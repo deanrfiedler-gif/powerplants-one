@@ -1054,6 +1054,8 @@ export async function presentationBytes(
   const b = await readReportBundle(p, i.manifest);
   if (digest(b.html) !== v.content_hash || digest(b.html) !== v.html_hash)
     fail("ExactDocumentUnavailable", "The exact retained presentation is unavailable. Its original reference is retained.");
+  // Private storage can outlive the reader's current report or field access.
+  await reportContext(database(), p, id);
   return { ...b, manifest: i.manifest, issued_at: i.issued_at as Date };
 }
 
