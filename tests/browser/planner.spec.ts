@@ -175,6 +175,20 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
   }
   await page.getByRole("button", { name: "Day", exact: true }).click();
   await capture(page, info, "day");
+  if (!info.project.name.startsWith("mobile")) {
+    // Desktop Day is the 07:00 to 18:00 timeline. A visit is a keyboard target that opens its
+    // details panel, and the panel carries Move or reassign (the keyboard alternative to drag).
+    const visit = page
+      .getByRole("region", { name: "Day timeline, 07:00 to 18:00", exact: true })
+      .getByRole("button")
+      .first();
+    await visit.focus();
+    await visit.press("Enter");
+    await expect(
+      page.getByRole("complementary", { name: /^Visit details: / }),
+    ).toBeVisible();
+    await capture(page, info, "day-details");
+  }
   const move = page
     .getByRole("button", { name: "Move or reassign", exact: true })
     .first();

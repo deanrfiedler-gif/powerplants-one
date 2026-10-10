@@ -44054,7 +44054,8 @@
           "paragraphs": [
             "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
             "Review current booking policy prepares the proposed interval, including published future windows. Confirmation, moves and request acceptance carry exact policy/hash and publication-head evidence. A stale save requires fresh preparation; existing bookings retain their historic pin.",
-            "Working hours: the sample calendars publish 07:00 to 18:00 on weekdays, and standard hours are 08:00 to 17:00. Confirm, Move or reassign and Propose a schedule change show an Extended hours warning when a person's visit or travel falls outside standard hours, naming the person and the times. The warning never blocks a save; outside the published calendar the server still refuses the booking."
+            "Working hours: the sample calendars publish 07:00 to 18:00 on weekdays, and standard hours are 08:00 to 17:00. Confirm, Move or reassign and Propose a schedule change show an Extended hours warning when a person's visit or travel falls outside standard hours, naming the person and the times. The warning never blocks a save; outside the published calendar the server still refuses the booking.",
+            "Day view on a wide screen is a 07:00 to 18:00 timeline with one row per person. Select a visit, or press Enter on it, to open its details beside the board; Move or reassign and Open appointment are there. Dragging a confirmed visit along the timeline proposes a new start time from where it lands, in fifteen-minute steps, and opens the same Move or reassign form. Nothing is saved until the server accepts it."
           ],
           "steps": [
             "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
@@ -44082,7 +44083,8 @@
           "paragraphs": [
             "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
             "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved.",
-            "Extended hours is a warning, not an error. A confirmed card in a person's lane also says Extended hours with that person's times, including travel. Proposed and cancelled visits reserve nothing and are not marked."
+            "Extended hours is a warning, not an error. A confirmed card in a person's lane also says Extended hours with that person's times, including travel. Proposed and cancelled visits reserve nothing and are not marked.",
+            "Each person shows hours booked out of their standard hours; hover the name for free time. Amber visits need attention (a policy hold, scope review, pack preparation or review, or customer contact not confirmed); hatched visits are proposed. Shaded ends of the day are extended hours or not working; hatched blocks are unavailable time, leave or a closed calendar; a faint hatch marks reserved time, including visits hidden by a filter."
           ],
           "steps": [],
           "rows": [],
