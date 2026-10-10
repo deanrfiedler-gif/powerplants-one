@@ -95,7 +95,7 @@
     },
     "MAPPING": {
       "path": "docs/testing/evidence/same-name-finance-mapping/README.md",
-      "head": "ffbe9a8dc39386b01416bb98c52cab77d6a7744f",
+      "head": "da0c096d2a530ab9d466e9b2983d002e26c6e5a0",
       "environment": "Windows Node24.21.0/PostgreSQL16.15; private synthetic database and real document renderer/storage. Six joined synthetic PT-02 checks; real Q01 work, Service issue, Finance release and immutable target mapping.",
       "review": "Source self-review; independent review and owner acceptance pending."
     },
