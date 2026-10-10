@@ -1,6 +1,6 @@
 import { toggleWorklistFilters, fillOpportunitySearch, keyOpportunitySearch } from "../helpers/crm-worklist-ui";
 import { captureTransferComparison } from "../helpers/crm-transfer-capture";
-import { crmRefinementCall } from "../helpers/crm-refinement-call";
+import { browserFixtureCall } from "../helpers/browser-fixture-call";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 import { committed } from "../helpers/quality-prepare";
 import {
@@ -16,7 +16,7 @@ import { localConfig } from "../../src/platform/config";
 import { crmCreate, crmQualify, crmBase, crmDiscovery, crmAction, CRM } from "../helpers/crm";
 import type { DirectoryView } from "../../src/crm/directory";
 const call = (page: Pick<Page, "request">, path: string, body?: unknown) =>
-  crmRefinementCall(page, path, body, new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin);
+  browserFixtureCall(page, path, body, new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin);
 
 test.describe.configure({ timeout: 120000 });
 test.beforeAll(() => {
