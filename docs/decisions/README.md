@@ -123,3 +123,4 @@ The [scheduling policy impact decision](scheduling-policy-impact-review.md) defi
 
 The [controlled scheduling-policy publication plan](scheduling-policy-publication.md) records the next API-C26/EVT-12 synthetic contract and reconciled 0053 allocation; no publication implementation or schema is added.
 - [ADR-0048 â€” Native Products catalogue](ADR-0048-products-native-catalogue.md): immutable technical revisions, bounded review/publication/import, existing ES-03 source reuse and separate Engineering/Equipment authority. Operational capability grants remain unallocated.
+- [ADR-0050 — Font Awesome Pro Light for application icons](ADR-0050-font-awesome-light-icons.md): Dean accepted Font Awesome Pro Classic Light, with Classic Solid for selected items, on 10 October 2026. He chose delivery through his Kit script on online pages, with the offline workspace keeping its local shapes; no implementation is authorised.

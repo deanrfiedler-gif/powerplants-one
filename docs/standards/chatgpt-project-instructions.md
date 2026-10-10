@@ -50,7 +50,7 @@ Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguis
 
 ## 7. User experience and quality
 
-Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
+Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icon style: ADR-0050. Show synthetic/environment context.
 
 Scope, permissions, validation/recovery and acceptance: product-quality-{register,plan}.md.
 
