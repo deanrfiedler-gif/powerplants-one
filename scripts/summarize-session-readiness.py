@@ -61,10 +61,10 @@ for root in roots:
     runtime = [r for r in rows if r["event"] == "server-runtime"]
     run = {k: data.get(k) for k in ["label", "source", "compiled_source", "build_id", "started_at", "comparison_block", "comparison_position", "node", "browser", "platform", "network", "detailed_diagnostics"]}
     run.update({"complete": complete, "sample_count": len(data["samples"]), "failed_samples": sum("error" in s for s in data["samples"]), "record_count": len(data["record_visits"]), "errors": data["errors"], "groups": groups,
-                "route_phase_count": sum(r["event"] == "read-phase" for r in rows), "pools": pools, "http_failures": failures,
+                "route_phase_count": sum(r["event"] == "read-phase" for r in rows), "diagnostic_cap_reached": any(r["event"] == "diagnostic-cap-reached" for r in rows), "pools": pools, "http_failures": failures,
                 "runtime": {key: distribution([r[key] for r in runtime if key in r]) for key in ["interval_ms", "event_loop_active_ms", "event_loop_idle_ms", "cpu_user_ms", "cpu_system_ms", "system_free_bytes"]}})
     runs.append(run)
-    for name in ["results.json", "gateway.jsonl", "fixture-after.json", "desktop-directory.png", "desktop-record.png", "phone-directory.png", "phone-record.png"]:
+    for name in ["run.json", "results.json", "gateway.jsonl", "fixture-after.json", "desktop-directory.png", "desktop-record.png", "phone-directory.png", "phone-record.png"]:
         source = root / name
         if not source.exists():
             continue
@@ -76,6 +76,6 @@ for root in roots:
         target.write_bytes(stored)
         artifacts.append({"path": relative, "bytes": len(stored), "sha256": hashlib.sha256(stored).hexdigest(), "original_bytes": len(raw), "original_sha256": hashlib.sha256(raw).hexdigest()})
 
-(output / "summary.json").write_text(json.dumps({"fixture": fixture, "runs": runs, "pooled": None, "limits": "Separate attempts on a shared Windows host; failures and absent phases remain explicit. Connection acquisition includes event-loop scheduling and PostgreSQL connection establishment. Held time includes queries and scheduling, not isolated database execution. No SQL, payloads or credentials recorded; incomplete runs have no timing groups."}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+(output / "summary.json").write_text(json.dumps({"fixture": fixture, "runs": runs, "pooled": None, "limits": "Separate attempts on the recorded run hosts; failures and absent phases remain explicit. Connection acquisition includes event-loop scheduling and PostgreSQL connection establishment. Held time includes queries and scheduling, not isolated database execution. No SQL, payloads or credentials recorded; incomplete runs have no timing groups."}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 (output / "artifacts.json").write_text(json.dumps(artifacts, indent=2) + "\n", encoding="utf-8", newline="\n")
 print(json.dumps([{"label": r["label"], "complete": r["complete"], "failed_samples": r["failed_samples"], "pools": len(r["pools"]), "http_failures": len(r["http_failures"])} for r in runs]))

@@ -16,7 +16,7 @@ PR #391's subsequent compiled-mobile CI failure is a fixture identity-switch tra
 
 The independent [baseline review](testing/evidence/pt27-loading/session-readiness/mobile-ci-review/summary.json) passes three unchanged-main mobile N01 repeats and the fixture transport regression. Earlier baseline harness failures and a negative transport probe remain retained. The socket cause is still unproven; updated-head CI, full PT-27 and deployment remain open.
 
-The next authorised [controlled observer comparison](decisions/pt27-loading-performance.md#controlled-observer-comparison--10-october-2026) uses a manual mode in the existing compiled-assurance workflow: one Linux runner, one build and one fresh declared fixture, with logging off/on/on/off and identical external resource sampling. Ordinary PR/main assurance remains unchanged. This separate block addresses the local host/observer confound; its execution, CI result and any corrective conclusion remain pending.
+The authorised [controlled observer comparison](testing/evidence/pt27-loading/observer-control/README.md) passes in CI at `ea2a82b`: one Linux runner/build/fixture, logging off/on/on/off, 320 directory loads and 80 actual record openings without failure. Available memory stays above 10 GiB, host CPU is near capacity, and traced acquisitions have no queued waiters or failures. Thirteen of 24 p95 groups meet three seconds; every cold-load group still misses. Most cold-load time precedes the directory request, making page/session bootstrap under controlled browser CPU load the next investigation. No application correction or original-503 cause is established. Ordinary PR/main assurance, full PT-27 and acceptance remain separate.
 
 ## PT-30 integration rehearsal — 10 October 2026
 
