@@ -32,5 +32,9 @@
   "merge_policy": "Require completed successful checks for the exact reviewed heads and recheck the remote heads before merging. Final CI and merge outcomes belong to the linked PR records; this review does not claim either merge has happened.",
   "rehearsal": "verification.json",
   "owner_acceptance": "Pending H01-H11 and applicable prerequisite dispositions",
-  "deployment": "Not requested or performed"
+  "deployment": "Not requested or performed",
+  "subsequent_ci_finding": {
+    "evidence": "pricing-recovery-ci.json",
+    "summary": "PR-389 attempt 1 fails the existing Products receipt-recovery timing assertion. The same race is reproduced with a held POST on unmodified main and corrected in the descendant PT-30 test. The unchanged PR-389 job rerun remains separate from this correction and from original local PT-29 passes."
+  }
 }

@@ -19,6 +19,12 @@ All four existing narrative phases pass on integrated application/test source `c
 
 The initial history image was captured while a secondary panel still showed loading. It remains in the evidence alongside the corrected view; the original API assertions passed. This was a capture-timing refinement, with no runtime or deadline change.
 
+## Integration CI finding
+
+PR #389's first compiled desktop run passes 401 cases, skips 17 existing inapplicable cases and fails the existing Products historical-pricing recovery test. Its pending panel is visible while the intercepted POST is still in flight; the test could reload before the intended accepted-response loss. [The source-bound diagnosis](pricing-recovery-ci.json) retains that failure, a normal passing control on unmodified main `8869437`, and the same failure reproduced by holding the real POST for 1,500 ms on that baseline. The local trace shows the original receipt read returning 404 before the POST is forwarded and accepted with 200. The application correctly retains the unknown original.
+
+The test now verifies server success and waits until **Recover original result** is enabled after the dropped response settles, before reloading. Both desktop and phone pass with the diagnostic delay, then pass without injection against the unchanged integrated build. The diagnostic delay is not committed to the test. No application behaviour, deadline, timeout or retry policy changes. The initial local attempt before the baseline listener was ready is retained separately from the healthy control and causal reproduction. Raw traces remain private; the JSON contains only selected network path/status/timing facts. The unchanged PR #389 job rerun and the descendant PT-30 correction have separate CI records.
+
 ## Preservation and limits
 
 [Before](before-restart-preservation.json) and [after restart](after-restart-preservation.json) record hashes/counts rather than database rows. The comparison deliberately excludes sessions and Session audit events. The actual process boundary is in [restart.json](restart.json). Latest installed migration is 77; 76 registered migrations are installed. A missing reserved number is not silently filled.
