@@ -142,6 +142,11 @@
       "name": "prototype",
       "result": "Passed",
       "log": "prototype.txt"
+    },
+    {
+      "name": "foundation on integrated branch documentation",
+      "result": "Passed; all 78 requirements and 22 issued sources retained",
+      "log": "foundation.txt"
     }
   ],
   "boundaries": [
@@ -251,6 +256,11 @@
       "path": "focused-units-canonical-temp.txt",
       "bytes": 1923,
       "sha256": "972bf9fcc1544ad1eb5587f3023c0e16e12cafbc38b425895a53502fac8a2426"
+    },
+    {
+      "path": "foundation.txt",
+      "bytes": 330,
+      "sha256": "0f3baa297188849b48373fa38f3337959e7d546042f1bfc101c4bd2642299280"
     },
     {
       "path": "long-pages-corrected.txt",
@@ -454,8 +464,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8660,
-      "sha256": "4fd08b3268263a175c25ec290093ba467ecd4e344d7667bb95cd5b7d26ab9945"
+      "bytes": 8739,
+      "sha256": "b52aed2e39d25617bcbdaa1833d5d4e70e33c5e29cfe6d430d0cadddd6d9d247"
     },
     {
       "path": "report-corrupt-before-release.json",
@@ -517,5 +527,6 @@
     "main": "ad45a520ae4b42144e2a18c92507bac1c72b4711",
     "merge": "f646ab3",
     "scope": "Four documentation-only files; both STATUS entries preserved. Application and tests unchanged."
-  }
+  },
+  "local_cluster_cleanup": "Task-owned PostgreSQL cluster stopped after verification; private evidence and configuration retained outside Git."
 }

@@ -46,7 +46,7 @@ Original [page hashes](page-checks.json), generated HTML/PDF pairs and [every-pa
 | Application build including TypeScript | Passed on corrected application source | [build](build.txt) |
 | Changed TypeScript lint | Passed | [log](changed-lint.txt) |
 | Existing affected database regressions | 4/4 pass: pack concurrency/render failure and Finance stored-output recovery/revoked owner | [TAP](existing-regressions.txt) |
-| Studio, naming and prototype checks | Passed; existing 28 stale and 322 unreviewed design records remain visible | [studio](studio.txt), [naming](naming.txt), [prototype](prototype.txt) |
+| Foundation, studio, naming and prototype checks | Passed; all 78 parent requirements retained; existing 28 stale and 322 unreviewed design records remain visible | [foundation](foundation.txt), [studio](studio.txt), [naming](naming.txt), [prototype](prototype.txt) |
 | Focused existing document-store, report and Finance units | 6 pass; one Windows symlink EPERM environment failure | [log](focused-units-canonical-temp.txt) |
 
 The document store, its existing unit tests and all renderer/template sources remain byte-identical to main. The unit limitation was observed before the runtime correction and is not attributed to this change. The main baseline remains available at the named commit; no guard or test was disabled.
