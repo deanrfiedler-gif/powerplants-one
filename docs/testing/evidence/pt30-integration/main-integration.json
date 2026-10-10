@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-10",
+  "review_status": "Implementation merge reconciliation; independent/owner acceptance pending",
+  "checked_source": "eacb39d605a9b34b5e6c4e86497db1c82ffb183d",
+  "main": "794aee6c0a540189c7fcce16c7d077c21bac68c6",
+  "reviewed_parents": [
+    "d0be6b0e5346b8c3b2b180e834718155c972d24d",
+    "caecf7bc787eb658a545268e507e35e257adf48f"
+  ],
+  "merge_path": "PR #390 against main; exact reviewed parent heads retained as ancestors",
+  "runtime_equal_to_rehearsal": true,
+  "rehearsal_application_source": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "rehearsal_build": "qE6dn5GfAoZAp53Forj96",
+  "non_document_changes_since_rehearsal": [
+    "tests/acceptance-browser/journey.spec.ts",
+    "tests/browser/products.spec.ts",
+    "tests/database/finance-same-name-mapping.test.ts"
+  ],
+  "integrity": {
+    "authored_procedures_preserved": 30,
+    "parent_ids_preserved": 78,
+    "exact_main_pt02_case_and_source_preserved": true,
+    "both_document_register_additions_preserved": true,
+    "all_source_keys_retained": true,
+    "issued_sources_unchanged": true,
+    "human_observations_pending": 11
+  },
+  "checks": {
+    "foundation": {
+      "command": "python -X utf8 scripts/check_foundation.py",
+      "exit_code": 0,
+      "log_sha256": "b0466e5ac7d73040153473e422613f95b2566ac52373048b19c08a999d876620"
+    },
+    "naming": {
+      "command": "python -X utf8 scripts/check_naming.py",
+      "exit_code": 0,
+      "log_sha256": "136f8dccba031f961830d5e1cdcc7c4f019d1cacdc90f9e65f4d415ce753455e"
+    },
+    "prototype": {
+      "command": "python -X utf8 scripts/check_prototype.py",
+      "exit_code": 0,
+      "log_sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "log_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    "studio": {
+      "command": "npm run studio:check",
+      "exit_code": 0,
+      "log_sha256": "66c374ae732d2051d904d9a6ce5899864c5478bdacf4173ac46f90ba8fa317d7"
+    }
+  },
+  "naming_instruction_characters": 7976,
+  "studio": {
+    "unreviewed": 322,
+    "stale": 28
+  },
+  "limits": [
+    "Metadata-only evidence commit follows this checked merge checkpoint. Final combined-head CI and actual merge outcome remain in PR #390.",
+    "No owner participation, independent visual acceptance, performance target pass or deployment is inferred."
+  ]
+}
