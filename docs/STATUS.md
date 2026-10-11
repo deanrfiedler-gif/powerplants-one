@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Page design tooling revisited — 11 October 2026
+
+Dean compared a Figma trial with Claude Design boards, using a proposed Reviews & approvals page for the reserved Estimating slot. He judged Figma faster to get right, easier to refine and better to click through. [ADR-0053](decisions/ADR-0053-figma-page-design.md) records his decision: pages are now designed in Figma, Git stays the authority, and Claude Design is retired for new work. Existing boards and the design system artifact remain as history, and ADR-0051's rules carry over with Figma in place of boards. The trial file becomes the working file, "PPO — Design". It holds Font Awesome Pro artwork, so it stays private and its link stays out of this repository. Evidence for a Figma design is a named Figma version and a retained capture with the icons replaced by placeholders. The Reviews & approvals page remains a synthetic proposal: not built and not accepted. No application code, page, scope or parent ID changes, and no visual review is implied.
+
 ## PT-27 loading performance — 10 October 2026
 
 The authorised [asset request correlation](decisions/pt27-loading-performance.md#asset-request-correlation--11-october-2026) identifies a browser emulation-path stall in the captured cases. The [first trace](testing/evidence/pt27-loading/asset-correlation/README.md) retains nine original timeouts. The [final release diagnostic](testing/evidence/pt27-loading/asset-release/README.md) retains three more: none recover during ten extra seconds unchanged; removing only Chrome's network-emulation rule resumes all pending scripts and returns the exact expected directory data, with headers in 312–663 ms and payload verification within 699 ms. Original failed samples remain failed, without reloads or retries. This supports the environment diagnosis for those cases, not a specific Chromium defect or the original HTTP 503 cause. The final block passes 217 of 220 loads and all 50 attempted openings; incomplete positions are not latency comparisons. The three-second target remains unmet. Validate equivalent network conditioning independently before another performance comparison; no pool, SQL, authentication or timeout correction is supported.
@@ -39,7 +43,7 @@ Dean then approved a design kit, adding three rules to ADR-0051:
 
 Group 1 is published as design system version 9: twelve shared parts captured from `main@ed3ccb8`, with the app's own 385 CSS rules for them. [`scripts/design-system/`](../scripts/design-system/README.md) regenerates the kit.
 
-Group 2's references are approved. The register table, context strip, inspection panel, record cards and dialog will each be built as a shared app component in a small PR, and page templates follow. The capture also corrected the design system's page text to the app's effective 14/1.45. It found an Estimating-only override of the shared header. Nothing in the app changed.
+Group 2's references are approved. The register table, context strip, inspection panel, record cards and dialog will each be built as a shared app component in a small PR, and page templates follow. The capture also corrected the design system's page text to the app's effective 14/1.45. It found an Estimating-only override of the shared header. Nothing in the app changed. On 11 October ADR-0053 replaced the drawing tool (above). Group 2 continues in the app, and each part is then drawn as a Figma component, not added to the Claude Design kit.
 
 ## PT-30 integration rehearsal — 10 October 2026
 

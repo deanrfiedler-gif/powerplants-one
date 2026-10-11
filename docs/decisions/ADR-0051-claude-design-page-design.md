@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** accepted by the owner, 10 October 2026.
+Owner: Dean Fiedler. **Status:** accepted by the owner, 10 October 2026. **Revisited 11 October 2026:** [ADR-0053](ADR-0053-figma-page-design.md) replaces Claude Design with Figma as the drawing tool, after Dean compared the two. This record stays as the record of the Claude Design period, and ADR-0053 carries its other rules over.
 
 Related: [ADR-0040](ADR-0040-development-workspace.md) (Git-backed design and development workspace); the [hosted design workspace](hosted-design-workspace.md); [ADR-0050](ADR-0050-font-awesome-light-icons.md) (Font Awesome Pro licence limits); the [UI build and review sequence](ui-build-sequence.md); the board records for [ES-01](es01-design-board.md), [ES-02](es02-design-board.md), [ES-08](es08-design-board.md) and the [navigation architecture](navigation-architecture-board.md); [HTML module conformance](../standards/html-module-conformance.md); the [design and build workflow](../design/development/README.md).
 
