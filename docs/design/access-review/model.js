@@ -18,6 +18,7 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    'admin.access.apply':'Apply independently approved local synthetic access requests',
     'admin.access.propose':'Submit local synthetic access requests',
     'admin.access.approve':'Independently decide local synthetic access requests',
     'admin.access.read':'Inspect workspace identities and exact permission grants',

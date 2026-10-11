@@ -36,6 +36,8 @@ Masters use stable names/Git history; review stays separate. Reserve rNN for con
 
 Separate UUID, reference, label, revision and state. Use SYN-PPO references; retain external/company/entity/provider keys. Use snake_case fields and PascalCase types/enums/events. Names are not keys. Filing assistance follows naming-sharepoint-handover and N0–N6.
 
+AD-01 local application follows [its explicit contract](../decisions/access-request-application.md): approval and grant installation are separate; Applied is historical installation, not current effective access. Preserve independent duties, exact dates, locked revalidation and original recovery. Teams, campaigns and D-020 policy remain open.
+
 ## 6. Business workflow controls
 
 Separate request/work order/appointment/pack/report/response/Finance handoff. Completion may need follow-up. Scheduling checks concurrency, crew availability, permissions, readiness, reasons and acknowledgement.

@@ -5115,7 +5115,8 @@
         "docs/design/access-review/capabilities.js",
         "docs/decisions/access-review-native.md",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-request-application.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -13118,7 +13119,7 @@
       "title": "Access request",
       "kind": "route",
       "module": "AD",
-      "summary": "Local synthetic single-capability proposal and independent decision; approval does not change grants.",
+      "summary": "Local synthetic single-capability proposal, independent decision and separate controlled application; Applied records installation, with grant validity checked separately.",
       "path": "/admin/access/requests/[id]",
       "source_paths": [
         "src/app/(business)/admin/access/requests/[id]/page.tsx",
@@ -13138,11 +13139,12 @@
         "src/shared/ui/use-recoverable-command.ts",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-request-application.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "14 request database checks, corrected affected upgrades, 33 compiled browser checks and 18 source/navigation checks pass; see access-request evidence. CI and owner review separate.",
+      "functional_status": "Application verification in progress; retained request evidence remains separate. Owner and visual acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13160,7 +13162,7 @@
       "title": "Access-change requests",
       "kind": "route",
       "module": "AD",
-      "summary": "Local synthetic single-capability proposal and independent decision; approval does not change grants.",
+      "summary": "Local synthetic single-capability proposal, independent decision and separate controlled application; Applied records installation, with grant validity checked separately.",
       "path": "/admin/access/requests",
       "source_paths": [
         "src/app/(business)/admin/access/requests/page.tsx",
@@ -13180,11 +13182,12 @@
         "src/shared/ui/use-recoverable-command.ts",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-request-application.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "14 request database checks, corrected affected upgrades, 33 compiled browser checks and 18 source/navigation checks pass; see access-request evidence. CI and owner review separate.",
+      "functional_status": "Application verification in progress; retained request evidence remains separate. Owner and visual acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

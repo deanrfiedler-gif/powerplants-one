@@ -26,7 +26,17 @@ import { capabilityCatalogue, isCapability } from "./capabilities";
 
 export const requestableCapability = (key: string) =>
   isCapability(key) && key !== "email.connect" && !key.startsWith("admin.");
-type Duty = "admin.access.propose" | "admin.access.approve";
+type Duty =
+  | "admin.access.read"
+  | "admin.access.propose"
+  | "admin.access.approve"
+  | "admin.access.apply";
+type Command = "Submit" | "Decide" | "Apply";
+const commandDuty: Record<Command, Duty> = {
+  Submit: "admin.access.propose",
+  Decide: "admin.access.approve",
+  Apply: "admin.access.apply",
+};
 const notFound = () =>
   new AppError(404, "NotFound", "This access request is unavailable.");
 function localOnly() {
@@ -75,7 +85,12 @@ export async function accessRequests(
 ) {
   localOnly();
   const state = query.state
-    ? choice(query.state, "state", ["Submitted", "Approved", "Returned"])
+    ? choice(query.state, "state", [
+        "Submitted",
+        "Approved",
+        "Returned",
+        "Applied",
+      ])
     : null;
   const offset = Number(query.offset ?? 0);
   if (!Number.isSafeInteger(offset) || offset < 0 || offset > 100000)
@@ -173,8 +188,13 @@ export async function accessRequest(p: Principal, id: string) {
       row.state === "Submitted" &&
       row.reviewer_id === p.actor_id &&
       (await holds(c, p, "admin.access.approve"));
+    const can_apply =
+      row.state === "Approved" &&
+      row.subject_id !== p.actor_id &&
+      row.reviewer_id !== p.actor_id &&
+      (await holds(c, p, "admin.access.apply"));
     await authority(c, p);
-    return { actor: p, request: row, history, can_decide };
+    return { actor: p, request: row, history, can_decide, can_apply };
   });
 }
 function commandCommon(b: Record<string, unknown>) {
@@ -242,17 +262,7 @@ async function validProposal(
     )
       invalid("site_id", "Choose a site belonging to the selected company.");
   }
-  if (
-    !(
-      await c.query("SELECT $1::timestamptz>clock_timestamp() AS future", [
-        b.valid_from,
-      ])
-    ).rows[0].future
-  )
-    invalid(
-      "valid_from",
-      "The proposed start must still be in the future. Return an outdated request and submit a corrected one.",
-    );
+  await futureStart(c, b.valid_from);
   if (
     (
       await c.query(
@@ -266,6 +276,46 @@ async function validProposal(
       "ExistingGrant",
       "A grant already exists at this exact scope, including scheduled or expired grants.",
     );
+}
+async function futureStart(c: QueryClient, start: string | Date) {
+  if (
+    !(
+      await c.query("SELECT $1::timestamptz>clock_timestamp() AS future", [
+        start,
+      ])
+    ).rows[0].future
+  )
+    invalid(
+      "valid_from",
+      "The proposed start must still be in the future. An Approved request cannot be backdated or replaced here.",
+    );
+}
+async function applicationParticipants(
+  c: QueryClient,
+  p: Principal,
+  row: Record<string, unknown>,
+) {
+  if (p.actor_id === row.subject_id || p.actor_id === row.reviewer_id)
+    throw new AppError(
+      403,
+      "IndependentExecutorRequired",
+      "The executor must differ from the affected person and the reviewer.",
+    );
+  for (const [actor, duty] of [
+    [row.requester_id, "admin.access.propose"],
+    [row.reviewer_id, "admin.access.approve"],
+  ] as const) {
+    const candidate = { ...p, actor_id: String(actor) };
+    if (
+      !(await holds(c, candidate, "admin.access.read")) ||
+      !(await holds(c, candidate, duty))
+    )
+      throw new AppError(
+        409,
+        "AccessAuthorityChanged",
+        "The requester and reviewer must retain their current local Workspace duties before application.",
+      );
+  }
 }
 async function eligibleReviewer(
   c: QueryClient,
@@ -299,8 +349,9 @@ async function eligibleReviewer(
 async function operation(
   p: Principal,
   input: ReturnType<typeof commandCommon> & Record<string, unknown>,
-  command: "Submit" | "Decide",
+  command: Command,
   mutate: (c: PoolClient) => Promise<Record<string, unknown>>,
+  revalidate?: (c: PoolClient, row: Record<string, unknown>) => Promise<void>,
 ) {
   const hash = createHash("sha256")
     .update(canonical({ command, ...input }))
@@ -311,11 +362,13 @@ async function operation(
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
         p.workspace_id,
       ]);
-      await authority(
-        c,
-        p,
-        command === "Submit" ? "admin.access.propose" : "admin.access.approve",
-      );
+      // All authority/scope writers are serialized for this bounded local application.
+      // Locks include absent grants/working-company rows, so inserts cannot race validation.
+      if (command === "Apply")
+        await c.query(
+          "LOCK TABLE ppo.users, ppo.permission_grants, ppo.working_companies, ppo.companies, ppo.sites IN SHARE ROW EXCLUSIVE MODE",
+        );
+      await authority(c, p, commandDuty[command]);
       const prior = (
         await c.query(
           "SELECT payload_hash,receipt FROM ppo.access_change_operations WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
@@ -340,7 +393,7 @@ async function operation(
         record_version: Number(row.version),
         state: String(row.state),
         accepted_at: new Date(
-          (row.decided_at ?? row.created_at) as string,
+          (row.applied_at ?? row.decided_at ?? row.created_at) as string,
         ).toISOString(),
         receipt_id,
         warnings: [],
@@ -383,11 +436,8 @@ async function operation(
           receipt,
         ],
       );
-      await authority(
-        c,
-        p,
-        command === "Submit" ? "admin.access.propose" : "admin.access.approve",
-      );
+      await authority(c, p, commandDuty[command]);
+      if (revalidate) await revalidate(c, row);
       return { receipt, replayed: false };
     });
   } catch (e) {
@@ -512,6 +562,62 @@ export async function decideAccessRequest(
     ).rows[0];
   });
 }
+export async function applyAccessRequest(
+  p: Principal,
+  id: string,
+  input: unknown,
+) {
+  localOnly();
+  const b = object(input, [...commonKeys, "expected_version"]);
+  const value = {
+    ...commandCommon(b),
+    request_id: uuid(id, "request_id"),
+    expected_version: version(b.expected_version),
+  };
+  return operation(
+    p,
+    value,
+    "Apply",
+    async (c) => {
+      const row = (
+        await c.query(
+          "SELECT * FROM ppo.access_change_requests WHERE workspace_id=$1 AND id=$2 FOR UPDATE",
+          [p.workspace_id, id],
+        )
+      ).rows[0];
+      if (!row) throw notFound();
+      await applicationParticipants(c, p, row);
+      if (row.version !== value.expected_version || row.state !== "Approved")
+        throw new AppError(
+          409,
+          "VersionConflict",
+          "Only the exact Approved version can be applied. Reload the saved request and history.",
+        );
+      await validProposal(c, p, row);
+      const grant_id = randomUUID();
+      // Copy dates and scope in PostgreSQL; never reconstitute approved microseconds in JS.
+      await c.query(
+        `INSERT INTO ppo.permission_grants(id,workspace_id,user_id,capability,scope_type,scope_id,company_id,site_id,valid_from,valid_to)
+      SELECT $3,workspace_id,subject_id,capability,scope_type,scope_id,company_id,site_id,valid_from,valid_to
+      FROM ppo.access_change_requests WHERE workspace_id=$1 AND id=$2`,
+        [p.workspace_id, id, grant_id],
+      );
+      return (
+        await c.query(
+          `UPDATE ppo.access_change_requests SET state='Applied',version=3,applied_by=$3,
+      applied_at=clock_timestamp(),application_reason=$4,grant_id=$5,
+      grant_snapshot=(SELECT to_jsonb(g) FROM ppo.permission_grants g WHERE g.id=$5)
+      WHERE workspace_id=$1 AND id=$2 RETURNING *`,
+          [p.workspace_id, id, p.actor_id, value.reason, grant_id],
+        )
+      ).rows[0];
+    },
+    async (c, row) => {
+      await applicationParticipants(c, p, row);
+      await futureStart(c, row.valid_from as Date);
+    },
+  );
+}
 export async function accessRequestReceipt(p: Principal, id: string) {
   localOnly();
   uuid(id, "operation_id");
@@ -525,13 +631,7 @@ export async function accessRequestReceipt(p: Principal, id: string) {
       )
     ).rows[0];
     if (!row) throw notFound();
-    await authority(
-      c,
-      p,
-      row.command === "Submit"
-        ? "admin.access.propose"
-        : "admin.access.approve",
-    );
+    await authority(c, p, commandDuty[row.command as Command]);
     return row.receipt as OperationReceipt;
   });
 }

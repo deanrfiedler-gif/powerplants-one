@@ -75470,7 +75470,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native local synthetic request and independent decision",
+      "content_mode": "Native local synthetic request, independent decision and separate application",
       "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
       "related_entry_keys": [
         "scope:AD-01",
@@ -75482,7 +75482,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Inspect the exact proposal and record an independent decision without changing grants."
+            "Inspect the exact proposal and independent decision, then separately install one approved local grant under current authority."
           ],
           "steps": [],
           "headers": [],
@@ -75492,7 +75492,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Local synthetic mode only. Clear the working company. Current Workspace admin.access.read is required; submission also requires admin.access.propose and decisions require admin.access.approve. Systems and Scheduling policy reviewer have explicit fixture duties; names confer no authority."
+            "Local synthetic mode only. Clear the acting identity’s working company. Current Workspace read is required; propose, approve and apply are separate duties. Systems has explicit propose/apply fixture duties; Scheduling policy reviewer has read/approve. Names confer no authority. The executor must differ from the reviewer and affected person."
           ],
           "steps": [],
           "headers": [],
@@ -75500,9 +75500,9 @@
         },
         {
           "section_id": "quick-start",
-          "title": "Submit or review a request",
+          "title": "Submit, review and separately apply",
           "paragraphs": [
-            "From Users and access choose Access-change requests. Systems can submit a proposal; switch to Scheduling policy reviewer through the existing account identity control to inspect and decide it."
+            "From Users and access choose Access-change requests. Systems submits; Scheduling policy reviewer inspects and decides. After Approved, switch back to Systems, reopen the exact record, inspect its scope/dates and enter an application reason before selecting Apply approved grant."
           ],
           "steps": [],
           "headers": [],
@@ -75512,7 +75512,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The queue uses one-add proposal fields followed by state-filtered saved cards and pagination. The detail page presents the immutable scope, dates, reason, named parties and saved history before any decision."
+            "The queue includes an Applied filter. The detail shows exact parties, immutable scope/dates, reasons and history. Approved has a separate application form for a permitted executor; Applied shows the installed grant UUID, application time/reason and a link to inspect current Person access."
           ],
           "steps": [],
           "headers": [],
@@ -75532,7 +75532,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Submit for independent review saves Submitted version 1. The named reviewer chooses Return for correction or Approve proposal only, enters a reason and selects Record decision. Refresh request and history reads the saved version. Returned proposals require a new corrected request."
+            "Submit saves version 1. The named reviewer records Approved or Returned at version 2. Applying exactly Approved version 2 installs one grant and saves Applied version 3 atomically. The approved UTC start must still be future; no date is shifted. Requester/reviewer must retain their local duties and subject must remain active/local."
           ],
           "steps": [],
           "headers": [],
@@ -75542,7 +75542,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Submission and decision persist exact audit-linked evidence and an actor-bound receipt. Approved means reviewed, not effective. There is no grant apply, user editing, role assignment, notification or business handover."
+            "Submission and decision leave grants unchanged. Separate application installs one exact approved local grant with an audit snapshot and actor-bound receipt. Applied is historical installation evidence; current access also depends on dates, identity, working company, authentication and domain checks. Hosted provisioning, role assignment and notification remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -75552,7 +75552,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Submitted can be decided once at its exact version. Approved and Returned are retained terminal states in this increment. Existing grants including expired ones prevent duplicate additions; Submitted/Approved requests reserve the same exact grant key. Approval rechecks current subject, scope, dates and absence of a grant."
+            "Submitted can be decided once. Returned is terminal and requires a new corrected request. Approved can be applied once at version 2 before its future start. A late or otherwise invalid Approved request is held unchanged; replacing/cancelling it is separate work. Applied is terminal here, with current grant state inspected separately."
           ],
           "steps": [],
           "headers": [],
@@ -75562,7 +75562,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Systems proposes pack.prepare for SYN Site observer at Company A / SYN-A, with a future UTC start and named Scheduling policy reviewer. The reviewer can Return it with a correction reason. Neither action changes the subject’s effective grants."
+            "Systems proposes a missing business capability for SYN Site observer at Company A / SYN-A with a future UTC start. Scheduling policy reviewer independently approves. Systems reopens and applies the exact approval. The new grant remains Scheduled until that UTC start; approval alone would have installed nothing."
           ],
           "steps": [],
           "headers": [],
@@ -75592,7 +75592,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the access-change request decision, retained AD-01 HTML, native access guide and execution evidence. Exact request UUIDs are used; the deferred ACR reference type has not been allocated."
+            "See access-change-requests.md and access-request-application.md, the retained AD-01 HTML and the access-application execution ledger. Exact UUIDs are used; the deferred ACR reference type is not allocated."
           ],
           "steps": [],
           "headers": [],
@@ -75610,7 +75610,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-requests/README.md; owner acceptance pending"
+      "runtime_evidence": "See docs/testing/evidence/access-application/README.md and earlier access-requests evidence; owner acceptance pending"
     },
     {
       "guide_key": "guide.route-admin-access-requests",
@@ -75621,7 +75621,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native local synthetic request and independent decision",
+      "content_mode": "Native local synthetic request, independent decision and separate application",
       "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
       "related_entry_keys": [
         "scope:AD-01",
@@ -75633,7 +75633,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Submit and inspect durable single-add access proposals for independent review."
+            "Inspect the exact proposal and independent decision, then separately install one approved local grant under current authority."
           ],
           "steps": [],
           "headers": [],
@@ -75643,7 +75643,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Local synthetic mode only. Clear the working company. Current Workspace admin.access.read is required; submission also requires admin.access.propose and decisions require admin.access.approve. Systems and Scheduling policy reviewer have explicit fixture duties; names confer no authority."
+            "Local synthetic mode only. Clear the acting identity’s working company. Current Workspace read is required; propose, approve and apply are separate duties. Systems has explicit propose/apply fixture duties; Scheduling policy reviewer has read/approve. Names confer no authority. The executor must differ from the reviewer and affected person."
           ],
           "steps": [],
           "headers": [],
@@ -75651,9 +75651,9 @@
         },
         {
           "section_id": "quick-start",
-          "title": "Submit or review a request",
+          "title": "Submit, review and separately apply",
           "paragraphs": [
-            "From Users and access choose Access-change requests. Systems can submit a proposal; switch to Scheduling policy reviewer through the existing account identity control to inspect and decide it."
+            "From Users and access choose Access-change requests. Systems submits; Scheduling policy reviewer inspects and decides. After Approved, switch back to Systems, reopen the exact record, inspect its scope/dates and enter an application reason before selecting Apply approved grant."
           ],
           "steps": [],
           "headers": [],
@@ -75663,7 +75663,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The queue uses one-add proposal fields followed by state-filtered saved cards and pagination. The detail page presents the immutable scope, dates, reason, named parties and saved history before any decision."
+            "The queue includes an Applied filter. The detail shows exact parties, immutable scope/dates, reasons and history. Approved has a separate application form for a permitted executor; Applied shows the installed grant UUID, application time/reason and a link to inspect current Person access."
           ],
           "steps": [],
           "headers": [],
@@ -75683,7 +75683,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Submit for independent review saves Submitted version 1. The named reviewer chooses Return for correction or Approve proposal only, enters a reason and selects Record decision. Refresh request and history reads the saved version. Returned proposals require a new corrected request."
+            "Submit saves version 1. The named reviewer records Approved or Returned at version 2. Applying exactly Approved version 2 installs one grant and saves Applied version 3 atomically. The approved UTC start must still be future; no date is shifted. Requester/reviewer must retain their local duties and subject must remain active/local."
           ],
           "steps": [],
           "headers": [],
@@ -75693,7 +75693,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Submission and decision persist exact audit-linked evidence and an actor-bound receipt. Approved means reviewed, not effective. There is no grant apply, user editing, role assignment, notification or business handover."
+            "Submission and decision leave grants unchanged. Separate application installs one exact approved local grant with an audit snapshot and actor-bound receipt. Applied is historical installation evidence; current access also depends on dates, identity, working company, authentication and domain checks. Hosted provisioning, role assignment and notification remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -75703,7 +75703,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Submitted can be decided once at its exact version. Approved and Returned are retained terminal states in this increment. Existing grants including expired ones prevent duplicate additions; Submitted/Approved requests reserve the same exact grant key. Approval rechecks current subject, scope, dates and absence of a grant."
+            "Submitted can be decided once. Returned is terminal and requires a new corrected request. Approved can be applied once at version 2 before its future start. A late or otherwise invalid Approved request is held unchanged; replacing/cancelling it is separate work. Applied is terminal here, with current grant state inspected separately."
           ],
           "steps": [],
           "headers": [],
@@ -75713,7 +75713,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Systems proposes pack.prepare for SYN Site observer at Company A / SYN-A, with a future UTC start and named Scheduling policy reviewer. The reviewer can Return it with a correction reason. Neither action changes the subject’s effective grants."
+            "Systems proposes a missing business capability for SYN Site observer at Company A / SYN-A with a future UTC start. Scheduling policy reviewer independently approves. Systems reopens and applies the exact approval. The new grant remains Scheduled until that UTC start; approval alone would have installed nothing."
           ],
           "steps": [],
           "headers": [],
@@ -75743,7 +75743,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the access-change request decision, retained AD-01 HTML, native access guide and execution evidence. Exact request UUIDs are used; the deferred ACR reference type has not been allocated."
+            "See access-change-requests.md and access-request-application.md, the retained AD-01 HTML and the access-application execution ledger. Exact UUIDs are used; the deferred ACR reference type is not allocated."
           ],
           "steps": [],
           "headers": [],
@@ -75761,7 +75761,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-requests/README.md; owner acceptance pending"
+      "runtime_evidence": "See docs/testing/evidence/access-application/README.md and earlier access-requests evidence; owner acceptance pending"
     }
   ]
 }

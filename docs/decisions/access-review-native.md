@@ -53,3 +53,7 @@ Use r20 Register / worklist and Record detail, existing PageHeader, SelectField,
 ## Request and independent-review continuation — 11 October 2026
 
 The [access-change request decision](access-change-requests.md) adopts local synthetic single-add submission and independent decision. Approved does not apply grants. Earlier read-only delivery boundaries remain historical; teams, apply and campaigns remain subsequent work.
+
+## Controlled application continuation — 11 October 2026
+
+The [application decision](access-request-application.md) adds a separate Workspace apply duty and exact local grant installation for one Approved request, with revalidation, independent execution, immutable evidence and recovery. Read inspection stays current-state evaluation; Applied describes historical installation. No hosted authority or operational D-020 policy is adopted.

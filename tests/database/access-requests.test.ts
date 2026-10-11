@@ -18,7 +18,10 @@ import {
   submitAccessRequest,
   decideAccessRequest,
 } from "../../src/access/requests";
-import { accessRequestSeedGrants } from "../helpers/engineering-materials-grants";
+import {
+  accessRequestSeedGrants,
+  accessApplicationSeedGrants,
+} from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -39,7 +42,7 @@ const shape = (values: Record<string, unknown>[]) =>
     })
     .sort();
 
-test("AD01 requests: populated upgrade retains all earlier rows and adds exactly three duties", async () => {
+test("AD01 requests: populated upgrade retains all earlier rows and adds exactly four duties through application", async () => {
   await transaction(async (c) => {
     await c.query(
       await readFile(
@@ -67,7 +70,10 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     shape(afterGrants.filter((g) => !ids.has(g.id))),
-    shape(accessRequestSeedGrants(grants)),
+    shape([
+      ...accessRequestSeedGrants(grants),
+      ...accessApplicationSeedGrants(grants),
+    ]),
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);
   const next = await rows(
@@ -80,7 +86,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     next.filter((x) => x.version > 78).map((x) => x.version),
-    [79],
+    [79, 80],
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version <= 78),
@@ -88,7 +94,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version > 78).map((x) => x.version),
-    [79],
+    [79, 80],
   );
   await migrate();
   await seed();

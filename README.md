@@ -1,6 +1,8 @@
 # Powerplants One
 
-Current work: [bounded Customers first-load correction](docs/decisions/customer-first-load.md), based on merged main `dcec2cf` after #370–#373. The unchanged notification bell is separated from the full My Work workspace, reducing observed cold JavaScript transfer by 12.37%; local timing samples, regression checks and open performance obligations are in the [evidence](docs/testing/evidence/customer-first-load/README.md). CREMS remains historical background under the [independent PPO direction](docs/decisions/product-direction-quality.md). Verification, owner acceptance and deployment remain separate.
+Current work: [AD-01 controlled local application](docs/decisions/access-request-application.md), continuing independently reviewed access requests. [Execution evidence](docs/testing/evidence/access-application/README.md) separates local verification, queued CI and pending owner acceptance. No hosted grant authority or deployment.
+
+Earlier performance increment: [bounded Customers first-load correction](docs/decisions/customer-first-load.md), based on merged main `dcec2cf` after #370–#373. The unchanged notification bell is separated from the full My Work workspace, reducing observed cold JavaScript transfer by 12.37%; local timing samples, regression checks and open performance obligations are in the [evidence](docs/testing/evidence/customer-first-load/README.md). CREMS remains historical background under the [independent PPO direction](docs/decisions/product-direction-quality.md). Verification, owner acceptance and deployment remain separate.
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 

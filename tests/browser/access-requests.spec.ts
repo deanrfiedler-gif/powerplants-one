@@ -240,7 +240,7 @@ test("AD-01 a lost submission response recovers the original after reload and ap
     .click();
   await expect(page.locator("main .status-chip")).toHaveText("Approved");
   await expect(page.locator("main")).toContainText(
-    "No access is effective from this request",
+    "This request has not installed a grant",
   );
   expect(
     (
@@ -311,4 +311,230 @@ test("AD-01 stale decisions are refused and denied refresh hides request context
     page.getByRole("heading", { name: "Saved history", exact: true }),
   ).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText("SYN-B");
+});
+
+async function approvedFixture(page: Page, origin: string) {
+  const f = await fixture(page, origin);
+  await browserFixtureCall(page, base, f.input, origin);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "scheduling-policy-reviewer" },
+    origin,
+  );
+  await browserFixtureCall(
+    page,
+    `${base}/${f.input.request_id}/decision`,
+    {
+      schema_version: 1,
+      operation_id: randomUUID(),
+      expected_version: 1,
+      decision: "Approved",
+      reason: "Independent approval of this exact local scope and dates.",
+    },
+    origin,
+  );
+  return f;
+}
+test("AD-01 approved local application installs once, retains its dates and opens current person access", async ({
+  page,
+  baseURL,
+}) => {
+  const f = await approvedFixture(page, baseURL!);
+  await page.goto(`/${base}/${f.input.request_id}`);
+  await expect(
+    page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  ).toHaveCount(0);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  ).toBeEnabled();
+  await page
+    .getByLabel("Application reason", { exact: true })
+    .fill("Install only the independently approved local synthetic grant.");
+  await page
+    .getByRole("button", { name: "Apply approved grant", exact: true })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Access application saved" }),
+  ).toContainText("exact approved grant was installed");
+  await page
+    .getByRole("button", { name: "Refresh request and history" })
+    .click();
+  await expect(page.locator("main .status-chip")).toHaveText("Applied");
+  await expect(page.locator("main")).toContainText(
+    "Applied does not mean current effective access",
+  );
+  await expect(page.locator("main")).toContainText("Apply · Version 3");
+  const d = await browserFixtureCall(
+    page,
+    `${base}/${f.input.request_id}`,
+    undefined,
+    baseURL!,
+  );
+  expect(d.history).toHaveLength(3);
+  expect(d.request.grant_snapshot.capability).toBe(f.input.capability);
+  expect(new Date(d.request.grant_snapshot.valid_from).toISOString()).toBe(
+    "2035-01-01T00:00:00.000Z",
+  );
+  await expect(
+    page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  ).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page
+    .getByRole("link", { name: "Inspect current person access", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Person access", exact: true }),
+  ).toBeVisible();
+  const grants = await browserFixtureCall(
+    page,
+    `admin/access/${subject}`,
+    undefined,
+    baseURL!,
+  );
+  expect(
+    grants.grants.filter((g: { id: string }) => g.id === d.request.grant_id),
+  ).toHaveLength(1);
+});
+test("AD-01 lost committed application response recovers the original after reload", async ({
+  page,
+  baseURL,
+}) => {
+  const f = await approvedFixture(page, baseURL!);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.goto(`/${base}/${f.input.request_id}`);
+  await page
+    .getByLabel("Application reason", { exact: true })
+    .fill("Recover this exact synthetic application after a lost response.");
+  let operationId = "",
+    done!: () => void;
+  const intercepted = new Promise<void>((resolve) => {
+    done = resolve;
+  });
+  await page.route(
+    `**/api/v1/${base}/${f.input.request_id}/apply`,
+    async (route) => {
+      const response = await route.fetch();
+      expect(response.ok()).toBe(true);
+      const receipt = await response.json();
+      operationId = receipt.operation_id;
+      await route.abort("failed");
+      done();
+    },
+  );
+  await page
+    .getByRole("button", { name: "Apply approved grant", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Retry unchanged action" }),
+  ).toBeEnabled();
+  await expect(
+    page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  ).toBeDisabled();
+  await intercepted;
+  await page.unroute(`**/api/v1/${base}/${f.input.request_id}/apply`);
+  await page.reload();
+  await expect(
+    page.getByRole("link", { name: "Open saved request", exact: true }),
+  ).toHaveAttribute("href", `/${base}/${f.input.request_id}`);
+  await expect(page.locator("main .status-chip")).toHaveText("Applied");
+  const original = await browserFixtureCall(
+    page,
+    `${base}/operations/${operationId}`,
+    undefined,
+    baseURL!,
+  );
+  const d = await browserFixtureCall(
+    page,
+    `${base}/${f.input.request_id}`,
+    undefined,
+    baseURL!,
+  );
+  expect(original.state).toBe("Applied");
+  expect(d.history).toHaveLength(3);
+  expect(d.history[2].operation_id).toBe(operationId);
+});
+test("AD-01 stale application and denied command clear protected context", async ({
+  page,
+  baseURL,
+}) => {
+  const f = await approvedFixture(page, baseURL!);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.goto(`/${base}/${f.input.request_id}`);
+  await page
+    .getByLabel("Application reason", { exact: true })
+    .fill("This tab still holds the previous approved request version.");
+  await browserFixtureCall(
+    page,
+    `${base}/${f.input.request_id}/apply`,
+    {
+      schema_version: 1,
+      operation_id: randomUUID(),
+      expected_version: 2,
+      reason: "A separate tab installed the same exact approved grant first.",
+    },
+    baseURL!,
+  );
+  await page
+    .getByRole("button", { name: "Apply approved grant", exact: true })
+    .click();
+  await expect(page.locator("main").getByRole("alert")).toContainText(
+    "exact Approved version",
+  );
+  await page
+    .getByRole("button", { name: "Refresh request and history" })
+    .click();
+  await expect(page.locator("main .status-chip")).toHaveText("Applied");
+  const g = await approvedFixture(page, baseURL!);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.goto(`/${base}/${g.input.request_id}`);
+  await page
+    .getByLabel("Application reason", { exact: true })
+    .fill("Permission changes must hide this retained protected proposal.");
+  await page.route(`**/api/v1/${base}/${g.input.request_id}/apply`, (route) =>
+    route.fulfill({
+      status: 403,
+      contentType: "application/json",
+      body: JSON.stringify({
+        code: "Forbidden",
+        message: "Application duty no longer held.",
+      }),
+    }),
+  );
+  await page
+    .getByRole("button", { name: "Apply approved grant", exact: true })
+    .click();
+  await expect(page.locator("main")).toContainText(
+    "Application duty no longer held",
+  );
+  await expect(
+    page.getByLabel("Application reason", { exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator("main")).not.toContainText(g.input.capability);
 });

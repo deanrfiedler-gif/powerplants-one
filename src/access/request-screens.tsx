@@ -48,11 +48,16 @@ type Request = {
   version: number;
   created_at: string;
   decision_reason: string | null;
+  subject_id: string;
+  grant_id: string | null;
+  applied_at: string | null;
+  application_reason: string | null;
 };
 type Detail = {
   actor: Actor;
   request: Request;
   can_decide: boolean;
+  can_apply: boolean;
   history: {
     command: string;
     request_version: number;
@@ -68,7 +73,9 @@ const transport = <T,>(path: string, body?: unknown) =>
 const hidden = (error: unknown) =>
   isDenied(error) || (error as Failure)?.code === "WorkingCompanySelected";
 const accepts = (e: JournalEntry) =>
-  e.path === base || e.path === `${base}/${e.record_id}/decision`;
+  e.path === base ||
+  e.path === `${base}/${e.record_id}/decision` ||
+  e.path === `${base}/${e.record_id}/apply`;
 function useAccessCommand(actor: Actor, key: string) {
   return useRecoverableCommand({
     key: `ppo-access-request:${actor.workspace_id}:${actor.actor_id}:${key}`,
@@ -112,7 +119,10 @@ function Recovery({ command }: { command: Command }) {
           >
             Open saved request
           </Link>
-          . No grants changed.
+          .{" "}
+          {command.accepted.receipt.state === "Applied"
+            ? "The exact approved grant was installed. Check its dates and current access separately."
+            : "No grants changed."}
         </p>
       )}
     </>
@@ -122,8 +132,9 @@ function Boundary() {
   return (
     <p className="callout">
       Local synthetic requests only. Approval records a review; it does not make
-      access effective. Applying changes, administrative grants and hosted
-      provisioning are outside this increment.
+      access effective. Applying an Approved request is a separate controlled
+      step. Administrative grants and hosted provisioning remain outside this
+      workflow.
     </p>
   );
 }
@@ -182,9 +193,11 @@ export function AccessRequestsScreen() {
               setOffset(0);
             }}
             empty="All states"
-            options={["Submitted", "Approved", "Returned"].map((id) => ({
-              id,
-            }))}
+            options={["Submitted", "Approved", "Returned", "Applied"].map(
+              (id) => ({
+                id,
+              }),
+            )}
           />
           <div className="record-grid">
             {queue.data.items.map((r) => (
@@ -406,7 +419,7 @@ export function AccessRequestScreen({ id }: { id: string }) {
       <PageHeader
         eyebrow="Administration · AD-01"
         title="Access request"
-        description="Review the exact saved proposal and its independent decision."
+        description="Review the exact saved proposal, independent decision and controlled application."
       />
       <Boundary />
       <ReadState
@@ -465,9 +478,25 @@ function RequestDetail({
       <p>Request reason: {r.reason}</p>
       {r.state === "Approved" && (
         <p className="callout">
-          Approved for review only. No access is effective from this request;
-          applying it is not implemented.
+          Approved, awaiting separate application. This request has not
+          installed a grant. Application must happen before the proposed start
+          and rechecks the exact scope, people and current duties.
         </p>
+      )}
+      {r.state === "Applied" && (
+        <div className="callout">
+          <p>
+            Applied <Stamp value={r.applied_at} />. The approved grant was
+            installed with the exact dates above. Applied does not mean current
+            effective access; authentication, validity, working company and
+            business checks still apply.
+          </p>
+          <p className="narrative">Grant {r.grant_id}</p>
+          <p>Application reason: {r.application_reason}</p>
+          <Link href={`/admin/access/${r.subject_id}`}>
+            Inspect current person access
+          </Link>
+        </div>
       )}
       {r.state === "Returned" && (
         <p className="callout">
@@ -514,6 +543,43 @@ function RequestDetail({
                 hint="10–1000 characters. Approving does not change grants."
               />
               <Button type="submit">Record decision</Button>
+            </fieldset>
+          </form>
+        </ValidationFields>
+      )}
+      {d.can_apply && !command.accepted && (
+        <ValidationFields error={command.error}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              void command.send(
+                `${base}/${r.id}/apply`,
+                { expected_version: r.version, reason },
+                `/admin/access/requests/${r.id}`,
+                "Access application",
+                r.id,
+              );
+            }}
+          >
+            <fieldset
+              disabled={command.busy || !!command.pending || !command.ready}
+            >
+              <legend>Apply approved local grant</legend>
+              <p>
+                This installs one grant for the person, capability, scope and
+                dates shown above. You must differ from the reviewer and
+                affected person. No date is shifted or backdated.
+              </p>
+              <Field
+                name="reason"
+                label="Application reason"
+                value={reason}
+                onChange={setReason}
+                required
+                maxLength={1000}
+                hint="10–1000 characters. Explain why you are applying this exact approval."
+              />
+              <Button type="submit">Apply approved grant</Button>
             </fieldset>
           </form>
         </ValidationFields>

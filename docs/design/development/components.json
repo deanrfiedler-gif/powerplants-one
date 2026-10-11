@@ -121,8 +121,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request and independent decision",
-          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -444,8 +444,8 @@
         },
         {
           "id": "buttons-ad01-requests",
-          "expected": "Paired native request/review comparison across desktop and phone.",
-          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -1194,8 +1194,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request and independent decision",
-          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -1482,8 +1482,8 @@
         },
         {
           "id": "fields-ad01-requests",
-          "expected": "Paired native request/review comparison across desktop and phone.",
-          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -2308,8 +2308,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request and independent decision",
-          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2582,8 +2582,8 @@
         },
         {
           "id": "read-state-ad01-requests",
-          "expected": "Paired native request/review comparison across desktop and phone.",
-          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -2623,8 +2623,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request and independent decision",
-          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2780,8 +2780,8 @@
         },
         {
           "id": "status-ad01-requests",
-          "expected": "Paired native request/review comparison across desktop and phone.",
-          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
