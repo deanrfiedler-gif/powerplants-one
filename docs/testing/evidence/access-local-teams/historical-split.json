@@ -1,0 +1,8 @@
+{
+  "reason": "Initial filter also selected unrelated fresh-decision cases; remaining required historical cases split across independent disposable databases.",
+  "stopped_processes": [
+    21976,
+    27656
+  ],
+  "observed_at": "2026-10-11T23:44:45.2187305+10:00"
+}

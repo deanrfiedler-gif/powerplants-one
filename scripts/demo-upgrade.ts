@@ -246,7 +246,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // duty. Preserve exact hosted tester grants and all upgrade originals in the proof.
   // 0081 adds empty immutable Projects baseline evidence, no seed, identity or grant.
   // Preserve both AD-01 local duties and all prior hosted rows and receipts.
-  if (latestMigrationVersion !== 81) throw Error("Review the existing-demo upgrade for this release.");
+  // 0082 extends only local request closure and immutable evidence. It introduces
+  // no seed, user, grant or hosted command; preserve all existing runtime revocations.
+  // 0083 adds immutable local team/roster evidence and one creation duty for the existing
+  // local Systems fixture only. Team APIs refuse hosted mode; no tester user/grant
+  // changes or authority-table write permissions. Generic table grants add no API authority.
+  if (latestMigrationVersion !== 83) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

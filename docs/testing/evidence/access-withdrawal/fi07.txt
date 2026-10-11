@@ -1,0 +1,20 @@
+TAP version 13
+# Subtest: FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers
+not ok 1 - FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers
+  ---
+  duration_ms: 160367.4438
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\field-customer-response.test.ts:1:16283'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 120000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 0
+# cancelled 1
+# skipped 0
+# todo 0
+# duration_ms 214023.8668

@@ -98,6 +98,6 @@ ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edg
 PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties. Preserve originals. No hosted grants; owner acceptance/deployment separate.
 
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
-UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-request-application.md; apply separate from approval; teams pending.
+UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-local-teams.md; rosters grant no authority; editing/routing remain open.
 
 PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.

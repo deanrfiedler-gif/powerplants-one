@@ -160,3 +160,21 @@ The proposed role catalogue and person comparison reuse this control in the exis
 The local request queue/form and independent decision record reuse this control. Host fixture: tests/browser/access-requests.spec.ts, covering exact proposal, Return/Approved, unchanged-operation recovery and authority refusals. No isolated renderer/export change. See [request evidence](../../../testing/evidence/access-requests/README.md); owner/device/zoom/screen-reader review is pending.
 
 AD-01 application continuation: retain the existing request host and consumer bindings. The same fields/buttons/read state/status now cover Approved application, future-dated Applied outcome, immutable original recovery and denied-context clearing. Applied must not imply current effective access. See [application contract](../../../decisions/access-request-application.md); tests/browser/access-requests.spec.ts provides owning-page states. Shared exports/styles remain unchanged; paired owner/device review remains pending.
+
+AD-01 withdrawal continuation reuses the same request consumer bindings and host fixture. Secondary reasoned closure, Withdrawn outcome, retained approval, fresh-request handover and original recovery extend the existing states. See [withdrawal contract](../../../decisions/access-request-withdrawal.md); no shared export/style change or owner acceptance.
+
+## AD-01 team proposal consumers
+
+The existing role catalogue adds read-only retained team examples using the same disclosure, refresh and failure controls. Host fixtures in `tests/browser/access-roles.spec.ts` cover source/current identity separation, keyboard roster disclosure, actual person links and hidden stale rosters during loading or refusal. No shared exports, styles or isolated renderer change. The existing route consumer binding remains. See [team contract](../../../decisions/access-team-inspection.md) and [evidence](../../../testing/evidence/access-teams/README.md); owner/device/zoom/screen-reader review stays open.
+
+## Saved local team record inspection — 11 October 2026
+
+The [local team contract](../../../decisions/access-local-teams.md) adds immutable local records and initial rosters. `/admin/access/roles#saved-local-teams` reuses record-grid/card styles, Button, ReadState and Stamp. Retained team examples remain separately labelled. Incoming data is the local team API; outgoing inspection is the exact original roster and audit-linked creation history. There is no native creation/editing form or membership-derived authority.
+
+At desktop widths, use the existing card grid. At 390/320 px, stack cards and wrap UUIDs, names, purpose and reason using `narrative`. Keyboard Enter/Space opens/closes the selected roster; pagination and Refresh saved teams are shared buttons. Collection loading and unavailable reads hide saved cards; detail loading hides the previous roster while retaining the opener and its focus; denied inspection clears the protected catalogue. Identity activity is current, while the roster is the immutable initial record. No source join/expiry dates are copied into it.
+
+Host fixtures live in `tests/browser/access-local-teams.spec.ts`; exact-record/concurrency/rollback and upgrade fixtures live in `tests/database/access-local-teams.test.ts`. Evidence and source-bound desktop/phone captures: `docs/testing/evidence/access-local-teams/README.md`. This is a small existing-page refinement under ADR-0053 rule 6. An accepted native Figma image is missing; the retained AD-01 HTML is a workflow reference, not visual acceptance of this addition. Owner, screen-reader and physical-device acceptance remain open; no review fingerprint is granted.
+
+Actual implementation review: [six source-bound captures and observations](../../../testing/evidence/access-local-teams/review.md), source `039df64`, 1440/390/320 widths. No horizontal document overflow observed. Existing phone-title truncation, card height and vertical scrolling remain explicit limits; owner acceptance is still pending.
+
+Fresh roster details replace cached lead/creator labels on the selected card; closing retains the newer snapshot. Collection refresh/paging clears it. `access-local-teams.spec.ts` includes a distinct presentation fixture for this state; it does not claim a server identity change.

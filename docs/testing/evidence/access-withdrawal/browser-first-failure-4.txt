@@ -1,0 +1,297 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: access-roles.spec.ts >> AD-01 role comparison clears changed results and recovers from read failure without retaining denied context
+- Location: tests\browser\access-roles.spec.ts:170:1
+
+# Error details
+
+```
+Test timeout of 60000ms exceeded.
+```
+
+```
+Error: locator.click: Test timeout of 60000ms exceeded.
+Call log:
+  - waiting for getByRole('button', { name: 'Compare current grants' })
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to main content":
+    - /url: "#main"
+  - generic [ref=e2]:
+    - navigation "Mobile navigation" [ref=e3]:
+      - button "More" [ref=e4] [cursor=pointer]
+    - generic [ref=e10]:
+      - banner [ref=e11]:
+        - link "Powerplants One home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - img "Powerplants Australia" [ref=e13]
+        - navigation "Breadcrumb" [ref=e14]:
+          - button "Page hierarchy" [ref=e15] [cursor=pointer]
+          - list "Users and access / Compare proposed role bundle" [ref=e18]:
+            - listitem [ref=e19]:
+              - generic [ref=e20]: Compare proposed role bundle
+        - generic [ref=e22]:
+          - button "Design and build workspace" [ref=e23] [cursor=pointer]
+          - button "Open global search" [ref=e26] [cursor=pointer]
+          - button "Page guide" [ref=e30] [cursor=pointer]
+        - generic:
+          - generic:
+            - region "Local demonstration identity":
+              - dialog "Account" [ref=e34]:
+                - generic [ref=e35]:
+                  - heading "Account" [level=2] [ref=e36]
+                  - button "Close account" [ref=e37] [cursor=pointer]
+                - generic [ref=e40]:
+                  - generic [ref=e41]:
+                    - generic [aria-hidden] [ref=e42]: PPO
+                    - generic [ref=e43]:
+                      - strong [ref=e44]: Choose an identity
+                      - generic [ref=e45]: Powerplants One · Synthetic data only
+                  - region "Development preview" [ref=e46]:
+                    - heading "Development · Shell preview" [level=3] [ref=e47]
+                    - generic [ref=e48]: Preview workspace
+                    - combobox "Preview workspace" [ref=e49]:
+                      - option "Sales" [selected]
+                      - option "Estimating & quotation"
+                      - option "Engineering"
+                      - option "Projects"
+                      - option "Service operations"
+                      - option "Supply chain"
+                      - option "Finance"
+                    - paragraph [ref=e50]: Presentation preference only. Operational access remains unchanged.
+                    - button "Reset preview preference" [ref=e51] [cursor=pointer]
+                  - paragraph [ref=e52]: Choose a page from More to open its workspace. Sign-in and access permissions stay the same.
+                  - paragraph [ref=e53]: Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.
+                  - generic [ref=e54]:
+                    - generic [ref=e55]: Identity
+                    - combobox "Identity" [ref=e56]:
+                      - option "Coordinator" [selected]
+                      - option "Sales receiver"
+                      - option "Customer records reviewer"
+                      - option "Observer"
+                      - option "Site observer — Q01"
+                      - option "Finance preparer"
+                      - option "Finance reviewer"
+                      - option "Finance processor"
+                      - option "Finance reconciler"
+                      - option "Company B"
+                      - option "Workspace observer"
+                      - option "Alex Lee — materials author"
+                      - option "Sam Jordan — materials engineer"
+                      - option "Casey — technical reviewer"
+                      - option "Drew — material release authority"
+                      - option "Robin — Supply Chain coordinator"
+                      - option "Quinn — materials viewer"
+                      - option "Riley — drawing issue owner"
+                      - option "Jamie — Service coordinator"
+                      - option "Taylor — commissioning verifier"
+                      - option "Morgan — Equipment records"
+                      - option "Synthetic source evidence reviewer"
+                      - option "Synthetic Products reader"
+                      - option "Synthetic Products author"
+                      - option "Synthetic Products reviewer"
+                      - option "Synthetic Products publisher"
+                      - option "Synthetic quotation approver"
+                      - option "Synthetic quotation issuer"
+                      - option "Scheduling policy reviewer"
+                      - option "Scheduling policy publisher"
+                      - option "Other workspace"
+                      - option "Technician — assignment unavailable"
+                      - option "Morgan — assigned technician"
+                      - option "Riley — assigned technician"
+                      - option "Systems — no business access"
+                  - button "Use this identity" [ref=e57] [cursor=pointer]
+                - generic [ref=e58]: Powerplants One · r17
+      - main [ref=e60]:
+        - alert [active] [ref=e61]:
+          - strong [ref=e62]: The request could not be completed. Try again using the recovery controls, or retain the support reference if the problem continues.
+          - generic [ref=e63]: "Support reference: 8b6cbbf1-51fd-48c2-b7f4-1e14b3aa48d1"
+        - paragraph [ref=e64]: Select an identity to load its permitted business records.
+  - alert [ref=e65]
+```
+
+# Test source
+
+```ts
+  81  |     .click();
+  82  |   await expect(
+  83  |     page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("list", {
+  84  |       name: "Users and access / Proposed role bundles",
+  85  |       exact: true,
+  86  |     }),
+  87  |   ).toContainText("Proposed role bundles");
+  88  |   await expect(page.locator("main article.record-card")).toHaveCount(7);
+  89  |   const coordinator = page.locator("main article").filter({
+  90  |     has: page.getByRole("heading", {
+  91  |       name: "Service coordinator",
+  92  |       exact: true,
+  93  |     }),
+  94  |   });
+  95  |   await expect(coordinator).toContainText("added pack.check; removed none");
+  96  |   await expect(coordinator).toContainText(
+  97  |     "This draft has not replaced the proposal.",
+  98  |   );
+  99  |   const disclosure = coordinator.getByText("Capabilities in r02", {
+  100 |     exact: true,
+  101 |   });
+  102 |   expect((await disclosure.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  103 |   await disclosure.focus();
+  104 |   await page.keyboard.press("Enter");
+  105 |   await expect(
+  106 |     coordinator.getByRole("link", { name: "pack.check", exact: true }),
+  107 |   ).toBeVisible();
+  108 |   await page.getByRole("link", { name: "Back to users and access" }).click();
+  109 |   await page
+  110 |     .locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]')
+  111 |     .click();
+  112 |   await page
+  113 |     .getByRole("link", { name: "Compare proposed role bundle", exact: true })
+  114 |     .click();
+  115 |   await page
+  116 |     .getByLabel("Proposed bundle", { exact: true })
+  117 |     .selectOption("bundle-observer");
+  118 |   await page
+  119 |     .getByLabel("Site", { exact: true })
+  120 |     .selectOption("70000000-0000-4000-8000-000000000001");
+  121 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  122 |   await expect(
+  123 |     page.getByRole("heading", {
+  124 |       name: "1 of 1 capabilities permit this scope",
+  125 |     }),
+  126 |   ).toBeVisible();
+  127 |   await expect(
+  128 |     page.getByText(/Missing capabilities are not a recommendation/),
+  129 |   ).toBeVisible();
+  130 |   await page
+  131 |     .getByLabel("Site", { exact: true })
+  132 |     .selectOption("70000000-0000-4000-8000-000000000002");
+  133 |   await expect(page.locator("#comparison-result")).toHaveCount(0);
+  134 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  135 |   await expect(
+  136 |     page.getByRole("heading", {
+  137 |       name: "0 of 1 capabilities permit this scope",
+  138 |     }),
+  139 |   ).toBeVisible();
+  140 |   expect(
+  141 |     await page.evaluate(
+  142 |       () => document.documentElement.scrollWidth <= innerWidth,
+  143 |     ),
+  144 |   ).toBe(true);
+  145 |   await page
+  146 |     .getByRole("link", { name: "Explain shared.read", exact: true })
+  147 |     .click();
+  148 |   await expect(page.getByLabel("Capability key", { exact: true })).toHaveValue(
+  149 |     "shared.read",
+  150 |   );
+  151 |   await expect(page.getByLabel("Site", { exact: true })).toHaveValue(
+  152 |     "70000000-0000-4000-8000-000000000002",
+  153 |   );
+  154 |   await expect(
+  155 |     page.getByRole("heading", {
+  156 |       name: "Grant does not permit this scope",
+  157 |       exact: true,
+  158 |     }),
+  159 |   ).toHaveCount(0);
+  160 |   await page.getByRole("button", { name: "Check grant eligibility" }).click();
+  161 |   await expect(
+  162 |     page.getByRole("heading", {
+  163 |       name: "Grant does not permit this scope",
+  164 |       exact: true,
+  165 |     }),
+  166 |   ).toBeVisible();
+  167 |   expect(errors).toEqual([]);
+  168 | });
+  169 |
+  170 | test("AD-01 role comparison clears changed results and recovers from read failure without retaining denied context", async ({
+  171 |   page,
+  172 |   baseURL,
+  173 | }) => {
+  174 |   await browserFixtureCall(
+  175 |     page,
+  176 |     "local-session",
+  177 |     { profile: "systems" },
+  178 |     baseURL!,
+  179 |   );
+  180 |   await page.goto("/admin/access/30000000-0000-4000-8000-000000000005/roles");
+> 181 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+      |                                                                      ^ Error: locator.click: Test timeout of 60000ms exceeded.
+  182 |   await expect(page.locator("#comparison-result")).toContainText(
+  183 |     "of 13 capabilities",
+  184 |   );
+  185 |   await page.getByLabel("Source revision", { exact: true }).selectOption("r02");
+  186 |   await expect(page.locator("#comparison-result")).toHaveCount(0);
+  187 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  188 |   await expect(page.locator("#comparison-result")).toContainText(
+  189 |     "of 14 capabilities",
+  190 |   );
+  191 |   let failure: "Unavailable" | "Forbidden" | "WorkingCompanySelected" | null =
+  192 |     "Unavailable";
+  193 |   await page.route("**/api/v1/admin/access/*/roles?**", (route) =>
+  194 |     failure
+  195 |       ? route.fulfill({
+  196 |           status:
+  197 |             failure === "Forbidden"
+  198 |               ? 403
+  199 |               : failure === "WorkingCompanySelected"
+  200 |                 ? 409
+  201 |                 : 503,
+  202 |           contentType: "application/json",
+  203 |           body: JSON.stringify({
+  204 |             code: failure,
+  205 |             message: `Synthetic comparison ${failure}`,
+  206 |           }),
+  207 |         })
+  208 |       : route.continue(),
+  209 |   );
+  210 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  211 |   await expect(page.locator("main .business-error")).toContainText(
+  212 |     "Synthetic comparison Unavailable",
+  213 |   );
+  214 |   await expect(page.locator("#comparison-result")).toHaveCount(0);
+  215 |   failure = null;
+  216 |   await page
+  217 |     .getByRole("button", { name: "Retry loading", exact: true })
+  218 |     .click();
+  219 |   await expect(page.locator("#comparison-result")).toContainText(
+  220 |     "of 14 capabilities",
+  221 |   );
+  222 |   failure = "WorkingCompanySelected";
+  223 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  224 |   await expect(page.locator("main .business-error")).toContainText(
+  225 |     "WorkingCompanySelected",
+  226 |   );
+  227 |   await expect(
+  228 |     page.getByRole("heading", { name: "SYN Site observer", exact: true }),
+  229 |   ).toHaveCount(0);
+  230 |   await expect(page.getByLabel("Proposed bundle", { exact: true })).toHaveCount(
+  231 |     0,
+  232 |   );
+  233 |   failure = null;
+  234 |   await page
+  235 |     .getByRole("button", { name: "Retry loading", exact: true })
+  236 |     .click();
+  237 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  238 |   await expect(page.locator("#comparison-result")).toContainText(
+  239 |     "of 13 capabilities",
+  240 |   );
+  241 |   failure = "Forbidden";
+  242 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+  243 |   await expect(page.locator("main .business-error")).toContainText("Forbidden");
+  244 |   await expect(
+  245 |     page.getByRole("heading", { name: "SYN Site observer", exact: true }),
+  246 |   ).toHaveCount(0);
+  247 |   await expect(page.locator("#comparison-result")).toHaveCount(0);
+  248 | });
+  249 |
+```

@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: AD-01 role comparisons preserve the seven retained proposals and exact revision deltas
+ok 1 - AD-01 role comparisons preserve the seven retained proposals and exact revision deltas
+  ---
+  duration_ms: 20.5665
+  type: 'test'
+  ...
+# Subtest: AD-01 role routes retain the access destination with task-specific titles
+ok 2 - AD-01 role routes retain the access destination with task-specific titles
+  ---
+  duration_ms: 1.0337
+  type: 'test'
+  ...
+# Subtest: AD-01 team examples preserve source IDs, people, lead, dates and fixed example clock
+ok 3 - AD-01 team examples preserve source IDs, people, lead, dates and fixed example clock
+  ---
+  duration_ms: 22.7683
+  type: 'test'
+  ...
+# Subtest: every forward SQL migration is registered exactly once; recovery is not a forward migration
+ok 4 - every forward SQL migration is registered exactly once; recovery is not a forward migration
+  ---
+  duration_ms: 25.2245
+  type: 'test'
+  ...
+# Subtest: local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions
+ok 5 - local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions
+  ---
+  duration_ms: 13.0306
+  type: 'test'
+  ...
+# Subtest: duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid
+ok 6 - duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid
+  ---
+  duration_ms: 2.8736
+  type: 'test'
+  ...
+# Subtest: read-only navigation does not imply creation or elevate an identity
+ok 7 - read-only navigation does not imply creation or elevate an identity
+  ---
+  duration_ms: 6.7643
+  type: 'test'
+  ...
+# Subtest: nested pages resolve to their actual workspace instead of a remembered Sales selection
+ok 8 - nested pages resolve to their actual workspace instead of a remembered Sales selection
+  ---
+  duration_ms: 8.8271
+  type: 'test'
+  ...
+# Subtest: seven workspace preferences validate schema and retain r15 identifiers
+ok 9 - seven workspace preferences validate schema and retain r15 identifiers
+  ---
+  duration_ms: 2.5292
+  type: 'test'
+  ...
+# Subtest: More finds workspace names and existing page names, including former rail destinations
+ok 10 - More finds workspace names and existing page names, including former rail destinations
+  ---
+  duration_ms: 5.7214
+  type: 'test'
+  ...
+# Subtest: AU-08 the Service rail is grouped without reordering, and other rails stay flat
+ok 11 - AU-08 the Service rail is grouped without reordering, and other rails stay flat
+  ---
+  duration_ms: 3.9657
+  type: 'test'
+  ...
+# Subtest: NR-18 a working company narrows scoped checks for its own actor only, and only inside a request
+ok 12 - NR-18 a working company narrows scoped checks for its own actor only, and only inside a request
+  ---
+  duration_ms: 32.0413
+  type: 'test'
+  ...
+# Subtest: NR-18 a choice entered while resolving the identity reaches the rest of that request only
+ok 13 - NR-18 a choice entered while resolving the identity reaches the rest of that request only
+  ---
+  duration_ms: 10.1727
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3038.3565

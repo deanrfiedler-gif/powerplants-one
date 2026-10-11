@@ -1,0 +1,41 @@
+
+Running 30 tests using 1 worker
+
+(node:3312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-local-teams.spec.ts:17:1 › AD01 saved teams: real creation, lost response, reload recovery and native roster (7.7s)
+  ok  2 [desktop] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: fresh detail identity labels replace the earlier list presentation (2.6s)
+  ok  3 [desktop] › tests\browser\access-local-teams.spec.ts:146:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue (2.3s)
+  ok  4 [desktop] › tests\browser\access-local-teams.spec.ts:203:1 › AD01 saved teams: real HTTP authority, origin, strict input and private response boundaries (951ms)
+  ok  5 [desktop] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (4.0s)
+  ok  6 [desktop] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (5.1s)
+  ok  7 [desktop] › tests\browser\access-roles.spec.ts:174:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (4.1s)
+  ok  8 [desktop] › tests\browser\access-roles.spec.ts:254:1 › AD-01 team proposals retain example provenance and hand over only to actual local people (2.9s)
+  ok  9 [desktop] › tests\browser\access-roles.spec.ts:314:1 › AD-01 team refresh clears stale rosters on loading, unavailable and authority failures (3.6s)
+  ok 10 [desktop] › tests\browser\access-roles.spec.ts:381:1 › AD-01 team presentation separates inactive and unavailable local people from source examples (2.7s)
+(node:32612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [phone] › tests\browser\access-local-teams.spec.ts:17:1 › AD01 saved teams: real creation, lost response, reload recovery and native roster (6.0s)
+  ok 12 [phone] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: fresh detail identity labels replace the earlier list presentation (3.5s)
+  ok 13 [phone] › tests\browser\access-local-teams.spec.ts:146:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue (3.7s)
+  ok 14 [phone] › tests\browser\access-local-teams.spec.ts:203:1 › AD01 saved teams: real HTTP authority, origin, strict input and private response boundaries (2.2s)
+  ok 15 [phone] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (4.7s)
+  ok 16 [phone] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (3.6s)
+  ok 17 [phone] › tests\browser\access-roles.spec.ts:174:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (5.0s)
+  ok 18 [phone] › tests\browser\access-roles.spec.ts:254:1 › AD-01 team proposals retain example provenance and hand over only to actual local people (6.3s)
+  ok 19 [phone] › tests\browser\access-roles.spec.ts:314:1 › AD-01 team refresh clears stale rosters on loading, unavailable and authority failures (5.2s)
+  ok 20 [phone] › tests\browser\access-roles.spec.ts:381:1 › AD-01 team presentation separates inactive and unavailable local people from source examples (3.0s)
+(node:29984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [narrow] › tests\browser\access-local-teams.spec.ts:17:1 › AD01 saved teams: real creation, lost response, reload recovery and native roster (5.2s)
+  ok 22 [narrow] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: fresh detail identity labels replace the earlier list presentation (3.2s)
+  ok 23 [narrow] › tests\browser\access-local-teams.spec.ts:146:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue (3.2s)
+  ok 24 [narrow] › tests\browser\access-local-teams.spec.ts:203:1 › AD01 saved teams: real HTTP authority, origin, strict input and private response boundaries (1.2s)
+  ok 25 [narrow] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (5.7s)
+  ok 26 [narrow] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (5.4s)
+  ok 27 [narrow] › tests\browser\access-roles.spec.ts:174:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (3.9s)
+  ok 28 [narrow] › tests\browser\access-roles.spec.ts:254:1 › AD-01 team proposals retain example provenance and hand over only to actual local people (3.4s)
+  ok 29 [narrow] › tests\browser\access-roles.spec.ts:314:1 › AD-01 team refresh clears stale rosters on loading, unavailable and authority failures (4.2s)
+  ok 30 [narrow] › tests\browser\access-roles.spec.ts:381:1 › AD-01 team presentation separates inactive and unavailable local people from source examples (3.0s)
+
+  30 passed (2.3m)

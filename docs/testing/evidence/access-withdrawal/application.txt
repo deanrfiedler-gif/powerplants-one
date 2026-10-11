@@ -1,0 +1,101 @@
+TAP version 13
+# Subtest: AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; one exact duty and inert reseed
+ok 1 - AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; one exact duty and inert reseed
+  ---
+  duration_ms: 115074.7996
+  type: 'test'
+  ...
+# Subtest: AD01 application: exact grant, current duties, separation, concurrency and recovery
+    # Subtest: Company, Site and Workspace install exact future grants with linked original evidence
+    ok 1 - Company, Site and Workspace install exact future grants with linked original evidence
+      ---
+      duration_ms: 775.3752
+      type: 'test'
+      ...
+    # Subtest: read/propose/approve alone, hosted mode and other workspace cannot apply
+    ok 2 - read/propose/approve alone, hosted mode and other workspace cannot apply
+      ---
+      duration_ms: 120.5963
+      type: 'test'
+      ...
+    # Subtest: reviewer and affected person cannot execute even with explicit read/apply duties
+    ok 3 - reviewer and affected person cannot execute even with explicit read/apply duties
+      ---
+      duration_ms: 272.7378
+      type: 'test'
+      ...
+    # Subtest: current requester/reviewer duty and active identities are revalidated
+    ok 4 - current requester/reviewer duty and active identities are revalidated
+      ---
+      duration_ms: 295.4477
+      type: 'test'
+      ...
+    # Subtest: working company and changed payload fields refuse application
+    ok 5 - working company and changed payload fields refuse application
+      ---
+      duration_ms: 121.4675
+      type: 'test'
+      ...
+    # Subtest: Submitted and Returned are not applicable
+    ok 6 - Submitted and Returned are not applicable
+      ---
+      duration_ms: 125.1546
+      type: 'test'
+      ...
+    # Subtest: concurrent application and identical retry install once
+    ok 7 - concurrent application and identical retry install once
+      ---
+      duration_ms: 337.6967
+      type: 'test'
+      ...
+    # Subtest: late grant insertion and revocation before the application lock are observed
+    ok 8 - late grant insertion and revocation before the application lock are observed
+      ---
+      duration_ms: 273.895
+      type: 'test'
+      ...
+    # Subtest: past approved start is refused without shifting the date
+    ok 9 - past approved start is refused without shifting the date
+      ---
+      duration_ms: 2249.7165
+      type: 'test'
+      ...
+    # Subtest: late audit failure rolls back grant, request and receipt together
+    ok 10 - late audit failure rolls back grant, request and receipt together
+      ---
+      duration_ms: 236.5174
+      type: 'test'
+      ...
+    # Subtest: installed grant becomes eligible only at its original start and exact company; working company still narrows
+    ok 11 - installed grant becomes eligible only at its original start and exact company; working company still narrows
+      ---
+      duration_ms: 2247.4872
+      type: 'test'
+      ...
+    # Subtest: a forged grant change at audit time is rejected by the deferred exact-grant guard
+    ok 12 - a forged grant change at audit time is rejected by the deferred exact-grant guard
+      ---
+      duration_ms: 151.9474
+      type: 'test'
+      ...
+    # Subtest: direct transition without exact evidence fails and applied evidence cannot be rewritten
+    ok 13 - direct transition without exact evidence fails and applied evidence cannot be rewritten
+      ---
+      duration_ms: 160.0184
+      type: 'test'
+      ...
+    1..13
+ok 2 - AD01 application: exact grant, current duties, separation, concurrency and recovery
+  ---
+  duration_ms: 7380.8507
+  type: 'test'
+  ...
+1..2
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 130241.9187
