@@ -114,3 +114,7 @@ This adoption changes the integration build only. It does not amend ADR-0011, th
 ## Native integration evidence
 
 The [application integration record](job-pack-integration.md) and [handover](../delivery/job-pack-integration-handover.md) record I5 completion evidence and the adopted departures. Implementation does not amend the accepted reference or grant owner/device acceptance.
+
+## Figma design — accepted 12 October 2026
+
+Dean accepted a Figma design for the Job packs register and this record page, on the Reviews & approvals pattern and the shared record layout: [Job pack design (Figma)](job-pack-figma-design.md). It supplements this record. r02, r03 and their bytes are unchanged, and r03 stays the built baseline until a build implements the new design. Decisions D1–D10 stand; the new design replaces only D8-A's in-module breadcrumb with the single shell breadcrumb. It changes nothing in the pack snapshot, OUT-09, the commands or server permission filtering.

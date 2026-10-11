@@ -1,8 +1,12 @@
 # Current prototype status
 
-**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 12 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
+
+## Job pack design accepted — 12 October 2026
+
+Dean asked for the Job Pack page to be designed in Figma, "very detailed and professional". After a first version he asked whether it could be improved, approved Claude's six recommendations ("Proceed.") and accepted the result as the named version "Job pack — Pipedrive pattern, accepted": "Proceed with your recommendations." The [decision](decisions/job-pack-figma-design.md) covers both pages. The Job packs register becomes a grid grouped by visit day, showing each pack's exact state label, readiness, crew acknowledgement and dispatch hold. The record page puts its three views and nine-section contents in the secondary menu. It adds a "Dispatch held until" bar for BP-07 §8's three conditions, a collapsible status panel, one primary action by state, decision dialogs for Check, Return, Queue exact output and Withdraw, and a source-changed review. On the phone, the coordinator gets tabbed views and the technician gets the whole pack with an acknowledgement confirmation. It supplements the r03 [Job Pack design](decisions/job-pack-design.md) without changing its bytes, the pack snapshot, OUT-09 or any command. [Seven icon-free capture boards](reference/ui/service/job-pack-design-r01/README.md) are retained with hashes. Nothing is built: the register needs list-read additions, and whether a preparer may check their own revision is still open. No parent ID changes.
 
 ## GitHub Actions queue repair — 11 October 2026
 

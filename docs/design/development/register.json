@@ -6985,7 +6985,13 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-04.png",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-05.png",
         "docs/testing/evidence/job-pack-i5/application-1440.png",
-        "docs/testing/evidence/job-pack-i5/application-320.png"
+        "docs/testing/evidence/job-pack-i5/application-320.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-02-Desktop-Record-Page-and-Preparation-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-03-Desktop-History-Decisions-and-Issue-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -6994,7 +7000,8 @@
         "docs/delivery/job-pack-i6-handover.md",
         "docs/delivery/job-pack-i7-handover.md",
         "docs/decisions/job-pack-integration.md",
-        "docs/delivery/job-pack-integration-handover.md"
+        "docs/delivery/job-pack-integration-handover.md",
+        "docs/decisions/job-pack-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7022,10 +7029,13 @@
       "guide_key": "guide.page.service.packs.new",
       "design_path": "docs/design/development/pages/route-service-packs-new.md",
       "html_path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-02-Desktop-Record-Page-and-Preparation-r01.png"
+      ],
       "dependencies": [
         "docs/decisions/job-pack-integration.md",
-        "docs/delivery/job-pack-integration-handover.md"
+        "docs/delivery/job-pack-integration-handover.md",
+        "docs/decisions/job-pack-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7053,8 +7063,14 @@
       "guide_key": "guide.page.service.packs",
       "design_path": "docs/design/development/pages/route-service-packs.md",
       "html_path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-01-Desktop-Register-and-Selection-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/job-pack-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
