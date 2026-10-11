@@ -1,4 +1,15 @@
 import { test, expect } from "@playwright/test";
+import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
+
+test.beforeEach(async ({ page }) => {
+  await retainApiReadsForTeardown(page);
+});
+
+test.afterEach(async ({ page }) => {
+  // This suite runs after SH and immediately before ES-08 resets the schema.
+  // Preview navigation can abandon Engineering and My Work server reads too.
+  await finishApiReadsForTeardown(page);
+});
 test("responsive shell, keyboard focus, server save, read-only refusal and storage feasibility", async ({
   page,
 }, info) => {

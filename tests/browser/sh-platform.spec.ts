@@ -12,7 +12,8 @@ import {
   seedChangesScenario,
 } from "../helpers/engineering-changes";
 import type { SignIn } from "../helpers/engineering-materials";
-import { drainApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
+import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
+import { navigateToMyWork } from "../helpers/my-work-navigation";
 
 test.beforeEach(async ({ page, baseURL }) => {
   await retainApiReadsForTeardown(page);
@@ -29,9 +30,7 @@ test.afterEach(async ({ page }) => {
   // The following ES-08 suite resets the synthetic schema. Closing a page
   // can abort a response while its server read still holds database locks.
   // Finish routed fetches and pending page traffic before fixture teardown.
-  await page.waitForLoadState("networkidle");
-  await drainApiReadsForTeardown(page);
-  await page.unrouteAll({ behavior: "wait" });
+  await finishApiReadsForTeardown(page);
 });
 
 test("SH notification event, explicit read, source guard, grouped state and preferences persist", async ({
@@ -240,7 +239,10 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
       "/work/reviews",
       "/search?q=SYN",
     ]) {
-      await page.goto(path);
+      if (path === "/work" || path === "/work/actions")
+        await navigateToMyWork(page, path);
+      else
+        await page.goto(path);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       if (path.startsWith("/search"))
         await expect(page.getByText(/results on this page/)).toBeVisible();

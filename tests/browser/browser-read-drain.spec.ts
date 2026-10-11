@@ -2,9 +2,9 @@ import { test, expect } from "@playwright/test";
 import { createServer } from "node:http";
 import { once } from "node:events";
 import type { AddressInfo } from "node:net";
-import { drainApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
+import { drainApiReadsForTeardown, finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 
-for (const abandonment of ["navigation", "AbortController"] as const) {
+for (const abandonment of ["navigation", "AbortController", "teardown navigation"] as const) {
   test(`teardown waits for overlapping server reads abandoned by ${abandonment}`, async ({ page }) => {
     const started = Promise.withResolvers<void>();
     const releases = [Promise.withResolvers<void>(), Promise.withResolvers<void>()];
@@ -31,15 +31,14 @@ for (const abandonment of ["navigation", "AbortController"] as const) {
       await started.promise;
       if (abandonment === "navigation") {
         await page.goto(`${origin}/next`);
-      } else {
+      } else if (abandonment === "AbortController") {
         const failed = page.waitForEvent("requestfailed", request => request.url().includes("/api/v1/slow-read"));
         await page.evaluate(() => (window as unknown as { readAbort: AbortController }).readAbort.abort());
         await failed;
       }
       let drained = false;
       const drain = (async () => {
-        await drainApiReadsForTeardown(page);
-        await page.unrouteAll({ behavior: "wait" });
+        await finishApiReadsForTeardown(page);
         drained = true;
       })();
       // The server is explicitly held, so a completed drain here is a defect.
