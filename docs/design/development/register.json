@@ -8738,10 +8738,17 @@
       "guide_key": "guide.page.estimating.quotes",
       "design_path": "docs/design/development/pages/route-estimating-quotes.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-04-Phone-Quotation-List-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/quotations-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

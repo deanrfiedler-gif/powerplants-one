@@ -4,6 +4,18 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Quotations design accepted — 11 October 2026
+
+Dean chose Quotations (`/estimating/quotes`) as the next page to design in Figma and accepted it as the named version "Quotations — Pipedrive pattern, accepted": "I am happy to proceed based on all of your recommendations." The [decision](decisions/quotations-design.md) applies the Reviews & approvals pattern. Each row is one quotation with its latest revision and a stage derived only from recorded ES-05, ES-06 and ES-07 facts; there is no validity column, because validity is Not configured. Clicking a quotation opens a record window with the exact revision's lifecycle; a selection offers only Open in sequence and Export list. "My quotations" means quotations you own, and quotation approvals appear both here and in Reviews & approvals. [Five icon-free captures](reference/ui/estimating/quotations-design-r01/README.md) are retained with hashes. Nothing is built: the page needs a new quotation-level read, which has its own open questions. No parent ID changes.
+
+## Reviews & approvals design accepted — 11 October 2026
+
+Dean designed the reserved Estimating slot `estimate-reviews` in Figma, following the patterns of the Pipedrive CRM he uses, and accepted it as the named version "Reviews & approvals — Pipedrive pattern, accepted". The [decision](decisions/estimate-reviews-design.md) records his decisions in his words, the conformance declaration and ten departures from the adopted shell. The departures are a labelled rail that still collapses to icons, a flush secondary menu that collapses to a strip, a More slide-out, a full-width grid register with fixed checkbox and settings columns, record windows that overlap the register, phone list rows and an icons-only phone tab bar. [Seven icon-free captures](reference/ui/estimating/reviews-approvals-design-r01/README.md) are retained with hashes: the first use of ADR-0053's capture rule. Nothing is built: the route, permission, capability and the shell rollout to other pages need their own decisions. No parent ID changes.
+
+## Page design tooling revisited — 11 October 2026
+
+Dean compared a Figma trial with Claude Design boards, using a proposed Reviews & approvals page for the reserved Estimating slot. He judged Figma faster to get right, easier to refine and better to click through. [ADR-0053](decisions/ADR-0053-figma-page-design.md) records his decision: pages are now designed in Figma, Git stays the authority, and Claude Design is retired for new work. Existing boards and the design system artifact remain as history, and ADR-0051's rules carry over with Figma in place of boards. The trial file becomes the working file, which Dean renamed "PPO - Design". It holds Font Awesome Pro artwork, so it stays private and its link stays out of this repository. Evidence for a Figma design is a named Figma version and a retained capture with the icons replaced by placeholders. The Reviews & approvals page remains a synthetic proposal: not built and not accepted. No application code, page, scope or parent ID changes, and no visual review is implied.
+
 ## Current PR completion — 11 October 2026
 
 Dean authorised fixing failed checks and merging ready implementation PRs, and confirmed that unfinished backup PRs #404–#408 stay separate. The `pr-fixes-20261011` session owns this integration write. PR #400 joins the shared register with the local-host opt-in (#401), Customers startup/diagnostics (#391), asset evidence (#402), network-calibration experiment (#403) and its subsequent CI counter-parser repair and source-bound measurement evidence (#409), preserving their commit ancestry. The STATUS conflict retains both integration and investigation records. PR #391 merged at its checked `99a0e99` head as main `1842708`, also merging #402 by ancestry. The later #409 head `f23aa8f` is included here; fresh final combined-head CI must pass before the remaining merges. No deployment is claimed.
@@ -75,7 +87,7 @@ Dean then approved a design kit, adding three rules to ADR-0051:
 
 Group 1 is published as design system version 9: twelve shared parts captured from `main@ed3ccb8`, with the app's own 385 CSS rules for them. [`scripts/design-system/`](../scripts/design-system/README.md) regenerates the kit.
 
-Group 2's references are approved. The register table, context strip, inspection panel, record cards and dialog will each be built as a shared app component in a small PR, and page templates follow. The capture also corrected the design system's page text to the app's effective 14/1.45. It found an Estimating-only override of the shared header. Nothing in the app changed.
+Group 2's references are approved. The register table, context strip, inspection panel, record cards and dialog will each be built as a shared app component in a small PR, and page templates follow. The capture also corrected the design system's page text to the app's effective 14/1.45. It found an Estimating-only override of the shared header. Nothing in the app changed. On 11 October ADR-0053 replaced the drawing tool (above). Group 2 continues in the app, and each part is then drawn as a Figma component, not added to the Claude Design kit.
 
 ## PT-30 integration rehearsal — 10 October 2026
 
@@ -255,6 +267,10 @@ The authorised PT-18 continuation adds regression proof on unchanged main `184b9
 
 The authorised backend continuation runs independently from main `184b933` alongside Claude's UI work and the separate job-pack PR #378. Thirteen storage-time access failures were reproduced for Service issued/generated HTML/PDF, the issued manifest and Finance evidence; three existing context rechecks now pass all sixteen focused HTTP scenarios, including unchanged-original recovery. [Decision](decisions/report-finance-download-access.md), [execution evidence](testing/evidence/report-finance-download-access/README.md). No UI, schema, grant, dependency or integration change; code delivery and synthetic verification remain separate from merge/deployment, independent review, full PT-01/18/23/29 coverage and owner-led PT-30.
 
-## PR check repairs — 11 October 2026
+## Current PR repair and integration — 11 October 2026
+
+Dean authorised fixing and merging the open PRs. The `pr-repairs-oct11` session owns this integration write. AD-01 CI exposes a stale zero-grant Systems assertion; the Service/Finance denial and unchanged-effect checks remain required. The LC-12 and LC-13 request-upgrade checks now split the upgraded ledger at the exact saved original length and still assert every explicit added version; this removes stale negative slice counts without discarding historical bytes or timestamps. Current-head CI is the merge gate. Backup PRs #404–#408 remain separate.
+
+## Earlier PR check repairs — 11 October 2026
 
 Dean's subsequent instruction authorises fixing failed checks and merging ready PRs. The `pr-fixes-20261011` session owns this integration write. PRs #400 and #401 fail the SC-07 phone identity-remount assertion because the test compares a populated week with the first single-day response. Both receive the bounded request-selection repair from `3b4ed1a`, whose [four-case diagnostic replay passed](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38099171363/job/114351326205). It retains exact dates, current identity, denial and rendered-state assertions. Checks on each updated PR remain the merge gate; the prior replay does not establish their combined result. This is test correlation only, with no runtime or acceptance change. Dean confirmed that unfinished backup PRs #404–#408 remain separate.

@@ -725,6 +725,19 @@ test("PT-01 joined role, scope, projection, export and approval matrix", async (
           [q.q.report.id, q.id],
         );
       const before = await snapshot();
+      // AD-01 adds explicit administration duties. Those grants must survive
+      // denied business approvals without granting Service or Finance authority.
+      const systemGrants = () =>
+        rows(
+          "SELECT * FROM ppo.permission_grants WHERE user_id=$1 ORDER BY id",
+          [sessions.systems.principal.actor_id],
+        );
+      const grantsBefore = await systemGrants();
+      assert.ok(
+        grantsBefore.every((grant) =>
+          String(grant.capability).startsWith("admin.access."),
+        ),
+      );
       const [revision] = await rows(
         "SELECT * FROM ppo.finance_revisions WHERE id=$1",
         [handoff.current_revision_id],
@@ -769,15 +782,7 @@ test("PT-01 joined role, scope, projection, export and approval matrix", async (
         )[0].n,
         0,
       );
-      assert.equal(
-        (
-          await rows(
-            "SELECT count(*)::int n FROM ppo.permission_grants WHERE user_id=$1",
-            [sessions.systems.principal.actor_id],
-          )
-        )[0].n,
-        0,
-      );
+      assert.deepEqual(await systemGrants(), grantsBefore);
     },
   );
 

@@ -55,3 +55,9 @@ First read-only AD-01 increment. Roles, teams, mutations, campaign attestations 
 ## CI menu assertion correction — 11 October 2026
 
 PR #410 at `7ef617f` reports a [CRM header/board failure](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38106719213/job/114373694842): the retained shell fixture now includes the AD-01 destination, but its test still expects 28 links and 29 total destinations. Preserve all r17 bytes and geometry assertions; expect 29 links / 30 destinations including Help, and assert the exact Users and access link. The focused retained-r17 shell comparison passes locally after that correction ([raw result](ci-menu-correction.txt), Chrome 155, desktop). This changes test expectations only. The full rerun and other checks remain separate.
+
+## Integrated PR repair — 11 October 2026
+
+Dean authorised repairing and merging the open PRs. CI at `1556f6d` failed the PT-01 matrix because the old assertion required Systems to have zero grants after the new seed explicitly gave it `admin.access.read` ([original failure](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38115560966/job/114399646337)). The actual Service/Finance HTTP denials and no-effect assertions passed before this stale count failed.
+
+The repaired assertion permits only the administrative access family in this fixture, snapshots every Systems grant and requires those exact rows after all denied approvals. It retains all HTTP denial, Service/Finance snapshot, operation-receipt and outbox checks. No runtime permission, seed or migration changes. Current-head CI and local replay results remain separate from the earlier source-bound evidence; independent review and owner acceptance stay open.
