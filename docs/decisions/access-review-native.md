@@ -61,3 +61,7 @@ The [application decision](access-request-application.md) adds a separate Worksp
 ## Requester withdrawal continuation — 11 October 2026
 
 The [withdrawal contract](access-request-withdrawal.md) adds reasoned closure of un-applied Submitted/Approved requests by the original requester under current read/propose authority. Original proposal/approval and installed access remain unchanged. A fresh proposal needs fresh independent review. Earlier held-request boundaries describe their source increments; grant revocation/editing, teams, campaigns and operational D-020 remain open.
+
+## Proposed team inspection continuation — 11 October 2026
+
+The [team contract](access-team-inspection.md) extends the existing role catalogue with exact retained team examples and separately checked current local identity links. No current memberships, team-lead authority or review routing are inferred. Source-only identities stay unlinked. Persisted teams and campaigns remain receiving work; D-020 and owner acceptance remain open.

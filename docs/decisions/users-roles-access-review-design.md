@@ -142,3 +142,7 @@ The receiving plan now has bounded native inspection, capability/role comparison
 ## Requester withdrawal continuation — 11 October 2026
 
 The [withdrawal contract](access-request-withdrawal.md) adds reasoned closure of un-applied Submitted/Approved requests by the original requester under current read/propose authority. Original proposal/approval and installed access remain unchanged. A fresh proposal needs fresh independent review. Earlier held-request boundaries describe their source increments; grant revocation/editing, teams, campaigns and operational D-020 remain open.
+
+## Native team proposal inspection — 11 October 2026
+
+The [team contract](access-team-inspection.md) exposes the two retained examples in the native role catalogue with explicit source names/dates and separately resolved local workspace identities. It implements inspection only. Canonical membership, routing, team-lead preview, attestations and operational D-020 remain open; membership grants no access, and later review-origin requests must preserve attester/reviewer independence.

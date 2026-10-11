@@ -13094,13 +13094,14 @@
       "title": "Proposed role bundles",
       "kind": "route",
       "module": "AD",
-      "summary": "Read-only retained role proposals and exact company/site comparison; no assignment or access mutation.",
+      "summary": "Retained role and team proposals with current local identity links; no assignment, membership, routing or access mutation.",
       "path": "/admin/access/roles",
       "source_paths": [
         "src/app/(business)/admin/access/roles/page.tsx",
         "src/access/role-screens.tsx",
         "src/access/service.ts",
-        "src/access/roles.ts"
+        "src/access/roles.ts",
+        "src/access/teams.ts"
       ],
       "guide_key": "guide.route-admin-access-roles",
       "design_path": "docs/design/development/pages/route-admin-access-roles.md",
@@ -13115,11 +13116,12 @@
         "src/platform/permissions.ts",
         "docs/design/access-review/model.js",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-team-inspection.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "22 AD-01 database, 24 compiled desktop/phone browser and 18 source/navigation unit checks pass locally; see role comparison ledger. CI and owner review separate.",
+      "functional_status": "Team inspection validation in progress; prior role comparison evidence remains separate. No owner review or deployment inferred.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

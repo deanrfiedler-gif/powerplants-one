@@ -117,7 +117,7 @@
         {
           "id": "ad01-role-host",
           "label": "Proposed-role comparison host",
-          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer. Team proposal fixtures in the same host cover keyboard roster disclosure, exact source/current identity separation, person links, loading/denial clearing and retry. No isolated renderer."
         },
         {
           "id": "ad01-request-host",
@@ -437,7 +437,7 @@
         {
           "id": "buttons-ad01-roles",
           "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
-          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
+          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending. Team examples extend existing cards/disclosures under ADR-0053 rule 6; canonical membership and routing remain open.",
           "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -2304,7 +2304,7 @@
         {
           "id": "ad01-role-host",
           "label": "Proposed-role comparison host",
-          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer. Team proposal fixtures in the same host cover keyboard roster disclosure, exact source/current identity separation, person links, loading/denial clearing and retry. No isolated renderer."
         },
         {
           "id": "ad01-request-host",
@@ -2575,7 +2575,7 @@
         {
           "id": "read-state-ad01-roles",
           "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
-          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
+          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending. Team examples extend existing cards/disclosures under ADR-0053 rule 6; canonical membership and routing remain open.",
           "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

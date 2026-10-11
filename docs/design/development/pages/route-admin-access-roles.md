@@ -25,3 +25,12 @@ Proposed/Draft never means adopted. Inactive, future, expired, unrelated-company
 ## Evidence and open review
 
 [Execution ledger](../../../testing/evidence/access-roles/README.md) separates functional proof, implementation captures and reference observations. Accepted native mockup images are missing. Owner/device/zoom/screen-reader acceptance and deployment remain pending. No review fingerprint is assigned by implementation.
+
+
+## Proposed team inspection continuation
+
+The existing card catalogue includes the exact Service coordination and Finance handoff proposals from the retained model, at its fixed 17 September 2026 example clock. Show the proposed lead and a keyboard-operable Example roster disclosure. Preserve source names and date text, alongside separately labelled current local identity names and active/inactive state. Do not infer live membership or authority. Design-only and unavailable local identities have no person link; hosted identities never resolve behind retained IDs. Exact current local links hand over to independently checked Person access.
+
+This small existing-page refinement uses ADR-0053 rule 6. The same r20 Register / worklist, grid, disclosure, shared Button/ReadState, target sizes and wrap rules apply at 1440/390/320 widths. No new layout, page, shared export or Figma design is adopted. Loading/error/refusal hides both role and team cards; Refresh proposals rechecks current inspection authority. The retained design's team-lead preview and routing remain unimplemented. Persisted memberships, campaigns and D-020 remain open.
+
+[Team contract](../../../decisions/access-team-inspection.md) and [execution ledger](../../../testing/evidence/access-teams/README.md) preserve source/proof boundaries. Accepted native images are still missing; implementation captures are observations only, with no owner review fingerprint assigned.

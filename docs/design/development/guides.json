@@ -75318,7 +75318,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native read-only proposed-role inspection and comparison",
+      "content_mode": "Native read-only role and team proposal inspection",
       "source_commit": "27863308e52fb35a78f34f43eb051194c34b06ba",
       "related_entry_keys": [
         "scope:AD-01",
@@ -75331,7 +75331,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Inspect seven retained business/approval role proposals, including exact source revisions and capability lists."
+            "Inspect seven retained business/approval role proposals, including exact source revisions and capability lists.",
+            "Also inspect the two retained team examples without treating their rosters as saved memberships."
           ],
           "steps": [],
           "headers": [],
@@ -75351,7 +75352,8 @@
           "section_id": "quick-start",
           "title": "Inspect proposed roles",
           "paragraphs": [
-            "From Users and access, select Browse proposed role bundles. Open Capabilities in r01 or r02 for the selected proposal."
+            "From Users and access, select Browse proposed role bundles. Open Capabilities in r01 or r02 for the selected proposal.",
+            "Select Inspect proposed teams, then open Example roster for the team. The proposed lead appears separately."
           ],
           "steps": [],
           "headers": [],
@@ -75361,7 +75363,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Each card identifies the proposal family, source revision/state, proposed grant scopes and capabilities. Service coordinator r02 is Draft and adds pack.check; it has not replaced r01."
+            "Each card identifies the proposal family, source revision/state, proposed grant scopes and capabilities. Service coordinator r02 is Draft and adds pack.check; it has not replaced r01.",
+            "The team source clock is fixed at 17 September 2026. Source example names/dates are separate from current local identity names and activity; no current membership status is calculated."
           ],
           "steps": [],
           "headers": [],
@@ -75381,7 +75384,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Inspect the exact capability key and plain-English description. A capability link opens its actual recorded grant holders. Use the people directory to open a person, then Compare proposed role bundle."
+            "Inspect the exact capability key and plain-English description. A capability link opens its actual recorded grant holders. Use the people directory to open a person, then Compare proposed role bundle.",
+            "Follow a current local identity link to Person access for a fresh inspection. A design-only or unavailable identity has no link. A lead proposal gives no review or grant authority."
           ],
           "steps": [],
           "headers": [],
@@ -75391,7 +75395,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "No role is assigned, no review is recorded and no grant changes. A capability link hands over to current grant inspection; a person comparison requires its own explicit request."
+            "No role is assigned, no review is recorded and no grant changes. A capability link hands over to current grant inspection; a person comparison requires its own explicit request.",
+            "Teams neither grant access nor route reviews. Persisted membership and campaigns remain subsequent work."
           ],
           "steps": [],
           "headers": [],
@@ -75401,7 +75406,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Proposed and Draft describe design proposals. They never mean Approved or Adopted. Loading and failure hide prior catalogue cards; Retry or Refresh proposed bundles rechecks authority."
+            "Proposed and Draft describe design proposals. They never mean Approved or Adopted. Loading and failure hide prior catalogue cards; Retry or Refresh proposals rechecks authority."
           ],
           "steps": [],
           "headers": [],
@@ -75411,7 +75416,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Service coordinator r01 lists 13 capabilities. Draft r02 lists 14, adding pack.check without removing a capability. That proposal difference does not change any person's access."
+            "Service coordinator r01 lists 13 capabilities. Draft r02 lists 14, adding pack.check without removing a capability. That proposal difference does not change any person's access.",
+            "Service coordination retains the design-only lead and former coordinator. The former coordinator example ended 12 September 2026. This source history does not create application identities."
           ],
           "steps": [],
           "headers": [],
@@ -75441,7 +75447,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides."
+            "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides.",
+            "Team boundary and provenance: docs/decisions/access-team-inspection.md; implementation evidence: docs/testing/evidence/access-teams/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75459,7 +75466,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-roles/README.md; owner review pending"
+      "runtime_evidence": "See docs/testing/evidence/access-teams/README.md and prior role ledger; owner review pending"
     },
     {
       "guide_key": "guide.route-admin-access-requests-id",

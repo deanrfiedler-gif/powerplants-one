@@ -2391,3 +2391,7 @@ The [application contract](../decisions/access-request-application.md) continues
 ## AD-01 withdrawal of un-applied requests
 
 The [withdrawal contract](../decisions/access-request-withdrawal.md) closes obsolete Submitted or Approved requests without changing installed access or reinterpreting their independent decision. Current original-requester authority, exact-version concurrency and immutable audit/recovery evidence govern the synthetic command. A fresh proposal uses fresh review. NFR-01–NFR-12, CRM-08, FIN-06 and D-020 retain their scope; no hosted or operational authority is added.
+
+## AD-01 retained team proposal inspection
+
+The [team contract](../decisions/access-team-inspection.md) adds read-only inspection of source team examples and current local identity links. Membership and lead labels confer no access or review authority. Source dates remain historical examples; persisted teams and campaigns remain open. Preserve all existing parent IDs, NFR-01–NFR-12, CRM-08, FIN-06 and unresolved operational D-020.

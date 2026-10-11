@@ -30,6 +30,10 @@ Dean authorised fixing failed checks and merging ready implementation PRs, and c
 
 The SC-07 planner test repair selects the intended responsive date window through the identity remount. Exact query, current-identity, denial and visible-state assertions remain. This integration authorisation supersedes the earlier draft-only disposition for these code contributions; the three-second performance target, original 503 attribution, full PT-27 and owner/device acceptance remain open. The checkpoints below retain their original evidence boundaries.
 
+## AD-01 proposed team inspection — 11 October 2026
+
+Dean's continuation instruction starts `codex/ad01-team-inspection` from #423 at `988a734`, stacked on #417 at `2579bd9`. Inspection found no feedback or failing checks; #423 was still running/queued and #417 checks were cancelled. The [team contract](decisions/access-team-inspection.md) exposes two exact retained proposals in the existing role catalogue, with current local identities resolved separately. Design-only and unavailable identities stay unlinked; no membership, review routing or grant authority is inferred. No migration, seed, capability, hosted change or deployment. [Evidence](testing/evidence/access-teams/README.md) records actual verification; persisted teams, campaigns, operational D-020 and owner acceptance remain open.
+
 ## AD-01 requester withdrawal — 11 October 2026
 
 Dean authorised the next bounded step. Branch `codex/ad01-request-withdrawal` continues PR #417 at `2e69c4c` after inspecting its current CI and dependencies. The [withdrawal contract](decisions/access-request-withdrawal.md) permits only the original requester with current read/propose authority to close Submitted or Approved requests. Proposal and decision stay immutable; installed access is unchanged. Migration 0081 adds no seed, capability, grant or user. [Execution evidence](testing/evidence/access-withdrawal/README.md) records verification and initial failures separately. Fresh proposals require fresh independent review; teams, campaigns, grant revocation/editing and operational D-020 remain open. Owner acceptance and deployment are separate.
