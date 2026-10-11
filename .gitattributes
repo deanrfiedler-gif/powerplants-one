@@ -51,3 +51,6 @@ docs/testing/evidence/report-photo-inspection/*.txt text eol=lf
 docs/testing/evidence/customer-loading-diagnosis/*.txt text eol=lf
 docs/testing/evidence/customer-server-diagnosis/*.txt text eol=lf
 docs/testing/evidence/customer-directory-prefetch/*.txt text eol=lf
+
+# AD-01 request evidence hashes identify these exact text bytes.
+docs/testing/evidence/access-requests/*.txt text eol=lf

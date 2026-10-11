@@ -1,0 +1,9 @@
+✔ LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance (48729.9339ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66445.1663

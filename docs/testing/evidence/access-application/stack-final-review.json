@@ -1,0 +1,227 @@
+{
+  "observed_at": "2026-10-11T08:36:56.104881+00:00",
+  "scope": "Final pre-publication checkpoint; #417 bff2325 predates the final test corrections and evidence commit. Publication-head CI remains separate.",
+  "prs": [
+    {
+      "number": 410,
+      "title": "AD-01: add native read-only users and access inspection",
+      "head": "1556f6df4228294d06694766cadae195780239e8",
+      "head_branch": "codex/ad01-access-review",
+      "base_branch": "main",
+      "state": "OPEN",
+      "draft": false,
+      "reviews": [],
+      "comments": [],
+      "inline_comments": [],
+      "check_counts": {
+        "SUCCESS": 53,
+        "FAILURE": 2,
+        "SKIPPED": 1
+      },
+      "failed_checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T07:48:40Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38115560966/job/114399646337",
+          "name": "P01\u2013P11 database-3 proof",
+          "startedAt": "2026-10-11T06:41:18Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T08:24:12Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38115560966/job/114423148095",
+          "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+          "startedAt": "2026-10-11T08:24:10Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        }
+      ]
+    },
+    {
+      "number": 412,
+      "title": "Codex/ad01 capability catalogue",
+      "head": "325789f967271fd866f890297c0e88c18687ec59",
+      "head_branch": "codex/ad01-capability-catalogue",
+      "base_branch": "main",
+      "state": "OPEN",
+      "draft": false,
+      "reviews": [],
+      "comments": [],
+      "inline_comments": [],
+      "check_counts": {
+        "SUCCESS": 101,
+        "IN_PROGRESS": 3,
+        "FAILURE": 2,
+        "QUEUED": 1,
+        "SKIPPED": 2
+      },
+      "failed_checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T07:50:43Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116119213/job/114401234087",
+          "name": "P01\u2013P11 database-3 proof",
+          "startedAt": "2026-10-11T06:50:07Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T08:35:54Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116119213/job/114424516919",
+          "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+          "startedAt": "2026-10-11T08:35:51Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        }
+      ]
+    },
+    {
+      "number": 413,
+      "title": "AD-01: add capability catalogue and grant holder inspection",
+      "head": "325789f967271fd866f890297c0e88c18687ec59",
+      "head_branch": "codex/ad01-capability-catalogue",
+      "base_branch": "codex/ad01-access-review",
+      "state": "OPEN",
+      "draft": false,
+      "reviews": [],
+      "comments": [],
+      "inline_comments": [],
+      "check_counts": {
+        "SUCCESS": 101,
+        "IN_PROGRESS": 3,
+        "FAILURE": 2,
+        "QUEUED": 1,
+        "SKIPPED": 2
+      },
+      "failed_checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T07:50:43Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116119213/job/114401234087",
+          "name": "P01\u2013P11 database-3 proof",
+          "startedAt": "2026-10-11T06:50:07Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T08:35:54Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116119213/job/114424516919",
+          "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+          "startedAt": "2026-10-11T08:35:51Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        }
+      ]
+    },
+    {
+      "number": 414,
+      "title": "AD-01: compare proposed role bundles at an exact company or site",
+      "head": "da91bb9334b3408c0ad8969da58173edcffe523a",
+      "head_branch": "codex/ad01-role-comparison",
+      "base_branch": "codex/ad01-capability-catalogue",
+      "state": "OPEN",
+      "draft": true,
+      "reviews": [],
+      "comments": [],
+      "inline_comments": [],
+      "check_counts": {
+        "SUCCESS": 47,
+        "QUEUED": 1,
+        "IN_PROGRESS": 2,
+        "FAILURE": 1,
+        "SKIPPED": 1
+      },
+      "failed_checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T08:07:57Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116246589/job/114401597134",
+          "name": "P01\u2013P11 database-3 proof",
+          "startedAt": "2026-10-11T07:17:11Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        }
+      ]
+    },
+    {
+      "number": 415,
+      "title": "AD-01: persist access requests and independent review decisions",
+      "head": "bb1f2673b6ca5d5d195a7b05f8295fbb5e292e0b",
+      "head_branch": "codex/ad01-access-requests",
+      "base_branch": "codex/ad01-role-comparison",
+      "state": "OPEN",
+      "draft": true,
+      "reviews": [],
+      "comments": [],
+      "inline_comments": [],
+      "check_counts": {
+        "SUCCESS": 45,
+        "FAILURE": 3,
+        "QUEUED": 6,
+        "SKIPPED": 1
+      },
+      "failed_checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T08:10:59Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116399290/job/114402025253",
+          "name": "P01\u2013P11 database-2 proof",
+          "startedAt": "2026-10-11T07:35:24Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T08:07:58Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116399290/job/114402025195",
+          "name": "P01\u2013P11 database-3 proof",
+          "startedAt": "2026-10-11T07:16:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-11T07:47:55Z",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116399290/job/114402025066",
+          "name": "P01\u2013P11 database-4 proof",
+          "startedAt": "2026-10-11T07:10:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Application assurance"
+        }
+      ]
+    },
+    {
+      "number": 417,
+      "title": "AD-01: apply independently approved local access requests",
+      "head": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "head_branch": "codex/ad01-approved-application",
+      "base_branch": "codex/ad01-access-requests",
+      "state": "OPEN",
+      "draft": true,
+      "reviews": [],
+      "comments": [],
+      "inline_comments": [],
+      "check_counts": {
+        "QUEUED": 15,
+        "IN_PROGRESS": 8,
+        "SUCCESS": 29,
+        "SKIPPED": 1
+      },
+      "failed_checks": []
+    }
+  ]
+}

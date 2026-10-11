@@ -1,0 +1,26 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (21818.6017ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (21.2904ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (16.0473ms)
+  ✔ grant eligibility differentiates company and exact site scope (17.4344ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (20.7512ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (5.7017ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (76.6356ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (1090.2915ms)
+  ✔ reads preserve every identity, grant and audit row (97.5467ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (1362.7196ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (44.9261ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (23.8949ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (9.9963ms)
+  ✔ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (4583.0527ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (100.6ms)
+✔ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (4769.5074ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37304.3989

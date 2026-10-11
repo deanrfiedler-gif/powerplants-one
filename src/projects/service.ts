@@ -277,6 +277,8 @@ export async function authoriseProjectReceipt(
   command: string,
 ) {
   const row = await projectRow(c, p, id);
+  if (command === "RecordProjectBaseline" && row.coordinator_id !== p.actor_id)
+    throw unavailable();
   if (
     !(await hasPermission(
       c,

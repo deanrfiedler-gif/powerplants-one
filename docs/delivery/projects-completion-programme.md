@@ -73,3 +73,6 @@ The Projects rail already matches the requested eight-item order. Projects, Prog
 | A8 | Not performed | Evidence-led PJ-09 refinement, consolidated regressions and fresh family captures |
 
 Actual command outcomes belong in the [A0 evidence record](../testing/evidence/projects-completion/README.md). Final family acceptance is outstanding. No fresh application screenshot is claimed for a documentation-only reconciliation.
+## Audit follow-up checkpoint — 11 October 2026
+
+The [derived gap register](crm-projects-audit-gaps.md) reconciles the supplied Pipedrive/Wrike audits with existing code and scope. First authorised slice: PJ-03 baseline recording and forecast/dependency review, per [decision](../decisions/project-schedule-baselines.md) and [verification](../testing/evidence/project-baselines/README.md). Keep PJ-03 at refine: calendar configuration, actual-date capture and critical-path scheduling are not delivered. Next recommended Projects slice is PJ-04 RAID; commercial variations, specialist coordination, readiness and stakeholder updates remain separate.

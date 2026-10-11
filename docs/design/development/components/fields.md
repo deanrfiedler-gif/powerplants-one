@@ -136,3 +136,24 @@ From Project Sales context, record a customer need as an Internal CustomerContac
 Desktop: show original native links, current customer/site, Activity version/state/date, selected Sales reference/version and separate source attribution. Refresh cannot advance a frozen comparison. A stale save changes no record; discard and compare again. Unknown creation/link results expose original lookup and exact retry; permission loss clears protected comparisons. Project content remains in the existing dialog to preserve Gantt geometry.
 
 Phone: stack fields and recovery controls, wrap names/references, retain readable labels and reachability of native modal actions. Keep the source context and all required review choices visible at 390/320 px. Preserve Escape/return-focus of the existing Project dialog. New LC-17 state mockups and accepted images are missing; this is a proposed host adaptation pending paired visual, keyboard/zoom, physical-device and owner review. Functional checks are recorded separately in `docs/testing/evidence/sales-followup-continuity/README.md`; no accepted fingerprint is supplied.
+
+
+## AD-01 consumer
+
+Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.
+
+AD-01 uses the existing Field and SelectField with capability, company/site and identity-status inputs. Company option text leads with the exact ERP company key so a long same-name company label cannot hide the distinguishing key at 320 px. No shared-control API or isolated fixture is changed.
+
+## AD-01 capability inspection consumers
+
+The catalogue and holder routes reuse existing controls without changing their exports. Host fixtures in `tests/browser/access-inspection.spec.ts` cover search/filter, zero grants, person context, unavailable retry and authority loss. Database fixtures cover scope, dates, inactive identities, masking and stable pages. Company ERP keys appear before same-name labels. The separate native routes adapt the retained capabilities view; owner/device/accessibility review is pending.
+
+## AD-01 proposed-role consumers
+
+The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+
+## AD-01 request consumers
+
+The local request queue/form and independent decision record reuse this control. Host fixture: tests/browser/access-requests.spec.ts, covering exact proposal, Return/Approved, unchanged-operation recovery and authority refusals. No isolated renderer/export change. See [request evidence](../../../testing/evidence/access-requests/README.md); owner/device/zoom/screen-reader review is pending.
+
+AD-01 application continuation: retain the existing request host and consumer bindings. The same fields/buttons/read state/status now cover Approved application, future-dated Applied outcome, immutable original recovery and denied-context clearing. Applied must not imply current effective access. See [application contract](../../../decisions/access-request-application.md); tests/browser/access-requests.spec.ts provides owning-page states. Shared exports/styles remain unchanged; paired owner/device review remains pending.

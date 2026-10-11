@@ -1,0 +1,148 @@
+{
+  "captured_at": "2026-10-11T04:22:52.393Z",
+  "source_commit": "3118920944cc8f92cd8b98153de2407ce0ab1c72",
+  "browser": "155.0.8059.40",
+  "origin": "http://127.0.0.1:3091",
+  "synthetic": true,
+  "reference": {
+    "path": "docs/design/access-review/access-review.html",
+    "sha256": "b006c02d9a800c77995f3afb7741b260342d4fa13391786918eb28ecbfab504c"
+  },
+  "images": [
+    {
+      "file": "native-1440-roles.png",
+      "kind": "Native proposed-role catalogue; source r01 and r02 Draft",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "1069c353ed0958194773a8721fb81cf9455aeb9d3f2c3be2d444fc36fbe06353"
+    },
+    {
+      "file": "native-1440-comparison.png",
+      "kind": "Native Read-only observer r01 at first Company A site; grant permits",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "65fc409c8ec80630be8a6bf6bcc5a315627a42bb31bb03a2cdfd82b64c8a5d97"
+    },
+    {
+      "file": "native-1440-different-site.png",
+      "kind": "Native same proposal/person at second Company A site; grant does not permit",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "5b88c6a3f805b4369a7b1b63b33f77e7af5870d5ae11c1aa817efa4457e081c7"
+    },
+    {
+      "file": "native-1440-outcome.png",
+      "kind": "Native per-capability refusal and fresh explanation link at second Company A site",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "5b88c6a3f805b4369a7b1b63b33f77e7af5870d5ae11c1aa817efa4457e081c7"
+    },
+    {
+      "file": "reference-1440-roles.png",
+      "kind": "Retained working HTML Role bundles subview; distinct reference fixture",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "af0e6f39aeffe8602cd62d560dfc490d39ed560229a358bde84dfea9f8015013"
+    },
+    {
+      "file": "native-390-roles.png",
+      "kind": "Native proposed-role catalogue; source r01 and r02 Draft",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "8f3a11e78135e8a9a68bea7c91d5ad7aecef379c43680a377d39806b10c0d9a1"
+    },
+    {
+      "file": "native-390-comparison.png",
+      "kind": "Native Read-only observer r01 at first Company A site; grant permits",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "8fc388bb4c9e2a35a7d78e7aa38c8fdd026c12cac13b6bae83ffc86a7e7431df"
+    },
+    {
+      "file": "native-390-different-site.png",
+      "kind": "Native same proposal/person at second Company A site; grant does not permit",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "4f353d37f137d079c40f34c6f1c4f4108a286aac6e865aae13a92de9f12be7a0"
+    },
+    {
+      "file": "native-390-outcome.png",
+      "kind": "Native per-capability refusal and fresh explanation link at second Company A site",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "4f353d37f137d079c40f34c6f1c4f4108a286aac6e865aae13a92de9f12be7a0"
+    },
+    {
+      "file": "reference-390-roles.png",
+      "kind": "Retained working HTML Role bundles subview; distinct reference fixture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "f9bf250ef93426f887b9f778bcb4a4b4f9dd0824f98a2481c2f4bcb062f73aa0"
+    },
+    {
+      "file": "native-320-roles.png",
+      "kind": "Native proposed-role catalogue; source r01 and r02 Draft",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "7f8b6454c73283618fd81a4536e1a2ef342c419dd5c27a66489f549cabd6060c"
+    },
+    {
+      "file": "native-320-comparison.png",
+      "kind": "Native Read-only observer r01 at first Company A site; grant permits",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "405858e76493769484a6f15e0761d879057460364b7b581a82a98ff5a38679a4"
+    },
+    {
+      "file": "native-320-different-site.png",
+      "kind": "Native same proposal/person at second Company A site; grant does not permit",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "a561a4f8c306ba9ef5db2062556364d370f835c81301573030d86a8ef6bc0c1c"
+    },
+    {
+      "file": "native-320-outcome.png",
+      "kind": "Native per-capability refusal and fresh explanation link at second Company A site",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "c04852bdcf4907cc9b6e4c9774d619d9b529100877993ddc151190d8232541eb"
+    },
+    {
+      "file": "reference-320-roles.png",
+      "kind": "Retained working HTML Role bundles subview; distinct reference fixture",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "6f1979f687596ccbb48ef837fb6ebda201e6762ade95240eaeb6939931c504bb"
+    }
+  ]
+}

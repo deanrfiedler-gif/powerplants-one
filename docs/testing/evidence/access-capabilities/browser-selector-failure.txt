@@ -1,0 +1,151 @@
+
+Running 15 tests using 1 worker
+
+(node:16616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (6.9s)
+  ok  2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (363ms)
+  ok  3 [desktop] › tests\browser\access-inspection.spec.ts:145:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (2.7s)
+  x   4 [desktop] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (2.1s)
+(node:23812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [desktop] › tests\browser\access-inspection.spec.ts:270:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.9s)
+(node:42896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.6s)
+  ok  7 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (345ms)
+  ok  8 [phone] › tests\browser\access-inspection.spec.ts:145:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.7s)
+  x   9 [phone] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (1.5s)
+(node:37196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [phone] › tests\browser\access-inspection.spec.ts:270:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.6s)
+(node:33216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (2.5s)
+  ok 12 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (199ms)
+  ok 13 [narrow] › tests\browser\access-inspection.spec.ts:145:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.6s)
+  x  14 [narrow] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (950ms)
+(node:37140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [narrow] › tests\browser\access-inspection.spec.ts:270:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.8s)
+
+
+  1) [desktop] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true })
+    Expected: visible
+    Error: strict mode violation: getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true }) resolved to 2 elements:
+        1) <span aria-current="page">Capability catalogue</span> aka locator('#page-hierarchy').getByText('Capability catalogue')
+        2) <span aria-current="page" class="ppo-crumb ppo-crumb-current">Capability catalogue</span> aka getByRole('list', { name: 'Users and access / Capability' }).getByText('Capability catalogue')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true }) with timeout 5000ms
+      - waiting for getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true })
+
+
+      204 |   await expect(
+      205 |     page.getByRole("navigation", { name: "Breadcrumb" }).getByText("Capability catalogue", { exact: true }),
+    > 206 |   ).toBeVisible();
+          |     ^
+      207 |   await page.getByLabel("Find a capability").fill("no-matching-capability");
+      208 |   await page.getByRole("button", { name: "Search capabilities" }).click();
+      209 |   await expect(
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-inspection.spec.ts:206:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [phone] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true })
+    Expected: visible
+    Error: strict mode violation: getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true }) resolved to 2 elements:
+        1) <span aria-current="page">Capability catalogue</span> aka locator('#page-hierarchy').getByText('Capability catalogue')
+        2) <span aria-current="page" class="ppo-crumb ppo-crumb-current">Capability catalogue</span> aka getByRole('list', { name: 'Users and access / Capability' }).getByText('Capability catalogue')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true }) with timeout 5000ms
+      - waiting for getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true })
+
+
+      204 |   await expect(
+      205 |     page.getByRole("navigation", { name: "Breadcrumb" }).getByText("Capability catalogue", { exact: true }),
+    > 206 |   ).toBeVisible();
+          |     ^
+      207 |   await page.getByLabel("Find a capability").fill("no-matching-capability");
+      208 |   await page.getByRole("button", { name: "Search capabilities" }).click();
+      209 |   await expect(
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-inspection.spec.ts:206:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [narrow] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true })
+    Expected: visible
+    Error: strict mode violation: getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true }) resolved to 2 elements:
+        1) <span aria-current="page">Capability catalogue</span> aka locator('#page-hierarchy').getByText('Capability catalogue')
+        2) <span aria-current="page" class="ppo-crumb ppo-crumb-current">Capability catalogue</span> aka getByRole('list', { name: 'Users and access / Capability' }).getByText('Capability catalogue')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true }) with timeout 5000ms
+      - waiting for getByRole('navigation', { name: 'Breadcrumb' }).getByText('Capability catalogue', { exact: true })
+
+
+      204 |   await expect(
+      205 |     page.getByRole("navigation", { name: "Breadcrumb" }).getByText("Capability catalogue", { exact: true }),
+    > 206 |   ).toBeVisible();
+          |     ^
+      207 |   await page.getByLabel("Find a capability").fill("no-matching-capability");
+      208 |   await page.getByRole("button", { name: "Search capabilities" }).click();
+      209 |   await expect(
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-inspection.spec.ts:206:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-narrow\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-narrow\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-narrow\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-narrow\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [desktop] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants 
+    [phone] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants 
+    [narrow] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants 
+  12 passed (43.6s)

@@ -1,0 +1,20 @@
+
+Running 9 tests using 1 worker
+
+(node:42868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (5.1s)
+  ok 2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (127ms)
+  ok 3 [desktop] › tests\browser\access-inspection.spec.ts:134:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.5s)
+(node:29548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (2.5s)
+  ok 5 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (113ms)
+  ok 6 [phone] › tests\browser\access-inspection.spec.ts:134:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.8s)
+(node:39864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 7 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.5s)
+  ok 8 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (98ms)
+  ok 9 [narrow] › tests\browser\access-inspection.spec.ts:134:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.5s)
+
+  9 passed (21.6s)

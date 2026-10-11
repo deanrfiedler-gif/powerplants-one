@@ -1,0 +1,856 @@
+✔ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (69698.0804ms)
+✔ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (70272.9869ms)
+✖ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (38078.6342ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 193443.4142
+
+✖ failing tests:
+
+test at tests\database\sales-estimating-binding.test.ts:1:10430
+✖ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (38078.6342ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      [
+        {
+          row: {
+            company_id: '20000000-0000-4000-8000-000000000001',
+  ...
+          row: {
+  +         capability: 'report.issue',
+  +         company_id: '20000000-0000-4000-8000-000000000001',
+  +         id: '90e4ce56-359f-4bee-aaf2-9d02af45fa92',
+  +         scope_id: '70000000-0000-4000-8000-000000000001',
+  +         scope_type: 'Site',
+  +         site_id: '70000000-0000-4000-8000-000000000001',
+  +         user_id: '30000000-0000-4000-8000-000000000005',
+  +         valid_from: '2025-01-01T00:00:00+10:00',
+  +         valid_to: '2025-02-01T00:00:00+10:00',
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+            capability: 'products.read',
+            company_id: '20000000-0000-4000-8000-000000000001',
+            id: '930ff6c8-5838-4b52-9455-41494a940bad',
+            scope_id: '20000000-0000-4000-8000-000000000001',
+            scope_type: 'Company',
+  ...
+          row: {
+  +         capability: 'report.respond',
+  +         company_id: null,
+  +         id: 'ddfb76a4-a5de-40e7-b09f-b9124be3bcaf',
+  +         scope_id: '10000000-0000-4000-8000-000000000001',
+  +         scope_type: 'Workspace',
+  +         site_id: null,
+  +         user_id: '30000000-0000-4000-8000-000000000005',
+  +         valid_from: '2025-01-01T00:00:00+10:00',
+  +         valid_to: '2025-02-01T00:00:00+10:00',
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+            capability: 'engineering.edit',
+            company_id: '20000000-0000-4000-8000-000000000001',
+            id: 'de443122-157e-409b-bcf7-996dba9e6a5f',
+            scope_id: '20000000-0000-4000-8000-000000000001',
+            scope_type: 'Company',
+  ...
+          row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           applied_at: '2026-10-11T16:40:56.389352+10:00',
+  +           applied_by: '30000000-0000-4000-8000-000000000003',
+  +           capability: 'report.issue',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.339571+10:00',
+  +           decided_at: '2026-10-11T16:40:56.358415+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: '90e4ce56-359f-4bee-aaf2-9d02af45fa92',
+  +           grant_snapshot: {
+  +             capability: 'report.issue',
+  +             company_id: '20000000-0000-4000-8000-000000000001',
+  +             id: '90e4ce56-359f-4bee-aaf2-9d02af45fa92',
+  +             scope_id: '70000000-0000-4000-8000-000000000001',
+  +             scope_type: 'Site',
+  +             site_id: '70000000-0000-4000-8000-000000000001',
+  +             user_id: '30000000-0000-4000-8000-000000000005',
+  +             valid_from: '2035-01-01T10:00:00.123+10:00',
+  +             valid_to: '2035-02-01T10:00:00.456+10:00',
+  +             workspace_id: '10000000-0000-4000-8000-000000000001'
+  +           },
+  +           id: 'd0a64b8b-3a0e-497a-ab39-a0c7f0590d20',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '70000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Site',
+  +           site_id: '70000000-0000-4000-8000-000000000001',
+  +           state: 'Applied',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 3,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: '17648d19-e39a-4445-9db2-ee088ed02b24',
+  +         object_id: 'd0a64b8b-3a0e-497a-ab39-a0c7f0590d20',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.391538+10:00',
+  +         operation_id: 'a0da8fb9-0363-4486-96b7-5b5746586e67',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+            actor_id: '30000000-0000-4000-8000-000000000001',
+            details: {
+              command: 'SalesHandover:Submit',
+              record_version: 3
+            },
+  ...
+            details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'finance.process',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.815916+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'e48208c2-c399-4b11-a960-87d22cad8241',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: '53dcc29e-ca68-461b-a45f-391d2e696deb',
+  +         object_id: 'e48208c2-c399-4b11-a960-87d22cad8241',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.817923+10:00',
+  +         operation_id: '30d878eb-53be-4b1a-9c77-f3ff22d0bf62',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+              application_reason: 'Apply the independently approved synthetic grant exactly.',
+              applied_at: '2026-10-11T16:40:56.236032+10:00',
+              applied_by: '30000000-0000-4000-8000-000000000003',
+              capability: 'report.review',
+              company_id: '20000000-0000-4000-8000-000000000001',
+  ...
+          row: {
+  +         actor_id: 'a0540000-0000-4000-8000-000000000001',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'activity.edit',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.553147+10:00',
+  +           decided_at: '2026-10-11T16:40:56.563384+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'ae74ba8f-c199-4edc-a005-387bf49c2a5b',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Approved',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 2,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: '649808ae-79c6-4560-bd9c-a77b6c35f5b1',
+  +         object_id: 'ae74ba8f-c199-4edc-a005-387bf49c2a5b',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.564988+10:00',
+  +         operation_id: '37545f0a-a129-46c5-92b1-23630eec4bb2',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: 'a0540000-0000-4000-8000-000000000001',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'report.respond',
+  +           company_id: null,
+  +           created_at: '2026-10-11T16:40:56.460343+10:00',
+  +           decided_at: '2026-10-11T16:40:56.471848+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: '340fb3ab-afd4-4a51-8ce3-9a036ea6cc9e',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '10000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Workspace',
+  +           site_id: null,
+  +           state: 'Approved',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 2,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: '66e48edf-e3bc-46f6-94c2-3df92cad04ec',
+  +         object_id: '340fb3ab-afd4-4a51-8ce3-9a036ea6cc9e',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.473699+10:00',
+  +         operation_id: 'cbba18c4-89fa-470b-986c-c6e947bed9a6',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+            actor_id: '30000000-0000-4000-8000-000000000003',
+            details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'estimating.edit',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.594399+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'eeee8521-975c-4c81-9bd6-7a06789fc3ce',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: '66ef7f74-4191-471e-b2fb-0561e6c65180',
+  +         object_id: 'eeee8521-975c-4c81-9bd6-7a06789fc3ce',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.596542+10:00',
+  +         operation_id: 'aaa67219-c332-4462-a26d-56639232e4c2',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+              capability: 'pack.check',
+              company_id: '20000000-0000-4000-8000-000000000001',
+              created_at: '2026-10-11T16:40:55.711484+10:00',
+              decided_at: null,
+              decision_reason: null,
+  ...
+            details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'estimating.quote.prepare',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.639131+10:00',
+  +           decided_at: '2026-10-11T16:40:56.649181+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'b8119833-4313-4e24-85ea-723f999d2a71',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Approved',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 2,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: '7af98cb0-534c-4369-9e08-643eaf746c0c',
+  +         object_id: 'b8119833-4313-4e24-85ea-723f999d2a71',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.65045+10:00',
+  +         operation_id: '17c8422d-86b6-4a2d-b4eb-85cd6493683e',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'report.respond',
+  +           company_id: null,
+  +           created_at: '2026-10-11T16:40:56.460343+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: '340fb3ab-afd4-4a51-8ce3-9a036ea6cc9e',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '10000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Workspace',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'a05b586d-65d5-40ca-b3c7-11e3a8180bb8',
+  +         object_id: '340fb3ab-afd4-4a51-8ce3-9a036ea6cc9e',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.462529+10:00',
+  +         operation_id: '0050e10f-57e7-4024-bd4c-d8b96a8c2524',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: 'a0540000-0000-4000-8000-000000000001',
+  +         details: {
+              profile: 'scheduling-policy-reviewer'
+            },
+            id: 'a05c60a5-5d87-466d-aab2-098fce4662c0',
+            object_id: 'a0540000-0000-4000-8000-000000000001',
+            object_type: 'Session',
+  ...
+          row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'activity.edit',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.553147+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'ae74ba8f-c199-4edc-a005-387bf49c2a5b',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'a3248a73-573c-4fed-95cf-7e6c92d87b74',
+  +         object_id: 'ae74ba8f-c199-4edc-a005-387bf49c2a5b',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.554685+10:00',
+  +         operation_id: '89e45c9b-ede0-4415-a74c-5eeef7389dc6',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+            actor_id: '30000000-0000-4000-8000-000000000001',
+            details: {
+              command: 'SalesHandover:Save',
+              record_version: 2
+            },
+  ...
+              applied_by: null,
+  +           capability: 'finance.review',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.794766+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'd9778a19-004e-43a7-befc-20d970d61c05',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'b195a8d3-8bf4-45ff-ba0b-4f6a5b458eb0',
+  +         object_id: 'd9778a19-004e-43a7-befc-20d970d61c05',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.796633+10:00',
+  +         operation_id: '714df45b-755e-45ad-b733-e91432875f10',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: 'a0540000-0000-4000-8000-000000000001',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'estimating.edit',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.594399+10:00',
+  +           decided_at: '2026-10-11T16:40:56.604384+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'eeee8521-975c-4c81-9bd6-7a06789fc3ce',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Approved',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 2,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'bf09e038-118f-4706-92e4-8dcf7d6f2ade',
+  +         object_id: 'eeee8521-975c-4c81-9bd6-7a06789fc3ce',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.605874+10:00',
+  +         operation_id: '8e87ee7a-26fc-49d5-8d6f-507d7d00a141',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'estimating.quote.prepare',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.639131+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'b8119833-4313-4e24-85ea-723f999d2a71',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'c1392295-8f2e-4d76-930b-91c1af852e0e',
+  +         object_id: 'b8119833-4313-4e24-85ea-723f999d2a71',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.640631+10:00',
+  +         operation_id: '9c405c3f-42a2-4217-aeff-23ab096cb944',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: 'a0540000-0000-4000-8000-000000000001',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+              capability: 'report.issue',
+              company_id: '20000000-0000-4000-8000-000000000001',
+              created_at: '2026-10-11T16:40:56.339571+10:00',
+  +           decided_at: '2026-10-11T16:40:56.358415+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'd0a64b8b-3a0e-497a-ab39-a0c7f0590d20',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '70000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Site',
+  +           site_id: '70000000-0000-4000-8000-000000000001',
+  +           state: 'Approved',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 2,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'c2c5439d-710b-4bc8-bb94-2d9d1cd2440d',
+  +         object_id: 'd0a64b8b-3a0e-497a-ab39-a0c7f0590d20',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.360502+10:00',
+  +         operation_id: '745ba180-db93-4efc-b12b-feb8b842f190',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'finance.prepare',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.742016+10:00',
+              decided_at: null,
+              decision_reason: null,
+              grant_id: null,
+              grant_snapshot: null,
+  +           id: 'ca98ae28-05e8-4569-93d7-0dbfd8bef04f',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Submitted',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 1,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'c6076f77-1c32-46de-b076-982da8a14c56',
+  +         object_id: 'ca98ae28-05e8-4569-93d7-0dbfd8bef04f',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.744245+10:00',
+  +         operation_id: 'f8f455ea-3530-433d-a79e-a182e042ca8d',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           applied_at: '2026-10-11T16:40:56.485135+10:00',
+  +           applied_by: '30000000-0000-4000-8000-000000000003',
+  +           capability: 'report.respond',
+  +           company_id: null,
+  +           created_at: '2026-10-11T16:40:56.460343+10:00',
+  +           decided_at: '2026-10-11T16:40:56.471848+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: 'ddfb76a4-a5de-40e7-b09f-b9124be3bcaf',
+  +           grant_snapshot: {
+  +             capability: 'report.respond',
+  +             company_id: null,
+  +             id: 'ddfb76a4-a5de-40e7-b09f-b9124be3bcaf',
+  +             scope_id: '10000000-0000-4000-8000-000000000001',
+  +             scope_type: 'Workspace',
+  +             site_id: null,
+  +             user_id: '30000000-0000-4000-8000-000000000005',
+  +             valid_from: '2035-01-01T10:00:00.123+10:00',
+  +             valid_to: '2035-02-01T10:00:00.456+10:00',
+  +             workspace_id: '10000000-0000-4000-8000-000000000001'
+  +           },
+  +           id: '340fb3ab-afd4-4a51-8ce3-9a036ea6cc9e',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '10000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Workspace',
+  +           site_id: null,
+  +           state: 'Applied',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 3,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'c884a5c3-c5d1-4400-a962-da38b091d0fd',
+  +         object_id: '340fb3ab-afd4-4a51-8ce3-9a036ea6cc9e',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.486478+10:00',
+  +         operation_id: '654c5872-5a28-4417-9908-a941cf7edab9',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+  +         actor_id: '30000000-0000-4000-8000-000000000003',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'report.issue',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.339571+10:00',
+  +           decided_at: null,
+  +           decision_reason: null,
+  +           grant_id: null,
+  +           grant_snapshot: null,
+              id: 'd0a64b8b-3a0e-497a-ab39-a0c7f0590d20',
+              reason: 'Apply the independently approved synthetic grant exactly.',
+              requester_id: '30000000-0000-4000-8000-000000000003',
+              reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+              scope_id: '70000000-0000-4000-8000-000000000001',
+  ...
+          row: {
+  +         actor_id: 'a0540000-0000-4000-8000-000000000001',
+  +         details: {
+  +           application_reason: null,
+  +           applied_at: null,
+  +           applied_by: null,
+  +           capability: 'finance.prepare',
+  +           company_id: '20000000-0000-4000-8000-000000000001',
+  +           created_at: '2026-10-11T16:40:56.742016+10:00',
+  +           decided_at: '2026-10-11T16:40:56.75705+10:00',
+  +           decision_reason: 'Apply the independently approved synthetic grant exactly.',
+  +           grant_id: null,
+  +           grant_snapshot: null,
+  +           id: 'ca98ae28-05e8-4569-93d7-0dbfd8bef04f',
+  +           reason: 'Apply the independently approved synthetic grant exactly.',
+  +           requester_id: '30000000-0000-4000-8000-000000000003',
+  +           reviewer_id: 'a0540000-0000-4000-8000-000000000001',
+  +           scope_id: '20000000-0000-4000-8000-000000000001',
+  +           scope_type: 'Company',
+  +           site_id: null,
+  +           state: 'Approved',
+  +           subject_id: '30000000-0000-4000-8000-000000000005',
+  +           synthetic: true,
+  +           valid_from: '2035-01-01T10:00:00.123+10:00',
+  +           valid_to: '2035-02-01T10:00:00.456+10:00',
+  +           version: 2,
+  +           workspace_id: '10000000-0000-4000-8000-000000000001'
+  +         },
+  +         id: 'db878568-3a46-42b4-acc9-e7f6a200a824',
+  +         object_id: 'ca98ae28-05e8-4569-93d7-0dbfd8bef04f',
+  +         object_type: 'AccessChangeRequest',
+  +         occurred_at: '2026-10-11T16:40:56.7586+10:00',
+  +         operation_id: 'b2e6d9a7-5a94-406a-8283-a0ff4d7cd286',
+  +         outcome: 'Accepted',
+  +         reason: 'Apply the independently approved synthetic grant exactly.',
+  +         schema_version: 1,
+  +         workspace_id: '10000000-0000-4000-8000-000000000001'
+  +       }
+  +     },
+  +     {
+  +       row: {
+            actor_id: '30000000-0000-4000-8000-000000000003',
+            details: {
+              application_reason: null,
+              applied_at: null,
+              applied_by: null,
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\tests\database\sales-estimating-binding.test.ts:402:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [],
+      [],
+      [ [Object] ],
+      [ [Object], [Object], [Object], [Object] ],
+      [ [Object] ],
+      [
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object]
+      ],
+      [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 287 more items
+      ],
+      [
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object]
+      ],
+      [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object], [Object], [Object], [Object] ]
+    ],
+    expected: [
+      [ [Object] ],
+      [ [Object] ],
+      [ [Object] ],
+      [],
+      [],
+      [ [Object] ],
+      [ [Object], [Object], [Object], [Object] ],
+      [ [Object] ],
+      [
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object]
+      ],
+      [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 285 more items
+      ],
+      [
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object]
+      ],
+      [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+      [ [Object], [Object], [Object], [Object], [Object], [Object] ]
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

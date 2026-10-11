@@ -1,0 +1,301 @@
+
+Running 33 tests using 1 worker
+
+(node:32456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (6.4s)
+  ok  2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (672ms)
+  ok  3 [desktop] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (3.0s)
+  ok  4 [desktop] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (3.8s)
+  ok  5 [desktop] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.2s)
+  ok  6 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.9s)
+  x   7 [desktop] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (3.0s)
+(node:25576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [desktop] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context (3.2s)
+(node:22792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [desktop] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (4.1s)
+  ok 10 [desktop] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (2.5s)
+  ok 11 [desktop] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (2.7s)
+(node:28544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.3s)
+  ok 13 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (321ms)
+  ok 14 [phone] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.8s)
+  ok 15 [phone] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (2.6s)
+  ok 16 [phone] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.5s)
+  ok 17 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (5.4s)
+  x  18 [phone] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (4.0s)
+(node:28064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  19 [phone] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context (4.5s)
+(node:18604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 20 [phone] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (3.7s)
+  ok 21 [phone] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (2.0s)
+  ok 22 [phone] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (2.2s)
+(node:33656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 23 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (4.0s)
+  ok 24 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (257ms)
+  ok 25 [narrow] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.9s)
+  ok 26 [narrow] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (4.4s)
+  ok 27 [narrow] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.8s)
+  ok 28 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (4.6s)
+  x  29 [narrow] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (3.4s)
+(node:33680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  30 [narrow] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context (3.6s)
+(node:42624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 31 [narrow] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (6.1s)
+  ok 32 [narrow] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (4.3s)
+  ok 33 [narrow] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (2.8s)
+
+
+  1) [desktop] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective
+
+    Error: route.abort: Route is already handled!
+
+      181 |     requestId = receipt.record_id;
+      182 |     operationId = receipt.operation_id;
+    > 183 |     await route.abort("failed");
+          |                 ^
+      184 |   });
+      185 |   await page
+      186 |     .getByRole("button", { name: "Submit for independent review" })
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:183:17
+
+    Error: apiRequestContext.fetch: Test ended.
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:201:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "already been decided"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" tabindex="-1" class="business-error">…</div> aka getByRole('alert').filter({ hasText: 'This request has changed or' })
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      279 |     .getByRole("button", { name: "Record decision", exact: true })
+      280 |     .click();
+    > 281 |   await expect(page.getByRole("alert")).toContainText("already been decided");
+          |                                         ^
+      282 |   await page
+      283 |     .getByRole("button", { name: "Refresh request and history" })
+      284 |     .click();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:281:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [phone] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective
+
+    Error: route.abort: Route is already handled!
+
+      181 |     requestId = receipt.record_id;
+      182 |     operationId = receipt.operation_id;
+    > 183 |     await route.abort("failed");
+          |                 ^
+      184 |   });
+      185 |   await page
+      186 |     .getByRole("button", { name: "Submit for independent review" })
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:183:17
+
+    Error: apiRequestContext.fetch: Test ended.
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:201:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [phone] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "already been decided"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" tabindex="-1" class="business-error">…</div> aka getByRole('alert').filter({ hasText: 'This request has changed or' })
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      279 |     .getByRole("button", { name: "Record decision", exact: true })
+      280 |     .click();
+    > 281 |   await expect(page.getByRole("alert")).toContainText("already been decided");
+          |                                         ^
+      282 |   await page
+      283 |     .getByRole("button", { name: "Refresh request and history" })
+      284 |     .click();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:281:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [narrow] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective
+
+    Error: route.abort: Route is already handled!
+
+      181 |     requestId = receipt.record_id;
+      182 |     operationId = receipt.operation_id;
+    > 183 |     await route.abort("failed");
+          |                 ^
+      184 |   });
+      185 |   await page
+      186 |     .getByRole("button", { name: "Submit for independent review" })
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:183:17
+
+    Error: apiRequestContext.fetch: Test ended.
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:201:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-narrow\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-narrow\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-narrow\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-a-lo-3c93c-pproval-remains-ineffective-narrow\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [narrow] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "already been decided"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" tabindex="-1" class="business-error">…</div> aka getByRole('alert').filter({ hasText: 'This request has changed or' })
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      279 |     .getByRole("button", { name: "Record decision", exact: true })
+      280 |     .click();
+    > 281 |   await expect(page.getByRole("alert")).toContainText("already been decided");
+          |                                         ^
+      282 |   await page
+      283 |     .getByRole("button", { name: "Refresh request and history" })
+      284 |     .click();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\browser\access-requests.spec.ts:281:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-narrow\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-narrow\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-narrow\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-access-review-pg\browser-results\access-requests-AD-01-stal-c23f8-fresh-hides-request-context-narrow\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective
+    [desktop] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context
+    [phone] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective
+    [phone] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context
+    [narrow] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective
+    [narrow] › tests\browser\access-requests.spec.ts:250:1 › AD-01 stale decisions are refused and denied refresh hides request context
+  27 passed (2.2m)

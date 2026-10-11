@@ -1,0 +1,27 @@
+# AD-01 access-change requests
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Status: implementation decision under the 11 October 2026 next-task instruction; owner and visual acceptance pending.
+
+Continue the [native AD-01 work](access-review-native.md) with local synthetic submission and independent decision for **one proposed additional business capability** at an exact Workspace, Company or Site scope. Preserve NFR-01–NFR-12, CRM-08, FIN-06 and D-020. This is a bounded implementation of the [receiving plan](users-roles-access-review-design.md), not operational policy approval.
+
+Use the existing Next.js, PostgreSQL and shared controls. Persist a request and append-only operation evidence in dedicated tables, with the existing audit log. A separate service, generic workflow engine and automatic grant application were rejected. Domain-owned receipts avoid introducing an operational business identity/reference or outbox event for a request that cannot yet be applied. Reuse the existing canonical hashing, operation lock and same-tab recovery control; give receipt recovery its own authority-checked endpoint. Do not allocate the deferred ACR reference type: the stable request UUID is the exact identity.
+
+Require current Workspace `admin.access.read` plus `admin.access.propose` to submit, or `admin.access.approve` to decide. Require no selected working company. Seed 79 gives the existing local Systems identity propose, and the existing Scheduling policy reviewer identity read/approve as an explicit synthetic access-review fixture. These grants are independent of its name and scheduling role. No new user or hosted grant is added. Hosted runtime commands are refused and its grant-write revocations remain unchanged.
+
+The named reviewer must be active, local, currently hold both read and approve, and differ from requester and subject. The subject must be active and local. Exclude `email.connect` and all administrative capabilities from proposals. Validate exact workspace/company/site keys; reject any existing grant at that scope, including expired grants, and another Submitted or Approved request for that same grant. UTC start must be future when submitted and approved; optional end must follow start. Reasons require 10–1000 characters. Review returns Approved or Returned at the exact request version; Returned is terminal for this increment and requires a new corrected request. Approving revalidates the subject, scope, dates and grant absence. Returning remains possible when those proposal conditions have changed.
+
+The stored proposal is immutable. Only the named independent reviewer can transition Submitted version 1 to Approved/Returned version 2, with a retained reason, actor and time. Serialize commands per workspace; hash the whole canonical command and retain actor-bound receipts. Exact replay rechecks current authority before returning the original result; changed payloads conflict. Reconstruct submission and decision from immutable audit-linked operation evidence. No request or decision modifies grants, identities or sessions. Approved means reviewed, **not effective**. Apply, revoke/validity/scope changes, editing/resubmission, multi-operation bundles, teams and review campaigns remain subsequent work.
+
+Use r20 Register / worklist and Record detail with PageHeader, Field/SelectField, Button, ReadState, Status, Stamp, ErrorNotice and the existing recoverable command hook. The request queue contains the single-add form; a separate detail route replaces the retained persistent inspector. These are proposed native adaptations; no accepted page/mobile image exists. Incoming: exact people, reviewer duties, capabilities and scope choices. Outgoing: durable reviewed request only. Keep guide drafts, source presence, functional proof, visual review and deployment separate.
+
+## Interfaces and verification
+
+`GET /api/v1/admin/access/requests` lists at most 50 records with a next-page indication; `/context` supplies local people, current reviewers and exact scope choices. `POST /api/v1/admin/access/requests` submits a new immutable proposal. `GET /api/v1/admin/access/requests/[id]` reads its record/history, and `POST /api/v1/admin/access/requests/[id]/decision` records the named reviewer's exact-version decision. `GET /api/v1/admin/access/requests/operations/[id]` recovers an actor-bound original under current duty. All responses remain private/no-store and commands use the existing origin/session boundary.
+
+The execution ledger links tests for AT-01/AT-34 permission and isolation concerns, retained audit evidence under NFR-01–NFR-12, and independent duties relevant to FIN-06. These are bounded synthetic proofs, not closure of the broader acceptance catalogue. The native workflow rejects review-campaign origin payloads; attester/reviewer separation must be added with that later receiving workflow rather than bypassed through an unrecognised origin field.
+
+## Controlled application continuation — 11 October 2026
+
+The [application contract](access-request-application.md) extends Approved version 2 with a separate, explicitly authorised local installation at version 3. Earlier no-apply statements describe the request/decision increment. Approval still changes no grant. Applied is distinct from current validity; hosted grant writes, administrative changes, teams and campaigns remain outside this continuation.

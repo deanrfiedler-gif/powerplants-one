@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -399,12 +400,12 @@ test("LC-13 populated 0073 upgrade retains accepted brief bytes, native Discover
   await seed();
   await migrate();
   await seed();
-  assert.deepEqual(await snapshots(tables), before);
+  assertAccessInspectionSnapshot(await snapshots(tables), before, tables);
   const upgraded = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(upgraded.slice(0, -4), ledger);
-  assert.deepEqual(upgraded.slice(-4).map(row => row.version), [74, 75, 76, 77]);
+  assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
+  assert.deepEqual(upgraded.slice(ledger.length).map(row => row.version), [74, 75, 76, 77, 78, 79, 80, 81]);
   assert.deepEqual(
     await readOperation(f.p, f.create.operation_id),
     f.created.receipt,

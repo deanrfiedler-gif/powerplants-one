@@ -39,3 +39,11 @@ Reset affects only `ppo.template-management.r01` and its `.view` preference key.
 All templates, sources, people, policies, dates, documents and form answers are synthetic. Preview profiles illustrate intended interface behaviour; they do not secure embedded fixture content from anyone holding the file. Publishing a template here approves and issues nothing: domain services retain the source information, business review, work authority, output issue and customer response, and DK-03 retains output preparation and distribution evidence.
 
 The proposed revisions created in this workspace are supported only by its declared fixture engine. They are not registered as supported versions in the application code, where `supportedTemplateDefinition` still recognises versions 1 and 2 for OUT-09, OUT-10 and OUT-14 only.
+
+## Source-pin review — 11 October 2026
+
+The issue/distribution contract changed only its living-master metadata. HTML conformance now also states the native application integration gate; this standalone fixture remains separate from a native integration or baseline acceptance. The current document context requires a Published scheduling policy covering the appointment start and extracts section formatting into shared helpers. These are runtime authority/composition changes, not new capabilities in this template fixture. The report-template source now uses two literal parallel reads to constrain compiler tracing, retaining the renderer order and hashed bytes. The manifest pins these reviewed current sources without claiming the fixture implements the native authority or scheduling checks.
+
+The stale manifest was also present on unchanged main `442a863`. This review refreshes source references only: the fixture, shared styles, issued HTML and historical verification remain unchanged. Current model/browser CI is recorded separately; no owner acceptance, native integration or deployment is inferred.
+
+Local verification passes 35 model groups and 38 native browser groups with no browser errors. Deterministic assembly using the builder's declared inputs and Git LF source bytes reproduces the exact issued HTML; no reference file is rewritten. The current GitHub run remains separate.

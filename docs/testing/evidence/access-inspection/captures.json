@@ -1,0 +1,117 @@
+{
+  "captured_at": "2026-10-11T02:52:27.020Z",
+  "source_commit": "538cfe1b85ee00a93d0a3e083bd8188f12c9bdaf",
+  "browser": "155.0.8059.40",
+  "origin": "http://127.0.0.1:3091",
+  "synthetic": true,
+  "images": [
+    {
+      "file": "native-1440-people.png",
+      "kind": "Native application",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "dca7d91c31ee335284ff39f11d54b2db8bd6ecac7218905ecf82c2e7d39a5900"
+    },
+    {
+      "file": "native-1440-person.png",
+      "kind": "Native application: SYN Site observer, SYN-A granted site",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "d0fcab7599d6cbd1743993d85c07c256a919629a325c5e5457031de4cd79ed4a"
+    },
+    {
+      "file": "native-1440-explanation.png",
+      "kind": "Native application: positive grant result, separate business/authentication limits",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "d0fcab7599d6cbd1743993d85c07c256a919629a325c5e5457031de4cd79ed4a"
+    },
+    {
+      "file": "reference-1440-person.png",
+      "kind": "Retained working HTML: SYN Site observer",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "f0268045f792f6728d7459eed31db8734513cad85a37f3d19c60ff66f25cdb70"
+    },
+    {
+      "file": "native-390-people.png",
+      "kind": "Native application",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "e5a6893ec9ffc0d8316e59599d8668e5871d9052336e41ae3ea95fae9d6f2d08"
+    },
+    {
+      "file": "native-390-person.png",
+      "kind": "Native application: SYN Site observer, SYN-A granted site",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "a7b5d320053b5cd9dc493c906281bf89fda502001bf7affc6d1e289155bfafc0"
+    },
+    {
+      "file": "native-390-explanation.png",
+      "kind": "Native application: positive grant result, separate business/authentication limits",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "29ddfec5154dd00d2e0b4772b3d8391b1d25145fec248ce2d8fef187cffc2a95"
+    },
+    {
+      "file": "reference-390-person.png",
+      "kind": "Retained working HTML: SYN Site observer",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "24fead85ead81dc8a56b95663e8138eb4d9ed77b90d594c2dc4c545b1c6bb599"
+    },
+    {
+      "file": "native-320-people.png",
+      "kind": "Native application",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "8590f3a992e204075fd75758547ad31e921c617739093078f243fe24726c91e8"
+    },
+    {
+      "file": "native-320-person.png",
+      "kind": "Native application: SYN Site observer, SYN-A granted site",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "e8cd467bc79ec0967cae721ec3971632d0a87944a56484006050c5feae41cd0a"
+    },
+    {
+      "file": "native-320-explanation.png",
+      "kind": "Native application: positive grant result, separate business/authentication limits",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "acffc39c5b04794d6f382948503491320910ea8f5ad6f7f6ab26f116e754047e"
+    },
+    {
+      "file": "reference-320-person.png",
+      "kind": "Retained working HTML: SYN Site observer",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "4b33566b2ee94309ff709185e77ea089f8b4981865e71239192b9e4f6e5fde58"
+    }
+  ]
+}

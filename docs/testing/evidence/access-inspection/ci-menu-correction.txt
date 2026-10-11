@@ -1,0 +1,9 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"155.0.8059.40"}
+
+Running 1 test using 1 worker
+
+(node:26428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\ui\desktop-shell.spec.ts:123:1 › runtime shell matches the retained r17 reference typography, panel geometry and guide layout (12.1s)
+
+  1 passed (16.2s)

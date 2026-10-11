@@ -1,0 +1,116 @@
+{
+  "application_source": "66aece17c8dc5436c729020dc2cd44876926933e",
+  "browser_test_correction": "62b3da1961fcf683ee4d8f52792f30d4f1d0defd",
+  "upgrade_assertion_correction": "08fc1671467714a1d28e2892a5c626f0a1f1eb61",
+  "lc15_ledger_correction": "cb6b0ccf9db22c1e42430bdc9d3c610db065f9cd",
+  "main_baseline": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+  "build": "Passed; includes application type check",
+  "database": {
+    "request_checks": 14,
+    "first_upgrade_batch": {
+      "passed": 24,
+      "failed": 2
+    },
+    "helper_rerun": {
+      "passed": 3,
+      "failed": 1,
+      "remaining_failure": "LC-15 original-ledger slice still excluded four rather than five migrations."
+    },
+    "lc15_final": {
+      "passed": 1,
+      "failed": 0
+    },
+    "remaining_failures": "None after exact seed 79 helper and LC-15 ledger correction; both quotation and hosted cases pass in helper rerun, LC-15 passes in final run.",
+    "main_comparison": {
+      "passed": 3,
+      "failed": 0,
+      "runs": 2
+    },
+    "intermediate_regression": {
+      "passed": 47,
+      "failed": 0,
+      "note": "Before final receipt-integrity and additional late-approval proof; final request checks rerun separately."
+    }
+  },
+  "browser": {
+    "passed": 33,
+    "failed": 0,
+    "widths": [
+      1440,
+      390,
+      320
+    ],
+    "initial_run": {
+      "passed": 27,
+      "failed": 6,
+      "cause": "Interception teardown raced the in-flight response; broad error locator also matched Next route announcer. Corrected harness only."
+    }
+  },
+  "unit": {
+    "passed": 18,
+    "failed": 0
+  },
+  "retained_model_checks": 107,
+  "retained_browser_checks": 40,
+  "visual": "Implementer observed 12 captures; owner/device/zoom/screen-reader review pending",
+  "deployment": "Not performed",
+  "artifacts": [
+    {
+      "file": "build.txt",
+      "sha256": "90480ac7100a023dc7c75f5effad008416c9cf64b40327b34b71382cc8868f03"
+    },
+    {
+      "file": "unit.txt",
+      "sha256": "7cbe5659ce2b4c77ddd3b3babdf8fee0aa0703cbdd1abeef06b0c1ef3bd12917"
+    },
+    {
+      "file": "intermediate-database.txt",
+      "sha256": "bd78b41057817df009eec3cc628be5d87829fa1e513cfa09219d41efc5b9d4a2"
+    },
+    {
+      "file": "upgrade-first-pass.txt",
+      "sha256": "fab700242f9f3b2e8d7bcf4f289a98fcb42970ecd4b3687e460aa0784c843380"
+    },
+    {
+      "file": "main-baseline.txt",
+      "sha256": "9ca7487ea6ee2a034119646c89f875016bf06fe0c1cf2dd36f77518266915ea9"
+    },
+    {
+      "file": "upgrade-helper-rerun.txt",
+      "sha256": "d56c8817b6c821789a4eb049bbb86af88f07bc95f583b0c034fb03ea55fc139d"
+    },
+    {
+      "file": "main-lc15-baseline.txt",
+      "sha256": "4d5f2c8f716c80a2661429d8c96ba7dee03796bbd0bf72bfc89501972b5e289b"
+    },
+    {
+      "file": "lc15-final.txt",
+      "sha256": "3e48440e8dcc279480d3a46389c50dae1e8fc7c2016b831e4994276e3ac37575"
+    },
+    {
+      "file": "browser.txt",
+      "sha256": "218724ebc15f8664b2e1d656b94a1f15847f9aa04cb467f123f3af4592b880d2"
+    },
+    {
+      "file": "initial-browser-harness-failures.txt",
+      "sha256": "9497f44bf6d53b21c5f6b79382bc8219e1f294218368f76b3024d43647be49c9"
+    },
+    {
+      "file": "initial-migration-failure.txt",
+      "sha256": "b4ef14beb036ac84f3574c3883a2b929123a7e6ded614c1bd609633ff7e885ec"
+    },
+    {
+      "file": "initial-hosted-fixture-failure.txt",
+      "sha256": "7c28f7a756ff86b50f6fb4b6ceab22162d9449855023d9d25c42f8efaee7d386"
+    },
+    {
+      "file": "design-model.json",
+      "sha256": "01c91eab21aed30ff21cf4d4149daee93fbe3ac091e1b5c532760d6726788352"
+    },
+    {
+      "file": "design-browser.json",
+      "sha256": "191dc0b82d5e596f157a556b2157c8420147aa2ab5bdb390e37a06a34aef619d"
+    }
+  ],
+  "output_normalization": "LF line endings; trailing whitespace and blank lines removed. Hashes identify these committed text outputs."
+}

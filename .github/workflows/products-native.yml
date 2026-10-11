@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+# A replacement PR commit supersedes only this workflow on that same PR.
+# Keep push and manual runs separate; never cancel their running verification.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:

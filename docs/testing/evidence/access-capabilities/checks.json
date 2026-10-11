@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-11T03:50:29.666604+00:00",
+  "application_source": "f3349fdf34141b7215850c043b1936e5171aab72",
+  "database_source": "fa89c3e",
+  "browser_source": "f3349fdf34141b7215850c043b1936e5171aab72",
+  "checks": {
+    "build_and_types": "pass",
+    "changed_source_lint": "pass",
+    "database_checks_passed": 16,
+    "native_browser_checks_passed": 15,
+    "navigation_unit_checks_passed": 20,
+    "focused_shell_menu_comparison_passed": 1,
+    "foundation": "pass",
+    "prototype": "pass",
+    "naming": "pass",
+    "studio": "pass"
+  },
+  "viewports": [
+    [
+      1440,
+      960
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      740
+    ]
+  ],
+  "capture_count": 12,
+  "boundaries": "Local synthetic proof only. Full CI, independent review, owner visual/device/accessibility acceptance and deployment are separate."
+}

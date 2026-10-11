@@ -1,0 +1,15 @@
+
+> powerplants-one@0.1.0 build
+> node --import tsx scripts/build-offline.ts && next build
+
+▲ Next.js 16.3.4 (Turbopack)
+✓ Running next.config.ts took 284ms
+- Experiments (use with caution):
+  · turbopackMemoryEviction: "auto"
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 97s
+  Running TypeScript ...
+src/access/screens.tsx(272,29): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<"admin.access.read" | "maintenance.read" | "maintenance.manage" | "maintenance.assess" | "maintenance.agreement.approve" | "warranty.read" | "warranty.manage" | "warranty.assess" | ... 123 more ... | "shared.history.record">'.
+Failed to type check.
+

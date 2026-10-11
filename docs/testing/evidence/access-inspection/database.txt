@@ -1,0 +1,22 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (30233.0201ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (36.2877ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (26.2075ms)
+  ✔ grant eligibility differentiates company and exact site scope (31.7785ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (38.4108ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (8.9614ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (132.0063ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (1748.3294ms)
+  ✔ reads preserve every identity, grant and audit row (137.2952ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (2186.0231ms)
+✔ ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes (85480.5016ms)
+✔ ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes (73134.1753ms)
+✔ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (65954.9562ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 287049.2142

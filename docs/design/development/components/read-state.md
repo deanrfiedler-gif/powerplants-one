@@ -141,3 +141,22 @@ Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, rea
 ## NAV entry and truthful recovery
 
 Home offers a declared permitted destination or a clear no-grant state; it grants no authority. Hosted offline entry displays an explanation while local originals retain their offline recovery links. Missing/revoked Survey Equipment identities are unavailable without leaking retained labels. Quotation windows and unavailable source adapters remain explicitly partial. Review these host states with the NAV fixtures, separately from owner/device acceptance.
+
+
+## AD-01 consumer
+
+Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.
+
+## AD-01 capability inspection consumers
+
+The catalogue and holder routes reuse existing controls without changing their exports. Host fixtures in `tests/browser/access-inspection.spec.ts` cover search/filter, zero grants, person context, unavailable retry and authority loss. Database fixtures cover scope, dates, inactive identities, masking and stable pages. Company ERP keys appear before same-name labels. The separate native routes adapt the retained capabilities view; owner/device/accessibility review is pending.
+
+## AD-01 proposed-role consumers
+
+The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+
+## AD-01 request consumers
+
+The local request queue/form and independent decision record reuse this control. Host fixture: tests/browser/access-requests.spec.ts, covering exact proposal, Return/Approved, unchanged-operation recovery and authority refusals. No isolated renderer/export change. See [request evidence](../../../testing/evidence/access-requests/README.md); owner/device/zoom/screen-reader review is pending.
+
+AD-01 application continuation: retain the existing request host and consumer bindings. The same fields/buttons/read state/status now cover Approved application, future-dated Applied outcome, immutable original recovery and denied-context clearing. Applied must not imply current effective access. See [application contract](../../../decisions/access-request-application.md); tests/browser/access-requests.spec.ts provides owning-page states. Shared exports/styles remain unchanged; paired owner/device review remains pending.

@@ -153,3 +153,24 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 ## Back links (phase 00 refinement batch 1)
 
 A back link stands alone, so WCAG 2.5.8 applies. Use `ppo-back-link` (`src/app/globals.css`): an inline-flex link at least 24 px tall, or 44 px on coarse pointers, with its existing text and underline. My Work, the activity record, site readiness and the Sales worklist links use it. Record links inside running text are exempt; standalone record links are refined with their pages.
+
+
+## AD-01 consumer
+
+Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.
+
+## AD-01 capability inspection consumers
+
+The catalogue and holder routes reuse existing controls without changing their exports. Host fixtures in `tests/browser/access-inspection.spec.ts` cover search/filter, zero grants, person context, unavailable retry and authority loss. Database fixtures cover scope, dates, inactive identities, masking and stable pages. Company ERP keys appear before same-name labels. The separate native routes adapt the retained capabilities view; owner/device/accessibility review is pending.
+
+## AD-01 proposed-role consumers
+
+The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+
+Native role-capability details summaries reuse the existing ppo-button quiet style for its 44 px target and focus treatment; native disclosure semantics remain intact. No shared CSS or export changes.
+
+## AD-01 request consumers
+
+The local request queue/form and independent decision record reuse this control. Host fixture: tests/browser/access-requests.spec.ts, covering exact proposal, Return/Approved, unchanged-operation recovery and authority refusals. No isolated renderer/export change. See [request evidence](../../../testing/evidence/access-requests/README.md); owner/device/zoom/screen-reader review is pending.
+
+AD-01 application continuation: retain the existing request host and consumer bindings. The same fields/buttons/read state/status now cover Approved application, future-dated Applied outcome, immutable original recovery and denied-context clearing. Applied must not imply current effective access. See [application contract](../../../decisions/access-request-application.md); tests/browser/access-requests.spec.ts provides owning-page states. Shared exports/styles remain unchanged; paired owner/device review remains pending.

@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "49265c78f176b6c3e3dd4e67e761db32c8ddda4bd18e1307eb99febc243fe2d7",
+  "register_sha256": "a4f31b7099f01e571be437685eb90906a84e4e1e645661d6a7c11dcd67cd80e4",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -20,12 +20,12 @@
   "build": "01"
  },
  "totals": {
-  "entries": 350,
-  "placed": 347,
+  "entries": 358,
+  "placed": 355,
   "excluded": 3,
-  "build": 46,
-  "refine": 105,
-  "review": 190,
+  "build": 45,
+  "refine": 106,
+  "review": 198,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -391,13 +391,13 @@
    ],
    "depends_on": [],
    "counts": {
-    "build": 6,
-    "refine": 16,
-    "review": 17,
+    "build": 5,
+    "refine": 17,
+    "review": 25,
     "decide": 0
    },
    "scopes": 20,
-   "routes": 19,
+   "routes": 27,
    "systems": 0,
    "entries": [
     {
@@ -407,7 +407,95 @@
      "module": "AD",
      "path": "/admin/access",
      "rank": 8,
-     "state": "build",
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access",
+     "title": "Users and access",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/[id]",
+     "title": "Person access and grant explanation",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/[id]",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/[id]/roles",
+     "title": "Compare proposed role bundle",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/[id]/roles",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/capabilities",
+     "title": "Capability catalogue",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/capabilities",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/capabilities/[id]",
+     "title": "Capability grants",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/capabilities/[id]",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/requests",
+     "title": "Access-change requests",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/requests",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/requests/[id]",
+     "title": "Access request",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/requests/[id]",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/roles",
+     "title": "Proposed role bundles",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/roles",
+     "rank": 8,
+     "state": "review",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
     },

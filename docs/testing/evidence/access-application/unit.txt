@@ -1,0 +1,28 @@
+✔ AD-01 role comparisons preserve the seven retained proposals and exact revision deltas (174.7984ms)
+✔ AD-01 role routes retain the access destination with task-specific titles (0.9256ms)
+✔ all Maintenance and Warranty routes retain their Service shell parent (8.2307ms)
+✔ seven full ordered compositions retain withheld positions and My Work placement (0.6694ms)
+✔ permission and readiness filters retain relative order and never manufacture links (2.9203ms)
+✔ specific routes, genuine views and shared records select exactly their rail parent (3.1007ms)
+✔ shared context is explicit or remembered, independent of customer route spelling (229.7365ms)
+✔ every primary semantic glyph has a deliberate distinct active drawing on the same grid (82.7786ms)
+✔ the five later Service destinations each have their own rail icon (0.6284ms)
+✔ every forward SQL migration is registered exactly once; recovery is not a forward migration (12.6775ms)
+✔ local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions (14.5289ms)
+✔ duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid (3.0769ms)
+✔ canonical contextual targets retain distinct IDs and bounded source identities (6.2893ms)
+✔ source returns refuse foreign origins, protocol relatives, arbitrary queries and malformed IDs (0.5004ms)
+✔ N04/N05 permitted landing uses operational ownership without adding grants (13.3359ms)
+✔ N06 inspection discovery requires both capabilities; record scope remains separate (3.5476ms)
+✔ N11/N15 blank More exposes operational entries and vocabulary finds canonical pages (7.7948ms)
+✔ N12 Sales Activities keeps one day/scope/department policy (84.4726ms)
+✔ N14/N22 specific task identity and parent precede generic prefixes (22.8239ms)
+✔ N07/N08 leave review cancels all transition side effects and preserves stronger review (1.6301ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5767.1792

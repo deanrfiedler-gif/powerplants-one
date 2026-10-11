@@ -1,0 +1,156 @@
+[
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/permissions-matrix-http.test.ts",
+    "pattern": "PT-01 complete",
+    "log": "main-matrix-isolated.txt",
+    "started_at": "2026-10-11T08:09:04.8887208Z",
+    "ended_at": "2026-10-11T08:10:18.8870881Z",
+    "exit_code": 0,
+    "raw_log": "main-matrix-isolated.log"
+  },
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/field-timer-boundaries.test.ts",
+    "pattern": "^FI01 additive 0049",
+    "log": "main-fi01-isolated.txt",
+    "started_at": "2026-10-11T08:10:18.9385771Z",
+    "ended_at": "2026-10-11T08:10:56.9095106Z",
+    "exit_code": 0,
+    "raw_log": "main-fi01-isolated.log"
+  },
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/quotation-material-resolution.test.ts",
+    "pattern": "^ES07 material: populated 0066",
+    "log": "main-material-isolated.txt",
+    "started_at": "2026-10-11T08:10:56.9197483Z",
+    "ended_at": "2026-10-11T08:13:19.1107845Z",
+    "exit_code": 0,
+    "raw_log": "main-material-isolated.log"
+  },
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/quotation-receipt-correction.test.ts",
+    "pattern": "^ES07 Receipt populated 0064",
+    "log": "main-receipt-isolated.txt",
+    "started_at": "2026-10-11T08:13:19.1191128Z",
+    "ended_at": "2026-10-11T08:14:08.5147287Z",
+    "exit_code": 1,
+    "raw_log": "main-receipt-isolated.log"
+  },
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/quotation-task-branch.test.ts",
+    "pattern": "^populated 0069 upgrade preserves isolated-task",
+    "log": "main-branch-isolated-isolated.txt",
+    "started_at": "2026-10-11T08:14:08.5182795Z",
+    "ended_at": "2026-10-11T08:15:23.9693837Z",
+    "exit_code": 0,
+    "raw_log": "main-branch-isolated-isolated.log"
+  },
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/quotation-task-branch.test.ts",
+    "pattern": "^populated 0069 upgrade preserves two-task",
+    "log": "main-branch-two-isolated.txt",
+    "started_at": "2026-10-11T08:15:23.9738627Z",
+    "ended_at": "2026-10-11T08:16:36.1200431Z",
+    "exit_code": 0,
+    "raw_log": "main-branch-two-isolated.log"
+  },
+  {
+    "tree": "main",
+    "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+    "test": "tests/database/quotation-task-branch.test.ts",
+    "pattern": "^populated 0069 upgrade preserves linear-chain",
+    "log": "main-branch-chain-isolated.txt",
+    "started_at": "2026-10-11T08:16:36.1249278Z",
+    "ended_at": "2026-10-11T08:17:49.4067449Z",
+    "exit_code": 0,
+    "raw_log": "main-branch-chain-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/permissions-matrix-http.test.ts",
+    "pattern": "PT-01 complete",
+    "log": "candidate-matrix-isolated.txt",
+    "started_at": "2026-10-11T08:17:49.5348804Z",
+    "ended_at": "2026-10-11T08:18:56.1487130Z",
+    "exit_code": 0,
+    "raw_log": "candidate-matrix-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/field-timer-boundaries.test.ts",
+    "pattern": "^FI01 additive 0049",
+    "log": "candidate-fi01-isolated.txt",
+    "started_at": "2026-10-11T08:18:56.1522164Z",
+    "ended_at": "2026-10-11T08:19:30.0503870Z",
+    "exit_code": 0,
+    "raw_log": "candidate-fi01-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/quotation-material-resolution.test.ts",
+    "pattern": "^ES07 material: populated 0066",
+    "log": "candidate-material-isolated.txt",
+    "started_at": "2026-10-11T08:19:30.0522354Z",
+    "ended_at": "2026-10-11T08:20:30.5234829Z",
+    "exit_code": 0,
+    "raw_log": "candidate-material-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/quotation-receipt-correction.test.ts",
+    "pattern": "^ES07 Receipt populated 0064",
+    "log": "candidate-receipt-isolated.txt",
+    "started_at": "2026-10-11T08:20:30.5264230Z",
+    "ended_at": "2026-10-11T08:21:14.5909840Z",
+    "exit_code": 0,
+    "raw_log": "candidate-receipt-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/quotation-task-branch.test.ts",
+    "pattern": "^populated 0069 upgrade preserves isolated-task",
+    "log": "candidate-branch-isolated-isolated.txt",
+    "started_at": "2026-10-11T08:21:14.5950660Z",
+    "ended_at": "2026-10-11T08:22:05.6796803Z",
+    "exit_code": 0,
+    "raw_log": "candidate-branch-isolated-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/quotation-task-branch.test.ts",
+    "pattern": "^populated 0069 upgrade preserves two-task",
+    "log": "candidate-branch-two-isolated.txt",
+    "started_at": "2026-10-11T08:22:05.6824403Z",
+    "ended_at": "2026-10-11T08:23:01.4121654Z",
+    "exit_code": 0,
+    "raw_log": "candidate-branch-two-isolated.log"
+  },
+  {
+    "tree": "candidate",
+    "source": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+    "test": "tests/database/quotation-task-branch.test.ts",
+    "pattern": "^populated 0069 upgrade preserves linear-chain",
+    "log": "candidate-branch-chain-isolated.txt",
+    "started_at": "2026-10-11T08:23:01.4154323Z",
+    "ended_at": "2026-10-11T08:24:01.5945534Z",
+    "exit_code": 0,
+    "raw_log": "candidate-branch-chain-isolated.log"
+  }
+]

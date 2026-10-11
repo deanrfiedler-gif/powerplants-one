@@ -11,6 +11,7 @@ import {
   type Failure,
 } from "./business-ui";
 import { LookupField, useUnsavedChanges } from "./record-ui";
+import { affectedSuccessors, scheduleChanged } from "../projects/baseline-model";
 import {
   formatDate,
   phases,
@@ -116,6 +117,9 @@ export function ProjectTaskPanel({
     current = schedule.tasks.find((t) => t.id === draft.id);
   const conflict =
     (command.error as Failure | null)?.code === "VersionConflict";
+  const previewTasks = [...schedule.tasks.filter(t => t.id !== proposed.id), proposed];
+  const impacted = current && scheduleChanged(current, proposed)
+    ? affectedSuccessors([proposed.id], schedule.tasks, previewTasks) : new Set<string>();
   const close = () => {
     if (pending) return;
     if (
@@ -568,6 +572,11 @@ export function ProjectTaskPanel({
                   Mon–Fri day; no tasks are moved automatically.
                 </p>
               </section>
+              {impacted.size > 0 && <div className="project-warning">
+                <h3>Successors to review</h3>
+                <p>Dates remain unchanged until their owner reviews them. Confirmed bookings remain with Service.</p>
+                <ul>{previewTasks.filter(t => impacted.has(t.id)).map(t => <li key={t.id}>{t.title} · {t.owner_name ?? "Unassigned"}{scheduleIssues(t, previewTasks).map((issue, i) => <p key={i}>{issue}</p>)}</li>)}</ul>
+              </div>}
               {issues.length > 0 && (
                 <div className="project-warning">
                   <strong>Dates to review</strong>

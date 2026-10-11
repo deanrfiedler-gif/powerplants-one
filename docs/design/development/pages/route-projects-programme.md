@@ -39,3 +39,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.projects.programme` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+## Project baseline access
+
+After selecting a project, the programme's ProjectsGantt host offers the same PJ-03 Baselines and forecast dialog as project detail. Reuse the current Planning workspace and Review/comparison controls; incoming project schedule/history and outgoing baseline or task receipts retain their owners. It compares one selected project; portfolio-wide baselines remain outside this increment.
+
+Desktop retains the fixed schedule; phone uses the same wrapping single-column dialog, labelled controls and focus return. No exact programme/baseline image is supplied. Keep r10 as the surrounding reference and paired review pending. See [PJ-03](scope-pj-03.md) and [verification](../../../testing/evidence/project-baselines/README.md).

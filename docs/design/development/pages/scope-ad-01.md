@@ -45,3 +45,20 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 The stable [AD-01 working HTML](../../access-review/access-review.html) is generated from the current capability registry. The issued r01 HTML and its original captures remain unchanged historical evidence; their catalogue count is not the working count. Server permission enforcement is separate from this explanatory design. Generator/model/browser checks use the versionless master. No owner review or current fingerprint is inferred from regeneration.
 
 Step 3 adds `schedule.policy.review` and `schedule.policy.publish` to the 100-entry working catalogue. Their labels describe distinct fictional duties; the policy handlers additionally require explicit current Workspace scope and complete source visibility. A generic capability explanation in AD-01 does not prove those command conditions. Existing role bundles and hosted tester authority are unchanged. Publication and resolution are internal test-harness commands until Step 4; PL-04 publication controls remain Step 5. No new mockup or accepted desktop/mobile capture accompanies this catalogue update; issued r01 images remain historical references.
+
+
+## Native read-only increment — 11 October 2026
+
+The [implementation decision](../../../decisions/access-review-native.md) adds the directory and person inspection routes. Current Workspace admin.access.read is required; Company/Site grants cannot inspect the workspace. Native People/grants/explanation are implemented; roles, teams, access changes and review campaigns remain open, so AD-01 is to refine rather than complete. The separate record route is a proposed adaptation of the reference inspector. Shared controls are reused; no accepted geometry or visual fingerprint is invented. See the [execution ledger](../../../testing/evidence/access-inspection/README.md).
+
+## Capability catalogue continuation
+
+Browse the capability catalogue from people/person access to inspect permissions across the workspace. Holder links carry the capability and matching company/site into the person form; they never imply a positive result. Submit a fresh eligibility check. See the [catalogue contract](route-admin-access-capabilities.md), [holder contract](route-admin-access-capabilities-id.md) and [execution ledger](../../../testing/evidence/access-capabilities/README.md). Existing review records remain unchanged.
+
+## Proposed-role continuation
+
+Users and access links to the seven proposed bundles; Person access links to the exact company/site comparison. See the [role comparison contract](route-admin-access-id-roles.md) and [evidence](../../../testing/evidence/access-roles/README.md). This implements inspection only; teams, assignments, access-changing commands and campaigns remain open. Existing captures retain their original source and do not establish review of the new links.
+
+## Request and independent-review continuation
+
+Local synthetic single-add proposals can be submitted and independently decided from [Access-change requests](route-admin-access-requests.md). Approved remains ineffective: apply, teams and campaigns remain open. Existing captures retain their original source; no acceptance of the new handover is inferred.

@@ -75,7 +75,7 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Finance | 7 | Reconciliation | Withheld | nav-reconciliation | No capability invented | Unavailable | None | Handoff reconciliation is a record action; no distinct reconciliation register. |
 | Finance | 8 | Exceptions | Withheld | nav-exceptions | No capability invented | Unavailable | None | Shared /admin recovery does not provide a finance-scoped exception list. |
 
-75 distinct catalogue destinations; 62 ready in source; 13 unavailable. Rail positions repeat shared destinations and exclude some shared/personal entries. See [navigation implementation evidence](../testing/evidence/navigation/README.md) for the bounded runtime matrix; source presence is not acceptance.
+76 distinct catalogue destinations; 63 ready in source; 13 unavailable. Rail positions repeat shared destinations and exclude some shared/personal entries. See [navigation implementation evidence](../testing/evidence/navigation/README.md) for the bounded runtime matrix; source presence is not acceptance.
 
 Specific child routes take precedence. Fertigation selects Specialist configurations; Engineering materials, changes and commissioning retain their own destination. Programme view is consumed by the project schedule and supplies a return to its chooser. Sales task drawers keep Tasks selected; People/Organisation details select Contacts in Sales.
 
