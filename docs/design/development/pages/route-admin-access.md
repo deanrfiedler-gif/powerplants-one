@@ -25,3 +25,7 @@ Existing reference: [AD-01 working HTML](../../access-review/access-review.html)
 ## Evidence and open review
 
 [Execution ledger](../../../testing/evidence/access-inspection/README.md). The execution ledger links source-bound native and reference captures at 1440/390/320 px and records the observed layout differences. These are implementation/reference evidence, not accepted mockups. Owner, physical-device, keyboard/zoom and screen-reader review remain open; accepted native images are still missing. No review fingerprint is set by implementation.
+
+## Capability catalogue continuation
+
+Browse the capability catalogue from people/person access to inspect permissions across the workspace. Holder links carry the capability and matching company/site into the person form; they never imply a positive result. Submit a fresh eligibility check. See the [catalogue contract](route-admin-access-capabilities.md), [holder contract](route-admin-access-capabilities-id.md) and [execution ledger](../../../testing/evidence/access-capabilities/README.md). Existing review records remain unchanged.

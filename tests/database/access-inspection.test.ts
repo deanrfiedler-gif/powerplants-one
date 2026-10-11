@@ -14,7 +14,10 @@ import {
   accessPeople,
   accessPerson,
   explainAccess,
+  accessCapabilities,
+  accessCapability,
 } from "../../src/access/service";
+import { capabilityLabels } from "../../src/access/capabilities";
 import { accessInspectionSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -374,6 +377,250 @@ test("AD01-02 workspace authority, masking, scope explanation and read-only pres
         company_id: companyA,
         site_id: siteA,
       });
+      assert.deepEqual(await snapshot(), before);
+    },
+  );
+});
+
+test("AD01-03 capability catalogue and holders preserve workspace authority and grant meaning", async (t) => {
+  const systems = (await createSession("systems")).principal;
+  const observer = (await createSession("site-observer")).principal;
+  await t.test(
+    "complete catalogue includes unassigned and hosted-only keys; literal search and domains",
+    async () => {
+      const all = await accessCapabilities(systems);
+      assert.deepEqual(
+        all.items.map((item) => item.key),
+        Object.keys(capabilityLabels),
+      );
+      assert.equal(
+        all.items.find((item) => item.key === "email.connect")?.hosted_only,
+        true,
+      );
+      assert.equal(
+        all.items.find((item) => item.key === "email.connect")?.recorded,
+        0,
+      );
+      assert.equal(
+        (await accessCapability(systems, "email.connect")).items.length,
+        0,
+      );
+      assert.equal(
+        (await accessCapabilities(systems, { q: "%" })).items.length,
+        0,
+      );
+      assert.deepEqual(
+        (
+          await accessCapabilities(systems, { q: "  inspect workspace  " })
+        ).items.map((item) => item.key),
+        ["admin.access.read"],
+      );
+      assert(
+        (await accessCapabilities(systems, { domain: "finance" })).items.every(
+          (item) => item.domain === "finance",
+        ),
+      );
+      await assert.rejects(
+        accessCapabilities(systems, { domain: "not-a-domain" }),
+        code("InvalidFilter"),
+      );
+      await assert.rejects(
+        accessCapabilities(systems, { q: "x".repeat(101) }),
+        code("InvalidFilter"),
+      );
+      await assert.rejects(
+        accessCapability(systems, "admin.access.approve"),
+        code("NotFound"),
+      );
+      await assert.rejects(
+        accessCapability(systems, "shared.read", { scope: "All" }),
+        code("InvalidFilter"),
+      );
+      await assert.rejects(
+        accessCapability(systems, "shared.read", { state: "Allowed" }),
+        code("InvalidFilter"),
+      );
+      for (const offset of ["-1", "1.5", "NaN", "100001"])
+        await assert.rejects(
+          accessCapability(systems, "shared.read", { offset }),
+          code("InvalidPage"),
+        );
+    },
+  );
+  await t.test(
+    "unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders",
+    async () => {
+      for (const p of [
+        observer,
+        (await createSession("other-workspace")).principal,
+      ]) {
+        await assert.rejects(accessCapabilities(p), code("Forbidden"));
+        await assert.rejects(
+          accessCapability(p, "shared.read"),
+          code("Forbidden"),
+        );
+      }
+      await database().query(
+        "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='admin.access.read'",
+        [systems.actor_id],
+      );
+      try {
+        await assert.rejects(accessCapabilities(systems), code("Forbidden"));
+        await assert.rejects(
+          accessCapability(systems, "shared.read"),
+          code("Forbidden"),
+        );
+      } finally {
+        await database().query(
+          "UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id=$1 AND capability='admin.access.read'",
+          [systems.actor_id],
+        );
+      }
+      await database().query(
+        "INSERT INTO ppo.working_companies(workspace_id,user_id,company_id) VALUES($1,$2,$3)",
+        [ws, systems.actor_id, companyA],
+      );
+      try {
+        await assert.rejects(
+          accessCapabilities(systems),
+          code("WorkingCompanySelected"),
+        );
+        await assert.rejects(
+          accessCapability(systems, "shared.read"),
+          code("WorkingCompanySelected"),
+        );
+      } finally {
+        await database().query(
+          "DELETE FROM ppo.working_companies WHERE user_id=$1",
+          [systems.actor_id],
+        );
+      }
+    },
+  );
+  await t.test(
+    "same-name companies, site scope and cross-workspace grants remain distinct",
+    async () => {
+      const all = await accessCapability(systems, "shared.read");
+      assert(
+        !all.items.some(
+          (g) => g.user_id === "30000000-0000-4000-8000-000000000004",
+        ),
+      );
+      const companies = all.items.filter((g) => g.scope_type === "Company");
+      assert(companies.some((g) => g.erp_company_id === "SYN-A"));
+      assert(companies.some((g) => g.erp_company_id === "SYN-B"));
+      const sites = await accessCapability(systems, "shared.read", {
+        scope: "Site",
+      });
+      assert(sites.items.length);
+      assert(
+        sites.items.every(
+          (g) =>
+            g.scope_type === "Site" &&
+            g.site_id &&
+            g.site_number &&
+            g.erp_company_id,
+        ),
+      );
+      assert(
+        sites.items.some(
+          (g) => g.user_id === observer.actor_id && g.site_id === siteA,
+        ),
+      );
+    },
+  );
+  await t.test(
+    "current counts exclude expired, scheduled and inactive identities; stable pagination and masked names",
+    async () => {
+      // All synthetic fixtures are local to this proof. The 60 grants exceed a page.
+      const ids = Array.from({ length: 60 }, () => randomUUID());
+      const before = (await accessCapabilities(systems, { q: "shared.read" }))
+        .items[0];
+      try {
+        for (const [index, id] of ids.entries()) {
+          await database().query(
+            "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name,active) VALUES($1::uuid,$2,$3,$1::text,$4,$5)",
+            [
+              id,
+              ws,
+              index === 0 ? "PPO-EntraDemo" : "PPO-LocalSynthetic",
+              index === 0
+                ? "SYN Hidden catalogue name"
+                : `SYN Catalogue ${String(index).padStart(2, "0")}`,
+              index !== 3,
+            ],
+          );
+          await database().query(
+            `INSERT INTO ppo.permission_grants(workspace_id,user_id,capability,scope_type,scope_id,company_id,valid_from,valid_to)
+          VALUES($1,$2,'shared.read','Company',$3,$3,
+            CASE WHEN $4=1 THEN clock_timestamp()+interval '1 day' ELSE clock_timestamp()-interval '2 days' END,
+            CASE WHEN $4=2 THEN clock_timestamp()-interval '1 day' ELSE NULL END)`,
+            [ws, id, companyA, index],
+          );
+        }
+        const after = (await accessCapabilities(systems, { q: "shared.read" }))
+          .items[0];
+        assert.equal(after.recorded, before.recorded + 60);
+        assert.equal(after.current, before.current + 57);
+        const first = await accessCapability(systems, "shared.read");
+        const second = await accessCapability(systems, "shared.read", {
+          offset: "50",
+        });
+        assert.equal(first.items.length, 50);
+        assert(first.has_more);
+        assert(!second.has_more);
+        const all = [...first.items, ...second.items];
+        assert.equal(new Set(all.map((g) => g.id)).size, after.recorded);
+        assert.equal(all.length, after.recorded);
+        assert.equal(
+          all.find((g) => g.user_id === ids[0])?.display_name,
+          "Hosted identity (masked)",
+        );
+        assert(!JSON.stringify(all).includes("Hidden catalogue"));
+        assert(!JSON.stringify(all).includes("subject_id"));
+        for (const [index, state] of [
+          [1, "Scheduled"],
+          [2, "Expired"],
+          [3, "Inactive identity"],
+        ] as const) {
+          const filtered = await accessCapability(systems, "shared.read", {
+            state,
+          });
+          assert(filtered.items.some((g) => g.user_id === ids[index]));
+          assert(filtered.items.every((g) => g.state === state));
+        }
+      } finally {
+        await database().query(
+          "DELETE FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[])",
+          [ids],
+        );
+        // Each user is referenced by the full integrated schema. Bound each FK
+        // cleanup statement instead of exhausting the ordinary statement timeout.
+        for (const id of ids)
+          await database().query("DELETE FROM ppo.users WHERE id=$1", [id]);
+      }
+    },
+  );
+  await t.test(
+    "catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged",
+    async () => {
+      const snapshot = () =>
+        Promise.all(
+          [
+            "users",
+            "permission_grants",
+            "audit_events",
+            "sessions",
+            "working_companies",
+          ].map((table) =>
+            rows(
+              `SELECT row_to_json(t) AS value FROM ppo.${table} t ORDER BY row_to_json(t)::text`,
+            ),
+          ),
+        );
+      const before = await snapshot();
+      await accessCapabilities(systems);
+      await accessCapability(systems, "shared.read");
       assert.deepEqual(await snapshot(), before);
     },
   );

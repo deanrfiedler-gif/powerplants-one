@@ -30449,7 +30449,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Proposed workflow: confirm the implemented subset before using these steps.",
+            "Browse the capability catalogue to search permissions across people, then filter holders by scope/state. Opening a holder preselects the capability and matching company/site; submit a fresh eligibility check."
           ],
           "steps": [
             "Inspect existing access and its business basis",
@@ -30590,7 +30591,10 @@
           "headers": []
         }
       ],
-      "related_entry_keys": [],
+      "related_entry_keys": [
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
+      ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html",
@@ -74539,7 +74543,10 @@
       "reviewed_content_hash": null,
       "content_mode": "Native read-only inspection; remaining AD-01 workflow pending",
       "source_commit": "0e1045903ce335020abf8efd11b09154345c5013",
-      "related_entry_keys": [],
+      "related_entry_keys": [
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
+      ],
       "sections": [
         {
           "section_id": "purpose",
@@ -74595,7 +74602,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Search or filter the directory, open the person, inspect grant validity, and check a capability against the exact company/site. Changing an explanation input clears the old result."
+            "Search or filter the directory, open the person, inspect grant validity, and check a capability against the exact company/site. Changing an explanation input clears the old result.",
+            "Browse the capability catalogue to search permissions across people, then filter holders by scope/state. Opening a holder preselects the capability and matching company/site; submit a fresh eligibility check."
           ],
           "steps": [],
           "rows": [],
@@ -74686,7 +74694,10 @@
       "reviewed_content_hash": null,
       "content_mode": "Native read-only inspection; remaining AD-01 workflow pending",
       "source_commit": "0e1045903ce335020abf8efd11b09154345c5013",
-      "related_entry_keys": [],
+      "related_entry_keys": [
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
+      ],
       "sections": [
         {
           "section_id": "purpose",
@@ -74742,7 +74753,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Search or filter the directory, open the person, inspect grant validity, and check a capability against the exact company/site. Changing an explanation input clears the old result."
+            "Search or filter the directory, open the person, inspect grant validity, and check a capability against the exact company/site. Changing an explanation input clears the old result.",
+            "Browse the capability catalogue to search permissions across people, then filter holders by scope/state. Opening a holder preselects the capability and matching company/site; submit a fresh eligibility check."
           ],
           "steps": [],
           "rows": [],
@@ -74821,6 +74833,310 @@
       ],
       "prepared_at": "2026-10-11",
       "runtime_evidence": "See docs/testing/evidence/access-inspection/README.md; owner review pending"
+    },
+    {
+      "guide_key": "guide.route-admin-access-capabilities-id",
+      "entry_key": "route:/admin/access/capabilities/[id]",
+      "title": "Capability grants",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native read-only capability inspection; remaining AD-01 workflow pending",
+      "source_commit": "7ef617f949c82a69e758058f9dac51507712ef17",
+      "related_entry_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Inspect who holds a selected capability, with its exact scope, validity and identity state."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use an identity with current Workspace admin.access.read access. Clear your working company in the account panel. The local synthetic Systems identity has the required read duty."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Inspect access",
+          "paragraphs": [
+            "Open a capability from the catalogue. Choose Grant scope and Grant state, then select Filter grants. Open a person to check the selected capability and company/site on Person access."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The page shows the capability key/description and up to 50 grant cards. Each card includes the person, state, scope, exact company ERP key/site number and validity dates. Previous page, Next page and Refresh grants navigate the recorded rows."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Capability keys follow the server contract. Descriptions explain those keys; they are not permission rules. Current counts are grant rows for active identities within validity dates, not unique people or effective access to business records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Filter by Workspace, Company or Site and Current, Scheduled, Expired or Inactive identity. Changing filters returns to the first page. Workspace grants preselect the capability only; choose the company for the separate person eligibility check."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "This is inspection only. Opening a holder selects context for a fresh check on Person access; submit Check grant eligibility to obtain a current result. No access, review, audit history or session is created by these reads."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading and read errors hide prior results. Empty search and zero recorded grants have explicit messages. Grant states are Current, Scheduled, Expired and Inactive identity; inactive identity takes precedence over dates. Hosted names and provider details stay masked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Search shared.read, open its grants and filter Site. Open SYN Site observer to carry that capability, company key and exact site into Person access. Check a different site separately; a grant at one site does not apply to another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Retry a temporary read failure. Clear the selected working company for workspace inspection. A permission refusal requires current authorised access. Refresh rechecks authority and never restores a grant."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Cards stack at phone widths. Use labelled native fields, Tab/Shift+Tab and submit buttons. Long keys wrap. An online server is required; no offline inspection authority is implied. Physical-device, zoom and screen-reader acceptance remain pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the native AD-01 decision, the retained AD-01 HTML, the capability catalogue execution record and the related People/Person access guides."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guidance and proposed native page adaptation. Implementation and functional tests do not grant owner acceptance, policy adoption or deployment status."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-11",
+      "runtime_evidence": "See docs/testing/evidence/access-capabilities/README.md; owner review pending"
+    },
+    {
+      "guide_key": "guide.route-admin-access-capabilities",
+      "entry_key": "route:/admin/access/capabilities",
+      "title": "Capability catalogue",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native read-only capability inspection; remaining AD-01 workflow pending",
+      "source_commit": "7ef617f949c82a69e758058f9dac51507712ef17",
+      "related_entry_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Find a capability and see whether grants are recorded in this workspace, including capabilities with zero grants."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use an identity with current Workspace admin.access.read access. Clear your working company in the account panel. The local synthetic Systems identity has the required read duty."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Inspect access",
+          "paragraphs": [
+            "From Users and access choose Browse the capability catalogue. Search the capability key or its description, optionally choose a Domain, then select Search capabilities. Open the capability key to inspect its holders."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The search form filters keys/descriptions and domain. Each card shows a key, description and current/recorded grant counts. email.connect is labelled hosted-demo-only. Refresh capabilities reads the current counts again."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Capability keys follow the server contract. Descriptions explain those keys; they are not permission rules. Current counts are grant rows for active identities within validity dates, not unique people or effective access to business records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Search with up to 100 characters; the search treats punctuation literally. Clear the text and select All domains to return to the full catalogue. Open a capability, including one with zero grants, to inspect its recorded holders."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "This is inspection only. Opening a holder selects context for a fresh check on Person access; submit Check grant eligibility to obtain a current result. No access, review, audit history or session is created by these reads."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading and read errors hide prior results. Empty search and zero recorded grants have explicit messages. Grant states are Current, Scheduled, Expired and Inactive identity; inactive identity takes precedence over dates. Hosted names and provider details stay masked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Search shared.read, open its grants and filter Site. Open SYN Site observer to carry that capability, company key and exact site into Person access. Check a different site separately; a grant at one site does not apply to another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Retry a temporary read failure. Clear the selected working company for workspace inspection. A permission refusal requires current authorised access. Refresh rechecks authority and never restores a grant."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Cards stack at phone widths. Use labelled native fields, Tab/Shift+Tab and submit buttons. Long keys wrap. An online server is required; no offline inspection authority is implied. Physical-device, zoom and screen-reader acceptance remain pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the native AD-01 decision, the retained AD-01 HTML, the capability catalogue execution record and the related People/Person access guides."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guidance and proposed native page adaptation. Implementation and functional tests do not grant owner acceptance, policy adoption or deployment status."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-11",
+      "runtime_evidence": "See docs/testing/evidence/access-capabilities/README.md; owner review pending"
     }
   ]
 }

@@ -108,6 +108,11 @@
           "id": "sales-followup-host",
           "label": "Reviewed return to Sales",
           "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
         }
       ],
       "implementation": [
@@ -278,7 +283,9 @@
         "route:/work/new",
         "scope:AD-01",
         "route:/admin/access",
-        "route:/admin/access/[id]"
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -402,6 +409,14 @@
           "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
           "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
           "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1033,6 +1048,11 @@
           "id": "sales-followup-host",
           "label": "Reviewed return to Sales",
           "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
         }
       ],
       "implementation": [
@@ -1177,7 +1197,9 @@
         "route:/work/new",
         "scope:AD-01",
         "route:/admin/access",
-        "route:/admin/access/[id]"
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1293,6 +1315,14 @@
           "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
           "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
           "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2103,6 +2133,11 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
         }
       ],
       "implementation": [
@@ -2240,7 +2275,9 @@
         "route:/warranty/supplier-recovery/[id]",
         "scope:AD-01",
         "route:/admin/access",
-        "route:/admin/access/[id]"
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -2350,6 +2387,14 @@
           "action": "Review NAV URL-state and truthful recovery fixtures separately from isolated catalogue examples.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -2373,6 +2418,11 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
         }
       ],
       "implementation": [
@@ -2450,7 +2500,8 @@
         "route:/warranty/supplier-recovery/[id]",
         "scope:AD-01",
         "route:/admin/access",
-        "route:/admin/access/[id]"
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -2502,6 +2553,14 @@
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

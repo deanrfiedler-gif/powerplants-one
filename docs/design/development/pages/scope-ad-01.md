@@ -50,3 +50,7 @@ Step 3 adds `schedule.policy.review` and `schedule.policy.publish` to the 100-en
 ## Native read-only increment — 11 October 2026
 
 The [implementation decision](../../../decisions/access-review-native.md) adds the directory and person inspection routes. Current Workspace admin.access.read is required; Company/Site grants cannot inspect the workspace. Native People/grants/explanation are implemented; roles, teams, access changes and review campaigns remain open, so AD-01 is to refine rather than complete. The separate record route is a proposed adaptation of the reference inspector. Shared controls are reused; no accepted geometry or visual fingerprint is invented. See the [execution ledger](../../../testing/evidence/access-inspection/README.md).
+
+## Capability catalogue continuation
+
+Browse the capability catalogue from people/person access to inspect permissions across the workspace. Holder links carry the capability and matching company/site into the person form; they never imply a positive result. Submit a fresh eligibility check. See the [catalogue contract](route-admin-access-capabilities.md), [holder contract](route-admin-access-capabilities-id.md) and [execution ledger](../../../testing/evidence/access-capabilities/README.md). Existing review records remain unchanged.

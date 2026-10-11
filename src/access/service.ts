@@ -1,5 +1,6 @@
 import { transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
+import { capabilityCatalogue, isCapability } from "./capabilities";
 import type { Principal } from "../platform/identity";
 import {
   hasPermission,
@@ -45,6 +46,112 @@ async function requireAccessInspection(c: QueryClient, p: Principal) {
 const personColumns = `u.id, CASE WHEN u.issuer='PPO-LocalSynthetic' THEN u.display_name
   ELSE 'Hosted identity (masked)' END AS display_name, u.active,
   u.issuer<>'PPO-LocalSynthetic' AS masked`;
+
+// Inactive identity takes precedence over grant dates, as in person inspection.
+// A current grant is not a claim of effective access to a business record.
+const grantState = `CASE WHEN NOT u.active THEN 'Inactive identity'
+  WHEN g.valid_from>statement_timestamp() THEN 'Scheduled'
+  WHEN g.valid_to IS NOT NULL AND g.valid_to<=statement_timestamp() THEN 'Expired'
+  ELSE 'Current' END`;
+
+export async function accessCapabilities(
+  p: Principal,
+  input: Record<string, string> = {},
+) {
+  const search = (input.q ?? "").trim().toLowerCase();
+  const domain = input.domain ?? "";
+  if (
+    search.length > 100 ||
+    (domain && !capabilityCatalogue.some((item) => item.domain === domain))
+  )
+    throw new AppError(
+      422,
+      "InvalidFilter",
+      "Use a search of up to 100 characters and an available domain.",
+    );
+  return transaction(async (c) => {
+    await c.query("SET TRANSACTION READ ONLY");
+    await requireAccessInspection(c, p);
+    const result = await c.query(
+      `SELECT g.capability,count(*)::int AS recorded,
+      count(*) FILTER (WHERE ${grantState}='Current')::int AS current
+      FROM ppo.permission_grants g JOIN ppo.users u
+        ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
+      WHERE g.workspace_id=$1 GROUP BY g.capability`,
+      [p.workspace_id],
+    );
+    const counts = new Map(result.rows.map((row) => [row.capability, row]));
+    await requireAccessInspection(c, p);
+    return {
+      items: capabilityCatalogue
+        .filter(
+          (item) =>
+            (!domain || item.domain === domain) &&
+            (!search ||
+              `${item.key} ${item.label}`.toLowerCase().includes(search)),
+        )
+        .map((item) => ({
+          ...item,
+          recorded: counts.get(item.key)?.recorded ?? 0,
+          current: counts.get(item.key)?.current ?? 0,
+        })),
+      domains: [...new Set(capabilityCatalogue.map((item) => item.domain))],
+      checked_at: new Date().toISOString(),
+    };
+  });
+}
+
+export async function accessCapability(
+  p: Principal,
+  key: string,
+  input: Record<string, string> = {},
+) {
+  const scope = input.scope ?? "",
+    state = input.state ?? "";
+  const offset = Number(input.offset ?? "0");
+  if (
+    !["", "Workspace", "Company", "Site"].includes(scope) ||
+    !["", "Current", "Scheduled", "Expired", "Inactive identity"].includes(
+      state,
+    )
+  )
+    throw new AppError(
+      422,
+      "InvalidFilter",
+      "Choose an available scope and grant state.",
+    );
+  if (!Number.isSafeInteger(offset) || offset < 0 || offset > 100000)
+    throw new AppError(422, "InvalidPage", "Choose an available result page.");
+  return transaction(async (c) => {
+    await c.query("SET TRANSACTION READ ONLY");
+    await requireAccessInspection(c, p);
+    if (!isCapability(key))
+      throw new AppError(404, "NotFound", "This capability is unavailable.");
+    const result = await c.query(
+      `SELECT g.id,g.user_id,g.scope_type,g.company_id,g.site_id,
+        g.valid_from,g.valid_to,${grantState} AS state,
+        CASE WHEN u.issuer='PPO-LocalSynthetic' THEN u.display_name ELSE 'Hosted identity (masked)' END AS display_name,
+        u.issuer<>'PPO-LocalSynthetic' AS masked,
+        co.display_name AS company_name,co.erp_company_id,
+        s.display_number AS site_number,s.display_name AS site_name
+      FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
+      LEFT JOIN ppo.companies co ON (co.workspace_id,co.id)=(g.workspace_id,g.company_id)
+      LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(g.workspace_id,g.site_id)
+      WHERE g.workspace_id=$1 AND g.capability=$2
+        AND ($3='' OR g.scope_type=$3) AND ($4='' OR ${grantState}=$4)
+      ORDER BY display_name,g.user_id,g.scope_type,g.id LIMIT 51 OFFSET $5`,
+      [p.workspace_id, key, scope, state, offset],
+    );
+    await requireAccessInspection(c, p);
+    return {
+      capability: capabilityCatalogue.find((item) => item.key === key)!,
+      items: result.rows.slice(0, 50),
+      has_more: result.rows.length > 50,
+      offset,
+      checked_at: new Date().toISOString(),
+    };
+  });
+}
 
 export async function accessPeople(
   p: Principal,

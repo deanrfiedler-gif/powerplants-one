@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "266a323fb8ee833361b54b22b6b27e4b34e67953745b7cc5abdee8b6483f4062",
+  "register_sha256": "ee51ac18811800022ecf3c9b99d545b6c4684171f5208ed5ae5bf40b257c47b4",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -20,12 +20,12 @@
   "build": "01"
  },
  "totals": {
-  "entries": 352,
-  "placed": 349,
+  "entries": 354,
+  "placed": 351,
   "excluded": 3,
   "build": 45,
   "refine": 106,
-  "review": 192,
+  "review": 194,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -393,11 +393,11 @@
    "counts": {
     "build": 5,
     "refine": 17,
-    "review": 19,
+    "review": 21,
     "decide": 0
    },
    "scopes": 20,
-   "routes": 21,
+   "routes": 23,
    "systems": 0,
    "entries": [
     {
@@ -428,6 +428,28 @@
      "kind": "route",
      "module": "AD",
      "path": "/admin/access/[id]",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/capabilities",
+     "title": "Capability catalogue",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/capabilities",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/capabilities/[id]",
+     "title": "Capability grants",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/capabilities/[id]",
      "rank": 8,
      "state": "review",
      "visual_review": "Pending",

@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## AD-01 capability catalogue continuation — 11 October 2026
+
+Dean's instruction to proceed with the next task continues AD-01 from PR #410 on `codex/ad01-capability-catalogue`. The [native decision](decisions/access-review-native.md#capability-catalogue-continuation--11-october-2026) adds the 132-key capability catalogue, scope/state-filtered grant holders and person-explanation context. Counts remain grant rows, not effective business authority. This increment introduces no migration, seed or access change. The [execution record](testing/evidence/access-capabilities/README.md) retains validation and limits; owner visual review, roles/teams, access changes and campaigns remain open.
+
 ## AD-01 native access inspection — 11 October 2026
 
 Repository writer: this AD-01 session, isolated branch `codex/ad01-access-review`, based on main `0e10459`. Dean's instruction to proceed starts the adopted next build item with the [read-only increment](decisions/access-review-native.md): people, exact grants and server-side company/site grant explanation. Migration/seed 0078 adds one inspection duty to the existing synthetic Systems identity; hosted users receive none. Native roles, teams, access-changing commands and campaigns remain subsequent work. [Execution evidence](testing/evidence/access-inspection/README.md) separates actual checks, retained setup failures, visual review, PR delivery and owner acceptance.

@@ -86,3 +86,7 @@ Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, rea
 ## AD-01 consumer
 
 Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.
+
+## AD-01 capability inspection consumers
+
+The catalogue and holder routes reuse existing controls without changing their exports. Host fixtures in `tests/browser/access-inspection.spec.ts` cover search/filter, zero grants, person context, unavailable retry and authority loss. Database fixtures cover scope, dates, inactive identities, masking and stable pages. Company ERP keys appear before same-name labels. The separate native routes adapt the retained capabilities view; owner/device/accessibility review is pending.

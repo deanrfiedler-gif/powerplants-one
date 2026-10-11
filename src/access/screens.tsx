@@ -13,6 +13,13 @@ import {
   useResource,
 } from "../components/business-ui";
 import { Button } from "../components/ui/button";
+import { isCapability } from "./capabilities";
+
+type ExplanationContext = {
+  capability?: string;
+  company_id?: string;
+  site_id?: string;
+};
 
 type Person = {
   id: string;
@@ -72,6 +79,11 @@ export function AccessPeopleScreen() {
         description="Inspect identities and their exact permission grants in this workspace."
       />
       <InspectionBoundary />
+      <p>
+        <Link href="/admin/access/capabilities">
+          Browse the capability catalogue
+        </Link>
+      </p>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -149,7 +161,13 @@ export function AccessPeopleScreen() {
   );
 }
 
-export function AccessPersonScreen({ id }: { id: string }) {
+export function AccessPersonScreen({
+  id,
+  initial = {},
+}: {
+  id: string;
+  initial?: ExplanationContext;
+}) {
   const resource = useResource<Detail>(`admin/access/${id}`);
   return (
     <>
@@ -162,10 +180,11 @@ export function AccessPersonScreen({ id }: { id: string }) {
       />
       {resource.data && !resource.loading && !resource.error && (
         <PersonDetail
-          key={id}
+          key={`${id}:${initial.capability}:${initial.company_id}:${initial.site_id}`}
           id={id}
           data={resource.data}
           refresh={resource.reload}
+          initial={initial}
         />
       )}
     </>
@@ -176,14 +195,32 @@ function PersonDetail({
   id,
   data,
   refresh,
+  initial,
 }: {
   id: string;
   data: Detail;
   refresh: () => void;
+  initial: ExplanationContext;
 }) {
-  const [capability, setCapability] = useState("shared.read"),
-    [company, setCompany] = useState(data.companies[0]?.id ?? ""),
-    [site, setSite] = useState("");
+  const initialCompany = data.companies.some(
+    (item) => item.id === initial.company_id,
+  )
+    ? initial.company_id!
+    : (data.companies[0]?.id ?? "");
+  const [capability, setCapability] = useState<string>(
+      initial.capability && isCapability(initial.capability)
+        ? initial.capability
+        : "shared.read",
+    ),
+    [company, setCompany] = useState(initialCompany),
+    [site, setSite] = useState(
+      data.sites.some(
+        (item) =>
+          item.id === initial.site_id && item.company_id === initialCompany,
+      )
+        ? initial.site_id!
+        : "",
+    );
   const [request, setRequest] = useState<string | null>(null);
   const explanation = useResource<{
     allowed: boolean;
@@ -205,6 +242,11 @@ function PersonDetail({
       <h2>{data.person.display_name}</h2>
       <Status value={data.person.active ? "Active" : "Inactive"} />
       <InspectionBoundary />
+      <p>
+        <Link href="/admin/access/capabilities">
+          Browse the capability catalogue
+        </Link>
+      </p>
       {data.person.masked && (
         <p>
           Provider subject, tenant, sign-in details and personal name are

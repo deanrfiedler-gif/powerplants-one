@@ -5088,12 +5088,14 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Read-only native people, exact grants and company/site grant explanation. Role bundles, teams, access changes and review campaigns remain unimplemented.",
+      "summary": "Native read-only people, capability catalogue, grant holders and company/site eligibility explanation. Roles, teams, access changes and campaigns remain open.",
       "path": "/admin/access",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "src/access/screens.tsx",
-        "src/access/service.ts"
+        "src/access/service.ts",
+        "src/access/catalogue-screens.tsx",
+        "src/access/capabilities.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5121,7 +5123,9 @@
       "build_rank": 8,
       "related_keys": [
         "route:/admin/access",
-        "route:/admin/access/[id]"
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
       ],
       "reviewer": null
     },
@@ -12870,7 +12874,9 @@
       "build_rank": 8,
       "related_keys": [
         "scope:AD-01",
-        "route:/admin/access"
+        "route:/admin/access",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
       ]
     },
     {
@@ -12910,7 +12916,87 @@
       "build_rank": 8,
       "related_keys": [
         "scope:AD-01",
-        "route:/admin/access/[id]"
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access/capabilities/[id]",
+      "title": "Capability grants",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only capability inspection with workspace authority, exact grant scope and validity. No role assignments or access changes.",
+      "path": "/admin/access/capabilities/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/access/capabilities/[id]/page.tsx",
+        "src/access/catalogue-screens.tsx",
+        "src/access/service.ts",
+        "src/access/capabilities.ts"
+      ],
+      "guide_key": "guide.route-admin-access-capabilities-id",
+      "design_path": "docs/design/development/pages/route-admin-access-capabilities-id.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation present; verification is recorded separately in the capability catalogue execution ledger.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities"
+      ]
+    },
+    {
+      "key": "route:/admin/access/capabilities",
+      "title": "Capability catalogue",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only capability inspection with workspace authority, exact grant scope and validity. No role assignments or access changes.",
+      "path": "/admin/access/capabilities",
+      "source_paths": [
+        "src/app/(business)/admin/access/capabilities/page.tsx",
+        "src/access/catalogue-screens.tsx",
+        "src/access/service.ts",
+        "src/access/capabilities.ts"
+      ],
+      "guide_key": "guide.route-admin-access-capabilities",
+      "design_path": "docs/design/development/pages/route-admin-access-capabilities.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation present; verification is recorded separately in the capability catalogue execution ledger.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities/[id]"
       ]
     }
   ]

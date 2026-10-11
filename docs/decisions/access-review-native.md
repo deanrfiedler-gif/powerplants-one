@@ -25,3 +25,15 @@ Incoming: current workspace identities, grants and exact company/site keys. Outg
 ## Verification required
 
 Prove denied identities, non-Workspace and expired grants, cross-workspace isolation, inactive subjects, same-name company keys, site restrictions, future/expired grants, working-company narrowing and masked hosted identities. Prove unchanged user/grant rows after reads, upgrade preservation and reseed idempotency. Keep desktop/phone functional evidence, reference comparison, independent review, owner acceptance and deployment separate.
+
+## Capability catalogue continuation — 11 October 2026
+
+Dean's instruction to proceed with the next task continues AD-01 with the capability catalogue from the retained design. Add `/admin/access/capabilities` and `/admin/access/capabilities/[id]`: search capability keys/descriptions, filter by domain, inspect recorded/current grant counts, then filter holders by scope and grant state. The existing Workspace inspection gate and working-company refusal apply before and after both reads. There is no migration, new capability, seed or grant change.
+
+Native display metadata must cover the server's `Capability` union exactly through an exhaustive TypeScript record. Copy the retained plain-English descriptions as display guidance; neither labels nor domain grouping grant authority. Proposed `admin.access.propose`, `admin.access.approve` and `admin.access.review` remain excluded. `email.connect` remains visible and explicitly hosted-demo-only even when the local workspace has no grants. Zero grants must not remove a capability from the catalogue.
+
+Counts describe grant rows, not unique people or effective business access. Current means an active identity with a started, unexpired grant; inactive identity takes precedence over dates, matching person inspection. Holder pages retain exact company ERP keys, site numbers, dates and hosted masking, use stable ordering and return at most 50 grants plus a next-page indication. Reads use one database statement time for validity comparisons. Refresh rechecks permission and hides retained data on failure.
+
+Opening a holder preselects the capability and any matching company/site on Person access. The page validates the incoming selection against its visible company/site choices; a deep link does not run or carry a positive explanation. The user submits a fresh server check. Workspace grants require a company choice for that separate eligibility check.
+
+The r20 page types remain Register / worklist and Record detail. Reuse PageHeader, Field/SelectField, ReadState, Status, Stamp and Button, with native stacked grant cards. The retained design combines capabilities with proposed bundles/teams and a persistent inspector; these separate native routes are a proposed adaptation pending paired review. Incoming: canonical capability keys and current workspace grants. Outgoing: person inspection with selected context. Roles, teams, commands and campaigns remain subsequent work; D-020 is unchanged. Evidence: [catalogue execution record](../testing/evidence/access-capabilities/README.md).
