@@ -213,7 +213,9 @@ test("AD-01 role comparison clears changed results and recovers from read failur
   );
   await expect(page.locator("#comparison-result")).toHaveCount(0);
   failure = null;
-  await page.getByRole("button", { name: "Retry", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Retry loading", exact: true })
+    .click();
   await expect(page.locator("#comparison-result")).toContainText(
     "of 14 capabilities",
   );
@@ -229,7 +231,9 @@ test("AD-01 role comparison clears changed results and recovers from read failur
     0,
   );
   failure = null;
-  await page.getByRole("button", { name: "Retry", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Retry loading", exact: true })
+    .click();
   await page.getByRole("button", { name: "Compare current grants" }).click();
   await expect(page.locator("#comparison-result")).toContainText(
     "of 13 capabilities",
