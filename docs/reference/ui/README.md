@@ -109,6 +109,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 **Cost sources design, 11 October 2026:** Dean accepted a Figma design for the existing Cost sources register (`/estimating/cost-sources`, ES-03), on the Reviews & approvals pattern. The [decision](../../decisions/cost-sources-design.md) records it, and the [retained captures](estimating/cost-sources-design-r01/README.md) are five icon-free PNGs with hashes. The app still shows the earlier card list. Listing it here does not repeat the dated inventory audit above.
 
+**Sales briefs design, 11 October 2026:** Dean accepted a Figma design for the Estimating Intake receiving queue (`/estimating/intake`), on the Reviews & approvals pattern, and renamed the destination Sales briefs. The [decision](../../decisions/sales-briefs-design.md) records it, and the [retained captures](estimating/sales-briefs-design-r01/README.md) are five icon-free PNGs with hashes. The app still shows the earlier cards labelled Intake. Listing it here does not repeat the dated inventory audit above.
+
 **17 September addition:** ES-04 Estimate Review & Pricing Exceptions r01 adds a dedicated internal review, correction and estimate-approval boundary between ES-03 and ES-05. Standalone design; acceptance and application integration remain separate.
 
 
@@ -118,6 +120,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Reviews & approvals — `estimate-reviews` | [Design r01 captures](estimating/reviews-approvals-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/estimate-reviews-design.md). Not built; no route yet |
 | Quotations — `/estimating/quotes` | [Design r01 captures](estimating/quotations-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/quotations-design.md). Not built; the route shows the earlier list |
 | Cost sources — `/estimating/cost-sources` | [Design r01 captures](estimating/cost-sources-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/cost-sources-design.md). Not built; the route shows the earlier card list |
+| Sales briefs (Estimating Intake) — `/estimating/intake` | [Design r01 captures](estimating/sales-briefs-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/sales-briefs-design.md). Not built; the route shows the earlier cards labelled Intake |
 | Sales → Estimating intake | [r02 preview](estimating/sales-estimating-intake-preview-r02.html) | Proposed design | [r02 change record](sales/sales-estimating-intake-change-record-r02.md). Original field-bank/design reference is retained below. |
 | Wizard data review | [r02](estimation-wizard/PPO-Wizard-Data-Review-r02.html) | Latest uploaded design; acceptance not established by this audit | Distinct from the advanced estimating-container study and bounded guided pilot. |
 | Quotation module | [r03](quoting/ppo-quotation-module-r03.html) | Latest uploaded design; acceptance not established by this audit | [r03 audit](quoting/ppo-quotation-audit-r03.md); separate from the legacy Quotation Builder concept below. |

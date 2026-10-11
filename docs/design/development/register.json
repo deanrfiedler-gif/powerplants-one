@@ -10625,7 +10625,13 @@
       "guide_key": "guide.route-estimating-intake",
       "design_path": "docs/design/development/pages/route-estimating-intake.md",
       "html_path": "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/sales-briefs-design-r01/PPO-Sales-Briefs-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/sales-briefs-design-r01/PPO-Sales-Briefs-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/sales-briefs-design-r01/PPO-Sales-Briefs-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/sales-briefs-design-r01/PPO-Sales-Briefs-04-Phone-Brief-List-r01.png",
+        "docs/reference/ui/estimating/sales-briefs-design-r01/PPO-Sales-Briefs-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
@@ -10635,7 +10641,8 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/sales-briefs-design.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
