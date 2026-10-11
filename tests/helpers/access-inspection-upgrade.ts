@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
-import { accessInspectionSeedGrants } from "./engineering-materials-grants";
+import {
+  accessInspectionSeedGrants,
+  accessRequestSeedGrants,
+} from "./engineering-materials-grants";
 
 type Row = Record<string, unknown>;
 const grant = (r: Row) => (r.row ?? r.value ?? r.v ?? r) as Row;
 
-/** Preserve the whole snapshot, allowing exactly seed 78's named, scoped grant. */
+/** Preserve the whole snapshot, allowing exactly the named seed 78/79 duties. */
 export function assertAccessInspectionSnapshot(
   actual: Row[][] | Record<string, Row[]>,
   original: Row[][] | Record<string, Row[]>,
@@ -27,12 +30,23 @@ export function assertAccessInspectionSnapshot(
     newRows.filter((r) => ids.has(grant(r).id)),
     oldRows,
   );
-  assert.deepEqual(
-    newRows.filter((r) => !ids.has(grant(r).id)).map(grant),
-    accessInspectionSeedGrants(oldGrants).map((g) => ({
+  const expected = [
+    ...accessInspectionSeedGrants(oldGrants).map((g) => ({
       ...g,
       id: "ad010078-0000-4000-8000-000000000001",
     })),
+    ...accessRequestSeedGrants(oldGrants).map((g, i) => ({
+      ...g,
+      id: `ad010079-0000-4000-8000-00000000000${i + 1}`,
+    })),
+  ].filter((g) => !ids.has(g.id));
+  const byId = (a: Row, b: Row) => String(a.id).localeCompare(String(b.id));
+  assert.deepEqual(
+    newRows
+      .filter((r) => !ids.has(grant(r).id))
+      .map(grant)
+      .sort(byId),
+    expected.sort(byId),
   );
   const preserved: Row[][] | Record<string, Row[]> = Array.isArray(actual)
     ? actual.map((rows, i) => (i === index ? oldRows : rows))
@@ -57,14 +71,20 @@ export function assertAccessInspectionSeedLedger(
   original: Row[],
   actual: Row[],
 ) {
+  const versions = new Set(original.map((r) => r.version));
   assert.deepEqual(
-    actual.filter((r) => r.version !== 78),
+    actual.filter((r) => versions.has(r.version)),
     original,
   );
-  const added = actual.filter((r) => r.version === 78);
-  assert.equal(added.length, 1);
-  assert.deepEqual(Object.keys(added[0]).sort(), ["applied_at", "version"]);
-  assert(
-    Number.isFinite(new Date(added[0].applied_at as string | Date).getTime()),
+  const added = actual.filter((r) => !versions.has(r.version));
+  assert.deepEqual(
+    added.map((r) => r.version),
+    [78, 79].filter((v) => !versions.has(v)),
   );
+  for (const row of added) {
+    assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);
+    assert(
+      Number.isFinite(new Date(row.applied_at as string | Date).getTime()),
+    );
+  }
 }
