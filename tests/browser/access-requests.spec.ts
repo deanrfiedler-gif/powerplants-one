@@ -173,6 +173,10 @@ test("AD-01 a lost submission response recovers the original after reload and ap
   await fill(page, f.input.capability);
   let requestId = "",
     operationId = "";
+  let interceptionFinished!: () => void;
+  const intercepted = new Promise<void>((resolve) => {
+    interceptionFinished = resolve;
+  });
   await page.route(`**/api/v1/${base}`, async (route) => {
     if (route.request().method() !== "POST") return route.continue();
     const response = await route.fetch();
@@ -181,16 +185,18 @@ test("AD-01 a lost submission response recovers the original after reload and ap
     requestId = receipt.record_id;
     operationId = receipt.operation_id;
     await route.abort("failed");
+    interceptionFinished();
   });
   await page
     .getByRole("button", { name: "Submit for independent review" })
     .click();
   await expect(
     page.getByRole("button", { name: "Retry unchanged action" }),
-  ).toBeVisible();
+  ).toBeEnabled();
   await expect(
     page.getByRole("button", { name: "Submit for independent review" }),
   ).toBeDisabled();
+  await intercepted;
   await page.unroute(`**/api/v1/${base}`);
   await page.reload();
   const link = page.getByRole("link", {
@@ -278,7 +284,9 @@ test("AD-01 stale decisions are refused and denied refresh hides request context
   await page
     .getByRole("button", { name: "Record decision", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText("already been decided");
+  await expect(page.locator("main").getByRole("alert")).toContainText(
+    "already been decided",
+  );
   await page
     .getByRole("button", { name: "Refresh request and history" })
     .click();
@@ -296,7 +304,7 @@ test("AD-01 stale decisions are refused and denied refresh hides request context
   await page
     .getByRole("button", { name: "Refresh request and history" })
     .click();
-  await expect(page.getByRole("alert")).toContainText(
+  await expect(page.locator("main").getByRole("alert")).toContainText(
     "Synthetic current-duty refusal",
   );
   await expect(
