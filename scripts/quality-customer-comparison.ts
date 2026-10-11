@@ -150,10 +150,12 @@ try {
         } catch (error) {
           // Freeze the failed window before any diagnostic intervention. The
           // original error is still thrown; no subsequent measured wave runs.
-          samples.push({ viewport: viewport.name, wave, user, ...(assetDiagnostics ? { asset_sample: assetSample, observed_until_ms: Date.now() } : {}), started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: structuredClone([...network.values()]) });
+          const originalFailure = { viewport: viewport.name, wave, user, ...(assetDiagnostics ? { asset_sample: assetSample, observed_until_ms: Date.now() } : {}), started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: structuredClone([...network.values()]) };
+          samples.push(originalFailure);
           if (releaseProbe && error instanceof Error && error.name === "TimeoutError" &&
               ![...network.values()].some(row => row.path === "/api/v1/local-session" || row.path === "/api/v1/crm/directory") &&
               [...network.values()].some(row => row.type === "Script" && row.finish_ms === undefined)) {
+            await writeFile(`${root}/asset-failure-${assetSample}.json`, JSON.stringify(originalFailure, null, 2), { flag: "wx" });
             const probe: Record<string, unknown> = { sample: assetSample, started_at_ms: Date.now(), original_failed: true, phases: [] };
             releaseProbes.push(probe);
             for (const intervention of ["unchanged", "remove-network-emulation"] as const) {
@@ -184,7 +186,7 @@ try {
                 if (response) break;
               } catch { phase.probe_error = "observation-unavailable"; phase.finished_at_ms = Date.now(); break; }
             }
-            await writeFile(`${root}/asset-release.json`, JSON.stringify(releaseProbes, null, 2));
+            await writeFile(`${root}/asset-release-${assetSample}.json`, JSON.stringify(probe, null, 2), { flag: "wx" });
           }
           throw error;
         } finally {
