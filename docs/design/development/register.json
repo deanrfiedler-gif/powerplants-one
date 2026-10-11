@@ -13149,11 +13149,12 @@
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
-        "docs/decisions/access-request-application.md"
+        "docs/decisions/access-request-application.md",
+        "docs/decisions/access-request-withdrawal.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission-matrix checks pass. Historical upgrade outcomes and CI are separately recorded in access-application evidence. Owner visual acceptance pending.",
+      "functional_status": "Withdrawal verification in progress; earlier request/application proof remains source-bound. Owner visual acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13192,11 +13193,12 @@
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
-        "docs/decisions/access-request-application.md"
+        "docs/decisions/access-request-application.md",
+        "docs/decisions/access-request-withdrawal.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission-matrix checks pass. Historical upgrade outcomes and CI are separately recorded in access-application evidence. Owner visual acceptance pending.",
+      "functional_status": "Withdrawal verification in progress; earlier request/application proof remains source-bound. Owner visual acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

@@ -2387,3 +2387,7 @@ See the [diamond decision](../decisions/quotation-task-diamond.md), [handover](.
 ## AD-01 bounded local grant application
 
 The [application contract](../decisions/access-request-application.md) continues native request/independent review with separate exact Approved-request installation, scoped authority, revalidation, atomic audit/receipt and original recovery. Applied records installation with retained dates, not current effective access. Preserve NFR-01–NFR-12, CRM-08, FIN-06 and operational D-020; no hosted provisioning, role policy or external integration is granted.
+
+## AD-01 withdrawal of un-applied requests
+
+The [withdrawal contract](../decisions/access-request-withdrawal.md) closes obsolete Submitted or Approved requests without changing installed access or reinterpreting their independent decision. Current original-requester authority, exact-version concurrency and immutable audit/recovery evidence govern the synthetic command. A fresh proposal uses fresh review. NFR-01–NFR-12, CRM-08, FIN-06 and D-020 retain their scope; no hosted or operational authority is added.

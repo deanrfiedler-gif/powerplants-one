@@ -57,3 +57,7 @@ The [access-change request decision](access-change-requests.md) adopts local syn
 ## Controlled application continuation — 11 October 2026
 
 The [application decision](access-request-application.md) adds a separate Workspace apply duty and exact local grant installation for one Approved request, with revalidation, independent execution, immutable evidence and recovery. Read inspection stays current-state evaluation; Applied describes historical installation. No hosted authority or operational D-020 policy is adopted.
+
+## Requester withdrawal continuation — 11 October 2026
+
+The [withdrawal contract](access-request-withdrawal.md) adds reasoned closure of un-applied Submitted/Approved requests by the original requester under current read/propose authority. Original proposal/approval and installed access remain unchanged. A fresh proposal needs fresh independent review. Earlier held-request boundaries describe their source increments; grant revocation/editing, teams, campaigns and operational D-020 remain open.

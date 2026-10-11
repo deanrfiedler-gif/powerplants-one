@@ -75470,7 +75470,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native local synthetic request, independent decision and separate application",
+      "content_mode": "Native local synthetic request, independent decision, application and requester withdrawal",
       "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
       "related_entry_keys": [
         "scope:AD-01",
@@ -75482,7 +75482,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Inspect the exact proposal and independent decision, then separately install one approved local grant under current authority."
+            "Inspect the exact proposal and independent decision, then separately install one approved local grant under current authority.",
+            "The original requester can also close an un-applied Submitted or Approved request without changing existing access."
           ],
           "steps": [],
           "headers": [],
@@ -75492,7 +75493,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Local synthetic mode only. Clear the acting identity’s working company. Current Workspace read is required; propose, approve and apply are separate duties. Systems has explicit propose/apply fixture duties; Scheduling policy reviewer has read/approve. Names confer no authority. The executor must differ from the reviewer and affected person."
+            "Local synthetic mode only. Clear the acting identity’s working company. Current Workspace read is required; propose, approve and apply are separate duties. Systems has explicit propose/apply fixture duties; Scheduling policy reviewer has read/approve. Names confer no authority. The executor must differ from the reviewer and affected person.",
+            "Withdrawal needs the original requester’s current read/propose duties; reviewer or executor authority alone does not permit closure."
           ],
           "steps": [],
           "headers": [],
@@ -75502,7 +75504,8 @@
           "section_id": "quick-start",
           "title": "Submit, review and separately apply",
           "paragraphs": [
-            "From Users and access choose Access-change requests. Systems submits; Scheduling policy reviewer inspects and decides. After Approved, switch back to Systems, reopen the exact record, inspect its scope/dates and enter an application reason before selecting Apply approved grant."
+            "From Users and access choose Access-change requests. Systems submits; Scheduling policy reviewer inspects and decides. After Approved, switch back to Systems, reopen the exact record, inspect its scope/dates and enter an application reason before selecting Apply approved grant.",
+            "To close an obsolete proposal, open its exact record as the requester, enter a Withdrawal reason and choose Withdraw request. Confirm Withdrawn in saved history."
           ],
           "steps": [],
           "headers": [],
@@ -75512,7 +75515,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The queue includes an Applied filter. The detail shows exact parties, immutable scope/dates, reasons and history. Approved has a separate application form for a permitted executor; Applied shows the installed grant UUID, application time/reason and a link to inspect current Person access."
+            "The queue includes an Applied filter. The detail shows exact parties, immutable scope/dates, reasons and history. Approved has a separate application form for a permitted executor; Applied shows the installed grant UUID, application time/reason and a link to inspect current Person access.",
+            "The secondary withdrawal form is separate from application. Withdrawn is available in the queue filter and retains any approval reason."
           ],
           "steps": [],
           "headers": [],
@@ -75522,7 +75526,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Affected person, independent reviewer, capability, scope, future UTC start and 10–1000 character reason are required. Company is required for Company/Site scope; Site must belong to it. End is optional and must follow start. All administrative capabilities and email.connect are excluded."
+            "Affected person, independent reviewer, capability, scope, future UTC start and 10–1000 character reason are required. Company is required for Company/Site scope; Site must belong to it. End is optional and must follow start. All administrative capabilities and email.connect are excluded.",
+            "A withdrawal reason of 10–1000 characters is required. The original proposal and decision cannot be edited."
           ],
           "steps": [],
           "headers": [],
@@ -75532,7 +75537,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Submit saves version 1. The named reviewer records Approved or Returned at version 2. Applying exactly Approved version 2 installs one grant and saves Applied version 3 atomically. The approved UTC start must still be future; no date is shifted. Requester/reviewer must retain their local duties and subject must remain active/local."
+            "Submit saves version 1. The named reviewer records Approved or Returned at version 2. Applying exactly Approved version 2 installs one grant and saves Applied version 3 atomically. The approved UTC start must still be future; no date is shifted. Requester/reviewer must retain their local duties and subject must remain active/local.",
+            "Withdraw only Submitted or Approved requests. Returned, Applied and Withdrawn cannot be withdrawn; installed access needs a different workflow."
           ],
           "steps": [],
           "headers": [],
@@ -75542,7 +75548,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Submission and decision leave grants unchanged. Separate application installs one exact approved local grant with an audit snapshot and actor-bound receipt. Applied is historical installation evidence; current access also depends on dates, identity, working company, authentication and domain checks. Hosted provisioning, role assignment and notification remain separate."
+            "Submission and decision leave grants unchanged. Separate application installs one exact approved local grant with an audit snapshot and actor-bound receipt. Applied is historical installation evidence; current access also depends on dates, identity, working company, authentication and domain checks. Hosted provisioning, role assignment and notification remain separate.",
+            "After confirmed withdrawal, Create a fresh request opens submission. Supply new dates and a fresh independent decision; no approval carries forward."
           ],
           "steps": [],
           "headers": [],
@@ -75552,7 +75559,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Submitted can be decided once. Returned is terminal and requires a new corrected request. Approved can be applied once at version 2 before its future start. A late or otherwise invalid Approved request is held unchanged; replacing/cancelling it is separate work. Applied is terminal here, with current grant state inspected separately."
+            "Submitted can be decided once. Returned is terminal and requires a new corrected request. Approved can be applied once at version 2 before its future start. A late or otherwise invalid Approved request is held unchanged; replacing/cancelling it is separate work. Applied is terminal here, with current grant state inspected separately.",
+            "Withdrawn closes the request, releases its pending capability/scope reservation and leaves existing access unchanged. A concurrent decision/application can make this tab stale."
           ],
           "steps": [],
           "headers": [],
@@ -75562,7 +75570,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Systems proposes a missing business capability for SYN Site observer at Company A / SYN-A with a future UTC start. Scheduling policy reviewer independently approves. Systems reopens and applies the exact approval. The new grant remains Scheduled until that UTC start; approval alone would have installed nothing."
+            "Systems proposes a missing business capability for SYN Site observer at Company A / SYN-A with a future UTC start. Scheduling policy reviewer independently approves. Systems reopens and applies the exact approval. The new grant remains Scheduled until that UTC start; approval alone would have installed nothing.",
+            "An Approved request misses its start. The original requester closes it with a reason, then submits a new proposal. The earlier approval remains visible on the closed record."
           ],
           "steps": [],
           "headers": [],
@@ -75572,7 +75581,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "A lost response retains the exact operation in this tab and disables new action. Check original result reads the actor-bound receipt; Retry unchanged action resends the same operation and payload. Reload in the same tab recovers it. Stale version requires refreshing the saved request. Current authority is checked again; a missing receipt is not proof that saving failed."
+            "A lost response retains the exact operation in this tab and disables new action. Check original result reads the actor-bound receipt; Retry unchanged action resends the same operation and payload. Reload in the same tab recovers it. Stale version requires refreshing the saved request. Current authority is checked again; a missing receipt is not proof that saving failed.",
+            "If withdrawal has an unknown outcome, check the original result or retry the unchanged action. Do not submit a replacement until closure is confirmed. A changed duty or working company can prevent recovery."
           ],
           "steps": [],
           "headers": [],
@@ -75582,7 +75592,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Shared labelled fields and buttons support keyboard operation without drag. At 390 and 320 CSS px cards and controls stack and identifiers wrap. This online workflow has same-tab recovery, not offline queuing. Actual device, zoom and screen-reader acceptance remain pending."
+            "Shared labelled fields and buttons support keyboard operation without drag. At 390 and 320 CSS px cards and controls stack and identifiers wrap. This online workflow has same-tab recovery, not offline queuing. Actual device, zoom and screen-reader acceptance remain pending.",
+            "On phone widths, scroll to the labelled withdrawal form. All competing actions are disabled while the original outcome is uncertain; offline submission is unavailable."
           ],
           "steps": [],
           "headers": [],
@@ -75592,7 +75603,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See access-change-requests.md and access-request-application.md, the retained AD-01 HTML and the access-application execution ledger. Exact UUIDs are used; the deferred ACR reference type is not allocated."
+            "See access-change-requests.md and access-request-application.md, the retained AD-01 HTML and the access-application execution ledger. Exact UUIDs are used; the deferred ACR reference type is not allocated.",
+            "Withdrawal contract and verification: docs/decisions/access-request-withdrawal.md and docs/testing/evidence/access-withdrawal/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75602,7 +75614,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations do not grant visual approval."
+            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations do not grant visual approval.",
+            "Withdrawal captures and functional evidence are separate from owner acceptance. Accepted native desktop/mobile images remain missing."
           ],
           "steps": [],
           "headers": [],
@@ -75610,7 +75623,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission checks pass. See docs/testing/evidence/access-application/README.md for exact source, historical upgrade/CI outcomes and pending owner acceptance."
+      "runtime_evidence": "Withdrawal verification in progress: docs/testing/evidence/access-withdrawal/README.md. Earlier application evidence remains tied to its recorded source."
     },
     {
       "guide_key": "guide.route-admin-access-requests",
@@ -75621,7 +75634,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native local synthetic request, independent decision and separate application",
+      "content_mode": "Native local synthetic request, independent decision, application and requester withdrawal",
       "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
       "related_entry_keys": [
         "scope:AD-01",
@@ -75633,7 +75646,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Inspect the exact proposal and independent decision, then separately install one approved local grant under current authority."
+            "Inspect the exact proposal and independent decision, then separately install one approved local grant under current authority.",
+            "The original requester can also close an un-applied Submitted or Approved request without changing existing access."
           ],
           "steps": [],
           "headers": [],
@@ -75643,7 +75657,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Local synthetic mode only. Clear the acting identity’s working company. Current Workspace read is required; propose, approve and apply are separate duties. Systems has explicit propose/apply fixture duties; Scheduling policy reviewer has read/approve. Names confer no authority. The executor must differ from the reviewer and affected person."
+            "Local synthetic mode only. Clear the acting identity’s working company. Current Workspace read is required; propose, approve and apply are separate duties. Systems has explicit propose/apply fixture duties; Scheduling policy reviewer has read/approve. Names confer no authority. The executor must differ from the reviewer and affected person.",
+            "Withdrawal needs the original requester’s current read/propose duties; reviewer or executor authority alone does not permit closure."
           ],
           "steps": [],
           "headers": [],
@@ -75653,7 +75668,8 @@
           "section_id": "quick-start",
           "title": "Submit, review and separately apply",
           "paragraphs": [
-            "From Users and access choose Access-change requests. Systems submits; Scheduling policy reviewer inspects and decides. After Approved, switch back to Systems, reopen the exact record, inspect its scope/dates and enter an application reason before selecting Apply approved grant."
+            "From Users and access choose Access-change requests. Systems submits; Scheduling policy reviewer inspects and decides. After Approved, switch back to Systems, reopen the exact record, inspect its scope/dates and enter an application reason before selecting Apply approved grant.",
+            "To close an obsolete proposal, open its exact record as the requester, enter a Withdrawal reason and choose Withdraw request. Confirm Withdrawn in saved history."
           ],
           "steps": [],
           "headers": [],
@@ -75663,7 +75679,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The queue includes an Applied filter. The detail shows exact parties, immutable scope/dates, reasons and history. Approved has a separate application form for a permitted executor; Applied shows the installed grant UUID, application time/reason and a link to inspect current Person access."
+            "The queue includes an Applied filter. The detail shows exact parties, immutable scope/dates, reasons and history. Approved has a separate application form for a permitted executor; Applied shows the installed grant UUID, application time/reason and a link to inspect current Person access.",
+            "The secondary withdrawal form is separate from application. Withdrawn is available in the queue filter and retains any approval reason."
           ],
           "steps": [],
           "headers": [],
@@ -75673,7 +75690,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Affected person, independent reviewer, capability, scope, future UTC start and 10–1000 character reason are required. Company is required for Company/Site scope; Site must belong to it. End is optional and must follow start. All administrative capabilities and email.connect are excluded."
+            "Affected person, independent reviewer, capability, scope, future UTC start and 10–1000 character reason are required. Company is required for Company/Site scope; Site must belong to it. End is optional and must follow start. All administrative capabilities and email.connect are excluded.",
+            "A withdrawal reason of 10–1000 characters is required. The original proposal and decision cannot be edited."
           ],
           "steps": [],
           "headers": [],
@@ -75683,7 +75701,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Submit saves version 1. The named reviewer records Approved or Returned at version 2. Applying exactly Approved version 2 installs one grant and saves Applied version 3 atomically. The approved UTC start must still be future; no date is shifted. Requester/reviewer must retain their local duties and subject must remain active/local."
+            "Submit saves version 1. The named reviewer records Approved or Returned at version 2. Applying exactly Approved version 2 installs one grant and saves Applied version 3 atomically. The approved UTC start must still be future; no date is shifted. Requester/reviewer must retain their local duties and subject must remain active/local.",
+            "Withdraw only Submitted or Approved requests. Returned, Applied and Withdrawn cannot be withdrawn; installed access needs a different workflow."
           ],
           "steps": [],
           "headers": [],
@@ -75693,7 +75712,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Submission and decision leave grants unchanged. Separate application installs one exact approved local grant with an audit snapshot and actor-bound receipt. Applied is historical installation evidence; current access also depends on dates, identity, working company, authentication and domain checks. Hosted provisioning, role assignment and notification remain separate."
+            "Submission and decision leave grants unchanged. Separate application installs one exact approved local grant with an audit snapshot and actor-bound receipt. Applied is historical installation evidence; current access also depends on dates, identity, working company, authentication and domain checks. Hosted provisioning, role assignment and notification remain separate.",
+            "After confirmed withdrawal, Create a fresh request opens submission. Supply new dates and a fresh independent decision; no approval carries forward."
           ],
           "steps": [],
           "headers": [],
@@ -75703,7 +75723,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Submitted can be decided once. Returned is terminal and requires a new corrected request. Approved can be applied once at version 2 before its future start. A late or otherwise invalid Approved request is held unchanged; replacing/cancelling it is separate work. Applied is terminal here, with current grant state inspected separately."
+            "Submitted can be decided once. Returned is terminal and requires a new corrected request. Approved can be applied once at version 2 before its future start. A late or otherwise invalid Approved request is held unchanged; replacing/cancelling it is separate work. Applied is terminal here, with current grant state inspected separately.",
+            "Withdrawn closes the request, releases its pending capability/scope reservation and leaves existing access unchanged. A concurrent decision/application can make this tab stale."
           ],
           "steps": [],
           "headers": [],
@@ -75713,7 +75734,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Systems proposes a missing business capability for SYN Site observer at Company A / SYN-A with a future UTC start. Scheduling policy reviewer independently approves. Systems reopens and applies the exact approval. The new grant remains Scheduled until that UTC start; approval alone would have installed nothing."
+            "Systems proposes a missing business capability for SYN Site observer at Company A / SYN-A with a future UTC start. Scheduling policy reviewer independently approves. Systems reopens and applies the exact approval. The new grant remains Scheduled until that UTC start; approval alone would have installed nothing.",
+            "An Approved request misses its start. The original requester closes it with a reason, then submits a new proposal. The earlier approval remains visible on the closed record."
           ],
           "steps": [],
           "headers": [],
@@ -75723,7 +75745,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "A lost response retains the exact operation in this tab and disables new action. Check original result reads the actor-bound receipt; Retry unchanged action resends the same operation and payload. Reload in the same tab recovers it. Stale version requires refreshing the saved request. Current authority is checked again; a missing receipt is not proof that saving failed."
+            "A lost response retains the exact operation in this tab and disables new action. Check original result reads the actor-bound receipt; Retry unchanged action resends the same operation and payload. Reload in the same tab recovers it. Stale version requires refreshing the saved request. Current authority is checked again; a missing receipt is not proof that saving failed.",
+            "If withdrawal has an unknown outcome, check the original result or retry the unchanged action. Do not submit a replacement until closure is confirmed. A changed duty or working company can prevent recovery."
           ],
           "steps": [],
           "headers": [],
@@ -75733,7 +75756,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Shared labelled fields and buttons support keyboard operation without drag. At 390 and 320 CSS px cards and controls stack and identifiers wrap. This online workflow has same-tab recovery, not offline queuing. Actual device, zoom and screen-reader acceptance remain pending."
+            "Shared labelled fields and buttons support keyboard operation without drag. At 390 and 320 CSS px cards and controls stack and identifiers wrap. This online workflow has same-tab recovery, not offline queuing. Actual device, zoom and screen-reader acceptance remain pending.",
+            "On phone widths, scroll to the labelled withdrawal form. All competing actions are disabled while the original outcome is uncertain; offline submission is unavailable."
           ],
           "steps": [],
           "headers": [],
@@ -75743,7 +75767,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See access-change-requests.md and access-request-application.md, the retained AD-01 HTML and the access-application execution ledger. Exact UUIDs are used; the deferred ACR reference type is not allocated."
+            "See access-change-requests.md and access-request-application.md, the retained AD-01 HTML and the access-application execution ledger. Exact UUIDs are used; the deferred ACR reference type is not allocated.",
+            "Withdrawal contract and verification: docs/decisions/access-request-withdrawal.md and docs/testing/evidence/access-withdrawal/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75753,7 +75778,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations do not grant visual approval."
+            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations do not grant visual approval.",
+            "Withdrawal captures and functional evidence are separate from owner acceptance. Accepted native desktop/mobile images remain missing."
           ],
           "steps": [],
           "headers": [],
@@ -75761,7 +75787,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission checks pass. See docs/testing/evidence/access-application/README.md for exact source, historical upgrade/CI outcomes and pending owner acceptance."
+      "runtime_evidence": "Withdrawal verification in progress: docs/testing/evidence/access-withdrawal/README.md. Earlier application evidence remains tied to its recorded source."
     }
   ]
 }

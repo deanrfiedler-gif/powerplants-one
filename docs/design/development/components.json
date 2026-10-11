@@ -121,8 +121,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request, independent decision and application",
-          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
+          "label": "Access request, decision, application and withdrawal",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
         }
       ],
       "implementation": [
@@ -444,8 +444,8 @@
         },
         {
           "id": "buttons-ad01-requests",
-          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
-          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -1194,8 +1194,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request, independent decision and application",
-          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
+          "label": "Access request, decision, application and withdrawal",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
         }
       ],
       "implementation": [
@@ -1482,8 +1482,8 @@
         },
         {
           "id": "fields-ad01-requests",
-          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
-          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -2308,8 +2308,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request, independent decision and application",
-          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
+          "label": "Access request, decision, application and withdrawal",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
         }
       ],
       "implementation": [
@@ -2582,8 +2582,8 @@
         },
         {
           "id": "read-state-ad01-requests",
-          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
-          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -2623,8 +2623,8 @@
         },
         {
           "id": "ad01-request-host",
-          "label": "Access request, independent decision and application",
-          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
+          "label": "Access request, decision, application and withdrawal",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
         }
       ],
       "implementation": [
@@ -2780,8 +2780,8 @@
         },
         {
           "id": "status-ad01-requests",
-          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
-          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

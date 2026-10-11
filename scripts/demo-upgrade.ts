@@ -244,7 +244,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // application columns and extended guards retain original v1/v2 evidence unchanged.
   // Seed 80 adds one duty to the existing local Systems identity; no user or hosted
   // duty. Preserve exact hosted tester grants and all upgrade originals in the proof.
-  if (latestMigrationVersion !== 80) throw Error("Review the existing-demo upgrade for this release.");
+  // 0081 extends only local request closure and immutable evidence. It introduces
+  // no seed, user, grant or hosted command; preserve all existing runtime revocations.
+  if (latestMigrationVersion !== 81) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -178,7 +178,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   assert.deepEqual(await snapshot(), old);
   assert.deepEqual(
     await rows(
-      "SELECT to_jsonb(r)-ARRAY['applied_by','applied_at','application_reason','grant_id','grant_snapshot'] value FROM ppo.access_change_requests r ORDER BY id",
+      "SELECT to_jsonb(r)-ARRAY['applied_by','applied_at','application_reason','grant_id','grant_snapshot','withdrawn_at','withdrawal_reason'] value FROM ppo.access_change_requests r ORDER BY id",
     ),
     requests,
   );
@@ -205,7 +205,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     next.filter((r) => r.version > 79).map((r) => r.version),
-    [80],
+    [80, 81],
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version <= 79),
