@@ -13119,7 +13119,13 @@
         "docs/testing/evidence/access-teams/native-390-teams.png",
         "docs/testing/evidence/access-teams/native-390-finance.png",
         "docs/testing/evidence/access-teams/native-320-teams.png",
-        "docs/testing/evidence/access-teams/native-320-finance.png"
+        "docs/testing/evidence/access-teams/native-320-finance.png",
+        "docs/testing/evidence/access-local-teams/native-1440-overview.png",
+        "docs/testing/evidence/access-local-teams/native-1440-history.png",
+        "docs/testing/evidence/access-local-teams/native-390-overview.png",
+        "docs/testing/evidence/access-local-teams/native-390-history.png",
+        "docs/testing/evidence/access-local-teams/native-320-overview.png",
+        "docs/testing/evidence/access-local-teams/native-320-history.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",

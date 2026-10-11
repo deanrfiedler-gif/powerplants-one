@@ -1,0 +1,152 @@
+{
+  "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+  "status": "Historical upgrades still running; draft review only",
+  "checks": {
+    "access_database": {
+      "passed": 81
+    },
+    "native_browser": {
+      "unique_passed": 42,
+      "initial_failed": 3,
+      "corrected_team_rerun_passed": 9
+    },
+    "unit": {
+      "passed": 19
+    },
+    "retained_model": {
+      "passed": 107
+    },
+    "retained_browser": {
+      "passed": 40
+    },
+    "build": "Passed",
+    "lint": "Passed",
+    "studio": "Passed; visual reviews pending",
+    "foundation": "Initial passed; final in progress",
+    "naming": "Passed",
+    "historical_upgrades": "In progress",
+    "hosted_upgrade": "Pending local database availability"
+  },
+  "artifacts": [
+    {
+      "path": "access-regression.txt",
+      "sha256": "27c5bd24a1c200d90eb36fabf85344c9b3fe2d5c08c34991a07ad6b5553b9b30"
+    },
+    {
+      "path": "browser-corrected.txt",
+      "sha256": "9c226aff01b315cbb1d0bd9207a5e706aecb234a5a5dcb7d6a8dc58c5bb05552"
+    },
+    {
+      "path": "browser-initial.txt",
+      "sha256": "dcec7fc6e0ef28f591d3a9154c20606a22bf279e322a3a290addb7431069fd73"
+    },
+    {
+      "path": "build-initial.txt",
+      "sha256": "04297d78234e19748860a5cc5f09e2690994dbca87e965af633e571b3ffc677a"
+    },
+    {
+      "path": "build.txt",
+      "sha256": "180a9dc6d9a9faecb45101d82d6dac73d7935fbbbf91051c47734672203ec951"
+    },
+    {
+      "path": "capture.txt",
+      "sha256": "e5e4c4d17cc8de7de5913192827bbbda114e5735cadfb6bb7d544cd1b7cfaba5"
+    },
+    {
+      "path": "captures.json",
+      "sha256": "a00142b28aedc8c475872a0526a327ec636c6c61aaf8234fdc7c0cfdb038ec40"
+    },
+    {
+      "path": "database-fixture-correction.txt",
+      "sha256": "f8b0ac21c7df0f05d87c7e2ef73d854981802dbb0fb1c103acf78c8aaebcca97"
+    },
+    {
+      "path": "database-initial.txt",
+      "sha256": "2f235a00c75d96b4b2b4fc7d32674ce3d191668fd021e8371fcada6d49a2fd36"
+    },
+    {
+      "path": "foundation-initial.json",
+      "sha256": "5b928807a9cad43f8047ff6a47cb0e9de859e500bd9a50f1b8a4a603e23bd3c8"
+    },
+    {
+      "path": "lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "naming-initial.json",
+      "sha256": "351319fb0856b21af692a6af1c6f376ad8289425480d7afbaa2bd70949bb8af2"
+    },
+    {
+      "path": "naming.json",
+      "sha256": "af1686ce36d7c93d7100a387289f878ab00816323f470f4accea2699e1a142d4"
+    },
+    {
+      "path": "native-1440-history.png",
+      "sha256": "689dc882b30ab1288f015553c2195540986618dfa0b3218f8e9bc096573dbeb4"
+    },
+    {
+      "path": "native-1440-overview.png",
+      "sha256": "fca90f4a315c83f3171a551d09f56a43f073bfb1627aec1507d922e8088f788a"
+    },
+    {
+      "path": "native-320-history.png",
+      "sha256": "ead858b5fa586bd5e5922cca3eb6e0eb37e2fb46fce2e431ee96f3fbe37dadf1"
+    },
+    {
+      "path": "native-320-overview.png",
+      "sha256": "f9413c11e554ddfea625db3b2dbc112a38728c8ab83b58d76ef76e6d9b60dac5"
+    },
+    {
+      "path": "native-390-history.png",
+      "sha256": "6872ec9366d823152d4214c8def60ee2fa3a7cf6abe75dd51c05b61dd9f0a16c"
+    },
+    {
+      "path": "native-390-overview.png",
+      "sha256": "f9ce7fbe41919ec0a21bd2ae97c33ae5b1e64c9f96ece601e486c6262ede67f1"
+    },
+    {
+      "path": "parent-pr-mid-validation.json",
+      "sha256": "caa9f60a600973058565466bc65f3a94d2631bb02852fc89c3a9f6f054648df7"
+    },
+    {
+      "path": "README.md",
+      "sha256": "305681d2ed97a8f255e1ca77c450285b04ee21b2760d32ca5056e99bf036476f"
+    },
+    {
+      "path": "retained-browser-setup.txt",
+      "sha256": "05bae5d1ae66ac3b68743fab04af632e0f0a74fdac6e90a52b7ebee5bba29742"
+    },
+    {
+      "path": "retained-browser.json",
+      "sha256": "f8bc1031a8571c9682e8ce9e9e1642f173cbbb9a9b8aecee3f8f5ff18151d855"
+    },
+    {
+      "path": "retained-model.json",
+      "sha256": "b7a03d37897996fecd81369bfd635f37a222d8de4eb4fafbe4be7832931dfcd9"
+    },
+    {
+      "path": "review.md",
+      "sha256": "aeaaa62d6644460901b11a1554274498517803ad89dc209603908482186f9074"
+    },
+    {
+      "path": "setup-and-corrections.md",
+      "sha256": "278557979200eb94d8e3603e610aefe29b393240d1a4df69f946f206c0c2b186"
+    },
+    {
+      "path": "studio-initial.json",
+      "sha256": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f"
+    },
+    {
+      "path": "studio.json",
+      "sha256": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f"
+    },
+    {
+      "path": "unit.txt",
+      "sha256": "7c79e6a90868fe2b2a0cd6f8d18729c46fa9a125ef46ab34dba02fa3f05f724c"
+    },
+    {
+      "path": "upgrade-files.json",
+      "sha256": "320626b423e4af6c3ba77626af295947aa7ca51828c882ed43deaef1b4868c84"
+    }
+  ]
+}
