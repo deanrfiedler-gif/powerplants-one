@@ -12,6 +12,7 @@ import { waitForSampleCoreResponse } from "./quality-core-response";
 import { comparisonProfile, cpuAllocation } from "./quality-comparison-profile";
 import { assetDiagnosticsAllowed, assetReleaseProbeAllowed, assetSampleHeader, observeAssetNetwork } from "./quality-asset-observer";
 import { assertCalibration, installNetworkConditions, networkMethod } from "./quality-network-conditioning";
+import { relayProxy, startPacketNetwork } from "./quality-packet-network";
 
 // Bounded Customers diagnostic, separate from the complete four-view PT-27 run.
 // Ten browser processes and unchanged network/readiness limits. Original results
@@ -34,7 +35,8 @@ const compiledSource = process.env.PPO_COMPILED_SOURCE;
 assert.match(compiledSource ?? "", /^[0-9a-f]{40}$/);
 const calibratedBlock = process.env.PPO_COMPARISON_BLOCK?.startsWith("cpu-assets-network-");
 const calibration = calibratedBlock ? JSON.parse(await readFile("verification-evidence/pt27-network-calibration/protocol.json", "utf8")) : null;
-if (calibratedBlock) assertCalibration(calibration, compiledSource!);
+const candidate = process.env.PPO_NETWORK_CANDIDATE ?? "global";
+if (calibratedBlock) assertCalibration(calibration, compiledSource!, undefined, candidate);
 execFileSync("git", ["diff", "--exit-code", compiledSource!, "--", "src", "db", "public", "package.json", "package-lock.json", "scripts/build-offline.ts", "next.config.ts"]);
 const fixture = await performanceFixtureFingerprint();
 assert.deepEqual(fixture, expected.fixture);
@@ -49,6 +51,7 @@ const samples: Record<string, unknown>[] = [];
 const visits: Record<string, unknown>[] = [];
 const errors: string[] = [];
 const releaseProbes: Record<string, unknown>[] = [];
+let packet: Awaited<ReturnType<typeof startPacketNetwork>> | undefined;
 const metadata = {
   ...profile,
   ...(allocation ? { cpu_allocation: allocation } : {}),
@@ -61,7 +64,7 @@ const metadata = {
   asset_release_probe: releaseProbe,
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
   network_method: method,
-  ...(calibration ? { network_calibration: { source: calibration.source, browser: calibration.browser, passed: calibration.passed } } : {}),
+  ...(calibration ? { network_calibration: { source: calibration.source, browser: calibration.browser, passed: calibration.passed, candidate } } : {}),
   fixture, target_ms: 3000,
   limits: `Customers only; ${profile.browser_count} independent headless Chrome process(es), four waves per viewport and one actual record activation per user/viewport. A one-browser run is a startup diagnostic and cannot satisfy the ten-user target. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Results apply to the recorded run host; no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.`,
 };
@@ -93,8 +96,16 @@ try {
     await new Promise(r => setTimeout(r, 500));
   }
   assert.ok(ready, "Owned compiled server must start within 120 seconds");
-  browsers.push(...await Promise.all(Array.from({ length: profile.browser_count }, () => chromium.launch({ channel: "chrome", ...(process.env.PPO_BROWSER_WRAPPER ? { executablePath: process.env.PPO_BROWSER_WRAPPER } : {}) }))));
-  if (calibration) for (const browser of browsers) assertCalibration(calibration, compiledSource!, browser.version());
+  if (method === "packet") {
+    const target = new URL(origin); assert.equal(target.hostname, "127.0.0.1"); assert.equal(target.protocol, "http:");
+    packet = await startPacketNetwork(profile.browser_count, Number(target.port), true, `${root}/packet-network.json`);
+  }
+  const launches = await Promise.allSettled(Array.from({ length: profile.browser_count }, async (_, user) => {
+    const browser = await chromium.launch({ channel: "chrome", ...(process.env.PPO_BROWSER_WRAPPER ? { executablePath: process.env.PPO_BROWSER_WRAPPER } : {}), ...(packet ? { proxy: relayProxy(user) } : {}) });
+    browsers[user] = browser; return browser;
+  }));
+  assert.ok(launches.every(r => r.status === "fulfilled"), "Original browser launch failed");
+  if (calibration) for (const browser of browsers) assertCalibration(calibration, compiledSource!, browser.version(), candidate);
   for (const viewport of [{ name: "desktop", width: 1440, height: 1000 }, { name: "phone", width: 390, height: 844 }]) {
     const contexts = await Promise.all(browsers.map(b => b.newContext({ viewport, isMobile: viewport.name === "phone", hasTouch: viewport.name === "phone", locale: "en-AU" })));
     for (const context of contexts) assert.equal((await context.request.post(`${origin}/api/v1/local-session`, { headers: { Origin: origin }, data: { profile: "coordinator" } })).status(), 200);
@@ -235,6 +246,7 @@ try {
     await Promise.all(contexts.map(c => c.close()));
   }
   assert.equal(samples.length, profile.browser_count * 8); assert.equal(visits.length, profile.browser_count * 2);
+  await packet?.verify();
   const after = await performanceFixtureFingerprint(); assert.deepEqual(after, fixture);
   await writeFile(`${root}/fixture-after.json`, JSON.stringify(after, null, 2));
   await checkpoint(true);
@@ -244,6 +256,7 @@ try {
   throw error;
 } finally {
   try { await Promise.all(browsers.map(b => b.close())); } finally {
+  try { await packet?.close(); } finally {
   try {
     if (assetDiagnostics) {
       try { await writeFile(`${root}/assets.jsonl`, await readFile(`verification-evidence/asset-diagnostics/process-${server.pid}.jsonl`)); }
@@ -258,6 +271,7 @@ try {
   } finally {
     server.kill();
     await closeDatabase();
+  }
   }
   }
 }

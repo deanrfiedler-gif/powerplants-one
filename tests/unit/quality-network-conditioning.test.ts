@@ -10,14 +10,19 @@ test("network candidate is opt-in and retains the declared profile", async () =>
     { PPO_NETWORK_METHOD: "global", GITHUB_ACTIONS: "true", PPO_BENCHMARK_FIXTURE: "add-synthetic-load", PPO_COMPARISON_BLOCK: "cpu-assets-other" }])
     assert.throws(() => networkMethod(env));
   assert.equal(networkMethod({ PPO_NETWORK_METHOD: "global", GITHUB_ACTIONS: "true", PPO_BENCHMARK_FIXTURE: "add-synthetic-load", PPO_COMPARISON_BLOCK: "cpu-assets-network-test" }), "global");
+  const packet = { PPO_NETWORK_METHOD: "packet", PPO_NETWORK_CANDIDATE: "packet", GITHUB_ACTIONS: "true", PPO_BENCHMARK_FIXTURE: "add-synthetic-load", PPO_COMPARISON_BLOCK: "cpu-assets-network-test" };
+  assert.equal(networkMethod(packet), "packet");
+  assert.throws(() => networkMethod({ ...packet, PPO_NETWORK_CANDIDATE: undefined }));
   const calls: { command: string; args: unknown }[] = [];
   const cdp = { send: async (command: string, args: unknown) => { calls.push({ command, args }); return { ruleIds: ["observed-rule"] }; } } as unknown as CDPSession;
   assert.equal(await installNetworkConditions(cdp, "rule"), "observed-rule");
   assert.equal(await installNetworkConditions(cdp, "global"), null);
+  assert.equal(await installNetworkConditions(cdp, "packet"), null);
   assert.deepEqual(calls, [
     { command: "Network.emulateNetworkConditionsByRule", args: { offline: false, matchedNetworkConditions: [{ urlPattern: "", ...networkConditions }] } },
     { command: "Network.overrideNetworkState", args: networkConditions },
     { command: "Network.emulateNetworkConditions", args: networkConditions },
+    { command: "Network.overrideNetworkState", args: networkConditions },
     { command: "Network.overrideNetworkState", args: networkConditions },
   ]);
 });
@@ -52,4 +57,6 @@ test("application measurement refuses a failed, stale, changed-profile or differ
   assert.throws(() => assertCalibration(verdict, "b".repeat(40)));
   assert.throws(() => assertCalibration(verdict, source, "different"));
   assert.throws(() => assertCalibration({ ...verdict, conditions: { ...networkConditions, latency: 0 } }, source));
+  assert.throws(() => assertCalibration(verdict, source, "recorded", "packet"));
+  assertCalibration({ ...verdict, candidate: "packet" }, source, "recorded", "packet");
 });

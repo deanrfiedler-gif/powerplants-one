@@ -111,6 +111,7 @@ def run(evidence, block, output):
     protocol = json.loads((block_root / "protocol.json").read_bytes())
     positions = protocol["positions"]
     profile = protocol.get("profile", "observer")
+    network_candidate = protocol.get("network_candidate", "global")
     assert profile in ["observer", "startup", "candidate", "cpu", "cpu-core", "cpu-assets", "cpu-assets-release", "cpu-assets-network"]
     assert [p["diagnostics"] for p in positions] == (["0", "1", "1", "0"] if profile == "observer" else ["0"] * 4)
     assert [p.get("browser_count", 10) for p in positions] == ([1, 10, 10, 1] if profile == "startup" else [10] * 4)
@@ -121,7 +122,7 @@ def run(evidence, block, output):
         assert builds[0] == builds[3] != builds[1] == builds[2]
     if profile in ["cpu", "cpu-core", "cpu-assets", "cpu-assets-release", "cpu-assets-network"]:
         assert [p["label"] for p in positions] == [block + "-" + suffix for suffix in
-                (["rule-a1", "global-b1", "global-b2", "rule-a2"] if profile == "cpu-assets-network" else ["shared-a1", "partitioned-b1", "partitioned-b2", "shared-a2"])]
+                (["rule-a1", network_candidate + "-b1", network_candidate + "-b2", "rule-a2"] if profile == "cpu-assets-network" else ["shared-a1", "partitioned-b1", "partitioned-b2", "shared-a2"])]
         assert all(p["compiled_source"] == protocol["source"] and p["build_id"] == protocol["build_id"] for p in positions)
     assert [r["label"] for r in protocol["results"]] == [p["label"] for p in positions], "Retain incomplete block before attempting summary"
     roots = [evidence / "pt27-loading" / p["label"] for p in positions]
@@ -163,8 +164,12 @@ def run(evidence, block, output):
         if profile == "cpu-assets-network":
             row["network_method"] = data["network_method"]
             row["network_calibration"] = data["network_calibration"]
-            assert row["network_method"] == ("global" if positions.index(position) in [1, 2] else "rule")
+            assert row["network_method"] == (network_candidate if positions.index(position) in [1, 2] else "rule")
             assert row["network_calibration"]["passed"] and row["network_calibration"]["source"] == protocol["source"]
+            if row["network_method"] == "packet":
+                packet = json.loads((root / "packet-network.json").read_bytes())
+                assert packet["after"][0]["kind"] == "noqueue" and len(packet["relays"]) == 10
+                row["packet_network"] = packet
         row.update({"driver_exit_code": outcome["exit_code"], "resources_whole_run": resource_summary(resources),
                     "resources_successful_action_interiors": resource_summary(resources, merged),
                     "browser_http_errors": [{"viewport": s["viewport"], "wave": s["wave"], "user": s["user"], "path": r["path"], "status": r["status"]}

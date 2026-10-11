@@ -13,6 +13,12 @@ summary_spec.loader.exec_module(summary)
 
 
 class Counters(unittest.TestCase):
+    def test_packet_order_preserves_original_rule_anchors(self):
+        self.assertEqual(observer.positions_for("cpu-assets-network", "packet"),
+                         [("rule-a1", "0", 10), ("packet-b1", "0", 10), ("packet-b2", "0", 10), ("rule-a2", "0", 10)])
+        with self.assertRaises(AssertionError):
+            observer.positions_for("cpu-assets-network", "unknown")
+
     def test_asset_receipt_finish_cache_and_absent_receipt_are_distinct(self):
         data = {"samples": [{"asset_sample": "phone-0-2", "error": "timeout", "network": [
             {"path": "/_next/static/chunks/a.js", "type": "Script"},

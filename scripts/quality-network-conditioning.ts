@@ -3,15 +3,16 @@ import type { CDPSession } from "@playwright/test";
 
 export const networkConditions = { offline: false, latency: 40, downloadThroughput: 1250000,
   uploadThroughput: 625000, connectionType: "wifi" as const };
-export type NetworkMethod = "rule" | "global";
+export type NetworkMethod = "rule" | "global" | "packet";
 
 export function networkMethod(env: Record<string, string | undefined>): NetworkMethod {
   const method = env.PPO_NETWORK_METHOD ?? "rule";
-  assert.ok(method === "rule" || method === "global", "Unknown network method");
-  if (method === "global") {
+  assert.ok(method === "rule" || method === "global" || method === "packet", "Unknown network method");
+  if (method !== "rule") {
     assert.equal(env.GITHUB_ACTIONS, "true");
     assert.equal(env.PPO_BENCHMARK_FIXTURE, "add-synthetic-load");
     assert.match(env.PPO_COMPARISON_BLOCK ?? "", /^cpu-assets-network-[a-z0-9-]+$/);
+    if (method === "packet") assert.equal(env.PPO_NETWORK_CANDIDATE, "packet");
   }
   return method;
 }
@@ -23,7 +24,7 @@ export async function installNetworkConditions(cdp: CDPSession, method: NetworkM
       offline: false, matchedNetworkConditions: [{ urlPattern: "", ...networkConditions }],
     });
     assert.equal(result.ruleIds.length, 1); rule = result.ruleIds[0];
-  } else {
+  } else if (method === "global") {
     await cdp.send("Network.emulateNetworkConditions", networkConditions);
   }
   await cdp.send("Network.overrideNetworkState", networkConditions);
@@ -53,9 +54,10 @@ export function calibrationIssues(sample: CalibrationSample, conditioned: boolea
   return issues;
 }
 
-export function assertCalibration(verdict: { passed?: boolean; source?: string; browser?: string; conditions?: unknown }, source: string, browser?: string) {
+export function assertCalibration(verdict: { passed?: boolean; source?: string; browser?: string; conditions?: unknown; candidate?: string }, source: string, browser?: string, candidate = "global") {
   assert.equal(verdict.passed, true, "Independent network calibration must pass before application samples");
   assert.equal(verdict.source, source, "Calibration must belong to this source");
   assert.deepEqual(verdict.conditions, networkConditions);
+  assert.equal(verdict.candidate ?? "global", candidate, "Calibration must qualify the selected method");
   if (browser) assert.equal(verdict.browser, browser, "Calibration must use the same Chrome version");
 }

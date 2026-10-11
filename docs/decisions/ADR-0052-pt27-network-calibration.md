@@ -30,4 +30,16 @@ This adds only opt-in diagnostic scripts and a manual workflow choice. Default c
 
 ## Evidence and disposition
 
-Pending execution. Calibration, application outcomes, CI assurance, owner acceptance and deployment will be recorded separately. No result is inferred from successful configuration commands.
+The first source-bound run, `c946745` / Actions `38101774119`, passed the transfer gate but retained six cold phone timeouts in global B1. Global B2 and the rule anchors completed. Reject the global command as a reliable replacement; neither successful configuration nor the small synthetic graph predicts this application's outcome. Original samples remain unchanged.
+
+## Second candidate, declared before implementation
+
+That failed application comparison justifies testing an independent throttle engine. Use Linux's existing `tc` HTB rate classes and netem delay on the disposable CI runner's loopback interface, with one loopback SOCKS5 relay port per browser to classify its aggregate traffic. No package, production service or application endpoint is added. The relay forwards opaque TCP only to the single approved loopback application/calibration port; it does not inspect or retain HTTP headers or bodies. Force Chrome's loopback proxy use. Record relay connection/byte counters and kernel class statistics so successful configuration alone cannot pass the gate.
+
+Each browser receives separate 10 Mbit/s download and 5 Mbit/s upload classes, with 20 ms delay in each direction. These are the same nominal byte rates and 40 ms round trip; packet accounting, TCP acknowledgement/handshake delay and relay overhead differ from CDP response scheduling. Equivalence is bounded by the unchanged transfer criteria, not asserted bit-for-bit. [HTB](https://github.com/iproute2/iproute2/blob/main/man/man8/tc-htb.8) supplies aggregate classes and [netem](https://github.com/iproute2/iproute2/blob/main/man/man8/tc-netem.8) documents timer and TCP placement limitations. Those limitations remain applicable to loopback measurement.
+
+Require Linux, four available CPUs, the explicit manual synthetic CI profile, unused reserved relay ports below the ephemeral range and an original `noqueue` loopback discipline. Refuse unexpected state. Create a uniquely identified owned root; remove only that verified root in cleanup, retaining before/configured/after statistics. Unclassified traffic remains unshaped. Do not modify the developer machine, routes, offload settings or other interfaces.
+
+Calibration order: direct unthrottled A1, unshaped relay A1, packet B1, packet B2, unshaped relay A2, direct unthrottled A2; each has one then ten independent browsers. Retain every outcome, including failures; both packet repeats and all anchors must satisfy the existing exact-byte, slope, aggregate, latency and graph criteria. Require nonzero per-browser relay bytes and traffic-class counts for both directions. No thresholds or 120-second deadlines change. A failure blocks application measurement.
+
+After that gate alone, compare rule / packet / packet / rule on the same compiled build and fixture, with all four CPUs shared in every position, the original ten-browser desktop/phone workloads and three-second target. The relay hop is an explicit method difference and its unshaped anchors bound overhead. Authentication setup remains outside measured actions. Keep default CDP rule behaviour unchanged pending evidence; a completed block is not production or full PT-27 acceptance.

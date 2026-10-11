@@ -7,6 +7,7 @@ import { availableParallelism } from "node:os";
 import { chromium } from "@playwright/test";
 import { calibrationIssues, installNetworkConditions, networkConditions, type CalibrationSample } from "./quality-network-conditioning";
 import { observeAssetNetwork } from "./quality-asset-observer";
+import { relayProxy, startPacketNetwork } from "./quality-packet-network";
 
 assert.equal(process.env.GITHUB_ACTIONS, "true", "Calibration is an explicit disposable CI experiment");
 assert.equal(process.env.PPO_BLOCK_PROFILE, "cpu-assets-network");
@@ -14,6 +15,9 @@ assert.equal(process.platform, "linux");
 assert.equal(availableParallelism(), 4, "Retain an unexpected runner; never silently change capacity");
 const source = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 assert.equal(source, process.env.PPO_SOURCE_HEAD);
+const candidate = process.env.PPO_NETWORK_CANDIDATE ?? "global";
+assert.ok(candidate === "global" || candidate === "packet");
+const methods = candidate === "packet" ? ["none-a1", "relay-a1", "packet-b1", "packet-b2", "relay-a2", "none-a2"] : ["none-a1", "rule", "global-b1", "global-b2", "none-a2"];
 const root = "verification-evidence/pt27-network-calibration";
 await mkdir("verification-evidence", { recursive: true });
 await mkdir(root, { recursive: false });
@@ -28,7 +32,7 @@ const graph = Buffer.from("<!doctype html><html><head>" + Array.from({ length: 8
 const server = createServer((req, res) => {
   const started = performance.now(), at = Date.now(), path = new URL(req.url ?? "/", "http://127.0.0.1").pathname;
   const rawSample = req.headers["x-ppo-calibration-sample"];
-  const sample = typeof rawSample === "string" && /^(none-a1|rule|global-b1|global-b2|none-a2)-(1|10)-[0-9]$/.test(rawSample) ? rawSample : null;
+  const sample = typeof rawSample === "string" && /^(none-a1|rule|global-b1|global-b2|packet-b1|packet-b2|relay-a1|relay-a2|none-a2)-(1|10)-[0-9]$/.test(rawSample) ? rawSample : null;
   const event: Record<string, unknown> = { sample, path: /^\/(tiny|graph|upload|download\/\d+|asset\/(css|js)\/\d+)$/.test(path) ? path : "other", at_ms: at, method: req.method };
   serverEvents.push(event);
   res.once("finish", () => Object.assign(event, { finished_ms: performance.now() - started, status: res.statusCode }));
@@ -57,21 +61,25 @@ const address = server.address(); assert.ok(address && typeof address !== "strin
 const origin = `http://127.0.0.1:${address.port}`;
 const cohorts: Record<string, unknown>[] = [];
 let browserVersion: string | undefined;
-const protocol = { source, started_at: new Date().toISOString(), node: process.version, platform: process.platform,
+const protocol = { source, candidate, started_at: new Date().toISOString(), node: process.version, platform: process.platform,
   logical_cpus: availableParallelism(), conditions: networkConditions, cohorts, passed: false, browser: "",
-  criteria: "ADR-0052: exact bytes; both global repeats and both unthrottled anchors at one/ten browsers; original rule retained without determining candidate gate; no retries or substituted cohorts." };
+  criteria: "ADR-0052: exact bytes; both candidate repeats and all unthrottled anchors at one/ten browsers; original rule (global profile only) retained without determining candidate gate; no retries or substituted cohorts." };
 await writeFile(`${root}/protocol.json`, JSON.stringify(protocol, null, 2));
 try {
-  for (const method of ["none-a1", "rule", "global-b1", "global-b2", "none-a2"] as const) {
+  for (const method of methods) {
     for (const users of [1, 10]) {
       const browsers: Awaited<ReturnType<typeof chromium.launch>>[] = [];
       const samples: (CalibrationSample & Record<string, unknown>)[] = [];
-      const cohort = { method, users, samples, complete: false, passed: false };
+      const cohort: Record<string, unknown> = { method, users, samples, complete: false, passed: false };
+      const conditioned = !method.startsWith("none") && !method.startsWith("relay");
+      const relay = method.startsWith("packet") || method.startsWith("relay");
+      let packet: Awaited<ReturnType<typeof startPacketNetwork>> | undefined;
       cohorts.push(cohort);
       try {
+        if (relay) packet = await startPacketNetwork(users, address.port, conditioned, `${root}/traffic-${method}-${users}.json`);
         // Retain every successfully launched owned browser even if another launch fails.
-        const launches = await Promise.allSettled(Array.from({ length: users }, async () => {
-          const b = await chromium.launch({ channel: "chrome" }); browsers.push(b); return b;
+        const launches = await Promise.allSettled(Array.from({ length: users }, async (_, user) => {
+          const b = await chromium.launch({ channel: "chrome", ...(relay ? { proxy: relayProxy(user) } : {}) }); browsers[user] = b; return b;
         }));
         assert.ok(launches.every(r => r.status === "fulfilled"), "Original browser launch failed");
         for (const b of browsers) { browserVersion ??= b.version(); assert.equal(b.version(), browserVersion); }
@@ -94,7 +102,7 @@ try {
           cdp.on("Network.loadingFinished", e => { const row = network.get(e.requestId); if (row) Object.assign(row, { finish_ms: 1000 * (e.timestamp - start), encoded_bytes: e.encodedDataLength }); });
           const stop = observeAssetNetwork(cdp, network, () => start);
           try {
-            if (!method.startsWith("none")) sample.rule_id = await installNetworkConditions(cdp, method === "rule" ? "rule" : "global");
+            if (conditioned) sample.rule_id = await installNetworkConditions(cdp, method === "rule" ? "rule" : candidate);
             sample.stage = "asset-graph"; const graphStart = performance.now();
             await page.goto(origin + "/graph", { waitUntil: "load", timeout: 120000 });
             sample.graph = await page.evaluate(() => ({ scripts: (window as unknown as { __ppoGraph: number }).__ppoGraph, stylesheets: document.styleSheets.length }));
@@ -142,15 +150,19 @@ try {
             sample.error = error instanceof Error ? error.message : "unknown-probe-error";
           } finally {
             sample.finished_at_ms = Date.now(); sample.network = structuredClone([...network.values()]); stop();
-            sample.issues = calibrationIssues(sample, !method.startsWith("none"));
+            sample.issues = calibrationIssues(sample, conditioned);
             await writeFile(`${root}/${sampleKey}.json`, JSON.stringify(sample, null, 2), { flag: "wx" });
             await context.close();
           }
         }));
+        await packet?.verify({ upload: 1375000, download: 5750000 });
         cohort.complete = samples.length === users;
         cohort.passed = cohort.complete && samples.every(s => (s.issues as string[]).length === 0);
+      } catch (error) {
+        cohort.error = String(error); // Retain setup/classification failures, too.
       } finally {
         await Promise.all(browsers.map(b => b.close()));
+        await packet?.close();
         await writeFile(`${root}/protocol.json`, JSON.stringify(protocol, null, 2));
         await writeFile(`${root}/server.json`, JSON.stringify(serverEvents, null, 2));
         console.log(JSON.stringify({ method, users, complete: cohort.complete, passed: cohort.passed,
@@ -158,7 +170,7 @@ try {
       }
     }
   }
-  protocol.passed = cohorts.length === 10 && cohorts.filter(c => c.method !== "rule").every(c => c.passed);
+  protocol.passed = cohorts.length === methods.length * 2 && cohorts.filter(c => c.method !== "rule").every(c => c.passed);
   await writeFile(`${root}/protocol.json`, JSON.stringify(protocol, null, 2));
   assert.ok(protocol.passed, "Retain failed calibration; do not measure the application");
 } finally {

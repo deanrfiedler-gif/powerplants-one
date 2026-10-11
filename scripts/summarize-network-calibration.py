@@ -16,6 +16,8 @@ def run(root, output):
         for sample in samples:
             assert json.loads((root / (sample["sample"] + ".json")).read_bytes()) == sample
         row = {key: cohort[key] for key in ["method", "users", "complete", "passed"]}
+        if "error" in cohort:
+            row["error"] = cohort["error"]
         row["samples"] = []
         for sample in samples:
             item = {key: sample[key] for key in ["sample", "stage", "issues"] if key in sample}
@@ -37,7 +39,11 @@ def run(root, output):
         rows.append(row)
     summary = {key: protocol[key] for key in ["source", "started_at", "node", "platform", "logical_cpus", "conditions", "browser", "passed", "criteria"]}
     summary["cohorts"] = rows
+    if "candidate" in protocol:
+        summary["candidate"] = protocol["candidate"]
     summary["limits"] = "Independent synthetic transfers, not application latency or production readiness. Both commands share Chromium's throttle engine. Missing probes and failed cohorts remain explicit; no retries, pooling, replacement or inferred success."
+    if protocol.get("candidate") == "packet":
+        summary["limits"] = "Independent packet shaping, not application latency or production readiness. Packet/TCP accounting and relay overhead differ from CDP. Unshaped relay anchors and per-browser kernel/relay observations are retained. Missing probes and failed cohorts remain explicit; no retries, pooling, replacement or inferred success."
     artifacts = []
     for path in sorted(root.glob("*.json")):
         raw = path.read_bytes()
