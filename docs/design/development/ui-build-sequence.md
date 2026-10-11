@@ -5,7 +5,7 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs\design\development\register.json` (SHA-256 `3c02ecc2426f3c77…`).
+- Register: `docs\design\development\register.json` (SHA-256 `e790b4546e38654f…`).
 - Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
 - 352 entries: 349 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
 - 192 built and awaiting owner review; 106 to refine; 45 to build; 6 awaiting a scope decision.

@@ -1,0 +1,47 @@
+{
+  "source": "fae7e3f96ff98a0edfb9198762f52ee08a6202e1",
+  "build_id": "nOF2Hp9SI52P_elFS3M3D",
+  "stats": {
+    "startTime": "2026-10-10T21:45:24.491Z",
+    "duration": 55087.045,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "warm every route once before the browser projects",
+      "project": "warm-up",
+      "status": "passed",
+      "duration_ms": 13810
+    },
+    {
+      "title": "directory record links avoid automatic reads and keep exact receiving navigation",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "duration_ms": 15335
+    },
+    {
+      "title": "directory record links avoid automatic reads and keep exact receiving navigation",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "duration_ms": 6132
+    },
+    {
+      "title": "P03 customer, shared contact, site/equipment attribution and My Work at desktop/mobile widths",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "duration_ms": 6485
+    },
+    {
+      "title": "P03 customer, shared contact, site/equipment attribution and My Work at desktop/mobile widths",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "duration_ms": 5685
+    }
+  ],
+  "artifacts_verified": 28,
+  "private_value_scan": "passed",
+  "limits": "Focused compiled desktop/phone regression, fresh standard synthetic seed, original warm-up and deadlines. Separate from load-fixture timing and full PR-suite status. No owner/device/production acceptance."
+}

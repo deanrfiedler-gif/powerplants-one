@@ -13,6 +13,9 @@ export const unavailable = () =>
 
 // Only fixed categories may enter review logs; never copy error text or arbitrary codes.
 export function unexpectedFailureCategory(error: unknown): string {
+  // Exact messages from the pinned pg-pool; return fixed labels, never the text.
+  if (error instanceof Error && error.message === "timeout exceeded when trying to connect") return "DatabasePoolWaitTimeout";
+  if (error instanceof Error && error.message === "Connection terminated due to connection timeout") return "DatabaseConnectTimeout";
   const code = error && typeof error === "object" && "code" in error
     ? error.code : undefined;
   switch (code) {

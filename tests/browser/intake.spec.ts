@@ -57,6 +57,9 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(
     page.getByText("Loading permitted records…", { exact: true }),
   ).toHaveCount(0);
+  const duplicates = page.locator("section.detail-section").filter({ has: page.getByRole("heading", { name: "Possible duplicate organisations", exact: true }) });
+  await expect(duplicates.getByRole("link", { name: /SYN-PPO-ORG-000005/ })).toHaveAttribute("href", "/customers/50000000-0000-4000-8000-000000000005");
+  await expect(duplicates.locator('a[href="/customers/50000000-0000-4000-8000-000000000001"]')).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("P03-customer.png"),
     fullPage: true,

@@ -9,6 +9,7 @@ import { proofDiagnosticsEnabled, proofEvent, proofPath, proofRequest as withPro
 import { runtimeSampler } from "../src/platform/proof-runtime";
 import { sendLoginPage } from "../src/login/login-page";
 import { withRequestScope } from "../src/platform/working-company";
+import { createAssetObserver } from "./quality-asset-observer";
 // `--compiled` serves the completed `npm run build` output instead of the
 // Turbopack development server. It is the same compiled application the hosted
 // image runs, but still the loopback synthetic-identity launcher: NODE_ENV
@@ -34,6 +35,7 @@ process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");
 const app = next({ dev: !compiled, hostname: "127.0.0.1", port: config.port });
 await app.prepare();
 const handler = app.getRequestHandler();
+const observeAsset = createAssetObserver(process.env, compiled);
 let proofRequest = 0;
 const server = createServer((req, res) => {
   const peer = req.socket.remoteAddress;
@@ -65,6 +67,7 @@ const server = createServer((req, res) => {
     sendLoginPage(res, "ready", 200, true); return;
   }
   const requestId = ++proofRequest;
+  observeAsset(req, res);
   // Numeric correlation only in opt-in loopback diagnostics, on uncached API
   // responses. Never include credentials, identity, payloads or cached assets.
   if (proofDiagnosticsEnabled() && loginPath.startsWith("/api/v1/"))
