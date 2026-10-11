@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "284e03e8df4f7d5d94493ac9b470c04ae3bb13dc362af98b3eca9dc8b345c005",
+  "register_sha256": "1bbe82edfe3feafafa8a5f734a7f692c253dac3feab87e3973050c14c045e2ae",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -20,12 +20,12 @@
   "build": "01"
  },
  "totals": {
-  "entries": 354,
-  "placed": 351,
+  "entries": 356,
+  "placed": 353,
   "excluded": 3,
   "build": 45,
   "refine": 106,
-  "review": 194,
+  "review": 196,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -393,11 +393,11 @@
    "counts": {
     "build": 5,
     "refine": 17,
-    "review": 21,
+    "review": 23,
     "decide": 0
    },
    "scopes": 20,
-   "routes": 23,
+   "routes": 25,
    "systems": 0,
    "entries": [
     {
@@ -434,6 +434,17 @@
      "placement": "Issued r02 rank"
     },
     {
+     "key": "route:/admin/access/[id]/roles",
+     "title": "Compare proposed role bundle",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/[id]/roles",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
      "key": "route:/admin/access/capabilities",
      "title": "Capability catalogue",
      "kind": "route",
@@ -450,6 +461,17 @@
      "kind": "route",
      "module": "AD",
      "path": "/admin/access/capabilities/[id]",
+     "rank": 8,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/access/roles",
+     "title": "Proposed role bundles",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/access/roles",
      "rank": 8,
      "state": "review",
      "visual_review": "Pending",

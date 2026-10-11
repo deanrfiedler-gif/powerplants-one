@@ -30367,7 +30367,7 @@
           "title": "Purpose and outcome",
           "paragraphs": [
             "Native Users and access now inspects current identities, grants and exact company/site grant eligibility. It does not change access.",
-            "The remaining role, team, change and campaign steps below are proposed workflow, not available native controls. Source content and guide text cannot authorise an access expansion.",
+            "Proposed-role comparison is now available; team, change and campaign steps below remain proposed workflow, not available native controls. Source content and guide text cannot authorise an access expansion.",
             "The versionless AD-01 working HTML explains 132 current code capabilities. The issued r01 remains historical evidence; the native server enforces actual grants."
           ],
           "steps": [],
@@ -30390,7 +30390,9 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
+          "paragraphs": [
+            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing."
+          ],
           "steps": [
             "Open Users and access under More, Administration and support.",
             "Find an identity by its visible name or filter Active/Inactive; open its person record.",
@@ -30593,7 +30595,9 @@
       ],
       "related_entry_keys": [
         "route:/admin/access/capabilities",
-        "route:/admin/access/capabilities/[id]"
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -74545,7 +74549,9 @@
       "source_commit": "0e1045903ce335020abf8efd11b09154345c5013",
       "related_entry_keys": [
         "route:/admin/access/capabilities",
-        "route:/admin/access/capabilities/[id]"
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles"
       ],
       "sections": [
         {
@@ -74572,7 +74578,8 @@
           "section_id": "quick-start",
           "title": "Inspect access",
           "paragraphs": [
-            "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility."
+            "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility.",
+            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing."
           ],
           "steps": [],
           "rows": [],
@@ -74696,7 +74703,9 @@
       "source_commit": "0e1045903ce335020abf8efd11b09154345c5013",
       "related_entry_keys": [
         "route:/admin/access/capabilities",
-        "route:/admin/access/capabilities/[id]"
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles"
       ],
       "sections": [
         {
@@ -74723,7 +74732,8 @@
           "section_id": "quick-start",
           "title": "Inspect access",
           "paragraphs": [
-            "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility."
+            "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility.",
+            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing."
           ],
           "steps": [],
           "rows": [],
@@ -75137,6 +75147,310 @@
       ],
       "prepared_at": "2026-10-11",
       "runtime_evidence": "See docs/testing/evidence/access-capabilities/README.md; owner review pending"
+    },
+    {
+      "guide_key": "guide.route-admin-access-id-roles",
+      "entry_key": "route:/admin/access/[id]/roles",
+      "title": "Compare proposed role bundle",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native read-only proposed-role inspection and comparison",
+      "source_commit": "27863308e52fb35a78f34f43eb051194c34b06ba",
+      "related_entry_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/roles"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Compare one proposed bundle revision with one person's current grants at a selected company or site."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use current Workspace admin.access.read authority and clear the reviewer's working company. Open an existing person from the workspace's Users and access directory."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Compare current grants",
+          "paragraphs": [
+            "Choose Compare proposed role bundle on Person access. Select Proposed bundle, Source revision, Company and optional Site, then Compare current grants."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The page identifies the person, exact proposed revision and selected company ERP key/site number. Each capability reports whether a current grant permits that scope, with a link to a fresh explanation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Bundle and revision are required. Company is required; Site is optional and restricted to the company. Company-level checks exclude site-only grants. Workspace grants can qualify; the subject's saved working company can narrow them."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Choose the exact source revision; r02 Service coordinator remains a Draft. Changing any selection clears the previous result. Select Compare current grants again to obtain a new server result."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "The result covers only capabilities in that proposal. Missing capabilities are not a recommendation to grant access. No membership, grant, approval, review campaign or audit event is created. Explain links preselect person context; Check grant eligibility must be submitted separately."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading/error hides prior comparison results. Inactive identities and future/expired grants cannot match. Hosted names stay masked and invitation/session checks are not evaluated. A denial or selected reviewer working company hides person and form context."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Compare Read-only observer r01 for SYN Site observer at its first Company A site: shared.read permits that scope. Compare the second site or the company without a site: it does not. Identical company names remain distinct through SYN-A/SYN-B keys."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Retry a temporary read failure. After permission or working-company refusal, Retry reloads person and proposal context and requires a fresh comparison. Do not treat an earlier match as current business authority."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Labelled native selects, Tab/Shift+Tab and submit buttons work without drag. Cards stack at 390/320 px; long keys wrap. Online server checks are required. Physical-device, zoom and screen-reader acceptance remain open."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the native AD-01 decision, role comparison execution ledger, retained AD-01 HTML and Person access explanation guide."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide; native pages adapt the retained catalogue/inspector into separate routes. Owner review, operational D-020 policy and deployment remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-11",
+      "runtime_evidence": "See docs/testing/evidence/access-roles/README.md; owner review pending"
+    },
+    {
+      "guide_key": "guide.route-admin-access-roles",
+      "entry_key": "route:/admin/access/roles",
+      "title": "Proposed role bundles",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native read-only proposed-role inspection and comparison",
+      "source_commit": "27863308e52fb35a78f34f43eb051194c34b06ba",
+      "related_entry_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/[id]/roles"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Inspect seven retained business/approval role proposals, including exact source revisions and capability lists."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use current Workspace admin.access.read authority and clear the working company in the account panel. Systems is the permitted local synthetic identity."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Inspect proposed roles",
+          "paragraphs": [
+            "From Users and access, select Browse proposed role bundles. Open Capabilities in r01 or r02 for the selected proposal."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Each card identifies the proposal family, source revision/state, proposed grant scopes and capabilities. Service coordinator r02 is Draft and adds pack.check; it has not replaced r01."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "These are comparison proposals from the retained AD-01 design, not adopted roles or personnel assignments. D-020 remains open. Hosted tester provisioning remains with the operator and its fixed set is excluded."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Inspect the exact capability key and plain-English description. A capability link opens its actual recorded grant holders. Use the people directory to open a person, then Compare proposed role bundle."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "No role is assigned, no review is recorded and no grant changes. A capability link hands over to current grant inspection; a person comparison requires its own explicit request."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Proposed and Draft describe design proposals. They never mean Approved or Adopted. Loading and failure hide prior catalogue cards; Retry or Refresh proposed bundles rechecks authority."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Service coordinator r01 lists 13 capabilities. Draft r02 lists 14, adding pack.check without removing a capability. That proposal difference does not change any person's access."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Retry a failed read. Clear a working company before workspace inspection. If permission is refused, obtain current authorised access; refreshing does not grant it."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Use native details summaries with keyboard Enter/Space; Tab follows links and shared buttons. Cards stack and keys wrap at 390/320 px. Online reads are required. Physical-device, zoom and screen-reader acceptance remain open."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide; owner acceptance and policy adoption are separate from functional proof. Accepted native mockup images are missing."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-11",
+      "runtime_evidence": "See docs/testing/evidence/access-roles/README.md; owner review pending"
     }
   ]
 }

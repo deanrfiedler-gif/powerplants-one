@@ -108,6 +108,8 @@ test("AD-01 direct HTTP requests enforce current inspection permission and expos
     "/api/v1/admin/access/capabilities/shared.read",
     "/api/v1/admin/access/30000000-0000-4000-8000-000000000005",
     "/api/v1/admin/access/30000000-0000-4000-8000-000000000005/explanation?capability=shared.read&company_id=20000000-0000-4000-8000-000000000001",
+    "/api/v1/admin/access/roles",
+    "/api/v1/admin/access/30000000-0000-4000-8000-000000000005/roles?bundle_id=bundle-observer&revision=r01&company_id=20000000-0000-4000-8000-000000000001",
   ]) {
     const response = await request.get(route);
     expect(response.status()).toBe(403);
@@ -127,6 +129,8 @@ test("AD-01 direct HTTP requests enforce current inspection permission and expos
     "/api/v1/admin/access",
     "/api/v1/admin/access/capabilities",
     "/api/v1/admin/access/capabilities/shared.read",
+    "/api/v1/admin/access/roles",
+    "/api/v1/admin/access/30000000-0000-4000-8000-000000000005/roles?bundle_id=bundle-observer&revision=r01&company_id=20000000-0000-4000-8000-000000000001",
   ]) {
     const response = await request.get(route);
     expect(response.status()).toBe(200);
@@ -202,7 +206,12 @@ test("AD-01 capability catalogue shows unassigned keys and drills through exact 
     .getByRole("link", { name: "Browse the capability catalogue" })
     .click();
   await expect(
-    page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("list", { name: "Users and access / Capability catalogue", exact: true }),
+    page
+      .getByRole("navigation", { name: "Breadcrumb" })
+      .getByRole("list", {
+        name: "Users and access / Capability catalogue",
+        exact: true,
+      }),
   ).toBeVisible();
   await page.getByLabel("Find a capability").fill("no-matching-capability");
   await page.getByRole("button", { name: "Search capabilities" }).click();

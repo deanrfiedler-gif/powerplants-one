@@ -5088,14 +5088,16 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Native read-only people, capability catalogue, grant holders and company/site eligibility explanation. Roles, teams, access changes and campaigns remain open.",
+      "summary": "Native people, capabilities, grant explanations and proposed-role comparison. Teams, access changes and campaigns remain open.",
       "path": "/admin/access",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "src/access/screens.tsx",
         "src/access/service.ts",
         "src/access/catalogue-screens.tsx",
-        "src/access/capabilities.ts"
+        "src/access/capabilities.ts",
+        "src/access/roles.ts",
+        "src/access/role-screens.tsx"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5115,7 +5117,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "People, capabilities, grant holders and explanations verified locally; roles, teams, changes and campaigns remain open.",
+      "functional_status": "Native inspection and proposed-role comparison implemented; see separate execution ledgers. Teams, changes, campaigns and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5125,7 +5127,9 @@
         "route:/admin/access",
         "route:/admin/access/[id]",
         "route:/admin/access/capabilities",
-        "route:/admin/access/capabilities/[id]"
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles"
       ],
       "reviewer": null
     },
@@ -12842,7 +12846,7 @@
       "title": "Person access and grant explanation",
       "kind": "route",
       "module": "AD",
-      "summary": "Read-only native people, exact grants and company/site grant explanation. Role bundles, teams, access changes and review campaigns remain unimplemented.",
+      "summary": "Native people, capabilities, grant explanations and proposed-role comparison. Teams, access changes and campaigns remain open.",
       "path": "/admin/access/[id]",
       "source_paths": [
         "src/app/(business)/admin/access/[id]/page.tsx",
@@ -12876,7 +12880,9 @@
         "scope:AD-01",
         "route:/admin/access",
         "route:/admin/access/capabilities",
-        "route:/admin/access/capabilities/[id]"
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles"
       ]
     },
     {
@@ -12884,7 +12890,7 @@
       "title": "Users and access",
       "kind": "route",
       "module": "AD",
-      "summary": "Read-only native people, exact grants and company/site grant explanation. Role bundles, teams, access changes and review campaigns remain unimplemented.",
+      "summary": "Native people, capabilities, grant explanations and proposed-role comparison. Teams, access changes and campaigns remain open.",
       "path": "/admin/access",
       "source_paths": [
         "src/app/(business)/admin/access/page.tsx",
@@ -12918,7 +12924,9 @@
         "scope:AD-01",
         "route:/admin/access/[id]",
         "route:/admin/access/capabilities",
-        "route:/admin/access/capabilities/[id]"
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles"
       ]
     },
     {
@@ -13005,6 +13013,88 @@
         "route:/admin/access",
         "route:/admin/access/[id]",
         "route:/admin/access/capabilities/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access/[id]/roles",
+      "title": "Compare proposed role bundle",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only retained role proposals and exact company/site comparison; no assignment or access mutation.",
+      "path": "/admin/access/[id]/roles",
+      "source_paths": [
+        "src/app/(business)/admin/access/[id]/roles/page.tsx",
+        "src/access/role-screens.tsx",
+        "src/access/service.ts",
+        "src/access/roles.ts"
+      ],
+      "guide_key": "guide.route-admin-access-id-roles",
+      "design_path": "docs/design/development/pages/route-admin-access-id-roles.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "docs/design/access-review/model.js",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Database scope/authority and preservation checks pass; compiled browser verification recorded separately in the role comparison ledger.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/roles"
+      ]
+    },
+    {
+      "key": "route:/admin/access/roles",
+      "title": "Proposed role bundles",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only retained role proposals and exact company/site comparison; no assignment or access mutation.",
+      "path": "/admin/access/roles",
+      "source_paths": [
+        "src/app/(business)/admin/access/roles/page.tsx",
+        "src/access/role-screens.tsx",
+        "src/access/service.ts",
+        "src/access/roles.ts"
+      ],
+      "guide_key": "guide.route-admin-access-roles",
+      "design_path": "docs/design/development/pages/route-admin-access-roles.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "docs/design/access-review/model.js",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Database scope/authority and preservation checks pass; compiled browser verification recorded separately in the role comparison ledger.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/[id]/roles"
       ]
     }
   ]

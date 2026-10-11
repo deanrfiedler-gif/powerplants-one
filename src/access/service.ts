@@ -1,6 +1,11 @@
 import { transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
-import { capabilityCatalogue, isCapability } from "./capabilities";
+import {
+  capabilityCatalogue,
+  capabilityLabels,
+  isCapability,
+} from "./capabilities";
+import { roleProposals } from "./roles";
 import type { Principal } from "../platform/identity";
 import {
   hasPermission,
@@ -53,6 +58,115 @@ const grantState = `CASE WHEN NOT u.active THEN 'Inactive identity'
   WHEN g.valid_from>statement_timestamp() THEN 'Scheduled'
   WHEN g.valid_to IS NOT NULL AND g.valid_to<=statement_timestamp() THEN 'Expired'
   ELSE 'Current' END`;
+
+export async function accessRoles(p: Principal) {
+  return transaction(async (c) => {
+    await c.query("SET TRANSACTION READ ONLY");
+    await requireAccessInspection(c, p);
+    return { items: roleProposals };
+  });
+}
+
+export async function compareAccessRole(
+  p: Principal,
+  id: string,
+  input: Record<string, string>,
+) {
+  identifier(id);
+  const company = identifier(input.company_id ?? "");
+  const site = input.site_id ? identifier(input.site_id) : undefined;
+  return transaction(async (c) => {
+    await c.query("SET TRANSACTION READ ONLY");
+    await requireAccessInspection(c, p);
+    const bundle = roleProposals.find((item) => item.id === input.bundle_id);
+    const revision = bundle?.revisions.find(
+      (item) => item.revision === input.revision,
+    );
+    if (!bundle || !revision)
+      throw new AppError(
+        422,
+        "InvalidRoleProposal",
+        "Choose an available proposed bundle and its exact source revision.",
+      );
+    const user = (
+      await c.query(
+        `SELECT ${personColumns} FROM ppo.users u WHERE u.workspace_id=$1 AND u.id=$2`,
+        [p.workspace_id, id],
+      )
+    ).rows[0];
+    if (!user)
+      throw new AppError(404, "NotFound", "This identity is unavailable.");
+    const companyRow = (
+      await c.query(
+        "SELECT id,display_name,erp_company_id FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, company],
+      )
+    ).rows[0];
+    const siteRow = site
+      ? (
+          await c.query(
+            "SELECT id,display_number,display_name FROM ppo.sites WHERE workspace_id=$1 AND company_id=$2 AND id=$3",
+            [p.workspace_id, company, site],
+          )
+        ).rows[0]
+      : null;
+    if (!companyRow || (site && !siteRow))
+      throw new AppError(
+        404,
+        "NotFound",
+        "This company or site is unavailable.",
+      );
+    const subject: Principal = {
+      workspace_id: p.workspace_id,
+      actor_id: id,
+      display_name: user.display_name,
+    };
+    const working = await loadWorkingCompany(c, subject);
+    const items = await withWorkingCompany(id, working, async () => {
+      const results = [];
+      // Bounded by the retained proposal (at most 14 capabilities). Reuse the
+      // server rule at the requested scope; never match grants held elsewhere.
+      for (const capability of revision.caps) {
+        const allowed = await hasPermission(
+          c,
+          subject,
+          capability,
+          company,
+          site,
+        );
+        results.push({
+          capability,
+          label: capabilityLabels[capability],
+          allowed,
+        });
+      }
+      return results;
+    });
+    await requireAccessInspection(c, p);
+    return {
+      person: user,
+      bundle_id: bundle.id,
+      bundle_name: bundle.name,
+      revision: revision.revision,
+      state: revision.state,
+      company: companyRow,
+      site: siteRow,
+      items,
+      matched: items.filter((item) => item.allowed).length,
+      reason: !user.active
+        ? "The identity is inactive."
+        : working && working !== company
+          ? "The person's selected working company excludes this company."
+          : "Each result checks current grant validity and the selected company/site.",
+      checked_at: new Date().toISOString(),
+      limitation:
+        "Comparison only: no role is assigned and no grant is changed. Missing capabilities are not a recommendation to grant access. Authentication, assignment, record state, source visibility and independent approval rules still apply.",
+      authentication: user.masked
+        ? "Hosted invitation and session validity have not been evaluated."
+        : "An active synthetic session is still required.",
+    };
+  });
+}
 
 export async function accessCapabilities(
   p: Principal,

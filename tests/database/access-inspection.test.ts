@@ -16,6 +16,8 @@ import {
   explainAccess,
   accessCapabilities,
   accessCapability,
+  accessRoles,
+  compareAccessRole,
 } from "../../src/access/service";
 import { capabilityLabels } from "../../src/access/capabilities";
 import { accessInspectionSeedGrants } from "../helpers/engineering-materials-grants";
@@ -622,6 +624,241 @@ test("AD01-03 capability catalogue and holders preserve workspace authority and 
       await accessCapabilities(systems);
       await accessCapability(systems, "shared.read");
       assert.deepEqual(await snapshot(), before);
+    },
+  );
+});
+
+test("AD01-04 proposed roles compare current authority at one exact scope without assigning access", async (t) => {
+  const systems = (await createSession("systems")).principal;
+  const observer = (await createSession("site-observer")).principal;
+  const workspaceObserver = (await createSession("workspace-observer"))
+    .principal;
+  const selection = {
+    bundle_id: "bundle-observer",
+    revision: "r01",
+    company_id: companyA,
+    site_id: siteA,
+  };
+  const compare = (input = selection, id = observer.actor_id) =>
+    compareAccessRole(systems, id, input);
+  await t.test(
+    "catalogue is proposed only; exact revision and selection are required",
+    async () => {
+      const catalogue = await accessRoles(systems);
+      assert.equal(catalogue.items.length, 7);
+      assert(!JSON.stringify(catalogue).includes("Adopted"));
+      assert(!catalogue.items.some((item) => item.id === "bundle-hosted-demo"));
+      for (const fields of [
+        { bundle_id: "bundle-hosted-demo" },
+        { bundle_id: "toString" },
+        { revision: "latest" },
+        { revision: "r02" },
+      ])
+        await assert.rejects(
+          compare({ ...selection, ...fields }),
+          code("InvalidRoleProposal"),
+        );
+      await assert.rejects(
+        compare({ ...selection, company_id: "" }),
+        code("InvalidIdentifier"),
+      );
+      await assert.rejects(
+        compare({ ...selection, company_id: companyB }),
+        code("NotFound"),
+      );
+      await assert.rejects(
+        compare(selection, "30000000-0000-4000-8000-000000000004"),
+        code("NotFound"),
+      );
+      await assert.rejects(
+        compare({ ...selection, company_id: randomUUID(), site_id: "" }),
+        code("NotFound"),
+      );
+      const first = await compare({
+        ...selection,
+        bundle_id: "bundle-service-coordinator",
+      });
+      const draft = await compare({
+        ...selection,
+        bundle_id: "bundle-service-coordinator",
+        revision: "r02",
+      });
+      assert.equal(first.items.length, 13);
+      assert.equal(first.state, "Proposed");
+      assert.equal(draft.items.length, 14);
+      assert.equal(draft.state, "Draft");
+      assert.deepEqual(
+        draft.items
+          .filter(
+            (item) =>
+              !first.items.some(
+                (prior) => prior.capability === item.capability,
+              ),
+          )
+          .map((item) => item.capability),
+        ["pack.check"],
+      );
+    },
+  );
+  await t.test(
+    "Site, Company and Workspace checks never match an unrelated grant",
+    async () => {
+      assert.equal((await compare()).matched, 1);
+      assert.equal(
+        (await compare({ ...selection, site_id: siteB })).matched,
+        0,
+      );
+      assert.equal((await compare({ ...selection, site_id: "" })).matched, 0);
+      assert.equal(
+        (await compare({ ...selection, company_id: companyB, site_id: "" }))
+          .matched,
+        0,
+      );
+      const wide = await compare(
+        { ...selection, company_id: companyB, site_id: "" },
+        workspaceObserver.actor_id,
+      );
+      assert.equal(wide.matched, 1);
+      assert.equal(wide.company.erp_company_id, "SYN-B");
+      assert.match(wide.limitation, /no role is assigned/);
+      assert.match(wide.limitation, /independent approval/);
+      await database().query(
+        "INSERT INTO ppo.working_companies(workspace_id,user_id,company_id) VALUES($1,$2,$3)",
+        [ws, workspaceObserver.actor_id, companyA],
+      );
+      try {
+        const narrowed = await compare(
+          { ...selection, company_id: companyB, site_id: "" },
+          workspaceObserver.actor_id,
+        );
+        assert.equal(narrowed.matched, 0);
+        assert.match(narrowed.reason, /working company/);
+      } finally {
+        await database().query(
+          "DELETE FROM ppo.working_companies WHERE user_id=$1",
+          [workspaceObserver.actor_id],
+        );
+      }
+    },
+  );
+  await t.test(
+    "inactive identity and future/expired grants remove matches",
+    async () => {
+      const saved = await rows(
+        "SELECT id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='shared.read'",
+        [observer.actor_id],
+      );
+      await database().query("UPDATE ppo.users SET active=false WHERE id=$1", [
+        observer.actor_id,
+      ]);
+      try {
+        const inactive = await compare();
+        assert.equal(inactive.matched, 0);
+        assert.match(inactive.reason, /inactive/);
+      } finally {
+        await database().query("UPDATE ppo.users SET active=true WHERE id=$1", [
+          observer.actor_id,
+        ]);
+      }
+      try {
+        await database().query(
+          "UPDATE ppo.permission_grants SET valid_to=clock_timestamp()-interval '1 second' WHERE user_id=$1 AND capability='shared.read'",
+          [observer.actor_id],
+        );
+        assert.equal((await compare()).matched, 0);
+        await database().query(
+          "UPDATE ppo.permission_grants SET valid_to=NULL,valid_from=clock_timestamp()+interval '1 day' WHERE user_id=$1 AND capability='shared.read'",
+          [observer.actor_id],
+        );
+        assert.equal((await compare()).matched, 0);
+      } finally {
+        for (const grant of saved)
+          await database().query(
+            "UPDATE ppo.permission_grants SET valid_from=$2,valid_to=$3 WHERE id=$1",
+            [grant.id, grant.valid_from, grant.valid_to],
+          );
+      }
+    },
+  );
+  await t.test(
+    "reviewer permissions and cleared working company are required on both reads",
+    async () => {
+      await assert.rejects(accessRoles(observer), code("Forbidden"));
+      await assert.rejects(
+        compareAccessRole(observer, observer.actor_id, selection),
+        code("Forbidden"),
+      );
+      const saved = await rows(
+        "SELECT id,valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='admin.access.read'",
+        [systems.actor_id],
+      );
+      try {
+        await database().query(
+          "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='admin.access.read'",
+          [systems.actor_id],
+        );
+        await assert.rejects(accessRoles(systems), code("Forbidden"));
+        await assert.rejects(compare(), code("Forbidden"));
+      } finally {
+        for (const grant of saved)
+          await database().query(
+            "UPDATE ppo.permission_grants SET valid_to=$2 WHERE id=$1",
+            [grant.id, grant.valid_to],
+          );
+      }
+      await database().query(
+        "INSERT INTO ppo.working_companies(workspace_id,user_id,company_id) VALUES($1,$2,$3)",
+        [ws, systems.actor_id, companyA],
+      );
+      try {
+        await assert.rejects(
+          accessRoles(systems),
+          code("WorkingCompanySelected"),
+        );
+        await assert.rejects(compare(), code("WorkingCompanySelected"));
+      } finally {
+        await database().query(
+          "DELETE FROM ppo.working_companies WHERE user_id=$1",
+          [systems.actor_id],
+        );
+      }
+    },
+  );
+  await t.test(
+    "hosted comparison masks identities; all reads preserve grants, users, audit and session state",
+    async () => {
+      const hosted = randomUUID();
+      await database().query(
+        "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-EntraDemo','role-comparison-private-subject','SYN Role private name')",
+        [hosted, ws],
+      );
+      try {
+        const snapshot = () =>
+          Promise.all(
+            [
+              "users",
+              "permission_grants",
+              "audit_events",
+              "sessions",
+              "working_companies",
+            ].map((name) => rows(`SELECT * FROM ppo.${name} ORDER BY 1,2`)),
+          );
+        const before = await snapshot();
+        const masked = await compare(selection, hosted);
+        assert.equal(masked.person.display_name, "Hosted identity (masked)");
+        assert.equal(masked.matched, 0);
+        assert.match(masked.authentication, /not been evaluated/);
+        assert(
+          !JSON.stringify(masked).includes("role-comparison-private-subject"),
+        );
+        assert(!JSON.stringify(masked).includes("SYN Role private name"));
+        await accessRoles(systems);
+        await compare();
+        await compare({ ...selection, bundle_id: "bundle-technician" });
+        assert.deepEqual(await snapshot(), before);
+      } finally {
+        await database().query("DELETE FROM ppo.users WHERE id=$1", [hosted]);
+      }
     },
   );
 });

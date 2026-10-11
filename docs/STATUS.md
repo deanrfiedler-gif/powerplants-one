@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## AD-01 proposed-role comparison — 11 October 2026
+
+Dean's next-task instruction continues AD-01 from PR #413 on `codex/ad01-role-comparison`, integrating main `ba1f4e3`. The [native decision](decisions/access-review-native.md#proposed-role-comparison-continuation--11-october-2026) adds seven retained role proposals, the exact Service coordinator draft delta and person comparison at a selected company/site. Matching grants never assign a role or recommend an access expansion. No migration, seed or access mutation is introduced. The [execution record](testing/evidence/access-roles/README.md) separates current verification from visual/owner acceptance and deployment. Teams, controlled access changes and campaigns remain open.
+
 ## AD-01 capability catalogue continuation — 11 October 2026
 
 Dean's instruction to proceed with the next task continues AD-01 from PR #410 on `codex/ad01-capability-catalogue`. The [native decision](decisions/access-review-native.md#capability-catalogue-continuation--11-october-2026) adds the 132-key capability catalogue, scope/state-filtered grant holders and person-explanation context. Counts remain grant rows, not effective business authority. This increment introduces no migration, seed or access change. The [execution record](testing/evidence/access-capabilities/README.md) retains validation and limits; owner visual review, roles/teams, access changes and campaigns remain open. The build/type check, 16 database checks, 15 native browser checks and 20 navigation checks pass locally. Twelve source-bound captures retain the proposed adaptation. PR #410 also receives the tested menu-count correction; full CI and review remain separate.
