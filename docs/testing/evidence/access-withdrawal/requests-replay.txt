@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: AD01 requests: populated upgrade retains all earlier rows and adds exactly four duties through application
+ok 1 - AD01 requests: populated upgrade retains all earlier rows and adds exactly four duties through application
+  ---
+  duration_ms: 44281.9631
+  type: 'test'
+  ...
+# Subtest: AD01 requests: independent review, recovery, isolation and unchanged effective grants
+    # Subtest: ordinary/read-only identities cannot submit or decide; hosted mode is refused
+    ok 1 - ordinary/read-only identities cannot submit or decide; hosted mode is refused
+      ---
+      duration_ms: 43.846
+      type: 'test'
+      ...
+    # Subtest: context lists only local subjects, exact scope keys and eligible independent reviewer
+    ok 2 - context lists only local subjects, exact scope keys and eligible independent reviewer
+      ---
+      duration_ms: 96.6464
+      type: 'test'
+      ...
+    # Subtest: refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons
+    ok 3 - refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons
+      ---
+      duration_ms: 229.1084
+      type: 'test'
+      ...
+    # Subtest: inactive and hosted subjects, inactive/expired/future reviewer grants are refused
+    ok 4 - inactive and hosted subjects, inactive/expired/future reviewer grants are refused
+      ---
+      duration_ms: 185.8596
+      type: 'test'
+      ...
+    # Subtest: an expired existing grant still prevents a duplicate proposal
+    ok 5 - an expired existing grant still prevents a duplicate proposal
+      ---
+      duration_ms: 42.7902
+      type: 'test'
+      ...
+    # Subtest: submission is durable and exact replay returns one original receipt; changed content conflicts
+    ok 6 - submission is durable and exact replay returns one original receipt; changed content conflicts
+      ---
+      duration_ms: 182.4111
+      type: 'test'
+      ...
+    # Subtest: authority is rechecked before replay, receipt read and workspace inspection
+    ok 7 - authority is rechecked before replay, receipt read and workspace inspection
+      ---
+      duration_ms: 110.8244
+      type: 'test'
+      ...
+    # Subtest: only the named reviewer decides; stale/concurrent decisions cannot replace the first
+    ok 8 - only the named reviewer decides; stale/concurrent decisions cannot replace the first
+      ---
+      duration_ms: 487.8682
+      type: 'test'
+      ...
+    # Subtest: approval revalidates changed eligibility while Return retains an invalid proposal
+    ok 9 - approval revalidates changed eligibility while Return retains an invalid proposal
+      ---
+      duration_ms: 213.883
+      type: 'test'
+      ...
+    # Subtest: site and Workspace proposals retain exact scope; approved requests never become grants
+    ok 10 - site and Workspace proposals retain exact scope; approved requests never become grants
+      ---
+      duration_ms: 161.9766
+      type: 'test'
+      ...
+    # Subtest: approval refuses a grant added after submission and a start that has passed
+    ok 11 - approval refuses a grant added after submission and a start that has passed
+      ---
+      duration_ms: 2227.6675
+      type: 'test'
+      ...
+    # Subtest: database guards retain proposal and exact immutable audit evidence
+    ok 12 - database guards retain proposal and exact immutable audit evidence
+      ---
+      duration_ms: 289.8829
+      type: 'test'
+      ...
+    1..12
+ok 2 - AD01 requests: independent review, recovery, isolation and unchanged effective grants
+  ---
+  duration_ms: 4388.251
+  type: 'test'
+  ...
+1..2
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 68195.3255

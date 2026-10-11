@@ -31,11 +31,12 @@ type Duty =
   | "admin.access.propose"
   | "admin.access.approve"
   | "admin.access.apply";
-type Command = "Submit" | "Decide" | "Apply";
+type Command = "Submit" | "Decide" | "Apply" | "Withdraw";
 const commandDuty: Record<Command, Duty> = {
   Submit: "admin.access.propose",
   Decide: "admin.access.approve",
   Apply: "admin.access.apply",
+  Withdraw: "admin.access.propose",
 };
 const notFound = () =>
   new AppError(404, "NotFound", "This access request is unavailable.");
@@ -90,6 +91,7 @@ export async function accessRequests(
         "Approved",
         "Returned",
         "Applied",
+        "Withdrawn",
       ])
     : null;
   const offset = Number(query.offset ?? 0);
@@ -193,8 +195,19 @@ export async function accessRequest(p: Principal, id: string) {
       row.subject_id !== p.actor_id &&
       row.reviewer_id !== p.actor_id &&
       (await holds(c, p, "admin.access.apply"));
+    const can_withdraw =
+      ["Submitted", "Approved"].includes(row.state) &&
+      row.requester_id === p.actor_id &&
+      (await holds(c, p, "admin.access.propose"));
     await authority(c, p);
-    return { actor: p, request: row, history, can_decide, can_apply };
+    return {
+      actor: p,
+      request: row,
+      history,
+      can_decide,
+      can_apply,
+      can_withdraw,
+    };
   });
 }
 function commandCommon(b: Record<string, unknown>) {
@@ -368,6 +381,10 @@ async function operation(
         await c.query(
           "LOCK TABLE ppo.users, ppo.permission_grants, ppo.working_companies, ppo.companies, ppo.sites IN SHARE ROW EXCLUSIVE MODE",
         );
+      else if (command === "Withdraw")
+        await c.query(
+          "LOCK TABLE ppo.users, ppo.permission_grants, ppo.working_companies IN SHARE ROW EXCLUSIVE MODE",
+        );
       await authority(c, p, commandDuty[command]);
       const prior = (
         await c.query(
@@ -393,7 +410,10 @@ async function operation(
         record_version: Number(row.version),
         state: String(row.state),
         accepted_at: new Date(
-          (row.applied_at ?? row.decided_at ?? row.created_at) as string,
+          (row.withdrawn_at ??
+            row.applied_at ??
+            row.decided_at ??
+            row.created_at) as string,
         ).toISOString(),
         receipt_id,
         warnings: [],
@@ -617,6 +637,50 @@ export async function applyAccessRequest(
       await futureStart(c, row.valid_from as Date);
     },
   );
+}
+export async function withdrawAccessRequest(
+  p: Principal,
+  id: string,
+  input: unknown,
+) {
+  localOnly();
+  const b = object(input, [...commonKeys, "expected_version"]);
+  const value = {
+    ...commandCommon(b),
+    request_id: uuid(id, "request_id"),
+    expected_version: version(b.expected_version),
+  };
+  return operation(p, value, "Withdraw", async (c) => {
+    const row = (
+      await c.query(
+        "SELECT * FROM ppo.access_change_requests WHERE workspace_id=$1 AND id=$2 FOR UPDATE",
+        [p.workspace_id, id],
+      )
+    ).rows[0];
+    if (!row) throw notFound();
+    if (row.requester_id !== p.actor_id)
+      throw new AppError(
+        403,
+        "RequesterRequired",
+        "Only the original requester can withdraw this request.",
+      );
+    if (
+      row.version !== value.expected_version ||
+      !["Submitted", "Approved"].includes(row.state)
+    )
+      throw new AppError(
+        409,
+        "VersionConflict",
+        "Only the exact un-applied Submitted or Approved version can be withdrawn. Reload the saved record.",
+      );
+    return (
+      await c.query(
+        `UPDATE ppo.access_change_requests SET state='Withdrawn',version=version+1,
+       withdrawn_at=clock_timestamp(),withdrawal_reason=$3 WHERE workspace_id=$1 AND id=$2 RETURNING *`,
+        [p.workspace_id, id, value.reason],
+      )
+    ).rows[0];
+  });
 }
 export async function accessRequestReceipt(p: Principal, id: string) {
   localOnly();

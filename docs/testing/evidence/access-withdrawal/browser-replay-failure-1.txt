@@ -1,0 +1,302 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: access-requests.spec.ts >> AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+- Location: tests\browser\access-requests.spec.ts:542:1
+
+# Error details
+
+```
+Error: expect(locator).toHaveText(expected) failed
+
+Locator: locator('main .status-chip')
+Expected: "Submitted"
+Error: strict mode violation: locator('main .status-chip') resolved to 50 elements:
+    1) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(2)
+    2) <span class="status-chip tone-neutral">Submitted</span> aka getByText('Submitted').nth(2)
+    3) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(3)
+    4) <span class="status-chip tone-neutral">Submitted</span> aka getByText('Submitted').nth(5)
+    5) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(4)
+    6) <span class="status-chip tone-neutral">Submitted</span> aka getByText('Submitted', { exact: true }).nth(3)
+    7) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(5)
+    8) <span class="status-chip tone-success">Approved</span> aka getByText('Approved').nth(2)
+    9) <span class="status-chip tone-neutral">Applied</span> aka getByText('Applied').nth(1)
+    10) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn', { exact: true }).nth(5)
+    ...
+
+Call log:
+  - Expect "toHaveText" locator('main .status-chip') with timeout 5000ms
+  - waiting for locator('main .status-chip')
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=f3e1]:
+  - link "Skip to main content":
+    - /url: "#main"
+  - generic [ref=f3e2]:
+    - navigation "Mobile navigation" [ref=f3e3]:
+      - button "More" [ref=f3e4] [cursor=pointer]
+    - generic [ref=f3e10]:
+      - banner [ref=f3e11]:
+        - link "Powerplants One home" [ref=f3e12] [cursor=pointer]:
+          - /url: /
+          - img "Powerplants Australia" [ref=f3e13]
+        - navigation "Breadcrumb" [ref=f3e14]:
+          - button "Page hierarchy" [ref=f3e15] [cursor=pointer]
+          - list "Users and access / Access request" [ref=f3e18]:
+            - listitem [ref=f3e19]:
+              - generic [ref=f3e20]: Access request
+        - generic [ref=f3e22]:
+          - button "Design and build workspace" [ref=f3e23] [cursor=pointer]
+          - button "Open global search" [ref=f3e26] [cursor=pointer]
+          - button "Page guide" [ref=f3e30] [cursor=pointer]
+        - region "Local demonstration identity" [ref=f3e36]:
+          - button "Change identity" [ref=f3e38] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f3e39]: SS
+      - main [ref=f3e40]:
+        - generic [ref=f3e41]:
+          - link "Back to access-change requests" [ref=f3e42] [cursor=pointer]:
+            - /url: /admin/access/requests
+          - generic [ref=f3e44]:
+            - heading "Access request" [level=1] [ref=f3e45]
+            - paragraph [ref=f3e46]: Review the exact saved proposal, independent decision and controlled application.
+          - paragraph [ref=f3e47]: Local synthetic requests only. Approval records a review; it does not make access effective. Applying an Approved request is a separate controlled step. Administrative grants and hosted provisioning remain outside this workflow.
+          - heading "SYN Site observer · incident.read" [level=2] [ref=f3e48]
+          - generic [ref=f3e49]: Submitted
+          - paragraph [ref=f3e50]: Request e64b721f-4ef4-40f5-af35-cf689babda11 · Version 1
+          - paragraph [ref=f3e51]: Company · SYN Greenhouse Demonstration · SYN-B
+          - paragraph [ref=f3e52]: "Requester: SYN Systems. Named reviewer: SYN Taylor Policy reviewer."
+          - paragraph [ref=f3e53]: "Proposed start: 1 Jan 2035, 10:00 am (Australia/Brisbane). Proposed end: No end date."
+          - paragraph [ref=f3e54]: "Request reason: Browser proof of an independently reviewed access request."
+          - group "Withdraw this un-applied request" [ref=f3e56]:
+            - paragraph [ref=f3e58]: As the original requester, you can close this request while it is Submitted or Approved. Its proposal and review stay in history. This cannot remove installed access.
+            - generic [ref=f3e59]:
+              - generic [ref=f3e60]: Withdrawal reason *
+              - textbox "Withdrawal reason" [ref=f3e61]
+              - generic [ref=f3e62]: 10–1000 characters. Explain why this request should no longer proceed.
+            - button "Withdraw request" [ref=f3e63] [cursor=pointer]
+          - button "Refresh request and history" [ref=f3e64] [cursor=pointer]
+          - heading "Saved history" [level=2] [ref=f3e65]
+          - list [ref=f3e66]:
+            - listitem [ref=f3e67]:
+              - strong [ref=f3e68]: Submit · Version 1
+              - text: · SYN Systems · 11 Oct 2026, 8:27 pm
+              - paragraph [ref=f3e69]: Browser proof of an independently reviewed access request.
+              - paragraph [ref=f3e70]: Operation 61c9b5b6-6073-43a2-8bfe-01ee942f176a
+  - alert [ref=f3e71]: Access request — Powerplants One
+```
+
+# Test source
+
+```ts
+  550 |         : await fixture(page, baseURL!);
+  551 |     if (state === "Submitted")
+  552 |       await browserFixtureCall(page, base, f.input, baseURL!);
+  553 |     await browserFixtureCall(
+  554 |       page,
+  555 |       "local-session",
+  556 |       { profile: "scheduling-policy-reviewer" },
+  557 |       baseURL!,
+  558 |     );
+  559 |     await page.goto(`/${base}/${f.input.request_id}`);
+  560 |     await expect(
+  561 |       page.getByRole("button", { name: "Withdraw request", exact: true }),
+  562 |     ).toHaveCount(0);
+  563 |     await browserFixtureCall(
+  564 |       page,
+  565 |       "local-session",
+  566 |       { profile: "systems" },
+  567 |       baseURL!,
+  568 |     );
+  569 |     await page.reload();
+  570 |     if (state === "Approved") {
+  571 |       await page
+  572 |         .getByLabel("Application reason", { exact: true })
+  573 |         .fill("This independent application reason must not be overwritten.");
+  574 |       await page.getByLabel("Withdrawal reason", { exact: true }).fill("short");
+  575 |       await page
+  576 |         .getByRole("button", { name: "Withdraw request", exact: true })
+  577 |         .click();
+  578 |       await expect(
+  579 |         page.getByLabel("Withdrawal reason", { exact: true }),
+  580 |       ).toHaveAttribute("aria-invalid", "true");
+  581 |       const notice = page.locator("main").getByRole("alert");
+  582 |       await expect(notice).toBeFocused();
+  583 |       await notice.locator('a[href="#withdrawal_reason"]').click();
+  584 |       await expect(
+  585 |         page.getByLabel("Withdrawal reason", { exact: true }),
+  586 |       ).toBeFocused();
+  587 |       await expect(
+  588 |         page.getByLabel("Application reason", { exact: true }),
+  589 |       ).toHaveAttribute("aria-invalid", "false");
+  590 |       await expect(
+  591 |         page.getByLabel("Application reason", { exact: true }),
+  592 |       ).toHaveValue(
+  593 |         "This independent application reason must not be overwritten.",
+  594 |       );
+  595 |     }
+  596 |     await page
+  597 |       .getByLabel("Withdrawal reason", { exact: true })
+  598 |       .fill(
+  599 |         "Close this obsolete proposal; a fresh independent decision is required.",
+  600 |       );
+  601 |     await page
+  602 |       .getByRole("button", { name: "Withdraw request", exact: true })
+  603 |       .click();
+  604 |     await expect(
+  605 |       page.getByRole("status").filter({ hasText: "Request withdrawal saved" }),
+  606 |     ).toContainText("No grants changed");
+  607 |     await page
+  608 |       .getByRole("button", { name: "Refresh request and history" })
+  609 |       .click();
+  610 |     await expect(page.locator("main .status-chip")).toHaveText("Withdrawn");
+  611 |     await expect(page.locator("main")).toContainText(
+  612 |       `Withdraw · Version ${state === "Submitted" ? 2 : 3}`,
+  613 |     );
+  614 |     await expect(
+  615 |       page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  616 |     ).toHaveCount(0);
+  617 |     if (state === "Approved")
+  618 |       await expect(page.locator("main")).toContainText(
+  619 |         "Retained approval reason:",
+  620 |       );
+  621 |     expect(
+  622 |       await page.evaluate(
+  623 |         () => document.documentElement.scrollWidth <= window.innerWidth,
+  624 |       ),
+  625 |     ).toBe(true);
+  626 |     const grants = await browserFixtureCall(
+  627 |       page,
+  628 |       `admin/access/${subject}`,
+  629 |       undefined,
+  630 |       baseURL!,
+  631 |     );
+  632 |     expect(grants.grants).toEqual(f.grants);
+  633 |     await page
+  634 |       .getByRole("link", { name: "Create a fresh request", exact: true })
+  635 |       .click();
+  636 |     await fill(page, f.input.capability);
+  637 |     await page
+  638 |       .getByRole("button", { name: "Submit for independent review" })
+  639 |       .click();
+  640 |     const saved = page.getByRole("link", {
+  641 |       name: "Open saved request",
+  642 |       exact: true,
+  643 |     });
+  644 |     await expect(saved).toBeVisible();
+  645 |     await expect(saved).not.toHaveAttribute(
+  646 |       "href",
+  647 |       `/${base}/${f.input.request_id}`,
+  648 |     );
+  649 |     await saved.click();
+> 650 |     await expect(page.locator("main .status-chip")).toHaveText("Submitted");
+      |                                                     ^ Error: expect(locator).toHaveText(expected) failed
+  651 |     await expect(page.locator("main")).toContainText("Version 1");
+  652 |   }
+  653 | });
+  654 |
+  655 | test("AD-01 lost committed withdrawal response recovers the original after reload", async ({
+  656 |   page,
+  657 |   baseURL,
+  658 | }) => {
+  659 |   const f = await approvedFixture(page, baseURL!);
+  660 |   await browserFixtureCall(
+  661 |     page,
+  662 |     "local-session",
+  663 |     { profile: "systems" },
+  664 |     baseURL!,
+  665 |   );
+  666 |   await page.goto(`/${base}/${f.input.request_id}`);
+  667 |   await page
+  668 |     .getByLabel("Withdrawal reason", { exact: true })
+  669 |     .fill("Recover this exact closure after losing the committed response.");
+  670 |   let operationId = "";
+  671 |   await page.route(
+  672 |     `**/api/v1/${base}/${f.input.request_id}/withdraw`,
+  673 |     async (route) => {
+  674 |       const response = await route.fetch();
+  675 |       expect(response.ok()).toBe(true);
+  676 |       operationId = (await response.json()).operation_id;
+  677 |       await route.abort("failed");
+  678 |     },
+  679 |   );
+  680 |   await page
+  681 |     .getByRole("button", { name: "Withdraw request", exact: true })
+  682 |     .click();
+  683 |   await expect(
+  684 |     page.getByRole("button", { name: "Retry unchanged action" }),
+  685 |   ).toBeEnabled();
+  686 |   await expect(
+  687 |     page.getByRole("button", { name: "Withdraw request", exact: true }),
+  688 |   ).toBeDisabled();
+  689 |   await expect(
+  690 |     page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  691 |   ).toBeDisabled();
+  692 |   await page.unroute(`**/api/v1/${base}/${f.input.request_id}/withdraw`);
+  693 |   await page.reload();
+  694 |   await expect(
+  695 |     page.getByRole("link", { name: "Open saved request", exact: true }),
+  696 |   ).toHaveAttribute("href", `/${base}/${f.input.request_id}`);
+  697 |   await expect(page.locator("main .status-chip")).toHaveText("Withdrawn");
+  698 |   const original = await browserFixtureCall(
+  699 |     page,
+  700 |     `${base}/operations/${operationId}`,
+  701 |     undefined,
+  702 |     baseURL!,
+  703 |   );
+  704 |   const d = await browserFixtureCall(
+  705 |     page,
+  706 |     `${base}/${f.input.request_id}`,
+  707 |     undefined,
+  708 |     baseURL!,
+  709 |   );
+  710 |   expect(original.state).toBe("Withdrawn");
+  711 |   expect(d.history).toHaveLength(3);
+  712 |   expect(d.history[2].operation_id).toBe(operationId);
+  713 | });
+  714 |
+  715 | test("AD-01 stale withdrawal cannot undo an application and denied closure hides protected context", async ({
+  716 |   page,
+  717 |   baseURL,
+  718 | }) => {
+  719 |   const f = await approvedFixture(page, baseURL!);
+  720 |   await browserFixtureCall(
+  721 |     page,
+  722 |     "local-session",
+  723 |     { profile: "systems" },
+  724 |     baseURL!,
+  725 |   );
+  726 |   await page.goto(`/${base}/${f.input.request_id}`);
+  727 |   await page
+  728 |     .getByLabel("Withdrawal reason", { exact: true })
+  729 |     .fill("This stale tab must not close a grant already installed elsewhere.");
+  730 |   await browserFixtureCall(
+  731 |     page,
+  732 |     `${base}/${f.input.request_id}/apply`,
+  733 |     {
+  734 |       schema_version: 1,
+  735 |       operation_id: randomUUID(),
+  736 |       expected_version: 2,
+  737 |       reason:
+  738 |         "A separate tab installed the exact independently approved grant.",
+  739 |     },
+  740 |     baseURL!,
+  741 |   );
+  742 |   await page
+  743 |     .getByRole("button", { name: "Withdraw request", exact: true })
+  744 |     .click();
+  745 |   await expect(page.locator("main").getByRole("alert").first()).toContainText(
+  746 |     "exact un-applied",
+  747 |   );
+  748 |   await page
+  749 |     .getByRole("button", { name: "Refresh request and history" })
+  750 |     .click();
+```

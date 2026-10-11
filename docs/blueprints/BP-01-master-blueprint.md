@@ -2387,3 +2387,15 @@ See the [diamond decision](../decisions/quotation-task-diamond.md), [handover](.
 ## AD-01 bounded local grant application
 
 The [application contract](../decisions/access-request-application.md) continues native request/independent review with separate exact Approved-request installation, scoped authority, revalidation, atomic audit/receipt and original recovery. Applied records installation with retained dates, not current effective access. Preserve NFR-01–NFR-12, CRM-08, FIN-06 and operational D-020; no hosted provisioning, role policy or external integration is granted.
+
+## AD-01 withdrawal of un-applied requests
+
+The [withdrawal contract](../decisions/access-request-withdrawal.md) closes obsolete Submitted or Approved requests without changing installed access or reinterpreting their independent decision. Current original-requester authority, exact-version concurrency and immutable audit/recovery evidence govern the synthetic command. A fresh proposal uses fresh review. NFR-01–NFR-12, CRM-08, FIN-06 and D-020 retain their scope; no hosted or operational authority is added.
+
+## AD-01 retained team proposal inspection
+
+The [team contract](../decisions/access-team-inspection.md) adds read-only inspection of source team examples and current local identity links. Membership and lead labels confer no access or review authority. Source dates remain historical examples; persisted teams and campaigns remain open. Preserve all existing parent IDs, NFR-01–NFR-12, CRM-08, FIN-06 and unresolved operational D-020.
+
+## AD-01 durable local team record foundation
+
+The [local team contract](../decisions/access-local-teams.md) adds explicit local initial rosters with a dedicated creation duty and immutable audit/receipt evidence. Saved records are inspected separately from retained team examples. No membership or lead label grants access or routes reviews. Native editing, membership lifecycle and campaigns remain open. Preserve all 78 parent IDs, including AD-01's NFR-01–NFR-12, CRM-08 and FIN-06, and unresolved operational D-020.

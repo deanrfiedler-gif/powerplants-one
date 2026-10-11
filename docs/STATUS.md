@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 12 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
@@ -43,6 +43,26 @@ The separately authorised CRM/Projects audit follow-up is on `codex/project-base
 Dean authorised fixing failed checks and merging ready implementation PRs, and confirmed that unfinished backup PRs #404–#408 stay separate. The `pr-fixes-20261011` session owns this integration write. PR #400 joins the shared register with the local-host opt-in (#401), Customers startup/diagnostics (#391), asset evidence (#402), network-calibration experiment (#403) and its subsequent CI counter-parser repair and source-bound measurement evidence (#409), preserving their commit ancestry. The STATUS conflict retains both integration and investigation records. PR #391 merged at its checked `99a0e99` head as main `1842708`, also merging #402 by ancestry. The later #409 head `f23aa8f` is included here; fresh final combined-head CI must pass before the remaining merges. No deployment is claimed.
 
 The SC-07 planner test repair selects the intended responsive date window through the identity remount. Exact query, current-identity, denial and visible-state assertions remain. This integration authorisation supersedes the earlier draft-only disposition for these code contributions; the three-second performance target, original 503 attribution, full PT-27 and owner/device acceptance remain open. The checkpoints below retain their original evidence boundaries.
+
+## AD-01 durable local team records — 11 October 2026
+
+Dean's continuation instruction starts `codex/ad01-local-teams` from #427 at `f9c8c00`. The initial stack inspection found no feedback or reported failure, with #427 queued, #423 partly running and #417 cancelled. The [contract](decisions/access-local-teams.md) adds dedicated local team creation, an immutable initial roster, audit-linked history and actor-bound recovery, plus inspection in the existing catalogue. Migration/seed 0082 adds one existing-local Systems duty and no user or hosted grant. Membership and lead labels confer no authority. [Evidence](testing/evidence/access-local-teams/README.md) records actual validation and limits. Native creation/editing, membership lifecycle, campaigns, D-020, owner acceptance and production readiness remain open.
+
+Final local validation on 12 October: [draft PR #429](https://github.com/deanrfiedler-gif/powerplants-one/pull/429) records 81 access database tests, 45 native browser checks, 68 historical cases covered by passing runs, five local existing-demo upgrade checks, 19 selected units, retained design checks and build/types/lint/document/register assurance. The interrupted initial historical run, initial failures, unchanged-main timeout and source-bound captures remain explicit. A later #423 mobile CI failure exposed a test URL-capture race; this draft waits for the exact saved-request URL and passes nine browser replays at three widths. Parent/final-head CI and owner review remain separate.
+
+## AD-01 proposed team inspection — 11 October 2026
+
+Dean's continuation instruction starts `codex/ad01-team-inspection` from #423 at `988a734`, stacked on #417 at `2579bd9`. Inspection found no feedback or failing checks; #423 was still running/queued and #417 checks were cancelled. The [team contract](decisions/access-team-inspection.md) exposes two exact retained proposals in the existing role catalogue, with current local identities resolved separately. Design-only and unavailable identities stay unlinked; no membership, review routing or grant authority is inferred. No migration, seed, capability, hosted change or deployment. [Evidence](testing/evidence/access-teams/README.md) records actual verification; persisted teams, campaigns, operational D-020 and owner acceptance remain open.
+
+Local validation passes: 28 reported database tests, 33 compiled browser checks at three widths, 13 selected units, retained-model assertions, build/types/lint and register/documentation assurance. Eight final captures and the initial setup/capture corrections remain source-bound in the ledger. Owner review and current-stack CI remain separate.
+
+[Draft PR #427](https://github.com/deanrfiedler-gif/powerplants-one/pull/427) publishes this bounded increment, stacked on #423. At publication CI was pending; the local task services were stopped. The evidence preserves setup/capture corrections and the Git line-ending hash correction. No owner acceptance, merge or deployment is inferred.
+
+## AD-01 requester withdrawal — 11 October 2026
+
+Dean authorised the next bounded step. Branch `codex/ad01-request-withdrawal` continues PR #417 at `2e69c4c` after inspecting its current CI and dependencies. The [withdrawal contract](decisions/access-request-withdrawal.md) permits only the original requester with current read/propose authority to close Submitted or Approved requests. Proposal and decision stay immutable; installed access is unchanged. Migration 0081 adds no seed, capability, grant or user. [Execution evidence](testing/evidence/access-withdrawal/README.md) records verification and initial failures separately. Fresh proposals require fresh independent review; teams, campaigns, grant revocation/editing and operational D-020 remain open. Owner acceptance and deployment are separate.
+
+[Draft PR #423](https://github.com/deanrfiedler-gif/powerplants-one/pull/423) now incorporates the repaired #417 parent through `2579bd9`, including the later documentation-only design records. Build/types/lint, 38 access-workflow database cases, 14 selected historical upgrades, five hosted-upgrade cases, 51 browser scenarios, 12 selected units and 107 retained-model assertions have passing coverage. Initial timeouts and browser test corrections remain explicit in the ledger, with source-bound replays and nine inspected captures. This is a local prototype result; final CI and owner/device/security acceptance remain separate.
 
 ## AD-01 controlled local application — 11 October 2026
 

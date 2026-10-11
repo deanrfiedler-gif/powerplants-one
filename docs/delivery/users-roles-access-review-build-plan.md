@@ -732,3 +732,7 @@ This is recorded so the design does not strand. None of it is authorised by this
 2. Should the proposed review-routing role be titled **Platform / data owner** (the register's reviewer role) or **Access approver**?
 3. Is `ACR` acceptable as a proposed reference type code, or do you prefer another?
 4. Should the hosted demo testers appear at all in a public design, even masked? The recommendation is yes, masked and synthetic, because expiry is a real operating control. The alternative is local identities only.
+
+## Durable local team continuation — 11 October 2026
+
+Dean's next-step instruction continues #427 with the [local team contract](../decisions/access-local-teams.md): dedicated local creation duty, explicit initial roster, immutable audit/receipt and saved-team inspection on the existing role catalogue. This is the record/API foundation. Native editing, membership lifecycle, review routing and campaigns remain open; team labels grant no permission or independent review duty. Preserve the receiving plan's future attester/reviewer separation and unresolved D-020. The [execution ledger](../testing/evidence/access-local-teams/README.md) separates functional proof, visual observations, owner acceptance and deployment.
