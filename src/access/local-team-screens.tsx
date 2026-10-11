@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../components/ui/button";
+import { Button, ButtonLink } from "../components/ui/button";
 import { LocalTeamCreation } from "./team-creation";
 import {
   type Failure,
@@ -23,7 +23,20 @@ type Team = {
 };
 type Detail = {
   team: Omit<Team, "member_count">;
-  members: { user_id: string; display_name: string; active: boolean }[];
+  members: {
+    user_id: string;
+    display_name: string;
+    active: boolean;
+    masked: boolean;
+    checked_at: string;
+    grant_counts: {
+      recorded: number;
+      current: number;
+      scheduled: number;
+      expired: number;
+      inactive: number;
+    } | null;
+  }[];
   history: {
     operation_id: string;
     actor_name: string;
@@ -175,6 +188,19 @@ export function SavedLocalTeams({
                 {selected === team.id && detail.data && !detail.loading && (
                   <div>
                     <h4>Initial roster</h4>
+                    <p>
+                      Recorded grant rows, not effective business access or
+                      review authority. The lead appears only if recorded as a
+                      member. Person access checks current company/site rules
+                      separately.
+                    </p>
+                    <p>
+                      Member access checked{" "}
+                      <Stamp value={detail.data.members[0].checked_at} />.
+                    </p>
+                    <Button onClick={detail.reload}>
+                      Refresh member access
+                    </Button>
                     <ul>
                       {detail.data.members.map((member) => (
                         <li key={member.user_id} className="narrative">
@@ -184,6 +210,27 @@ export function SavedLocalTeams({
                             : "Inactive identity"}
                           <br />
                           Person ID: {member.user_id}
+                          {member.masked || !member.grant_counts ? (
+                            <p>
+                              Access not inspected for this masked identity.
+                            </p>
+                          ) : (
+                            <>
+                              <p>
+                                Recorded grants: {member.grant_counts.recorded}.
+                                Current: {member.grant_counts.current};
+                                Scheduled: {member.grant_counts.scheduled};
+                                Expired: {member.grant_counts.expired}; Inactive
+                                identity: {member.grant_counts.inactive}.
+                              </p>
+                              <ButtonLink
+                                href={`/admin/access/${member.user_id}`}
+                                aria-label={`Inspect person access for ${member.display_name} ${member.user_id}`}
+                              >
+                                Inspect person access
+                              </ButtonLink>
+                            </>
+                          )}
                         </li>
                       ))}
                     </ul>

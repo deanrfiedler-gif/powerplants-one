@@ -60,7 +60,7 @@ const personColumns = `u.id, CASE WHEN u.issuer='PPO-LocalSynthetic' THEN u.disp
 
 // Inactive identity takes precedence over grant dates, as in person inspection.
 // A current grant is not a claim of effective access to a business record.
-const grantState = `CASE WHEN NOT u.active THEN 'Inactive identity'
+export const grantState = `CASE WHEN NOT u.active THEN 'Inactive identity'
   WHEN g.valid_from>statement_timestamp() THEN 'Scheduled'
   WHEN g.valid_to IS NOT NULL AND g.valid_to<=statement_timestamp() THEN 'Expired'
   ELSE 'Current' END`;
