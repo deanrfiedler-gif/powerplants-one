@@ -130,7 +130,7 @@ export async function startPacketNetwork(users: number, targetPort: number, shap
         assert.ok(relay.stats.connected > 0 && relay.stats.uploaded_bytes >= minimum.upload && relay.stats.downloaded_bytes >= minimum.download, "Each browser must traverse its relay with the expected payload volume");
         if (observed) for (const direction of [0, 1]) {
           const row = observed.classes.find((c: { handle: string }) => c.handle === classId(user, direction));
-          assert.ok(row?.bytes > 0 && row?.packets > 0, "Each directional kernel class must carry traffic");
+          assert.ok(row && row.bytes > 0 && row.packets > 0, "Each directional kernel class must carry traffic");
         }
       }
     } };
