@@ -141,7 +141,7 @@ async function exerciseBoth() {
         "SELECT version FROM ppo.seed_receipts WHERE version>=18 ORDER BY version",
       )
     ).map((r) => r.version),
-    [18, 19, 20, 21, 24, 29, 30, 31, 32, 40, 41, 44, 47, 48, 49, 51, 52, 53, 54, 55, 56, 58, 59, 78, 79, 80, 82],
+    [18, 19, 20, 21, 24, 29, 30, 31, 32, 40, 41, 44, 47, 48, 49, 51, 52, 53, 54, 55, 56, 58, 59, 78, 79, 80, 83],
   );
   await migrate();
   await seed();

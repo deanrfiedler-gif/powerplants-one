@@ -4,6 +4,12 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Remaining PR integration — 12 October 2026
+
+Dean authorised fixing and merging the remaining ready PRs, keeping backup PRs #404–#408 separate. The combined #429 contribution retains the exact heads of access #423/#427/#429 and design #422/#424/#426/#428. Dean confirmed the named Leads Figma version has been saved, resolving #426's draft checkpoint. All retained captures and original review fingerprints remain unchanged; design acceptance does not imply an application build or owner/device acceptance.
+
+Main already owns Projects migration 0081. The unpublished withdrawal migration moves from 0081 to 0082 and local teams from 0082 to 0083, with team seed 83; stable IDs, original ledgers and historical branch evidence are preserved. Exact migration/seed/grant assertions, the reserved Products path and the reviewed hosted-demo gate follow this combined history. The PT-01 matrix permits the explicit local team-creation duty while preserving every original grant and all Service/Finance denials and side-effect checks. The latest access branch already repairs the older mobile navigation race by waiting for the exact saved request URL. Full CI on the combined head targeting main remains the merge gate. No backup content, deployment or production authority is included.
+
 ## GitHub Actions queue repair — 11 October 2026
 
 Dean asked to investigate queued checks and finish the authorised PR merges. A live repository snapshot at 13:02 UTC found 39 running jobs and 177 queued jobs; obsolete PR heads still occupied runners because assurance workflows had no concurrency cancellation. Superseded runs were cancelled after comparing their heads with the live PRs. The 45 PR assurance workflows now group runs by workflow, event and PR number, cancelling only superseded runs on that same PR. Push and manual runs have separate groups and retain running verification; the manual-only Azure connection/deployment workflows are unchanged. No test, deadline, required check or protection is removed. This reduces duplicate demand; it does not establish the account's exact runner limit or increase capacity.
