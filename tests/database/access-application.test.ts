@@ -188,6 +188,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
     current.filter((g) => ids.has(g.id)),
     grants,
   );
+  // Migration/seed numbering can move; the original grant identity stays fixed.
   assert.deepEqual(
     current.filter((g) => !ids.has(g.id)),
     [...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
