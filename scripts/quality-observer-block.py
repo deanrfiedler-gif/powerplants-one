@@ -149,7 +149,10 @@ def remove_browser_cgroup(group):
     subprocess.run(["sudo", "-n", "rmdir", str(group)], check=True)
 
 
-def positions_for(profile):
+def positions_for(profile, network_candidate="global"):
+    if profile == "cpu-assets-network":
+        assert network_candidate in ["global", "packet"]
+        return [("rule-a1", "0", 10), (network_candidate + "-b1", "0", 10), (network_candidate + "-b2", "0", 10), ("rule-a2", "0", 10)]
     if profile == "observer":
         return [("off-a1", "0", 10), ("on-b1", "1", 10), ("on-b2", "1", 10), ("off-a2", "0", 10)]
     if profile == "candidate":
@@ -162,7 +165,8 @@ def positions_for(profile):
 
 def run(block, profile="observer"):
     assert sys.platform == "linux", "External runner sampling requires Linux /proc"
-    positions = positions_for(profile)
+    network_candidate = os.environ.get("PPO_NETWORK_CANDIDATE", "global")
+    positions = positions_for(profile, network_candidate)
     assert re.fullmatch(profile + r"-[a-z0-9-]+", block)
     assert os.environ.get("PPO_BENCHMARK_FIXTURE") == "add-synthetic-load"
     source = os.environ["PPO_COMPILED_SOURCE"]
@@ -170,7 +174,7 @@ def run(block, profile="observer"):
     assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == source
     working = Path.cwd()
     cpu_protocol = None
-    if profile in ["cpu", "cpu-core", "cpu-assets", "cpu-assets-release"]:
+    if profile in ["cpu", "cpu-core", "cpu-assets", "cpu-assets-release", "cpu-assets-network"]:
         assert os.environ.get("GITHUB_ACTIONS") == "true", "Only the disposable existing CI service may be constrained"
         assert shutil.which("taskset") and shutil.which("docker")
         available = sorted(os.sched_getaffinity(0))
@@ -188,12 +192,14 @@ def run(block, profile="observer"):
         if profile in ["cpu-core", "cpu-assets", "cpu-assets-release"]:
             core, remaining = whole_core_allocation(available, cpu_protocol["topology"])
             cpu_protocol.update({"service": core, "browsers": remaining, "layout": "physical-core"})
+        if profile == "cpu-assets-network":
+            cpu_protocol.update({"service": available, "browsers": available, "layout": "shared-four"})
     control = Path(os.environ["PPO_CONTROL_ROOT"]).resolve() if profile == "candidate" else working
     if profile == "candidate":
         assert control != working and control.is_dir()
         # Same driver, dependencies and database/fixture contract in both sources.
         for name in ["package.json", "package-lock.json", "scripts/quality-customer-comparison.ts",
-                     "scripts/quality-comparison-profile.ts", "scripts/quality-asset-observer.ts", "scripts/quality-performance-fixture.ts",
+                     "scripts/quality-comparison-profile.ts", "scripts/quality-asset-observer.ts", "scripts/quality-network-conditioning.ts", "scripts/quality-packet-network.ts", "scripts/quality-performance-fixture.ts",
                      "scripts/quality-core-response.ts", "verification-evidence/customer-loading-diagnosis/fixture.json"]:
             assert (control / name).read_bytes() == (working / name).read_bytes(), name
         subprocess.run(["git", "diff", "--exit-code", os.environ["PPO_CONTROL_SOURCE"], source, "--", "db"], check=True)
@@ -204,7 +210,7 @@ def run(block, profile="observer"):
         if cwd == control and profile == "candidate":
             assert compiled == os.environ["PPO_CONTROL_SOURCE"]
         attempts.append({"label": block + "-" + name, "diagnostics": mode, "browser_count": users,
-                         "asset_diagnostics": profile in ["cpu-assets", "cpu-assets-release"],
+                         "asset_diagnostics": profile in ["cpu-assets", "cpu-assets-release", "cpu-assets-network"],
                          "compiled_source": compiled, "build_id": (cwd / ".next/BUILD_ID").read_text().strip()})
     root = Path("verification-evidence/pt27-observer") / block
     root.mkdir(parents=True, exist_ok=False)
@@ -218,6 +224,8 @@ def run(block, profile="observer"):
                 "boundary": "One fresh runner, one build per declared source, one fixture, fresh app/browser processes per attempt. No retries, resets or substituted samples. External CPU/memory observation is identical in all positions. Separate from retained Windows samples."}
     if cpu_protocol:
         protocol["cpu_allocation"] = cpu_protocol
+    if profile == "cpu-assets-network":
+        protocol["network_candidate"] = network_candidate
     (root / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n")
     for position, (suffix, mode, users) in enumerate(positions, 1):
         label = block + "-" + suffix
@@ -226,8 +234,10 @@ def run(block, profile="observer"):
                "PPO_COMPILED_SOURCE": attempts[position - 1]["compiled_source"], "PPO_DRIVER_SOURCE": source,
                "PPO_COMPARISON_PROFILE": "startup-single" if users == 1 else "ten-user",
                "PPO_COMPARISON_BLOCK": block, "PPO_COMPARISON_POSITION": str(position)}
-        if profile in ["cpu-assets", "cpu-assets-release"]:
+        if profile in ["cpu-assets", "cpu-assets-release", "cpu-assets-network"]:
             env["PPO_ASSET_DIAGNOSTICS"] = "1"
+        if profile == "cpu-assets-network":
+            env["PPO_NETWORK_METHOD"] = network_candidate if suffix.startswith(network_candidate + "-") else "rule"
         if profile == "cpu-assets-release":
             env["PPO_ASSET_RELEASE_PROBE"] = "1"
         server_pid = None

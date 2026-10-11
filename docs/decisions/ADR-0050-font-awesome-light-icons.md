@@ -109,6 +109,14 @@ Dean confirmed Option A for the selected item and asked: "Do the module icon set
 - **Job packs.** The accepted Job Pack r03 set is drawn in Font Awesome where the Kit runs. The r03 drawings remain the fallback, and a unit test pins their first render. The [job pack record](job-pack-integration.md) notes the departure.
 - **Stylesheets.** Pages that styled every `svg` also outlined and stretched Font Awesome's filled artwork. 67 rules whose subject is a bare `svg` now also size the Font Awesome element: 59 in the first increment's branch and 8 job pack rules here. Font Awesome's own SVG keeps no stroke or margin, at 84% of its box. The sign-in page is static and keeps its drawings.
 
+## Local address — 11 October 2026
+
+- **Observed.** On 11 October `kit.fontawesome.com` answered 403 "Not allowed for origin" to `http://127.0.0.1:3000`, and the same Kit loaded on `http://localhost`. The local app therefore drew its fallback shapes. The first increment's note that the Kit accepted `127.0.0.1` no longer holds; why it changed is not known.
+- **Owner constraint.** Dean: "I can't use 127.0.0.1 as a domain in Font Awesome. It will only allow me to use localhost." He then asked for an opt-in rather than a change of default: "Yes, make the opt-in change and open a PR."
+- **Change.** `PPO_LOCAL_HOST` chooses the local browser address: `127.0.0.1` (the default) or `localhost`. The local server's host check and the same-origin check on changes (`src/platform/http.ts`) both compare against the chosen address. The server still listens on 127.0.0.1 only, and the database must still be on 127.0.0.1. Any other value stops the server before it starts.
+- **Use.** Set `PPO_LOCAL_HOST=localhost` in `.env.local`, restart the dev server and open `http://localhost:3000`. Browsers keep sign-in cookies per address, so choose the identity again. The browser and HTTP suites send `http://127.0.0.1:3000`, so leave the setting unset when running them.
+- **Not changed.** The default address, CI (which loads no Kit), the offline workspace and the hosted demo. The demo's own address still has to be added to the Kit (open question 3).
+
 ## Consequences
 
 - **Implementation** replaces the drawing inside the existing icon components and keeps their semantic names, so the pages that use them do not change. The selected state switches to Solid. Glyphs render square at today's sizes. They stay hidden from assistive technology, and every control keeps its accessible name (NFR-08).

@@ -1,0 +1,25 @@
+{
+  "source": "2fce332269b813041304fb79dcf129c51d9d9c97",
+  "platform": "win32",
+  "browser": "155.0.8059.40",
+  "node": "v24.21.0",
+  "scope": "Unshaped SOCKS relay integration only; no packet shaping, app, database or timing claim.",
+  "result": {
+    "download": 512000,
+    "exact": true,
+    "upload": {
+      "bytes": 125000
+    }
+  },
+  "relay": {
+    "port": 23279,
+    "target_port": 58944,
+    "accepted": 11,
+    "connected": 2,
+    "rejected": 9,
+    "errors": 0,
+    "uploaded_bytes": 252720,
+    "downloaded_bytes": 512919
+  },
+  "passed": true
+}
