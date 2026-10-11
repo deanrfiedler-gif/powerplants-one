@@ -3,6 +3,12 @@ on:
   pull_request:
     paths: ['infra/azure-demo/**', 'src/platform/**', 'src/login/**', 'src/documents/**', 'scripts/demo-*.ts', 'db/demo/**', 'tests/demo/**', 'tests/unit/azure-demo.test.ts', 'tests/unit/login.test.ts', 'package*.json', '.github/workflows/azure-demo-*.yml']
   workflow_dispatch:
+# A replacement PR commit supersedes only this workflow on that same PR.
+# Keep push and manual runs separate; never cancel their running verification.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:

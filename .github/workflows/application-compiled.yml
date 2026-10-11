@@ -14,6 +14,12 @@ on:
         type: choice
         options: [all, customer-observer, customer-startup, customer-candidate, customer-regression, customer-cpu, customer-core, customer-assets, customer-asset-release, customer-network, customer-packet]
         default: all
+# A replacement PR commit supersedes only this workflow on that same PR.
+# Keep push and manual runs separate; never cancel their running verification.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 defaults:

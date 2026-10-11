@@ -14,15 +14,28 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Accepted design: the [Work orders design decision](../../../decisions/work-orders-design.md) of 11 October 2026, with captures 01–04 in [Work orders design r01](../../../reference/ui/service/work-orders-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid. The app still shows record cards; the shell parts wait for their own rollout decision.
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+- **Layout at 1440 × 900:** the labelled 240 px Service rail, with its 15 destinations in the three AU-08 groups at 40 px each and Work orders selected (white tile, Solid icon, neutral badge counting Ready to authorise); the breadcrumb "Service operations / Work orders" as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
+- **Secondary menu:** All work orders, My work orders (you are the Service owner), Drafts and Authorised; a Needs attention group (Scope needed, Blocked at authorisation, Ready to authorise, Successor in draft); and a Planning group (No visit proposed, Visit needs review, Coverage unresolved). Neutral counts. It collapses to a 20 px strip from its right border or the top-bar toggle.
+- **Toolbar:** "New work order" as the primary button, Owner and Site filters, the count with its refresh time, Refresh and "…".
+- **Grid:** one row per work order. Single-line 40 px rows with lines between cells. Columns: Work order (reference and current scope revision, sorted newest first), Scope summary, Customer, State, Authorisation (icon and words), Coverage, Next visit, Site, Requests, Service owner and Updated. The checkbox column and the settings and "…" column stay fixed while the grid scrolls sideways. Long values end with an ellipsis; the record window shows them in full.
+- **Authorisation and next visit:** derived only from what the code records, using the decision's display rules. Blocked uses the warning text colour, Scope needed and Authorised are muted, and every status has words.
+- **Record window:** clicking a row opens it over the grid, never squeezing it, right-aligned at its both-menus-open width, with close, previous and next on its left edge. It shows the summary, the current scope, the rule note, Readiness and Visits tabs, and History. Its buttons are Open request and Open work order. Authorisation stays on the record page.
+- **Selection:** ticking rows shows a selection toolbar and a 360 px panel with Open in sequence and Export list only.
+
+At 1440 × 960 and 1024 × 768, also inspect the complete shell and stylesheet order and keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired design/application review.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Accepted design: captures 05–06 in [Work orders design r01](../../../reference/ui/service/work-orders-design-r01/README.md).
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+- **Header and toolbar at 390 × 844:** the page name only, with no breadcrumb. A toolbar holds a view picker ("All work orders") standing in for the secondary menu, the count and a filter icon button.
+- **List:** flush list rows about 80 px tall, each showing the scope summary and last update, the reference and customer, and the authorisation status with the planning position, with a chevron.
+- **Record view:** tapping a row opens a full-screen record view with back, previous and next. The reference sits in the header and the title in the body. The record is stacked, and Open request and Open work order are fixed at the bottom.
+- **Tab bar:** icons only, five Service tabs (My Work, Service requests, Work orders, Schedule, More), each with a hidden accessible label. Work orders is the current tab.
+
+At 320 CSS px and 200% zoom, keep the same task and record context. Inputs use readable 16 px text and touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen. Phone selection of several rows is not designed yet.
 
 ## Shared components and states
 
@@ -32,6 +45,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma design: [Work orders design r01 captures](../../../reference/ui/service/work-orders-design-r01/README.md) (icon-free PNGs; not application captures)
 - [PPO-Work-Orders-Workspace-r01.html](../../../reference/ui/service/PPO-Work-Orders-Workspace-r01.html)
 
 ## Behaviour, handovers and verification
