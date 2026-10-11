@@ -379,7 +379,7 @@ test("LC-15 populated 0074 upgrade retains every old outcome and original receip
   const after = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(after.slice(0, -4), ledger);
+  assert.deepEqual(after.slice(0, -5), ledger);
   assert.deepEqual(after.slice(-5).map(r => r.version), [75, 76, 77, 78, 79]);
   assert.deepEqual(
     (await readOpportunity(f.owner, f.o.id)).outcome_sources,
