@@ -36,8 +36,6 @@ Masters use stable names/Git history; review stays separate. Reserve rNN for con
 
 Separate UUID, reference, label, revision and state. Use SYN-PPO references; retain external/company/entity/provider keys. Use snake_case fields and PascalCase types/enums/events. Names are not keys. Filing assistance follows naming-sharepoint-handover and N0–N6.
 
-AD-01 local application follows [its explicit contract](../decisions/access-request-application.md): approval and grant installation are separate; Applied is historical installation, not current effective access. Preserve independent duties, exact dates, locked revalidation and original recovery. Teams, campaigns and D-020 policy remain open.
-
 ## 6. Business workflow controls
 
 Separate request/work order/appointment/pack/report/response/Finance handoff. Completion may need follow-up. Scheduling checks concurrency, crew availability, permissions, readiness, reasons and acknowledgement.
@@ -100,4 +98,4 @@ ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edg
 PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties. Preserve originals. No hosted grants; owner acceptance/deployment separate.
 
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
-UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-native.md; inspection/requests built; apply/teams pending.
+UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-request-application.md; apply separate from approval; teams pending.
