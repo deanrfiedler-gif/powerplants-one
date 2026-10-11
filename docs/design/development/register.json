@@ -5115,7 +5115,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Read-only native increment verified locally; roles, teams, changes and campaigns remain open.",
+      "functional_status": "People, capabilities, grant holders and explanations verified locally; roles, teams, changes and campaigns remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12937,7 +12937,11 @@
       "guide_key": "guide.route-admin-access-capabilities-id",
       "design_path": "docs/design/development/pages/route-admin-access-capabilities-id.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-capabilities/native-1440-holders.png",
+        "docs/testing/evidence/access-capabilities/native-390-holders.png",
+        "docs/testing/evidence/access-capabilities/native-320-holders.png"
+      ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
@@ -12946,7 +12950,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; verification is recorded separately in the capability catalogue execution ledger.",
+      "functional_status": "Local 16-check database, 15-case desktop/phone browser and compiled-build proof recorded in the capability catalogue execution ledger; CI/owner review separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12976,7 +12980,11 @@
       "guide_key": "guide.route-admin-access-capabilities",
       "design_path": "docs/design/development/pages/route-admin-access-capabilities.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-capabilities/native-1440-catalogue.png",
+        "docs/testing/evidence/access-capabilities/native-390-catalogue.png",
+        "docs/testing/evidence/access-capabilities/native-320-catalogue.png"
+      ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
@@ -12985,7 +12993,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; verification is recorded separately in the capability catalogue execution ledger.",
+      "functional_status": "Local 16-check database, 15-case desktop/phone browser and compiled-build proof recorded in the capability catalogue execution ledger; CI/owner review separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

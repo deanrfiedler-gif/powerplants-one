@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Status: local database/build verification recorded; browser/visual evidence in progress. Owner visual, device and operational acceptance separate.
+Owner: Dean Fiedler. Status: local verification recorded; PR CI and independent review remain separate. Owner visual, device and operational acceptance separate.
 
 ## Scope and source
 
@@ -12,11 +12,14 @@ The catalogue is exhaustive against the 132-key server Capability union. It does
 
 ## Verification record
 
-Application source: `fa89c3e`. Tests extend `tests/database/access-inspection.test.ts` and `tests/browser/access-inspection.spec.ts`, which run in the existing application assurance suites.
+Final application source: `f3349fdf34141b7215850c043b1936e5171aab72`. Database implementation proof: `fa89c3e`; subsequent runtime changes name the routes in the breadcrumb and correct singular-result copy. Tests extend `tests/database/access-inspection.test.ts` and `tests/browser/access-inspection.spec.ts`, which run in the existing application assurance suites.
 
 | Check | Result |
 |---|---|
 | `npm run build` (including whole-project TypeScript) | Pass |
+| Native browser/HTTP checks on compiled application | 15 pass across desktop, 390 px and 320 px; [raw result](browser.txt) |
+| Navigation unit checks | 20 pass |
+| Focused retained-r17 shell comparison | 1 pass; the prerequisite PR #410 menu-count correction is integrated |
 | ESLint over the access module, page/API routes and database/browser tests | Pass |
 | AD-01 database suite, disposable `ppo_synthetic_test` | 16 checks pass; [raw result](database.txt) |
 | Naming, foundation and prototype checks | Pass; documentation assurance only |
@@ -33,3 +36,20 @@ PostgreSQL initially could not bind the former local port; the task-owned dispos
 The retained AD-01 capabilities view combines the catalogue with proposed roles/teams and an inspector. Native catalogue/detail routes use existing cards and controls, and show only real grants. This is a proposed adaptation; accepted native mockup images are missing. Source presence, automated functional proof, paired visual observation, owner/device/zoom/screen-reader acceptance and deployment remain separate. No review fingerprint is assigned by implementation.
 
 The first browser run passed 12 of 15 scenarios; all three catalogue journeys expected a visible heading, whereas the shared register header delegates the visible title to the breadcrumb. Inspection also found that the new route inherited the parent label. Explicit catalogue/holder/person route metadata fixes the visible task and browser title, and the test now checks the breadcrumb. The original failed run is retained in `initial-browser-label-failure.txt`; the final browser result is recorded separately.
+
+
+The second browser run also passed 12 of 15: its breadcrumb locator matched both the visible breadcrumb and the hidden hierarchy item. The corrected test selects the labelled visible list; the 15-scenario run passes without changing runtime behaviour or deadlines. `browser-selector-failure.txt` retains that failed run. The final copy-only adjustment avoids “1 capabilities”; the compiled build, native browser suite and captures were refreshed afterward.
+
+## Visual comparison and handover
+
+[Capture manifest](captures.json) binds twelve unedited PNGs to the source, Chrome version, UTC time, viewport and SHA-256. The working HTML hash is included. Native catalogue images show `shared.read` filtered; reference images show the unfiltered capabilities view, so they compare layout rather than fixture counts. Native holder images show Site-filtered grants; context images show the preselected Person access form before submitting a check.
+
+| Width | Native catalogue | Native holders | Person context | Retained design |
+|---|---|---|---|---|
+| 1440 px | [Catalogue](native-1440-catalogue.png) | [Holders](native-1440-holders.png) | [Context](native-1440-context.png) | [Reference](reference-1440-catalogue.png) |
+| 390 px | [Catalogue](native-390-catalogue.png) | [Holders](native-390-holders.png) | [Context](native-390-context.png) | [Reference](reference-390-catalogue.png) |
+| 320 px | [Catalogue](native-320-catalogue.png) | [Holders](native-320-holders.png) | [Context](native-320-context.png) | [Reference](reference-320-catalogue.png) |
+
+Observed: native pages use the live shell/breadcrumb, stacked search fields and grant cards instead of the retained combined table and inspector. Long company/site text wraps; same-name company keys remain visible; the phone header abbreviates the task and the hierarchy retains its full name. Native navigation remains separate from proposed role/team tabs. No horizontal document overflow was measured at any captured width. Cards, explanation fields and reference tables continue below the first phone viewport; physical keyboard occlusion, 200% zoom, touch and screen-reader acceptance are not established here. These are implementer observations, not an owner verdict or baseline adoption.
+
+The follow-on PR is based on the read-only inspection branch from #410, including its tested menu assertion correction. Parent review/merge, full CI and this catalogue's independent review remain separate. Roles, teams, change requests, approvals and campaigns are still open AD-01 work.

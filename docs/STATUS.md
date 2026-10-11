@@ -6,7 +6,7 @@
 
 ## AD-01 capability catalogue continuation — 11 October 2026
 
-Dean's instruction to proceed with the next task continues AD-01 from PR #410 on `codex/ad01-capability-catalogue`. The [native decision](decisions/access-review-native.md#capability-catalogue-continuation--11-october-2026) adds the 132-key capability catalogue, scope/state-filtered grant holders and person-explanation context. Counts remain grant rows, not effective business authority. This increment introduces no migration, seed or access change. The [execution record](testing/evidence/access-capabilities/README.md) retains validation and limits; owner visual review, roles/teams, access changes and campaigns remain open.
+Dean's instruction to proceed with the next task continues AD-01 from PR #410 on `codex/ad01-capability-catalogue`. The [native decision](decisions/access-review-native.md#capability-catalogue-continuation--11-october-2026) adds the 132-key capability catalogue, scope/state-filtered grant holders and person-explanation context. Counts remain grant rows, not effective business authority. This increment introduces no migration, seed or access change. The [execution record](testing/evidence/access-capabilities/README.md) retains validation and limits; owner visual review, roles/teams, access changes and campaigns remain open. The build/type check, 16 database checks, 15 native browser checks and 20 navigation checks pass locally. Twelve source-bound captures retain the proposed adaptation. PR #410 also receives the tested menu-count correction; full CI and review remain separate.
 
 ## AD-01 native access inspection — 11 October 2026
 

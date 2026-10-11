@@ -24,4 +24,4 @@ Existing [working AD-01 HTML](../../access-review/access-review.html), capabilit
 
 ## Evidence and open review
 
-[Execution ledger](../../../testing/evidence/access-capabilities/README.md) records actual verification and native/reference captures when taken. Accepted native mockup images are missing. Owner visual review, physical-device, zoom and screen-reader acceptance remain pending. No review fingerprint is assigned by implementation and no deployment is claimed.
+[Execution ledger](../../../testing/evidence/access-capabilities/README.md) records 16 database checks, 15 native browser checks and twelve source-bound native/reference captures at 1440/390/320 px, with explicit observed adaptations. Accepted native mockup images are missing. Owner visual review, physical-device, zoom and screen-reader acceptance remain pending. No review fingerprint is assigned by implementation and no deployment is claimed.

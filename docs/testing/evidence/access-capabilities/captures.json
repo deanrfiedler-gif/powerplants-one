@@ -1,6 +1,6 @@
 {
-  "captured_at": "2026-10-11T03:41:01.082Z",
-  "source_commit": "85db0f23a7990ad31b3d6fb2b25ae444f721074d",
+  "captured_at": "2026-10-11T03:49:59.012Z",
+  "source_commit": "f3349fdf34141b7215850c043b1936e5171aab72",
   "browser": "155.0.8059.40",
   "origin": "http://127.0.0.1:3091",
   "synthetic": true,
@@ -16,7 +16,7 @@
         "width": 1440,
         "height": 960
       },
-      "sha256": "df267c7b70077d136389748554da9ee7bd38b3fd7efa77e6d7ab468d24200ac9"
+      "sha256": "9df8dd202a76136b74927d02bee2031d5d650411eca687d7e987d88d75742706"
     },
     {
       "file": "native-1440-holders.png",
@@ -52,7 +52,7 @@
         "width": 390,
         "height": 844
       },
-      "sha256": "765434b2d0e92469110baa10e9d09079238a5d15a59936ceb28f847af67437a4"
+      "sha256": "9a62acd538c0233efcbc7cea53188f38c64ee94203463c6a8c8c4b10fdf3bca4"
     },
     {
       "file": "native-390-holders.png",
@@ -88,7 +88,7 @@
         "width": 320,
         "height": 740
       },
-      "sha256": "ab85e4d5ba7ca7245a4a3e7eecd42a821860bc14f566e3cb62fa2a0948b5b419"
+      "sha256": "9797c5e54ce7009f0adf948f1cb8b1a3050b38505cc9bb2827f09feacbff3bc2"
     },
     {
       "file": "native-320-holders.png",
