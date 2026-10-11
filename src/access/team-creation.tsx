@@ -243,6 +243,9 @@ function TeamForm({
                 options={choices}
                 required
               />
+              <p className="narrative">
+                Selected lead ID: {lead || "None selected"}
+              </p>
               <SelectField
                 name="member_ids"
                 label="Person to add to initial roster"

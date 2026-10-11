@@ -54,6 +54,9 @@ test("AD01 native team creation: explicit roster, exact history and unchanged gr
   await expect(form(page)).toContainText("0 of 20 people selected");
   const name = await fill(page);
   await expect(
+    form(page).getByText(`Selected lead ID: ${creator}`, { exact: true }),
+  ).toBeVisible();
+  await expect(
     form(page)
       .getByLabel("Person to add to initial roster")
       .locator(`option[value="${member}"]`),
