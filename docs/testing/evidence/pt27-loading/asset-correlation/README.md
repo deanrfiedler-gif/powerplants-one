@@ -32,3 +32,5 @@ All four starting seven-table fixture fingerprints match. A1 retains its matchin
 [Summary](summary.json), [CI provenance](ci-provenance.json) and the [50-file integrity manifest](artifacts.json) preserve available original samples, event logs, captures, source/build manifests, process/affinity records and support files. Stored/original hashes and private-value scans pass. These observations add overhead and are source-specific; do not compare their absolute times with earlier uninstrumented runs as an application change. Application `src/`, database and dependencies remain unchanged from integrated source `3a626e6`.
 
 Keep PR #391 draft. The original 503 cause, three-second target, full four-view PT-27, owner/device/accessibility acceptance and deployment remain open. The separately retained [planner CI repair](../planner-ci-repair/README.md) changes response selection in a test, not planner behaviour.
+
+The recorded-source `16db9f3` summary reproduces byte-for-byte from the original download. All 46 core artifact manifest entries also reproduce exactly; four support records complete the 50-file integrity manifest.
