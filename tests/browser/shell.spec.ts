@@ -154,7 +154,7 @@ test("r17 preview preserves permissions, contextual navigation and page guidance
     await expect(page.getByRole("button", { name: "Open global search", exact: true })).toBeFocused();
   }
   await page.getByRole("button", { name: "Page guide", exact: true }).click();
-  await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("heading", { name: "Engineering", exact: true })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("heading", { name: "Engineering workload & deliverables", exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
