@@ -1,0 +1,266 @@
+✖ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (616.4294ms)
+✖ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (1133.7273ms)
+✖ LC-13 exact acceptance binding preserves independent native history and original recovery after successors (427.5935ms)
+✖ LC-13 stale source/workspace, wrong Deal and receiver authority block new links without effects (487.0295ms)
+✖ LC-13 identical concurrent linking has one original; competing intent cannot duplicate the association (455.9174ms)
+✖ LC-13 late publication failure and missing direct SQL evidence roll back the entire link (414.6108ms)
+✖ LC-13 revoked native access hides link identities and denies original recovery and replay (408.6347ms)
+✖ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (516.7894ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20449.9003
+
+✖ failing tests:
+
+test at tests\database\leads-amendments.test.ts:1:9573
+✖ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (616.4294ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-delivery-binding.test.ts:2:1134
+✖ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (1133.7273ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-estimating-binding.test.ts:1:4498
+✖ LC-13 exact acceptance binding preserves independent native history and original recovery after successors (427.5935ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-estimating-binding.test.ts:1:6307
+✖ LC-13 stale source/workspace, wrong Deal and receiver authority block new links without effects (487.0295ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-estimating-binding.test.ts:1:7369
+✖ LC-13 identical concurrent linking has one original; competing intent cannot duplicate the association (455.9174ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-estimating-binding.test.ts:1:8301
+✖ LC-13 late publication failure and missing direct SQL evidence roll back the entire link (414.6108ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-estimating-binding.test.ts:1:9727
+✖ LC-13 revoked native access hides link identities and denies original recovery and replay (408.6347ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\sales-estimating-binding.test.ts:1:10430
+✖ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (516.7894ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\Projects\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\Projects\powerplants-one\src\platform\database.ts:46:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\Projects\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }

@@ -1,0 +1,22 @@
+PR #414 head da91bb9334b3408c0ad8969da58173edcffe523a; decoded child-test failure excerpt only.
+https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116246589/job/114401597134
+test at tests/helpers/permissions-matrix-http.ts:1:17774
+Ã¢Å“â€“ Systems and non-review duties cannot approve Service or Finance, with no accepted effects (62.1777ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  1 !== 0
+
+      at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/helpers/permissions-matrix-http.ts:772:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/helpers/permissions-matrix-http.ts:716:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+",

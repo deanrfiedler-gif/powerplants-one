@@ -1,0 +1,28 @@
+PR #415 head bb1f2673b6ca5d5d195a7b05f8295fbb5e292e0b; selected completed-job failure excerpts.
+https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116399290/job/114402025195
+Full job output remains outside Git. Full ledger arrays and job environment are omitted.
+
+2026-10-11T08:07:53.5833775Z test at tests/database/sales-estimating-binding.test.ts:1:10511
+2026-10-11T08:07:53.5834502Z ✖ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (13397.73192ms)
+2026-10-11T08:07:53.5835076Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+2026-10-11T08:07:53.5835411Z   + actual - expected
+2026-10-11T08:07:53.5835602Z   ... Skipped lines
+2026-10-11T08:07:53.5835783Z
+2026-10-11T08:07:53.5835936Z     [
+2026-10-11T08:07:53.5836108Z       {
+2026-10-11T08:07:53.5836319Z         applied_at: 2026-10-11T08:02:02.746Z,
+2026-10-11T08:07:53.5836692Z         sha256: '6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4',
+2026-10-11T08:07:53.5837012Z         version: 1
+2026-10-11T08:07:53.5837186Z   ...
+2026-10-11T08:07:53.5837336Z       },
+2026-10-11T08:07:53.5837493Z   +   {
+2026-10-11T08:07:53.5837686Z   +     applied_at: 2026-10-11T08:02:08.606Z,
+2026-10-11T08:07:53.5838066Z   +     sha256: 'cef4c16e126669a711a95385e87eea94b8a1778d85b5eb1a622b72b6e3118097',
+2026-10-11T08:07:53.5838384Z   +     version: 74
+2026-10-11T08:07:53.5838554Z   +   }
+2026-10-11T08:07:53.5838708Z     ]
+2026-10-11T08:07:53.5838855Z
+2026-10-11T08:07:53.5839353Z       at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/sales-estimating-binding.test.ts:407:10)
+2026-10-11T08:07:53.5839997Z       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-10-11T08:07:53.5840414Z       at async Test.run (node:internal/test_runner/test:1409:7)
+2026-10-11T08:07:53.5840814Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {

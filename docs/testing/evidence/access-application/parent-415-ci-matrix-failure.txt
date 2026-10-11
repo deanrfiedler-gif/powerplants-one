@@ -1,0 +1,19 @@
+test at tests/helpers/permissions-matrix-http.ts:1:17774
+✖ Systems and non-review duties cannot approve Service or Finance, with no accepted effects (45.175448ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  2 !== 0
+
+      at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/helpers/permissions-matrix-http.ts:772:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/helpers/permissions-matrix-http.ts:716:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

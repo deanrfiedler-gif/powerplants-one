@@ -1,0 +1,53 @@
+PR #415 head bb1f2673b6ca5d5d195a7b05f8295fbb5e292e0b; selected completed-job failure excerpts.
+https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38116399290/job/114402025253
+Full job output remains outside Git. Full ledger arrays and job environment are omitted.
+
+2026-10-11T08:10:56.5701650Z test at tests/database/leads-amendments.test.ts:1:9654
+2026-10-11T08:10:56.5702638Z ✖ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (8428.799887ms)
+2026-10-11T08:10:56.5703522Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+2026-10-11T08:10:56.5704467Z   + actual - expected
+2026-10-11T08:10:56.5704677Z   ... Skipped lines
+2026-10-11T08:10:56.5704848Z
+2026-10-11T08:10:56.5704992Z     [
+2026-10-11T08:10:56.5705145Z       {
+2026-10-11T08:10:56.5705342Z         applied_at: 2026-10-11T07:44:28.477Z,
+2026-10-11T08:10:56.5705699Z         sha256: '6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4',
+2026-10-11T08:10:56.5706016Z         version: 1
+2026-10-11T08:10:56.5706222Z   ...
+2026-10-11T08:10:56.5706372Z       },
+2026-10-11T08:10:56.5706517Z   +   {
+2026-10-11T08:10:56.5706720Z   +     applied_at: 2026-10-11T07:44:31.463Z,
+2026-10-11T08:10:56.5707078Z   +     sha256: 'e9f2b63df599e9ce38472ae1061f4c31d7b91c0df7b774d96a36154bbb091379',
+2026-10-11T08:10:56.5707394Z   +     version: 73
+2026-10-11T08:10:56.5707574Z   +   }
+2026-10-11T08:10:56.5708036Z     ]
+2026-10-11T08:10:56.5708179Z
+2026-10-11T08:10:56.5708628Z       at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/leads-amendments.test.ts:359:10)
+2026-10-11T08:10:56.5709229Z       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-10-11T08:10:56.5709634Z       at async Test.run (node:internal/test_runner/test:1409:7)
+2026-10-11T08:10:56.5710019Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+
+2026-10-11T08:10:56.5828995Z test at tests/database/sales-delivery-binding.test.ts:2:1134
+2026-10-11T08:10:56.5829831Z ✖ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (9982.716174ms)
+2026-10-11T08:10:56.5830409Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+2026-10-11T08:10:56.5830724Z   + actual - expected
+2026-10-11T08:10:56.5830902Z   ... Skipped lines
+2026-10-11T08:10:56.5831071Z
+2026-10-11T08:10:56.5831214Z     [
+2026-10-11T08:10:56.5831359Z       {
+2026-10-11T08:10:56.5831552Z         applied_at: 2026-10-11T08:08:36.239Z,
+2026-10-11T08:10:56.5831906Z         sha256: '6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4',
+2026-10-11T08:10:56.5832212Z         version: 1
+2026-10-11T08:10:56.5832373Z   ...
+2026-10-11T08:10:56.5832625Z       },
+2026-10-11T08:10:56.5832769Z   +   {
+2026-10-11T08:10:56.5832947Z   +     applied_at: 2026-10-11T08:08:40.157Z,
+2026-10-11T08:10:56.5833292Z   +     sha256: '1c4d1a6012c4255aa29f5c5012b90ad84e7c31fe63dc9ae4af6f7952e4fb1b79',
+2026-10-11T08:10:56.5833591Z   +     version: 76
+2026-10-11T08:10:56.5833747Z   +   }
+2026-10-11T08:10:56.5833889Z     ]
+2026-10-11T08:10:56.5834032Z
+2026-10-11T08:10:56.5834488Z       at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/sales-delivery-binding.test.ts:373:10)
+2026-10-11T08:10:56.5835090Z       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-10-11T08:10:56.5835487Z       at async Test.run (node:internal/test_runner/test:1409:7)
+2026-10-11T08:10:56.5835868Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {

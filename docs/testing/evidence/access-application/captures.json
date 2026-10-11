@@ -1,0 +1,187 @@
+{
+  "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+  "browser": "155.0.8059.40",
+  "observed_at": "2026-10-11T07:05:24.430Z",
+  "captures": [
+    {
+      "file": "native-1440-approved.png",
+      "sha256": "2f9986e349860a1214fa5a565d2e090d0c1206c81e95098aa03ab8ea1acf3bec",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Approved version 2, permitted local executor",
+      "request_id": "34f5bd82-b32b-488d-847a-3584e1d793f4",
+      "overflow": false
+    },
+    {
+      "file": "native-1440-applied.png",
+      "sha256": "570009162ac36665a582f3a75492494c733a4944d6ff4b7f4943e9d6afa8c2da",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Applied version 3, future grant and original evidence",
+      "request_id": "34f5bd82-b32b-488d-847a-3584e1d793f4",
+      "overflow": false
+    },
+    {
+      "file": "reference-1440-changes.png",
+      "sha256": "d79b33e616065febecfc99e726281e940ac847140f2e3f5dc6f18ce4b7eb506e",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Retained working design Access changes, simulated application",
+      "request_id": null,
+      "overflow": false
+    },
+    {
+      "file": "native-390-approved.png",
+      "sha256": "e174e5ec6db129e4ba0fc0bb27e3df4788c5155591f4eec1019a9d9703120ee8",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Approved version 2, permitted local executor",
+      "request_id": "4d56e96e-fc92-418d-99bd-ca8ff06d7288",
+      "overflow": false
+    },
+    {
+      "file": "native-390-applied.png",
+      "sha256": "f223698c16dc589a709d86689146163c053932e4683447e76d33166e5ba9191e",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Applied version 3, future grant and original evidence",
+      "request_id": "4d56e96e-fc92-418d-99bd-ca8ff06d7288",
+      "overflow": false
+    },
+    {
+      "file": "reference-390-changes.png",
+      "sha256": "3096386a4e7d6b77a24f9132d1b0556a9a235ac475f60de77df315599409a23d",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Retained working design Access changes, simulated application",
+      "request_id": null,
+      "overflow": false
+    },
+    {
+      "file": "native-320-approved.png",
+      "sha256": "c3d31e7ef75460569fc2f6e49f45d4bab9aa2299922c99db1f4c226319b06455",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Approved version 2, permitted local executor",
+      "request_id": "648903bd-92b8-4d56-801f-9b46dc151a54",
+      "overflow": false
+    },
+    {
+      "file": "native-320-applied.png",
+      "sha256": "a738acce0f7b4ce9883652d0c5e7909c39e0dc8bea31c3048f0a6b0efffc6e06",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Applied version 3, future grant and original evidence",
+      "request_id": "648903bd-92b8-4d56-801f-9b46dc151a54",
+      "overflow": false
+    },
+    {
+      "file": "reference-320-changes.png",
+      "sha256": "53cb9af350038af12b024022f8700c0e539c1a42068224260b5a31edac20d087",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Retained working design Access changes, simulated application",
+      "request_id": null,
+      "overflow": false
+    },
+    {
+      "file": "native-1440-application-control.png",
+      "sha256": "f2553d4f4377e8549a3d82830e1ab9c26deafb37b11c0c9a7dddb5c3a91e7906",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Approved version 2, scrolled to application reason and action",
+      "request_id": "a503fad1-60c2-43ba-b2c8-f41ea481146d",
+      "overflow": false
+    },
+    {
+      "file": "native-1440-application-handover.png",
+      "sha256": "8977e3532532484ca43e5fee357477a357e7b1292383ecc0fba8652d59770e0f",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Applied version 3, scrolled to grant evidence and current-access handover",
+      "request_id": "a503fad1-60c2-43ba-b2c8-f41ea481146d",
+      "overflow": false
+    },
+    {
+      "file": "native-390-application-control.png",
+      "sha256": "60f56e6e09d0ea7346db8ccd5a3f385091239475c9d622ef1061982796a2909d",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Approved version 2, scrolled to application reason and action",
+      "request_id": "e4c28b57-143a-46ad-bf8e-02166c9bab8d",
+      "overflow": false
+    },
+    {
+      "file": "native-390-application-handover.png",
+      "sha256": "67ba569003a2f10d310be2592d39add3ed3229faa1ae0fe7412913b7ccb30d61",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Applied version 3, scrolled to grant evidence and current-access handover",
+      "request_id": "e4c28b57-143a-46ad-bf8e-02166c9bab8d",
+      "overflow": false
+    },
+    {
+      "file": "native-320-application-control.png",
+      "sha256": "1b73e8b57de3dee8208996522988b7c8314ea4aea8a87666734ece23f3e23f7e",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Approved version 2, scrolled to application reason and action",
+      "request_id": "4582a877-1625-4b4e-ae8e-19f6d06aaa94",
+      "overflow": false
+    },
+    {
+      "file": "native-320-application-handover.png",
+      "sha256": "14d25aa8c57741de2e3ccd32ac86e91cd314e5ce32a1b139ad6748a0e473da0d",
+      "source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Applied version 3, scrolled to grant evidence and current-access handover",
+      "request_id": "4582a877-1625-4b4e-ae8e-19f6d06aaa94",
+      "overflow": false
+    }
+  ]
+}

@@ -75602,7 +75602,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations will not grant visual approval."
+            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations do not grant visual approval."
           ],
           "steps": [],
           "headers": [],
@@ -75610,7 +75610,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-application/README.md and earlier access-requests evidence; owner acceptance pending"
+      "runtime_evidence": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission checks pass. See docs/testing/evidence/access-application/README.md for exact source, historical upgrade/CI outcomes and pending owner acceptance."
     },
     {
       "guide_key": "guide.route-admin-access-requests",
@@ -75753,7 +75753,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations will not grant visual approval."
+            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations do not grant visual approval."
           ],
           "steps": [],
           "headers": [],
@@ -75761,7 +75761,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-application/README.md and earlier access-requests evidence; owner acceptance pending"
+      "runtime_evidence": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission checks pass. See docs/testing/evidence/access-application/README.md for exact source, historical upgrade/CI outcomes and pending owner acceptance."
     }
   ]
 }

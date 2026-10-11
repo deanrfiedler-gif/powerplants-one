@@ -1,0 +1,223 @@
+
+Running 42 tests using 1 worker
+
+(node:26936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (1.7s)
+(node:39128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (71ms)
+(node:30672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [desktop] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.8s)
+(node:11452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [desktop] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (1.7s)
+(node:30636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [desktop] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (8.0s)
+  ok  6 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (10.6s)
+  ok  7 [desktop] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (5.7s)
+  ok  8 [desktop] › tests\browser\access-requests.spec.ts:256:1 › AD-01 stale decisions are refused and denied refresh hides request context (2.9s)
+  ok  9 [desktop] › tests\browser\access-requests.spec.ts:339:1 › AD-01 approved local application installs once, retains its dates and opens current person access (3.2s)
+  ok 10 [desktop] › tests\browser\access-requests.spec.ts:410:1 › AD-01 lost committed application response recovers the original after reload (4.3s)
+  ok 11 [desktop] › tests\browser\access-requests.spec.ts:473:1 › AD-01 stale application and denied command clear protected context (4.6s)
+  ok 12 [desktop] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (5.1s)
+  ok 13 [desktop] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (5.2s)
+  ok 14 [desktop] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (4.2s)
+(node:26408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.8s)
+  ok 16 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (745ms)
+  ok 17 [phone] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (3.5s)
+  ok 18 [phone] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (5.3s)
+  ok 19 [phone] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (4.2s)
+  ok 20 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.7s)
+  ok 21 [phone] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (4.9s)
+  ok 22 [phone] › tests\browser\access-requests.spec.ts:256:1 › AD-01 stale decisions are refused and denied refresh hides request context (3.2s)
+  ok 23 [phone] › tests\browser\access-requests.spec.ts:339:1 › AD-01 approved local application installs once, retains its dates and opens current person access (2.8s)
+  ok 24 [phone] › tests\browser\access-requests.spec.ts:410:1 › AD-01 lost committed application response recovers the original after reload (2.5s)
+  ok 25 [phone] › tests\browser\access-requests.spec.ts:473:1 › AD-01 stale application and denied command clear protected context (3.5s)
+  ok 26 [phone] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (5.3s)
+  ok 27 [phone] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (4.2s)
+  ok 28 [phone] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (2.5s)
+(node:23592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 29 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (4.1s)
+  ok 30 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (411ms)
+  ok 31 [narrow] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (3.0s)
+  ok 32 [narrow] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (3.5s)
+  ok 33 [narrow] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.3s)
+  ok 34 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.8s)
+  ok 35 [narrow] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (6.3s)
+  ok 36 [narrow] › tests\browser\access-requests.spec.ts:256:1 › AD-01 stale decisions are refused and denied refresh hides request context (2.8s)
+  ok 37 [narrow] › tests\browser\access-requests.spec.ts:339:1 › AD-01 approved local application installs once, retains its dates and opens current person access (4.2s)
+  ok 38 [narrow] › tests\browser\access-requests.spec.ts:410:1 › AD-01 lost committed application response recovers the original after reload (3.9s)
+  ok 39 [narrow] › tests\browser\access-requests.spec.ts:473:1 › AD-01 stale application and denied command clear protected context (4.7s)
+  ok 40 [narrow] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (3.7s)
+  ok 41 [narrow] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (4.0s)
+  ok 42 [narrow] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (4.3s)
+
+
+  1) [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-inspection.spec.ts:8:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Playwright/1.63.0 (x64; windows 10.0) node/24.21
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 25
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-inspection.spec.ts:99:9
+
+    Error Context: ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-di-a2d16--and-expose-no-write-method-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-di-a2d16--and-expose-no-write-method-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-di-a2d16--and-expose-no-write-method-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 25
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-inspection.spec.ts:153:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-de-692cb-ut-displaying-retained-data-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-de-692cb-ut-displaying-retained-data-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-de-692cb-ut-displaying-retained-data-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-de-692cb-ut-displaying-retained-data-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-inspection.spec.ts:198:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-approved-application\browser-results\access-inspection-AD-01-ca-885bd-s-through-exact-site-grants-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page
+    [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method
+    [desktop] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data
+    [desktop] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants
+  38 passed (3.1m)
