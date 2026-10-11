@@ -18,6 +18,7 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    'admin.access.read':'Inspect workspace identities and exact permission grants',
     'maintenance.read':'Read permitted agreements and maintenance',
     'maintenance.manage':'Maintain agreements plans and obligations',
     'maintenance.assess':'Review sourced entitlement and maintenance',
@@ -84,17 +85,17 @@
     'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter',
     'engineering.change.review':'Review engineering change proposals','engineering.change.decide':'Record technical decisions on engineering changes','engineering.change.receive':'Receive engineering change requests','engineering.change.verify':'Record retest results for engineering changes','engineering.change.close':'Close engineering changes',
     'engineering.commissioning.capture':'Capture commissioning test evidence','engineering.commissioning.review':'Review commissioning evidence and approve as-built records','engineering.commissioning.issue':'Issue and withdraw commissioning releases','engineering.commissioning.receive':'Receive commissioning and as-built releases'};
-  const FAMILY_NAMES={maintenance:"Maintenance",warranty:"Warranty",products:'Products',incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
+  const FAMILY_NAMES={admin:'Access inspection',maintenance:"Maintenance",warranty:"Warranty",products:'Products',incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
   const capability=key=>({key,label:LABELS[key],family:key.split('.')[0],familyName:FAMILY_NAMES[key.split('.')[0]],
     reads:/\.read(\.own)?$/.test(key),own:key.endsWith('.own'),
-    restricted:key.startsWith('finance.')||key==='shared.finance.read'||key==='shared.internal.read',
+    restricted:key.startsWith('admin.')||key.startsWith('finance.')||key==='shared.finance.read'||key==='shared.internal.read',
     hostedOnly:key==='email.connect'});
   const catalogue=()=>CAPS.keys.map(capability);
   const families=()=>[...new Set(CAPS.keys.map(k=>k.split('.')[0]))];
   const isCap=k=>CAPS.keys.includes(k);
 
-  /* Proposed administrative capabilities: deliberately outside the 74-value contract. */
-  const ADMIN_CAPS=['admin.access.read','admin.access.propose','admin.access.approve','admin.access.review'];
+  /* Proposed write/review capabilities remain outside the contract; native read inspection is implemented. */
+  const ADMIN_CAPS=['admin.access.propose','admin.access.approve','admin.access.review'];
   const roles={
     admin:{person:D(1),title:'Access administrator',admin:['admin.access.read','admin.access.propose']},
     approver:{person:D(2),title:'Access approver (platform / data owner)',admin:['admin.access.read','admin.access.approve','admin.access.review']},
@@ -219,6 +220,7 @@
   const grantState=(g,now=NOW)=>g.validFrom>now?'Future':g.validTo&&g.validTo<=now?'Expired':'Current';
   const scopeKey=g=>`${g.userId}|${g.capability}|${g.scopeType}|${g.scopeType==='Workspace'?WS:g.scopeType==='Company'?g.companyId:g.siteId}`;
   function checkScope(s,x){
+    must(x.capability!=='admin.access.read'||x.scopeType==='Workspace','Access inspection requires Workspace scope.');
     must(['Workspace','Company','Site'].includes(x.scopeType),'Choose Workspace, Company or Site scope.');
     if(x.scopeType==='Workspace')must(!x.companyId&&!x.siteId,'A Workspace grant has no company or site.');
     if(x.scopeType==='Company')must(company(s,x.companyId)&&!x.siteId,'A Company grant needs a company and no site.');
@@ -334,7 +336,7 @@
     const g=s.grants.find(x=>x.id===op.grantId&&x.userId===subject.id);
     must(g,'Choose one of this person’s grants.');
     if(op.kind==='validity'){must(!validTo||validTo>g.validFrom,'The end date must be after the grant’s start.');return {...op,validTo};}
-    if(op.kind==='scope'){checkScope(s,op);const key=scopeKey({...g,...op});must(!s.grants.some(x=>x.id!==g.id&&scopeKey(x)===key)&&!pendingKeys.has(key),'A grant already exists at the new scope.');pendingKeys.add(key);must(grantState(g,s.now)!=='Expired','An expired grant cannot change scope; add a new grant instead.');return {kind:'scope',grantId:g.id,scopeType:op.scopeType,companyId:op.scopeType==='Workspace'?null:op.companyId,siteId:op.scopeType==='Site'?op.siteId:null};}
+    if(op.kind==='scope'){checkScope(s,{...g,...op});const key=scopeKey({...g,...op});must(!s.grants.some(x=>x.id!==g.id&&scopeKey(x)===key)&&!pendingKeys.has(key),'A grant already exists at the new scope.');pendingKeys.add(key);must(grantState(g,s.now)!=='Expired','An expired grant cannot change scope; add a new grant instead.');return {kind:'scope',grantId:g.id,scopeType:op.scopeType,companyId:op.scopeType==='Workspace'?null:op.companyId,siteId:op.scopeType==='Site'?op.siteId:null};}
     must(grantState(g,s.now)==='Current','Only a current grant can be revoked; change a future grant’s validity instead.');
     must(g.validFrom<effectiveFrom,'Revocation must be effective after the grant started.');
     return {kind:'revoke',grantId:g.id};

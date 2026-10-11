@@ -275,7 +275,10 @@
         "route:/sales/leads/[id]",
         "route:/sales/leads",
         "route:/sales/opportunities/new",
-        "route:/work/new"
+        "route:/work/new",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -1171,7 +1174,10 @@
         "route:/service/work-orders/[id]",
         "route:/service/work-orders/new",
         "route:/sales/opportunities/new",
-        "route:/work/new"
+        "route:/work/new",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2231,7 +2237,10 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -2438,7 +2447,10 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",

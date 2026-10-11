@@ -233,7 +233,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // identity type or existing row changes. Generic runtime table privileges cover it, and
   // users/permission_grants stay read-only to the runtime role. A row only narrows record
   // access to a company the person's grants already reach; it never widens access.
-  if (latestMigrationVersion !== 77) throw Error("Review the existing-demo upgrade for this release.");
+  // 0078 extends the grant catalogue for read-only AD-01 inspection. Seed 78 adds
+  // exactly one existing local Systems grant, no users or hosted grants. Runtime
+  // users/grants remain read-only; no access-changing command or table is added.
+  if (latestMigrationVersion !== 78) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

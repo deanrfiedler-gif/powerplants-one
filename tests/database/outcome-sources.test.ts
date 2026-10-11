@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { readFile } from "node:fs/promises";
@@ -374,12 +375,12 @@ test("LC-15 populated 0074 upgrade retains every old outcome and original receip
   await seed();
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(names), before);
+  assertAccessInspectionSnapshot(await snapshot(names), before, names);
   const after = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(after.slice(0, -3), ledger);
-  assert.deepEqual(after.slice(-3).map(r => r.version), [75, 76, 77]);
+  assert.deepEqual(after.slice(0, -4), ledger);
+  assert.deepEqual(after.slice(-4).map(r => r.version), [75, 76, 77, 78]);
   assert.deepEqual(
     (await readOpportunity(f.owner, f.o.id)).outcome_sources,
     [],

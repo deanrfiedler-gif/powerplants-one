@@ -141,3 +141,8 @@ Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, rea
 ## NAV entry and truthful recovery
 
 Home offers a declared permitted destination or a clear no-grant state; it grants no authority. Hosted offline entry displays an explanation while local originals retain their offline recovery links. Missing/revoked Survey Equipment identities are unavailable without leaking retained labels. Quotation windows and unavailable source adapters remain explicitly partial. Review these host states with the NAV fixtures, separately from owner/device acceptance.
+
+
+## AD-01 consumer
+
+Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.

@@ -27,11 +27,11 @@ const demo=[...demoText.match(/export const demoCapabilities\s*=\s*\[([\s\S]*?)\
 const migrations=fs.readdirSync(path.join(root,'db/migrations')).filter(f=>f.endsWith('.sql')).map(f=>fs.readFileSync(path.join(root,'db/migrations',f),'utf8')).join('\n');
 
 /* Contract fidelity */
-test('Capability catalogue equals the application Capability union exactly',()=>{same([...C.keys],union);assert.equal(C.keys.length,131);assert.equal(C.source_sha256,sha(path.join(root,'src/platform/permissions.ts')));});
+test('Capability catalogue equals the application Capability union exactly',()=>{same([...C.keys],union);assert.equal(C.keys.length,132);assert.equal(C.source_sha256,sha(path.join(root,'src/platform/permissions.ts')));});
 test('Hosted demo capability set equals scripts/demo-database.ts',()=>{same([...C.hosted_demo],demo);assert.equal(C.hosted_demo.length,31);assert.equal(C.demo_source_sha256,sha(path.join(root,'scripts/demo-database.ts')));});
-test('Every capability has a plain-English label and a known family',()=>{for(const c of M.catalogue()){assert(c.label&&c.label.length>5,c.key);assert(c.familyName,c.key);}assert.equal(Object.keys(M.LABELS).length,131);});
+test('Every capability has a plain-English label and a known family',()=>{for(const c of M.catalogue()){assert(c.label&&c.label.length>5,c.key);assert(c.familyName,c.key);}assert.equal(Object.keys(M.LABELS).length,132);});
 test('Only email.connect is hosted-only, matching the hosted migration track',()=>{same(M.catalogue().filter(c=>c.hostedOnly).map(c=>c.key),['email.connect']);assert.match(fs.readFileSync(path.join(root,'db/demo/0002-gmail-connection.sql'),'utf8'),/email\.connect/);});
-test('Administrative capabilities stay outside the application contract',()=>{for(const k of M.ADMIN_CAPS){assert(!C.keys.includes(k));assert(!union.includes(k));assert(!migrations.includes(`'${k}'`));}});
+test('Administrative write/review capabilities stay outside the application contract',()=>{for(const k of M.ADMIN_CAPS){assert(!C.keys.includes(k));assert(!union.includes(k));assert(!migrations.includes(`'${k}'`));}});
 test('Scope rule mirrors ck_grants_scope in migration 0002',()=>{assert.match(migrations,/scope_type='Workspace' AND scope_id=workspace_id AND company_id IS NULL AND site_id IS NULL/);
   assert.doesNotThrow(()=>M.checkScope(state,{scopeType:'Workspace'}));assert.throws(()=>M.checkScope(state,{scopeType:'Workspace',companyId:CA}),/no company/);
   assert.throws(()=>M.checkScope(state,{scopeType:'Company',companyId:CA,siteId:S1}),/no site/);assert.throws(()=>M.checkScope(state,{scopeType:'Site',companyId:CB,siteId:S1}),/belong/);assert.throws(()=>M.checkScope(state,{scopeType:'Tenant'}),/Choose/);});
@@ -95,7 +95,7 @@ test('Hosted testers cannot be changed in the page',()=>refuse(()=>act('saveRequ
 test('Inactive identities cannot receive changes',()=>refuse(()=>act('saveRequest',{...base,subjectId:D(5)},'admin'),/Reactivate/));
 test('Reviewer must be an approver and independent',()=>{refuse(()=>act('saveRequest',{...base,reviewerId:P(12)},'admin'),/approval/);});
 test('Team lead cannot propose outside the team',()=>refuse(()=>act('saveRequest',base,'lead'),/your scope/));
-test('Unknown capability and hosted-only capability are refused',()=>{refuse(()=>act('saveRequest',{...base,operations:[addOp('admin.access.read')]},'admin'),/application contract/);refuse(()=>act('saveRequest',{...base,operations:[addOp('email.connect')]},'admin'),/hosted demo/);});
+test('Unknown capability and hosted-only capability are refused',()=>{refuse(()=>act('saveRequest',{...base,operations:[addOp('admin.access.propose')]},'admin'),/application contract/);refuse(()=>act('saveRequest',{...base,operations:[addOp('email.connect')]},'admin'),/hosted demo/);});
 test('Invalid scope combinations are refused',()=>refuse(()=>act('saveRequest',{...base,operations:[addOp('shared.read','Site',CB,S1)]},'admin'),/belong/));
 test('An existing grant, even expired, blocks a duplicate',()=>refuse(()=>act('saveRequest',{...base,subjectId:P(1),operations:[addOp('crm.opportunity.read')]},'admin'),/already exists \(Expired\)/));
 test('A request cannot add the same grant twice',()=>refuse(()=>act('saveRequest',{...base,operations:[addOp('report.read'),addOp('report.read')]},'admin'),/twice/));

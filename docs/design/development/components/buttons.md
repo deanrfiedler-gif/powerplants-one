@@ -153,3 +153,8 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 ## Back links (phase 00 refinement batch 1)
 
 A back link stands alone, so WCAG 2.5.8 applies. Use `ppo-back-link` (`src/app/globals.css`): an inline-flex link at least 24 px tall, or 44 px on coarse pointers, with its existing text and underline. My Work, the activity record, site readiness and the Sales worklist links use it. Record links inside running text are exempt; standalone record links are refined with their pages.
+
+
+## AD-01 consumer
+
+Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.

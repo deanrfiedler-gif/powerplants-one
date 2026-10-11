@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot, assertAccessInspectionSeedLedger } from "../helpers/access-inspection-upgrade";
 import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -434,22 +435,20 @@ test("ES06 populated 0059 upgrade preserves release/review, receipts, grants, id
     ).rows;
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  assertAccessInspectionSnapshot(await snapshot(), before);
   const after = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
   assert.deepEqual(after.filter(r=>r.version<=59), ledger);
-  assert.deepEqual(after.filter(r=>r.version>59).map(r=>r.version), [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77]);
-  assert.deepEqual(
-    (await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version"))
-      .rows,
-    seeds,
-  );
+  assert.deepEqual(after.filter(r=>r.version>59).map(r=>r.version), [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78]);
+  const upgradedSeeds = (await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")).rows;
+  await assertAccessInspectionSeedLedger(seeds, upgradedSeeds);
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  assert.deepEqual((await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")).rows, upgradedSeeds);
+  assertAccessInspectionSnapshot(await snapshot(), before);
   assert.deepEqual(
     (
       await database().query(

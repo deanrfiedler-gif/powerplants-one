@@ -5,16 +5,16 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs/design/development/register.json` (SHA-256 `b03ba61867c1473f…`).
-- Phases and ranks: build plan r02 in `docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
-- 350 entries: 347 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
-- 190 built and awaiting owner review; 105 to refine; 46 to build; 6 awaiting a scope decision.
+- Register: `docs\design\development\register.json` (SHA-256 `3c02ecc2426f3c77…`).
+- Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
+- 352 entries: 349 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
+- 192 built and awaiting owner review; 106 to refine; 45 to build; 6 awaiting a scope decision.
 - Review track starts at phase 00; build track starts at phase 01.
 
 | Phase | Title | After phases | Scopes | Routes | Review | Refine | Build | Decide |
 |---|---|---|---:|---:|---:|---:|---:|---:|
 | 00 | Verify the existing baseline | — | 7 | 19 | 29 | 1 | 0 | 0 |
-| 01 | Shared controls and core records | — | 20 | 19 | 17 | 16 | 6 | 0 |
+| 01 | Shared controls and core records | — | 20 | 21 | 19 | 17 | 5 | 0 |
 | 02 | Products, equipment and survey evidence | 01 | 15 | 14 | 28 | 0 | 1 | 0 |
 | 03 | Sales through quotation and handover | 01, 02 | 13 | 32 | 24 | 19 | 2 | 0 |
 | 04 | Service, job packs and field quality | 00, 01, 02 | 14 | 21 | 17 | 17 | 1 | 0 |
@@ -89,7 +89,9 @@ Put access, recovery, data quality, customer/site identity and controlled docume
 
 | Rank | Entry | Title | State | Placement |
 |---:|---|---|---|---|
-| 8 | `scope:AD-01` | Users, roles, teams and access review | To build | Issued r02 rank |
+| 8 | `scope:AD-01` | Users, roles, teams and access review | To refine | Issued r02 rank |
+| 8 | `route:/admin/access` | Users and access | Built; owner review pending | Issued r02 rank |
+| 8 | `route:/admin/access/[id]` | Person access and grant explanation | Built; owner review pending | Issued r02 rank |
 | 9 | `scope:AD-07` | Audit history and controlled export | To refine | Issued r02 rank |
 | 10 | `scope:AD-09` | Operational health, recovery and release readiness | To refine | Issued r02 rank |
 | 10 | `route:/foundation` | Foundation checks | To refine | Issued r02 rank |

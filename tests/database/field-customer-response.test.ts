@@ -1,3 +1,4 @@
+import { accessInspectionSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -714,8 +715,8 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
       .filter(([key]) => key !== "id")
       .sort(([a], [b]) => a.localeCompare(b))),
   )).sort();
-  const expectedGrants = [...estimateReviewSeedGrants(grants), ...quotationReleaseSeedGrants(grants)];
-  assert.equal(expectedGrants.length, 18);
+  const expectedGrants = [...accessInspectionSeedGrants(grants), ...estimateReviewSeedGrants(grants), ...quotationReleaseSeedGrants(grants)];
+  assert.equal(expectedGrants.length, 19);
   assert.deepEqual(
     grantContents(upgradedGrants.filter((g) => !originalGrantIds.has(g.id))),
     grantContents(expectedGrants),
@@ -747,10 +748,10 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(after.filter((row) => row.version <= 56), ledger);
-  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77]);
+  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78]);
   const afterSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   assert.deepEqual(afterSeeds.filter((row) => row.version <= 56), seedLedger);
-  assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58, 59]);
+  assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58, 59, 78]);
   assert.deepEqual(
     (await recordResponse(q.p, q.report.id, cmd)).receipt,
     saved.receipt,

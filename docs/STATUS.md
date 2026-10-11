@@ -1,8 +1,12 @@
 # Current prototype status
 
-**Updated:** 10 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
+
+## AD-01 native access inspection — 11 October 2026
+
+Repository writer: this AD-01 session, isolated branch `codex/ad01-access-review`, based on main `0e10459`. Dean's instruction to proceed starts the adopted next build item with the [read-only increment](decisions/access-review-native.md): people, exact grants and server-side company/site grant explanation. Migration/seed 0078 adds one inspection duty to the existing synthetic Systems identity; hosted users receive none. Native roles, teams, access-changing commands and campaigns remain subsequent work. [Execution evidence](testing/evidence/access-inspection/README.md) separates actual checks, retained setup failures, visual review, PR delivery and owner acceptance.
 
 ## Page design tooling — 10 October 2026
 

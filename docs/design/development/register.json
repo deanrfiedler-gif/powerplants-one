@@ -5088,10 +5088,12 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Implement users, roles, teams and access-review pages; current server permissions and setup scripts do not provide this management UI.",
+      "summary": "Read-only native people, exact grants and company/site grant explanation. Role bundles, teams, access changes and review campaigns remain unimplemented.",
       "path": "/admin/access",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/access/screens.tsx",
+        "src/access/service.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5100,9 +5102,12 @@
       "dependencies": [
         "docs/design/access-review/access-review.html",
         "src/platform/permissions.ts",
-        "docs/design/access-review/capabilities.js"
+        "docs/design/access-review/capabilities.js",
+        "docs/decisions/access-review-native.md",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
       ],
-      "scope_status": "unbuilt",
+      "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
@@ -5110,7 +5115,10 @@
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 8,
-      "related_keys": [],
+      "related_keys": [
+        "route:/admin/access",
+        "route:/admin/access/[id]"
+      ],
       "reviewer": null
     },
     {
@@ -12814,6 +12822,78 @@
       "related_keys": [
         "scope:MA-07",
         "route:/warranty/supplier-recovery/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access/[id]",
+      "title": "Person access and grant explanation",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only native people, exact grants and company/site grant explanation. Role bundles, teams, access changes and review campaigns remain unimplemented.",
+      "path": "/admin/access/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/access/[id]/page.tsx",
+        "src/access/screens.tsx",
+        "src/access/service.ts"
+      ],
+      "guide_key": "guide.route-admin-access-id",
+      "design_path": "docs/design/development/pages/route-admin-access-id.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access"
+      ]
+    },
+    {
+      "key": "route:/admin/access",
+      "title": "Users and access",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only native people, exact grants and company/site grant explanation. Role bundles, teams, access changes and review campaigns remain unimplemented.",
+      "path": "/admin/access",
+      "source_paths": [
+        "src/app/(business)/admin/access/page.tsx",
+        "src/access/screens.tsx",
+        "src/access/service.ts"
+      ],
+      "guide_key": "guide.route-admin-access",
+      "design_path": "docs/design/development/pages/route-admin-access.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access/[id]"
       ]
     }
   ]
