@@ -108,6 +108,21 @@
           "id": "sales-followup-host",
           "label": "Reviewed return to Sales",
           "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
+        },
+        {
+          "id": "ad01-role-host",
+          "label": "Proposed-role comparison host",
+          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -275,7 +290,16 @@
         "route:/sales/leads/[id]",
         "route:/sales/leads",
         "route:/sales/opportunities/new",
-        "route:/work/new"
+        "route:/work/new",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -399,6 +423,30 @@
           "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
           "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
           "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-roles",
+          "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
+          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
+          "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-requests",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1152,6 +1200,21 @@
           "id": "sales-followup-host",
           "label": "Reviewed return to Sales",
           "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
+        },
+        {
+          "id": "ad01-role-host",
+          "label": "Proposed-role comparison host",
+          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -1293,7 +1356,15 @@
         "route:/service/work-orders/[id]",
         "route:/service/work-orders/new",
         "route:/sales/opportunities/new",
-        "route:/work/new"
+        "route:/work/new",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1409,6 +1480,30 @@
           "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
           "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
           "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-ad01-roles",
+          "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
+          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
+          "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-ad01-requests",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2219,6 +2314,21 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
+        },
+        {
+          "id": "ad01-role-host",
+          "label": "Proposed-role comparison host",
+          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2353,7 +2463,16 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -2463,6 +2582,30 @@
           "action": "Review NAV URL-state and truthful recovery fixtures separately from isolated catalogue examples.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-roles",
+          "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
+          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
+          "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-requests",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -2486,6 +2629,21 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "ad01-catalogue-host",
+          "label": "Capability inspection host",
+          "description": "tests/browser/access-inspection.spec.ts exercises capability search, empty grants, scope filter, person context, denied refresh and unavailable retry; database fixtures add pagination, expiry, inactive identities and hosted masking. Host proof, not an isolated renderer."
+        },
+        {
+          "id": "ad01-role-host",
+          "label": "Proposed-role comparison host",
+          "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request, independent decision and application",
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2560,7 +2718,15 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -2612,6 +2778,30 @@
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-ad01-catalogue",
+          "expected": "Paired native catalogue and holder review at desktop and phone widths.",
+          "actual": "Shared controls reused; retained design combines capabilities with proposed roles/teams. Separate native routes remain a proposed adaptation.",
+          "action": "Review source-bound native/reference captures; owner, device and accessibility acceptance remain separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-ad01-roles",
+          "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
+          "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
+          "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-ad01-requests",
+          "expected": "Paired native request, review and separate application comparison across desktop and phone.",
+          "actual": "Shared controls unchanged; native Approved/application form and Applied original evidence extend separate form/detail pages. Accepted native images and owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

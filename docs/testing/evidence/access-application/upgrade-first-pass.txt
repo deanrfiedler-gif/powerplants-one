@@ -1,0 +1,154 @@
+✔ AD01 requests: populated upgrade retains all earlier rows and adds exactly four duties through application (42219.793ms)
+✔ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (165041.3189ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (77004.5959ms)
+✔ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (147551.6108ms)
+✔ E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations (87592.0503ms)
+✔ FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers (173659.4818ms)
+✖ FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants (32651.5504ms)
+✔ P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants (65077.7944ms)
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (41581.4091ms)
+✔ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (45672.7931ms)
+✔ fresh combined installation retains both registries and both domains through repeat migration and seed (35215.1931ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (46878.5024ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (30435.2941ms)
+✔ P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants (35952.3275ms)
+✔ LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance (29308.0451ms)
+✔ P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts (48178.5401ms)
+✔ P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits (32307.2186ms)
+✔ populated 0050 upgrade preserves every old row/hash, registers 0051–0080 and exact authority/instrument additions (20510.8375ms)
+✔ direct reseed and runner retries preserve an advanced head, later evidence, old pins and revoked grants (6036.0937ms)
+✔ fresh installation applies only registered files through 0080, retains reserved gaps and repeats without changes (21574.198ms)
+✔ PD upgrade from 25 preserves originals and exact new duties; repeat migration/seed is inert (16211.5885ms)
+✔ PD upgrade from 48 preserves originals and exact new duties; repeat migration/seed is inert (32763.85ms)
+✔ PD upgrade from 71 preserves originals and exact new duties; repeat migration/seed is inert (32143.4621ms)
+✔ PD upgrade from 72 preserves originals and exact new duties; repeat migration/seed is inert (24725.9295ms)
+✔ PD upgrade from 74 preserves originals and exact new duties; repeat migration/seed is inert (23839.1772ms)
+✔ PD upgrade from 76 preserves originals and exact new duties; repeat migration/seed is inert (20178.9936ms)
+✔ PD upgrade from 77 preserves originals and exact new duties; repeat migration/seed is inert (28747.6827ms)
+✔ PD upgrade from 78 preserves originals and exact new duties; repeat migration/seed is inert (27051.9006ms)
+✔ PD upgrade from 79 preserves originals and exact new duties; repeat migration/seed is inert (37492.4286ms)
+✔ PD upgrade from 80 preserves originals and exact new duties; repeat migration/seed is inert (43552.6746ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants (51971.0473ms)
+✔ P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants (87189.6084ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants (60080.1729ms)
+✔ ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations (99916.6324ms)
+✔ ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output (75735.9481ms)
+✔ ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes (57790.2078ms)
+✔ prepared reads work without migration-ledger privilege and refresh changed relation result shapes (19397.4859ms)
+✖ ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte (96463.3148ms)
+✖ ES07 Receipt populated 0064 upgrade preserves prior generations grants histories allocations outputs and original operations (203702.0779ms)
+✔ ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants (82379.4779ms)
+✔ ES07 dependency populated 0063 upgrade preserves all rows, accepted reviews, receipts, grants, histories and output bytes (146189.7054ms)
+✔ ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes (101058.5301ms)
+✔ ES07 Supply populated 0062 upgrade preserves all earlier commercial evidence, disposition, allocations, grants, identities and original bytes (113464.2184ms)
+✖ populated 0069 upgrade preserves isolated-task originals, every old row and output byte (169426.756ms)
+✖ populated 0069 upgrade preserves two-task originals, every old row and output byte (4034.8516ms)
+✖ populated 0069 upgrade preserves linear-chain originals, every old row and output byte (3463.5161ms)
+✔ populated 0068 upgrade preserves isolated-task originals, every old row and output byte (220935.4952ms)
+✔ populated 0068 upgrade preserves two-task originals, every old row and output byte (47535.0049ms)
+✔ populated 0067 upgrade preserves isolated resolution, receiving, allocations, grants, original receipts and issued bytes (96682.5451ms)
+✔ populated 0071 upgrade preserves isolated-task originals, every old row and output byte (82904.6224ms)
+✔ populated 0071 upgrade preserves two-task originals, every old row and output byte (81815.6749ms)
+✔ populated 0071 upgrade preserves linear-chain originals, every old row and output byte (55119.4418ms)
+✔ populated 0071 upgrade preserves branch originals, every old row and output byte (57929.2679ms)
+✔ populated 0071 upgrade preserves merge originals, every old row and output byte (48003.4122ms)
+✔ populated 0070 upgrade preserves isolated-task originals, every old row and output byte (55053.6994ms)
+✔ populated 0070 upgrade preserves two-task originals, every old row and output byte (52304.606ms)
+✔ populated 0070 upgrade preserves linear-chain originals, every old row and output byte (48815.5545ms)
+✔ populated 0070 upgrade preserves branch originals, every old row and output byte (62125.0338ms)
+✔ P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants (45828.3002ms)
+✔ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (32431.0916ms)
+✔ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (62915.7609ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 55
+ℹ fail 4
+ℹ cancelled 2
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4165289.2163
+
+✖ failing tests:
+
+test at tests\database\field-timer-boundaries.test.ts:1:6066
+✖ FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants (32651.5504ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  88 !== 87
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\field-timer-boundaries.test.ts:267:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 88,
+    expected: 87,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\quotation-material-resolution.test.ts:1:23929
+✖ ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte (96463.3148ms)
+  Error: timeout exceeded when trying to connect
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at runNextTicks (node:internal/process/task_queues:65:5)
+      at listOnTimeout (node:internal/timers:644:9)
+      at process.processTimers (node:internal/timers:618:7)
+      at async rows (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\quotation-material-resolution.test.ts:180:5)
+      at async Promise.all (index 9)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\quotation-material-resolution.test.ts:860:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\database\quotation-receipt-correction.test.ts:1:15936
+✖ ES07 Receipt populated 0064 upgrade preserves prior generations grants histories allocations outputs and original operations (203702.0779ms)
+  'test timed out after 120000ms'
+
+test at tests\database\quotation-task-branch.test.ts:1:17730
+✖ populated 0069 upgrade preserves isolated-task originals, every old row and output byte (169426.756ms)
+  'test timed out after 120000ms'
+
+test at tests\database\quotation-task-branch.test.ts:1:17730
+✖ populated 0069 upgrade preserves two-task originals, every old row and output byte (4034.8516ms)
+  error: deadlock detected
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\quotation-task-branch.test.ts:663:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 329,
+    severity: 'ERROR',
+    code: '40P01',
+    detail: 'Process 41080 waits for AccessExclusiveLock on relation 1390487 of database 16384; blocked by process 18624.\nProcess 18624 waits for AccessShareLock on relation 1404966 of database 16384; blocked by process 41080.',
+    hint: 'See server log for query details.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'deadlock.c',
+    line: '1135',
+    routine: 'DeadLockReport'
+  }
+
+test at tests\database\quotation-task-branch.test.ts:1:17730
+✖ populated 0069 upgrade preserves linear-chain originals, every old row and output byte (3463.5161ms)
+  Error: Connection terminated due to connection timeout
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\quotation-task-branch.test.ts:663:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    [cause]: Error: Connection terminated unexpectedly
+        at Connection.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg\lib\client.js:204:73)
+        at Connection.wrapper (node:events:639:12)
+        at Connection.emit (node:events:514:28)
+        at Socket.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg\lib\connection.js:64:12)
+        at Socket.emit (node:events:514:28)
+        at TCP.<anonymous> (node:net:362:12)
+  }

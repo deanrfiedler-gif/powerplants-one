@@ -716,6 +716,25 @@ test("PT-01 joined role, scope, projection, export and approval matrix", async (
   await t.test(
     "Systems and non-review duties cannot approve Service or Finance, with no accepted effects",
     async () => {
+      const systemsGrants = () =>
+        rows(
+          "SELECT * FROM ppo.permission_grants WHERE user_id=$1 ORDER BY id",
+          [sessions.systems.principal.actor_id],
+        );
+      const originalSystemsGrants = await systemsGrants();
+      // AD-01 fixture duties permit access administration, never business approval.
+      // Preserve every grant as well as refusing every inappropriate HTTP command.
+      assert.deepEqual(
+        originalSystemsGrants.filter(
+          (g) =>
+            ![
+              "admin.access.read",
+              "admin.access.propose",
+              "admin.access.apply",
+            ].includes(g.capability),
+        ),
+        [],
+      );
       const snapshot = () =>
         rows(
           `SELECT 'service' kind,to_jsonb(r) row FROM ppo.service_reports r WHERE id=$1
@@ -769,15 +788,7 @@ test("PT-01 joined role, scope, projection, export and approval matrix", async (
         )[0].n,
         0,
       );
-      assert.equal(
-        (
-          await rows(
-            "SELECT count(*)::int n FROM ppo.permission_grants WHERE user_id=$1",
-            [sessions.systems.principal.actor_id],
-          )
-        )[0].n,
-        0,
-      );
+      assert.deepEqual(await systemsGrants(), originalSystemsGrants);
     },
   );
 

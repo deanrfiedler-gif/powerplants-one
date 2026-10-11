@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -264,7 +265,7 @@ test("populated 0077 upgrade retains every original schedule, receipt, ledger, u
     ).rows;
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  assertAccessInspectionSnapshot(await snapshot(), before, tables);
   const after = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -276,13 +277,15 @@ test("populated 0077 upgrade retains every original schedule, receipt, ledger, u
   );
   assert.deepEqual(
     after.filter((r) => r.version > 77).map((r) => r.version),
-    [81],
+    [78, 79, 80, 81],
   );
   assert.equal((await readBaselines(p, project.id)).latest_revision, 0);
   await recordBaseline(p, project.id, input());
   const recorded = await readBaselines(p, project.id);
+  const settled = await snapshot();
   await migrate();
   await seed();
+  assert.deepEqual(await snapshot(), settled);
   assert.deepEqual(
     (await readBaselines(p, project.id)).selected,
     recorded.selected,

@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import { createEngineeringRequest } from "../../src/engineering/service";
 import { engineeringInput } from "../helpers/engineering";
 import { activityCommand } from "../../src/activities/activities";
@@ -732,7 +733,8 @@ for (const topology of ["isolated-task", "two-task", "linear-chain"])
     ).rows;
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
+    const upgradedSnapshot = await Promise.all(tables.map(legacyRows));
+    assertAccessInspectionSnapshot(upgradedSnapshot, before, tables);
     const now = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -744,7 +746,7 @@ for (const topology of ["isolated-task", "two-task", "linear-chain"])
     );
     assert.deepEqual(
       now.filter((r) => r.version > 69).map((r) => r.version),
-      [70, 71, 72, 73, 74, 75, 76, 77, 81],
+      [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81],
     );
     for (const {
       f,
@@ -767,7 +769,7 @@ for (const topology of ["isolated-task", "two-task", "linear-chain"])
     }
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
+    assert.deepEqual(await Promise.all(tables.map(legacyRows)), upgradedSnapshot);
   });
 test("Three-task branch accepts the native direction; reversed and newly added dependencies hold unexecuted receiving", async () => {
   const f = await fixture("SS");

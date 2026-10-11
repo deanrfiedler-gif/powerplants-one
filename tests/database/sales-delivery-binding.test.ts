@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -365,12 +366,12 @@ test("LC-16 populated 0075 upgrade preserves exact accepted Sales, native record
   await seed();
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(names), before);
+  assertAccessInspectionSnapshot(await snapshot(names), before, names);
   const after = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(after.slice(0, -2), ledger);
-  assert.deepEqual(after.slice(-3).map((r: { version: number }) => r.version), [76, 77, 81]);
+  assert.deepEqual(after.slice(0, ledger.length), ledger);
+  assert.deepEqual(after.slice(ledger.length).map((r: { version: number }) => r.version), [76, 77, 78, 79, 80, 81]);
   assert.deepEqual(
     await readOperation(f.p, f.create.operation_id),
     f.created.receipt,

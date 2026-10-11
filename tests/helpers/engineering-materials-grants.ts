@@ -103,7 +103,7 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
   const maintenance=maintenanceSeedGrants(original);
-  const expected=[...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
+  const expected=[...accessApplicationSeedGrants(original),...accessRequestSeedGrants(original),...accessInspectionSeedGrants(original),...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -168,4 +168,30 @@ export function maintenanceSeedGrants(original: Grant[]): Grant[] {
       ["30000000-0000-4000-8000-000000000002","30000000-0000-4000-8000-000000000012","30000000-0000-4000-8000-000000000014"].includes(id)?["maintenance.read","warranty.read",...(id.endsWith("012")?["maintenance.agreement.approve","warranty.goodwill"]:[])]:[];
     return caps.map(capability=>({...g,capability}));
   });
+}
+
+
+// Seed 78 adds one Workspace inspection duty to the existing local Systems user.
+export function accessInspectionSeedGrants(original: Grant[]): Grant[] {
+  const template = original.find(g => new Date(g.valid_from as string | Date).toISOString() === "2026-01-01T00:00:00.000Z");
+  assert(template, "Existing fixture includes the explicit baseline instant");
+  return [{ ...template, workspace_id: "10000000-0000-4000-8000-000000000001",
+    user_id: "30000000-0000-4000-8000-000000000003", company_id: null, site_id: null,
+    capability: "admin.access.read", scope_type: "Workspace",
+    scope_id: "10000000-0000-4000-8000-000000000001", valid_to: null }];
+}
+
+// Seed 79: three explicit existing-local-identity duties, no new users.
+export function accessRequestSeedGrants(original: Grant[]): Grant[] {
+  const template = accessInspectionSeedGrants(original)[0];
+  return [
+    ["30000000-0000-4000-8000-000000000003", "admin.access.propose"],
+    ["a0540000-0000-4000-8000-000000000001", "admin.access.read"],
+    ["a0540000-0000-4000-8000-000000000001", "admin.access.approve"],
+  ].map(([user_id, capability]) => ({...template, user_id, capability}));
+}
+
+// Seed 80: one separate local apply duty to the existing Systems fixture.
+export function accessApplicationSeedGrants(original: Grant[]): Grant[] {
+  return accessInspectionSeedGrants(original).map(g => ({ ...g, capability: "admin.access.apply" }));
 }

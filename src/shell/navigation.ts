@@ -63,6 +63,7 @@ export const destinations: ShellDestination[] = [
   {id:"sales-estimating",label:"Sales-to-Estimating handovers",icon:"nav-inbox",readiness:"ready",workspace:"sales",href:"/sales/handoffs/estimating",requires:["crm.opportunity.read"]},
   {id:"sales-won",label:"Won-deal receiving",icon:"nav-approval",readiness:"ready",workspace:"sales",href:"/sales/handoffs/won",requires:["crm.opportunity.read"]},
   {id:"sales-aftercare",label:"Aftercare & renewal",icon:"nav-activities",readiness:"ready",workspace:"sales",href:"/sales/aftercare",requiresAll:["shared.internal.read","report.read"]},
+  {id:"access",label:"Users and access",icon:"settings",readiness:"ready",href:"/admin/access",requires:["admin.access.read"]},
   {"id": "settings", "label": "Settings", "icon": "settings", "readiness": "unavailable"},
   {"id": "home", "label": "Home", "icon": "home", "readiness": "ready", "href": "/"},
   {"id": "work", "label": "My Work", "icon": "nav-work", "readiness": "ready", "href": "/work", "requires": ["activity.read"]},
@@ -240,6 +241,13 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (path === "/admin/access/requests") return { ...destination("access"), label: "Access-change requests" };
+  if (/^\/admin\/access\/requests\/[^/]+$/.test(path)) return { ...destination("access"), label: "Access request" };
+  if (path === "/admin/access/roles") return { ...destination("access"), label: "Proposed role bundles" };
+  if (/^\/admin\/access\/[^/]+\/roles$/.test(path)) return { ...destination("access"), label: "Compare proposed role bundle" };
+  if (path === "/admin/access/capabilities") return { ...destination("access"), label: "Capability catalogue" };
+  if (/^\/admin\/access\/capabilities\/[^/]+$/.test(path)) return { ...destination("access"), label: "Capability grants" };
+  if (/^\/admin\/access\/[^/]+$/.test(path)) return { ...destination("access"), label: "Person access" };
   if (/^\/customers\/[^/]+\/account$/.test(path)) return { ...destination("accounts"), label: "Customer Finance account" };
   if (/^\/estimating\/estimates\/[^/]+\/review$/.test(path)) return { ...destination("estimates"), label: "Estimate review" };
   if (/^\/estimating\/estimates\/[^/]+$/.test(path)) return { ...destination("estimates"), label: "Saved estimate" };
@@ -415,7 +423,7 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
     { title: "Department pages", ids: [...departmentRails[workspace], ...(workspace === "sales" ? ["sales-estimating","sales-won","sales-aftercare"] : workspace === "estimate" ? ["fertigation"] : workspace === "service" ? ["jobs"] : [])] },
     { title: "My workspace", ids: ["home", "work", "mail", "calendar", "approvals"] },
     { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "reports"] },
-    { title: "Administration & support", ids: ["settings", "recovery", "foundation"] },
+    { title: "Administration & support", ids: ["access", "settings", "recovery", "foundation"] },
     ...(q ? [{ title: "Workspace pages", ids: destinations.map(d => d.id) }] : []),
   ];
   const seen = new Set<string>();

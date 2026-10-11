@@ -1,0 +1,57 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (40834.2716ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (51.676ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (32.5484ms)
+  ✔ grant eligibility differentiates company and exact site scope (37.6896ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (48.0342ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (10.001ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (136.3462ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (1895.648ms)
+  ✔ reads preserve every identity, grant and audit row (219.4122ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (2461.3193ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (92.3862ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (38.6461ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (20.0045ms)
+  ✖ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (10395.3694ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (338.2658ms)
+✖ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (10905.8116ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 14
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56648.3204
+
+✖ failing tests:
+
+test at tests\database\access-inspection.test.ts:1:12561
+✖ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (10395.3694ms)
+  error: canceling statement due to statement timeout
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-inspection.test.ts:597:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-inspection.test.ts:532:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 277,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: 'SQL statement "SELECT 1 FROM ONLY "ppo"."supply_records" x WHERE $1 OPERATOR(pg_catalog.=) "workspace_id" AND $2 OPERATOR(pg_catalog.=) "owner_id" FOR KEY SHARE OF x"',
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }

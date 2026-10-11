@@ -1,0 +1,336 @@
+✖ AD01 requests: populated upgrade retains all earlier rows and adds exactly three duties (18568.7372ms)
+▶ AD01 requests: independent review, recovery, isolation and unchanged effective grants
+  ✖ ordinary/read-only identities cannot submit or decide; hosted mode is refused (22.5829ms)
+  ✖ context lists only local subjects, exact scope keys and eligible independent reviewer (39.1087ms)
+  ✖ refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons (6.8304ms)
+  ✖ inactive and hosted subjects, inactive/expired/future reviewer grants are refused (11.8532ms)
+  ✖ an expired existing grant still prevents a duplicate proposal (10.1965ms)
+  ✖ submission is durable and exact replay returns one original receipt; changed content conflicts (6.2339ms)
+  ✖ authority is rechecked before replay, receipt read and workspace inspection (12.9011ms)
+  ✖ only the named reviewer decides; stale/concurrent decisions cannot replace the first (4.1446ms)
+  ✖ approval revalidates changed eligibility while Return retains an invalid proposal (77.5164ms)
+  ✖ site and Workspace proposals retain exact scope; approved requests never become grants (8.5063ms)
+  ✖ database guards retain proposal and exact immutable audit evidence (2.9731ms)
+✖ AD01 requests: independent review, recovery, isolation and unchanged effective grants (336.1956ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 0
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25997.6754
+
+✖ failing tests:
+
+test at tests\database\access-requests.test.ts:1:1285
+✖ AD01 requests: populated upgrade retains all earlier rows and adds exactly three duties (18568.7372ms)
+  error: syntax error at end of input
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\scripts\database.ts:40:7)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+      at async migrate (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\scripts\database.ts:19:3)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:26:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 93,
+    severity: 'ERROR',
+    code: '42601',
+    detail: undefined,
+    hint: undefined,
+    position: '5752',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'scan.l',
+    line: '1240',
+    routine: 'scanner_yyerror'
+  }
+
+test at tests\database\access-requests.test.ts:1:3989
+✖ ordinary/read-only identities cannot submit or decide; hosted mode is refused (22.5829ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Hosted demo requires explicit HTTPS, Entra identity and a compiled production runtime.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:51:43)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:46:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Hosted demo requires explicit HTTPS, Entra identity and a compiled production runtime.
+        at demoConfig (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\demo-config.ts:6:11)
+        at runtimeConfig (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\config.ts:4:41)
+        at database (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:19:18)
+        at transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:41:24)
+        at operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:21)
+        at submitAccessRequest (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:151:10)
+        at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:51:64)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:46:3),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\database\access-requests.test.ts:1:4635
+✖ context lists only local subjects, exact scope keys and eligible independent reviewer (39.1087ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  false !== true
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:55:62)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:54:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\access-requests.test.ts:1:5111
+✖ refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons (6.8304ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: The current Workspace access duty is required.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:69:8)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:61:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: The current Workspace access duty is required.
+        at authority (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:27:47)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:123:5)
+        at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+        at async operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:15)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:69:8)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:61:3),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\database\access-requests.test.ts:1:6000
+✖ inactive and hosted subjects, inactive/expired/future reviewer grants are refused (11.8532ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: The current Workspace access duty is required.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:74:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:72:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: The current Workspace access duty is required.
+        at authority (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:27:47)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:123:5)
+        at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+        at async operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:15)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:74:10)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:72:3),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\database\access-requests.test.ts:1:7581
+✖ an expired existing grant still prevents a duplicate proposal (10.1965ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: The current Workspace access duty is required.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:86:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:83:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: The current Workspace access duty is required.
+        at authority (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:27:47)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:123:5)
+        at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+        at async operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:15)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:86:10)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:83:3),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\database\access-requests.test.ts:1:8274
+✖ submission is durable and exact replay returns one original receipt; changed content conflicts (6.2339ms)
+  Error: The current Workspace access duty is required.
+      at authority (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:27:47)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:123:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+      at async operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:15)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:91:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:90:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 403,
+    code: 'Forbidden',
+    field_errors: []
+  }
+
+test at tests\database\access-requests.test.ts:1:9199
+✖ authority is rechecked before replay, receipt read and workspace inspection (12.9011ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  error: relation "ppo.access_change_operations" does not exist
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:102:88)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:100:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: error: relation "ppo.access_change_operations" does not exist
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\node_modules\pg\lib\client.js:694:17
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:173:16)
+        at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:102:88)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:100:3)
+        at async Test.run (node:internal/test_runner/test:1409:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\database\access-requests.test.ts:1:10434
+✖ only the named reviewer decides; stale/concurrent decisions cannot replace the first (4.1446ms)
+  error: new row for relation "permission_grants" violates check constraint "ck_grants_capability"
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:112:30)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:111:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 449,
+    severity: 'ERROR',
+    code: '23514',
+    detail: 'Failing row contains (10000000-0000-4000-8000-000000000001, 30000000-0000-4000-8000-000000000003, null, admin.access.approve, 2026-01-01 00:00:00+10, null, 8705fc0d-951f-40fb-9186-02f429c615f5, Workspace, 10000000-0000-4000-8000-000000000001, null).',
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: 'ppo',
+    table: 'permission_grants',
+    column: undefined,
+    dataType: undefined,
+    constraint: 'ck_grants_capability',
+    file: 'execMain.c',
+    line: '2114',
+    routine: 'ExecConstraints'
+  }
+
+test at tests\database\access-requests.test.ts:1:11999
+✖ approval revalidates changed eligibility while Return retains an invalid proposal (77.5164ms)
+  Error: The current Workspace access duty is required.
+      at authority (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:27:47)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:123:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+      at async operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:15)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:127:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:126:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 403,
+    code: 'Forbidden',
+    field_errors: []
+  }
+
+test at tests\database\access-requests.test.ts:1:12761
+✖ site and Workspace proposals retain exact scope; approved requests never become grants (8.5063ms)
+  Error: The current Workspace access duty is required.
+      at authority (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:27:47)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:123:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\platform\database.ts:46:20)
+      at async operation (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\src\access\requests.ts:120:15)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:137:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:135:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 403,
+    code: 'Forbidden',
+    field_errors: []
+  }
+
+test at tests\database\access-requests.test.ts:1:13541
+✖ database guards retain proposal and exact immutable audit evidence (2.9731ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  error: relation "ppo.access_change_requests" does not exist
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:145:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:144:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: error: relation "ppo.access_change_requests" does not exist
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\node_modules\pg-pool\index.js:45:11
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:145:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:144:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }

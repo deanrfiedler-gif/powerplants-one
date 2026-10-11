@@ -38,3 +38,9 @@ Initial phone workflow failed after recording the baseline: the legend intercept
 ## Contacts CI repair — 11 October 2026
 
 The [original CI failure](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38124416939/job/114425685332) rejected two stale working source hashes. The [contract re-read](../../../design/contacts/README.md#project-baseline-contract-re-read--11-october-2026) records the precise Projects and Reports changes and their unchanged contact boundary. The deterministic builder reproduces the original 254,547-byte HTML with SHA-256 `aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52`; all Contacts model and native-browser checks pass locally. No issued HTML, historical evidence, source provenance or visual-review status changes. Updated-head CI remains the merge gate.
+
+## Access-stack integration — 11 October 2026
+
+The authorised PR repair pass integrates `8800193` (#410 → #413 → #414 → #415 → #417) before Projects 0081. All four migration registrations remain in order; seeds end at 80 because 0081 adds no grant or user. The hosted-upgrade review gate describes both local-only access changes and the empty Projects companions, while retaining hosted grant write restrictions.
+
+Every affected historical migration assertion retains its original rows and exact added versions. The Projects populated-0077 case allows exactly the named AD-01 seed grants/receipts, compares all other original rows, and preserves the complete settled snapshot on repeat. AD-01 request/application upgrade cases gain 0081 only in their migration expectations. Products retains every original history and adds reserved 0052 after integrated 0081. The joined design register passes with 358 entries, 204 routes and zero integrity errors; 330 unreviewed pages, 28 stale visual reviews and 42 pending component reviews remain visible. Final combined-head tests and CI are recorded separately; this is not owner acceptance or deployment.

@@ -1,0 +1,53 @@
+✔ AD01 requests: populated upgrade retains all earlier rows and adds exactly three duties (15591.5053ms)
+▶ AD01 requests: independent review, recovery, isolation and unchanged effective grants
+  ✔ ordinary/read-only identities cannot submit or decide; hosted mode is refused (18.8278ms)
+  ✔ context lists only local subjects, exact scope keys and eligible independent reviewer (34.9869ms)
+  ✔ refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons (85.3094ms)
+  ✖ inactive and hosted subjects, inactive/expired/future reviewer grants are refused (16.0211ms)
+  ✔ an expired existing grant still prevents a duplicate proposal (93.7945ms)
+  ✔ submission is durable and exact replay returns one original receipt; changed content conflicts (59.3814ms)
+  ✔ authority is rechecked before replay, receipt read and workspace inspection (32.3003ms)
+  ✔ only the named reviewer decides; stale/concurrent decisions cannot replace the first (116.8322ms)
+  ✔ approval revalidates changed eligibility while Return retains an invalid proposal (47.2022ms)
+  ✔ site and Workspace proposals retain exact scope; approved requests never become grants (61.7922ms)
+  ✔ database guards retain proposal and exact immutable audit evidence (132.0776ms)
+✖ AD01 requests: independent review, recovery, isolation and unchanged effective grants (740.4705ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 11
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17410.9391
+
+✖ failing tests:
+
+test at tests\database\access-requests.test.ts:1:6000
+✖ inactive and hosted subjects, inactive/expired/future reviewer grants are refused (16.0211ms)
+  error: new row for relation "users" violates check constraint "users_issuer_check"
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:76:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\access-requests.test.ts:72:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 325,
+    severity: 'ERROR',
+    code: '23514',
+    detail: 'Failing row contains (30000000-0000-4000-8000-000000000005, 10000000-0000-4000-8000-000000000001, PPO-EntraDemo, site-observer, SYN Site observer, t, t).',
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: 'ppo',
+    table: 'users',
+    column: undefined,
+    dataType: undefined,
+    constraint: 'users_issuer_check',
+    file: 'execMain.c',
+    line: '2114',
+    routine: 'ExecConstraints'
+  }

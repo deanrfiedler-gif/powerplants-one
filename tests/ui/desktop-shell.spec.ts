@@ -214,14 +214,15 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       // r17 geometry is retained; the navigation decision replaces planned links
       // with ready, permitted destinations, including native Supply Chain.
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
-      // Native Products, CS-08 and all three Sales handover/aftercare destinations are included. Footer count includes Help;
+      // Native Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Footer count includes Help;
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(28);
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(29);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
       for (const [name, href] of [["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
         await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
-      await expect(actualPanel.locator("footer")).toContainText("29 destinations");
+      await expect(actualPanel.getByRole("link", { name: "Users and access", exact: true })).toHaveAttribute("href", "/admin/access?department=sales");
+      await expect(actualPanel.locator("footer")).toContainText("30 destinations");
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
       await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }

@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -351,12 +352,12 @@ test("LC-12 populated previous-version upgrade preserves all Lead originals and 
   await seed();
   await migrate();
   await seed();
-  assert.deepEqual(await retained(), before);
+  assertAccessInspectionSnapshot(await retained(), before, tables);
   const afterLedger = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(afterLedger.slice(0, -5), ledger);
-  assert.deepEqual(afterLedger.slice(-6).map(row => row.version), [73, 74, 75, 76, 77, 81]);
+  assert.deepEqual(afterLedger.slice(0, ledger.length), ledger);
+  assert.deepEqual(afterLedger.slice(ledger.length).map(row => row.version), [73, 74, 75, 76, 77, 78, 79, 80, 81]);
   await resolveLeadContext(f.p, f.input.id, resolveInput(2));
   assert.deepEqual(
     (await createLead(f.p, f.input)).receipt,

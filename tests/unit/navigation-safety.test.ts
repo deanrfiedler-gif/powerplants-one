@@ -38,6 +38,10 @@ test("N12 Sales Activities keeps one day/scope/department policy", () => {
 test("N14/N22 specific task identity and parent precede generic prefixes", () => {
   const id="10000000-0000-4000-8000-000000000001";
   for(const [path,label] of [[`/estimating/estimates/${id}/review`,"Estimate review"],[`/customers/${id}/account`,"Customer Finance account"],["/products/import","Product import"],["/schedule/changes","Scheduling change follow-up"],["/my-jobs/site-readiness","Field site readiness"]]) assert.equal(pageForPath(path)?.label,label);
+  for (const [path, label] of [["/admin/access/capabilities", "Capability catalogue"], ["/admin/access/capabilities/shared.read", "Capability grants"], [`/admin/access/${id}`, "Person access"]]) {
+    assert.equal(pageForPath(path)?.label, label);
+    assert.equal(pageForPath(path)?.id, "access");
+  }
   assert.equal(railDestinationForLocation("/engineering/commissioning/basis",new URLSearchParams(),"engineering"),"commissioning");
 });
 test("N07/N08 leave review cancels all transition side effects and preserves stronger review", () => {

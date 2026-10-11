@@ -233,10 +233,19 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // identity type or existing row changes. Generic runtime table privileges cover it, and
   // users/permission_grants stay read-only to the runtime role. A row only narrows record
   // access to a company the person's grants already reach; it never widens access.
-  // 0081 adds an empty immutable Projects baseline companion and snapshot/evidence
-  // functions. No identity, seed, user, grant or prior schedule row is changed.
-  // Existing generic runtime privileges cover it; preserve all prior ledgers and
-  // receipts in the populated upgrade proof. 0078–0080 remain reserved here.
+  // 0078 extends the grant catalogue for read-only AD-01 inspection. Seed 78 adds
+  // exactly one existing local Systems grant, no users or hosted grants. Runtime
+  // users/grants remain read-only; no access-changing command or table is added.
+  // 0079 adds request/decision evidence only. Its commands explicitly refuse hosted
+  // mode; seed 79 adds three duties to existing local fixtures only, no users.
+  // Runtime users/grants remain read-only. No external task or grant apply exists.
+  // 0080 installs only a separately authorised local grant application. The application
+  // refuses hosted mode, and the runtime still cannot write users/grants. Nullable
+  // application columns and extended guards retain original v1/v2 evidence unchanged.
+  // Seed 80 adds one duty to the existing local Systems identity; no user or hosted
+  // duty. Preserve exact hosted tester grants and all upgrade originals in the proof.
+  // 0081 adds empty immutable Projects baseline evidence, no seed, identity or grant.
+  // Preserve both AD-01 local duties and all prior hosted rows and receipts.
   if (latestMigrationVersion !== 81) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");

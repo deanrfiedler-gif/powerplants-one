@@ -5093,29 +5093,54 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Implement users, roles, teams and access-review pages; current server permissions and setup scripts do not provide this management UI.",
+      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
       "path": "/admin/access",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/access/screens.tsx",
+        "src/access/service.ts",
+        "src/access/catalogue-screens.tsx",
+        "src/access/capabilities.ts",
+        "src/access/roles.ts",
+        "src/access/role-screens.tsx",
+        "src/access/request-screens.tsx",
+        "src/access/requests.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-inspection/reference-1440-person.png",
+        "docs/testing/evidence/access-inspection/reference-390-person.png",
+        "docs/testing/evidence/access-inspection/reference-320-person.png"
+      ],
       "dependencies": [
         "docs/design/access-review/access-review.html",
         "src/platform/permissions.ts",
-        "docs/design/access-review/capabilities.js"
+        "docs/design/access-review/capabilities.js",
+        "docs/decisions/access-review-native.md",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-request-application.md"
       ],
-      "scope_status": "unbuilt",
+      "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Native inspection, comparison and request/decision present; separate execution ledgers. Apply, teams, campaigns and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 8,
-      "related_keys": [],
+      "related_keys": [
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
+      ],
       "reviewer": null
     },
     {
@@ -8724,10 +8749,17 @@
       "guide_key": "guide.page.estimating.quotes",
       "design_path": "docs/design/development/pages/route-estimating-quotes.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-04-Phone-Quotation-List-r01.png",
+        "docs/reference/ui/estimating/quotations-design-r01/PPO-Quotations-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/quotations-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -12835,6 +12867,369 @@
       "related_keys": [
         "scope:MA-07",
         "route:/warranty/supplier-recovery/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access/[id]",
+      "title": "Person access and grant explanation",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
+      "path": "/admin/access/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/access/[id]/page.tsx",
+        "src/access/screens.tsx",
+        "src/access/service.ts"
+      ],
+      "guide_key": "guide.route-admin-access-id",
+      "design_path": "docs/design/development/pages/route-admin-access-id.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-inspection/native-1440-person.png",
+        "docs/testing/evidence/access-inspection/native-390-person.png",
+        "docs/testing/evidence/access-inspection/native-320-person.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Local AD-01 database and desktop/390/320 browser proof recorded; see execution ledger. Full CI is separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access",
+      "title": "Users and access",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
+      "path": "/admin/access",
+      "source_paths": [
+        "src/app/(business)/admin/access/page.tsx",
+        "src/access/screens.tsx",
+        "src/access/service.ts"
+      ],
+      "guide_key": "guide.route-admin-access",
+      "design_path": "docs/design/development/pages/route-admin-access.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-inspection/native-1440-people.png",
+        "docs/testing/evidence/access-inspection/native-390-people.png",
+        "docs/testing/evidence/access-inspection/native-320-people.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Local AD-01 database and desktop/390/320 browser proof recorded; see execution ledger. Full CI is separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/capabilities/[id]",
+        "route:/admin/access/roles",
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access/capabilities/[id]",
+      "title": "Capability grants",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only capability inspection with workspace authority, exact grant scope and validity. No role assignments or access changes.",
+      "path": "/admin/access/capabilities/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/access/capabilities/[id]/page.tsx",
+        "src/access/catalogue-screens.tsx",
+        "src/access/service.ts",
+        "src/access/capabilities.ts"
+      ],
+      "guide_key": "guide.route-admin-access-capabilities-id",
+      "design_path": "docs/design/development/pages/route-admin-access-capabilities-id.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-capabilities/native-1440-holders.png",
+        "docs/testing/evidence/access-capabilities/native-390-holders.png",
+        "docs/testing/evidence/access-capabilities/native-320-holders.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Local 16-check database, 15-case desktop/phone browser and compiled-build proof recorded in the capability catalogue execution ledger; CI/owner review separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities"
+      ]
+    },
+    {
+      "key": "route:/admin/access/capabilities",
+      "title": "Capability catalogue",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only capability inspection with workspace authority, exact grant scope and validity. No role assignments or access changes.",
+      "path": "/admin/access/capabilities",
+      "source_paths": [
+        "src/app/(business)/admin/access/capabilities/page.tsx",
+        "src/access/catalogue-screens.tsx",
+        "src/access/service.ts",
+        "src/access/capabilities.ts"
+      ],
+      "guide_key": "guide.route-admin-access-capabilities",
+      "design_path": "docs/design/development/pages/route-admin-access-capabilities.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-capabilities/native-1440-catalogue.png",
+        "docs/testing/evidence/access-capabilities/native-390-catalogue.png",
+        "docs/testing/evidence/access-capabilities/native-320-catalogue.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Local 16-check database, 15-case desktop/phone browser and compiled-build proof recorded in the capability catalogue execution ledger; CI/owner review separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/access/[id]/roles",
+      "title": "Compare proposed role bundle",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only retained role proposals and exact company/site comparison; no assignment or access mutation.",
+      "path": "/admin/access/[id]/roles",
+      "source_paths": [
+        "src/app/(business)/admin/access/[id]/roles/page.tsx",
+        "src/access/role-screens.tsx",
+        "src/access/service.ts",
+        "src/access/roles.ts"
+      ],
+      "guide_key": "guide.route-admin-access-id-roles",
+      "design_path": "docs/design/development/pages/route-admin-access-id-roles.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-roles/native-1440-comparison.png",
+        "docs/testing/evidence/access-roles/native-390-comparison.png",
+        "docs/testing/evidence/access-roles/native-320-comparison.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "docs/design/access-review/model.js",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "22 AD-01 database, 24 compiled desktop/phone browser and 18 source/navigation unit checks pass locally; see role comparison ledger. CI and owner review separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/roles"
+      ]
+    },
+    {
+      "key": "route:/admin/access/roles",
+      "title": "Proposed role bundles",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Read-only retained role proposals and exact company/site comparison; no assignment or access mutation.",
+      "path": "/admin/access/roles",
+      "source_paths": [
+        "src/app/(business)/admin/access/roles/page.tsx",
+        "src/access/role-screens.tsx",
+        "src/access/service.ts",
+        "src/access/roles.ts"
+      ],
+      "guide_key": "guide.route-admin-access-roles",
+      "design_path": "docs/design/development/pages/route-admin-access-roles.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-roles/native-1440-roles.png",
+        "docs/testing/evidence/access-roles/native-390-roles.png",
+        "docs/testing/evidence/access-roles/native-320-roles.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-review-native.md",
+        "src/platform/permissions.ts",
+        "docs/design/access-review/model.js",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "22 AD-01 database, 24 compiled desktop/phone browser and 18 source/navigation unit checks pass locally; see role comparison ledger. CI and owner review separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/[id]",
+        "route:/admin/access/capabilities",
+        "route:/admin/access/[id]/roles"
+      ]
+    },
+    {
+      "key": "route:/admin/access/requests/[id]",
+      "title": "Access request",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Local synthetic single-capability proposal, independent decision and separate controlled application; Applied records installation, with grant validity checked separately.",
+      "path": "/admin/access/requests/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/access/requests/[id]/page.tsx",
+        "src/access/request-screens.tsx",
+        "src/access/requests.ts"
+      ],
+      "guide_key": "guide.route-admin-access-requests-id",
+      "design_path": "docs/design/development/pages/route-admin-access-requests-id.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-application/native-1440-approved.png",
+        "docs/testing/evidence/access-application/native-1440-applied.png",
+        "docs/testing/evidence/access-application/native-1440-application-control.png",
+        "docs/testing/evidence/access-application/native-1440-application-handover.png",
+        "docs/testing/evidence/access-application/native-390-approved.png",
+        "docs/testing/evidence/access-application/native-390-applied.png",
+        "docs/testing/evidence/access-application/native-390-application-control.png",
+        "docs/testing/evidence/access-application/native-390-application-handover.png",
+        "docs/testing/evidence/access-application/native-320-approved.png",
+        "docs/testing/evidence/access-application/native-320-applied.png",
+        "docs/testing/evidence/access-application/native-320-application-control.png",
+        "docs/testing/evidence/access-application/native-320-application-handover.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-change-requests.md",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-request-application.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission-matrix checks pass. Historical upgrade outcomes and CI are separately recorded in access-application evidence. Owner visual acceptance pending.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/requests"
+      ]
+    },
+    {
+      "key": "route:/admin/access/requests",
+      "title": "Access-change requests",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Local synthetic single-capability proposal, independent decision and separate controlled application; Applied records installation, with grant validity checked separately.",
+      "path": "/admin/access/requests",
+      "source_paths": [
+        "src/app/(business)/admin/access/requests/page.tsx",
+        "src/access/request-screens.tsx",
+        "src/access/requests.ts"
+      ],
+      "guide_key": "guide.route-admin-access-requests",
+      "design_path": "docs/design/development/pages/route-admin-access-requests.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [
+        "docs/testing/evidence/access-requests/native-1440-form.png",
+        "docs/testing/evidence/access-requests/native-390-form.png",
+        "docs/testing/evidence/access-requests/native-320-form.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-change-requests.md",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-request-application.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "29 local request/application database checks, 42 AD-01 browser checks and 48 HTTP permission-matrix checks pass. Historical upgrade outcomes and CI are separately recorded in access-application evidence. Owner visual acceptance pending.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/requests/[id]"
       ]
     }
   ]

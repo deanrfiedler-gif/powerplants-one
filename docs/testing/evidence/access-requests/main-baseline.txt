@@ -1,0 +1,10 @@
+✔ ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output (87327.8308ms)
+✔ ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes (54499.7962ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 169450.9091

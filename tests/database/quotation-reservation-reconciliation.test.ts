@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -405,7 +406,8 @@ test("ES07 dependency populated 0063 upgrade preserves all rows, accepted review
     });
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  const upgradedSnapshot = await snapshot();
+  assertAccessInspectionSnapshot(upgradedSnapshot, before, tables.map(t => t.tablename));
   const after = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -417,7 +419,7 @@ test("ES07 dependency populated 0063 upgrade preserves all rows, accepted review
   );
   assert.deepEqual(
     after.filter((r) => r.version > 63).map((r) => r.version),
-    [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 81],
+    [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);
@@ -429,5 +431,5 @@ test("ES07 dependency populated 0063 upgrade preserves all rows, accepted review
   );
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  assert.deepEqual(await snapshot(), upgradedSnapshot);
 });

@@ -1,0 +1,49 @@
+{
+  "scope": "Local synthetic AD-01 role catalogue/comparison; not owner acceptance or deployment",
+  "application_source": "fd8cd548b66f1b7e71c873867874a8c4511da04b",
+  "verification_checkout": "3118920944cc8f92cd8b98153de2407ce0ab1c72",
+  "source_note": "After the compiled application commit, only the browser Retry loading selector and failed-run evidence changed. Database/service and role definitions are unchanged from abdbdc9; its database proof ran before presentation-only edits.",
+  "results": {
+    "build_and_types": "passed",
+    "database": 22,
+    "browser": 24,
+    "unit": 18,
+    "eslint": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio_errors": 0
+  },
+  "browser": {
+    "channel": "Chrome",
+    "version": "155.0.8059.40",
+    "viewports": [
+      [
+        1440,
+        960
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        320,
+        740
+      ]
+    ],
+    "physical_devices": false
+  },
+  "captures": {
+    "count": 15,
+    "manifest": "captures.json",
+    "hashes_verified": true
+  },
+  "review": {
+    "implementer_observation": "Representative native/reference desktop and phone captures inspected; proposed adaptation retained",
+    "owner": "pending",
+    "accepted_mockups": "missing",
+    "screen_reader_and_zoom": "pending",
+    "deployment": "not performed"
+  },
+  "ci": "Separate PR-head results; pending at publication"
+}

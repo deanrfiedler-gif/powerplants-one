@@ -1,0 +1,99 @@
+{
+  "application_source_commit": "538cfe1b85ee00a93d0a3e083bd8188f12c9bdaf",
+  "environment": "Task-owned local synthetic PostgreSQL 16; Node 24.21.0; Chrome 155.0.8059.40; app and database stopped after verification.",
+  "build": {
+    "command": "npm run build",
+    "result": "Passed",
+    "includes": "Next application build and full TypeScript check"
+  },
+  "lint": {
+    "command": "eslint over changed TypeScript/TSX/MJS files relative to main",
+    "result": "Passed",
+    "earlier_full_lint": "Passed before integration of main PT-27"
+  },
+  "database": {
+    "command": "node --env-file=<synthetic-test-env> --import tsx --test --test-concurrency=1 --test-name-pattern=AD01|populated tests/database/access-inspection.test.ts tests/database/quotation-disposition.test.ts tests/database/quotation-response.test.ts tests/database/sales-delivery-binding.test.ts",
+    "passed": 13,
+    "failed": 0,
+    "source_note": "Working tree leading to 538cfe1; later changes were a TypeScript annotation and display-only company option order."
+  },
+  "browser": {
+    "command": "playwright test tests/browser/access-inspection.spec.ts against compiled app with one worker",
+    "viewports": [
+      "1440x960",
+      "390x844",
+      "320x740"
+    ],
+    "passed": 9,
+    "failed": 0
+  },
+  "foundation": {
+    "status": "passed",
+    "issued_sources": 22,
+    "requirements": 78,
+    "decisions": 29,
+    "planned_acceptance": 38,
+    "backlog_items": 16,
+    "linked_issues": 16,
+    "local_links_checked": 7824,
+    "files_scanned_for_markers": 5146,
+    "errors": [],
+    "scope": "Documentation assurance only; no business acceptance tests executed"
+  },
+  "prototype": {
+    "status": "passed",
+    "package": "PP-01",
+    "documents": 12,
+    "parent_dispositions": 78,
+    "dispositions": {
+      "Core": 24,
+      "Partial": 25,
+      "Deferred": 29
+    },
+    "master_decisions": 29,
+    "prototype_procedures": 30,
+    "implementation_packages": 12,
+    "registers": {
+      "SC": 15,
+      "CMP": 12,
+      "SR": 20,
+      "VAL": 24,
+      "TR": 16,
+      "API-C": 26,
+      "API-R": 10
+    },
+    "errors": [],
+    "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+  },
+  "naming": {
+    "status": "passed",
+    "document_records": 525,
+    "standing_exceptions": 9,
+    "metadata_documents_compared": 366,
+    "git_masters": 244,
+    "project_instruction_characters": 7983,
+    "errors": [],
+    "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+  },
+  "studio": {
+    "entries": 352,
+    "component_entries": 41,
+    "runnable_components": 20,
+    "component_reviews_pending": 41,
+    "journeys": 30,
+    "current_journeys": 24,
+    "source_routes": 198,
+    "errors": [],
+    "unreviewed": 324,
+    "stale": 28,
+    "scope": "Coverage and reference integrity; visual/functional acceptance is separately recorded."
+  },
+  "working_design": {
+    "model_groups": 107,
+    "browser_groups": 40,
+    "result": "Passed",
+    "html_sha256": "b006c02d9a800c77995f3afb7741b260342d4fa13391786918eb28ecbfab504c"
+  },
+  "ci": "Pending; inspect the current PR checks. Superseded runs and the retained initial failure are not passes.",
+  "acceptance": "Owner visual, device, accessibility and operational acceptance remain separate and unclaimed."
+}

@@ -1,0 +1,59 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (20001.3775ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (43.9619ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (30.2274ms)
+  ✔ grant eligibility differentiates company and exact site scope (34.9134ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (39.0413ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (8.2455ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (99.0662ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (1126.0517ms)
+  ✔ reads preserve every identity, grant and audit row (121.2101ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (1530.486ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (43.1566ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (24.5297ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (12.5575ms)
+  ✔ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (4551.6956ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (112.6973ms)
+✔ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (4758.5519ms)
+▶ AD01-04 proposed roles compare current authority at one exact scope without assigning access
+  ✔ catalogue is proposed only; exact revision and selection are required (56.0989ms)
+  ✔ Site, Company and Workspace checks never match an unrelated grant (33.5818ms)
+  ✔ inactive identity and future/expired grants remove matches (25.8994ms)
+  ✔ reviewer permissions and cleared working company are required on both reads (15.9271ms)
+  ✔ hosted comparison masks identities; all reads preserve grants, users, audit and session state (954.6518ms)
+✔ AD01-04 proposed roles compare current authority at one exact scope without assigning access (1105.5493ms)
+✔ AD01 requests: populated upgrade retains all earlier rows and adds exactly three duties (15653.7613ms)
+▶ AD01 requests: independent review, recovery, isolation and unchanged effective grants
+  ✔ ordinary/read-only identities cannot submit or decide; hosted mode is refused (19.4347ms)
+  ✔ context lists only local subjects, exact scope keys and eligible independent reviewer (37.3478ms)
+  ✔ refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons (95.3571ms)
+  ✔ inactive and hosted subjects, inactive/expired/future reviewer grants are refused (68.1968ms)
+  ✔ an expired existing grant still prevents a duplicate proposal (17.7828ms)
+  ✔ submission is durable and exact replay returns one original receipt; changed content conflicts (70.2605ms)
+  ✔ authority is rechecked before replay, receipt read and workspace inspection (39.7209ms)
+  ✔ only the named reviewer decides; stale/concurrent decisions cannot replace the first (160.7118ms)
+  ✔ approval revalidates changed eligibility while Return retains an invalid proposal (46.7247ms)
+  ✔ site and Workspace proposals retain exact scope; approved requests never become grants (64.9611ms)
+  ✔ database guards retain proposal and exact immutable audit evidence (172.8993ms)
+✔ AD01 requests: independent review, recovery, isolation and unchanged effective grants (854.4395ms)
+✔ PD upgrade from 25 preserves originals and exact new duties; repeat migration/seed is inert (16584.164ms)
+✔ PD upgrade from 48 preserves originals and exact new duties; repeat migration/seed is inert (19085.2311ms)
+✔ PD upgrade from 71 preserves originals and exact new duties; repeat migration/seed is inert (20218.6375ms)
+✔ PD upgrade from 72 preserves originals and exact new duties; repeat migration/seed is inert (24923.2713ms)
+✔ PD upgrade from 74 preserves originals and exact new duties; repeat migration/seed is inert (21508.4092ms)
+✔ PD upgrade from 76 preserves originals and exact new duties; repeat migration/seed is inert (36839.5409ms)
+✔ PD upgrade from 77 preserves originals and exact new duties; repeat migration/seed is inert (26851.8313ms)
+✔ PD upgrade from 78 preserves originals and exact new duties; repeat migration/seed is inert (30262.537ms)
+✔ PD upgrade from 79 preserves originals and exact new duties; repeat migration/seed is inert (31560.5613ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants (35275.1012ms)
+✔ P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants (44175.135ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants (65400.6105ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 47
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 458356.6912

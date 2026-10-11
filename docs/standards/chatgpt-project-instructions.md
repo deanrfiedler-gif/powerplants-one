@@ -80,7 +80,7 @@ Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable 
 
 Sales: lead-to-delivery-continuity.md and sales-followup-continuity.md; outcome, Won and Lead-context decisions apply. Preserve native facts, source access and Activity owners; accept, create, link and plan separately.
 
-Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
+Equipment: ADR-0045 / equipment-native-completion-handover.md; reuse Assets, CS, Inspection and SH; read-only scanning. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
 
 SC-01–10: BP-08 / ADR-0049. Separate stock observations, custody, consumption, transactions and restricted credits. Live ERP: Not configured. Retain SC-08 source/hash warnings; SC-10 evidence is not owner acceptance.
 FI: field-quality-native-handover.md; field-closed-visit-guidance.md. Separate return attendance. FI-05: CS-06; induction needs Person.
@@ -98,6 +98,6 @@ ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edg
 PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties. Preserve originals. No hosted grants; owner acceptance/deployment separate.
 
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
-UI sequence: ui-build-sequence.md; SD-01–05 adopted; review at phase 00; regenerate with scripts/build-ui-sequence.py.
+UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-request-application.md; apply separate from approval; teams pending.
 
 PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.

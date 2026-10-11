@@ -1,0 +1,122 @@
+{
+  "captured_at": "2026-10-11T05:01:47.217Z",
+  "source_commit": "62b3da1961fcf683ee4d8f52792f30d4f1d0defd",
+  "browser": "155.0.8059.40",
+  "origin": "http://127.0.0.1:3091",
+  "synthetic": true,
+  "reference": {
+    "path": "docs/design/access-review/access-review.html",
+    "sha256": "0b22c21b375b02a308da9fcc949d6e367c4fe62fb6735f36aea53b7c755d3eba"
+  },
+  "images": [
+    {
+      "file": "native-1440-form.png",
+      "kind": "Native local single-add proposal; exact Company B key and named independent reviewer",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "3c82bbe7a182e956dc39a697d851c608892858ea999c603aaa4c710c44953f4c"
+    },
+    {
+      "file": "native-1440-review.png",
+      "kind": "Native Submitted version 1, exact scope and independent review controls",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "a2768ad24bd2e99a9198b652f5be8f62f1362767a986b245301435710d975a0b"
+    },
+    {
+      "file": "native-1440-approved.png",
+      "kind": "Native Approved version 2 with explicit no-effective-access boundary and saved history",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "7eb017acdb4dc578856acdf61ad15eb2d71ca37c2b11c2551cbe4a8643f3ed64"
+    },
+    {
+      "file": "reference-1440-changes.png",
+      "kind": "Working AD-01 Access changes reference; proposed broader workflow and distinct reference fixture",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "d79b33e616065febecfc99e726281e940ac847140f2e3f5dc6f18ce4b7eb506e"
+    },
+    {
+      "file": "native-390-form.png",
+      "kind": "Native local single-add proposal; exact Company B key and named independent reviewer",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "23c2be0ab5f896df47381c570ebd091d0101d8c21fde9a398285f91a4a1aaf40"
+    },
+    {
+      "file": "native-390-review.png",
+      "kind": "Native Submitted version 1, exact scope and independent review controls",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "cdff613afbe6facc3b024ac5b2d5ccb2c0417837a028977b2880dc7c383c1d76"
+    },
+    {
+      "file": "native-390-approved.png",
+      "kind": "Native Approved version 2 with explicit no-effective-access boundary and saved history",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "6a318ee583077c554aef5c8431fd8dc9c45b1561b5421421df8c4821365695ea"
+    },
+    {
+      "file": "reference-390-changes.png",
+      "kind": "Working AD-01 Access changes reference; proposed broader workflow and distinct reference fixture",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "ccecbd9d090b06d1db8a9373f35851a41ac24343725db05aad7afd9c8e3805a2"
+    },
+    {
+      "file": "native-320-form.png",
+      "kind": "Native local single-add proposal; exact Company B key and named independent reviewer",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "016f3e4741993826099bf9ca66a1196891bdcf788babf916e297397d4bc1c2ec"
+    },
+    {
+      "file": "native-320-review.png",
+      "kind": "Native Submitted version 1, exact scope and independent review controls",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "2d6b9dc173a664c0efe19cd99985c39915ed47534bbcd0a46b8ffc9043a43f8f"
+    },
+    {
+      "file": "native-320-approved.png",
+      "kind": "Native Approved version 2 with explicit no-effective-access boundary and saved history",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "7a73a8b75a6dbee7ea0bdc207f48869fd7a27bf3b71e0c9bff179f53d6abe715"
+    },
+    {
+      "file": "reference-320-changes.png",
+      "kind": "Working AD-01 Access changes reference; proposed broader workflow and distinct reference fixture",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "b2921922845eebcc879fa49d06f9baa58ccda14c9ee06d46cc2fdfc6a426f92d"
+    }
+  ],
+  "runtime_build_commit": "66aece17c8dc5436c729020dc2cd44876926933e"
+}

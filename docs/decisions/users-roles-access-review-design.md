@@ -134,3 +134,7 @@ The following remain separate outcomes:
 - native device, zoom, print and screen-reader review;
 - pinned-runtime CI evidence;
 - application implementation, merge and deployment.
+
+## Native receiving continuation — 11 October 2026
+
+The receiving plan now has bounded native inspection, capability/role comparison, single-add request/decision and [controlled local application](access-request-application.md). Unlike the retained design’s simulated Effective label, the native result is Applied with exact approved future dates and separate current eligibility. Separate apply duty, executor/reviewer/subject separation, locked revalidation and immutable grant evidence are explicit synthetic rules. Teams, attestations and operational D-020 acceptance remain open; issued design bytes are unchanged.

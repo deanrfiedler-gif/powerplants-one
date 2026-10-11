@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import { conversionReadClient } from "../../src/estimating/conversion/source-authority";
 import { supplyRecord } from "../../src/supply/context";
 import assert from "node:assert/strict";
@@ -808,7 +809,8 @@ test("ES07 populated 0065 upgrade preserves ES04–07 corrections histories gran
   ).rows;
   await migrate();
   await seed();
-  assert.deepEqual(await Promise.all(tables.map(snapshot)), original);
+  const upgradedSnapshot = await Promise.all(tables.map(snapshot));
+  assertAccessInspectionSnapshot(upgradedSnapshot, original, tables);
   const after = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -820,7 +822,7 @@ test("ES07 populated 0065 upgrade preserves ES04–07 corrections histories gran
   );
   assert.deepEqual(
     after.filter((x) => x.version > 65).map((x) => x.version),
-    [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 81],
+    [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

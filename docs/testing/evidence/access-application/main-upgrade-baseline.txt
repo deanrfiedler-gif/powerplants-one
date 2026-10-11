@@ -1,0 +1,11 @@
+✔ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (40304.2419ms)
+✔ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (47587.645ms)
+✔ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (193972.3354ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 305509.5024

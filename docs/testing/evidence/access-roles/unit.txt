@@ -1,0 +1,26 @@
+✔ AD-01 role comparisons preserve the seven retained proposals and exact revision deltas (14.071ms)
+✔ AD-01 role routes retain the access destination with task-specific titles (0.8345ms)
+✔ all Maintenance and Warranty routes retain their Service shell parent (6.5405ms)
+✔ seven full ordered compositions retain withheld positions and My Work placement (1.3848ms)
+✔ permission and readiness filters retain relative order and never manufacture links (4.0882ms)
+✔ specific routes, genuine views and shared records select exactly their rail parent (2.1953ms)
+✔ shared context is explicit or remembered, independent of customer route spelling (51.7807ms)
+✔ every primary semantic glyph has a deliberate distinct active drawing on the same grid (83.9407ms)
+✔ the five later Service destinations each have their own rail icon (0.6852ms)
+✔ canonical contextual targets retain distinct IDs and bounded source identities (3.2602ms)
+✔ source returns refuse foreign origins, protocol relatives, arbitrary queries and malformed IDs (2.7615ms)
+✔ read-only navigation does not imply creation or elevate an identity (7.2941ms)
+✔ nested pages resolve to their actual workspace instead of a remembered Sales selection (4.0993ms)
+✔ seven workspace preferences validate schema and retain r15 identifiers (1.2419ms)
+✔ More finds workspace names and existing page names, including former rail destinations (7.2757ms)
+✔ AU-08 the Service rail is grouped without reordering, and other rails stay flat (2.2595ms)
+✔ NR-18 a working company narrows scoped checks for its own actor only, and only inside a request (30.3743ms)
+✔ NR-18 a choice entered while resolving the identity reaches the rest of that request only (16.4055ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 998.7208

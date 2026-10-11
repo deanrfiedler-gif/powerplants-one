@@ -1,0 +1,385 @@
+{
+  "application_source": "b734e50754e7927296effdbc8b158497e24d9539",
+  "capture_source": "bff23252f8c5aab86bc4c42738d5137fef97d45b",
+  "field_count_correction": "72569989466f2e8f34c01f26384b6054f4166242",
+  "permissions_matrix_correction": "5dfe67a0dd78551ce705ba642577b26c2e7d1bbb",
+  "receiving_parent": {
+    "pr": 415,
+    "head": "bb1f2673b6ca5d5d195a7b05f8295fbb5e292e0b"
+  },
+  "main_baseline": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+  "build": "Passed; final application source unchanged through later test/evidence corrections.",
+  "types": "Passed after matrix correction; exit 0.",
+  "lint": "Changed application/tests and later matrix helper passed.",
+  "database": {
+    "request_application_final": {
+      "tests": 29,
+      "passed": 29,
+      "failed": 0
+    },
+    "intermediate": {
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "note": "Before two additional validity/exact-grant proofs."
+    },
+    "historical_first": {
+      "tests": 61,
+      "passed": 55,
+      "failed": 4,
+      "cancelled": 2
+    },
+    "historical_isolated_candidate": {
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "note": "Same assertions and 120-second limit; exact FI-01 grant count corrected. Material, receipt and branch test content unchanged between runs."
+    },
+    "historical_final_coverage": 61,
+    "hosted_upgrade": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    "http_permission_matrix": {
+      "wrapper_passed": true,
+      "nested_tests": 48,
+      "passed": 48,
+      "failed": 0
+    },
+    "isolated_main": {
+      "matrix_nested_passed": 48,
+      "historical_passed": 5,
+      "historical_failed": 1,
+      "failure": "Receipt upgrade hit SQL statement timeout during historical schema reset on unmodified main; current branch passes the isolated case."
+    },
+    "isolated_run_ledger": "isolated-results.json",
+    "initial_failures_retained": true
+  },
+  "browser": {
+    "passed": 42,
+    "failed": 0,
+    "widths": [
+      1440,
+      390,
+      320
+    ],
+    "first_run": {
+      "passed": 38,
+      "failed": 4,
+      "cause": "ECONNREFUSED before compiled server readiness; unchanged rerun passes."
+    }
+  },
+  "unit": {
+    "passed": 20,
+    "failed": 0
+  },
+  "retained_model_checks": 107,
+  "retained_browser_checks": 40,
+  "capability_count": 135,
+  "assurance": {
+    "status": "Passed; documentation coverage and consistency, not business or visual acceptance.",
+    "studio": {
+      "entries": 358,
+      "components": 42,
+      "unreviewed": 330,
+      "stale": 28,
+      "component_reviews_pending": 42,
+      "errors": []
+    },
+    "foundation": {
+      "requirements": 78,
+      "issued_sources": 22,
+      "errors": []
+    },
+    "prototype": {
+      "parent_dispositions": 78,
+      "errors": []
+    },
+    "naming": {
+      "project_instruction_characters": 7990,
+      "errors": []
+    }
+  },
+  "visual": {
+    "captures": 15,
+    "reviewer": "Codex implementer",
+    "observed_date": "2026-10-11",
+    "page_wide_overflow": false,
+    "owner_acceptance": "Pending; separate native detail adapts retained inspector; accepted native/mobile images missing."
+  },
+  "ci": {
+    "checkpoint": "stack-review.json",
+    "parent_failures": "Obsolete zero-Systems-grants assertion on #410, #412/#413, #414 and #415; stale LC-12/LC-13/LC-16 preserved-ledger slices also confirmed on #415. All are corrected in this draft; recorded parent-head failures remain separate.",
+    "publication_head": "Fresh PR checks separate; do not infer a pass from earlier heads or local runs.",
+    "final_pre_publication_checkpoint": "stack-final-review.json"
+  },
+  "deployment": "Not performed",
+  "services": "Task-owned application and PostgreSQL stopped; private configuration and disposable data retained outside Git.",
+  "artifacts": [
+    {
+      "file": "browser-first-startup-failures.txt",
+      "sha256": "471dfc8b7c62cc1d1cd279f58e0accd932419e964ba46da61c2a844e6e92a29d"
+    },
+    {
+      "file": "browser.txt",
+      "sha256": "52496ff9e9b6d6a67ff81cd8a2597404ee5af3e8b6a9cb1fd82a8a29943d7992"
+    },
+    {
+      "file": "build.txt",
+      "sha256": "c797c314a930f6a1d986d640110ac8e9c3ecfa748e771e4bb7af0a020e0cadcf"
+    },
+    {
+      "file": "candidate-branch-chain-isolated.txt",
+      "sha256": "025e7929a8be46a6418ff95a4ac57af1d652c269ef4b20bc0a4128c7b8317664"
+    },
+    {
+      "file": "candidate-branch-isolated-isolated.txt",
+      "sha256": "a8385e5d7e8c3bdbb0395808c25b3565b7280e9390b0628a9f04d7d3bc696b71"
+    },
+    {
+      "file": "candidate-branch-two-isolated.txt",
+      "sha256": "5d7c916dfe80e9406905d606db0519debc7e8e1931175f31ac99b47508a44223"
+    },
+    {
+      "file": "candidate-fi01-isolated.txt",
+      "sha256": "4ed0fcbb5d21ae2cbd6b911c5f209fb0802275a9ae110450e4ab93d623ea1e4a"
+    },
+    {
+      "file": "candidate-material-isolated.txt",
+      "sha256": "20fab45af9d3f4a74946b2600e47080d590dfe6eb88f735bb3e91faf54c3df22"
+    },
+    {
+      "file": "candidate-matrix-isolated.txt",
+      "sha256": "61a96792311a5faae6d81b1743ee58a2038cedf8f68288924e92c4a3fc03412b"
+    },
+    {
+      "file": "candidate-receipt-isolated.txt",
+      "sha256": "b2b86fd195074bde7ac6d2a780d818580fbb34f8c3e0bc397651378dab858351"
+    },
+    {
+      "file": "captures.json",
+      "sha256": "d0a0596e0fc8b6b6a3ddbb1fce35243a6d9df296661bb0990a1a820702294a17"
+    },
+    {
+      "file": "database-intermediate.txt",
+      "sha256": "a9d106bd2bb430f46eaa88a03a604c33432d8929ec5bac1d7dc42d2d857c60e5"
+    },
+    {
+      "file": "database.txt",
+      "sha256": "2120985e1702dab8e78f1bc23b7ae553957af0836101082991795f4f75c1b344"
+    },
+    {
+      "file": "demo-upgrade.txt",
+      "sha256": "f5eefeaf001f7ac64c9054425d40d433d9baa92b7b3e3585036daa5d838e3885"
+    },
+    {
+      "file": "foundation.txt",
+      "sha256": "f7c9ad2173d6f1f82abf4dca717a96bae117b69af199ff34e2e2f9776dedf464"
+    },
+    {
+      "file": "invalid-overlapping-candidate.txt",
+      "sha256": "c803811562aed51df1a7c283e16bf617d424b2f8a760e35a178dec1c79f910da"
+    },
+    {
+      "file": "invalid-overlapping-main.txt",
+      "sha256": "74d177576d5ff4d8755c8e31e11ac1c5187401917e9759bb191b9a941261e4c4"
+    },
+    {
+      "file": "isolated-results.json",
+      "sha256": "b0013f15ba5d82837f24164a6768a270414c7062371164030ee487f492aa2d78"
+    },
+    {
+      "file": "lint-matrix.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "main-branch-chain-isolated.txt",
+      "sha256": "14bbedbbebdb2469b3d936da19914f71381c9e298e854a36824b8c03790ec42c"
+    },
+    {
+      "file": "main-branch-isolated-isolated.txt",
+      "sha256": "9812122ab386c58ce0a42ee6726395801fa2f7c8d35296575fa5ecbc52b66056"
+    },
+    {
+      "file": "main-branch-two-isolated.txt",
+      "sha256": "627cf25143537c28622946499ac57545c2391518ce904e7e10a585938f5be829"
+    },
+    {
+      "file": "main-fi01-isolated.txt",
+      "sha256": "33921c25f0ab8ce45c9700d5d4cfc8a9fddb16b013c9b2486b5d7d488e3dd3b0"
+    },
+    {
+      "file": "main-material-isolated.txt",
+      "sha256": "2d6b39e7b952b052c5d602b8fa943e2bfd26b7d5c135fc799815061e314f7b00"
+    },
+    {
+      "file": "main-matrix-isolated.txt",
+      "sha256": "4dd87c5bbcc151b6efb9f88464495f99b01d961b4a7967675c4824d7e58754a4"
+    },
+    {
+      "file": "main-receipt-isolated.txt",
+      "sha256": "4701949342b2f997213a486ff062a809717d586dd91a3b4a5f036a7a570718cd"
+    },
+    {
+      "file": "main-upgrade-baseline.txt",
+      "sha256": "7ac157e199e1f7d211b75fa5fd059907c3ed70b7bc7f2ba82b37f79fc5c8904f"
+    },
+    {
+      "file": "naming-first-failure.txt",
+      "sha256": "e3b6b4b847fe8f0ba0b4343714ab55bd299b6f25acab85fb86df29adc104bfcb"
+    },
+    {
+      "file": "naming-intermediate-failure.txt",
+      "sha256": "1587f2dfeacf02382f561b9ee87bea5ab59a547b2240828d88e90c6b8f5900e3"
+    },
+    {
+      "file": "naming.txt",
+      "sha256": "2ec22829523cf57c0d6519db32c03d360a69dd44f83775093c950cba0f27e70c"
+    },
+    {
+      "file": "native-1440-application-control.png",
+      "sha256": "f2553d4f4377e8549a3d82830e1ab9c26deafb37b11c0c9a7dddb5c3a91e7906"
+    },
+    {
+      "file": "native-1440-application-handover.png",
+      "sha256": "8977e3532532484ca43e5fee357477a357e7b1292383ecc0fba8652d59770e0f"
+    },
+    {
+      "file": "native-1440-applied.png",
+      "sha256": "570009162ac36665a582f3a75492494c733a4944d6ff4b7f4943e9d6afa8c2da"
+    },
+    {
+      "file": "native-1440-approved.png",
+      "sha256": "2f9986e349860a1214fa5a565d2e090d0c1206c81e95098aa03ab8ea1acf3bec"
+    },
+    {
+      "file": "native-320-application-control.png",
+      "sha256": "1b73e8b57de3dee8208996522988b7c8314ea4aea8a87666734ece23f3e23f7e"
+    },
+    {
+      "file": "native-320-application-handover.png",
+      "sha256": "14d25aa8c57741de2e3ccd32ac86e91cd314e5ce32a1b139ad6748a0e473da0d"
+    },
+    {
+      "file": "native-320-applied.png",
+      "sha256": "a738acce0f7b4ce9883652d0c5e7909c39e0dc8bea31c3048f0a6b0efffc6e06"
+    },
+    {
+      "file": "native-320-approved.png",
+      "sha256": "c3d31e7ef75460569fc2f6e49f45d4bab9aa2299922c99db1f4c226319b06455"
+    },
+    {
+      "file": "native-390-application-control.png",
+      "sha256": "60f56e6e09d0ea7346db8ccd5a3f385091239475c9d622ef1061982796a2909d"
+    },
+    {
+      "file": "native-390-application-handover.png",
+      "sha256": "67ba569003a2f10d310be2592d39add3ed3229faa1ae0fe7412913b7ccb30d61"
+    },
+    {
+      "file": "native-390-applied.png",
+      "sha256": "f223698c16dc589a709d86689146163c053932e4683447e76d33166e5ba9191e"
+    },
+    {
+      "file": "native-390-approved.png",
+      "sha256": "e174e5ec6db129e4ba0fc0bb27e3df4788c5155591f4eec1019a9d9703120ee8"
+    },
+    {
+      "file": "parent-410-ci-matrix-failure.txt",
+      "sha256": "a2724f00b8bdc1751296d64dafcf0e5b1a07772a37b1f874689608171f8c5030"
+    },
+    {
+      "file": "parent-413-ci-matrix-failure.txt",
+      "sha256": "1a47a4492536d193b1d935d1437a10dd6117e682b245d848c9697844cfb9d6f5"
+    },
+    {
+      "file": "parent-414-ci-matrix-failure.txt",
+      "sha256": "d2ff0063cdd2e3d3d003db956b8dbc8fd2bc61404e765b41b56e397d876320a5"
+    },
+    {
+      "file": "parent-415-ci-matrix-failure.txt",
+      "sha256": "b6b2e95112702acd9a05978011eed50ca9e25264c34105a90398717594d70139"
+    },
+    {
+      "file": "parent-415-database-2-ledger-failures.txt",
+      "sha256": "eddd43370f38ee6523792563f58e76d81647f6ab950bcb86a66ec5c5a2579c02"
+    },
+    {
+      "file": "parent-415-database-3-ledger-failures.txt",
+      "sha256": "7b3f504dda8288a00d816724f7449d50d651117a4eb1eef6070a3be3ce3c6792"
+    },
+    {
+      "file": "parent-upgrade-diagnosis.txt",
+      "sha256": "2b4c4d92b8ff677bb61873a5b047eb2ac1d10a0e7f5a9003cd2743f121f533f4"
+    },
+    {
+      "file": "prototype.txt",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b"
+    },
+    {
+      "file": "reference-1440-changes.png",
+      "sha256": "d79b33e616065febecfc99e726281e940ac847140f2e3f5dc6f18ce4b7eb506e"
+    },
+    {
+      "file": "reference-320-changes.png",
+      "sha256": "53cb9af350038af12b024022f8700c0e539c1a42068224260b5a31edac20d087"
+    },
+    {
+      "file": "reference-390-changes.png",
+      "sha256": "3096386a4e7d6b77a24f9132d1b0556a9a235ac475f60de77df315599409a23d"
+    },
+    {
+      "file": "retained-browser.json",
+      "sha256": "fe1f341df6ae3dcb311bf4831bb6e78afceb9f87b49c3ab37b5c975a03e688a9"
+    },
+    {
+      "file": "retained-model.json",
+      "sha256": "49d66d2c1c20894477a31f472de9f1412786b7bf98164de8f667d968544b40aa"
+    },
+    {
+      "file": "setup-main-lock-capacity.txt",
+      "sha256": "687968327744a2268c26bc59c923248f9bfc83c23fd37245d3f9e89b7ecba3c6"
+    },
+    {
+      "file": "setup-parent-lock-capacity.txt",
+      "sha256": "fdf00af40d24c130403a1f6d465c937bf7ab362f6c7f8063cd1894a00e2f77b9"
+    },
+    {
+      "file": "stack-checkpoint.json",
+      "sha256": "0a036a26e89aa9fd51bbb1d2e3ea25c9652eb310fb52023a8975e7dbf8149a2a"
+    },
+    {
+      "file": "stack-final-review.json",
+      "sha256": "079afaac493ad93373819746745a2f2153143969f585d8f6b8c7d2aa732684c6"
+    },
+    {
+      "file": "stack-review.json",
+      "sha256": "f964393ba2bb728b10f71df7f834ec40f60f2301b38137820d3fe16178c5baa9"
+    },
+    {
+      "file": "studio.txt",
+      "sha256": "abb2fac18d15056e5ed27515dd54e0eb4f572f23bb995ffbf229670bd864b53b"
+    },
+    {
+      "file": "types.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "unit.txt",
+      "sha256": "1c8785c00e8a98c84a94f7150b2a10ad5e4efc6af6d50380cf13ba5677b2713e"
+    },
+    {
+      "file": "upgrade-files.json",
+      "sha256": "08cc5e9916df087c18c5270d95453bffb57a850844c9cd234530665b37e90757"
+    },
+    {
+      "file": "upgrade-first-pass.txt",
+      "sha256": "9e509e4de2497dc268af787e0cccc63270f82273d561372873170505307cef77"
+    }
+  ]
+}
