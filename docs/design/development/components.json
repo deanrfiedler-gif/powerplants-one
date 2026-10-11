@@ -1195,7 +1195,7 @@
         {
           "id": "ad01-request-host",
           "label": "Access request, decision, application and withdrawal",
-          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
+          "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed. Application and withdrawal reasons retain distinct IDs/values; the summary link focuses only the action with the server validation error."
         }
       ],
       "implementation": [

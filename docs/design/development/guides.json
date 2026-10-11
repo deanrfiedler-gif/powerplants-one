@@ -75471,7 +75471,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native local synthetic request, independent decision, application and requester withdrawal",
-      "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
+      "source_commit": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",
@@ -75623,7 +75623,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "Withdrawal verification in progress: docs/testing/evidence/access-withdrawal/README.md. Earlier application evidence remains tied to its recorded source."
+      "runtime_evidence": "Nine withdrawal database checks and 51 browser scenarios have passing coverage across the recorded runs: docs/testing/evidence/access-withdrawal/README.md. Initial failures and corrected/unchanged replays remain explicit. Earlier application evidence retains its own source."
     },
     {
       "guide_key": "guide.route-admin-access-requests",
@@ -75635,7 +75635,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native local synthetic request, independent decision, application and requester withdrawal",
-      "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
+      "source_commit": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",
@@ -75787,7 +75787,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "Withdrawal verification in progress: docs/testing/evidence/access-withdrawal/README.md. Earlier application evidence remains tied to its recorded source."
+      "runtime_evidence": "Nine withdrawal database checks and 51 browser scenarios have passing coverage across the recorded runs: docs/testing/evidence/access-withdrawal/README.md. Initial failures and corrected/unchanged replays remain explicit. Earlier application evidence retains its own source."
     }
   ]
 }

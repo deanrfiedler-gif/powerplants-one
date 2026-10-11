@@ -13126,7 +13126,7 @@
       "title": "Access request",
       "kind": "route",
       "module": "AD",
-      "summary": "Local synthetic single-capability proposal, independent decision and separate controlled application; Applied records installation, with grant validity checked separately.",
+      "summary": "Local synthetic proposal, independent decision, separate controlled application and original-requester withdrawal of un-applied requests; installed access stays unchanged on closure.",
       "path": "/admin/access/requests/[id]",
       "source_paths": [
         "src/app/(business)/admin/access/requests/[id]/page.tsx",
@@ -13148,7 +13148,13 @@
         "docs/testing/evidence/access-application/native-320-approved.png",
         "docs/testing/evidence/access-application/native-320-applied.png",
         "docs/testing/evidence/access-application/native-320-application-control.png",
-        "docs/testing/evidence/access-application/native-320-application-handover.png"
+        "docs/testing/evidence/access-application/native-320-application-handover.png",
+        "docs/testing/evidence/access-withdrawal/native-1440-withdrawal-control.png",
+        "docs/testing/evidence/access-withdrawal/native-1440-withdrawn-handover.png",
+        "docs/testing/evidence/access-withdrawal/native-390-withdrawal-control.png",
+        "docs/testing/evidence/access-withdrawal/native-390-withdrawn-handover.png",
+        "docs/testing/evidence/access-withdrawal/native-320-withdrawal-control.png",
+        "docs/testing/evidence/access-withdrawal/native-320-withdrawn-handover.png"
       ],
       "dependencies": [
         "docs/decisions/access-change-requests.md",
@@ -13161,7 +13167,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Withdrawal verification in progress; earlier request/application proof remains source-bound. Owner visual acceptance pending.",
+      "functional_status": "Nine withdrawal database checks and 51 native browser scenarios have passing coverage; original failures and isolated replays remain in the access-withdrawal ledger. Historical upgrade and CI outcomes are separate; owner review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13179,7 +13185,7 @@
       "title": "Access-change requests",
       "kind": "route",
       "module": "AD",
-      "summary": "Local synthetic single-capability proposal, independent decision and separate controlled application; Applied records installation, with grant validity checked separately.",
+      "summary": "Local synthetic proposal, independent decision, separate controlled application and original-requester withdrawal of un-applied requests; installed access stays unchanged on closure.",
       "path": "/admin/access/requests",
       "source_paths": [
         "src/app/(business)/admin/access/requests/page.tsx",
@@ -13205,7 +13211,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Withdrawal verification in progress; earlier request/application proof remains source-bound. Owner visual acceptance pending.",
+      "functional_status": "Nine withdrawal database checks and 51 native browser scenarios have passing coverage; original failures and isolated replays remain in the access-withdrawal ledger. Historical upgrade and CI outcomes are separate; owner review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
