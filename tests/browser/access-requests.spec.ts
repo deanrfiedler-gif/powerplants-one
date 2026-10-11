@@ -646,7 +646,13 @@ test("AD-01 requester withdraws both un-applied states and starts a fresh indepe
       "href",
       `/${base}/${f.input.request_id}`,
     );
+    const savedPath = await saved.getAttribute("href");
+    expect(savedPath).toMatch(/^\/admin\/access\/requests\/[0-9a-f-]+$/);
     await saved.click();
+    await expect(page).toHaveURL(new URL(savedPath!, baseURL!).href);
+    await expect(
+      page.getByRole("heading", { name: "Access request", exact: true }),
+    ).toBeVisible();
     await expect(page.locator("main .status-chip")).toHaveText("Submitted");
     await expect(page.locator("main")).toContainText("Version 1");
   }
