@@ -335,9 +335,22 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         .locator("main")
         .getByText(/^(?:.*\s)?Loading .*…$/);
       await call(page, "local-session", { profile: s.profile });
+      // SC-07 phone Day reads the whole Monday–Sunday week for its day chips.
+      // On mount (including an identity remount), the initial wide layout can
+      // also start a single-day read. Select the intended window throughout;
+      // whichever response happens to arrive first is not the screen contract.
+      const selectedRead = (response: Response) => {
+        const url = new URL(response.url());
+        if (url.pathname !== `/api/v1/${s.api}` || response.request().method() !== "GET") return false;
+        if (s.id !== "SC-07") return true;
+        const from = mobile ? "2031-11-03T00:00:00+10:00" : "2031-11-05T00:00:00+10:00";
+        const to = mobile ? "2031-11-10T00:00:00+10:00" : "2031-11-06T00:00:00+10:00";
+        return Date.parse(url.searchParams.get("from") ?? "") === Date.parse(from) &&
+          Date.parse(url.searchParams.get("to") ?? "") === Date.parse(to) &&
+          url.searchParams.get("timezone") === "Australia/Brisbane";
+      };
       const loadedRead = page.waitForResponse((response) =>
-        new URL(response.url()).pathname === `/api/v1/${s.api}` &&
-        response.request().method() === "GET" && response.status() === 200,
+        selectedRead(response) && response.status() === 200,
         { timeout: 60000 });
       // The screen contract is the authorised read and rendered state. A dev
       // document's unrelated load event is not the selected record's readiness.
@@ -355,7 +368,12 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       // Successful status alone is not populated proof. Assert a record from
       // this browser's exact response is actually rendered in the main region.
       if (s.id !== "SC-13" && s.id !== "SC-14") expect(original.items.length, s.id).toBeGreaterThan(0);
-      const record = original.items?.[0];
+      // A phone week can also contain visits on other days. Prove this fixture's
+      // selected-day appointment is present in the response and on screen.
+      const record = s.id === "SC-07"
+        ? original.items.find((item: { id: string }) => item.id === appointment)
+        : original.items?.[0];
+      if (s.id === "SC-07") expect(record, "SC-07: selected-day appointment").toBeTruthy();
       const populatedLabel: string = s.id === "SC-13" ? original.current.observations[0].id
         : s.id === "SC-14" ? original.filename
         : s.id === "SC-15" ? record.operation_id
@@ -452,7 +470,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         });
       }
       const recoveredRead = page.waitForResponse((response) =>
-        match(new URL(response.url())) && response.request().method() === "GET" && response.status() === 200,
+        selectedRead(response) && response.status() === 200,
       { timeout: 60000 });
       await Promise.all([recoveredRead, page.reload({ waitUntil: "domcontentloaded" })]);
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
@@ -612,7 +630,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       let denied: Response;
       try {
         [denied] = await Promise.all([
-          page.waitForResponse(response => currentReads.has(response.request())),
+          page.waitForResponse(response => currentReads.has(response.request()) && selectedRead(response)),
           identity(page, "systems"),
         ]);
       } finally {
