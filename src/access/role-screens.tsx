@@ -229,8 +229,10 @@ function RoleComparison({
         onSubmit={(event) => {
           event.preventDefault();
           const next = `admin/access/${id}/roles?${new URLSearchParams({ bundle_id: bundleId, revision, company_id: company, site_id: site })}`;
-          if (next === request) result.reload();
-          else setRequest(next);
+          // Re-selecting an earlier combination must not briefly reuse its
+          // cached result while the fresh permission read is pending.
+          result.reload();
+          setRequest(next);
         }}
       >
         <SelectField

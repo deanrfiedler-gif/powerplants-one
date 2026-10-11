@@ -1,6 +1,68 @@
 import { test, expect } from "@playwright/test";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
 
+test("AD-01 returning to earlier selections waits for a fresh comparison or explanation", async ({
+  page,
+  baseURL,
+}) => {
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  for (const role of [true, false]) {
+    const id = "30000000-0000-4000-8000-000000000005";
+    await page.goto(`/admin/access/${id}${role ? "/roles" : ""}`);
+    if (role)
+      await page
+        .getByLabel("Proposed bundle", { exact: true })
+        .selectOption("bundle-observer");
+    const site = page.getByLabel("Site", { exact: true });
+    await site.selectOption("70000000-0000-4000-8000-000000000001");
+    const button = page.getByRole("button", {
+      name: role ? "Compare current grants" : "Check grant eligibility",
+    });
+    const heading = page.getByRole("heading", {
+      name: role
+        ? "1 of 1 capabilities permit this scope"
+        : "Grant permits this scope",
+      exact: true,
+    });
+    await button.click();
+    await expect(heading).toBeVisible();
+    await site.selectOption("70000000-0000-4000-8000-000000000002");
+    await site.selectOption("70000000-0000-4000-8000-000000000001");
+    let release!: () => void;
+    const pending = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const pattern = role
+      ? "**/api/v1/admin/access/*/roles?**"
+      : "**/api/v1/admin/access/*/explanation?**";
+    await page.route(pattern, async (route) => {
+      await pending;
+      await route.continue();
+    });
+    const sent = page.waitForRequest((request) =>
+      request
+        .url()
+        .includes(
+          `/api/v1/admin/access/${id}/${role ? "roles" : "explanation"}?`,
+        ),
+    );
+    try {
+      await button.click();
+      await sent;
+      await expect(heading).toHaveCount(0);
+    } finally {
+      release();
+    }
+    await expect(heading).toBeVisible();
+    await page.unroute(pattern);
+  }
+});
+
 test("AD-01 retained proposed bundles, scoped comparison and fresh explanation handover", async ({
   page,
   baseURL,
@@ -18,12 +80,10 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
     .getByRole("link", { name: "Browse proposed role bundles" })
     .click();
   await expect(
-    page
-      .getByRole("navigation", { name: "Breadcrumb" })
-      .getByRole("list", {
-        name: "Users and access / Proposed role bundles",
-        exact: true,
-      }),
+    page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("list", {
+      name: "Users and access / Proposed role bundles",
+      exact: true,
+    }),
   ).toContainText("Proposed role bundles");
   await expect(page.locator("main article.record-card")).toHaveCount(7);
   const coordinator = page.locator("main article").filter({

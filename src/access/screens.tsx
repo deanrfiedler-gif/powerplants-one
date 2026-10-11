@@ -268,8 +268,8 @@ function PersonDetail({
           onSubmit={(event) => {
             event.preventDefault();
             const next = `admin/access/${id}/explanation?${new URLSearchParams({ capability, company_id: company, site_id: site })}`;
-            if (next === request) explanation.reload();
-            else setRequest(next);
+            explanation.reload();
+            setRequest(next);
           }}
         >
           <Field
