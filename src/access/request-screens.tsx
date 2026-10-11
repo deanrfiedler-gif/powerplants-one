@@ -455,7 +455,10 @@ function RequestDetail({
   const command = useAccessCommand(d.actor, d.request.id),
     [decision, setDecision] = useState("Returned"),
     [reason, setReason] = useState(""),
-    [withdrawalReason, setWithdrawalReason] = useState("");
+    [withdrawalReason, setWithdrawalReason] = useState(""),
+    [activeAction, setActiveAction] = useState<"Apply" | "Withdraw" | null>(
+      null,
+    );
   const r = d.request;
   if (hidden(command.error))
     return <ReadState loading={false} error={command.error} retry={retry} />;
@@ -578,6 +581,7 @@ function RequestDetail({
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              setActiveAction("Apply");
               void command.send(
                 `${base}/${r.id}/apply`,
                 { expected_version: r.version, reason },
@@ -597,7 +601,10 @@ function RequestDetail({
                 affected person. No date is shifted or backdated.
               </p>
               <Field
-                name="reason"
+                name="application_reason"
+                validationField={
+                  activeAction === "Apply" ? "reason" : "application_reason"
+                }
                 label="Application reason"
                 value={reason}
                 onChange={setReason}
@@ -615,6 +622,7 @@ function RequestDetail({
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              setActiveAction("Withdraw");
               void command.send(
                 `${base}/${r.id}/withdraw`,
                 { expected_version: r.version, reason: withdrawalReason },
@@ -634,7 +642,10 @@ function RequestDetail({
                 history. This cannot remove installed access.
               </p>
               <Field
-                name="reason"
+                name="withdrawal_reason"
+                validationField={
+                  activeAction === "Withdraw" ? "reason" : "withdrawal_reason"
+                }
                 label="Withdrawal reason"
                 value={withdrawalReason}
                 onChange={setWithdrawalReason}

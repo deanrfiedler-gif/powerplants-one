@@ -567,6 +567,29 @@ test("AD-01 requester withdraws both un-applied states and starts a fresh indepe
       baseURL!,
     );
     await page.reload();
+    if (state === "Approved") {
+      await page
+        .getByLabel("Application reason", { exact: true })
+        .fill("This independent application reason must not be overwritten.");
+      await page.getByLabel("Withdrawal reason", { exact: true }).fill("short");
+      await page
+        .getByRole("button", { name: "Withdraw request", exact: true })
+        .click();
+      await expect(
+        page.getByLabel("Withdrawal reason", { exact: true }),
+      ).toHaveAttribute("aria-invalid", "true");
+      await expect(
+        page.getByLabel("Withdrawal reason", { exact: true }),
+      ).toBeFocused();
+      await expect(
+        page.getByLabel("Application reason", { exact: true }),
+      ).toHaveAttribute("aria-invalid", "false");
+      await expect(
+        page.getByLabel("Application reason", { exact: true }),
+      ).toHaveValue(
+        "This independent application reason must not be overwritten.",
+      );
+    }
     await page
       .getByLabel("Withdrawal reason", { exact: true })
       .fill(
