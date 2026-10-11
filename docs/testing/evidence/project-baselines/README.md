@@ -4,6 +4,8 @@ Owner: Dean Fiedler. Review: local implementation verification recorded 11 Octob
 
 Scope: AC-PJ-BASELINE-01–04 in [the decision](../../../decisions/project-schedule-baselines.md). Synthetic fixtures only. Implementation adds a baseline companion, comparison dialog and successor preview; existing schedule/material and Service authorities remain independent.
 
+Verified application source: `ccaab5a281d6e055babdd04317381708fdc5cbf1`. The subsequent integration of main `8e178bc` changes documentation only, retaining ADR-0053 and both new audit/baseline document-register entries.
+
 ## Results
 
 | Check | Result and boundary |

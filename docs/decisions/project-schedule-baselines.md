@@ -29,3 +29,5 @@ Forecasts continue through the existing task command with version checks, reason
 - AC-PJ-BASELINE-04: desktop/mobile users can inspect warnings, record a reviewed baseline, compare revisions and recover an uncertain submission; current denial removes cached content.
 
 Migration 0081 is additive; 0078–0080 are reserved by concurrent access-administration work. The hosted-upgrade version gate may advance only after preservation checks: no seed, grant, identity dispatch or existing record changes. Deployment and operational approval remain separate.
+
+The subsequently integrated [ADR-0053](ADR-0053-figma-page-design.md) adopts Figma for new page designs. This bounded refinement reuses an existing Gantt, native dialog and catalogue controls under its rule 6; no Figma design is relied on or marked accepted. The new comparison and phone correction remain visibly pending owner/paired review.
