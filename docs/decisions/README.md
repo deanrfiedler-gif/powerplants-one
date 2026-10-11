@@ -1,5 +1,7 @@
 # Decision control
 
+[Project schedule baselines and forecast comparison](project-schedule-baselines.md) records the 11 October audit follow-up: independent immutable revisions, current coordinator authority, explicit calendar-day comparison and manual successor review. PRJ-02/04/07 and PJ-03 remain the governing scope; no Service booking or commercial approval authority is added.
+
 [UI build and review sequence](ui-build-sequence.md) is the order for creating and refining every registered page, derived from the live register and the issued r02 build plan. It keeps every r02 rank. Dean adopted SD-01 to SD-05 on 9 October 2026: rule-based placement of later routes, shared systems verified first, separate review and build tracks, a synthetic job walk after each phase, and a register-visible finish line for each phase.
 
 [ADR-0047 — Native Engineering control](ADR-0047-engineering-native-control.md) records the authorised EN-01–EN-05 synthetic implementation and backwards-compatible EN-06–EN-08 source lineage. Narrow technical duties, exact revisions, immutable review/issue evidence and recipient stages are separate; operational authority and new visual compositions remain unaccepted.

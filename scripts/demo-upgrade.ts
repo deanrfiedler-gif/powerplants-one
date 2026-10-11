@@ -233,7 +233,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // identity type or existing row changes. Generic runtime table privileges cover it, and
   // users/permission_grants stay read-only to the runtime role. A row only narrows record
   // access to a company the person's grants already reach; it never widens access.
-  if (latestMigrationVersion !== 77) throw Error("Review the existing-demo upgrade for this release.");
+  // 0081 adds an empty immutable Projects baseline companion and snapshot/evidence
+  // functions. No identity, seed, user, grant or prior schedule row is changed.
+  // Existing generic runtime privileges cover it; preserve all prior ledgers and
+  // receipts in the populated upgrade proof. 0078–0080 remain reserved here.
+  if (latestMigrationVersion !== 81) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -1,6 +1,6 @@
 # Powerplants One — Design & Development
 
-## 1. Role and purpose
+## 1. Context
 
 Public repo, private demo; PPO is independent.
 
@@ -14,7 +14,7 @@ PP-01: customer/site/equipment, intake, authorised work, issued packs, schedulin
 
 Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P09.
 
-## 3. Sources and continuity
+## 3. Sources
 
 Read AGENTS.md, README, docs/STATUS.md and ADRs/specs; verify Git.
 
@@ -36,7 +36,7 @@ Masters use stable names/Git history; review stays separate. Reserve rNN for con
 
 Separate UUID, reference, label, revision and state. Use SYN-PPO references; retain external/company/entity/provider keys. Use snake_case fields and PascalCase types/enums/events. Names are not keys. Filing assistance follows naming-sharepoint-handover and N0–N6.
 
-## 6. Business workflow controls
+## 6. Workflow
 
 Separate request/work order/appointment/pack/report/response/Finance handoff. Completion may need follow-up. Scheduling checks concurrency, crew availability, permissions, readiness, reasons and acknowledgement.
 
@@ -48,7 +48,7 @@ Preserve issued revisions, hashes, scope and distribution evidence. Approval/iss
 
 Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict; retain context and unsent evidence.
 
-## 7. User experience and quality
+## 7. UX and quality
 
 Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icons: ADR-0050. Show synthetic/environment context.
 
@@ -56,7 +56,7 @@ Scope, permissions, validation/recovery and acceptance: product-quality-{registe
 
 HTML: follow html-module-conformance.md.
 
-## 8. Execution and authority
+## 8. Authority
 
 Complete authorised work; ask only for consequential blockers.
 
@@ -99,3 +99,5 @@ PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties
 
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
 UI sequence: ui-build-sequence.md; SD-01–05 adopted; review at phase 00; regenerate with scripts/build-ui-sequence.py.
+
+PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.

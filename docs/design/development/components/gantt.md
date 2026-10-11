@@ -47,3 +47,12 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Accepted Sales context (LC-16)
 
 The native Project host supplies an optional Sales handovers action. It opens the existing labelled native-dialog pattern, closes on Escape or explicit close, and retains browser focus return. Exact accepted Sales context and historical revisions are read inside the dialog; the fixed schedule workspace has no extra sibling panel. The initial sibling layout displaced the phone schedule and is retained as failed evidence. Final desktop/phone proof and limits: docs/testing/evidence/won-delivery-continuity/README.md. No paired design acceptance is claimed.
+## Baseline and forecast addition — PJ-03
+
+The native host supplies optional `onBaselines`, opening `ProjectBaselines` inside the existing labelled native-dialog pattern. Reuse ProjectsGantt, Button, Field, SelectField, ReadState, ErrorNotice and current task editor. The catalogue fixture exposes the action but explicitly directs users to a saved project; it never fakes server evidence. Saved-host fixtures are `tests/browser/project-baselines.spec.ts`.
+
+Incoming: permitted current schedule plus paged immutable baseline revisions. Outgoing: one original RecordProjectBaseline receipt; task forecast edits remain SaveProjectTask. The comparison uses calendar days and the current visible owner; successor warnings do not automatically move dates or bookings. Read/command denial removes cached content; uncertain writes freeze values for exact retry.
+
+Desktop: retain the fixed schedule underneath an on-demand scrolling dialog. Phone: let the schedule page scroll vertically, preserve a 240–360px task-list viewport, and scroll the action strip horizontally; wrap dialog controls and dates, use single-column comparison cards, visible close and keyboard focus return; no horizontal document overflow. New states: no baseline, undated schedule, recorded baseline, slipped milestone, changed dependency, older history, stale revision, read-only, denied and unknown submission.
+
+Proposed departure: the comparison dialog and successor preview are new compositions, with no exact issued HTML/image. Preserve r10 for the surrounding schedule. Owner and paired visual acceptance are pending; [functional evidence](../../../testing/evidence/project-baselines/README.md) is separate.

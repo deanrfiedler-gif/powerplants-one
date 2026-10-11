@@ -79,6 +79,8 @@ export const migrationFiles = [
   "0075-opportunity-outcome-sources.sql",
   "0076-sales-delivery-bindings.sql",
   "0077-working-company.sql",
+  // 0078–0080 are reserved by concurrent access-administration work.
+  "0081-project-schedule-baselines.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -118,7 +120,7 @@ export const seedFiles = [
   [58, "seed-estimating-review.sql"],
   [59, "seed-quotation-release.sql"],
 ] as const;
-export const latestMigrationVersion = 77;
+export const latestMigrationVersion = 81;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.

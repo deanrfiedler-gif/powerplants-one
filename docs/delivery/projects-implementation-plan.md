@@ -8,6 +8,10 @@ versioning: git
 
 # Projects — proposed bounded delivery
 
+## Current authorised increment — 11 October 2026
+
+Dean authorised the [CRM/Projects audit follow-up](crm-projects-audit-gaps.md). Existing Gantt, Sales receiving and staged acceptance now precede this historical J1–J5 plan. The bounded J2/PJ-03 baseline increment proceeds under [project-schedule-baselines](../decisions/project-schedule-baselines.md): immutable dated snapshots, versioned forecast comparison, milestone slippage and successor review. RAID, configurable calendars, critical path and the other broad J2 controls remain open. The older invocation wording below records its original context, not a new approval gate.
+
 [BP-06](../blueprints/BP-06-projects-commercial-delivery.md) · [J1 starter](projects-first-increment-starter.md) · [Handover](projects-discovery-handover.md)
 
 J1–J5 are local BP-06 labels under PPO-012 / issue #12; they neither renumber P01–P12 nor create new parent requirements. Only discovery/design is invoked now. Full Projects remains Wave C; the proposal brings a small coordination slice forward. Recommended J1 start is after verified P10–P12 completion; the eventual user invocation can explicitly choose earlier delivery on verified shared contracts while preserving service ordering. No date, duration or budget is promised.

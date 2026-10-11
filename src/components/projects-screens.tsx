@@ -24,6 +24,7 @@ import {
 import { DeliverySalesSources } from "./sales-delivery-link";
 import { ProjectsGantt } from "./projects-gantt";
 import { ProjectTaskPanel } from "./project-task-panel";
+import { ProjectBaselines } from "./project-baselines";
 import {
   formatDate,
   type Project,
@@ -403,6 +404,7 @@ export function ProjectSchedulePage({
     resource = useResource<Schedule>(`projects/${id}`),
     [panel, setPanel] = useState<{ task: Task | null } | null>(null),
     [history, setHistory] = useState(false),
+    [baselines, setBaselines] = useState(false),
     [sales, setSales] = useState(false),
     [saved, setSaved] = useState(""),
     [blocked, setBlocked] = useState(false);
@@ -441,6 +443,7 @@ export function ProjectSchedulePage({
         saved={saved}
         onTask={(task) => setPanel({ task })}
         onHistory={() => setHistory(true)}
+        onBaselines={() => setBaselines(true)}
         onSalesContext={() => setSales(true)}
         onRefresh={resource.reload}
       />
@@ -470,6 +473,7 @@ export function ProjectSchedulePage({
         />
       )}
       {history && <History id={id} onClose={() => setHistory(false)} />}
+      {baselines && <ProjectBaselines id={id} onClose={() => setBaselines(false)} onDenied={() => setBlocked(true)} onSaved={() => { setSaved("Baseline recorded"); resource.reload(); }} />}
     </>
   );
 }

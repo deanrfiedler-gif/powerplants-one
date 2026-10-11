@@ -257,6 +257,7 @@ export function ProjectsGantt({
   onTask,
   onHistory,
   onSalesContext,
+  onBaselines,
   onRefresh,
   loading = false,
   saved = "",
@@ -269,6 +270,7 @@ export function ProjectsGantt({
   onTask: (task: Task | null) => void;
   onHistory: () => void;
   onSalesContext?: () => void;
+  onBaselines?: () => void;
   onRefresh: () => void;
   loading?: boolean;
   saved?: string;
@@ -704,6 +706,7 @@ export function ProjectsGantt({
             <button className="schedule-history" onClick={onHistory}>
               Change history
             </button>
+            {onBaselines && <button type="button" className="schedule-history" onClick={onBaselines}>Baselines and forecast</button>}
             {onSalesContext && <button className="schedule-history" onClick={onSalesContext}>Sales handovers</button>}
             <span className="preview-state" role="status">
               {loading

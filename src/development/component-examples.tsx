@@ -354,6 +354,7 @@ function GanttExample({ state }: { state: string }) {
         schedule={schedule}
         referenceDate={fixtureDate}
         preferenceKey={`ppo.catalogue.gantt.${state}`}
+        onBaselines={() => setMessage("Baseline recording and comparison require a saved project. Open a project to review its server history.")}
         onTask={(t) => setTask(t?.title ?? "New example task")}
         onHistory={() =>
           setMessage("Synthetic fixture has no saved business history.")

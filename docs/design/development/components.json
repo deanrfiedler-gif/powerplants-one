@@ -822,6 +822,11 @@
           "id": "sales-context-dialog",
           "label": "Accepted Sales context",
           "description": "Real Project host opens the shared native-dialog pattern for exact accepted Sales history without adding a sibling inside the fixed schedule workspace."
+        },
+        {
+          "id": "baseline-comparison",
+          "label": "Baseline and forecast",
+          "description": "Catalogue action explains the saved-project boundary. Native host fixtures in tests/browser/project-baselines.spec.ts cover empty history, recorded and slipped milestone, uncertain retry and stale refresh."
         }
       ],
       "implementation": [
@@ -836,7 +841,12 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/components/sales-delivery-link.tsx",
-        "src/components/projects-screens.tsx"
+        "src/components/projects-screens.tsx",
+        "src/components/project-baselines.tsx",
+        "src/components/project-task-panel.tsx",
+        "src/projects/baseline-model.ts",
+        "src/app/projects-gantt.css",
+        "docs/testing/evidence/project-baselines/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
@@ -846,7 +856,8 @@
       "specification": "docs/design/development/components/gantt.md",
       "used_on": [
         "route:/projects",
-        "route:/projects/programme"
+        "route:/projects/programme",
+        "route:/projects/[id]"
       ],
       "desktop": "Use Week/Month/Fit, owner and issue filters, group collapse, display options and list mode. The fixed reference date is 23 September 2026.",
       "mobile": "Inspect the actual list fallback, timeline scroll, long task titles and resize controls at phone width.",
@@ -866,6 +877,14 @@
           "expected": "Keep the schedule visible and operable on desktop and phone while exposing Sales provenance on demand.",
           "actual": "LC-16 replaces an initially failed sibling-panel layout with an explicit Sales handovers dialog. Final desktop/phone host verification passes, including Escape and return focus; paired design review remains pending.",
           "action": "Retain failure evidence, verify schedule and dialog at both viewports, then seek paired review against a matching new-state reference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "gantt-baseline-review",
+          "expected": "PJ-03 planning workspace opens a labelled comparison dialog while preserving the Gantt and its original r10 reference.",
+          "actual": "Baseline dialog and successor preview are new compositions without a matching issued mockup. Functional evidence is separate; paired visual acceptance pending.",
+          "action": "Review desktop/mobile host evidence and accept or refine the proposed addition.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
