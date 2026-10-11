@@ -49,3 +49,7 @@ Add /admin/access/roles and /admin/access/[id]/roles with GET-only APIs. Require
 Changing any selector clears the result. A read error hides prior results; denied/working-company responses hide person and form context. Retry after those refusals reloads context and requires an explicit new comparison. Per-capability links preselect Person access and still require a fresh eligibility check. No migration, seed, grant/identity/session/audit write, dependency, hosted configuration or deployment change.
 
 Use r20 Register / worklist and Record detail, existing PageHeader, SelectField, Button, ReadState, Status and Stamp. Separate card pages adapt the retained role catalogue and inspector; owner visual acceptance is pending. Incoming: exact retained proposal and actual scoped grants. Outgoing: capability holder inspection and fresh person explanation. Preserve NFR-01–NFR-12, CRM-08, FIN-06 and the unresolved operational D-020 matrix. Teams, controlled access changes/independent approval and review campaigns remain subsequent work.
+
+## Request and independent-review continuation — 11 October 2026
+
+The [access-change request decision](access-change-requests.md) adopts local synthetic single-add submission and independent decision. Approved does not apply grants. Earlier read-only delivery boundaries remain historical; teams, apply and campaigns remain subsequent work.

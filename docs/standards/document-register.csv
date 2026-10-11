@@ -526,3 +526,5 @@ PPO-AD01-NATIVE-DEC,AD-01 native access inspection,docs/decisions/access-review-
 PPO-AD01-NATIVE-EVID,AD-01 native access inspection evidence,docs/testing/evidence/access-inspection/README.md,,Verification in progress; acceptance separate,Dean Fiedler,0e1045903ce335020abf8efd11b09154345c5013,,,git,
 PPO-AD01-CATALOGUE-EVID,AD-01 capability catalogue evidence,docs/testing/evidence/access-capabilities/README.md,,Local verification recorded; owner acceptance separate,Dean Fiedler,7ef617f949c82a69e758058f9dac51507712ef17,,,git,
 PPO-AD01-ROLES-EVID,AD-01 proposed-role comparison evidence,docs/testing/evidence/access-roles/README.md,,Local verification recorded; owner acceptance separate,Dean Fiedler,27863308e52fb35a78f34f43eb051194c34b06ba,,,git,
+PPO-AD01-REQUESTS-DEC,AD-01 access-change requests,docs/decisions/access-change-requests.md,,Implementation decision; owner acceptance pending,Dean Fiedler,35435a34bb642dcbf64832a28c7599a8224f4c2d,,,git,
+PPO-AD01-REQUESTS-EVID,AD-01 access-request evidence,docs/testing/evidence/access-requests/README.md,,Verification in progress; owner acceptance separate,Dean Fiedler,35435a34bb642dcbf64832a28c7599a8224f4c2d,,,git,

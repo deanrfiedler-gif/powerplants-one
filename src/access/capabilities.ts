@@ -18,6 +18,8 @@ export const capabilityLabels = {
   "acceptance.technical": "Accept exact technical applicability",
   "activity.edit": "Create and complete activities",
   "activity.read": "Read activities",
+  "admin.access.propose": "Submit local synthetic access requests",
+  "admin.access.approve": "Independently decide local synthetic access requests",
   "admin.access.read":
     "Inspect workspace identities and exact permission grants",
   "crm.lead.convert": "Convert leads",

@@ -1,4 +1,4 @@
-import { accessInspectionSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, accessRequestSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -517,7 +517,7 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations WHERE version>58 ORDER BY version")).map(r => r.version),
-    [59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78],
+    [59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79],
   );
   const after = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
     ids = new Set(grants.map((g) => g.id));
@@ -529,9 +529,9 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
     gs.map(({ id: _, ...g }) => JSON.stringify(g)).sort();
   assert.deepEqual(
     sorted(after.filter((g) => !ids.has(g.id))),
-    sorted([...quotationReleaseSeedGrants(grants), ...accessInspectionSeedGrants(grants)]),
+    sorted([...quotationReleaseSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...accessRequestSeedGrants(grants)]),
   );
-  assert.equal(after.length - grants.length, 14);
+  assert.equal(after.length - grants.length, 17);
   assert.equal(
     (await rows("SELECT id FROM ppo.users")).length - users.length,
     2,

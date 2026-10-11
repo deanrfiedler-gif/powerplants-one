@@ -118,6 +118,11 @@
           "id": "ad01-role-host",
           "label": "Proposed-role comparison host",
           "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request and independent decision",
+          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -292,7 +297,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -432,6 +439,14 @@
           "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
           "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
           "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-requests",
+          "expected": "Paired native request/review comparison across desktop and phone.",
+          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1073,6 +1088,11 @@
           "id": "ad01-role-host",
           "label": "Proposed-role comparison host",
           "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request and independent decision",
+          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -1220,7 +1240,9 @@
         "route:/admin/access/[id]",
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1352,6 +1374,14 @@
           "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
           "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
           "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-ad01-requests",
+          "expected": "Paired native request/review comparison across desktop and phone.",
+          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2172,6 +2202,11 @@
           "id": "ad01-role-host",
           "label": "Proposed-role comparison host",
           "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request and independent decision",
+          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2313,7 +2348,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -2439,6 +2476,14 @@
           "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-requests",
+          "expected": "Paired native request/review comparison across desktop and phone.",
+          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -2472,6 +2517,11 @@
           "id": "ad01-role-host",
           "label": "Proposed-role comparison host",
           "description": "tests/browser/access-roles.spec.ts: retained proposal/draft difference, scoped match/refusal, changed selection, fresh explanation handover, unavailable retry and denied/working-company context clearing. Database fixtures prove actual authority, expiry, isolation and unchanged state. Host fixture, not an isolated renderer."
+        },
+        {
+          "id": "ad01-request-host",
+          "label": "Access request and independent decision",
+          "description": "tests/browser/access-requests.spec.ts: durable single-add submission, named reviewer, exact scope, Return/Approved without grant changes, unchanged-operation recovery, stale and denied state. Host fixture; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2552,7 +2602,9 @@
         "route:/admin/access/[id]",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -2620,6 +2672,14 @@
           "expected": "Paired native proposed-role catalogue and comparison review across desktop and phone widths.",
           "actual": "Shared controls reused; separate pages/cards adapt the retained inspector. Accepted native mockups and owner/device acceptance pending.",
           "action": "Inspect source-bound native/reference captures and exact host states; preserve policy and permission boundaries.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-ad01-requests",
+          "expected": "Paired native request/review comparison across desktop and phone.",
+          "actual": "Existing controls reused; separate form and detail adapt the retained inspector. Owner/device review pending.",
+          "action": "Review source-bound captures and host recovery/authority states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

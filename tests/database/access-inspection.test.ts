@@ -59,8 +59,8 @@ test("AD01-01 populated 0077 upgrade preserves identities and grants; reseed add
   const ledger = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  await migrate();
-  await seed();
+  await migrate(78);
+  await seed(78);
   const upgraded = await rows(
     "SELECT * FROM ppo.permission_grants ORDER BY id",
   );
@@ -85,8 +85,8 @@ test("AD01-01 populated 0077 upgrade preserves identities and grants; reseed add
     next.filter((r) => r.version > 77).map((r) => r.version),
     [78],
   );
-  await migrate();
-  await seed();
+  await migrate(78);
+  await seed(78);
   assert.deepEqual(
     await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
     upgraded,
@@ -431,7 +431,7 @@ test("AD01-03 capability catalogue and holders preserve workspace authority and 
         code("InvalidFilter"),
       );
       await assert.rejects(
-        accessCapability(systems, "admin.access.approve"),
+        accessCapability(systems, "admin.access.review"),
         code("NotFound"),
       );
       await assert.rejects(

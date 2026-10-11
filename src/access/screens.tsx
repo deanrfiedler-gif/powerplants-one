@@ -55,8 +55,8 @@ type Detail = {
 function InspectionBoundary() {
   return (
     <p className="callout">
-      Inspect current access and compare proposed role bundles. Teams, access
-      changes and review campaigns are not yet available here. Grant inspection
+      Inspect current access and compare proposed role bundles. Local synthetic requests can be independently reviewed; applying changes, teams
+      and review campaigns remain subsequent work. Grant inspection
       does not approve a business action.
     </p>
   );
@@ -79,6 +79,7 @@ export function AccessPeopleScreen() {
         description="Inspect identities and their exact permission grants in this workspace."
       />
       <InspectionBoundary />
+      <p><Link href="/admin/access/requests">Access-change requests</Link></p>
       <p>
         <Link href="/admin/access/roles">Browse proposed role bundles</Link>
       </p>
@@ -250,6 +251,7 @@ function PersonDetail({
       </p>
       <Status value={data.person.active ? "Active" : "Inactive"} />
       <InspectionBoundary />
+      <p><Link href="/admin/access/requests">Access-change requests</Link></p>
       <p>
         <Link href="/admin/access/capabilities">
           Browse the capability catalogue

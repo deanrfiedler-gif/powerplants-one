@@ -30391,7 +30391,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing."
+            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing.",
+            "Access-change requests now supports local synthetic single-add submission and independent review. Approval never applies grants. Other retained change/campaign controls remain proposed."
           ],
           "steps": [
             "Open Users and access under More, Administration and support.",
@@ -30597,7 +30598,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -74551,7 +74554,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "sections": [
         {
@@ -74579,7 +74584,8 @@
           "title": "Inspect access",
           "paragraphs": [
             "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility.",
-            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing."
+            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing.",
+            "Access-change requests now supports local synthetic single-add submission and independent review. Approval never applies grants. Other retained change/campaign controls remain proposed."
           ],
           "steps": [],
           "rows": [],
@@ -74705,7 +74711,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "sections": [
         {
@@ -74733,7 +74741,8 @@
           "title": "Inspect access",
           "paragraphs": [
             "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility.",
-            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing."
+            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing.",
+            "Access-change requests now supports local synthetic single-add submission and independent review. Approval never applies grants. Other retained change/campaign controls remain proposed."
           ],
           "steps": [],
           "rows": [],
@@ -75451,6 +75460,308 @@
       ],
       "prepared_at": "2026-10-11",
       "runtime_evidence": "See docs/testing/evidence/access-roles/README.md; owner review pending"
+    },
+    {
+      "guide_key": "guide.route-admin-access-requests-id",
+      "entry_key": "route:/admin/access/requests/[id]",
+      "title": "Access request",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native local synthetic request and independent decision",
+      "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
+      "related_entry_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/requests"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Inspect the exact proposal and record an independent decision without changing grants."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Local synthetic mode only. Clear the working company. Current Workspace admin.access.read is required; submission also requires admin.access.propose and decisions require admin.access.approve. Systems and Scheduling policy reviewer have explicit fixture duties; names confer no authority."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Submit or review a request",
+          "paragraphs": [
+            "From Users and access choose Access-change requests. Systems can submit a proposal; switch to Scheduling policy reviewer through the existing account identity control to inspect and decide it."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The queue uses one-add proposal fields followed by state-filtered saved cards and pagination. The detail page presents the immutable scope, dates, reason, named parties and saved history before any decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Affected person, independent reviewer, capability, scope, future UTC start and 10–1000 character reason are required. Company is required for Company/Site scope; Site must belong to it. End is optional and must follow start. All administrative capabilities and email.connect are excluded."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Submit for independent review saves Submitted version 1. The named reviewer chooses Return for correction or Approve proposal only, enters a reason and selects Record decision. Refresh request and history reads the saved version. Returned proposals require a new corrected request."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Submission and decision persist exact audit-linked evidence and an actor-bound receipt. Approved means reviewed, not effective. There is no grant apply, user editing, role assignment, notification or business handover."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Submitted can be decided once at its exact version. Approved and Returned are retained terminal states in this increment. Existing grants including expired ones prevent duplicate additions; Submitted/Approved requests reserve the same exact grant key. Approval rechecks current subject, scope, dates and absence of a grant."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Systems proposes pack.prepare for SYN Site observer at Company A / SYN-A, with a future UTC start and named Scheduling policy reviewer. The reviewer can Return it with a correction reason. Neither action changes the subject’s effective grants."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "A lost response retains the exact operation in this tab and disables new action. Check original result reads the actor-bound receipt; Retry unchanged action resends the same operation and payload. Reload in the same tab recovers it. Stale version requires refreshing the saved request. Current authority is checked again; a missing receipt is not proof that saving failed."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Shared labelled fields and buttons support keyboard operation without drag. At 390 and 320 CSS px cards and controls stack and identifiers wrap. This online workflow has same-tab recovery, not offline queuing. Actual device, zoom and screen-reader acceptance remain pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the access-change request decision, retained AD-01 HTML, native access guide and execution evidence. Exact request UUIDs are used; the deferred ACR reference type has not been allocated."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations will not grant visual approval."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-11",
+      "runtime_evidence": "See docs/testing/evidence/access-requests/README.md; owner acceptance pending"
+    },
+    {
+      "guide_key": "guide.route-admin-access-requests",
+      "entry_key": "route:/admin/access/requests",
+      "title": "Access-change requests",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native local synthetic request and independent decision",
+      "source_commit": "35435a34bb642dcbf64832a28c7599a8224f4c2d",
+      "related_entry_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/requests/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Submit and inspect durable single-add access proposals for independent review."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Local synthetic mode only. Clear the working company. Current Workspace admin.access.read is required; submission also requires admin.access.propose and decisions require admin.access.approve. Systems and Scheduling policy reviewer have explicit fixture duties; names confer no authority."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Submit or review a request",
+          "paragraphs": [
+            "From Users and access choose Access-change requests. Systems can submit a proposal; switch to Scheduling policy reviewer through the existing account identity control to inspect and decide it."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The queue uses one-add proposal fields followed by state-filtered saved cards and pagination. The detail page presents the immutable scope, dates, reason, named parties and saved history before any decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Affected person, independent reviewer, capability, scope, future UTC start and 10–1000 character reason are required. Company is required for Company/Site scope; Site must belong to it. End is optional and must follow start. All administrative capabilities and email.connect are excluded."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Submit for independent review saves Submitted version 1. The named reviewer chooses Return for correction or Approve proposal only, enters a reason and selects Record decision. Refresh request and history reads the saved version. Returned proposals require a new corrected request."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Submission and decision persist exact audit-linked evidence and an actor-bound receipt. Approved means reviewed, not effective. There is no grant apply, user editing, role assignment, notification or business handover."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Submitted can be decided once at its exact version. Approved and Returned are retained terminal states in this increment. Existing grants including expired ones prevent duplicate additions; Submitted/Approved requests reserve the same exact grant key. Approval rechecks current subject, scope, dates and absence of a grant."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Systems proposes pack.prepare for SYN Site observer at Company A / SYN-A, with a future UTC start and named Scheduling policy reviewer. The reviewer can Return it with a correction reason. Neither action changes the subject’s effective grants."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "A lost response retains the exact operation in this tab and disables new action. Check original result reads the actor-bound receipt; Retry unchanged action resends the same operation and payload. Reload in the same tab recovers it. Stale version requires refreshing the saved request. Current authority is checked again; a missing receipt is not proof that saving failed."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Shared labelled fields and buttons support keyboard operation without drag. At 390 and 320 CSS px cards and controls stack and identifiers wrap. This online workflow has same-tab recovery, not offline queuing. Actual device, zoom and screen-reader acceptance remain pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the access-change request decision, retained AD-01 HTML, native access guide and execution evidence. Exact request UUIDs are used; the deferred ACR reference type has not been allocated."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Owner acceptance, D-020 operational policy and deployment remain separate. Accepted native/mobile mockup images are missing; source-bound implementation/reference observations will not grant visual approval."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-11",
+      "runtime_evidence": "See docs/testing/evidence/access-requests/README.md; owner acceptance pending"
     }
   ]
 }

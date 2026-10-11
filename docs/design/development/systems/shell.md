@@ -126,3 +126,5 @@ Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-lo
 The existing Users and access destination owns the capability catalogue, capability grants and person routes. Specific page metadata precedes the generic access prefix, so the breadcrumb and browser title show the current task. The catalogue uses the register header variant; the breadcrumb supplies its visible page name. The destination permission and More entry are unchanged. Verify through the native AD-01 browser journey and navigation safety tests; no shell review is granted by this edit.
 
 AD-01 proposed roles and person comparison keep the existing access destination with explicit task-specific breadcrumb labels. No rail or More-menu item is added. The new routes retain scope AD-01 and current server inspection authority.
+
+AD-01 requests retain the Users and access destination with exact Access-change requests and Access request breadcrumb aliases, before the generic person route. No new menu item is added.

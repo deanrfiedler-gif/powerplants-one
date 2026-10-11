@@ -45,4 +45,13 @@ test("AD-01 role routes retain the access destination with task-specific titles"
     "Compare proposed role bundle",
   );
   assert.equal(pageForPath("/admin/access/roles")?.id, "access");
+  assert.equal(
+    pageForPath("/admin/access/requests")?.label,
+    "Access-change requests",
+  );
+  assert.equal(
+    pageForPath("/admin/access/requests/30000000-0000-4000-8000-000000000005")
+      ?.label,
+    "Access request",
+  );
 });

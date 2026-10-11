@@ -18,6 +18,8 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    'admin.access.propose':'Submit local synthetic access requests',
+    'admin.access.approve':'Independently decide local synthetic access requests',
     'admin.access.read':'Inspect workspace identities and exact permission grants',
     'maintenance.read':'Read permitted agreements and maintenance',
     'maintenance.manage':'Maintain agreements plans and obligations',
@@ -95,7 +97,7 @@
   const isCap=k=>CAPS.keys.includes(k);
 
   /* Proposed write/review capabilities remain outside the contract; native read inspection is implemented. */
-  const ADMIN_CAPS=['admin.access.propose','admin.access.approve','admin.access.review'];
+  const ADMIN_CAPS=['admin.access.review'];
   const roles={
     admin:{person:D(1),title:'Access administrator',admin:['admin.access.read','admin.access.propose']},
     approver:{person:D(2),title:'Access approver (platform / data owner)',admin:['admin.access.read','admin.access.approve','admin.access.review']},
@@ -323,7 +325,7 @@
     must(op&&['add','validity','scope','revoke'].includes(op.kind),'Choose an operation.');
     const validTo=op.validTo?iso(op.validTo):null;
     if(op.kind==='add'){
-      must(isCap(op.capability),'Choose a capability from the application contract.');
+      must(isCap(op.capability)&&!op.capability.startsWith('admin.'),'Choose a business capability from the application contract.');
       must(!(op.capability==='email.connect'&&subject.issuer!=='PPO-EntraDemo'),'email.connect exists only on the hosted demo track.');
       checkScope(s,op);
       const key=scopeKey({userId:subject.id,...op});

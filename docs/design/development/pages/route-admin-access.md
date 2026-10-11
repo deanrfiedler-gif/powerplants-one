@@ -33,3 +33,7 @@ Browse the capability catalogue from people/person access to inspect permissions
 ## Proposed-role continuation
 
 Users and access links to the seven proposed bundles; Person access links to the exact company/site comparison. See the [role comparison contract](route-admin-access-id-roles.md) and [evidence](../../../testing/evidence/access-roles/README.md). This implements inspection only; teams, assignments, access-changing commands and campaigns remain open. Existing captures retain their original source and do not establish review of the new links.
+
+## Request and independent-review continuation
+
+Local synthetic single-add proposals can be submitted and independently decided from [Access-change requests](route-admin-access-requests.md). Approved remains ineffective: apply, teams and campaigns remain open. Existing captures retain their original source; no acceptance of the new handover is inferred.

@@ -24,7 +24,7 @@ function identifier(value: string) {
   return value;
 }
 
-async function requireAccessInspection(c: QueryClient, p: Principal) {
+export async function requireAccessInspection(c: QueryClient, p: Principal) {
   const result = await c.query(
     `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u
        ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)

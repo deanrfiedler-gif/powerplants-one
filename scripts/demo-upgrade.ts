@@ -236,7 +236,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0078 extends the grant catalogue for read-only AD-01 inspection. Seed 78 adds
   // exactly one existing local Systems grant, no users or hosted grants. Runtime
   // users/grants remain read-only; no access-changing command or table is added.
-  if (latestMigrationVersion !== 78) throw Error("Review the existing-demo upgrade for this release.");
+  // 0079 adds request/decision evidence only. Its commands explicitly refuse hosted
+  // mode; seed 79 adds three duties to existing local fixtures only, no users.
+  // Runtime users/grants remain read-only. No external task or grant apply exists.
+  if (latestMigrationVersion !== 79) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

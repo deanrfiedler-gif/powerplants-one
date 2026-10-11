@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## AD-01 access requests and independent decisions — 11 October 2026
+
+Dean's next-task instruction continues from PR #414 on `codex/ad01-access-requests`. The [decision](decisions/access-change-requests.md) adds local synthetic single-add proposals, named independent review, durable audit evidence and unchanged-operation recovery. Migration/seed 0079 adds three explicit duties to two existing local identities; no new user or hosted duty. Approval never changes grants. [Execution evidence](testing/evidence/access-requests/README.md) records checks and limits; apply, teams, campaigns and owner acceptance remain open.
+
 ## AD-01 proposed-role comparison — 11 October 2026
 
 Dean's next-task instruction continues AD-01 from PR #413 on `codex/ad01-role-comparison`, integrating main `ba1f4e3`. The [native decision](decisions/access-review-native.md#proposed-role-comparison-continuation--11-october-2026) adds seven retained role proposals, the exact Service coordinator draft delta and person comparison at a selected company/site. Matching grants never assign a role or recommend an access expansion. No migration, seed or access mutation is introduced. The [execution record](testing/evidence/access-roles/README.md) separates current verification from visual/owner acceptance and deployment. Teams, controlled access changes and campaigns remain open. Local build/types, 22 database checks, 24 browser checks, 18 source/navigation checks, ESLint and documentation/register assurance pass. Fifteen source-bound captures record the proposed layout adaptation; owner review and deployment remain separate.

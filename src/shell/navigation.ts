@@ -241,6 +241,8 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (path === "/admin/access/requests") return { ...destination("access"), label: "Access-change requests" };
+  if (/^\/admin\/access\/requests\/[^/]+$/.test(path)) return { ...destination("access"), label: "Access request" };
   if (path === "/admin/access/roles") return { ...destination("access"), label: "Proposed role bundles" };
   if (/^\/admin\/access\/[^/]+\/roles$/.test(path)) return { ...destination("access"), label: "Compare proposed role bundle" };
   if (path === "/admin/access/capabilities") return { ...destination("access"), label: "Capability catalogue" };

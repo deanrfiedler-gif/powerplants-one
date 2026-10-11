@@ -5088,7 +5088,7 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Native people, capabilities, grant explanations and proposed-role comparison. Teams, access changes and campaigns remain open.",
+      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
       "path": "/admin/access",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -5097,7 +5097,9 @@
         "src/access/catalogue-screens.tsx",
         "src/access/capabilities.ts",
         "src/access/roles.ts",
-        "src/access/role-screens.tsx"
+        "src/access/role-screens.tsx",
+        "src/access/request-screens.tsx",
+        "src/access/requests.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5117,7 +5119,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native inspection and proposed-role comparison implemented; see separate execution ledgers. Teams, changes, campaigns and owner acceptance remain open.",
+      "functional_status": "Native inspection, comparison and request/decision present; separate execution ledgers. Apply, teams, campaigns and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5129,7 +5131,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ],
       "reviewer": null
     },
@@ -12846,7 +12850,7 @@
       "title": "Person access and grant explanation",
       "kind": "route",
       "module": "AD",
-      "summary": "Native people, capabilities, grant explanations and proposed-role comparison. Teams, access changes and campaigns remain open.",
+      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
       "path": "/admin/access/[id]",
       "source_paths": [
         "src/app/(business)/admin/access/[id]/page.tsx",
@@ -12882,7 +12886,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ]
     },
     {
@@ -12890,7 +12896,7 @@
       "title": "Users and access",
       "kind": "route",
       "module": "AD",
-      "summary": "Native people, capabilities, grant explanations and proposed-role comparison. Teams, access changes and campaigns remain open.",
+      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
       "path": "/admin/access",
       "source_paths": [
         "src/app/(business)/admin/access/page.tsx",
@@ -12926,7 +12932,9 @@
         "route:/admin/access/capabilities",
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/roles",
-        "route:/admin/access/[id]/roles"
+        "route:/admin/access/[id]/roles",
+        "route:/admin/access/requests",
+        "route:/admin/access/requests/[id]"
       ]
     },
     {
@@ -13103,6 +13111,82 @@
         "route:/admin/access/[id]",
         "route:/admin/access/capabilities",
         "route:/admin/access/[id]/roles"
+      ]
+    },
+    {
+      "key": "route:/admin/access/requests/[id]",
+      "title": "Access request",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Local synthetic single-capability proposal and independent decision; approval does not change grants.",
+      "path": "/admin/access/requests/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/access/requests/[id]/page.tsx",
+        "src/access/request-screens.tsx",
+        "src/access/requests.ts"
+      ],
+      "guide_key": "guide.route-admin-access-requests-id",
+      "design_path": "docs/design/development/pages/route-admin-access-requests-id.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-change-requests.md",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation present; execution and limits in access-requests evidence ledger.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/requests"
+      ]
+    },
+    {
+      "key": "route:/admin/access/requests",
+      "title": "Access-change requests",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Local synthetic single-capability proposal and independent decision; approval does not change grants.",
+      "path": "/admin/access/requests",
+      "source_paths": [
+        "src/app/(business)/admin/access/requests/page.tsx",
+        "src/access/request-screens.tsx",
+        "src/access/requests.ts"
+      ],
+      "guide_key": "guide.route-admin-access-requests",
+      "design_path": "docs/design/development/pages/route-admin-access-requests.md",
+      "html_path": "docs/design/access-review/access-review.html",
+      "image_paths": [],
+      "dependencies": [
+        "docs/decisions/access-change-requests.md",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/platform/permissions.ts",
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation present; execution and limits in access-requests evidence ledger.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 8,
+      "related_keys": [
+        "scope:AD-01",
+        "route:/admin/access",
+        "route:/admin/access/requests/[id]"
       ]
     }
   ]

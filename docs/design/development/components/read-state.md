@@ -154,3 +154,7 @@ The catalogue and holder routes reuse existing controls without changing their e
 ## AD-01 proposed-role consumers
 
 The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+
+## AD-01 request consumers
+
+The local request queue/form and independent decision record reuse this control. Host fixture: tests/browser/access-requests.spec.ts, covering exact proposal, Return/Approved, unchanged-operation recovery and authority refusals. No isolated renderer/export change. See [request evidence](../../../testing/evidence/access-requests/README.md); owner/device/zoom/screen-reader review is pending.
