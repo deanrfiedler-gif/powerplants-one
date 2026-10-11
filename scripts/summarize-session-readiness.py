@@ -69,7 +69,7 @@ for root in roots:
                 "route_phase_count": sum(r["event"] == "read-phase" for r in rows), "diagnostic_cap_reached": any(r["event"] == "diagnostic-cap-reached" for r in rows), "pools": pools, "http_failures": failures,
                 "runtime": {key: distribution([r[key] for r in runtime if key in r]) for key in ["interval_ms", "event_loop_active_ms", "event_loop_idle_ms", "cpu_user_ms", "cpu_system_ms", "system_free_bytes"]}})
     runs.append(run)
-    for name in ["run.json", "results.json", "customer-client-manifest.json", "customer-record-manifest.json", "gateway.jsonl", "assets.jsonl", "asset-release.json", "fixture-after.json", "desktop-directory.png", "desktop-record.png", "phone-directory.png", "phone-record.png", *sorted(p.name for p in root.glob("asset-failure-*.json")), *sorted(p.name for p in root.glob("asset-release-*.json"))]:
+    for name in ["run.json", "results.json", "customer-client-manifest.json", "customer-record-manifest.json", "gateway.jsonl", "assets.jsonl", "asset-release.json", "packet-network.json", "fixture-after.json", "desktop-directory.png", "desktop-record.png", "phone-directory.png", "phone-record.png", *sorted(p.name for p in root.glob("asset-failure-*.json")), *sorted(p.name for p in root.glob("asset-release-*.json"))]:
         source = root / name
         if not source.exists():
             continue
