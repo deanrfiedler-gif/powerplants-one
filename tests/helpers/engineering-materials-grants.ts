@@ -103,7 +103,7 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
   const maintenance=maintenanceSeedGrants(original);
-  const expected=[...accessTeamSeedGrants(original),...accessApplicationSeedGrants(original),...accessRequestSeedGrants(original),...accessInspectionSeedGrants(original),...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
+  const expected=[...accessReviewSeedGrants(original),...accessTeamSeedGrants(original),...accessApplicationSeedGrants(original),...accessRequestSeedGrants(original),...accessInspectionSeedGrants(original),...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -199,4 +199,9 @@ export function accessApplicationSeedGrants(original: Grant[]): Grant[] {
 // Seed 83: one existing-local Systems duty; team membership grants no authority.
 export function accessTeamSeedGrants(original: Grant[]): Grant[] {
   return accessInspectionSeedGrants(original).map(g => ({ ...g, capability: "admin.access.team.create" }));
+}
+
+// Seed 84: one explicit local independent-attestation duty, no user or hosted grant.
+export function accessReviewSeedGrants(original: Grant[]): Grant[] {
+  return accessInspectionSeedGrants(original).map(g => ({ ...g, capability: "admin.access.review.attest" }));
 }

@@ -20,7 +20,7 @@ import {
   decideAccessRequest,
   applyAccessRequest,
 } from "../../src/access/requests";
-import { accessApplicationSeedGrants, accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -191,7 +191,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   // Migration/seed numbering can move; the original grant identity stays fixed.
   assert.deepEqual(
     current.filter((g) => !ids.has(g.id)),
-    [...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
+    [...accessReviewSeedGrants(grants).map(g => ({ ...g, id: "ad010084-0000-4000-8000-000000000001" })), ...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
       ...g,
       id: "ad010080-0000-4000-8000-000000000001",
     }))].sort((a,b) => String(a.id).localeCompare(String(b.id))),
@@ -206,7 +206,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     next.filter((r) => r.version > 79).map((r) => r.version),
-    [80, 81, 82, 83],
+    [80, 81, 82, 83, 84],
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version <= 79),
@@ -214,7 +214,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version > 79).map((r) => r.version),
-    [80, 83],
+    [80, 83, 84],
   );
   for (const f of [approved, returned, submitted])
     assert.deepEqual(

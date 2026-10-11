@@ -9,6 +9,7 @@ export type Capability =
   | "admin.access.propose"
   | "admin.access.approve"
   | "admin.access.apply"
+  | "admin.access.review.attest"
   | "admin.access.team.create"
   | "maintenance.read"
   | "maintenance.manage"

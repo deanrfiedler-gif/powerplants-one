@@ -18,7 +18,7 @@ import {
   localTeamContext,
 } from "../../src/access/local-teams";
 import { submitAccessRequest } from "../../src/access/requests";
-import { accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
 after(closeDatabase);
@@ -113,19 +113,19 @@ test(
     );
     assert.deepEqual(
       next.filter((g) => !ids.has(g.id)),
-      accessTeamSeedGrants(grants).map((g) => ({
+      [...accessReviewSeedGrants(grants).map(g => ({...g,id:"ad010084-0000-4000-8000-000000000001"})),...accessTeamSeedGrants(grants).map((g) => ({
         ...g,
         id: "ad010082-0000-4000-8000-000000000001",
-      })),
+      }))].sort((a,b)=>a.id.localeCompare(b.id)),
     );
     const newLedger = await rows(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
       ),
       newSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
-    assert.deepEqual(newLedger.slice(0, -1), ledger);
-    assert.equal(newLedger.at(-1).version, 83);
-    assert.deepEqual(newSeeds.slice(0, -1), seeds);
-    assert.equal(newSeeds.at(-1).version, 83);
+    assert.deepEqual(newLedger.filter(r=>r.version<=82), ledger);
+    assert.deepEqual(newLedger.filter(r=>r.version>82).map(r=>r.version), [83,84]);
+    assert.deepEqual(newSeeds.filter(r=>r.version<=82), seeds);
+    assert.deepEqual(newSeeds.filter(r=>r.version>82).map(r=>r.version), [83,84]);
     assert.deepEqual(await localTeams(creator), { items: [], has_more: false });
     await migrate();
     await seed();

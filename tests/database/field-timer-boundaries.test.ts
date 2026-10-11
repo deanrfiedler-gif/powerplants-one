@@ -1,4 +1,4 @@
-import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
 import { productsSeedGrants, maintenanceSeedGrants, estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
@@ -243,7 +243,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
   );
   assert.deepEqual(
     migrationsAfter.slice(migrationsBefore.length).map((row) => row.version),
-    [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83],
+    [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84],
   );
   await seed();
   await migrate();
@@ -274,7 +274,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
         .sort();
     assert.deepEqual(
       shape(additions),
-      shape([...accessTeamSeedGrants(before[i].map((x) => x.row)), ...accessApplicationSeedGrants(before[i].map((x) => x.row)), ...accessRequestSeedGrants(before[i].map((x) => x.row)),...accessInspectionSeedGrants(before[i].map((x) => x.row)),...maintenanceSeedGrants(before[i].map((x) => x.row)),...productsSeedGrants(before[i].map((x) => x.row)),...schedulingPolicySeedGrants(before[i].map((x) => x.row)),...incidentSeedGrants(before[i].map((x) => x.row)),...estimateReviewSeedGrants(before[i].map((x) => x.row)),...quotationReleaseSeedGrants(before[i].map((x) => x.row))]),
+      shape([...accessReviewSeedGrants(before[i].map((x) => x.row)), ...accessTeamSeedGrants(before[i].map((x) => x.row)), ...accessApplicationSeedGrants(before[i].map((x) => x.row)), ...accessRequestSeedGrants(before[i].map((x) => x.row)),...accessInspectionSeedGrants(before[i].map((x) => x.row)),...maintenanceSeedGrants(before[i].map((x) => x.row)),...productsSeedGrants(before[i].map((x) => x.row)),...schedulingPolicySeedGrants(before[i].map((x) => x.row)),...incidentSeedGrants(before[i].map((x) => x.row)),...estimateReviewSeedGrants(before[i].map((x) => x.row)),...quotationReleaseSeedGrants(before[i].map((x) => x.row))]),
     );
   }
   assert.equal(

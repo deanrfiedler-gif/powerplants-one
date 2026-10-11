@@ -20,7 +20,7 @@ import {
 } from "../../src/access/requests";
 import {
   accessRequestSeedGrants,
-  accessApplicationSeedGrants, accessTeamSeedGrants,
+  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants,
 } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -72,7 +72,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
     shape(afterGrants.filter((g) => !ids.has(g.id))),
     shape([
       ...accessRequestSeedGrants(grants),
-      ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants),
+      ...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants),
     ]),
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);
@@ -86,7 +86,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     next.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80, 81, 82, 83],
+    [79, 80, 81, 82, 83, 84],
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version <= 78),
@@ -94,7 +94,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80, 83],
+    [79, 80, 83, 84],
   );
   await migrate();
   await seed();

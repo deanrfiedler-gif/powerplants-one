@@ -18,6 +18,7 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    'admin.access.review.attest':'Record independent local single-grant Keep attestations',
     'admin.access.team.create':'Create local synthetic team records',
     'admin.access.apply':'Apply independently approved local synthetic access requests',
     'admin.access.propose':'Submit local synthetic access requests',
