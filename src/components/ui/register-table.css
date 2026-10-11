@@ -1,0 +1,337 @@
+/* The house register table (ADR-0051, group 2): EN-06's owner-refined register, made shared. White rows, a pale
+   grey 43px header with column rules, #EDF6E9 emphasis, #F8FAF7 hover (theme board r22 D23), flush to its pane.
+   The values are the register's own, so it looks the same in every workspace.
+
+   Specificity: every rule starts with :is(.ppo-register, #ppo-shared) or an equivalent root. No element carries the
+   id #ppo-shared. Inside :is() it gives each rule the weight of an id, so the register keeps its look against the
+   id-scoped element resets of the shared workspaces (`#ppo-… button { padding: 0 }` in my-work.css) and the global
+   element rules (`button:hover`). A module that must adjust the register on purpose uses its scope id with a class,
+   which still outranks these rules. */
+
+:is(.ppo-register, #ppo-shared) {
+  --ppo-register-ink: #242a37;
+  --ppo-register-text-secondary: #596779;
+  --ppo-register-muted: #667181;
+  --ppo-register-line: #e1e5eb;
+  --ppo-register-line-soft: #e9ecf1;
+  --ppo-register-header: #f4f5f7;
+  --ppo-register-hover: #f8faf7;
+  --ppo-register-emphasis: #edf6e9;
+  --ppo-register-surface: #fff;
+  flex: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  border-top: 1px solid var(--ppo-register-line);
+}
+:is(.ppo-register, #ppo-shared)[data-variant="panel"] {
+  border-top: 0;
+}
+:is(.ppo-register, #ppo-shared)[data-stale] {
+  opacity: 0.72;
+  transition: opacity 0.15s ease;
+}
+
+/* The table meets both edges of its pane: no exterior padding, margin, frame or radius. */
+:is(.ppo-register, #ppo-shared) .ppo-register-table {
+  width: 100%;
+  min-width: 860px;
+  margin: 0;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0;
+  table-layout: auto;
+  color: var(--ppo-register-ink);
+  font-size: 14px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+:is(.ppo-register, #ppo-shared)[data-variant="panel"] .ppo-register-table {
+  min-width: 720px;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Header: grey sentence-case labels with fine column rules. */
+:is(.ppo-register, #ppo-shared) th {
+  height: 43px;
+  padding: 0;
+  border-bottom: 1px solid var(--ppo-register-line);
+  border-right: 1px solid var(--ppo-register-line-soft);
+  background: var(--ppo-register-header);
+  color: var(--ppo-register-text-secondary);
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+}
+:is(.ppo-register, #ppo-shared) th:last-child {
+  border-right: 0;
+}
+:is(.ppo-register, #ppo-shared)[data-variant="panel"] th {
+  padding: 0 14px;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-sort {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  width: 100%;
+  height: 42px;
+  min-height: 0;
+  margin: 0;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 400;
+  text-align: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+/* A header that does not sort: the same position as a sort button's label, without the button. */
+:is(.ppo-register, #ppo-shared) .ppo-register-label {
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-sort:hover {
+  background: none;
+  color: inherit;
+}
+:is(.ppo-register, #ppo-shared) th[aria-sort] .ppo-register-sort::after {
+  content: "";
+  margin-left: 8px;
+  border: 4px solid transparent;
+}
+:is(.ppo-register, #ppo-shared) th[aria-sort="ascending"] .ppo-register-sort::after {
+  border-bottom-color: var(--ppo-register-text-secondary);
+  transform: translateY(-2px);
+}
+:is(.ppo-register, #ppo-shared) th[aria-sort="descending"] .ppo-register-sort::after {
+  border-top-color: var(--ppo-register-text-secondary);
+  transform: translateY(2px);
+}
+
+/* Body: white rows, light rules between rows and columns. */
+:is(.ppo-register, #ppo-shared) td {
+  height: 50px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--ppo-register-line-soft);
+  border-right: 1px solid var(--ppo-register-line-soft);
+  background: var(--ppo-register-surface);
+  vertical-align: middle;
+  line-height: 20px;
+}
+:is(.ppo-register, #ppo-shared)[data-variant="panel"] td {
+  height: 48px;
+}
+:is(.ppo-register, #ppo-shared) td:last-child {
+  border-right: 0;
+}
+:is(.ppo-register, #ppo-shared)[data-variant="register"] td:not(.ppo-register-wrap) {
+  white-space: nowrap;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-table[data-wide] .ppo-register-wrap {
+  min-width: 360px;
+}
+
+/* Rows. The host marks the inspected, selected and removed rows; inspecting and selecting are independent. */
+:is(.ppo-register, #ppo-shared)[data-variant="register"] tbody tr {
+  cursor: pointer;
+}
+:is(.ppo-register, #ppo-shared)[data-variant="panel"] tbody tr {
+  cursor: default;
+}
+:is(.ppo-register, #ppo-shared) tbody tr:hover td {
+  background: var(--ppo-register-hover);
+}
+:is(.ppo-register, #ppo-shared) tbody tr:is([data-inspected], [data-selected]) td {
+  background: var(--ppo-register-emphasis);
+}
+:is(.ppo-register, #ppo-shared) tbody tr[data-inspected] td:first-child {
+  box-shadow: inset 3px 0 0 var(--navy, #242a37);
+}
+:is(.ppo-register, #ppo-shared) tbody tr[data-removed] td {
+  color: var(--ppo-register-muted);
+}
+:is(.ppo-register, #ppo-shared) tbody tr:focus-within td {
+  background: var(--ppo-register-hover);
+}
+:is(.ppo-register, #ppo-shared) tbody tr[data-inspected]:focus-within td {
+  background: var(--ppo-register-emphasis);
+}
+
+/* Pinned columns: the selection checkbox, then the row's key (an identifier such as a line number). */
+:is(.ppo-register, #ppo-shared) :is(th, td).ppo-register-check {
+  width: 48px;
+  padding: 0 0 0 16px;
+  text-align: left;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+:is(.ppo-register, #ppo-shared) th.ppo-register-check {
+  z-index: 3;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-check input {
+  display: block;
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  margin: 0;
+  accent-color: var(--navy, #242a37);
+  cursor: pointer;
+}
+:is(.ppo-register, #ppo-shared) td.ppo-register-check {
+  border-right: 0;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-key {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-check + .ppo-register-key {
+  left: 48px;
+}
+:is(.ppo-register, #ppo-shared) th.ppo-register-key {
+  z-index: 3;
+}
+
+/* Cell content: the row's title opens it; a sub-line adds one fact in smaller grey words. */
+:is(.ppo-register, #ppo-shared) :is(a, button).ppo-register-row-title {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--navy, #242a37);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+:is(.ppo-register, #ppo-shared) :is(a, button).ppo-register-row-title:hover {
+  background: none;
+  color: var(--navy, #242a37);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-sub {
+  display: block;
+  color: var(--ppo-register-text-secondary);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+:is(.ppo-register, #ppo-shared) :is(.ppo-register-sort, .ppo-register-row-title, .ppo-register-check input):focus-visible {
+  outline: 2px solid var(--focus, #365d8b);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* No rows: say why and what would bring rows back. */
+:is(.ppo-register, #ppo-shared) .ppo-register-empty {
+  padding: 40px 20px;
+  color: var(--ppo-register-text-secondary);
+  text-align: center;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-empty strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ppo-register-ink);
+  font-size: 16px;
+}
+:is(.ppo-register, #ppo-shared) .ppo-register-empty p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Footer under the register: count, selection and paging. The extra class outranks the workspaces' footer reset
+   (`#ppo-… footer { display: block; padding: 0 }`, an id and an element). */
+:is(.ppo-register-foot, #ppo-shared).ppo-register-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 8px 8px 18px;
+  border: 0;
+  background: transparent;
+  color: #596779;
+  font-size: 14px;
+  text-align: inherit;
+}
+:is(.ppo-register-foot, #ppo-shared) .ppo-register-spacer {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* State chip: words first. A check only for a completed positive state, a warning only where someone must act. */
+:is(.ppo-register-chip, #ppo-shared) {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  padding: 3px 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: #f0f2f5;
+  color: #3d4757;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+:is(.ppo-register-chip, #ppo-shared).ppo-register-chip--positive {
+  background: #edf6e9;
+  color: #2f6b24;
+}
+:is(.ppo-register-chip, #ppo-shared).ppo-register-chip--attention {
+  background: #fdf1e2;
+  color: #a3510c;
+}
+:is(.ppo-register-chip, #ppo-shared).ppo-register-chip--negative {
+  background: #fdecec;
+  color: var(--danger, #993b2a);
+}
+.ppo-register-chip-icon {
+  display: contents;
+}
+/* Ties with a workspace's own icon size (`#ppo-… .mw-icon`); this file loads after the module stylesheets. */
+:is(.ppo-register-chip, #ppo-shared) .ppo-register-chip-icon > * {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  stroke-width: 2;
+}
+:is(.ppo-register-chip, #ppo-shared).ppo-register-chip--attention .ppo-register-chip-icon > * {
+  color: #d9792b;
+}
+
+@media (max-width: 780px) {
+  /* Phones scroll the whole row: only the checkbox stays pinned. */
+  :is(.ppo-register, #ppo-shared) .ppo-register-key {
+    position: static;
+  }
+}
