@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-11T22:00:29.5660157Z",
+  "application_port": 3094,
+  "application_stopped": true,
+  "postgres_port": 55494,
+  "postgres_stopped": true,
+  "remaining_listeners": 0,
+  "stores": "Preserved private synthetic data/configuration outside Git; reused integrated 0083 store without checksum conversion",
+  "scope": "Only verified task application listener and task PostgreSQL instance stopped"
+}

@@ -5127,7 +5127,10 @@
         "docs/testing/evidence/access-inspection/reference-320-person.png",
         "docs/testing/evidence/access-team-creation/native-1440-form.png",
         "docs/testing/evidence/access-team-creation/native-390-form.png",
-        "docs/testing/evidence/access-team-creation/native-320-form.png"
+        "docs/testing/evidence/access-team-creation/native-320-form.png",
+        "docs/testing/evidence/access-team-access/native-1440-member-access.png",
+        "docs/testing/evidence/access-team-access/native-390-member-access.png",
+        "docs/testing/evidence/access-team-access/native-320-member-access.png"
       ],
       "dependencies": [
         "docs/design/access-review/access-review.html",
@@ -5138,11 +5141,12 @@
         "src/components/ui/button.tsx",
         "docs/decisions/access-request-application.md",
         "docs/decisions/access-local-teams.md",
-        "docs/decisions/access-team-creation.md"
+        "docs/decisions/access-team-creation.md",
+        "docs/decisions/access-team-inspection-current.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native team creation: 51 integrated browser cases, with 21 creation cases rechecked after mobile ID refinement; 73 integrated database cases covered by passing runs, 48 HTTP permission checks and 19 selected units. See access-team-creation evidence for initial failures and exact source pins. Membership editing, campaigns and owner acceptance remain open.",
+      "functional_status": "Saved-team current access: 45 database cases covered by passing runs, 45 browser checks at three widths, 19 selected units with 2 component rechecks, final build/types/lint and documented assurance. Initial fixture/register failures retained. No membership authority or review attestation; owner acceptance remains open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13167,7 +13171,7 @@
       "title": "Proposed role bundles",
       "kind": "route",
       "module": "AD",
-      "summary": "Retained role/team proposals plus separately saved local team records, initial rosters and audit-linked creation history.",
+      "summary": "Retained proposals and immutable saved local rosters, with timestamped member grant counts, exact person access and creation history.",
       "path": "/admin/access/roles",
       "source_paths": [
         "src/app/(business)/admin/access/roles/page.tsx",
@@ -13209,7 +13213,13 @@
         "docs/testing/evidence/access-team-creation/native-320-form.png",
         "docs/testing/evidence/access-team-creation/native-320-pending.png",
         "docs/testing/evidence/access-team-creation/native-320-result.png",
-        "docs/testing/evidence/access-team-creation/native-320-roster.png"
+        "docs/testing/evidence/access-team-creation/native-320-roster.png",
+        "docs/testing/evidence/access-team-access/native-1440-member-access.png",
+        "docs/testing/evidence/access-team-access/native-1440-identity-limits.png",
+        "docs/testing/evidence/access-team-access/native-390-member-access.png",
+        "docs/testing/evidence/access-team-access/native-390-identity-limits.png",
+        "docs/testing/evidence/access-team-access/native-320-member-access.png",
+        "docs/testing/evidence/access-team-access/native-320-identity-limits.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
@@ -13219,11 +13229,12 @@
         "src/components/ui/button.tsx",
         "docs/decisions/access-team-inspection.md",
         "docs/decisions/access-local-teams.md",
-        "docs/decisions/access-team-creation.md"
+        "docs/decisions/access-team-creation.md",
+        "docs/decisions/access-team-inspection-current.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Native team creation: 51 integrated browser cases, with 21 creation cases rechecked after mobile ID refinement; 73 integrated database cases covered by passing runs, 48 HTTP permission checks and 19 selected units. See access-team-creation evidence for initial failures and exact source pins. Membership editing, campaigns and owner acceptance remain open.",
+      "functional_status": "Saved-team current access: 45 database cases covered by passing runs, 45 browser checks at three widths, 19 selected units with 2 component rechecks, final build/types/lint and documented assurance. Initial fixture/register failures retained. No membership authority or review attestation; owner acceptance remains open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
