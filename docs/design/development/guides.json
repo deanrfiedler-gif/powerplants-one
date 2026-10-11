@@ -75319,7 +75319,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native read-only role and team proposal inspection",
-      "source_commit": "27863308e52fb35a78f34f43eb051194c34b06ba",
+      "source_commit": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",

@@ -2,7 +2,7 @@
 
 Current increment: [AD-01 proposed team inspection](docs/decisions/access-team-inspection.md), separating the retained example rosters from current local identity records. Teams confer no access or routing authority. [Evidence](docs/testing/evidence/access-teams/README.md) separates verification and acceptance.
 
-Current work: [AD-01 requester withdrawal](docs/decisions/access-request-withdrawal.md), closing obsolete un-applied requests while preserving proposal, approval and existing access. [Execution evidence](docs/testing/evidence/access-withdrawal/README.md) separates local verification, CI and owner acceptance. No hosted grant authority or deployment.
+Previous increment: [AD-01 requester withdrawal](docs/decisions/access-request-withdrawal.md), closing obsolete un-applied requests while preserving proposal, approval and existing access. [Execution evidence](docs/testing/evidence/access-withdrawal/README.md) separates local verification, CI and owner acceptance. No hosted grant authority or deployment.
 
 Earlier performance increment: [bounded Customers first-load correction](docs/decisions/customer-first-load.md), based on merged main `dcec2cf` after #370–#373. The unchanged notification bell is separated from the full My Work workspace, reducing observed cold JavaScript transfer by 12.37%; local timing samples, regression checks and open performance obligations are in the [evidence](docs/testing/evidence/customer-first-load/README.md). CREMS remains historical background under the [independent PPO direction](docs/decisions/product-direction-quality.md). Verification, owner acceptance and deployment remain separate.
 

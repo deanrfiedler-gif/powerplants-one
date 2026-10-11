@@ -13109,7 +13109,12 @@
       "image_paths": [
         "docs/testing/evidence/access-roles/native-1440-roles.png",
         "docs/testing/evidence/access-roles/native-390-roles.png",
-        "docs/testing/evidence/access-roles/native-320-roles.png"
+        "docs/testing/evidence/access-roles/native-320-roles.png",
+        "docs/testing/evidence/access-teams/native-1440-teams.png",
+        "docs/testing/evidence/access-teams/native-390-teams.png",
+        "docs/testing/evidence/access-teams/native-390-finance.png",
+        "docs/testing/evidence/access-teams/native-320-teams.png",
+        "docs/testing/evidence/access-teams/native-320-finance.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
@@ -13121,7 +13126,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Team inspection validation in progress; prior role comparison evidence remains separate. No owner review or deployment inferred.",
+      "functional_status": "28 database, 33 compiled browser and 13 selected unit tests pass for team/role/access inspection; build/types/lint and register/docs assurance pass. See team ledger; CI and owner review remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

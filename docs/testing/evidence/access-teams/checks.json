@@ -1,0 +1,79 @@
+{
+  "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+  "base": "988a7343f262d4c083200337b7be344b0bb3dbbd",
+  "database": {
+    "passed": 28,
+    "failed": 0,
+    "cancelled": 0
+  },
+  "browser": {
+    "passed": 33,
+    "failed": 0,
+    "new_team_cases": 9,
+    "widths": [
+      1440,
+      390,
+      320
+    ]
+  },
+  "unit": {
+    "passed": 13,
+    "failed": 0
+  },
+  "build": "Passed",
+  "types": "Passed",
+  "changed_file_lint": "Passed",
+  "captures": {
+    "final": 8,
+    "initial_unusable": 2,
+    "observed_overflow": []
+  },
+  "setup": "Initial default-port PostgreSQL startup failed; explicit inspected loopback/port succeeded before tests. Services stopped.",
+  "owner_acceptance": "Not granted",
+  "deployment": "None",
+  "artifacts": {
+    "ancestor-checkpoint.json": "06b2dc1ba4a80e7d33e06d88a14da8e4157d6f44f09fc83b952fe07c5f5d4280",
+    "browser.txt": "92ae35d7e7bd27d40c9d3c83847e3835c8e3bb44006dd7ec0cfdef6cbc31d362",
+    "build.txt": "7f3c76d7d59fcee68f96a25e742e46e4b30f3b7cbde900a7ff1e4589441cd5f3",
+    "capture-phones.txt": "95a4106b9aa813c7d49115accb513177bae1bde41ef09f6d733d33c066a2eed3",
+    "capture.txt": "8024d3a4bb074a7718e682cd5cc03072bc32b3da6409c8ca5814a0b496c82dab",
+    "captures.json": "fdd00adef284f5f21dd36e655199a4aa97594b95c89c6e71d9986f57d0954a4d",
+    "database.txt": "381669d60b3af6834c3c036cfe382b2b704fdff711fcb4b1fcd7d5979bdf7f49",
+    "design-model.json": "49d66d2c1c20894477a31f472de9f1412786b7bf98164de8f667d968544b40aa",
+    "foundation-final.txt": "72b223b2de87e38da27463b936945dea8b052e64e35964a8d069e4628921f96d",
+    "foundation.txt": "e085d3ad03e5ff9eb21648faedb793276d6f782e0da62810054c7f961cc3351d",
+    "initial-capture-attempt.json": "b54e9cde7f22b72981acffb945e66c0cf7be27751352d449945c5d06e11a13a6",
+    "initial-native-320-teams.png": "3fb18ccfd303ea351ef496434ef271f2cd0caee8b3c20e2d05ace620a34d29c0",
+    "initial-native-390-teams.png": "cc89f8d97c3929ba68971285b395b23226b1edf073cc7fafcb2ff04c133a94d7",
+    "lint-final.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "naming-final.txt": "e85746862dc9e613c14f3ad6b682d412bc30c492746e9aacc75972bff591c916",
+    "naming.txt": "e85746862dc9e613c14f3ad6b682d412bc30c492746e9aacc75972bff591c916",
+    "native-1440-teams.png": "0c587f6cecf48f78dce5709ac732fbd2ef3a5022f1738ac49b11f1aa90f5238e",
+    "native-320-finance.png": "b448d46e96e9fccf4b360a282baa07ac20be2ab73439b1bab8bea02045434c36",
+    "native-320-teams.png": "3d2dd224ba7d40f05105c9fd095b320aa68ebc0917b24f6f0891f59af142129c",
+    "native-390-finance.png": "9e1db5962c5f5a467a9ebd2e7ce391f2fdac4186ec8dc16533c03cb0b27ac5ef",
+    "native-390-teams.png": "170b0514ab4e36d10a28f370f66db06bd3d2019cf2f30690c9506a7cfd0ed93c",
+    "parent-checkpoint.json": "825bd9260811f48f751a4ba1924e475b12d90b1ca57e971ddba893af1cfc9b3f",
+    "reference-1440-teams.png": "a8cf03dad3fdee99e12879d803b657b4c8351a352ac5e7e8898c3c1b05bbbd6a",
+    "reference-320-teams.png": "c75bf3c834663bdc7f9ff495ca653ad6221471ed0a1fa87984cb4a4d04a9b876",
+    "reference-390-teams.png": "9dc78afc794b064eaa56155aca318351bdd467652f76bed9659cb7d755902ddc",
+    "setup.txt": "612defa65acf310a633ce56e9a84ac907323a122206ff3615bf5e8cbff4fa07b",
+    "studio-final.txt": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
+    "studio.txt": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
+    "types.txt": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+    "unit.txt": "34f77187383d76ecfd9e298f30d4426bf0ea8aa7de27d1b412f36c09c77448e4"
+  },
+  "retained_model_assertions": 107,
+  "assurance": {
+    "studio": "Passed",
+    "foundation": "Passed; 78 parent IDs retained",
+    "naming": "Passed; 7993 instruction characters"
+  },
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "chrome": "155.0.8059.40"
+  },
+  "source_after_validation": "Only evidence, register and documentation edits follow the recorded implementation/test commit."
+}
