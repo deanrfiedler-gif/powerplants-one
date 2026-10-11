@@ -71,6 +71,10 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.deepEqual(await ledger(), oldLedger);
   await upgradeExistingDemo(name, tenant, true);
   const upgradedRows=await Promise.all(tables.map(rows));
+  assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability LIKE 'admin.access.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
+  for (const table of ["ppo.users", "ppo.permission_grants"])
+    for (const privilege of ["INSERT", "UPDATE", "DELETE"])
+      assert.equal((await database().query("SELECT has_table_privilege($1,$2,$3) AS allowed",[role,table,privilege])).rows[0].allowed,false);
   const addedUsers=upgradedRows[1].filter(r=>!before[1].some(old=>old.row.id===r.row.id));
   // Seed 29 adds the six fictional EN-06 responsibility profiles. They are PPO-LocalSynthetic identities,
   // which the hosted sign-in can never select, and no invited tester gains a material duty from them.
