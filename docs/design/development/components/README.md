@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 20 runnable examples, twelve host entries and nine reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response and ES-07 receiving/conversion hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 21 runnable examples, twelve host entries and nine reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response and ES-07 receiving/conversion hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 
@@ -21,7 +21,7 @@ Runnable requires a code-owned renderer ID, declared states, a real application 
 | Family | Current real examples | Explicit limits |
 |---|---|---|
 | Foundations | Runtime tokens; Button and ButtonLink | Legacy scope overrides and tokens remain visible migration work |
-| Tables and grids | CRM Grid; estimating AreasEditor selection/edit table; real customer/contact directory host | No universal bulk-select or spreadsheet-cell editor is adopted |
+| Tables and grids | Shared house register table (`RegisterTable`, adopted by EN-06 materials); CRM Grid; estimating AreasEditor selection/edit table; real customer/contact directory host | No universal bulk-select or spreadsheet-cell editor is adopted |
 | Boards and cards | CRM Board; ForecastWorklist | Host permissions, pagination and saved commands remain integration concerns |
 | Gantt | ProjectsGantt, including List, programme, undated and loading cases | Editing/history callbacks are presentation-only; fixed catalogue clock |
 | Scheduling | PlannerBoard, AppointmentCard and the published-impact/resolution host | Readiness, concurrency and confirmation remain server/host checks |

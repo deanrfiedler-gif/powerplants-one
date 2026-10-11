@@ -291,3 +291,21 @@ export const schedulingPolicyHoldFixture: import("../scheduling/policy-holds").P
   disposition: "Unresolved", held: true,
   next_action: "Make a controlled change, then obtain a fresh policy-impact resolution.",
 };
+// House register table (`register-table`): synthetic material-style lines covering every chip tone, a sub-line,
+// a long wrapping title and a removed line.
+export const registerTableFixture: {
+  id: string;
+  key: string;
+  title: string;
+  sub: string | null;
+  quantity: string;
+  source: string | null;
+  state: { tone: "neutral" | "attention" | "positive" | "negative"; label: string };
+  owner: string;
+  removed?: boolean;
+}[] = [
+  { id: fixtureId(301), key: "010", title: "SYN glasshouse climate controller", sub: null, quantity: "2 each", source: "SYN-DWG-101 · Rev B", state: { tone: "positive", label: "Verified" }, owner: "SYN Engineer A" },
+  { id: fixtureId(302), key: "020", title: "SYN fertigation dosing pump", sub: "Substitution proposed", quantity: "1 each", source: "SYN-DWG-102 · Rev A", state: { tone: "attention", label: "Evidence needed" }, owner: "SYN Engineer B" },
+  { id: fixtureId(303), key: "030", title: "SYN irrigation valve set for the north glasshouse, with a description long enough to wrap in the register", sub: null, quantity: "12 each", source: null, state: { tone: "neutral", label: "In review" }, owner: "SYN Engineer A" },
+  { id: fixtureId(304), key: "040", title: "SYN sensor cable", sub: "Removed", quantity: "40 m", source: "SYN-DWG-103 · Rev C", state: { tone: "negative", label: "Mapping missing" }, owner: "SYN Engineer C", removed: true },
+];
