@@ -84,11 +84,19 @@ test("AD01 review HTTP: exact basis, independent command and original receipt en
     },
   );
   await t.test("origin and payload guards precede writes", async () => {
-    assert.equal(
-      (await call(actor, "reviews", cmd, { origin: "https://invalid.example" }))
-        .body.code,
-      "OriginRejected",
-    );
+    // The loopback launcher refuses foreign origins before a route is reached.
+    const foreign = await fetch(`${origin}/api/v1/admin/access/reviews`, {
+      method: "POST",
+      headers: {
+        cookie: actor,
+        origin: "https://invalid.example",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cmd),
+    });
+    assert.equal(foreign.status, 403);
+    assert.equal(foreign.headers.get("cache-control"), "no-store");
+    assert.equal(await foreign.text(), "Local synthetic access only.");
     assert.equal(
       (await call(actor, "reviews", { ...cmd, decision: "Revoke" })).status,
       422,
