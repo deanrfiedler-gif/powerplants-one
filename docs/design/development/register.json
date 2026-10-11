@@ -5101,7 +5101,9 @@
         "src/access/request-screens.tsx",
         "src/access/requests.ts",
         "src/access/local-teams.ts",
-        "src/access/local-team-screens.tsx"
+        "src/access/local-team-screens.tsx",
+        "src/access/team-creation.tsx",
+        "src/app/api/v1/admin/access/teams/context/route.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5119,11 +5121,12 @@
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
         "docs/decisions/access-request-application.md",
-        "docs/decisions/access-local-teams.md"
+        "docs/decisions/access-local-teams.md",
+        "docs/decisions/access-team-creation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "81 access database tests and 45 unique compiled desktop/phone browser checks pass; build/types, 19 selected units and retained design checks pass. See access-local-teams evidence for historical upgrades and original failures. Native editing, membership lifecycle, campaigns, owner acceptance and deployment remain open.",
+      "functional_status": "Native local team creation and original recovery implemented; current verification is recorded in access-team-creation evidence. Membership editing, campaigns, migration-stack integration and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13106,7 +13109,9 @@
         "src/access/roles.ts",
         "src/access/teams.ts",
         "src/access/local-teams.ts",
-        "src/access/local-team-screens.tsx"
+        "src/access/local-team-screens.tsx",
+        "src/access/team-creation.tsx",
+        "src/app/api/v1/admin/access/teams/context/route.ts"
       ],
       "guide_key": "guide.route-admin-access-roles",
       "design_path": "docs/design/development/pages/route-admin-access-roles.md",
@@ -13134,11 +13139,12 @@
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
         "docs/decisions/access-team-inspection.md",
-        "docs/decisions/access-local-teams.md"
+        "docs/decisions/access-local-teams.md",
+        "docs/decisions/access-team-creation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "81 access database tests and 45 unique compiled desktop/phone browser checks pass; build/types, 19 selected units and retained design checks pass. See access-local-teams evidence for historical upgrades and original failures. Native editing, membership lifecycle, campaigns, owner acceptance and deployment remain open.",
+      "functional_status": "Native local team creation and original recovery implemented; current verification is recorded in access-team-creation evidence. Membership editing, campaigns, migration-stack integration and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

@@ -41,3 +41,5 @@ Migration/seed 0082 extend the live capability/audit constraints and add team/ev
 Prove authority, local/workspace/participant boundaries, duplicate and malformed payloads, concurrent creation, current-duty loss, exact replay/recovery, immutable state/evidence and rollback. Browser checks inspect real API-created records, refresh/denial recovery and unchanged retained examples at desktop/390/320 widths. Maintain the live guide/register/component records and evidence in the same PR. This does not approve operational team membership, production use or deployment.
 
 Opening a roster refreshes its lead/creator identity labels from the detail response. Closing it retains those newer labels until an explicit collection refresh or page change; it never falls back to an older list label. This is current-identity presentation, not a change to immutable membership or creation evidence.
+
+Native creation now follows the [bounded form/recovery contract](access-team-creation.md). The initial-roster command, permissions, immutable evidence and membership limits above are unchanged; membership editing remains open.

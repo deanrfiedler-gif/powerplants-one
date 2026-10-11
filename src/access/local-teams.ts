@@ -27,27 +27,47 @@ function localOnly() {
       "Team records are available only in the local synthetic prototype.",
     );
 }
-async function authority(c: QueryClient, p: Principal, create = false) {
-  localOnly();
-  await requireAccessInspection(c, p);
-  if (
-    create &&
-    !(
-      await c.query(
-        `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u
+async function canCreate(c: QueryClient, p: Principal) {
+  return !!(
+    await c.query(
+      `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u
     ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
     WHERE g.workspace_id=$1 AND g.user_id=$2 AND u.active AND u.issuer='PPO-LocalSynthetic'
     AND g.capability='admin.access.team.create' AND g.scope_type='Workspace' AND g.scope_id=$1
     AND g.valid_from<=clock_timestamp() AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())`,
-        [p.workspace_id, p.actor_id],
-      )
-    ).rowCount
-  )
+      [p.workspace_id, p.actor_id],
+    )
+  ).rowCount;
+}
+async function authority(c: QueryClient, p: Principal, create = false) {
+  localOnly();
+  await requireAccessInspection(c, p);
+  if (create && !(await canCreate(c, p)))
     throw new AppError(
       403,
       "Forbidden",
       "Current Workspace team-creation authority is required.",
     );
+}
+export async function localTeamContext(p: Principal) {
+  localOnly();
+  return transaction(async (c) => {
+    await c.query("SET TRANSACTION READ ONLY");
+    await authority(c, p);
+    const people = (
+      await c.query(
+        "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND active AND issuer='PPO-LocalSynthetic' ORDER BY display_name,id",
+        [p.workspace_id],
+      )
+    ).rows;
+    await authority(c, p);
+    const can_create = await canCreate(c, p);
+    return {
+      actor: { actor_id: p.actor_id, workspace_id: p.workspace_id },
+      can_create,
+      people: can_create ? people : [],
+    };
+  });
 }
 const missing = () =>
   new AppError(404, "NotFound", "This local team record is unavailable.");

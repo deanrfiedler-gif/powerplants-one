@@ -15,6 +15,7 @@ import {
   localTeams,
   localTeam,
   recoverLocalTeam,
+  localTeamContext,
 } from "../../src/access/local-teams";
 import { submitAccessRequest } from "../../src/access/requests";
 import { accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
@@ -146,6 +147,60 @@ test(
 
 test("AD01 teams: creation, retention, authority and recovery", async (t) => {
   await t.test(
+    "creation context is read-only, local, active, workspace-bound and current-duty gated",
+    async () => {
+      const tables = [
+        "users",
+        "permission_grants",
+        "sessions",
+        "access_teams",
+        "access_team_members",
+        "access_team_operations",
+        "audit_events",
+      ];
+      const before = await snap(tables);
+      const context = await localTeamContext(creator);
+      assert.deepEqual(context.actor, {
+        actor_id: creator.actor_id,
+        workspace_id: ws,
+      });
+      assert.equal(context.can_create, true);
+      assert.deepEqual(
+        context.people,
+        await rows(
+          "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND active AND issuer='PPO-LocalSynthetic' ORDER BY display_name,id",
+          [ws],
+        ),
+      );
+      assert(context.people.some((p) => p.id === creator.actor_id));
+      assert.deepEqual(await localTeamContext(reader), {
+        actor: { actor_id: reader.actor_id, workspace_id: ws },
+        can_create: false,
+        people: [],
+      });
+      await assert.rejects(localTeamContext(person), code("Forbidden"));
+      await assert.rejects(
+        localTeamContext({ ...creator, workspace_id: randomUUID() }),
+        code("Forbidden"),
+      );
+      await rows("UPDATE ppo.users SET active=false WHERE id=$1", [
+        person.actor_id,
+      ]);
+      try {
+        assert(
+          !(await localTeamContext(creator)).people.some(
+            (p) => p.id === person.actor_id,
+          ),
+        );
+      } finally {
+        await rows("UPDATE ppo.users SET active=true WHERE id=$1", [
+          person.actor_id,
+        ]);
+      }
+      assert.deepEqual(await snap(tables), before);
+    },
+  );
+  await t.test(
     "atomic original roster, audit and receipt; no permission, session or request mutation",
     async () => {
       const before = await snap([
@@ -268,6 +323,10 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
       );
       try {
         await assert.rejects(
+          localTeamContext(creator),
+          code("WorkingCompanySelected"),
+        );
+        await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("WorkingCompanySelected"),
         );
@@ -285,6 +344,7 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
         creator.actor_id,
       ]);
       try {
+        await assert.rejects(localTeamContext(creator), code("Forbidden"));
         await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("Forbidden"),
@@ -298,6 +358,8 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
         "UPDATE ppo.permission_grants SET valid_to='2026-01-02' WHERE capability='admin.access.team.create'",
       );
       try {
+        assert.equal((await localTeamContext(creator)).can_create, false);
+        assert.deepEqual((await localTeamContext(creator)).people, []);
         await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("Forbidden"),
@@ -352,6 +414,11 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
         person.actor_id,
       ]);
       try {
+        assert(
+          !(await localTeamContext(creator)).people.some(
+            (p) => p.id === person.actor_id,
+          ),
+        );
         await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("InvalidData"),
@@ -564,6 +631,7 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
       process.env.PPO_ENV = "azure-demo";
       try {
         for (const run of [
+          () => localTeamContext(creator),
           () => createLocalTeam(creator, cmd()),
           () => localTeams(creator),
           () => localTeam(creator, randomUUID()),

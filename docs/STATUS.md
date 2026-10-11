@@ -30,6 +30,12 @@ Dean authorised fixing failed checks and merging ready implementation PRs, and c
 
 The SC-07 planner test repair selects the intended responsive date window through the identity remount. Exact query, current-identity, denial and visible-state assertions remain. This integration authorisation supersedes the earlier draft-only disposition for these code contributions; the three-second performance target, original 503 attribution, full PT-27 and owner/device acceptance remain open. The checkpoints below retain their original evidence boundaries.
 
+## AD-01 native local team creation — 12 October 2026
+
+Continuation on `codex/ad01-team-creation` starts from #429 `a42bf5c`. Its failed Systems-duty CI expectation is corrected and locally re-proved without weakening business approval refusals; the repair is pushed to #429 as `2968125`. The [creation contract](decisions/access-team-creation.md) adds an explicit native initial-roster form using the existing audited API and recovery journal. No migration, seed, permission, membership editing or operational policy is added. [Evidence](testing/evidence/access-team-creation/README.md) records verification separately from owner acceptance.
+
+#417 has merged and main has reached `4a286d3`. Main's Projects migration 0081 collides with the draft withdrawal history; this increment stays stacked on #429 and does not rewrite either populated ledger. Migration-stack integration, membership lifecycle, campaigns, owner/device acceptance and production readiness remain open.
+
 ## AD-01 durable local team records — 11 October 2026
 
 Dean's continuation instruction starts `codex/ad01-local-teams` from #427 at `f9c8c00`. The initial stack inspection found no feedback or reported failure, with #427 queued, #423 partly running and #417 cancelled. The [contract](decisions/access-local-teams.md) adds dedicated local team creation, an immutable initial roster, audit-linked history and actor-bound recovery, plus inspection in the existing catalogue. Migration/seed 0082 adds one existing-local Systems duty and no user or hosted grant. Membership and lead labels confer no authority. [Evidence](testing/evidence/access-local-teams/README.md) records actual validation and limits. Native creation/editing, membership lifecycle, campaigns, D-020, owner acceptance and production readiness remain open.

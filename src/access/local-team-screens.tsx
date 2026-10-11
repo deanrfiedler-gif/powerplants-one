@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/ui/button";
+import { LocalTeamCreation } from "./team-creation";
 import {
   type Failure,
   isDenied,
@@ -38,6 +39,7 @@ export function SavedLocalTeams({
 }) {
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
+  const receiptInspection = useRef(false);
   const [inspectedTeams, setInspectedTeams] = useState<
     Record<string, Omit<Team, "member_count">>
   >({});
@@ -56,6 +58,20 @@ export function SavedLocalTeams({
       ? detail.data.team
       : {}),
   }));
+  // A recovered receipt can predate the current 50-row page. Its exact detail
+  // remains inspectable without guessing a team by name or scanning pages.
+  if (
+    selected &&
+    detail.data &&
+    !detail.loading &&
+    !detail.error &&
+    visibleTeams &&
+    !visibleTeams.some((team) => team.id === selected)
+  )
+    visibleTeams.unshift({
+      ...detail.data.team,
+      member_count: detail.data.members.length,
+    });
   const error = list.error || detail.error;
   const failure = error as Failure | null;
   const denied =
@@ -64,6 +80,13 @@ export function SavedLocalTeams({
   useEffect(() => {
     if (denied) onDenied(error);
   }, [denied, error, onDenied]);
+  useEffect(() => {
+    if (receiptInspection.current && selected && detail.data &&
+        !detail.loading && !list.loading && !error) {
+      document.getElementById(`local-team-${selected}`)?.focus();
+      receiptInspection.current = false;
+    }
+  }, [selected, detail.data, detail.loading, list.loading, error]);
   const refresh = () => {
     setSelected(null);
     setInspectedTeams({});
@@ -72,6 +95,15 @@ export function SavedLocalTeams({
   return (
     <section id="saved-local-teams" aria-labelledby="saved-local-teams-heading">
       <h2 id="saved-local-teams-heading">Saved local teams</h2>
+      <LocalTeamCreation
+        onDenied={onDenied}
+        onInspect={(id) => {
+          receiptInspection.current = true;
+          setSelected(id);
+          detail.reload();
+          list.reload();
+        }}
+      />
       <p className="callout">
         These synthetic records preserve an initial roster. Membership and the
         lead label grant no access or review duty. Current identity activity is
@@ -84,12 +116,14 @@ export function SavedLocalTeams({
       />
       {!list.loading && !error && list.data && (
         <>
-          {list.data.items.length === 0 && (
+          {visibleTeams?.length === 0 && (
             <p>No local teams have been recorded.</p>
           )}
           <div className="record-grid">
             {visibleTeams!.map((team) => (
               <article
+                id={`local-team-${team.id}`}
+                tabIndex={-1}
                 className="record-card"
                 key={team.id}
                 aria-label={`${team.name} saved team`}
