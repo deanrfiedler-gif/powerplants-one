@@ -1,34 +1,33 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
+import { browserFixtureCall } from "../helpers/browser-fixture-call";
 
 const site = "70000000-0000-4000-8000-000000000001";
 const company = "20000000-0000-4000-8000-000000000001";
 const owner = "30000000-0000-4000-8000-000000000001";
 const command = () => ({ schema_version: 1, operation_id: randomUUID(), reason: "SYN NAV contextual link fixture" });
-test.beforeEach(async ({ page, baseURL }) => {
-  const login = await page.request.post("/api/v1/local-session", { headers: { Origin: baseURL! }, data: { profile: "coordinator" } });
-  expect(login.ok()).toBe(true);
+const call = (page: Pick<Page, "request">, path: string, body: unknown) =>
+  browserFixtureCall(page, path, body, new URL(test.info().project.use.baseURL!).origin);
+test.beforeEach(async ({ page }) => {
+  await call(page, "local-session", { profile: "coordinator" });
 });
 
-test("N01 saved survey opens each exact Equipment record and returns to its source", async ({ page, baseURL }) => {
+test("N01 saved survey opens each exact Equipment record and returns to its source", async ({ page }) => {
   const assets = [randomUUID(), randomUUID()], survey = randomUUID();
   for (const [index, id] of assets.entries()) {
-    const result = await page.request.post("/api/v1/assets", { headers: { Origin: baseURL! }, data: {
+    await call(page, "assets", {
       ...command(), id, company_id: company, site_id: site, description: `SYN NAV Equipment ${index + 1}`,
       identity_status: "Unresolved", manufacturer: "SYN NAV", model: "P45", serial: `SYN-${id}`,
       effective_at: "2026-09-01T00:00:00.000Z", configuration: "SYN NAV equipment basis",
-    } });
-    expect(result.ok(), await result.text()).toBe(true);
+    });
   }
-  const created = await page.request.post("/api/v1/cs/Survey", { headers: { Origin: baseURL! }, data: {
+  await call(page, "cs/Survey", {
     ...command(), id: survey, context_id: site, name: "SYN NAV two equipment survey", owner_id: owner,
-  } });
-  expect(created.ok(), await created.text()).toBe(true);
-  const saved = await page.request.post(`/api/v1/cs/Survey/${survey}/save`, { headers: { Origin: baseURL! }, data: {
+  });
+  await call(page, `cs/Survey/${survey}/save`, {
     ...command(), expected_version: 1, name: "SYN NAV two equipment survey", owner_id: owner, content: { schema_version: 1, purpose: "SYN NAV exact equipment", facility_ids: [], asset_ids: assets, observations: [] },
-  } });
-  expect(saved.ok(), await saved.text()).toBe(true);
+  });
   for (const [index, id] of assets.entries()) {
     const ready = page.waitForResponse(response => response.url().includes("/cs/Survey/options?context_id=") && response.ok());
     await page.goto(`/surveys/${survey}`);
@@ -42,7 +41,7 @@ test("N01 saved survey opens each exact Equipment record and returns to its sour
     await page.getByRole("link", { name: "Return to source survey", exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`/surveys/${survey}(?:\\?|$)`));
   }
-  expect((await page.request.post("/api/v1/local-session",{headers:{Origin:baseURL!},data:{profile:"technician"}})).ok()).toBe(true);
+  await call(page, "local-session", { profile: "technician" });
   const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/equipment/${assets[0]}`)&&[403,404].includes(r.status()));
   await page.goto(`/equipment/${assets[0]}?returnTo=${encodeURIComponent(`/surveys/${survey}`)}`);await denied;
   await expect(page.getByRole("heading",{name:"SYN NAV Equipment 1",exact:true})).toHaveCount(0);
@@ -60,8 +59,7 @@ test("N02 continuing obligation opens exact owned Activity and returns to its ob
   await page.getByRole("link", { name: "Return to acceptance obligation", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/projects/acceptance/stages/${fixture.stage}.*#obligation-${fixture.obligation}$`));
   await expect(page.locator(`#obligation-${fixture.obligation}`)).toBeVisible();
-  const profile=await page.request.post("/api/v1/local-session",{headers:{Origin:new URL(test.info().project.use.baseURL!).origin},data:{profile:"technician"}});
-  expect(profile.ok()).toBe(true);
+  await call(page, "local-session", { profile: "technician" });
   const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/activities/${fixture.activity}`)&&[403,404].includes(r.status()));
   await page.goto(`/work/${fixture.activity}?returnTo=${encodeURIComponent(`/projects/acceptance/stages/${fixture.stage}#obligation-${fixture.obligation}`)}`);await denied;
   await expect(page.getByRole("heading",{name:fixture.summary,exact:true})).toHaveCount(0);

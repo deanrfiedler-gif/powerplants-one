@@ -21,4 +21,7 @@ test("unexpected failure diagnostics distinguish bounded causes without copying 
   for (const error of [undefined, null, secret, new Error(secret), { code: secret }, { code: 53300 }, { code: "23505", detail: secret }]) {
     assert.equal(unexpectedFailureCategory(error), "UnexpectedFailure");
   }
+  assert.equal(unexpectedFailureCategory(new Error("timeout exceeded when trying to connect")), "DatabasePoolWaitTimeout");
+  assert.equal(unexpectedFailureCategory(new Error("Connection terminated due to connection timeout", { cause: new Error(secret) })), "DatabaseConnectTimeout");
+  assert.equal(unexpectedFailureCategory(new Error(`timeout exceeded when trying to connect ${secret}`)), "UnexpectedFailure");
 });

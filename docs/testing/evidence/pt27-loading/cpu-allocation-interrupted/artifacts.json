@@ -1,0 +1,44 @@
+[
+  {
+    "path": "review-diagnostic-redactions.json.gz",
+    "bytes": 346,
+    "sha256": "7980d48ab65c06e724267880d1cac4a9267e74d2b8190a640f6ab84ca81e0cd6",
+    "original_bytes": 525,
+    "original_sha256": "2581f5d546b0055b689e4b5e6b4f6d46b284f47e1064506ab63f879a8ea29222"
+  },
+  {
+    "path": "customer-loading-diagnosis/fixture.json.gz",
+    "bytes": 1038,
+    "sha256": "680e867ab4b0a1fb4db9b5289d834562578b680b6d861390f400e0d9de14d89e",
+    "original_bytes": 2301,
+    "original_sha256": "6433d2e2f1cd715582f7ce0ec8bb9318ec15c29d9d9ddaa90903f817fb9cccb5"
+  },
+  {
+    "path": "transport-diagnostics/process-5508.jsonl.gz",
+    "bytes": 2070,
+    "sha256": "246f9f4d70e4f4746c3f438505241c78360b6ea6a055865a7d2eb838050d32cb",
+    "original_bytes": 21030,
+    "original_sha256": "c32cf7ddc24f757277072817906f74214b3201d253dda97427d65b444a27758d"
+  },
+  {
+    "path": "pt27-loading/observer-compiled-smoke/gateway.jsonl.gz",
+    "bytes": 2070,
+    "sha256": "246f9f4d70e4f4746c3f438505241c78360b6ea6a055865a7d2eb838050d32cb",
+    "original_bytes": 21030,
+    "original_sha256": "c32cf7ddc24f757277072817906f74214b3201d253dda97427d65b444a27758d"
+  },
+  {
+    "path": "pt27-loading/observer-compiled-smoke/smoke.json.gz",
+    "bytes": 222,
+    "sha256": "7fac178456db3fe59746010f077521e86b3e55708247b0cd33595e23a1267aab",
+    "original_bytes": 299,
+    "original_sha256": "526ec8fb81193eea658c529e9f2ece1e51727555e76091d8009fbfba0d747433"
+  },
+  {
+    "path": "comparison-step.log.gz",
+    "bytes": 1363,
+    "sha256": "c2bd78d04a7e178c61f9e558cda77d6cd9e65155cdbcb40e640487b4d84e076c",
+    "original_bytes": 7001,
+    "original_sha256": "0333c74890d19c30dc65320c398bf8d171efd7fd35376b0cd1fcf07bb46a33f8"
+  }
+]

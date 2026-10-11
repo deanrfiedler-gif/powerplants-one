@@ -1,0 +1,317 @@
+[
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/run.json.gz",
+    "bytes": 1355,
+    "sha256": "23f04bb864acf2b5f1b3536b742f5e9ed6ad80d0a30668899f5cd350cda52244",
+    "original_bytes": 2739,
+    "original_sha256": "64e202ce1f248d6be3e872d9c9c6df335e142d906d4c27c98a49792389ed0a56"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/results.json.gz",
+    "bytes": 111731,
+    "sha256": "eead935a29a8a3031f00eed2626a3ff98e567c49e36963c56fd643db64154519",
+    "original_bytes": 1309191,
+    "original_sha256": "cc61a83397372e2502d59040af06457513c27563f69a1f7ee4a8fd71b2bac49a"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/customer-client-manifest.json.gz",
+    "bytes": 1642,
+    "sha256": "7cdaa0f31aad7562189a813c10e05c8b89a2aa99ae50c83a3c17c76a82965ea1",
+    "original_bytes": 27605,
+    "original_sha256": "0bf530a2b9188f48ea296eb2189149acef77cf9b4dfbd243f701b9ea6b73c602"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/fixture-after.json.gz",
+    "bytes": 616,
+    "sha256": "407c41b4b084bdf8b6921fa9476e8779a049c725f3d2508e887ba0866a071ff5",
+    "original_bytes": 1288,
+    "original_sha256": "2bb6e6aacd42e15e7c1df7cd66c3fc1dee5498f629cba6bd1a3aca9931d9c558"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/desktop-directory.png",
+    "bytes": 165306,
+    "sha256": "5f0d6a1641fd10b29acbe3f04bce5a6167d7ca492529016c5732eca2c3737e03",
+    "original_bytes": 165306,
+    "original_sha256": "5f0d6a1641fd10b29acbe3f04bce5a6167d7ca492529016c5732eca2c3737e03"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39",
+    "original_bytes": 117750,
+    "original_sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/phone-directory.png",
+    "bytes": 67323,
+    "sha256": "b514d98405edade59be7512276f52ca60a22ab6469ccc5b74d90361298e1e2e1",
+    "original_bytes": 67323,
+    "original_sha256": "b514d98405edade59be7512276f52ca60a22ab6469ccc5b74d90361298e1e2e1"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a1/phone-record.png",
+    "bytes": 54358,
+    "sha256": "522894a64f5fd7b2ab753151626382949880a69c2d1bd3eb8bbced620d04eb71",
+    "original_bytes": 54358,
+    "original_sha256": "522894a64f5fd7b2ab753151626382949880a69c2d1bd3eb8bbced620d04eb71"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/run.json.gz",
+    "bytes": 1328,
+    "sha256": "76a71429bbfcba1df2cf271d7e461c7208e4f611bc35a764235d2126cb1509ca",
+    "original_bytes": 2741,
+    "original_sha256": "faba9c4a0ee6bd0c2c96c628bd9f70fb01e70db72347a42b891e0a476fc92532"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/results.json.gz",
+    "bytes": 110311,
+    "sha256": "c29e19480ec9a7eb15f1d3d1b869879f13b0c27821df7399f8991201c5fa73d3",
+    "original_bytes": 1291145,
+    "original_sha256": "76b3f5b9e5c055fed9cb2714111991bf3771b6a2a1791793178d0b1974204fce"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/customer-client-manifest.json.gz",
+    "bytes": 1587,
+    "sha256": "3711b64bc14d0cc88c8855ac671f369202de7999f4bcff554702ddf8de2ac43c",
+    "original_bytes": 27287,
+    "original_sha256": "15319e5bb7e4dc4a4ea8681a6678452bb9e6dba55b0b2e8290d8dbdfeac92aa0"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/fixture-after.json.gz",
+    "bytes": 616,
+    "sha256": "407c41b4b084bdf8b6921fa9476e8779a049c725f3d2508e887ba0866a071ff5",
+    "original_bytes": 1288,
+    "original_sha256": "2bb6e6aacd42e15e7c1df7cd66c3fc1dee5498f629cba6bd1a3aca9931d9c558"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/desktop-directory.png",
+    "bytes": 165392,
+    "sha256": "0c7bcd2f74e01777caa8b0cacc0365752e1c925206bc822dfb149961609c2eb8",
+    "original_bytes": 165392,
+    "original_sha256": "0c7bcd2f74e01777caa8b0cacc0365752e1c925206bc822dfb149961609c2eb8"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39",
+    "original_bytes": 117750,
+    "original_sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/phone-directory.png",
+    "bytes": 67483,
+    "sha256": "ae4f994419ef7f46a2b3b92eb31c07099882c7b242b3624b63f07f73e9725df9",
+    "original_bytes": 67483,
+    "original_sha256": "ae4f994419ef7f46a2b3b92eb31c07099882c7b242b3624b63f07f73e9725df9"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b1/phone-record.png",
+    "bytes": 54361,
+    "sha256": "9f3ac255d2cd68ada2d480c061b549ddf45907552eb542c3fd75ab997413c85f",
+    "original_bytes": 54361,
+    "original_sha256": "9f3ac255d2cd68ada2d480c061b549ddf45907552eb542c3fd75ab997413c85f"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/run.json.gz",
+    "bytes": 1329,
+    "sha256": "a586222708f7e20d22322be5a9a155dcf93568fcfb8e53e40c359f34ee8cbf7c",
+    "original_bytes": 2742,
+    "original_sha256": "950bae0521293a3d43a14021bff28986aa9da0be75fc76085985bc93855fdcb4"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/results.json.gz",
+    "bytes": 112876,
+    "sha256": "86a1211a838423d674045c7710da4c134717a5389bca368ea0d339c84e63e4e6",
+    "original_bytes": 1323787,
+    "original_sha256": "756abc892570005b08d0b81973bb0d084544ec5ebf48e1932424b1f68786ecaa"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/customer-client-manifest.json.gz",
+    "bytes": 1587,
+    "sha256": "3711b64bc14d0cc88c8855ac671f369202de7999f4bcff554702ddf8de2ac43c",
+    "original_bytes": 27287,
+    "original_sha256": "15319e5bb7e4dc4a4ea8681a6678452bb9e6dba55b0b2e8290d8dbdfeac92aa0"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/fixture-after.json.gz",
+    "bytes": 616,
+    "sha256": "407c41b4b084bdf8b6921fa9476e8779a049c725f3d2508e887ba0866a071ff5",
+    "original_bytes": 1288,
+    "original_sha256": "2bb6e6aacd42e15e7c1df7cd66c3fc1dee5498f629cba6bd1a3aca9931d9c558"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/desktop-directory.png",
+    "bytes": 165416,
+    "sha256": "005d44e8976740cc0f23408b556061e14636521fdf246b8613e70151a8e62169",
+    "original_bytes": 165416,
+    "original_sha256": "005d44e8976740cc0f23408b556061e14636521fdf246b8613e70151a8e62169"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "5fe7b3cca8d78405460eb1fca09e7e024c160cfc22c863397eebdb2ccfedb602",
+    "original_bytes": 117750,
+    "original_sha256": "5fe7b3cca8d78405460eb1fca09e7e024c160cfc22c863397eebdb2ccfedb602"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/phone-directory.png",
+    "bytes": 67480,
+    "sha256": "8d56f8518405b3f5239653bcc11fa9315cfe1bb5f0d93208d5c51859dc0c8f84",
+    "original_bytes": 67480,
+    "original_sha256": "8d56f8518405b3f5239653bcc11fa9315cfe1bb5f0d93208d5c51859dc0c8f84"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-candidate-b2/phone-record.png",
+    "bytes": 54361,
+    "sha256": "9f3ac255d2cd68ada2d480c061b549ddf45907552eb542c3fd75ab997413c85f",
+    "original_bytes": 54361,
+    "original_sha256": "9f3ac255d2cd68ada2d480c061b549ddf45907552eb542c3fd75ab997413c85f"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/run.json.gz",
+    "bytes": 1356,
+    "sha256": "0a000f288f376ef1194b7ecdbb28cb8d8a163020f1dc333fea13d5d6475c7ae8",
+    "original_bytes": 2740,
+    "original_sha256": "4b842f5146422bfa2bf443f25e57cc78f8b14b464cd55a10124e13e579a49a29"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/results.json.gz",
+    "bytes": 114801,
+    "sha256": "2612b4ef4213ce5bc329335151dd67a74f9d11aa4f7472f120e96ab4e2302d19",
+    "original_bytes": 1347150,
+    "original_sha256": "f34573425ce43812cc5ead4571b687ac8530010f72e2de821ad9c1b1579773a8"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/customer-client-manifest.json.gz",
+    "bytes": 1642,
+    "sha256": "7cdaa0f31aad7562189a813c10e05c8b89a2aa99ae50c83a3c17c76a82965ea1",
+    "original_bytes": 27605,
+    "original_sha256": "0bf530a2b9188f48ea296eb2189149acef77cf9b4dfbd243f701b9ea6b73c602"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/fixture-after.json.gz",
+    "bytes": 616,
+    "sha256": "407c41b4b084bdf8b6921fa9476e8779a049c725f3d2508e887ba0866a071ff5",
+    "original_bytes": 1288,
+    "original_sha256": "2bb6e6aacd42e15e7c1df7cd66c3fc1dee5498f629cba6bd1a3aca9931d9c558"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/desktop-directory.png",
+    "bytes": 165365,
+    "sha256": "6e236dc2baf648f2e9a92566a80a0e205544d4a23cfea0ab05b240b6489eda12",
+    "original_bytes": 165365,
+    "original_sha256": "6e236dc2baf648f2e9a92566a80a0e205544d4a23cfea0ab05b240b6489eda12"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39",
+    "original_bytes": 117750,
+    "original_sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/phone-directory.png",
+    "bytes": 67427,
+    "sha256": "ac38add252fe9e6aa28e5e923e56e5a609a8ce30b835d66eea8d6bf55ca93a68",
+    "original_bytes": 67427,
+    "original_sha256": "ac38add252fe9e6aa28e5e923e56e5a609a8ce30b835d66eea8d6bf55ca93a68"
+  },
+  {
+    "path": "candidate-ci-38086863599-1-control-a2/phone-record.png",
+    "bytes": 54357,
+    "sha256": "9a593c357e199082192a165a36c551a31dd0022728395356ac7d87a3be842f57",
+    "original_bytes": 54357,
+    "original_sha256": "9a593c357e199082192a165a36c551a31dd0022728395356ac7d87a3be842f57"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-candidate-b1-resources.jsonl.gz",
+    "bytes": 1281,
+    "sha256": "8b6bf5f3454ad4b9fa9c0d5d41a85a401f457e6d9175601beaa14ff2695d1525",
+    "original_bytes": 7664,
+    "original_sha256": "edf9ab10df1893c55f2538cf2673321cb2e635fa8c9fbcdeeab7bd49fac0a956"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-candidate-b1.log.gz",
+    "bytes": 253,
+    "sha256": "793f99fe2fa50251e84011ff7a8a3168fb04299fd88dca95b5b2cfe5c8a5791a",
+    "original_bytes": 874,
+    "original_sha256": "7050aeb36d9755212081ffd645855e7ae60db181175664f88c55b304b7416bf1"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-candidate-b2-resources.jsonl.gz",
+    "bytes": 1297,
+    "sha256": "d431f3655ee9b3071026667da2fb406c5ecea440de474cfc7388f46e3ccc8cb4",
+    "original_bytes": 7677,
+    "original_sha256": "50006a21aa399c0d1c47827c1c2f1e959b1e7aa1bb43da817a1fe66ef681419b"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-candidate-b2.log.gz",
+    "bytes": 253,
+    "sha256": "1efcb4b3dee59bd7aba8a31f1da8301ea22faeb52dd1a18a12e881d81e61bd7d",
+    "original_bytes": 874,
+    "original_sha256": "0b8f65a076235c353b3c6ee1d819d455cc6e7fc393b0a83cfd0d17868c1af9fb"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-control-a1-resources.jsonl.gz",
+    "bytes": 1330,
+    "sha256": "ff7554dc6b69695ddc9c90f5962e3982897766ecbd47be5a9b673dff66b48449",
+    "original_bytes": 7952,
+    "original_sha256": "0044d2c71d8e2a20d73e07a4632a08c74c611e63905d8a9ddc592a015de684f7"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-control-a1.log.gz",
+    "bytes": 256,
+    "sha256": "fcf01ca69888af4b377a83c931ab57dec2d4670817ab13e2130d8e99d2878208",
+    "original_bytes": 858,
+    "original_sha256": "c29af16e7282ad2c9f28d2576edc1f1d36e645c19ff54bfb4f5ad19a333b19d6"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-control-a2-resources.jsonl.gz",
+    "bytes": 1299,
+    "sha256": "32efa670d8dc2a0f26d20b875de55585ea4587bc45efb4eb255f526bb31e6a3d",
+    "original_bytes": 7693,
+    "original_sha256": "1be10ef5b9ef015ebe5233a27c45a540a2b12cb8349ee1ba01d805e0b987b082"
+  },
+  {
+    "path": "external/candidate-ci-38086863599-1-control-a2.log.gz",
+    "bytes": 256,
+    "sha256": "e281c9bbe66f0f21566a0ed357c45aa016c5bf6afa4465ce792a2eedeb2eed92",
+    "original_bytes": 858,
+    "original_sha256": "7912a7e15c0e5ebea64fe40cae8420b22654a655b84b4a8b93c41080e90e7c10"
+  },
+  {
+    "path": "external/protocol.json.gz",
+    "bytes": 1551,
+    "sha256": "008e0c84cbd5928599dda046c89d5c1a9cc39b804202ea5f414b0a6374f8bdcc",
+    "original_bytes": 4318,
+    "original_sha256": "bc0bbbe1e8160d14fc0fdffd87ebbfea5522846bf8e84fe86fe78ecdccd902b8"
+  },
+  {
+    "path": "support/review-diagnostic-redactions.json.gz",
+    "bytes": 348,
+    "sha256": "d5fa737b8cdb1d97aa301e3b585f8ad230de5bdb52f246ffa9f8b73e1df5b466",
+    "original_bytes": 525,
+    "original_sha256": "5d1dbc54678a6ba078e351740b1b628a77dd0b97ac64a8968f932a7ed0356ccf"
+  },
+  {
+    "path": "support/customer-loading-diagnosis/fixture.json.gz",
+    "bytes": 1034,
+    "sha256": "0c643a25de42695e0f3e1a51bf374392afac79894d747fcbc930fa5109a20ea1",
+    "original_bytes": 2301,
+    "original_sha256": "2c6ec3b55f9fe812a433dde648f89f16e08e30f988c34954ad4245b67330398a"
+  },
+  {
+    "path": "support/pt27-loading/observer-compiled-smoke/gateway.jsonl.gz",
+    "bytes": 2051,
+    "sha256": "cce3f7635bbbd5ff20d49f05a64b7f68e255ec1e20b0bed7d8c01076ea6b3c62",
+    "original_bytes": 21038,
+    "original_sha256": "b445bf0bd1de859d17c67e48def58cac077c90336b32487e3511495d4a5cc57e"
+  },
+  {
+    "path": "support/pt27-loading/observer-compiled-smoke/smoke.json.gz",
+    "bytes": 226,
+    "sha256": "e0248791e88b8437e12483b5f685f3a8b7f3324043608c578be8f54cb62bf69f",
+    "original_bytes": 299,
+    "original_sha256": "561046e575f873cb86d46be4cb03e1e4e34017e7d48cea5c1564478cbbd63a0e"
+  }
+]

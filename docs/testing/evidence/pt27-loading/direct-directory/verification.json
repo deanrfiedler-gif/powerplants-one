@@ -1,0 +1,19 @@
+{
+  "executed_date": "2026-10-11 Australia/Brisbane",
+  "candidate_source": "6b57f8d7eb586160fd821303bd7c8ca86948c3ca",
+  "control_source": "20734e177844ea887007b4279a5edea9d205e102",
+  "analysis_reproduction_source": "6e85c288ef72704c2e4006f747013360632896a6",
+  "analysis_script_sha256": {
+    "scripts/summarize-observer-block.py": "19efd744664ea7546b8a11bfb6574df9f7319f45d55b91205f0651b59c702cfd",
+    "scripts/summarize-session-readiness.py": "576b544eab8315e019063ab49876d19def8cfe5b2ea65dc8e375db748e3c85d4"
+  },
+  "checks": {
+    "comparison_ci": "passed; both builds, compiled smoke, profile/counter tests, all four attempts",
+    "summary_reproduction": "exact structured summary and 41 core retained files reproduce byte-for-byte",
+    "artifact_integrity": "45 stored/original hash pairs verified",
+    "private_value_scan": "passed",
+    "source_review": "Customers-only runtime import change; session, query, grants and navigation code unchanged",
+    "capture_inspection": "candidate B1 desktop and phone directory composition inspected; no owner/paired-reference acceptance"
+  },
+  "limits": "Mixed phone/receiving timing. Superseded by the receiving-panel refinement; not an accepted whole-page speedup. Full source-head assurance was superseded; no full-suite claim for this candidate."
+}

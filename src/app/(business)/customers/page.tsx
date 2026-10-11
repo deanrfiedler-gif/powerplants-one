@@ -1,4 +1,5 @@
-import { ContextList } from "../../../components/context-screens";
+import "../../styles/customers.css";
+import { CrmDirectory } from "../../../components/crm-directory";
 export default function Page() {
-  return <ContextList section="customers" />;
+  return <CrmDirectory key="customers" kind="organisations" />;
 }

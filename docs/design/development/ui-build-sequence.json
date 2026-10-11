@@ -2,9 +2,9 @@
  "title": "Powerplants One UI build and review sequence",
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
-  "register": "docs/design/development/register.json",
-  "register_sha256": "b03ba61867c1473ff8a32a64f1a6474d2cbf05b01721997e33e463a0a7561b5f",
-  "build_plan": "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html",
+  "register": "docs\\design\\development\\register.json",
+  "register_sha256": "49265c78f176b6c3e3dd4e67e761db32c8ddda4bd18e1307eb99febc243fe2d7",
+  "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
   "build_plan_basis": "Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort."

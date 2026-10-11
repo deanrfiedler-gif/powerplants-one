@@ -1,0 +1,16 @@
+{
+  "source": "3a626e69f4755b56aca200a98146baaa0f62b8c3",
+  "run": 38091640985,
+  "measurement_samples": 0,
+  "failure": "Sampler unit test asserted filesystem process-directory enumeration order; exact role membership was correct.",
+  "passed_before_failure": [
+    "build",
+    "synthetic fixture preparation",
+    "compiled diagnostic smoke",
+    "two TypeScript profile guards"
+  ],
+  "repair": "Assert exact unordered process membership for both roles; no diagnostic/application/workload change.",
+  "private_value_scan": "passed",
+  "artifacts_verified": 6,
+  "step_log_capture": "gh run view --log-failed rendered text captured locally; downloaded artifact files retain their original bytes."
+}
