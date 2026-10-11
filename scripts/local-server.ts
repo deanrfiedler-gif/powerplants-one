@@ -39,7 +39,7 @@ const server = createServer((req, res) => {
   const peer = req.socket.remoteAddress;
   if (
     !["127.0.0.1", "::ffff:127.0.0.1"].includes(peer ?? "") ||
-    req.headers.host !== `127.0.0.1:${config.port}` ||
+    req.headers.host !== `${config.host}:${config.port}` ||
     Object.keys(req.headers).some(
       (h) =>
         h === "forwarded" ||
