@@ -1,14 +1,17 @@
 {
-  "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
-  "status": "Historical upgrades still running; draft review only",
+  "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
+  "status": "Local validation complete; draft PR #429; CI and owner acceptance separate",
   "checks": {
     "access_database": {
       "passed": 81
     },
     "native_browser": {
-      "unique_passed": 42,
+      "unique_passed": 45,
+      "initial_passed": 39,
       "initial_failed": 3,
-      "corrected_team_rerun_passed": 9
+      "corrected_team_rerun_passed": 9,
+      "final_role_team_passed": 30,
+      "unchanged_inspection_passed": 15
     },
     "unit": {
       "passed": 19
@@ -22,10 +25,43 @@
     "build": "Passed",
     "lint": "Passed",
     "studio": "Passed; visual reviews pending",
-    "foundation": "Initial passed; final in progress",
+    "foundation": "Passed; 78 requirement IDs and 22 issued sources retained",
     "naming": "Passed",
-    "historical_upgrades": "In progress",
-    "hosted_upgrade": "Pending local database availability"
+    "historical_upgrades": {
+      "unique_selected_cases": 68,
+      "initial_recorded_results": 52,
+      "initial_passed": 48,
+      "initial_failed": 4,
+      "initial_run": "Interrupted; exact continuation selectors/files recorded in upgrade-files.json",
+      "all_covered_by_passes": true
+    },
+    "hosted_upgrade": {
+      "passed": 5,
+      "scope": "Existing-demo upgrade exercised only on a local disposable database; hosted API and runtime privilege boundaries retained"
+    },
+    "policy_baseline": {
+      "source": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+      "passed": 1,
+      "failed": 1,
+      "failure": "Fresh snapshot statement timeout 57014; both current cases pass in isolation without relaxed assertions/timeouts"
+    },
+    "parent_browser_regression": {
+      "parent_pr": 423,
+      "failed_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38134036369/job/114454108725",
+      "replays_passed": 9,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "repetitions_per_width": 3,
+      "test_timeout_ms": 45000,
+      "test_path": "tests/browser/access-requests.spec.ts",
+      "test_sha256": "74401e08c3fa40471a355b06352092f13e6ab85bed16a6e42f7e330b8a6ff118",
+      "scope": "Exact saved-record URL synchronization; application unchanged; historical parent CI remains failed"
+    },
+    "services": "Stopped; no listeners on task ports 3092, 55492 or 55487",
+    "ci": "Incomplete; original parent #423 mobile failure diagnosed and corrected here with nine passing replays. See stack-publication.json and parent-mobile-regression.md."
   },
   "artifacts": [
     {
@@ -37,16 +73,28 @@
       "sha256": "9c226aff01b315cbb1d0bd9207a5e706aecb234a5a5dcb7d6a8dc58c5bb05552"
     },
     {
+      "path": "browser-final.txt",
+      "sha256": "f55b5b5a69bfd3c39516288c175eb24a35645bb94415bf135bb75528b0e60ecc"
+    },
+    {
       "path": "browser-initial.txt",
-      "sha256": "dcec7fc6e0ef28f591d3a9154c20606a22bf279e322a3a290addb7431069fd73"
+      "sha256": "7e2e050250afe2b005f54818cb8ad749897d06b31fe1475d4abfd6b40b1bb724"
+    },
+    {
+      "path": "build-final.txt",
+      "sha256": "c0ab4eb7d9abb932253cddbe9869c9f1d59aa7505178fc6d68357f0bc40e720c"
     },
     {
       "path": "build-initial.txt",
-      "sha256": "04297d78234e19748860a5cc5f09e2690994dbca87e965af633e571b3ffc677a"
+      "sha256": "713dd3aab6f2f786fed2c5b52635998b68b6481a88c0f924a1dfccf07bd5ef7a"
     },
     {
       "path": "build.txt",
-      "sha256": "180a9dc6d9a9faecb45101d82d6dac73d7935fbbbf91051c47734672203ec951"
+      "sha256": "fbe823920e14c46eee0c928fd76449aafbcfdecb571c6c3c0b9b6f8a00a3bbea"
+    },
+    {
+      "path": "capture-final.txt",
+      "sha256": "e80ce80b2c20cef9de2b2e7855fdc48d6f315a75ed7aac923dcbfa554f103a16"
     },
     {
       "path": "capture.txt",
@@ -54,7 +102,11 @@
     },
     {
       "path": "captures.json",
-      "sha256": "a00142b28aedc8c475872a0526a327ec636c6c61aaf8234fdc7c0cfdb038ec40"
+      "sha256": "86737324edcc36e3e42c47d8c5966d02a36cb792a4ef46f7919aa0a8441d2728"
+    },
+    {
+      "path": "cleanup.json",
+      "sha256": "a3917f86f0baaece37346ac109c0c905b93d18adaebfb94d1a9a2bdde2d9069a"
     },
     {
       "path": "database-fixture-correction.txt",
@@ -62,19 +114,87 @@
     },
     {
       "path": "database-initial.txt",
-      "sha256": "2f235a00c75d96b4b2b4fc7d32674ce3d191668fd021e8371fcada6d49a2fd36"
+      "sha256": "0100719400cc266c3836f456c8f1902587615b094be2411ee58a82750a5a8300"
+    },
+    {
+      "path": "demo-upgrade.txt",
+      "sha256": "cfcf62df8495d3f40249470b0c8017a4aca0769a0a3c60adc805786de745fd1d"
+    },
+    {
+      "path": "foundation-handover.txt",
+      "sha256": "b46f670bba4fa4084f65fc3b9e5abe74cf6262da1c6e8ac0c8536beb3e268742"
     },
     {
       "path": "foundation-initial.json",
       "sha256": "5b928807a9cad43f8047ff6a47cb0e9de859e500bd9a50f1b8a4a603e23bd3c8"
     },
     {
+      "path": "foundation-publication.txt",
+      "sha256": "17e21c916a41424f567eb2471481961b079ae043dc45910275dd2f052eeef202"
+    },
+    {
+      "path": "foundation.json",
+      "sha256": "71ff38088a30ac9839619ed16e0e3d6fa601f4b6da8000f8bb9199070f78d532"
+    },
+    {
+      "path": "freshness-lint-final.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "historical-coverage.json",
+      "sha256": "c41e9a75b1fe628e3e40368ca176f602129dd28225b5cbf406534dac3882acd8"
+    },
+    {
+      "path": "historical-split.json",
+      "sha256": "857aac0f524dd5aafb5cd489654219d40013c017a701c7aec30530c61c5867da"
+    },
+    {
+      "path": "initial-captures/captures.json",
+      "sha256": "a00142b28aedc8c475872a0526a327ec636c6c61aaf8234fdc7c0cfdb038ec40"
+    },
+    {
+      "path": "initial-captures/native-1440-history.png",
+      "sha256": "689dc882b30ab1288f015553c2195540986618dfa0b3218f8e9bc096573dbeb4"
+    },
+    {
+      "path": "initial-captures/native-1440-overview.png",
+      "sha256": "fca90f4a315c83f3171a551d09f56a43f073bfb1627aec1507d922e8088f788a"
+    },
+    {
+      "path": "initial-captures/native-320-history.png",
+      "sha256": "ead858b5fa586bd5e5922cca3eb6e0eb37e2fb46fce2e431ee96f3fbe37dadf1"
+    },
+    {
+      "path": "initial-captures/native-320-overview.png",
+      "sha256": "f9413c11e554ddfea625db3b2dbc112a38728c8ab83b58d76ef76e6d9b60dac5"
+    },
+    {
+      "path": "initial-captures/native-390-history.png",
+      "sha256": "6872ec9366d823152d4214c8def60ee2fa3a7cf6abe75dd51c05b61dd9f0a16c"
+    },
+    {
+      "path": "initial-captures/native-390-overview.png",
+      "sha256": "f9ce7fbe41919ec0a21bd2ae97c33ae5b1e64c9f96ece601e486c6262ede67f1"
+    },
+    {
+      "path": "isolated-exits.json",
+      "sha256": "f82e3acc296432416e382db602aa511563db05abab32c70743b8a8c8da69574c"
+    },
+    {
       "path": "lint.txt",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "naming-handover.txt",
+      "sha256": "af1686ce36d7c93d7100a387289f878ab00816323f470f4accea2699e1a142d4"
+    },
+    {
       "path": "naming-initial.json",
       "sha256": "351319fb0856b21af692a6af1c6f376ad8289425480d7afbaa2bd70949bb8af2"
+    },
+    {
+      "path": "naming-publication.txt",
+      "sha256": "af1686ce36d7c93d7100a387289f878ab00816323f470f4accea2699e1a142d4"
     },
     {
       "path": "naming.json",
@@ -82,35 +202,59 @@
     },
     {
       "path": "native-1440-history.png",
-      "sha256": "689dc882b30ab1288f015553c2195540986618dfa0b3218f8e9bc096573dbeb4"
+      "sha256": "c0172cc5167c5a9d52e0a054ae9ef4dd75265364558a55c0f6c59c4411fcfdee"
     },
     {
       "path": "native-1440-overview.png",
-      "sha256": "fca90f4a315c83f3171a551d09f56a43f073bfb1627aec1507d922e8088f788a"
+      "sha256": "9346743ae2798291711ab3e487d84c7cd366df7abaa554e23c3fc45fc24dfa5c"
     },
     {
       "path": "native-320-history.png",
-      "sha256": "ead858b5fa586bd5e5922cca3eb6e0eb37e2fb46fce2e431ee96f3fbe37dadf1"
+      "sha256": "38f67071bd15a03fa87d70c9c103025bc780d3c2e0020e9a7ea42f77f8139902"
     },
     {
       "path": "native-320-overview.png",
-      "sha256": "f9413c11e554ddfea625db3b2dbc112a38728c8ab83b58d76ef76e6d9b60dac5"
+      "sha256": "551a7e5f6cd619d00afed76ff5fe50dd8e8a4540f2eeb2b04cfc02c3740307af"
     },
     {
       "path": "native-390-history.png",
-      "sha256": "6872ec9366d823152d4214c8def60ee2fa3a7cf6abe75dd51c05b61dd9f0a16c"
+      "sha256": "283dcce0bbd723ced618ff593f3d409bda4cf8ee8ee997cf63c0ec5be9085589"
     },
     {
       "path": "native-390-overview.png",
-      "sha256": "f9ce7fbe41919ec0a21bd2ae97c33ae5b1e64c9f96ece601e486c6262ede67f1"
+      "sha256": "ad30d3be6e9fbb38a0422b1c0194254edbb92b776b071dfc1d8004ad5f69fce0"
+    },
+    {
+      "path": "parent-browser-replay.txt",
+      "sha256": "fc870226bc6f5bfcecad180c220e336410346b0c77f9173a82c7a6a60ef50240"
+    },
+    {
+      "path": "parent-browser-setup-failure.txt",
+      "sha256": "263d227226737b40ae16c25f341c7b32c71ea18a0102c77eca4469c96660d43d"
+    },
+    {
+      "path": "parent-mobile-regression.md",
+      "sha256": "3b706d9fde3944beb89f4254dce4434837c2f7f2658e93ecaf8e99387907faaf"
     },
     {
       "path": "parent-pr-mid-validation.json",
       "sha256": "caa9f60a600973058565466bc65f3a94d2631bb02852fc89c3a9f6f054648df7"
     },
     {
+      "path": "parent-replay-lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "policy-isolated.txt",
+      "sha256": "2e43cf2c661b535241c07d02658536e8806c51822ea1e18083170b2318411de7"
+    },
+    {
+      "path": "policy-main-baseline.txt",
+      "sha256": "36af7a79035be9ad32ea2cc54a385355f8c76083f0f37f1cdf801353c4047407"
+    },
+    {
       "path": "README.md",
-      "sha256": "305681d2ed97a8f255e1ca77c450285b04ee21b2760d32ca5056e99bf036476f"
+      "sha256": "3a5e221ae14e0b8712f88a4a056029d14fa957d9edfa437ab59897d324ab0533"
     },
     {
       "path": "retained-browser-setup.txt",
@@ -126,14 +270,26 @@
     },
     {
       "path": "review.md",
-      "sha256": "aeaaa62d6644460901b11a1554274498517803ad89dc209603908482186f9074"
+      "sha256": "ae072e840930fc4e1e94826d6aae1eddff2a6ed78af543b6caf875de5a458fbd"
     },
     {
       "path": "setup-and-corrections.md",
-      "sha256": "278557979200eb94d8e3603e610aefe29b393240d1a4df69f946f206c0c2b186"
+      "sha256": "6f86b244e47b254cfb9e7fbac03169556095ca28830885ba67fbeaba61aab1f2"
+    },
+    {
+      "path": "stack-publication.json",
+      "sha256": "604df113cb3c97b940738cf48d45058afaf1357612a91a5d78319050bed53e5b"
+    },
+    {
+      "path": "studio-handover.txt",
+      "sha256": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f"
     },
     {
       "path": "studio-initial.json",
+      "sha256": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f"
+    },
+    {
+      "path": "studio-publication.txt",
       "sha256": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f"
     },
     {
@@ -146,7 +302,25 @@
     },
     {
       "path": "upgrade-files.json",
-      "sha256": "320626b423e4af6c3ba77626af295947aa7ca51828c882ed43deaef1b4868c84"
+      "sha256": "3cf9c7b5458f7954c07c8b0f747d99cec829b2bb3e3de68ec897e26f908f6931"
+    },
+    {
+      "path": "upgrade-isolated.txt",
+      "sha256": "68789afc197deffe81e9e145b074686d076d5d4663fbf8f3ed9b34f4f0b503ca"
+    },
+    {
+      "path": "upgrades-continuation-a.txt",
+      "sha256": "6e1bfcfb0632a47b36c3bc7938213cb6d6c7d872f6b6d3b2526e510d9a3f250f"
+    },
+    {
+      "path": "upgrades-continuation-b.txt",
+      "sha256": "16b6cbb71f3823ca2d28a8f3fb0cd8cc7e7889239361c36d0bbb0c50206033d5"
+    },
+    {
+      "path": "upgrades-initial.txt",
+      "sha256": "5dc0594530d0ba0e44bd873471049d50e25abed0abb46f225d3790e6b56818c5"
     }
-  ]
+  ],
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/429",
+  "handover_date": "2026-10-12"
 }

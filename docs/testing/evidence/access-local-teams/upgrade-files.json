@@ -35,5 +35,30 @@
     "tests/database/sales-estimating-binding.test.ts",
     "tests/database/estimating.test.ts",
     "tests/database/estimating-workspaces.test.ts"
+  ],
+  "initial_run_disposition": "Interrupted after 52 reported results (48 passes, four failures later covered by isolated passes). The broad fresh alternative also matched unrelated behavior cases; required remaining historical cases continue below.",
+  "continuations": [
+    {
+      "log": "upgrades-continuation-a.txt",
+      "database": "ppo_synthetic_test on independent loopback cluster 55492",
+      "name_pattern": "populated 0069 upgrade preserves linear-chain|populated 0068 upgrade|populated 0071 upgrade",
+      "files": [
+        "tests/database/quotation-task-branch.test.ts",
+        "tests/database/quotation-task-chain.test.ts",
+        "tests/database/quotation-task-diamond.test.ts"
+      ]
+    },
+    {
+      "log": "upgrades-continuation-b.txt",
+      "database": "ppo_synthetic_test on independent loopback cluster 55487",
+      "name_pattern": "upgrade",
+      "files": [
+        "tests/database/quotation-task-dependency.test.ts",
+        "tests/database/quotation-task-merge.test.ts",
+        "tests/database/reports.test.ts",
+        "tests/database/sales-delivery-binding.test.ts",
+        "tests/database/sales-estimating-binding.test.ts"
+      ]
+    }
   ]
 }

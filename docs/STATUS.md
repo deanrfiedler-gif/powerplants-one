@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 12 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
@@ -33,6 +33,8 @@ The SC-07 planner test repair selects the intended responsive date window throug
 ## AD-01 durable local team records — 11 October 2026
 
 Dean's continuation instruction starts `codex/ad01-local-teams` from #427 at `f9c8c00`. The initial stack inspection found no feedback or reported failure, with #427 queued, #423 partly running and #417 cancelled. The [contract](decisions/access-local-teams.md) adds dedicated local team creation, an immutable initial roster, audit-linked history and actor-bound recovery, plus inspection in the existing catalogue. Migration/seed 0082 adds one existing-local Systems duty and no user or hosted grant. Membership and lead labels confer no authority. [Evidence](testing/evidence/access-local-teams/README.md) records actual validation and limits. Native creation/editing, membership lifecycle, campaigns, D-020, owner acceptance and production readiness remain open.
+
+Final local validation on 12 October: [draft PR #429](https://github.com/deanrfiedler-gif/powerplants-one/pull/429) records 81 access database tests, 45 native browser checks, 68 historical cases covered by passing runs, five local existing-demo upgrade checks, 19 selected units, retained design checks and build/types/lint/document/register assurance. The interrupted initial historical run, initial failures, unchanged-main timeout and source-bound captures remain explicit. A later #423 mobile CI failure exposed a test URL-capture race; this draft waits for the exact saved-request URL and passes nine browser replays at three widths. Parent/final-head CI and owner review remain separate.
 
 ## AD-01 proposed team inspection — 11 October 2026
 

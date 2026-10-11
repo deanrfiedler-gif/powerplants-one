@@ -1,0 +1,32 @@
+
+Running 9 tests using 1 worker
+
+(node:34600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (9.0s)
+(node:31564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (4.7s)
+(node:33320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (4.3s)
+(node:27776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.7s)
+(node:34428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.8s)
+(node:22576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 6 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (4.2s)
+(node:2592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 7 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (4.2s)
+(node:33580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 8 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.3s)
+(node:21520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 9 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (3.4s)
+
+  9 passed (53.8s)

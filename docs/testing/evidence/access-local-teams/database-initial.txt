@@ -25,9 +25,9 @@
 test at tests\database\access-local-teams.test.ts:1:5782
 ✖ strict schema, exact IDs, explicit distinct bounded roster and version (15.2856ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Check the highlighted details.
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:235:9)
@@ -53,9 +53,9 @@ test at tests\database\access-local-teams.test.ts:1:5782
 test at tests\database\access-local-teams.test.ts:1:6334
 ✖ read/approve, lead and membership confer no creation duty (23.9766ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Check the highlighted details.
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:255:7)
@@ -81,9 +81,9 @@ test at tests\database\access-local-teams.test.ts:1:6334
 test at tests\database\access-local-teams.test.ts:1:7977
 ✖ deactivated or hosted participant refused; original replay survives later identity changes (35.9414ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Check the highlighted details.
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:322:9)
@@ -111,9 +111,9 @@ test at tests\database\access-local-teams.test.ts:1:7977
 test at tests\database\access-local-teams.test.ts:1:9774
 ✖ authority mutation queued before creation is revalidated after table lock (30.3011ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Check the highlighted details.
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:418:9)

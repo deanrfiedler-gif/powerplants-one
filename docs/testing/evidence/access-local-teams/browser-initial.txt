@@ -57,7 +57,7 @@ Running 42 tests using 1 worker
   ok 42 [narrow] › tests\browser\access-roles.spec.ts:381:1 › AD-01 team presentation separates inactive and unavailable local people from source examples (2.5s)
 
 
-  1) [desktop] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue 
+  1) [desktop] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue
 
     Test timeout of 60000ms exceeded.
 
@@ -89,7 +89,7 @@ Running 42 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) [phone] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue 
+  2) [phone] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue
 
     Test timeout of 60000ms exceeded.
 
@@ -121,7 +121,7 @@ Running 42 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  3) [narrow] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue 
+  3) [narrow] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue
 
     Test timeout of 60000ms exceeded.
 
@@ -154,7 +154,7 @@ Running 42 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   3 failed
-    [desktop] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue 
-    [phone] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue 
-    [narrow] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue 
+    [desktop] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue
+    [phone] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue
+    [narrow] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue
   39 passed (6.0m)

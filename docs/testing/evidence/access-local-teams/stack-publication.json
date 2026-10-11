@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-10-12T00:01:33.0456328+10:00",
+  "stage": "Before final documentation and parent browser-test correction commit",
+  "pull_requests": [
+    {
+      "number": 429,
+      "state": "OPEN",
+      "draft": true,
+      "base": "codex/ad01-team-inspection",
+      "head": "039df64103f09d804507ff226f4a35e3e11d7a4a",
+      "reviews": 0,
+      "comments": 0,
+      "failed": [],
+      "checks": "IN_PROGRESS:10, QUEUED:10, SKIPPED:1, SUCCESS:32"
+    },
+    {
+      "number": 427,
+      "state": "OPEN",
+      "draft": true,
+      "base": "codex/ad01-request-withdrawal",
+      "head": "f9c8c00213bc5279bcf0e5afdc688e770faf5108",
+      "reviews": 0,
+      "comments": 0,
+      "failed": [],
+      "checks": "IN_PROGRESS:10, SKIPPED:1, SUCCESS:39"
+    },
+    {
+      "number": 423,
+      "state": "OPEN",
+      "draft": true,
+      "base": "codex/ad01-approved-application",
+      "head": "988a7343f262d4c083200337b7be344b0bb3dbbd",
+      "reviews": 0,
+      "comments": 0,
+      "failed": [
+        {
+          "name": "P01–P11 browser-mobile proof",
+          "conclusion": "FAILURE",
+          "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38134036369/job/114454108725"
+        }
+      ],
+      "checks": "FAILURE:1, IN_PROGRESS:2, SKIPPED:1, SUCCESS:50"
+    },
+    {
+      "number": 417,
+      "state": "OPEN",
+      "draft": false,
+      "base": "main",
+      "head": "2579bd9ab895477a86e7dc811fc2fe358f0b424b",
+      "reviews": 0,
+      "comments": 0,
+      "failed": [],
+      "checks": "CANCELLED:102, SKIPPED:2"
+    }
+  ]
+}

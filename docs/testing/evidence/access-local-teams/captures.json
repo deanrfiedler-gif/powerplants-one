@@ -1,90 +1,90 @@
 {
-  "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
-  "captured_at": "2026-10-11T12:46:22.158Z",
+  "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
+  "captured_at": "2026-10-11T13:21:16.253Z",
   "captures": [
     {
       "file": "native-1440-overview.png",
-      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
       "viewport": {
         "width": 1440,
         "height": 960
       },
       "state": "overview",
-      "sha256": "fca90f4a315c83f3171a551d09f56a43f073bfb1627aec1507d922e8088f788a",
+      "sha256": "9346743ae2798291711ab3e487d84c7cd366df7abaa554e23c3fc45fc24dfa5c",
       "overflow": false,
       "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
     },
     {
       "file": "native-1440-history.png",
-      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
       "viewport": {
         "width": 1440,
         "height": 960
       },
       "state": "history",
-      "sha256": "689dc882b30ab1288f015553c2195540986618dfa0b3218f8e9bc096573dbeb4",
+      "sha256": "c0172cc5167c5a9d52e0a054ae9ef4dd75265364558a55c0f6c59c4411fcfdee",
       "overflow": false,
       "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
     },
     {
       "file": "native-390-overview.png",
-      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
       "viewport": {
         "width": 390,
         "height": 844
       },
       "state": "overview",
-      "sha256": "f9ce7fbe41919ec0a21bd2ae97c33ae5b1e64c9f96ece601e486c6262ede67f1",
+      "sha256": "ad30d3be6e9fbb38a0422b1c0194254edbb92b776b071dfc1d8004ad5f69fce0",
       "overflow": false,
       "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
     },
     {
       "file": "native-390-history.png",
-      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
       "viewport": {
         "width": 390,
         "height": 844
       },
       "state": "history",
-      "sha256": "6872ec9366d823152d4214c8def60ee2fa3a7cf6abe75dd51c05b61dd9f0a16c",
+      "sha256": "283dcce0bbd723ced618ff593f3d409bda4cf8ee8ee997cf63c0ec5be9085589",
       "overflow": false,
       "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
     },
     {
       "file": "native-320-overview.png",
-      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
       "viewport": {
         "width": 320,
         "height": 740
       },
       "state": "overview",
-      "sha256": "f9413c11e554ddfea625db3b2dbc112a38728c8ab83b58d76ef76e6d9b60dac5",
+      "sha256": "551a7e5f6cd619d00afed76ff5fe50dd8e8a4540f2eeb2b04cfc02c3740307af",
       "overflow": false,
       "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
     },
     {
       "file": "native-320-history.png",
-      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "source": "039df64103f09d804507ff226f4a35e3e11d7a4a",
       "viewport": {
         "width": 320,
         "height": 740
       },
       "state": "history",
-      "sha256": "ead858b5fa586bd5e5922cca3eb6e0eb37e2fb46fce2e431ee96f3fbe37dadf1",
+      "sha256": "38f67071bd15a03fa87d70c9c103025bc780d3c2e0020e9a7ea42f77f8139902",
       "overflow": false,
       "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
     }
   ],
   "fixture": {
-    "team_id": "e516b744-3281-4e9f-a4b1-bcdb56a0b7f0",
-    "operation_id": "13794cf1-6a20-4da3-87a9-97da1e8a0a04",
+    "team_id": "98135c03-f1a3-460d-b1a8-d1cc7a20814c",
+    "operation_id": "98969d48-27e7-4805-891a-b4ec4cd75f85",
     "receipt": {
-      "receipt_id": "ecb790fa-f5dd-43e3-9c5b-af7fab07d444",
-      "operation_id": "13794cf1-6a20-4da3-87a9-97da1e8a0a04",
-      "record_id": "e516b744-3281-4e9f-a4b1-bcdb56a0b7f0",
+      "receipt_id": "2e2bcc7a-1e1b-4168-84b4-7c151609de67",
+      "operation_id": "98969d48-27e7-4805-891a-b4ec4cd75f85",
+      "record_id": "98135c03-f1a3-460d-b1a8-d1cc7a20814c",
       "record_version": 1,
       "state": "Recorded",
-      "accepted_at": "2026-10-11T12:46:23.281Z",
+      "accepted_at": "2026-10-11T13:21:19.827Z",
       "warnings": [],
       "task_ids": []
     }

@@ -117,12 +117,17 @@ test("AD-01 submit, reopen and independently return an exact proposal without ch
     exact: true,
   });
   await expect(link).toBeVisible();
+  const savedPath = await link.getAttribute("href");
+  expect(savedPath).toMatch(/^\/admin\/access\/requests\/[0-9a-f-]{36}$/);
+  const url = new URL(savedPath!, baseURL!).href;
   await link.click();
+  // Queue content also contains SYN-B; it cannot prove the client navigation
+  // finished before we retain a URL for the later reviewer identity.
+  await expect(page).toHaveURL(url);
   await expect(page.locator("main")).toContainText("SYN-B");
   await expect(
     page.getByRole("button", { name: "Record decision", exact: true }),
   ).toHaveCount(0);
-  const url = page.url();
   await page.reload();
   await expect(page.locator("main")).toContainText("Version 1");
   await browserFixtureCall(
