@@ -28,6 +28,7 @@ Scope: the existing Estimating destination `estimates` ("Intake & workload", rou
 | Fixes before locking in | User decision, 11 October 2026 | Dean asked "Are you now satisfied with that design?" Claude named three things: titles cut short, the phone record title cut off, and a Saved estimates menu item that led nowhere. Dean replied "Proceed with the three fixes" |
 | Present-mode check | User request, 11 October 2026 | "I do have a local desktop version of Figma now. could you use it?" Claude played both flows in Figma desktop; section 7 |
 | Acceptance | User decision, 11 October 2026 | Dean saved the named version "Intake & workload — Pipedrive pattern, accepted" and answered "yes" to Claude's lock-in plan, which named the ES-01 decisions this design replaces |
+| Menu heading fix | User decision, 11 October 2026 | "Proceed with your recommendation on the menu heading". Claude had recommended fixing the shared "v2 / Menu heading" once in Shell v2 rather than page by page. Section 4, F1 |
 | Recommendations on the notes card | Adopted with the accepted design | Claude's recommendations were on the page's notes card when Dean saved the named version. Section 4 lists them as departures W1–W11 |
 | Building the page or the shell | Not decided | Section 6 |
 
@@ -106,9 +107,9 @@ A1 is a rule of the shared pattern, so it applies to every page that uses it. Th
 
 When the page is built to this design, these [ES-01 decisions](es01-design-board.md) are replaced: P1 (the persistent detail panel), P4 (the section tabs), P7 (the drawer) and O1 (the 1360 CSS px breakpoint). P2's segmented control becomes menu counts with the same count rule, and P5's inline owner choice becomes the My estimating work view. P3, P6, P8, O2 and the native workload contract stay in force. Until the page is built, the app keeps the ES-01 implementation as it is.
 
-### Finding in a shared part
+### Shared component fix
 
-F1. The Shell v2 component "v2 / Menu heading" (`73:48`) is 24 px tall but draws its text from 18 px, so the text overhangs the next item by 10 px. Under a plain item this is invisible; a highlighted item directly under a heading hides the heading. On this page the heading copies are 34 px tall. Fixing the component would move every menu down 10 px per heading on the other accepted pages, so it is left as an open question (section 6).
+F1. The Shell v2 component "v2 / Menu heading" (`73:48`) was 24 px tall but drew its text from 18 px, so the text overhung the next item by 10 px. Under a plain item this was invisible; a highlighted item directly under a heading hid the heading. This page first used 34 px heading copies. On Dean's decision the component itself now hugs its text: 18 px above, no padding below, 34 px tall, the same spacing this page used. Every side menu and the More slide-out on every page moved down 10 px per heading; no menu overflows. On this page the side-menu headings are unchanged, and the Intake rules block at the foot of the menu now starts 10 px higher because its heading has room. The retained captures of the earlier accepted pages, and of this page's Intake rules block, show the spacing before the fix; their next revisions will show it.
 
 ## 5. Superseded and retained references
 
@@ -122,7 +123,6 @@ The [ES-01 design board r01](../reference/ui/estimating/workload-design-board-r0
   - Should Saved estimates stay a view of this page or get its own rail item?
   - Should a saved-estimate row open a record window instead of the saved estimate page?
   - Add a "Not allocated" view once estimator allocation exists?
-  - Fix "v2 / Menu heading" once in Shell v2 (F1), accepting that every menu moves down 10 px per heading?
   - How should several rows be selected on the phone? The recommendation is the same as for Reviews & approvals: press and hold a row.
 - **Not drawn yet:** loading, no matches, no permitted workload, failed read (rows and counts cleared, with Try loading again) and no access (ES-01 X1–X5); the no-edit-permission notice and Start discovery (V2); a Won record with a Sales handover due (V3); stale data after a background refresh; the phone view picker and filter sheets; the 1024 px and 320 px widths. Every row opens the same sample record.
 
@@ -133,6 +133,7 @@ The [ES-01 design board r01](../reference/ui/estimating/workload-design-board-r0
 - Claude confirmed in Figma desktop that the named version "Intake & workload — Pipedrive pattern, accepted" was saved after all these changes, by opening the entry's version information and cancelling. The page was then renamed "Intake & workload (accepted)", which alters no pixel.
 - The seven captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder` (167, 167, 180, 101, 167, 42 and 42 icons), and the prototype switches frozen for the state shown. A check after the swap found no Font Awesome instance left in any copy. They were exported at scale 1 with the Figma connector, and each downloaded image was inspected. The hashes are in the [captures README](../reference/ui/estimating/intake-workload-design-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs` and `npm run studio:check` were run on this change and reported no errors.
+- After the Menu heading fix (F1), Claude checked the More slide-out, this page's menus and the Reviews & approvals menu with screenshots, and confirmed that every side menu on the Quotations, Cost sources and Sales briefs pages still ends well inside its 836 px frame.
 - Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
 
 ## 8. Consequences
