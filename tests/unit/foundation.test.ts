@@ -70,6 +70,26 @@ test("synthetic configuration rejects production, missing, remote and shared set
   ])
     assert.throws(() => localConfig({ ...env, DATABASE_URL: url }));
 });
+test("the local browser address is 127.0.0.1 unless localhost is chosen, and nothing else", () => {
+  const standard = localConfig(env);
+  assert.deepEqual([standard.host, standard.origin], ["127.0.0.1", "http://127.0.0.1:3000"]);
+  const chosen = localConfig({ ...env, PPO_LOCAL_HOST: "localhost", PPO_PORT: "3100" });
+  assert.deepEqual([chosen.host, chosen.origin], ["localhost", "http://localhost:3100"]);
+  for (const host of ["", "0.0.0.0", "::1", "[::1]", "LOCALHOST", "localhost.", "app.localhost", "db.example", "127.0.0.1:3000"])
+    assert.throws(() => localConfig({ ...env, PPO_LOCAL_HOST: host }), /PPO_LOCAL_HOST/);
+  // The database stays on 127.0.0.1 whatever the browser address.
+  assert.throws(() =>
+    localConfig({ ...env, PPO_LOCAL_HOST: "localhost", DATABASE_URL: "postgresql://x:y@localhost/ppo_synthetic" }),
+  );
+  const refused = spawnSync(process.execPath, ["--import", "tsx", "scripts/local-server.ts"], {
+    env: { ...process.env, ...env, PPO_LOCAL_HOST: "0.0.0.0", NEXT_TELEMETRY_DISABLED: "1" },
+    encoding: "utf8",
+    timeout: 5000,
+  });
+  assert.equal(refused.status, 1);
+  assert.match(refused.stderr, /PPO_LOCAL_HOST must be 127\.0\.0\.1 or localhost/);
+  assert.doesNotMatch(refused.stdout, /local synthetic only/);
+});
 test("draft schema rejects forged authority, unlisted fields, unsafe versions and malformed input", () => {
   const valid = {
     operation_id: randomUUID(),

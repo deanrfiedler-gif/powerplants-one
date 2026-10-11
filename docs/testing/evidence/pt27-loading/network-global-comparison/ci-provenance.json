@@ -1,0 +1,205 @@
+{
+  "conclusion": "failure",
+  "headSha": "c9467450cfb4dac40b46254e079b416f5c2eed58",
+  "jobs": [
+    {
+      "completedAt": "2026-10-11T01:37:05Z",
+      "conclusion": "failure",
+      "databaseId": 114359007101,
+      "name": "PT-27 controlled customer comparison",
+      "startedAt": "2026-10-11T01:27:19Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T01:27:21Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T01:27:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:27:37Z",
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "startedAt": "2026-10-11T01:27:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:27:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 3,
+          "startedAt": "2026-10-11T01:27:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:27:52Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "number": 4,
+          "startedAt": "2026-10-11T01:27:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:28:36Z",
+          "conclusion": "success",
+          "name": "Install the existing locked runtime and browser",
+          "number": 5,
+          "startedAt": "2026-10-11T01:27:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:29:52Z",
+          "conclusion": "success",
+          "name": "Independently calibrate the candidate before any application samples",
+          "number": 6,
+          "startedAt": "2026-10-11T01:28:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:31:14Z",
+          "conclusion": "success",
+          "name": "Build the declared source once",
+          "number": 7,
+          "startedAt": "2026-10-11T01:29:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:31:14Z",
+          "conclusion": "skipped",
+          "name": "Build the pinned control once with the same locked dependencies",
+          "number": 8,
+          "startedAt": "2026-10-11T01:31:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:31:15Z",
+          "conclusion": "success",
+          "name": "Configure disposable PostgreSQL lock capacity",
+          "number": 9,
+          "startedAt": "2026-10-11T01:31:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:31:51Z",
+          "conclusion": "success",
+          "name": "Prepare the declared fresh synthetic fixture once",
+          "number": 10,
+          "startedAt": "2026-10-11T01:31:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:31:57Z",
+          "conclusion": "success",
+          "name": "Verify actual compiled diagnostic phases",
+          "number": 11,
+          "startedAt": "2026-10-11T01:31:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:31:57Z",
+          "conclusion": "skipped",
+          "name": "Bind the same driver and existing fixture to the control build",
+          "number": 12,
+          "startedAt": "2026-10-11T01:31:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:00Z",
+          "conclusion": "failure",
+          "name": "Execute the predeclared comparison block",
+          "number": 13,
+          "startedAt": "2026-10-11T01:31:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:00Z",
+          "conclusion": "skipped",
+          "name": "Verify the changed receiving and directory journeys on desktop and phone",
+          "number": 14,
+          "startedAt": "2026-10-11T01:37:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:00Z",
+          "conclusion": "success",
+          "name": "Prepare diagnostic evidence",
+          "number": 15,
+          "startedAt": "2026-10-11T01:37:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:03Z",
+          "conclusion": "success",
+          "name": "Preserve every original attempt and resource sample",
+          "number": 16,
+          "startedAt": "2026-10-11T01:37:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:03Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "number": 30,
+          "startedAt": "2026-10-11T01:37:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:03Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 31,
+          "startedAt": "2026-10-11T01:37:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:03Z",
+          "conclusion": "success",
+          "name": "Stop containers",
+          "number": 32,
+          "startedAt": "2026-10-11T01:37:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T01:37:03Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 33,
+          "startedAt": "2026-10-11T01:37:03Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38101774119/job/114359007101"
+    },
+    {
+      "completedAt": "2026-10-11T01:25:17Z",
+      "conclusion": "skipped",
+      "databaseId": 114359007895,
+      "name": "Compiled application ${{ matrix.suite }} proof",
+      "startedAt": "2026-10-11T01:25:17Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38101774119/job/114359007895"
+    },
+    {
+      "completedAt": "2026-10-11T01:25:17Z",
+      "conclusion": "skipped",
+      "databaseId": 114359008378,
+      "name": "Desktop and mobile browser suite against the compiled application",
+      "startedAt": "2026-10-11T01:25:18Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38101774119/job/114359008378"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38101774119",
+  "artifact": {
+    "id": 11687714821,
+    "name": "PT27-controlled-observer-evidence",
+    "size_in_bytes": 3626217,
+    "digest": "sha256:c659db368355f571f8ced5af886a13b6e2d67e97bc13b1339f40d774be5cf2ad"
+  }
+}

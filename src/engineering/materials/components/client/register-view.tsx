@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { RegisterEmpty, RegisterFooter, RegisterSortHeader, RegisterTable } from "../../../../components/ui/register-table";
 import { mappingConditions, quantityText, parseQuantity, formatQuantity } from "../../model";
 import type { readLine, readRegister } from "../../reads";
 import { LineForm } from "./line-form";
@@ -152,44 +153,45 @@ export function RegisterView() {
           </div>
         )}
         <ReadNotice error={register.error} what="The materials register" />
-        <div className="em-table-scroll" data-stale={register.stale || undefined}>
-          <table className="em-table" data-wide={hiddenColumns.includes("~wide") || undefined}>
-            <caption className="mw-sr">Material requirements of this set. Opening a line inspects it; ticking a line selects it for a release set. The two are independent.</caption>
-            <thead>
-              <tr>
-                <th scope="col" className="em-col-check"><input ref={header} type="checkbox" aria-label={`Select the ${pageIds.length} lines on this page`} checked={pageIds.length > 0 && chosenHere.length === pageIds.length} onChange={togglePage} disabled={!pageIds.length} /></th>
-                {shown.map(([id, label]) => (
-                  <th key={id} scope="col" className={`em-col-${id}`} aria-sort={sort === sortFor[id] ? (dir === "asc" ? "ascending" : "descending") : undefined}>
-                    <button type="button" onClick={() => go(sort === sortFor[id] ? { dir: dir === "asc" ? "desc" : null } : { sort: sortFor[id] === "line" ? null : sortFor[id], dir: null })}>{label}</button>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((l) => (
-                <tr key={l.id} data-inspected={l.id === inspected || undefined} data-selected={l.id in selection || undefined} data-removed={l.removed || undefined}
-                  onClick={(e) => { if (!(e.target as HTMLElement).closest("input,button,a,label")) go({ line: l.id }, false); }}>
-                  <td className="em-col-check"><input type="checkbox" aria-label={`Select line ${l.line_number}, ${l.description}`} checked={l.id in selection} onChange={() => toggle(l)} disabled={l.removed} /></td>
-                  {shown.map(([id]) => <Cell key={id} id={id} line={l} open={() => go({ line: l.id }, false)} />)}
-                </tr>
+        <RegisterTable
+          caption="Material requirements of this set. Opening a line inspects it; ticking a line selects it for a release set. The two are independent."
+          stale={!!register.stale}
+          wide={hiddenColumns.includes("~wide")}
+          empty={<>
+            {data && !items.length && (data.counts.set_total === 0
+              ? <RegisterEmpty title="No material requirements yet"><p>Add the first requirement from an exact drawing issue.</p></RegisterEmpty>
+              : <RegisterEmpty title="No lines match"><p>{data.counts.set_total} line{data.counts.set_total === 1 ? "" : "s"} exist in this set. Clear a condition or the search to see them.</p></RegisterEmpty>)}
+            {!data && register.loading && <RegisterEmpty><p>Loading the materials register…</p></RegisterEmpty>}
+          </>}
+          footer={
+            <RegisterFooter>
+              <span>{data ? `${data.total} material${data.total === 1 ? "" : "s"}${data.counts.conditioned ? ` of ${data.counts.set_total} in this set` : ""}` : "…"} · {selectedCount} selected</span>
+              <span className="mw-spacer" />
+              <span>{from}–{to} of {data?.total ?? "…"}</span>
+              <button type="button" className="mw-icon-button" aria-label="Previous page" disabled={!data || data.page <= 1} onClick={() => go({ page: String((data?.page ?? 2) - 1) })}><Icon name="chevron-left" /></button>
+              <button type="button" className="mw-icon-button" aria-label="Next page" disabled={!data || to >= data.total} onClick={() => go({ page: String((data?.page ?? 1) + 1) })}><Icon name="chevron-right" /></button>
+            </RegisterFooter>
+          }>
+          <thead>
+            <tr>
+              <th scope="col" className="ppo-register-check"><input ref={header} type="checkbox" aria-label={`Select the ${pageIds.length} lines on this page`} checked={pageIds.length > 0 && chosenHere.length === pageIds.length} onChange={togglePage} disabled={!pageIds.length} /></th>
+              {shown.map(([id, label]) => (
+                <RegisterSortHeader key={id} label={label} className={`em-col-${id}${columnRole[id] ? ` ${columnRole[id]}` : ""}`}
+                  direction={sort === sortFor[id] ? (dir === "asc" ? "ascending" : "descending") : undefined}
+                  onSort={() => go(sort === sortFor[id] ? { dir: dir === "asc" ? "desc" : null } : { sort: sortFor[id] === "line" ? null : sortFor[id], dir: null })} />
               ))}
-            </tbody>
-          </table>
-          {data && !items.length && (
-            <div className="em-empty">
-              {data.counts.set_total === 0 ? <><strong>No material requirements yet</strong><p>Add the first requirement from an exact drawing issue.</p></>
-                : <><strong>No lines match</strong><p>{data.counts.set_total} line{data.counts.set_total === 1 ? "" : "s"} exist in this set. Clear a condition or the search to see them.</p></>}
-            </div>
-          )}
-          {!data && register.loading && <div className="em-empty"><p>Loading the materials register…</p></div>}
-        </div>
-        <footer className="em-table-foot">
-          <span>{data ? `${data.total} material${data.total === 1 ? "" : "s"}${data.counts.conditioned ? ` of ${data.counts.set_total} in this set` : ""}` : "…"} · {selectedCount} selected</span>
-          <span className="mw-spacer" />
-          <span>{from}–{to} of {data?.total ?? "…"}</span>
-          <button type="button" className="mw-icon-button" aria-label="Previous page" disabled={!data || data.page <= 1} onClick={() => go({ page: String((data?.page ?? 2) - 1) })}><Icon name="chevron-left" /></button>
-          <button type="button" className="mw-icon-button" aria-label="Next page" disabled={!data || to >= data.total} onClick={() => go({ page: String((data?.page ?? 1) + 1) })}><Icon name="chevron-right" /></button>
-        </footer>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((l) => (
+              <tr key={l.id} data-inspected={l.id === inspected || undefined} data-selected={l.id in selection || undefined} data-removed={l.removed || undefined}
+                onClick={(e) => { if (!(e.target as HTMLElement).closest("input,button,a,label")) go({ line: l.id }, false); }}>
+                <td className="ppo-register-check"><input type="checkbox" aria-label={`Select line ${l.line_number}, ${l.description}`} checked={l.id in selection} onChange={() => toggle(l)} disabled={l.removed} /></td>
+                {shown.map(([id]) => <Cell key={id} id={id} line={l} open={() => go({ line: l.id }, false)} />)}
+              </tr>
+            ))}
+          </tbody>
+        </RegisterTable>
         <footer className="em-page-foot"><span>Synthetic preview · {dateText(data?.observed_at ?? null, "")}</span><span>Technical release does not authorise purchasing.</span></footer>
       </section>
       {inspected && <Inspector key={inspected} lineId={inspected} outside={outside} onClose={() => go({ line: null })} onEdit={setEditing} changed={() => { register.reload(); reloadFrame(); }} />}
@@ -202,13 +204,16 @@ export function RegisterView() {
   );
 }
 
+// The line number is the row's pinned key; the requirement is the one column that wraps.
+const columnRole: Partial<Record<ColumnId, string>> = { line: "ppo-register-key", requirement: "ppo-register-wrap" };
+
 function Cell({ id, line: l, open }: { id: ColumnId; line: Line; open: () => void }) {
-  if (id === "line") return <td className="em-col-line">{l.line_number}</td>;
+  if (id === "line") return <td className="em-col-line ppo-register-key">{l.line_number}</td>;
   if (id === "requirement")
     return (
-      <td className="em-col-requirement">
-        <button type="button" className="em-row-title" onClick={open} aria-label={`Inspect line ${l.line_number}, ${l.description}`}>{l.description}</button>
-        {(l.substitution || l.removed) && <span className="em-cell-sub">{[l.substitution && (substitutionWords[l.substitution.state] ?? "Substitution proposed"), l.removed && "Removed"].filter(Boolean).join(" · ")}</span>}
+      <td className="em-col-requirement ppo-register-wrap">
+        <button type="button" className="ppo-register-row-title" onClick={open} aria-label={`Inspect line ${l.line_number}, ${l.description}`}>{l.description}</button>
+        {(l.substitution || l.removed) && <span className="ppo-register-sub">{[l.substitution && (substitutionWords[l.substitution.state] ?? "Substitution proposed"), l.removed && "Removed"].filter(Boolean).join(" · ")}</span>}
       </td>
     );
   if (id === "quantity") return <td className="em-col-quantity">{quantityText(l.quantity, l.unit)}</td>;

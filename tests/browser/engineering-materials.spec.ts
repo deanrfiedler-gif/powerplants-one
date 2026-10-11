@@ -85,7 +85,7 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
 
   // A35: header fill, rows and rules meet both edges of the register pane, with the menu open and the inspector shut.
   const flush = async () => {
-    const pane = (await page.locator(".em-register").boundingBox())!, table = (await page.locator(".em-register .em-table").boundingBox())!, head = (await page.locator(".em-register thead th").first().boundingBox())!;
+    const pane = (await page.locator(".em-register").boundingBox())!, table = (await page.locator(".em-register .ppo-register-table").boundingBox())!, head = (await page.locator(".em-register thead th").first().boundingBox())!;
     expect(Math.abs(table.x - pane.x)).toBeLessThan(1);
     expect(Math.abs(head.x - pane.x)).toBeLessThan(1);
     expect(table.x + table.width).toBeGreaterThanOrEqual(pane.x + pane.width - 1);
@@ -96,12 +96,12 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   // A38: the numbers come from the server for this set, and they agree with the rows.
   await expect(page.locator(".em-tabs button")).toHaveText([/All materials\s*8/, /Ready for review\s*5/, /Needs attention\s*3/]);
   await expect(page.locator(".em-attention strong")).toHaveText("3 material lines need attention");
-  await expect(page.locator(".em-table-foot")).toContainText("8 materials · 0 selected");
+  await expect(page.locator(".ppo-register-foot")).toContainText("8 materials · 0 selected");
   // The refined register: the notice sits above the table, states are chips, and no summary strip follows the table.
-  const notice = (await page.locator(".em-attention").boundingBox())!, tableTop = (await page.locator(".em-register .em-table").boundingBox())!.y;
+  const notice = (await page.locator(".em-attention").boundingBox())!, tableTop = (await page.locator(".em-register .ppo-register-table").boundingBox())!.y;
   expect(notice.y + notice.height).toBeLessThanOrEqual(tableTop + 1);
   await expect(page.locator(".em-states")).toHaveCount(0);
-  await expect(rows(page).filter({ hasText: "Control interface module" }).locator(".em-chip")).toHaveText(["Verified", "Evidence needed"]);
+  await expect(rows(page).filter({ hasText: "Control interface module" }).locator(".ppo-register-chip")).toHaveText(["Verified", "Evidence needed"]);
   await expect(rows(page).filter({ hasText: "Control interface module" })).toContainText("Substitution proposed");
   await expect(rows(page).filter({ hasText: "Pump assembly" })).toContainText("H-101 · Rev C");
 
@@ -111,7 +111,7 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await expect(inspector.getByRole("heading", { level: 2 })).toHaveText("Control interface module");
   await expect(page).toHaveURL(/line=/);
   await expect(page.locator(".em-register tbody input:checked")).toHaveCount(0);
-  await expect(page.locator(".em-table-foot")).toContainText("0 selected");
+  await expect(page.locator(".ppo-register-foot")).toContainText("0 selected");
   await expect(inspector.locator(".em-pair", { hasText: "Material required-by" }).locator("strong")).toHaveText("Date needed");
   await expect(inspector).toContainText("Obtain supplier firmware statement");
   await expect(inspector).toContainText(/Review due 22 Sept? 2026/);
@@ -137,7 +137,7 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   // Selection is separate: two ticks make the page checkbox indeterminate and leave line 030 inspected.
   await page.getByRole("checkbox", { name: /Select line 020/ }).check();
   await page.getByRole("checkbox", { name: /Select line 050/ }).check();
-  await expect(page.locator(".em-table-foot")).toContainText("2 selected");
+  await expect(page.locator(".ppo-register-foot")).toContainText("2 selected");
   expect(await page.locator(".em-register thead input").evaluate((el) => (el as HTMLInputElement).indeterminate)).toBe(true);
   await expect(page.getByRole("region", { name: "Selected lines" })).toContainText("Prepare release set from 2 lines");
   await expect(inspector.getByRole("heading", { level: 2 })).toHaveText("Control interface module");
@@ -151,10 +151,10 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await page.getByPlaceholder("Search materials").fill("tubing");
   await expect(page).toHaveURL(/q=tubing/);
   await expect(rows(page)).toHaveCount(0);
-  await expect(page.locator(".em-empty")).toContainText("No lines match");
+  await expect(page.locator(".ppo-register-empty")).toContainText("No lines match");
   await page.locator(".em-tabs button", { hasText: "All materials" }).click();
   await expect(rows(page)).toHaveCount(1);
-  await expect(page.locator(".em-table-foot")).toContainText("1 material of 8 in this set");
+  await expect(page.locator(".ppo-register-foot")).toContainText("1 material of 8 in this set");
 
   // The entry route opens the workspace itself, on the package last opened here; the list is there when asked for.
   await page.goto("/engineering/materials");
