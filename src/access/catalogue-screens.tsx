@@ -109,7 +109,7 @@ export function AccessCapabilitiesScreen() {
       {resource.data && !resource.loading && !resource.error && (
         <>
           <p className="read-meta">
-            {resource.data.items.length} capabilities. Counts are grants, not
+            Capabilities shown: {resource.data.items.length}. Counts are grants, not
             people. Checked <Stamp value={resource.data.checked_at} />.
           </p>
           <p>
