@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createConnection, createServer, type Socket } from "node:net";
 import { once } from "node:events";
-import { packetCommands, relayPort, startRelay } from "../../scripts/quality-packet-network";
+import { packetClassCounters, packetCommands, relayPort, startRelay } from "../../scripts/quality-packet-network";
 
 test("opaque relay handles fragmented and pipelined SOCKS handshakes, exact bidirectional bytes and rejects unrelated targets", async () => {
   const target = createServer(socket => socket.pipe(socket));
@@ -50,4 +50,13 @@ test("packet plan has independent capped classes in both directions with no all-
   assert.ok(filters.every(c => c.includes("127.0.0.1/32") && c.includes("0xffff")));
   assert.equal(commands.filter(c => c.includes("netem") && c.includes("20ms")).length, 20);
   assert.throws(() => packetCommands(2)); assert.throws(() => relayPort(10));
+});
+
+test("legacy tc class statistics preserve observed counters and refuse missing, changed or duplicate formats", () => {
+  const first = "class htb 7abc:100 root leaf 200: prio 0 rate 10Mbit ceil 10Mbit burst 64Kb cburst 64Kb\n Sent 2500123 bytes 123 pkt (dropped 0, overlimits 42 requeues 0)\n backlog 0b 0p requeues 0\n";
+  const second = "class htb 7abc:101 root leaf 201: prio 0 rate 5Mbit ceil 5Mbit\n Sent 1250456 bytes 456 pkt (dropped 2, overlimits 7 requeues 0)\n";
+  assert.deepEqual(packetClassCounters(first + second), [{ handle: "7abc:100", bytes: 2500123, packets: 123, dropped: 0 }, { handle: "7abc:101", bytes: 1250456, packets: 456, dropped: 2 }]);
+  assert.throws(() => packetClassCounters(first.replace("Sent 2500123 bytes 123 pkt", "unknown counters")));
+  assert.throws(() => packetClassCounters(first + first));
+  assert.throws(() => packetClassCounters(first.replace("7abc:", "1:")));
 });
