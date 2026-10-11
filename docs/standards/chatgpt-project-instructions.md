@@ -2,7 +2,7 @@
 
 ## 1. Context
 
-Public repo, private demo; PPO is independent.
+Public repo, private demo.
 
 ## 2. Delivery
 
