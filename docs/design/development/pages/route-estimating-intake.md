@@ -21,15 +21,36 @@ Acceptance records receiving evidence only. It does not create or approve an Est
 
 ## Desktop
 
+Accepted design (11 October 2026): the [Sales briefs design decision](../../../decisions/sales-briefs-design.md), with captures 01–03 in [Sales briefs design r01](../../../reference/ui/estimating/sales-briefs-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid. The design labels this destination Sales briefs; the app still shows Intake and the earlier cards, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the labelled 240 px rail with Sales briefs selected (white tile, Solid inbox icon); the breadcrumb "Estimating & quotation / Sales briefs" as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
+- **Secondary menu:** All briefs, Awaiting my decision (receiving owner is me; Submitted or Clarification answered) and Assigned to me; a State group (Submitted, Clarification requested, Clarification answered, Returned, Accepted); an Attention group (Source changed). Neutral counts appear on open views only. It collapses to a 20 px strip from its right border or the top-bar toggle.
+- **Toolbar:** Customer and Receiving owner filters, the count with its refresh time, Refresh and "…".
+- **Grid:** one row per brief at its latest submitted revision. Single-line 40 px rows with lines between cells. Columns: Opportunity (reference and revision), Title, Customer, State (icon and words), Updated (sorted, newest first), Requested ("Date needed" when Sales gave a reason instead), Receiving owner and Sales owner. The checkbox column and the settings and "…" column stay fixed while the grid scrolls sideways. Long titles and customers end with an ellipsis; the record window shows them in full.
+- **State:** the receiving states as the code records them. "· source changed" is added in the warning text colour to an open brief whose source fingerprint changed; Returned is muted; every state has words.
+- **Record window:** clicking a row opens it over the grid, never squeezing it. Its left edge meets the secondary menu's right edge, with close, previous and next on that edge. It shows the summary, the frozen brief, the rule note, Clarification and Evidence tabs, and History. Its buttons are Open opportunity and Open brief; receiving decisions stay on the brief page.
+- **Selection:** ticking rows shows a selection toolbar and a 360 px panel with Open in sequence and Export list only.
+
+The brief page itself keeps the requirements below.
+
  retain the current shell, Roboto/Verdana and navy/green tokens. Reuse PageHeader, Button, Field, SelectField, RecordTabs and error/status controls. Keep review decisions after the brief, immutable history separate and long reasons wrapping. Inspect at 1440 × 960 and 1024 × 768.
 
 ## Mobile
+
+Accepted design (11 October 2026): captures 04–05 in [Sales briefs design r01](../../../reference/ui/estimating/sales-briefs-design-r01/README.md).
+
+- **Header and toolbar at 390 × 844:** the page name "Sales briefs" only, with no breadcrumb. A toolbar holds a view picker ("All briefs") standing in for the secondary menu, the count and a filter icon button.
+- **List:** flush list rows about 80 px tall, each showing the title and last update, the reference and customer, and the state and requested date, with a chevron.
+- **Record view:** tapping a row opens a full-screen record view with back, previous and next. The brief is stacked, and Open opportunity and Open brief are fixed at the bottom.
+- **Tab bar:** icons only, the five Estimating tabs, each with a hidden accessible label. Sales briefs is reached through More, so More is the current tab. Phone selection of several rows is not designed yet.
+
+The brief page itself keeps the requirements below.
 
  stack fields/actions, keep every tab reachable and contain table/history overflow. Inspect at 390 × 844, 320 CSS px and 200% zoom; keyboard focus and recovery state must stay visible.
 
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.route-estimating-intake` carries normal and recovery steps.
 
-Retained reference: `docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ADR-0046 recorded the earlier quotation boundary. Current native ES-05/06/07 engines exist; Sales quotation/outcome integration and automatic downstream effects remain separate from this handover. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+Accepted Figma design for the receiving queue: [Sales briefs design r01 captures](../../../reference/ui/estimating/sales-briefs-design-r01/README.md) (icon-free PNGs; not application captures). Retained reference: `docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ADR-0046 recorded the earlier quotation boundary. Current native ES-05/06/07 engines exist; Sales quotation/outcome integration and automatic downstream effects remain separate from this handover. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
 
 ## Accepted Sales brief link (LC-13)
 
