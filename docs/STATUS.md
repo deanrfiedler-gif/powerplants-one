@@ -36,6 +36,8 @@ Dean's continuation instruction starts `codex/ad01-team-inspection` from #423 at
 
 Local validation passes: 28 reported database tests, 33 compiled browser checks at three widths, 13 selected units, retained-model assertions, build/types/lint and register/documentation assurance. Eight final captures and the initial setup/capture corrections remain source-bound in the ledger. Owner review and current-stack CI remain separate.
 
+[Draft PR #427](https://github.com/deanrfiedler-gif/powerplants-one/pull/427) publishes this bounded increment, stacked on #423. At publication CI was pending; the local task services were stopped. The evidence preserves setup/capture corrections and the Git line-ending hash correction. No owner acceptance, merge or deployment is inferred.
+
 ## AD-01 requester withdrawal — 11 October 2026
 
 Dean authorised the next bounded step. Branch `codex/ad01-request-withdrawal` continues PR #417 at `2e69c4c` after inspecting its current CI and dependencies. The [withdrawal contract](decisions/access-request-withdrawal.md) permits only the original requester with current read/propose authority to close Submitted or Approved requests. Proposal and decision stay immutable; installed access is unchanged. Migration 0081 adds no seed, capability, grant or user. [Execution evidence](testing/evidence/access-withdrawal/README.md) records verification and initial failures separately. Fresh proposals require fresh independent review; teams, campaigns, grant revocation/editing and operational D-020 remain open. Owner acceptance and deployment are separate.
