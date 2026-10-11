@@ -16,3 +16,11 @@ Use the repository's pinned Node/npm/Playwright and Chrome channel for native ve
 Open the generated single HTML file to review it. For consistent same-origin browser storage it can also be served by a local static server. No provider or network request is made by the file. Reset affects only `ppo.output-distribution.r01` and its `.view` preference key, and re-arms the scripted finalisation interruption. JSON review export is not an import or restore contract.
 
 The stylesheet belongs to this isolated artifact; future application integration must scope its host and reuse the established components. All content is synthetic. Preview profiles are illustrative and do not secure the embedded fixture data.
+
+## Source-pin review — 11 October 2026
+
+The document issue/distribution contract and ES-05 decision replaced routine revision metadata with Git-managed history. HTML conformance also gained the application integration gate: canonical routes, scoped shell boundaries, independent source/compiled comparisons and separate owner review remain prerequisites for a later native integration. Naming adopted the same living-master rule while retaining controlled issued revisions, and added the independent Fertigation scope key; neither changes this synthetic distribution model's IDs or issue rules. The manifest now pins those reviewed current sources.
+
+The stale manifest was also present on unchanged main `442a863`. This review refreshes source references only: the fixture, shared styles, issued HTML and historical verification remain unchanged. Current model/browser CI is recorded separately; no owner acceptance, native integration or deployment is inferred.
+
+Local verification passes 38 model groups and 36 native browser groups with no browser errors. Deterministic assembly using the builder's declared inputs and Git LF source bytes reproduces the exact issued HTML; no reference file is rewritten. The current GitHub run remains separate.
