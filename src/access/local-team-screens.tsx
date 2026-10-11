@@ -185,6 +185,11 @@ export function SavedLocalTeams({
                   {selected === team.id ? "Close" : "Inspect"} roster for{" "}
                   {team.name}
                 </Button>
+                {selected === team.id && (
+                  <Button disabled={detail.loading} onClick={detail.reload}>
+                    Refresh member access
+                  </Button>
+                )}
                 {selected === team.id && detail.data && !detail.loading && (
                   <div>
                     <h4>Initial roster</h4>
@@ -198,9 +203,6 @@ export function SavedLocalTeams({
                       Member access checked{" "}
                       <Stamp value={detail.data.members[0].checked_at} />.
                     </p>
-                    <Button onClick={detail.reload}>
-                      Refresh member access
-                    </Button>
                     <ul>
                       {detail.data.members.map((member) => (
                         <li key={member.user_id} className="narrative">
