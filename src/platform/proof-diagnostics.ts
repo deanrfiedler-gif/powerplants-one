@@ -4,9 +4,13 @@ import { AsyncLocalStorage } from "node:async_hooks";
 
 // Opt-in, local synthetic verification only. Never record request headers,
 // query strings, bodies, identities, output content or exception messages.
-const enabled = process.env.PPO_PROOF_DIAGNOSTICS === "1" &&
-  process.env.PPO_ENV === "local-synthetic" && process.env.PPO_EXPOSURE === "loopback" &&
-  process.env.PPO_IDENTITY === "synthetic" && process.env.NODE_ENV !== "production";
+// Read the runtime environment through an opaque lookup. Next substitutes
+// NODE_ENV even through an inlined helper argument, which can erase enabled
+// branches while leaving a dynamic condition in the guarded compiled launcher.
+export const proofDiagnosticsAllowed = (env: Record<string, string | undefined>) =>
+  env.PPO_PROOF_DIAGNOSTICS === "1" && env.PPO_ENV === "local-synthetic" &&
+  env.PPO_EXPOSURE === "loopback" && env.PPO_IDENTITY === "synthetic" && env.NODE_ENV !== "production";
+const enabled = proofDiagnosticsAllowed(Reflect.get(process, "env"));
 let count = 0;
 const limit = 60000;
 type ProofRequest = { request_id: number; path: string; route_id?: number };
@@ -19,18 +23,26 @@ const diagnosticGlobal = globalThis as typeof globalThis & {
 const scope = diagnosticGlobal[scopeKey] ??= new AsyncLocalStorage<ProofRequest>();
 let routeId = 0;
 export const proofDiagnosticsEnabled = () => enabled;
+const measuredRead = (path: string) => /^\/api\/v1\/(?:reports\/:id|my-jobs\/:id|local-session|shell\/context|crm\/directory(?:\/views)?)$/.test(path);
+// Capture only the existing numeric/sanitised context, never the request itself.
+export function captureDatabaseProof() {
+  const current = scope.getStore();
+  if (!enabled || !current || !measuredRead(current.path)) return null;
+  return (event: string, fields: Record<string, string | number | boolean | null>) =>
+    scope.run(current, () => proofEvent(event, fields));
+}
 export function proofRequest<T>(request: ProofRequest, work: () => T): T {
   return enabled ? scope.run(request, work) : work();
 }
 export function proofReadRequest<T>(path: string, work: () => T): T {
   const safePath = proofPath(path);
-  if (!enabled || !/^\/api\/v1\/(reports|my-jobs)\/:id$/.test(safePath)) return work();
+  if (!enabled || !measuredRead(safePath)) return work();
   // A fallback route ID makes missing gateway-context propagation observable.
   return scope.run({ request_id: 0, ...scope.getStore(), path: safePath, route_id: ++routeId }, work);
 }
 export function proofReadPhase(phase: string) {
   const current = scope.getStore();
-  if (enabled && current && /^\/api\/v1\/(reports|my-jobs)\/:id$/.test(current.path))
+  if (enabled && current && measuredRead(current.path))
     proofEvent("read-phase", { phase });
 }
 export function proofEvent(event: string, fields: Record<string, string | number | boolean | null> = {}) {
@@ -49,6 +61,7 @@ export function proofEvent(event: string, fields: Record<string, string | number
 
 export function proofPath(raw: string) {
   const path = raw.split("?")[0].replace(/[0-9a-f]{32,}/gi, "opaque");
+  if (["/api/v1/local-session", "/api/v1/shell/context", "/api/v1/crm/directory", "/api/v1/crm/directory/views"].includes(path)) return path;
   if (/^\/_next\/static\/[a-zA-Z0-9_./%\[\]@()+-]+$/.test(path)) return path.slice(0, 240);
   if (/^\/(api\/v1\/|customers|sites|schedule|my-jobs|service|documents|finance|crm|work|people|equipment)/.test(path) &&
       /^\/[a-zA-Z0-9_/-]+$/.test(path))

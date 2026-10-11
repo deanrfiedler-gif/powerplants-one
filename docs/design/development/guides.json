@@ -36051,9 +36051,10 @@
       "source_paths": [
         "src/app/(business)/customers/[id]/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/duplicate-candidates.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context. PT-27 receiving duplicate-panel source binding updated; matching-name review, task steps and draft review status are unchanged.",
       "document_id": "PPO-GUIDE-PAGE-CUSTOMERS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -36063,7 +36064,8 @@
       "workflow_basis": [
         "src/app/(business)/customers/[id]/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/duplicate-candidates.tsx"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -36598,9 +36600,10 @@
       "source_paths": [
         "src/app/(business)/customers/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/crm-directory.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context. Direct-directory source binding added for the PT-27 loading candidate; the task sequence and draft review status are unchanged.",
       "document_id": "PPO-GUIDE-PAGE-CUSTOMERS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -36610,7 +36613,8 @@
       "workflow_basis": [
         "src/app/(business)/customers/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/crm-directory.tsx"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

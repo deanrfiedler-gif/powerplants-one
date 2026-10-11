@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "executed_date": "2026-10-10",
+  "timezone": "Australia/Brisbane",
+  "application_source": "48823716a6866a13b7d0cc89e556353a1966f874",
+  "build_id": "vccN4lXZaIVUer6rX-wEy",
+  "final_driver_source": "73541a22e3c89386c92966cedf1adceb64e4c9f2",
+  "compiled_smoke_script_sha256": "536e14ba91dfb29800d9b5afd72995c245c9b29ad7d0f6ca05ee123a174c4e6d",
+  "checks": [
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "log": "logs/session-opaque-build.log.gz"
+    },
+    {
+      "command": "compiled smoke of all four read paths",
+      "result": "passed",
+      "log": "logs/session-compiled-smoke.log.gz"
+    },
+    {
+      "command": "browser",
+      "result": "14 passed",
+      "log": "verification/browser.log.gz"
+    },
+    {
+      "command": "unit",
+      "result": "28 passed",
+      "log": "verification/unit.log.gz"
+    },
+    {
+      "command": "lint",
+      "result": "passed",
+      "log": "verification/lint.log.gz"
+    },
+    {
+      "command": "typecheck",
+      "result": "passed",
+      "log": "verification/typecheck.log.gz"
+    },
+    {
+      "command": "scope-unit",
+      "result": "3 passed",
+      "log": "verification/scope-unit.log.gz"
+    },
+    {
+      "command": "fixture",
+      "result": "unchanged",
+      "log": "verification/fixture.log.gz"
+    },
+    {
+      "command": "studio",
+      "result": "passed; 28 stale and 322 unreviewed",
+      "log": "verification/studio.log.gz"
+    },
+    {
+      "command": "prototype",
+      "result": "passed",
+      "log": "verification/prototype.log.gz"
+    },
+    {
+      "command": "naming",
+      "result": "passed",
+      "log": "verification/naming.log.gz"
+    },
+    {
+      "command": "foundation",
+      "result": "passed",
+      "log": "verification/foundation.log.gz"
+    },
+    {
+      "command": "studio-final",
+      "result": "passed",
+      "log": "verification/studio-final.log.gz"
+    }
+  ],
+  "assurance": "Build, 31 focused units, 14 compiled browser checks, lint/type, unchanged fixture and all listed repository checks pass. Main CI context is historical and separate; updated PR-head CI is recorded on GitHub.",
+  "limits": "Focused synthetic verification; no fresh owner/visual review, original-503 fix, full PT-27 acceptance, merge or deployment claim.",
+  "summary_script_sha256": "cea6df48de3f4b5cf6c8d2a327fa9405502348341772a7c127f43f6c53672273"
+}

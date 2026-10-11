@@ -1,0 +1,120 @@
+{
+  "source_head": "ff5a6ba15da14b640c18f678a92b6856a0d92112",
+  "run_id": 38046173315,
+  "artifact_id": 11668044130,
+  "job_id": 114196047195,
+  "failed_test": "N01 saved survey opens each exact Equipment record and returns to its source",
+  "error": "apiRequestContext.post: read ECONNRESET",
+  "failed_call": "POST /api/v1/local-session after browser navigation",
+  "window_start_ms": 1791630128939,
+  "window_end_ms": 1791630135424,
+  "window_events": {
+    "server-runtime": 4,
+    "http-received": 146,
+    "read-phase": 56,
+    "database-acquire-start": 25,
+    "database-acquired": 25,
+    "database-release": 25,
+    "http-finished": 144,
+    "database-client-connected": 31,
+    "http-closed-incomplete": 1
+  },
+  "received_posts": [
+    {
+      "at_ms": 1791630129072,
+      "pid": 5485,
+      "sequence": 40182,
+      "event": "http-received",
+      "request_id": 19926,
+      "path": "/api/v1/local-session",
+      "method": "POST"
+    },
+    {
+      "at_ms": 1791630129082,
+      "pid": 5485,
+      "sequence": 40184,
+      "event": "http-received",
+      "request_id": 19927,
+      "path": "/api/v1/:other",
+      "method": "POST"
+    },
+    {
+      "at_ms": 1791630129139,
+      "pid": 5485,
+      "sequence": 40186,
+      "event": "http-received",
+      "request_id": 19928,
+      "path": "/api/v1/:other",
+      "method": "POST"
+    },
+    {
+      "at_ms": 1791630129163,
+      "pid": 5485,
+      "sequence": 40188,
+      "event": "http-received",
+      "request_id": 19929,
+      "path": "/api/v1/:other/:other",
+      "method": "POST"
+    },
+    {
+      "at_ms": 1791630129189,
+      "pid": 5485,
+      "sequence": 40190,
+      "event": "http-received",
+      "request_id": 19930,
+      "path": "/api/v1/:other/:other/:id/:other",
+      "method": "POST"
+    }
+  ],
+  "post_count": 5,
+  "local_session_posts": 1,
+  "last_setup_response_ms": 1791630129218,
+  "time_from_last_setup_response_to_test_end_ms": 6206,
+  "database_acquisition_failures": 0,
+  "observation": "Only the initial coordinator session POST reached the gateway. Both asset creates, survey create and survey save reached it. No final technician session POST was received before test failure. The server continued answering nearby browser requests. A stale idle API socket is consistent with these observations but not proven by a retained socket trace.",
+  "raw_trace": "Not uploaded: workflow excludes trace.zip from review artifacts.",
+  "server_log_sha256": "a25bc806b9dc743a09ccdfea6e0a1c938ea4a41c50f86cee8d736f48b046b848",
+  "limits": "This connection reset is not the prior HTTP 503 reproduction. No database or application timeout fix is established.",
+  "reviewed_repair_head": "5b0bb26ce4d562f6462d3a25fb7412872c3bff98",
+  "unchanged_baseline": {
+    "source": "6c69d92b8fd0913de916587f6e4cabb358868f11",
+    "build_id": "qThSo3tITjqcT7DkJfgP0",
+    "test_file_sha256": "2e20b333d00fd47056c8733cbdbf2c041937b545c7f5a609e893cc5576e08562",
+    "command": "node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts --project=mobile-chromium --no-deps tests/browser/navigation-context.spec.ts --grep N01 --repeat-each=3 --reporter=list,json",
+    "environment": "Separate source export and disposable ppo_synthetic_test PostgreSQL 16.15 cluster; retained benchmark database untouched. Node 24.21.0, Playwright 1.63.0, Chrome 155.0.8059.40. Original 120-second startup and 45-second test deadlines retained.",
+    "attempts": [
+      {
+        "label": "baseline-navigation",
+        "result": "120-second startup timeout; no tests executed"
+      },
+      {
+        "label": "baseline-navigation-repeat",
+        "result": "120-second startup timeout with missing next module at the preserved build location; no tests executed"
+      },
+      {
+        "label": "baseline-navigation-resolved",
+        "result": "3 passed, 0 failed",
+        "stats": {
+          "startTime": "2026-10-10T12:21:32.768Z",
+          "duration": 147507.613,
+          "expected": 3,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      }
+    ],
+    "harness_correction": "Linked the same locked node_modules at the preserved build parent so its external module resolution succeeds; no application or test source change.",
+    "limit": "Three unchanged-main passes do not disprove an intermittent failure or establish the original reset cause."
+  },
+  "transport_regression": {
+    "command": "node --import tsx --test tests/unit/browser-fixture-transport.test.ts",
+    "passed": 1,
+    "failed": 0,
+    "boundary": "Real HTTP requests preserve cookies/body/Origin, use distinct connections, reject a lost POST response once and reject HTTP 503 once; no retries."
+  },
+  "negative_probe": {
+    "result": "6 of 6 isolated transport calls passed",
+    "boundary": "A 50ms synthetic server idle limit with caller blocking did not reproduce ECONNRESET. This is not evidence establishing the original CI cause or an application timeout change."
+  }
+}

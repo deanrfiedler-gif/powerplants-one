@@ -2,6 +2,7 @@ import pg, { type PoolClient } from "pg";
 import { runtimeConfig } from "./config";
 import { isHostedDemo } from "./demo-config";
 import { proofReadPhase } from "./proof-diagnostics";
+import { installDatabaseProof } from "./proof-database";
 
 export const databasePoolLimits = Object.freeze({
   // The declared load creates three database-backed reads for each of ten
@@ -23,6 +24,7 @@ export function database() {
     ...(isHostedDemo() ? { ssl: { rejectUnauthorized: true, minVersion: "TLSv1.2" as const }, max: 8 } : {}),
     application_name: "PPO-P01",
   });
+  installDatabaseProof(pool);
   pool.on("error", () => {
     // An idle connection may end during a database restart. The pool removes it;
     // subsequent requests reconnect. Never log connection strings or SQL payloads.

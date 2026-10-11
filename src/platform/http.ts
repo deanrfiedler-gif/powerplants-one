@@ -6,6 +6,7 @@ import { AppError, unexpectedFailureCategory } from "./errors";
 import { resolveIdentity, sessionCookie } from "./identity";
 import { database } from "./database";
 import { enterWorkingCompany, loadWorkingCompany } from "./working-company";
+import { proofReadPhase } from "./proof-diagnostics";
 export function localRequest(request: NextRequest, mutation = false) {
   const config = runtimeConfig(),
     expected = process.env.PPO_LOCAL_GATEWAY,
@@ -35,8 +36,13 @@ export function localRequest(request: NextRequest, mutation = false) {
 }
 // NR-18: the signed-in person's chosen working company applies to the rest of this request.
 export const identity = async (request: NextRequest) => {
+  proofReadPhase("session-lookup-start");
   const p = await resolveIdentity(request.cookies.get(sessionCookie)?.value);
-  enterWorkingCompany(p.actor_id, await loadWorkingCompany(database(), p));
+  proofReadPhase("session-lookup-complete");
+  proofReadPhase("working-company-start");
+  const company = await loadWorkingCompany(database(), p);
+  proofReadPhase("working-company-complete");
+  enterWorkingCompany(p.actor_id, company);
   return p;
 };
 export async function jsonBody(request: NextRequest, maxBytes = 16384): Promise<unknown> {
