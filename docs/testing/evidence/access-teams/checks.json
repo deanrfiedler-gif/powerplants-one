@@ -42,7 +42,7 @@
     "design-model.json": "49d66d2c1c20894477a31f472de9f1412786b7bf98164de8f667d968544b40aa",
     "foundation-final.txt": "72b223b2de87e38da27463b936945dea8b052e64e35964a8d069e4628921f96d",
     "foundation.txt": "e085d3ad03e5ff9eb21648faedb793276d6f782e0da62810054c7f961cc3351d",
-    "initial-capture-attempt.json": "b54e9cde7f22b72981acffb945e66c0cf7be27751352d449945c5d06e11a13a6",
+    "initial-capture-attempt.json": "71c1788431d74750a10db27f56a8c824eec62cf32bec5a9c596c2f4352e24deb",
     "initial-native-320-teams.png": "3fb18ccfd303ea351ef496434ef271f2cd0caee8b3c20e2d05ace620a34d29c0",
     "initial-native-390-teams.png": "cc89f8d97c3929ba68971285b395b23226b1edf073cc7fafcb2ff04c133a94d7",
     "lint-final.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
@@ -57,7 +57,7 @@
     "reference-1440-teams.png": "a8cf03dad3fdee99e12879d803b657b4c8351a352ac5e7e8898c3c1b05bbbd6a",
     "reference-320-teams.png": "c75bf3c834663bdc7f9ff495ca653ad6221471ed0a1fa87984cb4a4d04a9b876",
     "reference-390-teams.png": "9dc78afc794b064eaa56155aca318351bdd467652f76bed9659cb7d755902ddc",
-    "setup.txt": "612defa65acf310a633ce56e9a84ac907323a122206ff3615bf5e8cbff4fa07b",
+    "setup.txt": "faa397c9547ea3b67b67bf9eaaac2a5223923137c9b5e56818a69337d3cc7ae2",
     "studio-final.txt": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
     "studio.txt": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
     "types.txt": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
@@ -75,5 +75,13 @@
     "postgresql": "16.15",
     "chrome": "155.0.8059.40"
   },
-  "source_after_validation": "Only evidence, register and documentation edits follow the recorded implementation/test commit."
+  "source_after_validation": "Only evidence, register and documentation edits follow the recorded implementation/test commit.",
+  "evidence_hash_correction": {
+    "initial_commit": "dce4a8b",
+    "files": [
+      "initial-capture-attempt.json",
+      "setup.txt"
+    ],
+    "reason": "Initial hashes used CRLF working-copy bytes; Git stored normalized LF. Recomputed from committed Git bytes."
+  }
 }
