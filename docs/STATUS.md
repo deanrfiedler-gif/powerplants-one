@@ -6,7 +6,7 @@
 
 ## AD-01 proposed-role comparison — 11 October 2026
 
-Dean's next-task instruction continues AD-01 from PR #413 on `codex/ad01-role-comparison`, integrating main `ba1f4e3`. The [native decision](decisions/access-review-native.md#proposed-role-comparison-continuation--11-october-2026) adds seven retained role proposals, the exact Service coordinator draft delta and person comparison at a selected company/site. Matching grants never assign a role or recommend an access expansion. No migration, seed or access mutation is introduced. The [execution record](testing/evidence/access-roles/README.md) separates current verification from visual/owner acceptance and deployment. Teams, controlled access changes and campaigns remain open.
+Dean's next-task instruction continues AD-01 from PR #413 on `codex/ad01-role-comparison`, integrating main `ba1f4e3`. The [native decision](decisions/access-review-native.md#proposed-role-comparison-continuation--11-october-2026) adds seven retained role proposals, the exact Service coordinator draft delta and person comparison at a selected company/site. Matching grants never assign a role or recommend an access expansion. No migration, seed or access mutation is introduced. The [execution record](testing/evidence/access-roles/README.md) separates current verification from visual/owner acceptance and deployment. Teams, controlled access changes and campaigns remain open. Local build/types, 22 database checks, 24 browser checks, 18 source/navigation checks, ESLint and documentation/register assurance pass. Fifteen source-bound captures record the proposed layout adaptation; owner review and deployment remain separate.
 
 ## AD-01 capability catalogue continuation — 11 October 2026
 

@@ -13031,7 +13031,11 @@
       "guide_key": "guide.route-admin-access-id-roles",
       "design_path": "docs/design/development/pages/route-admin-access-id-roles.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-roles/native-1440-comparison.png",
+        "docs/testing/evidence/access-roles/native-390-comparison.png",
+        "docs/testing/evidence/access-roles/native-320-comparison.png"
+      ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
@@ -13041,7 +13045,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Database scope/authority and preservation checks pass; compiled browser verification recorded separately in the role comparison ledger.",
+      "functional_status": "22 AD-01 database, 24 compiled desktop/phone browser and 18 source/navigation unit checks pass locally; see role comparison ledger. CI and owner review separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13072,7 +13076,11 @@
       "guide_key": "guide.route-admin-access-roles",
       "design_path": "docs/design/development/pages/route-admin-access-roles.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-roles/native-1440-roles.png",
+        "docs/testing/evidence/access-roles/native-390-roles.png",
+        "docs/testing/evidence/access-roles/native-320-roles.png"
+      ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
@@ -13082,7 +13090,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Database scope/authority and preservation checks pass; compiled browser verification recorded separately in the role comparison ledger.",
+      "functional_status": "22 AD-01 database, 24 compiled desktop/phone browser and 18 source/navigation unit checks pass locally; see role comparison ledger. CI and owner review separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

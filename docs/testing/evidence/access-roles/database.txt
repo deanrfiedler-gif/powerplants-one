@@ -1,0 +1,33 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (32266.2956ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (35.662ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (22.2237ms)
+  ✔ grant eligibility differentiates company and exact site scope (24.5829ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (26.99ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (7.0703ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (117.7439ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (1765.9509ms)
+  ✔ reads preserve every identity, grant and audit row (128.906ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (2156.1176ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (50.7749ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (22.4616ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (11.4448ms)
+  ✔ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (4904.4444ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (102.1848ms)
+✔ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (5103.7651ms)
+▶ AD01-04 proposed roles compare current authority at one exact scope without assigning access
+  ✔ catalogue is proposed only; exact revision and selection are required (52.311ms)
+  ✔ Site, Company and Workspace checks never match an unrelated grant (26.8952ms)
+  ✔ inactive identity and future/expired grants remove matches (20.9805ms)
+  ✔ reviewer permissions and cleared working company are required on both reads (12.8123ms)
+  ✔ hosted comparison masks identities; all reads preserve grants, users, audit and session state (889.684ms)
+✔ AD01-04 proposed roles compare current authority at one exact scope without assigning access (1018.7345ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46378.1764
