@@ -6747,14 +6747,23 @@
       "guide_key": "guide.page.sales.leads.id",
       "design_path": "docs/design/development/pages/route-sales-leads-id.md",
       "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-01-Desktop-Record-Page-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-02-Desktop-Activity-Tab-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-03-Desktop-Email-Tab-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-04-Desktop-File-Tab-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-05-Desktop-Register-Record-Window-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-06-Desktop-States-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-07-Phone-Tabs-Forms-Action-Sheet-r01.png"
+      ],
       "dependencies": [
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/testing/evidence/lead-context-resolution/README.md",
         "src/components/sales-followup.tsx",
-        "src/sales/followup.ts"
+        "src/sales/followup.ts",
+        "docs/decisions/lead-record-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
