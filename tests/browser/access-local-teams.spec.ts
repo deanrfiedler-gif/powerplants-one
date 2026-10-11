@@ -92,6 +92,57 @@ test("AD01 saved teams: real creation, lost response, reload recovery and native
     saved.getByRole("heading", { name: "Initial roster" }),
   ).toHaveCount(0);
 });
+test("AD01 saved teams: fresh detail identity labels replace the earlier list presentation", async ({
+  page,
+  baseURL,
+}) => {
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  const input = command();
+  await browserFixtureCall(page, "admin/access/teams", input, baseURL!);
+  await page.goto("/admin/access/roles");
+  const card = page.getByRole("article", { name: `${input.name} saved team` });
+  await expect(card).toContainText("Lead: SYN Systems · Active identity");
+  // Presentation fixture only: database checks separately prove local masking and activity reads.
+  await page.route(
+    `**/api/v1/admin/access/teams/${input.team_id}`,
+    async (route) => {
+      const response = await route.fetch(),
+        body = await response.json();
+      await route.fulfill({
+        response,
+        json: {
+          ...body,
+          team: {
+            ...body.team,
+            lead_name: "SYN Renamed lead",
+            lead_active: false,
+            creator_name: "SYN Renamed recorder",
+          },
+        },
+      });
+    },
+  );
+  await card
+    .getByRole("button", { name: `Inspect roster for ${input.name}` })
+    .click();
+  await expect(card).toContainText(
+    "Lead: SYN Renamed lead · Inactive identity",
+  );
+  await expect(card).toContainText("by SYN Renamed recorder");
+  await expect(card).toContainText("1 person in the initial roster");
+  await card
+    .getByRole("button", { name: `Close roster for ${input.name}` })
+    .click();
+  await expect(card).toContainText(
+    "Lead: SYN Renamed lead · Inactive identity",
+  );
+});
+
 test("AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue", async ({
   page,
   baseURL,
@@ -123,7 +174,9 @@ test("AD01 saved teams: unavailable refresh hides saved data; denied detail clea
     page.getByText("Synthetic team service unavailable"),
   ).toBeVisible();
   await page.unroute("**/api/v1/admin/access/teams?**");
-  await page.getByRole("button", { name: "Retry loading", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Retry loading", exact: true })
+    .click();
   await expect(saved).toBeVisible();
   await page.route(`**/api/v1/admin/access/teams/${input.team_id}`, (route) =>
     route.fulfill({

@@ -127,7 +127,7 @@
         {
           "id": "ad01-local-team-host",
           "label": "Saved local team inspection",
-          "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form."
+          "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form. Fresh-detail identity labels replace older collection labels and remain on close; a separate mocked presentation fixture proves this state."
         }
       ],
       "implementation": [
@@ -2329,7 +2329,7 @@
         {
           "id": "ad01-local-team-host",
           "label": "Saved local team inspection",
-          "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form."
+          "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form. Fresh-detail identity labels replace older collection labels and remain on close; a separate mocked presentation fixture proves this state."
         }
       ],
       "implementation": [

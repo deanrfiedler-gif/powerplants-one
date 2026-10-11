@@ -21,7 +21,7 @@ type Team = {
   member_count: number;
 };
 type Detail = {
-  team: Team;
+  team: Omit<Team, "member_count">;
   members: { user_id: string; display_name: string; active: boolean }[];
   history: {
     operation_id: string;
@@ -38,12 +38,24 @@ export function SavedLocalTeams({
 }) {
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
+  const [inspectedTeams, setInspectedTeams] = useState<
+    Record<string, Omit<Team, "member_count">>
+  >({});
   const list = useResource<{ items: Team[]; has_more: boolean }>(
     `admin/access/teams?offset=${offset}`,
   );
   const detail = useResource<Detail>(
     selected ? `admin/access/teams/${selected}` : null,
   );
+  // Preserve a newer inspected identity label when its roster is closed. A
+  // collection refresh or page change clears these per-record snapshots.
+  const visibleTeams = list.data?.items.map((team) => ({
+    ...team,
+    ...inspectedTeams[team.id],
+    ...(selected === team.id && detail.data && !detail.loading
+      ? detail.data.team
+      : {}),
+  }));
   const error = list.error || detail.error;
   const failure = error as Failure | null;
   const denied =
@@ -54,6 +66,7 @@ export function SavedLocalTeams({
   }, [denied, error, onDenied]);
   const refresh = () => {
     setSelected(null);
+    setInspectedTeams({});
     list.reload();
   };
   return (
@@ -75,7 +88,7 @@ export function SavedLocalTeams({
             <p>No local teams have been recorded.</p>
           )}
           <div className="record-grid">
-            {list.data.items.map((team) => (
+            {visibleTeams!.map((team) => (
               <article
                 className="record-card"
                 key={team.id}
@@ -102,6 +115,16 @@ export function SavedLocalTeams({
                   variant="quiet"
                   aria-expanded={selected === team.id}
                   onClick={() => {
+                    if (
+                      selected &&
+                      detail.data &&
+                      !detail.loading &&
+                      !detail.error
+                    )
+                      setInspectedTeams((current) => ({
+                        ...current,
+                        [selected]: detail.data!.team,
+                      }));
                     detail.reload();
                     setSelected(selected === team.id ? null : team.id);
                   }}
@@ -147,6 +170,7 @@ export function SavedLocalTeams({
               disabled={offset === 0}
               onClick={() => {
                 setSelected(null);
+                setInspectedTeams({});
                 setOffset(offset - 50);
               }}
             >
@@ -156,6 +180,7 @@ export function SavedLocalTeams({
               disabled={!list.data.has_more}
               onClick={() => {
                 setSelected(null);
+                setInspectedTeams({});
                 setOffset(offset + 50);
               }}
             >

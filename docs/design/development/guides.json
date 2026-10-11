@@ -75415,7 +75415,8 @@
           "title": "Statuses, warnings and save state",
           "paragraphs": [
             "Proposed and Draft describe design proposals. They never mean Approved or Adopted. Loading and failure hide prior catalogue cards; Retry or Refresh proposals rechecks authority.",
-            "No local teams have been recorded is a real empty collection. Collection loading/unavailable reads hide saved cards; roster loading retains the opener and hides the previous roster; a denied team read clears protected catalogue content. Refresh saved teams and Retry recheck current authority."
+            "No local teams have been recorded is a real empty collection. Collection loading/unavailable reads hide saved cards; roster loading retains the opener and hides the previous roster; a denied team read clears protected catalogue content. Refresh saved teams and Retry recheck current authority.",
+            "Opening a roster refreshes lead/creator identity labels. Closing or switching preserves those newer labels; Refresh saved teams or paging replaces the collection snapshot."
           ],
           "steps": [],
           "headers": [],
