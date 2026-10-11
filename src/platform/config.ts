@@ -24,6 +24,12 @@ export function localConfig(
   const port = Number(env.PPO_PORT ?? "3000");
   if (!Number.isInteger(port) || port < 1024 || port > 65535)
     throw new Error("Invalid local port.");
+  // The browser address. "localhost" is an opt-in for services that accept only that name, such
+  // as a Font Awesome Kit (ADR-0050). Either name is loopback; the server still listens on
+  // 127.0.0.1 and refuses every other host.
+  const host = env.PPO_LOCAL_HOST ?? "127.0.0.1";
+  if (host !== "127.0.0.1" && host !== "localhost")
+    throw new Error("PPO_LOCAL_HOST must be 127.0.0.1 or localhost.");
   let db: URL;
   try {
     db = new URL(env.DATABASE_URL ?? "");
@@ -44,7 +50,8 @@ export function localConfig(
     );
   return {
     port,
-    origin: `http://127.0.0.1:${port}`,
+    host,
+    origin: `http://${host}:${port}`,
     database_url: db.toString(),
     database_name: db.pathname.slice(1),
   };
