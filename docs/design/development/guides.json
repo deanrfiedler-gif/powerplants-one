@@ -10107,10 +10107,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-06",
+      "prepared_at": "2026-10-11",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance. Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -10377,6 +10377,22 @@
           "headers": [],
           "rows": [],
           "id": "material-diamond"
+        },
+        {
+          "section_id": "baseline-forecast",
+          "title": "Record and compare a schedule baseline",
+          "paragraphs": [
+            "In a saved project, open Baselines and forecast. Only the current coordinator with edit access can record a baseline for an active project. Each revision retains the complete dated schedule, recording actor and reason.",
+            "Differences are calendar days. Finish-to-start checks use the next Monday–Friday date; holidays and automatic shifts are not included. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
+          ],
+          "steps": [
+            "Date every task and inspect schedule warnings. Enter a baseline label and reason, acknowledge the review, then record the baseline.",
+            "Continue forecast changes through Edit task. Inspect affected successors and retain a reason for the change.",
+            "Reopen Baselines and forecast to inspect milestone slippage, changed dependencies and current owners. Select earlier revisions or Older baselines to inspect history.",
+            "If a version conflict occurs, refresh, compare the latest dates and acknowledge the review again. If the result is unconfirmed, retry the unchanged baseline before leaving."
+          ],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -41878,10 +41894,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-06",
+      "prepared_at": "2026-10-11",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance. Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -42165,6 +42181,22 @@
             "In Projects, choose Sales handovers to open the exact context in a dialog. Close it or press Escape to return focus to that action; the schedule stays visible behind it."
           ],
           "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "baseline-forecast",
+          "title": "Record and compare a schedule baseline",
+          "paragraphs": [
+            "In a saved project, open Baselines and forecast. Only the current coordinator with edit access can record a baseline for an active project. Each revision retains the complete dated schedule, recording actor and reason.",
+            "Differences are calendar days. Finish-to-start checks use the next Monday–Friday date; holidays and automatic shifts are not included. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
+          ],
+          "steps": [
+            "Date every task and inspect schedule warnings. Enter a baseline label and reason, acknowledge the review, then record the baseline.",
+            "Continue forecast changes through Edit task. Inspect affected successors and retain a reason for the change.",
+            "Reopen Baselines and forecast to inspect milestone slippage, changed dependencies and current owners. Select earlier revisions or Older baselines to inspect history.",
+            "If a version conflict occurs, refresh, compare the latest dates and acknowledge the review again. If the result is unconfirmed, retry the unchanged baseline before leaving."
+          ],
           "rows": [],
           "headers": []
         }
@@ -62197,10 +62229,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-11",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Not run for this guide Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -62424,6 +62456,22 @@
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
           "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "baseline-forecast",
+          "title": "Record and compare a schedule baseline",
+          "paragraphs": [
+            "In a saved project, open Baselines and forecast. Only the current coordinator with edit access can record a baseline for an active project. Each revision retains the complete dated schedule, recording actor and reason.",
+            "Differences are calendar days. Finish-to-start checks use the next Monday–Friday date; holidays and automatic shifts are not included. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
+          ],
+          "steps": [
+            "Date every task and inspect schedule warnings. Enter a baseline label and reason, acknowledge the review, then record the baseline.",
+            "Continue forecast changes through Edit task. Inspect affected successors and retain a reason for the change.",
+            "Reopen Baselines and forecast to inspect milestone slippage, changed dependencies and current owners. Select earlier revisions or Older baselines to inspect history.",
+            "If a version conflict occurs, refresh, compare the latest dates and acknowledge the review again. If the result is unconfirmed, retry the unchanged baseline before leaving."
+          ],
           "rows": [],
           "headers": []
         }

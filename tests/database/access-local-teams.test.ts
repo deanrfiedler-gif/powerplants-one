@@ -57,7 +57,7 @@ const counts = () =>
   ]);
 
 test(
-  "AD01 teams: populated 0081 upgrade preserves history and adds exactly one local duty",
+  "AD01 teams: populated 0082 upgrade preserves history and adds exactly one local duty",
   { timeout: 300000 },
   async () => {
     await transaction(async (c) => {
@@ -70,8 +70,8 @@ test(
       );
       await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
     });
-    await migrate(81);
-    await seed(81);
+    await migrate(82);
+    await seed(82);
     creator = (await createSession("systems")).principal;
     reader = (await createSession("scheduling-policy-reviewer")).principal;
     person = (await createSession("site-observer")).principal;
@@ -123,9 +123,9 @@ test(
       ),
       newSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
     assert.deepEqual(newLedger.slice(0, -1), ledger);
-    assert.equal(newLedger.at(-1).version, 82);
+    assert.equal(newLedger.at(-1).version, 83);
     assert.deepEqual(newSeeds.slice(0, -1), seeds);
-    assert.equal(newSeeds.at(-1).version, 82);
+    assert.equal(newSeeds.at(-1).version, 83);
     assert.deepEqual(await localTeams(creator), { items: [], has_more: false });
     await migrate();
     await seed();

@@ -126,7 +126,7 @@ async function clone(
   );
 }
 
-test("populated 0050 upgrade preserves every old row/hash, registers 0051–0082 and exact authority/instrument additions", async () => {
+test("populated 0050 upgrade preserves every old row/hash, registers 0051–0083 and exact authority/instrument additions", async () => {
   const names = (await tables()).filter((t) => t !== "seed_receipts"),
     beforeRows = await snapshot(names);
   const oldLedger = (
@@ -173,20 +173,20 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0082
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(ledger.slice(0, -32), oldLedger);
-  assert.equal(ledger.at(-1).version, 82);
+  assert.deepEqual(ledger.slice(0, oldLedger.length), oldLedger);
+  assert.equal(ledger.at(-1).version, 83);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83,
     ],
   );
   const receipts = (
     await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")
   ).rows;
   assert.deepEqual(receipts.slice(0, -12), oldReceipts);
-  assert.equal(receipts.at(-1).version, 82);
+  assert.equal(receipts.at(-1).version, 83);
   await transaction(async (db) => {
     const chain = await loadPolicyChain(db, workspace);
     assert.equal(chain.members.length, 1);
@@ -672,7 +672,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
   );
 });
 
-test("fresh installation applies only registered files through 0082, retains reserved gaps and repeats without changes", async () => {
+test("fresh installation applies only registered files through 0083, retains reserved gaps and repeats without changes", async () => {
   await database().query(await sql("migrations/0001-recover.sql"));
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
@@ -687,7 +687,7 @@ test("fresh installation applies only registered files through 0082, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83,
     ],
   );
   const first = await snapshot(await tables());

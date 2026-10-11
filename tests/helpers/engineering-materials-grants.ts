@@ -196,7 +196,7 @@ export function accessApplicationSeedGrants(original: Grant[]): Grant[] {
   return accessInspectionSeedGrants(original).map(g => ({ ...g, capability: "admin.access.apply" }));
 }
 
-// Seed 82: one existing-local Systems duty; team membership grants no authority.
+// Seed 83: one existing-local Systems duty; team membership grants no authority.
 export function accessTeamSeedGrants(original: Grant[]): Grant[] {
   return accessInspectionSeedGrants(original).map(g => ({ ...g, capability: "admin.access.team.create" }));
 }

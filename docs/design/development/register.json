@@ -1183,7 +1183,14 @@
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
-        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-04-Desktop-Saved-Estimates-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-05-Desktop-Collapsed-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-06-Phone-Workload-List-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-07-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "src/estimating/workload.ts",
@@ -1192,7 +1199,8 @@
         "src/components/sales-estimating-link.tsx",
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/decisions/intake-workload-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -1970,7 +1978,7 @@
       "title": "Baseline, forecast and dependency review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
+      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority.",
       "path": "/projects/programme",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1993,11 +2001,16 @@
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/decisions/quotation-task-diamond.md"
+        "docs/decisions/quotation-task-diamond.md",
+        "src/projects/baselines.ts",
+        "src/projects/baseline-model.ts",
+        "src/components/project-baselines.tsx",
+        "docs/decisions/project-schedule-baselines.md",
+        "docs/testing/evidence/project-baselines/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5961,11 +5974,18 @@
       "guide_key": "guide.page.engineering",
       "design_path": "docs/design/development/pages/route-engineering.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-04-Phone-Package-List-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
-        "src/engineering/control/guide.ts"
+        "src/engineering/control/guide.ts",
+        "docs/decisions/engineering-workload-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6295,12 +6315,20 @@
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
-        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-04-Desktop-Saved-Estimates-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-05-Desktop-Collapsed-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-06-Phone-Workload-List-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-07-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
-        "docs/delivery/estimating-programme-handover.md"
+        "docs/delivery/estimating-programme-handover.md",
+        "docs/decisions/intake-workload-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6594,7 +6622,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6624,11 +6652,16 @@
         "src/components/sales-delivery-creation.tsx",
         "src/components/sales-followup.tsx",
         "src/sales/followup.ts",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/projects/baselines.ts",
+        "src/projects/baseline-model.ts",
+        "src/components/project-baselines.tsx",
+        "docs/decisions/project-schedule-baselines.md",
+        "docs/testing/evidence/project-baselines/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6717,14 +6750,23 @@
       "guide_key": "guide.page.sales.leads.id",
       "design_path": "docs/design/development/pages/route-sales-leads-id.md",
       "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-01-Desktop-Record-Page-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-02-Desktop-Activity-Tab-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-03-Desktop-Email-Tab-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-04-Desktop-File-Tab-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-05-Desktop-Register-Record-Window-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-06-Desktop-States-r01.png",
+        "docs/reference/ui/crm/lead-record-page-design-r01/PPO-Lead-Record-07-Phone-Tabs-Forms-Action-Sheet-r01.png"
+      ],
       "dependencies": [
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/testing/evidence/lead-context-resolution/README.md",
         "src/components/sales-followup.tsx",
-        "src/sales/followup.ts"
+        "src/sales/followup.ts",
+        "docs/decisions/lead-record-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -6750,14 +6792,21 @@
       "guide_key": "guide.page.sales.leads",
       "design_path": "docs/design/development/pages/route-sales-leads.md",
       "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-01-Desktop-Register-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-04-Phone-Lead-List-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/testing/evidence/lead-context-resolution/README.md",
         "src/components/sales-followup.tsx",
-        "src/sales/followup.ts"
+        "src/sales/followup.ts",
+        "docs/decisions/leads-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7399,8 +7448,17 @@
       "guide_key": "guide.page.service.work-orders",
       "design_path": "docs/design/development/pages/route-service-work-orders.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-04-Desktop-Collapsed-Record-Window-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-05-Phone-Work-Order-List-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-06-Phone-Record-View-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/work-orders-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -9147,7 +9205,7 @@
       "title": "Programme",
       "kind": "route",
       "module": "PJ",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority.",
       "path": "/projects/programme",
       "source_paths": [
         "src/app/(business)/projects/programme/page.tsx"
@@ -9156,10 +9214,16 @@
       "design_path": "docs/design/development/pages/route-projects-programme.md",
       "html_path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/projects/baselines.ts",
+        "src/projects/baseline-model.ts",
+        "src/components/project-baselines.tsx",
+        "docs/decisions/project-schedule-baselines.md",
+        "docs/testing/evidence/project-baselines/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

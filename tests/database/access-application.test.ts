@@ -190,7 +190,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     current.filter((g) => !ids.has(g.id)),
-    [...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
+    [...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010083-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
       ...g,
       id: "ad010080-0000-4000-8000-000000000001",
     }))].sort((a,b) => String(a.id).localeCompare(String(b.id))),
@@ -205,7 +205,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     next.filter((r) => r.version > 79).map((r) => r.version),
-    [80, 81, 82],
+    [80, 81, 82, 83],
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version <= 79),
@@ -213,7 +213,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version > 79).map((r) => r.version),
-    [80, 82],
+    [80, 83],
   );
   for (const f of [approved, returned, submitted])
     assert.deepEqual(

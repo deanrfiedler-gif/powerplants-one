@@ -14,7 +14,7 @@ Reuse PostgreSQL, Next.js, the existing session/origin boundary, canonical opera
 
 ## Authority, participants and state
 
-Creation requires an active local actor with current Workspace `admin.access.read` and new `admin.access.team.create`, with no selected working company. Read alone, request propose/approve/apply, team lead and membership confer no creation duty. Seed 82 adds one explicit duty to the existing Systems fixture only; no new user or hosted grant. All team APIs refuse hosted mode, and hosted runtime authority-table write revocations remain.
+Creation requires an active local actor with current Workspace `admin.access.read` and new `admin.access.team.create`, with no selected working company. Read alone, request propose/approve/apply, team lead and membership confer no creation duty. Seed 83 adds one explicit duty to the existing Systems fixture only; no new user or hosted grant. All team APIs refuse hosted mode, and hosted runtime authority-table write revocations remain.
 
 Only Create is implemented: caller-provided UUID at expected version 0 becomes Recorded version 1. Name is 1–100 characters, purpose and reason 10–1000 characters, and the initial roster has 1–20 distinct explicit user UUIDs. The lead and every member must be active local identities in the same workspace at commit. The lead may be outside the roster (as in the retained Service example); the creator may be lead/member because these labels confer no privilege or independent approval. No one is silently added. Names may repeat: UUID is identity, and it remains visible in the catalogue. These are bounded synthetic rules, not an operational team policy.
 
@@ -36,10 +36,14 @@ The existing `/admin/access/roles` catalogue adds a Saved local teams section us
 
 ## Upgrade and proof
 
-Migration/seed 0082 extend the live capability/audit constraints and add team/evidence tables without rewriting old rows or altering business_identities. Update all exact migration/seed ledgers and grant allowlists required by AGENTS.md. Review the hosted upgrade gate: the new duty goes only to existing local Systems, all API commands refuse hosted mode, tester grant sets and runtime authority-table revocations stay unchanged. Prove populated 0081 preservation/reseed, historical upgrades including estimates across 0026 and reserved Products 0052, exact new duty and unchanged hosted users/grants.
+Migration/seed 0083 extend the live capability/audit constraints and add team/evidence tables without rewriting old rows or altering business_identities. Update all exact migration/seed ledgers and grant allowlists required by AGENTS.md. Review the hosted upgrade gate: the new duty goes only to existing local Systems, all API commands refuse hosted mode, tester grant sets and runtime authority-table revocations stay unchanged. Prove populated 0082 preservation/reseed, historical upgrades including estimates across 0026 and reserved Products 0052, exact new duty and unchanged hosted users/grants.
 
 Prove authority, local/workspace/participant boundaries, duplicate and malformed payloads, concurrent creation, current-duty loss, exact replay/recovery, immutable state/evidence and rollback. Browser checks inspect real API-created records, refresh/denial recovery and unchanged retained examples at desktop/390/320 widths. Maintain the live guide/register/component records and evidence in the same PR. This does not approve operational team membership, production use or deployment.
 
 Opening a roster refreshes its lead/creator identity labels from the detail response. Closing it retains those newer labels until an explicit collection refresh or page change; it never falls back to an older list label. This is current-identity presentation, not a change to immutable membership or creation evidence.
 
 Native creation now follows the [bounded form/recovery contract](access-team-creation.md). The initial-roster command, permissions, immutable evidence and membership limits above are unchanged; membership editing remains open.
+
+## Integration — 12 October 2026
+
+The integration after merged Projects 0081 moves this unpublished migration and seed from 0082 to 0083. Stable team/grant IDs and historical evidence retain their original bytes.

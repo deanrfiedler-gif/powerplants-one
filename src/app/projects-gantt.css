@@ -547,3 +547,23 @@ body:has(#ppo-gantt-page) .business-content{display:flex;flex:1;min-height:0;pos
 #ppo-gantt-page[data-calendar-detail="false"] .time-cell{background-image:repeating-linear-gradient(to right,#e5eaf0 0,#e5eaf0 1px,transparent 1px,transparent var(--grid-step))}
 .ppo-project-dialog input,.ppo-project-dialog select,.ppo-project-dialog textarea{margin:0}
 .ppo-project-dialog .lookup-field input{margin-bottom:4px}
+/* PJ-03 comparison reuses the native project dialog and shared form controls. */
+.project-baseline-dialog { width: min(920px, calc(100vw - 24px)); }
+.project-baseline-actions { display: flex; flex-wrap: wrap; gap: var(--space-2, 8px); margin-block: var(--space-3, 12px); }
+.project-baseline-items { list-style: none; padding: 0; display: grid; gap: var(--space-3, 12px); }
+.project-baseline-items > li { border: 1px solid var(--line); border-radius: var(--radius-card); padding: 12px; overflow-wrap: anywhere; }
+.project-baseline-items h4 { margin: 0 0 var(--space-2, 8px); }
+.project-baseline-items p { margin-block: var(--space-2, 8px); }
+.project-baseline-dialog fieldset { min-width: 0; border: 0; padding: 0; }
+.project-baseline-dialog fieldset > label { display: block; margin-block: var(--space-3, 12px); }
+.project-baseline-dialog input[type="checkbox"] { width: 18px; height: 18px; min-height: 18px; padding: 0; margin-right: 8px; vertical-align: middle; accent-color: var(--navy); }
+.project-baseline-dialog .ppo-button--primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
+@media(max-width:780px) {
+  /* Keep a usable task list below tall headers; the existing page container scrolls. */
+  #ppo-gantt-page .main { height: auto; min-height: 100%; }
+  #ppo-gantt-page .schedule-card { flex: none; }
+  #ppo-gantt-page .schedule-viewport { flex: none; height: clamp(240px, 45dvh, 360px); }
+  #ppo-gantt-page .section-tabs { height: 42px; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+  #ppo-gantt-page .section-tabs > * { flex-shrink: 0; }
+  #ppo-gantt-page .section-tabs .preview-state { margin-left: 0; }
+}

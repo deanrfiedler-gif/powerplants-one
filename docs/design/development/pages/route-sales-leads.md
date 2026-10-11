@@ -15,11 +15,32 @@ This page address exists in the inspected application source. Open it from a run
 
 ## Desktop
 
+Accepted design (11 October 2026): the [Leads design decision](../../../decisions/leads-design.md), with captures 01–03 in [Leads design r01](../../../reference/ui/crm/leads-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid with a labelled Sales rail. The app still shows the icon tabs and the earlier list, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the labelled 240 px Sales rail with Leads selected (white tile, Solid crosshairs icon, count) and the rail label "Estimating handovers"; the breadcrumb "Sales / Leads" as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
+- **Secondary menu:** Inbox and My leads; a Status group (New, Contacting, Nurturing); a Follow-up group (Overdue, Next action needed, from the next-action states); Other views (Archived, Disqualified, Converted). Every view shows a neutral count, which needs a count read. It collapses to a 20 px strip from its right border or the top-bar toggle.
+- **Toolbar:** Owner and Source filters, the count with its refresh time, Refresh, a navy "+ Lead" and "…".
+- **Grid:** single-line 40 px rows with lines between cells. Default columns: Lead title, Next activity, Next activity due, Organisation, Contact, Status (neutral tag), Lead owner and Date added (sorted, newest first). Lead ID, Next activity owner, Source and Archived stay in the column chooser. The checkbox column and the settings and "…" column stay fixed while the grid scrolls sideways.
+- **Wording and colour:** the app's wording. Overdue uses the danger colour with an icon; "Due date needed" and "Next action needed" use the warning colour; "Organisation to confirm" and "Contact to confirm" are muted. Every state has words.
+- **Record window:** clicking a row opens it over the grid, never squeezing it, from the secondary menu's right edge, with close, previous and next on that edge. It shows the enquiry, the customer context, the rule note, Activities and Customer context tabs, and History. For the lead owner its footer offers Plan activity and Convert to deal, with Archive, Disqualify and Transfer owner under "…".
+- **Selection:** ticking rows shows a selection toolbar and a 360 px panel with Open in sequence and Export list only.
+
+The modal forms (+ Lead, reasons, Transfer owner, Convert to deal) keep the requirements below.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (11 October 2026): captures 04–05 in [Leads design r01](../../../reference/ui/crm/leads-design-r01/README.md).
+
+- **Header and toolbar at 390 × 844:** the page name "Leads" only, with no breadcrumb. A toolbar holds a view picker ("Inbox") standing in for the secondary menu, the count and a filter icon button.
+- **List:** flush list rows about 80 px tall, each showing the title; the organisation and contact with the status tag; and the next activity with its due date, with a chevron. The floating "+" for + Lead stays.
+- **Record view:** tapping a row opens a full-screen record view with back, previous and next. The lead is stacked, and Plan activity and Convert to deal are fixed at the bottom for the lead owner.
+- **Tab bar:** icons only, the Sales tabs (My Work, Deals, Activities, Contacts, More), each with a hidden accessible label. It stays visible on Leads; no tab is current, because Leads is reached through More. Phone selection of several rows is not designed yet.
+
+The modal forms keep the requirements below.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -33,7 +54,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design: [Leads design r01 captures](../../../reference/ui/crm/leads-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). Earlier approved references, retained unchanged: the r04 desktop interior `docs/blueprints/crm-leads-desktop-preview.html` (its upload alias `docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html`) and the r02 phone reference `docs/blueprints/crm-leads-preview.html`. The accepted design replaces their layout when the page is built. Images of the LC-11, LC-12 and LC-17 states are still missing.
 
 ## Behaviour, handovers and verification
 

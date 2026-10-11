@@ -82,8 +82,9 @@ export const migrationFiles = [
   "0078-access-inspection.sql",
   "0079-access-requests.sql",
   "0080-access-application.sql",
-  "0081-access-withdrawal.sql",
-  "0082-access-teams.sql",
+  "0081-project-schedule-baselines.sql",
+  "0082-access-withdrawal.sql",
+  "0083-access-teams.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -125,9 +126,9 @@ export const seedFiles = [
   [78, "seed-access-inspection.sql"],
   [79, "seed-access-requests.sql"],
   [80, "seed-access-application.sql"],
-  [82, "seed-access-teams.sql"],
+  [83, "seed-access-teams.sql"],
 ] as const;
-export const latestMigrationVersion = 82;
+export const latestMigrationVersion = 83;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.
