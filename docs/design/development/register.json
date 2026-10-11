@@ -5971,11 +5971,18 @@
       "guide_key": "guide.page.engineering",
       "design_path": "docs/design/development/pages/route-engineering.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-04-Phone-Package-List-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
-        "src/engineering/control/guide.ts"
+        "src/engineering/control/guide.ts",
+        "docs/decisions/engineering-workload-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
