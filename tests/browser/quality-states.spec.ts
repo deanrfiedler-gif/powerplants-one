@@ -335,8 +335,16 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         .locator("main")
         .getByText(/^(?:.*\s)?Loading .*…$/);
       await call(page, "local-session", { profile: s.profile });
+      // The responsive planner first renders with the desktop range, then the
+      // phone reads its seven day chips. Observe the intended settled window,
+      // not whichever transient response wins the hydration/identity race.
+      const selectedWindow = (url: URL) => s.id !== "SC-07" || (
+        Date.parse(url.searchParams.get("from") ?? "") === Date.parse(mobile ? "2031-11-02T14:00:00.000Z" : "2031-11-04T14:00:00.000Z") &&
+        Date.parse(url.searchParams.get("to") ?? "") === Date.parse(mobile ? "2031-11-09T14:00:00.000Z" : "2031-11-05T14:00:00.000Z")
+      );
       const loadedRead = page.waitForResponse((response) =>
         new URL(response.url()).pathname === `/api/v1/${s.api}` &&
+        selectedWindow(new URL(response.url())) &&
         response.request().method() === "GET" && response.status() === 200,
         { timeout: 60000 });
       // The screen contract is the authorised read and rendered state. A dev
@@ -605,7 +613,8 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       };
       const currentRead = (request: Request) => {
         if (identityAccepted && request.method() === "GET" &&
-            new URL(request.url()).pathname === `/api/v1/${s.api}`)
+            new URL(request.url()).pathname === `/api/v1/${s.api}` &&
+            selectedWindow(new URL(request.url())))
           currentReads.add(request);
       };
       page.on("response", acceptedIdentity).on("request", currentRead);

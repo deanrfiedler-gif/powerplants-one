@@ -297,7 +297,7 @@ jobs:
         if: inputs.proof == 'customer-regression'
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/pt27-regression/results.json
-        run: node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts tests/browser/intake.spec.ts tests/browser/directory-navigation.spec.ts --grep 'P03 customer|directory record links' --output verification-evidence/pt27-regression --reporter=list,json
+        run: node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts tests/browser/intake.spec.ts tests/browser/directory-navigation.spec.ts tests/browser/quality-states.spec.ts --grep 'P03 customer|directory record links|P11 PT-29 all fifteen screen families' --output verification-evidence/pt27-regression --reporter=list,json
       - name: Prepare diagnostic evidence
         if: always()
         id: observer_review
