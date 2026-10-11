@@ -26,4 +26,4 @@ Descriptive cold p95 in complete positions is 5.646/6.384/6.366 seconds on deskt
 
 [Summary](summary.json) and [58-file manifest](artifacts.json) retain all four positions and original failures. All hashes and private-value scans pass. Recorded-source `c946745` tools reproduce the summary byte-for-byte and all 54 core manifest rows exactly; four support files complete the manifest. Build and compiled diagnostic smoke pass separately. Final PR assurance and owner acceptance remain separate.
 
-This outcome justifies the ADR's next independent candidate: per-browser Linux packet shaping with unshaped relay anchors and unchanged calibration gates before any further application comparison. Default comparisons retain the existing rule method. PR #391 remains draft; no production or full PT-27 acceptance follows.
+This outcome justified the ADR's independent packet candidate, whose later calibration and app outcomes are recorded separately. Default comparisons retain the existing rule method. PR #391 was draft at this measurement and subsequently merged at `99a0e99`; the network-method follow-up is PR #409. No production or full PT-27 acceptance follows.
