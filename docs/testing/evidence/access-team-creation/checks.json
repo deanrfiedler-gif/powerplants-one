@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+  "integrated_parent": "c3a0ca633c3e05fbd5d7690f43cc398a5891bead",
+  "integrated_backend_baseline": "9234248951e8896392b06b09c43a71e2519abcdf",
+  "stable_id_expectation_repair": "44fbb7f",
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/430",
+  "status": "Local prototype validation complete; final pushed-head CI and owner acceptance separate",
+  "source_hash_method": "SHA-256 of exact Git blob bytes at source (LF), not Windows working-copy bytes",
+  "source_sha256": {
+    "src/access/team-creation.tsx": "d692545fac22a1a33e3a8ec34d1892ab5c2f76dd652dd5a301786ee9c1ba8d7d",
+    "src/access/local-team-screens.tsx": "91d1b4723e2c449b847ae9337d6b9375e8e77d662b5060a4664970bc07cbf7e1",
+    "src/access/local-teams.ts": "5d973f781561a2a787e25992da530e04a762f0c4709c5764e47964259bdb13d4",
+    "src/app/api/v1/admin/access/teams/context/route.ts": "572edb313fdaecd903873789f311b0ee3f2c164db7c03bb5496f316136d9e418",
+    "tests/browser/access-team-creation.spec.ts": "c27149c938a6f1051995a9ad09b58931b7b552c1e427168c8d909b04d40ca13e",
+    "tests/database/access-local-teams.test.ts": "57c973fcc15eefcc25e957c363012f54ba7470e04e5b9d321f33ef4dd6cb93bb",
+    "tests/database/access-application.test.ts": "3d34ca90d7aee67dbb13ac6b316945fb803a3695cb3c9f77994b037c015482fd",
+    "tests/helpers/permissions-matrix-http.ts": "46bf376e6a0de654954a1c6c2a8780c52aa4dcda8540b75493bd37ada7b73bec"
+  },
+  "checks": {
+    "integrated_database": {
+      "reported_cases": 73,
+      "initial_passed": 69,
+      "initial_failed": 4,
+      "complete_application_replay_passed": 15,
+      "unchanged_project_upgrade_replay_passed": 1,
+      "all_cases_have_passing_coverage": true,
+      "counting": "Includes Node parent test; replays are not additional unique cases",
+      "files": [
+        "access-application",
+        "access-inspection",
+        "access-local-teams",
+        "access-withdrawal",
+        "project-baselines"
+      ],
+      "initial_log": "logs/access-database-final.log",
+      "replay_logs": [
+        "logs/application-replay.log",
+        "logs/baseline-upgrade-replay.log"
+      ]
+    },
+    "http_permissions": {
+      "passed": 48,
+      "log": "logs/permissions-matrix-final.log"
+    },
+    "browser": {
+      "unique_cases_passed": 51,
+      "initial_integrated_passed": 51,
+      "final_creation_replay_passed": 21,
+      "total_executions": 72,
+      "final_creation_source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "initial_run_log": "logs/browser.log",
+      "final_run_log": "logs/browser-final.log",
+      "viewports": [
+        [
+          1440,
+          960
+        ],
+        [
+          390,
+          844
+        ],
+        [
+          320,
+          740
+        ]
+      ],
+      "workers": 1,
+      "locale": "en-AU",
+      "scope": "Real compiled local application; selected failure/recovery boundaries are deliberately injected"
+    },
+    "selected_units": {
+      "passed": 19,
+      "log": "logs/units-final.log"
+    },
+    "final_build": {
+      "passed": true,
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "log": "logs/build-visual-fix.log"
+    },
+    "typecheck": {
+      "passed": true,
+      "log": "logs/typecheck.log",
+      "note": "Final build also ran TypeScript after the last application edit"
+    },
+    "targeted_lint": {
+      "exit_code": 0,
+      "log": "logs/lint-visual-fix.log",
+      "note": "Successful command emitted no diagnostics"
+    },
+    "studio": {
+      "passed": true,
+      "unreviewed_pages": 330,
+      "stale_pages": 28,
+      "component_review_warnings": 42,
+      "log": "logs/studio-handover.log"
+    },
+    "foundation": {
+      "passed": true,
+      "requirements": 78,
+      "issued_sources": 22,
+      "log": "logs/foundation-handover.log"
+    },
+    "naming": {
+      "passed": true,
+      "copied_instruction_characters": 7952,
+      "log": "logs/naming-handover.log"
+    },
+    "captures": {
+      "final": 12,
+      "retained_initial": 12,
+      "final_source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "final_manifest": "captures.json",
+      "initial_manifest": "initial-captures/captures.json",
+      "final_document_overflow": false,
+      "review": "review.md"
+    },
+    "cleanup": {
+      "owned_services_stopped": true,
+      "record": "cleanup.json"
+    }
+  },
+  "corrections": [
+    "Initial parent CI omitted the exact team-create duty in its shared Systems expectation; repaired in 2968125 and pushed to parent.",
+    "Parent integration changed a test expectation for a stable grant UUID; 44fbb7f restores the unchanged issued ID without editing seed/grant data.",
+    "Initial Projects historical upgrade timed out at schema reset before migration; unchanged isolated replay passes. No general performance conclusion.",
+    "Copied guidance initially exceeded 8000 characters; shortening omitted a required docs/STATUS.md reference. ad9c9c0 restores it and naming passes.",
+    "Initial phone lead select clipped the ID; final wrapped selected-ID text and browser assertion added in 999042e."
+  ],
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "chrome": "155.0.8059.40",
+    "host": "Windows"
+  },
+  "limits": [
+    "No new migration, seed, capability or grant against integrated parent.",
+    "Earlier draft-checksum databases preserved; no conversion proof.",
+    "Owner visual/security approval, physical devices, zoom and assistive technology not granted.",
+    "Membership lifecycle, campaigns, review routing and operational D-020 remain open.",
+    "No deployment, production integration or business transactions."
+  ],
+  "artifact_sha256": {
+    "captures.json": "2366b68a20cb47e699d8c71a36c7c451a4978b413d09add0d12351b73d424072",
+    "cleanup.json": "2ed9502d904910a6ba07cbc38f6ad3a99cdc2424510b4b0d13340eb721d3cda5",
+    "initial-captures/captures.json": "574d66ea1dcad377fbcbec9d34bfc8dad6c0acbed550466b5352d136c1645c5e",
+    "initial-captures/native-1440-form.png": "8e6976da10514349a6c8072650a1f582454fcbe5c59d683148409aae74bdcc49",
+    "initial-captures/native-1440-pending.png": "e4f042d398c588cf0a4cbc922ac3060695eb08aaa7a38202d2f0b7e5830fb6f8",
+    "initial-captures/native-1440-result.png": "bb884119dea05b4f50cbf911e60f2bea5286d356be19cc468ec68e0e3a796480",
+    "initial-captures/native-1440-roster.png": "c7a9ae531efda22b0303817f6540051da0ab631d4763c0c75cd4bf1cf7d57737",
+    "initial-captures/native-320-form.png": "4577c13a8b14d39af891a6b0fa7f7e700bab23c63c9ec5b3a733191295369144",
+    "initial-captures/native-320-pending.png": "fae0efed5e8a290d08bbe59d491436f12d7995fb433a9f8bb6012af5932fc587",
+    "initial-captures/native-320-result.png": "294c75b7dcb5f28a44d1299be2367102ee9e8b32d25475de0f884d9fde1e87da",
+    "initial-captures/native-320-roster.png": "da4184df68c420b798f4b508e04234fab032e608f92ba5386e12c60c44b10d16",
+    "initial-captures/native-390-form.png": "5d1f3e2384568342ed0c25070bf36d3502feefa8dd7326d68715361afbc1aa90",
+    "initial-captures/native-390-pending.png": "2acded434cb782a668cd390f0fef8e53104aaf74f315d7f05de9ad21f5fa325e",
+    "initial-captures/native-390-result.png": "d774a0627f46970b3a1b4b7333336dee29ac4cfbea30552c9ceb94f01a4f4e00",
+    "initial-captures/native-390-roster.png": "4450f55e1346023f1bcac2e0156a261cf9fa40930fed45d80f962a7262d7b492",
+    "logs/access-database-final.log": "3eb1e6292f5350bf6ce13b4f8a273e12c38f1d1f95d557b6568e531f09fa829a",
+    "logs/access-database.log": "15c4c78a6be8bec1f32c07a9cc2ed1f395bb6aedf2bbc2544d0292c7888e3ea8",
+    "logs/application-replay.log": "97957c917d45ead4257516445fe61cb48544d2f9a7dd2d6e195c959d2dd082a8",
+    "logs/baseline-upgrade-replay.log": "9fb258fe78cc12e2b1848803f3ffffd224692174c6bdb91a6cc632315c7e3c20",
+    "logs/browser-final.log": "5c7d5ec379b77cf621027b9bbd04649fbaad52679415ce87d718279c3425bb39",
+    "logs/browser.log": "cfab208d0c836c2d78434ec5abb48629ee21e9841ffab470f730a948c6b9e0ba",
+    "logs/build-final.log": "a183eea43a9ca2a697cb3908fccca6605079b7fb14fc472817fe395f763d8825",
+    "logs/build-visual-fix.log": "23e66fe9beecba72e95c45c69475d81a5ac55636d2af05cd4c1271e6d2b8b790",
+    "logs/build.log": "da3c5db1c875cdec8c181a1cc33df8e70ff8aa699c3f6c74502383bfd7cf2fce",
+    "logs/capture-final.log": "cf1e15d1ae9563174b80f282bfd8b176d0735862eba112cf1909f2427c4d44ec",
+    "logs/capture.log": "cb391e73656634d506e15de447293aa8c7c93824aef231095fcb49309c2bff09",
+    "logs/foundation-final.log": "ea33c6e4ea477171b09acab69e08c2b18e12339084a6b6dadbebb1f6f8739582",
+    "logs/foundation-handover.log": "d40cb5e7f95451c678083a523d64c440e7bd97b9188663ab821d7ef25af455ed",
+    "logs/lint-final.log": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "logs/lint-visual-fix.log": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "logs/lint.log": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "logs/naming-corrected.log": "71f8b2fc91fdc7a4557f3612a0a11459270c1a217475c4c28c1ad536601c2028",
+    "logs/naming-final.log": "a339363a731f2e7730cc53053d364e4082bcc1e135426304734cd95ea20edfe8",
+    "logs/naming-handover.log": "71f8b2fc91fdc7a4557f3612a0a11459270c1a217475c4c28c1ad536601c2028",
+    "logs/naming.log": "ca5faf585cc14c3c1409aa3a694075f6a9d1a27be91101bf41d8eb319873a71c",
+    "logs/permissions-matrix-final.log": "fd2372a88eed1399a0b66a75a9c38758d728daa743dffa41c247440b93bdf2fc",
+    "logs/permissions-matrix.log": "2ab14d4c3ed89ffb66ea4c16b0d754b81309f42c9452b6cc25f3eec488879906",
+    "logs/studio-final.log": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
+    "logs/studio-handover.log": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
+    "logs/typecheck.log": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+    "logs/units-final.log": "cb87198c5b8d1751d244e281baf47993475aeb22a12d8dfa1cf1ec1d6556b08a",
+    "logs/units.log": "90922217922fde3e9c5893d0255514d97905b0bd6c0800c565d18f677b57a4b7",
+    "native-1440-form.png": "4d79b70a3419a7a7f82919a1abe2bf275743d8ee9c0f65f70471b2a6c5060659",
+    "native-1440-pending.png": "667f382a3699547564c5c23db7bae59409baddeaa27a46bceb12b504811f9356",
+    "native-1440-result.png": "415f0e4f059a489c800d308ad2c9f77502fdb6e785c4369093f2c25bc1609948",
+    "native-1440-roster.png": "cd171741f43ceda8fe89b6e1febd7600236c8612a9c447b420622c520b9303d1",
+    "native-320-form.png": "bb14d44dc2668677a1409fab18c3c0cdfcd2842cc8c84a4c90a90a6ab8febecf",
+    "native-320-pending.png": "dbce9083ae95dbee275d30dcf1dcb7416a72860518a8cef613bfb66b9645b9b6",
+    "native-320-result.png": "1cc5e49aa68b2d4adf673f43dff7b09736ae917d853a81e34ced99b52cb1d6d6",
+    "native-320-roster.png": "389d5a16cbe1f88ee37948b62c4e8cc1a5d43584be2c7de81edf173e9719ed6c",
+    "native-390-form.png": "cb9315f208b2f5b2394f37eda3c211b65658aecd43a56653b22ce333dff16391",
+    "native-390-pending.png": "937b7397da7a32a9c37898adb50822f405c7a97fc95b4bcff5c425727a3c497d",
+    "native-390-result.png": "7b6225c198a3a9fdbd95bcb8852c2ca6e9776c0dfd3fafc9a09b3e5a552dff0c",
+    "native-390-roster.png": "00b01de4652712e0fbb52fb17a1ee4f669d70b7d2a832120a5ade2e24b9ce401",
+    "README.md": "4728ed687352925ba5b7a654774d966e36aa284b0edd462d9475da4911a0b88f",
+    "review.md": "a412eadb28802a2d64434ea001e1aa4b19427d5ac83c3cb9d493e69bd8e81ebc"
+  }
+}

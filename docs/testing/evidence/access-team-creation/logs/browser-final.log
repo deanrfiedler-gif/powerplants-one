@@ -1,0 +1,32 @@
+
+Running 21 tests using 1 worker
+
+(node:26988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-team-creation.spec.ts:40:1 › AD01 native team creation: explicit roster, exact history and unchanged grants (7.2s)
+  ok  2 [desktop] › tests\browser\access-team-creation.spec.ts:127:1 › AD01 native team creation: invalid roster is refused and entries survive correction (3.0s)
+  ok  3 [desktop] › tests\browser\access-team-creation.spec.ts:155:1 › AD01 native team creation: lost committed response reloads the original with a minimal receipt pointer (2.6s)
+  ok  4 [desktop] › tests\browser\access-team-creation.spec.ts:203:1 › AD01 native team creation: absent original needs explicit exact retry, including a second team (3.4s)
+  ok  5 [desktop] › tests\browser\access-team-creation.spec.ts:238:1 › AD01 native team creation: storage refusal sends nothing; unsubmitted refresh reviews draft loss (2.2s)
+  ok  6 [desktop] › tests\browser\access-team-creation.spec.ts:279:1 › AD01 native team creation: actor change withholds original and restores only its owner (4.7s)
+  ok  7 [desktop] › tests\browser\access-team-creation.spec.ts:324:1 › AD01 native team creation: unavailable context retries; command denial clears protected catalogue (3.2s)
+(node:34016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [phone] › tests\browser\access-team-creation.spec.ts:40:1 › AD01 native team creation: explicit roster, exact history and unchanged grants (4.4s)
+  ok  9 [phone] › tests\browser\access-team-creation.spec.ts:127:1 › AD01 native team creation: invalid roster is refused and entries survive correction (3.1s)
+  ok 10 [phone] › tests\browser\access-team-creation.spec.ts:155:1 › AD01 native team creation: lost committed response reloads the original with a minimal receipt pointer (4.3s)
+  ok 11 [phone] › tests\browser\access-team-creation.spec.ts:203:1 › AD01 native team creation: absent original needs explicit exact retry, including a second team (2.6s)
+  ok 12 [phone] › tests\browser\access-team-creation.spec.ts:238:1 › AD01 native team creation: storage refusal sends nothing; unsubmitted refresh reviews draft loss (2.3s)
+  ok 13 [phone] › tests\browser\access-team-creation.spec.ts:279:1 › AD01 native team creation: actor change withholds original and restores only its owner (4.1s)
+  ok 14 [phone] › tests\browser\access-team-creation.spec.ts:324:1 › AD01 native team creation: unavailable context retries; command denial clears protected catalogue (2.0s)
+(node:12512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [narrow] › tests\browser\access-team-creation.spec.ts:40:1 › AD01 native team creation: explicit roster, exact history and unchanged grants (4.8s)
+  ok 16 [narrow] › tests\browser\access-team-creation.spec.ts:127:1 › AD01 native team creation: invalid roster is refused and entries survive correction (2.9s)
+  ok 17 [narrow] › tests\browser\access-team-creation.spec.ts:155:1 › AD01 native team creation: lost committed response reloads the original with a minimal receipt pointer (4.0s)
+  ok 18 [narrow] › tests\browser\access-team-creation.spec.ts:203:1 › AD01 native team creation: absent original needs explicit exact retry, including a second team (2.8s)
+  ok 19 [narrow] › tests\browser\access-team-creation.spec.ts:238:1 › AD01 native team creation: storage refusal sends nothing; unsubmitted refresh reviews draft loss (2.0s)
+  ok 20 [narrow] › tests\browser\access-team-creation.spec.ts:279:1 › AD01 native team creation: actor change withholds original and restores only its owner (3.0s)
+  ok 21 [narrow] › tests\browser\access-team-creation.spec.ts:324:1 › AD01 native team creation: unavailable context retries; command denial clears protected catalogue (1.9s)
+
+  21 passed (1.3m)

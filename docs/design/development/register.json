@@ -5124,7 +5124,10 @@
       "image_paths": [
         "docs/testing/evidence/access-inspection/reference-1440-person.png",
         "docs/testing/evidence/access-inspection/reference-390-person.png",
-        "docs/testing/evidence/access-inspection/reference-320-person.png"
+        "docs/testing/evidence/access-inspection/reference-320-person.png",
+        "docs/testing/evidence/access-team-creation/native-1440-form.png",
+        "docs/testing/evidence/access-team-creation/native-390-form.png",
+        "docs/testing/evidence/access-team-creation/native-320-form.png"
       ],
       "dependencies": [
         "docs/design/access-review/access-review.html",
@@ -5139,7 +5142,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native local team creation and original recovery implemented; current verification is recorded in access-team-creation evidence. Membership editing, campaigns, earlier draft-database conversion and owner acceptance remain open.",
+      "functional_status": "Native team creation: 51 integrated browser cases, with 21 creation cases rechecked after mobile ID refinement; 73 integrated database cases covered by passing runs, 48 HTTP permission checks and 19 selected units. See access-team-creation evidence for initial failures and exact source pins. Membership editing, campaigns and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13194,7 +13197,19 @@
         "docs/testing/evidence/access-local-teams/native-390-overview.png",
         "docs/testing/evidence/access-local-teams/native-390-history.png",
         "docs/testing/evidence/access-local-teams/native-320-overview.png",
-        "docs/testing/evidence/access-local-teams/native-320-history.png"
+        "docs/testing/evidence/access-local-teams/native-320-history.png",
+        "docs/testing/evidence/access-team-creation/native-1440-form.png",
+        "docs/testing/evidence/access-team-creation/native-1440-pending.png",
+        "docs/testing/evidence/access-team-creation/native-1440-result.png",
+        "docs/testing/evidence/access-team-creation/native-1440-roster.png",
+        "docs/testing/evidence/access-team-creation/native-390-form.png",
+        "docs/testing/evidence/access-team-creation/native-390-pending.png",
+        "docs/testing/evidence/access-team-creation/native-390-result.png",
+        "docs/testing/evidence/access-team-creation/native-390-roster.png",
+        "docs/testing/evidence/access-team-creation/native-320-form.png",
+        "docs/testing/evidence/access-team-creation/native-320-pending.png",
+        "docs/testing/evidence/access-team-creation/native-320-result.png",
+        "docs/testing/evidence/access-team-creation/native-320-roster.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
@@ -13208,7 +13223,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Native local team creation and original recovery implemented; current verification is recorded in access-team-creation evidence. Membership editing, campaigns, earlier draft-database conversion and owner acceptance remain open.",
+      "functional_status": "Native team creation: 51 integrated browser cases, with 21 creation cases rechecked after mobile ID refinement; 73 integrated database cases covered by passing runs, 48 HTTP permission checks and 19 selected units. See access-team-creation evidence for initial failures and exact source pins. Membership editing, campaigns and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

@@ -165,7 +165,7 @@ The catalogue and holder routes reuse existing controls without changing their e
 
 ## AD-01 proposed-role consumers
 
-The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies to comparison and local-team creation; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
 
 Native role-capability details summaries reuse the existing ppo-button quiet style for its 44 px target and focus treatment; native disclosure semantics remain intact. No shared CSS or export changes.
 

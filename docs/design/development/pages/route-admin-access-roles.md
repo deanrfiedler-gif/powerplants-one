@@ -56,3 +56,8 @@ The [creation contract](../../../decisions/access-team-creation.md) adds a form 
 At desktop and 390/320 widths use the existing vertical form fields and wrapped roster/receipt IDs. No new shared style/export or layout is adopted. Use native selects, labelled errors, keyboard buttons and the existing unsaved-navigation guard. Pending commands disable the form; explicit unchanged retry and original-result lookup reuse the actor/workspace/tab journal. A receipt shows exact team/operation IDs; Inspect saved team reads that exact roster even outside the current collection page. Recording another team is explicit. Refresh available people reviews unsubmitted draft loss; collection refresh preserves the form. Denial clears protected catalogue content. Storage failure sends nothing.
 
 Host fixtures: `tests/browser/access-team-creation.spec.ts`; current context/authority fixtures: `tests/database/access-local-teams.test.ts`. [Evidence](../../../testing/evidence/access-team-creation/README.md) separates functional checks from source-bound observations. Accepted native images, owner/device/zoom/screen-reader acceptance, membership editing and operational policy remain open. No review fingerprint is assigned.
+
+The closed native selector may clip its option text on phones. Show the complete selected lead UUID as wrapped text below it before submission; selected roster IDs also wrap. The receipt inspection action moves keyboard focus to its exact saved card.
+
+
+Final native team-creation observations: [source-bound capture review](../../../testing/evidence/access-team-creation/review.md). The twelve final frames and retained initial frames are implementation evidence; owner review and existing review fingerprints remain separate.

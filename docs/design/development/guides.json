@@ -75368,7 +75368,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native proposal inspection and local team creation",
-      "source_commit": "9234248951e8896392b06b09c43a71e2519abcdf",
+      "source_commit": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",
@@ -75498,7 +75498,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use native details summaries with keyboard Enter/Space; Tab follows links and shared buttons. Cards stack and keys wrap at 390/320 px. Online reads are required. Physical-device, zoom and screen-reader acceptance remain open."
+            "Use native details summaries with keyboard Enter/Space; Tab follows links and shared buttons. Cards stack and keys wrap at 390/320 px. Online reads are required. Physical-device, zoom and screen-reader acceptance remain open.",
+            "The lead selector can clip long option text on phones. Check the full selected lead ID in the wrapped text below it; selected roster IDs also remain visible before saving."
           ],
           "steps": [],
           "headers": [],
