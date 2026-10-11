@@ -6719,14 +6719,21 @@
       "guide_key": "guide.page.sales.leads",
       "design_path": "docs/design/development/pages/route-sales-leads.md",
       "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-01-Desktop-Register-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-04-Phone-Lead-List-r01.png",
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-05-Phone-Record-View-r01.png"
+      ],
       "dependencies": [
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/testing/evidence/lead-context-resolution/README.md",
         "src/components/sales-followup.tsx",
-        "src/sales/followup.ts"
+        "src/sales/followup.ts",
+        "docs/decisions/leads-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
