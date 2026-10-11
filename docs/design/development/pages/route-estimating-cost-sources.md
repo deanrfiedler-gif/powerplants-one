@@ -15,11 +15,28 @@ Find current permitted sources by reference, supplier, item or title and explici
 
 ## Desktop
 
-At 1440 × 1000 and 1024 × 768, keep record/source identity and the primary action with the task. Register cards separate supplier/item context from revision/validity; evidence uses labelled facts and a disclosure for UUID/hash attribution. Form fields and quantity tiers use consistent shared controls; comparison groups before/after cost with unchanged sell, warning and explicit confirmation. Long source text and hashes wrap. Dense content must not hide unresolved validity or review state.
+Accepted design: the [Cost sources design decision](../../../decisions/cost-sources-design.md) of 11 October 2026, with captures 01–03 in [Cost sources design r01](../../../reference/ui/estimating/cost-sources-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid. The app still shows the card list described below; the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the labelled 240 px rail with Cost sources selected (white tile, Solid icon, a neutral badge for sources awaiting your review); the breadcrumb "Estimating & quotation / Cost sources" as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
+- **Secondary menu:** All sources, Awaiting my review and My sources (owned by you); a State group (Draft, Submitted, Reviewed, Returned, Rejected) and a Validity group (Expiry unknown, Past expiry), with neutral counts. It collapses to a 20 px strip from its right border or the top-bar toggle.
+- **Toolbar:** a primary "New source" button where company edit authority permits, the literal search "Search source, supplier or item", a Supplier filter, the count with "AUD, excluding tax", Refresh and "…".
+- **Grid:** one row per source, single-line 40 px rows with lines between cells. Source (reference and revision), Title, State, Supplier expiry, Tier 1 cost and Updated (sorted, newest first) are in view with the menu open; Supplier, Item, Unit and Effective scroll in from the right. The checkbox column and the settings and "…" column stay fixed while the grid scrolls sideways.
+- **State and validity:** the five recorded states with icon and words; "Your submission" when you cannot review your own source; Returned in the warning text colour and Rejected muted. Unknown expiry reads "Unknown" and, like a past expiry date, has a warning icon. Nothing is red.
+- **Record window:** clicking a row opens it over the grid, never squeezing it. Its left edge meets the secondary menu's right edge, with close, previous and next on that edge. It shows the source facts, the quantity tiers with the tier rule, a rule note, tabs for Changes from the previous revision, Evidence and Used in, and History. Its buttons are Open source and Review evidence; the decision and its reason stay on the source page.
+- **Selection:** ticking rows shows a selection toolbar and a 360 px panel with Open in sequence and Export list only.
+
+The app today, at 1440 × 1000 and 1024 × 768: keep record/source identity and the primary action with the task. Register cards separate supplier/item context from revision/validity; evidence uses labelled facts and a disclosure for UUID/hash attribution. Form fields and quantity tiers use consistent shared controls; comparison groups before/after cost with unchanged sell, warning and explicit confirmation. Long source text and hashes wrap. Dense content must not hide unresolved validity or review state.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, stack facts, fields, tier controls and register cards. Maintain readable input text and 44 px controls. Keep actions in document flow above the fixed shell navigation; never conceal a required confirmation to reduce height. At 200% enlargement, allow additional rows and retain visible focus. Global page information closes with Escape and restores focus while unsaved form values remain. Native phone, keyboard and enlarged-state evidence must be inspected; physical device and assistive-technology acceptance remain separate.
+Accepted design: captures 04–05 in [Cost sources design r01](../../../reference/ui/estimating/cost-sources-design-r01/README.md).
+
+- **Header and toolbar at 390 × 844:** the page name only, with no breadcrumb. A toolbar holds a view picker ("All sources") standing in for the secondary menu, the count and a filter icon button.
+- **List:** flush list rows about 80 px tall, each showing the title and tier 1 cost, the reference, revision and supplier, and the state and supplier expiry, with a chevron. The list leaves space below its last row so that it scrolls clear of Quick add.
+- **Record view:** tapping a row opens a full-screen record view with back, previous and next. The source is stacked, and Open source and Review evidence are fixed at the bottom.
+- **Tab bar:** icons only, the five Estimating tabs, each with a hidden accessible label. Cost sources is reached through More, so More is the current tab.
+
+The app today, at 390 × 844 and 320 CSS px: stack facts, fields, tier controls and register cards. Maintain readable input text and 44 px controls. Keep actions in document flow above the fixed shell navigation; never conceal a required confirmation to reduce height. At 200% enlargement, allow additional rows and retain visible focus. Global page information closes with Escape and restores focus while unsaved form values remain. Native phone, keyboard and enlarged-state evidence must be inspected; physical device and assistive-technology acceptance remain separate.
 
 ## Components and states
 
@@ -33,6 +50,7 @@ Incoming: explicit authored synthetic evidence, exact current saved estimate/dis
 
 ## Exact references and evidence
 
+- Accepted Figma design: [Cost sources design r01 captures](../../../reference/ui/estimating/cost-sources-design-r01/README.md) (icon-free PNGs; not application captures) and the [design decision](../../../decisions/cost-sources-design.md).
 - [Supplier-pricing r01 HTML](../../../reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html).
 - [Original desktop price-comparison capture](../../../testing/evidence/supplier-pricing-r01/desktop-price-comparison.png).
 - Exact source captures for the new native record/form route compositions are missing; compare their task and component behaviour against the retained package and record proposed departures.
