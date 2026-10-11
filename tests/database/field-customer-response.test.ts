@@ -716,7 +716,7 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
       .sort(([a], [b]) => a.localeCompare(b))),
   )).sort();
   const expectedGrants = [...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...estimateReviewSeedGrants(grants), ...quotationReleaseSeedGrants(grants)];
-  assert.equal(expectedGrants.length, 24);
+  assert.equal(expectedGrants.length, 25);
   assert.deepEqual(
     grantContents(upgradedGrants.filter((g) => !originalGrantIds.has(g.id))),
     grantContents(expectedGrants),

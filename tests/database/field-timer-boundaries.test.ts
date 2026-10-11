@@ -264,7 +264,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
     const additions = after[i]
       .filter((x) => !ids.has(x.row.id))
       .map((x) => x.row);
-    assert.equal(additions.length, 89);
+    assert.equal(additions.length, 90);
     const shape = (grants: Record<string, unknown>[]) =>
       grants
         .map(({ id: _id, ...value }) => {
