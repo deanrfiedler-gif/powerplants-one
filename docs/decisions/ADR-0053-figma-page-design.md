@@ -87,5 +87,5 @@ Group 2 of the design kit (ADR-0051) continues. Each part, starting with the reg
 ## Validation
 
 - The evidence for this decision is Dean's comparison of 11 October 2026. It is one owner's judgement on one page, not a measured study.
-- No icon-free capture has been made yet, because no decision record relies on a Figma design. The first such record will exercise rule 3.
+- Rule 3 was first used on 11 October 2026 for the [Reviews & approvals design](estimate-reviews-design.md): seven captures from copies of the accepted frames, with every icon swapped for `Icon/placeholder`, cited with the named version "Reviews & approvals — Pipedrive pattern, accepted".
 - This record implies no owner visual review of any page or component.
