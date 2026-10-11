@@ -79,8 +79,8 @@ async function basis(
 ) {
   // One statement supplies both the observed row/date state and its timestamp.
   const row = (
-    await c.query<{ snapshot: Snapshot; checked_at: Date }>(
-      `SELECT statement_timestamp() AS checked_at,
+    await c.query<{ snapshot: Snapshot; checked_at: string }>(
+      `SELECT to_char(statement_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS checked_at,
     jsonb_build_object('team',jsonb_build_object('id',t.id,'version',t.version),
       'subject',jsonb_build_object('id',u.id,'active',u.active,'issuer',u.issuer),
       'grant',to_jsonb(g),'row_state',${grantState}) AS snapshot
@@ -324,7 +324,8 @@ export async function accessReview(p: Principal, id: string) {
       u.issuer<>'PPO-LocalSynthetic' OR a.issuer<>'PPO-LocalSynthetic' AS masked,
       CASE WHEN u.issuer='PPO-LocalSynthetic' AND a.issuer='PPO-LocalSynthetic' THEN r.reason ELSE NULL END AS reason,
       CASE WHEN u.issuer='PPO-LocalSynthetic' AND a.issuer='PPO-LocalSynthetic' THEN r.basis_snapshot ELSE NULL END AS basis_snapshot,
-      r.checked_at,o.operation_id,o.audit_id ${joins} JOIN ppo.access_review_operations o ON o.attestation_id=r.id
+      to_char(r.checked_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS checked_at,
+      o.operation_id,o.audit_id ${joins} JOIN ppo.access_review_operations o ON o.attestation_id=r.id
       WHERE r.workspace_id=$1 AND r.id=$2`,
         [p.workspace_id, id],
       )

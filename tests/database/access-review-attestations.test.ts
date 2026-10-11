@@ -186,6 +186,10 @@ test(
         const basis = await accessReviewBasis(reader, query());
         assert.equal(basis.snapshot.subject.id, subject.actor_id);
         assert.equal(basis.snapshot.row_state, "Current");
+        assert.match(
+          basis.checked_at,
+          /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}Z$/,
+        );
         assert.deepEqual(await evidence(), beforeEvidence);
         const cmd = await input(),
           saved = await recordAccessReview(actor, cmd),
@@ -195,6 +199,16 @@ test(
         assert.equal(detail.actor_id, actor.actor_id);
         assert.deepEqual(detail.basis_snapshot, basis.snapshot);
         assert.equal(detail.operation_id, cmd.operation_id);
+        assert.equal(
+          detail.checked_at,
+          (
+            await rows(
+              `SELECT to_char(checked_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') value
+           FROM ppo.access_review_attestations WHERE id=$1`,
+              [cmd.attestation_id],
+            )
+          )[0].value,
+        );
         assert.deepEqual(
           (
             await rows("SELECT details FROM ppo.audit_events WHERE id=$1", [
