@@ -9899,7 +9899,12 @@
       "image_paths": [
         "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png",
         "docs/testing/evidence/estimating-native-cost-sources/desktop-css-zoom-200.png",
-        "docs/testing/evidence/estimating-native-cost-sources/phone-320.png"
+        "docs/testing/evidence/estimating-native-cost-sources/phone-320.png",
+        "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-04-Phone-Source-List-r01.png",
+        "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-05-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "src/components/cost-sources.tsx",
@@ -9908,7 +9913,8 @@
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/testing/evidence/estimating-native-cost-sources/README.md",
-        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json",
+        "docs/decisions/cost-sources-design.md"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
