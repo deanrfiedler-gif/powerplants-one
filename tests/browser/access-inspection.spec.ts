@@ -1,13 +1,16 @@
 import { test, expect } from "@playwright/test";
+import { browserFixtureCall } from "../helpers/browser-fixture-call";
 
 test("AD-01 people and exact company/site explanation on the native page", async ({
   page,
   baseURL,
 }) => {
-  await page.request.post("/api/v1/local-session", {
-    data: { profile: "systems" },
-    headers: { Origin: baseURL! },
-  });
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
   await page.goto("/admin/access");
   await expect(
     page.getByRole("navigation", { name: "Breadcrumb" }),
@@ -93,10 +96,12 @@ test("AD-01 direct HTTP requests enforce current inspection permission and expos
   request,
   baseURL,
 }) => {
-  await request.post("/api/v1/local-session", {
-    data: { profile: "coordinator" },
-    headers: { Origin: baseURL! },
-  });
+  await browserFixtureCall(
+    { request },
+    "local-session",
+    { profile: "coordinator" },
+    baseURL!,
+  );
   for (const route of [
     "/api/v1/admin/access",
     "/api/v1/admin/access/30000000-0000-4000-8000-000000000005",
@@ -106,10 +111,12 @@ test("AD-01 direct HTTP requests enforce current inspection permission and expos
     expect(response.status()).toBe(403);
     expect((await response.json()).code).toBe("Forbidden");
   }
-  await request.post("/api/v1/local-session", {
-    data: { profile: "systems" },
-    headers: { Origin: baseURL! },
-  });
+  await browserFixtureCall(
+    { request },
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
   const read = await request.get("/api/v1/admin/access");
   expect(read.status()).toBe(200);
   expect(read.headers()["cache-control"]).toContain("no-store");
@@ -128,19 +135,23 @@ test("AD-01 denied page clears people; failed reads retry without displaying ret
   page,
   baseURL,
 }) => {
-  await page.request.post("/api/v1/local-session", {
-    data: { profile: "coordinator" },
-    headers: { Origin: baseURL! },
-  });
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "coordinator" },
+    baseURL!,
+  );
   await page.goto("/admin/access");
   await expect(page.locator("main .business-error")).toContainText(
     "Workspace access inspection is not permitted",
   );
   await expect(page.locator('a[href^="/admin/access/"]')).toHaveCount(0);
-  await page.request.post("/api/v1/local-session", {
-    data: { profile: "systems" },
-    headers: { Origin: baseURL! },
-  });
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
   await page.route("**/api/v1/admin/access?**", (route) =>
     route.fulfill({
       status: 503,
