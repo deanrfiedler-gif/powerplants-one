@@ -241,6 +241,9 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (path === "/admin/access/capabilities") return { ...destination("access"), label: "Capability catalogue" };
+  if (/^\/admin\/access\/capabilities\/[^/]+$/.test(path)) return { ...destination("access"), label: "Capability grants" };
+  if (/^\/admin\/access\/[^/]+$/.test(path)) return { ...destination("access"), label: "Person access" };
   if (/^\/customers\/[^/]+\/account$/.test(path)) return { ...destination("accounts"), label: "Customer Finance account" };
   if (/^\/estimating\/estimates\/[^/]+\/review$/.test(path)) return { ...destination("estimates"), label: "Estimate review" };
   if (/^\/estimating\/estimates\/[^/]+$/.test(path)) return { ...destination("estimates"), label: "Saved estimate" };

@@ -202,7 +202,7 @@ test("AD-01 capability catalogue shows unassigned keys and drills through exact 
     .getByRole("link", { name: "Browse the capability catalogue" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Capability catalogue", exact: true }),
+    page.getByRole("navigation", { name: "Breadcrumb" }).getByText("Capability catalogue", { exact: true }),
   ).toBeVisible();
   await page.getByLabel("Find a capability").fill("no-matching-capability");
   await page.getByRole("button", { name: "Search capabilities" }).click();
