@@ -1183,7 +1183,14 @@
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
-        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-04-Desktop-Saved-Estimates-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-05-Desktop-Collapsed-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-06-Phone-Workload-List-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-07-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "src/estimating/workload.ts",
@@ -1192,7 +1199,8 @@
         "src/components/sales-estimating-link.tsx",
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/decisions/intake-workload-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6264,12 +6272,20 @@
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
         "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
-        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-04-Desktop-Saved-Estimates-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-05-Desktop-Collapsed-Record-Window-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-06-Phone-Workload-List-r01.png",
+        "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-07-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
-        "docs/delivery/estimating-programme-handover.md"
+        "docs/delivery/estimating-programme-handover.md",
+        "docs/decisions/intake-workload-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
