@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import {
   Field,
+  type Failure,
   isDenied,
   PageHeader,
   ReadState,
@@ -194,7 +195,7 @@ function PersonDetail({
   }>(request);
   if (
     isDenied(explanation.error) ||
-    explanation.error?.code === "WorkingCompanySelected"
+    (explanation.error as Failure | null)?.code === "WorkingCompanySelected"
   )
     return (
       <ReadState loading={false} error={explanation.error} retry={refresh} />
