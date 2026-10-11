@@ -26,7 +26,9 @@ test("permission and readiness filters retain relative order and never manufactu
   assert.deepEqual(railDestinations("supply", ["work", "supply", "stock"], true).map(d => d.id), ["work"]);
   assert.ok(!navigationForCapabilities(new Set(["activity.read"]), true).includes("tasks"));
   assert.ok(!navigationForCapabilities(new Set(["finance.account.read"]), true).includes("accounts"));
-  for (const id of ["products", "insights", "exceptions"]) assert.equal(destination(id).href, undefined);
+  for (const id of ["insights", "exceptions"]) assert.equal(destination(id).href, undefined);
+  assert.equal(destination("products").href, "/products");
+  assert.deepEqual(destination("products").requires, ["products.read"]);
   assert.equal(destination("drawings").href, "/engineering/drawings");
   assert.ok(navigationForCapabilities(new Set(["engineering.read"]), true).includes("drawings"));
 });

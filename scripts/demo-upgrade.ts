@@ -132,7 +132,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // copied from the coordinator's Company A scope/validity. Hosted identities
   // gain no source-review or commercial approval duty. Generic table grants
   // cover the additive records; upgrade/reseed proofs retain revoked grants.
-  if (latestMigrationVersion !== 48) throw Error("Review the existing-demo upgrade for this release.");
+  // Products 0049 adds scoped typed catalogue/import evidence only, with the
+  // post-0026 constraint flush. No seed, role/profile or operational grant changes.
+  // Generic table privileges cover these additive tables; old source/estimate rows remain.
+  if (latestMigrationVersion !== 49) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

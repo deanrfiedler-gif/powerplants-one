@@ -110,3 +110,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 - [ADR-0046 — Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.
 
 - [Field readiness over CS-06](field-readiness-native.md): FI-05 assigned-visit review reuses CS snapshots/events with current assignment and receipt authority; induction remains unverified without a Person binding.
+
+- [ADR-0048 — Native Products catalogue](ADR-0048-products-native-catalogue.md): immutable technical revisions, bounded review/publication/import, existing ES-03 source reuse and separate Engineering/Equipment authority. Operational capability grants remain unallocated.

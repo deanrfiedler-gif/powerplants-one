@@ -1,6 +1,12 @@
 // The shell allocates the viewport once; full-bleed modules own their toolbar,
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
+  { route: "/products", moduleId: "PD-01", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-composition" },
+  { route: "/products/[id]", moduleId: "PD-01", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-composition" },
+  { route: "/products/publication", moduleId: "PD-02", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-composition" },
+  { route: "/products/pricing", moduleId: "PD-03", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-composition" },
+  { route: "/products/compatibility", moduleId: "PD-04", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-composition" },
+  { route: "/products/import", moduleId: "PD-05", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-composition" },
   { route: "/equipment", moduleId: "EQ-01", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq01-register-native-r01" },
   { route: "/equipment/[id]", moduleId: "EQ-01", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq01-record-native-r01" },
   { route: "/equipment/lookup", moduleId: "EQ-02", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq02-native-r01" },

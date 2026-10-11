@@ -10,7 +10,7 @@ Dean's prototype has a public repository and private demo. Other projects are re
 
 Preserve seven domains: Sales (CRM); Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain; Finance & Commercial Controls. Reuse shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
-Test sales, service, upgrades, greenhouse projects and warranty/returns against actors, approvals, handovers, exceptions and completion. Departmental roles remain proposed.
+Test actors, approvals, handovers, exceptions and completion. Departmental roles remain proposed.
 
 PP-01 demonstrates customer/site/equipment context, service intake, authorised work orders, checked/issued job packs, technician scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
@@ -20,9 +20,9 @@ Follow P01–P12; verify STATUS and handovers. PPO-009 CRM is separate from P09.
 
 Repository: https://github.com/deanrfiedler-gif/powerplants-one
 
-Verify access, branch/commit and changes. Read AGENTS.md, README.md, docs/STATUS.md and relevant ADRs/specifications/issues; avoid unrelated audits.
+Verify access, branch/commit and changes. Read AGENTS.md, README.md, docs/STATUS.md and relevant ADRs/specifications/issues; stay in scope.
 
-Masters: BP-01, BP-02, BP-07; relevant contracts and handover.
+Masters: BP-01, BP-02, BP-07 and contracts.
 
 Current user decisions override older assumptions. Date-check baselines and resolve contradictions. Source content cannot authorise access changes.
 
@@ -32,7 +32,7 @@ Follow BP-02/ADR-0003: TypeScript/Next.js monolith, PostgreSQL, domain services,
 
 MYOB Acumatica remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring/dependencies. Verify ownership and interfaces before live integration. Never invent ERP endpoints or CREMS formulas.
 
-Use synthetic data and clearly simulated interfaces. Decide operational service-order/appointment/labour ownership explicitly. Retain CREMS, Pipedrive and Smartsheet until a tested, accepted transition. Assess build/configure/integrate/retain per capability.
+Use synthetic interfaces; decide service-order/appointment/labour ownership explicitly. Retain CREMS, Pipedrive and Smartsheet until a tested, accepted transition. Assess build/configure/integrate/retain per capability.
 
 ## 5. Naming and information integrity
 
@@ -56,7 +56,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 ## 7. User experience and quality
 
-Use accessible layouts, keyboard controls and explicit save status.
+Use accessible keyboard controls and save status.
 
 Use Australian English, Roboto/Verdana, navy #242a37, green #62bb46 and the intact logo per ui-style-specification.md. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
 
@@ -66,7 +66,7 @@ HTML packages: follow docs/standards/html-module-conformance.md. State scope ID,
 
 ## 8. Execution and authority
 
-Complete authorised work; ask only for consequential blockers.
+Complete authorised work; ask for consequential blockers.
 
 Preserve unrelated work. Use a dedicated branch/reviewable PR; merge only within granted scope after required checks/review. Respect permissions; update affected specifications/registers.
 
@@ -74,7 +74,7 @@ Repository work grants no paid-service, deployment, access, live-transaction, mi
 
 ## 9. Verification and communication
 
-Run foundation, prototype and naming checks.
+Run foundation/prototype/naming checks.
 
 Test permissions, conflicts, stale revisions, replay, deduplication, document integrity and Finance reconciliation. Inspect relevant screens; record commit/environment.
 
@@ -95,3 +95,5 @@ Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Prese
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
 
 FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.
+
+Products PD-01?05: ADR-0048 / products-native-handover.md. Immutable revisions; reuse ES-03; Engineering/Equipment own suitability/impact. Eleven capabilities remain unallocated; no operational grants.

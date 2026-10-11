@@ -11,6 +11,7 @@ export const componentCategories = [
   "Mobile",
 ] as const;
 export const exampleIds = [
+  "products",
   "foundations",
   "buttons",
   "sales-table",

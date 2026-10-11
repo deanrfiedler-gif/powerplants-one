@@ -1,0 +1,29 @@
+{
+  "format": "PPO synthetic catalogue 1",
+  "rows": [
+    {
+      "external_key": "SYN-EXAMPLE-FAMILY",
+      "kind": "Family",
+      "parent_id": null,
+      "reference": "SYN-EXAMPLE-FAMILY",
+      "content": {
+        "title": "SYN Demonstration family",
+        "manufacturer": "Fictional Controls",
+        "model": "Demonstration family",
+        "variant": "Family scope",
+        "technical_revision": "source-tech-A",
+        "source_reference": "SYN-FICTIONAL-NOTE",
+        "source_revision": "A",
+        "source_date": "2026-09-25",
+        "description": "Synthetic format example, not technical suitability evidence.",
+        "unit": "each",
+        "attributes": [],
+        "documents": [],
+        "lifecycle": "Unknown",
+        "lifecycle_evidence": "Support not confirmed in synthetic evidence.",
+        "support_until": null,
+        "data_mode": "Synthetic"
+      }
+    }
+  ]
+}

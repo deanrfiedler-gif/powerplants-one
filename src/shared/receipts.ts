@@ -42,6 +42,7 @@ import { visibleTicket } from "../service/tickets";
 import { visibleActivity } from "../activities/activities";
 import { visible } from "./reads";
 import { uuid } from "./validation";
+import { productReceiptAuthority } from "../products/context";
 export async function readOperation(
   p: Principal,
   operation_id: string,
@@ -55,7 +56,9 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "CostSource") {
+  if (["Product", "ProductRelationship", "ProductImport"].includes(r.object_type)) {
+    await productReceiptAuthority(client,p,r.record_id,r.command,r.object_type);
+  } else if (r.object_type === "CostSource") {
     await sourceReceiptAuthority(client,p,r.record_id,r.command);
   } else if (r.object_type === "AftercareRecord") {
     await aftercareReceiptAuthority(client,p,r.record_id,r.command);

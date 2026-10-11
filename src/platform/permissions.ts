@@ -4,6 +4,17 @@ import { AppError } from "./errors";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "products.read"
+  | "products.edit"
+  | "products.review"
+  | "products.publish"
+  | "products.commercial.read"
+  | "products.sources.bind"
+  | "products.relationship.edit"
+  | "products.relationship.review"
+  | "products.import.stage"
+  | "products.import.review"
+  | "products.import.apply"
   | "acceptance.scope"
   | "acceptance.submit"
   | "acceptance.technical"

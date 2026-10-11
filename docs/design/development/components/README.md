@@ -47,7 +47,7 @@ The entire r22 board remains a retained source, including proposed future patter
 | states | Read-state/error/status examples |
 | responsive | Cross-cutting width presets and mobile form |
 | ai-assistance | Reference-only AI patterns; no shared runtime claim |
-| products | Reference-only product-pattern inventory |
+| products | Runnable native technical attributes, document applicability and lifecycle fixture; PD-01–PD-05 consumer bindings |
 | estimation-wizard | Runnable area editor/tabs; complete saved wizard retained as integration/reference work |
 | future-patterns, innovation, fi-panel-suggestion, fi-panel-review, fi-panel-connections | Reference-only future patterns; no implied adoption |
 | references, handover | Exact source links, usage specifications, ownership, gaps and this maintenance contract |
