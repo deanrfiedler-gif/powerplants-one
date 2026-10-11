@@ -16,7 +16,7 @@ Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P0
 
 ## 3. Sources
 
-Read AGENTS.md, README, STATUS and relevant ADRs/specs; verify Git.
+Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
