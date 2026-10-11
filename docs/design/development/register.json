@@ -7368,8 +7368,17 @@
       "guide_key": "guide.page.service.work-orders",
       "design_path": "docs/design/development/pages/route-service-work-orders.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-04-Desktop-Collapsed-Record-Window-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-05-Phone-Work-Order-List-r01.png",
+        "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-06-Phone-Record-View-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/work-orders-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
