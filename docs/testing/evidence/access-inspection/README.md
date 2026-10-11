@@ -51,3 +51,7 @@ The eligibility-result views are retained separately for [desktop](native-1440-e
 ## Review boundary
 
 First read-only AD-01 increment. Roles, teams, mutations, campaign attestations and operational D-020 authority remain open. No hosted deployment, independent review, owner acceptance or physical-device/screen-reader review is claimed. Exact synthetic reference/application captures, where retained below, prove only the inspected states.
+
+## CI menu assertion correction — 11 October 2026
+
+PR #410 at `7ef617f` reports a [CRM header/board failure](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38106719213/job/114373694842): the retained shell fixture now includes the AD-01 destination, but its test still expects 28 links and 29 total destinations. Preserve all r17 bytes and geometry assertions; expect 29 links / 30 destinations including Help, and assert the exact Users and access link. The focused retained-r17 shell comparison passes locally after that correction ([raw result](ci-menu-correction.txt), Chrome 155, desktop). This changes test expectations only. The full rerun and other checks remain separate.
