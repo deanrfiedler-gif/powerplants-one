@@ -144,3 +144,5 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
 
 
 - [Saved-team access inspection](access-team-inspection-current.md): current per-member grant-state counts and exact person handover; roster labels grant no authority.
+
+[Local access review attestations](access-review-attestations.md) records the bounded single-grant Keep API, independent authority, stale-basis checks, immutable evidence and open campaign/native controls.

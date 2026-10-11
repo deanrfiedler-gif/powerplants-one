@@ -1,0 +1,137 @@
+{
+  "status": "Core validation complete; broader historical and hosted upgrades still running. Draft publication does not grant acceptance.",
+  "source": "89937ba147c8180fa5adbd22b18a2979b0907a1a",
+  "runtime_source": "041402f",
+  "completed": {
+    "access_regression": 101,
+    "final_attestation_database": 18,
+    "http": 5,
+    "native_browser_unique_cases_with_passing_evidence": 15,
+    "native_browser_initial": {
+      "passed": 14,
+      "failed": 1
+    },
+    "unchanged_narrow_replays": 2,
+    "unit": 22,
+    "retained_model": 107,
+    "retained_browser": 40,
+    "field_upgrade_replays": 3,
+    "estimating_across_0026": 1,
+    "build": "Passed",
+    "lint": "Passed",
+    "studio": "Passed; 330 unreviewed, 28 stale, 42 component reviews pending",
+    "foundation": "Passed; 78 parent IDs and 22 issued sources retained",
+    "naming": "Passed"
+  },
+  "pending": [
+    "Remaining historical migration cases, reserved Products path and existing-demo upgrade",
+    "Permissions-matrix 110-second wrapper replay",
+    "CI on the published draft head"
+  ],
+  "initial_corrections": [
+    "Hosted replacement fixture used an unrecognised issuer; corrected to PPO-EntraDemo without changing the schema.",
+    "Independent test database inherited WIN1252; recreated only that disposable database as UTF8 before replay.",
+    "Foreign-origin HTTP test expected a route envelope; launcher correctly refuses earlier with plain text and no-store.",
+    "Field exact added-grant counts extended to 25 and 90 alongside their exact grant-set checks.",
+    "One native read failed while the app logged DatabaseConnectTimeout; unchanged case passed twice on replay.",
+    "Permissions-matrix wrapper hit its existing 110-second deadline; retry pending."
+  ],
+  "artifacts": [
+    {
+      "path": "logs/database-initial.log",
+      "sha256": "906f0018f72272ee0e7e97677cb0aef15b93ddbcfddd82c10a2881c409ef971a"
+    },
+    {
+      "path": "logs/access-regression.log",
+      "sha256": "9f93efaec73871d4b2926d06c304b02f0201a70aa5896d3f7ed8e52eccaa3f4b"
+    },
+    {
+      "path": "logs/build.log",
+      "sha256": "83a6b99d27fceae179837ce89a54e62122e6212322909323cfb9efebebef9434"
+    },
+    {
+      "path": "logs/build-final.log",
+      "sha256": "30da1c2370fed1949f8a0987fa433e7d1ee58b1f0923bd0e745ed2a4c69d2253"
+    },
+    {
+      "path": "logs/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/retained-model.log",
+      "sha256": "0d74aca159d2cc26698e0f7907d8db0b4a0748241f16bf4d19b3cfc748698da6"
+    },
+    {
+      "path": "logs/retained-browser.log",
+      "sha256": "66106e0fa4ac7b76584f4e179c66c540565155bf06d249a4a6ce7978583f8872"
+    },
+    {
+      "path": "logs/unit.log",
+      "sha256": "e7ea33602b43fce45aee90b5a96c9c62580684fa03824b44d770c3f6fb8d970a"
+    },
+    {
+      "path": "logs/studio.log",
+      "sha256": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f"
+    },
+    {
+      "path": "logs/naming.log",
+      "sha256": "522ea014c6264f6ce7c730657ae51cefe84df47c5648d9ff7590f44a994fa774"
+    },
+    {
+      "path": "logs/foundation.log",
+      "sha256": "d962862e910ef1066a8f4ee7c855c3f686ee400381a51eea79b95829c916ebdf"
+    },
+    {
+      "path": "logs/lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/lint-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/database-final.log",
+      "sha256": "cf0f3eb90cba1e6e852fef5eab4547c11d2c5fc6dc522f55c1e22e98f766effe"
+    },
+    {
+      "path": "logs/estimating-e2-upgrade.log",
+      "sha256": "c0bdbf34dc9518cf554fb0419ef20cd94931be0996795137f5b9a806355781a2"
+    },
+    {
+      "path": "logs/permissions-matrix.log",
+      "sha256": "98c624d1d46f90b230859ea3e8c39c08bafb4bdf5e2b0d981f53ac746337578d"
+    },
+    {
+      "path": "logs/database-final-utf8.log",
+      "sha256": "52b0eced695fab9921799936c19e4b9dc637620a9060a7ab8100c6b6db3a9ea3"
+    },
+    {
+      "path": "logs/estimating-e2-utf8.log",
+      "sha256": "36f545bf7003230da8ae442ede7ecb0fcd75496e8aa91fd112c454327782ec87"
+    },
+    {
+      "path": "logs/permissions-matrix-utf8.log",
+      "sha256": "5c5a47277db29e2a3b24dc36b5884b96b7da360e9a8ebc74b968a50bf213fc88"
+    },
+    {
+      "path": "logs/field-upgrade-replays.log",
+      "sha256": "53b157494e470fb11d024ec97e996ae15eb48c689530a3c3c9670e5fe091b59a"
+    },
+    {
+      "path": "logs/http.log",
+      "sha256": "fc8105e67da451da4fae86948bc8a966ccadcdc2f0dd689ba676a6ceb756255b"
+    },
+    {
+      "path": "logs/http-final.log",
+      "sha256": "f6fc9e9e07ab7b676326f536fe9414e77125eb8c8272b459485bec71b293b777"
+    },
+    {
+      "path": "logs/browser.log",
+      "sha256": "50d3bc04d2168d011a4b0bb2e7c0b4a4ec9805523b4d74634dd02f608badb126"
+    },
+    {
+      "path": "logs/browser-replay.log",
+      "sha256": "27dffe32e54c0f3163948bb34abfa0048f69af8b1cb48364d6ba34a5692282ae"
+    }
+  ]
+}

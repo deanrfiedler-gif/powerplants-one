@@ -1,0 +1,334 @@
+✖ AD01 review: populated 0083 upgrade retains originals and adds exactly one local duty (52503.4599ms)
+▶ AD01 review: authority, freshness, evidence and original recovery
+  ✖ basis read and Keep preserve all authority/business records and link exact evidence (370.6621ms)
+  ✖ explicit Workspace duty and independent actor are required; team lead is insufficient (2.2013ms)
+  ✖ strict payload, wrong team/member/grant and invalid offsets refuse without evidence (0.8557ms)
+  ✖ working-company selection blocks reads, commands and original recovery (0.8364ms)
+  ✖ any reviewed row change, inactive subject and noncurrent dates invalidate the basis (0.8247ms)
+  ✖ same-operation races record once; changed payload and duplicate identity conflict (0.6249ms)
+  ✖ recovery is actor-bound and retains the original when the grant is removed (0.462ms)
+  ✖ loss of either current duty or actor activity blocks replay and recovery (0.714ms)
+  ✖ queued authority loss is revalidated after acquiring the write lock (0.6235ms)
+  ✖ date boundary during evidence writing rolls back the complete attestation (14.4542ms)
+  ✖ audit failure and incomplete/tampered evidence roll back; accepted records are immutable (1.2162ms)
+  ✖ Workspace, Company and Site grant bases remain exact; unrelated rows do not stale a review (0.5811ms)
+  ✖ deferred agreement rejects a forged receipt and leaves no record or audit (0.2819ms)
+  ✖ hosted replacement identities are masked and cannot be newly reviewed or act (0.3537ms)
+  ✖ bounded pagination preserves distinct explicit later observations (0.3195ms)
+  ✔ hosted environment refuses all review services before database use (1.7319ms)
+✖ AD01 review: authority, freshness, evidence and original recovery (401.9702ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 1
+ℹ fail 17
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82613.4842
+
+✖ failing tests:
+
+test at tests\database\access-review-attestations.test.ts:1:1915
+✖ AD01 review: populated 0083 upgrade retains originals and adds exactly one local duty (52503.4599ms)
+  error: character with byte sequence 0xe2 0x86 0x92 in encoding "UTF8" has no equivalent in encoding "WIN1252"
+      at <WORKTREE>\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (<WORKTREE>\scripts\database.ts:62:7)
+      at async transaction (<WORKTREE>\src\platform\database.ts:46:20)
+      at async seed (<WORKTREE>\scripts\database.ts:50:3)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:88:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 175,
+    severity: 'ERROR',
+    code: '22P05',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'mbutils.c',
+    line: '1908',
+    routine: 'report_untranslatable_char'
+  }
+
+test at tests\database\access-review-attestations.test.ts:1:4551
+✖ basis read and Keep preserve all authority/business records and link exact evidence (370.6621ms)
+  error: relation "ppo.access_review_operations" does not exist
+      at <WORKTREE>\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async rows (<WORKTREE>\tests\database\access-review-attestations.test.ts:27:4)
+      at async Promise.all (index 1)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:185:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:181:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 127,
+    severity: 'ERROR',
+    code: '42P01',
+    detail: undefined,
+    hint: undefined,
+    position: '31',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '1431',
+    routine: 'parserOpenTable'
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:569
+✖ explicit Workspace duty and independent actor are required; team lead is insufficient (2.2013ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:244:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:241:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:1307
+✖ strict payload, wrong team/member/grant and invalid offsets refuse without evidence (0.8557ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:282:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:279:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:2274
+✖ working-company selection blocks reads, commands and original recovery (0.8364ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:325:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:322:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:2956
+✖ any reviewed row change, inactive subject and noncurrent dates invalidate the basis (0.8247ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:350:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:347:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:4037
+✖ same-operation races record once; changed payload and duplicate identity conflict (0.6249ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:399:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:396:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:4724
+✖ recovery is actor-bound and retains the original when the grant is removed (0.462ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:431:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:428:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:5978
+✖ loss of either current duty or actor activity blocks replay and recovery (0.714ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:483:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:480:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:6886
+✖ queued authority loss is revalidated after acquiring the write lock (0.6235ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:527:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:524:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:2:8086
+✖ date boundary during evidence writing rolls back the complete attestation (14.4542ms)
+  TypeError: Cannot read properties of undefined (reading 'valid_to')
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:574:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:567:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\database\access-review-attestations.test.ts:2:9105
+✖ audit failure and incomplete/tampered evidence roll back; accepted records are immutable (1.2162ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:607:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:604:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:3:851
+✖ Workspace, Company and Site grant bases remain exact; unrelated rows do not stale a review (0.5811ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:665:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:646:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:3:2242
+✖ deferred agreement rejects a forged receipt and leaves no record or audit (0.2819ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:702:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:699:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:3:2963
+✖ hosted replacement identities are masked and cannot be newly reviewed or act (0.3537ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:723:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:720:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }
+
+test at tests\database\access-review-attestations.test.ts:3:3968
+✖ bounded pagination preserves distinct explicit later observations (0.3195ms)
+  Error: Check the highlighted details.
+      at invalid (<WORKTREE>\src\platform\validation.ts:3:9)
+      at uuid (<WORKTREE>\src\platform\validation.ts:24:12)
+      at accessReviewBasis (<WORKTREE>\src\access\reviews.ts:102:16)
+      at input (<WORKTREE>\tests\database\access-review-attestations.test.ts:67:22)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:767:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:763:13) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'team_id', message: 'A valid UUID is required.' } ]
+  }

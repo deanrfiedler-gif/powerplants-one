@@ -1,0 +1,39 @@
+▶ AD01 review HTTP: exact basis, independent command and original receipt envelopes
+  ✔ reader can inspect basis but cannot attest; unauthenticated request is refused (51.5437ms)
+  ✖ origin and payload guards precede writes (15.8578ms)
+  ✔ accepted command, unchanged replay and lost-response recovery return one exact receipt (195.817ms)
+  ✔ read-only history/filter handover retains exact team, subject, basis and audit linkage (117.3531ms)
+✖ AD01 review HTTP: exact basis, independent command and original receipt envelopes (2269.3735ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3095.9302
+
+✖ failing tests:
+
+test at tests\http\access-review-attestations.test.ts:1:2506
+✖ origin and payload guards precede writes (15.8578ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'no-store'
+  - 'private, no-store'
+
+      at call (<WORKTREE>\tests\http\access-review-attestations.test.ts:31:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\http\access-review-attestations.test.ts:88:8)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\http\access-review-attestations.test.ts:86:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'no-store',
+    expected: 'private, no-store',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

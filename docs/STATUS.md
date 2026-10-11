@@ -4,6 +4,12 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## AD-01 local review attestation foundation — 12 October 2026
+
+The [bounded contract](decisions/access-review-attestations.md) continues saved-team inspection #433 with a separate local review duty and immutable single-grant Keep observations. Commands refuse self-review, noncurrent rows and stale bases; original actor-bound receipt recovery does not reapply anything. No permission, validity, roster or request changes. Migration/seed 0084 add one explicit duty to the existing local Systems fixture, no users or hosted grants. Historical ledgers and all issued IDs remain preserved.
+
+This is an API/record foundation; existing native team/person inspection remains the UI. Campaign assignment/completion, native attestation entry, Change/Revoke/Unable-to-confirm outcomes, review-origin request separation, cadence/retention and operational D-020 remain open. [Execution evidence](testing/evidence/access-review-attestations/README.md) records checks and corrections; owner/security acceptance and deployment are separate.
+
 ## Remaining PR integration — 12 October 2026
 
 Dean authorised fixing and merging the remaining ready PRs, keeping backup PRs #404–#408 separate. The combined #429 contribution retains the exact heads of access #423/#427/#429 and design #422/#424/#426/#428. Dean confirmed the named Leads Figma version has been saved, resolving #426's draft checkpoint. All retained captures and original review fingerprints remain unchanged; design acceptance does not imply an application build or owner/device acceptance.

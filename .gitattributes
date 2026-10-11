@@ -57,3 +57,4 @@ docs/testing/evidence/access-requests/*.txt text eol=lf
 # AD-01 team creation proof logs retain their published manifest bytes.
 docs/testing/evidence/access-team-creation/logs/*.log text eol=lf
 docs/testing/evidence/access-team-access/logs/*.log text eol=lf
+docs/testing/evidence/access-review-attestations/logs/*.log text eol=lf

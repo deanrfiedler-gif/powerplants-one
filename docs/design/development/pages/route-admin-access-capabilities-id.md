@@ -25,3 +25,8 @@ Existing [working AD-01 HTML](../../access-review/access-review.html), capabilit
 ## Evidence and open review
 
 [Execution ledger](../../../testing/evidence/access-capabilities/README.md) records 16 database checks, 15 native browser checks and twelve source-bound native/reference captures at 1440/390/320 px, with explicit observed adaptations. Accepted native mockup images are missing. Owner visual review, physical-device, zoom and screen-reader acceptance remain pending. No review fingerprint is assigned by implementation and no deployment is claimed.
+
+
+## Local review API boundary
+
+The [attestation contract](../../../decisions/access-review-attestations.md) introduces `admin.access.review.attest` (137 current capability keys) and immutable local single-grant Keep records. The broad retained `admin.access.review` remains proposed campaign authority; it is not inferred from a lead label. No native attestation form or new page/layout is delivered. Existing roster counts/person links are still read-only. Shared component implementations, fixtures and consumer bindings are unchanged. Native review images are missing; existing historical captures and pending owner review remain separate. API/upgrade evidence: [execution ledger](../../../testing/evidence/access-review-attestations/README.md).

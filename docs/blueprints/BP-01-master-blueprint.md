@@ -2408,3 +2408,8 @@ The [creation contract](../decisions/access-team-creation.md) exposes the existi
 ## AD-01 saved-team access inspection
 
 The [inspection contract](../decisions/access-team-inspection-current.md) adds a current grant-row summary for each recorded local team member, with exact person-access handover. It preserves immutable initial membership and audit history; it adds no grant, review attestation, operational policy or authority inheritance. All existing parent IDs, NFR-01–NFR-12, CRM-08, FIN-06 and unresolved D-020 remain unchanged.
+
+
+## Local review attestation foundation — 12 October 2026
+
+The [attestation contract](../decisions/access-review-attestations.md) adds local independent Keep observations of one exact current saved-member grant, guarded by a separate duty, unchanged basis and immutable audit/receipt. No access, membership or validity is changed. API delivery does not complete the retained campaign workflow; native entry, routing, other decisions and operational D-020 remain open. All existing parent IDs, NFR-01–NFR-12, CRM-08 and FIN-06 are preserved.

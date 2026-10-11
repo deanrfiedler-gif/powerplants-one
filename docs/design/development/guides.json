@@ -30592,7 +30592,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "Local review API boundary: docs/decisions/access-review-attestations.md. A dedicated independent duty records one current grant Keep observation with an exact basis. No native attestation control or campaign completion is delivered; roster inspection records no review. Evidence: docs/testing/evidence/access-review-attestations/README.md."
           ],
           "steps": [],
           "rows": [],
@@ -75186,7 +75187,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the native AD-01 decision, the retained AD-01 HTML, the capability catalogue execution record and the related People/Person access guides."
+            "See the native AD-01 decision, the retained AD-01 HTML, the capability catalogue execution record and the related People/Person access guides.",
+            "Local review API boundary: docs/decisions/access-review-attestations.md. A dedicated independent duty records one current grant Keep observation with an exact basis. No native attestation control or campaign completion is delivered; roster inspection records no review. Evidence: docs/testing/evidence/access-review-attestations/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75514,7 +75516,8 @@
             "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides.",
             "Team boundary and provenance: docs/decisions/access-team-inspection.md; implementation evidence: docs/testing/evidence/access-teams/README.md.",
             "Local record contract: docs/decisions/access-local-teams.md. Database, browser and review evidence: docs/testing/evidence/access-local-teams/README.md.",
-            "Native creation and recovery: docs/decisions/access-team-creation.md; docs/testing/evidence/access-team-creation/README.md."
+            "Native creation and recovery: docs/decisions/access-team-creation.md; docs/testing/evidence/access-team-creation/README.md.",
+            "Local review API boundary: docs/decisions/access-review-attestations.md. A dedicated independent duty records one current grant Keep observation with an exact basis. No native attestation control or campaign completion is delivered; roster inspection records no review. Evidence: docs/testing/evidence/access-review-attestations/README.md."
           ],
           "steps": [],
           "headers": [],

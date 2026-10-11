@@ -5101,7 +5101,7 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Native inspection and local access requests, plus immutable synthetic team records and initial-roster inspection. Membership grants no authority.",
+      "summary": "Native access administration and team inspection, plus a local independent single-grant Keep attestation API. Teams confer no authority; campaign/native review controls remain open.",
       "path": "/admin/access",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -5116,7 +5116,8 @@
         "src/access/local-teams.ts",
         "src/access/local-team-screens.tsx",
         "src/access/team-creation.tsx",
-        "src/app/api/v1/admin/access/teams/context/route.ts"
+        "src/app/api/v1/admin/access/teams/context/route.ts",
+        "src/access/reviews.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5142,11 +5143,12 @@
         "docs/decisions/access-request-application.md",
         "docs/decisions/access-local-teams.md",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Saved-team current access: 45 database cases covered by passing runs, 45 browser checks at three widths, 19 selected units with 2 component rechecks, final build/types/lint and documented assurance. Initial fixture/register failures retained. No membership authority or review attestation; owner acceptance remains open.",
+      "functional_status": "Prior native inspection/creation proof retained. Local review attestation API and migration/seed 0084 verification are recorded separately in docs/testing/evidence/access-review-attestations/README.md; no native entry or owner acceptance claimed.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13060,7 +13062,8 @@
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -13103,7 +13106,8 @@
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -13230,7 +13234,8 @@
         "docs/decisions/access-team-inspection.md",
         "docs/decisions/access-local-teams.md",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
