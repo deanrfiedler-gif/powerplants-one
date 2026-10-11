@@ -4,7 +4,7 @@
 
 Owner: Dean Fiedler. Status: implemented with passing local coverage across the recorded runs; CI, independent security, visual/owner acceptance and deployment separate.
 
-[Contract](../../../decisions/access-request-withdrawal.md). [Draft PR #423](https://github.com/deanrfiedler-gif/powerplants-one/pull/423), branch `codex/ad01-request-withdrawal`, starts at PR #417 `2e69c4caad0dbdaa5f298d62d1b41fb03e40f7c3`. Initial stack inspection found no reviews/comments and no #417 failures, with CI still running. Earlier parent failures matched corrections already in #417. The parent subsequently advanced to `8800193ba9551ac3562dfce230568ff426464cfc`; merge `e71e93507f8e29082ac4a84e2cdbcfb4be4f6a79` incorporates its repaired stack and accepted design records. LC-12/LC-13 keep the parent's original-ledger boundary plus exact added version 0081. This task does not own parent integration or deployment.
+[Contract](../../../decisions/access-request-withdrawal.md). [Draft PR #423](https://github.com/deanrfiedler-gif/powerplants-one/pull/423), branch `codex/ad01-request-withdrawal`, starts at PR #417 `2e69c4caad0dbdaa5f298d62d1b41fb03e40f7c3`. Initial stack inspection found no reviews/comments and no #417 failures, with CI still running. Earlier parent failures matched corrections already in #417. The parent subsequently advanced to `8800193ba9551ac3562dfce230568ff426464cfc`; merge `e71e93507f8e29082ac4a84e2cdbcfb4be4f6a79` incorporates its repaired stack and accepted design records. LC-12/LC-13 keep the parent's original-ledger boundary plus exact added version 0081. The parent later advances to `2579bd9ab895477a86e7dc811fc2fe358f0b424b` with documentation-only Sales briefs/Cost sources records; those are also merged. Runtime, migrations and tests are unchanged by that second update, and documentation assurance is rerun. This task does not own parent integration or deployment.
 
 ## Scope and sources
 
@@ -22,7 +22,7 @@ The first browser block's new reason-focus assertion assumes direct field focus.
 
 ## Recorded checks
 
-[Machine-readable checks and artifact hashes](checks.json) preserve individual outcomes. Text logs are normalised to UTF-8/LF with trailing whitespace removed; the original local output remains outside Git.
+[Machine-readable checks and artifact hashes](checks.json) preserve individual outcomes. [Validation profile](validation-profile.json) records the pinned local runtimes and unchanged replay limits. Text logs are normalised to UTF-8/LF with trailing whitespace removed; the original local output remains outside Git.
 
 | Check | Passing coverage |
 |---|---:|
@@ -37,6 +37,10 @@ The first browser block's new reason-focus assertion assumes direct field focus.
 The 14 historical cases are three Products paths (25, 80 and 81, including reserved 0052), FI-01, FI-07, two policy cases, two E1 cases, E2, two Lead integration cases and LC-12/LC-13. This increment does not claim a rerun of all 61 historical cases from the previous application increment or the full repository suite. Other migration pins are updated and remain subject to CI. Build, final type checking and changed-source/test lint pass. The retained browser script is not rerun here; its prior evidence remains separate.
 
 [Nine captures and hashes](captures.json) identify the exact source and viewport. The [page comparison](../../../design/development/pages/route-admin-access-requests-id.md#withdrawal-continuation) records implementer inspection and the visible limitations. Capture inspection is not an acceptance decision.
+
+Studio, foundation, prototype and naming checks pass. The register retains 358 entries, 42 components, 330 unreviewed entries, 28 stale reviews and 42 pending component reviews. Documentation assurance preserves all 78 parent requirements; it does not grant business or visual acceptance. Both task-owned temporary services are stopped.
+
+The [pre-publication CI snapshot](pre-publication-ci-checkpoint.json) is tied to `1053c3f`, with checks pending and no review feedback. The [final parent checkpoint](parent-final-checkpoint.json) identifies fresh parent `2579bd9`, for which checks were not yet reported; that is not a passing CI result. Later publication-head CI remains separate.
 
 ## Design and remaining work
 

@@ -1,6 +1,6 @@
 {
-  "recorded_at": "2026-10-11T10:57:26.981917+00:00",
-  "evidence_preparation_head": "1053c3f650355a84c8c1396138afa8007152db68",
+  "recorded_at": "2026-10-11T11:00:59.776538+00:00",
+  "evidence_preparation_head": "78456b9f4156c580f651be52e0de4482aed3aa36",
   "database_source": "1e4eec78a983be30cecf6a7217f84565bc752570",
   "integrated_parent": "8800193ba9551ac3562dfce230568ff426464cfc",
   "integrated_runtime": "e71e93507f8e29082ac4a84e2cdbcfb4be4f6a79",
@@ -243,7 +243,7 @@
     },
     "naming": {
       "status": "passed",
-      "document_records": 535,
+      "document_records": 539,
       "project_instruction_characters": 7989,
       "errors": []
     }
@@ -351,7 +351,7 @@
     },
     {
       "file": "foundation-final.txt",
-      "sha256": "e15a51fd7393ec3173ecd3123f9c2270fd7a0374e69fc5c3609925923fe575fe"
+      "sha256": "ec3f305af84cde34ed89529a11329f9f031ad569928d5b750d6623ed99e430de"
     },
     {
       "file": "foundation.txt",
@@ -399,7 +399,7 @@
     },
     {
       "file": "naming-final.txt",
-      "sha256": "7908df9a9c0fc84a8f10a4e2d4c62e4d36f9139a11420fc724c66f43acd7a97d"
+      "sha256": "72c9e77038cd50e27ddf6257717a73397bde5decab01b625c204cac92a6348b4"
     },
     {
       "file": "naming.txt",
@@ -504,6 +504,10 @@
     {
       "file": "unit.txt",
       "sha256": "d6a0a859e8812e1b675ef3fe78fbe67c589b0555172ce7fc06fc635345e27931"
+    },
+    {
+      "file": "validation-profile.json",
+      "sha256": "bdf8ea213af246acd99bb691fa3831048ac0050ffac2e337f4a462381a11da3b"
     },
     {
       "file": "validation-results.json",
