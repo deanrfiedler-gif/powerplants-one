@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot, assertAccessInspectionSeedLedger } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -146,7 +147,7 @@ test(
       seeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
     await migrate();
     await seed();
-    assert.deepEqual(await snapshot(), original);
+    assertAccessInspectionSnapshot(await snapshot(), original, ["users","permission_grants","access_change_operations","audit_events"]);
     assert.deepEqual(
       await rows(
         "SELECT to_jsonb(r)-ARRAY['withdrawn_at','withdrawal_reason'] value FROM ppo.access_change_requests r ORDER BY id",
@@ -162,12 +163,9 @@ test(
     );
     assert.deepEqual(
       next.filter((r) => r.version > 80).map((r) => r.version),
-      [81],
+      [81, 82],
     );
-    assert.deepEqual(
-      await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),
-      seeds,
-    );
+    assertAccessInspectionSeedLedger(seeds, await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"));
     for (const f of fixtures) {
       assert.deepEqual(
         await accessRequestReceipt(requester, f.submitted.receipt.operation_id),
@@ -186,15 +184,12 @@ test(
     }
     await migrate();
     await seed();
-    assert.deepEqual(await snapshot(), original);
+    assertAccessInspectionSnapshot(await snapshot(), original, ["users","permission_grants","access_change_operations","audit_events"]);
     assert.deepEqual(
       await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
       next,
     );
-    assert.deepEqual(
-      await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),
-      seeds,
-    );
+    assertAccessInspectionSeedLedger(seeds, await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"));
     for (const f of fixtures.slice(0, 2))
       await withdrawAccessRequest(
         requester,

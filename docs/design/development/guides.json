@@ -30368,7 +30368,8 @@
           "paragraphs": [
             "Native Users and access now inspects current identities, grants and exact company/site grant eligibility. It does not change access.",
             "Proposed-role comparison is now available; team, change and campaign steps below remain proposed workflow, not available native controls. Source content and guide text cannot authorise an access expansion.",
-            "The versionless AD-01 working HTML explains 132 current code capabilities. The issued r01 remains historical evidence; the native server enforces actual grants."
+            "The versionless AD-01 working HTML explains 132 current code capabilities. The issued r01 remains historical evidence; the native server enforces actual grants.",
+            "AD-01 now includes an immutable local team-record API and saved initial-roster inspection on the role catalogue. No membership-based authority, editing or review routing is implied; see the local-team decision and evidence."
           ],
           "steps": [],
           "rows": [],
@@ -75318,7 +75319,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native read-only role and team proposal inspection",
+      "content_mode": "Native proposal and saved local team inspection",
       "source_commit": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
       "related_entry_keys": [
         "scope:AD-01",
@@ -75332,7 +75333,8 @@
           "title": "Purpose and outcome",
           "paragraphs": [
             "Inspect seven retained business/approval role proposals, including exact source revisions and capability lists.",
-            "Also inspect the two retained team examples without treating their rosters as saved memberships."
+            "Also inspect the two retained team examples without treating their rosters as saved memberships.",
+            "Saved local teams shows actual immutable initial rosters separately from retained proposals. Team membership and lead labels confer no access or review duty."
           ],
           "steps": [],
           "headers": [],
@@ -75342,7 +75344,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use current Workspace admin.access.read authority and clear the working company in the account panel. Systems is the permitted local synthetic identity."
+            "Use current Workspace admin.access.read authority and clear the working company in the account panel. Systems is the permitted local synthetic identity.",
+            "Saved local teams is available only in the local synthetic prototype. Reading requires current Workspace inspection authority. Creation is currently an API capability held by local Systems; there is no native creation form."
           ],
           "steps": [],
           "headers": [],
@@ -75353,7 +75356,8 @@
           "title": "Inspect proposed roles",
           "paragraphs": [
             "From Users and access, select Browse proposed role bundles. Open Capabilities in r01 or r02 for the selected proposal.",
-            "Select Inspect proposed teams, then open Example roster for the team. The proposed lead appears separately."
+            "Select Inspect proposed teams, then open Example roster for the team. The proposed lead appears separately.",
+            "Scroll to Saved local teams. Select Inspect roster for the named team to see exact person IDs and creation history. Use Previous teams/Next teams for pages of up to 50 records."
           ],
           "steps": [],
           "headers": [],
@@ -75364,7 +75368,8 @@
           "title": "Understand this page",
           "paragraphs": [
             "Each card identifies the proposal family, source revision/state, proposed grant scopes and capabilities. Service coordinator r02 is Draft and adds pack.check; it has not replaced r01.",
-            "The team source clock is fixed at 17 September 2026. Source example names/dates are separate from current local identity names and activity; no current membership status is calculated."
+            "The team source clock is fixed at 17 September 2026. Source example names/dates are separate from current local identity names and activity; no current membership status is calculated.",
+            "Saved cards show the exact team ID, purpose, recorded instant and creator, lead and roster count. Names may repeat; the UUID identifies the record. Lead membership is never implied."
           ],
           "steps": [],
           "headers": [],
@@ -75374,7 +75379,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "These are comparison proposals from the retained AD-01 design, not adopted roles or personnel assignments. D-020 remains open. Hosted tester provisioning remains with the operator and its fixed set is excluded."
+            "These are comparison proposals from the retained AD-01 design, not adopted roles or personnel assignments. D-020 remains open. Hosted tester provisioning remains with the operator and its fixed set is excluded.",
+            "The initial roster records the people selected when the team was created. Current identity names and activity can change; an inactive person remains in the original record. No historical join or expiry dates are inferred."
           ],
           "steps": [],
           "headers": [],
@@ -75385,7 +75391,8 @@
           "title": "Complete the main task",
           "paragraphs": [
             "Inspect the exact capability key and plain-English description. A capability link opens its actual recorded grant holders. Use the people directory to open a person, then Compare proposed role bundle.",
-            "Follow a current local identity link to Person access for a fresh inspection. A design-only or unavailable identity has no link. A lead proposal gives no review or grant authority."
+            "Follow a current local identity link to Person access for a fresh inspection. A design-only or unavailable identity has no link. A lead proposal gives no review or grant authority.",
+            "Open the roster with its shared button (Enter/Space), inspect each person ID and current identity activity, then read the original reason, actor, time and operation ID. Close the roster with the same button."
           ],
           "steps": [],
           "headers": [],
@@ -75396,7 +75403,8 @@
           "title": "Completion and handover",
           "paragraphs": [
             "No role is assigned, no review is recorded and no grant changes. A capability link hands over to current grant inspection; a person comparison requires its own explicit request.",
-            "Teams neither grant access nor route reviews. Persisted membership and campaigns remain subsequent work."
+            "Teams neither grant access nor route reviews. Membership lifecycle changes and campaigns remain subsequent work.",
+            "Roster editing, removal, lead transfer, membership validity and campaigns remain future contracts. API creation requires its own dedicated current duty and commits one team, roster, audit event and original receipt."
           ],
           "steps": [],
           "headers": [],
@@ -75406,7 +75414,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Proposed and Draft describe design proposals. They never mean Approved or Adopted. Loading and failure hide prior catalogue cards; Retry or Refresh proposals rechecks authority."
+            "Proposed and Draft describe design proposals. They never mean Approved or Adopted. Loading and failure hide prior catalogue cards; Retry or Refresh proposals rechecks authority.",
+            "No local teams have been recorded is a real empty collection. Collection loading/unavailable reads hide saved cards; roster loading retains the opener and hides the previous roster; a denied team read clears protected catalogue content. Refresh saved teams and Retry recheck current authority."
           ],
           "steps": [],
           "headers": [],
@@ -75417,7 +75426,8 @@
           "title": "Worked examples",
           "paragraphs": [
             "Service coordinator r01 lists 13 capabilities. Draft r02 lists 14, adding pack.check without removing a capability. That proposal difference does not change any person's access.",
-            "Service coordination retains the design-only lead and former coordinator. The former coordinator example ended 12 September 2026. This source history does not create application identities."
+            "Service coordination retains the design-only lead and former coordinator. The former coordinator example ended 12 September 2026. This source history does not create application identities.",
+            "An API-created SYN Service roster may name a lead outside its explicitly selected members. The roster gives neither the lead nor members permission to create teams, approve requests or access company records."
           ],
           "steps": [],
           "headers": [],
@@ -75427,7 +75437,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Retry a failed read. Clear a working company before workspace inspection. If permission is refused, obtain current authorised access; refreshing does not grant it."
+            "Retry a failed read. Clear a working company before workspace inspection. If permission is refused, obtain current authorised access; refreshing does not grant it.",
+            "For an uncertain API creation, recover the original actor-bound receipt by operation ID or replay the identical command. Changed content conflicts. Current read/create duties are still required; a page reload never repeats creation."
           ],
           "steps": [],
           "headers": [],
@@ -75448,7 +75459,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides.",
-            "Team boundary and provenance: docs/decisions/access-team-inspection.md; implementation evidence: docs/testing/evidence/access-teams/README.md."
+            "Team boundary and provenance: docs/decisions/access-team-inspection.md; implementation evidence: docs/testing/evidence/access-teams/README.md.",
+            "Local record contract: docs/decisions/access-local-teams.md. Database, browser and review evidence: docs/testing/evidence/access-local-teams/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75466,7 +75478,7 @@
         }
       ],
       "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-teams/README.md and prior role ledger; owner review pending"
+      "runtime_evidence": "See docs/testing/evidence/access-local-teams/README.md and prior team/role ledgers; owner review pending"
     },
     {
       "guide_key": "guide.route-admin-access-requests-id",

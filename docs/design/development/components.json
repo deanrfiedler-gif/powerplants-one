@@ -123,6 +123,11 @@
           "id": "ad01-request-host",
           "label": "Access request, decision, application and withdrawal",
           "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
+        },
+        {
+          "id": "ad01-local-team-host",
+          "label": "Saved local team inspection",
+          "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form."
         }
       ],
       "implementation": [
@@ -148,7 +153,9 @@
         "src/components/opportunity-outcome-source.tsx",
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
-        "src/components/sales-followup.tsx"
+        "src/components/sales-followup.tsx",
+        "src/access/local-team-screens.tsx",
+        "docs/decisions/access-local-teams.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -447,6 +454,14 @@
           "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
           "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-local-teams",
+          "expected": "Saved roster and history readable at desktop/390/320 widths with keyboard controls and honest current identity labels.",
+          "actual": "Existing cards/shared buttons and ReadState extended under ADR-0053 rule 6. Accepted native image and owner/device review remain missing.",
+          "action": "Inspect source-bound saved-team captures and denied/loading/recovery states; retain separate operational policy status.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2310,6 +2325,11 @@
           "id": "ad01-request-host",
           "label": "Access request, decision, application and withdrawal",
           "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
+        },
+        {
+          "id": "ad01-local-team-host",
+          "label": "Saved local team inspection",
+          "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form."
         }
       ],
       "implementation": [
@@ -2333,7 +2353,9 @@
         "docs/decisions/field-closed-visit-guidance.md",
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
-        "src/components/navigation-intent.ts"
+        "src/components/navigation-intent.ts",
+        "src/access/local-team-screens.tsx",
+        "docs/decisions/access-local-teams.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2585,6 +2607,14 @@
           "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
           "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-local-teams",
+          "expected": "Saved roster and history readable at desktop/390/320 widths with keyboard controls and honest current identity labels.",
+          "actual": "Existing cards/shared buttons and ReadState extended under ADR-0053 rule 6. Accepted native image and owner/device review remain missing.",
+          "action": "Inspect source-bound saved-team captures and denied/loading/recovery states; retain separate operational policy status.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

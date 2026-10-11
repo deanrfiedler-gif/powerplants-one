@@ -2395,3 +2395,7 @@ The [withdrawal contract](../decisions/access-request-withdrawal.md) closes obso
 ## AD-01 retained team proposal inspection
 
 The [team contract](../decisions/access-team-inspection.md) adds read-only inspection of source team examples and current local identity links. Membership and lead labels confer no access or review authority. Source dates remain historical examples; persisted teams and campaigns remain open. Preserve all existing parent IDs, NFR-01–NFR-12, CRM-08, FIN-06 and unresolved operational D-020.
+
+## AD-01 durable local team record foundation
+
+The [local team contract](../decisions/access-local-teams.md) adds explicit local initial rosters with a dedicated creation duty and immutable audit/receipt evidence. Saved records are inspected separately from retained team examples. No membership or lead label grants access or routes reviews. Native editing, membership lifecycle and campaigns remain open. Preserve all 78 parent IDs, including AD-01's NFR-01–NFR-12, CRM-08 and FIN-06, and unresolved operational D-020.

@@ -146,3 +146,7 @@ The [withdrawal contract](access-request-withdrawal.md) adds reasoned closure of
 ## Native team proposal inspection — 11 October 2026
 
 The [team contract](access-team-inspection.md) exposes the two retained examples in the native role catalogue with explicit source names/dates and separately resolved local workspace identities. It implements inspection only. Canonical membership, routing, team-lead preview, attestations and operational D-020 remain open; membership grants no access, and later review-origin requests must preserve attester/reviewer independence.
+
+## Durable local team continuation — 11 October 2026
+
+Dean's next-step instruction continues #427 with the [local team contract](../decisions/access-local-teams.md): dedicated local creation duty, explicit initial roster, immutable audit/receipt and saved-team inspection on the existing role catalogue. This is the record/API foundation. Native editing, membership lifecycle, review routing and campaigns remain open; team labels grant no permission or independent review duty. Preserve the receiving plan's future attester/reviewer separation and unresolved D-020. The [execution ledger](../testing/evidence/access-local-teams/README.md) separates functional proof, visual observations, owner acceptance and deployment.

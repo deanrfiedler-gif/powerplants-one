@@ -20,7 +20,7 @@ import {
 } from "../../src/access/requests";
 import {
   accessRequestSeedGrants,
-  accessApplicationSeedGrants,
+  accessApplicationSeedGrants, accessTeamSeedGrants,
 } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -42,7 +42,7 @@ const shape = (values: Record<string, unknown>[]) =>
     })
     .sort();
 
-test("AD01 requests: populated upgrade retains all earlier rows and adds exactly four duties through application", async () => {
+test("AD01 requests: populated upgrade retains all earlier rows and adds exactly five duties through team creation", async () => {
   await transaction(async (c) => {
     await c.query(
       await readFile(
@@ -72,7 +72,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
     shape(afterGrants.filter((g) => !ids.has(g.id))),
     shape([
       ...accessRequestSeedGrants(grants),
-      ...accessApplicationSeedGrants(grants),
+      ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants),
     ]),
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);
@@ -86,7 +86,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     next.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80, 81],
+    [79, 80, 81, 82],
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version <= 78),
@@ -94,7 +94,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80],
+    [79, 80, 82],
   );
   await migrate();
   await seed();

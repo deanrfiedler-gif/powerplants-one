@@ -15,6 +15,7 @@ import {
 import { capabilityLabels } from "./capabilities";
 import type { RoleProposal } from "./roles";
 
+import { SavedLocalTeams } from "./local-team-screens";
 import type { InspectedTeamPerson, TeamInspection } from "./teams";
 
 type Roles = {
@@ -63,6 +64,12 @@ function ProposalBoundary() {
 
 export function AccessRolesScreen() {
   const resource = useResource<Roles>("admin/access/roles");
+  const [teamFailure, setTeamFailure] = useState<unknown>(null);
+  const refresh = () => {
+    setTeamFailure(null);
+    resource.reload();
+  };
+  const error = teamFailure || resource.error;
   return (
     <>
       <Link href="/admin/access">Back to users and access</Link>
@@ -78,12 +85,8 @@ export function AccessRolesScreen() {
         bundle. Hosted tester provisioning remains with the operator; its fixed
         tester set is outside this catalogue.
       </p>
-      <ReadState
-        loading={resource.loading}
-        error={resource.error}
-        retry={resource.reload}
-      />
-      {resource.data && !resource.loading && !resource.error && (
+      <ReadState loading={resource.loading} error={error} retry={refresh} />
+      {resource.data && !resource.loading && !error && (
         <>
           <p>
             <a href="#proposed-teams">Inspect proposed teams</a>
@@ -190,7 +193,8 @@ export function AccessRolesScreen() {
               ))}
             </div>
           </section>
-          <Button onClick={resource.reload}>Refresh proposals</Button>
+          <SavedLocalTeams onDenied={setTeamFailure} />
+          <Button onClick={refresh}>Refresh proposals</Button>
         </>
       )}
     </>
