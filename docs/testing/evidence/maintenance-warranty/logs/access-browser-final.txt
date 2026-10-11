@@ -1,0 +1,137 @@
+{
+  "source": "local",
+  "html_sha256": "35b26909832be39798589c1dab8af0eb8e890934da5cdc2ff8968d289371858a",
+  "browser": "154.0.8037.58",
+  "browser_channel": "chrome",
+  "substitute_path": null,
+  "groups": 40,
+  "results": [
+    "Six views, synthetic banner and authority statement render without errors",
+    "Queue tile filters the register and toggles off",
+    "Search matches capability keys and empty results offer recovery",
+    "A filter that hides the selected person clears the selection with a notice",
+    "Site-scoped person: matrix and explanation show the failing scope step",
+    "Grant detail discloses contract fields and absent audit",
+    "Inactive identity separates server refusal from offline device content",
+    "Hosted tester is masked, read-only and never offers a change",
+    "Partial source keeps local identities and marks hosted status unknown",
+    "Loading, failed and empty states never imply an all-clear",
+    "Catalogue lists all 101 contract capabilities with proposed labels declared",
+    "Bundle comparison lists affected holders and offers no adoption",
+    "Teams are shown with no authority",
+    "New request refuses a duplicate of an expired grant and keeps entries",
+    "Cancelling a changed form asks before discarding",
+    "Guided request with several operations saves a draft with a new reference",
+    "Submission shows restricted-access warnings",
+    "Approver decides with a required reason and cannot raise requests",
+    "Simulated apply requires confirmation; a lost response recovers the original operation",
+    "Applied grant appears in effective access with request provenance",
+    "Failed save keeps entries and changes nothing",
+    "Another session saving first produces a conflict that overwrites nothing",
+    "A storage change from another tab raises the conflict banner",
+    "Team lead sees only the team and submits a team member change",
+    "Team lead sees only assigned, completed reviews as read-only",
+    "Review decisions: keep, revoke to a draft request, owner required for unable",
+    "Completion stays blocked until every item is decided, then becomes read-only",
+    "Evidence exports are synthetic, complete and formula-safe",
+    "A review recommendation must be decided by a different approver",
+    "Ordinary user sees only their own access and cannot open workflow views",
+    "Auditor has read-only access to every view",
+    "History shows workflow events and explanations update from the selectors",
+    "Assistant answers from visible records and cannot act",
+    "Page guide closes with Escape and returns focus",
+    "Arrow keys move between view tabs and the skip link reaches content",
+    "Reload retains the exact session and preview settings",
+    "Backup restore refuses a tampered file without replacing the session",
+    "A malformed stored session is preserved and can be reset",
+    "All six views fit five widths with phone-sized targets",
+    "Inspection panel fits a phone and closes with Escape"
+  ],
+  "errors": [],
+  "images": [
+    {
+      "name": "1440-people.png",
+      "sha256": "bb9a1a686e910b273ab12f6fa5e296bdb56c5f19c95fed61d7795aa92f65865d"
+    },
+    {
+      "name": "1440-explain-panel.png",
+      "sha256": "57afaec5c80c40125069da8494c4a19ad45e10844084e9b654f910526cd876c3"
+    },
+    {
+      "name": "1440-person.png",
+      "sha256": "6e4494e0cc698debf162801c02866af3aff3f4df400294b3b9aed2759e8096db"
+    },
+    {
+      "name": "1440-partial.png",
+      "sha256": "ffa206ea425c1f57ded84260222605e0c26c9883e9f2a8c31508780f11a68995"
+    },
+    {
+      "name": "1440-catalogue.png",
+      "sha256": "56223b1b3e8065be14c30b60082080598d2b7c17a7600e6e91f7fa873cf22bf1"
+    },
+    {
+      "name": "1440-changes.png",
+      "sha256": "242b57fb743b9d60e181032313f132f7403aa245d1999c62ee2a1ba309d57cb2"
+    },
+    {
+      "name": "1440-reviews.png",
+      "sha256": "ea4fc454831e6ce3666fd05f2a174bf8061becf525879d37280b00cf618291e7"
+    },
+    {
+      "name": "1440-history.png",
+      "sha256": "d0d65f35cc1a14461aa67e078e474b82e1441e2258c345b264d8e01d5d204d8a"
+    },
+    {
+      "name": "390-people.png",
+      "sha256": "df6ebb8bdebcae9f3f06525b5b297aa2063ac6980441ab6e6b92845046f15b50"
+    },
+    {
+      "name": "390-person.png",
+      "sha256": "8dc606abe2ed3d0548c123aa1239fafd5a8b645e65078b8a50d730a3bbf92d50"
+    },
+    {
+      "name": "390-catalogue.png",
+      "sha256": "8f9e6a138d3dd8cf3752dc36ebd52aff66bb13d6985e736e77a47db10c6b6667"
+    },
+    {
+      "name": "390-changes.png",
+      "sha256": "f074827262a60bfcfd304a53c03d275de3eabe9163f76f96efa4c7289155b14e"
+    },
+    {
+      "name": "390-reviews.png",
+      "sha256": "726391d13deb5b074d81c3b70ddf0cb803cf324a5f8b96a899bad2d6ce1e896b"
+    },
+    {
+      "name": "390-history.png",
+      "sha256": "c74d61b46018ae5bf40dee461debe62d01124d6f938d2510dfe1a020d026d820"
+    },
+    {
+      "name": "320-people.png",
+      "sha256": "1b14e78876f1171340202311e1e5de86a6e2e2d413d719c6afa7886f24f6532d"
+    },
+    {
+      "name": "320-person.png",
+      "sha256": "82f832b1bc40d3dd7fae32fc5706c178fa748a87b39ae02feb9833606fb98a7a"
+    },
+    {
+      "name": "320-catalogue.png",
+      "sha256": "b6adbf779f1f2a69cade1f1754af888da2457b6c3d7a480ea9515f997bf0f875"
+    },
+    {
+      "name": "320-changes.png",
+      "sha256": "4bf2145c5f2852e80372924d60640ce6880ce99374147ccdf49afbc6c3118e0a"
+    },
+    {
+      "name": "320-reviews.png",
+      "sha256": "f31ebd42e6f3981d3cbe4530eb6f5dfc6abeef49b1546e9ed6887cddc55b1348"
+    },
+    {
+      "name": "320-history.png",
+      "sha256": "6e7498dbcafa7e39151ad59718ada213e437d73c2714f2f008e46d5f8f8174e2"
+    },
+    {
+      "name": "390-panel.png",
+      "sha256": "1b1aba72bb95391a72f9b472ed3b19994e930661dbab4def34314a9ea065bdf2"
+    }
+  ]
+}

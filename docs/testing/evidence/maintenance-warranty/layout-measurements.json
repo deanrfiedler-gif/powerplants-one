@@ -1,0 +1,307 @@
+{
+  "implementation": "60e2da3ea56f599faf24ca9b6a54dd5792c37715",
+  "browser": "154.0.8037.58",
+  "note": "720 by 480 is the CSS viewport equivalent of 200% reflow at 1440 by 960, not a physical zoom or device claim.",
+  "measures": [
+    {
+      "width": 1440,
+      "height": 960,
+      "focused": {
+        "tag": "BUTTON",
+        "text": "Assign next case review",
+        "outline": "solid",
+        "outlineWidth": "3px"
+      },
+      "sizes": [
+        {
+          "tag": "SELECT",
+          "label": "Select…",
+          "height": 45.328125,
+          "font": 14
+        },
+        {
+          "tag": "INPUT",
+          "label": "Next review due",
+          "height": 44.875,
+          "font": 14.4
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Next action",
+          "height": 105.5,
+          "font": 14.4
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Reason for this action",
+          "height": 105.5,
+          "font": 14.4
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Assign next case review",
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "scroll": [
+        {
+          "node": "HTML",
+          "client": 1440,
+          "scroll": 1440
+        },
+        {
+          "node": "main",
+          "client": 1364,
+          "scroll": 1364
+        },
+        {
+          "node": "ppo-warranty",
+          "client": 1324,
+          "scroll": 1324
+        }
+      ],
+      "keyboard": "Enter opens disclosure; Space toggles; Tab and Shift+Tab reach submit/reason; no submission performed"
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "focused": {
+        "tag": "BUTTON",
+        "text": "Assign next case review",
+        "outline": "solid",
+        "outlineWidth": "3px"
+      },
+      "sizes": [
+        {
+          "tag": "SELECT",
+          "label": "Select…SYN Alex LeeSYN Casey ReviewerSYN Company B coordinatorSYN CoordinatorSYN Customer records reviewerSYN Drew Release authoritySYN Finance context reviewerSYN Finance processorSYN Finance reconcilerSYN Finance reviewerSYN Jamie Service coordinatorSYN Morgan Equipment recordsSYN Morgan TechnicianSYN ObserverSYN Quinn Materials viewerSYN Riley Drawing issue ownerSYN Riley TechnicianSYN Robin Supply coordinatorSYN Sales receiverSYN Sam JordanSYN Site observerSYN Source evidence reviewerSYN SystemsSYN Taylor Commissioning verifierSYN Technician (assignment unavailable)SYN Workspace observer",
+          "height": 45.328125,
+          "font": 14
+        },
+        {
+          "tag": "INPUT",
+          "label": "Next review due",
+          "height": 44.875,
+          "font": 14.4
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Next action",
+          "height": 105.5,
+          "font": 14.4
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Reason for this action",
+          "height": 105.5,
+          "font": 14.4
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Assign next case review",
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "scroll": [
+        {
+          "node": "HTML",
+          "client": 1024,
+          "scroll": 1024
+        },
+        {
+          "node": "main",
+          "client": 948,
+          "scroll": 948
+        },
+        {
+          "node": "ppo-warranty",
+          "client": 908,
+          "scroll": 908
+        }
+      ],
+      "keyboard": "Enter opens disclosure; Space toggles; Tab and Shift+Tab reach submit/reason; no submission performed"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "focused": {
+        "tag": "BUTTON",
+        "text": "Assign next case review",
+        "outline": "solid",
+        "outlineWidth": "3px"
+      },
+      "sizes": [
+        {
+          "tag": "SELECT",
+          "label": "Select…SYN Alex LeeSYN Casey ReviewerSYN Company B coordinatorSYN CoordinatorSYN Customer records reviewerSYN Drew Release authoritySYN Finance context reviewerSYN Finance processorSYN Finance reconcilerSYN Finance reviewerSYN Jamie Service coordinatorSYN Morgan Equipment recordsSYN Morgan TechnicianSYN ObserverSYN Quinn Materials viewerSYN Riley Drawing issue ownerSYN Riley TechnicianSYN Robin Supply coordinatorSYN Sales receiverSYN Sam JordanSYN Site observerSYN Source evidence reviewerSYN SystemsSYN Taylor Commissioning verifierSYN Technician (assignment unavailable)SYN Workspace observer",
+          "height": 44,
+          "font": 16
+        },
+        {
+          "tag": "INPUT",
+          "label": "Next review due",
+          "height": 47.1875,
+          "font": 16
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Next action",
+          "height": 114.75,
+          "font": 16
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Reason for this action",
+          "height": 114.75,
+          "font": 16
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Assign next case review",
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "scroll": [
+        {
+          "node": "HTML",
+          "client": 390,
+          "scroll": 390
+        },
+        {
+          "node": "main",
+          "client": 390,
+          "scroll": 390
+        },
+        {
+          "node": "ppo-warranty",
+          "client": 366,
+          "scroll": 366
+        }
+      ],
+      "keyboard": "Enter opens disclosure; Space toggles; Tab and Shift+Tab reach submit/reason; no submission performed"
+    },
+    {
+      "width": 320,
+      "height": 844,
+      "focused": {
+        "tag": "BUTTON",
+        "text": "Assign next case review",
+        "outline": "solid",
+        "outlineWidth": "3px"
+      },
+      "sizes": [
+        {
+          "tag": "SELECT",
+          "label": "Select…",
+          "height": 44,
+          "font": 16
+        },
+        {
+          "tag": "INPUT",
+          "label": "Next review due",
+          "height": 47.1875,
+          "font": 16
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Next action",
+          "height": 114.75,
+          "font": 16
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Reason for this action",
+          "height": 114.75,
+          "font": 16
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Assign next case review",
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "scroll": [
+        {
+          "node": "HTML",
+          "client": 320,
+          "scroll": 320
+        },
+        {
+          "node": "main",
+          "client": 320,
+          "scroll": 320
+        },
+        {
+          "node": "ppo-warranty",
+          "client": 296,
+          "scroll": 296
+        }
+      ],
+      "keyboard": "Enter opens disclosure; Space toggles; Tab and Shift+Tab reach submit/reason; no submission performed"
+    },
+    {
+      "width": 720,
+      "height": 480,
+      "focused": {
+        "tag": "BUTTON",
+        "text": "Assign next case review",
+        "outline": "solid",
+        "outlineWidth": "3px"
+      },
+      "sizes": [
+        {
+          "tag": "SELECT",
+          "label": "Select…",
+          "height": 44,
+          "font": 16
+        },
+        {
+          "tag": "INPUT",
+          "label": "Next review due",
+          "height": 47.1875,
+          "font": 16
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Next action",
+          "height": 114.75,
+          "font": 16
+        },
+        {
+          "tag": "TEXTAREA",
+          "label": "Reason for this action",
+          "height": 114.75,
+          "font": 16
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Assign next case review",
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "scroll": [
+        {
+          "node": "HTML",
+          "client": 720,
+          "scroll": 720
+        },
+        {
+          "node": "main",
+          "client": 720,
+          "scroll": 720
+        },
+        {
+          "node": "ppo-warranty",
+          "client": 696,
+          "scroll": 696
+        }
+      ],
+      "keyboard": "Enter opens disclosure; Space toggles; Tab and Shift+Tab reach submit/reason; no submission performed"
+    }
+  ]
+}

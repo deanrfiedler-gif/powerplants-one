@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Review: implementation verification in progress; owner/business/device acceptance pending. No deployment or external transaction.
+Owner: Dean Fiedler. Review: implementation delivered with local synthetic verification; owner/business/device acceptance pending. No deployment or external transaction.
 
 ## Baseline and scope
 
@@ -16,7 +16,31 @@ Existing Work Order coverage remains separate. Owned requests enter real Service
 
 ## Verification ledger
 
-Verification is ongoing. The final ledger will record exact commands/results, reviewed screenshots, baseline failures and source head. No unexecuted test or uninspected image is accepted by this document. See [evidence index](../testing/evidence/maintenance-warranty/README.md).
+The tested application implementation is `60e2da3ea56f599faf24ca9b6a54dd5792c37715`, based on incorporated main `2173cc64eed54b1e3fb8334495f7cd924206d13f`. Evidence/documentation delivery follows without changing those application bytes. See the [evidence index](../testing/evidence/maintenance-warranty/README.md) for the exact capture manifest, inspected-image subset, logs and restart comparison. The PR records the final delivery head and its CI status; CI is not inferred from local results.
+
+Commands ran in an isolated worktree on Windows with Node 24.21.0, PostgreSQL 16, Chrome 154.0.8037.58 and Playwright 1.63.0. Database/HTTP commands load a private temporary environment file for `ppo_synthetic_test` on port 55499; compiled browser tests target port 3099. In the commands below, `ENV` means that environment-file path, not a committed credential. `npm.cmd` was used on Windows.
+
+| Check | Executed command / selection | Actual result |
+|---|---|---|
+| Native domain and real Service journeys | `node --env-file=ENV --import tsx --test --test-concurrency=1 --test-timeout=180000 tests/database/maintenance.test.ts tests/database/maintenance-service.test.ts` | 13 passed, zero failed; [log](../testing/evidence/maintenance-warranty/logs/ma-domain-final.txt) |
+| HTTP authority, receipts and competing versions | `node --env-file=ENV --import tsx --test tests/http/maintenance.test.ts` | 1 passed, zero failed; [log](../testing/evidence/maintenance-warranty/logs/ma-http-release.txt) |
+| Native desktop and phone browser | `node --env-file=ENV node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts tests/browser/maintenance.spec.ts --no-deps --reporter=list` | 8 passed in 3.2 minutes; all 14 routes and exact guide keys; [log](../testing/evidence/maintenance-warranty/logs/ma-browser-release.txt) |
+| Full unit run | `npm.cmd run test:unit` | 425 executed: 421 passed, 4 Windows baseline failures; [log](../testing/evidence/maintenance-warranty/logs/unit-all-final.txt) |
+| Current-main baseline | `node --import tsx --test tests/unit/document-store.test.ts tests/unit/recovery.test.ts tests/unit/warm-routes.test.ts` on detached `2173cc6` | 7 executed: 3 passed, the same 4 failed; [log](../testing/evidence/maintenance-warranty/logs/unit-current-main-baseline.txt) |
+| Final shell navigation | `node --import tsx --test tests/unit/department-navigation.test.ts` | 6 passed, including all 14 Maintenance/Warranty route families; [log](../testing/evidence/maintenance-warranty/logs/nav-final.txt) |
+| Cross-domain migration and seed assertions | Selected upgrade/fresh-install cases in Estimating, DR-01, Field, Finance, Leads/Projects, Offline, Packs, Planner, Quality, Reports and hosted-demo upgrade files | Initial run: 18 passed, 2 cancelled on timeout and 1 after-hook failure. The two timed-out upgrade cases passed on replay; complete hosted-demo upgrade and Equipment suites then passed 15/15. See disposition below. |
+| Equipment and hosted-demo regression | Complete `tests/database/equipment.test.ts` and `tests/demo/upgrade.test.ts`, serial under the same synthetic environment | 15 passed, zero failed; [log](../testing/evidence/maintenance-warranty/logs/demo-equipment-final.txt) |
+| Build / static | `npm.cmd run build`, `npm.cmd run lint`, `npm.cmd run typecheck` | Passed; final build also completes TypeScript and all route generation. Retained logs are in the evidence directory. |
+| AD-01 generated contract | `node scripts/check-access-review-model.mjs`; `node scripts/check-access-review-browser.mjs` | 107 model groups and 40 browser groups passed; generated source contains all 101 capabilities. |
+| Documentation and register | `python scripts/check_foundation.py`; `python scripts/check_prototype.py`; `python scripts/check_naming.py`; `npm.cmd run studio:check`; `git diff origin/main --check` | Passed. Studio: 323 entries, 169 routes, 30 components; review states remain unreviewed, with no stale fingerprints. All 78 parent IDs retained. |
+| Focus, form sizing and reflow | Evidence `layout-proof.mjs` against the compiled app, without submitting | Five viewports passed; Enter/Space, Tab/Shift+Tab, visible focus, phone input fonts >=16 px and controls >=44 px. 720 by 480 is a 200% reflow equivalent, not physical zoom/device proof. |
+| Durable persistence | `scripts/maintenance-restart-proof.ts write`, verified isolated app/PostgreSQL restart, then `verify` with changed server PID | All seven families, twelve typed tables and the original receipt/audit/outbox snapshot retained exactly; original receipt GET and POST retry add no effects. [Proof](../testing/evidence/maintenance-warranty/restart-proof.json) |
+
+The [initial shared-upgrade log](../testing/evidence/maintenance-warranty/logs/upgrade-regression.txt) is deliberately retained as a failed run. Field P07 and Finance P10 exceeded their timeout during a long machine interruption; [serial replay](../testing/evidence/maintenance-warranty/logs/upgrade-rerun.txt) passed both. A filtered hosted-demo run excluded the final restoration case after a deliberate corrupt-checksum scenario, so its after-hook failed; running the complete five-case file subsequently passed. No applied migration was rewritten to suppress this. The complete Equipment file passed alongside it.
+
+The four unit failures are two private document-store path assertions, one recovery-directory error assertion and the Windows route-separator assertion. They reproduce on untouched current main, not just the original base. No new unit regression is claimed; the full Ubuntu CI lane remains the broader platform check. Intermediate browser proof mistakes (an ambiguous locator and a document-only overflow detector) were corrected; the final detector covers the main pane and workspace and passes its injected-overflow negative control. The final eight-case browser run also checks that no Maintenance route renders the fallback breadcrumb.
+
+Visual inspection covers all seven native registers and details on desktop and phone, all six desktop Warranty views, three unchanged source references at both widths, focused forms at five widths, and phone cards below the filters. The manifest marks 56 inspected captures separately from ten repeated automated captures. Native layout adaptations remain proposed; no review fingerprint is promoted to accepted. Physical phones, screen readers and owner design review remain open.
 
 ## Review boundaries
 
@@ -36,4 +60,10 @@ The complete native route pairs are `/maintenance/agreements`, `/maintenance/cov
 
 Migration 0049 adds nine capabilities: `maintenance.read`, `maintenance.manage`, `maintenance.assess`, `maintenance.agreement.approve`, `warranty.read`, `warranty.manage`, `warranty.assess`, `warranty.goodwill` and `warranty.recovery`. Existing Activity, Service and Finance duties still apply at their receiving boundary. Seed 49 adds grants to existing scoped synthetic users; it adds no user or invited tester rights. The generated AD-01 contract contains 101 capabilities.
 
-Main advanced to `2173cc64eed54b1e3fb8334495f7cd924206d13f` while validation ran. Merge `7e7a90a` retains its ES-02 documentation and our native work; there is no migration collision. The code implementation checkpoint is `d4091b0`, followed by visual/proof refinements. Final source/head and retained capture hashes are recorded with the completed evidence ledger.
+Main advanced to `2173cc64eed54b1e3fb8334495f7cd924206d13f` while validation ran. Merge `7e7a90a` retains its ES-02 documentation and our native work; there is no migration collision. Initial implementation `d4091b0` was followed by the tested refinement `60e2da3ea56f599faf24ca9b6a54dd5792c37715`. Fetched main was checked again before delivery and had not advanced.
+
+## Remaining external and acceptance work
+
+SC-08 native return/stock custody is unavailable. The typed recovery record can retain ordered external return evidence, with `SC08Unavailable` explicit; it cannot create inventory movements or an RMA transaction. MYOB remains the ERP authority. Finance-authorised credit evidence records an exact external company/reference and bounded amount, but is not a live ERP posting or independent confirmation of payment. Customer and supplier communications are retained evidence, not messages sent by this application.
+
+Maintenance and Warranty code completion does not establish operational contract terms, warranty policy, goodwill policy or business acceptance. Those decisions require their existing authorised owners and exact source evidence. Owner visual review, real-device/screen-reader acceptance, final PR CI and normal review/merge remain separate. No public deployment was performed, and issue #15 is referenced rather than closed.

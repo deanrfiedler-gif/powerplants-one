@@ -1,0 +1,1 @@
+Five viewports passed: keyboard disclosure/focus, no horizontal overflow, phone form font >=16px and controls >=44px.

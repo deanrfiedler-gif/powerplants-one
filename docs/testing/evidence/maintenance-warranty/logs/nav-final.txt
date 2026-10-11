@@ -1,0 +1,14 @@
+✔ all Maintenance and Warranty routes retain their Service shell parent (2.7837ms)
+✔ seven full ordered compositions retain withheld positions and My Work placement (0.4617ms)
+✔ permission and readiness filters retain relative order and never manufacture links (1.3436ms)
+✔ specific routes, genuine views and shared records select exactly their rail parent (1.0551ms)
+✔ shared context is explicit or remembered, independent of customer route spelling (0.7416ms)
+✔ every primary semantic glyph has a deliberate distinct active drawing on the same grid (28.0021ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 634.8813
