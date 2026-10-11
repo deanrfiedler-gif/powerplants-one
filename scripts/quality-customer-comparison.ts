@@ -10,7 +10,7 @@ import { closeDatabase } from "../src/platform/database";
 import { performanceFixtureFingerprint } from "./quality-performance-fixture";
 import { waitForSampleCoreResponse } from "./quality-core-response";
 import { comparisonProfile, cpuAllocation } from "./quality-comparison-profile";
-import { assetDiagnosticsAllowed, assetSampleHeader, observeAssetNetwork } from "./quality-asset-observer";
+import { assetDiagnosticsAllowed, assetReleaseProbeAllowed, assetSampleHeader, observeAssetNetwork } from "./quality-asset-observer";
 
 // Bounded Customers diagnostic, separate from the complete four-view PT-27 run.
 // Ten browser processes and unchanged network/readiness limits. Original results
@@ -21,6 +21,8 @@ const profile = comparisonProfile(process.env);
 const allocation = cpuAllocation(process.env);
 const assetDiagnostics = assetDiagnosticsAllowed(process.env, true);
 if (process.env.PPO_ASSET_DIAGNOSTICS) assert.ok(assetDiagnostics, "Asset observation requires the explicit compiled synthetic profile");
+const releaseProbe = assetReleaseProbeAllowed(process.env);
+if (process.env.PPO_ASSET_RELEASE_PROBE) assert.ok(releaseProbe, "Release probe requires its own post-failure diagnostic profile");
 if (allocation) assert.equal(process.platform, "linux");
 if (process.env.PPO_BROWSER_WRAPPER) assert.ok(allocation, "Browser constraint requires the explicit CPU diagnostic");
 const root = `verification-evidence/pt27-loading/${label}`;
@@ -41,6 +43,7 @@ const browsers: Awaited<ReturnType<typeof chromium.launch>>[] = [];
 const samples: Record<string, unknown>[] = [];
 const visits: Record<string, unknown>[] = [];
 const errors: string[] = [];
+const releaseProbes: Record<string, unknown>[] = [];
 const metadata = {
   ...profile,
   ...(allocation ? { cpu_allocation: allocation } : {}),
@@ -50,12 +53,14 @@ const metadata = {
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
   detailed_diagnostics: process.env.PPO_PROOF_DIAGNOSTICS === "1",
   asset_diagnostics: assetDiagnostics,
+  asset_release_probe: releaseProbe,
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
   fixture, target_ms: 3000,
   limits: `Customers only; ${profile.browser_count} independent headless Chrome process(es), four waves per viewport and one actual record activation per user/viewport. A one-browser run is a startup diagnostic and cannot satisfy the ten-user target. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Results apply to the recorded run host; no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.`,
 };
 async function checkpoint(complete: boolean) {
   await writeFile(`${root}/results.json`, JSON.stringify({ ...metadata, complete, browser: browsers[0]?.version(), samples, record_visits: visits, errors }, null, 2));
+  if (releaseProbe) await writeFile(`${root}/asset-release.json`, JSON.stringify(releaseProbes, null, 2));
 }
 async function settled(page: Page) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
@@ -143,7 +148,44 @@ try {
           // without calling their difference per-action browser work.
           samples.push({ viewport: viewport.name, wave, user, ...(assetDiagnostics ? { asset_sample: assetSample } : {}), started_at_ms: beganAt, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, browser_metrics_before: beforeMetrics, free_memory_bytes: freemem(), network: [...network.values()] });
         } catch (error) {
-          samples.push({ viewport: viewport.name, wave, user, ...(assetDiagnostics ? { asset_sample: assetSample } : {}), started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: [...network.values()] });
+          // Freeze the failed window before any diagnostic intervention. The
+          // original error is still thrown; no subsequent measured wave runs.
+          samples.push({ viewport: viewport.name, wave, user, ...(assetDiagnostics ? { asset_sample: assetSample, observed_until_ms: Date.now() } : {}), started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: structuredClone([...network.values()]) });
+          if (releaseProbe && error instanceof Error && error.name === "TimeoutError" &&
+              ![...network.values()].some(row => row.path === "/api/v1/local-session" || row.path === "/api/v1/crm/directory") &&
+              [...network.values()].some(row => row.type === "Script" && row.finish_ms === undefined)) {
+            const probe: Record<string, unknown> = { sample: assetSample, started_at_ms: Date.now(), original_failed: true, phases: [] };
+            releaseProbes.push(probe);
+            for (const intervention of ["unchanged", "remove-network-emulation"] as const) {
+              const at = Date.now(), phase: Record<string, unknown> = { intervention, started_at_ms: at, observation_limit_ms: 10000 };
+              (probe.phases as Record<string, unknown>[]).push(phase);
+              // Observe only newly started directory reads in this phase. This
+              // is a post-failure diagnostic, never a replacement load sample.
+              const resumed = waitForSampleCoreResponse(page, "/api/v1/crm/directory", 10000)
+                .then(response => ({ response }), () => ({ response: null }));
+              try {
+                if (intervention === "remove-network-emulation")
+                  await cdp.send("Network.emulateNetworkConditionsByRule", { offline: false, matchedNetworkConditions: [] });
+                const { response } = await resumed;
+                phase.core_headers_at_ms = response ? Date.now() : null;
+                phase.core_status = response?.status() ?? null;
+                if (response) {
+                  let deadline: ReturnType<typeof setTimeout> | undefined;
+                  try {
+                    const body = await Promise.race([response.json(), new Promise<never>((_, reject) => {
+                      deadline = setTimeout(() => reject(Error("probe-body-unavailable")), Math.max(1, 10000 - (Date.now() - at)));
+                    })]);
+                    const { observed_at, ...data } = body; void observed_at;
+                    phase.expected_payload = createHash("sha256").update(JSON.stringify(data)).digest("hex") === expected.expected_sha256;
+                  } finally { clearTimeout(deadline); }
+                }
+                phase.network = structuredClone([...network.values()]);
+                phase.finished_at_ms = Date.now();
+                if (response) break;
+              } catch { phase.probe_error = "observation-unavailable"; phase.finished_at_ms = Date.now(); break; }
+            }
+            await writeFile(`${root}/asset-release.json`, JSON.stringify(releaseProbes, null, 2));
+          }
           throw error;
         } finally {
           stopAssetObserver();

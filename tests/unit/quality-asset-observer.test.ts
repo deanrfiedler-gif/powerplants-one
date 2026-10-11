@@ -3,13 +3,17 @@ import test from "node:test";
 import { createServer, get } from "node:http";
 import { once, EventEmitter } from "node:events";
 import type { CDPSession } from "@playwright/test";
-import { assetDiagnosticsAllowed, assetFailure, assetPath, assetSampleHeader, createAssetObserver, observeAssetNetwork } from "../../scripts/quality-asset-observer";
+import { assetDiagnosticsAllowed, assetReleaseProbeAllowed, assetFailure, assetPath, assetSampleHeader, createAssetObserver, observeAssetNetwork } from "../../scripts/quality-asset-observer";
 
 const env = { PPO_ASSET_DIAGNOSTICS: "1", PPO_ENV: "local-synthetic", PPO_EXPOSURE: "loopback",
   PPO_IDENTITY: "synthetic", NODE_ENV: "test", PPO_BENCHMARK_FIXTURE: "add-synthetic-load", PPO_COMPARISON_BLOCK: "cpu-assets-test" };
 
 test("asset observations require compiled explicit synthetic scope and exclude arbitrary values", () => {
   assert.ok(assetDiagnosticsAllowed(env, true));
+  assert.equal(assetReleaseProbeAllowed(env), false);
+  assert.equal(assetReleaseProbeAllowed({ ...env, PPO_ASSET_RELEASE_PROBE: "1" }), false);
+  assert.equal(assetReleaseProbeAllowed({ ...env, PPO_ASSET_RELEASE_PROBE: "1", PPO_COMPARISON_BLOCK: "cpu-assets-release-test" }), true);
+  assert.equal(assetReleaseProbeAllowed({ ...env, PPO_ASSET_RELEASE_PROBE: "1", PPO_COMPARISON_BLOCK: "cpu-assets-release-test", PPO_EXPOSURE: "shared" }), false);
   assert.equal(assetDiagnosticsAllowed(env, false), false);
   for (const key of Object.keys(env).filter(k => k !== "NODE_ENV")) assert.equal(assetDiagnosticsAllowed({ ...env, [key]: undefined }, true), false);
   for (const override of [{ NODE_ENV: "production" }, { PPO_ENV: "azure-demo" }, { PPO_EXPOSURE: "shared" }, { PPO_COMPARISON_BLOCK: "cpu-core-test" }]) assert.equal(assetDiagnosticsAllowed({ ...env, ...override }, true), false);

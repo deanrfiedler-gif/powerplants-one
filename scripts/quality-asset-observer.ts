@@ -8,6 +8,9 @@ export const assetDiagnosticsAllowed = (env: Record<string, string | undefined>,
   compiled && env.PPO_ASSET_DIAGNOSTICS === "1" && env.PPO_ENV === "local-synthetic" &&
   env.PPO_EXPOSURE === "loopback" && env.PPO_IDENTITY === "synthetic" && env.NODE_ENV !== "production" &&
   env.PPO_BENCHMARK_FIXTURE === "add-synthetic-load" && /^cpu-assets-[a-z0-9-]+$/.test(env.PPO_COMPARISON_BLOCK ?? "");
+export const assetReleaseProbeAllowed = (env: Record<string, string | undefined>) =>
+  assetDiagnosticsAllowed(env, true) && env.PPO_ASSET_RELEASE_PROBE === "1" &&
+  /^cpu-assets-release-[a-z0-9-]+$/.test(env.PPO_COMPARISON_BLOCK ?? "");
 
 export const assetPath = (raw: string) =>
   /^\/_next\/static\/chunks\/[A-Za-z0-9._-]{1,160}\.(?:js|css)$/.test(raw.split("?", 1)[0])

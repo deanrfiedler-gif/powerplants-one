@@ -24,6 +24,12 @@ class Counters(unittest.TestCase):
         self.assertEqual(result["counts"], {"browser_assets": 3, "server_received": 1, "server_finished": 1,
             "browser_finished": 1, "browser_failed": 1, "server_finished_browser_unfinished": 1, "without_server_receipt": 2})
         self.assertEqual(result["failed_samples"][0]["assets"][0]["server"], events)
+        data["samples"][0]["observed_until_ms"] = 100
+        for event in events:
+            event["at_ms"] = 101
+        after = summary.asset_summary(data, events)
+        self.assertEqual(after["counts"]["server_received"], 0)
+        self.assertEqual(after["failed_samples"][0]["assets"][0]["server_after_window"], events)
 
     def test_whole_core_profile_rejects_partial_or_unexpected_topology(self):
         rows = [{"cpu": n, "thread_siblings_list": "2-3" if n < 4 else "4-5"} for n in [2, 3, 4, 5]]
@@ -43,6 +49,7 @@ class Counters(unittest.TestCase):
         self.assertEqual(observer.positions_for("cpu"), [("shared-a1", "0", 10), ("partitioned-b1", "0", 10), ("partitioned-b2", "0", 10), ("shared-a2", "0", 10)])
         self.assertEqual(observer.positions_for("cpu-core"), observer.positions_for("cpu"))
         self.assertEqual(observer.positions_for("cpu-assets"), observer.positions_for("cpu-core"))
+        self.assertEqual(observer.positions_for("cpu-assets-release"), observer.positions_for("cpu-core"))
         with self.assertRaises(AssertionError):
             observer.positions_for("unknown")
 
