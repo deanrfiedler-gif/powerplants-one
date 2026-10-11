@@ -28,4 +28,4 @@ A confirmed receipt shows the exact team and operation IDs and offers inspection
 
 Prove context isolation/current duty/working company/hosted refusal without writes; native explicit selection, validation, server refusal, exact retry/reload recovery, storage refusal, actor isolation and saved-roster inspection at 1440/390/320 widths. Re-run affected access database and shared permissions checks, build/types/lint, relevant unit/navigation and register/document assurance. No migration change means this increment does not alter historical-upgrade expectations. Retain initial failures and source-bound evidence separately from review.
 
-Membership edits, removal, lead transfer, archive/expiry, campaigns, review routing, operational policy, migration-stack integration, owner/device/screen-reader acceptance and deployment remain open.
+Membership edits, removal, lead transfer, archive/expiry, campaigns, review routing, operational policy, earlier draft-database conversion, owner/device/screen-reader acceptance and deployment remain open.

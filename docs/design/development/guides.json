@@ -75368,7 +75368,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native proposal inspection and local team creation",
-      "source_commit": "039df64103f09d804507ff226f4a35e3e11d7a4a",
+      "source_commit": "9234248951e8896392b06b09c43a71e2519abcdf",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",

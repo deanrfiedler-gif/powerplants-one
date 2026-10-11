@@ -2,13 +2,13 @@
 
 ## 1. Context
 
-Public repo, private demo.
+Public repo; private demo.
 
 ## 2. Delivery
 
 Preserve BP-01 domains and shared records.
 
-Test joined journeys; separate runtime proof and owner acceptance.
+Test joined journeys; separate proof and owner acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -16,7 +16,7 @@ Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P0
 
 ## 3. Sources
 
-Read AGENTS.md, README, docs/STATUS.md and ADRs/specs; verify Git.
+Read AGENTS.md, README, STATUS and relevant ADRs/specs; verify Git.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
@@ -26,7 +26,7 @@ BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissi
 
 MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces, ownership and operating rules before integration.
 
-Use synthetic fixtures; decide service-order/appointment/labour ownership. Operational cutover needs tested acceptance. Assess build/configure/integrate/retain per capability.
+Use synthetic fixtures; decide service-order/appointment/labour ownership. Cutover needs tested acceptance. Assess build/configure/integrate/retain per capability.
 
 ## 5. Naming
 
@@ -34,7 +34,7 @@ Follow PPO-STD-001/ADR-0005. Product: Powerplants One; code: PPO. Independent of
 
 Masters use stable names/Git history; review stays separate. Reserve rNN for controlled issues; separate software/API/schema versions. Preserve issued bytes, 78 parent IDs and requirement/decision/interface/test/work-package traceability.
 
-Separate UUID, reference, label, revision and state. Use SYN-PPO references; retain external/company/entity/provider keys. Use snake_case fields and PascalCase types/enums/events. Names are not keys. Filing assistance follows naming-sharepoint-handover and N0–N6.
+Distinguish UUID/reference/label/revision/state. Use SYN-PPO references; retain external/company/entity/provider keys. Use snake_case fields and PascalCase types/enums/events. Names are not keys. Filing assistance follows naming-sharepoint-handover and N0–N6.
 
 ## 6. Workflow
 
@@ -44,13 +44,13 @@ Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commit
 
 P10 reads immutable P09 reviews and preserves field Drafts. Incomplete declarations block Finance despite accepted attendance. Allocate billable/non-billable quantities. SyntheticVerified is not live verification. Preserve processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Finance scope governs reads/output/receipts.
 
-Preserve issued revisions, hashes, scope and distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct; content changes need a new revision and acknowledgement.
+Preserve issued revisions/hashes/scope/distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct; content changes need a new revision and acknowledgement.
 
 Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict; retain context and unsent evidence.
 
 ## 7. UX and quality
 
-Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icons: ADR-0050. Show synthetic/environment context.
+Use Australian English, ui-style-specification.md and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icons: ADR-0050. Show synthetic/environment context.
 
 Scope, permissions, validation/recovery and acceptance: product-quality-{register,plan}.md.
 
@@ -58,11 +58,11 @@ HTML: follow html-module-conformance.md.
 
 ## 8. Authority
 
-Complete authorised work; ask only for consequential blockers.
+Complete authorised work; ask for consequential blockers only.
 
 Preserve unrelated work. Use branch/PR; merge needs authority and checks/review. Respect permissions; update specs/registers.
 
-Repo work grants no paid service, deployment, access, transactions, migration or messaging. Keep secrets/operational data outside Git; use synthetic/redacted fixtures.
+Repo work grants no paid service, deployment, access, transactions, migration or messaging. Secrets/operational data stay outside Git; use synthetic/redacted fixtures.
 
 ## 9. Verification
 
