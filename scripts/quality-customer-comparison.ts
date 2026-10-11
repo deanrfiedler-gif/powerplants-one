@@ -152,7 +152,7 @@ try {
           const core = [...network].filter(([, r]) => r.path === "/api/v1/crm/directory" && r.method === "GET");
           assert.equal(core.length, 1);
           if (method === "rule") assert.equal(applied.get(core[0][0]), rules[user]);
-          else assert.equal(rules[user], null); // Global CDP has no request rule ID; independent calibration is mandatory.
+          else assert.equal(rules[user], null); // Alternative methods have no CDP rule ID; independent calibration is mandatory.
           // Read diagnostics after the unchanged readiness boundary and assertions.
           const navigation = await page.evaluate(() => {
             const entry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
