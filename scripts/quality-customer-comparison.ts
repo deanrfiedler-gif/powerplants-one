@@ -11,6 +11,7 @@ import { performanceFixtureFingerprint } from "./quality-performance-fixture";
 import { waitForSampleCoreResponse } from "./quality-core-response";
 import { comparisonProfile, cpuAllocation } from "./quality-comparison-profile";
 import { assetDiagnosticsAllowed, assetReleaseProbeAllowed, assetSampleHeader, observeAssetNetwork } from "./quality-asset-observer";
+import { assertCalibration, installNetworkConditions, networkMethod } from "./quality-network-conditioning";
 
 // Bounded Customers diagnostic, separate from the complete four-view PT-27 run.
 // Ten browser processes and unchanged network/readiness limits. Original results
@@ -19,6 +20,7 @@ const label = process.argv[2];
 assert.match(label ?? "", /^[a-z][a-z0-9-]+$/);
 const profile = comparisonProfile(process.env);
 const allocation = cpuAllocation(process.env);
+const method = networkMethod(process.env);
 const assetDiagnostics = assetDiagnosticsAllowed(process.env, true);
 if (process.env.PPO_ASSET_DIAGNOSTICS) assert.ok(assetDiagnostics, "Asset observation requires the explicit compiled synthetic profile");
 const releaseProbe = assetReleaseProbeAllowed(process.env);
@@ -30,6 +32,9 @@ await mkdir(root, { recursive: false });
 const expected = JSON.parse(await readFile("verification-evidence/customer-loading-diagnosis/fixture.json", "utf8"));
 const compiledSource = process.env.PPO_COMPILED_SOURCE;
 assert.match(compiledSource ?? "", /^[0-9a-f]{40}$/);
+const calibratedBlock = process.env.PPO_COMPARISON_BLOCK?.startsWith("cpu-assets-network-");
+const calibration = calibratedBlock ? JSON.parse(await readFile("verification-evidence/pt27-network-calibration/protocol.json", "utf8")) : null;
+if (calibratedBlock) assertCalibration(calibration, compiledSource!);
 execFileSync("git", ["diff", "--exit-code", compiledSource!, "--", "src", "db", "public", "package.json", "package-lock.json", "scripts/build-offline.ts", "next.config.ts"]);
 const fixture = await performanceFixtureFingerprint();
 assert.deepEqual(fixture, expected.fixture);
@@ -55,6 +60,8 @@ const metadata = {
   asset_diagnostics: assetDiagnostics,
   asset_release_probe: releaseProbe,
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
+  network_method: method,
+  ...(calibration ? { network_calibration: { source: calibration.source, browser: calibration.browser, passed: calibration.passed } } : {}),
   fixture, target_ms: 3000,
   limits: `Customers only; ${profile.browser_count} independent headless Chrome process(es), four waves per viewport and one actual record activation per user/viewport. A one-browser run is a startup diagnostic and cannot satisfy the ten-user target. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Results apply to the recorded run host; no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.`,
 };
@@ -87,19 +94,17 @@ try {
   }
   assert.ok(ready, "Owned compiled server must start within 120 seconds");
   browsers.push(...await Promise.all(Array.from({ length: profile.browser_count }, () => chromium.launch({ channel: "chrome", ...(process.env.PPO_BROWSER_WRAPPER ? { executablePath: process.env.PPO_BROWSER_WRAPPER } : {}) }))));
+  if (calibration) for (const browser of browsers) assertCalibration(calibration, compiledSource!, browser.version());
   for (const viewport of [{ name: "desktop", width: 1440, height: 1000 }, { name: "phone", width: 390, height: 844 }]) {
     const contexts = await Promise.all(browsers.map(b => b.newContext({ viewport, isMobile: viewport.name === "phone", hasTouch: viewport.name === "phone", locale: "en-AU" })));
     for (const context of contexts) assert.equal((await context.request.post(`${origin}/api/v1/local-session`, { headers: { Origin: origin }, data: { profile: "coordinator" } })).status(), 200);
     const pages = await Promise.all(contexts.map(c => c.newPage()));
     const sessions = await Promise.all(pages.map(p => p.context().newCDPSession(p)));
-    const rules: string[] = [];
+    const rules: (string | null)[] = [];
     for (const cdp of sessions) {
       await cdp.send("Network.enable");
       await cdp.send("Performance.enable");
-      const conditions = { offline: false, latency: 40, downloadThroughput: 1250000, uploadThroughput: 625000, connectionType: "wifi" as const };
-      const { ruleIds } = await cdp.send("Network.emulateNetworkConditionsByRule", { offline: false, matchedNetworkConditions: [{ urlPattern: "", ...conditions }] });
-      rules.push(ruleIds[0]);
-      await cdp.send("Network.overrideNetworkState", conditions);
+      rules.push(await installNetworkConditions(cdp, method));
     }
     for (let wave = 0; wave < 4; wave++) {
       const outcomes = await Promise.allSettled(pages.map(async (page, user) => {
@@ -135,7 +140,8 @@ try {
           assert.deepEqual(await page.locator(viewport.name === "phone" ? ".crm-directory-mobile-main strong" : ".crm-directory-table tbody th a").allTextContents(), data.items.map((r: { display_name: string }) => r.display_name));
           const core = [...network].filter(([, r]) => r.path === "/api/v1/crm/directory" && r.method === "GET");
           assert.equal(core.length, 1);
-          assert.equal(applied.get(core[0][0]), rules[user]);
+          if (method === "rule") assert.equal(applied.get(core[0][0]), rules[user]);
+          else assert.equal(rules[user], null); // Global CDP has no request rule ID; independent calibration is mandatory.
           // Read diagnostics after the unchanged readiness boundary and assertions.
           const navigation = await page.evaluate(() => {
             const entry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;

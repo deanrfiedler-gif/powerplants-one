@@ -50,6 +50,7 @@ class Counters(unittest.TestCase):
         self.assertEqual(observer.positions_for("cpu-core"), observer.positions_for("cpu"))
         self.assertEqual(observer.positions_for("cpu-assets"), observer.positions_for("cpu-core"))
         self.assertEqual(observer.positions_for("cpu-assets-release"), observer.positions_for("cpu-core"))
+        self.assertEqual(observer.positions_for("cpu-assets-network"), [("rule-a1", "0", 10), ("global-b1", "0", 10), ("global-b2", "0", 10), ("rule-a2", "0", 10)])
         with self.assertRaises(AssertionError):
             observer.positions_for("unknown")
 
