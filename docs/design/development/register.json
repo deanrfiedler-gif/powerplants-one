@@ -5098,7 +5098,11 @@
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-inspection/reference-1440-person.png",
+        "docs/testing/evidence/access-inspection/reference-390-person.png",
+        "docs/testing/evidence/access-inspection/reference-320-person.png"
+      ],
       "dependencies": [
         "docs/design/access-review/access-review.html",
         "src/platform/permissions.ts",
@@ -5109,7 +5113,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Read-only native increment verified locally; roles, teams, changes and campaigns remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12844,7 +12848,11 @@
       "guide_key": "guide.route-admin-access-id",
       "design_path": "docs/design/development/pages/route-admin-access-id.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-inspection/native-1440-person.png",
+        "docs/testing/evidence/access-inspection/native-390-person.png",
+        "docs/testing/evidence/access-inspection/native-320-person.png"
+      ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
@@ -12853,7 +12861,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Local AD-01 database and desktop/390/320 browser proof recorded; see execution ledger. Full CI is separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12880,7 +12888,11 @@
       "guide_key": "guide.route-admin-access",
       "design_path": "docs/design/development/pages/route-admin-access.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-inspection/native-1440-people.png",
+        "docs/testing/evidence/access-inspection/native-390-people.png",
+        "docs/testing/evidence/access-inspection/native-320-people.png"
+      ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
@@ -12889,7 +12901,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Local AD-01 database and desktop/390/320 browser proof recorded; see execution ledger. Full CI is separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

@@ -24,4 +24,4 @@ Existing reference: [AD-01 working HTML](../../access-review/access-review.html)
 
 ## Evidence and open review
 
-[Execution ledger](../../../testing/evidence/access-inspection/README.md). Matching reference/app captures and owner/device/keyboard/zoom review remain separate. No accepted native images exist yet; missing images remain explicit. No review fingerprint is set by implementation.
+[Execution ledger](../../../testing/evidence/access-inspection/README.md). The execution ledger links source-bound native and reference captures at 1440/390/320 px and records the observed layout differences. These are implementation/reference evidence, not accepted mockups. Owner, physical-device, keyboard/zoom and screen-reader review remain open; accepted native images are still missing. No review fingerprint is set by implementation.

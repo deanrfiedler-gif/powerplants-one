@@ -141,3 +141,5 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 ## AD-01 consumer
 
 Native Users and access/person inspection reuses this component unchanged. States include populated/empty directory, denied/expired authority, retryable reads and current/scheduled/expired grant records. The [AD-01 evidence](../../../testing/evidence/access-inspection/README.md) records host verification; these bindings do not grant visual acceptance or change the component's existing fixture semantics.
+
+AD-01 uses the existing Field and SelectField with capability, company/site and identity-status inputs. Company option text leads with the exact ERP company key so a long same-name company label cannot hide the distinguishing key at 320 px. No shared-control API or isolated fixture is changed.
