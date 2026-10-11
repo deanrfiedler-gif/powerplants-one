@@ -1,0 +1,179 @@
+TAP version 13
+# Subtest: AD01 withdrawal: populated 0080 upgrade retains exact requests, grants, histories, receipts and ledgers
+not ok 1 - AD01 withdrawal: populated 0080 upgrade retains exact requests, grants, histories, receipts and ledgers
+  ---
+  duration_ms: 120071.2421
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:2750'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 120000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: AD01 withdrawal: exact closure, authority, concurrency and original recovery
+    # Subtest: Submitted and Approved close once, retain exact originals, release the tuple and recover after replacement
+    not ok 1 - Submitted and Approved close once, retain exact originals, release the tuple and recover after replacement
+      ---
+      duration_ms: 312.7092
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:5094'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:205:25)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:201:11)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      ...
+    # Subtest: only the original requester with current local Workspace duties may close or recover
+    not ok 2 - only the original requester with current local Workspace duties may close or recover
+      ---
+      duration_ms: 10.0208
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:7387'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:289:23)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:286:11)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: late or no-longer-eligible proposals can close without changing installed access
+    not ok 3 - late or no-longer-eligible proposals can close without changing installed access
+      ---
+      duration_ms: 19.7924
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:9567'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:382:19)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:378:11)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: terminal states, stale versions and malformed proposals have no effects
+    not ok 4 - terminal states, stale versions and malformed proposals have no effects
+      ---
+      duration_ms: 13.0431
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:10494'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:418:25)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:414:11)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: withdrawal races decision/application with exactly one transition
+    not ok 5 - withdrawal races decision/application with exactly one transition
+      ---
+      duration_ms: 9.5069
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:11332'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:457:25)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:453:11)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: authority revocation while waiting for the lock refuses closure
+    not ok 6 - authority revocation while waiting for the lock refuses closure
+      ---
+      duration_ms: 6.4271
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:12379'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:498:23)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:495:11)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: late audit failure and missing evidence roll back, while accepted history is immutable
+    not ok 7 - late audit failure and missing evidence roll back, while accepted history is immutable
+      ---
+      duration_ms: 2.912
+      type: 'test'
+      location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:13546'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'actor_id')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        proposal (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:77:25)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:548:23)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1402:25)
+        Test.start (node:internal/test_runner/test:1262:17)
+        TestContext.test (node:internal/test_runner/test:400:20)
+        TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-withdrawal.test.ts:545:11)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    1..7
+not ok 2 - AD01 withdrawal: exact closure, authority, concurrency and original recovery
+  ---
+  duration_ms: 433.9491
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\access-withdrawal.test.ts:1:4992'
+  failureType: 'subtestsFailed'
+  error: '7 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..2
+# tests 9
+# suites 0
+# pass 0
+# fail 8
+# cancelled 1
+# skipped 0
+# todo 0
+# duration_ms 174409.7091

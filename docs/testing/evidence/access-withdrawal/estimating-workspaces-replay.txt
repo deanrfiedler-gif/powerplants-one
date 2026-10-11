@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original
+ok 1 - E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original
+  ---
+  duration_ms: 54423.9223
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62255.7011

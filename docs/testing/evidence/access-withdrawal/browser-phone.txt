@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:30076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (22.4s)
+  ok 2 [phone] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (6.1s)
+
+  2 passed (34.2s)

@@ -1,0 +1,223 @@
+
+Running 51 tests using 1 worker
+
+(node:33524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (7.1s)
+  ok  2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (568ms)
+  ok  3 [desktop] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (2.6s)
+  ok  4 [desktop] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (4.1s)
+  ok  5 [desktop] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (3.0s)
+  ok  6 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (5.3s)
+  ok  7 [desktop] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (4.9s)
+  ok  8 [desktop] › tests\browser\access-requests.spec.ts:256:1 › AD-01 stale decisions are refused and denied refresh hides request context (2.4s)
+  ok  9 [desktop] › tests\browser\access-requests.spec.ts:339:1 › AD-01 approved local application installs once, retains its dates and opens current person access (3.4s)
+  ok 10 [desktop] › tests\browser\access-requests.spec.ts:410:1 › AD-01 lost committed application response recovers the original after reload (3.7s)
+  ok 11 [desktop] › tests\browser\access-requests.spec.ts:473:1 › AD-01 stale application and denied command clear protected context (3.9s)
+  x  12 [desktop] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (12.3s)
+(node:28992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [desktop] › tests\browser\access-requests.spec.ts:652:1 › AD-01 lost committed withdrawal response recovers the original after reload (3.6s)
+  ok 14 [desktop] › tests\browser\access-requests.spec.ts:712:1 › AD-01 stale withdrawal cannot undo an application and denied closure hides protected context (3.4s)
+  ok 15 [desktop] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (4.0s)
+  ok 16 [desktop] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (4.0s)
+  ok 17 [desktop] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (2.9s)
+(node:15496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 18 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.9s)
+  ok 19 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (514ms)
+  ok 20 [phone] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (3.6s)
+  ok 21 [phone] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (4.9s)
+  ok 22 [phone] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (3.6s)
+  ok 23 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (5.4s)
+  ok 24 [phone] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (6.0s)
+  ok 25 [phone] › tests\browser\access-requests.spec.ts:256:1 › AD-01 stale decisions are refused and denied refresh hides request context (3.2s)
+  ok 26 [phone] › tests\browser\access-requests.spec.ts:339:1 › AD-01 approved local application installs once, retains its dates and opens current person access (4.0s)
+  ok 27 [phone] › tests\browser\access-requests.spec.ts:410:1 › AD-01 lost committed application response recovers the original after reload (3.9s)
+  ok 28 [phone] › tests\browser\access-requests.spec.ts:473:1 › AD-01 stale application and denied command clear protected context (4.7s)
+  x  29 [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (17.4s)
+(node:28568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 30 [phone] › tests\browser\access-requests.spec.ts:652:1 › AD-01 lost committed withdrawal response recovers the original after reload (8.7s)
+  ok 31 [phone] › tests\browser\access-requests.spec.ts:712:1 › AD-01 stale withdrawal cannot undo an application and denied closure hides protected context (11.9s)
+  ok 32 [phone] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (9.8s)
+  ok 33 [phone] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (12.0s)
+  x  34 [phone] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (1.1m)
+(node:34884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 35 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (24.0s)
+  ok 36 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (3.0s)
+  ok 37 [narrow] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (8.1s)
+  ok 38 [narrow] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (6.5s)
+  ok 39 [narrow] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (3.2s)
+  ok 40 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (8.1s)
+  ok 41 [narrow] › tests\browser\access-requests.spec.ts:167:1 › AD-01 a lost submission response recovers the original after reload and approval remains ineffective (38.4s)
+  ok 42 [narrow] › tests\browser\access-requests.spec.ts:256:1 › AD-01 stale decisions are refused and denied refresh hides request context (9.7s)
+  ok 43 [narrow] › tests\browser\access-requests.spec.ts:339:1 › AD-01 approved local application installs once, retains its dates and opens current person access (8.0s)
+  ok 44 [narrow] › tests\browser\access-requests.spec.ts:410:1 › AD-01 lost committed application response recovers the original after reload (6.0s)
+  ok 45 [narrow] › tests\browser\access-requests.spec.ts:473:1 › AD-01 stale application and denied command clear protected context (11.4s)
+  x  46 [narrow] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (29.4s)
+(node:32176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 47 [narrow] › tests\browser\access-requests.spec.ts:652:1 › AD-01 lost committed withdrawal response recovers the original after reload (9.4s)
+  ok 48 [narrow] › tests\browser\access-requests.spec.ts:712:1 › AD-01 stale withdrawal cannot undo an application and denied closure hides protected context (5.8s)
+  ok 49 [narrow] › tests\browser\access-roles.spec.ts:4:1 › AD-01 returning to earlier selections waits for a fresh comparison or explanation (6.6s)
+  ok 50 [narrow] › tests\browser\access-roles.spec.ts:66:1 › AD-01 retained proposed bundles, scoped comparison and fresh explanation handover (6.4s)
+  ok 51 [narrow] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context (7.4s)
+
+
+  1) [desktop] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByLabel('Withdrawal reason', { exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByLabel('Withdrawal reason', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Withdrawal reason', { exact: true })
+        13 × locator resolved to <input required="" type="text" value="short" maxlength="1000" aria-invalid="true" id="withdrawal_reason" name="withdrawal_reason" data-validation-field="reason" aria-label="Withdrawal reason" aria-describedby="withdrawal_reason-hint withdrawal_reason-error"/>
+           - unexpected value "inactive"
+
+
+      581 |       await expect(
+      582 |         page.getByLabel("Withdrawal reason", { exact: true }),
+    > 583 |       ).toBeFocused();
+          |         ^
+      584 |       await expect(
+      585 |         page.getByLabel("Application reason", { exact: true }),
+      586 |       ).toHaveAttribute("aria-invalid", "false");
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:583:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByLabel('Withdrawal reason', { exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByLabel('Withdrawal reason', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Withdrawal reason', { exact: true })
+        13 × locator resolved to <input required="" type="text" value="short" maxlength="1000" aria-invalid="true" id="withdrawal_reason" name="withdrawal_reason" data-validation-field="reason" aria-label="Withdrawal reason" aria-describedby="withdrawal_reason-hint withdrawal_reason-error"/>
+           - unexpected value "inactive"
+
+
+      581 |       await expect(
+      582 |         page.getByLabel("Withdrawal reason", { exact: true }),
+    > 583 |       ).toBeFocused();
+          |         ^
+      584 |       await expect(
+      585 |         page.getByLabel("Application reason", { exact: true }),
+      586 |       ).toHaveAttribute("aria-invalid", "false");
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:583:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [phone] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Compare current grants' })
+
+
+      179 |   );
+      180 |   await page.goto("/admin/access/30000000-0000-4000-8000-000000000005/roles");
+    > 181 |   await page.getByRole("button", { name: "Compare current grants" }).click();
+          |                                                                      ^
+      182 |   await expect(page.locator("#comparison-result")).toContainText(
+      183 |     "of 13 capabilities",
+      184 |   );
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-roles.spec.ts:181:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-roles-AD-01-role-co-4cf92-ut-retaining-denied-context-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-roles-AD-01-role-co-4cf92-ut-retaining-denied-context-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-roles-AD-01-role-co-4cf92-ut-retaining-denied-context-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-roles-AD-01-role-co-4cf92-ut-retaining-denied-context-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [narrow] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByLabel('Withdrawal reason', { exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByLabel('Withdrawal reason', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Withdrawal reason', { exact: true })
+        14 × locator resolved to <input required="" type="text" value="short" maxlength="1000" aria-invalid="true" id="withdrawal_reason" name="withdrawal_reason" data-validation-field="reason" aria-label="Withdrawal reason" aria-describedby="withdrawal_reason-hint withdrawal_reason-error"/>
+           - unexpected value "inactive"
+
+
+      581 |       await expect(
+      582 |         page.getByLabel("Withdrawal reason", { exact: true }),
+    > 583 |       ).toBeFocused();
+          |         ^
+      584 |       await expect(
+      585 |         page.getByLabel("Application reason", { exact: true }),
+      586 |       ).toHaveAttribute("aria-invalid", "false");
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:583:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-narrow\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-narrow\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-narrow\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-request-withdrawal\browser-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-narrow\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+    [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+    [phone] › tests\browser\access-roles.spec.ts:170:1 › AD-01 role comparison clears changed results and recovers from read failure without retaining denied context
+    [narrow] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+  47 passed (9.4m)

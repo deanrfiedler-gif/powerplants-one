@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: populated 0050 upgrade preserves every old row/hash, registers 0051–0081 and exact authority/instrument additions
+ok 1 - populated 0050 upgrade preserves every old row/hash, registers 0051–0081 and exact authority/instrument additions
+  ---
+  duration_ms: 69875.2472
+  type: 'test'
+  ...
+# Subtest: fresh installation applies only registered files through 0081, retains reserved gaps and repeats without changes
+ok 2 - fresh installation applies only registered files through 0081, retains reserved gaps and repeats without changes
+  ---
+  duration_ms: 55721.1814
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 169221.0816

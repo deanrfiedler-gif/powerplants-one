@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: populated 0067 upgrade preserves isolated resolution, receiving, allocations, grants, original receipts and issued bytes
+ok 1 - populated 0067 upgrade preserves isolated resolution, receiving, allocations, grants, original receipts and issued bytes
+  ---
+  duration_ms: 93962.5957
+  type: 'test'
+  ...
+# Subtest: populated 0070 upgrade preserves isolated-task originals, every old row and output byte
+ok 2 - populated 0070 upgrade preserves isolated-task originals, every old row and output byte
+  ---
+  duration_ms: 104509.3031
+  type: 'test'
+  ...
+# Subtest: populated 0070 upgrade preserves two-task originals, every old row and output byte
+ok 3 - populated 0070 upgrade preserves two-task originals, every old row and output byte
+  ---
+  duration_ms: 85444.949
+  type: 'test'
+  ...
+# Subtest: populated 0070 upgrade preserves linear-chain originals, every old row and output byte
+ok 4 - populated 0070 upgrade preserves linear-chain originals, every old row and output byte
+  ---
+  duration_ms: 77651.5137
+  type: 'test'
+  ...
+# Subtest: populated 0070 upgrade preserves branch originals, every old row and output byte
+ok 5 - populated 0070 upgrade preserves branch originals, every old row and output byte
+  ---
+  duration_ms: 89715.6929
+  type: 'test'
+  ...
+# Subtest: P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants
+ok 6 - P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants
+  ---
+  duration_ms: 52864.9121
+  type: 'test'
+  ...
+# Subtest: LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts
+ok 7 - LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts
+  ---
+  duration_ms: 53100.271
+  type: 'test'
+  ...
+# Subtest: LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts
+ok 8 - LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts
+  ---
+  duration_ms: 76929.1855
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 666333.6652

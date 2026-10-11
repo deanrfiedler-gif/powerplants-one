@@ -42,8 +42,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No accepted ES-01 image or HTML reference exists. Keep this gap visible. The proposed design board is retained for review:
+No accepted ES-01 image or HTML reference of the implemented page exists. Keep this gap visible. The accepted Figma design for the next build and the proposed design board are retained:
 
+- [Intake & workload design r01](../../../reference/ui/estimating/intake-workload-design-r01/README.md) — seven icon-free captures of the design Dean accepted on 11 October 2026; see [Accepted Figma design](#accepted-figma-design--11-october-2026)
 - [Design board r01](../../../reference/ui/estimating/workload-design-board-r01/README.md) — 14 artboards, proposed and not accepted; key boards: [D1 · Workload desktop](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png) (1440 × 1400), [D2 · Saved estimates](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png) (1440 × 900), [R1 · 1024 drawer](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png) (1024 × 768), [R2 · Phone 390](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png) (390 × 2112) and [R4 · Phone 320](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png) (320 × 700)
 - [Native workload evidence](../../../testing/evidence/estimating-native-workload/README.md) — captures of the first native increment, parent `f929312`
 - [Design adoption evidence](../../../testing/evidence/estimating-workload-design-adoption/README.md) — captures of the running build after the 25 September decisions; not visual acceptance
@@ -74,6 +75,10 @@ Amends the native workload contract above where they differ. Decisions and reaso
 | Saved estimates (P8) | Table: estimate, customer, version, saved date and right-aligned saved sell in AUD, excluding tax. A null sell total reads Not estimated. Labelled blocks at 700 CSS px and below |
 | States (P9) | Loading text, no matches, no permitted workload, failed read with rows and counts cleared plus Try loading again, and no access. Placeholder rows declined |
 | Findings | B1–B5 fixed; `estimating.css` keeps its button rules for the other Estimating screens |
+
+## Accepted Figma design — 11 October 2026
+
+Dean accepted a Figma design for this page as the named version "Intake & workload — Pipedrive pattern, accepted": see the [design decision](../../../decisions/intake-workload-design.md) and the seven icon-free [captures](../../../reference/ui/estimating/intake-workload-design-r01/README.md). It applies the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) pattern: a full-width grid, a record window that overlaps it, readiness and Saved estimates as secondary-menu views with counts, the Not configured intake rules at the foot of the menu, and phone list rows. When the page is built it replaces P1 (persistent panel), P4 (section tabs), P7 (drawer) and O1 (1360 CSS px breakpoint); P2's segments become menu counts with the same count rule, and P5's owner choice becomes the My estimating work view. P3, P6, P8, O2 and the native workload contract stay in force. The decision also amends the shared record-window rule (A1). Until the page is built, the implemented composition above remains the app's behaviour; visual status stays Needs review.
 
 ## Behaviour, handovers and verification
 

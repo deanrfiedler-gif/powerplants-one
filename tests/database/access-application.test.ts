@@ -20,7 +20,7 @@ import {
   decideAccessRequest,
   applyAccessRequest,
 } from "../../src/access/requests";
-import { accessApplicationSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessApplicationSeedGrants, accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -141,7 +141,7 @@ async function noApplication(id: string) {
   );
 }
 
-test("AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; one exact duty and inert reseed", async () => {
+test("AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; exact application/team duties and inert reseed", async () => {
   await transaction(async (c) => {
     await c.query("SET LOCAL statement_timeout='120s'");
     await c.query(
@@ -178,7 +178,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   assert.deepEqual(await snapshot(), old);
   assert.deepEqual(
     await rows(
-      "SELECT to_jsonb(r)-ARRAY['applied_by','applied_at','application_reason','grant_id','grant_snapshot'] value FROM ppo.access_change_requests r ORDER BY id",
+      "SELECT to_jsonb(r)-ARRAY['applied_by','applied_at','application_reason','grant_id','grant_snapshot','withdrawn_at','withdrawal_reason'] value FROM ppo.access_change_requests r ORDER BY id",
     ),
     requests,
   );
@@ -188,12 +188,13 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
     current.filter((g) => ids.has(g.id)),
     grants,
   );
+  // Migration/seed numbering can move; the original grant identity stays fixed.
   assert.deepEqual(
     current.filter((g) => !ids.has(g.id)),
-    accessApplicationSeedGrants(grants).map((g) => ({
+    [...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
       ...g,
       id: "ad010080-0000-4000-8000-000000000001",
-    })),
+    }))].sort((a,b) => String(a.id).localeCompare(String(b.id))),
   );
   const next = await rows(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -205,7 +206,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     next.filter((r) => r.version > 79).map((r) => r.version),
-    [80, 81],
+    [80, 81, 82, 83],
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version <= 79),
@@ -213,7 +214,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version > 79).map((r) => r.version),
-    [80],
+    [80, 83],
   );
   for (const f of [approved, returned, submitted])
     assert.deepEqual(
