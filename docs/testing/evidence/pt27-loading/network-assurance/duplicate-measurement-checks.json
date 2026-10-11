@@ -1,0 +1,113 @@
+{
+  "reason": "Duplicate full-assurance workflows on temporary measurement refs cancelled to release capacity for the scoped experiment. Workflow_dispatch measurements, delivery PR #391 and other feature branches are excluded. Final delivery-head assurance remains required.",
+  "runs": [
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38103254641,
+      "event": "pull_request",
+      "headSha": "2fce332269b813041304fb79dcf129c51d9d9c97",
+      "name": "Compiled application browser assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38103254641"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38103254646,
+      "event": "pull_request",
+      "headSha": "2fce332269b813041304fb79dcf129c51d9d9c97",
+      "name": "Quotation Supply follow-up assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38103254646"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38103254606,
+      "event": "pull_request",
+      "headSha": "2fce332269b813041304fb79dcf129c51d9d9c97",
+      "name": "Application assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38103254606"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070062,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Quotation conversion assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070062"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070081,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Application assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070081"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070037,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Quotation Supply follow-up assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070037"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070065,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Compiled application browser assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070065"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070048,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Azure demo preparation checks",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070048"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070070,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Quotation disposition assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070070"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070119,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "CRM Leads implementation",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070119"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070092,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "CRM refinements assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070092"
+    },
+    {
+      "conclusion": "cancelled",
+      "databaseId": 38104070088,
+      "event": "pull_request",
+      "headSha": "beb4d0c5eaa77a8fcef8d03a8b6ac76787cfd4e3",
+      "name": "Estimating E1 assurance",
+      "status": "completed",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38104070088"
+    }
+  ]
+}

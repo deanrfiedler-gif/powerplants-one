@@ -20,7 +20,7 @@ const measure = () => page.evaluate(() => {
   const menu = document.querySelector(".mw-menu:not([hidden])");
   const strip = document.querySelector(".mw-menu-strip");
   const scope = document.querySelector("[data-menu]");
-  const table = document.querySelector(".em-table-scroll, .mw-content table, table");
+  const table = document.querySelector(".ppo-register, .em-table-scroll, .mw-content table, table");
   const crumbs = [...document.querySelectorAll(".ppo-crumbs li")].map(li => ({ text: li.textContent, hidden: getComputedStyle(li).display === "none", kind: li.dataset.crumb }));
   const toggle = document.querySelector(".ppo-header-menu-slot .ppo-menu-toggle");
   const heading = document.querySelector(".product-heading");

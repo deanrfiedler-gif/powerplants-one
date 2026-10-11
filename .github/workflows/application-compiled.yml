@@ -12,7 +12,7 @@ on:
       proof:
         description: Existing full assurance or a separate PT-27 controlled comparison
         type: choice
-        options: [all, customer-observer, customer-startup, customer-candidate, customer-regression, customer-cpu, customer-core, customer-assets, customer-asset-release]
+        options: [all, customer-observer, customer-startup, customer-candidate, customer-regression, customer-cpu, customer-core, customer-assets, customer-asset-release, customer-network, customer-packet]
         default: all
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
     needs: compiled_suites
-    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' }}
+    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' && inputs.proof != 'customer-network' && inputs.proof != 'customer-packet' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -34,7 +34,7 @@ jobs:
 
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
-    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release'
+    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' && inputs.proof != 'customer-network' && inputs.proof != 'customer-packet'
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
@@ -209,7 +209,7 @@ jobs:
 
   customer_observer:
     name: PT-27 controlled customer comparison
-    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup' || inputs.proof == 'customer-candidate' || inputs.proof == 'customer-regression' || inputs.proof == 'customer-cpu' || inputs.proof == 'customer-core' || inputs.proof == 'customer-assets' || inputs.proof == 'customer-asset-release')
+    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup' || inputs.proof == 'customer-candidate' || inputs.proof == 'customer-regression' || inputs.proof == 'customer-cpu' || inputs.proof == 'customer-core' || inputs.proof == 'customer-assets' || inputs.proof == 'customer-asset-release' || inputs.proof == 'customer-network' || inputs.proof == 'customer-packet')
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     services:
@@ -229,7 +229,8 @@ jobs:
       PPO_SOURCE_HEAD: ${{ github.sha }}
       PPO_COMPILED_SOURCE: ${{ github.sha }}
       PPO_BENCHMARK_FIXTURE: add-synthetic-load
-      PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-asset-release' && 'cpu-assets-release' || inputs.proof == 'customer-assets' && 'cpu-assets' || inputs.proof == 'customer-core' && 'cpu-core' || inputs.proof == 'customer-cpu' && 'cpu' || inputs.proof == 'customer-startup' && 'startup' || inputs.proof == 'customer-candidate' && 'candidate' || inputs.proof == 'customer-regression' && 'regression' || 'observer' }}
+      PPO_BLOCK_PROFILE: ${{ (inputs.proof == 'customer-network' || inputs.proof == 'customer-packet') && 'cpu-assets-network' || inputs.proof == 'customer-asset-release' && 'cpu-assets-release' || inputs.proof == 'customer-assets' && 'cpu-assets' || inputs.proof == 'customer-core' && 'cpu-core' || inputs.proof == 'customer-cpu' && 'cpu' || inputs.proof == 'customer-startup' && 'startup' || inputs.proof == 'customer-candidate' && 'candidate' || inputs.proof == 'customer-regression' && 'regression' || 'observer' }}
+      PPO_NETWORK_CANDIDATE: ${{ inputs.proof == 'customer-packet' && 'packet' || 'global' }}
       PPO_CONTROL_SOURCE: 20734e177844ea887007b4279a5edea9d205e102
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -244,6 +245,11 @@ jobs:
           npm install --global npm@11.19.0
           npm ci
           npm run browser:install
+      - name: Independently calibrate the candidate before any application samples
+        if: inputs.proof == 'customer-network' || inputs.proof == 'customer-packet'
+        run: |
+          node --import tsx --test tests/unit/quality-network-conditioning.test.ts tests/unit/quality-packet-network.test.ts
+          node --import tsx scripts/quality-network-calibration.ts
       - name: Build the declared source once
         run: npm run build
       - name: Build the pinned control once with the same locked dependencies
@@ -284,13 +290,13 @@ jobs:
           cp .env.local "$PPO_CONTROL_ROOT/.env.local"
           mkdir -p "$PPO_CONTROL_ROOT/verification-evidence/customer-loading-diagnosis" "$PPO_CONTROL_ROOT/verification-evidence/pt27-loading"
           cp verification-evidence/customer-loading-diagnosis/fixture.json "$PPO_CONTROL_ROOT/verification-evidence/customer-loading-diagnosis/fixture.json"
-          cp scripts/quality-customer-comparison.ts scripts/quality-comparison-profile.ts scripts/quality-asset-observer.ts "$PPO_CONTROL_ROOT/scripts/"
+          cp scripts/quality-customer-comparison.ts scripts/quality-comparison-profile.ts scripts/quality-asset-observer.ts scripts/quality-network-conditioning.ts scripts/quality-packet-network.ts "$PPO_CONTROL_ROOT/scripts/"
       - name: Execute the predeclared comparison block
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         if: inputs.proof != 'customer-regression'
         run: |
-          node --import tsx --test tests/unit/quality-comparison-profile.test.ts tests/unit/quality-asset-observer.test.ts
+          node --import tsx --test tests/unit/quality-comparison-profile.test.ts tests/unit/quality-asset-observer.test.ts tests/unit/quality-network-conditioning.test.ts tests/unit/quality-packet-network.test.ts
           python3 tests/scripts/test_quality_observer_block.py
           python3 scripts/quality-observer-block.py "${PPO_BLOCK_PROFILE}-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" "${PPO_BLOCK_PROFILE}"
       - name: Verify the changed receiving and directory journeys on desktop and phone
@@ -310,6 +316,7 @@ jobs:
           path: |
             verification-evidence/review-diagnostic-redactions.json
             verification-evidence/customer-loading-diagnosis/fixture.json
+            verification-evidence/pt27-network-calibration/
             verification-evidence/pt27-observer/
             verification-evidence/pt27-loading/
             verification-evidence/transport-diagnostics/
