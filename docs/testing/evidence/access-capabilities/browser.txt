@@ -1,0 +1,26 @@
+
+Running 15 tests using 1 worker
+
+(node:24624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.3s)
+  ok  2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (203ms)
+  ok  3 [desktop] › tests\browser\access-inspection.spec.ts:145:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (2.1s)
+  ok  4 [desktop] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (3.6s)
+  ok  5 [desktop] › tests\browser\access-inspection.spec.ts:270:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.4s)
+(node:35512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (3.0s)
+  ok  7 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (301ms)
+  ok  8 [phone] › tests\browser\access-inspection.spec.ts:145:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.2s)
+  ok  9 [phone] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (2.2s)
+  ok 10 [phone] › tests\browser\access-inspection.spec.ts:270:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (1.9s)
+(node:22204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (2.5s)
+  ok 12 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (182ms)
+  ok 13 [narrow] › tests\browser\access-inspection.spec.ts:145:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (1.6s)
+  ok 14 [narrow] › tests\browser\access-inspection.spec.ts:190:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (4.5s)
+  ok 15 [narrow] › tests\browser\access-inspection.spec.ts:270:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (2.4s)
+
+  15 passed (37.8s)

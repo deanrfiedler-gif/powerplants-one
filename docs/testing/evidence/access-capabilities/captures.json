@@ -1,0 +1,121 @@
+{
+  "captured_at": "2026-10-11T03:41:01.082Z",
+  "source_commit": "85db0f23a7990ad31b3d6fb2b25ae444f721074d",
+  "browser": "155.0.8059.40",
+  "origin": "http://127.0.0.1:3091",
+  "synthetic": true,
+  "reference": {
+    "path": "docs/design/access-review/access-review.html",
+    "sha256": "b006c02d9a800c77995f3afb7741b260342d4fa13391786918eb28ecbfab504c"
+  },
+  "images": [
+    {
+      "file": "native-1440-catalogue.png",
+      "kind": "Native catalogue filtered to shared.read",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "df267c7b70077d136389748554da9ee7bd38b3fd7efa77e6d7ab468d24200ac9"
+    },
+    {
+      "file": "native-1440-holders.png",
+      "kind": "Native shared.read holders filtered to Site",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "6d5f874f84b9db0f26e641577372980a7c63d38d6127141f232b3f071d6217d0"
+    },
+    {
+      "file": "native-1440-context.png",
+      "kind": "Native person context; no eligibility check submitted",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "f2eae4c1f78a8091c83667f438e2113eed11954b0207d1d9fd592e7e51b7405a"
+    },
+    {
+      "file": "reference-1440-catalogue.png",
+      "kind": "Retained working HTML capabilities view",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "c74e2e5fdef70845555e36e40eaf9837df19efadf62e88e655450e2421ffcd0e"
+    },
+    {
+      "file": "native-390-catalogue.png",
+      "kind": "Native catalogue filtered to shared.read",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "765434b2d0e92469110baa10e9d09079238a5d15a59936ceb28f847af67437a4"
+    },
+    {
+      "file": "native-390-holders.png",
+      "kind": "Native shared.read holders filtered to Site",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "8b64f342f850bbab7fca39e0555c056bb145674ac4ec666251559629d2e1c860"
+    },
+    {
+      "file": "native-390-context.png",
+      "kind": "Native person context; no eligibility check submitted",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "bd1e39f7f5b2ef5b90bbc8f3b68dba7b78dc4cef3640c61c433c3a56bf4fe96a"
+    },
+    {
+      "file": "reference-390-catalogue.png",
+      "kind": "Retained working HTML capabilities view",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "5f4f2d4fcded4ef32e2b23daba3676301e99d61b1db7c9fbc53ba149433364da"
+    },
+    {
+      "file": "native-320-catalogue.png",
+      "kind": "Native catalogue filtered to shared.read",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "ab85e4d5ba7ca7245a4a3e7eecd42a821860bc14f566e3cb62fa2a0948b5b419"
+    },
+    {
+      "file": "native-320-holders.png",
+      "kind": "Native shared.read holders filtered to Site",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "da840296c2b4aa03d86c2a515ca6d0c1ceeb6ff3143a01748f74d0ed691cb191"
+    },
+    {
+      "file": "native-320-context.png",
+      "kind": "Native person context; no eligibility check submitted",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "cc3f1b44e4f823dc1ecfd968fa0dac4739a255889ace392a656b5dd34e8d0f58"
+    },
+    {
+      "file": "reference-320-catalogue.png",
+      "kind": "Retained working HTML capabilities view",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "983eea430de90f55075b49d0e6b6fc7bba19b29d6768d395e5a81db547c7e367"
+    }
+  ]
+}
