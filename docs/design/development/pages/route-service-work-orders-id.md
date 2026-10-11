@@ -15,11 +15,26 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design (12 October 2026): the [work order record page decision](../../../decisions/work-order-record-page-design.md), with captures 01–10 in [Work order record page design r01](../../../reference/ui/service/work-order-record-page-design-r01/README.md). It is the second record type on the shared record layout. The app still shows the work order as a stack of panels, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the Service rail with Work orders selected; the breadcrumb "Service / Work orders / reference", which returns to the register; no secondary menu. Below the top bar come a one-row header, a state banner when one applies, the "Ready to authorise" bar, then a 380 px details column and a main column, each scrolling on its own.
+- **Header:** title (the scope summary, or "Work scope needed") and the State tag, the position in the register view with previous/next, one main action chosen by state and permission (Write the scope, Review readiness, Authorise rNN or Propose a visit; none when read only), a second action where one applies, and "…" (Review a readiness criterion, Open the linked request, Compare saved version, Copy link). Below: reference, the Service owner with an avatar, and origin.
+- **Readiness bar:** six checks drawn from `blockers()`: requests triaged, scope, equipment, coverage route, authority evidence, and criteria cleared (n of 5). A gap shows in amber, with words.
+- **Details column:** Summary, Customer and site, Linked requests, Coverage, Equipment, Authority evidence and Origin, divided by lines.
+- **Main column:** view tabs Authorisation, Scope rNN, Visits, Evidence and History. The page opens on the tab that holds the next step. Authorisation leads with a decision card listing each blocker and the action that clears it, then the five criteria. Review opens a side panel; Authorise opens a confirmation dialog with a required reason; Edit scope opens the editor in the Scope tab with a fixed save bar.
+- **States:** scope needed, ready to authorise without authorise access, authorised with no visit, read only, a newer saved version while editing, a failed refresh, and a successor in draft (capture 09).
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (12 October 2026): capture 11 in [Work order record page design r01](../../../reference/ui/service/work-order-record-page-design-r01/README.md).
+
+- **At 390 × 844:** tapping a work order in the list opens the record page directly: back, previous/next, the State tag and authorisation status, then Details, Authorisation, Scope and Visits tabs over scrolling content, with "…", Edit scope and the main action fixed at the bottom. Evidence and History open from Details.
+- **Actions:** "…" opens an action sheet with the record actions.
+- **Not drawn yet:** the phone Visits tab and the phone versions of the states.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -34,6 +49,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-Work-Orders-Workspace-r01.html](../../../reference/ui/service/PPO-Work-Orders-Workspace-r01.html)
+- Accepted Figma design: [Work order record page design r01 captures](../../../reference/ui/service/work-order-record-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The retained workspace HTML above stays unchanged; the accepted design replaces the panel layout when the page is built. Images of the Propose a visit form, the successor scope form and the LC-16 Sales sources panel are still missing.
 
 ## Behaviour, handovers and verification
 

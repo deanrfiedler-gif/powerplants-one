@@ -77,10 +77,12 @@ Blockers are the record's existing list: every linked request must be Triaged, a
 
 | Shown | When |
 |---|---|
-| — | A Draft; no visit can be planned for it |
+| — | A Draft with no active visit |
 | Not proposed | Authorised, with no active visit. PL-01 lists these orders as unassigned demand |
 | Proposed or Confirmed, with the date | The earliest active visit's status and start date |
-| Review required | An active visit was proposed on an earlier scope (`scope_review_required`) |
+| Review required | An active visit was proposed on an earlier scope, or on a draft scope that is not yet authorised (`scope_review_required`) |
+
+Corrected 12 October 2026 by the [work order record page decision](work-order-record-page-design.md), section 5: this table first said that no visit can be planned for a Draft. The code allows a visit to be proposed against the current scope at any time (`proposeVisit`), and such a visit reads Review required until it was proposed on the authorised, current scope. The accepted captures show no draft with a visit, so they are unchanged.
 
 ### Departures
 

@@ -113,6 +113,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 **Work orders design, 11 October 2026:** Dean accepted a Figma design for the existing Work orders register (`/service/work-orders`, SV-03), the first Service page on the Reviews & approvals pattern. The [decision](../../decisions/work-orders-design.md) records it, and the [retained captures](service/work-orders-design-r01/README.md) are six icon-free PNGs with hashes. The app still shows record cards. Listing it here does not repeat the dated inventory audit above.
 
+**Work order record page, 12 October 2026:** Dean accepted a Figma design for the work order record page (`/service/work-orders/[id]`), the second record type on the shared record layout. The [decision](../../decisions/work-order-record-page-design.md) records it, and the [retained captures](service/work-order-record-page-design-r01/README.md) are eleven icon-free PNGs with hashes. The app still shows the work order as a stack of panels. Listing it here does not repeat the dated inventory audit above.
+
 **17 September addition:** ES-04 Estimate Review & Pricing Exceptions r01 adds a dedicated internal review, correction and estimate-approval boundary between ES-03 and ES-05. Standalone design; acceptance and application integration remain separate.
 
 
@@ -155,6 +157,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 | Service Cases & Triage | [r02](service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html) | Proposed workspace | [Design and handover](../../decisions/service-cases-workspace-design.md). The service-folder r02 upload is an exact duplicate. |
 | Work Orders | [r01](service/PPO-Work-Orders-Workspace-r01.html) | Uploaded design; acceptance not established by this audit | SV work-order visual already on main. Authorisation, booking, attendance review and billing remain distinct. |
 | Work orders register — `/service/work-orders` | [Design r01 captures](service/work-orders-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/work-orders-design.md). Not built; the route shows record cards |
+| Work order record page — `/service/work-orders/[id]` | [Design r01 captures](service/work-order-record-page-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 12 October 2026 | [Decision](../../decisions/work-order-record-page-design.md). Not built; the route shows stacked panels. Second record type on the shared record layout |
 | Service Review & Reports | [r02](service-review/PPO-Service-Review-and-Reports-Workspace-r02.html) | Proposed SV-06/SV-07 workspace; owner acceptance separate | r02 is the CI-repaired successor, despite retained r01 display labels. [Design and handover](../../decisions/service-review-reports-workspace-design.md). |
 | Service Job Pack | [r03](job-pack/powerplants-one-job-pack-r03.html) | Accepted current design; [native integration](../../decisions/job-pack-integration.md) records implementation and separate review. r02 remains the retained predecessor. |
 | Field Technicians | [r04](field-technicians/powerplants-one-field-technicians-r04.html) | Earlier design, still the recorded implementation baseline until r05 integration. |
