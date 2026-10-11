@@ -34,9 +34,22 @@ export function assertAccessInspectionSnapshot(
       id: "ad010078-0000-4000-8000-000000000001",
     })),
   );
-  const preserved = Array.isArray(actual)
+  const preserved: Row[][] | Record<string, Row[]> = Array.isArray(actual)
     ? actual.map((rows, i) => (i === index ? oldRows : rows))
     : { ...actual, permission_grants: oldRows };
+  const seedIndex = names?.indexOf("seed_receipts") ?? -1;
+  const oldSeeds = Array.isArray(original)
+    ? original[seedIndex]
+    : original.seed_receipts;
+  if (oldSeeds) {
+    const newSeeds = Array.isArray(actual)
+      ? actual[seedIndex]
+      : actual.seed_receipts;
+    assert(newSeeds, "The upgraded snapshot must retain the seed ledger");
+    assertAccessInspectionSeedLedger(oldSeeds.map(grant), newSeeds.map(grant));
+    if (Array.isArray(preserved)) preserved[seedIndex] = oldSeeds;
+    else preserved.seed_receipts = oldSeeds;
+  }
   assert.deepEqual(preserved, original);
 }
 

@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import { createEngineeringRequest } from "../../src/engineering/service";
 import { engineeringInput } from "../helpers/engineering";
 import { activityCommand } from "../../src/activities/activities";
@@ -633,7 +634,8 @@ for (const paired of [false, true])
     ).rows;
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
+    const upgradedSnapshot = await Promise.all(tables.map(legacyRows));
+    assertAccessInspectionSnapshot(upgradedSnapshot, before, tables);
     const now = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -668,7 +670,7 @@ for (const paired of [false, true])
     }
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
+    assert.deepEqual(await Promise.all(tables.map(legacyRows)), upgradedSnapshot);
   });
 test("Three-task chain accepts the native direction; reversed and newly added dependencies hold unexecuted receiving", async () => {
   const f = await fixture("SS");

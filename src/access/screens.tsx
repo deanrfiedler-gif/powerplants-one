@@ -245,7 +245,7 @@ function PersonDetail({
             required
             options={data.companies.map((item) => ({
               id: item.id,
-              display_name: `${item.display_name} · ${item.erp_company_id}`,
+              display_name: `${item.erp_company_id} · ${item.display_name}`,
             }))}
           />
           <SelectField

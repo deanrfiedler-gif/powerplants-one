@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -474,7 +475,8 @@ for (const topology of [
     ).rows;
     await migrate();
     await seed();
-    assert.deepEqual(await legacySnapshot(tables), before);
+    const upgradedSnapshot = await legacySnapshot(tables);
+    assertAccessInspectionSnapshot(upgradedSnapshot, before, tables);
     const now = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -509,7 +511,7 @@ for (const topology of [
     }
     await migrate();
     await seed();
-    assert.deepEqual(await legacySnapshot(tables), before);
+    assert.deepEqual(await legacySnapshot(tables), upgradedSnapshot);
   });
 
 test("restricted runtime prepared diamond reads expose all four tasks only with current authority and no ledger privilege", async () => {

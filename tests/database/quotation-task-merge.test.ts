@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import { materialDependencies } from "../../src/estimating/supply-followup/material-context";
 import { conversionReadClient } from "../../src/estimating/conversion/source-authority";
 import { createEngineeringRequest } from "../../src/engineering/service";
@@ -1095,7 +1096,8 @@ for (const topology of [
     ).rows;
     await migrate();
     await seed();
-    assert.deepEqual(await legacySnapshot(tables), before);
+    const upgradedSnapshot = await legacySnapshot(tables);
+    assertAccessInspectionSnapshot(upgradedSnapshot, before, tables);
     const now = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -1130,7 +1132,7 @@ for (const topology of [
     }
     await migrate();
     await seed();
-    assert.deepEqual(await legacySnapshot(tables), before);
+    assert.deepEqual(await legacySnapshot(tables), upgradedSnapshot);
   });
 
 test("B's native position invalidates review even though the action never edits B; unrelated Project changes do not", async () => {

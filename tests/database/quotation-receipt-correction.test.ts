@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -568,7 +569,8 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
     });
   await migrate();
   await seed();
-  assert.deepEqual(await snap(), original);
+  const upgradedSnapshot = await snap();
+  assertAccessInspectionSnapshot(upgradedSnapshot, original, tables);
   const after = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -591,7 +593,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
     );
   await migrate();
   await seed();
-  assert.deepEqual(await snap(), original);
+  assert.deepEqual(await snap(), upgradedSnapshot);
 });
 
 test("ES07 Receipt partial unresolved correction retains separate Stock observation; unknown original Supply outcome holds replacement", async () => {

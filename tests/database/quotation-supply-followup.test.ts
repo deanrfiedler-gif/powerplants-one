@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -586,7 +587,8 @@ test("ES07 Supply populated 0062 upgrade preserves all earlier commercial eviden
     ).rows;
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  const upgradedSnapshot = await snapshot();
+  assertAccessInspectionSnapshot(upgradedSnapshot, before, tables);
   const after = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -602,7 +604,7 @@ test("ES07 Supply populated 0062 upgrade preserves all earlier commercial eviden
   );
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(), before);
+  assert.deepEqual(await snapshot(), upgradedSnapshot);
   assert.deepEqual(
     (
       await database().query(

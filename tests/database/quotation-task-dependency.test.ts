@@ -1,3 +1,4 @@
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -491,7 +492,8 @@ test("populated 0067 upgrade preserves isolated resolution, receiving, allocatio
   ).rows;
   await migrate();
   await seed();
-  assert.deepEqual(await Promise.all(tables.map(rows)), before);
+  const upgradedSnapshot = await Promise.all(tables.map(rows));
+  assertAccessInspectionSnapshot(upgradedSnapshot, before, tables);
   const now = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -512,7 +514,7 @@ test("populated 0067 upgrade preserves isolated resolution, receiving, allocatio
   );
   await migrate();
   await seed();
-  assert.deepEqual(await Promise.all(tables.map(rows)), before);
+  assert.deepEqual(await Promise.all(tables.map(rows)), upgradedSnapshot);
 });
 test("SS pair accepts the native direction; reversed and newly added dependencies hold unexecuted receiving", async () => {
   const f = await fixture("SS");
