@@ -252,7 +252,14 @@ test("AD01 team access: delayed previous roster cannot replace the newly selecte
       name: /Inspect person access for/,
     }),
   ).toHaveAttribute("href", `/admin/access/${actor}`);
+  const lateResponse = page.waitForResponse(
+    response => response.url().endsWith(`/admin/access/teams/${first.team_id}`),
+  );
   release();
+  await (await lateResponse).finished();
+  await page.evaluate(() => new Promise<void>(resolve =>
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+  ));
   await expect(
     card(page, first.name).getByRole("link", {
       name: /Inspect person access for/,
