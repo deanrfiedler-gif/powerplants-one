@@ -578,6 +578,9 @@ test("AD-01 requester withdraws both un-applied states and starts a fresh indepe
       await expect(
         page.getByLabel("Withdrawal reason", { exact: true }),
       ).toHaveAttribute("aria-invalid", "true");
+      const notice = page.locator("main").getByRole("alert");
+      await expect(notice).toBeFocused();
+      await notice.locator('a[href="#withdrawal_reason"]').click();
       await expect(
         page.getByLabel("Withdrawal reason", { exact: true }),
       ).toBeFocused();
