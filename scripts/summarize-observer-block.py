@@ -71,12 +71,44 @@ def role_summary(rows, windows=None):
     return result
 
 
+def asset_summary(data, events):
+    index = {}
+    for event in events:
+        if "sample" in event and "path" in event:
+            index.setdefault((event["sample"], event["path"]), []).append(event)
+    totals = dict.fromkeys(["browser_assets", "server_received", "server_finished", "browser_finished",
+                           "browser_failed", "server_finished_browser_unfinished", "without_server_receipt"], 0)
+    failed = []
+    for sample in data["samples"]:
+        assets = []
+        for row in sample["network"]:
+            if row.get("type") not in ["Script", "Stylesheet"] or not row["path"].startswith("/_next/static/chunks/"):
+                continue
+            server = index.get((sample["asset_sample"], row["path"]), [])
+            received = [e for e in server if e["event"] == "asset-received"]
+            finished = [e for e in server if e["event"] == "asset-finished"]
+            totals["browser_assets"] += 1
+            totals["server_received"] += bool(received)
+            totals["server_finished"] += bool(finished)
+            totals["browser_finished"] += "finish_ms" in row
+            totals["browser_failed"] += "failed_ms" in row
+            totals["server_finished_browser_unfinished"] += bool(finished) and "finish_ms" not in row
+            totals["without_server_receipt"] += not received
+            if "error" in sample:
+                assets.append({"browser": row, "server": server, "server_receipt_count": len(received)})
+        if "error" in sample:
+            failed.append({"sample": sample["asset_sample"], "error": sample["error"], "assets": assets})
+    return {"cap_reached": any(e["event"] == "asset-cap-reached" for e in events),
+            "server_event_count": len(events), "counts": totals, "failed_samples": failed,
+            "limits": "Counts join each browser sample/path to all matching server events; multiple receipts remain explicit. Cache hits can legitimately have no receipt. Server finish is OS handoff, not client receipt. Browser data/failure events stop at the original sample boundary; the copied server log follows browser cleanup, before server shutdown. No missing event is inferred as zero duration or proof of a particular transport cause."}
+
+
 def run(evidence, block, output):
     block_root = evidence / "pt27-observer" / block
     protocol = json.loads((block_root / "protocol.json").read_bytes())
     positions = protocol["positions"]
     profile = protocol.get("profile", "observer")
-    assert profile in ["observer", "startup", "candidate", "cpu", "cpu-core"]
+    assert profile in ["observer", "startup", "candidate", "cpu", "cpu-core", "cpu-assets"]
     assert [p["diagnostics"] for p in positions] == (["0", "1", "1", "0"] if profile == "observer" else ["0"] * 4)
     assert [p.get("browser_count", 10) for p in positions] == ([1, 10, 10, 1] if profile == "startup" else [10] * 4)
     if profile == "candidate":
@@ -84,7 +116,7 @@ def run(evidence, block, output):
         builds = [p["build_id"] for p in positions]
         assert sources[0] == sources[3] != sources[1] == sources[2]
         assert builds[0] == builds[3] != builds[1] == builds[2]
-    if profile in ["cpu", "cpu-core"]:
+    if profile in ["cpu", "cpu-core", "cpu-assets"]:
         assert [p["label"] for p in positions] == [block + "-" + suffix for suffix in
                 ["shared-a1", "partitioned-b1", "partitioned-b2", "shared-a2"]]
         assert all(p["compiled_source"] == protocol["source"] and p["build_id"] == protocol["build_id"] for p in positions)
@@ -108,6 +140,11 @@ def run(evidence, block, output):
             assert row["route_phase_count"] > 0 and row["pools"] and not row["diagnostic_cap_reached"]
         if not data["detailed_diagnostics"]:
             assert not (root / "gateway.jsonl").exists()
+        if profile == "cpu-assets":
+            assert data["asset_diagnostics"] and position["asset_diagnostics"]
+            events = [json.loads(line) for line in (root / "assets.jsonl").read_text().splitlines()]
+            row["asset_observations"] = asset_summary(data, events)
+            assert events and not row["asset_observations"]["cap_reached"], "Do not interpret missing or capped asset observations"
         resources = [json.loads(line) for line in (block_root / (root.name + "-resources.jsonl")).read_text().splitlines()]
         windows = sorted((s["started_at_ms"], s["started_at_ms"] + s["ready_ms"]) for s in data["samples"] + data["record_visits"] if "ready_ms" in s)
         # Combine concurrent browser windows into their union.
@@ -121,7 +158,7 @@ def run(evidence, block, output):
                     "resources_successful_action_interiors": resource_summary(resources, merged),
                     "browser_http_errors": [{"viewport": s["viewport"], "wave": s["wave"], "user": s["user"], "path": r["path"], "status": r["status"]}
                                             for s in data["samples"] for r in s["network"] if r.get("status", 0) >= 400]})
-        if profile in ["cpu", "cpu-core"]:
+        if profile in ["cpu", "cpu-core", "cpu-assets"]:
             index = positions.index(position)
             allocation = protocol["cpu_allocation"]
             partitioned = index in [1, 2]
@@ -141,7 +178,7 @@ def run(evidence, block, output):
                 if row["allocation_valid"]:
                     assert role["escaped_threads"] == 0
         for group in row["groups"]:
-            if profile in ["cpu", "cpu-core"]:
+            if profile in ["cpu", "cpu-core", "cpu-assets"]:
                 observed = [s for s in data["samples"] if s["viewport"] == group["viewport"] and
                             (s["wave"] == 0 if group["phase"] == "cold" else s["wave"] > 0)] if group["phase"] != "record" else [s for s in data["record_visits"] if s["viewport"] == group["viewport"]]
                 windows = [(s["started_at_ms"], s["started_at_ms"] + s["ready_ms"]) for s in observed if "ready_ms" in s]
@@ -167,7 +204,7 @@ def run(evidence, block, output):
     summary.update({"protocol": protocol, "resource_limits": "Two-second external samples, identical in both modes. Whole-run counters include startup, fixture identity setup and screenshots. Action-interior counters include only whole intervals within successful measured browser actions; missing process data are unknown, never zero. CPU values summarize sampled intervals, not isolated SQL execution. Host CPU includes browsers, database and runner work. The declared block order bounds order effects but does not eliminate caches or cloud scheduling; one block cannot establish an observer effect or an earlier failure cause."})
     summary["browser_phase_limits"] = "Core request start includes document/asset loading, hydration and client/session gating; it is not isolated network or server time. CDP finish-minus-headers is the raw event timestamp difference under emulation, which can be negative when response events are delayed; do not interpret it as physical transfer time. Percentiles of separate components are not additive."
     summary["browser_counter_limits"] = "Cross-navigation Performance.getMetrics differences in startup block 38086160387 can be negative. All derived browser_work_seconds, including positive values, are excluded from interpretation; their original bytes remain retained. New drivers keep raw before/after counters without deriving action duration. Readiness, network events and external /proc counters have independent clocks and are unaffected by this diagnostic limitation."
-    if profile in ["cpu", "cpu-core"]:
+    if profile in ["cpu", "cpu-core", "cpu-assets"]:
         summary["allocation_valid"] = all(r["allocation_valid"] for r in summary["runs"])
         summary["cpu_allocation_limits"] = "Shared four versus the declared service/browser allocation on one existing runner. No extra capacity or independent hardware; this is not a representative device. The physical-core profile requires two complete, non-overlapping sibling groups; the earlier one/three profile shares a physical core. Shared memory/I/O, hypervisor scheduling and caches remain limits. Per-role CPU uses only identical PID/start-time pairs across two-second samples; exited/new processes are unmatched and their interval work is omitted, never inferred zero. Transient processes between samples are unseen. No CPU percentage establishes SQL execution time. Thread affinity is checked at sample times only; no kernel-wide isolation or ownership of unclassified runner work is claimed."
     for source in sorted(block_root.iterdir()):

@@ -13,6 +13,18 @@ summary_spec.loader.exec_module(summary)
 
 
 class Counters(unittest.TestCase):
+    def test_asset_receipt_finish_cache_and_absent_receipt_are_distinct(self):
+        data = {"samples": [{"asset_sample": "phone-0-2", "error": "timeout", "network": [
+            {"path": "/_next/static/chunks/a.js", "type": "Script"},
+            {"path": "/_next/static/chunks/b.js", "type": "Script", "failed_ms": 5},
+            {"path": "/_next/static/chunks/c.css", "type": "Stylesheet", "finish_ms": 4, "disk_cache": True}]}]}
+        identity = {"sample": "phone-0-2", "path": "/_next/static/chunks/a.js", "request_id": 1}
+        events = [{**identity, "event": event} for event in ["asset-received", "asset-finished"]]
+        result = summary.asset_summary(data, events)
+        self.assertEqual(result["counts"], {"browser_assets": 3, "server_received": 1, "server_finished": 1,
+            "browser_finished": 1, "browser_failed": 1, "server_finished_browser_unfinished": 1, "without_server_receipt": 2})
+        self.assertEqual(result["failed_samples"][0]["assets"][0]["server"], events)
+
     def test_whole_core_profile_rejects_partial_or_unexpected_topology(self):
         rows = [{"cpu": n, "thread_siblings_list": "2-3" if n < 4 else "4-5"} for n in [2, 3, 4, 5]]
         self.assertEqual(observer.whole_core_allocation([2, 3, 4, 5], rows), ([2, 3], [4, 5]))
@@ -30,6 +42,7 @@ class Counters(unittest.TestCase):
         self.assertEqual(observer.positions_for("candidate"), [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)])
         self.assertEqual(observer.positions_for("cpu"), [("shared-a1", "0", 10), ("partitioned-b1", "0", 10), ("partitioned-b2", "0", 10), ("shared-a2", "0", 10)])
         self.assertEqual(observer.positions_for("cpu-core"), observer.positions_for("cpu"))
+        self.assertEqual(observer.positions_for("cpu-assets"), observer.positions_for("cpu-core"))
         with self.assertRaises(AssertionError):
             observer.positions_for("unknown")
 

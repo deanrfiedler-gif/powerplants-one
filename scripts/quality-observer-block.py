@@ -154,7 +154,7 @@ def positions_for(profile):
         return [("off-a1", "0", 10), ("on-b1", "1", 10), ("on-b2", "1", 10), ("off-a2", "0", 10)]
     if profile == "candidate":
         return [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)]
-    if profile in ["cpu", "cpu-core"]:
+    if profile in ["cpu", "cpu-core", "cpu-assets"]:
         return [("shared-a1", "0", 10), ("partitioned-b1", "0", 10), ("partitioned-b2", "0", 10), ("shared-a2", "0", 10)]
     assert profile == "startup", "Unknown block profile"
     return [("single-a1", "0", 1), ("ten-b1", "0", 10), ("ten-b2", "0", 10), ("single-a2", "0", 1)]
@@ -170,7 +170,7 @@ def run(block, profile="observer"):
     assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == source
     working = Path.cwd()
     cpu_protocol = None
-    if profile in ["cpu", "cpu-core"]:
+    if profile in ["cpu", "cpu-core", "cpu-assets"]:
         assert os.environ.get("GITHUB_ACTIONS") == "true", "Only the disposable existing CI service may be constrained"
         assert shutil.which("taskset") and shutil.which("docker")
         available = sorted(os.sched_getaffinity(0))
@@ -185,7 +185,7 @@ def run(block, profile="observer"):
                         "database_pid": int(database_pid), "original_database_cpuset": original_cpus,
                         "topology": [{"cpu": cpu, **{key: (Path(f"/sys/devices/system/cpu/cpu{cpu}/topology") / key).read_text().strip()
                                       for key in ["core_id", "physical_package_id", "thread_siblings_list"]}} for cpu in available]}
-        if profile == "cpu-core":
+        if profile in ["cpu-core", "cpu-assets"]:
             core, remaining = whole_core_allocation(available, cpu_protocol["topology"])
             cpu_protocol.update({"service": core, "browsers": remaining, "layout": "physical-core"})
     control = Path(os.environ["PPO_CONTROL_ROOT"]).resolve() if profile == "candidate" else working
@@ -193,7 +193,7 @@ def run(block, profile="observer"):
         assert control != working and control.is_dir()
         # Same driver, dependencies and database/fixture contract in both sources.
         for name in ["package.json", "package-lock.json", "scripts/quality-customer-comparison.ts",
-                     "scripts/quality-comparison-profile.ts", "scripts/quality-performance-fixture.ts",
+                     "scripts/quality-comparison-profile.ts", "scripts/quality-asset-observer.ts", "scripts/quality-performance-fixture.ts",
                      "scripts/quality-core-response.ts", "verification-evidence/customer-loading-diagnosis/fixture.json"]:
             assert (control / name).read_bytes() == (working / name).read_bytes(), name
         subprocess.run(["git", "diff", "--exit-code", os.environ["PPO_CONTROL_SOURCE"], source, "--", "db"], check=True)
@@ -204,6 +204,7 @@ def run(block, profile="observer"):
         if cwd == control and profile == "candidate":
             assert compiled == os.environ["PPO_CONTROL_SOURCE"]
         attempts.append({"label": block + "-" + name, "diagnostics": mode, "browser_count": users,
+                         "asset_diagnostics": profile == "cpu-assets",
                          "compiled_source": compiled, "build_id": (cwd / ".next/BUILD_ID").read_text().strip()})
     root = Path("verification-evidence/pt27-observer") / block
     root.mkdir(parents=True, exist_ok=False)
@@ -225,6 +226,8 @@ def run(block, profile="observer"):
                "PPO_COMPILED_SOURCE": attempts[position - 1]["compiled_source"], "PPO_DRIVER_SOURCE": source,
                "PPO_COMPARISON_PROFILE": "startup-single" if users == 1 else "ten-user",
                "PPO_COMPARISON_BLOCK": block, "PPO_COMPARISON_POSITION": str(position)}
+        if profile == "cpu-assets":
+            env["PPO_ASSET_DIAGNOSTICS"] = "1"
         server_pid = None
         attempt_root = cwd / "verification-evidence/pt27-loading" / label
         metadata = attempt_root / "run.json"
@@ -253,7 +256,7 @@ def run(block, profile="observer"):
             env.update({"PPO_CPU_MODE": "partitioned" if partitioned else "shared",
                         "PPO_SERVER_CPUS": service_csv, "PPO_BROWSER_CPUS": client_csv,
                         "PPO_BROWSER_WRAPPER": str(wrapper), "PPO_BROWSER_CGROUP": str(browser_group)})
-            if profile == "cpu-core":
+            if profile in ["cpu-core", "cpu-assets"]:
                 env["PPO_CPU_LAYOUT"] = "physical-core"
             command = ["taskset", "--cpu-list", client_csv, *command]
         affinity_violations = 0

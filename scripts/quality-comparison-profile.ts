@@ -20,7 +20,7 @@ export function cpuAllocation(env: Record<string, string | undefined>) {
   assert.ok(["shared", "partitioned"].includes(env.PPO_CPU_MODE ?? ""));
   if (env.PPO_CPU_LAYOUT) {
     assert.equal(env.PPO_CPU_LAYOUT, "physical-core");
-    assert.match(env.PPO_COMPARISON_BLOCK ?? "", /^cpu-core-[a-z0-9-]+$/);
+    assert.match(env.PPO_COMPARISON_BLOCK ?? "", /^cpu-(core|assets)-[a-z0-9-]+$/);
   }
   const parse = (text: string | undefined) => {
     assert.match(text ?? "", /^\d+(,\d+)*$/);
