@@ -1,0 +1,443 @@
+[
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/run.json.gz",
+    "bytes": 1417,
+    "sha256": "510fbdd66485d7c55146f3a6da94a830008b72ac184cee5c5c834a230e7c5ffd",
+    "original_bytes": 3036,
+    "original_sha256": "385321de57753d5d1f4024f4e54bfb21d68da3b473d85f067036a14d630e3ab9"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/results.json.gz",
+    "bytes": 403719,
+    "sha256": "e69816b2566facb0d968a9499f114072643641d3bff511a26d64b84ef58343f4",
+    "original_bytes": 4710452,
+    "original_sha256": "20aaf2ce1162140490efe1d2b404401ffd2028325ff8e50bbd009bbc049cf889"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/customer-client-manifest.json.gz",
+    "bytes": 1585,
+    "sha256": "e7aee0f0f7d55cb9e6ed0485149a767b4f9e55a84e95138b1a83528853e8e0d8",
+    "original_bytes": 27287,
+    "original_sha256": "e7c90f28207e21dc1cd1d3c6c357fd428d9fb7008ebe58faec4d0b087ee722d0"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/customer-record-manifest.json.gz",
+    "bytes": 1609,
+    "sha256": "4aadffba2b38e34a5d62f9870cf695f3e6fc93bb07dff1202ac8f6def8f462fb",
+    "original_bytes": 27389,
+    "original_sha256": "5fbfc16ff69bb32feaafcd6d6f479b6838f91c684de6a176bc00b9ad17c21166"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/assets.jsonl.gz",
+    "bytes": 21458,
+    "sha256": "0cf4171ec76612e6cdd53c61d416f0ff7ed7422868f95e9ec85c20366ac02f1a",
+    "original_bytes": 310583,
+    "original_sha256": "598991e28a258950c20376ec4f7fb502801a9dce677aa940a2e7eb941eb3f701"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/asset-release.json.gz",
+    "bytes": 22,
+    "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+    "original_bytes": 2,
+    "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/fixture-after.json.gz",
+    "bytes": 613,
+    "sha256": "3e451a70402dd43e95ce2a52801c836559d6bcf6fbaad675ccf820c41f9b2feb",
+    "original_bytes": 1288,
+    "original_sha256": "c4ebb168c244005e0af80d8391dcd6def125931701e4fb367e098d517cf8d256"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/desktop-directory.png",
+    "bytes": 165206,
+    "sha256": "1fc34aa0ab1b54586f0617be28718e80079ed4001896e9c595bf2c669453f851",
+    "original_bytes": 165206,
+    "original_sha256": "1fc34aa0ab1b54586f0617be28718e80079ed4001896e9c595bf2c669453f851"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39",
+    "original_bytes": 117750,
+    "original_sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/phone-directory.png",
+    "bytes": 67424,
+    "sha256": "8df173022cf9a34d418a1dac0978b3d8adda3937776b2debcb1af1503c697c54",
+    "original_bytes": 67424,
+    "original_sha256": "8df173022cf9a34d418a1dac0978b3d8adda3937776b2debcb1af1503c697c54"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a1/phone-record.png",
+    "bytes": 54361,
+    "sha256": "9f3ac255d2cd68ada2d480c061b549ddf45907552eb542c3fd75ab997413c85f",
+    "original_bytes": 54361,
+    "original_sha256": "9f3ac255d2cd68ada2d480c061b549ddf45907552eb542c3fd75ab997413c85f"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/run.json.gz",
+    "bytes": 1420,
+    "sha256": "4c3872f4e089b663806ea62d106dcc402a3e1ab17a115e38ed218a4eaac1ee65",
+    "original_bytes": 3010,
+    "original_sha256": "9aa4277a237207eaa00ff219609a90a35f9eec05fe2730138820effa210151ca"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/results.json.gz",
+    "bytes": 59033,
+    "sha256": "aeb0d8095ca106f44dd91935e3eab54902310110cb510c7b969efb272fbe0209",
+    "original_bytes": 664787,
+    "original_sha256": "9a800180163219c0db98bb2dd3bead8248bced3c73430b397783a7063c38fa43"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/customer-client-manifest.json.gz",
+    "bytes": 1585,
+    "sha256": "e7aee0f0f7d55cb9e6ed0485149a767b4f9e55a84e95138b1a83528853e8e0d8",
+    "original_bytes": 27287,
+    "original_sha256": "e7c90f28207e21dc1cd1d3c6c357fd428d9fb7008ebe58faec4d0b087ee722d0"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/customer-record-manifest.json.gz",
+    "bytes": 1609,
+    "sha256": "4aadffba2b38e34a5d62f9870cf695f3e6fc93bb07dff1202ac8f6def8f462fb",
+    "original_bytes": 27389,
+    "original_sha256": "5fbfc16ff69bb32feaafcd6d6f479b6838f91c684de6a176bc00b9ad17c21166"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/assets.jsonl.gz",
+    "bytes": 10603,
+    "sha256": "107d8bd876b69f43830050c513a4c334104d406a83cce454e2a67fda6edb5364",
+    "original_bytes": 148509,
+    "original_sha256": "557dc4eab8e7612c6d76b1144a7cd4a5f975e770a1633658b0486ed02c4c987e"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/asset-release.json.gz",
+    "bytes": 4883,
+    "sha256": "58da401c68d408486271fb44c8aabcc091325517b7f77e628b5c8ac42704da14",
+    "original_bytes": 63389,
+    "original_sha256": "543c9c9e4ec2bbbe6c2ceef428ae1dbff1bffc8cb3519fd85d05cf85df5a4b39"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/asset-failure-desktop-0-2.json.gz",
+    "bytes": 1545,
+    "sha256": "c482acdeecd40af69b9f6241e656f00e795fcab4eb97048ddb597eb1e5349594",
+    "original_bytes": 9314,
+    "original_sha256": "4f9dc2e9938cbebe3feb1c1279f45d094e3106abca6084f83543b2fe5201d331"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b1/asset-release-desktop-0-2.json.gz",
+    "bytes": 4807,
+    "sha256": "cd4f082082f49f461868c6f4a9dab33a70a0dd6ffa6ade98ef81a0bd46b2badb",
+    "original_bytes": 59601,
+    "original_sha256": "7165e9610f27088ab65902d8159141d821dc6054c962daa9a3299f5c1b186bad"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/run.json.gz",
+    "bytes": 1420,
+    "sha256": "bc7b36708f6815aeae72e18c1841732cf695bc771014460474467b47ea5ad63c",
+    "original_bytes": 3010,
+    "original_sha256": "1091b4dd000795de96289c25fc17413a42d39d2bca63c6f97e450b50cde5f2ae"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/results.json.gz",
+    "bytes": 285013,
+    "sha256": "536c4014f1a85efc25d52e7f397acdd801b043549c8b033d1fdaf1de2e346a39",
+    "original_bytes": 3413772,
+    "original_sha256": "9464931f2a9877a6e2122d4ebb1b4d46a3ffb8ccf2b5115735b5653e2d0cd23c"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/customer-client-manifest.json.gz",
+    "bytes": 1585,
+    "sha256": "e7aee0f0f7d55cb9e6ed0485149a767b4f9e55a84e95138b1a83528853e8e0d8",
+    "original_bytes": 27287,
+    "original_sha256": "e7c90f28207e21dc1cd1d3c6c357fd428d9fb7008ebe58faec4d0b087ee722d0"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/customer-record-manifest.json.gz",
+    "bytes": 1609,
+    "sha256": "4aadffba2b38e34a5d62f9870cf695f3e6fc93bb07dff1202ac8f6def8f462fb",
+    "original_bytes": 27389,
+    "original_sha256": "5fbfc16ff69bb32feaafcd6d6f479b6838f91c684de6a176bc00b9ad17c21166"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/assets.jsonl.gz",
+    "bytes": 21405,
+    "sha256": "16e9cdae01e6c28d772d4d39bf62088eaaaa322b7a75d64c8ace94a0015c22a9",
+    "original_bytes": 303608,
+    "original_sha256": "b900380ff2b936c956874ff1fb48f2048f04fb903d956c4a3ef94bf9cde73528"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/asset-release.json.gz",
+    "bytes": 10596,
+    "sha256": "c68192ba38e5d963126b58170f003e2ab8a7ff1b37bffda9c993dd842f6fc32b",
+    "original_bytes": 141696,
+    "original_sha256": "3eee70f20f6c0e2da56a801597231a405223c4ea7ed2f18b35999674331d554d"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/desktop-directory.png",
+    "bytes": 165305,
+    "sha256": "9e107194052d1a92bb3d7db936eea745ed81e5ee14a2dda0d7739a85038532ea",
+    "original_bytes": 165305,
+    "original_sha256": "9e107194052d1a92bb3d7db936eea745ed81e5ee14a2dda0d7739a85038532ea"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39",
+    "original_bytes": 117750,
+    "original_sha256": "9fd2903e0371386d56d3e4739ed1fef1eaa9a4e3f751fe522f88bd8b4baaeb39"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/asset-failure-phone-0-0.json.gz",
+    "bytes": 1298,
+    "sha256": "629b322d5b896f79af54000c03b9259fc877d887c840e7e9d228be4f5b10627e",
+    "original_bytes": 7359,
+    "original_sha256": "e591ecc584a87a7cfd84f8efe322142a1325ea1905a4490f7e49837fd5479254"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/asset-failure-phone-0-8.json.gz",
+    "bytes": 1454,
+    "sha256": "e04eb0b9465d7852a48afcaf4b55cf1200226ca6c1813ca0cf7d030dee2591ee",
+    "original_bytes": 8735,
+    "original_sha256": "eb5f1d1296be9e69d3526a028ac0bbcb0f5094acf611ee2b47f077cfe1f9f662"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/asset-release-phone-0-0.json.gz",
+    "bytes": 5251,
+    "sha256": "7a15db37272a91f46d01da930232d0e49c1867f56985e36533878e426dc9515d",
+    "original_bytes": 63914,
+    "original_sha256": "d2a1b46f4302390ada9df4e773b39f5b9b5d28bdc9966a6e704e8100849e92fb"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-partitioned-b2/asset-release-phone-0-8.json.gz",
+    "bytes": 5592,
+    "sha256": "7f34eab999a16330bbfe26f23c7318f493da2ff27348bc8949c0972d1b3f45b3",
+    "original_bytes": 69312,
+    "original_sha256": "d726d422763232b93596b49eae8ae627c1d889ae2cce43296d1a20ade5dcf00c"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/run.json.gz",
+    "bytes": 1419,
+    "sha256": "e8b8b3106ce7a1866a77f97e93ff2b01368f1926a693fb6a4020cc6b10886a3d",
+    "original_bytes": 3037,
+    "original_sha256": "c98c029980edea5afe842659e43fc84e06b1a91264ae4c34d9dc7384950a658f"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/results.json.gz",
+    "bytes": 409442,
+    "sha256": "13789e03bef78ff2f623a69b0cb0d5461f0806b793118b7ef1fd6d4e3a0c33f3",
+    "original_bytes": 4700454,
+    "original_sha256": "f3e585a0ab9dc94d3ab33772661d8449e2af958695b258a29fd1d10d728aadcf"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/customer-client-manifest.json.gz",
+    "bytes": 1585,
+    "sha256": "e7aee0f0f7d55cb9e6ed0485149a767b4f9e55a84e95138b1a83528853e8e0d8",
+    "original_bytes": 27287,
+    "original_sha256": "e7c90f28207e21dc1cd1d3c6c357fd428d9fb7008ebe58faec4d0b087ee722d0"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/customer-record-manifest.json.gz",
+    "bytes": 1609,
+    "sha256": "4aadffba2b38e34a5d62f9870cf695f3e6fc93bb07dff1202ac8f6def8f462fb",
+    "original_bytes": 27389,
+    "original_sha256": "5fbfc16ff69bb32feaafcd6d6f479b6838f91c684de6a176bc00b9ad17c21166"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/assets.jsonl.gz",
+    "bytes": 21591,
+    "sha256": "965dd5614103cf2ecb23efc5237e63d9cd231781ba804664a8bf19d272493d3e",
+    "original_bytes": 311733,
+    "original_sha256": "c759b93beabfd1d889d58a8b8a82999bd5e6b92548230947636a898907cf213e"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/asset-release.json.gz",
+    "bytes": 22,
+    "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+    "original_bytes": 2,
+    "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/fixture-after.json.gz",
+    "bytes": 613,
+    "sha256": "3e451a70402dd43e95ce2a52801c836559d6bcf6fbaad675ccf820c41f9b2feb",
+    "original_bytes": 1288,
+    "original_sha256": "c4ebb168c244005e0af80d8391dcd6def125931701e4fb367e098d517cf8d256"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/desktop-directory.png",
+    "bytes": 165314,
+    "sha256": "5b2793bcfb6c84e5f491fdecf5bd760237bec5c3e738f915aa79a1b7eccd9014",
+    "original_bytes": 165314,
+    "original_sha256": "5b2793bcfb6c84e5f491fdecf5bd760237bec5c3e738f915aa79a1b7eccd9014"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/desktop-record.png",
+    "bytes": 117750,
+    "sha256": "5fe7b3cca8d78405460eb1fca09e7e024c160cfc22c863397eebdb2ccfedb602",
+    "original_bytes": 117750,
+    "original_sha256": "5fe7b3cca8d78405460eb1fca09e7e024c160cfc22c863397eebdb2ccfedb602"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/phone-directory.png",
+    "bytes": 67459,
+    "sha256": "c81daa5f9ef3f0ff9b7c523a3b731e0716072a78977ef7b9a61795f83dc4dbab",
+    "original_bytes": 67459,
+    "original_sha256": "c81daa5f9ef3f0ff9b7c523a3b731e0716072a78977ef7b9a61795f83dc4dbab"
+  },
+  {
+    "path": "cpu-assets-release-ci-38099530550-1-shared-a2/phone-record.png",
+    "bytes": 54366,
+    "sha256": "79f567ff3b89ab1b60271bd1c9139c577a1fe8b7e996bfbdcaa5648004d6ff00",
+    "original_bytes": 54366,
+    "original_sha256": "79f567ff3b89ab1b60271bd1c9139c577a1fe8b7e996bfbdcaa5648004d6ff00"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b1-browser-constraint.json.gz",
+    "bytes": 190,
+    "sha256": "74a12f36ec96d016050a0ae4b6dcf5b4b5a8d9531f8682bd342783b86f540145",
+    "original_bytes": 261,
+    "original_sha256": "151c9bf2bd9ce0381e0bd3f0b7e8b9a0f9edda20c0e7ac9883b2eb6cc68d36f5"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b1-browser-wrapper.py.gz",
+    "bytes": 617,
+    "sha256": "a0e5f5ef43a251beff86dcc88d02770526d8c8aed3b6b411b2128030c7c8c645",
+    "original_bytes": 1011,
+    "original_sha256": "4c8ba120f081902d356502a21421892d4c9065a087547b068b150a7be1324e30"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b1-resources.jsonl.gz",
+    "bytes": 29905,
+    "sha256": "b3684a10804f915e6c7dac8bfdca71e3899573296a17a513e7d53fd0439ebfec",
+    "original_bytes": 1529222,
+    "original_sha256": "d35261c1544a7ede3dd088adcd44d85b7cf2038e085c7fc64ab241be08c09acc"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b1.log.gz",
+    "bytes": 423,
+    "sha256": "cd0dbfe2352714c3f57f819b54957898cde73f274ef7f2ea59c02d5ad8b58d81",
+    "original_bytes": 567,
+    "original_sha256": "760bf4a75f4a3ac26ccc3bfe8457146fb225b2cfc6547ff1e84962103327a597"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b2-browser-constraint.json.gz",
+    "bytes": 190,
+    "sha256": "ebdbc7651730833dd1978dd8e4aad03b7e969980fa6000c34707857f19072cc4",
+    "original_bytes": 261,
+    "original_sha256": "cacfa726d83bbda008fe56d273bd1a276b5dc8c7f2d75e52f7fed516fa922031"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b2-browser-wrapper.py.gz",
+    "bytes": 617,
+    "sha256": "a0e5f5ef43a251beff86dcc88d02770526d8c8aed3b6b411b2128030c7c8c645",
+    "original_bytes": 1011,
+    "original_sha256": "4c8ba120f081902d356502a21421892d4c9065a087547b068b150a7be1324e30"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b2-resources.jsonl.gz",
+    "bytes": 43087,
+    "sha256": "9f16b001a4c0cdb25c4cae2076e2c5b40d6f81d19bea54ccebdfbe2cac02246a",
+    "original_bytes": 1866485,
+    "original_sha256": "3c38c4ad5f2b8b0068a9ad2f84cc25d0d6899e69c34381a560441188d440bd61"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-partitioned-b2.log.gz",
+    "bytes": 522,
+    "sha256": "04c3127cd24482419d95d611029124041839a45da6c393afb970b4da3dbd823f",
+    "original_bytes": 991,
+    "original_sha256": "32287a920c89f94194361afa754cf8138edc2040eda738de2daba882bff12e2e"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a1-browser-constraint.json.gz",
+    "bytes": 190,
+    "sha256": "8646df72ab9f592bfeb8c93edbb2cb6c2a4a00bc0156e7f6dda99722f8d04b40",
+    "original_bytes": 284,
+    "original_sha256": "a246a035fa5f706c3707f3729a0557415e9a6eafeba74551c736870bf751c621"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a1-browser-wrapper.py.gz",
+    "bytes": 617,
+    "sha256": "a0e5f5ef43a251beff86dcc88d02770526d8c8aed3b6b411b2128030c7c8c645",
+    "original_bytes": 1011,
+    "original_sha256": "4c8ba120f081902d356502a21421892d4c9065a087547b068b150a7be1324e30"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a1-resources.jsonl.gz",
+    "bytes": 20391,
+    "sha256": "b450e810e29ba8928ee2244ad93b4b1f23dc92888d84d859b5925acc14b573a6",
+    "original_bytes": 446045,
+    "original_sha256": "b799bb43f0a96e801f1bf15c39e85a651feb28231e17f4c34b42083af5b32e62"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a1.log.gz",
+    "bytes": 260,
+    "sha256": "80152208dcf770258e7e1b2cce56e8711ad46b05240f59377ea99c205a4e1663",
+    "original_bytes": 922,
+    "original_sha256": "d6397ff6c76beab2e501450f41c55a537cc0e7a8358021df6033349e07ab5c8f"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a2-browser-constraint.json.gz",
+    "bytes": 190,
+    "sha256": "70d432c583e0d770e067bc6c00462715c9fc27a2233ff95fe24bd74d1b85c4bd",
+    "original_bytes": 284,
+    "original_sha256": "3a8b134a3cc0b3cac11e8194399ea9802e46a099e1f57c1a813b90a64fd814a4"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a2-browser-wrapper.py.gz",
+    "bytes": 617,
+    "sha256": "a0e5f5ef43a251beff86dcc88d02770526d8c8aed3b6b411b2128030c7c8c645",
+    "original_bytes": 1011,
+    "original_sha256": "4c8ba120f081902d356502a21421892d4c9065a087547b068b150a7be1324e30"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a2-resources.jsonl.gz",
+    "bytes": 20790,
+    "sha256": "7d9e7034e8d6c7126742e1acf06280a34a4dfd525f05c5fa095b1a625691b698",
+    "original_bytes": 435810,
+    "original_sha256": "00aef66394f1021a47fcffebb1d3e7234a64e7dc6adbcb53e89991660fffe012"
+  },
+  {
+    "path": "external/cpu-assets-release-ci-38099530550-1-shared-a2.log.gz",
+    "bytes": 260,
+    "sha256": "a6789007b940ed1d8aa714239cb97d5224d14a7167621380228e03239cb5dc4a",
+    "original_bytes": 922,
+    "original_sha256": "5b112e4523e356eaf406b28b8f8cdd7bdabd0c9a8fc6436b938bf55e431cb11d"
+  },
+  {
+    "path": "external/protocol.json.gz",
+    "bytes": 1726,
+    "sha256": "2fc6e73d0297957baf2d7ff10f3ba696d5b87c0daa063d15731b7ab3b368514f",
+    "original_bytes": 5537,
+    "original_sha256": "ecbd4850634ed108ec2a935312713c3b5adab30fa908f33bddbb0750d1ebadc0"
+  },
+  {
+    "path": "support/review-diagnostic-redactions.json.gz",
+    "bytes": 349,
+    "sha256": "aa88aa6dafed0d4a8a11e72c80c589d52c56a216ea21fe20181d9acb9e3802da",
+    "original_bytes": 525,
+    "original_sha256": "b015424c8f2d6ea70071809f9586e4e98968d07575c03ee42b40244b03b9ae77"
+  },
+  {
+    "path": "support/customer-loading-diagnosis/fixture.json.gz",
+    "bytes": 1037,
+    "sha256": "c1ece3736b938c0874db5dec258ceb44a9112956bc5edc3e4dd84fe4254a5243",
+    "original_bytes": 2301,
+    "original_sha256": "136b6eed496ec294fd31f00f30f2d885bb4484ccae49f7e7c9f2f57bc104c10b"
+  },
+  {
+    "path": "support/pt27-loading/observer-compiled-smoke/gateway.jsonl.gz",
+    "bytes": 2055,
+    "sha256": "9c82b2c37c67bad728e1b5c8ff32bc53f69fcfb3225eba67c5aaad65d41c3f86",
+    "original_bytes": 21029,
+    "original_sha256": "30f99ece8f530d688ef4551c3f47a8b641838fe5767aabbd95a710a59c0488d5"
+  },
+  {
+    "path": "support/pt27-loading/observer-compiled-smoke/smoke.json.gz",
+    "bytes": 221,
+    "sha256": "8f06fb200a22a67e5f20191f849d5ddd2d5bd8ae5b9e7cd83c8d2bfde5dc2e59",
+    "original_bytes": 299,
+    "original_sha256": "21fd58940f2f25c785bb088d056dbd0e780e0c6b0a3a6c1a6fcd9ed556fd4249"
+  }
+]

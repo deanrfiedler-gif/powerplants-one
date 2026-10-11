@@ -34,3 +34,5 @@ All four starting seven-table fixture fingerprints match. A1 retains its matchin
 Keep PR #391 draft. The original 503 cause, three-second target, full four-view PT-27, owner/device/accessibility acceptance and deployment remain open. The separately retained [planner CI repair](../planner-ci-repair/README.md) changes response selection in a test, not planner behaviour.
 
 The recorded-source `16db9f3` summary reproduces byte-for-byte from the original download. All 46 core artifact manifest entries also reproduce exactly; four support records complete the 50-file integrity manifest.
+
+The subsequently predeclared [post-failure release diagnostic](../asset-release/README.md) captures three additional original timeouts and locates a browser emulation-path dependency. It does not alter or reclassify the nine original failures here.
