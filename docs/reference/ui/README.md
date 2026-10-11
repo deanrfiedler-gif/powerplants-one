@@ -105,6 +105,8 @@ These are the latest uploaded shared visual references. Their presence does not 
 
 **Reviews & approvals design, 11 October 2026:** Dean accepted a Figma design for the reserved Estimating slot `estimate-reviews`. The [decision](../../decisions/estimate-reviews-design.md) records it, and the [retained captures](estimating/reviews-approvals-design-r01/README.md) are seven icon-free PNGs with hashes, not HTML. The page is not built. Listing it here does not repeat the dated inventory audit above.
 
+**Quotations design, 11 October 2026:** Dean accepted a Figma design for the existing Quotations register (`/estimating/quotes`), on the Reviews & approvals pattern. The [decision](../../decisions/quotations-design.md) records it, and the [retained captures](estimating/quotations-design-r01/README.md) are five icon-free PNGs with hashes. The app still shows the earlier list. Listing it here does not repeat the dated inventory audit above.
+
 **17 September addition:** ES-04 Estimate Review & Pricing Exceptions r01 adds a dedicated internal review, correction and estimate-approval boundary between ES-03 and ES-05. Standalone design; acceptance and application integration remain separate.
 
 
@@ -112,6 +114,7 @@ These are the latest uploaded shared visual references. Their presence does not 
 |---|---|---|---|
 | Estimate review & pricing exceptions — ES-04 | [r01](estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html) · [Detailed report](estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-Report-r01.md) | Proposed six-view design; owner acceptance and application integration separate | Exact scope/cost review, pricing exceptions, retained corrections, independent review, separate estimate approval and prepared ES-05 handover. [Decision](../../decisions/estimate-review-pricing-exceptions-design.md) · [Verification](../../testing/evidence/estimate-review-r01/README.md). |
 | Reviews & approvals — `estimate-reviews` | [Design r01 captures](estimating/reviews-approvals-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/estimate-reviews-design.md). Not built; no route yet |
+| Quotations — `/estimating/quotes` | [Design r01 captures](estimating/quotations-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 11 October 2026 | [Decision](../../decisions/quotations-design.md). Not built; the route shows the earlier list |
 | Sales → Estimating intake | [r02 preview](estimating/sales-estimating-intake-preview-r02.html) | Proposed design | [r02 change record](sales/sales-estimating-intake-change-record-r02.md). Original field-bank/design reference is retained below. |
 | Wizard data review | [r02](estimation-wizard/PPO-Wizard-Data-Review-r02.html) | Latest uploaded design; acceptance not established by this audit | Distinct from the advanced estimating-container study and bounded guided pilot. |
 | Quotation module | [r03](quoting/ppo-quotation-module-r03.html) | Latest uploaded design; acceptance not established by this audit | [r03 audit](quoting/ppo-quotation-audit-r03.md); separate from the legacy Quotation Builder concept below. |
