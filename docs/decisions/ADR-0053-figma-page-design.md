@@ -22,7 +22,7 @@ Claude asked Dean to compare the two tools. His answers:
 Claude then asked three follow-on questions, each with a recommended option. Dean chose the recommended option each time:
 
 - **Claude Design:** "Retire for new work". New pages and option comparisons are drawn in Figma. Existing boards, the design system artifact and the UI refinement canvas stay as historical records, and are no longer resynced.
-- **Working file:** "Keep the trial file". It is renamed "PPO — Design" and keeps everything the trial built.
+- **Working file:** "Keep the trial file". It keeps everything the trial built. Dean renamed it "PPO - Design" the same day.
 - **Evidence:** "Icon-free capture + version". Decision records cite the Figma file, the node IDs and a named Figma version. The repository keeps a capture, with its hash, in which the icons are replaced by plain placeholders.
 
 Accepted: Dean designs the Powerplants One pages himself in Figma. Git stays the authority. Claude Design is retired for new work.
@@ -34,7 +34,7 @@ Accepted: Dean designs the Powerplants One pages himself in Figma. Git stays the
   - ADR-0051 said: "Claude can read Figma frames through a connector, but Dean would do the drawing." In the trial, Claude drew the whole file through the Figma connector's write tool (`use_figma`, which runs the Figma Plugin API). That covered variables, text styles, components with variants, the shell, three templates, and the comparison page with its prototype interactions. Dean learnt the editor alongside, and built a practice component himself.
   - ADR-0051 said Figma "needs a second, hand-maintained copy of the tokens, shell and components, which drifts from the CSS". That is still true. The trial took its colour variables from `src/app/styles/my-work.css`, giving each one its CSS name as its code syntax. It built the shell from `main@ed3ccb8` and from measurements of the running app. Nothing keeps the two in step automatically.
   - ADR-0051 listed licence cost and learning time. Dean has taken on both: a paid seat, and learning the editor with step-by-step guidance.
-- **What the trial built**, in the file now named "PPO — Design":
+- **What the trial built**, in the file now named "PPO - Design":
   - Variables: "PPO colour" (from `my-work.css`), "PPO layout" (radii, spacing and shell sizes) and "Prototype" (the menu toggle). The `PPO/*` text styles use Roboto.
   - Components: Tag, Button, Menu item, Rail item, Attention item, Activity row, Side panel, and 49 icons. Each icon is named `Icon/<name>`, matching `src/components/font-awesome-icons.ts`.
   - The Shell page: the logo, the rail (collapsed and expanded), the top bar, the menu, the More link and panel, the phone header, tabs, the tab bar and quick add. It also has three templates: desktop, desktop without the menu, and phone.
@@ -60,7 +60,7 @@ Option B.
 
 These rules come from Dean's answers:
 
-1. **Figma is the drawing surface.** Draw the following in the Figma file "PPO — Design": new pages, structural layout choices, side-by-side comparisons of options, and visual refinements that Dean wants to make by hand. Claude draws through the Figma connector, explaining each step so that Dean can make changes himself.
+1. **Figma is the drawing surface.** Draw the following in the Figma file "PPO - Design": new pages, structural layout choices, side-by-side comparisons of options, and visual refinements that Dean wants to make by hand. Claude draws through the Figma connector, explaining each step so that Dean can make changes himself.
 2. **Claude Design is retired for new work.** No new boards are drawn, and the design system artifact is not resynced again. Existing boards, the design system artifact and the UI refinement canvas stay as they are, linked from the decision records that relied on them. Those records are not rewritten.
 3. **Evidence is a named version and an icon-free capture.** Before a Figma design is relied on, save a named version in the file's version history. The decision record cites the file name, the frame's node IDs and that version. Retain a capture of the frame under `docs/reference/ui/` with its hash, as for boards. In the capture, every icon is replaced by the `Icon/placeholder` shape, so no Pro artwork reaches the repository. The file's link is never put in this repository: if its sharing were ever opened, the link would publish the artwork.
 
