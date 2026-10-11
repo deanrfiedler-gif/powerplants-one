@@ -55,8 +55,23 @@ export async function startRelay(port: number, targetPort: number) {
 }
 
 const tc = (...args: string[]) => execFileSync("sudo", ["-n", "tc", ...args], { encoding: "utf8" });
-const snapshot = () => ({ qdisc: JSON.parse(tc("-j", "-s", "qdisc", "show", "dev", "lo")),
-  classes: JSON.parse(tc("-j", "-s", "class", "show", "dev", "lo")), filters: JSON.parse(tc("-j", "-s", "filter", "show", "dev", "lo", "parent", "7abc:")) });
+// iproute2 6.1 class output ignores -j. Retain its text and extract only explicit counters.
+export function packetClassCounters(raw: string) {
+  const rows = raw.split(/(?=^class )/m).filter(s => s.trim());
+  const counters = rows.map(row => {
+    const id = row.match(/^class htb (7abc:[0-9a-f]+)\b/);
+    const sent = row.match(/^\s*Sent (\d+) bytes (\d+) pkt \(dropped (\d+),/m);
+    assert.ok(id && sent, "Unknown tc class/statistics format; refuse inferred counters");
+    return { handle: id[1], bytes: Number(sent[1]), packets: Number(sent[2]), dropped: Number(sent[3]) };
+  });
+  assert.equal(new Set(counters.map(c => c.handle)).size, counters.length, "Duplicate class statistics");
+  return counters;
+}
+const snapshot = () => {
+  const classText = tc("-s", "class", "show", "dev", "lo");
+  return { qdisc: JSON.parse(tc("-j", "-s", "qdisc", "show", "dev", "lo")), classes: packetClassCounters(classText),
+    class_text: classText, filter_text: tc("-s", "filter", "show", "dev", "lo", "parent", "7abc:") };
+};
 const classId = (user: number, direction: number) => `7abc:${(0x100 + user * 2 + direction).toString(16)}`;
 
 export function packetCommands(users: number): string[][] {
