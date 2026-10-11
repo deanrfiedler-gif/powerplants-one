@@ -1,0 +1,545 @@
+✔ AD01 requests: populated upgrade retains all earlier rows and adds exactly three duties (24043.015ms)
+▶ AD01 requests: independent review, recovery, isolation and unchanged effective grants
+  ✔ ordinary/read-only identities cannot submit or decide; hosted mode is refused (16.8208ms)
+  ✔ context lists only local subjects, exact scope keys and eligible independent reviewer (28.2847ms)
+  ✔ refuses self change, self review, unknown/admin/hosted capabilities, malformed or mismatched scope, dates and reasons (75.919ms)
+  ✔ inactive and hosted subjects, inactive/expired/future reviewer grants are refused (83.3272ms)
+  ✔ an expired existing grant still prevents a duplicate proposal (11.0189ms)
+  ✔ submission is durable and exact replay returns one original receipt; changed content conflicts (60.5546ms)
+  ✔ authority is rechecked before replay, receipt read and workspace inspection (39.9278ms)
+  ✔ only the named reviewer decides; stale/concurrent decisions cannot replace the first (152.5477ms)
+  ✔ approval revalidates changed eligibility while Return retains an invalid proposal (54.2394ms)
+  ✔ site and Workspace proposals retain exact scope; approved requests never become grants (68.7428ms)
+  ✔ approval refuses a grant added after submission and a start that has passed (2173.3508ms)
+  ✔ database guards retain proposal and exact immutable audit evidence (206.3134ms)
+✔ AD01 requests: independent review, recovery, isolation and unchanged effective grants (3016.3635ms)
+✔ FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers (63082.694ms)
+✔ FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants (44473.9545ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (90886.1046ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (88038.7333ms)
+✔ populated 0050 upgrade preserves every old row/hash, registers 0051–0079 and exact authority/instrument additions (72390.2229ms)
+✔ fresh installation applies only registered files through 0079, retains reserved gaps and repeats without changes (39844.7134ms)
+✖ ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output (57188.7246ms)
+✔ ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants (36244.2431ms)
+✖ ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes (35775.7966ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=missing
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-39
+Demo upgrade stage: apply-migration-40
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-migration-42
+Demo upgrade stage: apply-migration-43
+Demo upgrade stage: apply-migration-44
+Demo upgrade stage: apply-migration-45
+Demo upgrade stage: apply-migration-46
+Demo upgrade stage: apply-migration-47
+Demo upgrade stage: apply-migration-48
+Demo upgrade stage: apply-migration-49
+Demo upgrade stage: apply-migration-50
+Demo upgrade stage: apply-migration-51
+Demo upgrade stage: apply-migration-52
+Demo upgrade stage: apply-migration-53
+Demo upgrade stage: apply-migration-54
+Demo upgrade stage: apply-migration-55
+Demo upgrade stage: apply-migration-56
+Demo upgrade stage: apply-migration-57
+Demo upgrade stage: apply-migration-58
+Demo upgrade stage: apply-migration-59
+Demo upgrade stage: apply-migration-60
+Demo upgrade stage: apply-migration-61
+Demo upgrade stage: apply-migration-62
+Demo upgrade stage: apply-migration-63
+Demo upgrade stage: apply-migration-64
+Demo upgrade stage: apply-migration-65
+Demo upgrade stage: apply-migration-66
+Demo upgrade stage: apply-migration-67
+Demo upgrade stage: apply-migration-68
+Demo upgrade stage: apply-migration-69
+Demo upgrade stage: apply-migration-70
+Demo upgrade stage: apply-migration-71
+Demo upgrade stage: apply-migration-72
+Demo upgrade stage: apply-migration-73
+Demo upgrade stage: apply-migration-74
+Demo upgrade stage: apply-migration-75
+Demo upgrade stage: apply-migration-76
+Demo upgrade stage: apply-migration-77
+Demo upgrade stage: apply-migration-78
+Demo upgrade stage: apply-migration-79
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-40
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-seed-44
+Demo upgrade stage: apply-seed-47
+Demo upgrade stage: apply-seed-48
+Demo upgrade stage: apply-seed-49
+Demo upgrade stage: apply-seed-51
+Demo upgrade stage: apply-seed-52
+Demo upgrade stage: apply-seed-53
+Demo upgrade stage: apply-seed-54
+Demo upgrade stage: apply-seed-55
+Demo upgrade stage: apply-seed-56
+Demo upgrade stage: apply-seed-58
+Demo upgrade stage: apply-seed-59
+Demo upgrade stage: apply-seed-78
+Demo upgrade stage: apply-seed-79
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent (16151.8563ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-39
+Demo upgrade stage: apply-migration-40
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-migration-42
+Demo upgrade stage: apply-migration-43
+Demo upgrade stage: apply-migration-44
+Demo upgrade stage: apply-migration-45
+Demo upgrade stage: apply-migration-46
+Demo upgrade stage: apply-migration-47
+Demo upgrade stage: apply-migration-48
+Demo upgrade stage: apply-migration-49
+Demo upgrade stage: apply-migration-50
+Demo upgrade stage: apply-migration-51
+Demo upgrade stage: apply-migration-52
+Demo upgrade stage: apply-migration-53
+Demo upgrade stage: apply-migration-54
+Demo upgrade stage: apply-migration-55
+Demo upgrade stage: apply-migration-56
+Demo upgrade stage: apply-migration-57
+Demo upgrade stage: apply-migration-58
+Demo upgrade stage: apply-migration-59
+Demo upgrade stage: apply-migration-60
+Demo upgrade stage: apply-migration-61
+Demo upgrade stage: apply-migration-62
+Demo upgrade stage: apply-migration-63
+Demo upgrade stage: apply-migration-64
+Demo upgrade stage: apply-migration-65
+Demo upgrade stage: apply-migration-66
+Demo upgrade stage: apply-migration-67
+Demo upgrade stage: apply-migration-68
+Demo upgrade stage: apply-migration-69
+Demo upgrade stage: apply-migration-70
+Demo upgrade stage: apply-migration-71
+Demo upgrade stage: apply-migration-72
+Demo upgrade stage: apply-migration-73
+Demo upgrade stage: apply-migration-74
+Demo upgrade stage: apply-migration-75
+Demo upgrade stage: apply-migration-76
+Demo upgrade stage: apply-migration-77
+Demo upgrade stage: apply-migration-78
+Demo upgrade stage: apply-migration-79
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-40
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-seed-44
+Demo upgrade stage: apply-seed-47
+Demo upgrade stage: apply-seed-48
+Demo upgrade stage: apply-seed-49
+Demo upgrade stage: apply-seed-51
+Demo upgrade stage: apply-seed-52
+Demo upgrade stage: apply-seed-53
+Demo upgrade stage: apply-seed-54
+Demo upgrade stage: apply-seed-55
+Demo upgrade stage: apply-seed-56
+Demo upgrade stage: apply-seed-58
+Demo upgrade stage: apply-seed-59
+Demo upgrade stage: apply-seed-78
+Demo upgrade stage: apply-seed-79
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ an already-current demo requires explicit upgrade for missing booking grants (17692.8232ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-39
+Demo upgrade stage: apply-migration-40
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-migration-42
+Demo upgrade stage: apply-migration-43
+Demo upgrade stage: apply-migration-44
+Demo upgrade stage: apply-migration-45
+Demo upgrade stage: apply-migration-46
+Demo upgrade stage: apply-migration-47
+Demo upgrade stage: apply-migration-48
+Demo upgrade stage: apply-migration-49
+Demo upgrade stage: apply-migration-50
+Demo upgrade stage: apply-migration-51
+Demo upgrade stage: apply-migration-52
+Demo upgrade stage: apply-migration-53
+Demo upgrade stage: apply-migration-54
+Demo upgrade stage: apply-migration-55
+Demo upgrade stage: apply-migration-56
+Demo upgrade stage: apply-migration-57
+Demo upgrade stage: apply-migration-58
+Demo upgrade stage: apply-migration-59
+Demo upgrade stage: apply-migration-60
+Demo upgrade stage: apply-migration-61
+Demo upgrade stage: apply-migration-62
+Demo upgrade stage: apply-migration-63
+Demo upgrade stage: apply-migration-64
+Demo upgrade stage: apply-migration-65
+Demo upgrade stage: apply-migration-66
+Demo upgrade stage: apply-migration-67
+Demo upgrade stage: apply-migration-68
+Demo upgrade stage: apply-migration-69
+Demo upgrade stage: apply-migration-70
+Demo upgrade stage: apply-migration-71
+Demo upgrade stage: apply-migration-72
+Demo upgrade stage: apply-migration-73
+Demo upgrade stage: apply-migration-74
+Demo upgrade stage: apply-migration-75
+Demo upgrade stage: apply-migration-76
+Demo upgrade stage: apply-migration-77
+Demo upgrade stage: apply-migration-78
+Demo upgrade stage: apply-migration-79
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-40
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-seed-44
+Demo upgrade stage: apply-seed-47
+Demo upgrade stage: apply-seed-48
+Demo upgrade stage: apply-seed-49
+Demo upgrade stage: apply-seed-51
+Demo upgrade stage: apply-seed-52
+Demo upgrade stage: apply-seed-53
+Demo upgrade stage: apply-seed-54
+Demo upgrade stage: apply-seed-55
+Demo upgrade stage: apply-seed-56
+Demo upgrade stage: apply-seed-58
+Demo upgrade stage: apply-seed-59
+Demo upgrade stage: apply-seed-78
+Demo upgrade stage: apply-seed-79
+Demo upgrade stage: apply-hosted-migration-2
+Demo upgrade stage: apply-hosted-migration-3
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums (31137.4767ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 24
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 659920.883
+
+✖ failing tests:
+
+test at tests\database\quotation-conversion.test.ts:1:14479
+✖ ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output (57188.7246ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        capability: 'admin.access.read',
+        company_id: null,
+        id: 'ad010078-0000-4000-8000-000000000001',
+  ...
+      },
+  +   {
+  +     capability: 'admin.access.propose',
+  +     company_id: null,
+  +     id: 'ad010079-0000-4000-8000-000000000001',
+  +     scope_id: '10000000-0000-4000-8000-000000000001',
+  +     scope_type: 'Workspace',
+  +     site_id: null,
+  +     user_id: '30000000-0000-4000-8000-000000000003',
+  +     valid_from: '2026-01-01T10:00:00+10:00',
+  +     valid_to: null,
+  +     workspace_id: '10000000-0000-4000-8000-000000000001'
+  +   },
+  +   {
+  +     capability: 'admin.access.read',
+  +     company_id: null,
+  +     id: 'ad010079-0000-4000-8000-000000000002',
+  +     scope_id: '10000000-0000-4000-8000-000000000001',
+  +     scope_type: 'Workspace',
+  +     site_id: null,
+  +     user_id: 'a0540000-0000-4000-8000-000000000001',
+  +     valid_from: '2026-01-01T10:00:00+10:00',
+  +     valid_to: null,
+  +     workspace_id: '10000000-0000-4000-8000-000000000001'
+  +   },
+  +   {
+  +     capability: 'admin.access.approve',
+  +     company_id: null,
+  +     id: 'ad010079-0000-4000-8000-000000000003',
+  +     scope_id: '10000000-0000-4000-8000-000000000001',
+  +     scope_type: 'Workspace',
+  +     site_id: null,
+  +     user_id: 'a0540000-0000-4000-8000-000000000001',
+  +     valid_from: '2026-01-01T10:00:00+10:00',
+  +     valid_to: null,
+  +     workspace_id: '10000000-0000-4000-8000-000000000001'
+  +   }
+    ]
+
+      at assertAccessInspectionSnapshot (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\helpers\access-inspection-upgrade.ts:30:10)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\quotation-conversion.test.ts:501:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { id: 'ad010078-0000-4000-8000-000000000001', site_id: null, user_id: '30000000-0000-4000-8000-000000000003', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.read', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' }, { id: 'ad010079-0000-4000-8000-000000000001', site_id: null, user_id: '30000000-0000-4000-8000-000000000003', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.propose', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' }, { id: 'ad010079-0000-4000-8000-000000000002', site_id: null, user_id: 'a0540000-0000-4000-8000-000000000001', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.read', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' }, { id: 'ad010079-0000-4000-8000-000000000003', site_id: null, user_id: 'a0540000-0000-4000-8000-000000000001', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.approve', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' } ],
+    expected: [ { id: 'ad010078-0000-4000-8000-000000000001', site_id: null, user_id: '30000000-0000-4000-8000-000000000003', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.read', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\quotation-response.test.ts:3:788
+✖ ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes (35775.7966ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        capability: 'admin.access.read',
+        company_id: null,
+        id: 'ad010078-0000-4000-8000-000000000001',
+  ...
+      },
+  +   {
+  +     capability: 'admin.access.propose',
+  +     company_id: null,
+  +     id: 'ad010079-0000-4000-8000-000000000001',
+  +     scope_id: '10000000-0000-4000-8000-000000000001',
+  +     scope_type: 'Workspace',
+  +     site_id: null,
+  +     user_id: '30000000-0000-4000-8000-000000000003',
+  +     valid_from: '2026-01-01T10:00:00+10:00',
+  +     valid_to: null,
+  +     workspace_id: '10000000-0000-4000-8000-000000000001'
+  +   },
+  +   {
+  +     capability: 'admin.access.read',
+  +     company_id: null,
+  +     id: 'ad010079-0000-4000-8000-000000000002',
+  +     scope_id: '10000000-0000-4000-8000-000000000001',
+  +     scope_type: 'Workspace',
+  +     site_id: null,
+  +     user_id: 'a0540000-0000-4000-8000-000000000001',
+  +     valid_from: '2026-01-01T10:00:00+10:00',
+  +     valid_to: null,
+  +     workspace_id: '10000000-0000-4000-8000-000000000001'
+  +   },
+  +   {
+  +     capability: 'admin.access.approve',
+  +     company_id: null,
+  +     id: 'ad010079-0000-4000-8000-000000000003',
+  +     scope_id: '10000000-0000-4000-8000-000000000001',
+  +     scope_type: 'Workspace',
+  +     site_id: null,
+  +     user_id: 'a0540000-0000-4000-8000-000000000001',
+  +     valid_from: '2026-01-01T10:00:00+10:00',
+  +     valid_to: null,
+  +     workspace_id: '10000000-0000-4000-8000-000000000001'
+  +   }
+    ]
+
+      at assertAccessInspectionSnapshot (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\helpers\access-inspection-upgrade.ts:30:10)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-access-review\powerplants-one\tests\database\quotation-response.test.ts:438:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { id: 'ad010078-0000-4000-8000-000000000001', site_id: null, user_id: '30000000-0000-4000-8000-000000000003', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.read', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' }, { id: 'ad010079-0000-4000-8000-000000000001', site_id: null, user_id: '30000000-0000-4000-8000-000000000003', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.propose', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' }, { id: 'ad010079-0000-4000-8000-000000000002', site_id: null, user_id: 'a0540000-0000-4000-8000-000000000001', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.read', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' }, { id: 'ad010079-0000-4000-8000-000000000003', site_id: null, user_id: 'a0540000-0000-4000-8000-000000000001', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.approve', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' } ],
+    expected: [ { id: 'ad010078-0000-4000-8000-000000000001', site_id: null, user_id: '30000000-0000-4000-8000-000000000003', scope_id: '10000000-0000-4000-8000-000000000001', valid_to: null, capability: 'admin.access.read', company_id: null, scope_type: 'Workspace', valid_from: '2026-01-01T10:00:00+10:00', workspace_id: '10000000-0000-4000-8000-000000000001' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

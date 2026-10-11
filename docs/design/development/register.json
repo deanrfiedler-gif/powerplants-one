@@ -13128,7 +13128,11 @@
       "guide_key": "guide.route-admin-access-requests-id",
       "design_path": "docs/design/development/pages/route-admin-access-requests-id.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-requests/native-1440-approved.png",
+        "docs/testing/evidence/access-requests/native-390-approved.png",
+        "docs/testing/evidence/access-requests/native-320-approved.png"
+      ],
       "dependencies": [
         "docs/decisions/access-change-requests.md",
         "src/shared/ui/use-recoverable-command.ts",
@@ -13138,7 +13142,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; execution and limits in access-requests evidence ledger.",
+      "functional_status": "14 request database checks, corrected affected upgrades, 33 compiled browser checks and 18 source/navigation checks pass; see access-request evidence. CI and owner review separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13166,7 +13170,11 @@
       "guide_key": "guide.route-admin-access-requests",
       "design_path": "docs/design/development/pages/route-admin-access-requests.md",
       "html_path": "docs/design/access-review/access-review.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/access-requests/native-1440-form.png",
+        "docs/testing/evidence/access-requests/native-390-form.png",
+        "docs/testing/evidence/access-requests/native-320-form.png"
+      ],
       "dependencies": [
         "docs/decisions/access-change-requests.md",
         "src/shared/ui/use-recoverable-command.ts",
@@ -13176,7 +13184,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; execution and limits in access-requests evidence ledger.",
+      "functional_status": "14 request database checks, corrected affected upgrades, 33 compiled browser checks and 18 source/navigation checks pass; see access-request evidence. CI and owner review separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

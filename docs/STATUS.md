@@ -6,7 +6,7 @@
 
 ## AD-01 access requests and independent decisions — 11 October 2026
 
-Dean's next-task instruction continues from PR #414 on `codex/ad01-access-requests`. The [decision](decisions/access-change-requests.md) adds local synthetic single-add proposals, named independent review, durable audit evidence and unchanged-operation recovery. Migration/seed 0079 adds three explicit duties to two existing local identities; no new user or hosted duty. Approval never changes grants. [Execution evidence](testing/evidence/access-requests/README.md) records checks and limits; apply, teams, campaigns and owner acceptance remain open.
+Dean's next-task instruction continues from PR #414 on `codex/ad01-access-requests`. The [decision](decisions/access-change-requests.md) adds local synthetic single-add proposals, named independent review, durable audit evidence and unchanged-operation recovery. Migration/seed 0079 adds three explicit duties to two existing local identities; no new user or hosted duty. Approval never changes grants. [Execution evidence](testing/evidence/access-requests/README.md) records checks and limits; apply, teams, campaigns and owner acceptance remain open. Build/types, 14 request database checks, corrected affected upgrades, 33 compiled desktop/phone browser checks and 18 source/navigation checks pass. The evidence retains initial failures and 12 source-bound captures; no owner acceptance or deployment is inferred.
 
 ## AD-01 proposed-role comparison — 11 October 2026
 
