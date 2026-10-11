@@ -6,7 +6,7 @@
 
 ## Current PR completion — 11 October 2026
 
-Dean authorised fixing failed checks and merging ready implementation PRs, and confirmed that unfinished backup PRs #404–#408 stay separate. The `pr-fixes-20261011` session owns this integration write. PR #400 joins the shared register with the local-host opt-in (#401), Customers startup/diagnostics (#391), asset evidence (#402) and network-calibration experiment (#403), preserving their commit ancestry. The STATUS conflict retains both integration and investigation records. Final combined-head CI must pass before merge; no merge or deployment is claimed here.
+Dean authorised fixing failed checks and merging ready implementation PRs, and confirmed that unfinished backup PRs #404–#408 stay separate. The `pr-fixes-20261011` session owns this integration write. PR #400 joins the shared register with the local-host opt-in (#401), Customers startup/diagnostics (#391), asset evidence (#402), network-calibration experiment (#403) and its subsequent CI counter-parser repair (#409), preserving their commit ancestry. The STATUS conflict retains both integration and investigation records. Final combined-head CI must pass before merge; no merge or deployment is claimed here.
 
 The SC-07 planner test repair selects the intended responsive date window through the identity remount. Exact query, current-identity, denial and visible-state assertions remain. This integration authorisation supersedes the earlier draft-only disposition for these code contributions; the three-second performance target, original 503 attribution, full PT-27 and owner/device acceptance remain open. The checkpoints below retain their original evidence boundaries.
 
