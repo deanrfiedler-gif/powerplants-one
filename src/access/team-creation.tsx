@@ -24,9 +24,11 @@ type Context = {
 const base = "admin/access/teams";
 const target = "/admin/access/roles#saved-local-teams";
 const accepts = (entry: JournalEntry) =>
-  entry.path === base && entry.target === target &&
+  entry.path === base &&
+  entry.target === target &&
   (entry.phase === "accepted" ||
-    (entry.body.team_id === entry.record_id && entry.body.expected_version === 0));
+    (entry.body.team_id === entry.record_id &&
+      entry.body.expected_version === 0));
 const transport = <T,>(path: string, body?: unknown) =>
   api<T>(path.startsWith("operations/") ? `${base}/${path}` : path, body);
 const hidden = (error: unknown) =>
@@ -88,8 +90,10 @@ function TeamForm({
     scope: context.actor,
     accepts,
     transport,
-    acceptsReceipt: (entry, receipt) => receipt.record_id === entry.record_id &&
-      receipt.record_version === 1 && receipt.state === "Recorded",
+    acceptsReceipt: (entry, receipt) =>
+      receipt.record_id === entry.record_id &&
+      receipt.record_version === 1 &&
+      receipt.state === "Recorded",
   });
   const [name, setName] = useState(""),
     [purpose, setPurpose] = useState(""),

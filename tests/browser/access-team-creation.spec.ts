@@ -86,7 +86,9 @@ test("AD01 native team creation: explicit roster, exact history and unchanged gr
   await form(page).getByRole("button", { name: "Inspect saved team" }).click();
   const card = page.getByRole("article", { name: `${name} saved team` });
   await expect(card).toBeFocused();
-  await expect(page.getByText("No local teams have been recorded.", { exact: true })).toHaveCount(0);
+  await expect(
+    page.getByText("No local teams have been recorded.", { exact: true }),
+  ).toHaveCount(0);
   await expect(
     card.getByRole("heading", { name: "Initial roster" }),
   ).toBeVisible();

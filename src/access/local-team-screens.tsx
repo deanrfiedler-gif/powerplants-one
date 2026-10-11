@@ -81,8 +81,14 @@ export function SavedLocalTeams({
     if (denied) onDenied(error);
   }, [denied, error, onDenied]);
   useEffect(() => {
-    if (receiptInspection.current && selected && detail.data &&
-        !detail.loading && !list.loading && !error) {
+    if (
+      receiptInspection.current &&
+      selected &&
+      detail.data &&
+      !detail.loading &&
+      !list.loading &&
+      !error
+    ) {
       document.getElementById(`local-team-${selected}`)?.focus();
       receiptInspection.current = false;
     }
