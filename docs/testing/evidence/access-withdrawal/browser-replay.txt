@@ -1,0 +1,64 @@
+
+Running 3 tests using 1 worker
+
+(node:26336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (27.1s)
+(node:3552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (36.4s)
+(node:41272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [narrow] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal (18.6s)
+
+
+  1) [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('main .status-chip')
+    Expected: "Submitted"
+    Error: strict mode violation: locator('main .status-chip') resolved to 50 elements:
+        1) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(2)
+        2) <span class="status-chip tone-neutral">Submitted</span> aka getByText('Submitted').nth(2)
+        3) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(3)
+        4) <span class="status-chip tone-neutral">Submitted</span> aka getByText('Submitted').nth(5)
+        5) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(4)
+        6) <span class="status-chip tone-neutral">Submitted</span> aka getByText('Submitted', { exact: true }).nth(3)
+        7) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn').nth(5)
+        8) <span class="status-chip tone-success">Approved</span> aka getByText('Approved').nth(2)
+        9) <span class="status-chip tone-neutral">Applied</span> aka getByText('Applied').nth(1)
+        10) <span class="status-chip tone-neutral">Withdrawn</span> aka getByText('Withdrawn', { exact: true }).nth(5)
+        ...
+
+    Call log:
+      - Expect "toHaveText" locator('main .status-chip') with timeout 5000ms
+      - waiting for locator('main .status-chip')
+
+
+      648 |     );
+      649 |     await saved.click();
+    > 650 |     await expect(page.locator("main .status-chip")).toHaveText("Submitted");
+          |                                                     ^
+      651 |     await expect(page.locator("main")).toContainText("Version 1");
+      652 |   }
+      653 | });
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:650:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-replay-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-request-withdrawal\browser-replay-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-request-withdrawal\browser-replay-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-request-withdrawal\browser-replay-results\access-requests-AD-01-requ-df53d-pendently-reviewed-proposal-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [phone] › tests\browser\access-requests.spec.ts:542:1 › AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal
+  2 passed (1.9m)

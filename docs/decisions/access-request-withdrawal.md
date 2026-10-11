@@ -20,6 +20,8 @@ Write state, audit and actor-bound receipt in one transaction; a deferred constr
 
 ## Interface and proof
 
+`POST /api/v1/admin/access/requests/{id}/withdraw` uses the existing strict command envelope: `schema_version: 1`, UUID `operation_id`, exact `expected_version` and a 10–1000 character `reason`. It returns the standard operation receipt and uses the existing actor-bound recovery route. Request reads expose the derived `can_withdraw` flag, saved `withdrawn_at`/`withdrawal_reason` and immutable history; the queue accepts the `Withdrawn` state filter.
+
 Reuse the current r20 Record detail and Register / worklist, shared Field, Button, Status, ReadState, Stamp and recovery controls. Add a reasoned secondary withdrawal form to the request detail and a Withdrawn queue filter. Explain that it closes only this request and leaves existing access unchanged. Show the retained independent decision alongside the withdrawal outcome. Hand over to a fresh request via the existing queue; no new page or unreviewed shared-control implementation.
 
 This deliberately departs from the retained design: its simulated withdrawal covers Draft/Submitted/Returned and permits an administrator override; the native increment covers Submitted/Approved only and requires the original requester. Native Returned is already terminal and does not reserve the tuple; native Draft is not persisted. Approved closure resolves the missed-start hold without granting or editing access. The secondary action and neutral closed state also differ from the retained danger treatment. These differences are exposed for owner review; the retained design and issued bytes are unchanged.

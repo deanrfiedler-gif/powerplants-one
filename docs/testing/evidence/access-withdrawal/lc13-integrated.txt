@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts
+ok 1 - LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts
+  ---
+  duration_ms: 43186.0892
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46759.1492
