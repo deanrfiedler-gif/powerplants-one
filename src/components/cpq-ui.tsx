@@ -1,5 +1,5 @@
 "use client";
-import { Component, useEffect, useId, useRef, type ReactNode } from "react";
+import { Children, cloneElement, Component, isValidElement, useEffect, useId, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import { useIdentity } from "./business-session";
 import { useShell } from "./shell-provider";
@@ -251,11 +251,20 @@ export function CpqField({
   help?: ReactNode;
   children: ReactNode;
 }) {
+  const id = useId(), labelId = `${id}-label`, helpId = `${id}-help`;
   return (
     <label className="cpq-field">
-      <span>{label}</span>
-      {children}
-      {help && <small>{help}</small>}
+      <span id={labelId}>{label}</span>
+      {Children.map(children, (child) =>
+        isValidElement<{ "aria-labelledby"?: string; "aria-describedby"?: string }>(child) &&
+        typeof child.type === "string" && ["input", "select", "textarea"].includes(child.type)
+          ? cloneElement(child, {
+              "aria-labelledby": child.props["aria-labelledby"] ?? labelId,
+              "aria-describedby": [child.props["aria-describedby"], help ? helpId : null].filter(Boolean).join(" ") || undefined,
+            })
+          : child,
+      )}
+      {help && <small id={helpId}>{help}</small>}
     </label>
   );
 }

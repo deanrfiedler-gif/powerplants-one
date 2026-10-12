@@ -142,6 +142,29 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     .getByRole("button", { name: "Configure", exact: true })
     .click();
   await expect(page.getByLabel(/^Cable run distance/)).toHaveValue("140");
+  await expect(
+    page.getByRole("button", { name: "Save configuration", exact: true }),
+  ).toBeEnabled();
+  if (!info.project.name.includes("mobile")) {
+    const expand = page.getByRole("button", { name: "Expand primary navigation", exact: true });
+    if (await expand.isVisible()) await expand.click();
+    // Retained Figma frame 16: the white 380 px summary spans the complete
+    // workspace beside its header and footer. This catches the prior layout
+    // defect where the summary began below the tabs and ended above Save.
+    const summary = page.locator(".cpq-workbench > .cpq-summary");
+    await expect(summary).toBeVisible();
+    await expect(summary).toHaveCSS("background-color", "rgb(255, 255, 255)");
+    const panel = (await summary.boundingBox())!;
+    const header = (await page.locator(".cpq-header").boundingBox())!;
+    const footer = (await page.locator(".cpq-footer").boundingBox())!;
+    expect(panel.width).toBe(380);
+    expect(Math.abs(panel.y - header.y)).toBeLessThanOrEqual(1);
+    expect(Math.abs(panel.y + panel.height - footer.y - footer.height)).toBeLessThanOrEqual(1);
+    const actions = page.locator(".cpq-footer");
+    const save = (await actions.getByRole("button", { name: "Save configuration", exact: true }).boundingBox())!;
+    const use = (await actions.getByRole("button", { name: "Use in estimate", exact: true }).boundingBox())!;
+    expect(save.x).toBeLessThan(use.x);
+  }
   await page.screenshot({ path: info.outputPath("cpq-configure.png") });
   await page.getByLabel(/^Cable run distance/).fill("145");
   await expect(
@@ -195,7 +218,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     exact: true,
   });
   await expect(adjustment).toContainText("effective 40");
-  await adjustment.getByLabel("Decision", { exact: true }).selectOption("Keep");
+  await adjustment.getByRole("combobox", { name: "Decision", exact: true }).selectOption("Keep");
   await adjustment
     .getByLabel("Reason", { exact: false })
     .fill("SYN reviewed increased cable run; retain forty supports.");

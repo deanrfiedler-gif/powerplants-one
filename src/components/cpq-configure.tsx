@@ -607,617 +607,621 @@ function ConfigurationEditor({
         </>
       }
     >
-      <CpqHeader
-        title={workspace.context.title}
-        context={option.label}
-        status={
-          historical
-            ? "Historical · read only"
-            : command.hasUnsavedChanges
-              ? "Unsaved changes"
-              : command.status
-        }
-      >
-        <Button onClick={() => setSummary(true)}>
-          <ProductIcon name="list" />
-          Summary
-        </Button>
-        {historical && (
-          <ButtonLink
-            href={`/estimating/cpq/${workspace.workspace.id}?option=${option.id}`}
+      <div className="cpq-workbench">
+        <div className="cpq-main">
+          <CpqHeader
+            title={workspace.context.title}
+            context={option.label}
+            status={
+              historical
+                ? "Historical · read only"
+                : command.hasUnsavedChanges
+                  ? "Unsaved changes"
+                  : command.status
+            }
           >
-            Open working configuration
-          </ButtonLink>
-        )}
-      </CpqHeader>
-      {historical && (
-        <div className="cpq-historical">
-          Evaluation {savedRun?.evaluation_number} · saved{" "}
-          {stamp(savedRun?.updated_at)}. This retained evaluation is read only.
-        </div>
-      )}
-      <div className="cpq-readiness">
-        <span>Readiness</span>
-        <CpqPill tone={displayedCurrent && result?.ready ? "good" : "warning"}>
-          {calculating
-            ? "Recalculating"
-            : !displayedCurrent
-              ? "Current inputs need evaluation"
-              : result?.ready
-                ? "Calculation complete"
-                : "Checks required"}
-        </CpqPill>
-        <CpqPill>Review after use</CpqPill>
-        {sourceStale && (
-          <Button variant="quiet" onClick={() => void compareActive()}>
-            Source changed · compare current basis
-          </Button>
-        )}
-      </div>
-      <CpqTabs
-        tabs={[
-          "Configure",
-          "Materials & labour",
-          "Pricing",
-          "Compare",
-          "History",
-        ]}
-        current={tab}
-        onChange={setTab}
-      />
-      <div className="cpq-phone-selector">
-        <CpqField label="System">
-          <select
-            value={selected}
-            onChange={(e) => {
-              setSelected(e.target.value);
-              setTab("Configure");
-            }}
-          >
-            <option value="overview">Solution overview</option>
-            {input.instances.map((i) => (
-              <option key={i.id} value={i.id}>
-                {i.label}
-              </option>
-            ))}
-          </select>
-        </CpqField>
-      </div>
-      <div className="cpq-body">
-        <div className="cpq-scroll">
-          <div className="cpq-stack">
-            <ErrorNotice error={command.error ?? error} focusOnError={false} />
-            {command.uncertain && (
-              <CpqNotice tone="warning">
-                <p>
-                  The save outcome is uncertain. Keep the original action until
-                  its receipt is confirmed.
-                </p>
-                <Button
-                  busy={command.busy}
-                  onClick={() => void command.reconcile()}
-                >
-                  Confirm original action
-                </Button>
-              </CpqNotice>
+            <Button onClick={() => setSummary(true)}>
+              <ProductIcon name="list" />
+              Summary
+            </Button>
+            {historical && (
+              <ButtonLink
+                href={`/estimating/cpq/${workspace.workspace.id}?option=${option.id}`}
+              >
+                Open working configuration
+              </ButtonLink>
             )}
-            {adopted && (
-              <CpqNotice tone="good">
-                The configuration was used in the estimate.{" "}
-                <Link href={`/estimating/estimates/${adopted}/review`}>
-                  Open estimate review
-                </Link>
-                .
-              </CpqNotice>
+          </CpqHeader>
+          {historical && (
+            <div className="cpq-historical">
+              Evaluation {savedRun?.evaluation_number} · saved{" "}
+              {stamp(savedRun?.updated_at)}. This retained evaluation is read only.
+            </div>
+          )}
+          <div className="cpq-readiness">
+            <span>Readiness</span>
+            <CpqPill tone={displayedCurrent && result?.ready ? "good" : "warning"}>
+              {calculating
+                ? "Recalculating"
+                : !displayedCurrent
+                  ? "Current inputs need evaluation"
+                  : result?.ready
+                    ? "Calculation complete"
+                    : "Checks required"}
+            </CpqPill>
+            <CpqPill>Review after use</CpqPill>
+            {sourceStale && (
+              <Button variant="quiet" onClick={() => void compareActive()}>
+                Source changed · compare current basis
+              </Button>
             )}
-            {tab === "Configure" &&
-              (selectedInstance ? (
-                <>
-                  <div className="cpq-section-head">
-                    <div>
-                      <h2>
-                        {input.instances.indexOf(selectedInstance) + 1} ·{" "}
-                        {selectedInstance.label}
-                      </h2>
-                      <small>
-                        {definition.label} · quantities follow the selected
-                        release
-                      </small>
-                    </div>
-                  </div>
-                  <CpqField label="System name">
-                    <input
-                      readOnly={!editable}
-                      disabled={busy}
-                      value={selectedInstance.label}
-                      maxLength={100}
-                      onChange={(e) =>
-                        change({
-                          ...input,
-                          instances: input.instances.map((i) =>
-                            i.id === selected
-                              ? { ...i, label: e.target.value }
-                              : i,
-                          ),
-                        })
-                      }
-                    />
-                  </CpqField>
-                  {!!definition.facts.some((f) => f.binding) && (
-                    <section className="cpq-stack-tight">
-                      <h3>Facts from the estimate · read only here</h3>
-                      <Link
-                        href={`/estimating/discovery/${workspace.workspace.id}`}
-                      >
-                        Change in the estimation wizard
-                      </Link>
-                      <div className="cpq-fact-grid">
-                        {definition.facts
-                          .filter((f) => f.binding)
-                          .map((f) => (
-                            <div key={f.key}>
-                              <small>{f.label}</small>
-                              <strong>
-                                {selectedInstance.facts[f.key] === null
-                                  ? "Unknown"
-                                  : String(selectedInstance.facts[f.key])}{" "}
-                                {f.unit}
-                              </strong>
-                              <small>{f.source}</small>
+          </div>
+          <CpqTabs
+            tabs={[
+              "Configure",
+              "Materials & labour",
+              "Pricing",
+              "Compare",
+              "History",
+            ]}
+            current={tab}
+            onChange={setTab}
+          />
+          <div className="cpq-phone-selector">
+            <CpqField label="System">
+              <select
+                value={selected}
+                onChange={(e) => {
+                  setSelected(e.target.value);
+                  setTab("Configure");
+                }}
+              >
+                <option value="overview">Solution overview</option>
+                {input.instances.map((i) => (
+                  <option key={i.id} value={i.id}>
+                    {i.label}
+                  </option>
+                ))}
+              </select>
+            </CpqField>
+          </div>
+          <div className="cpq-body">
+            <div className="cpq-scroll">
+              <div className="cpq-stack">
+                <ErrorNotice error={command.error ?? error} focusOnError={false} />
+                {command.uncertain && (
+                  <CpqNotice tone="warning">
+                    <p>
+                      The save outcome is uncertain. Keep the original action until
+                      its receipt is confirmed.
+                    </p>
+                    <Button
+                      busy={command.busy}
+                      onClick={() => void command.reconcile()}
+                    >
+                      Confirm original action
+                    </Button>
+                  </CpqNotice>
+                )}
+                {adopted && (
+                  <CpqNotice tone="good">
+                    The configuration was used in the estimate.{" "}
+                    <Link href={`/estimating/estimates/${adopted}/review`}>
+                      Open estimate review
+                    </Link>
+                    .
+                  </CpqNotice>
+                )}
+                {tab === "Configure" &&
+                  (selectedInstance ? (
+                    <>
+                      <div className="cpq-section-head">
+                        <div>
+                          <h2>
+                            {input.instances.indexOf(selectedInstance) + 1} ·{" "}
+                            {selectedInstance.label}
+                          </h2>
+                          <small>
+                            {definition.label} · quantities follow the selected
+                            release
+                          </small>
+                        </div>
+                      </div>
+                      <CpqField label="System name">
+                        <input
+                          readOnly={!editable}
+                          disabled={busy}
+                          value={selectedInstance.label}
+                          maxLength={100}
+                          onChange={(e) =>
+                            change({
+                              ...input,
+                              instances: input.instances.map((i) =>
+                                i.id === selected
+                                  ? { ...i, label: e.target.value }
+                                  : i,
+                              ),
+                            })
+                          }
+                        />
+                      </CpqField>
+                      {!!definition.facts.some((f) => f.binding) && (
+                        <section className="cpq-stack-tight">
+                          <h3>Facts from the estimate · read only here</h3>
+                          <Link
+                            href={`/estimating/discovery/${workspace.workspace.id}`}
+                          >
+                            Change in the estimation wizard
+                          </Link>
+                          <div className="cpq-fact-grid">
+                            {definition.facts
+                              .filter((f) => f.binding)
+                              .map((f) => (
+                                <div key={f.key}>
+                                  <small>{f.label}</small>
+                                  <strong>
+                                    {selectedInstance.facts[f.key] === null
+                                      ? "Unknown"
+                                      : String(selectedInstance.facts[f.key])}{" "}
+                                    {f.unit}
+                                  </strong>
+                                  <small>{f.source}</small>
+                                </div>
+                              ))}
+                          </div>
+                        </section>
+                      )}
+                      {definition.facts
+                        .filter((f) => !f.binding)
+                        .map((f) => {
+                          const options = definition.design?.option_sets.find(
+                              (s) => s.fact === f.key,
+                            ),
+                            value = selectedInstance.facts[f.key];
+                          return (
+                            <section key={f.key} className="cpq-stack-tight">
+                              {options ? (
+                                <>
+                                  <div className="cpq-section-head">
+                                    <h3>{f.label}</h3>
+                                    <small>
+                                      {f.required
+                                        ? "Required · choose one"
+                                        : "Choose one"}
+                                    </small>
+                                  </div>
+                                  <div
+                                    className="cpq-option-grid"
+                                    role="radiogroup"
+                                    aria-label={f.label}
+                                  >
+                                    {options.options.map((o) => {
+                                      const availability =
+                                          result?.explanation?.options.find(
+                                            (x) =>
+                                              x.instance_id === selected &&
+                                              x.set === options.key &&
+                                              x.value === o.value,
+                                          ),
+                                        available =
+                                          availability?.available !== false;
+                                      return (
+                                        <label
+                                          key={o.value}
+                                          className="cpq-option"
+                                          data-selected={value === o.value}
+                                          data-unavailable={!available}
+                                        >
+                                          <input
+                                            type="radio"
+                                            name={f.key}
+                                            value={o.value}
+                                            checked={value === o.value}
+                                            disabled={
+                                              !editable || busy || !available
+                                            }
+                                            onChange={() =>
+                                              fact(selected, f.key, o.value)
+                                            }
+                                          />
+                                          <span>
+                                            <strong>{o.label}</strong>
+                                            <small>
+                                              {value === o.value
+                                                ? "Selected"
+                                                : availability?.available === null
+                                                  ? "Availability not yet known"
+                                                  : available
+                                                    ? "Available"
+                                                    : o.reason}
+                                            </small>
+                                          </span>
+                                        </label>
+                                      );
+                                    })}
+                                  </div>
+                                </>
+                              ) : (
+                                <CpqField
+                                  label={f.label + (f.required ? " *" : "")}
+                                  help={
+                                    <>
+                                      {f.description ?? f.source} · {f.unit}
+                                      {f.minimum != null
+                                        ? ` · ${f.minimum} to ${f.maximum ?? "no maximum"}`
+                                        : ""}
+                                    </>
+                                  }
+                                >
+                                  {f.type === "Boolean" ? (
+                                    <select
+                                      disabled={!editable || busy}
+                                      value={
+                                        value === null || value === undefined
+                                          ? ""
+                                          : String(value)
+                                      }
+                                      onChange={(e) =>
+                                        fact(
+                                          selected,
+                                          f.key,
+                                          e.target.value === ""
+                                            ? null
+                                            : e.target.value === "true",
+                                        )
+                                      }
+                                    >
+                                      <option value="">Unknown</option>
+                                      <option value="true">Yes</option>
+                                      <option value="false">No</option>
+                                    </select>
+                                  ) : f.type === "Choice" ? (
+                                    <select
+                                      disabled={!editable || busy}
+                                      value={String(value ?? "")}
+                                      onChange={(e) =>
+                                        fact(
+                                          selected,
+                                          f.key,
+                                          e.target.value || null,
+                                        )
+                                      }
+                                    >
+                                      <option value="">Unknown</option>
+                                      {f.choices.map((c) => (
+                                        <option key={c}>{c}</option>
+                                      ))}
+                                    </select>
+                                  ) : (
+                                    <input
+                                      readOnly={!editable}
+                                      disabled={busy}
+                                      inputMode={
+                                        ["Integer", "Decimal"].includes(f.type)
+                                          ? "decimal"
+                                          : "text"
+                                      }
+                                      value={String(value ?? "")}
+                                      maxLength={f.type === "Text" ? 500 : 30}
+                                      placeholder="Unknown"
+                                      onChange={(e) =>
+                                        fact(
+                                          selected,
+                                          f.key,
+                                          e.target.value || null,
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </CpqField>
+                              )}
+                              {definition.schema_version === 3 &&
+                                !f.required &&
+                                editable && (
+                                  <label>
+                                    <input
+                                      type="checkbox"
+                                      checked={
+                                        selectedInstance.not_applicable?.includes(
+                                          f.key,
+                                        ) ?? false
+                                      }
+                                      disabled={busy}
+                                      onChange={(e) =>
+                                        change({
+                                          ...input,
+                                          instances: input.instances.map((i) =>
+                                            i.id === selected
+                                              ? {
+                                                  ...i,
+                                                  facts: {
+                                                    ...i.facts,
+                                                    [f.key]: null,
+                                                  },
+                                                  not_applicable: e.target.checked
+                                                    ? [
+                                                        ...(
+                                                          i.not_applicable ?? []
+                                                        ).filter(
+                                                          (k) => k !== f.key,
+                                                        ),
+                                                        f.key,
+                                                      ]
+                                                    : (
+                                                        i.not_applicable ?? []
+                                                      ).filter((k) => k !== f.key),
+                                                }
+                                              : i,
+                                          ),
+                                        })
+                                      }
+                                    />{" "}
+                                    Not applicable
+                                  </label>
+                                )}
+                            </section>
+                          );
+                        })}
+                      <Button onClick={() => setTab("Materials & labour")}>
+                        Review materials & labour <ProductIcon name="expand" />
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="cpq-section-head">
+                        <div>
+                          <h2>Solution overview</h2>
+                          <small>
+                            {option.label} · {input.instances.length} systems
+                          </small>
+                        </div>
+                        {editable && (
+                          <Button
+                            disabled={busy || input.instances.length >= 20}
+                            onClick={() => {
+                              const instance = blankInput(
+                                definition,
+                                acceptedBasis!,
+                              ).instances[0];
+                              instance.label = `System ${input.instances.length + 1}`;
+                              change({
+                                ...input,
+                                instances: [...input.instances, instance],
+                              });
+                              setSelected(instance.id);
+                            }}
+                          >
+                            <ProductIcon name="plus" />
+                            Add system
+                          </Button>
+                        )}
+                      </div>
+                      {input.instances.map((i, n) => (
+                        <section key={i.id} className="cpq-card cpq-section-head">
+                          <div>
+                            <h3>
+                              {n + 1} · {i.label}
+                            </h3>
+                            <small>{definition.label}</small>
+                          </div>
+                          <Button onClick={() => setSelected(i.id)}>
+                            Configure <ProductIcon name="expand" />
+                          </Button>
+                        </section>
+                      ))}
+                      {!!result?.explanation?.capacity.length && (
+                        <section className="cpq-card cpq-stack-tight">
+                          <h3>Shared controller capacity</h3>
+                          {result.explanation.capacity.map((c) => (
+                            <div className="cpq-section-head" key={c.key + c.group}>
+                              <span>
+                                {c.group} · {quantity(c.demand)} of{" "}
+                                {quantity(c.capacity)} outputs
+                              </span>
+                              <CpqPill
+                                tone={c.state === "Ready" ? "good" : "warning"}
+                              >
+                                {c.state}
+                              </CpqPill>
                             </div>
                           ))}
-                      </div>
-                    </section>
-                  )}
-                  {definition.facts
-                    .filter((f) => !f.binding)
-                    .map((f) => {
-                      const options = definition.design?.option_sets.find(
-                          (s) => s.fact === f.key,
-                        ),
-                        value = selectedInstance.facts[f.key];
-                      return (
-                        <section key={f.key} className="cpq-stack-tight">
-                          {options ? (
-                            <>
-                              <div className="cpq-section-head">
-                                <h3>{f.label}</h3>
-                                <small>
-                                  {f.required
-                                    ? "Required · choose one"
-                                    : "Choose one"}
-                                </small>
-                              </div>
-                              <div
-                                className="cpq-option-grid"
-                                role="radiogroup"
-                                aria-label={f.label}
-                              >
-                                {options.options.map((o) => {
-                                  const availability =
-                                      result?.explanation?.options.find(
-                                        (x) =>
-                                          x.instance_id === selected &&
-                                          x.set === options.key &&
-                                          x.value === o.value,
-                                      ),
-                                    available =
-                                      availability?.available !== false;
-                                  return (
-                                    <label
-                                      key={o.value}
-                                      className="cpq-option"
-                                      data-selected={value === o.value}
-                                      data-unavailable={!available}
-                                    >
-                                      <input
-                                        type="radio"
-                                        name={f.key}
-                                        value={o.value}
-                                        checked={value === o.value}
-                                        disabled={
-                                          !editable || busy || !available
-                                        }
-                                        onChange={() =>
-                                          fact(selected, f.key, o.value)
-                                        }
-                                      />
-                                      <span>
-                                        <strong>{o.label}</strong>
-                                        <small>
-                                          {value === o.value
-                                            ? "Selected"
-                                            : availability?.available === null
-                                              ? "Availability not yet known"
-                                              : available
-                                                ? "Available"
-                                                : o.reason}
-                                        </small>
-                                      </span>
-                                    </label>
-                                  );
-                                })}
-                              </div>
-                            </>
-                          ) : (
-                            <CpqField
-                              label={f.label + (f.required ? " *" : "")}
-                              help={
-                                <>
-                                  {f.description ?? f.source} · {f.unit}
-                                  {f.minimum != null
-                                    ? ` · ${f.minimum} to ${f.maximum ?? "no maximum"}`
-                                    : ""}
-                                </>
-                              }
-                            >
-                              {f.type === "Boolean" ? (
-                                <select
-                                  disabled={!editable || busy}
-                                  value={
-                                    value === null || value === undefined
-                                      ? ""
-                                      : String(value)
-                                  }
-                                  onChange={(e) =>
-                                    fact(
-                                      selected,
-                                      f.key,
-                                      e.target.value === ""
-                                        ? null
-                                        : e.target.value === "true",
-                                    )
-                                  }
-                                >
-                                  <option value="">Unknown</option>
-                                  <option value="true">Yes</option>
-                                  <option value="false">No</option>
-                                </select>
-                              ) : f.type === "Choice" ? (
-                                <select
-                                  disabled={!editable || busy}
-                                  value={String(value ?? "")}
-                                  onChange={(e) =>
-                                    fact(
-                                      selected,
-                                      f.key,
-                                      e.target.value || null,
-                                    )
-                                  }
-                                >
-                                  <option value="">Unknown</option>
-                                  {f.choices.map((c) => (
-                                    <option key={c}>{c}</option>
-                                  ))}
-                                </select>
-                              ) : (
-                                <input
-                                  readOnly={!editable}
-                                  disabled={busy}
-                                  inputMode={
-                                    ["Integer", "Decimal"].includes(f.type)
-                                      ? "decimal"
-                                      : "text"
-                                  }
-                                  value={String(value ?? "")}
-                                  maxLength={f.type === "Text" ? 500 : 30}
-                                  placeholder="Unknown"
-                                  onChange={(e) =>
-                                    fact(
-                                      selected,
-                                      f.key,
-                                      e.target.value || null,
-                                    )
-                                  }
-                                />
-                              )}
-                            </CpqField>
-                          )}
-                          {definition.schema_version === 3 &&
-                            !f.required &&
-                            editable && (
-                              <label>
-                                <input
-                                  type="checkbox"
-                                  checked={
-                                    selectedInstance.not_applicable?.includes(
-                                      f.key,
-                                    ) ?? false
-                                  }
-                                  disabled={busy}
-                                  onChange={(e) =>
-                                    change({
-                                      ...input,
-                                      instances: input.instances.map((i) =>
-                                        i.id === selected
-                                          ? {
-                                              ...i,
-                                              facts: {
-                                                ...i.facts,
-                                                [f.key]: null,
-                                              },
-                                              not_applicable: e.target.checked
-                                                ? [
-                                                    ...(
-                                                      i.not_applicable ?? []
-                                                    ).filter(
-                                                      (k) => k !== f.key,
-                                                    ),
-                                                    f.key,
-                                                  ]
-                                                : (
-                                                    i.not_applicable ?? []
-                                                  ).filter((k) => k !== f.key),
-                                            }
-                                          : i,
-                                      ),
-                                    })
-                                  }
-                                />{" "}
-                                Not applicable
-                              </label>
-                            )}
                         </section>
-                      );
-                    })}
-                  <Button onClick={() => setTab("Materials & labour")}>
-                    Review materials & labour <ProductIcon name="expand" />
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <div className="cpq-section-head">
-                    <div>
-                      <h2>Solution overview</h2>
-                      <small>
-                        {option.label} · {input.instances.length} systems
-                      </small>
-                    </div>
-                    {editable && (
-                      <Button
-                        disabled={busy || input.instances.length >= 20}
-                        onClick={() => {
-                          const instance = blankInput(
-                            definition,
-                            acceptedBasis!,
-                          ).instances[0];
-                          instance.label = `System ${input.instances.length + 1}`;
-                          change({
-                            ...input,
-                            instances: [...input.instances, instance],
-                          });
-                          setSelected(instance.id);
+                      )}
+                      <CpqField label="Pricing date">
+                        <input
+                          type="date"
+                          readOnly={!editable}
+                          disabled={busy}
+                          value={input.pricing_date}
+                          onChange={(e) =>
+                            change({ ...input, pricing_date: e.target.value })
+                          }
+                        />
+                      </CpqField>
+                      <CpqNotice>
+                        Requirements are retained in the estimation wizard.
+                        Configure systems here, save the evaluation, then review the
+                        exact estimate handover.
+                      </CpqNotice>
+                    </>
+                  ))}
+                {tab === "Materials & labour" &&
+                  (result ? (
+                    <CpqMaterials
+                      result={result}
+                      definition={definition}
+                      input={input}
+                      readOnly={!editable || busy || !current}
+                      onWhy={setWhy}
+                      onAdjust={setAdjust}
+                    />
+                  ) : (
+                    <CpqEmpty>
+                      Complete the configuration to calculate materials and labour.
+                    </CpqEmpty>
+                  ))}
+                {tab === "Pricing" && result && (
+                  <CpqPricing
+                    result={result}
+                    input={input}
+                    d={definition}
+                    readOnly={!editable || busy}
+                    onPricing={(pricing) => change({ ...input, pricing })}
+                  />
+                )}
+                {tab === "Compare" && (
+                  <>
+                    <h2>Compare evaluations</h2>
+                    <CpqField label="Compare with saved evaluation">
+                      <select
+                        value={comparisonRun?.id ?? ""}
+                        onChange={(e) => {
+                          if (e.target.value)
+                            void api<Saved>(`cpq/runs/${e.target.value}`)
+                              .then(setComparisonRun)
+                              .catch(setError);
+                          else setComparisonRun(null);
                         }}
                       >
-                        <ProductIcon name="plus" />
-                        Add system
+                        <option value="">Choose an evaluation</option>
+                        {history.items
+                          .filter((r) => r.option_id === option.id)
+                          .map((r) => (
+                            <option key={r.id} value={r.id}>
+                              {stamp(r.saved_at)} · {r.state} ·{" "}
+                              {money(r.totals.sell)}
+                            </option>
+                          ))}
+                      </select>
+                    </CpqField>
+                    {comparisonRun && result && (
+                      <Comparison before={comparisonRun.result} after={result} />
+                    )}{" "}
+                    {!historical && (
+                      <Button disabled={busy} onClick={() => void compareActive()}>
+                        Compare against current release and source
                       </Button>
                     )}
-                  </div>
-                  {input.instances.map((i, n) => (
-                    <section key={i.id} className="cpq-card cpq-section-head">
-                      <div>
-                        <h3>
-                          {n + 1} · {i.label}
-                        </h3>
-                        <small>{definition.label}</small>
-                      </div>
-                      <Button onClick={() => setSelected(i.id)}>
-                        Configure <ProductIcon name="expand" />
-                      </Button>
-                    </section>
-                  ))}
-                  {!!result?.explanation?.capacity.length && (
-                    <section className="cpq-card cpq-stack-tight">
-                      <h3>Shared controller capacity</h3>
-                      {result.explanation.capacity.map((c) => (
-                        <div className="cpq-section-head" key={c.key + c.group}>
-                          <span>
-                            {c.group} · {quantity(c.demand)} of{" "}
-                            {quantity(c.capacity)} outputs
-                          </span>
-                          <CpqPill
-                            tone={c.state === "Ready" ? "good" : "warning"}
-                          >
-                            {c.state}
-                          </CpqPill>
-                        </div>
-                      ))}
-                    </section>
-                  )}
-                  <CpqField label="Pricing date">
-                    <input
-                      type="date"
-                      readOnly={!editable}
-                      disabled={busy}
-                      value={input.pricing_date}
-                      onChange={(e) =>
-                        change({ ...input, pricing_date: e.target.value })
-                      }
-                    />
-                  </CpqField>
-                  <CpqNotice>
-                    Requirements are retained in the estimation wizard.
-                    Configure systems here, save the evaluation, then review the
-                    exact estimate handover.
-                  </CpqNotice>
-                </>
-              ))}
-            {tab === "Materials & labour" &&
-              (result ? (
-                <CpqMaterials
-                  result={result}
-                  definition={definition}
-                  input={input}
-                  readOnly={!editable || busy || !current}
-                  onWhy={setWhy}
-                  onAdjust={setAdjust}
-                />
-              ) : (
-                <CpqEmpty>
-                  Complete the configuration to calculate materials and labour.
-                </CpqEmpty>
-              ))}
-            {tab === "Pricing" && result && (
-              <CpqPricing
-                result={result}
-                input={input}
-                d={definition}
-                readOnly={!editable || busy}
-                onPricing={(pricing) => change({ ...input, pricing })}
-              />
-            )}
-            {tab === "Compare" && (
-              <>
-                <h2>Compare evaluations</h2>
-                <CpqField label="Compare with saved evaluation">
-                  <select
-                    value={comparisonRun?.id ?? ""}
-                    onChange={(e) => {
-                      if (e.target.value)
-                        void api<Saved>(`cpq/runs/${e.target.value}`)
-                          .then(setComparisonRun)
-                          .catch(setError);
-                      else setComparisonRun(null);
-                    }}
-                  >
-                    <option value="">Choose an evaluation</option>
+                  </>
+                )}
+                {tab === "History" && (
+                  <>
+                    <h2>Saved evaluation history</h2>
+                    <p>
+                      Each evaluation preserves its inputs, rule release, generated
+                      lines and adjustments.
+                    </p>
                     {history.items
                       .filter((r) => r.option_id === option.id)
                       .map((r) => (
-                        <option key={r.id} value={r.id}>
-                          {stamp(r.saved_at)} · {r.state} ·{" "}
-                          {money(r.totals.sell)}
-                        </option>
+                        <article className="cpq-card cpq-section-head" key={r.id}>
+                          <div>
+                            <Link
+                              href={`/estimating/cpq/${workspace.workspace.id}?option=${option.id}&evaluation=${r.id}`}
+                            >
+                              Saved {stamp(r.saved_at)}
+                            </Link>
+                            <small className="cpq-subtext">
+                              {r.input.overrides.length} adjustments ·{" "}
+                              {r.diagnostic_count} checks ·{" "}
+                              {r.parent_id
+                                ? "Successor evaluation"
+                                : "First evaluation"}
+                            </small>
+                          </div>
+                          <strong>AUD {money(r.totals.sell)}</strong>
+                          <CpqPill tone={r.state === "Ready" ? "good" : "warning"}>
+                            {r.state}
+                          </CpqPill>
+                        </article>
                       ))}
-                  </select>
-                </CpqField>
-                {comparisonRun && result && (
-                  <Comparison before={comparisonRun.result} after={result} />
-                )}{" "}
-                {!historical && (
-                  <Button disabled={busy} onClick={() => void compareActive()}>
-                    Compare against current release and source
-                  </Button>
+                  </>
                 )}
-              </>
-            )}
-            {tab === "History" && (
-              <>
-                <h2>Saved evaluation history</h2>
-                <p>
-                  Each evaluation preserves its inputs, rule release, generated
-                  lines and adjustments.
-                </p>
-                {history.items
-                  .filter((r) => r.option_id === option.id)
-                  .map((r) => (
-                    <article className="cpq-card cpq-section-head" key={r.id}>
-                      <div>
-                        <Link
-                          href={`/estimating/cpq/${workspace.workspace.id}?option=${option.id}&evaluation=${r.id}`}
+                {!!result?.diagnostics.length && (
+                  <section
+                    className="cpq-stack-tight"
+                    aria-label="Calculation checks"
+                  >
+                    <h3>Before use in estimate</h3>
+                    {result.diagnostics.map((d, n) => (
+                      <CpqNotice key={n} tone="warning">
+                        {d.message}
+                      </CpqNotice>
+                    ))}
+                  </section>
+                )}
+                {!!orphaned.length && (
+                  <section
+                    className="cpq-stack-tight"
+                    aria-label="Retained adjustments"
+                  >
+                    <h3>Adjustments without a generated line</h3>
+                    <p>
+                      These saved adjustments are retained. Restore their source
+                      configuration or remove them with a reason before use.
+                    </p>
+                    {orphaned.map((o) => (
+                      <article className="cpq-card" key={o.target + o.kind}>
+                        <strong>
+                          {o.kind} · {o.value ?? "Excluded"}
+                        </strong>
+                        <p>{o.reason}</p>
+                        <small>{o.target}</small>
+                        <Button
+                          disabled={!editable || busy}
+                          onClick={() => {
+                            setOrphan(o);
+                            setRemovalReason("");
+                          }}
                         >
-                          Saved {stamp(r.saved_at)}
-                        </Link>
-                        <small className="cpq-subtext">
-                          {r.input.overrides.length} adjustments ·{" "}
-                          {r.diagnostic_count} checks ·{" "}
-                          {r.parent_id
-                            ? "Successor evaluation"
-                            : "First evaluation"}
-                        </small>
-                      </div>
-                      <strong>AUD {money(r.totals.sell)}</strong>
-                      <CpqPill tone={r.state === "Ready" ? "good" : "warning"}>
-                        {r.state}
-                      </CpqPill>
-                    </article>
-                  ))}
-              </>
-            )}
-            {!!result?.diagnostics.length && (
-              <section
-                className="cpq-stack-tight"
-                aria-label="Calculation checks"
-              >
-                <h3>Before use in estimate</h3>
-                {result.diagnostics.map((d, n) => (
-                  <CpqNotice key={n} tone="warning">
-                    {d.message}
-                  </CpqNotice>
-                ))}
-              </section>
-            )}
-            {!!orphaned.length && (
-              <section
-                className="cpq-stack-tight"
-                aria-label="Retained adjustments"
-              >
-                <h3>Adjustments without a generated line</h3>
-                <p>
-                  These saved adjustments are retained. Restore their source
-                  configuration or remove them with a reason before use.
-                </p>
-                {orphaned.map((o) => (
-                  <article className="cpq-card" key={o.target + o.kind}>
-                    <strong>
-                      {o.kind} · {o.value ?? "Excluded"}
-                    </strong>
-                    <p>{o.reason}</p>
-                    <small>{o.target}</small>
-                    <Button
-                      disabled={!editable || busy}
-                      onClick={() => {
-                        setOrphan(o);
-                        setRemovalReason("");
-                      }}
-                    >
-                      Remove retained adjustment
-                    </Button>
-                  </article>
-                ))}
-              </section>
-            )}
+                          Remove retained adjustment
+                        </Button>
+                      </article>
+                    ))}
+                  </section>
+                )}
+              </div>
+            </div>
           </div>
+          {!historical && (
+            <footer className="cpq-footer">
+              <div>
+                <strong role="status">
+                  {calculating
+                    ? "Recalculating…"
+                    : command.hasUnsavedChanges
+                      ? "Unsaved changes"
+                      : command.status}
+                </strong>
+                <small>
+                  {current
+                    ? "Save the configuration before using it in the estimate."
+                    : "Incomplete entries can be saved as a working draft."}
+                </small>
+              </div>
+              <div className="cpq-actions">
+                <Button
+                  variant="primary"
+                  busy={command.busy}
+                  disabled={!editable || busy || calculating}
+                  onClick={() => void save()}
+                >
+                  {current ? "Save configuration" : "Save working draft"}
+                </Button>
+                <Button
+                  disabled={!canUse}
+                  onClick={() => void openEstimatePreview()}
+                >
+                  Use in estimate
+                </Button>
+              </div>
+            </footer>
+          )}
         </div>
         {tab === "Configure" && (
           <aside className="cpq-summary">{summaryContent}</aside>
         )}
       </div>
-      {!historical && (
-        <footer className="cpq-footer">
-          <div>
-            <strong role="status">
-              {calculating
-                ? "Recalculating…"
-                : command.hasUnsavedChanges
-                  ? "Unsaved changes"
-                  : command.status}
-            </strong>
-            <small>
-              {current
-                ? "Save the configuration before using it in the estimate."
-                : "Incomplete entries can be saved as a working draft."}
-            </small>
-          </div>
-          <div className="cpq-actions">
-            <Button
-              disabled={!canUse}
-              onClick={() => void openEstimatePreview()}
-            >
-              Use in estimate
-            </Button>
-            <Button
-              variant="primary"
-              busy={command.busy}
-              disabled={!editable || busy || calculating}
-              onClick={() => void save()}
-            >
-              {current ? "Save configuration" : "Save working draft"}
-            </Button>
-          </div>
-        </footer>
-      )}
       {summary && (
         <CpqDialog
           title="Configuration summary"

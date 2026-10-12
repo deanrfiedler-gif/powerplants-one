@@ -21,3 +21,7 @@ Four route consumers `/estimating/cpq`, `/estimating/cpq/[id]`, `/estimating/rul
 ## Alignment and review
 
 Native cent rounding, saved shell preferences and data-dependent labels are explicit departures from literal design example values. No private Pro SVG or private Figma URL is committed. The named version and [44 icon-free source captures](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) are retained. Owner visual review, physical devices and screen readers remain open. Functional proof and deployment are tracked separately in docs/delivery/cpq-ui-handover.md. No review fingerprint is asserted by this change.
+
+Configure & price keeps its white desktop summary alongside the entire workspace column, including the header, tabs and action footer, as retained frame 16 shows. Rules studio keeps Quick test beside its definition body as frame 02 shows. At phone widths summary opens in the full-screen panel; Save precedes Use in the configuration footer.
+
+Native fields use an explicit accessible name from the visible label, with help as a separate description. Select options do not become part of the field name; the Review adjustment journey selects the exact Decision field.

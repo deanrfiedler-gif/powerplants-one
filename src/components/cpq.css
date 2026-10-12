@@ -310,6 +310,21 @@
   padding: 24px;
   scroll-padding: 24px;
 }
+.cpq-workbench {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.cpq-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
 .cpq-body {
   display: flex;
   flex: 1;
@@ -432,7 +447,7 @@
 .cpq-summary {
   width: 380px;
   flex: 0 0 380px;
-  background: #f6f7f9;
+  background: #fff;
   border-left: 1px solid var(--cpq-line);
   padding: 24px;
   overflow: auto;
@@ -779,6 +794,12 @@
 @media (max-width: 600px) {
   #ppo-cpq .mw-content {
     overflow: auto;
+  }
+  .cpq-workbench,
+  .cpq-main {
+    display: block;
+    overflow: visible;
+    flex: none;
   }
   .cpq-header {
     padding: 16px;

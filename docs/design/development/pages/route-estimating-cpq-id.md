@@ -12,7 +12,7 @@ Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 476:33
 
 ## Desktop
 
-At 1440 × 960 retain the existing 64 px shell header and 240 px rail. CPQ outline is 240 px; rule definition starts with it collapsed. Header, readiness and view tabs precede the scroll region. Configure has a 380 px summary; rule authoring has a 380 px quick test. Why uses a 400 px drawer. White cards, #e1e5eb borders, #f6f7f9 background, Roboto 14/20 body and 20/26 page title. Option cards use #e9f1fa with a #365d8b selected border. Reuse scoped shared buttons and product icons.
+At 1440 × 960 retain the existing 64 px shell header and 240 px rail. CPQ outline is 240 px; rule definition starts with it collapsed. Header, readiness and view tabs precede the scroll region. Configure has a white 380 px summary spanning the full workspace height beside the header, tabs, content and Save/Use footer; rule authoring has a 380 px quick test. Why uses a 400 px drawer. White cards, #e1e5eb borders, #f6f7f9 background, Roboto 14/20 body and 20/26 page title. Option cards use #e9f1fa with a #365d8b selected border. Reuse scoped shared buttons and product icons.
 
 ## Mobile
 
