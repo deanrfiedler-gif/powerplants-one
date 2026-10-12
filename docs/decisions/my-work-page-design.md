@@ -58,6 +58,7 @@ This is a design decision. It authorises none of the following:
 | R5 Owner after Due | Claude's recommendation, adopted | In activity grids the Owner column follows Due, so Team queue uses the same row as My actions |
 | R6 Weather is compact and conditional | Claude's recommendation, adopted | One small panel, shown only when a provider is connected, focused on today's site visits (section 6) |
 | R7 Phone quick actions | Claude's recommendation, adopted | Emails, Leads and Tasks stay, with their names under the icons. Map and Insights are hidden until those features exist |
+| Save the named Figma version | User confirmation, 12 October 2026 | "I have saved it as My Work — Pipedrive pattern, accepted" |
 | Q1 Weather provider | Resolved by "Proceed" | An ADR chooses the provider before anything is built. Dean suggested Google Weather; the ADR compares it and settles the key, cost, attribution, caching and locations |
 | Q3 Phone quick actions | Resolved by "Proceed" | As R7 |
 | Q5 Order of the Overview side column | Resolved by "Proceed" | Weather first, then Today's schedule, Waiting on others and Needs a next activity |

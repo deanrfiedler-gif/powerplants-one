@@ -34,7 +34,7 @@ The viewer is Sasha Clarke in Estimating & quotation, on Monday 12 October 2026.
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design" in Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "My Work — Pipedrive pattern, accepted", to be saved by Dean |
+| Named version | "My Work — Pipedrive pattern, accepted", saved by Dean on 12 October 2026 ("I have saved it as My Work — Pipedrive pattern, accepted") |
 | Accepted frames | Page "My Work (accepted)" `404:2`: Overview `404:3`, My actions `411:84514`, activity window `413:982`, Record outcome `413:92120`, Team queue `415:3573`, Reviews & handovers `415:91696`, Blocked & waiting `415:92578`, Updates Inbox `415:94450`, phone Overview `404:181`, phone My actions `414:1984` and phone Activity `414:2309` |
 | Capture copies | Page "Captures (icon-free)": `448:46897`, `448:47599`, `448:48523`, `448:49602`, `448:50552`, `448:51542`, `448:52104`, `448:52650`, `448:53325` (images 01–09 in order) |
 
