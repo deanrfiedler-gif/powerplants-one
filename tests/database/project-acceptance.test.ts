@@ -12,6 +12,8 @@ import { readWorkspace, file } from "../../src/projects/acceptance/reads";
 import { readOperation } from "../../src/shared/receipts";
 import { saveTask, readSchedule } from "../../src/projects/service";
 import { taskInput } from "../helpers/projects";
+import { raidInput } from "../helpers/project-raid";
+import { saveRaid, readRaid } from "../../src/projects/raid";
 import { hasPermission } from "../../src/platform/permissions";
 import { principalOf } from "../helpers/engineering-materials-direct";
 import {
@@ -115,6 +117,8 @@ test("PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Servic
     ),
     originalScheduleSave = await saveTask(scheduleActor, project, task);
   const closed = await finishStage(project, s.stage);
+  const raid = { ...raidInput(), owner_id: scheduleActor.actor_id };
+  const raidOriginal = await saveRaid(scheduleActor, project, raid);
   assert.equal(closed.stage.closeout, "Closed");
   assert.deepEqual(closed.closeout_gates, []);
   for (const m of closed.manifests) {
@@ -141,6 +145,9 @@ test("PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Servic
   const closedSchedule = await readSchedule(scheduleActor, project);
   assert.equal(closedSchedule.project.lifecycle, "Closed");
   assert.equal(closedSchedule.project.can_edit, false);
+  assert.equal((await readRaid(scheduleActor, project, { id: raid.id })).current!.can_edit, false);
+  assert.deepEqual((await saveRaid(scheduleActor, project, raid)).receipt, raidOriginal.receipt);
+  await assert.rejects(saveRaid(scheduleActor, project, { ...raid, operation_id: randomUUID(), expected_version: 1 }), (e) => (e as { code: string }).code === "ClosedProject");
   assert.deepEqual(
     (await saveTask(scheduleActor, project, task)).receipt,
     originalScheduleSave.receipt,

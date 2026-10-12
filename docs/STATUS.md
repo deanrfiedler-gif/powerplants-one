@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Projects RAID and owned actions backend — 13 October 2026
+
+Repository writer: this authorised Projects backend session, branch `codex/projects-raid-backend`, based on main `7e4ef3b`. Dean asked to proceed with PJ-04 and supplied his 11 October Wrike feature audit as reference. The [contract](decisions/project-raid-backend.md) records the audit's bounded observations separately from PPO decisions. Migration 0087 adds typed owned RAID/Decision entries, immutable revisions, current scoped Activity links, reasoned closure/reopening and exact original recovery. Existing Project and Activity permissions apply; no grant, seed, schedule, booking or external integration changes. [Execution evidence](testing/evidence/project-raid/README.md) records validation. Native page/Figma work, owner acceptance, CI/review and deployment remain separate. Remaining BC-02 work includes project receiving/health and the explicit calendars/actuals contract.
+
 ## Leads PR integration — 12 October 2026
 
 Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. PR #452 incorporates the reconciled #451 head `8dd3ba6` so both contributions are verified with the merged backends before the dependency-ordered merges. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.
