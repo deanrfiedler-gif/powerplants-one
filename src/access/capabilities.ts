@@ -20,6 +20,7 @@ export const capabilityLabels = {
   "activity.read": "Read activities",
   "admin.access.apply":
     "Apply independently approved local synthetic access requests",
+  "admin.access.team.create": "Create local synthetic team records",
   "admin.access.propose": "Submit local synthetic access requests",
   "admin.access.approve":
     "Independently decide local synthetic access requests",

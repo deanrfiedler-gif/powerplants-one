@@ -1,0 +1,104 @@
+{
+  "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+  "browser": "155.0.8059.40",
+  "observed_at": "2026-10-11T12:03:08.033Z",
+  "captures": [
+    {
+      "file": "native-1440-teams.png",
+      "sha256": "0c587f6cecf48f78dce5709ac732fbd2ef3a5022f1738ac49b11f1aa90f5238e",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Retained example proposals with separate current local identities; both rosters expanded",
+      "framing": "Team section only; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "reference-1440-teams.png",
+      "sha256": "a8cf03dad3fdee99e12879d803b657b4c8351a352ac5e7e8898c3c1b05bbbd6a",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Retained team proposal preview; source-only roster/status and simulated routing guidance",
+      "framing": "Team section only; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "reference-390-teams.png",
+      "sha256": "9dc78afc794b064eaa56155aca318351bdd467652f76bed9659cb7d755902ddc",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Retained team proposal preview; source-only roster/status and simulated routing guidance",
+      "framing": "Team section only; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "reference-320-teams.png",
+      "sha256": "c75bf3c834663bdc7f9ff495ca653ad6221471ed0a1fa87984cb4a4d04a9b876",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Retained team proposal preview; source-only roster/status and simulated routing guidance",
+      "framing": "Team section only; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "native-390-teams.png",
+      "sha256": "170b0514ab4e36d10a28f370f66db06bd3d2019cf2f30690c9506a7cfd0ed93c",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Proposed teams with both example rosters expanded",
+      "framing": "Native viewport after scrolling within main; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "native-390-finance.png",
+      "sha256": "9e1db5962c5f5a467a9ebd2e7ce391f2fdac4186ec8dc16533c03cb0b27ac5ef",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Finance handoff with both example rosters expanded",
+      "framing": "Native viewport after scrolling within main; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "native-320-teams.png",
+      "sha256": "3d2dd224ba7d40f05105c9fd095b320aa68ebc0917b24f6f0891f59af142129c",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Proposed teams with both example rosters expanded",
+      "framing": "Native viewport after scrolling within main; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    },
+    {
+      "file": "native-320-finance.png",
+      "sha256": "b448d46e96e9fccf4b360a282baa07ac20be2ab73439b1bab8bea02045434c36",
+      "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Finance handoff with both example rosters expanded",
+      "framing": "Native viewport after scrolling within main; SVG icons replaced by plain square placeholders before capture",
+      "overflow": false
+    }
+  ],
+  "phone_recaptured_at": "2026-10-11T12:05:01.498Z"
+}

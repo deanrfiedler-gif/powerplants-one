@@ -1,0 +1,20 @@
+
+Running 9 tests using 1 worker
+
+(node:28828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\browser\access-local-teams.spec.ts:17:1 › AD01 saved teams: real creation, lost response, reload recovery and native roster (3.9s)
+  ok 2 [desktop] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue (2.8s)
+  ok 3 [desktop] › tests\browser\access-local-teams.spec.ts:150:1 › AD01 saved teams: real HTTP authority, origin, strict input and private response boundaries (981ms)
+(node:32556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [phone] › tests\browser\access-local-teams.spec.ts:17:1 › AD01 saved teams: real creation, lost response, reload recovery and native roster (4.1s)
+  ok 5 [phone] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue (2.9s)
+  ok 6 [phone] › tests\browser\access-local-teams.spec.ts:150:1 › AD01 saved teams: real HTTP authority, origin, strict input and private response boundaries (1.1s)
+(node:30296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 7 [narrow] › tests\browser\access-local-teams.spec.ts:17:1 › AD01 saved teams: real creation, lost response, reload recovery and native roster (4.1s)
+  ok 8 [narrow] › tests\browser\access-local-teams.spec.ts:95:1 › AD01 saved teams: unavailable refresh hides saved data; denied detail clears whole catalogue (3.0s)
+  ok 9 [narrow] › tests\browser\access-local-teams.spec.ts:150:1 › AD01 saved teams: real HTTP authority, origin, strict input and private response boundaries (1.1s)
+
+  9 passed (34.5s)

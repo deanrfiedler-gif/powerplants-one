@@ -1,0 +1,115 @@
+{
+  "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+  "browser": "155.0.8059.40",
+  "observed_at": "2026-10-11T10:32:08.455Z",
+  "captures": [
+    {
+      "file": "native-1440-withdrawal-control.png",
+      "sha256": "7c1669eccc2ad65edad703ea0f8b1481ffc2771ec890707e16ead5919d1c0fe3",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Approved version 2, original requester withdrawal form",
+      "request_id": "569a00d5-f61c-4fc2-9a20-d15a5d6238bd",
+      "overflow": false
+    },
+    {
+      "file": "native-1440-withdrawn-handover.png",
+      "sha256": "cf9b4fb35aada55d85c87ca49b2f6ae1c6448f6a9f54477a524ba271dfd3606c",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Withdrawn version 3, retained approval and fresh-request handover",
+      "request_id": "569a00d5-f61c-4fc2-9a20-d15a5d6238bd",
+      "overflow": false
+    },
+    {
+      "file": "reference-1440-changes.png",
+      "sha256": "d79b33e616065febecfc99e726281e940ac847140f2e3f5dc6f18ce4b7eb506e",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "Retained simulated access-change workflow; different closure states and authority",
+      "request_id": null,
+      "overflow": false
+    },
+    {
+      "file": "native-390-withdrawal-control.png",
+      "sha256": "4afd8487a001e5a2c1d48fb972dc217a728d4e6fdf2beab3a6d86d117c6f02f0",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Approved version 2, original requester withdrawal form",
+      "request_id": "a4f81efb-22fb-4c32-8491-f5ebb422eb90",
+      "overflow": false
+    },
+    {
+      "file": "native-390-withdrawn-handover.png",
+      "sha256": "2ae58b960510cdb7d302283aa1971c97fbbdad2ed2e49ea3e536e2ad8feaa32a",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Withdrawn version 3, retained approval and fresh-request handover",
+      "request_id": "a4f81efb-22fb-4c32-8491-f5ebb422eb90",
+      "overflow": false
+    },
+    {
+      "file": "reference-390-changes.png",
+      "sha256": "3096386a4e7d6b77a24f9132d1b0556a9a235ac475f60de77df315599409a23d",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "Retained simulated access-change workflow; different closure states and authority",
+      "request_id": null,
+      "overflow": false
+    },
+    {
+      "file": "native-320-withdrawal-control.png",
+      "sha256": "a7cd3cb1a0f9e016f790fbc55ee8c7edf50426fe5a28f86db63f74a4e46b825d",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Approved version 2, original requester withdrawal form",
+      "request_id": "7ff05fe1-3335-4c8b-91f9-76af67b66ff6",
+      "overflow": false
+    },
+    {
+      "file": "native-320-withdrawn-handover.png",
+      "sha256": "f8ebd85fc04cf497366a54b652d39acb3a4b5bb919cc702ba46b712437dfeda3",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Withdrawn version 3, retained approval and fresh-request handover",
+      "request_id": "7ff05fe1-3335-4c8b-91f9-76af67b66ff6",
+      "overflow": false
+    },
+    {
+      "file": "reference-320-changes.png",
+      "sha256": "53cb9af350038af12b024022f8700c0e539c1a42068224260b5a31edac20d087",
+      "source": "e00f6a2970a70a9cd9dcc8c9a5787b6a878e2e77",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "Retained simulated access-change workflow; different closure states and authority",
+      "request_id": null,
+      "overflow": false
+    }
+  ]
+}

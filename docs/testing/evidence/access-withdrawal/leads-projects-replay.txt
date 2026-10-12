@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: fresh combined installation retains both registries and both domains through repeat migration and seed
+ok 1 - fresh combined installation retains both registries and both domains through repeat migration and seed
+  ---
+  duration_ms: 37635.9157
+  type: 'test'
+  ...
+# Subtest: main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts
+ok 2 - main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts
+  ---
+  duration_ms: 42224.9372
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84594.7231

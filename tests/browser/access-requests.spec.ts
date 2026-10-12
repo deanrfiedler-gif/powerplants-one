@@ -117,12 +117,17 @@ test("AD-01 submit, reopen and independently return an exact proposal without ch
     exact: true,
   });
   await expect(link).toBeVisible();
+  const savedPath = await link.getAttribute("href");
+  expect(savedPath).toMatch(/^\/admin\/access\/requests\/[0-9a-f-]{36}$/);
+  const url = new URL(savedPath!, baseURL!).href;
   await link.click();
+  // Queue content also contains SYN-B; it cannot prove the client navigation
+  // finished before we retain a URL for the later reviewer identity.
+  await expect(page).toHaveURL(url);
   await expect(page.locator("main")).toContainText("SYN-B");
   await expect(
     page.getByRole("button", { name: "Record decision", exact: true }),
   ).toHaveCount(0);
-  const url = page.url();
   await page.reload();
   await expect(page.locator("main")).toContainText("Version 1");
   await browserFixtureCall(
@@ -535,6 +540,260 @@ test("AD-01 stale application and denied command clear protected context", async
   );
   await expect(
     page.getByLabel("Application reason", { exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator("main")).not.toContainText(g.input.capability);
+});
+
+test("AD-01 requester withdraws both un-applied states and starts a fresh independently reviewed proposal", async ({
+  page,
+  baseURL,
+}) => {
+  for (const state of ["Submitted", "Approved"]) {
+    const f =
+      state === "Approved"
+        ? await approvedFixture(page, baseURL!)
+        : await fixture(page, baseURL!);
+    if (state === "Submitted")
+      await browserFixtureCall(page, base, f.input, baseURL!);
+    await browserFixtureCall(
+      page,
+      "local-session",
+      { profile: "scheduling-policy-reviewer" },
+      baseURL!,
+    );
+    await page.goto(`/${base}/${f.input.request_id}`);
+    await expect(
+      page.getByRole("button", { name: "Withdraw request", exact: true }),
+    ).toHaveCount(0);
+    await browserFixtureCall(
+      page,
+      "local-session",
+      { profile: "systems" },
+      baseURL!,
+    );
+    await page.reload();
+    if (state === "Approved") {
+      await page
+        .getByLabel("Application reason", { exact: true })
+        .fill("This independent application reason must not be overwritten.");
+      await page.getByLabel("Withdrawal reason", { exact: true }).fill("short");
+      await page
+        .getByRole("button", { name: "Withdraw request", exact: true })
+        .click();
+      await expect(
+        page.getByLabel("Withdrawal reason", { exact: true }),
+      ).toHaveAttribute("aria-invalid", "true");
+      const notice = page.locator("main").getByRole("alert");
+      await expect(notice).toBeFocused();
+      await notice.locator('a[href="#withdrawal_reason"]').click();
+      await expect(
+        page.getByLabel("Withdrawal reason", { exact: true }),
+      ).toBeFocused();
+      await expect(
+        page.getByLabel("Application reason", { exact: true }),
+      ).toHaveAttribute("aria-invalid", "false");
+      await expect(
+        page.getByLabel("Application reason", { exact: true }),
+      ).toHaveValue(
+        "This independent application reason must not be overwritten.",
+      );
+    }
+    await page
+      .getByLabel("Withdrawal reason", { exact: true })
+      .fill(
+        "Close this obsolete proposal; a fresh independent decision is required.",
+      );
+    await page
+      .getByRole("button", { name: "Withdraw request", exact: true })
+      .click();
+    await expect(
+      page.getByRole("status").filter({ hasText: "Request withdrawal saved" }),
+    ).toContainText("No grants changed");
+    await page
+      .getByRole("button", { name: "Refresh request and history" })
+      .click();
+    await expect(page.locator("main .status-chip")).toHaveText("Withdrawn");
+    await expect(page.locator("main")).toContainText(
+      `Withdraw · Version ${state === "Submitted" ? 2 : 3}`,
+    );
+    await expect(
+      page.getByRole("button", { name: "Apply approved grant", exact: true }),
+    ).toHaveCount(0);
+    if (state === "Approved")
+      await expect(page.locator("main")).toContainText(
+        "Retained approval reason:",
+      );
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+    const grants = await browserFixtureCall(
+      page,
+      `admin/access/${subject}`,
+      undefined,
+      baseURL!,
+    );
+    expect(grants.grants).toEqual(f.grants);
+    await page
+      .getByRole("link", { name: "Create a fresh request", exact: true })
+      .click();
+    await fill(page, f.input.capability);
+    await page
+      .getByRole("button", { name: "Submit for independent review" })
+      .click();
+    const saved = page.getByRole("link", {
+      name: "Open saved request",
+      exact: true,
+    });
+    await expect(saved).toBeVisible();
+    await expect(saved).not.toHaveAttribute(
+      "href",
+      `/${base}/${f.input.request_id}`,
+    );
+    const savedPath = await saved.getAttribute("href");
+    expect(savedPath).toMatch(/^\/admin\/access\/requests\/[0-9a-f-]+$/);
+    await saved.click();
+    await expect(page).toHaveURL(new URL(savedPath!, baseURL!).href);
+    await expect(
+      page.getByRole("heading", { name: "Access request", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator("main .status-chip")).toHaveText("Submitted");
+    await expect(page.locator("main")).toContainText("Version 1");
+  }
+});
+
+test("AD-01 lost committed withdrawal response recovers the original after reload", async ({
+  page,
+  baseURL,
+}) => {
+  const f = await approvedFixture(page, baseURL!);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.goto(`/${base}/${f.input.request_id}`);
+  await page
+    .getByLabel("Withdrawal reason", { exact: true })
+    .fill("Recover this exact closure after losing the committed response.");
+  let operationId = "";
+  await page.route(
+    `**/api/v1/${base}/${f.input.request_id}/withdraw`,
+    async (route) => {
+      const response = await route.fetch();
+      expect(response.ok()).toBe(true);
+      operationId = (await response.json()).operation_id;
+      await route.abort("failed");
+    },
+  );
+  await page
+    .getByRole("button", { name: "Withdraw request", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Retry unchanged action" }),
+  ).toBeEnabled();
+  await expect(
+    page.getByRole("button", { name: "Withdraw request", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Apply approved grant", exact: true }),
+  ).toBeDisabled();
+  await page.unroute(`**/api/v1/${base}/${f.input.request_id}/withdraw`);
+  await page.reload();
+  await expect(
+    page.getByRole("link", { name: "Open saved request", exact: true }),
+  ).toHaveAttribute("href", `/${base}/${f.input.request_id}`);
+  await expect(page.locator("main .status-chip")).toHaveText("Withdrawn");
+  const original = await browserFixtureCall(
+    page,
+    `${base}/operations/${operationId}`,
+    undefined,
+    baseURL!,
+  );
+  const d = await browserFixtureCall(
+    page,
+    `${base}/${f.input.request_id}`,
+    undefined,
+    baseURL!,
+  );
+  expect(original.state).toBe("Withdrawn");
+  expect(d.history).toHaveLength(3);
+  expect(d.history[2].operation_id).toBe(operationId);
+});
+
+test("AD-01 stale withdrawal cannot undo an application and denied closure hides protected context", async ({
+  page,
+  baseURL,
+}) => {
+  const f = await approvedFixture(page, baseURL!);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.goto(`/${base}/${f.input.request_id}`);
+  await page
+    .getByLabel("Withdrawal reason", { exact: true })
+    .fill("This stale tab must not close a grant already installed elsewhere.");
+  await browserFixtureCall(
+    page,
+    `${base}/${f.input.request_id}/apply`,
+    {
+      schema_version: 1,
+      operation_id: randomUUID(),
+      expected_version: 2,
+      reason:
+        "A separate tab installed the exact independently approved grant.",
+    },
+    baseURL!,
+  );
+  await page
+    .getByRole("button", { name: "Withdraw request", exact: true })
+    .click();
+  await expect(page.locator("main").getByRole("alert").first()).toContainText(
+    "exact un-applied",
+  );
+  await page
+    .getByRole("button", { name: "Refresh request and history" })
+    .click();
+  await expect(page.locator("main .status-chip")).toHaveText("Applied");
+  await expect(
+    page.getByRole("button", { name: "Withdraw request", exact: true }),
+  ).toHaveCount(0);
+  const g = await approvedFixture(page, baseURL!);
+  await browserFixtureCall(
+    page,
+    "local-session",
+    { profile: "systems" },
+    baseURL!,
+  );
+  await page.goto(`/${base}/${g.input.request_id}`);
+  await page
+    .getByLabel("Withdrawal reason", { exact: true })
+    .fill("A refused command must hide the retained protected proposal.");
+  await page.route(
+    `**/api/v1/${base}/${g.input.request_id}/withdraw`,
+    (route) =>
+      route.fulfill({
+        status: 403,
+        contentType: "application/json",
+        body: JSON.stringify({
+          code: "Forbidden",
+          message: "Submission duty no longer held.",
+        }),
+      }),
+  );
+  await page
+    .getByRole("button", { name: "Withdraw request", exact: true })
+    .click();
+  await expect(page.locator("main")).toContainText(
+    "Submission duty no longer held",
+  );
+  await expect(
+    page.getByLabel("Withdrawal reason", { exact: true }),
   ).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText(g.input.capability);
 });

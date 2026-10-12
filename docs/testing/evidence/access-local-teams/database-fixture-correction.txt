@@ -1,0 +1,53 @@
+✔ AD01 teams: populated 0081 upgrade preserves history and adds exactly one local duty (16406.2912ms)
+▶ AD01 teams: creation, retention, authority and recovery
+  ✔ atomic original roster, audit and receipt; no permission, session or request mutation (69.3654ms)
+  ✔ strict schema, exact IDs, explicit distinct bounded roster and version (39.4237ms)
+  ✔ read/approve, lead and membership confer no creation duty (22.2995ms)
+  ✔ current working company, inactive actor and expired duty refuse without mutation (42.5827ms)
+  ✖ deactivated or hosted participant refused; original replay survives later identity changes (37.1905ms)
+  ✔ same-operation concurrent retry records once; same-team concurrent operation conflicts (54.0782ms)
+  ✔ authority mutation queued before creation is revalidated after table lock (18.4417ms)
+  ✔ SQL guards retain exact record, roster and evidence; incomplete insertion rolls back (335.1511ms)
+  ✔ another authorised actor cannot recover or collide with the original actor receipt (95.2482ms)
+  ✔ hosted environment refuses every team API service before database access (1.1402ms)
+✖ AD01 teams: creation, retention, authority and recovery (719.7237ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 10
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18888.385
+
+✖ failing tests:
+
+test at tests\database\access-local-teams.test.ts:1:7967
+✖ deactivated or hosted participant refused; original replay survives later identity changes (37.1905ms)
+  error: new row for relation "users" violates check constraint "users_issuer_check"
+      at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async rows (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:26:4)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:345:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\access-local-teams.test.ts:313:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 329,
+    severity: 'ERROR',
+    code: '23514',
+    detail: 'Failing row contains (30000000-0000-4000-8000-000000000005, 10000000-0000-4000-8000-000000000001, PPO-HostedFixture, site-observer, SYN Site observer, t, t).',
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: 'ppo',
+    table: 'users',
+    column: undefined,
+    dataType: undefined,
+    constraint: 'users_issuer_check',
+    file: 'execMain.c',
+    line: '2114',
+    routine: 'ExecConstraints'
+  }

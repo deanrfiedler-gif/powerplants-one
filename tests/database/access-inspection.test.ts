@@ -862,3 +862,143 @@ test("AD01-04 proposed roles compare current authority at one exact scope withou
     },
   );
 });
+
+test("AD01-05 proposed teams distinguish retained examples from current local identities", async (t) => {
+  await migrate();
+  await seed();
+  const systems = (await createSession("systems")).principal;
+  const other = (await createSession("other-workspace")).principal;
+  const target = "30000000-0000-4000-8000-000000000005";
+  const service = async () =>
+    (await accessRoles(systems)).teams.find(
+      (team) => team.id === "team-service",
+    )!;
+  await t.test(
+    "exact proposals, design-only gaps, current names and inactive local identities",
+    async () => {
+      const initial = await service();
+      assert.equal(initial.lead.current, null);
+      assert(initial.lead.designOnly);
+      assert.equal(initial.members.length, 4);
+      assert.equal(
+        initial.members.filter((person) => person.current).length,
+        3,
+      );
+      assert.equal(initial.members[3].to, "2026-09-12");
+      const saved = (
+        await rows("SELECT display_name,active FROM ppo.users WHERE id=$1", [
+          target,
+        ])
+      )[0];
+      try {
+        await database().query(
+          "UPDATE ppo.users SET display_name='SYN Current renamed observer',active=false WHERE id=$1",
+          [target],
+        );
+        const changed = (await service()).members.find(
+          (person) => person.id === target,
+        )!;
+        assert.equal(changed.name, "SYN Site observer");
+        assert.deepEqual(changed.current, {
+          id: target,
+          display_name: "SYN Current renamed observer",
+          active: false,
+        });
+      } finally {
+        await database().query(
+          "UPDATE ppo.users SET display_name=$2,active=$3 WHERE id=$1",
+          [target, saved.display_name, saved.active],
+        );
+      }
+    },
+  );
+  await t.test(
+    "a design-only ID collision is never resolved to a current identity",
+    async () => {
+      const id = "3a000000-0000-4000-8000-000000000003";
+      await database().query(
+        "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic','team-collision','SYN Must not resolve')",
+        [id, ws],
+      );
+      try {
+        const result = await service();
+        assert.equal(result.lead.current, null);
+        assert(!JSON.stringify(result).includes("SYN Must not resolve"));
+      } finally {
+        await database().query("DELETE FROM ppo.users WHERE id=$1", [id]);
+      }
+    },
+  );
+  await t.test(
+    "hosted identity behind a retained ID is unavailable and its data stays private",
+    async () => {
+      await database().query(
+        "UPDATE ppo.users SET issuer='PPO-EntraDemo' WHERE id=$1",
+        [target],
+      );
+      try {
+        const person = (await service()).members.find((p) => p.id === target)!;
+        assert.equal(person.current, null);
+        assert.equal(person.designOnly, false);
+        assert.deepEqual(Object.keys(person).sort(), [
+          "current",
+          "designOnly",
+          "from",
+          "id",
+          "name",
+          "to",
+        ]);
+      } finally {
+        await database().query(
+          "UPDATE ppo.users SET issuer='PPO-LocalSynthetic' WHERE id=$1",
+          [target],
+        );
+      }
+    },
+  );
+  await t.test(
+    "another workspace cannot resolve this workspace's identities even with inspection authority",
+    async () => {
+      const id = randomUUID();
+      await database().query(
+        "INSERT INTO ppo.permission_grants(id,workspace_id,user_id,capability,scope_type,scope_id,valid_from) VALUES($1,$2,$3,'admin.access.read','Workspace',$2,'2026-01-01')",
+        [id, other.workspace_id, other.actor_id],
+      );
+      try {
+        const result = await accessRoles(other);
+        assert.equal(result.team_example_date, "2026-09-17");
+        assert(
+          result.teams
+            .flatMap((team) => [team.lead, ...team.members])
+            .every((p) => p.current === null),
+        );
+      } finally {
+        await database().query(
+          "DELETE FROM ppo.permission_grants WHERE id=$1",
+          [id],
+        );
+      }
+    },
+  );
+  await t.test(
+    "repeated team reads preserve users, grants, sessions and all request/audit evidence",
+    async () => {
+      const snapshot = () =>
+        Promise.all(
+          [
+            "users",
+            "permission_grants",
+            "sessions",
+            "audit_events",
+            "working_companies",
+            "access_change_requests",
+            "access_change_operations",
+          ].map((name) => rows(`SELECT * FROM ppo.${name} ORDER BY 1,2`)),
+        );
+      const before = await snapshot();
+      assert.deepEqual(await accessRoles(systems), await accessRoles(systems));
+      assert.deepEqual(await snapshot(), before);
+      await assert.rejects(accessRoles(other), code("Forbidden"));
+    },
+  );
+});

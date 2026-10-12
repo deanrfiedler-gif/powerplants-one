@@ -1,0 +1,967 @@
+TAP version 13
+# Subtest: E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection
+ok 1 - E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection
+  ---
+  duration_ms: 23712.7649
+  type: 'test'
+  ...
+# Subtest: E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it
+ok 2 - E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it
+  ---
+  duration_ms: 36694.633
+  type: 'test'
+  ...
+# Subtest: E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants
+ok 3 - E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants
+  ---
+  duration_ms: 135362.5283
+  type: 'test'
+  ...
+# Subtest: DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery
+ok 4 - DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery
+  ---
+  duration_ms: 102847.184
+  type: 'test'
+  ...
+# Subtest: FI07-03 changed recipient, source, service owner and permissions refuse fresh capture and retain originals
+ok 5 - FI07-03 changed recipient, source, service owner and permissions refuse fresh capture and retain originals
+  ---
+  duration_ms: 49898.4077
+  type: 'test'
+  ...
+# Subtest: FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers
+ok 6 - FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers
+  ---
+  duration_ms: 108460.4791
+  type: 'test'
+  ...
+# Subtest: FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants
+ok 7 - FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants
+  ---
+  duration_ms: 114798.3794
+  type: 'test'
+  ...
+# Subtest: P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants
+ok 8 - P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants
+  ---
+  duration_ms: 83953.8234
+  type: 'test'
+  ...
+# Subtest: P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds
+ok 9 - P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds
+  ---
+  duration_ms: 53755.9158
+  type: 'test'
+  ...
+# Subtest: LC-12 populated previous-version upgrade preserves all Lead originals and permission grants
+ok 10 - LC-12 populated previous-version upgrade preserves all Lead originals and permission grants
+  ---
+  duration_ms: 67913.9626
+  type: 'test'
+  ...
+# Subtest: fresh combined installation retains both registries and both domains through repeat migration and seed
+ok 11 - fresh combined installation retains both registries and both domains through repeat migration and seed
+  ---
+  duration_ms: 87045.8193
+  type: 'test'
+  ...
+# Subtest: main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts
+ok 12 - main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts
+  ---
+  duration_ms: 211424.0223
+  type: 'test'
+  ...
+# Subtest: an existing Leads 0018 record and receipt survive the Projects upgrade exactly
+ok 13 - an existing Leads 0018 record and receipt survive the Projects upgrade exactly
+  ---
+  duration_ms: 184577.367
+  type: 'test'
+  ...
+# Subtest: a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed
+ok 14 - a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed
+  ---
+  duration_ms: 124979.7298
+  type: 'test'
+  ...
+# Subtest: P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants
+ok 15 - P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants
+  ---
+  duration_ms: 129286.0212
+  type: 'test'
+  ...
+# Subtest: LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance
+not ok 16 - LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance
+  ---
+  duration_ms: 80756.6843
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\outcome-sources.test.ts:1:10557'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+
+      [
+        {
+          applied_at: 2026-10-11T13:04:30.388Z,
+          sha256: '6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4',
+          version: 1
+    ...
+        },
+    +   {
+    +     applied_at: 2026-10-11T13:05:20.882Z,
+    +     sha256: '01325c3b3411c21fcb9e49e2fb67ab9f7aa5ad21af6ab9df7bcf830164c80c05',
+    +     version: 75
+    +   }
+      ]
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      version: 1
+      sha256: '6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4'
+      applied_at: 2026-10-11T13:04:30.388Z
+    1:
+      version: 2
+      sha256: '9f817da163dc168b61fe363665f1b1bc3308e75ddb44aa71fac96e99a1225bdb'
+      applied_at: 2026-10-11T13:04:31.523Z
+    2:
+      version: 3
+      sha256: '3a7e3ed9cea0707b260a5f105775c9c64a683c1722cc64b8b2d76d5ce708720f'
+      applied_at: 2026-10-11T13:04:31.736Z
+    3:
+      version: 4
+      sha256: 'f090bea4f4d006dcdc559eb434899a6f403a71343d560d7f4a998dac8299f927'
+      applied_at: 2026-10-11T13:04:32.510Z
+    4:
+      version: 5
+      sha256: 'ca7d58a72e05828fdb63b6b59a174638f57f064510ac0fb7fbbddba592944fb6'
+      applied_at: 2026-10-11T13:04:33.362Z
+    5:
+      version: 6
+      sha256: 'a46bb0541fdbbe1a2e7786703233f46b44ed0fa51b7918e0be51240d0b12a3a0'
+      applied_at: 2026-10-11T13:04:34.222Z
+    6:
+      version: 7
+      sha256: '0471df2d8774964b328008330b65577f6887aef52d88eb50888f0d1221d46599'
+      applied_at: 2026-10-11T13:04:34.710Z
+    7:
+      version: 8
+      sha256: '91be021b877c0dc49f669f4052f6493148de9b9430c5032d4617b0f8a5667166'
+      applied_at: 2026-10-11T13:04:34.914Z
+    8:
+      version: 9
+      sha256: '39cbffd1abd943b5f5e3f6c2648fe8585310a6f1edaacfa5c966c4dc2bd57731'
+      applied_at: 2026-10-11T13:04:35.734Z
+    9:
+      version: 10
+      sha256: '4e750f4ba1a27ece94985081d2d56cecc88542fa40b70b4b76a43944d4ae082a'
+      applied_at: 2026-10-11T13:04:36.176Z
+    10:
+      version: 11
+      sha256: 'c9d6291e33ce5adc8e32551ee9307674250d75d9f9b58858c93d504a87b2ee81'
+      applied_at: 2026-10-11T13:04:37.491Z
+    11:
+      version: 12
+      sha256: '953847c6a89f5195c83a787929c4fe8f3038b8e8e80b14c695a7ba498c608469'
+      applied_at: 2026-10-11T13:04:38.034Z
+    12:
+      version: 13
+      sha256: 'b2f7eee7e762756bf1e53ae58fbaae9b3fb2fe72f34061e8ee903973effe876c'
+      applied_at: 2026-10-11T13:04:38.047Z
+    13:
+      version: 14
+      sha256: '6c7a3b5fd822e7063513565ac2d5725c7ca1fe91adaac6c7d4224dac319a988f'
+      applied_at: 2026-10-11T13:04:38.055Z
+    14:
+      version: 15
+      sha256: '481953b1e47acad2233d548d30b9e0e91f3dafb3f5d16f01a2480fd5c348069b'
+      applied_at: 2026-10-11T13:04:38.196Z
+    15:
+      version: 17
+      sha256: '55651d39a66368ee033adc818a7a26f1178b3888d776308ac7881c39bd1768b3'
+      applied_at: 2026-10-11T13:04:38.255Z
+    16:
+      version: 18
+      sha256: '2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255'
+      applied_at: 2026-10-11T13:04:38.594Z
+    17:
+      version: 19
+      sha256: '9b58480eb0daebe8bbe4af4ac952d0d43bb2b6cd621b87f095547e426a4f1043'
+      applied_at: 2026-10-11T13:04:38.877Z
+    18:
+      version: 20
+      sha256: 'cd80e09e3fffb0af4b658b96c813dc85ea16fc4b000d5fa59d6e1a2739d9e8ce'
+      applied_at: 2026-10-11T13:04:39.061Z
+    19:
+      version: 21
+      sha256: 'd90196ffb3e58919e7ed50915b87bec504dca9bd9ca303d250dea45c1befd8fe'
+      applied_at: 2026-10-11T13:04:39.099Z
+    20:
+      version: 22
+      sha256: '58e6424077e3a0ddd9ca27ea0826b5850df953c46705b066f20ec1e2fd52d8d0'
+      applied_at: 2026-10-11T13:04:39.114Z
+    21:
+      version: 23
+      sha256: 'f33d7454ba4cf12fa58443eec1fa9275be47642f453ac01fb1ffd9e81d0bba80'
+      applied_at: 2026-10-11T13:04:39.230Z
+    22:
+      version: 24
+      sha256: 'c8fe85a674a3d0e48750405e01192230f79d9d02165d6e368f7b52db42647950'
+      applied_at: 2026-10-11T13:04:39.406Z
+    23:
+      version: 25
+      sha256: '022ee3b533ab9907d4bad4bfe0f4e1172a0d783157b8cf2d0abf0587cab79e03'
+      applied_at: 2026-10-11T13:04:39.425Z
+    24:
+      version: 26
+      sha256: '35d1909820c49ba6c7d06fbcbdf0f08eea295eb9b01b99995812e8f1f7c80148'
+      applied_at: 2026-10-11T13:04:39.958Z
+    25:
+      version: 27
+      sha256: '594423763e394da82d996ce02ddd4699fc2d8fd1aa4e9d55236fbca4fcd1b7df'
+      applied_at: 2026-10-11T13:04:40.041Z
+    26:
+      version: 28
+      sha256: 'ddecfcbf9c65287ef358c3024e2faa9f24c3c9ae9f64560c7eda0af52c6a9b74'
+      applied_at: 2026-10-11T13:04:40.090Z
+    27:
+      version: 29
+      sha256: 'a4f348864915c24262a2819cf9da33bb5171f7e04bdb7b1e04f045017d41d2b4'
+      applied_at: 2026-10-11T13:04:40.947Z
+    28:
+      version: 30
+      sha256: '3674efdd59991fca4b6caa8cc4caa6f8507eccb2a0934db53785c067d44be67a'
+      applied_at: 2026-10-11T13:04:43.053Z
+    29:
+      version: 31
+      sha256: 'ad6acda04a5856e4e77bf585d541dfa78780328a29df8ddaf8136ecd3b5ba6b7'
+      applied_at: 2026-10-11T13:04:46.083Z
+    30:
+      version: 32
+      sha256: '8cf465cadfa44b874bb3ee60e5738bfd3334c2033156da87dd76caee5a6a5a5b'
+      applied_at: 2026-10-11T13:04:47.262Z
+    31:
+      version: 33
+      sha256: '05645b8e934b3e2fbb189a0fb15e70249f954847bf14b9688c01bf52bccd5b99'
+      applied_at: 2026-10-11T13:04:47.331Z
+    32:
+      version: 34
+      sha256: '2633dd4be124f267d920eb77e6d935cdc291315e145bbae7b68a3b4f63ac7ea6'
+      applied_at: 2026-10-11T13:04:47.521Z
+    33:
+      version: 35
+      sha256: 'ec6f19344550d4af340f4f0ccd5b14748e6e6d43354a8b845965c015cc37a95b'
+      applied_at: 2026-10-11T13:04:47.574Z
+    34:
+      version: 36
+      sha256: '8e59bb81caef9f6e5d3f27d32a808e554009b33aaa7a902e6951f722a0de72de'
+      applied_at: 2026-10-11T13:04:47.649Z
+    35:
+      version: 37
+      sha256: '6cce3c3a96a08b08a33564a7f378497fb32522deb20e5eb482e0504053d3a64a'
+      applied_at: 2026-10-11T13:04:47.718Z
+    36:
+      version: 38
+      sha256: '0327af08bf3531c288e07fcffe1b048ac7a9bd754b67b137f81027bf79fb6486'
+      applied_at: 2026-10-11T13:04:47.727Z
+    37:
+      version: 39
+      sha256: '782765ecb2ac3398e216133c5c999cc0817bdca0f812cfd66d4bf7a47cd81470'
+      applied_at: 2026-10-11T13:04:47.793Z
+    38:
+      version: 40
+      sha256: '80d9f7167167e2937c3228bae67080f7153ee97f877866122e4d8178ffec41a2'
+      applied_at: 2026-10-11T13:04:48.584Z
+    39:
+      version: 41
+      sha256: '87b29fefab54c8c1db0ceabb713821d2696c3089b4c7922989df59540162d222'
+      applied_at: 2026-10-11T13:04:48.852Z
+    40:
+      version: 42
+      sha256: '3e9cf1eb92bf5570d13473061ea703aa5be68b7449a911bf5aee014b35ce82ca'
+      applied_at: 2026-10-11T13:04:49.437Z
+    41:
+      version: 43
+      sha256: 'dc9ab6b3eb1428358db32f2318c82e12c5f74d9da1eafc76f14aabbfe15a30de'
+      applied_at: 2026-10-11T13:04:49.622Z
+    42:
+      version: 44
+      sha256: '6617700a2103d330b1db24926ad5cff0cfcb95c4bfc01f3922a3890f670bae14'
+      applied_at: 2026-10-11T13:04:50.151Z
+    43:
+      version: 45
+      sha256: '02129d0b50340fef2d0c35198c6242379f2e294ad0ea3f32a77f86ee6d9879b3'
+      applied_at: 2026-10-11T13:04:50.829Z
+    44:
+      version: 46
+      sha256: '6f72b06bc3d04de4e6e3c64930ec0fb1678c3d9c54031970afd5de77103e985b'
+      applied_at: 2026-10-11T13:04:51.059Z
+    45:
+      version: 47
+      sha256: '3db21aa295aef19faf84fddb301fece150489e4f98d6fd7c6015113cc554c631'
+      applied_at: 2026-10-11T13:04:52.262Z
+    46:
+      version: 48
+      sha256: '6b99f171efb97cade73b6f196898fdeb7011aca21617a638f9cf6c8f15745231'
+      applied_at: 2026-10-11T13:04:53.249Z
+    47:
+      version: 49
+      sha256: '352b2965af84b5e47791c54e5587f2ecca2d25078c46ff760d4d281ebfc5f82b'
+      applied_at: 2026-10-11T13:04:54.975Z
+    48:
+      version: 50
+      sha256: '5ceba1aa2ce9c547cbfb59f0d5fe1938ffe2e2363873b5856b9dbb4e9c2c8a8a'
+      applied_at: 2026-10-11T13:04:55.474Z
+    49:
+      version: 51
+      sha256: '44c950d7d21be9a7887a7a6608f7101380b1a1f4e0271a6e415b8cc9944eddfc'
+      applied_at: 2026-10-11T13:05:02.361Z
+    50:
+      version: 52
+      sha256: 'a93c485bf485e5de228bcc8b1fa280b398759ea5b65e244f34bf7458f1aad447'
+      applied_at: 2026-10-11T13:05:03.252Z
+    51:
+      version: 53
+      sha256: 'a541e7b9e5cf57322ffbc00de0dbb231420de0679d4c6a25e5b6487894617218'
+      applied_at: 2026-10-11T13:05:04.255Z
+    52:
+      version: 54
+      sha256: '7dce7c45d1e3872a8884ee9a0d5a8ce4ff698aebec743703f60b27d5701bed84'
+      applied_at: 2026-10-11T13:05:04.444Z
+    53:
+      version: 55
+      sha256: 'a28d7b8c1384625cfa9a27581f8591084d10d60dbda2171f87ddf9e36eefc741'
+      applied_at: 2026-10-11T13:05:04.691Z
+    54:
+      version: 56
+      sha256: 'aac258eba0f4051399a913966d8ae55636d6530bd1e2633f7f9ff51ea54824b6'
+      applied_at: 2026-10-11T13:05:05.113Z
+    55:
+      version: 57
+      sha256: '818122710640fbe8187fb94a2a904f5595653ea18ca8edfaafb04c6c8096922c'
+      applied_at: 2026-10-11T13:05:05.174Z
+    56:
+      version: 58
+      sha256: 'a95f9e4b76b467a4512767bc66d6143580233d61fa20fe3fb4fae59b47fb4c69'
+      applied_at: 2026-10-11T13:05:05.307Z
+    57:
+      version: 59
+      sha256: '14cb6b3e80552f7b435122b64a05cad3626f4cad7a37b0b0a5cd7a4f41f6df41'
+      applied_at: 2026-10-11T13:05:05.566Z
+    58:
+      version: 60
+      sha256: '375da07fb363f4889afcc358dd9e2a7a785547fc11a7adbb423c780add053050'
+      applied_at: 2026-10-11T13:05:05.681Z
+    59:
+      version: 61
+      sha256: 'f5a1b4b714e80232c4c9e1115c873ed2722c92e9024c1465dd2b3cf501590423'
+      applied_at: 2026-10-11T13:05:05.876Z
+    60:
+      version: 62
+      sha256: '0049933da5b5a682b1603d7a4fb27d33618b76a940230cc0c54873079a49e877'
+      applied_at: 2026-10-11T13:05:05.995Z
+    61:
+      version: 63
+      sha256: '3777da0e4c1a3b5d3d7aad8f070160e940ed52cac610756d9175ed3870e823a2'
+      applied_at: 2026-10-11T13:05:06.149Z
+    62:
+      version: 64
+      sha256: 'd5254296d021998e26894f915524eda582ae66827bc89f3fa852abf22d150e14'
+      applied_at: 2026-10-11T13:05:06.171Z
+    63:
+      version: 65
+      sha256: 'a31b5c0762b39e0bd5a20b74ee0a95ec9d73b72f582aa9fbe81b98cec40ecc0e'
+      applied_at: 2026-10-11T13:05:06.396Z
+    64:
+      version: 66
+      sha256: 'a685ff5ad08b3b3970366cc17740c107c64dd187b0a6d549251321e49a129e1d'
+      applied_at: 2026-10-11T13:05:06.643Z
+    65:
+      version: 67
+      sha256: 'd34f44ffef104e0b77eebd0c82b9688a315d2d9e2657155aa3298dbaf57f85d1'
+      applied_at: 2026-10-11T13:05:06.824Z
+    66:
+      version: 68
+      sha256: 'ad6b5f8c14ee8c897dff76bf4699f9bf559fbb7b8c1983087679c36ba944a2cb'
+      applied_at: 2026-10-11T13:05:06.875Z
+    67:
+      version: 69
+      sha256: 'bd997195581ab185bb95e016c2c8ef08e6a6547e1629230866c50f9d9d7fd9ad'
+      applied_at: 2026-10-11T13:05:06.945Z
+    68:
+      version: 70
+      sha256: '5fccad613c026a90c2efa3b3ac2c369333a16b7d24f24afc0b466b60edb85437'
+      applied_at: 2026-10-11T13:05:07.006Z
+    69:
+      version: 71
+      sha256: '3e3e36e65b8c94b1301f28693d06d39c4d9b318ede5c0abcb78eab22bdbc71a8'
+      applied_at: 2026-10-11T13:05:07.040Z
+    70:
+      version: 72
+      sha256: 'fa46919b4012196ecaff12af0aba19b75f92b62617367625d9c0dea61b84b80b'
+      applied_at: 2026-10-11T13:05:07.113Z
+    71:
+      version: 73
+      sha256: 'e9f2b63df599e9ce38472ae1061f4c31d7b91c0df7b774d96a36154bbb091379'
+      applied_at: 2026-10-11T13:05:07.223Z
+    72:
+      version: 74
+      sha256: 'cef4c16e126669a711a95385e87eea94b8a1778d85b5eb1a622b72b6e3118097'
+      applied_at: 2026-10-11T13:05:07.289Z
+  actual:
+    0:
+      version: 1
+      sha256: '6817290d78e6493a8b266ddfdef1c5a2806683516e9f397c5c6fa3a8d8e1aaf4'
+      applied_at: 2026-10-11T13:04:30.388Z
+    1:
+      version: 2
+      sha256: '9f817da163dc168b61fe363665f1b1bc3308e75ddb44aa71fac96e99a1225bdb'
+      applied_at: 2026-10-11T13:04:31.523Z
+    2:
+      version: 3
+      sha256: '3a7e3ed9cea0707b260a5f105775c9c64a683c1722cc64b8b2d76d5ce708720f'
+      applied_at: 2026-10-11T13:04:31.736Z
+    3:
+      version: 4
+      sha256: 'f090bea4f4d006dcdc559eb434899a6f403a71343d560d7f4a998dac8299f927'
+      applied_at: 2026-10-11T13:04:32.510Z
+    4:
+      version: 5
+      sha256: 'ca7d58a72e05828fdb63b6b59a174638f57f064510ac0fb7fbbddba592944fb6'
+      applied_at: 2026-10-11T13:04:33.362Z
+    5:
+      version: 6
+      sha256: 'a46bb0541fdbbe1a2e7786703233f46b44ed0fa51b7918e0be51240d0b12a3a0'
+      applied_at: 2026-10-11T13:04:34.222Z
+    6:
+      version: 7
+      sha256: '0471df2d8774964b328008330b65577f6887aef52d88eb50888f0d1221d46599'
+      applied_at: 2026-10-11T13:04:34.710Z
+    7:
+      version: 8
+      sha256: '91be021b877c0dc49f669f4052f6493148de9b9430c5032d4617b0f8a5667166'
+      applied_at: 2026-10-11T13:04:34.914Z
+    8:
+      version: 9
+      sha256: '39cbffd1abd943b5f5e3f6c2648fe8585310a6f1edaacfa5c966c4dc2bd57731'
+      applied_at: 2026-10-11T13:04:35.734Z
+    9:
+      version: 10
+      sha256: '4e750f4ba1a27ece94985081d2d56cecc88542fa40b70b4b76a43944d4ae082a'
+      applied_at: 2026-10-11T13:04:36.176Z
+    10:
+      version: 11
+      sha256: 'c9d6291e33ce5adc8e32551ee9307674250d75d9f9b58858c93d504a87b2ee81'
+      applied_at: 2026-10-11T13:04:37.491Z
+    11:
+      version: 12
+      sha256: '953847c6a89f5195c83a787929c4fe8f3038b8e8e80b14c695a7ba498c608469'
+      applied_at: 2026-10-11T13:04:38.034Z
+    12:
+      version: 13
+      sha256: 'b2f7eee7e762756bf1e53ae58fbaae9b3fb2fe72f34061e8ee903973effe876c'
+      applied_at: 2026-10-11T13:04:38.047Z
+    13:
+      version: 14
+      sha256: '6c7a3b5fd822e7063513565ac2d5725c7ca1fe91adaac6c7d4224dac319a988f'
+      applied_at: 2026-10-11T13:04:38.055Z
+    14:
+      version: 15
+      sha256: '481953b1e47acad2233d548d30b9e0e91f3dafb3f5d16f01a2480fd5c348069b'
+      applied_at: 2026-10-11T13:04:38.196Z
+    15:
+      version: 17
+      sha256: '55651d39a66368ee033adc818a7a26f1178b3888d776308ac7881c39bd1768b3'
+      applied_at: 2026-10-11T13:04:38.255Z
+    16:
+      version: 18
+      sha256: '2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255'
+      applied_at: 2026-10-11T13:04:38.594Z
+    17:
+      version: 19
+      sha256: '9b58480eb0daebe8bbe4af4ac952d0d43bb2b6cd621b87f095547e426a4f1043'
+      applied_at: 2026-10-11T13:04:38.877Z
+    18:
+      version: 20
+      sha256: 'cd80e09e3fffb0af4b658b96c813dc85ea16fc4b000d5fa59d6e1a2739d9e8ce'
+      applied_at: 2026-10-11T13:04:39.061Z
+    19:
+      version: 21
+      sha256: 'd90196ffb3e58919e7ed50915b87bec504dca9bd9ca303d250dea45c1befd8fe'
+      applied_at: 2026-10-11T13:04:39.099Z
+    20:
+      version: 22
+      sha256: '58e6424077e3a0ddd9ca27ea0826b5850df953c46705b066f20ec1e2fd52d8d0'
+      applied_at: 2026-10-11T13:04:39.114Z
+    21:
+      version: 23
+      sha256: 'f33d7454ba4cf12fa58443eec1fa9275be47642f453ac01fb1ffd9e81d0bba80'
+      applied_at: 2026-10-11T13:04:39.230Z
+    22:
+      version: 24
+      sha256: 'c8fe85a674a3d0e48750405e01192230f79d9d02165d6e368f7b52db42647950'
+      applied_at: 2026-10-11T13:04:39.406Z
+    23:
+      version: 25
+      sha256: '022ee3b533ab9907d4bad4bfe0f4e1172a0d783157b8cf2d0abf0587cab79e03'
+      applied_at: 2026-10-11T13:04:39.425Z
+    24:
+      version: 26
+      sha256: '35d1909820c49ba6c7d06fbcbdf0f08eea295eb9b01b99995812e8f1f7c80148'
+      applied_at: 2026-10-11T13:04:39.958Z
+    25:
+      version: 27
+      sha256: '594423763e394da82d996ce02ddd4699fc2d8fd1aa4e9d55236fbca4fcd1b7df'
+      applied_at: 2026-10-11T13:04:40.041Z
+    26:
+      version: 28
+      sha256: 'ddecfcbf9c65287ef358c3024e2faa9f24c3c9ae9f64560c7eda0af52c6a9b74'
+      applied_at: 2026-10-11T13:04:40.090Z
+    27:
+      version: 29
+      sha256: 'a4f348864915c24262a2819cf9da33bb5171f7e04bdb7b1e04f045017d41d2b4'
+      applied_at: 2026-10-11T13:04:40.947Z
+    28:
+      version: 30
+      sha256: '3674efdd59991fca4b6caa8cc4caa6f8507eccb2a0934db53785c067d44be67a'
+      applied_at: 2026-10-11T13:04:43.053Z
+    29:
+      version: 31
+      sha256: 'ad6acda04a5856e4e77bf585d541dfa78780328a29df8ddaf8136ecd3b5ba6b7'
+      applied_at: 2026-10-11T13:04:46.083Z
+    30:
+      version: 32
+      sha256: '8cf465cadfa44b874bb3ee60e5738bfd3334c2033156da87dd76caee5a6a5a5b'
+      applied_at: 2026-10-11T13:04:47.262Z
+    31:
+      version: 33
+      sha256: '05645b8e934b3e2fbb189a0fb15e70249f954847bf14b9688c01bf52bccd5b99'
+      applied_at: 2026-10-11T13:04:47.331Z
+    32:
+      version: 34
+      sha256: '2633dd4be124f267d920eb77e6d935cdc291315e145bbae7b68a3b4f63ac7ea6'
+      applied_at: 2026-10-11T13:04:47.521Z
+    33:
+      version: 35
+      sha256: 'ec6f19344550d4af340f4f0ccd5b14748e6e6d43354a8b845965c015cc37a95b'
+      applied_at: 2026-10-11T13:04:47.574Z
+    34:
+      version: 36
+      sha256: '8e59bb81caef9f6e5d3f27d32a808e554009b33aaa7a902e6951f722a0de72de'
+      applied_at: 2026-10-11T13:04:47.649Z
+    35:
+      version: 37
+      sha256: '6cce3c3a96a08b08a33564a7f378497fb32522deb20e5eb482e0504053d3a64a'
+      applied_at: 2026-10-11T13:04:47.718Z
+    36:
+      version: 38
+      sha256: '0327af08bf3531c288e07fcffe1b048ac7a9bd754b67b137f81027bf79fb6486'
+      applied_at: 2026-10-11T13:04:47.727Z
+    37:
+      version: 39
+      sha256: '782765ecb2ac3398e216133c5c999cc0817bdca0f812cfd66d4bf7a47cd81470'
+      applied_at: 2026-10-11T13:04:47.793Z
+    38:
+      version: 40
+      sha256: '80d9f7167167e2937c3228bae67080f7153ee97f877866122e4d8178ffec41a2'
+      applied_at: 2026-10-11T13:04:48.584Z
+    39:
+      version: 41
+      sha256: '87b29fefab54c8c1db0ceabb713821d2696c3089b4c7922989df59540162d222'
+      applied_at: 2026-10-11T13:04:48.852Z
+    40:
+      version: 42
+      sha256: '3e9cf1eb92bf5570d13473061ea703aa5be68b7449a911bf5aee014b35ce82ca'
+      applied_at: 2026-10-11T13:04:49.437Z
+    41:
+      version: 43
+      sha256: 'dc9ab6b3eb1428358db32f2318c82e12c5f74d9da1eafc76f14aabbfe15a30de'
+      applied_at: 2026-10-11T13:04:49.622Z
+    42:
+      version: 44
+      sha256: '6617700a2103d330b1db24926ad5cff0cfcb95c4bfc01f3922a3890f670bae14'
+      applied_at: 2026-10-11T13:04:50.151Z
+    43:
+      version: 45
+      sha256: '02129d0b50340fef2d0c35198c6242379f2e294ad0ea3f32a77f86ee6d9879b3'
+      applied_at: 2026-10-11T13:04:50.829Z
+    44:
+      version: 46
+      sha256: '6f72b06bc3d04de4e6e3c64930ec0fb1678c3d9c54031970afd5de77103e985b'
+      applied_at: 2026-10-11T13:04:51.059Z
+    45:
+      version: 47
+      sha256: '3db21aa295aef19faf84fddb301fece150489e4f98d6fd7c6015113cc554c631'
+      applied_at: 2026-10-11T13:04:52.262Z
+    46:
+      version: 48
+      sha256: '6b99f171efb97cade73b6f196898fdeb7011aca21617a638f9cf6c8f15745231'
+      applied_at: 2026-10-11T13:04:53.249Z
+    47:
+      version: 49
+      sha256: '352b2965af84b5e47791c54e5587f2ecca2d25078c46ff760d4d281ebfc5f82b'
+      applied_at: 2026-10-11T13:04:54.975Z
+    48:
+      version: 50
+      sha256: '5ceba1aa2ce9c547cbfb59f0d5fe1938ffe2e2363873b5856b9dbb4e9c2c8a8a'
+      applied_at: 2026-10-11T13:04:55.474Z
+    49:
+      version: 51
+      sha256: '44c950d7d21be9a7887a7a6608f7101380b1a1f4e0271a6e415b8cc9944eddfc'
+      applied_at: 2026-10-11T13:05:02.361Z
+    50:
+      version: 52
+      sha256: 'a93c485bf485e5de228bcc8b1fa280b398759ea5b65e244f34bf7458f1aad447'
+      applied_at: 2026-10-11T13:05:03.252Z
+    51:
+      version: 53
+      sha256: 'a541e7b9e5cf57322ffbc00de0dbb231420de0679d4c6a25e5b6487894617218'
+      applied_at: 2026-10-11T13:05:04.255Z
+    52:
+      version: 54
+      sha256: '7dce7c45d1e3872a8884ee9a0d5a8ce4ff698aebec743703f60b27d5701bed84'
+      applied_at: 2026-10-11T13:05:04.444Z
+    53:
+      version: 55
+      sha256: 'a28d7b8c1384625cfa9a27581f8591084d10d60dbda2171f87ddf9e36eefc741'
+      applied_at: 2026-10-11T13:05:04.691Z
+    54:
+      version: 56
+      sha256: 'aac258eba0f4051399a913966d8ae55636d6530bd1e2633f7f9ff51ea54824b6'
+      applied_at: 2026-10-11T13:05:05.113Z
+    55:
+      version: 57
+      sha256: '818122710640fbe8187fb94a2a904f5595653ea18ca8edfaafb04c6c8096922c'
+      applied_at: 2026-10-11T13:05:05.174Z
+    56:
+      version: 58
+      sha256: 'a95f9e4b76b467a4512767bc66d6143580233d61fa20fe3fb4fae59b47fb4c69'
+      applied_at: 2026-10-11T13:05:05.307Z
+    57:
+      version: 59
+      sha256: '14cb6b3e80552f7b435122b64a05cad3626f4cad7a37b0b0a5cd7a4f41f6df41'
+      applied_at: 2026-10-11T13:05:05.566Z
+    58:
+      version: 60
+      sha256: '375da07fb363f4889afcc358dd9e2a7a785547fc11a7adbb423c780add053050'
+      applied_at: 2026-10-11T13:05:05.681Z
+    59:
+      version: 61
+      sha256: 'f5a1b4b714e80232c4c9e1115c873ed2722c92e9024c1465dd2b3cf501590423'
+      applied_at: 2026-10-11T13:05:05.876Z
+    60:
+      version: 62
+      sha256: '0049933da5b5a682b1603d7a4fb27d33618b76a940230cc0c54873079a49e877'
+      applied_at: 2026-10-11T13:05:05.995Z
+    61:
+      version: 63
+      sha256: '3777da0e4c1a3b5d3d7aad8f070160e940ed52cac610756d9175ed3870e823a2'
+      applied_at: 2026-10-11T13:05:06.149Z
+    62:
+      version: 64
+      sha256: 'd5254296d021998e26894f915524eda582ae66827bc89f3fa852abf22d150e14'
+      applied_at: 2026-10-11T13:05:06.171Z
+    63:
+      version: 65
+      sha256: 'a31b5c0762b39e0bd5a20b74ee0a95ec9d73b72f582aa9fbe81b98cec40ecc0e'
+      applied_at: 2026-10-11T13:05:06.396Z
+    64:
+      version: 66
+      sha256: 'a685ff5ad08b3b3970366cc17740c107c64dd187b0a6d549251321e49a129e1d'
+      applied_at: 2026-10-11T13:05:06.643Z
+    65:
+      version: 67
+      sha256: 'd34f44ffef104e0b77eebd0c82b9688a315d2d9e2657155aa3298dbaf57f85d1'
+      applied_at: 2026-10-11T13:05:06.824Z
+    66:
+      version: 68
+      sha256: 'ad6b5f8c14ee8c897dff76bf4699f9bf559fbb7b8c1983087679c36ba944a2cb'
+      applied_at: 2026-10-11T13:05:06.875Z
+    67:
+      version: 69
+      sha256: 'bd997195581ab185bb95e016c2c8ef08e6a6547e1629230866c50f9d9d7fd9ad'
+      applied_at: 2026-10-11T13:05:06.945Z
+    68:
+      version: 70
+      sha256: '5fccad613c026a90c2efa3b3ac2c369333a16b7d24f24afc0b466b60edb85437'
+      applied_at: 2026-10-11T13:05:07.006Z
+    69:
+      version: 71
+      sha256: '3e3e36e65b8c94b1301f28693d06d39c4d9b318ede5c0abcb78eab22bdbc71a8'
+      applied_at: 2026-10-11T13:05:07.040Z
+    70:
+      version: 72
+      sha256: 'fa46919b4012196ecaff12af0aba19b75f92b62617367625d9c0dea61b84b80b'
+      applied_at: 2026-10-11T13:05:07.113Z
+    71:
+      version: 73
+      sha256: 'e9f2b63df599e9ce38472ae1061f4c31d7b91c0df7b774d96a36154bbb091379'
+      applied_at: 2026-10-11T13:05:07.223Z
+    72:
+      version: 74
+      sha256: 'cef4c16e126669a711a95385e87eea94b8a1778d85b5eb1a622b72b6e3118097'
+      applied_at: 2026-10-11T13:05:07.289Z
+    73:
+      version: 75
+      sha256: '01325c3b3411c21fcb9e49e2fb67ab9f7aa5ad21af6ab9df7bcf830164c80c05'
+      applied_at: 2026-10-11T13:05:20.882Z
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\outcome-sources.test.ts:382:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts
+ok 17 - P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts
+  ---
+  duration_ms: 75072.639
+  type: 'test'
+  ...
+# Subtest: SC-06 pack read adds registry readiness, actors and an advisory basis for staff only, and leaves the checked snapshot alone
+ok 18 - SC-06 pack read adds registry readiness, actors and an advisory basis for staff only, and leaves the checked snapshot alone
+  ---
+  duration_ms: 48533.433
+  type: 'test'
+  ...
+# Subtest: P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits
+ok 19 - P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits
+  ---
+  duration_ms: 103640.3182
+  type: 'test'
+  ...
+# Subtest: populated 0050 upgrade preserves every old row/hash, registers 0051–0082 and exact authority/instrument additions
+not ok 20 - populated 0050 upgrade preserves every old row/hash, registers 0051–0082 and exact authority/instrument additions
+  ---
+  duration_ms: 62056.3961
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\policy-persistence.test.ts:1:3698'
+  failureType: 'testCodeFailure'
+  error: 'canceling statement due to statement timeout'
+  code: '57014'
+  name: 'error'
+  stack: |-
+    C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async snapshot (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\policy-persistence.test.ts:63:18)
+    async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\policy-persistence.test.ts:212:20)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: fresh installation applies only registered files through 0082, retains reserved gaps and repeats without changes
+not ok 21 - fresh installation applies only registered files through 0082, retains reserved gaps and repeats without changes
+  ---
+  duration_ms: 154407.4783
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\policy-persistence.test.ts:1:18807'
+  failureType: 'testCodeFailure'
+  error: 'canceling statement due to statement timeout'
+  code: '57014'
+  name: 'error'
+  stack: |-
+    C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async snapshot (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\policy-persistence.test.ts:63:18)
+    async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\policy-persistence.test.ts:693:17)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: PD upgrade from 25 preserves originals and exact new duties; repeat migration/seed is inert
+ok 22 - PD upgrade from 25 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 69016.4341
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 48 preserves originals and exact new duties; repeat migration/seed is inert
+ok 23 - PD upgrade from 48 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 86545.0352
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 71 preserves originals and exact new duties; repeat migration/seed is inert
+ok 24 - PD upgrade from 71 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 75300.4955
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 72 preserves originals and exact new duties; repeat migration/seed is inert
+ok 25 - PD upgrade from 72 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 66236.7557
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 74 preserves originals and exact new duties; repeat migration/seed is inert
+ok 26 - PD upgrade from 74 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 66312.7653
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 76 preserves originals and exact new duties; repeat migration/seed is inert
+ok 27 - PD upgrade from 76 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 111428.8218
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 77 preserves originals and exact new duties; repeat migration/seed is inert
+ok 28 - PD upgrade from 77 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 56349.0378
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 78 preserves originals and exact new duties; repeat migration/seed is inert
+ok 29 - PD upgrade from 78 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 52776.4968
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 79 preserves originals and exact new duties; repeat migration/seed is inert
+not ok 30 - PD upgrade from 79 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 10027.8263
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\products-upgrade.test.ts:1:1706'
+  failureType: 'testCodeFailure'
+  error: 'canceling statement due to statement timeout'
+  code: '57014'
+  name: 'error'
+  stack: |-
+    C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\products-upgrade.test.ts:41:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: PD upgrade from 80 preserves originals and exact new duties; repeat migration/seed is inert
+ok 31 - PD upgrade from 80 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 39188.2011
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 81 preserves originals and exact new duties; repeat migration/seed is inert
+ok 32 - PD upgrade from 81 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 57723.1678
+  type: 'test'
+  ...
+# Subtest: PD upgrade from 82 preserves originals and exact new duties; repeat migration/seed is inert
+ok 33 - PD upgrade from 82 preserves originals and exact new duties; repeat migration/seed is inert
+  ---
+  duration_ms: 49241.4194
+  type: 'test'
+  ...
+# Subtest: P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants
+ok 34 - P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants
+  ---
+  duration_ms: 26084.4986
+  type: 'test'
+  ...
+# Subtest: P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants
+ok 35 - P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants
+  ---
+  duration_ms: 33121.4603
+  type: 'test'
+  ...
+# Subtest: P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants
+ok 36 - P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants
+  ---
+  duration_ms: 38758.1119
+  type: 'test'
+  ...
+# Subtest: ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations
+ok 37 - ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations
+  ---
+  duration_ms: 88608.3605
+  type: 'test'
+  ...
+# Subtest: ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output
+ok 38 - ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output
+  ---
+  duration_ms: 65471.7297
+  type: 'test'
+  ...
+# Subtest: ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes
+ok 39 - ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes
+  ---
+  duration_ms: 65771.3552
+  type: 'test'
+  ...
+# Subtest: prepared reads work without migration-ledger privilege and refresh changed relation result shapes
+ok 40 - prepared reads work without migration-ledger privilege and refresh changed relation result shapes
+  ---
+  duration_ms: 23731.303
+  type: 'test'
+  ...
+# Subtest: ES07 material: quotation retention leaves owned work actionable and returned native evidence requires fresh explicit disposition
+ok 41 - ES07 material: quotation retention leaves owned work actionable and returned native evidence requires fresh explicit disposition
+  ---
+  duration_ms: 65448.5448
+  type: 'test'
+  ...
+# Subtest: ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte
+ok 42 - ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte
+  ---
+  duration_ms: 71425.5487
+  type: 'test'
+  ...
+# Subtest: ES07 Receipt immutable return, hold, receiving corrections and proposal replacements require fresh exact decisions
+ok 43 - ES07 Receipt immutable return, hold, receiving corrections and proposal replacements require fresh exact decisions
+  ---
+  duration_ms: 56419.1705
+  type: 'test'
+  ...
+# Subtest: ES07 Receipt populated 0064 upgrade preserves prior generations grants histories allocations outputs and original operations
+ok 44 - ES07 Receipt populated 0064 upgrade preserves prior generations grants histories allocations outputs and original operations
+  ---
+  duration_ms: 46409.4189
+  type: 'test'
+  ...
+# Subtest: ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants
+ok 45 - ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants
+  ---
+  duration_ms: 49968.9876
+  type: 'test'
+  ...
+# Subtest: ES07 dependency executes exact native successor, conserves shared quantities, recovers originals and requires fresh disposition
+ok 46 - ES07 dependency executes exact native successor, conserves shared quantities, recovers originals and requires fresh disposition
+  ---
+  duration_ms: 52124.1318
+  type: 'test'
+  ...
+# Subtest: ES07 dependency populated 0063 upgrade preserves all rows, accepted reviews, receipts, grants, histories and output bytes
+ok 47 - ES07 dependency populated 0063 upgrade preserves all rows, accepted reviews, receipts, grants, histories and output bytes
+  ---
+  duration_ms: 47726.4588
+  type: 'test'
+  ...
+# Subtest: ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes
+ok 48 - ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes
+  ---
+  duration_ms: 50017.9031
+  type: 'test'
+  ...
+# Subtest: ES07 Supply populated 0062 upgrade preserves all earlier commercial evidence, disposition, allocations, grants, identities and original bytes
+ok 49 - ES07 Supply populated 0062 upgrade preserves all earlier commercial evidence, disposition, allocations, grants, identities and original bytes
+  ---
+  duration_ms: 54246.6807
+  type: 'test'
+  ...
+# Subtest: quotation retention remains resolved through branch review; native result requires fresh explicit ES07 disposition
+ok 50 - quotation retention remains resolved through branch review; native result requires fresh explicit ES07 disposition
+  ---
+  duration_ms: 72976.3403
+  type: 'test'
+  ...
+# Subtest: populated 0069 upgrade preserves isolated-task originals, every old row and output byte
+ok 51 - populated 0069 upgrade preserves isolated-task originals, every old row and output byte
+  ---
+  duration_ms: 78667.8785
+  type: 'test'
+  ...
+# Subtest: populated 0069 upgrade preserves two-task originals, every old row and output byte
+ok 52 - populated 0069 upgrade preserves two-task originals, every old row and output byte
+  ---
+  duration_ms: 64739.856
+  type: 'test'
+  ...

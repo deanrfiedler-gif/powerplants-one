@@ -1,0 +1,411 @@
+
+Running 9 tests using 1 worker
+
+(node:33592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (2.0s)
+(node:12420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.8s)
+(node:32672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.7s)
+(node:33288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.9s)
+(node:28812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.8s)
+(node:33808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.8s)
+(node:35148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  7 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.8s)
+(node:428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  8 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.4s)
+(node:35500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  9 [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants (1.8s)
+
+
+  1) [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-desktop-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-phone-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+
+    Error: apiRequestContext.fetch: connect ECONNREFUSED 127.0.0.1:3092
+    Call log:
+      - → POST http://127.0.0.1:3092/api/v1/local-session
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - Origin: http://127.0.0.1:3092
+        - Connection: close
+        - content-type: application/json
+        - content-length: 21
+
+
+       at ..\helpers\browser-fixture-call.ts:4
+
+      2 |
+      3 | export async function browserFixtureCall(page: Pick<Page, "request">, path: string, body?: unknown, origin = "http://127.0.0.1:3000") {
+    > 4 |   const r = await page.request.fetch(`/api/v1/${path}`, {
+        |                                ^
+      5 |     method: body === undefined ? "GET" : "POST",
+      6 |     // Fixture requests can follow a long browser interaction. Do not reuse an
+      7 |     // idle API socket at its closing boundary; retain the same cookie jar,
+        at browserFixtureCall (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\helpers\browser-fixture-call.ts:4:32)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:10:9)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\browser\access-requests.spec.ts:97:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-local-teams\parent-browser-replay\access-requests-AD-01-subm-12799-sal-without-changing-grants-narrow-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9 failed
+    [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [desktop] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [phone] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
+    [narrow] › tests\browser\access-requests.spec.ts:93:1 › AD-01 submit, reopen and independently return an exact proposal without changing grants
