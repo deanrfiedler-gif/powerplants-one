@@ -128,12 +128,26 @@
           "id": "ad01-local-team-host",
           "label": "Saved local team inspection",
           "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form. Fresh-detail identity labels replace older collection labels and remain on close; a separate mocked presentation fixture proves this state."
+        },
+        {
+          "id": "ad01-team-creation-host",
+          "label": "Native local team creation and recovery",
+          "description": "tests/browser/access-team-creation.spec.ts: explicit roster, validation, saved history beyond collection page, lost-response/reload original, absent-receipt exact retry for a second team, storage refusal, draft refresh, actor isolation and denied-context clearing. Uses the real host and shared controls; mocked transport/presentation failures are distinguished from actual authority/database proofs."
+        },
+        {
+          "id": "ad01-team-access-host",
+          "label": "Saved-team current access inspection",
+          "description": "tests/browser/access-team-access.spec.ts: exact person handover, timestamped row counts, masked/zero/inactive presentation, refresh preserving draft, stale-read withholding, denial and rapid selection at 1440/390/320 widths. Actual SQL authority/count proofs are separate."
         }
       ],
       "implementation": [
         {
           "path": "src/components/ui/button.tsx",
           "symbol": "Button"
+        },
+        {
+          "path": "src/components/ui/button.tsx",
+          "symbol": "ButtonLink"
         }
       ],
       "dependencies": [
@@ -155,7 +169,10 @@
         "src/components/sales-delivery-creation.tsx",
         "src/components/sales-followup.tsx",
         "src/access/local-team-screens.tsx",
-        "docs/decisions/access-local-teams.md"
+        "docs/decisions/access-local-teams.md",
+        "src/access/team-creation.tsx",
+        "docs/decisions/access-team-creation.md",
+        "docs/decisions/access-team-inspection-current.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -462,6 +479,22 @@
           "expected": "Saved roster and history readable at desktop/390/320 widths with keyboard controls and honest current identity labels.",
           "actual": "Existing cards/shared buttons and ReadState extended under ADR-0053 rule 6. Accepted native image and owner/device review remain missing.",
           "action": "Inspect source-bound saved-team captures and denied/loading/recovery states; retain separate operational policy status.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-team-creation",
+          "expected": "Explicit local creation and original recovery accessible at desktop/390/320 widths.",
+          "actual": "Existing form/control patterns reused; accepted native Figma image and owner/device review remain missing.",
+          "action": "Review source-bound form, pending, result and roster captures alongside host tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-team-access",
+          "expected": "Exact member handover and fresh/withheld read states remain understandable at desktop and phone widths.",
+          "actual": "Existing native card/list and shared controls reused; accepted native image and owner/device review missing.",
+          "action": "Review source-bound current-access captures with browser fixtures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1230,6 +1263,11 @@
           "id": "ad01-request-host",
           "label": "Access request, decision, application and withdrawal",
           "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed. Application and withdrawal reasons retain distinct IDs/values; the summary link focuses only the action with the server validation error."
+        },
+        {
+          "id": "ad01-team-creation-host",
+          "label": "Native local team creation and recovery",
+          "description": "tests/browser/access-team-creation.spec.ts: explicit roster, validation, saved history beyond collection page, lost-response/reload original, absent-receipt exact retry for a second team, storage refusal, draft refresh, actor isolation and denied-context clearing. Uses the real host and shared controls; mocked transport/presentation failures are distinguished from actual authority/database proofs."
         }
       ],
       "implementation": [
@@ -1255,7 +1293,9 @@
         "src/components/opportunity-outcome-source.tsx",
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
-        "src/components/sales-followup.tsx"
+        "src/components/sales-followup.tsx",
+        "src/access/team-creation.tsx",
+        "docs/decisions/access-team-creation.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1379,7 +1419,8 @@
         "route:/admin/access/capabilities/[id]",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "route:/admin/access/roles"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1519,6 +1560,14 @@
           "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
           "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-ad01-team-creation",
+          "expected": "Explicit local creation and original recovery accessible at desktop/390/320 widths.",
+          "actual": "Existing form/control patterns reused; accepted native Figma image and owner/device review remain missing.",
+          "action": "Review source-bound form, pending, result and roster captures alongside host tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2349,6 +2398,16 @@
           "id": "ad01-local-team-host",
           "label": "Saved local team inspection",
           "description": "tests/browser/access-local-teams.spec.ts: actual API creation, lost-response/reload receipt recovery and native initial roster; unavailable/denied presentation fixtures hide stale data. Pagination, exact grants, concurrency and immutable evidence are database proofs. Existing host, no isolated creation form. Fresh-detail identity labels replace older collection labels and remain on close; a separate mocked presentation fixture proves this state."
+        },
+        {
+          "id": "ad01-team-creation-host",
+          "label": "Native local team creation and recovery",
+          "description": "tests/browser/access-team-creation.spec.ts: explicit roster, validation, saved history beyond collection page, lost-response/reload original, absent-receipt exact retry for a second team, storage refusal, draft refresh, actor isolation and denied-context clearing. Uses the real host and shared controls; mocked transport/presentation failures are distinguished from actual authority/database proofs."
+        },
+        {
+          "id": "ad01-team-access-host",
+          "label": "Saved-team current access inspection",
+          "description": "tests/browser/access-team-access.spec.ts: exact person handover, timestamped row counts, masked/zero/inactive presentation, refresh preserving draft, stale-read withholding, denial and rapid selection at 1440/390/320 widths. Actual SQL authority/count proofs are separate."
         }
       ],
       "implementation": [
@@ -2374,7 +2433,10 @@
         "docs/design/development/navigation-fixtures.json",
         "src/components/navigation-intent.ts",
         "src/access/local-team-screens.tsx",
-        "docs/decisions/access-local-teams.md"
+        "docs/decisions/access-local-teams.md",
+        "src/access/team-creation.tsx",
+        "docs/decisions/access-team-creation.md",
+        "docs/decisions/access-team-inspection-current.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2634,6 +2696,22 @@
           "expected": "Saved roster and history readable at desktop/390/320 widths with keyboard controls and honest current identity labels.",
           "actual": "Existing cards/shared buttons and ReadState extended under ADR-0053 rule 6. Accepted native image and owner/device review remain missing.",
           "action": "Inspect source-bound saved-team captures and denied/loading/recovery states; retain separate operational policy status.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-team-creation",
+          "expected": "Explicit local creation and original recovery accessible at desktop/390/320 widths.",
+          "actual": "Existing form/control patterns reused; accepted native Figma image and owner/device review remain missing.",
+          "action": "Review source-bound form, pending, result and roster captures alongside host tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-team-access",
+          "expected": "Exact member handover and fresh/withheld read states remain understandable at desktop and phone widths.",
+          "actual": "Existing native card/list and shared controls reused; accepted native image and owner/device review missing.",
+          "action": "Review source-bound current-access captures with browser fixtures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

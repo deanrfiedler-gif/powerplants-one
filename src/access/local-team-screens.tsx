@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Button } from "../components/ui/button";
+import { useEffect, useRef, useState } from "react";
+import { Button, ButtonLink } from "../components/ui/button";
+import { LocalTeamCreation } from "./team-creation";
 import {
   type Failure,
   isDenied,
@@ -22,7 +23,20 @@ type Team = {
 };
 type Detail = {
   team: Omit<Team, "member_count">;
-  members: { user_id: string; display_name: string; active: boolean }[];
+  members: {
+    user_id: string;
+    display_name: string;
+    active: boolean;
+    masked: boolean;
+    checked_at: string;
+    grant_counts: {
+      recorded: number;
+      current: number;
+      scheduled: number;
+      expired: number;
+      inactive: number;
+    } | null;
+  }[];
   history: {
     operation_id: string;
     actor_name: string;
@@ -38,6 +52,7 @@ export function SavedLocalTeams({
 }) {
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
+  const receiptInspection = useRef(false);
   const [inspectedTeams, setInspectedTeams] = useState<
     Record<string, Omit<Team, "member_count">>
   >({});
@@ -56,6 +71,20 @@ export function SavedLocalTeams({
       ? detail.data.team
       : {}),
   }));
+  // A recovered receipt can predate the current 50-row page. Its exact detail
+  // remains inspectable without guessing a team by name or scanning pages.
+  if (
+    selected &&
+    detail.data &&
+    !detail.loading &&
+    !detail.error &&
+    visibleTeams &&
+    !visibleTeams.some((team) => team.id === selected)
+  )
+    visibleTeams.unshift({
+      ...detail.data.team,
+      member_count: detail.data.members.length,
+    });
   const error = list.error || detail.error;
   const failure = error as Failure | null;
   const denied =
@@ -64,6 +93,19 @@ export function SavedLocalTeams({
   useEffect(() => {
     if (denied) onDenied(error);
   }, [denied, error, onDenied]);
+  useEffect(() => {
+    if (
+      receiptInspection.current &&
+      selected &&
+      detail.data &&
+      !detail.loading &&
+      !list.loading &&
+      !error
+    ) {
+      document.getElementById(`local-team-${selected}`)?.focus();
+      receiptInspection.current = false;
+    }
+  }, [selected, detail.data, detail.loading, list.loading, error]);
   const refresh = () => {
     setSelected(null);
     setInspectedTeams({});
@@ -72,6 +114,15 @@ export function SavedLocalTeams({
   return (
     <section id="saved-local-teams" aria-labelledby="saved-local-teams-heading">
       <h2 id="saved-local-teams-heading">Saved local teams</h2>
+      <LocalTeamCreation
+        onDenied={onDenied}
+        onInspect={(id) => {
+          receiptInspection.current = true;
+          setSelected(id);
+          detail.reload();
+          list.reload();
+        }}
+      />
       <p className="callout">
         These synthetic records preserve an initial roster. Membership and the
         lead label grant no access or review duty. Current identity activity is
@@ -84,12 +135,14 @@ export function SavedLocalTeams({
       />
       {!list.loading && !error && list.data && (
         <>
-          {list.data.items.length === 0 && (
+          {visibleTeams?.length === 0 && (
             <p>No local teams have been recorded.</p>
           )}
           <div className="record-grid">
             {visibleTeams!.map((team) => (
               <article
+                id={`local-team-${team.id}`}
+                tabIndex={-1}
                 className="record-card"
                 key={team.id}
                 aria-label={`${team.name} saved team`}
@@ -132,9 +185,24 @@ export function SavedLocalTeams({
                   {selected === team.id ? "Close" : "Inspect"} roster for{" "}
                   {team.name}
                 </Button>
+                {selected === team.id && (
+                  <Button disabled={detail.loading} onClick={detail.reload}>
+                    Refresh member access
+                  </Button>
+                )}
                 {selected === team.id && detail.data && !detail.loading && (
                   <div>
                     <h4>Initial roster</h4>
+                    <p>
+                      Recorded grant rows, not effective business access or
+                      review authority. The lead appears only if recorded as a
+                      member. Person access checks current company/site rules
+                      separately.
+                    </p>
+                    <p>
+                      Member access checked{" "}
+                      <Stamp value={detail.data.members[0].checked_at} />.
+                    </p>
                     <ul>
                       {detail.data.members.map((member) => (
                         <li key={member.user_id} className="narrative">
@@ -144,6 +212,27 @@ export function SavedLocalTeams({
                             : "Inactive identity"}
                           <br />
                           Person ID: {member.user_id}
+                          {member.masked || !member.grant_counts ? (
+                            <p>
+                              Access not inspected for this masked identity.
+                            </p>
+                          ) : (
+                            <>
+                              <p>
+                                Recorded grants: {member.grant_counts.recorded}.
+                                Current: {member.grant_counts.current};
+                                Scheduled: {member.grant_counts.scheduled};
+                                Expired: {member.grant_counts.expired}; Inactive
+                                identity: {member.grant_counts.inactive}.
+                              </p>
+                              <ButtonLink
+                                href={`/admin/access/${member.user_id}`}
+                                aria-label={`Inspect person access for ${member.display_name} ${member.user_id}`}
+                              >
+                                Inspect person access
+                              </ButtonLink>
+                            </>
+                          )}
                         </li>
                       ))}
                     </ul>

@@ -30,7 +30,7 @@ The More slide-out and the collapsed rail and secondary menu are not captured ag
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Engineering workload — Pipedrive pattern, accepted", saved by Dean on 11 October 2026 |
+| Named version | "Engineering workload — Pipedrive pattern, accepted": Figma's 11 October 2026 8:25 pm (AEST) autosave, the first after these captures were committed at 8:13 pm. No version had this name until 12 October 2026, when Claude named that autosave at Dean's request; Figma shows the name as added that day |
 | Accepted frames | Page "Engineering workload (accepted)": desktop `184:1048`, desktop with two rows selected `189:23728`, phone `184:1435` |
 | Capture copies | Page "Captures (icon-free)": `193:13095`, `193:14382`, `193:15634`, `193:16956`, `193:17341` (images 01–05 in order) |
 
@@ -39,4 +39,4 @@ The capture copies are duplicates of the accepted frames with only two changes:
 - Each Font Awesome icon instance was swapped for `Icon/placeholder`: 202, 202, 212, 45 and 45 instances, in image order. A check after the swap found no Font Awesome instance left in any copy.
 - The record window was made visible for the state shown (images 02 and 05).
 
-The copies were made before Dean saved the named version, and the accepted page was not changed afterwards. Each copy was exported with the Figma connector and downloaded directly to this folder.
+The copies were made before the autosave that now carries the name, and the accepted page was not changed afterwards. Each copy was exported with the Figma connector and downloaded directly to this folder.

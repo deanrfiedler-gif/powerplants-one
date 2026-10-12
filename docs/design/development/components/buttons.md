@@ -165,7 +165,7 @@ The catalogue and holder routes reuse existing controls without changing their e
 
 ## AD-01 proposed-role consumers
 
-The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies to comparison and local-team creation; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
 
 Native role-capability details summaries reuse the existing ppo-button quiet style for its 44 px target and focus treatment; native disclosure semantics remain intact. No shared CSS or export changes.
 
@@ -192,3 +192,16 @@ Host fixtures live in `tests/browser/access-local-teams.spec.ts`; exact-record/c
 Actual implementation review: [six source-bound captures and observations](../../../testing/evidence/access-local-teams/review.md), source `039df64`, 1440/390/320 widths. No horizontal document overflow observed. Existing phone-title truncation, card height and vertical scrolling remain explicit limits; owner acceptance is still pending.
 
 Fresh roster details replace cached lead/creator labels on the selected card; closing retains the newer snapshot. Collection refresh/paging clears it. `access-local-teams.spec.ts` includes a distinct presentation fixture for this state; it does not claim a server identity change.
+
+## Native local team creation — 12 October 2026
+
+The [creation contract](../../../decisions/access-team-creation.md) adds a form inside Saved local teams using the existing Field, SelectField, ValidationFields, ErrorNotice, Button and recovery journal. Current creation context supplies active local identities and an explicit creation-duty flag; no name is preselected. Show exact IDs with names, explicit lead inclusion, 1–20 selected members and individual Remove controls. Name is at most 100 characters; purpose/reason are 10–1000. The initial roster remains immutable and grants no authority.
+
+At desktop and 390/320 widths use the existing vertical form fields and wrapped roster/receipt IDs. No new shared style/export or layout is adopted. Use native selects, labelled errors, keyboard buttons and the existing unsaved-navigation guard. Pending commands disable the form; explicit unchanged retry and original-result lookup reuse the actor/workspace/tab journal. A receipt shows exact team/operation IDs; Inspect saved team reads that exact roster even outside the current collection page. Recording another team is explicit. Refresh available people reviews unsubmitted draft loss; collection refresh preserves the form. Denial clears protected catalogue content. Storage failure sends nothing.
+
+Host fixtures: `tests/browser/access-team-creation.spec.ts`; current context/authority fixtures: `tests/database/access-local-teams.test.ts`. [Evidence](../../../testing/evidence/access-team-creation/README.md) separates functional checks from source-bound observations. Accepted native images, owner/device/zoom/screen-reader acceptance, membership editing and operational policy remain open. No review fingerprint is assigned.
+
+
+## AD-01 saved-team access host
+
+The [read contract](../../../decisions/access-team-inspection-current.md) reuses Button/ButtonLink, Stamp and ReadState within the expanded saved roster. Exact local-person links and Refresh member access retain ordinary keyboard semantics; masked identities have no access link. Refresh preserves the creation draft but hides previous counts until a fresh result arrives. Unavailable and denied reads remain distinct; denial clears protected content. Counts/UUIDs wrap on 390/320 widths without new CSS. Host state: tests/browser/access-team-access.spec.ts; [evidence](../../../testing/evidence/access-team-access/README.md). Owner/device/zoom/screen-reader review and accepted native imagery remain missing; no review fingerprint is assigned.
