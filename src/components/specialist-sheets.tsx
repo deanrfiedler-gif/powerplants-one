@@ -16,6 +16,7 @@ export type Selection = { bay: number; group: number };
 export type SheetContext = {
   project: string;
   estimate: string;
+  configuration?: string;
   signature: string;
   date: string;
   revision: string;
@@ -31,7 +32,7 @@ export function TitleBlock({ sheet, drawing, context, narrow = false }: { sheet:
     ["Project", context.project, false],
     ["Drawing", drawing, false],
     ["Estimate", context.estimate, true],
-    ["Configuration", `CFG ${context.signature}`, true],
+    ["Configuration", `${context.configuration ? `${context.configuration} · ` : ""}CFG ${context.signature}`, true],
     ["Date", context.date, false],
     ["Sheet", `${sheet} / 05`, true],
     ["Rev", context.revision, true],

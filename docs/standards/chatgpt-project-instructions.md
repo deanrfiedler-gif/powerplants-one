@@ -103,3 +103,6 @@ UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-atte
 PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.
 
 [Backend](../delivery/backend-completion-plan.md).
+
+
+ES-08: the 13 October Screen Configurator Workbench request authorises implementation of private Figma page 406:2. Follow `docs/decisions/es08-figma-implementation.md`; preserve exact synthetic backend authority, original run evidence and issued references. Design implementation, owner review and deployment remain separate.

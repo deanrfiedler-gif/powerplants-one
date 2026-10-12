@@ -515,7 +515,13 @@ export function ProductHeader() {
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
-  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  const screenWorkbench = /^\/estimating\/configurations\/[^/]+\/(configure|drawings|parts|pricing|compare|definition|history)$/.test(path);
+  if (screenWorkbench) {
+    const parent = crumbs.find(c => c.key === "page");
+    if (parent) parent.href = "/estimating/configurations";
+    crumbs.push({ key: "workbench", label: "Screen Configurator Workbench", kind: "page" });
+  }
+  if (record && shell.context && !screenWorkbench) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
   // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
   // and updates it in the same commit as the route, before the route announcer reads document.title.
   const title = documentTitle({

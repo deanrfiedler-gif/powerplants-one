@@ -5,7 +5,7 @@ import type { Comparison, Decision, Position } from "../estimating/specialist/ty
 import { headline, manualReview, type Headline } from "../estimating/specialist/workbench";
 import { NativePrices } from "./specialist-pricing";
 import type { Bench } from "./specialist-types";
-import { Notice, Pill, Segmented, fmt, money, readable, runLabel } from "./specialist-ui";
+import { Icon, Notice, Pill, Segmented, fmt, money, readable, runLabel } from "./specialist-ui";
 
 // Compare & save (design board artboard 05): the live configuration against a
 // saved run or a session-only scratch baseline (D9), line changes matched by
@@ -13,7 +13,7 @@ import { Notice, Pill, Segmented, fmt, money, readable, runLabel } from "./speci
 // record-run checklist. Saving never rewrites an earlier run.
 type Row = Comparison<Position>;
 const kinds = ["Changed", "Manual edit", "Added", "Removed", "Deleted", "Incompatible", "Unchanged"] as const;
-const value = (x: Position | null) => (x ? `${x.effective_quantity?.display ?? "Unresolved"} ${x.unit}` : "Omitted");
+const value = (x: Position | null) => (x ? `${x.effective_quantity ? fmt(Number(x.effective_quantity.display), Number.isInteger(Number(x.effective_quantity.display)) ? 0 : 2) : "Unresolved"} ${x.unit}` : "Omitted");
 const choicesFor = (kind: Row["kind"], current: Position | null, candidate: Position | null): { value: Decision["choice"]; label: string }[] =>
   kind === "Deleted"
     ? [
@@ -212,7 +212,7 @@ export function CompareView({ bench }: { bench: Bench }) {
                       <span className="es08-num">
                         <span className="es08-sub">{value(r.current)}</span> → <strong>{value(r.candidate)}</strong>
                       </span>
-                      <span className="es08-num es08-tone-info es08-strong">{r.current?.effective_quantity && r.candidate?.effective_quantity ? `${Number(r.candidate.effective_quantity.display) - Number(r.current.effective_quantity.display) > 0 ? "+" : ""}${fmt(Number(r.candidate.effective_quantity.display) - Number(r.current.effective_quantity.display), 2)}` : ""}</span>
+                      <span className="es08-num es08-tone-info es08-strong">{r.current?.effective_quantity && r.candidate?.effective_quantity ? `${Number(r.candidate.effective_quantity.display) - Number(r.current.effective_quantity.display) > 0 ? "+" : ""}${fmt(Number(r.candidate.effective_quantity.display) - Number(r.current.effective_quantity.display), Number.isInteger(Number(r.candidate.effective_quantity.display) - Number(r.current.effective_quantity.display)) ? 0 : 2)} ${r.candidate.unit}` : ""}</span>
                     </li>
                   ))}
                 </ul>
@@ -249,9 +249,7 @@ export function CompareView({ bench }: { bench: Bench }) {
             <ul aria-label="Save requirements" className="es08-checks">
               {checks.map((ck) => (
                 <li key={ck.label}>
-                  <span className={`es08-check-mark es08-check-mark--${ck.ok ? "ok" : "warn"}`} aria-hidden="true">
-                    {ck.ok ? "✓" : "!"}
-                  </span>
+                  <span className={`es08-check-mark es08-check-mark--${ck.ok ? "ok" : "warn"}`}><Icon name={ck.ok ? "check" : "warning"} /></span>
                   <span>
                     <span className="es08-strong">{ck.label}</span>
                     <span className={`es08-sub ${ck.ok ? "es08-tone-ok" : "es08-tone-warn"}`}>{ck.status}</span>

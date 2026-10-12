@@ -2136,6 +2136,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "es08-figma-host",
+          "label": "Screen Configurator Workbench",
+          "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
         }
       ],
       "implementation": [
@@ -2157,7 +2162,10 @@
       },
       "specification": "docs/design/development/components/menu.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:ES-08",
+        "route:/estimating/configurations/[id]",
+        "route:/estimating/configurations/[id]/[view]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -3161,6 +3169,11 @@
           "id": "shell-activation-loading",
           "label": "Desktop rail loading and phone handover",
           "description": "Customers host retains the original desktop/phone prefetch policy and captures request observations; keyboard and touch open the exact permitted People route and Back restores Customers. Fixture: tests/browser/shell-loading.spec.ts; directory and navigation-safety fixtures cover receiving, saved views, authority and dirty-state recovery."
+        },
+        {
+          "id": "es08-figma-host",
+          "label": "Screen Configurator Workbench",
+          "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
         }
       ],
       "implementation": [
@@ -3257,7 +3270,8 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/customers",
-        "route:/people"
+        "route:/people",
+        "scope:ES-08"
       ],
       "desktop": "76 px compact or 232 px labelled primary rail; accessible collapse button, identity/browser persistence and in-memory fallback. More contains ordinary permitted Workspace selection. Keep Home/More reachable with long and short rails; 1200 px secondary-menu docking remains.",
       "mobile": "Retain the 780/781 px boundary, visible Sales labels and global shell on Leads. More provides labelled permitted Workspace selection; equivalent destinations retain date/scope/record meaning. Check 320 px without page overflow; touch targets aim for 44 px.",
@@ -5491,6 +5505,11 @@
           "id": "es08-withheld",
           "label": "Section withheld",
           "description": "A drawing rule breach (Venlo span not a whole number of roofs, vent at or above the sawtooth rise, screen at or above the structure underside) withholds the section with its reason while the quantities stay valid (D14). Host fixture: tests/browser/specialist-workbench.spec.ts."
+        },
+        {
+          "id": "es08-figma-inspector",
+          "label": "Figma field inspection",
+          "description": "The same live geometry appears in the restyled sheets; selected fields open a bottom-sheet inspector on phones. Northbank synthetic fixture and tests/browser/specialist-workbench.spec.ts."
         }
       ],
       "implementation": [
@@ -5503,7 +5522,8 @@
         "src/estimating/specialist/drawing.ts",
         "src/estimating/specialist/workbench.ts",
         "src/components/specialist-sheets.tsx",
-        "src/components/specialist-workbench.css"
+        "src/components/specialist-workbench.css",
+        "src/components/specialist-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-G-Cross-Section-Engine-r01.png",
@@ -5512,7 +5532,9 @@
       },
       "specification": "docs/design/development/components/cross-section.md",
       "used_on": [
-        "scope:ES-08"
+        "scope:ES-08",
+        "route:/estimating/configurations/[id]",
+        "route:/estimating/configurations/[id]/[view]"
       ],
       "desktop": "Sheet variant at 1,280 × 310 inside the sheet frame; card variant at 660 × 330; mini variant at 400 × 236 in the live card. Width and height share one scale; labels are SVG text so downloads stay self-contained.",
       "mobile": "The SVG scales with its container; at 390 px the sheet text is small and the page relies on pinch zoom, as the design board's phone composition states.",
@@ -5524,6 +5546,94 @@
           "expected": "Paired owner comparison of the application sections with the design board's section engine and families standard at 1,440 px and 390 px.",
           "actual": "Application captures are retained in docs/reference/ui/specialist/workbench-native-r01; no owner review is recorded.",
           "action": "Review the retained captures beside the design board; record the result in the ES-08 page record.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "screen-configurator-workbench",
+      "title": "Screen Configurator Workbench",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Figma-aligned seven-view host with shared Bench state, context/readiness strips, source-attributed fields, menus, dynamic drawings, inspection panels and save recovery.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "seven-views",
+          "label": "Seven workbench views",
+          "description": "Synthetic Northbank at desktop/phone widths; menu sections/filters, all sheets, live results, pricing, comparison, findings and immutable history."
+        },
+        {
+          "id": "input-and-review",
+          "label": "Invalid and changed inputs",
+          "description": "Raw invalid drafts, drawing-only errors, untested options, missing rates and fourteen manual-review quantities use the existing rules."
+        },
+        {
+          "id": "receipt-recovery",
+          "label": "Saved, unknown and read-only",
+          "description": "Existing browser fixture covers original receipt recovery, late previews, permission withdrawal and exact receiving evidence."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/specialist-workbench.tsx",
+          "symbol": "SpecialistWorkspace"
+        },
+        {
+          "path": "src/components/specialist-header.tsx",
+          "symbol": "WorkbenchHeader"
+        },
+        {
+          "path": "src/components/specialist-menu.tsx",
+          "symbol": "WorkbenchMenu"
+        },
+        {
+          "path": "src/components/specialist-ui.tsx",
+          "symbol": "Segmented"
+        },
+        {
+          "path": "src/components/specialist-ui.tsx",
+          "symbol": "Dialog"
+        }
+      ],
+      "dependencies": [
+        "src/components/specialist-figma.css",
+        "src/components/specialist-workbench.css",
+        "src/components/specialist-configure.tsx",
+        "src/components/specialist-drawings.tsx",
+        "src/components/specialist-parts.tsx",
+        "src/components/specialist-pricing.tsx",
+        "src/components/specialist-compare.tsx",
+        "src/components/specialist-records.tsx",
+        "src/components/specialist-types.ts",
+        "scripts/es08-fixture.ts",
+        "docs/decisions/es08-figma-implementation.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
+        "anchor": "",
+        "status": "Historical behaviour reference; current requested visual source is private Figma page 406:2, identified by the implementation decision. Accepted named version and icon-free source capture missing."
+      },
+      "specification": "docs/design/development/components/screen-configurator-workbench.md",
+      "used_on": [
+        "scope:ES-08",
+        "route:/estimating/configurations/[id]",
+        "route:/estimating/configurations/[id]/[view]"
+      ],
+      "desktop": "Docked/collapsed secondary menu; compact record strips; two-column Configure; 440 px working overlay; full-width pricing and definition tables; persistent save footer.",
+      "mobile": "390/320 px header, expandable readiness, section stepper, save/actions footer, full-screen working and bottom-sheet field inspector.",
+      "keyboard": "Named controls, visible focus, native table headings, native modal focus/return and shared overflow-menu keyboard behaviour.",
+      "limitations": "Drawing inputs are browser-local; engineering and procurement authority remain unresolved; local fallback glyphs apply when the private Font Awesome Kit is unavailable.",
+      "gaps": [
+        {
+          "id": "es08-figma-owner-review",
+          "expected": "Owner comparison with the private Figma named version and retained icon-free source captures.",
+          "actual": "Direct implementation request recorded; version/captures and owner acceptance are not recorded.",
+          "action": "Review application evidence against the named private Figma source and record the result separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

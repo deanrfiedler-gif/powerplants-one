@@ -68,4 +68,8 @@ export type Bench = {
   cancelReceiving: () => void;
   apply: () => Promise<boolean>;
   phone: boolean;
+  partsFilter: "active" | "manual" | "zero" | "all";
+  setPartsFilter: (filter: Bench["partsFilter"]) => void;
+  findingFilter: string;
+  setFindingFilter: (filter: string) => void;
 };

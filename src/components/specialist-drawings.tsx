@@ -6,7 +6,7 @@ import { bayCode, coverageReconciliation, cutSchedule, groupLetter, untestedName
 import { SectionDrawing, Withheld, allLayers, type SectionLayers } from "./specialist-section";
 import { BaySheet, CutSheet, LongSheet, PlanSheet, SheetFrame, bayPositions, downloadSvg, downloadText, type Selection, type SheetContext } from "./specialist-sheets";
 import type { Bench } from "./specialist-types";
-import { Icon, Notice, Pill, Segmented, fmt } from "./specialist-ui";
+import { Dialog, Icon, Notice, Pill, Segmented, fmt, usePhone } from "./specialist-ui";
 
 // Drawings (design board artboard 02): the toolbar with the roof profile,
 // layer switches and sheet navigation; five A3 landscape sheets each with a
@@ -23,12 +23,15 @@ export function DrawingsView({ bench }: { bench: Bench }) {
   const { geometry: g, drawing, data, signature, untested } = bench,
     [selection, setSelection] = useState<Selection>({ bay: 2, group: 0 }),
     [open, setOpen] = useState(false),
+    [inspectorOpen, setInspectorOpen] = useState(false),
+    phone = usePhone(),
     [layers, setLayers] = useState<SectionLayers>(allLayers),
     drawingError = Object.values(bench.drawingErrors)[0],
     site = data.source.source?.site?.display_name ?? "Saved scope",
     context: SheetContext = {
       project: site,
-      estimate: data.configuration.display_number,
+      estimate: `${data.estimate ? `Estimate v${data.estimate.version}` : "No estimate"} · option ${data.source.option_label}`,
+      configuration: data.configuration.display_number,
       signature,
       date: new Date().toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" }),
       revision: `Draft v${data.configuration.version}`,
@@ -77,46 +80,7 @@ export function DrawingsView({ bench }: { bench: Bench }) {
     id = `${bayCode(sel.bay)}·${groupLetter(sel.group)}`,
     sheetHead = (n: string, title: string) => `${site} · ${n} ${title}`,
     right = `${context.revision} · Estimating study · not for fabrication`;
-  return (
-    <div className="es08-view">
-      <ViewHead bench={bench} exportCsv={exportCsv} />
-      <div className="es08-drawbar">
-        <div className="es08-drawbar-left">
-          <div className="es08-drawbar-profile">
-            <span className="es08-eyebrow">Roof profile</span>
-            <span>
-              {drawing.profile}
-              <Link href={`/estimating/configurations/${bench.id}/configure`}>Change in Configure</Link>
-            </span>
-          </div>
-          <fieldset className="es08-layers">
-            <legend className="es08-eyebrow">Layers</legend>
-            {layerDefs.map(([key, label]) => (
-              <label key={key} data-on={layers[key] || undefined}>
-                <input type="checkbox" checked={layers[key]} onChange={() => setLayers({ ...layers, [key]: !layers[key] })} />
-                {label}
-              </label>
-            ))}
-          </fieldset>
-        </div>
-        <nav aria-label="Sheets" className="es08-sheet-nav">
-          <span className="es08-sub">Sheets</span>
-          <a href="#es08-sheet-01">01 Plan</a>
-          <a href="#es08-sheet-02">02 Cross section</a>
-          <a href="#es08-sheet-03">03 Longitudinal</a>
-          <a href="#es08-sheet-04">04 Bay section</a>
-          <a href="#es08-sheet-05">05 Screen cut</a>
-          <a href="#es08-schedule">Cut schedule</a>
-        </nav>
-      </div>
-      <div className="es08-drawgrid">
-        <section id="es08-sheet-01" className="es08-card es08-sheet-card" aria-labelledby="es08-s1-h">
-          <SheetHead n="01" title="Plan" sub="Length runs left to right · select a screen field to inspect it on every sheet" svgId="plan" file={`PPO-ES08-01-plan-${signature}.svg`} heading="es08-s1-h" />
-          <SheetFrame left={sheetHead("01", `Plan · ${drawing.profile}`)} right={right} sheet="01" drawing={`Plan · ${drawing.profile}`} context={context} narrow>
-            <PlanSheet g={g} drawing={drawing} selection={sel} onSelect={setSelection} layers={layers} />
-          </SheetFrame>
-        </section>
-        <aside className="es08-inspector" aria-label="Field inspector and legend">
+  const inspector = <>
           <section className="es08-card" aria-labelledby="es08-insp-h">
             <div className="es08-insp-head">
               <span id="es08-insp-h" className="es08-eyebrow">Selected screen field</span>
@@ -179,7 +143,50 @@ export function DrawingsView({ bench }: { bench: Bench }) {
           <Notice tone="info" title="What these sheets are not" role="none">
             Estimating study only. Trusses, drive layout and screen parking are schematic; hems, seams, attachments, loads and connections are not drawn. Confirm before fabrication.
           </Notice>
-        </aside>
+        </>;
+  return (
+    <div className="es08-view">
+      <ViewHead bench={bench} exportCsv={exportCsv} />
+      <div className="es08-drawbar">
+        <div className="es08-drawbar-left">
+          <div className="es08-drawbar-profile">
+            <span className="es08-eyebrow">Roof profile</span>
+            <span>
+              {drawing.profile}
+              <Link href={`/estimating/configurations/${bench.id}/configure`}>Change in Configure</Link>
+            </span>
+          </div>
+          <fieldset className="es08-layers">
+            <legend className="es08-eyebrow">Layers</legend>
+            {layerDefs.map(([key, label]) => (
+              <label key={key} data-on={layers[key] || undefined}>
+                <input type="checkbox" checked={layers[key]} onChange={() => setLayers({ ...layers, [key]: !layers[key] })} />
+                {label}
+              </label>
+            ))}
+          </fieldset>
+        </div>
+        <nav aria-label="Sheets" className="es08-sheet-nav">
+          <span className="es08-sub">Sheets</span>
+          <a href="#es08-sheet-01">01 Plan</a>
+          <a href="#es08-sheet-02">02 Cross section</a>
+          <a href="#es08-sheet-03">03 Longitudinal</a>
+          <a href="#es08-sheet-04">04 Bay section</a>
+          <a href="#es08-sheet-05">05 Screen cut</a>
+          <a href="#es08-schedule">Cut schedule</a>
+        </nav>
+      </div>
+      <button type="button" className="ppo-button es08-inspector-trigger" onClick={() => setInspectorOpen(true)}>Selected field {id} · Inspect</button>
+      <div className="es08-drawgrid">
+        <section id="es08-sheet-01" className="es08-card es08-sheet-card" aria-labelledby="es08-s1-h">
+          <SheetHead n="01" title="Plan" sub="Length runs left to right · select a screen field to inspect it on every sheet" svgId="plan" file={`PPO-ES08-01-plan-${signature}.svg`} heading="es08-s1-h" />
+          <SheetFrame left={sheetHead("01", `Plan · ${drawing.profile}`)} right={right} sheet="01" drawing={`Plan · ${drawing.profile}`} context={context} narrow>
+            <PlanSheet g={g} drawing={drawing} selection={sel} onSelect={selected => { setSelection(selected); if (phone) setInspectorOpen(true); }} layers={layers} />
+          </SheetFrame>
+        </section>
+        {!phone && <aside className="es08-inspector" aria-label="Field inspector and legend">{inspector}</aside>}
+        {phone && inspectorOpen && <Dialog title={`Selected screen field ${id}`} close={() => setInspectorOpen(false)} className="es08-dialog--inspector">{inspector}</Dialog>}
+
       </div>
       <section id="es08-sheet-02" className="es08-card es08-sheet-card" aria-labelledby="es08-s2-h">
         <SheetHead n="02" title="Cross section" sub={`Looking along the house · ${profileDescription(drawing, g.spanWidth)} · true proportion · one screen strip per motor group with overhangs and hooks`} svgId="section" file={`PPO-ES08-02-cross-section-${signature}.svg`} heading="es08-s2-h" />
@@ -208,8 +215,8 @@ export function DrawingsView({ bench }: { bench: Bench }) {
           svgId="bay"
           file={`PPO-ES08-04-bay-section-${signature}.svg`}
           heading="es08-s4-h"
-          extra={
-            <Segmented
+        />
+        <div className="es08-screen-position"><span>Screen position</span><Segmented
               label="Screen position"
               size="sm"
               options={[
@@ -218,9 +225,7 @@ export function DrawingsView({ bench }: { bench: Bench }) {
               ]}
               value={open ? "open" : "closed"}
               onChange={(x) => setOpen(x === "open")}
-            />
-          }
-        />
+            /></div>
         <SheetFrame left={sheetHead("04", "Bay section")} right={right} sheet="04" drawing={`Bay section · ${bayCode(Math.max(0, Math.min(sel.bay, g.bays - 2)))}–${bayCode(Math.max(0, Math.min(sel.bay, g.bays - 2)) + 1)}`} context={context}>
           <BaySheet g={g} selection={sel} open={open} layers={layers} />
         </SheetFrame>
