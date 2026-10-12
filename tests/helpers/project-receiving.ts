@@ -18,8 +18,8 @@ import { projectInput } from "./projects";
 export async function projectReceivingFixture() {
   const p = (await createSession("coordinator")).principal,
     deal = crmDiscovery();
-  deal.initial_action.due_at="2031-10-01T00:00:00.000Z";
-  deal.initial_action.due_needed=false;
+  deal.initial_action.due_at = "2031-10-01T00:00:00.000Z";
+  deal.initial_action.due_needed = false;
   await createOpportunity(p, deal);
   for (const [i, stage_id] of [
     "Scoping",

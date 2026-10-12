@@ -124,8 +124,14 @@ export function projectFactProjection(r: ProjectFacts) {
   ].flatMap(([code, count]) =>
     Number(count) > 0 ? [{ code: String(code), count: Number(count) }] : [],
   );
-  if (r.forecast_finish && r.target_date && r.forecast_finish>r.target_date) reasons.push({code:"ForecastAfterTarget",count:1});
-  if (r.forecast_finish && r.baseline_finish && r.forecast_finish>r.baseline_finish) reasons.push({code:"ForecastAfterBaseline",count:1});
+  if (r.forecast_finish && r.target_date && r.forecast_finish > r.target_date)
+    reasons.push({ code: "ForecastAfterTarget", count: 1 });
+  if (
+    r.forecast_finish &&
+    r.baseline_finish &&
+    r.forecast_finish > r.baseline_finish
+  )
+    reasons.push({ code: "ForecastAfterBaseline", count: 1 });
   if (!r.task_count) reasons.push({ code: "ScheduleNeeded", count: 1 });
   return {
     id: r.id,

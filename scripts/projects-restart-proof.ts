@@ -24,8 +24,13 @@ try {
   const p = (await createSession("coordinator")).principal;
   if (process.argv[2] === "write") {
     const receiving = await projectReceivingFixture();
-    const project = receiving.project, task = taskInput();
-    const receivingResult = await bindDelivery(p, receiving.handover, receiving.binding);
+    const project = receiving.project,
+      task = taskInput();
+    const receivingResult = await bindDelivery(
+      p,
+      receiving.handover,
+      receiving.binding,
+    );
     const result = await saveTask(p, project.id, task);
     const action = raidAction(project.id),
       raid = raidInput();
@@ -38,7 +43,11 @@ try {
     await writeFile(
       path + "/synthetic-original.json",
       JSON.stringify({
-        receiving: {handover:receiving.handover,binding:receiving.binding,receipt:receivingResult.receipt},
+        receiving: {
+          handover: receiving.handover,
+          binding: receiving.binding,
+          receipt: receivingResult.receipt,
+        },
         project,
         task,
         overview,
@@ -77,8 +86,15 @@ try {
       proof.raid_receipt,
     );
     const overview = await readProjectOverview(p, proof.project.id);
-    assert.deepEqual(await readOperation(p,proof.receiving.binding.operation_id),proof.receiving.receipt);
-    assert.deepEqual((await bindDelivery(p,proof.receiving.handover,proof.receiving.binding)).receipt,proof.receiving.receipt);
+    assert.deepEqual(
+      await readOperation(p, proof.receiving.binding.operation_id),
+      proof.receiving.receipt,
+    );
+    assert.deepEqual(
+      (await bindDelivery(p, proof.receiving.handover, proof.receiving.binding))
+        .receipt,
+      proof.receiving.receipt,
+    );
     assert.deepEqual(
       { ...overview, observed_at: proof.overview.observed_at },
       proof.overview,
