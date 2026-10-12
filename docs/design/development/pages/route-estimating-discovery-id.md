@@ -84,6 +84,8 @@ The board artboards are design references, not application captures. Their data 
 
 ## Behaviour, handovers and verification
 
+Lost-save recovery (12 October 2026 repair): when a background read finds the accepted successor and invalidates the open comparison, the workspace warning must still expose **Confirm original save outcome** on desktop and phone. Keep editing paused and recover the original operation; do not infer command acknowledgement from the refreshed revision. ES02-T27/T28/T54/T58 forces this refresh and checks the original receipt/revision. This functional correction does not grant visual acceptance.
+
 The draft User Guide `guide.page.estimating.discovery.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Incoming: the CR-02 sales-to-estimating handover (accepted submission with opportunity, customer and one site) and permitted Facility and equipment references; the CS-08 survey is declared but not yet integrated. Outgoing: the immutable discovery revision and the Draft quotation render. The manual estimate receives a saved, Complete basis only by explicit adoption. Sent, accepted and converted belong to ES-05, ES-06 and ES-07.

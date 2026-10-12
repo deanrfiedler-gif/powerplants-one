@@ -2122,7 +2122,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                     role="alert"
                     title="We couldn’t confirm whether the save completed"
                     actions={
-                      !savingReview && (
+                      // A background read can invalidate the comparison and
+                      // hide its dialog while the original save is unresolved.
+                      (!savingReview || !validPreview) && (
                         <button
                           type="button"
                           className="es02-button"

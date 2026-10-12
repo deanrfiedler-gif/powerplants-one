@@ -400,8 +400,16 @@ test("ES02-T27/T28/T54/T58: stale discovery retains its proposal and reconciles 
       exact: true,
     }),
   ).toBeDisabled();
-  await capture(page, info, "successor-uncertain", ".es02-dialog");
   await page.unroute(`**/api/v1/${s.path}`);
+  // Refresh the saved read while the accepted POST response is still lost.
+  // Its new version invalidates the comparison and closes the review dialog;
+  // the original command must remain recoverable from the workspace banner.
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(page.getByRole("tab", { name: "Revisions 3", exact: true })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Review discovery revision", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("status").filter({ hasText: "Save outcome uncertain" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Confirm original save outcome", exact: true })).toBeVisible();
+  await capture(page, info, "successor-uncertain", ".es02-context");
   await page
     .getByRole("button", { name: "Confirm original save outcome", exact: true })
     .click();
