@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "ce00a60200ac9d355d9cf4eae89a0904afeb07ac8af68aeda439b327fb775eba",
+  "register_sha256": "4ba914177fa13649284094cf5665fb07f43c63404c4594e8194453f0074e4928",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -23,9 +23,9 @@
   "entries": 358,
   "placed": 355,
   "excluded": 3,
-  "build": 45,
+  "build": 44,
   "refine": 106,
-  "review": 198,
+  "review": 199,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -1274,9 +1274,9 @@
     "02"
    ],
    "counts": {
-    "build": 2,
+    "build": 1,
     "refine": 19,
-    "review": 24,
+    "review": 25,
     "decide": 0
    },
    "scopes": 13,
@@ -1532,7 +1532,7 @@
      "module": "ES",
      "path": "/estimating/configurations",
      "rank": 48,
-     "state": "build",
+     "state": "review",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
     },

@@ -57,3 +57,7 @@ Dean accepted the ES-08 design board r01 on 23 September 2026 ([decision](../../
 The draft User Guide `guide.es.08` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Compare the retained application captures with the board at the same viewports, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Backend inventory reconciliation - 12 October 2026
+
+Merged main `6c164712f7120c89c0d2f5dd24833865696b4968` includes the native specialist engine, commands, exact runs, resolved parts, original-operation recovery and estimate receiving, plus the seven-view [workbench build](../../../decisions/es08-workbench-build.md). The old scope-level Unbuilt label was stale. This correction does not grant a visual review fingerprint, engineering/business acceptance or deployment. [Backend completion plan](../../../delivery/backend-completion-plan.md) tracks remaining work separately.

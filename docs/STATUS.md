@@ -4,6 +4,18 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Backend PR integration — 12 October 2026
+
+Current repository writer: this backend-completion chat. Dean authorised monitoring, repairing and merging PR #449 followed by #450 only after all applicable checks pass. PR #449 integrates catalogue main `ae83043b55058ba47334c3e9ba431d3538f2a8da`, preserving both original contributions, migration 0085 and all catalogue upgrade assertions. Shared status/register conflicts retain both decisions; the build sequence is regenerated from the combined register without changing visual review fingerprints. PR #450 remains the dependent Quotations increment.
+
+The seven configured protected-main check names below were re-read on 12 October and remain unchanged; strict up-to-date checking is off, administrator enforcement is on and no approving review is required. No protection or test threshold is changed. Checks on the new combined heads, sequential merges and deployment are separate facts; deployment is outside this task.
+
+## Backend completion and review queue — 12 October 2026
+
+Repository writer: the backend-completion session on `codex/backend-review-queue`, starting from merged main `6c164712f7120c89c0d2f5dd24833865696b4968`. Dean authorised proceeding with the [dependency-led backend plan](delivery/backend-completion-plan.md). The catalogue writer has completed draft PR #448; that separate contribution and its migration remain to be reconciled and are not duplicated here.
+
+The first bounded increment implements the [Reviews & approvals backend](decisions/estimating-review-queue.md), reusing exact ES-04/ES-05 reads and existing permissions. It preserves independent duties, returned findings, applicable earlier reviews and changed quotation sources; counts explicitly cover only authorised rows in the current candidate window. [Executed evidence](testing/evidence/estimating-review-queue/README.md) records 21 passing combined database cases, the five-case final queue replay, three compiled HTTP cases and static/build checks, plus three Windows unit failures reproduced on unchanged main. The queue page and accepted shell remain unbuilt. PR review, owner acceptance and deployment remain separate.
+
 ## ES-02 backend equipment catalogue — 12 October 2026
 
 Repository writer: this authorised backend session, branch `codex/es02-equipment-catalogue`, based on main `6c16471`. Dean is continuing UI design with Claude in Figma and authorised the backend six-family/108-category increment. [ADR-0054](decisions/ADR-0054-es02-equipment-catalogue.md) adds opt-in r02 classification and versioned persistence while preserving exact r01 reads, original receipts, costs and quotations. Migration 0085 extends the installed configuration guard; no seed, user, grant or backfill. Existing APIs expose catalogue metadata only on explicit request. The source list is checked against all 108 retained names. [Execution evidence](testing/evidence/estimating-catalogue/README.md) separates checks, setup failures and remaining acceptance. UI authoring, technical suitability rules, operational approval and deployment are separate.
