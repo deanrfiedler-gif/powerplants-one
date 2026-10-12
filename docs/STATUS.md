@@ -4,6 +4,12 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Backend completion and review queue — 12 October 2026
+
+Repository writer: the backend-completion session on `codex/backend-review-queue`, starting from merged main `6c164712f7120c89c0d2f5dd24833865696b4968`. Dean authorised proceeding with the [dependency-led backend plan](delivery/backend-completion-plan.md). The catalogue writer has completed draft PR #448; that separate contribution and its migration remain to be reconciled and are not duplicated here.
+
+The first bounded increment implements the [Reviews & approvals backend](decisions/estimating-review-queue.md), reusing exact ES-04/ES-05 reads and existing permissions. It preserves independent duties, returned findings, applicable earlier reviews and changed quotation sources; counts explicitly cover only authorised rows in the current candidate window. [Executed evidence](testing/evidence/estimating-review-queue/README.md) records 21 passing combined database cases, the five-case final queue replay, three compiled HTTP cases and static/build checks, plus three Windows unit failures reproduced on unchanged main. The queue page and accepted shell remain unbuilt. PR review, owner acceptance and deployment remain separate.
+
 ## Design PR follow-up — 12 October 2026
 
 Repository writer: this authorised repair/merge session (`codex/pr-design-followup-oct12`). PRs #446 (My Work) and #447 (Estimation Wizard) arrived during the repair run. Their original heads are retained above the #441 integration, with both sets of documentation, captures and page guidance preserved. Dean confirmed that the Wizard named Figma version is saved on 12 October, resolving its draft checkpoint; #446 already records his My Work save. Their acceptance covers the designs as documented, not the remaining implementation, open questions or visual review fingerprints. Full combined-head CI remains the merge gate.

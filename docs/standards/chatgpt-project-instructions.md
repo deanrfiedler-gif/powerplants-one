@@ -52,9 +52,9 @@ Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguis
 
 Use Australian English, ui-style-specification.md and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icons: ADR-0050. Show synthetic/environment context.
 
-Scope, permissions, validation/recovery and acceptance: product-quality-{register,plan}.md.
+Quality: product-quality-{register,plan}.md.
 
-HTML: follow html-module-conformance.md.
+HTML: html-module-conformance.md.
 
 ## 8. Authority
 
@@ -101,3 +101,5 @@ NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-archi
 UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-attestations.md; local Keep API; native reviews, campaigns and D-020 open.
 
 PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.
+
+Backend: [plan](../delivery/backend-completion-plan.md).

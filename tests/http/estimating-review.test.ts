@@ -112,3 +112,66 @@ test("ES04 HTTP exact authority, strict content, stale sequence, original replay
   assert.equal(final.commercial_approval, "Not configured");
   assert.equal(final.decisions.length, 1);
 });
+
+test("Reviews queue HTTP is a scoped no-store read with exact source links and no write methods", async () => {
+  const owner = await session("coordinator"),
+    reviewer = await session("estimating-source-reviewer");
+  const o = crmCreate();
+  assert.equal((await request(owner, "crm/opportunities", o)).status, 201);
+  const input = {
+    ...estimateInput(o.id),
+    title: `SYN HTTP queue ${randomUUID()}`,
+  };
+  assert.equal(
+    (await request(owner, "estimating/estimates", input)).status,
+    201,
+  );
+  const detailPath = `estimating/estimates/${input.id}/review`;
+  const detail = await (await request(owner, detailPath)).json();
+  assert.equal(
+    (
+      await request(owner, detailPath, {
+        ...crmBase(),
+        estimate_version_id: detail.saved.id,
+        basis_hash: detail.basis_hash,
+        expected_version: detail.estimate.version,
+        expected_review_version: detail.sequence,
+        responses: [],
+      })
+    ).status,
+    200,
+  );
+  const path = `estimating/reviews?source=estimates&q=${encodeURIComponent(input.title)}`;
+  const response = await request(reviewer, path);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("cache-control")!, /no-store/);
+  const queue = await response.json();
+  assert.equal(queue.items.length, 3);
+  assert.equal(queue.counts.awaiting_me, 3);
+  assert.equal(queue.counts_scope, "CurrentCandidateWindow");
+  assert.equal(queue.waiting_policy, "NotConfigured");
+  for (const row of queue.items) {
+    assert.equal(row.estimate_version_id, detail.saved.id);
+    assert.equal(row.href, `/estimating/estimates/${input.id}/review`);
+  }
+  const own = await (await request(owner, path + "&view=awaiting_me")).json();
+  assert.equal(own.items.length, 0);
+  assert.equal(own.counts.all, 3);
+  assert.equal(
+    (await request(owner, "estimating/reviews?limit=26")).status,
+    422,
+  );
+  assert.equal(
+    (await request(owner, "estimating/reviews?approval=true")).status,
+    422,
+  );
+  assert.equal((await request(owner, "estimating/reviews", {})).status, 405);
+  const other = await session("second-company");
+  assert.equal((await (await request(other, path)).json()).items.length, 0);
+  const technician = await session("assigned-technician");
+  assert.equal((await request(technician, "estimating/reviews")).status, 403);
+  assert.equal(
+    (await fetch(`${origin}/api/v1/estimating/reviews`)).status,
+    401,
+  );
+});

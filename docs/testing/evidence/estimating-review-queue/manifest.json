@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "executed_on": "2026-10-12",
+  "baseline": "6c164712f7120c89c0d2f5dd24833865696b4968",
+  "scope": "Local synthetic backend proof; no visual or business acceptance",
+  "build_id": "kduuf4BI9osvTqzgeV1i-",
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "os": "Windows"
+  },
+  "files": [
+    {
+      "path": "src/app/api/v1/estimating/reviews/route.ts",
+      "sha256": "2f65af2bcd9cd391189a1abe1da5aa84ec256a088940e500291fa110c713b56e"
+    },
+    {
+      "path": "src/estimating/review/queue.ts",
+      "sha256": "edd1808f76b0b44b56fe84fbbec060a6123e2e69edf90a2dfc03d8ffcb95dd7a"
+    },
+    {
+      "path": "src/estimating/review/queue-model.ts",
+      "sha256": "4cf66fca45d7b9cdf141d3b4e948aead16f22bddcc23c13033c8371ed73531b4"
+    },
+    {
+      "path": "src/estimating/review/reads.ts",
+      "sha256": "ef1b1cbb9debdacaf944a1b0b9579fbf52cc5f4166a8dac3876be2b93a6b58cf"
+    },
+    {
+      "path": "src/estimating/release/reads.ts",
+      "sha256": "e8fdf98a375ee8b2d2c5853b24df8a93c1f1d333cd6cfd0c53df38aa2bf9b073"
+    },
+    {
+      "path": "tests/helpers/estimating-review-queue-cases.ts",
+      "sha256": "4899f6c2698b38f9936279afb664226b399a9386228ef84938474b8237de0907"
+    },
+    {
+      "path": "tests/database/estimating-review.test.ts",
+      "sha256": "4493463d2d682269fec0bedf35f2059a5db56c634f8475063c07e9d7d6a1fc09"
+    },
+    {
+      "path": "tests/http/estimating-review.test.ts",
+      "sha256": "c868ec10bf823e932a4ca5cd681c7bc80cf87066056e5a1bfe261b3049492250"
+    },
+    {
+      "path": "tests/unit/estimating-review-queue.test.ts",
+      "sha256": "d3603059d85cca28cd2a8640819304a8e7b11dc6d5b2019e164c3cd6d3b94870"
+    }
+  ]
+}
