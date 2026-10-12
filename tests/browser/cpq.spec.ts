@@ -157,6 +157,10 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     const panel = (await summary.boundingBox())!;
     const header = (await page.locator(".cpq-header").boundingBox())!;
     const footer = (await page.locator(".cpq-footer").boundingBox())!;
+    await expect(page.locator(".cpq-footer")).toHaveCSS("font-size", "14px");
+    await expect(page.getByLabel(/^Cable run distance/)).toHaveCSS("margin", "0px");
+    await expect(page.getByLabel(/^Cable run distance/)).toHaveCSS("font-weight", "400");
+    expect((await page.getByRole("complementary", { name: "Application navigation" }).boundingBox())!.width).toBe(240);
     expect(panel.width).toBe(380);
     expect(Math.abs(panel.y - header.y)).toBeLessThanOrEqual(1);
     expect(Math.abs(panel.y + panel.height - footer.y - footer.height)).toBeLessThanOrEqual(1);
@@ -164,6 +168,8 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     const save = (await actions.getByRole("button", { name: "Save configuration", exact: true }).boundingBox())!;
     const use = (await actions.getByRole("button", { name: "Use in estimate", exact: true }).boundingBox())!;
     expect(save.x).toBeLessThan(use.x);
+    expect(Math.abs(save.y - use.y)).toBeLessThanOrEqual(1);
+    expect(footer.height).toBeLessThanOrEqual(82);
   }
   await page.screenshot({ path: info.outputPath("cpq-configure.png") });
   await page.getByLabel(/^Cable run distance/).fill("145");
@@ -302,6 +308,10 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await formulaDialog.getByLabel("Formula", { exact: true }).fill(proposedFormula);
   await formulaDialog.getByRole("button", { name: "Run server test", exact: true }).click();
   await expect(formulaDialog.getByText("Scenario expectations match", { exact: true })).toBeVisible();
+  const formulaHeader = (await formulaDialog.locator(":scope > header").boundingBox())!;
+  const formulaFooter = (await formulaDialog.locator(":scope > footer").boundingBox())!;
+  expect(formulaHeader.y).toBeGreaterThanOrEqual(0);
+  expect(formulaFooter.y + formulaFooter.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath("cpq-formula.png") });
   await formulaDialog.getByRole("button", { name: "Apply to draft", exact: true }).click();

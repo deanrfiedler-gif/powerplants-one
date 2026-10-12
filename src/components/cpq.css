@@ -10,10 +10,15 @@
   --cpq-blue: #365d8b;
   color: var(--cpq-ink);
   font:
-    14px/20px PPOShellRoboto,
-    Roboto,
+    14px/20px Roboto,
+    PPOShellRoboto,
     Arial,
     sans-serif;
+}
+@media (min-width: 781px) {
+  .app-frame[data-rail="expanded"]:has(#ppo-cpq) {
+    --ppo-rail-width: 240px;
+  }
 }
 #ppo-cpq .mw-content {
   display: flex;
@@ -143,6 +148,7 @@
   min-height: 40px;
   width: 100%;
   min-width: 0;
+  margin: 0;
 }
 #ppo-cpq input[type="checkbox"],
 .cpq-dialog input[type="checkbox"] {
@@ -345,11 +351,13 @@
   flex-direction: column;
   gap: 12px;
 }
-.cpq-field {
+#ppo-cpq .cpq-field,
+.cpq-dialog .cpq-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 0;
+  font-weight: 400;
 }
 .cpq-field > span {
   font-weight: 500;
@@ -488,13 +496,24 @@
 .cpq-footer {
   min-height: 80px;
   border-top: 1px solid var(--cpq-line);
-  padding: 14px 24px;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   background: #fff;
   flex-shrink: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--cpq-muted);
+}
+.cpq-footer > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.cpq-footer .cpq-actions {
+  flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 .cpq-footer small {
   display: block;
@@ -604,15 +623,23 @@
 .cpq-dialog::backdrop {
   background: #17212e55;
 }
+.cpq-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 .cpq-dialog > header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--cpq-line);
   padding: 16px 24px;
+  flex-shrink: 0;
 }
 .cpq-dialog-body {
   padding: 24px;
+  min-height: 0;
+  overflow: auto;
 }
 .cpq-dialog > footer {
   display: flex;
@@ -620,6 +647,9 @@
   justify-content: flex-end;
   padding: 16px 24px;
   border-top: 1px solid var(--cpq-line);
+  font-size: 14px;
+  line-height: 20px;
+  flex-shrink: 0;
 }
 .cpq-drawer {
   margin: 0 0 0 auto;
@@ -643,7 +673,8 @@
   margin: 0;
   font-weight: 500;
 }
-.cpq-formula {
+#ppo-cpq .cpq-formula,
+.cpq-dialog .cpq-formula {
   font:
     13px/21px ui-monospace,
     Consolas,
@@ -989,8 +1020,8 @@
 /* Retained formula dialog frame 05: editor plus a 300 px insertion panel. */
 .cpq-dialog:has(.cpq-formula-editor) { width: 880px; }
 .cpq-dialog:has(.cpq-formula-editor) > .cpq-dialog-body { padding: 0; }
-.cpq-formula-editor { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
-.cpq-formula-editor > section, .cpq-formula-insert { padding: 24px; min-width: 0; }
+.cpq-formula-editor { display: grid; grid-template-columns: minmax(0, 1fr) 300px; height: min(640px, calc(90dvh - 150px)); min-height: 0; }
+.cpq-formula-editor > section, .cpq-formula-insert { padding: 24px; min-width: 0; overflow: auto; }
 .cpq-formula-insert { background: #f6f7f9; border-left: 1px solid #e1e5eb; }
 .cpq-formula-insert .ppo-button { justify-content: flex-start; text-align: left; }
 .cpq-formula-insert small { display: block; margin-top: 4px; }
@@ -998,7 +1029,8 @@
 .cpq-formula-units { background: #f6f7f9; border-radius: 6px; padding: 12px; }
 .cpq-formula-units p { overflow-wrap: anywhere; }
 @media (max-width: 600px) {
-  .cpq-formula-editor { grid-template-columns: 1fr; }
+  .cpq-formula-editor { grid-template-columns: 1fr; height: auto; }
+  .cpq-formula-editor > section, .cpq-formula-insert { overflow: visible; }
   .cpq-formula-editor > section, .cpq-formula-insert { padding: 16px; }
   .cpq-formula-insert { border-left: 0; border-top: 1px solid #e1e5eb; }
 }

@@ -41,12 +41,12 @@
     {
       "key": "configure-layout",
       "source": "tests/browser/cpq.spec.ts; docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-16-Configure-Greenhouse-2-r01.png",
-      "expected": "At 1440 px the white 380 px summary aligns with both header top and footer bottom; Save precedes Use. This is a bounded geometry check, not complete visual acceptance."
+      "expected": "At 1440 px the expanded rail is 240 px and white 380 px summary aligns with header and footer; normal-weight inputs have zero margins, and Save precedes Use on one line in the 80 px footer. This is a bounded geometry check, not complete visual acceptance."
     },
     {
       "key": "formula-editor",
       "source": "tests/browser/cpq.spec.ts; tests/unit/cpq-design.test.ts",
-      "expected": "Bounded min/max and 0–12-place exact round; server test does not save; Apply/Cancel remain distinct and source-1 functions remain refused."
+      "expected": "Bounded min/max and 0–12-place exact round; server test does not save; Apply/Cancel remain distinct and source-1 functions remain refused. Header and actions stay visible while formula content scrolls."
     }
   ]
 }
