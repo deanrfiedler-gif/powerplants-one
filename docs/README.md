@@ -72,3 +72,6 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 [Standalone r01 workspace and receiving handover](decisions/service-review-reports-workspace-design.md): SV-06/SV-07 exact evidence, report response and owned follow-up; design only.
 
 [Native Priva Fertigation Configurator](delivery/priva-fertigation-native-handover.md) — native ES-02 scope, prominent irrigation/master valve workflows, neutral production context and exact revision evidence. [Traceability matrix](testing/priva-fertigation-native-matrix.csv); merge and deployment require separate authorisation.
+
+- [Backend completion delivery plan](delivery/backend-completion-plan.md): authorised bounded backend work; delivery evidence, owner acceptance and deployment remain separate.
+- [Quotation register backend](decisions/quotation-register-backend.md): current quotation rows and exact revision history, scoped lifecycle facts and bounded filters; page implementation remains separate.

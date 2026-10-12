@@ -5,10 +5,10 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs\design\development\register.json` (SHA-256 `ce00a60200ac9d35…`).
+- Register: `docs\design\development\register.json` (SHA-256 `4ba914177fa13649…`).
 - Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
 - 358 entries: 355 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
-- 198 built and awaiting owner review; 106 to refine; 45 to build; 6 awaiting a scope decision.
+- 199 built and awaiting owner review; 106 to refine; 44 to build; 6 awaiting a scope decision.
 - Review track starts at phase 00; build track starts at phase 01.
 
 | Phase | Title | After phases | Scopes | Routes | Review | Refine | Build | Decide |
@@ -16,7 +16,7 @@ Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register
 | 00 | Verify the existing baseline | — | 7 | 19 | 29 | 1 | 0 | 0 |
 | 01 | Shared controls and core records | — | 20 | 27 | 25 | 17 | 5 | 0 |
 | 02 | Products, equipment and survey evidence | 01 | 15 | 14 | 28 | 0 | 1 | 0 |
-| 03 | Sales through quotation and handover | 01, 02 | 13 | 32 | 24 | 19 | 2 | 0 |
+| 03 | Sales through quotation and handover | 01, 02 | 13 | 32 | 25 | 19 | 1 | 0 |
 | 04 | Service, job packs and field quality | 00, 01, 02 | 14 | 21 | 17 | 17 | 1 | 0 |
 | 05 | Engineering, project delivery and supply | 00, 01, 02, 03, 04 | 27 | 60 | 43 | 39 | 5 | 0 |
 | 06 | Finance, maintenance and customer lifecycle | 01, 02, 03, 04, 05 | 19 | 25 | 32 | 7 | 5 | 0 |
@@ -201,7 +201,7 @@ Refine the existing sales journey, connect survey-backed estimating, then comple
 | 47 | `route:/estimating/fertigation` | Priva Fertigation Configurator | To refine | Issued r02 rank |
 | 47 | `route:/estimating/fertigation/[id]` | Priva Fertigation Configurator · detail | To refine | Issued r02 rank |
 | 47 | `route:/estimating/fertigation/new` | Priva Fertigation Configurator · create | To refine | Issued r02 rank |
-| 48 | `scope:ES-08` | Specialist configuration workbench | To build | Issued r02 rank |
+| 48 | `scope:ES-08` | Specialist configuration workbench | Built; owner review pending | Issued r02 rank |
 | 48 | `route:/estimating/configurations` | Screen Systems configurations | To refine | Issued r02 rank |
 | 48 | `route:/estimating/configurations/[id]` | Screen Systems configurations · detail | To refine | Issued r02 rank |
 | 48 | `route:/estimating/configurations/[id]/[view]` | Screen Systems configurations · selected view | To refine | Issued r02 rank |

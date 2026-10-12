@@ -1508,7 +1508,7 @@
       "title": "Specialist configuration workbench",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement the validated Screen Systems specialist workbench: governed inputs, calculations, generated parts, overrides and safe rerun. Other calculators require separately validated scope.",
+      "summary": "Native Screen Systems engine, exact runs, resolved parts, estimate receiving and the seven-view accepted-board workbench exist. ES-08 scope metadata is reconciled against merged PR #441; engineering, owner and visual acceptance remain separate. Other calculators require their own validated scope.",
       "path": "/estimating/configurations",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1532,7 +1532,7 @@
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [],
-      "scope_status": "unbuilt",
+      "scope_status": "Native synthetic backend and workbench present; review separate",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",

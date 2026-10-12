@@ -13,6 +13,61 @@ import {
   approve,
   issue,
 } from "../helpers/quotation-release-http";
+import type {
+  listQuotations,
+  readQuotation,
+} from "../../src/estimating/quotations/reads";
+
+test("quotation register compiled HTTP provides authenticated current rows and stable quotation history", async () => {
+  const f = await httpFixture(),
+    other = await session("second-company"),
+    path = "estimating/quotations";
+  assert.equal((await request("", path)).status, 401);
+  assert.equal((await request(await session("technician"), path)).status, 403);
+  assert.equal((await request(f.owner, path + "?limit=26")).status, 422);
+  assert.equal((await request(f.owner, path + "?unexpected=1")).status, 422);
+  const native = await detail(f.owner, f.draft.id),
+    id = native.revision.quote_id;
+  const r = await request(
+    f.owner,
+    path + "?q=" + encodeURIComponent(native.revision.snapshot.display_number),
+  );
+  assert.equal(r.status, 200);
+  assert.match(r.headers.get("cache-control")!, /no-store/);
+  const list: Awaited<ReturnType<typeof listQuotations>> = await r.json();
+  assert.equal(list.items.length, 1);
+  assert.equal(list.items[0].id, id);
+  assert.equal(list.items[0].stage, "Draft");
+  assert.equal(list.counts_scope, "CurrentCandidateWindow");
+  const p = prepare(native);
+  await json(f.owner, releasePath(f.draft.id) + "/prepare", p);
+  const history: Awaited<ReturnType<typeof readQuotation>> = await json(
+    f.owner,
+    `${path}/${id}?limit=1`,
+  );
+  assert.equal(history.latest.revision_id, p.id);
+  assert.equal(history.latest.stage, "AwaitingApproval");
+  assert.equal(history.latest.render_state, "Pending");
+  assert.equal(history.next_offset, 1);
+  const older: Awaited<ReturnType<typeof readQuotation>> = await json(
+    f.owner,
+    `${path}/${id}?limit=1&offset=1`,
+  );
+  assert.equal(older.revisions[0].summary.revision_id, f.draft.id);
+  assert.equal((await request(other, `${path}/${id}`)).status, 404);
+  assert.equal((await request(f.owner, `${path}/${f.draft.id}`)).status, 404);
+  assert.equal(
+    (await request(f.owner, `${path}/${id}?stage=Draft`)).status,
+    422,
+  );
+  assert.equal((await request(f.owner, `${path}/${id}`, {})).status, 405);
+  // Existing revision API and navigation landing keep their published contracts.
+  assert.equal(
+    (await request(f.owner, `estimating/quotes/${f.draft.id}`)).status,
+    200,
+  );
+  assert.equal((await request(f.owner, "navigation/quotations")).status, 200);
+});
 
 test("ES05 compiled HTTP exact approval, issue, distribution, original recovery and permission boundaries", async () => {
   const f = await httpFixture(),

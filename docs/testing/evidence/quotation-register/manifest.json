@@ -1,0 +1,18 @@
+{
+  "source_dependency": "712ba2d530db0c4dd144cc5808fb44eb5ba6560f",
+  "integrated_baseline": "6c164712f7120c89c0d2f5dd24833865696b4968",
+  "build_id": "guej18AZaQqJxqpzF698c",
+  "executed_on": "2026-10-12",
+  "scope": "Local synthetic backend proof; review, page and deployment separate",
+  "sha256": {
+    "src/app/api/v1/estimating/quotations/[id]/route.ts": "b6721cad86aab8bb7e2e2b0d80652d9a22d7943d06d5d848b3e3e93164065d54",
+    "src/app/api/v1/estimating/quotations/route.ts": "867000d8ef030d77c80678372d1793512e2f881dba620f5ec45f250461fcc879",
+    "src/estimating/quotations/model.ts": "fdc4fd926b18c62ba47a155d306f8886358fe31ef4cfa3d7af0973abb39adf1a",
+    "src/estimating/quotations/projection.ts": "39c083e9293f9d3b0e83dc6b270814c3f7ff0eda8aa87c94dad4f044e35c1589",
+    "src/estimating/quotations/reads.ts": "f326fe6e3ae0bbe037c670b561c62669508dbd49cefbb6731e3ef9b7bec3faa1",
+    "tests/database/quotation-release.test.ts": "73a678a465f08d63249a83a2414b59779b83991ac9532062ca5ea8ccd3b31163",
+    "tests/helpers/quotation-register-cases.ts": "9785e0a08f247a902ff7fc20a3a3a0b6500eaa3e8cb1a10d648ebfa21dad46e7",
+    "tests/http/quotation-release.test.ts": "e6775d82bf0c3fd4b7d0c6556d3d7fe82ea35128652cd568f66ae1a27c27d6a5",
+    "tests/unit/quotation-register.test.ts": "e9df3496b8672693f679475fbecb685ead1dcf3deb8a7c14947ff3a8e56bb2aa"
+  }
+}
