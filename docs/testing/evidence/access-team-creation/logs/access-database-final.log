@@ -1,0 +1,170 @@
+✖ AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; exact application/team duties and inert reseed (93585.6651ms)
+▶ AD01 application: exact grant, current duties, separation, concurrency and recovery
+  ✖ Company, Site and Workspace install exact future grants with linked original evidence (1142.4653ms)
+  ✔ read/propose/approve alone, hosted mode and other workspace cannot apply (194.3144ms)
+  ✔ reviewer and affected person cannot execute even with explicit read/apply duties (206.8858ms)
+  ✔ current requester/reviewer duty and active identities are revalidated (624.868ms)
+  ✔ working company and changed payload fields refuse application (100.0485ms)
+  ✔ Submitted and Returned are not applicable (146.3212ms)
+  ✔ concurrent application and identical retry install once (314.9301ms)
+  ✔ late grant insertion and revocation before the application lock are observed (223.0536ms)
+  ✔ past approved start is refused without shifting the date (2197.6381ms)
+  ✔ late audit failure rolls back grant, request and receipt together (233.0658ms)
+  ✔ installed grant becomes eligible only at its original start and exact company; working company still narrows (2260.9028ms)
+  ✔ a forged grant change at audit time is rejected by the deferred exact-grant guard (177.0121ms)
+  ✔ direct transition without exact evidence fails and applied evidence cannot be rewritten (319.0941ms)
+✖ AD01 application: exact grant, current duties, separation, concurrency and recovery (8152.9002ms)
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (104709.2098ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (68.2663ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (44.8333ms)
+  ✔ grant eligibility differentiates company and exact site scope (54.0518ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (71.5034ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (14.4596ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (203.5808ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (2197.2045ms)
+  ✔ reads preserve every identity, grant and audit row (244.433ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (2936.0841ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (97.0618ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (47.4808ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (25.4576ms)
+  ✔ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (10567.2081ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (325.8345ms)
+✔ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (11084.074ms)
+▶ AD01-04 proposed roles compare current authority at one exact scope without assigning access
+  ✔ catalogue is proposed only; exact revision and selection are required (135.5815ms)
+  ✔ Site, Company and Workspace checks never match an unrelated grant (70.713ms)
+  ✔ inactive identity and future/expired grants remove matches (59.4901ms)
+  ✔ reviewer permissions and cleared working company are required on both reads (33.1939ms)
+  ✔ hosted comparison masks identities; all reads preserve grants, users, audit and session state (2327.8573ms)
+✔ AD01-04 proposed roles compare current authority at one exact scope without assigning access (2668.7657ms)
+▶ AD01-05 proposed teams distinguish retained examples from current local identities
+  ✔ exact proposals, design-only gaps, current names and inactive local identities (25.6533ms)
+  ✔ a design-only ID collision is never resolved to a current identity (2215.1513ms)
+  ✔ hosted identity behind a retained ID is unavailable and its data stays private (20.0203ms)
+  ✔ another workspace cannot resolve this workspace's identities even with inspection authority (14.7078ms)
+  ✔ repeated team reads preserve users, grants, sessions and all request/audit evidence (270.9053ms)
+✔ AD01-05 proposed teams distinguish retained examples from current local identities (3289.035ms)
+✔ AD01 teams: populated 0082 upgrade preserves history and adds exactly one local duty (42993.1465ms)
+▶ AD01 teams: creation, retention, authority and recovery
+  ✔ creation context is read-only, local, active, workspace-bound and current-duty gated (159.8974ms)
+  ✔ atomic original roster, audit and receipt; no permission, session or request mutation (91.0967ms)
+  ✔ strict schema, exact IDs, explicit distinct bounded roster and version (27.3623ms)
+  ✔ read/approve, lead and membership confer no creation duty (12.114ms)
+  ✔ current working company, inactive actor and expired duty refuse without mutation (55.9632ms)
+  ✔ deactivated or hosted participant refused; original replay survives later identity changes (143.7ms)
+  ✔ same-operation concurrent retry records once; same-team concurrent operation conflicts (53.4695ms)
+  ✔ authority mutation queued before creation is revalidated after table lock (14.9157ms)
+  ✔ SQL guards retain exact record, roster and evidence; incomplete insertion rolls back (205.0797ms)
+  ✔ another authorised actor cannot recover or collide with the original actor receipt (97.5164ms)
+  ✔ failed audit insertion rolls back team, roster and all receipts (65.8942ms)
+  ✔ current authority is required for original recovery and replay (66.1866ms)
+  ✔ bounded pages retain exact IDs when names repeat (696.4586ms)
+  ✔ hosted environment refuses every team API service before database access (1.1136ms)
+✔ AD01 teams: creation, retention, authority and recovery (1697.2555ms)
+✔ AD01 withdrawal: populated 0080 upgrade retains exact requests, grants, histories, receipts and ledgers (35250.2978ms)
+▶ AD01 withdrawal: exact closure, authority, concurrency and original recovery
+  ✔ Submitted and Approved close once, retain exact originals, release the tuple and recover after replacement (358.782ms)
+  ✔ only the original requester with current local Workspace duties may close or recover (120.9561ms)
+  ✔ late or no-longer-eligible proposals can close without changing installed access (1678.665ms)
+  ✔ terminal states, stale versions and malformed proposals have no effects (253.82ms)
+  ✔ withdrawal races decision/application with exactly one transition (147.1503ms)
+  ✔ authority revocation while waiting for the lock refuses closure (63.8054ms)
+  ✔ late audit failure and missing evidence roll back, while accepted history is immutable (109.0205ms)
+✔ AD01 withdrawal: exact closure, authority, concurrency and original recovery (2736.7636ms)
+✔ immutable baseline survives forecast changes, exact retry, pool restart and migration/seed reruns (45526.1124ms)
+✔ stale and concurrent baselines, undated schedule, missing review and detached evidence fail (57943.8679ms)
+✔ current scope and coordinator authority precede baseline and receipt disclosure including replay (60960.9759ms)
+✔ baseline history pages are bounded, independently selectable and retain all revisions (62712.3488ms)
+✖ populated 0077 upgrade retains every original schedule, receipt, ledger, user and grant (103493.0054ms)
+ℹ tests 73
+ℹ suites 0
+ℹ pass 69
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 669659.5121
+
+✖ failing tests:
+
+test at tests\database\access-application.test.ts:1:3778
+✖ AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; exact application/team duties and inert reseed (93585.6651ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        capability: 'admin.access.apply',
+        company_id: null,
+        id: 'ad010080-0000-4000-8000-000000000001',
+  ...
+        company_id: null,
+  +     id: 'ad010082-0000-4000-8000-000000000001',
+  -     id: 'ad010083-0000-4000-8000-000000000001',
+        scope_id: '10000000-0000-4000-8000-000000000001',
+        scope_type: 'Workspace',
+        site_id: null,
+        user_id: '30000000-0000-4000-8000-000000000003',
+        valid_from: 2026-01-01T00:00:00.000Z,
+
+      at TestContext.<anonymous> (<workspace>\tests\database\access-application.test.ts:191:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { workspace_id: '10000000-0000-4000-8000-000000000001', user_id: '30000000-0000-4000-8000-000000000003', company_id: null, capability: 'admin.access.apply', valid_from: 2026-01-01T00:00:00.000Z, valid_to: null, id: 'ad010080-0000-4000-8000-000000000001', scope_type: 'Workspace', scope_id: '10000000-0000-4000-8000-000000000001', site_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', user_id: '30000000-0000-4000-8000-000000000003', company_id: null, capability: 'admin.access.team.create', valid_from: 2026-01-01T00:00:00.000Z, valid_to: null, id: 'ad010082-0000-4000-8000-000000000001', scope_type: 'Workspace', scope_id: '10000000-0000-4000-8000-000000000001', site_id: null } ],
+    expected: [ { workspace_id: '10000000-0000-4000-8000-000000000001', user_id: '30000000-0000-4000-8000-000000000003', company_id: null, capability: 'admin.access.apply', valid_from: 2026-01-01T00:00:00.000Z, valid_to: null, id: 'ad010080-0000-4000-8000-000000000001', scope_type: 'Workspace', scope_id: '10000000-0000-4000-8000-000000000001', site_id: null }, { workspace_id: '10000000-0000-4000-8000-000000000001', user_id: '30000000-0000-4000-8000-000000000003', company_id: null, capability: 'admin.access.team.create', valid_from: 2026-01-01T00:00:00.000Z, valid_to: null, id: 'ad010083-0000-4000-8000-000000000001', scope_type: 'Workspace', scope_id: '10000000-0000-4000-8000-000000000001', site_id: null } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\database\access-application.test.ts:1:7037
+✖ Company, Site and Workspace install exact future grants with linked original evidence (1142.4653ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert(
+
+      at TestContext.<anonymous> (<workspace>\tests\database\access-application.test.ts:337:7)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (<workspace>\tests\database\access-application.test.ts:253:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\database\project-baselines.test.ts:2:2372
+✖ populated 0077 upgrade retains every original schedule, receipt, ledger, user and grant (103493.0054ms)
+  error: canceling statement due to statement timeout
+      at <workspace>\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (<workspace>\tests\database\project-baselines.test.ts:228:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }

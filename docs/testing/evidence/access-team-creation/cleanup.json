@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-10-11T21:20:39.9842086Z",
+  "application_port": 3092,
+  "application_stopped": true,
+  "postgres_port": 55494,
+  "postgres_stopped": true,
+  "checked_ports": [
+    3092,
+    55494,
+    55492,
+    55487
+  ],
+  "remaining_listeners": 0,
+  "application_process_ids": [
+    34592
+  ],
+  "stores": "Private synthetic stores and environment files preserved outside Git; no data directory removed",
+  "previous_store": "Earlier draft-checksum PostgreSQL store on port 55492 preserved and stopped",
+  "scope": "Only this task's verified application process and PostgreSQL instance stopped"
+}

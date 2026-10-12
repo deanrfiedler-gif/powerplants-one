@@ -42,6 +42,8 @@ Prove authority, local/workspace/participant boundaries, duplicate and malformed
 
 Opening a roster refreshes its lead/creator identity labels from the detail response. Closing it retains those newer labels until an explicit collection refresh or page change; it never falls back to an older list label. This is current-identity presentation, not a change to immutable membership or creation evidence.
 
+Native creation now follows the [bounded form/recovery contract](access-team-creation.md). The initial-roster command, permissions, immutable evidence and membership limits above are unchanged; membership editing remains open.
+
 ## Integration — 12 October 2026
 
 The integration after merged Projects 0081 moves this unpublished migration and seed from 0082 to 0083. Stable team/grant IDs and historical evidence retain their original bytes.

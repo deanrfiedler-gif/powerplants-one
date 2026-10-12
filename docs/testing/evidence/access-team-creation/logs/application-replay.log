@@ -1,0 +1,24 @@
+✔ AD01 application: populated 0079 retains original proposals, decisions, audit and receipts; exact application/team duties and inert reseed (38344.5443ms)
+▶ AD01 application: exact grant, current duties, separation, concurrency and recovery
+  ✔ Company, Site and Workspace install exact future grants with linked original evidence (553.241ms)
+  ✔ read/propose/approve alone, hosted mode and other workspace cannot apply (117.1811ms)
+  ✔ reviewer and affected person cannot execute even with explicit read/apply duties (111.4176ms)
+  ✔ current requester/reviewer duty and active identities are revalidated (185.8424ms)
+  ✔ working company and changed payload fields refuse application (67.3868ms)
+  ✔ Submitted and Returned are not applicable (66.4074ms)
+  ✔ concurrent application and identical retry install once (199.1376ms)
+  ✔ late grant insertion and revocation before the application lock are observed (180.4763ms)
+  ✔ past approved start is refused without shifting the date (2183.6269ms)
+  ✔ late audit failure rolls back grant, request and receipt together (82.7869ms)
+  ✔ installed grant becomes eligible only at its original start and exact company; working company still narrows (2164.296ms)
+  ✔ a forged grant change at audit time is rejected by the deferred exact-grant guard (81.7206ms)
+  ✔ direct transition without exact evidence fails and applied evidence cannot be rewritten (88.1837ms)
+✔ AD01 application: exact grant, current duties, separation, concurrency and recovery (6089.9635ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72421.8436

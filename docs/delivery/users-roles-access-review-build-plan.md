@@ -736,3 +736,7 @@ This is recorded so the design does not strand. None of it is authorised by this
 ## Durable local team continuation — 11 October 2026
 
 Dean's next-step instruction continues #427 with the [local team contract](../decisions/access-local-teams.md): dedicated local creation duty, explicit initial roster, immutable audit/receipt and saved-team inspection on the existing role catalogue. This is the record/API foundation. Native editing, membership lifecycle, review routing and campaigns remain open; team labels grant no permission or independent review duty. Preserve the receiving plan's future attester/reviewer separation and unresolved D-020. The [execution ledger](../testing/evidence/access-local-teams/README.md) separates functional proof, visual observations, owner acceptance and deployment.
+
+## Native local team creation continuation — 12 October 2026
+
+The [creation contract](../decisions/access-team-creation.md) continues #429 using the existing immutable-roster API, explicit local selection and actor-bound original recovery. No migration, seed, capability or operational policy is added. Membership editing, review routing/campaigns and D-020 remain open. The updated #429 parent places withdrawal/teams at 0082/0083 after Projects 0081; earlier local draft databases are preserved separately, without rewriting their ledgers. [Execution evidence](../testing/evidence/access-team-creation/README.md) distinguishes local verification, CI and owner review.
