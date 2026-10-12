@@ -50,6 +50,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Behaviour, handovers and verification
 
+The [12 October backend contract](../../../decisions/quotation-register-backend.md) adds `/api/v1/estimating/quotations` for current quotation rows and `/api/v1/estimating/quotations/[id]` for stable quotation history. This is a receiving contract for a later page implementation; the existing navigation landing still supplies this page. Counts belong to the authorised candidate window, timestamps explicitly describe revision updates, and unavailable conversion authority produces an unknown stage with partial status. The page must preserve these distinctions when connected. No component binding, accepted visual fingerprint or page behaviour is changed by the backend increment.
+
 The draft User Guide `guide.page.estimating.quotes` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.

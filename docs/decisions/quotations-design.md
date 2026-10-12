@@ -98,6 +98,8 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 
 ## 5. Not decided
 
+Later backend decision, 12 October: Dean authorised the [quotation register read and history contract](quotation-register-backend.md), resolving backend current-row, stage precedence, bounded partial/count semantics and all-time scope. This does not adopt new page states or implement the accepted page; the original design and captures below retain their historical meaning.
+
 - **Building the page.** Q1 needs a quotation-level read: the latest revision and derived stage for each permitted quotation. It must report restricted or missing sources as a partial list, never an empty one. The read, its tests and the route change need their own pull requests. Reading still needs `estimating.quote.read` and `estimating.read`. No new capability is proposed.
 - **Rolling out the shell.** As for Reviews & approvals, the adopted Shell page and the app stay as built until a shell implementation is planned and recorded.
 - **Open questions:**

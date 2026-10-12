@@ -45,6 +45,7 @@ These package keys are local tracking labels, not new parent requirements. Prior
 |---|---|---|
 | BC-00 plan and ES-08 scope reconciliation | Recorded in this contribution | Writer coordination completed; original scope keys and all review fingerprints preserved |
 | BC-01 Reviews & approvals | Backend implemented and locally verified; PR review/CI separate | [Execution evidence](../testing/evidence/estimating-review-queue/README.md). Read-only ES-04/ES-05 queue; source commands remain the decision authority. Page and global-count contract remain open |
-| BC-01 remaining projections | Next backend increments | Quotation/Lead/Work Order/Cost Source/Engineering reads; define each exact source contract and receiving proof before implementation |
-| ES-02 catalogue | Draft PR #448; CI and integration separate | Reconcile exact delivered head; not owned or duplicated here |
+| BC-01 Quotations register | Backend implemented and locally verified on `codex/quotation-register`, based on PR #449; CI/review separate | [Read contract](../decisions/quotation-register-backend.md) and [execution evidence](../testing/evidence/quotation-register/README.md): one row per current quotation and exact revision history; native ES-05/06/07 authority. Accepted page implementation remains separate |
+| BC-01 remaining projections | Next backend increments | Lead/Work Order/Cost Source/Engineering reads; define each exact source contract and receiving proof before implementation |
+| ES-02 catalogue | PR #448 merged as `ae83043b55058ba47334c3e9ba431d3538f2a8da` after this increment's local proof | Reconcile the stacked backend contributions with current main before merge; catalogue code is not duplicated here |
 | BC-02-11 | Remaining authorised programme | No implementation or acceptance inferred from this plan |

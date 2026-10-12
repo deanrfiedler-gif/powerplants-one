@@ -37,6 +37,7 @@ import {
   releaseCommand,
 } from "../helpers/quotation-release";
 import { crmBase, CRM } from "../helpers/crm";
+import { registerQuotationRegisterTests } from "../helpers/quotation-register-cases";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -557,3 +558,5 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
     0,
   );
 });
+
+registerQuotationRegisterTests();

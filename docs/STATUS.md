@@ -4,9 +4,13 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
-## Backend completion and review queue — 12 October 2026
+## Backend completion — 12 October 2026
 
-Repository writer: the backend-completion session on `codex/backend-review-queue`, starting from merged main `6c164712f7120c89c0d2f5dd24833865696b4968`. Dean authorised proceeding with the [dependency-led backend plan](delivery/backend-completion-plan.md). The catalogue writer has completed draft PR #448; that separate contribution and its migration remain to be reconciled and are not duplicated here.
+Current repository writer: this backend-completion chat on `codex/quotation-register`, continuing review-queue head `712ba2d530db0c4dd144cc5808fb44eb5ba6560f` while PR #449 awaits CI/review. Dean authorised the [Quotations register backend](decisions/quotation-register-backend.md). The separate catalogue chat merged #448 as `ae83043b55058ba47334c3e9ba431d3538f2a8da` after this increment's local proof; this stacked contribution keeps its verified source dependency and requires reconciliation with current main before merge. Quotations runtime and verification are recorded independently of the accepted page and deployment.
+
+The Quotations backend now returns one row per actual current quotation, exact revision history, recorded lifecycle stages, owner/customer filters and stable bounded windows. Native recipient/source/Supply authority governs every fact; inaccessible conversion evidence yields an unknown stage and explicit partial status. [Executed evidence](testing/evidence/quotation-register/README.md) records eight passing database cases, nine focused unit tests, four compiled HTTP cases and static/build/documentation checks. The accepted page, shared shell, export and global counts remain separate work. This contribution adds no migration, seed, capability or command; PR CI, review and deployment remain separate.
+
+The previous increment used `codex/backend-review-queue`, starting from merged main `6c164712f7120c89c0d2f5dd24833865696b4968`. Dean authorised proceeding with the [dependency-led backend plan](delivery/backend-completion-plan.md). The catalogue contribution and its migration are not duplicated here.
 
 The first bounded increment implements the [Reviews & approvals backend](decisions/estimating-review-queue.md), reusing exact ES-04/ES-05 reads and existing permissions. It preserves independent duties, returned findings, applicable earlier reviews and changed quotation sources; counts explicitly cover only authorised rows in the current candidate window. [Executed evidence](testing/evidence/estimating-review-queue/README.md) records 21 passing combined database cases, the five-case final queue replay, three compiled HTTP cases and static/build checks, plus three Windows unit failures reproduced on unchanged main. The queue page and accepted shell remain unbuilt. PR review, owner acceptance and deployment remain separate.
 
