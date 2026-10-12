@@ -8683,7 +8683,9 @@
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/es08-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",

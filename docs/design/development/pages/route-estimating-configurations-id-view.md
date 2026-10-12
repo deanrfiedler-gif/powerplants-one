@@ -68,9 +68,21 @@ Application captures (native workbench, 12 October 2026, headless Chrome, synthe
 
 The board artboards are design references; the application captures are implementation captures, not visual acceptance.
 
+Figma proposal (12 October 2026): page "ES-08 · Screen Configurator Workbench" `406:2` in "PPO - Design" — not accepted; no captures retained yet (see the [proposal record](../../../decisions/es08-figma-design.md)).
+
 ## Accepted design direction and the build
 
 Dean accepted the ES-08 design board r01 on 23 September 2026 ([decision](../../../decisions/es08-design-board.md), [retained captures and hashes](../../../reference/ui/specialist/design-board-r01/README.md)). The native workbench was built from it on 12 October 2026; the [build record](../../../decisions/es08-workbench-build.md) states the points settled at implementation (slug `drawings`, the heading and record line, drawing-only inputs remembered per browser, the r03 roof list) and seven adaptations for review: the explicit save bar with a reason, Send to estimate kept as the working synthetic receiving flow, width-adaptive composition, SVG text labels, the retained section filter, the phone save bar and the record line.
+
+## Figma design proposal — 12 October 2026
+
+Dean asked for ES-08 to be designed in Figma so that it looks, reads and behaves like the pages accepted there since ADR-0053. The proposal is on the page "ES-08 · Screen Configurator Workbench" `406:2` of the private Figma file "PPO - Design" (link not recorded): seven desktop views with the secondary menu docked, Configure and Drawings with it collapsed, four phone frames, states S1–S11 and a notes card. The [proposal record](../../../decisions/es08-figma-design.md) names every frame and component node, the accepted patterns reused, 17 new or proposed components and 23 proposed application changes (P1–P23), and the questions for Dean (Q1–Q7, including the four open points of the build record).
+
+Status: **proposal, not accepted**. No named version is saved and no icon-free captures are retained yet; at acceptance they go in a new `docs/reference/ui/specialist/` revision folder and this record is updated. The application is unchanged; it is brought into line in a later build once the design is accepted.
+
+Proposed desktop composition (1,440 px, rail expanded and secondary menu docked, 960 px content): record header with the configuration name as title, a flush context strip, the accepted readiness bar, Record / View tabs with counts, the view body and a sticky save bar. The secondary menu lists the current view's contents (Configure sections with status, drawing sheets and schedules, position filters, pricing parts, comparison parts, finding kinds, runs). Collapsed, the content widens to about 1,180 px.
+
+Proposed phone composition (390 × 844): the accepted record phone pattern — back, readiness summary, text tabs, scrolling content and a footer with "…", Save draft and Next section above a live summary bar; the field inspector as a bottom sheet; the working panel full screen.
 
 ## Behaviour, handovers and verification
 
