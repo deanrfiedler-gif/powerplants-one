@@ -7,6 +7,7 @@ on:
       - "src/app/**/projects/**"
       - "src/app/projects-gantt.css"
       - "src/shared/receipts.ts"
+      - "src/sales/delivery-binding.ts"
       - "src/shell/**"
       - "db/**"
       - "scripts/database.ts"
@@ -75,8 +76,8 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and selectors
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-raid.test.ts tests/database/desktop-shell.test.ts
-      - name: Compiled Projects RAID and owned Activity handover
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/desktop-shell.test.ts
+      - name: Compiled Projects receiving, overview, RAID and Activity handovers
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/project-raid-server.log 2>&1 &
@@ -86,7 +87,7 @@ jobs:
             curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-raid.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-raid.test.ts tests/http/project-overview.test.ts
       - name: Original operation across PostgreSQL and application-process restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
