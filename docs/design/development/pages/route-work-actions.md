@@ -18,11 +18,19 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with captures 02 and 04 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+
+- **Layout at 1440 × 900:** the breadcrumb "My Work / My actions"; toolbar owner, Due and Filters (status, type, source and search), the count and "updated hh:mm AEST", refresh, + Activity and "…".
+- **Grid:** the accepted grid, grouped Overdue, Today, Upcoming and Date needed. Columns: Done (a ring that opens Record outcome), Activity, Due (sorted), Owner, Linked to, Organisation or site, Contact and Purpose, with "…" pinned right. There is no selection column, because My actions has no bulk actions.
+- **Record outcome:** what happened (required, with the type's presets), notes, and what happens next, which defaults to "Plan the next activity" for a lead or opportunity.
+
 ## Mobile
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+
+Accepted design (12 October 2026): capture 09 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (centre): flush rows grouped as on the desktop, each with a done ring, type icon, title, linked-record tag and timing; toolbar owner, count and filter.
 
 ## Shared components and states
 
@@ -33,6 +41,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-My-Work-and-Action-Centre-r01.html](../../../reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html)
+- Accepted Figma design: [My Work page design r01 captures](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The earlier references above stay as historical design records.
 
 ## Behaviour, handovers and verification
 

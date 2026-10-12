@@ -154,6 +154,8 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
 
 - [Work order record page design — owner decision](work-order-record-page-design.md): Dean chose the work order record page (`/service/work-orders/[id]`, SV-03) as the next Figma page and accepted it on 12 October 2026 ("Proceed with your recommendations") as the named version "Work order record page — shared record layout, accepted". It is the second record type on the shared record layout, with view tabs, a "Ready to authorise" bar drawn from the code's blockers, a decision card, a review side panel and an Authorise confirmation that asks for a reason. It corrects the Work orders register's Next visit rule and the lead record page's weekdays. Eleven icon-free captures are retained. The reads, the build and the shell rollout are not decided.
 
+- [My Work page design — owner decision](my-work-page-design.md): Dean asked for the Figma My Work trial screen to be rebuilt to align with the accepted pages, and accepted the redraw on 12 October 2026 ("Proceed with your recommendations") as the named version "My Work — Pipedrive pattern, accepted". It moves the Overview, My actions, Team queue, Reviews & handovers, Blocked & waiting, Updates & preferences and the phone onto the accepted shell, grid and record window, applies the 9 October review findings, and adds a proposed Today's weather module (Dean's request) that needs a provider ADR before it is built. D3 and My Work on the Sales rail stay open; nothing is built.
+
 
 - [Saved-team access inspection](access-team-inspection-current.md): current per-member grant-state counts and exact person handover; roster labels grant no authority.
 

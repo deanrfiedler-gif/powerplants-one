@@ -7607,11 +7607,16 @@
       "guide_key": "guide.page.work.actions",
       "design_path": "docs/design/development/pages/route-work-actions.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-02-Desktop-My-Actions-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-04-Desktop-Record-Outcome-Dialog-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7639,13 +7644,17 @@
       "guide_key": "guide.page.work",
       "design_path": "docs/design/development/pages/route-work.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
         "src/components/saved-view-controls.tsx",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7677,13 +7686,15 @@
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/reviews-all-permitted.png",
         "docs/testing/evidence/sh-platform/captures/returned-detail-phone.png",
-        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png"
+        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-06-Desktop-Reviews-Handovers-r01.png"
       ],
       "dependencies": [
         "src/components/review-workspace.tsx",
         "src/reviews/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7711,11 +7722,14 @@
       "guide_key": "guide.page.work.team",
       "design_path": "docs/design/development/pages/route-work-team.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-05-Desktop-Team-Queue-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7746,13 +7760,15 @@
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/notifications-inbox-desktop.png",
         "docs/testing/evidence/sh-platform/captures/notifications-inbox-320.png",
-        "docs/testing/evidence/sh-platform/captures/preferences-phone.png"
+        "docs/testing/evidence/sh-platform/captures/preferences-phone.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-08-Desktop-Updates-Inbox-r01.png"
       ],
       "dependencies": [
         "src/components/notification-workspace.tsx",
         "src/notifications/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7781,11 +7797,14 @@
       "guide_key": "guide.page.work.waiting",
       "design_path": "docs/design/development/pages/route-work-waiting.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-07-Desktop-Blocked-Waiting-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7813,7 +7832,10 @@
       "guide_key": "guide.page.work.id",
       "design_path": "docs/design/development/pages/route-work-id.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-03-Desktop-Activity-Window-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
@@ -7823,7 +7845,8 @@
         "src/sales/followup.ts",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",

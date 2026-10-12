@@ -15,6 +15,10 @@ Coordinate current review work without creating another approval authority. My r
 
 Use a bounded worklist with six perspectives and source/owner filters. Keep source-state notices and qualified counts visible. Reuse WorkDialog for detail and hand off through the source link. Retain the existing 1440/1280/1024 layout and test the intermediate 768 width. The merged global design-workspace and information controls remain available.
 
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 06 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+
+- **Layout:** the breadcrumb "My Work / Reviews & handovers"; the six perspectives move into a view picker ("My reviews"); Area and Type filters; a grid with Item, Reference and revision, Area, Status, Owner or reviewer, Due and Submitted (sorted, oldest first); one plain sentence under the grid: opening a review never approves it.
+
 ## Mobile
 
 Wrap all six perspectives and filters, stack long source/owner details at 390 and 320 CSS px, and keep Open source and dialog close reachable. Keyboard focus returns on Escape. Review decisions require the online source workflow. Verification covered widths 430, 390 and 320; physical-device and owner acceptance remain pending.
@@ -31,6 +35,7 @@ All-source failure/denial does not show zero workload. A partial source slice re
 - [returned-detail-phone.png](../../../testing/evidence/sh-platform/captures/returned-detail-phone.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
 - [receiver-desktop.png](../../../testing/evidence/sh-platform/captures/receiver-desktop.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
 - [PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html](../../../reference/ui/approvals-handover/PPO-Cross-Module-Approvals-and-Handover-Inbox-r01.html) — retained design reference.
+- Accepted Figma design: [My Work page design r01 captures](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The earlier references above stay as historical design records.
 
 ## Behaviour, handovers and verification
 
