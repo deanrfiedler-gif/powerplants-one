@@ -1,0 +1,95 @@
+{
+  "recorded_local_date": "2026-10-13",
+  "source_commit": "ef2c280811df1bfe4960ef8f07d59b0645e581b6",
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/461",
+  "dependency_commit": "0213e8dce94d94f5beadf344189c95447a79a706",
+  "data": "Synthetic",
+  "ci": {
+    "run": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38320022294",
+    "result": "success",
+    "environment": "Ubuntu 24.04; pinned Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15",
+    "checks": {
+      "studio_lint_type_unit_build": "passed",
+      "scoped_database": {
+        "passed": 31,
+        "failed": 0,
+        "new_overview_receiving_cases": 5
+      },
+      "compiled_http": {
+        "passed": 4,
+        "failed": 0,
+        "new_overview_receiving_cases": 2
+      },
+      "real_postgresql_and_process_restart": "passed",
+      "existing_react_layout": {
+        "passed": 5,
+        "failed": 0
+      },
+      "existing_desktop_and_phone_journeys": {
+        "passed": 5,
+        "failed": 0
+      }
+    },
+    "foundation": {
+      "result": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38320022313/job/115045615672"
+    }
+  },
+  "local": {
+    "environment": "Windows; Node 24.21.0, npm 11.19.0, PostgreSQL 16.15; ppo_synthetic_test",
+    "new_units": {
+      "passed": 2,
+      "failed": 0
+    },
+    "corrected_receiving_regression": {
+      "passed": 1,
+      "failed": 0,
+      "duration_ms": 349554.3919
+    },
+    "restart": {
+      "passed": true,
+      "project_version": 2,
+      "tasks": 1,
+      "original_receipt_retained": true,
+      "raid_history_and_original_retained": true,
+      "overview_and_portfolio_retained": true,
+      "exact_receiving_and_original_retained": true
+    },
+    "closeout_regression": "Setup failed with unchanged connection timeout before assertions; broad database CI is separate",
+    "compiled_http_attempt": "Not final-source proof: earlier compiled bundle lacked the final variance reason, and reseeding preserved the intentionally revoked grant. Clean current-source CI passed.",
+    "final_naming": {
+      "passed": true,
+      "errors": 0,
+      "project_instruction_characters": 7995
+    },
+    "final_foundation": "Duplicate scan stopped under host load without a result; pinned-source foundation CI passed. Final-document CI is separate."
+  },
+  "unchanged_main_control": {
+    "source_commit": "c3ff5b90d0730f55583b6ee73f9d1af4a449695e",
+    "query": "SELECT 1",
+    "result": "Connection terminated due to connection timeout",
+    "elapsed_ms": 3014,
+    "database_and_configuration_source_identical": true
+  },
+  "limits": [
+    "No new Project UI or owner/device acceptance is claimed",
+    "No migration, seed, grant, capability or dependency added",
+    "Independent review, complete cross-module CI, merge and deployment remain separate",
+    "Earlier local and CI failures are recorded in README.md; no assertion, timeout or business rule relaxed"
+  ],
+  "normalised_lf_sha256": {
+    ".github/workflows/projects-gantt.yml": "df6172bdf1cc91011371ad0ef29d350694d342dc6c66fb8bedf9fd1ca9c7864f",
+    "scripts/projects-restart-proof.ts": "220dce799bc79b4dcf72465fab02352efb486e46ce7f860927636f0a516f0a7c",
+    "src/app/api/v1/projects/[id]/overview/route.ts": "359739bb3fc8e6972c0c554a9367a31da0106af9e499d5646b4584ac1cbca640",
+    "src/app/api/v1/projects/portfolio/route.ts": "9614878b451fcd10e227495d14b6b221c6fdf63cf654f2dc54a0cac937797830",
+    "src/projects/overview-model.ts": "9ec7c53bb0eb600318408e731cb0d5efa9309a4dfade71bc7cc8c98ececee7f0",
+    "src/projects/overview.ts": "9cdffc9d28bc4c21db92826c9dbfee02fdf8b65dd2dec3d84cde7b45921df4f1",
+    "src/projects/portfolio.ts": "524e638f3ed370b022f70d3028091adea2bd9d0a9b7c61b23297265e44adabfa",
+    "src/sales/delivery-binding.ts": "3ea0eafa144de497c7f67f951e509088dfbac2d56f1111c77d535008946b080d",
+    "tests/database/project-acceptance.test.ts": "154e3afb20a35eb9f9ebe9538e71b544c5b8a71870ffe5bcfc49aa8d1513321c",
+    "tests/database/project-overview.test.ts": "ad3961e0db173056d877a9beb0411bd9878ec2d17e8ed6efacb548724eaea0ac",
+    "tests/helpers/project-receiving.ts": "b015b8503f634bb64821fc29f85cb2fbf55fbfdb0a050e5c272e31262e1aa2cb",
+    "tests/http/project-overview.test.ts": "cb8d67f3aa67f8017d86b3271690ae6a8deef15e331b947b7dbce86a6b23c1c3",
+    "tests/unit/project-overview.test.ts": "0ff1c81f4938c74784c7d16910d711050126f0ebc62c56ce49f13a403112d679"
+  }
+}
