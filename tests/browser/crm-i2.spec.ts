@@ -386,7 +386,7 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
 test("CA-13 shared brand consumers retain navigation, readable actions and original identity controls", async ({ page }, info) => {
   // Home opens the existing authenticated My Work page.
   await call(page, "local-session", { profile: "coordinator" });
-  for (const [path, title] of [["/", "Good (morning|afternoon|evening), "], ["/customers", "Organisations"], ["/work", "Good (morning|afternoon|evening), "], ["/service/reports", "Service review"]]) {
+  for (const [path, title] of [["/", "My Work"], ["/customers", "Organisations"], ["/work", "My Work"], ["/service/reports", "Service review"]]) {
     await page.goto(path);
     if (path === "/") {
       // Home redirects through a streamed page; its initial identity read can still be

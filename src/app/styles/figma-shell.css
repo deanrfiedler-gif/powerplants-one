@@ -1,0 +1,76 @@
+/* Accepted Shell v2 composition, shared by the Figma module designs.
+   Existing navigation permissions, targets, identity and stored preferences remain authoritative. */
+:root {
+  --ppo-shell-surface: #f6f7f9;
+  --ppo-shell-line: #e1e5eb;
+  --ppo-shell-selected: #e3e8ee;
+  --ppo-shell-link: #355b80;
+  --ppo-rail-text: #e0e1e3;
+  --ppo-rail-muted: #acaeb3;
+}
+.ppo-rail-department { display: none; }
+@media (min-width: 781px) {
+  .app-frame[data-rail=expanded] { --ppo-rail-width: 240px; }
+  .ppo-rail .ppo-primary-nav { flex: 0 1 auto; gap: 2px; padding-top: 4px; padding-bottom: 0; }
+  .ppo-primary-nav .ppo-rail-item { flex-basis: 44px; height: 44px; }
+  .ppo-rail-bottom { margin-top: 2px; padding: 0 0 12px; }
+  .ppo-rail .ppo-rail-bottom .ppo-rail-item { height: 44px; }
+  .app-frame[data-rail=expanded] .ppo-rail .brand { padding-left: 20px; }
+  .app-frame[data-rail=expanded] .ppo-rail .brand-logo { width: 46px; height: 46px; }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-toggle { width: calc(100% - 16px); flex-basis: 40px; min-height: 40px; margin: 2px 8px; }
+  .app-frame[data-rail=expanded] .ppo-rail-department { display: block; align-self: stretch; padding: 6px 20px 10px; color: var(--ppo-rail-muted); font: 500 11px/16px PPOShellRoboto, Roboto, sans-serif; letter-spacing: .66px; text-transform: uppercase; }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-primary-nav { padding: 0 8px; }
+  .app-frame[data-rail=expanded] .ppo-rail-bottom { padding: 0 8px 12px; }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-item { padding: 0 10px 0 12px; color: var(--ppo-rail-text); }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-item[aria-current=page] { color: var(--ppo-rail-ink); }
+  .app-frame[data-rail=expanded] .ppo-rail .product-icon { width: 20px; height: 20px; flex: 0 0 20px; }
+  .app-frame[data-rail=expanded] .ppo-rail-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 14px/20px PPOShellRoboto, Roboto, sans-serif; }
+  .app-frame[data-rail=expanded] [aria-current=page] .ppo-rail-label { font-weight: 500; }
+  .app-frame[data-rail=expanded] .ppo-rail-toggle .ppo-rail-label { font-size: 12px; line-height: 16px; }
+  .app-frame .ppo-more-panel, .app-frame[data-rail=expanded] .ppo-more-panel, .app-frame:has([data-menu]) .ppo-more-panel {
+    left: var(--ppo-rail-width); top: 0; bottom: 0; width: 240px; max-height: 100dvh; border-radius: 0; border: 0; border-right: 1px solid var(--ppo-shell-line); background: var(--ppo-shell-surface); box-shadow: 6px 0 18px #24293829;
+  }
+  .ppo-more-body { padding: 0 8px 12px; }
+  .ppo-more-panel > header { padding: 12px 8px 4px 20px; }
+  .ppo-more-panel h2 { font-size: 16px; font-weight: 700; }
+  .ppo-more-link { gap: 10px; min-height: 40px; padding: 8px 12px; font-size: 14px; line-height: 20px; }
+  .ppo-more-link span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ppo-more-link .product-icon { width: 16px; height: 16px; }
+  .ppo-more-link[aria-current=page] { background: var(--ppo-shell-selected); color: var(--ppo-shell-link); }
+  .ppo-more-link[aria-current=page] .product-icon { color: inherit; }
+  .ppo-menu-group h3 { margin: 18px 12px 2px; font-size: 11px; line-height: 16px; }
+  /* Flow the search between the breadcrumb and utilities; it cannot collide with an expanded rail. */
+  .app-frame .ppo-shell-header .product-heading { flex: 0 1 320px; max-width: 36%; min-width: 100px; }
+  .app-frame .ppo-header-centre { position: static; transform: none; width: min(459px, 40%); flex: 0 1 459px; margin-inline: auto; }
+  .app-frame .ppo-shell-header .ppo-crumbs { flex-wrap: nowrap; }
+  .app-frame .ppo-shell-header .ppo-crumbs li { flex: 0 1 auto; min-width: 0; }
+  .app-frame .ppo-shell-header .ppo-crumbs .ppo-crumb { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+  .app-frame .ppo-shell-header .ppo-crumbs li:last-child { flex: 0 0 auto; max-width: 100%; }
+  .app-frame:has(.mw-overview-figma) .ppo-breadcrumb-trigger { display: none; }
+}
+@media (min-width: 781px) and (max-width: 1199px) {
+  .app-frame .ppo-shell-header .ppo-crumbs li:not(:last-child) { display: none; }
+  .app-frame .ppo-shell-header .ppo-crumbs li:last-child::before { content: none; }
+  .app-frame .ppo-shell-header .ppo-breadcrumb-trigger { display: flex; }
+  .app-frame .ppo-header-centre { min-width: 44px; }
+}
+/* Opt-in secondary-menu presentation; retained Engineering baselines remain explicit. */
+#ppo-my-work[data-menu-presentation=figma] .mw-menu { padding: 8px; background: var(--surface); border-right: 1px solid var(--line); }
+#ppo-my-work[data-menu-presentation=figma] .mw-menu li a { min-height: 40px; padding: 8px 12px; gap: 10px; }
+#ppo-my-work[data-menu-presentation=figma] .mw-menu li a[aria-current=page] { background: var(--ppo-shell-selected); color: var(--link); }
+#ppo-my-work[data-menu-presentation=figma] .mw-menu li a :is(.mw-icon,.product-icon) { width: 16px; height: 16px; flex: 0 0 16px; color: inherit; }
+#ppo-my-work[data-menu-presentation=figma] .mw-menu-pinned { margin-top: 2px; padding-top: 0; border: 0; }
+#ppo-my-work[data-menu-presentation=figma] .mw-menu-pinned h2 { margin: 0; padding: 18px 12px 2px; font-size: 11px; font-weight: 500; line-height: 16px; }
+#ppo-my-work[data-menu-presentation=figma] .mw-menu-pinned p { padding: 8px 12px; }
+#ppo-my-work[data-menu-presentation=figma] button.mw-menu-strip { width: 20px; min-width: 20px; }
+#ppo-my-work[data-menu-presentation=figma] .mw-badge { background: transparent; color: var(--muted); font-size: 12px; font-weight: 400; padding: 0; min-width: 0; }
+@media (max-width: 780px) {
+  .app-frame .mobile-navigation { min-height: 64px; height: calc(64px + env(safe-area-inset-bottom)); padding: 0 0 env(safe-area-inset-bottom); background: var(--ppo-rail-navy); }
+  .app-frame .mobile-navigation :is(a,button) { min-height: 64px; border-radius: 0; color: var(--ppo-rail-text); position: relative; justify-content: center; }
+  .app-frame .mobile-navigation :is(a,button) > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .app-frame .mobile-navigation .product-icon { width: 24px; height: 24px; }
+  .app-frame .mobile-navigation [aria-current=page] { background: var(--ppo-rail-hover); color: white; box-shadow: inset 0 3px #62bb46; }
+  .app-frame .mobile-navigation [aria-current=page]::before { display: none; }
+  .app-frame:has(.mw-mobile) .ppo-shell-header .ppo-breadcrumb-trigger { display: none; }
+  .app-frame:has(#ppo-my-work) .ppo-shell-header .product-heading { min-width: 0; flex: 1; }
+}

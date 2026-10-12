@@ -3120,7 +3120,7 @@
         {
           "id": "nav-rail-modes",
           "label": "Rail modes",
-          "description": "Compact 76 px, labelled 232 px, short-height long Service rail, blocked storage, mobile More/Workspace and visible Sales labels. Fixture: tests/browser/navigation-safety.spec.ts; tests/browser/department-navigation.spec.ts"
+          "description": "Compact 76 px, labelled 240 px, saved identity preference, short-height long Service rail, blocked storage and accessible icon-only phone navigation. Existing navigation browser fixtures remain authoritative."
         },
         {
           "id": "nav-authorized-context",
@@ -3161,6 +3161,11 @@
           "id": "shell-activation-loading",
           "label": "Desktop rail loading and phone handover",
           "description": "Customers host retains the original desktop/phone prefetch policy and captures request observations; keyboard and touch open the exact permitted People route and Back restores Customers. Fixture: tests/browser/shell-loading.spec.ts; directory and navigation-safety fixtures cover receiving, saved views, authority and dirty-state recovery."
+        },
+        {
+          "id": "figma-my-work-overview",
+          "label": "Figma My Work overview",
+          "description": "Real compiled desktop/phone My Work host, outcome ring, row actions menu, saved views, unknown counts and denied identity. Fixtures: tests/browser/my-work.spec.ts; tests/browser/my-work-mobile.spec.ts. Source frames 404:3 and 404:181; no new isolated renderer."
         }
       ],
       "implementation": [
@@ -3213,7 +3218,16 @@
         "docs/decisions/navigation-consolidation.md",
         "src/components/shell-provider.tsx",
         "src/components/offline-entry.tsx",
-        "src/app/leads.css"
+        "src/app/leads.css",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/components/client/my-work-shell.tsx",
+        "src/activities/components/client/my-work-overview.tsx",
+        "src/activities/components/client/my-work-mobile.tsx",
+        "src/activities/components/client/my-work-list.tsx",
+        "src/activities/work-guide.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3257,10 +3271,11 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/customers",
-        "route:/people"
+        "route:/people",
+        "scope:SH-02"
       ],
-      "desktop": "76 px compact or 232 px labelled primary rail; accessible collapse button, identity/browser persistence and in-memory fallback. More contains ordinary permitted Workspace selection. Keep Home/More reachable with long and short rails; 1200 px secondary-menu docking remains.",
-      "mobile": "Retain the 780/781 px boundary, visible Sales labels and global shell on Leads. More provides labelled permitted Workspace selection; equivalent destinations retain date/scope/record meaning. Check 320 px without page overflow; touch targets aim for 44 px.",
+      "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
+      "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
       "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
       "gaps": [
@@ -3421,6 +3436,14 @@
           "expected": "Baseline shell prefetch policy is restored; deliberate navigation, keyboard/touch, Back and access remain correct. Loading availability and performance require separate measured evidence.",
           "actual": "Both shell prefetch experiments are withdrawn. Unchanged main reproduces cold-wave readiness failures. Verified compiled traces and an untraced repeat complete without reproducing the 503s; the original cause remains unresolved. All attempts remain retained and no overall performance acceptance is inferred.",
           "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "figma-shell-overview-review",
+          "expected": "Paired accepted Shell v2 and My Work overview review on desktop and phone.",
+          "actual": "First implementation authorised 13 October; exact sources and execution evidence recorded separately. Other My Work grids/detail overlays and module interiors remain.",
+          "action": "Review docs/testing/evidence/figma-ui/README.md and explicit runtime adaptations before recording owner/device acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

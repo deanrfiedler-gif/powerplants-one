@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Figma UI application implementation — 13 October 2026
+
+Repository writer: this user-authorised UI implementation session, branch `codex/figma-app-ui`, based on main `7e4ef3b`. Dean requested the supplied Figma designs in the application including shell, icons and styling. The [first increment](decisions/figma-ui-implementation.md) implements Shell v2 and the desktop/phone My Work overview using existing source-backed reads and commands. Backend extensions are authorised where needed, but this increment requires no new technology, migration, seed or capability. The [execution ledger](testing/evidence/figma-ui/README.md) records checks and comparison limits. Remaining module interiors and My Work grids/overlays are explicit follow-on work. Existing review fingerprints, issued reference bytes and parent IDs are preserved. Code delivery, visual acceptance and hosted deployment remain separate.
+
 ## Leads PR integration — 12 October 2026
 
 Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. PR #452 incorporates the reconciled #451 head `8dd3ba6` so both contributions are verified with the merged backends before the dependency-ordered merges. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.

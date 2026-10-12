@@ -13,7 +13,8 @@
     "src/components/ui/controls.css",
     "src/app/layout.tsx",
     "src/components/product-navigation.tsx",
-    "src/components/shell-provider.tsx"
+    "src/components/shell-provider.tsx",
+    "src/app/styles/figma-shell.css"
   ],
   "entries": [
     {
@@ -34,7 +35,12 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -48,7 +54,7 @@
         "route:/work"
       ],
       "reviewer": "Dean Fiedler",
-      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate."
+      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "scope:SH-02",
@@ -67,7 +73,12 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -88,7 +99,8 @@
         "route:/work/new",
         "route:/sales/tasks"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": " Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "scope:SH-03",
@@ -7677,7 +7689,12 @@
         "src/components/saved-view-controls.tsx",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
-        "docs/decisions/my-work-page-design.md"
+        "docs/decisions/my-work-page-design.md",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7691,7 +7708,8 @@
         "scope:SH-01",
         "scope:SH-02"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": " Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "route:/work/reviews",
@@ -9470,7 +9488,12 @@
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation.mmd",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd",
-        "docs/testing/evidence/pt27-loading/README.md"
+        "docs/testing/evidence/pt27-loading/README.md",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -9482,7 +9505,7 @@
       "build_rank": null,
       "related_keys": [],
       "reviewer": "Dean Fiedler",
-      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged."
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "system:theme",
