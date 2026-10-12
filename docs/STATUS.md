@@ -6,9 +6,13 @@
 
 ## Leads PR integration — 12 October 2026
 
-Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.
+Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. PR #452 incorporates the reconciled #451 head `8dd3ba6` so both contributions are verified with the merged backends before the dependency-ordered merges. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.
 
 The seven protected-main check names below were re-read on 12 October and remain unchanged; strict up-to-date checking is off, administrator enforcement is on and no approving review is required. No protection, assertion or deadline is changed. Code integration, visual acceptance and deployment remain separate.
+
+## Lead record readiness and summary backend — 12 October 2026
+
+Repository writer: this user-authorised Lead record backend session, branch `codex/lead-record-reads`, based on PR #451 at `d02b258`. Dean requested conversion readiness and record-summary reads and PR publication while Figma design continues separately. The [read contract](decisions/lead-record-backend.md) adds saved-context readiness and scoped activity/age summary to the existing detail read. [Execution evidence](testing/evidence/lead-record/README.md) records actual verification. Qualification inputs and the native conversion command remain authoritative. Grouped history, other customer work, UI implementation and external integrations remain separate. All 36 selected database cases have passing execution (34 in the first batch and two unchanged-deadline isolated replays), alongside five focused unit tests and documentation checks. The full compiled build, three compiled HTTP cases, TypeScript and lint pass. [PR #452](https://github.com/deanrfiedler-gif/powerplants-one/pull/452) follows #451; contribution CI and review remain separate, with no merge, acceptance or deployment implied.
 
 ## Leads counts and follow-up backend — 12 October 2026
 

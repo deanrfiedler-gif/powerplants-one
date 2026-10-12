@@ -1,3 +1,4 @@
+import { registerLeadRecordTests } from "../helpers/lead-record-cases";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -27,6 +28,7 @@ process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 beforeEach(reset);
 after(closeDatabase);
 registerLeadRegisterTests();
+registerLeadRecordTests();
 const principal = async (profile = "coordinator") =>
   (await createSession(profile)).principal;
 const code = (value: string) => (e: unknown) =>
