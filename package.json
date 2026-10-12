@@ -32,13 +32,15 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.33.0",
+    "fast-xml-parser": "5.11.1",
     "next": "16.3.4",
     "openid-client": "6.8.8",
     "pg": "8.23.0",
     "playwright": "1.63.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "server-only": "0.0.1"
+    "server-only": "0.0.1",
+    "yauzl": "3.4.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.3.4",
@@ -47,6 +49,7 @@
     "@types/pg": "8.23.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
+    "@types/yauzl": "3.4.0",
     "eslint": "10.10.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "prettier": "3.9.6",
