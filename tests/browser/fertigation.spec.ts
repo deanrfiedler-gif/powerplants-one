@@ -1189,8 +1189,20 @@ test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resol
     },
     proposal,
   });
-  await page.goto(`/estimating/fertigation/${id}?view=overview`);
+  // The channel breach is a candidate failure, never a conflict finding, and
+  // its labelled engine text names the channel once.
+  const breach =
+    "SYN channel A is outside entered injection limits; unconfirmed evidence does not cancel the failure.";
+  await page.goto(`/estimating/fertigation/${id}?view=recipes`);
   const root = page.locator("#ppo-fertigation");
+  const injection = root.locator(".fn-injection-rows li", {
+    hasText: "SYN channel A",
+  });
+  await expect(injection.locator(".fn-chip")).toHaveText("Candidate failure");
+  await expect(injection).toContainText(breach);
+  await expect(injection).not.toContainText("Channel SYN channel A");
+
+  await page.goto(`/estimating/fertigation/${id}?view=overview`);
   await expect(
     root.getByRole("heading", { name: "What this scope can produce now" }),
   ).toBeVisible();
@@ -1201,6 +1213,14 @@ test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resol
     root.getByRole("heading", { name: "Capacity headroom" }),
   ).toBeVisible();
   await expect(root.getByText(/is outside its entered limits/)).toBeVisible();
+  await expect(
+    root.getByRole("region", { name: "Next actions" }),
+  ).toContainText(breach);
+  await expect(
+    root
+      .locator("table.fn-capacity tbody tr", { hasText: "SYN channel A at" })
+      .locator(".fn-chip"),
+  ).toHaveText("Candidate failure");
 
   await root
     .getByRole("button", { name: "How this is calculated" })

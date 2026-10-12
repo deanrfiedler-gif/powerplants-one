@@ -231,7 +231,8 @@ export function InjectionRequirement({
                   </>
                 ) : over || under ? (
                   <>
-                    <Chip tone="conflict" icon="conflict">Conflict</Chip>
+                    {/* The engine keeps this on the candidate: never a finding or a count. */}
+                    <Chip tone="conflict" icon="conflict">Candidate failure</Chip>
                     <small>
                       {failure ??
                         (over

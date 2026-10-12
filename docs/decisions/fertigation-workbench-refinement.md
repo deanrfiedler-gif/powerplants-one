@@ -118,7 +118,7 @@ Not built yet: F1's "evidence for a declaration" and "mapped to a native field" 
 Corrections found while building, now reflected here and to be reflected on the board:
 
 - Native records a technical review with open findings (disposition "Reviewed; unresolved"), and a handover needs only a review of the exact revision. The board's "review unavailable while conflicts are open" was a design assumption, not native behaviour; the running screen shows the native rule.
-- An injection channel above its entered range is a candidate failure in native, not a scope finding. It appears in Next actions and Resolve alongside conflicts but is never added to finding counts.
+- An injection channel above its entered range is a candidate failure in native, not a scope finding. It appears in Next actions and Resolve alongside conflicts but is never added to finding counts. The capacity headroom and injection panels label it Candidate failure too (12 October 2026).
 - The engine gates timing on the scenario's phase and I/O on bank and controller phases, but raises a phase finding only for areas, crop groups, valves, masters, sources and scheduled groups. An undeclared scenario phase shows only as "timing incomplete". The declarations diagnose this and name the phase; the engine is unchanged, and adding the missing findings would need a new calculation edition.
 
 ## Built to the board, 12 October 2026

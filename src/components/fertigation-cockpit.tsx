@@ -499,7 +499,7 @@ export function CapacityPanel({
                     {r.state === "over" ? (
                       <span className="fn-chip fn-chip-conflict">
                         <ConflictMark />
-                        Conflict
+                        {r.candidate ? "Candidate failure" : "Conflict"}
                       </span>
                     ) : r.state === "unknown" ? (
                       <span className="fn-chip fn-chip-unknown">Not assessable</span>
