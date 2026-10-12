@@ -20,7 +20,10 @@ import {
   reviewRelease,
   activateRelease,
   testRelease,
+  sealRelease,
 } from "../../src/cpq/releases";
+import { saveDraft, readDraft, listDrafts } from "../../src/cpq/drafts";
+import { definition as validateDefinition } from "../../src/cpq/validation";
 import {
   readRelease,
   readRun,
@@ -30,6 +33,7 @@ import {
 } from "../../src/cpq/reads";
 import {
   previewCalculation,
+  evaluatePreview,
   calculateRun,
   previewAdoption,
   adoptRun,
@@ -151,6 +155,168 @@ const adoption = (preview: Awaited<ReturnType<typeof previewAdoption>>) => ({
     excluded: "SYN no other work",
     assumptions: "SYN software verification only",
   },
+});
+
+test("design contract retains drafts, immutable rule versions and separate seals; live head changes only on activation", async () => {
+  const s = await setup();
+  const content = validateDefinition({
+    ...cpqDefinition(),
+    schema_version: 3,
+    design: {
+      option_sets: [],
+      structure: [],
+      shared_capacity: [],
+      decision_tables: [],
+      pricing: { mode: "Catalog", percent: "0", allow_override: true },
+    },
+  });
+  const draftInput = {
+    ...crmBase(),
+    id: randomUUID(),
+    company_id: CRM.company,
+    kind: "Rules",
+    release_id: s.release_id,
+    estimating_workspace_id: null,
+    option_id: null,
+    discovery_revision_id: null,
+    base_revision_id: s.view.current.id,
+    base_run_id: null,
+    binding_hash: null,
+    label: content.label,
+    expected_version: 0,
+    content: {
+      ...content,
+      rules: [{ ...content.rules[0], quantity: "ceil(" }],
+    },
+  };
+  const saved = await saveDraft(s.p, draftInput);
+  assert.equal(saved.receipt.state, "Working");
+  assert.equal(
+    (await readDraft(s.p, draftInput.id)).draft.content.rules instanceof Array,
+    true,
+  );
+  assert.equal((await saveDraft(s.p, draftInput)).replayed, true);
+  assert.equal(
+    (await readOperation(s.p, draftInput.operation_id)).record_id,
+    draftInput.id,
+  );
+  assert.equal(
+    (await listDrafts(s.p, { company_id: CRM.company, kind: "Rules" })).items
+      .length,
+    1,
+  );
+  assert.equal(
+    (await readRelease(s.p, s.release_id)).current.id,
+    s.view.current.id,
+  );
+  await assert.rejects(
+    saveDraft(s.p, {
+      ...draftInput,
+      ...crmBase(),
+      content,
+      expected_version: 0,
+    }),
+    code("VersionConflict"),
+  );
+  await saveDraft(s.p, {
+    ...draftInput,
+    ...crmBase(),
+    content,
+    expected_version: 1,
+  });
+  assert.equal((await readDraft(s.p, draftInput.id)).history.length, 2);
+  const made = await saveRelease(s.p, {
+    ...crmBase(),
+    id: s.release_id,
+    company_id: CRM.company,
+    expected_version: 1,
+    definition: content,
+    draft: { id: draftInput.id, expected_version: 2 },
+  });
+  const v = await readRelease(s.p, s.release_id);
+  assert.equal(
+    (await readDraft(s.p, draftInput.id)).draft.base_revision_id,
+    v.current.id,
+  );
+  assert.equal((await readDraft(s.p, draftInput.id)).history.length, 3);
+  assert.equal(v.rule_versions.length, 2);
+  assert.equal(v.members.length, 2);
+  const reviewed = await reviewRelease(s.reviewer, s.release_id, {
+    ...crmBase(),
+    expected_version: made.receipt.record_version,
+    revision_id: v.current.id,
+    content_hash: v.current.content_hash,
+    outcome: "Approved",
+  });
+  const activate = {
+    ...crmBase(),
+    expected_version: reviewed.receipt.record_version,
+    revision_id: v.current.id,
+    content_hash: v.current.content_hash,
+    expected_activation_version: 0,
+  };
+  await assert.rejects(
+    activateRelease(s.publisher, s.release_id, activate),
+    code("CpqRevisionChanged"),
+  );
+  const seal = {
+    ...crmBase(),
+    expected_version: reviewed.receipt.record_version,
+    revision_id: v.current.id,
+    content_hash: v.current.content_hash,
+  };
+  const sealed = await sealRelease(s.publisher, s.release_id, seal);
+  assert.equal((await readRelease(s.p, s.release_id)).active, null);
+  assert.equal(
+    (await sealRelease(s.publisher, s.release_id, seal)).replayed,
+    true,
+  );
+  assert.equal(
+    (await readOperation(s.publisher, seal.operation_id)).state,
+    "Sealed",
+  );
+  await activateRelease(s.publisher, s.release_id, {
+    ...activate,
+    ...crmBase(),
+    expected_version: sealed.receipt.record_version,
+  });
+  const before = await readRelease(s.p, s.release_id);
+  content.rules[0].description = "SYN new explanation";
+  await saveRelease(s.p, {
+    ...crmBase(),
+    id: s.release_id,
+    company_id: CRM.company,
+    expected_version: before.release.version,
+    definition: content,
+  });
+  const after = await readRelease(s.p, s.release_id);
+  assert.equal(after.rule_versions.length, 3);
+  assert.equal(after.active?.revision.id, v.current.id);
+  assert.equal(after.seals.length, 1);
+  await saveRelease(s.p, {
+    ...crmBase(),
+    id: s.release_id,
+    company_id: CRM.company,
+    expected_version: after.release.version,
+    definition: v.current.definition,
+  });
+  const reused = await readRelease(s.p, s.release_id);
+  assert.equal(reused.rule_versions.length, 3);
+  assert.deepEqual(
+    reused.members.map((m) => m.rule_version_id).sort(),
+    v.members.map((m) => m.rule_version_id).sort(),
+  );
+  await assert.rejects(
+    rows(
+      "UPDATE ppo.cpq_rule_versions SET reason='changed' WHERE workspace_id=$1",
+      [CRM.workspace],
+    ),
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='cpq.author'",
+    [CRM.workspace, s.p.actor_id],
+  );
+  await assert.rejects(readOperation(s.p, draftInput.operation_id));
 });
 
 test("CPQ release review/publication is independent, hash-bound, replayable and revoked before recovery", async () => {
@@ -325,6 +491,45 @@ test("saved calculations and exact atomic adoption replay without duplicating es
     code("RecordUnavailable"),
   );
 });
+test("live preview creates no evidence; Save atomically retains the working draft and immutable run with CAS rollback", async () => {
+  const s = await calculated();
+  const snapshot = async () =>
+    rows(
+      "SELECT (SELECT count(*) FROM ppo.cpq_runs)::int AS runs,(SELECT count(*) FROM ppo.audit_events)::int AS audits,(SELECT count(*) FROM ppo.operation_receipts)::int AS receipts",
+    );
+  const before = await snapshot();
+  const preview = await evaluatePreview(s.p, s.g.id, {
+    option_id: s.g.option_id,
+    revision_id: s.g.revision_id,
+    binding_hash: s.command.binding_hash,
+    input: cpqInput(),
+  });
+  assert.equal(preview.result.ready, true);
+  assert.deepEqual(await snapshot(), before);
+  const command = {
+    ...s.command,
+    ...crmBase(),
+    id: randomUUID(),
+    parent_id: s.run.id,
+    draft: {
+      id: randomUUID(),
+      expected_version: 0,
+      label: "SYN saved configuration",
+    },
+  };
+  await calculateRun(s.p, s.g.id, command);
+  const saved = await readDraft(s.p, command.draft.id);
+  assert.equal(saved.draft.base_run_id, command.id);
+  assert.equal(saved.draft.version, 1);
+  assert.deepEqual(saved.draft.content, (await readRun(s.p, command.id)).input);
+  assert.equal((await calculateRun(s.p, s.g.id, command)).replayed, true);
+  const stable = await snapshot(),
+    bad = { ...command, ...crmBase(), id: randomUUID() };
+  await assert.rejects(calculateRun(s.p, s.g.id, bad), code("VersionConflict"));
+  assert.deepEqual(await snapshot(), stable);
+  assert.equal((await readDraft(s.p, command.draft.id)).history.length, 1);
+});
+
 test("recalculation retains manual costs, replaces owned lines and blocks stale estimate snapshots", async () => {
   const s = await calculated(),
     first = adoption(await previewAdoption(s.p, s.run.id));
@@ -460,7 +665,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
   assert.deepEqual(
     after.filter((r) => r.version > 85).map((r) => r.version),
-    [86],
+    [86, 87],
   );
   await migrate();
   await seed();
@@ -472,4 +677,113 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
     (await rows("SELECT count(*)::int AS n FROM ppo.cpq_releases"))[0].n,
     0,
   );
+});
+
+test("0087 preserves populated 0086 CPQ releases, runs, adoption and identity history", async () => {
+  await database().query(
+    await readFile(
+      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
+      "utf8",
+    ),
+  );
+  await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
+  await migrate(86);
+  await seed(86);
+  // The prior contract's service paths do not require the new read projections.
+  const p = (await createSession("coordinator")).principal,
+    reviewer = (await createSession("products-reviewer")).principal,
+    publisher = (await createSession("products-publisher")).principal;
+  await grant(p.actor_id, ["cpq.read", "cpq.author", "cpq.calculate"]);
+  await grant(reviewer.actor_id, ["cpq.read", "cpq.review"]);
+  await grant(publisher.actor_id, ["cpq.read", "cpq.publish"]);
+  const id = randomUUID();
+  await saveRelease(p, {
+    ...crmBase(),
+    id,
+    company_id: CRM.company,
+    expected_version: 0,
+    definition: cpqDefinition(),
+  });
+  const v = (
+    await rows("SELECT * FROM ppo.cpq_revisions WHERE release_id=$1", [id])
+  )[0];
+  await reviewRelease(reviewer, id, {
+    ...crmBase(),
+    expected_version: 1,
+    revision_id: v.id,
+    content_hash: v.content_hash,
+    outcome: "Approved",
+  });
+  await activateRelease(publisher, id, {
+    ...crmBase(),
+    expected_version: 2,
+    revision_id: v.id,
+    content_hash: v.content_hash,
+    expected_activation_version: 0,
+  });
+  const g = await discovery(p),
+    basis = await previewCalculation(p, g.id, {
+      option_id: g.option_id,
+      revision_id: g.revision_id,
+    }),
+    runId = randomUUID();
+  await calculateRun(p, g.id, {
+    ...crmBase(),
+    id: runId,
+    option_id: g.option_id,
+    revision_id: g.revision_id,
+    parent_id: null,
+    binding_hash: basis.binding_hash,
+    input: cpqInput(),
+  });
+  await adoptRun(p, runId, adoption(await previewAdoption(p, runId)));
+  const tables = [
+    "cpq_releases",
+    "cpq_revisions",
+    "cpq_reviews",
+    "cpq_activations",
+    "cpq_heads",
+    "cpq_runs",
+    "cpq_adoptions",
+    "business_identities",
+    "permission_grants",
+    "estimate_versions",
+  ];
+  const snapshots = await Promise.all(
+    tables.map((t) =>
+      rows(
+        `SELECT to_jsonb(t) AS row FROM ppo.${t} t ORDER BY to_jsonb(t)::text`,
+      ),
+    ),
+  );
+  const ledger = await rows(
+    "SELECT * FROM public.ppo_migrations ORDER BY version",
+  );
+  await migrate();
+  await seed();
+  for (let i = 0; i < tables.length; i++)
+    assert.deepEqual(
+      await rows(
+        `SELECT to_jsonb(t) AS row FROM ppo.${tables[i]} t ORDER BY to_jsonb(t)::text`,
+      ),
+      snapshots[i],
+    );
+  const current = await rows(
+    "SELECT * FROM public.ppo_migrations ORDER BY version",
+  );
+  assert.deepEqual(
+    current.filter((r) => r.version <= 86),
+    ledger,
+  );
+  assert.deepEqual(
+    current.filter((r) => r.version > 86).map((r) => r.version),
+    [87],
+  );
+  await migrate();
+  await seed();
+  assert.deepEqual(
+    await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
+    current,
+  );
+  assert.equal((await readRelease(p, id)).current.content_hash, v.content_hash);
 });

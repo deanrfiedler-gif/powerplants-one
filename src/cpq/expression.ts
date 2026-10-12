@@ -126,6 +126,11 @@ export class Fraction {
 
 type Op = "+" | "-" | "*" | "/";
 type Expr =
+  | {
+      readonly kind: "call";
+      readonly fn: "ceil" | "floor" | "round";
+      readonly value: Expr;
+    }
   | { readonly kind: "literal"; readonly value: string }
   | { readonly kind: "fact"; readonly name: string }
   | { readonly kind: "unary"; readonly op: "+" | "-"; readonly value: Expr }
@@ -145,6 +150,7 @@ const compiledHere = new WeakSet<object>();
 export function compileFormula(
   source: string,
   allowedSymbols: ReadonlySet<string>,
+  functions = false,
 ): CompiledFormula {
   if (
     typeof source !== "string" ||
@@ -185,6 +191,19 @@ export function compileFormula(
     } else if (text !== undefined && DECIMAL.test(text)) {
       left = { kind: "literal", value: text };
     } else if (
+      functions &&
+      ["ceil", "floor", "round"].includes(text) &&
+      tokens[at]?.text === "("
+    ) {
+      at++;
+      const value = expression(1, depth + 1);
+      if (tokens[at++]?.text !== ")")
+        fail(
+          "FORMULA_SYNTAX",
+          "A rounding function takes exactly one expression",
+        );
+      left = { kind: "call", fn: text as "ceil" | "floor" | "round", value };
+    } else if (
       text !== undefined &&
       SYMBOL.test(text) &&
       allowedSymbols.has(text)
@@ -216,7 +235,7 @@ export function compileFormula(
     if (++count > 256 || depth > 32)
       fail("FORMULA_LIMIT", "AST exceeds size/depth budget");
     if (node.kind === "fact") dependencies.add(node.name);
-    if (node.kind === "unary")
+    if (node.kind === "unary" || node.kind === "call")
       pending.push({ node: node.value, depth: depth + 1 });
     if (node.kind === "binary") {
       pending.push({ node: node.left, depth: depth + 1 });
@@ -256,6 +275,20 @@ export function evaluateFormula(
       fail("COMPUTATION_LIMIT", "Evaluation budget exceeded");
     if (node.kind === "literal") return Fraction.fromDecimal(node.value);
     if (node.kind === "fact") return bindings.get(node.name)!;
+    if (node.kind === "call") {
+      const v = visit(node.value, depth + 1),
+        n = v.numerator,
+        d = v.denominator;
+      const q = n / d,
+        remainder = n % d;
+      return new Fraction(
+        node.fn === "ceil"
+          ? q + (remainder > 0n ? 1n : 0n)
+          : node.fn === "floor"
+            ? q - (remainder < 0n ? 1n : 0n)
+            : q + (abs(remainder) * 2n >= d ? (n < 0n ? -1n : 1n) : 0n),
+      );
+    }
     if (node.kind === "unary") {
       const value = visit(node.value, depth + 1);
       return node.op === "-" ? value.negate() : value;
