@@ -187,7 +187,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     .getByRole("button", { name: "Materials & labour", exact: true })
     .click();
   await expect(
-    page.getByText("Needs review", { exact: true }).first(),
+    page.locator(".cpq-pill").filter({ hasText: /^Needs review$/ }).first(),
   ).toBeVisible();
   await adjust.click();
   adjustment = page.getByRole("dialog", {
@@ -202,7 +202,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await adjustment
     .getByRole("button", { name: "Apply adjustment", exact: true })
     .click();
-  await expect(page.getByText("Needs review", { exact: true })).toHaveCount(0);
+  await expect(page.locator(".cpq-pill").filter({ hasText: /^Needs review$/ })).toHaveCount(0);
   // The server commits, but the browser loses the response. Recover the exact
   // receipt instead of creating a second evaluation or abandoning the draft.
   let intercepted = false;

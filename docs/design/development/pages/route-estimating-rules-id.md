@@ -2,13 +2,13 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable key: `route:/estimating/rules/[id]`. Scopes ES-02/ES-03; parent requirements EST-02–EST-09 preserved. Owner: Dean Fiedler. Visual acceptance pending. r20 page type: Rule editor / workbench.
+Stable key: `route:/estimating/rules/[id]`. Scopes ES-02/ES-03; parent requirements EST-02–EST-09 preserved. Owner: Dean Fiedler. Visual acceptance pending. r20 page type: Work queue + persistent detail; supporting Form / guided workflow and Review / comparison.
 
 ## Purpose and reference
 
 Author typed conditions, safe formulas, parameters, parts, options, structures, decision tables, capacities and milestone proposals, with immutable rule and release versions.
 
-Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 486:641, 488:1029, 489:1398, 490:1678, 491:2594, 492:2572, 492:2722, 493:3027, 493:3444, 496:3355, 497:3789, 508:1123. The implementation session inspected design context and rendered frames. A named saved Figma version has not been supplied for this contribution. No public image is retained because the source contains private Pro artwork. Do not substitute screenshots as application assets or imply image presence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
+Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 486:641, 488:1029, 489:1398, 490:1678, 491:2594, 492:2572, 492:2722, 493:3027, 493:3444, 496:3355, 497:3789, 508:1123. The implementation session inspected design context and rendered frames. Dean confirmed the named Figma version “CPQ — Configure & price and Rules studio, accepted” on 13 October. The [44 retained icon-free reference images](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) and [accepted design decision](../../../decisions/cpq-figma-design.md) are now linked into the page register. Preserve these reference bytes; application screenshots are separate implementation evidence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
 
 ## Desktop
 

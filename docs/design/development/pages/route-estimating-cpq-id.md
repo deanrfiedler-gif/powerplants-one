@@ -2,13 +2,13 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable key: `route:/estimating/cpq/[id]`. Scopes ES-02/ES-03; parent requirements EST-02–EST-09 preserved. Owner: Dean Fiedler. Visual acceptance pending. r20 page type: Configurator / workbench.
+Stable key: `route:/estimating/cpq/[id]`. Scopes ES-02/ES-03; parent requirements EST-02–EST-09 preserved. Owner: Dean Fiedler. Visual acceptance pending. r20 page type: Form / guided workflow; supporting Review / comparison and Document & evidence workspace.
 
 ## Purpose and reference
 
 Configure a selected discovery option, explain quantities and prices, compare saved evaluations and deliberately use a saved result in the native estimate.
 
-Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 476:338, 478:666, 480:1244, 480:2550, 481:2485, 481:2966, 482:3079, 499:1366, 502:4198, 506:678. The implementation session inspected design context and rendered frames. A named saved Figma version has not been supplied for this contribution. No public image is retained because the source contains private Pro artwork. Do not substitute screenshots as application assets or imply image presence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
+Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 476:338, 478:666, 480:1244, 480:2550, 481:2485, 481:2966, 482:3079, 499:1366, 502:4198, 506:678. The implementation session inspected design context and rendered frames. Dean confirmed the named Figma version “CPQ — Configure & price and Rules studio, accepted” on 13 October. The [44 retained icon-free reference images](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) and [accepted design decision](../../../decisions/cpq-figma-design.md) are now linked into the page register. Preserve these reference bytes; application screenshots are separate implementation evidence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
 
 ## Desktop
 

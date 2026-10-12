@@ -2,13 +2,13 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable key: `route:/estimating/rules`. Scopes ES-02/ES-03; parent requirements EST-02–EST-09 preserved. Owner: Dean Fiedler. Visual acceptance pending. r20 page type: Register.
+Stable key: `route:/estimating/rules`. Scopes ES-02/ES-03; parent requirements EST-02–EST-09 preserved. Owner: Dean Fiedler. Visual acceptance pending. r20 page type: Register / worklist.
 
 ## Purpose and reference
 
 Find company rule definitions and continue working authoring drafts.
 
-Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 485:301. The implementation session inspected design context and rendered frames. A named saved Figma version has not been supplied for this contribution. No public image is retained because the source contains private Pro artwork. Do not substitute screenshots as application assets or imply image presence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
+Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 485:301. The implementation session inspected design context and rendered frames. Dean confirmed the named Figma version “CPQ — Configure & price and Rules studio, accepted” on 13 October. The [44 retained icon-free reference images](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) and [accepted design decision](../../../decisions/cpq-figma-design.md) are now linked into the page register. Preserve these reference bytes; application screenshots are separate implementation evidence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
 
 ## Desktop
 

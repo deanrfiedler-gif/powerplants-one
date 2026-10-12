@@ -20,4 +20,4 @@ Four route consumers `/estimating/cpq`, `/estimating/cpq/[id]`, `/estimating/rul
 
 ## Alignment and review
 
-Native cent rounding, saved shell preferences and data-dependent labels are explicit departures from literal design example values. No private Pro SVG or private Figma URL is committed. Missing retained source images, named-version confirmation, owner visual review, physical devices and screen readers remain open. Functional proof and deployment are tracked separately in docs/delivery/cpq-ui-handover.md. No review fingerprint is asserted by this change.
+Native cent rounding, saved shell preferences and data-dependent labels are explicit departures from literal design example values. No private Pro SVG or private Figma URL is committed. The named version and [44 icon-free source captures](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) are retained. Owner visual review, physical devices and screen readers remain open. Functional proof and deployment are tracked separately in docs/delivery/cpq-ui-handover.md. No review fingerprint is asserted by this change.

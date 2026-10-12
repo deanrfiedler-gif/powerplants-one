@@ -5595,9 +5595,9 @@
         "docs/design/development/cpq-fixtures.json"
       ],
       "reference": {
-        "path": "docs/decisions/cpq-figma-ui.md",
+        "path": "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
         "anchor": "",
-        "status": "Private Figma frame references; paired acceptance pending"
+        "status": "Owner-accepted icon-free Figma references; implementation visual acceptance pending"
       },
       "specification": "docs/design/development/components/cpq-workbench.md",
       "used_on": [
@@ -5614,7 +5614,7 @@
         {
           "id": "cpq-paired-review",
           "expected": "Full paired visual and physical-device acceptance against a named saved Figma version.",
-          "actual": "Implementation and browser verification in progress; no public source image with licensed glyphs.",
+          "actual": "Retained named-version source images are linked. Compiled browser and bounded visual verification are in progress; owner/device acceptance remains pending.",
           "action": "Record bounded browser evidence and retain owner/device acceptance as pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
