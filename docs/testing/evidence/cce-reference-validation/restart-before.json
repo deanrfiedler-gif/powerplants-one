@@ -1,0 +1,50 @@
+{
+  "ppo_synthetic_test.estimate_versions": {
+    "rows": 3,
+    "hash": "dda206d28c331e387218c81e9340e6761b01ac48c15d7e4f3f1ae7e8742c5001"
+  },
+  "ppo_synthetic_test.cce_rule_versions": {
+    "rows": 1,
+    "hash": "17b58f2c190574a8150adfef16591b02cbd349d129714fa109afcaecd269ab20"
+  },
+  "ppo_synthetic_test.cce_evaluation_runs": {
+    "rows": 1,
+    "hash": "4cd580883d434c3074cf2a1229065cff207619ed9f10977b05bb25e906184f80"
+  },
+  "ppo_synthetic_test.estimate_bom_snapshots": {
+    "rows": 1,
+    "hash": "08ebfd8ead351522e54b4f3901ccbe8c3251281a000c14c647ff2f4fe35d8d0f"
+  },
+  "cce_contract_test_attempt_2.estimate_versions": {
+    "rows": 9,
+    "hash": "21cb72bc4fa1e9bdda7f9113f9b194314b13636af9300ec833ef5d894d7fadd0"
+  },
+  "cce_contract_test_attempt_2.cce_rule_versions": {
+    "rows": 10,
+    "hash": "4b98f941eba66965253d67ca487b08b1c00ca8eb1b9a1127b894a12aa7af3c16"
+  },
+  "cce_contract_test_attempt_2.cce_evaluation_runs": {
+    "rows": 13,
+    "hash": "379a7aafdc1c3284224db8d3729435e8add9bf4bbe7ca568bd3005b7d593e9be"
+  },
+  "cce_contract_test_attempt_2.estimate_bom_snapshots": {
+    "rows": 5,
+    "hash": "543e50eab2919ad85937e0e5b08fe67903251c6cf84b819af6c710c09eacafa2"
+  },
+  "cce_native_populated_upgrade.estimate_versions": {
+    "rows": 3,
+    "hash": "dda206d28c331e387218c81e9340e6761b01ac48c15d7e4f3f1ae7e8742c5001"
+  },
+  "cce_native_populated_upgrade.cce_rule_versions": {
+    "rows": 0,
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cce_native_populated_upgrade.cce_evaluation_runs": {
+    "rows": 0,
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cce_native_populated_upgrade.estimate_bom_snapshots": {
+    "rows": 0,
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

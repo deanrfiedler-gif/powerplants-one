@@ -1,0 +1,982 @@
+{
+  "columns": [
+    {
+      "table_name": "companies",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "companies",
+      "column_name": "workspace_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "companies",
+      "column_name": "provider",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "companies",
+      "column_name": "legacy_erp_connection_key",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "companies",
+      "column_name": "erp_company_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "companies",
+      "column_name": "display_name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "companies",
+      "column_name": "synthetic",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "companies",
+      "column_name": "erp_connection_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "workspace_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "company_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "estimate_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "synthetic",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "clock_timestamp()"
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "created_by",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "updated_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "clock_timestamp()"
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "updated_by",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "predecessor_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "scope_revision_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "title",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "scope",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "lines",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "policy",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "content_hash",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "reason",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "cost_total",
+      "data_type": "numeric",
+      "udt_name": "numeric",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "sell_total",
+      "data_type": "numeric",
+      "udt_name": "numeric",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "estimate_versions",
+      "column_name": "cost_schema_version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "1"
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "workspace_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "company_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "display_number",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "1"
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "synthetic",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "clock_timestamp()"
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "created_by",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "updated_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "clock_timestamp()"
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "updated_by",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "opportunity_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "site_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "owner_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "option_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "estimation_revision_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "current_version_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimates",
+      "column_name": "state",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'Draft'::text"
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "workspace_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "company_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "estimating_workspace_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "ordinal",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "label",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "state",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'Active'::text"
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "current_revision_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "predecessor_option_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "1"
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "workspace_version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "clock_timestamp()"
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "created_by",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "updated_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "clock_timestamp()"
+    },
+    {
+      "table_name": "estimating_options",
+      "column_name": "updated_by",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "workspace_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "issuer",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "subject_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "display_name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "active",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "users",
+      "column_name": "synthetic",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true"
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "companies",
+      "conname": "companies_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "companies",
+      "conname": "companies_provider_check",
+      "contype": "c",
+      "definition": "CHECK ((provider = 'Synthetic'::text))"
+    },
+    {
+      "table_name": "companies",
+      "conname": "companies_synthetic_check",
+      "contype": "c",
+      "definition": "CHECK (synthetic)"
+    },
+    {
+      "table_name": "companies",
+      "conname": "companies_workspace_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)"
+    },
+    {
+      "table_name": "companies",
+      "conname": "companies_workspace_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, id)"
+    },
+    {
+      "table_name": "companies",
+      "conname": "companies_workspace_id_provider_erp_connection_id_erp_compa_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, provider, legacy_erp_connection_key, erp_company_id)"
+    },
+    {
+      "table_name": "companies",
+      "conname": "fk_companies_connection",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, erp_connection_id) REFERENCES ppo.erp_connections(workspace_id, id)"
+    },
+    {
+      "table_name": "companies",
+      "conname": "uq_companies_source",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, id, erp_connection_id, erp_company_id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_cost_schema",
+      "contype": "c",
+      "definition": "CHECK ((cost_schema_version = ANY (ARRAY[1, 2])))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_check",
+      "contype": "c",
+      "definition": "CHECK ((((version = 1) AND (predecessor_id IS NULL)) OR ((version > 1) AND (predecessor_id IS NOT NULL))))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_check1",
+      "contype": "c",
+      "definition": "CHECK ((((jsonb_array_length(lines) = 0) AND (cost_total IS NULL) AND (sell_total IS NULL)) OR ((jsonb_array_length(lines) > 0) AND (cost_total IS NOT NULL) AND (sell_total IS NOT NULL) AND (cost_total >= (0)::numeric) AND (sell_total >= cost_total))))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_content_hash_check",
+      "contype": "c",
+      "definition": "CHECK ((content_hash ~ '^[a-f0-9]{64}$'::text))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_lines_check",
+      "contype": "c",
+      "definition": "CHECK (((jsonb_typeof(lines) = 'array'::text) AND (jsonb_array_length(lines) <= 100)))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_policy_check",
+      "contype": "c",
+      "definition": "CHECK ((policy = 'SYN-EST-ARITHMETIC-01'::text))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_reason_check",
+      "contype": "c",
+      "definition": "CHECK (((length(btrim(reason)) >= 1) AND (length(btrim(reason)) <= 1000)))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_scope_check",
+      "contype": "c",
+      "definition": "CHECK ((jsonb_typeof(scope) = 'object'::text))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_scope_revision_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (scope_revision_id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_synthetic_check",
+      "contype": "c",
+      "definition": "CHECK (synthetic)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_title_check",
+      "contype": "c",
+      "definition": "CHECK (((length(btrim(title)) >= 1) AND (length(btrim(title)) <= 200)))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_version_check",
+      "contype": "c",
+      "definition": "CHECK ((version > 0))"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_company_id_estimate_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, company_id, estimate_id) REFERENCES ppo.estimates(workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_company_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_created_by_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, created_by) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_estimate_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, estimate_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_estimate_id_predecessor_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, estimate_id, predecessor_id) REFERENCES ppo.estimate_versions(workspace_id, estimate_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_estimate_id_version_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, estimate_id, version)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, id) REFERENCES ppo.business_identities(workspace_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "estimate_versions_workspace_id_updated_by_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, updated_by) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimate_versions",
+      "conname": "exact_discovery_basis",
+      "contype": "t",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimate_graph",
+      "contype": "t",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_estimation_revision_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (estimation_revision_id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_option_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (option_id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_state_check",
+      "contype": "c",
+      "definition": "CHECK ((state = 'Draft'::text))"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_synthetic_check",
+      "contype": "c",
+      "definition": "CHECK (synthetic)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_version_check",
+      "contype": "c",
+      "definition": "CHECK ((version > 0))"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_company_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_company_id_opportunity_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, company_id, opportunity_id) REFERENCES ppo.opportunities(workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_company_id_site_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, company_id, site_id) REFERENCES ppo.sites(workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_created_by_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, created_by) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_display_number_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, display_number)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, id) REFERENCES ppo.business_identities(workspace_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_owner_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, owner_id) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "estimates_workspace_id_updated_by_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, updated_by) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "exact_discovery_basis",
+      "contype": "t",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "table_name": "estimates",
+      "conname": "fk_estimate_current_version",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, id, current_version_id) REFERENCES ppo.estimate_versions(workspace_id, estimate_id, id) DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_graph",
+      "contype": "t",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_check",
+      "contype": "c",
+      "definition": "CHECK ((((ordinal = 1) AND (predecessor_option_id IS NULL)) OR ((ordinal > 1) AND (predecessor_option_id IS NOT NULL))))"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_label_check",
+      "contype": "c",
+      "definition": "CHECK (((length(btrim(label)) >= 1) AND (length(btrim(label)) <= 100)))"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_ordinal_check",
+      "contype": "c",
+      "definition": "CHECK (((ordinal >= 1) AND (ordinal <= 10)))"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_state_check",
+      "contype": "c",
+      "definition": "CHECK ((state = ANY (ARRAY['Active'::text, 'Archived'::text])))"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_version_check",
+      "contype": "c",
+      "definition": "CHECK ((version > 0))"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_company_id_estimating_work_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, company_id, estimating_workspace_id) REFERENCES ppo.estimating_workspaces(workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_company_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, company_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_created_by_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, created_by) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_estimating_workspace_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, estimating_workspace_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_estimating_workspace_id_ord_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, estimating_workspace_id, ordinal)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_estimating_workspace_id_pr_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, estimating_workspace_id, predecessor_option_id) REFERENCES ppo.estimating_options(workspace_id, estimating_workspace_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_id_updated_by_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, updated_by) REFERENCES ppo.users(workspace_id, id)"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "estimating_options_workspace_version_check",
+      "contype": "c",
+      "definition": "CHECK ((workspace_version > 0))"
+    },
+    {
+      "table_name": "estimating_options",
+      "conname": "fk_estimating_current_revision",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id, id, current_revision_id) REFERENCES ppo.estimation_revisions(workspace_id, option_id, id) DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_issuer_check",
+      "contype": "c",
+      "definition": "CHECK ((issuer = 'PPO-LocalSynthetic'::text))"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_issuer_subject_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (issuer, subject_id)"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_synthetic_check",
+      "contype": "c",
+      "definition": "CHECK (synthetic)"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_workspace_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_workspace_id_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (workspace_id, id)"
+    }
+  ]
+}

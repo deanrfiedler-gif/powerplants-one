@@ -1,5 +1,7 @@
 # Decision control
 
+[CCE architecture proposal and documentation publication](cce-architecture-proposal.md) — Dean authorised publication of the report, Figma brief and bounded reference evidence on 12 October 2026. Architecture adoption, operating rules and implementation remain open; existing estimating and specialist scopes are preserved.
+
 [Project schedule baselines and forecast comparison](project-schedule-baselines.md) records the 11 October audit follow-up: independent immutable revisions, current coordinator authority, explicit calendar-day comparison and manual successor review. PRJ-02/04/07 and PJ-03 remain the governing scope; no Service booking or commercial approval authority is added.
 
 [UI build and review sequence](ui-build-sequence.md) is the order for creating and refining every registered page, derived from the live register and the issued r02 build plan. It keeps every r02 rank. Dean adopted SD-01 to SD-05 on 9 October 2026: rule-based placement of later routes, shared systems verified first, separate review and build tracks, a synthetic job walk after each phase, and a register-visible finish line for each phase.
