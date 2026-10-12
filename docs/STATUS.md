@@ -6,11 +6,11 @@
 
 ## Open PR conflict integration — 13 October 2026
 
-Current repository writer: this user-authorised conflict repair and merge session, on `codex/pr-conflicts-oct13`. Dean requested fixing and merging the conflicting open PRs. The combined #456 head preserves Work orders #454 (`f3fde57`), the latest CPQ design #455 (`957f6a1`) and Cost sources #456 (`97b1117`) by ancestry, together with main `7e4ef3b`. Shared status/document-register additions are retained, and the backend delivery plan and generated build sequence are reconciled. Runtime code, tests, migrations, original evidence, issued captures and visual review fingerprints retain their contribution bytes.
+Current repository writer for backend integration: this user-authorised conflict repair and merge session, on `codex/pr-backends-oct13`. Dean repeated the request to fix and merge the conflicting open PRs. Combined #458 preserves Work orders #454 (`f3fde57`), Cost sources #456 (`97b1117`), Engineering workload #457 (`2e65624`) and Project RAID #458 (`9b87786`) by ancestry, together with main `c3ff5b9`, where CPQ design #455 has already merged. Shared status/document-register additions are retained and the backend plan and generated build sequence are reconciled. Figma shell #459 has independent active repairs and remains the next integration.
 
-The latest #455 revision records Dean's confirmation of the saved named Figma version and its known differences from merged backend #453. The design and backend remain separate evidence; no UI implementation, business-rule approval, visual acceptance or deployment is introduced by this integration.
+The RAID contribution's catalogue upgrade proof sorted complete JSON rows, whose checksums can place migration 0087 before 0086. The exact added versions are now compared in numeric order; original full-row ledgers, repeated-run equality, tests and deadlines remain intact. This fixes the observed CI assertion without changing migration execution or historical records. The original per-PR evidence remains source-pinned.
 
-The seven protected-main required check names listed below were re-read on 13 October and remain unchanged; strict up-to-date checking is off, administrator enforcement is on, and no approving review is required. Fresh CI on the final combined #456 head is the merge gate. Original per-PR executions remain source-pinned; local assurance and combined-head CI are recorded separately in the PR.
+The seven protected-main required check names listed below were re-read on 13 October and remain unchanged; strict up-to-date checking is off, administrator enforcement is on, and no approving review is required. Fresh combined-head CI is the merge gate. Code integration, visual/owner acceptance and deployment remain separate. Local checks and CI outcomes are recorded in #458; no hosted deployment is authorised by this repair.
 
 ## Work orders backend — 12 October 2026
 
