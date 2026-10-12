@@ -1,8 +1,10 @@
 # Powerplants One
 
-Current increment: [AD-01 saved-team access inspection](docs/decisions/access-team-inspection-current.md), showing current per-member grant-state counts and exact person-access handover while preserving the immutable initial roster. Team labels confer no authority. [Evidence](docs/testing/evidence/access-team-access/README.md) separates verification and acceptance.
+Current increment: [AD-01 local review attestation API](docs/decisions/access-review-attestations.md), recording an independent Keep observation of one exact current team-member grant with stale-basis refusal and immutable audit/receipt recovery. Native attestation controls and campaigns remain open. [Evidence](docs/testing/evidence/access-review-attestations/README.md) separates verification and acceptance.
 
-Previous increment: [AD-01 native local team creation](docs/decisions/access-team-creation.md), recording explicit initial rosters with actor-bound original recovery. [Execution evidence](docs/testing/evidence/access-team-creation/README.md) retains the final build, browser proof and initial corrections; owner acceptance and deployment remain separate.
+Previous increment: [AD-01 saved-team access inspection](docs/decisions/access-team-inspection-current.md), showing current per-member grant-state counts and exact person-access handover while preserving the immutable initial roster. Team labels confer no authority. [Evidence](docs/testing/evidence/access-team-access/README.md) separates verification and acceptance.
+
+Earlier increment: [AD-01 native local team creation](docs/decisions/access-team-creation.md), recording explicit initial rosters with actor-bound original recovery. [Execution evidence](docs/testing/evidence/access-team-creation/README.md) retains the final build, browser proof and initial corrections; owner acceptance and deployment remain separate.
 
 Earlier performance increment: [bounded Customers first-load correction](docs/decisions/customer-first-load.md), based on merged main `dcec2cf` after #370–#373. The unchanged notification bell is separated from the full My Work workspace, reducing observed cold JavaScript transfer by 12.37%; local timing samples, regression checks and open performance obligations are in the [evidence](docs/testing/evidence/customer-first-load/README.md). CREMS remains historical background under the [independent PPO direction](docs/decisions/product-direction-quality.md). Verification, owner acceptance and deployment remain separate.
 

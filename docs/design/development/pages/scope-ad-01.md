@@ -72,3 +72,8 @@ At desktop widths, use the existing card grid. At 390/320 px, stack cards and wr
 Host fixtures live in `tests/browser/access-local-teams.spec.ts`; exact-record/concurrency/rollback and upgrade fixtures live in `tests/database/access-local-teams.test.ts`. Evidence and source-bound desktop/phone captures: `docs/testing/evidence/access-local-teams/README.md`. This is a small existing-page refinement under ADR-0053 rule 6. An accepted native Figma image is missing; the retained AD-01 HTML is a workflow reference, not visual acceptance of this addition. Owner, screen-reader and physical-device acceptance remain open; no review fingerprint is granted.
 
 Actual implementation review: [six source-bound captures and observations](../../../testing/evidence/access-local-teams/review.md), source `039df64`, 1440/390/320 widths. No horizontal document overflow observed. Existing phone-title truncation, card height and vertical scrolling remain explicit limits; owner acceptance is still pending.
+
+
+## Local review API boundary
+
+The [attestation contract](../../../decisions/access-review-attestations.md) introduces `admin.access.review.attest` (137 current capability keys) and immutable local single-grant Keep records. The broad retained `admin.access.review` remains proposed campaign authority; it is not inferred from a lead label. No native attestation form or new page/layout is delivered. Existing roster counts/person links are still read-only. Shared component implementations, fixtures and consumer bindings are unchanged. Native review images are missing; existing historical captures and pending owner review remain separate. API/upgrade evidence: [execution ledger](../../../testing/evidence/access-review-attestations/README.md).

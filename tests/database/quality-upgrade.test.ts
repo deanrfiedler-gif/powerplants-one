@@ -1,4 +1,4 @@
-import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
 import { productsSeedGrants } from "../helpers/engineering-materials-grants";
 import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
@@ -241,6 +241,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       expected.push(...estimateReviewSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       expected.push(...quotationReleaseSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       expected.push(...productsSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      expected.push(...accessReviewSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       expected.push(...accessTeamSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       expected.push(...accessApplicationSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       expected.push(...accessRequestSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));

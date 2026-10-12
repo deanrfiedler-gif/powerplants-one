@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import {
   accessInspectionSeedGrants,
   accessRequestSeedGrants,
-  accessApplicationSeedGrants, accessTeamSeedGrants,
+  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants,
 } from "./engineering-materials-grants";
 
 type Row = Record<string, unknown>;
 const grant = (r: Row) => (r.row ?? r.value ?? r.v ?? r) as Row;
 
-/** Preserve the whole snapshot, allowing exactly the named seed 78/79/80/83 duties. */
+/** Preserve the whole snapshot, allowing exactly the named seed 78/79/80/83/84 duties. */
 export function assertAccessInspectionSnapshot(
   actual: Row[][] | Record<string, Row[]>,
   original: Row[][] | Record<string, Row[]>,
@@ -32,6 +32,7 @@ export function assertAccessInspectionSnapshot(
     oldRows,
   );
   const expected = [
+    ...accessReviewSeedGrants(oldGrants).map(g => ({ ...g, id: "ad010084-0000-4000-8000-000000000001" })),
     ...accessTeamSeedGrants(oldGrants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })),
     ...accessApplicationSeedGrants(oldGrants).map(g => ({ ...g, id: "ad010080-0000-4000-8000-000000000001" })),
     ...accessInspectionSeedGrants(oldGrants).map((g) => ({
@@ -82,7 +83,7 @@ export function assertAccessInspectionSeedLedger(
   const added = actual.filter((r) => !versions.has(r.version));
   assert.deepEqual(
     added.map((r) => r.version),
-    [78, 79, 80, 83].filter((v) => !versions.has(v)),
+    [78, 79, 80, 83, 84].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);

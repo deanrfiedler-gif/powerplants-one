@@ -1,0 +1,57 @@
+✔ AD01 review: populated 0083 upgrade retains originals and adds exactly one local duty (47210.8996ms)
+▶ AD01 review: authority, freshness, evidence and original recovery
+  ✔ basis read and Keep preserve all authority/business records and link exact evidence (215.3856ms)
+  ✔ explicit Workspace duty and independent actor are required; team lead is insufficient (86.0973ms)
+  ✔ strict payload, wrong team/member/grant and invalid offsets refuse without evidence (80.1032ms)
+  ✔ working-company selection blocks reads, commands and original recovery (67.0266ms)
+  ✔ any reviewed row change, inactive subject and noncurrent dates invalidate the basis (91.8485ms)
+  ✔ same-operation races record once; changed payload and duplicate identity conflict (64.9399ms)
+  ✔ recovery is actor-bound and retains the original when the grant is removed (110.5618ms)
+  ✔ loss of either current duty or actor activity blocks replay and recovery (91.0532ms)
+  ✔ queued authority loss is revalidated after acquiring the write lock (36.3663ms)
+  ✔ date boundary during evidence writing rolls back the complete attestation (2240.7176ms)
+  ✔ audit failure and incomplete/tampered evidence roll back; accepted records are immutable (144.9325ms)
+  ✖ hosted replacement identities are masked and cannot be newly reviewed or act (128.3272ms)
+  ✔ bounded pagination preserves distinct explicit later observations (1544.8069ms)
+  ✔ hosted environment refuses all review services before database use (1.4228ms)
+✖ AD01 review: authority, freshness, evidence and original recovery (4914.3267ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 14
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66422.8395
+
+✖ failing tests:
+
+test at tests\database\access-review-attestations.test.ts:2:851
+✖ hosted replacement identities are masked and cannot be newly reviewed or act (128.3272ms)
+  error: new row for relation "users" violates check constraint "users_issuer_check"
+      at <WORKTREE>\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async rows (<WORKTREE>\tests\database\access-review-attestations.test.ts:27:4)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:630:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (<WORKTREE>\tests\database\access-review-attestations.test.ts:619:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 360,
+    severity: 'ERROR',
+    code: '23514',
+    detail: 'Failing row contains (30000000-0000-4000-8000-000000000005, 10000000-0000-4000-8000-000000000001, https://login.microsoftonline.com/synthetic/v2.0, site-observer, SYN Site observer, t, t).',
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: 'ppo',
+    table: 'users',
+    column: undefined,
+    dataType: undefined,
+    constraint: 'users_issuer_check',
+    file: 'execMain.c',
+    line: '2114',
+    routine: 'ExecConstraints'
+  }

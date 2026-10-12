@@ -1,0 +1,27 @@
+✔ AD01 review: populated 0083 upgrade retains originals and adds exactly one local duty (24834.4383ms)
+▶ AD01 review: authority, freshness, evidence and original recovery
+  ✔ basis read and Keep preserve all authority/business records and link exact evidence (216.2349ms)
+  ✔ explicit Workspace duty and independent actor are required; team lead is insufficient (131.1329ms)
+  ✔ strict payload, wrong team/member/grant and invalid offsets refuse without evidence (113.4653ms)
+  ✔ working-company selection blocks reads, commands and original recovery (235.98ms)
+  ✔ any reviewed row change, inactive subject and noncurrent dates invalidate the basis (199.2829ms)
+  ✔ same-operation races record once; changed payload and duplicate identity conflict (104.7977ms)
+  ✔ recovery is actor-bound and retains the original when the grant is removed (171.8543ms)
+  ✔ loss of either current duty or actor activity blocks replay and recovery (110.1004ms)
+  ✔ queued authority loss is revalidated after acquiring the write lock (55.28ms)
+  ✔ date boundary during evidence writing rolls back the complete attestation (2276.7491ms)
+  ✔ audit failure and incomplete/tampered evidence roll back; accepted records are immutable (313.3072ms)
+  ✔ Workspace, Company and Site grant bases remain exact; unrelated rows do not stale a review (350.5236ms)
+  ✔ deferred agreement rejects a forged receipt and leaves no record or audit (133.0604ms)
+  ✔ hosted replacement identities are masked and cannot be newly reviewed or act (198.8532ms)
+  ✔ bounded pagination preserves distinct explicit later observations (2249.0048ms)
+  ✔ hosted environment refuses all review services before database use (2.1828ms)
+✔ AD01 review: authority, freshness, evidence and original recovery (6873.6818ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33719.9525
