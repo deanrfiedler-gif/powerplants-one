@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Leads counts and follow-up backend — 12 October 2026
+
+Repository writer: this user-authorised Leads backend session, branch `codex/leads-counts-follow-up`, based on merged main `ae83043`. Dean requested implementation and PR publication while continuing UI design with Claude in Figma. The [read contract](decisions/lead-register-backend.md) adds full authorised-match counts, MyLeads and active follow-up filtering using existing Lead/Activity permissions and states. Hidden next activities remain unavailable, with explicit partial follow-up coverage. Existing commands and exact list/detail DTOs are retained; no migration, seed, capability or external integration is added. [Execution evidence](testing/evidence/lead-register/README.md) records validation and the supplied personal-trial audit provenance. The accepted page, shell, rail badge and separate record-page reads remain outstanding; visual review, business acceptance and deployment are not implied.
+
 ## ES-02 backend equipment catalogue — 12 October 2026
 
 Repository writer: this authorised backend session, branch `codex/es02-equipment-catalogue`, based on main `6c16471`. Dean is continuing UI design with Claude in Figma and authorised the backend six-family/108-category increment. [ADR-0054](decisions/ADR-0054-es02-equipment-catalogue.md) adds opt-in r02 classification and versioned persistence while preserving exact r01 reads, original receipts, costs and quotations. Migration 0085 extends the installed configuration guard; no seed, user, grant or backfill. Existing APIs expose catalogue metadata only on explicit request. The source list is checked against all 108 retained names. [Execution evidence](testing/evidence/estimating-catalogue/README.md) separates checks, setup failures and remaining acceptance. UI authoring, technical suitability rules, operational approval and deployment are separate.
