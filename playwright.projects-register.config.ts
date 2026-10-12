@@ -6,7 +6,9 @@ export default defineConfig({
   timeout: 180000,
   use: {
     channel: "chrome",
-    baseURL: process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? 3000}`,
+    baseURL:
+      process.env.PPO_TEST_ORIGIN ??
+      `http://127.0.0.1:${process.env.PPO_PORT ?? 3000}`,
     locale: "en-AU",
     screenshot: "only-on-failure",
   },

@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import { useIdentity } from "./business-session";
 import { ReadState, Stamp, useResource } from "./business-ui";
 import { useShell } from "./shell-provider";
@@ -47,21 +53,45 @@ const views: { id: ProjectView; label: string; icon: string }[] = [
 // Reuse the licensed Kit's exact named assets. Public/offline builds retain the existing local glyph.
 function Icon({ name }: { name: string }) {
   const fallbackNames: Record<string, ShellIconName> = {
-    xmark: "close", plus: "plus", ellipsis: "more", user: "contacts",
-    "magnifying-glass": "search", "diagram-project": "projects",
-    "circle-check": "check", "triangle-exclamation": "warning",
-    "chevron-right": "chevron-right", "chevron-down": "down", "chevron-up": "down",
-    "arrow-right": "chevron-right", "flag-checkered": "flag", "rotate-left": "changes",
-    files: "documents", building: "customers", "location-dot": "sites",
-    "circle-dollar": "deals", "square-check": "check", square: "board", "chart-gantt": "calendar",
+    xmark: "close",
+    plus: "plus",
+    ellipsis: "more",
+    user: "contacts",
+    "magnifying-glass": "search",
+    "diagram-project": "projects",
+    "circle-check": "check",
+    "triangle-exclamation": "warning",
+    "chevron-right": "chevron-right",
+    "chevron-down": "down",
+    "chevron-up": "down",
+    "arrow-right": "chevron-right",
+    "flag-checkered": "flag",
+    "rotate-left": "changes",
+    files: "documents",
+    building: "customers",
+    "location-dot": "sites",
+    "circle-dollar": "deals",
+    "square-check": "check",
+    square: "board",
+    "chart-gantt": "calendar",
   };
   return (
     <FontAwesomeGlyph
       icon={name}
       className="pj-icon"
       fallback={
-        <span className="pj-icon" style={name === "chevron-up" ? { transform: "rotate(180deg)" } : undefined}>
-          <ShellIcon name={fallbackNames[name] ?? (name.includes("calendar") ? "calendar" : "list")} />
+        <span
+          className="pj-icon"
+          style={
+            name === "chevron-up" ? { transform: "rotate(180deg)" } : undefined
+          }
+        >
+          <ShellIcon
+            name={
+              fallbackNames[name] ??
+              (name.includes("calendar") ? "calendar" : "list")
+            }
+          />
         </span>
       }
     />
@@ -389,7 +419,14 @@ function RegisterView({ query }: { query: string }) {
         retained={!!data}
       />
       <div className="pj-results" aria-busy={resource.loading}>
-        <div className="pj-desktop pj-table-host">
+        <div
+          className="pj-desktop pj-table-host"
+          style={
+            {
+              "--pj-table-width": `${88 + columns.filter((c) => !hidden.includes(c.key)).reduce((sum, c) => sum + c.width, 0)}px`,
+            } as CSSProperties
+          }
+        >
           <RegisterTable
             caption="Projects. Open a project snapshot or select rows to open in sequence and export."
             stale={busy}

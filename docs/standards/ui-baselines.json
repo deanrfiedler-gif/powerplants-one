@@ -951,7 +951,7 @@
       "id": "projects-figma-register",
       "route": "/projects",
       "scope": "#ppo-projects",
-      "layout": "fullbleed",
+      "layout": "full-bleed",
       "scroll_owner": ".pj-results / .ppo-register",
       "design": "docs/design/projects-register/figma-measurements.json",
       "sha256": "fb14827aef132996afbdec7cfd1e5da02b952de59b91255dc9e573cc80a01a0a",

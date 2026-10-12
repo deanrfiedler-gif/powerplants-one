@@ -25,3 +25,9 @@ Recorded runs on 13 October:
 Windows; Node 24.21.0; isolated PostgreSQL 16 instance on a task-specific loopback port, database `ppo_synthetic_test`; application on its own loopback port. No existing app or another task's database was reset. The first database reset failed with PostgreSQL `out of shared memory` and its explicit `max_locks_per_transaction` hint. The isolated cluster is corrected to 512, matching the repository test setup; this setup failure is retained separately from test results.
 
 Current scope excludes hosted deployment and business acceptance until actually established. The user asked for the live application; source delivery alone must not be described as deployed.
+
+## Review corrections
+
+Local TypeScript, focused lint, studio integrity (358 entries, 204 routes; pending/stale reviews preserved), naming (7,999 instruction characters), two unit tests and `git diff --check` pass. The UI build-sequence files were regenerated from the maintained register. Initial CI stopped on the exact Desktop/Mobile heading contract; corrected to the required headings. The measured host layout is `full-bleed`, matching the existing shell contract.
+
+Browser attempts are retained locally under `test-results/` rather than overwritten. Initial cold compilation exceeded the new fixture's unchanged deadline; the denied-read locator was scoped to Projects to exclude Next's announcer. Replay passes both desktop/phone refused-read cases. Populated desktop caught inherited title wrapping (61 px rows) and phone captured shared-reset interference with snapshot controls. Scoped overrides address these; populated phone then completed selection/filter/sequence/overflow assertions but timed out on the first Gantt compilation. Final fixed capture/proof is still in progress. No screenshot baseline or owner acceptance was changed to make a check pass.

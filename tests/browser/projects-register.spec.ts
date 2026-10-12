@@ -52,6 +52,9 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
       await expect(page.locator(".pj-observed")).toContainText("2 projects");
     });
   const phone = (page.viewportSize()?.width ?? 1440) <= 780;
+  const savedSnapshot = page.waitForResponse((r) =>
+    r.url().endsWith(`/api/v1/projects/${first.id}`),
+  );
   if (!phone) {
     const expand = page.getByRole("button", {
       name: "Expand primary navigation",
@@ -91,6 +94,7 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
     await row.click();
   }
   const snapshot = page.getByRole("dialog", { name: first.title });
+  expect((await savedSnapshot).ok()).toBe(true);
   await expect(snapshot).toBeVisible();
   await expect(snapshot).toContainText("SYN Controller configuration");
   await expect(snapshot).toContainText("1 tasks · 0 complete · 1 at risk");
@@ -166,7 +170,9 @@ test("failed or forbidden register refresh never exports retained rows", async (
     }),
   );
   await page.reload();
-  await expect(page.getByRole("alert")).toContainText("Access refused");
+  await expect(page.locator("#ppo-projects").getByRole("alert")).toContainText(
+    "Access refused",
+  );
   await expect(page.locator(".pj-table-host tbody tr")).toHaveCount(0);
   await expect(page.locator(".pj-phone-row")).toHaveCount(0);
 });

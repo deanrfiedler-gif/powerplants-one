@@ -18,7 +18,7 @@ Views are Active (default), My projects, Closed, All, Overdue milestones, Tasks 
 
 Next milestone is the earliest incomplete milestone, undated last with stable ID ties. Overdue means its finish date is before the site's observed local date. At risk counts non-milestone tasks explicitly marked AtRisk. Missing target, unscheduled milestone and no remaining milestones remain distinct. Project lifecycle remains Active/Closed; phase summaries do not create another lifecycle.
 
-## Desktop composition
+## Desktop
 
 At 1440 × 900, use 240 px expanded navy primary rail, 64 px header, 240 px secondary menu and 960 px content. Honour the shared persisted rail preference. Secondary views are 40 px rows; content toolbar is 60 px with 16 px horizontal padding and 40 px controls. Use existing Roboto, semantic tokens, the original Brand logo and named Font Awesome Kit icons. Unconfigured/offline glyphs retain ADR-0050 fallbacks.
 
@@ -26,7 +26,7 @@ The shared `RegisterTable` adopts this scoped variant: white 40 px header and ro
 
 Selection changes the toolbar and opens a 360 px panel over the grid, with factual selected cards and Open in sequence/Export list actions. Hide panel retains selection; cancel clears it. Record inspection uses a native modal at the content top, width capped at 960 px, with 440 px fact column, 24 px padding, a fixed footer and separate activity/history scrolling. Prev/Next follow the selection or visible page. Escape and close return to the register. No document-level horizontal scroll is permitted.
 
-## Mobile and responsive behaviour
+## Mobile
 
 At 390 × 844 and down to 320 CSS px, keep the existing 780/781 px boundary and shared header; view/filter toolbar is 61 px. Flush rows are at least 80 px with 16 px horizontal padding, a title, customer/target line, explicit risk count, milestone/date line and trailing affordance. Full values are readable in the snapshot. The 56 px add action remains above the 64 px navigation bar. The Projects phone bar exposes Work, Projects, Programme, Acceptance and More when permitted; icons keep accessible names.
 
