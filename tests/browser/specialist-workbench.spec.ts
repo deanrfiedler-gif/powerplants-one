@@ -32,105 +32,137 @@ async function login(page: Page, route = path + "/configure") {
     .click();
   await expect(page.locator("#ppo-specialist h1")).toBeVisible();
 }
+// The seven views are the module header's own navigation (design board
+// departure D1); the shell's secondary menu lists the same links.
+// A view link's accessible name includes its count badge ("Drawings 5 sheets"),
+// so match the label at the start of the name.
 async function view(page: Page, name: string) {
-  const toggle = page.getByRole("button", {
-    name: "Expand Specialist configuration menu",
-    exact: true,
-  });
-  if (await toggle.isVisible()) await toggle.click();
-  const link = page.getByRole("link", { name, exact: true });
-  if (!(await link.isVisible()))
-    await page
-      .getByRole("button", {
-        name: "Specialist configuration menu",
-        exact: true,
-      })
-      .click();
-  await link.click();
-  await expect(
-    page.getByRole("dialog", {
-      name: "Specialist configuration menu",
-      exact: true,
-    }),
-  ).not.toBeVisible();
+  await page
+    .getByRole("navigation", { name: "Workbench views", exact: true })
+    .getByRole("link", { name: new RegExp("^" + name.replace(/[^\w ]/g, (c) => "\\" + c)) })
+    .click();
 }
-test("ES08 native six views, shared shell, dense parts and responsive evidence", async ({
+// The readiness strip is a description list; Playwright has no role for it.
+const gates = (page: Page) => page.locator(".es08-gates");
+test("ES08 native seven views, shared shell, drawing set, dense parts and responsive evidence", async ({
   page,
   context,
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await login(page);
-  await expect(page.locator(".es08-summary")).toContainText(
-    "Current calculation",
-  );
+  await expect(gates(page)).toContainText("Model resolves · 1,843 m² floor");
+  await expect(
+    page.getByRole("status").filter({ hasText: /Draft v\d+ · saved/ }),
+  ).toBeVisible();
   await compareEs08Design(page, context, info);
-  for (const [name, slug] of [
-    ["Configure", "configure"],
-    ["Parts & working", "parts"],
-    ["Pricing", "pricing"],
-    ["Compare & save", "compare"],
-    ["Definition review", "definition"],
-    ["Run history", "history"],
+  for (const [name, slug, heading] of [
+    ["Configure", "configure", "Configure"],
+    ["Drawings", "drawings", "Drawing set"],
+    ["Parts & working", "parts", "Parts & working"],
+    ["Pricing", "pricing", "Commercial review"],
+    ["Compare & save", "compare", "Compare & save"],
+    ["Definition review", "definition", "Definition review"],
+    ["Run history", "history", "Immutable run history"],
   ]) {
     await view(page, name);
     await expect(page).toHaveURL(new RegExp(slug + "$"));
     await expect(
-      page
-        .locator("#ppo-specialist h2")
-        .filter({
-          hasText: name === "Configure" ? "Configure Screen Systems" : name,
-        })
-        .first(),
+      page.getByRole("heading", { name: heading, exact: true, level: 2 }),
     ).toBeVisible();
+    // The module header, its seven views and the six gates stay on every view (D8).
+    await expect(gates(page)).toBeVisible();
     if (slug === "history")
       await expect(
         page.getByRole("button", { name: "Inspect", exact: true }),
       ).toBeVisible();
     await page.screenshot({ path: info.outputPath(`es08-${slug}-1920.png`) });
     if (slug === "configure") {
-      await page
-        .getByRole("region", { name: "Screen Systems schematics" })
-        .scrollIntoViewIfNeeded();
-      for (const drawing of [
-        "Plan",
-        "Screen cut",
-        "Cross section",
-        "Bay section",
+      const live = page.getByRole("group", { name: "Live drawing", exact: true });
+      await live.getByRole("button", { name: "Plan", exact: true }).click();
+      await expect(
+        page.getByRole("img", { name: /^Schematic plan, 48\.0 m long/ }),
+      ).toBeVisible();
+      await live.getByRole("button", { name: "Section", exact: true }).click();
+      await expect(
+        page.getByRole("img", { name: /cross section: 6 spans of 6\.4 m/ }),
+      ).toBeVisible();
+      // Every roof profile draws from the one shared section component (D5, D15).
+      const profile = page.getByRole("group", { name: "Roof profile", exact: true });
+      for (const [name, pattern] of [
+        ["Venlo", /^Venlo cross section/],
+        ["Gothic", /^Gothic cross section/],
+        ["Sawtooth", /^Sawtooth cross section/],
+        ["Gable", /^Gable cross section/],
       ]) {
-        await page
-          .getByRole("combobox", { name: /^Drawing/ })
-          .selectOption(drawing);
-        await expect(
-          page.getByRole("img", { name: new RegExp("^" + drawing + ":") }),
-        ).toBeVisible();
-        await page.screenshot({
-          path: info.outputPath(
-            `es08-diagram-${drawing.toLowerCase().replaceAll(" ", "-")}-1920.png`,
-          ),
-        });
+        await profile.getByRole("button", { name, exact: true }).click();
+        await expect(page.getByRole("img", { name: pattern })).toBeVisible();
       }
+      // A drawing-only error withholds the section and never the quantities (D14).
+      await profile.getByRole("button", { name: "Venlo", exact: true }).click();
       await page
-        .getByRole("combobox", { name: /^Drawing/ })
-        .selectOption("Plan");
+        .getByRole("group", { name: "Venlo roof width", exact: true })
+        .getByRole("button", { name: "4.0 m", exact: true })
+        .click();
+      await expect(
+        page.getByRole("img", { name: /^Cross section withheld/ }),
+      ).toBeVisible();
+      await expect(gates(page)).toContainText("Drawing withheld");
+      await expect(gates(page)).toContainText("Quantities valid");
+      await page
+        .getByRole("group", { name: "Venlo roof width", exact: true })
+        .getByRole("button", { name: "3.2 m", exact: true })
+        .click();
+      await profile.getByRole("button", { name: "Gable", exact: true }).click();
+      await expect(gates(page)).toContainText("Model resolves");
+    }
+    if (slug === "drawings") {
+      for (const pattern of [
+        /^Plan, 48\.0 m long by 38\.4 m wide/,
+        /cross section: 6 spans/,
+        /^Longitudinal section, 48\.0 m long/,
+        /^Bay section of bays B03 and B04/,
+        /^Standard screen cut 20\.0 m by 4\.3 m/,
+      ])
+        await expect(page.getByRole("img", { name: pattern })).toBeVisible();
+      await page
+        .getByRole("button", { name: "Select field B05 group B", exact: true })
+        .click();
+      await expect(page.getByRole("status").filter({ hasText: "B05·B" })).toBeVisible();
+      await expect(
+        page.getByRole("img", { name: /^Bay section of bays B05 and B06/ }),
+      ).toBeVisible();
+      await page.getByRole("button", { name: "Open", exact: true }).click();
+      await expect(
+        page.getByRole("img", { name: /screen open:/ }),
+      ).toBeVisible();
+      await expect(page.getByText("Estimating study · not for fabrication").first()).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Cut schedule", exact: true })).toBeVisible();
+      await expect(page.getByText("2,064.0 m²").first()).toBeVisible();
+      await page.screenshot({ path: info.outputPath("es08-drawings-selected-1920.png") });
     }
     if (slug === "parts") {
       await page
-        .getByLabel("Position state", { exact: true })
-        .selectOption("All");
-      await expect(page.locator(".es08-table-scroll tbody tr")).toHaveCount(
+        .getByRole("group", { name: "Position state", exact: true })
+        .getByRole("button", { name: /^All · / })
+        .click();
+      await expect(page.locator(".es08-table--parts tbody tr")).toHaveCount(
         143,
       );
-      await page
-        .getByRole("button", { name: /Working/ })
-        .first()
-        .click();
-      await expect(page.getByRole("dialog")).toBeVisible();
+      const opener = page
+        .getByRole("row", { name: /CE-LINE-223 · / })
+        .getByRole("button", { name: "Working", exact: true });
+      await opener.click();
+      // A persistent panel beside the table on desktop; a side dialog on a phone.
+      const panel = page
+        .getByRole("complementary", { name: "Standard screen cloth", exact: true })
+        .or(page.getByRole("dialog", { name: "CE-LINE-223 working", exact: true }));
+      await expect(panel).toBeVisible();
+      await expect(panel).toContainText("24 × 20.0 m × 4.3 m = 2,064.0 m²");
       await page.screenshot({ path: info.outputPath("es08-working-1920.png") });
       await page.keyboard.press("Escape");
-      await expect(
-        page.getByRole("button", { name: /Working/ }).first(),
-      ).toBeFocused();
+      await expect(panel).toHaveCount(0);
+      await expect(opener).toBeFocused();
     }
     if (slug === "history") {
       await page.getByRole("button", { name: "Inspect", exact: true }).click();
@@ -143,6 +175,11 @@ test("ES08 native six views, shared shell, dense parts and responsive evidence",
         .getByRole("button", { name: "Export evidence", exact: true })
         .click();
       expect((await download).suggestedFilename()).toMatch(/PPO-ES08-review/);
+      // The export is a download, not a departure: the leave guard stays
+      // closed although the profile edits above left the draft unsaved.
+      await expect(
+        page.getByRole("dialog", { name: "Unsaved configuration changes" }),
+      ).toHaveCount(0);
     }
   }
   await view(page, "Configure");
@@ -174,6 +211,10 @@ test("ES08 native six views, shared shell, dense parts and responsive evidence",
       await save.scrollIntoViewIfNeeded();
       const box = (await save.boundingBox())!;
       expect(box.y + box.height).toBeLessThan(height - 50);
+      // The phone stepper replaces the section list (design board D).
+      await expect(
+        page.getByRole("button", { name: "Next section", exact: true }).first(),
+      ).toBeVisible();
       await page.screenshot({
         path: info.outputPath(`es08-actions-${width}.png`),
       });
@@ -193,9 +234,9 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   ).toBeVisible();
   await page.reload();
   await expect(page.locator("#es08-span")).toHaveValue("-");
-  await expect(
-    page.getByRole("alert").filter({ hasText: "Review calculation inputs" }),
-  ).toBeVisible();
+  // A quantity error withholds every result and names the rule on the field.
+  await expect(page.locator("#es08-span")).toHaveAttribute("aria-invalid", "true");
+  await expect(gates(page)).toContainText("Withheld");
   await page.locator("#es08-span").fill("6.4");
   await page.locator("#es08-bays").fill("13");
   await view(page, "Compare & save");
@@ -208,6 +249,10 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
       exact: true,
     })
     .click();
+  await page
+    .getByRole("checkbox", { name: /I understand run R02 is a local design record/ })
+    .check();
+  await expect(gates(page)).toContainText("14 of 14 reviewed");
   // Hold the resource reload behind the accepted command read. The old
   // resource must not restore the previous version while that reload waits.
   let releaseRefresh!: () => void;
@@ -232,6 +277,9 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
     }
     await route.continue();
   });
+  await expect(
+    page.getByRole("button", { name: "Save review run", exact: true }),
+  ).toBeEnabled();
   await page
     .getByRole("button", { name: "Save review run", exact: true })
     .click();
@@ -331,15 +379,18 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   await expect(
     page.getByRole("button", { name: "Apply reviewed changes", exact: true }),
   ).toBeDisabled();
+  // Every required decision is chosen in place as a segmented choice (D10).
   await page
-    .getByLabel("CE-LINE-240 decision", { exact: true })
-    .selectOption("omit");
+    .getByRole("group", { name: "CE-LINE-240 decision", exact: true })
+    .getByRole("button", { name: "Keep omitted", exact: true })
+    .click();
   await page
     .getByRole("button", { name: "Review estimate changes", exact: true })
     .click();
   await page
-    .getByLabel("CE-LINE-242 decision", { exact: true })
-    .selectOption("keep");
+    .getByRole("group", { name: "CE-LINE-242 decision", exact: true })
+    .getByRole("button", { name: /^Keep saved/ })
+    .click();
   await page
     .getByRole("button", { name: "Review estimate changes", exact: true })
     .click();
@@ -452,14 +503,12 @@ test("ES08 create recovery through reload, read-only review and permission withd
   await expect(
     page.getByRole("button", { name: "Save draft", exact: true }),
   ).toBeDisabled();
+  await expect(page.locator(".es08-status").filter({ hasText: /^Read-only/ })).toBeVisible();
   await page.screenshot({ path: info.outputPath("es08-read-only.png") });
   fixture("revoke-read");
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(
-    page.getByRole("heading", {
-      name: "SYN Northbank Screen Systems",
-      exact: true,
-    }),
+    page.getByText("SYN Northbank Screen Systems", { exact: true }),
   ).toHaveCount(0);
   expect((await page.request.get(api)).status()).toBe(404);
   await page.screenshot({
@@ -504,8 +553,8 @@ test("ES08-T52 late preview cannot replace a newer calculation", async ({
   );
   await page.locator("#es08-bays").fill("14");
   await latest;
-  await expect(page.locator(".es08-summary")).toContainText("2150");
-  const current = await page.locator(".es08-summary").innerText();
+  await expect(gates(page)).toContainText("2,150 m² floor");
+  const current = await gates(page).innerText();
   release();
   await finished;
   await page.evaluate(
@@ -514,7 +563,7 @@ test("ES08-T52 late preview cannot replace a newer calculation", async ({
         requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
       ),
   );
-  await expect(page.locator(".es08-summary")).toHaveText(current, {
+  await expect(gates(page)).toHaveText(current, {
     useInnerText: true,
   });
   await expect(page.locator("#es08-bays")).toHaveValue("14");

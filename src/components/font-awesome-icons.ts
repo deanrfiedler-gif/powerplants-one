@@ -14,6 +14,8 @@ import type { FertigationIconName } from "./fertigation-icons";
 import type { GanttIconName } from "./projects-gantt";
 import type { WizardIconName } from "./estimation-wizard-ui";
 
+import type { SpecialistIconName } from "./specialist-ui";
+
 // ADR-0050: each semantic icon name maps to one Font Awesome Pro icon, drawn in Classic Light,
 // and in Classic Solid where the app marks a selected item. Every catalogue keeps its own names
 // and meanings, so each map is typed against its catalogue: a new name with no Font Awesome
@@ -438,3 +440,20 @@ export const estimationWizardFontAwesome = {
   unchanged: "square-check",
   incomparable: "square-xmark",
 } satisfies Record<WizardIconName, FontAwesomeIcon>;
+
+// src/components/specialist-ui.tsx: the ES-08 Screen Configurator Workbench controls and sheets.
+export const specialistFontAwesome = {
+  "chevron-left": "chevron-left",
+  "chevron-right": "chevron-right",
+  "chevron-down": "chevron-down",
+  close: "xmark",
+  search: "magnifying-glass",
+  download: "download",
+  print: "print",
+  "arrow-right": "arrow-right",
+  warning: "triangle-exclamation",
+  info: "circle-info",
+  check: "check",
+  drawing: "pen-ruler",
+  spinner: "spinner",
+} satisfies Record<SpecialistIconName, FontAwesomeIcon>;

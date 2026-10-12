@@ -1521,7 +1521,15 @@
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-B-Structure-Families-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
-        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-docked-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-02-Drawings-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-03-Parts-working-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-04-Pricing-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-05-Compare-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [],
       "scope_status": "unbuilt",
@@ -8667,7 +8675,7 @@
       "title": "Screen Systems configurations · selected view",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Screen Configurator Workbench: seven views (Configure, Drawings, Parts & working, Pricing, Compare & save, Definition review, Run history) built from the owner-accepted design board on 12 October 2026; source presence does not establish deployment or acceptance.",
       "path": "/estimating/configurations/[id]/[view]",
       "source_paths": [
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx"
@@ -8679,7 +8687,15 @@
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-01-Configure-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
-        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-docked-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-02-Drawings-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-03-Parts-working-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-04-Pricing-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-05-Compare-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [],
       "scope_status": "refine",
