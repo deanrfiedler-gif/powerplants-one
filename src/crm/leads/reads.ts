@@ -1,3 +1,4 @@
+import { leadConversionReadiness, leadRecordSummary } from "./record";
 import { projectsAvailable } from "../../projects/visibility";
 import type { Principal } from "../../platform/identity";
 import { database, transaction } from "../../platform/database";
@@ -19,6 +20,7 @@ import {
 } from "../../shared/validation";
 import {
   activityVisibility,
+  visibleActivity,
   readActivityWithClient,
 } from "../../activities/activities";
 import { visibleOpportunity } from "../context";
@@ -44,7 +46,24 @@ async function readSequentially<T, U>(rows: T[], read: (row: T) => Promise<U>) {
   return results;
 }
 export async function readLead(p: Principal, id: string) {
-  return readLeadWithClient(database(), p, id);
+  return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
+      p.workspace_id,
+    ]);
+    const observedAt = Date.now();
+    const detail = await readLeadWithClient(c, p, id, observedAt);
+    const lead = await visibleLead(c, p, id);
+    const conversion_readiness = await leadConversionReadiness(c, p, lead);
+    // Expiring grants are not held by the workspace lock. Fail closed rather
+    // than returning activity data selected before access expired.
+    for (const action of detail.actions) await visibleActivity(c, p, action.id);
+    await visibleLead(c, p, id);
+    return {
+      ...detail,
+      conversion_readiness,
+      record_summary: leadRecordSummary(detail, observedAt),
+    };
+  });
 }
 async function readLeadWithClient(
   c: QueryClient,

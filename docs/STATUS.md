@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Lead record readiness and summary backend — 12 October 2026
+
+Repository writer: this user-authorised Lead record backend session, branch `codex/lead-record-reads`, based on PR #451 at `d02b258`. Dean requested conversion readiness and record-summary reads and PR publication while Figma design continues separately. The [read contract](decisions/lead-record-backend.md) adds saved-context readiness and scoped activity/age summary to the existing detail read. [Execution evidence](testing/evidence/lead-record/README.md) records actual verification. Qualification inputs and the native conversion command remain authoritative. Grouped history, other customer work, UI implementation and external integrations remain separate. Validation is in progress; no acceptance or deployment is implied.
+
 ## Leads counts and follow-up backend — 12 October 2026
 
 Repository writer: this user-authorised Leads backend session, branch `codex/leads-counts-follow-up`, based on merged main `ae83043`. Dean requested implementation and PR publication while continuing UI design with Claude in Figma. The [read contract](decisions/lead-register-backend.md) adds full authorised-match counts, MyLeads and active follow-up filtering using existing Lead/Activity permissions and states. Hidden next activities remain unavailable, with explicit partial follow-up coverage. Existing commands and exact list/detail DTOs are retained; no migration, seed, capability or external integration is added. [Execution evidence](testing/evidence/lead-register/README.md) records validation and the supplied personal-trial audit provenance. The accepted page, shell, rail badge and separate record-page reads remain outstanding; visual review, business acceptance and deployment are not implied.
