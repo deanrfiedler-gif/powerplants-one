@@ -29,6 +29,9 @@ import {
 import { crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { sourceInput } from "../helpers/estimating-sources";
+import { registerCostSourceRegisterTests } from "../helpers/cost-source-register-cases";
+
+registerCostSourceRegisterTests();
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
