@@ -308,7 +308,7 @@ test("ES02-T65: Back, Forward, shell router, page hierarchy and installed reload
     if (!(await hierarchy.isVisible()))
       await page.getByRole("button", { name: "Page hierarchy", exact: true }).click();
     await expect(hierarchy).toBeVisible();
-    await hierarchy.getByRole("link", { name: "Estimating", exact: true }).click();
+    await hierarchy.getByRole("link", { name: "Estimating & quotation", exact: true }).click();
   };
   await leaveViaHierarchy();
   await stay();
