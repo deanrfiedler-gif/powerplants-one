@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-11T10:59:02.2666017Z",
+  "platform": "Windows",
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "python": "Python 3.14.7",
+  "postgresql": "pg_ctl (PostgreSQL) 16.15",
+  "database": "ppo_synthetic_test",
+  "browser_database": "ppo_synthetic",
+  "browser": "Chrome 155.0.8059.40",
+  "browser_workers": 1,
+  "database_test_concurrency": 1,
+  "existing_test_timeout_ms": 120000,
+  "withdrawal_populated_test_timeout_ms": 300000,
+  "application_pool_and_sql_limits": "Unchanged",
+  "configuration": "Private files outside Git; loopback synthetic services only"
+}

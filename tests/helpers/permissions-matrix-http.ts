@@ -731,6 +731,7 @@ test("PT-01 joined role, scope, projection, export and approval matrix", async (
               "admin.access.read",
               "admin.access.propose",
               "admin.access.apply",
+              "admin.access.team.create",
             ].includes(g.capability),
         ),
         [],

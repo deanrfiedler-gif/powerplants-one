@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: LC-12 populated previous-version upgrade preserves all Lead originals and permission grants
+ok 1 - LC-12 populated previous-version upgrade preserves all Lead originals and permission grants
+  ---
+  duration_ms: 60061.8879
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 83774.7891

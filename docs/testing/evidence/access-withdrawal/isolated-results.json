@@ -1,0 +1,65 @@
+[
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/access-requests.test.ts",
+    "pattern": ".*",
+    "log": "requests-replay.log",
+    "started_at": "2026-10-11T10:41:43.6506959Z",
+    "ended_at": "2026-10-11T10:42:52.7327411Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/field-customer-response.test.ts",
+    "pattern": "^FI07-07 populated",
+    "log": "fi07-replay.log",
+    "started_at": "2026-10-11T10:42:52.8566304Z",
+    "ended_at": "2026-10-11T10:44:26.3976419Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/estimating.test.ts",
+    "pattern": "^DR01-DB03",
+    "log": "estimating-replay.log",
+    "started_at": "2026-10-11T10:44:26.4128902Z",
+    "ended_at": "2026-10-11T10:45:42.4617091Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/estimating-workspaces.test.ts",
+    "pattern": "E2 migration formalises",
+    "log": "estimating-workspaces-replay.log",
+    "started_at": "2026-10-11T10:45:42.4687260Z",
+    "ended_at": "2026-10-11T10:46:44.8706522Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/leads-projects-integration.test.ts",
+    "pattern": "fresh combined installation|main 0017",
+    "log": "leads-projects-replay.log",
+    "started_at": "2026-10-11T10:46:44.8764791Z",
+    "ended_at": "2026-10-11T10:48:09.6071348Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/leads-amendments.test.ts",
+    "pattern": "^LC-12 populated",
+    "log": "lc12-integrated.log",
+    "started_at": "2026-10-11T10:48:09.6130570Z",
+    "ended_at": "2026-10-11T10:49:33.5283886Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1053c3f650355a84c8c1396138afa8007152db68",
+    "test": "tests/database/sales-estimating-binding.test.ts",
+    "pattern": "^LC-13 populated",
+    "log": "lc13-integrated.log",
+    "started_at": "2026-10-11T10:49:33.5336921Z",
+    "ended_at": "2026-10-11T10:50:20.5189954Z",
+    "exit_code": 0
+  }
+]

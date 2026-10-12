@@ -1,3 +1,9 @@
+import {
+  teamExampleDate,
+  teamProposals,
+  type TeamProposalPerson,
+  type TeamInspection,
+} from "./teams";
 import { transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
 import {
@@ -63,7 +69,34 @@ export async function accessRoles(p: Principal) {
   return transaction(async (c) => {
     await c.query("SET TRANSACTION READ ONLY");
     await requireAccessInspection(c, p);
-    return { items: roleProposals };
+    const ids = [
+      ...new Set(
+        teamProposals
+          .flatMap((team) => [team.lead, ...team.members])
+          .filter((person) => !person.designOnly)
+          .map((person) => person.id),
+      ),
+    ];
+    const people = (
+      await c.query<{ id: string; display_name: string; active: boolean }>(
+        `SELECT id,display_name,active FROM ppo.users
+       WHERE workspace_id=$1 AND id=ANY($2::uuid[]) AND issuer='PPO-LocalSynthetic'`,
+        [p.workspace_id, ids],
+      )
+    ).rows;
+    const inspect = <T extends TeamProposalPerson>(person: T) => ({
+      ...person,
+      current: person.designOnly
+        ? null
+        : (people.find((row) => row.id === person.id) ?? null),
+    });
+    const teams: TeamInspection[] = teamProposals.map((team) => ({
+      ...team,
+      lead: inspect(team.lead),
+      members: team.members.map(inspect),
+    }));
+    await requireAccessInspection(c, p);
+    return { items: roleProposals, teams, team_example_date: teamExampleDate };
   });
 }
 

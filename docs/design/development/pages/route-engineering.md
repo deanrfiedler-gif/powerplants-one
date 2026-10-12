@@ -14,11 +14,28 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design (11 October 2026): the [Engineering workload design decision](../../../decisions/engineering-workload-design.md), with captures 01–03 in [Engineering workload design r01](../../../reference/ui/engineering/engineering-workload-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid with Engineering's own rail. The app still shows the r02 tabbed register and package drawer, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the labelled 240 px Engineering rail with Engineering workload selected (white tile, Solid bars-progress icon); the breadcrumb "Engineering / Engineering workload" as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid. The four header links move to the rail and to the record window's Linked records.
+- **Secondary menu:** All packages, My work, Author actions, Reviews assigned to me and Released; a Status group (Queued, In design, Awaiting information); an Attention group (Needs attention). Neutral counts on every view, from a new count read. It collapses to a 20 px strip from its right border or the top-bar toggle.
+- **Toolbar:** New request (the existing "What needs engineering?" dialog), search, Engineer (any eligible engineer) and Discipline filters, the count, Refresh and "…".
+- **Grid:** single-line 40 px rows. Reference, Work package, Customer, Status and Required by are visible with both menus open; Engineer, Next action, Action due, Deliverables, Discipline and Project or opportunity scroll in from the right. Required by is sorted on the server (earliest first, "Date needed" last). Overdue dates are amber with an icon. The checkbox column and the settings and "…" column stay fixed.
+- **Status:** Queued and In design neutral, Awaiting information amber; every status has words.
+- **Record window:** clicking a row opens it over the grid, never squeezing it, capped at 960 px and right-aligned. It shows the package summary, next action and missing input, design brief, linked records and the effort rule, with Deliverables, Queries and Reviews & issues tabs and the coordination History. Its buttons are Open package and Update coordination.
+- **Selection:** ticking rows shows a 360 px panel with Open in sequence and Export list only.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (11 October 2026): captures 04–05 in [Engineering workload design r01](../../../reference/ui/engineering/engineering-workload-design-r01/README.md).
+
+- **Header and toolbar at 390 × 844:** the page name "Engineering workload" only, with no breadcrumb. A toolbar holds a view picker ("All packages") standing in for the secondary menu, the count and a filter icon button.
+- **List:** flush list rows about 80 px tall, each showing the title and required date, the reference and status, and the customer and engineer, with a chevron.
+- **Record view:** tapping a row opens a full-screen record view with back, previous and next. The package is stacked, and Open package and Update coordination are fixed at the bottom.
+- **Tab bar:** icons only, five tabs with hidden accessible labels: My Work, Engineering workload (current), Drawings, Technical reviews and More. Phone selection of several rows is not designed yet.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +49,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma design: [Engineering workload design r01 captures](../../../reference/ui/engineering/engineering-workload-design-r01/README.md) (icon-free PNGs; not application captures).
 - [PPO-Engineering-Container-r02.html](../../../reference/ui/engineering/PPO-Engineering-Container-r02.html)
 
 ## Behaviour, handovers and verification

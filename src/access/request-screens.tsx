@@ -52,12 +52,15 @@ type Request = {
   grant_id: string | null;
   applied_at: string | null;
   application_reason: string | null;
+  withdrawn_at: string | null;
+  withdrawal_reason: string | null;
 };
 type Detail = {
   actor: Actor;
   request: Request;
   can_decide: boolean;
   can_apply: boolean;
+  can_withdraw: boolean;
   history: {
     command: string;
     request_version: number;
@@ -75,7 +78,8 @@ const hidden = (error: unknown) =>
 const accepts = (e: JournalEntry) =>
   e.path === base ||
   e.path === `${base}/${e.record_id}/decision` ||
-  e.path === `${base}/${e.record_id}/apply`;
+  e.path === `${base}/${e.record_id}/apply` ||
+  e.path === `${base}/${e.record_id}/withdraw`;
 function useAccessCommand(actor: Actor, key: string) {
   return useRecoverableCommand({
     key: `ppo-access-request:${actor.workspace_id}:${actor.actor_id}:${key}`,
@@ -193,11 +197,15 @@ export function AccessRequestsScreen() {
               setOffset(0);
             }}
             empty="All states"
-            options={["Submitted", "Approved", "Returned", "Applied"].map(
-              (id) => ({
-                id,
-              }),
-            )}
+            options={[
+              "Submitted",
+              "Approved",
+              "Returned",
+              "Applied",
+              "Withdrawn",
+            ].map((id) => ({
+              id,
+            }))}
           />
           <div className="record-grid">
             {queue.data.items.map((r) => (
@@ -270,8 +278,8 @@ function SubmitForm({
       <h2>Propose one additional capability</h2>
       <p>
         Choose a future UTC start. Existing grants, including expired grants,
-        need a different change workflow. Returned requests remain retained;
-        submit a new corrected proposal.
+        need a different change workflow. Returned and Withdrawn requests remain
+        retained; submit a new corrected proposal.
       </p>
       <ValidationFields error={command.error}>
         <form
@@ -446,7 +454,11 @@ function RequestDetail({
 }) {
   const command = useAccessCommand(d.actor, d.request.id),
     [decision, setDecision] = useState("Returned"),
-    [reason, setReason] = useState("");
+    [reason, setReason] = useState(""),
+    [withdrawalReason, setWithdrawalReason] = useState(""),
+    [activeAction, setActiveAction] = useState<"Apply" | "Withdraw" | null>(
+      null,
+    );
   const r = d.request;
   if (hidden(command.error))
     return <ReadState loading={false} error={command.error} retry={retry} />;
@@ -504,6 +516,23 @@ function RequestDetail({
           corrected proposal; this record stays unchanged.
         </p>
       )}
+      {r.state === "Withdrawn" && (
+        <div className="callout">
+          <p>
+            Withdrawn by {r.requester_name} <Stamp value={r.withdrawn_at} />.
+            This request is closed; existing access is unchanged.
+          </p>
+          <p>Withdrawal reason: {r.withdrawal_reason}</p>
+          {r.decision_reason && (
+            <p>Retained approval reason: {r.decision_reason}</p>
+          )}
+          <Link href="/admin/access/requests">Create a fresh request</Link>
+          <p>
+            A fresh proposal needs its own dates and independent decision. No
+            approval carries forward.
+          </p>
+        </div>
+      )}
       {d.can_decide && !command.accepted && (
         <ValidationFields error={command.error}>
           <form
@@ -552,6 +581,7 @@ function RequestDetail({
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              setActiveAction("Apply");
               void command.send(
                 `${base}/${r.id}/apply`,
                 { expected_version: r.version, reason },
@@ -571,7 +601,10 @@ function RequestDetail({
                 affected person. No date is shifted or backdated.
               </p>
               <Field
-                name="reason"
+                name="application_reason"
+                validationField={
+                  activeAction === "Apply" ? "reason" : "application_reason"
+                }
                 label="Application reason"
                 value={reason}
                 onChange={setReason}
@@ -580,6 +613,49 @@ function RequestDetail({
                 hint="10–1000 characters. Explain why you are applying this exact approval."
               />
               <Button type="submit">Apply approved grant</Button>
+            </fieldset>
+          </form>
+        </ValidationFields>
+      )}
+      {d.can_withdraw && !command.accepted && (
+        <ValidationFields error={command.error}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setActiveAction("Withdraw");
+              void command.send(
+                `${base}/${r.id}/withdraw`,
+                { expected_version: r.version, reason: withdrawalReason },
+                `/admin/access/requests/${r.id}`,
+                "Request withdrawal",
+                r.id,
+              );
+            }}
+          >
+            <fieldset
+              disabled={command.busy || !!command.pending || !command.ready}
+            >
+              <legend>Withdraw this un-applied request</legend>
+              <p>
+                As the original requester, you can close this request while it
+                is Submitted or Approved. Its proposal and review stay in
+                history. This cannot remove installed access.
+              </p>
+              <Field
+                name="withdrawal_reason"
+                validationField={
+                  activeAction === "Withdraw" ? "reason" : "withdrawal_reason"
+                }
+                label="Withdrawal reason"
+                value={withdrawalReason}
+                onChange={setWithdrawalReason}
+                required
+                maxLength={1000}
+                hint="10–1000 characters. Explain why this request should no longer proceed."
+              />
+              <Button type="submit" variant="secondary">
+                Withdraw request
+              </Button>
             </fieldset>
           </form>
         </ValidationFields>

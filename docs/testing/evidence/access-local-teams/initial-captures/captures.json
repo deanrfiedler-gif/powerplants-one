@@ -1,0 +1,92 @@
+{
+  "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+  "captured_at": "2026-10-11T12:46:22.158Z",
+  "captures": [
+    {
+      "file": "native-1440-overview.png",
+      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "overview",
+      "sha256": "fca90f4a315c83f3171a551d09f56a43f073bfb1627aec1507d922e8088f788a",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-1440-history.png",
+      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "history",
+      "sha256": "689dc882b30ab1288f015553c2195540986618dfa0b3218f8e9bc096573dbeb4",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-390-overview.png",
+      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "overview",
+      "sha256": "f9ce7fbe41919ec0a21bd2ae97c33ae5b1e64c9f96ece601e486c6262ede67f1",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-390-history.png",
+      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "history",
+      "sha256": "6872ec9366d823152d4214c8def60ee2fa3a7cf6abe75dd51c05b61dd9f0a16c",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-320-overview.png",
+      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "overview",
+      "sha256": "f9413c11e554ddfea625db3b2dbc112a38728c8ab83b58d76ef76e6d9b60dac5",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-320-history.png",
+      "source": "ee327bca613567fe8ee213cff3a73c0e433009fd",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "history",
+      "sha256": "ead858b5fa586bd5e5922cca3eb6e0eb37e2fb46fce2e431ee96f3fbe37dadf1",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    }
+  ],
+  "fixture": {
+    "team_id": "e516b744-3281-4e9f-a4b1-bcdb56a0b7f0",
+    "operation_id": "13794cf1-6a20-4da3-87a9-97da1e8a0a04",
+    "receipt": {
+      "receipt_id": "ecb790fa-f5dd-43e3-9c5b-af7fab07d444",
+      "operation_id": "13794cf1-6a20-4da3-87a9-97da1e8a0a04",
+      "record_id": "e516b744-3281-4e9f-a4b1-bcdb56a0b7f0",
+      "record_version": 1,
+      "state": "Recorded",
+      "accepted_at": "2026-10-11T12:46:23.281Z",
+      "warnings": [],
+      "task_ids": []
+    }
+  }
+}
