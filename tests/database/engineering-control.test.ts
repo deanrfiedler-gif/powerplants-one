@@ -8,6 +8,7 @@ import { controlRead } from "../../src/engineering/control/reads";
 import { controlCommand } from "../../src/engineering/control/commands";
 import { readOperation } from "../../src/shared/receipts";
 import { listEngineering } from "../../src/engineering/service";
+import { engineeringRegister } from "../../src/engineering/register";
 import {
   directSignIn,
   principalOf,
@@ -396,6 +397,10 @@ test("EN03/EN05: mixed document revisions, separate duties, immutable issue, dis
   const original = command(issueFields);
   await ok(s.issuer, s.base, original);
   assert.equal((await s.issuer(s.base, original)).status, 200);
+  const releaseActor = await principalOf("materials-release");
+  const releasedRegister = await engineeringRegister(releaseActor, { q: s.ids.package, view: "released" });
+  assert.equal(releasedRegister.counts.released, 1);
+  assert.equal(releasedRegister.items[0].technical.released, 1);
   let data = await s.read(s.issuer),
     issue = data.records.issue[0];
   const trans = data.transmittals[0];
@@ -477,6 +482,9 @@ test("EN03/EN05: mixed document revisions, separate duties, immutable issue, dis
     [issue.id],
   );
   assert.equal(derived[0].change, "Withdrawn");
+  const changedRegister = await engineeringRegister(releaseActor, { q: s.ids.package, view: "released" });
+  assert.equal(changedRegister.counts.released, 0);
+  assert.equal(changedRegister.items.length, 0);
   assert.equal(
     (
       await s.author(
@@ -629,6 +637,10 @@ test("EN01 accountable workloads use actual technical records and source changes
     ),
   );
   const q = { q: s.ids.package };
+  const workload = await engineeringRegister(author, { ...q, view: "author" });
+  assert.equal(workload.counts.author, 1);
+  assert.equal(workload.items[0].technical.blocked, 1);
+  assert.equal(workload.items[0].needs_attention, true);
   assert.equal(
     (await listEngineering(author, { ...q, view: "author" })).items[0].technical
       ?.author_waiting,
@@ -664,6 +676,10 @@ test("EN01 accountable workloads use actual technical records and source changes
     1,
   );
   const review = (await s.read()).records.review[0];
+  const reviewWorkload = await engineeringRegister(reviewer, { ...q, view: "review" });
+  assert.equal(reviewWorkload.counts.review, 1);
+  assert.equal(reviewWorkload.items[0].technical.reviews, 1);
+  assert.equal((await engineeringRegister(author, { ...q, view: "author" })).matching_count, 0);
   await ok(
     s.coordinator,
     `engineering/${s.ids.package}/materials/sources`,
@@ -709,6 +725,9 @@ test("EN02–EN05 site scope is checked independently of company and hidden link
       s.ids.package,
     );
     await assert.rejects(controlRead(viewer, other.ids.package));
+    const inaccessible = await engineeringRegister(viewer, { q: other.ids.package });
+    assert.equal(inaccessible.counts.all, 0);
+    assert.deepEqual(inaccessible.engineers.items, []);
     assert.equal(
       (await listEngineering(viewer, { q: other.ids.package })).items.length,
       0,
@@ -728,6 +747,11 @@ test("EN02–EN05 site scope is checked independently of company and hidden link
   const basis = command(saveFields("basis", basisContent(hidden)));
   await ok(s.coordinator, s.base, basis);
   assert.equal((await s.read()).records.basis.length, 0);
+  const restrictedRegister = await engineeringRegister(await principalOf("materials-author"), {
+    q: s.ids.package, view: "author",
+  });
+  assert.equal(restrictedRegister.counts.author, 0);
+  assert.equal(restrictedRegister.items.length, 0);
   assert.equal(
     (
       await listEngineering(await principalOf("materials-author"), {

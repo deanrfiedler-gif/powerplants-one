@@ -174,3 +174,5 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
 - [Reviews & approvals queue backend](estimating-review-queue.md): authorised bounded backend work; delivery evidence, owner acceptance and deployment remain separate.
 
 - [Quotation register backend](quotation-register-backend.md): one current revision per quotation, recorded lifecycle facts and permission-scoped history; accepted page implementation and global counts remain separate.
+
+- [Engineering workload register backend](engineering-workload-backend.md): user-authorised BC-01 scoped EN-01 reads; validation and acceptance separate.

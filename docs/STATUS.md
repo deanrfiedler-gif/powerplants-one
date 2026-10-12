@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Engineering workload backend — 13 October 2026
+
+Repository writer: this user-authorised Engineering workload backend chat, branch `codex/engineering-workload-backend`, based on current main `7e4ef3b`. Dean requested the next BC-01 increment after Reviews, Quotations and Leads merged; Work orders #454 and Cost sources #456 remain independent open contributions. The [read contract](decisions/engineering-workload-backend.md) adds a sorted EN-01 register, complete permitted-match view/status counts, recorded-engineer filter choices and source-bound page continuation. Native package, context and technical-source authority govern every row and aggregate. The final source check refuses changed results. No migration, seed, capability or business command change. [Execution evidence](testing/evidence/engineering-workload/README.md) records tests and retained failures; final verification is in progress. Accepted page/shell implementation, review, owner acceptance and deployment remain separate.
+
 ## Leads PR integration — 12 October 2026
 
 Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. PR #452 incorporates the reconciled #451 head `8dd3ba6` so both contributions are verified with the merged backends before the dependency-ordered merges. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.

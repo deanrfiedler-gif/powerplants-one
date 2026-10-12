@@ -147,3 +147,7 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 - The five captures are copies of the accepted frames, with every Font Awesome icon swapped for `Icon/placeholder`. A check after the swap found no Font Awesome instance left in any copy. They were exported at scale 1 with the Figma connector, and each image was inspected. The hashes are in the [captures README](../reference/ui/engineering/engineering-workload-design-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs` and `npm run studio:check` were run on this change.
 - Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+
+## Backend continuation — 13 October 2026
+
+Dean separately authorised the EN-01 [register backend](engineering-workload-backend.md) under BC-01. It adds scoped sorting, complete permitted-match view/status counts and recorded-engineer filter choices. These choices identify actual owners of matching packages, including explicitly inactive owners; new assignment still uses the existing context-specific eligibility read. Source-bound page tokens refuse changed sources. This continuation does not implement or visually accept the Figma page or shell. All original captures and design review evidence remain unchanged.
