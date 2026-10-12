@@ -163,7 +163,7 @@ async function expectSummary(page: Page, ...texts: string[]) {
   const summary = page.getByRole("complementary", { name: "Estimate summary", exact: true });
   const sheetNeeded = !(await summary.isVisible());
   if (sheetNeeded)
-    await page.locator(".es02-summary-bar").getByRole("button", { name: "Summary", exact: true }).click();
+    await page.locator(".es02-bottom").getByRole("button", { name: "Summary", exact: true }).click();
   await expect(summary).toBeVisible();
   for (const text of texts) await expect(summary).toContainText(text);
   if (sheetNeeded)
