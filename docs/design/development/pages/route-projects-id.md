@@ -145,3 +145,11 @@ PJ-03 uses the existing r20 Planning workspace with an on-demand Review/comparis
 Reuse ProjectsGantt, ProjectTaskPanel, the native dialog, Button, Field, SelectField, ReadState and ErrorNotice. Incoming current project and baseline history; outgoing baseline receipt or reasoned task forecast. No Service booking change. Desktop keeps the fixed Gantt visible behind the modal; phone scrolls the schedule page vertically around a usable task-list viewport, scrolls its action strip horizontally, and wraps controls in single-column comparison cards with keyboard focus return.
 
 Exact new-state HTML/image is missing. The r10 schedule reference remains unchanged; [the decision](../../../decisions/project-schedule-baselines.md) exposes the addition for review. [Verification](../../../testing/evidence/project-baselines/README.md) does not grant business or paired visual acceptance.
+
+## PJ-01/PJ-02 backend continuation — 13 October 2026
+
+The [backend contract](../../../decisions/project-overview-backend.md) joins exact native Sales receiving attribution, saved dates/baselines, phase counts, team, scoped RAID/actions and explained portfolio attention. Existing page types, shared Button/Field/dialog/Gantt controls, routes and scope IDs stay in place. Incoming handovers remain explicit accepted Sales events; outgoing actions remain native schedule, baseline, Activity, RAID and acceptance workflows. No new component or page is implemented here.
+
+Desktop and phone consumers must show the selected versus latest baseline, site timezone, unknown forecast when tasks are undated, historical versus current Sales evidence, named receiving owner, restricted coverage and preview continuation. Counts describe all authorised matches for the displayed filters; page tokens are transient. No current flags is not a health score or completion approval. Keep missing/stale/loading/denied and uncertain native-save states accessible through the existing controls.
+
+The [accepted Project record design](../../../decisions/project-record-page-design.md) and its exact icon-free captures remain the reference for the later page. Exact new API-state desktop/phone captures are missing. [Backend evidence](../../../testing/evidence/project-overview/README.md) does not grant visual, device, guide or owner acceptance. Review fingerprints stay unchanged.

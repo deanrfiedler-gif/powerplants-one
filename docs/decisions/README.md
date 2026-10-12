@@ -1,5 +1,7 @@
 # Decision control
 
+[Projects receiving and overview backend](project-overview-backend.md) records exact native Sales attribution and explained scoped portfolio reads; page and owner acceptance remain separate.
+
 [Projects RAID and owned actions backend](project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.
 
 [Leads counts and follow-up reads](lead-register-backend.md) records the authorised BC-01 backend increment, full authorised-match count semantics and unavailable-activity boundaries.

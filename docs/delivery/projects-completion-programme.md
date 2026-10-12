@@ -76,3 +76,7 @@ Actual command outcomes belong in the [A0 evidence record](../testing/evidence/p
 ## Audit follow-up checkpoint — 11 October 2026
 
 The [derived gap register](crm-projects-audit-gaps.md) reconciles the supplied Pipedrive/Wrike audits with existing code and scope. First authorised slice: PJ-03 baseline recording and forecast/dependency review, per [decision](../decisions/project-schedule-baselines.md) and [verification](../testing/evidence/project-baselines/README.md). Keep PJ-03 at refine: calendar configuration, actual-date capture and critical-path scheduling are not delivered. Next recommended Projects slice is PJ-04 RAID; commercial variations, specialist coordination, readiness and stakeholder updates remain separate.
+
+## PJ-01/PJ-02 backend continuation — 13 October 2026
+
+The [authorised overview contract](../decisions/project-overview-backend.md) reconciles A1 with delivered LC-16 receiving and current baselines. It completes the bounded receiving-attribution and explained portfolio/overview read gap using those native authorities and PJ-04 records. A1 is no longer wholly unimplemented. This does not adopt the old manual health/stage proposal or complete all record-design departures. [Evidence](../testing/evidence/project-overview/README.md) separates backend verification, the dependent PR, UI and owner acceptance.

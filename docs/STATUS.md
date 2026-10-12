@@ -4,6 +4,11 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+
+## Projects receiving and overview backend — 13 October 2026
+
+Dean authorised PJ-01/PJ-02 after PJ-04. Branch `codex/projects-overview-backend` continues from PR #458, which remains a dependency. The [contract](decisions/project-overview-backend.md) adds scoped portfolio counts/filters and a consistent Project overview with exact Sales attribution, dates/baselines, phase counts, team and current RAID/Activity facts. Existing native commands, original receipts and schedule history remain authoritative; no schema, seed, grant or technology change. [Execution evidence](testing/evidence/project-overview/README.md) records actual verification. Accepted page implementation, broader related-domain/history reads, owner acceptance, merge and deployment remain separate; PJ-03 calendars/actuals remains next.
+
 ## Projects RAID and owned actions backend — 13 October 2026
 
 Repository writer: this authorised Projects backend session, branch `codex/projects-raid-backend`, based on main `7e4ef3b`. Dean asked to proceed with PJ-04 and supplied his 11 October Wrike feature audit as reference. The [contract](decisions/project-raid-backend.md) records the audit's bounded observations separately from PPO decisions. Migration 0087 adds typed owned RAID/Decision entries, immutable revisions, current scoped Activity links, reasoned closure/reopening and exact original recovery. Existing Project and Activity permissions apply; no grant, seed, schedule, booking or external integration changes. [Execution evidence](testing/evidence/project-raid/README.md) records 11 passing database/upgrade cases, five focused units, two compiled HTTP cases, real PostgreSQL restart and static/build/document checks. [PR #458](https://github.com/deanrfiedler-gif/powerplants-one/pull/458) carries independent CI and review. Native page/Figma work, owner acceptance, CI/review and deployment remain separate. Remaining BC-02 work includes project receiving/health and the explicit calendars/actuals contract.

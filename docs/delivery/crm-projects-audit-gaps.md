@@ -42,3 +42,7 @@ The audit suggestion to combine Leads and Deals does not override PPO's adopted 
 3. Take GAP-02 as the next bounded Projects increment; reconcile concurrent Administration work and then prioritise CRM reporting against commercial variations.
 
 This register adds derived GAP IDs only; it does not replace any of the 78 parent IDs or grant approval to proposals.
+
+## PJ-01/PJ-02 backend checkpoint — 13 October 2026
+
+[Receiving and overview backend](../decisions/project-overview-backend.md) completes the bounded BC-02 read gap around existing LC-16, PJ-03 baselines and PJ-04 records. Exact retained acceptance, named receiving ownership, unknown/restricted context, dates, phase counts, team and explained attention now have API contracts. Existing native commands are reused. UI, configurable calendars/actuals and later record-design additions remain open; no Wrike parity or full domain acceptance is claimed.

@@ -170,3 +170,7 @@ See the [diamond decision](../decisions/quotation-task-diamond.md), [handover](.
 ## PJ-04 owned RAID and decisions backend
 
 The [13 October contract](../decisions/project-raid-backend.md), authorised by Dean after Engineering, implements the first BC-02 / PRJ-03 slice with typed immutable Risk, Assumption, Issue, Dependency and Decision revisions, scoped owners and native Activity links. Closure requires an outcome and terminal linked actions; history and exact recovery remain intact. The supplied Wrike audit is bounded account evidence and proposals, not operational authority. The native page, broader interface/review workflows, project health and configurable calendars remain separate work. [Execution evidence](../testing/evidence/project-raid/README.md) separates verification from owner acceptance and deployment.
+
+## PJ-01/PJ-02 receiving and overview backend
+
+The [13 October contract](../decisions/project-overview-backend.md) reuses delivered LC-16 receiving and adds exact Sales attribution, consistent overview and permission-scoped portfolio reads. The later accepted record design supersedes this blueprint’s early manual health/stage proposals for this increment: explain current coordination facts without a score. Original receiving decisions, schedules, baselines and source authority remain intact. Configurable calendars, actuals, later record tabs and owner acceptance remain separate.

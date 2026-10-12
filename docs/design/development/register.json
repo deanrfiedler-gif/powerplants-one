@@ -1913,7 +1913,7 @@
       "title": "Project initiation and receiving review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend project creation with accepted commercial scope, receiving review, owned assumptions and return/rework. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
+      "summary": "Extend project creation with accepted commercial scope, receiving review, owned assumptions and return/rework. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
       "path": "/projects/new",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1926,11 +1926,17 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/project-overview-backend.md",
+        "docs/testing/evidence/project-overview/README.md",
+        "src/projects/overview.ts",
+        "src/projects/overview-model.ts",
+        "src/projects/portfolio.ts",
+        "src/sales/delivery-binding.ts"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
+      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1948,7 +1954,7 @@
       "title": "Project overview and portfolio health",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend project register/detail with explained health, recovery actions, milestones and completeness.",
+      "summary": "Extend project register/detail with explained health, recovery actions, milestones and completeness. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
       "path": "/projects",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1964,11 +1970,17 @@
       ],
       "dependencies": [
         "docs/decisions/navigation-architecture-board.md",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md",
+        "docs/decisions/project-overview-backend.md",
+        "docs/testing/evidence/project-overview/README.md",
+        "src/projects/overview.ts",
+        "src/projects/overview-model.ts",
+        "src/projects/portfolio.ts",
+        "src/sales/delivery-binding.ts"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6674,7 +6686,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6720,11 +6732,17 @@
         "src/components/project-baselines.tsx",
         "docs/decisions/project-schedule-baselines.md",
         "docs/testing/evidence/project-baselines/README.md",
-        "docs/decisions/project-record-page-design.md"
+        "docs/decisions/project-record-page-design.md",
+        "docs/decisions/project-overview-backend.md",
+        "docs/testing/evidence/project-overview/README.md",
+        "src/projects/overview.ts",
+        "src/projects/overview-model.ts",
+        "src/projects/portfolio.ts",
+        "src/sales/delivery-binding.ts"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending.",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending. PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6741,7 +6759,7 @@
       "title": "Create project",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
       "path": "/projects/new",
       "source_paths": [
         "src/app/(business)/projects/new/page.tsx"
@@ -6754,11 +6772,17 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/project-overview-backend.md",
+        "docs/testing/evidence/project-overview/README.md",
+        "src/projects/overview.ts",
+        "src/projects/overview-model.ts",
+        "src/projects/portfolio.ts",
+        "src/sales/delivery-binding.ts"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
+      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6774,7 +6798,7 @@
       "title": "Project register",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
       "path": "/projects",
       "source_paths": [
         "src/app/(business)/projects/page.tsx"
@@ -6785,10 +6809,17 @@
       "image_paths": [
         "docs/blueprints/projects-visuals/projects-register-desktop.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/project-overview-backend.md",
+        "docs/testing/evidence/project-overview/README.md",
+        "src/projects/overview.ts",
+        "src/projects/overview-model.ts",
+        "src/projects/portfolio.ts",
+        "src/sales/delivery-binding.ts"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
