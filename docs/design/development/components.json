@@ -631,7 +631,9 @@
       "used_on": [
         "route:/engineering/[id]/materials",
         "route:/engineering/[id]/materials/mapping",
-        "route:/engineering/[id]/materials/releases"
+        "route:/engineering/[id]/materials/releases",
+        "route:/estimating/fertigation",
+        "route:/estimating/fertigation/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
