@@ -7,6 +7,8 @@ type NavigateEvent = Event & {
   destination: { url: string; key: string };
   hashChange: boolean;
   canIntercept: boolean;
+  // The filename of an anchor download, else null; absent before the API had it.
+  downloadRequest?: string | null;
 };
 type Navigation = EventTarget & {
   navigate: (url: string, options?: { history: "replace" | "push" }) => unknown;
@@ -51,6 +53,8 @@ export function useDiscoveryNavigation(dirty: boolean, pending: boolean, interna
         bypass.current ||
         (!dirty && !pending) ||
         event.hashChange ||
+        // A download keeps the document, so unsaved work is not at risk.
+        event.downloadRequest != null ||
         internal(event.destination.url) ||
         !event.cancelable
       )

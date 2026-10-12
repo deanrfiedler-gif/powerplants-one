@@ -29,8 +29,8 @@ test("every mapped icon is a plain Font Awesome name and every catalogue is mapp
   assert.deepEqual(sizes, {
     navigationFontAwesome: 64, shellFontAwesome: 35, productFontAwesome: 51, myWorkFontAwesome: 45, secondaryMenuFontAwesome: 5,
     jobPackFontAwesome: 12, materialsFontAwesome: 25, changesOutlineFontAwesome: 4, changesToneFontAwesome: 9,
-    commissioningOutlineFontAwesome: 5, commissioningMarkFontAwesome: 9, acceptanceFontAwesome: 4, fertigationFontAwesome: 1,
-    leadsFontAwesome: 3, ganttFontAwesome: 9,
+    commissioningOutlineFontAwesome: 5, commissioningMarkFontAwesome: 9, acceptanceFontAwesome: 4, fertigationFontAwesome: 33,
+    leadsFontAwesome: 3, ganttFontAwesome: 9, estimationWizardFontAwesome: 39, specialistFontAwesome: 13,
   });
   for (const [catalogue, map] of Object.entries(mappings)) {
     for (const [name, icon] of Object.entries(map)) assert.match(icon, /^[a-z0-9]+(-[a-z0-9]+)*$/, `${catalogue}.${name}`);

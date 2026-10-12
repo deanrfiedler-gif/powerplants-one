@@ -507,6 +507,12 @@ export interface CapacityRow {
   ratio: number | null;
   state: CapacityState;
   note: string;
+  /**
+   * The limit is a configured candidate's entered envelope or channel range.
+   * The engine keeps a breach on the candidate: a candidate failure, never a
+   * finding or a count.
+   */
+  candidate: boolean;
 }
 
 const known = (v: number | null | undefined): v is number =>
@@ -550,6 +556,7 @@ function row(
     ratio,
     state,
     note,
+    candidate: false,
   };
 }
 
@@ -738,8 +745,8 @@ export function capacityRows(scope: Scope, calc: Calculation): CapacityRow[] {
     (r) => r.shortlisted && active(scope, r),
   );
   for (const c of shortlisted)
-    rows.push(
-      row(
+    rows.push({
+      ...row(
         `candidate:${c.id}`,
         c.label,
         known(c.minimum_m3h) && known(c.maximum_m3h)
@@ -751,7 +758,8 @@ export function capacityRows(scope: Scope, calc: Calculation): CapacityRow[] {
         c.maximum_m3h,
         "Entered limits only · manufacturer confirmation pending",
       ),
-    );
+      candidate: true,
+    });
   if (!shortlisted.length && scope.candidates.length)
     rows.push(
       row(
@@ -772,8 +780,8 @@ export function capacityRows(scope: Scope, calc: Calculation): CapacityRow[] {
       (r) => r.stock_id === need.stock_id && active(scope, r),
     )) {
       const group = scope.groups.find((x) => x.id === need.group_id);
-      rows.push(
-        row(
+      rows.push({
+        ...row(
           `injection:${need.group_id}:${ch.id}`,
           `${ch.label} at ${group?.label ?? "group"}`,
           known(lph)
@@ -785,7 +793,8 @@ export function capacityRows(scope: Scope, calc: Calculation): CapacityRow[] {
           ch.maximum_lph,
           "Entered range, not a manufacturer rating",
         ),
-      );
+        candidate: true,
+      });
     }
   }
   return rows;
@@ -926,11 +935,21 @@ export function outputReadiness(input: {
   ];
 }
 
-/** Replace record identities in engine text with their labels. */
+/**
+ * Replace record identities in engine text with their labels. Engine text
+ * names the kind before an identity ("Channel <id>"); where the label already
+ * names that kind ("Channel A · Nutrient") the kind word is dropped so it reads
+ * once. The engine's own text (PPO-FERT-NATIVE-CALC-r01) is unchanged.
+ */
 export function withLabels(scope: Scope, text: string): string {
   return text.replace(
-    /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi,
-    (id) => recordLocation(scope, id)?.label || "record",
+    /([A-Za-z]+ )?([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/gi,
+    (_match, kind: string | undefined, id: string) => {
+      const label = recordLocation(scope, id)?.label || "record";
+      if (!kind) return label;
+      const named = new RegExp(`\\b${kind.trim()}\\b`, "i").test(label);
+      return named ? label : `${kind}${label}`;
+    },
   );
 }
 

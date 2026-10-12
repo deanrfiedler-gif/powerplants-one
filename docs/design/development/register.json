@@ -1521,7 +1521,15 @@
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-B-Structure-Families-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
-        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-docked-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-02-Drawings-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-03-Parts-working-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-04-Pricing-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-05-Compare-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [],
       "scope_status": "unbuilt",
@@ -6145,7 +6153,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6169,7 +6177,11 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/estimation-wizard.tsx"
+        "src/components/estimation-wizard.tsx",
+        "src/components/estimation-wizard.css",
+        "src/components/estimation-wizard-ui.tsx",
+        "src/components/configuration-editor.tsx",
+        "src/components/discovery-fields.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -8703,7 +8715,7 @@
       "title": "Screen Systems configurations · selected view",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Screen Configurator Workbench: seven views (Configure, Drawings, Parts & working, Pricing, Compare & save, Definition review, Run history) built from the owner-accepted design board on 12 October 2026; source presence does not establish deployment or acceptance.",
       "path": "/estimating/configurations/[id]/[view]",
       "source_paths": [
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx"
@@ -8715,7 +8727,15 @@
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-01-Configure-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
-        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-docked-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-02-Drawings-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-03-Parts-working-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-04-Pricing-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-05-Compare-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [],
       "scope_status": "refine",

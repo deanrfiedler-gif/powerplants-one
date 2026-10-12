@@ -4,16 +4,21 @@ export const definition = manifest;
 export const bundleId = "42482a87-bf98-51b6-85ea-e1ee390e14e7";
 // Updated only by extract-specialist-native.mjs; source bytes are retained separately.
 export const bundleHash = manifest.bundle_hash;
+// Drawings is the seventh view (design board departure D1); its slug follows
+// its label, as the decision left the slug to implementation.
 export const views = [
   "configure",
+  "drawings",
   "parts",
   "pricing",
   "compare",
   "definition",
   "history",
 ] as const;
+export type View = (typeof views)[number];
 export const viewLabels = [
   "Configure",
+  "Drawings",
   "Parts & working",
   "Pricing",
   "Compare & save",

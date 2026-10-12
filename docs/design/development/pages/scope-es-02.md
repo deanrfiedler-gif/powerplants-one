@@ -12,6 +12,8 @@ Retain the native five-step wizard delivered by PR #272, including exact revisio
 2. Keep alternatives and their exact revisions distinct
 3. Check the saved cost basis before preparing a quotation
 
+**Page built to the board, 12 October 2026.** On Dean's instruction the discovery workspace was rebuilt to design board r01's composition; the [build record](../../../decisions/es02-wizard-ui-build.md) lists what was adopted (P3–P7, P9, the O1 recommendation, B1–B4 and B6) and what still waits (P1/P2 need the successor configuration definition; P8 is a shell change). Visual review is pending.
+
 **Design board r01, 24 September 2026.** An in-app design board re-bases the wizard onto the running shell and build plan r04 and compares it with the running build on `main` `72b2769`. It records one user decision: six equipment families with 108 categories replace r04 §4.7's four presentation groups (23 September 2026). Implementing that needs a successor to configuration definition `PPO-ES02-CONFIG-r01`, a migration and an ADR amending ADR-0035; none is authorised. The board's proposals P2–P9 and open decision O1 are not accepted. It also records six findings against the running build (B1–B6). See the [design board record](../../../decisions/es02-design-board.md); the page-level contract, with measured geometry, is in [the discovery workspace entry](route-estimating-discovery-id.md).
 
 ## Desktop
