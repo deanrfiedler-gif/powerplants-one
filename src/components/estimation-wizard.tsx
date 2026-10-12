@@ -372,7 +372,8 @@ function SummaryPanel({
         )}
       </div>
       <span className="es02-summary-eyebrow">
-        Alternative {label} · {selected ? "Selected" : "Viewed · not selected"}
+        Alternative {label} ·{" "}
+        {selected ? "Selected alternative" : "Viewed alternative · not selected"}
       </span>
       <dl className="es02-rows">
         <Row label="Discovery readiness">
@@ -2128,7 +2129,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                           disabled={command.busy}
                           onClick={() => void command.reconcile()}
                         >
-                          Check again
+                          Confirm original save outcome
                         </button>
                       )
                     }
@@ -2170,7 +2171,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                     tone="warning"
                     icon="warning"
                     role="alert"
-                    title={`Alternative ${current.option.label} changed while you were editing`}
+                    title="The workspace changed. Your proposal is retained."
                     actions={
                       <>
                         <button
@@ -2181,7 +2182,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                             setCompareRequest((n) => n + 1);
                           }}
                         >
-                          Compare with current
+                          Compare current saved revision
                         </button>
                         <button
                           type="button"
@@ -2193,14 +2194,15 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                             })
                           }
                         >
-                          Keep editing
+                          Keep proposal and review against current revision
                         </button>
                       </>
                     }
                   >
-                    The workspace is now at version {d.workspace.version}. Your
-                    save was not applied. Your working copy is kept, still based
-                    on {rev(base!.version)}.
+                    Alternative {current.option.label} is now at workspace
+                    version {d.workspace.version}; a save based on{" "}
+                    {rev(base!.version)} would be refused. Your working copy is
+                    kept, still based on {rev(base!.version)}.
                   </Strip>
                 )}
                 <div key={current.option.id} hidden={tab !== "Discovery"}>
@@ -2958,6 +2960,39 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                         </tbody>
                       </table>
                     </TableScroll>
+                    <div className="es02-actions es02-viewed-actions">
+                      <span className="es02-reason">
+                        Viewed alternative {current.option.label}
+                        {selected ? " · selected" : ""}
+                      </span>
+                      <button
+                        type="button"
+                        className="es02-button"
+                        disabled={!canEdit || selected || frozen}
+                        onClick={() => chooseAction("Select")}
+                      >
+                        Select this option
+                      </button>
+                      {current.option.state === "Archived" ? (
+                        <button
+                          type="button"
+                          className="es02-button"
+                          disabled={!d.can_edit || frozen}
+                          onClick={() => chooseAction("Reopen")}
+                        >
+                          Reopen this option
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="es02-button"
+                          disabled={!canEdit || selected || frozen}
+                          onClick={() => chooseAction("Archive")}
+                        >
+                          Archive this option
+                        </button>
+                      )}
+                    </div>
                     <p className="es02-table-foot">
                       <span>
                         <strong>{d.options.length} of 10 alternatives</strong> ·{" "}
@@ -3450,7 +3485,7 @@ function SaveReview({
       <ErrorNotice error={error} />
       {uncertain && (
         <button type="button" className="es02-button" onClick={reconcile}>
-          Check again
+          Confirm original save outcome
         </button>
       )}
       <Strip tone="info">
@@ -3518,10 +3553,10 @@ function SaveReview({
                     )
                   }
                 />
-                <span>
-                  I confirm {id} ·{" "}
-                  {discoveryDefinition.questions.find((q) => q.id === id)?.label ?? id} —
-                  in this exact proposal
+                <span
+                  title={discoveryDefinition.questions.find((q) => q.id === id)?.label ?? id}
+                >
+                  I confirm {id} in this exact proposal
                 </span>
               </label>
             ))}

@@ -430,6 +430,9 @@ test("ES02-T59: a delayed old preview cannot restore Complete after the current 
     .getByLabel("Proposed work", { exact: true })
     .fill("SYN slower earlier valid preview");
   await requested;
+  await page
+    .getByRole("button", { name: "Technical details", exact: true })
+    .click();
   const zones = page.getByLabel("Customer-required climate zones (Zones)", {
     exact: true,
   });

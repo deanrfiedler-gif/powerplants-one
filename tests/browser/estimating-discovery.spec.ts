@@ -545,14 +545,15 @@ test("ES02-T41/T42/T58: draft survives step changes and identity loss clears pro
   await page
     .getByLabel("Q01 Included work", { exact: true })
     .fill("SYN private unsaved E2 proposal");
+  // At phone widths the steps are a select with previous and next (design board P5).
   for (const step of [
-    "2. Configuration",
-    "3. Scope & delivery",
-    "4. Pricing",
-    "5. Review",
-    "1. Requirements",
+    "Configuration",
+    "Scope & delivery",
+    "Pricing",
+    "Review",
+    "Requirements",
   ])
-    await page.getByRole("button", { name: step, exact: true }).click();
+    await page.getByLabel(/^Step \d of 5/).selectOption(step);
   await expect(
     page.getByLabel("Q01 Included work", { exact: true }),
   ).toHaveValue("SYN private unsaved E2 proposal");

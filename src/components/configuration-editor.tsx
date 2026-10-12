@@ -1041,11 +1041,22 @@ export function SystemsEditor({
                     {compactCoverage(coverageLabel(s, value.areas))}
                   </span>,
                   equipmentLabel(s) ? (
-                    <span title={equipmentLabel(s)}>
-                      {equipmentLabel(s)
-                        .split(", ")
-                        .map((e) => e.split(" · ")[0])
-                        .join(", ")}
+                    <span>
+                      {s.equipment_ids.map((id, i) => {
+                        const [reference, ...rest] = (
+                          options.equipment.find((e) => e.id === id)?.display_name ??
+                          "Saved equipment"
+                        ).split(" · ");
+                        return (
+                          <span key={id}>
+                            {i > 0 ? ", " : ""}
+                            {reference}
+                            {rest.length > 0 && (
+                              <span className="es02-secondary"> · {rest.join(" · ")}</span>
+                            )}
+                          </span>
+                        );
+                      })}
                     </span>
                   ) : (
                     <span className="es02-secondary">Proposed</span>
@@ -1079,9 +1090,18 @@ export function SystemsEditor({
         {!rows.length && (
           <p className="es02-empty">
             <span>
-              {value.systems.length
-                ? `0 of ${plural(value.systems.length, "system")} · no selection. No systems match${search ? ` “${search}”` : ""}${family ? ` in ${familyLabel(family)}` : ""}${area ? ` in ${value.areas.find((a) => a.id === area)?.label ?? "this area"}` : ""}.`
-                : "No systems recorded yet. Add a system from a family card or the toolbar."}
+              {value.systems.length ? (
+                <>
+                  <strong>No matching systems.</strong> 0 of{" "}
+                  {plural(value.systems.length, "system")} · no selection
+                  {search ? ` · nothing matches “${search}”` : ""}
+                  {family ? ` in ${familyLabel(family)}` : ""}
+                  {area ? ` in ${value.areas.find((a) => a.id === area)?.label ?? "this area"}` : ""}
+                  {review ? " · no systems carry a finding" : ""}.
+                </>
+              ) : (
+                "No systems recorded yet. Add a system from a family card or the toolbar."
+              )}
             </span>
             {(search || family || area || review) && (
               <button type="button" className="es02-button es02-button-sm" onClick={() => changeFilter(clearFilters)}>

@@ -63,7 +63,7 @@ browser storage. Margin appears only as a labelled calculation.
 answer state tags), new `estimation-wizard-ui.tsx` (icons with local outline fallbacks under
 ADR-0050, tags, change markers, labelled scroll regions), `font-awesome-icons.ts` (the wizard's
 icon map), `record-ui.tsx` (tab labels may carry a count badge), `scope-preferences.ts`
-(remembered-menu flag), `tests/browser/estimating-wizard.spec.ts` (three copy changes), the
+(remembered-menu flag), `tests/browser/estimating-wizard.spec.ts` and `tests/browser/estimating-discovery.spec.ts` (summary wording, the revisions heading, the Technical details toggle and the phone step select; every other pinned label is unchanged), the
 page entry `docs/design/development/pages/route-estimating-discovery-id.md`, the route's
 register entry and this record.
 

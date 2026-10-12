@@ -969,6 +969,13 @@
   opacity: 0.5;
 }
 
+#ppo-estimate-wizard .es02-viewed-actions {
+  padding: 10px 0 2px;
+}
+#ppo-estimate-wizard .es02-viewed-actions .es02-reason {
+  margin-right: auto;
+}
+
 /* Editor · padded two-column form beneath the table. */
 #ppo-estimate-wizard .es02-editor {
   padding: 18px 0 8px;
