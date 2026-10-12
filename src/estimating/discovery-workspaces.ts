@@ -8,7 +8,7 @@ import { object, optionalId } from "../shared/validation";
 import { requireCapability } from "../platform/permissions";
 import { visibleOpportunity } from "../crm/context";
 import { digest } from "../documents/store";
-import { configurationConfirmations, copyConfiguration } from "./configuration";
+import { configurationConfirmations, copyConfiguration, requireConfigurationSuccessor } from "./configuration";
 import { savedOptionCost, discoveryHistoryCounts } from "./discovery-reads";
 import { receivedFertigation } from "./fertigation/receiving-reads";
 import {
@@ -169,6 +169,7 @@ function proposedInput(change: DiscoveryChange, source: DiscoveryRevision) {
     return { ...inherited, configuration: copyConfiguration(source.input.configuration, source.id, change.copy_allocation_id, change.copy_follow_up!) };
   }
   if (change.kind === "Save" && source.input?.configuration && !change.discovery?.configuration) throw new AppError(422, "ConfigurationRequired", "Retain the captured configuration schema in a successor; it cannot be discarded by using the legacy parser.");
+  if (change.kind === "Save") requireConfigurationSuccessor(source.input?.configuration, change.discovery?.configuration);
   return change.discovery!;
 }
 function comparisonFor(

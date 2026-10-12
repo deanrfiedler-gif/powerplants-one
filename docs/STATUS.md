@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## ES-02 backend equipment catalogue — 12 October 2026
+
+Repository writer: this authorised backend session, branch `codex/es02-equipment-catalogue`, based on main `6c16471`. Dean is continuing UI design with Claude in Figma and authorised the backend six-family/108-category increment. [ADR-0054](decisions/ADR-0054-es02-equipment-catalogue.md) adds opt-in r02 classification and versioned persistence while preserving exact r01 reads, original receipts, costs and quotations. Migration 0085 extends the installed configuration guard; no seed, user, grant or backfill. Existing APIs expose catalogue metadata only on explicit request. The source list is checked against all 108 retained names. [Execution evidence](testing/evidence/estimating-catalogue/README.md) separates checks, setup failures and remaining acceptance. UI authoring, technical suitability rules, operational approval and deployment are separate.
+
 ## Design PR follow-up — 12 October 2026
 
 Repository writer: this authorised repair/merge session (`codex/pr-design-followup-oct12`). PRs #446 (My Work) and #447 (Estimation Wizard) arrived during the repair run. Their original heads are retained above the #441 integration, with both sets of documentation, captures and page guidance preserved. Dean confirmed that the Wizard named Figma version is saved on 12 October, resolving its draft checkpoint; #446 already records his My Work save. Their acceptance covers the designs as documented, not the remaining implementation, open questions or visual review fingerprints. Full combined-head CI remains the merge gate.

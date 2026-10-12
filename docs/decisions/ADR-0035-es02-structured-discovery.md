@@ -184,3 +184,7 @@ to 0039. This same ES-02 decision was formerly the unmerged ADR-0033; it moves t
 ADR-0035 because main now owns ADR-0033 and the separate ES-08 branch already uses
 ADR-0034. Issued records, all parent requirements and historical evidence remain
 unchanged. Current links and the maintained register use the new identifier.
+
+## Catalogue successor — 12 October 2026
+
+[ADR-0054](ADR-0054-es02-equipment-catalogue.md) adds explicit schema 2 / `PPO-ES02-CONFIG-r02` without changing the schema 1 definition described above. Both remain supported; r01 saved inputs, hashes, copied identities and receipts keep their original interpretation. The amendment owns r02 categories, confirmations, conservative successor evidence preservation and the API-only authoring boundary.

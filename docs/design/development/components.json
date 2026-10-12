@@ -688,7 +688,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "Representative synthetic content and normal interaction."
+          "description": "Representative synthetic content and normal interaction. Retains the r01 area fixture; backend r02 category fixtures are verified separately."
         },
         {
           "id": "empty",
@@ -725,12 +725,12 @@
       "desktop": "Select an area before changing its fields. Add/remove affects the preview only; saved configuration commands remain in the owning page.",
       "mobile": "Scroll the table within its container; the selected-area field editor must remain reachable below it.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities.",
+      "limitations": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities. ADR-0054 adds backend catalogue support; this r01 example and its consumer bindings are retained. Shared source uses the existing icon fallback for unfamiliar family IDs; no category editor is delivered.",
       "gaps": [
         {
           "id": "area-editor-alignment",
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
-          "actual": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities.",
+          "actual": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities. r02 family/category authoring awaits the separate accepted Figma implementation.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

@@ -10,6 +10,7 @@ import { visibility, visible } from "../shared/reads";
 import { object, uuid, optionalId, choice, invalid } from "../shared/validation";
 import { discoveryDefinition, discoveryDefinitionHash } from "./discovery";
 import { workspaceAuthority } from "./discovery-workspace-context";
+import { equipmentCatalogue, equipmentCatalogueDefinition } from "./equipment-catalogue";
 
 // Candidate labels are current scoped observations, never authority to save.
 // Preview and acceptance independently recheck the complete proposed context.
@@ -25,6 +26,7 @@ export async function discoveryFormOptions(
       "selected_facility_ids",
       "selected_equipment_ids",
       "search",
+      "configuration_definition",
     ]),
     opportunityId = uuid(input.opportunity_id, "opportunity_id"),
     requestedSite = optionalId(input.site_id, "site_id"),
@@ -34,6 +36,8 @@ export async function discoveryFormOptions(
       "Unknown",
     ] as const),
     workspaceId = optionalId(input.workspace_id, "workspace_id");
+  if (input.configuration_definition !== undefined && input.configuration_definition !== equipmentCatalogueDefinition)
+    invalid("configuration_definition", "Request the supported r02 catalogue explicitly.");
   const selected = (value: unknown, max: number) => { if (value === undefined || value === "") return []; if (typeof value !== "string") invalid("selected_ids", "Use explicit selected IDs."); const ids = value.split(",").map(v => uuid(v, "selected_ids")); if (ids.length > max || new Set(ids).size !== ids.length) invalid("selected_ids", "Keep saved membership within its distinct reference limit."); return ids; };
   const selectedFacilities = selected(input.selected_facility_ids, 10), selectedEquipment = selected(input.selected_equipment_ids, 100);
   const search = typeof input.search === "string" ? input.search.trim() : "";
@@ -138,6 +142,13 @@ export async function discoveryFormOptions(
       owner: { id: p.actor_id, display_name: p.display_name },
       definition: discoveryDefinition,
       definition_hash: discoveryDefinitionHash,
+      // Additive opt-in metadata. Existing clients continue to create r01.
+      ...(input.configuration_definition === equipmentCatalogueDefinition ? { configuration_catalogue: {
+        schema_version: 2,
+        definition_id: equipmentCatalogueDefinition,
+        families: equipmentCatalogue,
+        shared_infrastructure: { family: "Infrastructure", category_id: null },
+      } } : {}),
       sites,
       facilities: keptFacilities,
       equipment: keptEquipment,

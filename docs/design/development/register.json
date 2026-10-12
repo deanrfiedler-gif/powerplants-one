@@ -1224,7 +1224,7 @@
       "title": "Estimation Wizard · discovery, alternatives & revisions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored. ADR-0054 adds opt-in backend r02 catalogue persistence; the native editor remains r01 and category UI implementation is separate.",
       "path": "/estimating/discovery",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -6155,7 +6155,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored. ADR-0054 adds opt-in backend r02 catalogue persistence; the native editor remains r01 and category UI implementation is separate.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
