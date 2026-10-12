@@ -36,11 +36,20 @@ Departures from the captures and their authority are listed in the parity regist
 
 ## Desktop
 
+Accepted design (12 October 2026): the [Priva Fertigation Workbench Figma design decision](../../../decisions/fertigation-figma-design.md), with captures 01–12 in [Figma design r01](../../../reference/ui/estimating/fertigation-figma-design-r01/README.md). The running page is still the board build described above. Align it to the design in a follow-up, adopting the differences the decision lists.
+
+- **Layout at 1440 × 1000:** the Shell v2 rail with Specialist configurations current; the breadcrumb "Scope register / SYN-PPO-FRT-000001"; the flush secondary menu with Scope readiness, the three groups with severity badges, then Scope register, Return to Discovery alternative and the edition. Below the top bar: the one-row record header, the context strip, then the scrolling view.
+- **Header:** title and status tag (Saved revision N, Unsaved changes, Conflict — proposal retained, Historical revision · read-only, Archived), History as the one secondary action, Save revision as the primary action, and "…" for Report, Irrigation valves, Compare draft, the exports and copy, restore and archive. The meta line carries the reference, scope state, Discovery binding and saved time.
+- **Views:** section headings outside white cards; metric tiles with basis tags; registers on the shared grid with Record / View tabs, filter buttons, Find in register, Add and the row "…" menu; charts in the pastel-with-outline palette with no navy fills; Channel A as "Candidate failure".
+- **Overlays:** Resolve a conflict and Calculation trace as right-hand drawers and History as a centred dialog, each with a transparent click-catcher (captures 10–12).
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 Built geometry: the page runs to 1440 px inside the content area with 32 px gutters; tiles are four across (three across for the six Overview tiles); panels are white on the paper ground with 8 px radii; chart text is 11–13 px and never scales. At 1280 px and below tiles fall to two across and the Scope review column stacks; at 1100 px and below the two-column panels stack. Captures at 1440 × 1000 were taken against the board reference scope on 12 October 2026 (see Visual references). Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (12 October 2026): capture 13 in [Figma design r01](../../../reference/ui/estimating/fertigation-figma-design-r01/README.md). At 390 × 844 the phone header shows the page name only ("Priva fertigation scope"), then a compact record block, the section picker that opens a sheet with the groups and badges, the view as list rows (the valve register as rows with flow, mainline, phase, allocation and evidence), 2 × 2 tiles, and the Report / Save revision bar above the icon-only tab bar with More current. Not drawn yet: the other seven views on the phone and the phone versions of the states.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -67,6 +76,8 @@ Design reference (direction given, not accepted): the [retained design board cap
 - states: board H;
 - design language: board I;
 - the shared header and rail: boards J and K.
+
+Accepted Figma design (12 October 2026): [Priva Fertigation Workbench Figma design r01 captures](../../../reference/ui/estimating/fertigation-figma-design-r01/README.md), fourteen icon-free PNGs (design compositions, not application captures), recorded by the [design decision](../../../decisions/fertigation-figma-design.md). The board captures above stay unchanged as the content reference; the Figma design governs appearance.
 
 Application captures (working evidence, not a visual review): [fertigation-board-parity](../../../testing/evidence/fertigation-board-parity/README.md), the nine views at 1440 × 1000 and 390 × 844, the register, the create page and the editor, resolve, trace and history dialogs, taken against [`boardReferenceScope`](../../../../tests/helpers/fertigation-board-scope.ts) (FN-T117) on the local dev server on 12 October 2026. The [parity register](../../../testing/priva-fertigation-board-parity.csv) pairs each board region with its application element. No accepted visual baseline exists for this route; departures are raised in the [workbench refinement record](../../../decisions/fertigation-workbench-refinement.md).
 

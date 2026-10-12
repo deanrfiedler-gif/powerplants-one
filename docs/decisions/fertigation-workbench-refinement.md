@@ -181,4 +181,5 @@ If a departure or feature is rejected, the board reverts that part and this reco
 ## Related
 
 - Board: private claude.ai design canvas "Priva Fertigation Workbench".
+- Figma design accepted on 12 October 2026, to which the built page is to be aligned: [Priva Fertigation Workbench Figma design](fertigation-figma-design.md).
 - [ADR-0038](ADR-0038-priva-fertigation-native.md), [page contract](../design/development/pages/route-estimating-fertigation-id.md), [HTML module conformance](../standards/html-module-conformance.md).
