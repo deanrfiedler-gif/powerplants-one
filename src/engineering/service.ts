@@ -49,6 +49,13 @@ type Row = Omit<EngineeringPackage, "updated_at" | "can_edit"> & {
   project_id: string | null;
   opportunity_id: string | null;
 };
+// The additive EN-01 register shares the native projection and authority rules.
+export {
+  projectionSql as engineeringProjectionSql,
+  permitted as engineeringVisibilitySql,
+  project as projectEngineering,
+  type Row as EngineeringRow,
+};
 async function linked(
   c: QueryClient,
   p: Principal,
