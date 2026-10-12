@@ -150,7 +150,7 @@ The catalogue and holder routes reuse existing controls without changing their e
 
 ## AD-01 proposed-role consumers
 
-The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies only to comparison; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
+The proposed role catalogue and person comparison reuse this control in the existing shell. SelectField applies to comparison and local-team creation; buttons, read state and status apply to both. The host fixture is tests/browser/access-roles.spec.ts, covering proposed/draft state, selected-scope match/refusal, changed selections, explicit explanation handover and denied/unavailable recovery. No isolated renderer or component export changes. See [role evidence](../../../testing/evidence/access-roles/README.md). Paired owner/device/zoom/screen-reader review remains open.
 
 ## AD-01 request consumers
 
@@ -161,3 +161,13 @@ AD-01 application continuation: retain the existing request host and consumer bi
 AD-01 withdrawal continuation reuses the same request consumer bindings and host fixture. Secondary reasoned closure, Withdrawn outcome, retained approval, fresh-request handover and original recovery extend the existing states. See [withdrawal contract](../../../decisions/access-request-withdrawal.md); no shared export/style change or owner acceptance.
 
 AD-01 application and withdrawal reasons have distinct control IDs and independent values. Map the server reason error only to the action just submitted. The shared error notice receives initial focus; its field link must focus that action's reason without marking the other form invalid. The compiled host fixture exercises this at all three widths.
+
+## Native local team creation — 12 October 2026
+
+The [creation contract](../../../decisions/access-team-creation.md) adds a form inside Saved local teams using the existing Field, SelectField, ValidationFields, ErrorNotice, Button and recovery journal. Current creation context supplies active local identities and an explicit creation-duty flag; no name is preselected. Show exact IDs with names, explicit lead inclusion, 1–20 selected members and individual Remove controls. Name is at most 100 characters; purpose/reason are 10–1000. The initial roster remains immutable and grants no authority.
+
+At desktop and 390/320 widths use the existing vertical form fields and wrapped roster/receipt IDs. No new shared style/export or layout is adopted. Use native selects, labelled errors, keyboard buttons and the existing unsaved-navigation guard. Pending commands disable the form; explicit unchanged retry and original-result lookup reuse the actor/workspace/tab journal. A receipt shows exact team/operation IDs; Inspect saved team reads that exact roster even outside the current collection page. Recording another team is explicit. Refresh available people reviews unsubmitted draft loss; collection refresh preserves the form. Denial clears protected catalogue content. Storage failure sends nothing.
+
+Host fixtures: `tests/browser/access-team-creation.spec.ts`; current context/authority fixtures: `tests/database/access-local-teams.test.ts`. [Evidence](../../../testing/evidence/access-team-creation/README.md) separates functional checks from source-bound observations. Accepted native images, owner/device/zoom/screen-reader acceptance, membership editing and operational policy remain open. No review fingerprint is assigned.
+
+For the local-team host, supplement the native lead selector with its complete selected UUID in wrapped text: the closed selector clips long options at phone widths. Keep the exact ID visible before submission without changing the shared SelectField.

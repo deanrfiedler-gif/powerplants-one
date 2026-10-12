@@ -75367,8 +75367,8 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native proposal and saved local team inspection",
-      "source_commit": "039df64103f09d804507ff226f4a35e3e11d7a4a",
+      "content_mode": "Native proposal inspection, local team creation and current member access",
+      "source_commit": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",
@@ -75382,7 +75382,8 @@
           "paragraphs": [
             "Inspect seven retained business/approval role proposals, including exact source revisions and capability lists.",
             "Also inspect the two retained team examples without treating their rosters as saved memberships.",
-            "Saved local teams shows actual immutable initial rosters separately from retained proposals. Team membership and lead labels confer no access or review duty."
+            "Saved local teams shows actual immutable initial rosters separately from retained proposals. Team membership and lead labels confer no access or review duty.",
+            "Expanded saved rosters show current grant-row counts for each original member and link to exact Person access; membership grants no authority and this is not a completed access review."
           ],
           "steps": [],
           "headers": [],
@@ -75393,7 +75394,7 @@
           "title": "Before you start",
           "paragraphs": [
             "Use current Workspace admin.access.read authority and clear the working company in the account panel. Systems is the permitted local synthetic identity.",
-            "Saved local teams is available only in the local synthetic prototype. Reading requires current Workspace inspection authority. Creation is currently an API capability held by local Systems; there is no native creation form."
+            "Saved local teams is local only. Recording a team requires current Workspace inspection and team-creation authority, held by the local Systems fixture. Clear the working company first."
           ],
           "steps": [],
           "headers": [],
@@ -75440,7 +75441,8 @@
           "paragraphs": [
             "Inspect the exact capability key and plain-English description. A capability link opens its actual recorded grant holders. Use the people directory to open a person, then Compare proposed role bundle.",
             "Follow a current local identity link to Person access for a fresh inspection. A design-only or unavailable identity has no link. A lead proposal gives no review or grant authority.",
-            "Open the roster with its shared button (Enter/Space), inspect each person ID and current identity activity, then read the original reason, actor, time and operation ID. Close the roster with the same button."
+            "Open the roster with its shared button (Enter/Space), inspect each person ID and current identity activity, then read the original reason, actor, time and operation ID. Close the roster with the same button.",
+            "In Record a local team, enter name, purpose and reason. Choose a lead and add each member explicitly; a lead is not automatically a member. Remove unwanted selections, then Record team. The saved initial roster cannot be edited. Inspect saved team opens its exact creation history. Record another team explicitly begins the next draft."
           ],
           "steps": [],
           "headers": [],
@@ -75476,7 +75478,7 @@
           "paragraphs": [
             "Service coordinator r01 lists 13 capabilities. Draft r02 lists 14, adding pack.check without removing a capability. That proposal difference does not change any person's access.",
             "Service coordination retains the design-only lead and former coordinator. The former coordinator example ended 12 September 2026. This source history does not create application identities.",
-            "An API-created SYN Service roster may name a lead outside its explicitly selected members. The roster gives neither the lead nor members permission to create teams, approve requests or access company records."
+            "A recorded SYN Service roster may name a lead outside its explicitly selected members. The roster gives neither the lead nor members permission to create teams, approve requests or access company records."
           ],
           "steps": [],
           "headers": [],
@@ -75487,7 +75489,7 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "Retry a failed read. Clear a working company before workspace inspection. If permission is refused, obtain current authorised access; refreshing does not grant it.",
-            "For an uncertain API creation, recover the original actor-bound receipt by operation ID or replay the identical command. Changed content conflicts. Current read/create duties are still required; a page reload never repeats creation."
+            "An uncertain creation locks the form and retains the exact submitted values in this tab. Check original result reads its receipt; Retry unchanged action sends the same original only. A missing receipt does not prove failure. Reload checks the original before any send. Current read/create duties and the original identity are required. Storage failure sends nothing. Refresh available people reviews loss of an unsubmitted draft; Refresh saved teams retains the form."
           ],
           "steps": [],
           "headers": [],
@@ -75497,7 +75499,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use native details summaries with keyboard Enter/Space; Tab follows links and shared buttons. Cards stack and keys wrap at 390/320 px. Online reads are required. Physical-device, zoom and screen-reader acceptance remain open."
+            "Use native details summaries with keyboard Enter/Space; Tab follows links and shared buttons. Cards stack and keys wrap at 390/320 px. Online reads are required. Physical-device, zoom and screen-reader acceptance remain open.",
+            "The lead selector can clip long option text on phones. Check the full selected lead ID in the wrapped text below it; selected roster IDs also remain visible before saving.",
+            "Member counts and IDs wrap within the saved card. Refresh member access updates the timestamped observation without discarding an unsubmitted team draft. A masked identity has no access link or counts."
           ],
           "steps": [],
           "headers": [],
@@ -75509,7 +75513,8 @@
           "paragraphs": [
             "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides.",
             "Team boundary and provenance: docs/decisions/access-team-inspection.md; implementation evidence: docs/testing/evidence/access-teams/README.md.",
-            "Local record contract: docs/decisions/access-local-teams.md. Database, browser and review evidence: docs/testing/evidence/access-local-teams/README.md."
+            "Local record contract: docs/decisions/access-local-teams.md. Database, browser and review evidence: docs/testing/evidence/access-local-teams/README.md.",
+            "Native creation and recovery: docs/decisions/access-team-creation.md; docs/testing/evidence/access-team-creation/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75526,8 +75531,8 @@
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-local-teams/README.md and prior team/role ledgers; owner review pending"
+      "prepared_at": "2026-10-12",
+      "runtime_evidence": "See docs/testing/evidence/access-team-access/README.md; owner review pending"
     },
     {
       "guide_key": "guide.route-admin-access-requests-id",
