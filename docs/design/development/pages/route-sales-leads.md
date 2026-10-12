@@ -103,3 +103,7 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** Empty and populated states are both clear. Phone: the warning triangle on a lead has no visible meaning; add a label. Phone empty-state text failed contrast in the empty run.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Counts and follow-up backend — 12 October 2026
+
+The [Leads read contract](../../../decisions/lead-register-backend.md) supplies the count and follow-up API prerequisites for the accepted register. Counts apply the caller's current scope and filters across all matches; unavailable next-activity evidence is explicit. The list adds MyLeads and Overdue/NextActionNeeded filtering while preserving row DTOs. [Backend evidence](../../../testing/evidence/lead-register/README.md) is separate from visual proof. The running page has not been wired to these reads; accepted menu/toolbar/badge presentation and a fresh visual review remain pending. No review fingerprint is promoted.

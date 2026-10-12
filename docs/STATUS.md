@@ -4,6 +4,16 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Leads PR integration — 12 October 2026
+
+Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.
+
+The seven protected-main check names below were re-read on 12 October and remain unchanged; strict up-to-date checking is off, administrator enforcement is on and no approving review is required. No protection, assertion or deadline is changed. Code integration, visual acceptance and deployment remain separate.
+
+## Leads counts and follow-up backend — 12 October 2026
+
+Repository writer: this user-authorised Leads backend session, branch `codex/leads-counts-follow-up`, based on merged main `ae83043`. Dean requested implementation and PR publication while continuing UI design with Claude in Figma. The [read contract](decisions/lead-register-backend.md) adds full authorised-match counts, MyLeads and active follow-up filtering using existing Lead/Activity permissions and states. Hidden next activities remain unavailable, with explicit partial follow-up coverage. Existing commands and exact list/detail DTOs are retained; no migration, seed, capability or external integration is added. [Execution evidence](testing/evidence/lead-register/README.md) records validation and the supplied personal-trial audit provenance. The accepted page, shell, rail badge and separate record-page reads remain outstanding; visual review, business acceptance and deployment are not implied.
+
 ## Backend PR integration — 12 October 2026
 
 Current repository writer: this backend-completion chat. Dean authorised monitoring, repairing and merging PR #449 followed by #450 only after all applicable checks pass. PR #449 integrates catalogue main `ae83043b55058ba47334c3e9ba431d3538f2a8da`, preserving both original contributions, migration 0085 and all catalogue upgrade assertions. Shared status/register conflicts retain both decisions; the build sequence is regenerated from the combined register without changing visual review fingerprints. PR #450 remains the dependent Quotations increment.

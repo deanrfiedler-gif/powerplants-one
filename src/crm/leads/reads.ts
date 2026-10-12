@@ -1,32 +1,58 @@
 import { projectsAvailable } from "../../projects/visibility";
 import type { Principal } from "../../platform/identity";
-import { database } from "../../platform/database";
+import { database, transaction } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
 import {
   hasPermission,
   requireCapability,
   scopeSql,
+  type QueryClient,
 } from "../../platform/permissions";
 import { companyContext, scopedOwner } from "../../shared/authority";
 import { envelope, page, visible, visibility } from "../../shared/reads";
-import { choice, object, optionalId, uuid } from "../../shared/validation";
-import { activityVisibility, readActivity } from "../../activities/activities";
-import { visibleOpportunity } from "../context";
 import {
-  leadAuthority,
-  leadContext,
-  leadVisibility,
-  visibleLead,
-} from "./context";
-import { sources } from "./validation";
+  choice,
+  invalid,
+  object,
+  optionalId,
+  uuid,
+} from "../../shared/validation";
+import {
+  activityVisibility,
+  readActivityWithClient,
+} from "../../activities/activities";
+import { visibleOpportunity } from "../context";
+import { leadAuthority, leadContext, visibleLead } from "./context";
+import {
+  leadFilterKeys,
+  leadFilters,
+  leadFollowUps,
+  leadFollowUpPredicate,
+  leadRegisterSource,
+  leadViews,
+  leadViewPredicate,
+} from "./register";
 import {
   currentResolution,
   visibleCustomerContext,
   type LeadResolution,
 } from "./resolution-context";
+// A transaction owns one pg client; do not enqueue overlapping reads on it.
+async function readSequentially<T, U>(rows: T[], read: (row: T) => Promise<U>) {
+  const results: U[] = [];
+  for (const row of rows) results.push(await read(row));
+  return results;
+}
 export async function readLead(p: Principal, id: string) {
-  const c = database(),
-    l = await visibleLead(c, p, id);
+  return readLeadWithClient(database(), p, id);
+}
+async function readLeadWithClient(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  observedAt = Date.now(),
+) {
+  const l = await visibleLead(c, p, id);
   const labels = (
     await c.query(
       "SELECT u.display_name AS owner_name,o.display_name AS organisation_name,pe.display_name AS contact_name,s.display_name AS site_name FROM ppo.lead_candidates l JOIN ppo.users u ON (u.workspace_id,u.id)=(l.workspace_id,l.owner_id) LEFT JOIN ppo.organisations o ON (o.workspace_id,o.id)=(l.workspace_id,l.organisation_id) LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(l.workspace_id,l.primary_person_id) LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(l.workspace_id,l.site_id) WHERE l.workspace_id=$1 AND l.id=$2",
@@ -44,8 +70,8 @@ export async function readLead(p: Principal, id: string) {
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;
-  const actions = await Promise.all(
-    actionIds.map((a) => readActivity(p, a.id)),
+  const actions = await readSequentially(actionIds, (a) =>
+    readActivityWithClient(c, p, a.id),
   );
   const events = (
     await c.query<{
@@ -104,17 +130,18 @@ export async function readLead(p: Principal, id: string) {
   }
   const next = actions.find((a) => a.id === l.next_activity_id) ?? null;
   const conversion_review = conversion
-    ? await conversionReview(p, id, !!deal)
+    ? await conversionReview(c, p, id, !!deal)
     : null;
-  const resolution = await readResolution(p, id);
+  const resolution = await readResolution(c, p, id);
   const resolution_history = resolution
-    ? await Promise.all(
+    ? await readSequentially(
         (
           await c.query<LeadResolution>(
             "SELECT company_id,organisation_id,site_id,primary_person_id,event_id,lead_version FROM ppo.lead_context_resolutions WHERE workspace_id=$1 AND lead_id=$2 ORDER BY lead_version",
             [p.workspace_id, id],
           )
-        ).rows.map((r) => readResolution(p, id, r)),
+        ).rows,
+        (r) => readResolution(c, p, id, r),
       )
     : [];
   const ownership_history = (
@@ -147,7 +174,7 @@ export async function readLead(p: Principal, id: string) {
           ? "Needed"
           : next.due_needed
             ? "DueNeeded"
-            : Date.parse(next.due_at!) < Date.now()
+            : Date.parse(next.due_at!) < observedAt
               ? "Overdue"
               : "Upcoming",
     deal,
@@ -162,12 +189,12 @@ export async function readLead(p: Principal, id: string) {
 }
 
 async function readResolution(
+  c: QueryClient,
   p: Principal,
   id: string,
   original?: LeadResolution,
 ) {
-  const c = database(),
-    r = original ?? (await currentResolution(c, p, id));
+  const r = original ?? (await currentResolution(c, p, id));
   if (!r) return null;
   try {
     await visibleCustomerContext(c, p, r);
@@ -192,12 +219,13 @@ async function readResolution(
 }
 
 async function conversionReview(
+  c: QueryClient,
   p: Principal,
   id: string,
   dealVisible: boolean,
 ) {
   const evidence = (
-    await database().query<{
+    await c.query<{
       retained: {
         id: string;
         version: number;
@@ -225,18 +253,23 @@ async function conversionReview(
   };
   if (!dealVisible) return restricted;
   try {
-    const retained = await Promise.all(
-      evidence.retained.map(async (original) => {
-        const current = await readActivity(p, original.id);
+    const retained = await readSequentially(
+      evidence.retained,
+      async (original) => {
+        const current = await readActivityWithClient(c, p, original.id);
         return {
           ...original,
           current_status: current.status,
           current_owner: current.owner_name,
           current_version: current.version,
         };
-      }),
+      },
     );
-    const review_activity = await readActivity(p, evidence.review_activity_id);
+    const review_activity = await readActivityWithClient(
+      c,
+      p,
+      evidence.review_activity_id,
+    );
     return { state: "Available" as const, retained, review_activity };
   } catch (e) {
     if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
@@ -244,34 +277,27 @@ async function conversionReview(
   }
 }
 export async function listLeads(p: Principal, input: unknown = {}) {
-  const c = database();
-  await requireCapability(c, p, "crm.lead.read");
   const r = object(input, [
+    ...leadFilterKeys,
     "limit",
     "cursor",
-    "q",
     "view",
-    "status",
-    "source",
-    "owner_id",
     "sort",
+    "follow_up",
   ]);
-  const view = choice(r.view ?? "Active", "view", [
-      "Active",
-      "Archived",
-      "Disqualified",
-      "Converted",
-    ] as const),
+  const view = choice(r.view ?? "Active", "view", leadViews),
     sort = choice(r.sort ?? "Newest", "sort", [
       "Newest",
       "Oldest",
       "Name",
     ] as const),
-    status = r.status
-      ? choice(r.status, "status", ["New", "Contacting", "Nurturing"] as const)
-      : null,
-    source = r.source ? choice(r.source, "source", sources) : null,
-    owner = optionalId(r.owner_id, "owner_id");
+    followUp =
+      r.follow_up === undefined
+        ? null
+        : choice(r.follow_up, "follow_up", leadFollowUps),
+    filters = leadFilters(r);
+  if (followUp && view !== "Active" && view !== "MyLeads")
+    invalid("follow_up", "Follow-up views apply to active leads only.");
   const pg = page(
     Object.fromEntries(
       Object.entries(r).filter(([k]) => ["limit", "cursor", "q"].includes(k)),
@@ -282,75 +308,98 @@ export async function listLeads(p: Principal, input: unknown = {}) {
       resource: "Leads",
       view,
       sort,
-      status,
-      source,
-      owner,
+      status: filters.status,
+      source: filters.source,
+      owner: filters.owner,
+      follow_up: followUp,
     },
   );
-  let anchor: string | null = null;
-  if (pg.after) {
-    await visibleLead(c, p, pg.after);
-    anchor = (
-      await c.query(
-        "SELECT CASE WHEN $3='Name' THEN lower(title) ELSE created_at::text END AS anchor FROM ppo.lead_candidates WHERE workspace_id=$1 AND id=$2",
-        [p.workspace_id, pg.after, sort],
-      )
-    ).rows[0].anchor;
-  }
-  const expression = sort === "Name" ? "lower(lead.title)" : "lead.created_at",
-    compare = sort === "Newest" ? "<" : ">",
-    order = sort === "Newest" ? "DESC" : "ASC",
-    cast = sort === "Name" ? "text" : "timestamptz";
-  const rows = (
-    await c.query<{ id: string }>(
-      `SELECT lead.id FROM ppo.lead_candidates lead WHERE lead.workspace_id=$1 AND ${leadVisibility()}
- AND (($3='Active' AND lead.status IN ('New','Contacting','Nurturing') AND NOT lead.is_archived) OR ($3='Archived' AND lead.is_archived) OR ($3='Disqualified' AND lead.status='Disqualified' AND NOT lead.is_archived) OR ($3='Converted' AND lead.status='Converted'))
- AND ($4::text IS NULL OR lead.status=$4) AND ($5::text IS NULL OR lead.source_channel=$5) AND ($6::uuid IS NULL OR lead.owner_id=$6)
- AND position(lower($7) IN lower(concat_ws(' ',lead.title,lead.organisation_text,lead.contact_text,lead.need_summary,(SELECT o.display_name FROM ppo.organisations o WHERE o.workspace_id=lead.workspace_id AND o.id=lead.organisation_id),(SELECT pe.display_name FROM ppo.people pe WHERE pe.workspace_id=lead.workspace_id AND pe.id=lead.primary_person_id))))>0
- AND ($8::uuid IS NULL OR (${expression},lead.id) ${compare} ($9::${cast},$8::uuid)) ORDER BY ${expression} ${order},lead.id ${order} LIMIT $10`,
-      [
-        p.workspace_id,
-        p.actor_id,
-        view,
-        status,
-        source,
-        owner,
-        pg.q,
-        pg.after,
-        anchor,
-        pg.limit + 1,
-      ],
-    )
-  ).rows;
-  const selected = rows.slice(0, pg.limit);
-  const items = await Promise.all(
-    selected.map(async ({ id }) => {
-      const l = await readLead(p, id);
-      return {
-        id: l.id,
-        display_number: l.display_number,
-        version: l.version,
-        title: l.title,
-        organisation_name: l.organisation_name ?? l.organisation_text,
-        contact_name: l.contact_name ?? l.contact_text,
-        owner_name: l.owner_name,
-        owner_id: l.owner_id,
-        status: l.status,
-        is_archived: l.is_archived,
-        source_channel: l.source_channel,
-        created_at: l.created_at,
-        next_action_state: l.next_action_state,
-        next_activity: l.next_activity,
-      };
-    }),
-  );
-  return {
-    ...envelope(
-      items,
-      rows.length > pg.limit ? pg.cursor(selected.at(-1)!.id) : null,
-    ),
-    can_create: await hasPermission(c, p, "crm.lead.create"),
-  };
+  return transaction(async (c) => {
+    // Use the same workspace lock as native commands. Hydration uses this client
+    // throughout, so concurrent list reads cannot exhaust the pool awaiting themselves.
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
+      p.workspace_id,
+    ]);
+    await requireCapability(c, p, "crm.lead.read");
+    let anchor: string | null = null;
+    if (pg.after) {
+      await visibleLead(c, p, pg.after);
+      anchor = (
+        await c.query(
+          "SELECT CASE WHEN $3='Name' THEN lower(title) ELSE created_at::text END AS anchor FROM ppo.lead_candidates WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, pg.after, sort],
+        )
+      ).rows[0].anchor;
+    }
+    const observed_at = new Date().toISOString();
+    const expression = sort === "Name" ? "lower(r.title)" : "r.created_at",
+      compare = sort === "Newest" ? "<" : ">",
+      order = sort === "Newest" ? "DESC" : "ASC",
+      cast = sort === "Name" ? "text" : "timestamptz";
+    const sql = `${leadRegisterSource(await projectsAvailable(c))}
+      SELECT r.id,r.next_action_state FROM leads r
+      WHERE ${leadViewPredicate(view)} AND ${leadFollowUpPredicate(followUp)}
+        AND ($8::uuid IS NULL OR (${expression},r.id) ${compare} ($9::${cast},$8::uuid))
+      ORDER BY ${expression} ${order},r.id ${order} LIMIT $10`;
+    const values = [
+      p.workspace_id,
+      p.actor_id,
+      filters.status,
+      filters.source,
+      filters.owner,
+      pg.q,
+      observed_at,
+      pg.after,
+      anchor,
+      pg.limit + 1,
+    ];
+    const rows = (
+      await c.query<{ id: string; next_action_state: string }>(sql, values)
+    ).rows;
+    const selected = rows.slice(0, pg.limit);
+    const changed = () =>
+      new AppError(
+        409,
+        "LeadReadChanged",
+        "Lead access or follow-up changed during this read. Refresh the list.",
+      );
+    const items = await readSequentially(
+      selected,
+      async ({ id, next_action_state }) => {
+        const l = await readLeadWithClient(c, p, id, Date.parse(observed_at));
+        if (l.next_action_state !== next_action_state) throw changed();
+        return {
+          id: l.id,
+          display_number: l.display_number,
+          version: l.version,
+          title: l.title,
+          organisation_name: l.organisation_name ?? l.organisation_text,
+          contact_name: l.contact_name ?? l.contact_text,
+          owner_name: l.owner_name,
+          owner_id: l.owner_id,
+          status: l.status,
+          is_archived: l.is_archived,
+          source_channel: l.source_channel,
+          created_at: l.created_at,
+          next_action_state: l.next_action_state,
+          next_activity: l.next_activity,
+        };
+      },
+    );
+    // Time-limited grants may expire even under a workspace lock. Recheck every
+    // candidate, including the lookahead, before exposing rows or a next cursor.
+    const current = (await c.query(sql, values)).rows;
+    if (JSON.stringify(current) !== JSON.stringify(rows)) throw changed();
+    await requireCapability(c, p, "crm.lead.read");
+    return {
+      ...envelope(
+        items,
+        rows.length > pg.limit ? pg.cursor(selected.at(-1)!.id) : null,
+      ),
+      observed_at,
+      can_create: await hasPermission(c, p, "crm.lead.create"),
+    };
+  });
 }
 export async function leadOptions(p: Principal, input: unknown = {}) {
   const c = database(),
