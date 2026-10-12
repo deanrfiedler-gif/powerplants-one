@@ -17,7 +17,7 @@ import {
   object,
   uuid,
 } from "../shared/validation";
-import { requireAccessInspection } from "./service";
+import { grantState, requireAccessInspection } from "./service";
 
 function localOnly() {
   if (isHostedDemo())
@@ -116,7 +116,17 @@ export async function localTeam(p: Principal, id: string) {
     const members = (
       await c.query(
         `SELECT m.user_id,${personName("u")} AS display_name,u.active,
-      u.issuer<>'PPO-LocalSynthetic' AS masked FROM ppo.access_team_members m
+      u.issuer<>'PPO-LocalSynthetic' AS masked, statement_timestamp() AS checked_at,
+      CASE WHEN u.issuer='PPO-LocalSynthetic' THEN (
+        SELECT json_build_object(
+          'recorded',count(*)::int,
+          'current',count(*) FILTER (WHERE ${grantState}='Current')::int,
+          'scheduled',count(*) FILTER (WHERE ${grantState}='Scheduled')::int,
+          'expired',count(*) FILTER (WHERE ${grantState}='Expired')::int,
+          'inactive',count(*) FILTER (WHERE ${grantState}='Inactive identity')::int)
+        FROM ppo.permission_grants g
+        WHERE (g.workspace_id,g.user_id)=(u.workspace_id,u.id)
+      ) ELSE NULL END AS grant_counts FROM ppo.access_team_members m
       JOIN ppo.users u ON (u.workspace_id,u.id)=(m.workspace_id,m.user_id)
       WHERE m.workspace_id=$1 AND m.team_id=$2 ORDER BY m.user_id`,
         [p.workspace_id, id],

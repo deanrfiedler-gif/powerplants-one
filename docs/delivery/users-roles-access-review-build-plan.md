@@ -740,3 +740,8 @@ Dean's next-step instruction continues #427 with the [local team contract](../de
 ## Native local team creation continuation — 12 October 2026
 
 The [creation contract](../decisions/access-team-creation.md) continues #429 using the existing immutable-roster API, explicit local selection and actor-bound original recovery. No migration, seed, capability or operational policy is added. Membership editing, review routing/campaigns and D-020 remain open. The updated #429 parent places withdrawal/teams at 0082/0083 after Projects 0081; earlier local draft databases are preserved separately, without rewriting their ledgers. [Execution evidence](../testing/evidence/access-team-creation/README.md) distinguishes local verification, CI and owner review.
+
+
+## Saved-team access inspection continuation — 12 October 2026
+
+The [inspection contract](../decisions/access-team-inspection-current.md) continues #430 with read-only current member grant-state counts and exact person-access links. This prepares inspection without adopting review campaigns, routing, attestations, membership editing or operational D-020. Current identity/grant observations and immutable creation evidence remain separate; hosted identities are masked and not linked.
