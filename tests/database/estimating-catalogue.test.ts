@@ -328,7 +328,7 @@ test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit re
   );
   assert.deepEqual(
     ledger.filter((r) => r.row.version >= 85).map((r) => r.row.version),
-    [85, 86],
+    [85, 86, 87],
   );
   await migrate();
   await seed();

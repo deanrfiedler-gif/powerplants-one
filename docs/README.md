@@ -1,5 +1,7 @@
 # Documentation index
 
+[Projects RAID and owned actions backend](decisions/project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.
+
 [Lead record readiness and summary backend](decisions/lead-record-backend.md) — saved-context conversion review and scoped age/activity summary; [execution evidence](testing/evidence/lead-record/README.md).
 
 [Leads counts and follow-up backend](decisions/lead-register-backend.md) — permission-scoped full counts, active follow-up views and [execution evidence](testing/evidence/lead-register/README.md); Figma page integration remains separate.

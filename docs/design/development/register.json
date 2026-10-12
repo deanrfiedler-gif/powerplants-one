@@ -2044,16 +2044,24 @@
       "summary": "Implement risks, assumptions, issues, dependencies, decisions and linked project actions.",
       "path": "/projects/risks",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/projects/raid.ts",
+        "src/projects/raid-validation.ts",
+        "src/app/api/v1/projects/[id]/raid/route.ts",
+        "docs/decisions/project-raid-backend.md"
       ],
       "guide_key": "guide.pj.04",
       "design_path": "docs/design/development/pages/scope-pj-04.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/activities/activities.ts",
+        "src/projects/service.ts",
+        "src/shared/receipts.ts"
+      ],
+      "scope_status": "Backend implemented; page unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Backend verified locally: 11 database/upgrade, 5 unit, 2 HTTP and real restart; page/owner review separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
