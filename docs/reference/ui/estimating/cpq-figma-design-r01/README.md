@@ -4,7 +4,7 @@ revision: r01
 date: 2026-10-12
 owner: Dean Fiedler
 status: Retained owner-accepted design reference; icon-free; not an application capture or UI baseline
-source_commit: fe7794b08235c089f215bd5b41a17e33603df21c
+source_commit: 7e4ef3b8ce28e1976fea621f9de33999c26fbe21
 ---
 
 # CPQ Configure & price and Rules studio Figma design r01 — retained captures
@@ -21,7 +21,7 @@ Each image is one Figma frame or board exported at scale 1:
 
 Before export, every Font Awesome icon was replaced by a plain placeholder square, as [ADR-0053](../../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. The rail icons, status icons, chevrons and button icons therefore appear as squares; the words beside them carry the meaning. The Powerplants logo is the company's own.
 
-Every figure, name, rule, rate, price, margin, limit and release is synthetic: the Northbank Nursery fixture on the design's Read me page, built on the worked examples of the [CCE technical specification](../../../../architecture/cce-technical-specification.md). None is an adopted operating rule, price policy or service target. The images are design compositions, not captures of the application. Nothing they show is built.
+Every figure, name, rule, rate, price, margin, limit and release is synthetic: the Northbank Nursery fixture on the design's Read me page, built on the worked examples of the [CCE technical specification](../../../../architecture/cce-technical-specification.md). None is an adopted operating rule, price policy or service target. The images are design compositions, not captures of the application. No page they show is built.
 
 ## Images
 
@@ -50,7 +50,7 @@ Every figure, name, rule, rate, price, margin, limit and release is synthetic: t
 | 21 · Configure & price · Pricing waterfall, margin and markup | [PPO-CPQ-Figma-21-Pricing-r01.png](PPO-CPQ-Figma-21-Pricing-r01.png) | 1440 × 960 | 207,552 | `08afdc82ebf01dbd20e29316d0439b1d1919abac96d97ea54a55d30a584b0598` |
 | 22 · Configure & price · Compare with evaluation 2 | [PPO-CPQ-Figma-22-Compare-with-Evaluation-2-r01.png](PPO-CPQ-Figma-22-Compare-with-Evaluation-2-r01.png) | 1440 × 960 | 180,203 | `0980ab1af4407c01d53be52b5cba3c4d411fbba542b0814bf649d35cdb66bd87` |
 | 23 · Configure & price · Use in estimate (dialog): exact evaluation 3 to estimate v05 | [PPO-CPQ-Figma-23-Use-in-Estimate-Dialog-r01.png](PPO-CPQ-Figma-23-Use-in-Estimate-Dialog-r01.png) | 1440 × 960 | 315,961 | `4598920ab041d1444c23d1336d7f9df0429c02e8e3d543b5d877e47f6edaf38e` |
-| 24 · Configure & price · Used in estimate v05 (intended outcome, GAP-01) | [PPO-CPQ-Figma-24-Used-in-Estimate-v05-r01.png](PPO-CPQ-Figma-24-Used-in-Estimate-v05-r01.png) | 1440 × 960 | 214,409 | `2748fc590c74dee0b69102ee119cc189ff6614fd0e1119078673f265727d5cd7` |
+| 24 · Configure & price · Used in estimate v05 (intended outcome) | [PPO-CPQ-Figma-24-Used-in-Estimate-v05-r01.png](PPO-CPQ-Figma-24-Used-in-Estimate-v05-r01.png) | 1440 × 960 | 214,409 | `2748fc590c74dee0b69102ee119cc189ff6614fd0e1119078673f265727d5cd7` |
 | 25 · Overrides · Line actions | [PPO-CPQ-Figma-25-Line-Actions-r01.png](PPO-CPQ-Figma-25-Line-Actions-r01.png) | 1440 × 960 | 211,443 | `1a6b36b13091e285dc14fc424cadeebf7a9415dcfdf985d8d30440fd0bd8d323` |
 | 26 · Overrides · Adjust quantity 33 to 40 with a reason (dialog) | [PPO-CPQ-Figma-26-Adjust-Quantity-Dialog-r01.png](PPO-CPQ-Figma-26-Adjust-Quantity-Dialog-r01.png) | 1440 × 960 | 270,925 | `c41d3832742c4923d47970d330c0e9b9117ea95aaccdae3bab4edb762b9cddfc` |
 | 27 · Overrides · Reopened: adjustment and exclusion kept | [PPO-CPQ-Figma-27-Reopened-Adjustments-Kept-r01.png](PPO-CPQ-Figma-27-Reopened-Adjustments-Kept-r01.png) | 1440 × 960 | 195,241 | `d9d9e4d4b30009d0dd04e543132cae5f06b7b60ccc49d8ea8c212cd77e22baaf` |
@@ -83,7 +83,7 @@ Image 42 shows the components State, Fact token, KV row, Button (unavailable), C
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design" in Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "CPQ — Configure & price and Rules studio, accepted", to be saved by Dean. Until he confirms it is saved, this record cites the accepted pages and node IDs below |
+| Named version | "CPQ — Configure & price and Rules studio, accepted"; Dean confirmed on 13 October 2026 that this named version is saved |
 | Accepted pages | "CPQ · 1 Read me, sources & decisions (accepted)" `464:2`, "CPQ · 2 Foundations & components (accepted)" `464:3`, "CPQ · 3 Rules studio (accepted)" `464:4`, "CPQ · 4 Configure & price (accepted)" `464:5`, "CPQ · 5 Compare, history & overrides (accepted)" `464:6` and "CPQ · 6 Responsive & states (accepted)" `464:7` |
 | Accepted frames | <ul><li>Rules studio `464:4`: registry `485:301`, rule editor Definition `486:641`, text-fact change `488:1029`, test run 1 `489:1398`, formula editor `490:1678`, test run 2 `491:2121`, changes vs v7 `491:2594`, create version 8 `492:2572`, release R6 `492:2722`, decision table `493:3027`, fact dictionary `493:3444`, product structure `496:3355`, rule history v6 `496:3786`, action forms `497:3789` (images 01–14)</li><li>Configure & price `464:5`: register `483:3760`, Configure Greenhouse 2 `476:338`, shared capacity conflict `478:666`, solution overview `478:1174`, Materials & labour `480:1244`, Why this line? `480:1903`, Pricing `481:2485`, compare with evaluation 2 `481:2966`, Use in estimate `482:3079`, used in estimate v05 `482:3549` (images 15–24); annotations `482:4012` (receiving state) and `517:17102` (entry points) are not captured</li><li>Compare, history & overrides `464:6`: `499:2`, `499:724`, `499:1438`, `500:1801`, `500:2288`, `501:2917`, `501:3053`, `502:4198`, `502:4663`, `503:5004`, `503:5532`, `504:5781`, `504:6182` (images 25–37)</li><li>Responsive & states `464:7`: tablets `505:2`, `505:627`; phones `506:678`, `506:784`, `507:753`, `507:1041`, `507:1200`, `508:1123`, `508:1281`; states board `509:1235`</li><li>Components `464:3`: the 23 "CPQ / …" components (images 42–44), including "CPQ / Why this line panel" `473:1055`</li></ul> |
 | Capture copies | Page "Captures (icon-free)", from y = 70,000: `522:60747`, `522:61268`, `522:61906`, `522:62553`, `522:63011`, `522:63806`, `522:64188`, `522:64520`, `522:64967`, `522:65104`, `522:65301`, `522:65474`, `522:65638`, `522:65726`, `522:65793`, `522:65906`, `522:68066`, `522:68156`, `522:68257`, `522:68323`, `522:68388`, `522:68532`, `522:68598`, `522:68748`, `522:72382`, `522:72470`, `522:72565`, `522:72634`, `522:72745`, `522:72816`, `522:72904`, `522:72973`, `522:77974`, `522:78044`, `522:78108`, `522:78222`, `522:78289`, `522:78395`, `522:78504`, `523:74885`, `523:75994`, `523:76518`, `523:77404`, `523:78102` (images 01–44 in order) |

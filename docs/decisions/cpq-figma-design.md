@@ -2,8 +2,8 @@
 document_id: PPO-CPQ-FIGMA-DESIGN-DEC
 date: 2026-10-12
 owner: Dean Fiedler
-status: Owner-accepted design; owner decisions DEC-CCE-01, -04, -05, -06 and GAP-11 open; adoption command (GAP-01), routes, build and UI baseline acceptance separate
-source_commit: fe7794b08235c089f215bd5b41a17e33603df21c
+status: Owner-accepted design; named version saved; owner decisions DEC-CCE-01, -04, -05, -06 and GAP-11 open; reconciliation with the native CPQ backend, page routes, build and UI baseline acceptance separate
+source_commit: 7e4ef3b8ce28e1976fea621f9de33999c26fbe21
 versioning: git
 ---
 
@@ -19,7 +19,7 @@ The design followed the [CCE Figma brief](../delivery/cce-figma-design-prompt.md
 
 Claude drew the design in the working file "PPO - Design" and summarised it with ten questions, each with a recommendation. Dean replied: "I accept."
 
-The design reference is the named Figma version "CPQ — Configure & price and Rules studio, accepted", which Dean saves himself.
+The design reference is the named Figma version "CPQ — Configure & price and Rules studio, accepted". Dean saved it himself and confirmed on 13 October 2026: "I have now saved it as CPQ — Configure & price and Rules studio, accepted".
 
 This record retains:
 - his decisions, in his words;
@@ -29,7 +29,7 @@ This record retains:
 - what remains open.
 
 Scope:
-- **Workspaces:** two new workspaces in Estimating & quotation, drawn as a **proposed extension**. No route, register entry or page-scope ID exists for them, and this record creates none. Package labels CPQ-00 to CPQ-11 stay planning labels.
+- **Workspaces:** two new workspaces in Estimating & quotation, drawn as a **proposed extension**. No page route, register entry or page-scope ID exists for them, and this record creates none. The native CPQ backend, merged after the acceptance, adds API routes and duties but no pages (section 7). Package labels CPQ-00 to CPQ-11 stay planning labels.
 - **Parent requirements:** EST-02 to EST-07 of [BP-01](../blueprints/BP-01-master-blueprint.md). No parent requirement ID is added or renamed; all 78 remain.
 - **Existing destinations, linked and not redrawn:** the Estimation wizard (ES-02), Cost sources (ES-03), estimate review (ES-04), quotation approval and issue (ES-05), customer response (ES-06), conversion (ES-07), Screen Systems (ES-08, not renamed) and Products.
 - **Authorities:** MYOB remains the intended ERP authority, SharePoint the document authority, and the native CAD tools keep drawing authoring.
@@ -53,7 +53,7 @@ This is a design decision. It authorises none of the following:
 | Q3 Summary on Configure | Adopted as drawn | The summary panel is open on Configure only, leaving a 580 px main column; other views hide it (D4) |
 | Q9 Pilot scope | Adopted as drawn | Screen systems only for the first pilot (D15) |
 | Q10 Tablet behaviour | Adopted as drawn | Below 1280 px the rail and the solution outline collapse automatically, and the summary opens on demand |
-| Q4–Q8 | Still open | They are owner decisions in the CCE register. Accepting the screens does not settle them, and the screens show them as open (section 7) |
+| Q4–Q8 | Still open | They are owner decisions in the CCE register. Accepting the screens does not settle them, and the screens show them as open (section 8) |
 
 The design's Read me page records the acceptance (card `520:3`). The card says what the acceptance covers and what it does not, as listed under Scope above.
 
@@ -79,7 +79,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Page types (r20) | <ul><li>Register / worklist: Configure & price register, Rules registry.</li><li>Form / guided workflow: Configure, conflict, rule editor.</li><li>Overview: solution overview.</li><li>Work queue + persistent detail: Materials & labour with "Why this line?", and the adjustment frames.</li><li>Review / comparison: Pricing, compare, test bench, changes, release, compare with R5.</li><li>Planning workspace and record detail: decision table, fact dictionary, product structure, rule history.</li><li>Document & evidence workspace: History and saved evaluations.</li></ul>One scroll owner per view; the right panel scrolls on its own |
 | Reused components | <ul><li>Shell v2: the labelled v2 Rail, the Shell top bar and the flush side menu, which collapses to its strip in the editors.</li><li>The shared register grid: header cells, cells and row actions.</li><li>The shared record layout ([lead record page decision](lead-record-page-design.md)): Record / View tab, Record / Banner and Record / History item. The CPQ Context header is a copy of the accepted Estimation Wizard header with a flexible title.</li><li>The dialog pattern of the accepted ES-02 save dialog, Filter chip, Menu item and heading, Tag, Button and Font Awesome Light icons.</li><li>New: the 23 CPQ components in section 2.</li></ul> |
 | Incoming handovers | <ul><li>The estimate's context, and the discovery facts of ES-02 discovery r03, read only.</li><li>Span and area facts from ES-08 Screen Configurator run R01.</li><li>Cost sources (ES-03) and Products, read and linked.</li></ul>No source is edited from CPQ |
-| Outgoing handovers | <ul><li>The exact saved evaluation is handed to the existing estimate page, where it creates a new estimate version (v05, or v06 as a successor) and requires ES-04 review. This is the intended outcome only: the atomic adoption command does not exist (GAP-01).</li><li>Quotation approval and issue (ES-05), customer response (ES-06) and conversion (ES-07) are unchanged.</li><li>Rules studio hands sealed releases to activation, a separate duty for each scope.</li></ul> |
+| Outgoing handovers | <ul><li>The exact saved evaluation is handed to the existing estimate page, where it creates a new estimate version (v05, or v06 as a successor) and requires ES-04 review. When the design was accepted, no adoption command existed (GAP-01). The native CPQ backend now provides one (section 7), and no page calls it yet.</li><li>Quotation approval and issue (ES-05), customer response (ES-06) and conversion (ES-07) are unchanged.</li><li>Rules studio hands sealed releases to activation, a separate duty for each scope.</li></ul> |
 | Source authority | The CCE specification §3–4, §6 and §10.2–10.3 for the rule language, evaluation, overrides and pricing; the CCE brief for screens and journeys; Dean's pasted plan and feature list for the package order and features; `src/shell/navigation.ts` for the Estimating rail order and labels; the accepted Figma pages for appearance |
 | Proposed departures | <ul><li>Desktop frames are 1440 × 960, as the brief asks, rather than the accepted pages' 900.</li><li>The two rail entries are hidden by default until routes exist.</li><li>The formula functions ceil, floor, round, min and max go beyond the reference evaluator's four operators, and are drawn as a proposed language profile (Q4, DEC-CCE-01).</li><li>The brief's "Distance greater than 100 m" example is shown on the Support spacing rule's real condition, "greater than 0 m"; the interaction is the same.</li></ul> |
 
@@ -129,21 +129,37 @@ Recorded on the Read me page (`512:2`) and accepted with the design.
 - The existing destinations, which are linked rather than redrawn (D14).
 - The shell top bar at 1024 px: the search narrowing it would need is a proposal only.
 
-## 7. What remains open
+## 7. Native CPQ backend
+
+Draft pull request #453 was open when Dean accepted the design. It merged on 13 October 2026 (Brisbane time) as the [native CPQ runtime](cpq-native-runtime.md), with an [API and UI handover](../interfaces/cpq-api.md). It is backend only, and its record leaves the UI to this separate workstream. It adds:
+- migration 0086 and the CPQ API routes;
+- five duties, `cpq.read`, `cpq.author`, `cpq.review`, `cpq.publish` and `cpq.calculate`, which no seed grants;
+- an adoption command that, according to its record, writes the native estimate version, the CPQ evidence and the operation receipt in one transaction.
+
+This design was not drawn against that API and has not yet been reconciled with it. The known differences to settle before a page is built are:
+- **Release states:** the backend's release moves from Draft to Reviewed or Rejected, then to Published. An independent reviewer approves, and a third person publishes and activates the release for a company. The design shows create version, compose release, seal and activate (D9).
+- **Fact types:** the backend has Decimal, Boolean and Choice facts. The design's rule editor changes a field to a text fact (image 03).
+- **Formulas:** backend expressions allow `+ - * /` only. The design's formula editor inserts `ceil()`, which remains a proposed language profile (Q4, DEC-CCE-01).
+- **Adjustments:** the backend's overrides are Quantity, SellPrice and Suppress. Each is bound to the exact generated basis, and a changed basis blocks adoption. The design's set, exclude and review-on-changed-basis behaviour corresponds to these, but the labels need aligning.
+- **Results:** a backend run is permanently Ready or Blocked, and a later edit creates a new run with a parent pointer. The design calls these saved evaluations.
+- **Duties:** the backend names the duties, but no one holds them until access management grants them. The design's "not yet assigned (DEC-CCE-06)" display therefore still applies.
+- **Receiving limit:** the backend blocks adoption above the native receiving limits rather than truncating, which matches the Q8 recommendation.
+
+## 8. What remains open
 
 - **Q4 Formula functions (DEC-CCE-01):** which functions join the first language profile. Recommendation: ceil, floor and round only, with min and max later.
 - **Q5 Who may adjust what (DEC-CCE-05):** quantities, exclusions, manual lines and prices. Recommendation: estimators adjust generated material quantities above engineering minimums, and price changes need the commercial role.
 - **Q6 Publication duties (DEC-CCE-06):** author, reviewer, publisher and activator. Recommendation: authors create versions; an independent publisher seals and activates; engineering review evidence is required for engineering scopes.
 - **Q7 Pricing basis (DEC-CCE-04):** target margin or markup as the default policy basis. Recommendation: target gross margin, with markup always shown beside it.
 - **Q8 Receiving limit (GAP-11):** the native estimate accepts at most 100 manual lines (`src/estimating/validation.ts`), and fitting CPQ output to every native receiving profile is unproven. Recommendation: show the count in the Use in estimate dialog, and block above the limit until the compatibility decision is made.
-- **GAP-01:** the atomic adoption command does not exist. The used-in-estimate and successor frames show the intended outcome only. Draft pull request [#453](https://github.com/deanrfiedler-gif/powerplants-one/pull/453) ("Add governed CPQ calculation and native estimate adoption backend") is backend-only and not merged, and it has not been reviewed against this design here.
-- **Routes and capabilities:** the two workspaces have no route, register entry, permission or capability. The rail entries stay hidden until those exist.
+- **Backend reconciliation:** align this design with the native CPQ API before a page is built, settling the differences in section 7.
+- **Page routes:** the two workspaces have no page route or design-register entry. The rail entries stay hidden until pages exist.
 - **Build:** no application page exists. Building one needs separate authority, and its page entries in the design register follow then.
-- **Named version:** Dean saves "CPQ — Configure & price and Rules studio, accepted". Until he confirms it is saved, this record cites the accepted pages and node IDs.
+- **Named version:** Dean confirmed on 13 October 2026 that the named version is saved, which resolves the draft checkpoint for this record. This records his confirmation, not an independent inspection of Figma version history.
 - **Not yet done:** a Present-mode click-through in Figma desktop; keyboard, screen-reader and browser checks; real data volumes; names longer than the samples.
 - **No baseline:** no UI baseline is registered, and no visual review fingerprint is implied.
 
-## 8. Verification
+## 9. Verification
 
 - Every frame was rendered and inspected in Figma during drawing for clipping and overflow. Colour pairs were measured as given in section 4.
 - The accepted Quotations rail was rechecked after the two hidden rail properties were added.
