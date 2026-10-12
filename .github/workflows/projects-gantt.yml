@@ -76,7 +76,7 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and selectors
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/desktop-shell.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/sales-delivery-binding.test.ts tests/database/desktop-shell.test.ts
       - name: Compiled Projects receiving, overview, RAID and Activity handovers
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset

@@ -11,7 +11,7 @@ if (localConfig().database_name !== "ppo_synthetic_test")
 after(closeDatabase);
 const h = httpAcceptance(localConfig().origin);
 test("PJ02-HTTP01 compiled native saves feed scoped overview, all-match portfolio counts and strict read validation", async () => {
-  const project = projectInput(),
+  const project = {...projectInput(), target_date:"2020-01-01"},
     item = raidInput(),
     action = raidAction(project.id);
   assert.equal((await h.call("coordinator", "projects", project)).status, 201);
@@ -34,6 +34,7 @@ test("PJ02-HTTP01 compiled native saves feed scoped overview, all-match portfoli
     read = await h.call("coordinator", route);
   assert.equal(read.status, 200);
   assert.equal(read.body.project.version, 2);
+  assert.ok(read.body.project.attention.reasons.some((r:{code:string})=>r.code==="ForecastAfterTarget"));
   assert.equal(read.body.actions.items[0].id, action.id);
   assert.equal(read.body.raid.items[0].id, item.id);
   assert.equal(read.body.project.attention.state, "NeedsAttention");

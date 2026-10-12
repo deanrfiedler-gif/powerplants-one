@@ -105,7 +105,8 @@ export function projectFactsSql() {
     WHERE p.workspace_id=$1 AND ($4::uuid IS NULL OR p.id=$4) AND ${projectVisibility("p")}
   ), classified AS (
     SELECT *,CASE WHEN lifecycle='Closed' THEN 'Closed'
-      WHEN overdue_milestones+at_risk_tasks+overdue_actions+high_priority_raid+overdue_raid>0 THEN 'NeedsAttention'
+      WHEN overdue_milestones+at_risk_tasks+overdue_actions+high_priority_raid+overdue_raid>0
+        OR forecast_finish>target_date OR forecast_finish>baseline_finish THEN 'NeedsAttention'
       WHEN task_count=0 OR undated_tasks+unassigned_tasks+unavailable_owners+undated_actions>0 OR actions_partial THEN 'InformationNeeded'
       ELSE 'NoCurrentFlags' END AS attention_state FROM facts
   )`;
@@ -123,6 +124,8 @@ export function projectFactProjection(r: ProjectFacts) {
   ].flatMap(([code, count]) =>
     Number(count) > 0 ? [{ code: String(code), count: Number(count) }] : [],
   );
+  if (r.forecast_finish && r.target_date && r.forecast_finish>r.target_date) reasons.push({code:"ForecastAfterTarget",count:1});
+  if (r.forecast_finish && r.baseline_finish && r.forecast_finish>r.baseline_finish) reasons.push({code:"ForecastAfterBaseline",count:1});
   if (!r.task_count) reasons.push({ code: "ScheduleNeeded", count: 1 });
   return {
     id: r.id,

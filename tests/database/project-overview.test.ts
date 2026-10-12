@@ -108,6 +108,10 @@ test("PJ02-01 overview explains saved schedule, selected baseline, transitive su
     expected_version: 3,
     finish_date: "2030-01-10",
   });
+  const moved=(await readPortfolio(p,{q:project.id})).items[0];
+  assert.equal(moved.dates.forecast_minus_baseline_days,2);
+  assert.ok(moved.attention.reasons.some(r=>r.code==="ForecastAfterBaseline"));
+  assert.ok(moved.attention.reasons.some(r=>r.code==="ForecastAfterTarget"));
   await recordBaseline(p, project.id, {
     ...crmBase(),
     expected_version: 4,
@@ -316,7 +320,7 @@ test("PJ02-03 full-match filters and bound paging agree, while missing dates nev
     prefix = `SYN portfolio ${randomUUID()}`,
     ids: string[] = [];
   for (let n = 0; n < 4; n++) {
-    const project = { ...projectInput(), title: `${prefix} ${n}` };
+    const project = { ...projectInput(), title: `${prefix} ${n}`, target_date:"2031-01-01" };
     ids.push(project.id);
     await createProject(p, project);
     if (n !== 0)

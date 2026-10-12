@@ -4,12 +4,13 @@ import { localConfig } from "../src/platform/config";
 import { closeDatabase } from "../src/platform/database";
 import { createSession } from "../src/platform/identity";
 import {
-  createProject,
   saveTask,
   readSchedule,
   projectHistory,
 } from "../src/projects/service";
-import { projectInput, taskInput } from "../tests/helpers/projects";
+import { taskInput } from "../tests/helpers/projects";
+import { projectReceivingFixture } from "../tests/helpers/project-receiving";
+import { bindDelivery } from "../src/sales/delivery-binding";
 import { raidInput, raidAction } from "../tests/helpers/project-raid";
 import { saveRaid, readRaid } from "../src/projects/raid";
 import { createActivity } from "../src/activities/activities";
@@ -22,9 +23,9 @@ const path = "verification-evidence/projects-restart";
 try {
   const p = (await createSession("coordinator")).principal;
   if (process.argv[2] === "write") {
-    const project = projectInput(),
-      task = taskInput();
-    await createProject(p, project);
+    const receiving = await projectReceivingFixture();
+    const project = receiving.project, task = taskInput();
+    const receivingResult = await bindDelivery(p, receiving.handover, receiving.binding);
     const result = await saveTask(p, project.id, task);
     const action = raidAction(project.id),
       raid = raidInput();
@@ -37,6 +38,7 @@ try {
     await writeFile(
       path + "/synthetic-original.json",
       JSON.stringify({
+        receiving: {handover:receiving.handover,binding:receiving.binding,receipt:receivingResult.receipt},
         project,
         task,
         overview,
@@ -75,6 +77,8 @@ try {
       proof.raid_receipt,
     );
     const overview = await readProjectOverview(p, proof.project.id);
+    assert.deepEqual(await readOperation(p,proof.receiving.binding.operation_id),proof.receiving.receipt);
+    assert.deepEqual((await bindDelivery(p,proof.receiving.handover,proof.receiving.binding)).receipt,proof.receiving.receipt);
     assert.deepEqual(
       { ...overview, observed_at: proof.overview.observed_at },
       proof.overview,
@@ -90,6 +94,7 @@ try {
         original_receipt_retained: true,
         raid_history_and_original_retained: true,
         overview_and_portfolio_retained: true,
+        exact_receiving_and_original_retained: true,
       }),
     );
   } else throw Error("Use write or verify");
