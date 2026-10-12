@@ -1624,11 +1624,15 @@
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
-        "src/engineering/control/guide.ts"
+        "src/engineering/control/guide.ts",
+        "src/engineering/register.ts",
+        "src/engineering/register-query.ts",
+        "src/app/api/v1/engineering/register/route.ts",
+        "docs/decisions/engineering-workload-backend.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native command, database and browser evidence retained in programme handover; acceptance separate",
+      "functional_status": "EN-01 register backend: 17 database and 2 compiled HTTP cases pass; accepted page/shell implementation and owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6002,11 +6006,15 @@
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
         "src/engineering/control/guide.ts",
-        "docs/decisions/engineering-workload-design.md"
+        "docs/decisions/engineering-workload-design.md",
+        "src/engineering/register.ts",
+        "src/engineering/register-query.ts",
+        "src/app/api/v1/engineering/register/route.ts",
+        "docs/decisions/engineering-workload-backend.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native command, database and browser evidence retained in programme handover; acceptance separate",
+      "functional_status": "EN-01 register backend: 17 database and 2 compiled HTTP cases pass; accepted page/shell implementation and owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
