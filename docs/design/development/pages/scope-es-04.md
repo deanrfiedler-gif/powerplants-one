@@ -43,3 +43,7 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## Native bounded implementation — 3 October 2026
 
 The saved-estimate entry now links `/estimating/estimates/[id]/review`. Exact submissions, independent evidence-review kinds, attributable findings/corrections and selective applicability are implemented. The proposed review queue remains unbuilt. Commercial approval and pricing exceptions remain Not configured. Reuses the estimate-review host component, shared controls and original-operation journal; incoming/outgoing boundaries and desktop/mobile requirements are in [the native page contract](route-estimating-estimates-id-review.md). Source presence and automated proof do not grant visual, owner or deployment acceptance.
+
+## Queue backend - 12 October 2026
+
+The [read-only queue contract](../../../decisions/estimating-review-queue.md) supplies `GET /api/v1/estimating/reviews` over exact ES-04 submissions and ES-05 prepared quotations. Counts cover authorised rows in one candidate window; a partial or filtered empty window is not a complete backlog. Record links return to the existing native review/release page. The [accepted Figma composition](../../../decisions/estimate-reviews-design.md) remains the page reference; its route, shared shell, record windows, loading/error/stale states and window-count presentation remain unbuilt. This API addition grants no visual review fingerprint or owner acceptance.

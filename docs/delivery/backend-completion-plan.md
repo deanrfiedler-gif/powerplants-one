@@ -1,0 +1,51 @@
+# Backend completion delivery plan
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Date: 12 October 2026. Status: Dean authorised proceeding with the dependency-led plan in the backend-completion chat. Code delivery, independent review, owner acceptance and deployment remain separate.
+
+## Scope and source
+
+Starting integrated source: `6c164712f7120c89c0d2f5dd24833865696b4968`. The backend-completion session owns this contribution after the catalogue writer completed and opened draft PR #448 at `9f8587a8133df7c9bf83c2359c25fd964a07af43`. ES-02's six-family/108-category work merged separately in PR #448 as ae83043b55058ba47334c3e9ba431d3538f2a8da and is reconciled into the backend PR stack; do not duplicate it.
+
+This plan derives from BP-01, the live development register, the CRM/Projects gap register, current native handovers and the 12 October discussion. Keep all 78 parent IDs and existing ES/PJ/FN/other scope keys. CREMS and competitor parity are not prerequisites. MYOB, SharePoint and native CAD retain their existing authority. No operational connection, communication, transaction, migration or deployment is performed by adopting this plan.
+
+## Ordered work and dependency gates
+
+These package keys are local tracking labels, not new parent requirements. Priorities express build order, not dates or effort estimates. Each package is divided into reviewable increments.
+
+| Package | Priority and outcome | Entry dependencies | Completion evidence / remaining boundary |
+|---|---|---|---|
+| BC-00 | P0: reconcile delivered code, stale status and next contracts | Current main, open PRs and active writer inspected | Preserved scope IDs; explicit missing behaviour, source and test contracts. Do not treat pending visual/owner review as missing code |
+| BC-01 | P1: reads for existing workflows; Reviews & approvals first, then quotation/Lead/Work Order/Cost Source/Engineering projections | Existing domain reads and exact source authority; accepted design intent | Permission-scoped API, counts/paging semantics, partial data and stale-source proof. Page/shell implementation is separately recorded |
+| BC-02 | P1: PJ-04 RAID and owned actions; remaining PJ-01/02 receiving/health; PJ-03 calendars and actuals | Existing Sales receiving, Project, baseline and Activity services; explicit calendar/effort contract for those fields | Connected saved records, explained health and historical schedule preservation; no inferred operational calendar |
+| BC-03 | P1: DK-01/02 library and revision services; DK-03 publication and DK-06 templates | Existing protected exact-document/render services and audience rules | Exact version preservation, controlled publication/withdrawal, source permissions, output recovery |
+| BC-04 | P1: native Excel import and CCE/CPQ as separate increments | Existing parser, Product/Cost Source/estimate services; CCE contract and architecture choices resolved for each enabled profile | Upload/validate/review/atomic save; bounded rules/releases/runs; native adoption and persistent override recovery. Existing specialist engines preserved |
+| BC-05 | P1 discovery, P2 delivery: MYOB/SharePoint/Microsoft adapters | Actual approved environment/endpoint evidence, company/entity keys, access and retention contract | Scoped reads first; complete/partial sync, revocation, reconnect, unknown-outcome recovery and reconciliation. External writes/activation have separate authority |
+| BC-06 | P2: PJ-05 commercial controls -> PJ-06 specialists -> PJ-07 readiness -> PJ-08 updates; SV-07/08; Warranty-to-Supply; capacity/reservation gaps | Relevant BC-02/03 slices, financial definitions, existing Engineering/Service/Supply sources | Exact independent handovers, owned exceptions, no implicit booking/stock/accounting effects. Exact missing PJ-07 design source stays visible |
+| BC-07 | P2: FN-01/02 extensions and FN-06 definitions/reconciliation -> FN-03/04/05 performance/claims/cash | Define measures early; Project commitments/variations and source-backed account observations before their calculations | Reconciled dates/currencies/units/completeness and independent expected calculations. Synthetic proof remains distinct from authoritative ERP data |
+| BC-08 | P2 by source: RP-01-06 reporting, ES-09 actual comparison -> ES-10 calibration | Agreed per-report definitions and applicable sources; reviewed comparable actuals before calibration | Source-to-measure trace, denominator/completeness evidence, scoped export. CRM reports need not wait for Projects |
+| BC-09 | P3 expansion: CP1 support -> independent CP2/CP3 -> CP4/CP5 slices | Fresh P11/P12 readiness, customer isolation and public conversation; only relevant publication/domain dependencies for later slices | Customer isolation, exact audience-bound outputs and repeat-safe replies. No all-domain gate; activation separate |
+| BC-10 | P3 expansion: AI1 CRM -> AI2 voice -> AI3 selected email -> AI4 knowledge/domain assistance | Existing scoped CRM for AI1; explicit provider configuration; relevant email/controlled knowledge for later slices | Simulated versus real-model evaluation, exact user-confirmed native commands and evidence. No all-domain gate |
+| BC-11 | Throughout: AD-01/02/03/04/05/07/09 minimum controls; complete AD-06/08/10 and operational readiness | Controls follow each feature; migration and retention policy precede operational cutover | Access review, governed corrections, mappings, audit, recovery, dry-run reconciliation, retention and support. Full owner/device/operational acceptance remains distinct |
+
+## Delivery rules
+
+1. Reuse native writers, exact revisions, current permissions, Activities, document services and original-operation receipts. Select no new framework or service without a reasoned ADR.
+2. Deliver an API and connected receiving proof before declaring a backend workflow complete. An API does not imply its accepted Figma page or shell is implemented.
+3. Preserve original ledgers, grants and issued evidence across migrations. Follow every historical-upgrade and capability-generation obligation in AGENTS.md. Allocate migration/ADR numbers only against the current integration history.
+4. Test scoped read/write denial, stale sources, independent duties, racing commands, rollback, exact replay and restart where relevant. Keep all original thresholds; compare suspected environment failures against unchanged main.
+5. For each package record source/PR, tests and actual failures, owner review, deployment and next dependency separately. Do not create a fleet of speculative issues.
+6. External contract discovery can proceed alongside synthetic code. Verified adapters are dependencies of live results, not a reason to block all local implementation.
+7. Conditional CX workshop/telemetry/tool-custody/grower-production scope remains outside core completion until adopted.
+
+## Current increment ledger
+
+| Increment | State | Evidence / next boundary |
+|---|---|---|
+| BC-00 plan and ES-08 scope reconciliation | Recorded in this contribution | Writer coordination completed; original scope keys and all review fingerprints preserved |
+| BC-01 Reviews & approvals | Backend implemented and locally verified; PR review/CI separate | [Execution evidence](../testing/evidence/estimating-review-queue/README.md). Read-only ES-04/ES-05 queue; source commands remain the decision authority. Page and global-count contract remain open |
+| BC-01 Quotations register | Backend implemented and locally verified on `codex/quotation-register`, based on PR #449; CI/review separate | [Read contract](../decisions/quotation-register-backend.md) and [execution evidence](../testing/evidence/quotation-register/README.md): one row per current quotation and exact revision history; native ES-05/06/07 authority. Accepted page implementation remains separate |
+| BC-01 remaining projections | Next backend increments | Lead/Work Order/Cost Source/Engineering reads; define each exact source contract and receiving proof before implementation |
+| ES-02 catalogue | PR #448 merged; reconciled into the #449/#450 stack | Preserve migration 0085 and exact upgrade assertions; combined-head CI remains the merge gate |
+| BC-02-11 | Remaining authorised programme | No implementation or acceptance inferred from this plan |

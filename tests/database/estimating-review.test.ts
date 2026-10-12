@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { registerReviewQueueTests } from "../helpers/estimating-review-queue-cases";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import {
@@ -459,3 +460,5 @@ test("ES04 later source revisions invalidate only source-price review and preser
     before.saved.source_bindings,
   );
 });
+
+registerReviewQueueTests();
