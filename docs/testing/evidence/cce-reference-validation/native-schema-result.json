@@ -1,0 +1,313 @@
+{
+  "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+  "latestMigrationVersion": 77,
+  "migrationCount": 76,
+  "applied": [
+    {
+      "file": "0001-foundation.sql",
+      "sha256": "dbfbff684617c70fde38840f4a81fd450492d3d8fef1e6399c6a94e59ecba2ca"
+    },
+    {
+      "file": "0002-shared-foundation.sql",
+      "sha256": "ae020733603f2c0ad2f1c1d50aeb6402ab00db44b72cfc469f82c95befce3f3d"
+    },
+    {
+      "file": "0003-customer-intake.sql",
+      "sha256": "914b54baf4a7cbf559961d871d0f6c294d84c67b99443575730def35b24d4515"
+    },
+    {
+      "file": "0004-work-scope.sql",
+      "sha256": "2bc10f42e96b06c3db599c37cda229e8fd63f17df341ea1d797dca660e11c3f0"
+    },
+    {
+      "file": "0005-planner.sql",
+      "sha256": "75fc703a595c2038ce0e15b9319a729398949d925d951cc1351b48392a69d7b0"
+    },
+    {
+      "file": "0006-job-packs.sql",
+      "sha256": "3d82ba065443f5a1a295adda0eabcd523f0bc8e66c63bf5a63ff376d401c3285"
+    },
+    {
+      "file": "0007-online-field.sql",
+      "sha256": "dd9cd11c48152131e895f9a495e09f0cf0f46a67946acc2cd9ef67944d508bfa"
+    },
+    {
+      "file": "0008-offline-recovery.sql",
+      "sha256": "a318b18fb347ddaf9b15e0ff7a30256680f21f34f0267e975fe5e525b2886637"
+    },
+    {
+      "file": "0009-service-reports.sql",
+      "sha256": "7c681075d90b2358c70a10c8b63bb59aaac157f3d4f10a40c97ef5460f1e4707"
+    },
+    {
+      "file": "0010-crm-opportunities.sql",
+      "sha256": "31bf958050b2f9de86b141eb7e5a6b767de6c8c60596b438c2e2738bd25d31e1"
+    },
+    {
+      "file": "0011-finance-handoff.sql",
+      "sha256": "33d4f706b8be375b67c4a6ebcdc2cb662c9ecca7753e78de2d153100c45924fa"
+    },
+    {
+      "file": "0012-estimating-e1.sql",
+      "sha256": "3cb99ba1826862cb32b02d4b05d23f6e47875729b1c4d7d964a01e476b3c8275"
+    },
+    {
+      "file": "0013-p11-travel.sql",
+      "sha256": "743d76a806525530503852d445fbb0fef5552d5ac52412b7f09b43c23fdf4326"
+    },
+    {
+      "file": "0014-p11-travel-guard-repair.sql",
+      "sha256": "2e5d9a5e4bf1321dc0512c3569d6cab1abce1f3de92740ee446b666d13d8bf8c"
+    },
+    {
+      "file": "0015-email-calendar.sql",
+      "sha256": "a9dfddf567c61d72bce3d261bb3136251cd7fb97c06ef9d4b45c1a547a2e6837"
+    },
+    {
+      "file": "0017-crm-ui-refinements.sql",
+      "sha256": "a797d858b1cc7154efd28b259f8592abe6de00e73e19840beec1f541baa3663a"
+    },
+    {
+      "file": "0018-crm-leads.sql",
+      "sha256": "da19a97460297b002e4f1da0d7172261e862b7e40355609b33f4ddd0166c5866"
+    },
+    {
+      "file": "0019-projects-gantt.sql",
+      "sha256": "a1c6d2f555919bba43b86764ef9e719f8716c50564907b41af013a4723abb578"
+    },
+    {
+      "file": "0020-engineering-intake.sql",
+      "sha256": "582f78142cd4e5f6079bad43fa49075929723cf26dc7250c17803d1b5d7a9164"
+    },
+    {
+      "file": "0021-crm-five-stages.sql",
+      "sha256": "af938a1240ff88d11ae8e02005293e7ed0035f9ef4d637c4aed956b87426a8b2"
+    },
+    {
+      "file": "0022-crm-discovery-conversion.sql",
+      "sha256": "b64b1e8d523ab560e7e9f0a2b73f616d38251cb897805f06df3e69eb861253f8"
+    },
+    {
+      "file": "0023-crm-owned-outcomes.sql",
+      "sha256": "3734a56b1d5031e28171392d3a57f11becfdc176ffc2561b796d02100c490bba"
+    },
+    {
+      "file": "0024-crm-owner-transfer.sql",
+      "sha256": "c43f077b171642971197e87d57f7a2156908f120d9bde09c184348dd7134f528"
+    },
+    {
+      "file": "0025-estimating-line-taxonomy.sql",
+      "sha256": "ed884fa40c3d3a72c5925a786cb0bde730d04983aba92fc8e2f8b31042b2f555"
+    },
+    {
+      "file": "0026-estimating-discovery.sql",
+      "sha256": "92cfd96b0c88caa5c6a97bb77f10dc5875e8f9aea984d47349cd795c27f3c3d1"
+    },
+    {
+      "file": "0027-estimating-discovery-cost-basis.sql",
+      "sha256": "7d3cef50206cf2de22c185625b0dca37667c26abaeebec756c9c855a0dd303c3"
+    },
+    {
+      "file": "0028-my-work-scheduling-and-views.sql",
+      "sha256": "ddecfcbf9c65287ef358c3024e2faa9f24c3c9ae9f64560c7eda0af52c6a9b74"
+    },
+    {
+      "file": "0029-engineering-materials.sql",
+      "sha256": "a4f348864915c24262a2819cf9da33bb5171f7e04bdb7b1e04f045017d41d2b4"
+    },
+    {
+      "file": "0030-engineering-changes.sql",
+      "sha256": "3674efdd59991fca4b6caa8cc4caa6f8507eccb2a0934db53785c067d44be67a"
+    },
+    {
+      "file": "0031-commissioning-as-built.sql",
+      "sha256": "ad6acda04a5856e4e77bf585d541dfa78780328a29df8ddaf8136ecd3b5ba6b7"
+    },
+    {
+      "file": "0032-staged-acceptance.sql",
+      "sha256": "8cf465cadfa44b874bb3ee60e5738bfd3334c2033156da87dd76caee5a6a5a5b"
+    },
+    {
+      "file": "0033-acceptance-lifecycle-evidence.sql",
+      "sha256": "05645b8e934b3e2fbb189a0fb15e70249f954847bf14b9688c01bf52bccd5b99"
+    },
+    {
+      "file": "0034-acceptance-recipient-context.sql",
+      "sha256": "2633dd4be124f267d920eb77e6d935cdc291315e145bbae7b68a3b4f63ac7ea6"
+    },
+    {
+      "file": "0035-acceptance-response-integrity.sql",
+      "sha256": "ec6f19344550d4af340f4f0ccd5b14748e6e6d43354a8b845965c015cc37a95b"
+    },
+    {
+      "file": "0036-acceptance-command-recovery.sql",
+      "sha256": "8e59bb81caef9f6e5d3f27d32a808e554009b33aaa7a902e6951f722a0de72de"
+    },
+    {
+      "file": "0037-acceptance-scope-disposition.sql",
+      "sha256": "6cce3c3a96a08b08a33564a7f378497fb32522deb20e5eb482e0504053d3a64a"
+    },
+    {
+      "file": "0038-acceptance-source-followup.sql",
+      "sha256": "0327af08bf3531c288e07fcffe1b048ac7a9bd754b67b137f81027bf79fb6486"
+    },
+    {
+      "file": "0039-estimating-configuration.sql",
+      "sha256": "782765ecb2ac3398e216133c5c999cc0817bdca0f812cfd66d4bf7a47cd81470"
+    },
+    {
+      "file": "0040-specialist-configurations.sql",
+      "sha256": "80d9f7167167e2937c3228bae67080f7153ee97f877866122e4d8178ffec41a2"
+    },
+    {
+      "file": "0041-facilities-growing-areas.sql",
+      "sha256": "87b29fefab54c8c1db0ceabb713821d2696c3089b4c7922989df59540162d222"
+    },
+    {
+      "file": "0042-fertigation-scopes.sql",
+      "sha256": "3e9cf1eb92bf5570d13473061ea703aa5be68b7449a911bf5aee014b35ce82ca"
+    },
+    {
+      "file": "0043-sh-platform-coordination.sql",
+      "sha256": "dc9ab6b3eb1428358db32f2318c82e12c5f74d9da1eafc76f14aabbfe15a30de"
+    },
+    {
+      "file": "0044-customer-location-workflows.sql",
+      "sha256": "6617700a2103d330b1db24926ad5cff0cfcb95c4bfc01f3922a3890f670bae14"
+    },
+    {
+      "file": "0045-equipment-workflows.sql",
+      "sha256": "02129d0b50340fef2d0c35198c6242379f2e294ad0ea3f32a77f86ee6d9879b3"
+    },
+    {
+      "file": "0046-sales-workflows.sql",
+      "sha256": "6f72b06bc3d04de4e6e3c64930ec0fb1678c3d9c54031970afd5de77103e985b"
+    },
+    {
+      "file": "0047-engineering-native-control.sql",
+      "sha256": "3db21aa295aef19faf84fddb301fece150489e4f98d6fd7c6015113cc554c631"
+    },
+    {
+      "file": "0048-estimating-cost-sources.sql",
+      "sha256": "6b99f171efb97cade73b6f196898fdeb7011aca21617a638f9cf6c8f15745231"
+    },
+    {
+      "file": "0049-supply-chain.sql",
+      "sha256": "352b2965af84b5e47791c54e5587f2ecca2d25078c46ff760d4d281ebfc5f82b"
+    },
+    {
+      "file": "0050-field-work-timers.sql",
+      "sha256": "5ceba1aa2ce9c547cbfb59f0d5fe1938ffe2e2363873b5856b9dbb4e9c2c8a8a"
+    },
+    {
+      "file": "0051-maintenance-warranty.sql",
+      "sha256": "44c950d7d21be9a7887a7a6608f7101380b1a1f4e0271a6e415b8cc9944eddfc"
+    },
+    {
+      "file": "0052-products-catalogue.sql",
+      "sha256": "a93c485bf485e5de228bcc8b1fa280b398759ea5b65e244f34bf7458f1aad447"
+    },
+    {
+      "file": "0053-scheduling-policy-publication.sql",
+      "sha256": "a541e7b9e5cf57322ffbc00de0dbb231420de0679d4c6a25e5b6487894617218"
+    },
+    {
+      "file": "0054-scheduling-policy-commands.sql",
+      "sha256": "7dce7c45d1e3872a8884ee9a0d5a8ce4ff698aebec743703f60b27d5701bed84"
+    },
+    {
+      "file": "0055-service-inspections.sql",
+      "sha256": "a28d7b8c1384625cfa9a27581f8591084d10d60dbda2171f87ddf9e36eefc741"
+    },
+    {
+      "file": "0056-field-incidents.sql",
+      "sha256": "aac258eba0f4051399a913966d8ae55636d6530bd1e2633f7f9ff51ea54824b6"
+    },
+    {
+      "file": "0057-field-customer-response.sql",
+      "sha256": "818122710640fbe8187fb94a2a904f5595653ea18ca8edfaafb04c6c8096922c"
+    },
+    {
+      "file": "0058-estimating-review.sql",
+      "sha256": "a95f9e4b76b467a4512767bc66d6143580233d61fa20fe3fb4fae59b47fb4c69"
+    },
+    {
+      "file": "0059-quotation-release.sql",
+      "sha256": "14cb6b3e80552f7b435122b64a05cad3626f4cad7a37b0b0a5cd7a4f41f6df41"
+    },
+    {
+      "file": "0060-quotation-response.sql",
+      "sha256": "375da07fb363f4889afcc358dd9e2a7a785547fc11a7adbb423c780add053050"
+    },
+    {
+      "file": "0061-quotation-conversion.sql",
+      "sha256": "f5a1b4b714e80232c4c9e1115c873ed2722c92e9024c1465dd2b3cf501590423"
+    },
+    {
+      "file": "0062-quotation-disposition.sql",
+      "sha256": "0049933da5b5a682b1603d7a4fb27d33618b76a940230cc0c54873079a49e877"
+    },
+    {
+      "file": "0063-quotation-supply-followup.sql",
+      "sha256": "3777da0e4c1a3b5d3d7aad8f070160e940ed52cac610756d9175ed3870e823a2"
+    },
+    {
+      "file": "0064-quotation-reservation-reconciliation.sql",
+      "sha256": "d5254296d021998e26894f915524eda582ae66827bc89f3fa852abf22d150e14"
+    },
+    {
+      "file": "0065-quotation-receipt-correction.sql",
+      "sha256": "a31b5c0762b39e0bd5a20b74ee0a95ec9d73b72f582aa9fbe81b98cec40ecc0e"
+    },
+    {
+      "file": "0066-quotation-allocation-shortfall.sql",
+      "sha256": "a685ff5ad08b3b3970366cc17740c107c64dd187b0a6d549251321e49a129e1d"
+    },
+    {
+      "file": "0067-quotation-material-resolution.sql",
+      "sha256": "d34f44ffef104e0b77eebd0c82b9688a315d2d9e2657155aa3298dbaf57f85d1"
+    },
+    {
+      "file": "0068-quotation-task-dependency.sql",
+      "sha256": "ad6b5f8c14ee8c897dff76bf4699f9bf559fbb7b8c1983087679c36ba944a2cb"
+    },
+    {
+      "file": "0069-quotation-task-chain.sql",
+      "sha256": "bd997195581ab185bb95e016c2c8ef08e6a6547e1629230866c50f9d9d7fd9ad"
+    },
+    {
+      "file": "0070-quotation-task-branch.sql",
+      "sha256": "5fccad613c026a90c2efa3b3ac2c369333a16b7d24f24afc0b466b60edb85437"
+    },
+    {
+      "file": "0071-quotation-task-merge.sql",
+      "sha256": "3e3e36e65b8c94b1301f28693d06d39c4d9b318ede5c0abcb78eab22bdbc71a8"
+    },
+    {
+      "file": "0072-quotation-task-diamond.sql",
+      "sha256": "fa46919b4012196ecaff12af0aba19b75f92b62617367625d9c0dea61b84b80b"
+    },
+    {
+      "file": "0073-lead-context-ownership.sql",
+      "sha256": "e9f2b63df599e9ce38472ae1061f4c31d7b91c0df7b774d96a36154bbb091379"
+    },
+    {
+      "file": "0074-sales-estimating-binding.sql",
+      "sha256": "cef4c16e126669a711a95385e87eea94b8a1778d85b5eb1a622b72b6e3118097"
+    },
+    {
+      "file": "0075-opportunity-outcome-sources.sql",
+      "sha256": "01325c3b3411c21fcb9e49e2fb67ab9f7aa5ad21af6ab9df7bcf830164c80c05"
+    },
+    {
+      "file": "0076-sales-delivery-bindings.sql",
+      "sha256": "1c4d1a6012c4255aa29f5c5012b90ad84e7c31fe63dc9ae4af6f7952e4fb1b79"
+    },
+    {
+      "file": "0077-working-company.sql",
+      "sha256": "bc0eb628ec9274da9ff873511c313e5c832bf9cc7c05875f8c04c4c623be5237"
+    }
+  ],
+  "cceDdlApplied": true,
+  "scope": "Unseeded fresh native schema; service writer and populated upgrade not established"
+}

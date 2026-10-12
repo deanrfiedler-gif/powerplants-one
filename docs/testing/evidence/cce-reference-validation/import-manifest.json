@@ -1,0 +1,417 @@
+{
+  "prepared": "2026-10-12",
+  "scope": "Documentation publication; no historical database rerun",
+  "executionBaseline": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+  "publicationBase": "4228d470ca4c566a15e7c3397fc053b8f7bef4bc",
+  "sourceArchive": {
+    "name": "powerplants-one-cce-validation-evidence.zip",
+    "sha256": "38ef6eaf80285be5333b221ef421dedadf802d141d353da6d01bfeecc4f7b595",
+    "members": 43,
+    "originalMemberHashesVerified": 42
+  },
+  "sourceReport": {
+    "name": "powerplants-one-cce-technical-specification.md",
+    "sha256": "d09260bb40920809700bf8c2b7cfe9cf3acb628876e4f3885303cf03622d2f0d"
+  },
+  "sourcePrompt": {
+    "name": "powerplants-one-cce-figma-prompt.md",
+    "sha256": "d2d5e26bcb7507f79bddf5441f06b77b5662259e77296c753db535f8cb8a1371"
+  },
+  "transformationPolicy": [
+    "Original manifest and README retained under provenance; superseded report retained under provenance",
+    "Historical JSON outcomes preserved; machine-specific paths redacted where present",
+    "Six database harness sources use explicit recorded-checkout resolution; restart executable supplied by environment",
+    "Report and prompt are living repository documents; current-source reconciliation does not alter past test claims",
+    "Expression test import uses .js resolution for repository TypeScript compatibility; implementation bytes unchanged",
+    "Superseded prior-report.md retained byte-for-byte as provenance/prior-report.md.txt; original broken heading links remain historical plain-text evidence"
+  ],
+  "files": [
+    {
+      "archivePath": "README.md",
+      "publishedPath": "provenance/original-README.md",
+      "originalBytes": 6391,
+      "originalSha256": "1be043c816816d23d38d8e2d3aea5e9d74e6fe0e0073c0808807ff07b5238742",
+      "publishedBytes": 6391,
+      "publishedSha256": "1be043c816816d23d38d8e2d3aea5e9d74e6fe0e0073c0808807ff07b5238742",
+      "transformed": false
+    },
+    {
+      "archivePath": "SHA256SUMS.json",
+      "publishedPath": "provenance/original-SHA256SUMS.json",
+      "originalBytes": 5620,
+      "originalSha256": "e0c9f6f1f807f5832f25119fb58d8350b487b39915becff0c27108e51820a511",
+      "publishedBytes": 5620,
+      "publishedSha256": "e0c9f6f1f807f5832f25119fb58d8350b487b39915becff0c27108e51820a511",
+      "transformed": false
+    },
+    {
+      "archivePath": "arithmetic-oracle.json",
+      "publishedPath": "arithmetic-oracle.json",
+      "originalBytes": 741129,
+      "originalSha256": "9c9638e6ad5e3c412c479af6ea3042d6dbe1cc8e3dd7d472306af92de4dea5c2",
+      "publishedBytes": 741129,
+      "publishedSha256": "9c9638e6ad5e3c412c479af6ea3042d6dbe1cc8e3dd7d472306af92de4dea5c2",
+      "transformed": false
+    },
+    {
+      "archivePath": "commercial-check.mjs",
+      "publishedPath": "commercial-check.mjs",
+      "originalBytes": 2875,
+      "originalSha256": "03d0920d711e80ce10f4ade611f2ef831c1a5954230d8eb95f46bc60f9846803",
+      "publishedBytes": 2875,
+      "publishedSha256": "03d0920d711e80ce10f4ade611f2ef831c1a5954230d8eb95f46bc60f9846803",
+      "transformed": false
+    },
+    {
+      "archivePath": "commercial-result.json",
+      "publishedPath": "commercial-result.json",
+      "originalBytes": 619,
+      "originalSha256": "8c9690400ddaa8f97366a9ddc531d62dde3956daa701095a3e5d878fa1ecd14d",
+      "publishedBytes": 619,
+      "publishedSha256": "8c9690400ddaa8f97366a9ddc531d62dde3956daa701095a3e5d878fa1ecd14d",
+      "transformed": false
+    },
+    {
+      "archivePath": "database-attempt-1.json",
+      "publishedPath": "database-attempt-1.json",
+      "originalBytes": 1616,
+      "originalSha256": "5e25d1e2193bd4bc42a048cf021c420654b1ec00a6bb27244acf960a65f0c005",
+      "publishedBytes": 1417,
+      "publishedSha256": "9b59912a1533c1c79ee3d2bbb8dacefa8864a472ae035c40b370d36cf72db2d6",
+      "transformed": true
+    },
+    {
+      "archivePath": "database-check.mjs",
+      "publishedPath": "database-check.mjs",
+      "originalBytes": 18930,
+      "originalSha256": "d6286bef6d95476f681d2b664cd6bd33b1c3ffad414e8b3a3354955d0421ee63",
+      "publishedBytes": 18975,
+      "publishedSha256": "e7b2180442448d5cc5b76e97a60afcf8f4b1812d4ea41a5aee3dead2cbe62f14",
+      "transformed": true
+    },
+    {
+      "archivePath": "database-result.json",
+      "publishedPath": "database-result.json",
+      "originalBytes": 1574,
+      "originalSha256": "3b6281dc8ece08c71d1831e03a7b8d1c6164c190e52fd0dceff18c7bf700e86e",
+      "publishedBytes": 1574,
+      "publishedSha256": "3b6281dc8ece08c71d1831e03a7b8d1c6164c190e52fd0dceff18c7bf700e86e",
+      "transformed": false
+    },
+    {
+      "archivePath": "example-rule.json",
+      "publishedPath": "example-rule.json",
+      "originalBytes": 1501,
+      "originalSha256": "47e3e66d4ba50177361395948fdf8a9195120d89ac35cc6b3da0444ba254827a",
+      "publishedBytes": 1501,
+      "publishedSha256": "47e3e66d4ba50177361395948fdf8a9195120d89ac35cc6b3da0444ba254827a",
+      "transformed": false
+    },
+    {
+      "archivePath": "expression-check.ts",
+      "publishedPath": "expression-check.ts",
+      "originalBytes": 3366,
+      "originalSha256": "545b8067ff4e700a47dbc439b51b967226db1bd6d0cce707102e5c83f954113d",
+      "publishedBytes": 3366,
+      "publishedSha256": "96457555f55f1e6fad4fa34f7f6de0029333d2d6536ac0eb75f39f2fc41865ca",
+      "transformed": true
+    },
+    {
+      "archivePath": "expression.ts",
+      "publishedPath": "expression.ts",
+      "originalBytes": 8378,
+      "originalSha256": "c1ac257c79c841e12ebd97132a1223b7cd0112c3c1d735c39d4b22d226b4abb4",
+      "publishedBytes": 8378,
+      "publishedSha256": "c1ac257c79c841e12ebd97132a1223b7cd0112c3c1d735c39d4b22d226b4abb4",
+      "transformed": false
+    },
+    {
+      "archivePath": "generate-oracle.py",
+      "publishedPath": "generate-oracle.py",
+      "originalBytes": 962,
+      "originalSha256": "67fdbaecd832c587f291026cca0061ef4eedbd75ad4a3108c835e907d765b29b",
+      "publishedBytes": 962,
+      "publishedSha256": "67fdbaecd832c587f291026cca0061ef4eedbd75ad4a3108c835e907d765b29b",
+      "transformed": false
+    },
+    {
+      "archivePath": "native-journey-attempt-1.json",
+      "publishedPath": "native-journey-attempt-1.json",
+      "originalBytes": 719,
+      "originalSha256": "58448def5890633c7b86e6fd6d24b795f756cb380db69e51393c58f4e3846f79",
+      "publishedBytes": 664,
+      "publishedSha256": "06906759c075b2c3c76a03187c744e4ac70ae555427392828068a14e34263dc4",
+      "transformed": true
+    },
+    {
+      "archivePath": "native-journey-attempt-2.json",
+      "publishedPath": "native-journey-attempt-2.json",
+      "originalBytes": 523,
+      "originalSha256": "17186734c9fa548bcb869b4261273a0ae207502aea7788827200b93e93c8baca",
+      "publishedBytes": 437,
+      "publishedSha256": "7df2189654ff3bf12eeee664244887c6d26a9b42ddbd4150efc140b74266bac4",
+      "transformed": true
+    },
+    {
+      "archivePath": "native-journey-result.json",
+      "publishedPath": "native-journey-result.json",
+      "originalBytes": 940,
+      "originalSha256": "c8327f891af905759f291c8d44b9faf32a6f6494570c83fc0e5db516628da067",
+      "publishedBytes": 940,
+      "publishedSha256": "c8327f891af905759f291c8d44b9faf32a6f6494570c83fc0e5db516628da067",
+      "transformed": false
+    },
+    {
+      "archivePath": "native-journey.mjs",
+      "publishedPath": "native-journey.mjs",
+      "originalBytes": 7300,
+      "originalSha256": "08dfc4125f9915b54c56fef2e2b1f7b5193893781cf2249229e5fcef3cb12e25",
+      "publishedBytes": 7340,
+      "publishedSha256": "822c08b2e912fd04bfab5575914d5ba57afbe4fafd8790262cd673bda54aeb1f",
+      "transformed": true
+    },
+    {
+      "archivePath": "native-parent-catalog.json",
+      "publishedPath": "native-parent-catalog.json",
+      "originalBytes": 28593,
+      "originalSha256": "984c8824eefd790becd13d8a8238c17c4671078d8d586b3f25d1b74c7127e1be",
+      "publishedBytes": 28593,
+      "publishedSha256": "984c8824eefd790becd13d8a8238c17c4671078d8d586b3f25d1b74c7127e1be",
+      "transformed": false
+    },
+    {
+      "archivePath": "native-schema-result.json",
+      "publishedPath": "native-schema-result.json",
+      "originalBytes": 11174,
+      "originalSha256": "6df3783bd6b9575e88ea832cf7b5d1898c21999a4c351edc4ed65693df00d3a5",
+      "publishedBytes": 11174,
+      "publishedSha256": "6df3783bd6b9575e88ea832cf7b5d1898c21999a4c351edc4ed65693df00d3a5",
+      "transformed": false
+    },
+    {
+      "archivePath": "native-schema.mjs",
+      "publishedPath": "native-schema.mjs",
+      "originalBytes": 3101,
+      "originalSha256": "90b6172052ef50475dda287937c482c81a9879ce3a24ca00617ab86d4efda605",
+      "publishedBytes": 3141,
+      "publishedSha256": "b2e9f5f8d37f4f8262b603cce376e783d356eecd05148b4ac35515f8c2f1b30b",
+      "transformed": true
+    },
+    {
+      "archivePath": "oracle-check.mjs",
+      "publishedPath": "oracle-check.mjs",
+      "originalBytes": 1035,
+      "originalSha256": "10d1e774710fdb1e6ca519610805e668cf44cd83f6bcf9fad469e169e9283671",
+      "publishedBytes": 1035,
+      "publishedSha256": "10d1e774710fdb1e6ca519610805e668cf44cd83f6bcf9fad469e169e9283671",
+      "transformed": false
+    },
+    {
+      "archivePath": "oracle-result.json",
+      "publishedPath": "oracle-result.json",
+      "originalBytes": 220,
+      "originalSha256": "c14d7c1f72ec37b0d8f848ac8512afa8748755940aeb7c10e14d63919a3121a5",
+      "publishedBytes": 220,
+      "publishedSha256": "c14d7c1f72ec37b0d8f848ac8512afa8748755940aeb7c10e14d63919a3121a5",
+      "transformed": false
+    },
+    {
+      "archivePath": "persist-workflow.mjs",
+      "publishedPath": "persist-workflow.mjs",
+      "originalBytes": 7547,
+      "originalSha256": "046c3c35278158085f67b62cbcdef196a10a21116f33cbe1ee67e8e464c3a743",
+      "publishedBytes": 7592,
+      "publishedSha256": "3063e32972bbeefe998ebbdb1f8f7c53d48684437c8a3c28fe3e425c841e5053",
+      "transformed": true
+    },
+    {
+      "archivePath": "persisted-workflow-result.json",
+      "publishedPath": "persisted-workflow-result.json",
+      "originalBytes": 896,
+      "originalSha256": "87831f046e55c10354da4fe95ec374ca8976f08b0c5c684f15197ec2dc37205a",
+      "publishedBytes": 896,
+      "publishedSha256": "87831f046e55c10354da4fe95ec374ca8976f08b0c5c684f15197ec2dc37205a",
+      "transformed": false
+    },
+    {
+      "archivePath": "populated-upgrade-result.json",
+      "publishedPath": "populated-upgrade-result.json",
+      "originalBytes": 50312,
+      "originalSha256": "c8e0aad9d5b5dee150e7579845e0b3aa7f0950cb062a1da33590ad3835654279",
+      "publishedBytes": 50312,
+      "publishedSha256": "c8e0aad9d5b5dee150e7579845e0b3aa7f0950cb062a1da33590ad3835654279",
+      "transformed": false
+    },
+    {
+      "archivePath": "populated-upgrade.mjs",
+      "publishedPath": "populated-upgrade.mjs",
+      "originalBytes": 3429,
+      "originalSha256": "660e3f1f5fe225e75eb1166f133bf4675d8320f66d80d6b3e59d280b104b68ba",
+      "publishedBytes": 3474,
+      "publishedSha256": "8155b699f151ceae689360b8d742136be9bf412e68bbbd93f4a96ca1844e3e9a",
+      "transformed": true
+    },
+    {
+      "archivePath": "prior-report.md",
+      "publishedPath": "provenance/prior-report.md.txt",
+      "originalBytes": 154868,
+      "originalSha256": "73e6ed026f026138beaf500d5cfb9b8a17be2960d112851d54eaf3bdf51cafb4",
+      "publishedBytes": 154868,
+      "publishedSha256": "73e6ed026f026138beaf500d5cfb9b8a17be2960d112851d54eaf3bdf51cafb4",
+      "transformed": false
+    },
+    {
+      "archivePath": "reference-schema.sql",
+      "publishedPath": "reference-schema.sql",
+      "originalBytes": 22081,
+      "originalSha256": "9abd63c3acc057f64dce14c80a6cafec425d37c94335a065bc90f1dca500173e",
+      "publishedBytes": 22081,
+      "publishedSha256": "9abd63c3acc057f64dce14c80a6cafec425d37c94335a065bc90f1dca500173e",
+      "transformed": false
+    },
+    {
+      "archivePath": "reference-workflow.mjs",
+      "publishedPath": "reference-workflow.mjs",
+      "originalBytes": 11645,
+      "originalSha256": "80784f690dc51242e91e19f18b6064bfac2dd5bd5d5e13d1f136ed356a12f759",
+      "publishedBytes": 11645,
+      "publishedSha256": "80784f690dc51242e91e19f18b6064bfac2dd5bd5d5e13d1f136ed356a12f759",
+      "transformed": false
+    },
+    {
+      "archivePath": "report-integrity.json",
+      "publishedPath": "report-integrity.json",
+      "originalBytes": 345,
+      "originalSha256": "ed9c67be25ac226593ea8b08d628c196c2a2192d1618d90d5b65f675195161ed",
+      "publishedBytes": 276,
+      "publishedSha256": "4db7955c8a682a9efcfc6a6d53a99a3d718c60442465312a66e3fe8d0e4f60af",
+      "transformed": true
+    },
+    {
+      "archivePath": "restart-before.json",
+      "publishedPath": "restart-before.json",
+      "originalBytes": 1817,
+      "originalSha256": "744de01cb4cadafdff0dfc35ed34f370b30bfc881fb8de2faa1b690285334378",
+      "publishedBytes": 1817,
+      "publishedSha256": "744de01cb4cadafdff0dfc35ed34f370b30bfc881fb8de2faa1b690285334378",
+      "transformed": false
+    },
+    {
+      "archivePath": "restart-check.mjs",
+      "publishedPath": "restart-check.mjs",
+      "originalBytes": 2460,
+      "originalSha256": "9cac0cad03daf8aa83e6c0820cac89c7e841dd054ecbbf3a34615acc1db34399",
+      "publishedBytes": 2627,
+      "publishedSha256": "06568875dc9a87d9206d70e86edd96f1edad15210eb7c45ca590e0d571830262",
+      "transformed": true
+    },
+    {
+      "archivePath": "restart-result.json",
+      "publishedPath": "restart-result.json",
+      "originalBytes": 2191,
+      "originalSha256": "b5c64df684bcc78b59ee4a124a489b11b4f0736e1ae3778df1a6671a33a61051",
+      "publishedBytes": 2191,
+      "publishedSha256": "b5c64df684bcc78b59ee4a124a489b11b4f0736e1ae3778df1a6671a33a61051",
+      "transformed": false
+    },
+    {
+      "archivePath": "rule-schema.json",
+      "publishedPath": "rule-schema.json",
+      "originalBytes": 20347,
+      "originalSha256": "5605edf9d4a62ebf1a4020e151ea59dd3a83f3ed3a0740d4e090834a8787d0f1",
+      "publishedBytes": 20347,
+      "publishedSha256": "5605edf9d4a62ebf1a4020e151ea59dd3a83f3ed3a0740d4e090834a8787d0f1",
+      "transformed": false
+    },
+    {
+      "archivePath": "schema-2020-check.cjs",
+      "publishedPath": "schema-2020-check.cjs",
+      "originalBytes": 3958,
+      "originalSha256": "373e47fee28399d0a37d57299e2c96281baefca482d17df9a53e32a48ac06fa1",
+      "publishedBytes": 3958,
+      "publishedSha256": "373e47fee28399d0a37d57299e2c96281baefca482d17df9a53e32a48ac06fa1",
+      "transformed": false
+    },
+    {
+      "archivePath": "schema-coverage-result.json",
+      "publishedPath": "schema-coverage-result.json",
+      "originalBytes": 295,
+      "originalSha256": "801dfa6b98123c4305f8191f2da54dda053ed160021483e7e8edde57d047d330",
+      "publishedBytes": 295,
+      "publishedSha256": "801dfa6b98123c4305f8191f2da54dda053ed160021483e7e8edde57d047d330",
+      "transformed": false
+    },
+    {
+      "archivePath": "schema-coverage.cjs",
+      "publishedPath": "schema-coverage.cjs",
+      "originalBytes": 3089,
+      "originalSha256": "6a26aec455bdd56e8541445542843ceb0165980f01f8f239916ff06a3143120f",
+      "publishedBytes": 3089,
+      "publishedSha256": "6a26aec455bdd56e8541445542843ceb0165980f01f8f239916ff06a3143120f",
+      "transformed": false
+    },
+    {
+      "archivePath": "schema-result.json",
+      "publishedPath": "schema-result.json",
+      "originalBytes": 223,
+      "originalSha256": "9ce931e7cd3140211472d2e46b6a3323dd0b45821530abb614a4b3a739ce0825",
+      "publishedBytes": 223,
+      "publishedSha256": "9ce931e7cd3140211472d2e46b6a3323dd0b45821530abb614a4b3a739ce0825",
+      "transformed": false
+    },
+    {
+      "archivePath": "validator/package-lock.json",
+      "publishedPath": "validator/package-lock.json",
+      "originalBytes": 2791,
+      "originalSha256": "6164ceecc8e78609365d4a26c7eb86cc74f89c0f08b277bafa5b5bc8210d3156",
+      "publishedBytes": 2791,
+      "publishedSha256": "6164ceecc8e78609365d4a26c7eb86cc74f89c0f08b277bafa5b5bc8210d3156",
+      "transformed": false
+    },
+    {
+      "archivePath": "validator/package.json",
+      "publishedPath": "validator/package.json",
+      "originalBytes": 76,
+      "originalSha256": "b4f53034ac018bc6d17b3288f66c718a0584e636e1d922673225b2584e51f3b0",
+      "publishedBytes": 76,
+      "publishedSha256": "b4f53034ac018bc6d17b3288f66c718a0584e636e1d922673225b2584e51f3b0",
+      "transformed": false
+    },
+    {
+      "archivePath": "verification-summary.json",
+      "publishedPath": "verification-summary.json",
+      "originalBytes": 4425,
+      "originalSha256": "2aa4c404992dd036420e5450c3d50157e8ae54f9b43332032f4d6f29ac5520cf",
+      "publishedBytes": 4255,
+      "publishedSha256": "ffd81cff25f19418b60f696aaab8c86252f3b4248a224f05b092d5b4562bcffd",
+      "transformed": true
+    },
+    {
+      "archivePath": "workflow-check.mjs",
+      "publishedPath": "workflow-check.mjs",
+      "originalBytes": 8823,
+      "originalSha256": "7316e2c3073417ef98dae195864357a976f988c791d37e5e14af6aed3482adab",
+      "publishedBytes": 8823,
+      "publishedSha256": "7316e2c3073417ef98dae195864357a976f988c791d37e5e14af6aed3482adab",
+      "transformed": false
+    },
+    {
+      "archivePath": "workflow-fixture.json",
+      "publishedPath": "workflow-fixture.json",
+      "originalBytes": 2449,
+      "originalSha256": "c4063c8848f651699d11addd8034cda581696193cb4bcaebd14308badae27471",
+      "publishedBytes": 2449,
+      "publishedSha256": "c4063c8848f651699d11addd8034cda581696193cb4bcaebd14308badae27471",
+      "transformed": false
+    },
+    {
+      "archivePath": "workflow-result.json",
+      "publishedPath": "workflow-result.json",
+      "originalBytes": 4414,
+      "originalSha256": "a2d8bc29d9f336b399dcb2794058284c71c307d5a9bd80681fac2898b6624572",
+      "publishedBytes": 4414,
+      "publishedSha256": "a2d8bc29d9f336b399dcb2794058284c71c307d5a9bd80681fac2898b6624572",
+      "transformed": false
+    }
+  ]
+}

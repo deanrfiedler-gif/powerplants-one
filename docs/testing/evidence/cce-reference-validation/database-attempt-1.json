@@ -1,0 +1,59 @@
+{
+  "scope": "Synthetic contract-parent harness, not the native service writer",
+  "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+  "passed": 11,
+  "failed": 1,
+  "cases": [
+    {
+      "id": "DB-01",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-02",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-03",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-04",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-05",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-06",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-07",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-08",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-09",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-10",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-11",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-12",
+      "status": "FAIL",
+      "code": "ERR_ASSERTION",
+      "message": "22003: numeric field overflow",
+      "stack": "AssertionError [ERR_ASSERTION]: 22003: numeric field overflow\n    at throwsAction (file:///<evidence-workdir>/database-check.mjs:39:153)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///<evidence-workdir>/database-check.mjs:64:71\n    at async check (file:///<evidence-workdir>/database-check.mjs:16:33)\n    at async file:///<evidence-workdir>/database-check.mjs:64:2"
+    }
+  ]
+}

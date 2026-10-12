@@ -8,6 +8,14 @@
 
 Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.
 
+## CCE documentation publication — 12 October 2026
+
+Repository documentation writer for this bounded contribution: the CCE publication session on `docs/cce-reference-package`, based on `4228d470ca4c566a15e7c3397fc053b8f7bef4bc`. Dean authorised the documentation-only branch and PR. The [working specification](architecture/cce-technical-specification.md), [Figma prompt](delivery/cce-figma-design-prompt.md), [proposal/decision](decisions/cce-architecture-proposal.md) and [reference evidence](testing/evidence/cce-reference-validation/README.md) are now discoverable in Git. This records publication preparation; the PR and GitHub checks determine remote delivery separately.
+
+The owner-confirmed CCE UI scope is rule/condition and configuration-data authoring plus CPQ. Existing estimating wizard, quotation, review and delivery pages are integration points; this package does not propose rebuilding them.
+
+Historical database, native-command and restart evidence remains pinned to `ba1f4e3` through migration 0077; the publication base includes 0083. The [publication ledger](testing/evidence/cce-reference-validation/publication-validation.json) records fresh checks separately. ADR-0053's private existing Figma file and icon-free public evidence rules now govern the prompt. No runtime feature, application migration, accepted CCE design, architecture adoption, production adapter or deployment is added. Existing source snapshots, specialist families and all parent IDs remain unchanged.
+
 ## Remaining PR integration — 12 October 2026
 
 Dean authorised fixing and merging the remaining ready PRs, keeping backup PRs #404–#408 separate. The combined #429 contribution retains the exact heads of access #423/#427/#429 and design #422/#424/#426/#428. Dean confirmed the named Leads Figma version has been saved, resolving #426's draft checkpoint. All retained captures and original review fingerprints remain unchanged; design acceptance does not imply an application build or owner/device acceptance.

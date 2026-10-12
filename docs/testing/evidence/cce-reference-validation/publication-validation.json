@@ -1,0 +1,255 @@
+{
+  "prepared": "2026-10-12",
+  "publicationBase": "4228d470ca4c566a15e7c3397fc053b8f7bef4bc",
+  "historicalExecutionBaseline": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+  "scope": "Documentation import and pure reference replay only; no SQL, native-command or restart harness execution",
+  "checks": [
+    {
+      "name": "runtime-versions",
+      "command": "node --version",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/runtime-versions.txt"
+    },
+    {
+      "name": "typescript-version",
+      "command": "node node_modules/typescript/bin/tsc --version",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/typescript-version.txt"
+    },
+    {
+      "name": "python-version",
+      "command": "python --version",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/python-version.txt"
+    },
+    {
+      "name": "validator-install",
+      "command": "npm.cmd ci --prefix <evidence-replay>\\validator --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/validator-install.txt"
+    },
+    {
+      "name": "schema",
+      "command": "node <evidence-replay>\\schema-2020-check.cjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/schema.txt"
+    },
+    {
+      "name": "schema-coverage",
+      "command": "node <evidence-replay>\\schema-coverage.cjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/schema-coverage.txt"
+    },
+    {
+      "name": "expressions",
+      "command": "node --import tsx <evidence-replay>\\expression-check.ts",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/expressions.txt"
+    },
+    {
+      "name": "generate-oracle",
+      "command": "python -X utf8 <evidence-replay>\\generate-oracle.py",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/generate-oracle.txt"
+    },
+    {
+      "name": "oracle",
+      "command": "node --import tsx <evidence-replay>\\oracle-check.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/oracle.txt"
+    },
+    {
+      "name": "workflow",
+      "command": "node --import tsx <evidence-replay>\\workflow-check.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/workflow.txt"
+    },
+    {
+      "name": "commercial",
+      "command": "node --import tsx <evidence-replay>\\commercial-check.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/commercial.txt"
+    },
+    {
+      "name": "expression-compile",
+      "command": "node node_modules/typescript/bin/tsc --ignoreConfig --strict --noEmit --target ES2022 --module NodeNext --moduleResolution NodeNext --skipLibCheck --typeRoots <checkout>\\node_modules\\@types <evidence-replay>\\expression.ts",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/expression-compile.txt"
+    },
+    {
+      "name": "foundation",
+      "command": "python -X utf8 scripts/check_foundation.py",
+      "exitCode": 124,
+      "status": "FAIL",
+      "log": "publication/foundation.txt"
+    },
+    {
+      "name": "prototype",
+      "command": "python -X utf8 scripts/check_prototype.py",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/prototype.txt"
+    },
+    {
+      "name": "naming",
+      "command": "python -X utf8 scripts/check_naming.py",
+      "exitCode": 1,
+      "status": "FAIL",
+      "log": "publication/naming.txt"
+    },
+    {
+      "name": "studio",
+      "command": "npm.cmd run studio:check",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/studio.txt"
+    },
+    {
+      "name": "typecheck",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 2,
+      "status": "FAIL",
+      "log": "publication/typecheck.txt"
+    },
+    {
+      "name": "expressions-final",
+      "command": "node --import tsx <publication-workdir>\\expression-check.ts",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/expressions-final.txt"
+    },
+    {
+      "name": "naming-final",
+      "command": "python -X utf8 scripts/check_naming.py",
+      "exitCode": 1,
+      "status": "FAIL",
+      "log": "publication/naming-final.txt"
+    },
+    {
+      "name": "typecheck-final",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/typecheck-final.txt"
+    },
+    {
+      "name": "foundation-final",
+      "command": "python -X utf8 scripts/check_foundation.py",
+      "exitCode": 1,
+      "status": "FAIL",
+      "log": "publication/foundation-final.txt"
+    },
+    {
+      "name": "diff-check",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/diff-check.txt"
+    },
+    {
+      "name": "naming-repaired",
+      "command": "python -X utf8 scripts/check_naming.py",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/naming-repaired.txt"
+    },
+    {
+      "name": "foundation-repaired",
+      "command": "python -X utf8 scripts/check_foundation.py",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/foundation-repaired.txt"
+    },
+    {
+      "name": "diff-check-final",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/diff-check-final.txt"
+    },
+    {
+      "name": "reference-environment-guard",
+      "command": "Node assertions: missing CCE_REPO_ROOT and wrong checkout are refused before database access",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "publication/environment-guard.txt"
+    }
+  ],
+  "notRun": [
+    "Historical database, native command, populated upgrade and restart harnesses against current main",
+    "Complete CCE application/browser/worker/provider tests; no such implementation is added",
+    "Independent security review and business acceptance"
+  ],
+  "publicationRepairs": [
+    {
+      "finding": "Initial foundation check exceeded 150-second collection limit",
+      "treatment": "Rerun with a command-scoped exclusion for the pre-existing untracked .worktrees directory; no tracked source excluded or ignore file changed"
+    },
+    {
+      "finding": "Maintained project instructions exceeded their 8000-character contract",
+      "treatment": "Use a concise CCE scope pointer in existing Estimating guidance; retain other instruction meanings"
+    },
+    {
+      "finding": "Retained expression test imported a .ts extension incompatible with repository typechecking",
+      "treatment": "Adapt test specifier to .js resolved by tsx/TypeScript; retain original source hash; rerun expression check"
+    },
+    {
+      "finding": "Existing generated Next route types referenced paths absent from the fetched main checkout",
+      "treatment": "Regenerate ignored route types with the installed Next typegen command; no application source changes and no regression attribution"
+    },
+    {
+      "finding": "Initial Reviews & approvals link guessed an unavailable filename",
+      "treatment": "Resolve to the actual estimate-reviews-design.md decision before final link checks"
+    },
+    {
+      "finding": "Owner clarified UI boundary during publication",
+      "treatment": "Narrow report, Figma brief and decision/status to authoring data and CPQ; existing wizard/quotation pages are integration only"
+    },
+    {
+      "finding": "Repository link checking found appendix anchors with omitted em-dash spacing",
+      "treatment": "Living report appendix headings use colons matching their links; prior report retained byte-for-byte as a plain-text provenance file with original defects visible"
+    },
+    {
+      "finding": "First compacted project instructions omitted the checker-required docs/STATUS.md spelling",
+      "treatment": "Restored the explicit path, preserved the ES-01–10/Excel source guidance and kept total length below 8000 characters"
+    }
+  ],
+  "localCheckScope": "Command-scoped Git exclusion of pre-existing untracked /.worktrees/; no tracked files excluded and no repository ignore changes",
+  "currentResult": "PASS for documentation, source integrity, typecheck and pure reference checks; historical failed attempts remain recorded; no new database execution",
+  "finalPassingChecks": [
+    "schema",
+    "schema-coverage",
+    "expressions-final",
+    "oracle",
+    "workflow",
+    "commercial",
+    "expression-compile",
+    "prototype",
+    "studio",
+    "typecheck-final",
+    "naming-repaired",
+    "foundation-repaired",
+    "diff-check-final",
+    "reference-environment-guard"
+  ],
+  "contentReview": "publication/publication-content-review.json",
+  "reportSourceConsistency": "publication/report-integrity.json",
+  "designReviewLimits": {
+    "unreviewedPages": 330,
+    "stalePages": 28,
+    "componentReviewsPending": 42,
+    "meaning": "Existing studio integrity output; no visual acceptance claimed"
+  }
+}

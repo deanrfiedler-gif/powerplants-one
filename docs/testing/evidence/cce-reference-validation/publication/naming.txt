@@ -1,0 +1,12 @@
+{
+  "status": "failed",
+  "document_records": 556,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 396,
+  "git_masters": 265,
+  "project_instruction_characters": 8438,
+  "errors": [
+    "Copy-ready project instructions exceed 8,000 characters"
+  ],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}
