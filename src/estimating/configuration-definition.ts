@@ -1,3 +1,10 @@
+import {
+  catalogueGroups,
+  equipmentCatalogueDefinition,
+  type CatalogueFamily,
+  type CategoryId,
+} from "./equipment-catalogue";
+
 // Captured independently from the immutable ten-question r01 questionnaire.
 export const configurationDefinition = "PPO-ES02-CONFIG-r01" as const;
 export const equipmentFamilies = [
@@ -76,7 +83,9 @@ export type Coverage = {
 };
 export type ProposedSystem = Entity & {
   name: string;
-  family: Family;
+  family: Family | CatalogueFamily;
+  // Absent in r01; required in r02 (null only for Shared infrastructure).
+  category_id?: CategoryId | null;
   type: string;
   intent: "New" | "Retain" | "RetainExpand";
   proposed_work: string;
@@ -121,8 +130,9 @@ export type DiscoveryFollowUp = Entity &
     activity_id: string | null;
   };
 export type Configuration = {
-  schema_version: 1;
-  definition_id: typeof configurationDefinition;
+  schema_version: 1 | 2;
+  definition_id:
+    typeof configurationDefinition | typeof equipmentCatalogueDefinition;
   areas: Area[];
   systems: ProposedSystem[];
   facts: ConfigurationFact[];
@@ -169,12 +179,14 @@ export function configurationCounts(
     growing_areas: config.areas.filter((a) => a.purpose === "Growing").length,
     systems: new Set(config.systems.map((s) => s.id)).size,
     families: Object.fromEntries(
-      equipmentFamilies.map((f) => [
-        f.id,
-        new Set(
-          config.systems.filter((s) => s.family === f.id).map((s) => s.id),
-        ).size,
-      ]),
+      (config.schema_version === 2 ? catalogueGroups : equipmentFamilies).map(
+        (f) => [
+          f.id,
+          new Set(
+            config.systems.filter((s) => s.family === f.id).map((s) => s.id),
+          ).size,
+        ],
+      ),
     ),
     to_confirm: new Set(
       findings

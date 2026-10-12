@@ -253,7 +253,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // changes or authority-table write permissions. Generic table grants add no API authority.
   // 0084 adds immutable local single-grant attestations and one existing-local duty.
   // Review APIs refuse hosted mode; no hosted users/grants or runtime authority writes.
-  if (latestMigrationVersion !== 84) throw Error("Review the existing-demo upgrade for this release.");
+  // 0085 adds the opt-in ES-02 r02 catalogue guard and extends the installed
+  // configuration trigger. No backfill, table, seed, user, permission, identity
+  // ALTER or output change. Existing r01 writes and hosted grant boundaries remain.
+  if (latestMigrationVersion !== 85) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

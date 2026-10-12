@@ -1034,7 +1034,7 @@ export function SystemsEditor({
                     aria-pressed={system?.id === s.id}
                     onClick={() => setSelected(s.id)}
                   >
-                    <Icon name={familyGlyph[s.family] ?? "other"} className="es02-icon es02-icon-sm" />
+                    <Icon name={familyIcon(s.family) ?? "other"} className="es02-icon es02-icon-sm" />
                     {s.name || "New system"}
                   </button>,
                   <span key="coverage" title={coverageLabel(s, value.areas)}>
