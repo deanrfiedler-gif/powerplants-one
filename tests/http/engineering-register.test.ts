@@ -67,7 +67,7 @@ test("EN01 HTTP native coordination feeds sorted scoped counts and invalidates s
   };
   assert.equal(
     (await call(cookie, `engineering/${a.id}/coordination`, command)).status,
-    200,
+    201,
   );
   assert.equal(
     (await call(cookie, `engineering/${a.id}/coordination`, command)).status,
