@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Excel parser backup recovery — 12 October 2026
+
+Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.
+
 ## Remaining PR integration — 12 October 2026
 
 Dean authorised fixing and merging the remaining ready PRs, keeping backup PRs #404–#408 separate. The combined #429 contribution retains the exact heads of access #423/#427/#429 and design #422/#424/#426/#428. Dean confirmed the named Leads Figma version has been saved, resolving #426's draft checkpoint. All retained captures and original review fingerprints remain unchanged; design acceptance does not imply an application build or owner/device acceptance.
@@ -105,6 +109,10 @@ Dean's instruction to proceed with the next task continues AD-01 from PR #410 on
 Repository writer: this AD-01 session, isolated branch `codex/ad01-access-review`, based on main `0e10459`. Dean's instruction to proceed starts the adopted next build item with the [read-only increment](decisions/access-review-native.md): people, exact grants and server-side company/site grant explanation. Migration/seed 0078 adds one inspection duty to the existing synthetic Systems identity; hosted users receive none. Native roles, teams, access-changing commands and campaigns remain subsequent work. [Execution evidence](testing/evidence/access-inspection/README.md) separates actual checks, retained setup failures, visual review, PR delivery and owner acceptance.
 
 [PR #410](https://github.com/deanrfiedler-gif/powerplants-one/pull/410) integrates main's PT-27 work and delivers this first increment. The final local build, nine desktop/phone browser checks, 13 selected database checks and documentation/register checks pass. Twelve source-bound native/reference captures expose the proposed layout adaptation; no owner acceptance is inferred. The source is mergeable; full current-head CI is still pending. AD-01 remains to refine, with roles, teams, changes and campaigns open.
+
+## Closed backup recovery review — 12 October 2026
+
+Dean closed backups #404–#408 and requested a selective recovery review. The [source-by-source ledger](testing/evidence/backup-recovery/README.md) identifies missing Excel parser work for a separate tested contribution and restores two verified historical Engineering documentation corrections from #404. Every saved #407/#408 blob already occurs in main history; Products' old 0049 SQL is identical to current 0052, and later completed code/evidence supersedes the broader #406 snapshot. Backup branches remain retained. This documentation recovery changes no runtime, migration, grant, review status or deployment.
 
 ## Earlier open PR integration — 11 October 2026
 
