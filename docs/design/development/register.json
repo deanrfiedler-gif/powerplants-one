@@ -2057,7 +2057,7 @@
       ],
       "scope_status": "Backend implemented; page unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Backend verification in progress; page and owner acceptance separate",
+      "functional_status": "Backend verified locally: 11 database/upgrade, 5 unit, 2 HTTP and real restart; page/owner review separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
