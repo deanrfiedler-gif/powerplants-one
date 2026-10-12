@@ -68,6 +68,11 @@
       "id": "figma-my-work-overview",
       "fixture": "tests/browser/my-work.spec.ts; tests/browser/my-work-mobile.spec.ts",
       "description": "Accepted overview presentation with real counts, outcome/reschedule/follow-up commands, menu focus return, hidden unconfigured weather and three quick actions. Other module interiors retain their existing baseline."
+    },
+    {
+      "id": "figma-shell-consumer-reflow",
+      "fixture": "tests/ui/desktop-shell.spec.ts; tests/browser/engineering-materials.spec.ts; tests/browser/engineering-changes.spec.ts; tests/browser/estimating-workload.spec.ts",
+      "description": "Flowing search and full-height More; whole Engineering destination breadcrumbs; retained Engineering menu separated from the opt-in My Work Figma presentation; Estimating panel/drawer follows available width with either rail mode."
     }
   ]
 }

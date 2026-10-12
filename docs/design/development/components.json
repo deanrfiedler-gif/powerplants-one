@@ -3442,7 +3442,7 @@
         {
           "id": "figma-shell-overview-review",
           "expected": "Paired accepted Shell v2 and My Work overview review on desktop and phone.",
-          "actual": "First implementation authorised 13 October; exact sources and execution evidence recorded separately. Other My Work grids/detail overlays and module interiors remain.",
+          "actual": "First implementation authorised 13 October; exact sources and execution evidence recorded separately. Release preparation checks flowing search, whole Engineering breadcrumbs, retained legacy menus and Estimating reflow in both rail modes. Other My Work grids/detail overlays and module interiors remain.",
           "action": "Review docs/testing/evidence/figma-ui/README.md and explicit runtime adaptations before recording owner/device acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

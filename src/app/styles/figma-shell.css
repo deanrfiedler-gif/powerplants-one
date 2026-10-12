@@ -46,6 +46,15 @@
   .app-frame .ppo-shell-header .ppo-crumbs li { flex: 0 1 auto; min-width: 0; }
   .app-frame .ppo-shell-header .ppo-crumbs .ppo-crumb { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
   .app-frame .ppo-shell-header .ppo-crumbs li:last-child { flex: 0 0 auto; max-width: 100%; }
+  /* Workspace names can be long. Keep the current destination whole and expose
+     its ancestors through Page hierarchy, including when its menu is docked. */
+  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) { max-height: 42px; }
+  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) li { display: none; }
+  .app-frame .ppo-shell-header .ppo-crumbs li[data-crumb=view],
+  .app-frame .workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li:has(+ [data-crumb=view]) { display: flex; flex: 0 1 auto; }
+  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) li::before { content: none; }
+  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) .ppo-crumb { white-space: normal; overflow-wrap: anywhere; }
+  .app-frame .workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
   .app-frame:has(.mw-overview-figma) .ppo-breadcrumb-trigger { display: none; }
 }
 @media (min-width: 781px) and (max-width: 1199px) {

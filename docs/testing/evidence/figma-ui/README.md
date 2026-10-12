@@ -14,7 +14,7 @@ Windows, Node 24.21.0, npm 11.19.0, PostgreSQL 16; isolated `ppo_synthetic_test`
 
 The initial compiled build, changed-file lint and TypeScript checks passed. The first browser run stopped at two superseded presentation assertions: the local Roboto family alias and the removed greeting's department chip. Those assertions were updated to the accepted design; outcome, counts, permissions, history, timing, focus and reload assertions were retained. The visual pass also identified breadcrumb compression and premature toolbar wrapping; the implementation was corrected before final verification.
 
-Final application source: `33b23b7`. The subsequent evidence-only commit does not change the tested application or test code.
+Initial locally verified application source: `33b23b7`. The subsequent evidence-only commit does not change the tested application or test code.
 
 | Check | Result |
 |---|---|
@@ -47,3 +47,13 @@ Visual inspection used the licensed local preview at 1440 × 900 and 390 × 844.
 | `phone-overview.png` | `8cbbcdf4fa8bf2e0bf7192f7778f5e026f34572b7acdf4bace4c3dfaef728fc4` |
 
 The overview geometry follows the inspected source. Data-dependent rows/cards, the omitted unconfigured weather, permitted utility controls and the current department's destinations explain the deliberate visual differences. Keyboard/focus and CSS reflow checks do not substitute for a physical-device or screen-reader review.
+
+## Release preparation continuation — 13 October 2026
+
+Dean confirmed “My Work first” and asked to proceed. Main advanced to `c3ff5b9` with the accepted CPQ design records. Merge `271c5f7` retains those records and this contribution; only the two append-only status/register conflicts needed reconciliation.
+
+Initial PR-head CI exposed superseded shell assumptions in CRM and Estimating, an Engineering menu comparison against the newly changed My Work presentation, and a real long-breadcrumb truncation. The header now keeps the current workspace destination whole, with ancestors available through Page hierarchy. CRM presentation checks follow the Shell v2 palette, flowing search and 240 px full-height More panel. Engineering asserts its retained menu separately from My Work's explicit `figma` mode. Estimating exercises the original compact-rail docking boundary and the expanded-rail drawer without reducing its 1244 px content-width requirement. No command, permission, test deadline or required check is removed.
+
+Fresh compiled consumer checks and contribution CI determine readiness of this repair. The original local results above are retained with their original source and do not stand in for the repaired-head results or hosted deployment.
+
+Continuation local build, changed-test ESLint, whitespace and design-register checks pass. Four focused component shell scenarios pass. The combined r17 utility comparison reaches the existing 30-second deadline during capture locally; the retained test now foregrounds each of its two pages before capture, without changing that deadline. The first compiled consumer attempt was stopped after the local preview's `localhost` host setting disagreed with the runner's `127.0.0.1`; those refusals precede application behavior. A corrected launch then reached the existing 120-second server-start deadline. Both attempts remain in local logs. A separately started compiled server and fresh CI are used for the subsequent consumer proof; no local all-browser pass is claimed at this checkpoint.
