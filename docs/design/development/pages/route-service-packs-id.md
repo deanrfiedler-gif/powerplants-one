@@ -15,6 +15,20 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted successor design: the [Job pack design decision](../../../decisions/job-pack-figma-design.md) of 12 October 2026, with captures 02–05 and 07 in [Job pack design r01](../../../reference/ui/service/job-pack-design-r01/README.md). The app still shows the integrated r03 design described in the rest of this section, and r03 stays the built baseline until a build implements the new design.
+
+- **Layout at 1440 × 900:**
+  - the Service rail with Job packs selected;
+  - the shell breadcrumb "Service / Job packs / reference", which replaces the in-module breadcrumb;
+  - a secondary menu holding the views (Job pack, Preparation, Revision history) and the nine-section contents, with amber attention counts;
+  - Record / Header with one primary action by state and "…" for the rest;
+  - a "Dispatch held until" bar with Pack issued, Crew acknowledged and Readiness;
+  - the pack paper in the centre;
+  - a status panel (readiness by stage, crew acknowledgement, pack record, output) that collapses to a 48 px strip.
+- **Decisions:** Check, Return, Queue exact output and Withdraw open dialogs that take a "Decision / change reason". Withdraw is a destructive action.
+- **Preparation:** the guided form with a fixed save bar. Saving opens "Record preparation change", which asks for a reason. Revision history shows each revision's reason and its field-level changes.
+- **Source changed:** a card lists each changed source with its checked and current versions and the sections it affects. "Review changed sources" opens Preparation with a before-and-now comparison in each affected section.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Match the linked page-specific reference; retain its accepted geometry.
 
 The Preparation view is the accepted r03 three-column composition: a contents rail listing the nine sections, the guided form, and a rail carrying Preparation status and Where information comes from. The module container owns the scroll, not the shell's `main`.
@@ -32,6 +46,8 @@ Measured on the compiled application, 23 September 2026 (`4c8fd6d`), Preparation
 No horizontal page scroll was found at any of the six viewports. The **Exact text as it will be issued** disclosure, structured section content, the source-change notice and the readiness stage groups are later increments (I4, I6, I7); this entry records only what I3 delivers.
 
 ## Mobile
+
+Accepted successor design: capture 06 in [Job pack design r01](../../../reference/ui/service/job-pack-design-r01/README.md). The coordinator's phone record page has Pack, Readiness and History tabs, with Print preview and the state's primary action fixed at the bottom. The technician sees only the current issue: "Your visit" and "Bring and collect" cards, the whole pack, and "Acknowledge this exact issue" with a confirmation sheet and an acknowledged state. The measurements below are the built r03 page.
 
 At 760 CSS px and below the page is a single column. The contents rail becomes a **Jump to a section** control, entries use 16 px text, and buttons and choices keep a 44 px target.
 
@@ -57,6 +73,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma successor design: [Job pack design r01 captures](../../../reference/ui/service/job-pack-design-r01/README.md) (icon-free PNGs; not application captures)
 - [powerplants-one-job-pack-r03.html](../../../reference/ui/job-pack/powerplants-one-job-pack-r03.html)
 
 ## Behaviour, handovers and verification

@@ -15,6 +15,8 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted successor design: the Preparation view of the [Job pack design decision](../../../decisions/job-pack-figma-design.md), capture 02 in [Job pack design r01](../../../reference/ui/service/job-pack-design-r01/README.md), titled "Prepare the first revision". The menu, header and status panel are those of the record page. The first save opens the reason dialog as "Record the first preparation". The app still shows the integrated r03 Preparation view described below.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Match the linked page-specific reference; retain its accepted geometry.
 
 The Preparation view is the accepted r03 three-column composition: a contents rail listing the nine sections, the guided form, and a rail carrying Preparation status and Where information comes from. The module container owns the scroll, not the shell's `main`.
@@ -57,6 +59,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma successor design: [Job pack design r01 captures](../../../reference/ui/service/job-pack-design-r01/README.md) (icon-free PNGs; not application captures)
 - [powerplants-one-job-pack-r03.html](../../../reference/ui/job-pack/powerplants-one-job-pack-r03.html)
 
 ## Behaviour, handovers and verification
