@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## My Work page design accepted — 12 October 2026
+
+Dean asked for the Figma My Work trial screen to be rebuilt "so it aligns with the rest of the UI pages that we have built", and accepted the redraw: "Proceed with your recommendations". The [decision](decisions/my-work-page-design.md) moves the Overview, My actions (with the activity window and Record outcome), Team queue, Reviews & handovers, Blocked & waiting, the Updates inbox and the phone onto the accepted Shell v2, shared grid and record window, and applies the 9 October review findings. Dean also asked for a Today's weather module; it is in the design as a proposal and needs a provider ADR (Google Weather was suggested) before anything is built. Nine icon-free [captures](reference/ui/my-work/my-work-page-design-r01/README.md) are retained. Still open: D3 (the "No next activity" rule) and whether My Work joins the Sales rail. Design only: no code, read, service or deployment changes. The named Figma version "My Work — Pipedrive pattern, accepted" is to be saved by Dean.
+
 ## Excel parser backup recovery — 12 October 2026
 
 Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.

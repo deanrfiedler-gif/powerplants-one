@@ -18,6 +18,10 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 07 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+
+- **Layout:** the breadcrumb "My Work / Blocked & waiting"; owner filter; a grid with Waiting for, Follow-up (sorted, next first), Waiting on, Source, Reference, Since and Follow-up owner; the fixed note rephrased in plain words under the grid.
+
 ## Mobile
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
@@ -33,6 +37,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-My-Work-and-Action-Centre-r01.html](../../../reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html)
+- Accepted Figma design: [My Work page design r01 captures](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The earlier references above stay as historical design records.
 
 ## Behaviour, handovers and verification
 

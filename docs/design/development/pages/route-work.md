@@ -18,6 +18,13 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 01 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+
+- **Layout at 1440 × 900:** the department rail with My Work selected; the breadcrumb "<department> / My Work"; the flush secondary menu with the six views and their counts, then Pinned views. Toolbar: View: Today's focus, owner, Filters, "updated hh:mm AEST", refresh, + Activity and "…" (Refresh now, Save or manage views…, Customise overview, Open calendar, Full activity form). The greeting and the department chip are removed.
+- **Summary strip:** Overdue, Due today, Waiting on others and No next activity, flush under the toolbar; each cell opens its view, and an unread count shows "—", never zero.
+- **Main column:** My activities (overdue and today, eight at most) in one-line rows: a done ring that opens Record outcome, the type icon, the title with the full width, the linked-record tag and context, timing and "…" (Reschedule or Set date, Open activity page). Then the Date needed and Reviews notices.
+- **Side column:** Today's weather (proposed; shown only when a provider is connected), Today's schedule, Waiting on others and Needs a next activity, all with one heading pattern (title, count, link).
+
 ## Mobile
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
@@ -25,6 +32,10 @@ At 390 × 844 and 320 CSS px, retain the same task and record context. Stack rel
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
 NAV repair: the overview header reads **My Work** and marks it current, without a redundant hidden Overview crumb. Subviews retain their identity and Page hierarchy disclosure. The Sales phone bar keeps five labelled cells and scoped Activities on the current local day; personal agenda links retain their separate meaning. The existing native phone fixture checks header geometry and the source-backed overview. [Screenshot inspection](../../../testing/evidence/pr366-pr367-repair/screenshot-review.md) records an actual 390 px synthetic read; it does not grant owner, device or zoom acceptance. No new issued mockup is available.
+
+Accepted design (12 October 2026): capture 09 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md).
+
+- **At 390 × 844:** the page name only in the header; the weather row and its site warning when a provider is connected; Quick actions Emails, Leads and Tasks with their names (Map and Insights hidden until they exist); Needs attention; This week; Today; Waiting on others. Flush lists, the icon-only tab bar with My Work current and the floating Create button.
 
 ## Shared components and states
 
@@ -35,6 +46,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-My-Work-and-Action-Centre-r01.html](../../../reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html)
+- Accepted Figma design: [My Work page design r01 captures](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The earlier references above stay as historical design records.
 
 ## Behaviour, handovers and verification
 
