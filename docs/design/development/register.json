@@ -6766,7 +6766,7 @@
       "title": "Project register",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Native Projects register from Figma 209:46: authorised schedule facts, views, filters, sorting, selection/export and exact-project snapshots. Existing schedule and closeout handovers remain.",
       "path": "/projects",
       "source_paths": [
         "src/app/(business)/projects/page.tsx"
@@ -6777,7 +6777,14 @@
       "image_paths": [
         "docs/blueprints/projects-visuals/projects-register-desktop.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",

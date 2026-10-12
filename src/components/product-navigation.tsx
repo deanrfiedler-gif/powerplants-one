@@ -374,6 +374,7 @@ function ProductNavigationView({
               onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
               <ProductIcon name={item.icon} active={activeId === item.id} />
               <span className="ppo-rail-label">{item.label}</span>
+              {item.id === "projects" && <span id="header-project-count" />}
             </Link>);
             // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.
             return section.label ? <div key={section.label} role="group" aria-label={section.label} className="ppo-rail-group">
@@ -432,12 +433,12 @@ function ProductNavigationView({
         </dialog>
       )}
       <nav
-        className={`mobile-navigation${workspace.id === "sales" ? " ppo-phone-bar-r07" : ""}`}
+        className={`mobile-navigation${workspace.id === "sales" || workspace.id === "projects" ? " ppo-phone-bar-r07" : ""}${workspace.id === "projects" ? " pj-phone-navigation" : ""}`}
         aria-label="Mobile navigation"
       >
         {workspace.id === "sales"
           ? salesPhoneBar.filter((entry) => allowed(destination(entry.id))).map(phoneCell)
-          : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)]
+          : (workspace.id === "projects" ? [destination("work"), destination("projects"), destination("programme"), destination("acceptance")] : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)])
               .filter((item): item is ShellDestination => !!item && allowed(item))
               .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
               .map((item) => link(item, true))}

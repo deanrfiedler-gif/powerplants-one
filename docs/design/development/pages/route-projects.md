@@ -1,42 +1,43 @@
 # Project register — design reference
 
-Stable entry: `route:/projects`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/projects`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and task
+Stable entry: `route:/projects`; PJ01 / PPO-012 / BP-06. Owner: Dean Fiedler. Application `/projects`. User-requested implementation; owner/device review pending. Preserve PRJ-01, PRJ-02, PRJ-07 and PRJ-08. Register / worklist is the r20 page type, with a project inspection window.
 
-An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
+## Source and provenance
 
-1. Select the project and check its reporting basis
-2. Review overdue milestones and explained health
-3. Open the underlying issue before assigning recovery work
+The current source is Dean's supplied Figma Projects page `209:46`, inspected 13 October 2026: desktop `209:47`, selection `209:238` (toolbar `209:260`, panel `209:301`), snapshot `209:118`, phone `209:457`, phone snapshot `209:617`, notes `209:478`. See the [decision](../../../decisions/projects-register-native.md) and [measured geometry](../../projects-register/figma-measurements.json). The notes' intended named version is **Projects register — Pipedrive pattern, accepted**; that saved version was not independently confirmed. The desktop snapshot render returned a hidden/black frame; its high-fidelity structure and the visible phone snapshot provide the source for the record layout. No exact public icon-free captures are available for this register yet. The private file link and licensed artwork remain outside Git.
 
-## Desktop
+Retain the [earlier register image](../../../blueprints/projects-visuals/projects-register-desktop.png) and [Gantt r10 HTML](../../../reference/ui/projects/ppo-projects-gantt-content-r10.html) as historical and receiving-schedule references. They are not substitutes for this Figma register. The separately accepted `/projects/[id]` record-page design remains its own increment.
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+## Purpose and handovers
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+Find authorised projects by lifecycle, coordinator, customer, milestone date or explicit task risk; inspect saved context; open the exact schedule or Acceptance & closeout. Incoming records come from native creation or controlled Sales receiving. Customer/site permissions and independent Sales access govern reads. The register cannot close projects, change task dates or assign bulk work.
 
-## Mobile
+Views are Active (default), My projects, Closed, All, Overdue milestones, Tasks at risk and No target date. My projects means active records coordinated by the current actor; attention views include active records. Counts include all authorised matches; the primary rail badge includes all authorised active projects independently of filters. URL parameters preserve view/filter/sort, while page tokens, column visibility and selection are transient. Selection and CSV cover the displayed page only.
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Next milestone is the earliest incomplete milestone, undated last with stable ID ties. Overdue means its finish date is before the site's observed local date. At risk counts non-milestone tasks explicitly marked AtRisk. Missing target, unscheduled milestone and no remaining milestones remain distinct. Project lifecycle remains Active/Closed; phase summaries do not create another lifecycle.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+## Desktop composition
 
-## Shared components and states
+At 1440 × 900, use 240 px expanded navy primary rail, 64 px header, 240 px secondary menu and 960 px content. Honour the shared persisted rail preference. Secondary views are 40 px rows; content toolbar is 60 px with 16 px horizontal padding and 40 px controls. Use existing Roboto, semantic tokens, the original Brand logo and named Font Awesome Kit icons. Unconfigured/offline glyphs retain ADR-0050 fallbacks.
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+The shared `RegisterTable` adopts this scoped variant: white 40 px header and rows; column widths 44/240/200/120/110/80/180/190/140/90/170/44; thin rules; title medium 14/20; 12/16 secondary text. Checkbox and action columns pin to opposite edges. Table scrolling stays inside its bounded container, with a sticky header. Unknown dates sort last; sort direction is accessible. Column controls retain the title. The generic shared table keeps its existing dimensions elsewhere.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Selection changes the toolbar and opens a 360 px panel over the grid, with factual selected cards and Open in sequence/Export list actions. Hide panel retains selection; cancel clears it. Record inspection uses a native modal at the content top, width capped at 960 px, with 440 px fact column, 24 px padding, a fixed footer and separate activity/history scrolling. Prev/Next follow the selection or visible page. Escape and close return to the register. No document-level horizontal scroll is permitted.
 
-## Visual references
+## Mobile and responsive behaviour
 
-- [projects-register-desktop.png](../../../blueprints/projects-visuals/projects-register-desktop.png)
-- [ppo-projects-gantt-content-r10.html](../../../reference/ui/projects/ppo-projects-gantt-content-r10.html)
+At 390 × 844 and down to 320 CSS px, keep the existing 780/781 px boundary and shared header; view/filter toolbar is 61 px. Flush rows are at least 80 px with 16 px horizontal padding, a title, customer/target line, explicit risk count, milestone/date line and trailing affordance. Full values are readable in the snapshot. The 56 px add action remains above the 64 px navigation bar. The Projects phone bar exposes Work, Projects, Programme, Acceptance and More when permitted; icons keep accessible names.
 
-## Behaviour, handovers and verification
+Tap opens a snapshot. Press and hold selects; pointer movement cancels the hold, and Shift+Space is a keyboard alternative. Selection exposes labelled bottom actions. This behaviour is adopted in Figma notes but undrawn. The full-screen snapshot stacks facts, fact tabs and attributed history, with a fixed 64 px action footer. At intermediate widths use the shared secondary-menu overlay below 1200 px rather than shrinking the menu. Check 1024/768, 390/844, 320/740 and enlarged layouts.
 
-The draft User Guide `guide.page.projects` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+## Components, states and accessibility
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Reuse `SecondaryMenuFrame`, `RegisterTable`, `RegisterSortHeader`, `RegisterEmpty`, `RegisterFooter`, Button/ButtonLink, WorklistChoice/WorklistMenu, `ReadState`, shell header slots and FontAwesomeGlyph. Keep scope `#ppo-projects` and declared dependencies. Native table semantics, labelled checkboxes, `aria-sort`, visible focus, modal Escape/focus return and keyboard fact tabs are required. Sort/filter changes discard selection and restart paging.
+
+Loading, failed/denied reads, empty/filtered-empty, long titles, unknown dates, unavailable Sales source, earlier history, phone selection and column controls are explicit adaptations beyond the drawn happy state. Failed refreshes cannot export retained rows; denial clears protected results. Each snapshot reads its own current schedule, history and separately scoped Sales handovers. Refresh and retry are read-only. New project and schedule commands retain their own native validation and recovery.
+
+## Verification and review
+
+The native fixture is `tests/browser/projects-register.spec.ts`; server authority and full-match/paging rules are in `tests/database/projects-register.test.ts`; CSV safety is in `tests/unit/projects-register.test.ts`. The [execution record](../../../testing/evidence/projects-register/README.md) lists actual results, viewport captures and limitations. `guide.page.projects` is maintained as Draft with stable sections. Owner acceptance, physical device/screen reader testing, CI, merge and hosted deployment are separate; no review fingerprint is promoted by this edit.
