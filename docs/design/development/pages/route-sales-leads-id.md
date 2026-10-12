@@ -16,11 +16,28 @@ This page address exists in the inspected application source. Open it from a run
 
 ## Desktop
 
+Accepted design (11 October 2026): the [lead record page decision](../../../decisions/lead-record-page-design.md), with captures 01–06 in [Lead record page design r01](../../../reference/ui/crm/lead-record-page-design-r01/README.md). It is proposed as the shared record layout. The app still opens the lead as a dialog over the Leads list, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the Sales rail with Leads selected; the breadcrumb "Sales / Leads / reference", which returns to the register; no secondary menu. Below the top bar come a one-row header, a readiness or state band, then a 380 px details column and an activity column, each scrolling on its own.
+- **Header:** title and status, the position in the register view with previous/next, Plan activity, Convert to deal and "…" (Edit lead, Resolve customer context, Transfer ownership, Archive lead, Disqualify lead last and in red). Below: reference, the owner with an avatar, and origin.
+- **Readiness bar:** "Ready to convert", with the requirements from `src/crm/leads/validation.ts` (organisation, site or a reason, contact or a reason, requirement, next activity). The qualification note shows as "asked when you convert". A gap shows in amber, with words.
+- **State banners:** read only (another owner), converted (Open deal), archived (Unarchive) and disqualified (Reopen), each with date, person and reason. The actions, composer and planning that the app does not allow are hidden.
+- **Details column:** Summary, Captured enquiry, Organisation (with other open work at the same customer), Site, Contact and Requirement, in collapsible sections divided by lines.
+- **Activity column:** a composer with Note (in place), Activity (the activity form), Email (write and send from the connected mailbox) and File (SharePoint upload or link); Focus with the next activity and quick planning; History grouped by day, filtered by All, Notes, Activities, Emails, Files or Changes, with counts.
+
+The LC-11, LC-12 and LC-17 forms keep the requirements below.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (11 October 2026): capture 07 in [Lead record page design r01](../../../reference/ui/crm/lead-record-page-design-r01/README.md).
+
+- **At 390 × 844:** tapping a lead in the list opens the record page directly: back, previous/next, status, then Details, Activity, Emails and Files tabs over scrolling content, with "…", Plan activity and Convert to deal fixed at the bottom.
+- **Actions and forms:** "…" opens an action sheet with the lead actions. "Plan an activity" and "Write an email" open full-screen forms with Save or Send.
+- **Not drawn yet:** the phone versions of the six states.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -34,7 +51,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design: [Lead record page design r01 captures](../../../reference/ui/crm/lead-record-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The retained Leads container `docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html` stays unchanged; the accepted design replaces the dialog layout when the page is built. Images of the LC-11, LC-12 and LC-17 forms are still missing.
 
 ## Behaviour, handovers and verification
 

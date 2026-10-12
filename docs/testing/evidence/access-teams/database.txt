@@ -1,0 +1,182 @@
+TAP version 13
+# Subtest: AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty
+ok 1 - AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty
+  ---
+  duration_ms: 20191.729
+  type: 'test'
+  ...
+# Subtest: AD01-02 workspace authority, masking, scope explanation and read-only preservation
+    # Subtest: ordinary identities cannot enumerate people or read explanations
+    ok 1 - ordinary identities cannot enumerate people or read explanations
+      ---
+      duration_ms: 44.6824
+      type: 'test'
+      ...
+    # Subtest: list and detail preserve exact company keys and refuse another workspace
+    ok 2 - list and detail preserve exact company keys and refuse another workspace
+      ---
+      duration_ms: 27.7158
+      type: 'test'
+      ...
+    # Subtest: grant eligibility differentiates company and exact site scope
+    ok 3 - grant eligibility differentiates company and exact site scope
+      ---
+      duration_ms: 40.2683
+      type: 'test'
+      ...
+    # Subtest: inactive, future and expired subjects/grants cannot produce a positive explanation
+    ok 4 - inactive, future and expired subjects/grants cannot produce a positive explanation
+      ---
+      duration_ms: 42.6751
+      type: 'test'
+      ...
+    # Subtest: expired reviewer authority is rechecked; Company inspection grants are rejected by the schema
+    ok 5 - expired reviewer authority is rechecked; Company inspection grants are rejected by the schema
+      ---
+      duration_ms: 8.1246
+      type: 'test'
+      ...
+    # Subtest: working company narrows subject explanations and requires reviewer workspace context
+    ok 6 - working company narrows subject explanations and requires reviewer workspace context
+      ---
+      duration_ms: 120.9606
+      type: 'test'
+      ...
+    # Subtest: hosted names/subject keys cannot leak through search or detail
+    ok 7 - hosted names/subject keys cannot leak through search or detail
+      ---
+      duration_ms: 1354.2368
+      type: 'test'
+      ...
+    # Subtest: reads preserve every identity, grant and audit row
+    ok 8 - reads preserve every identity, grant and audit row
+      ---
+      duration_ms: 140.4651
+      type: 'test'
+      ...
+    1..8
+ok 2 - AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ---
+  duration_ms: 1803.4507
+  type: 'test'
+  ...
+# Subtest: AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+    # Subtest: complete catalogue includes unassigned and hosted-only keys; literal search and domains
+    ok 1 - complete catalogue includes unassigned and hosted-only keys; literal search and domains
+      ---
+      duration_ms: 51.1451
+      type: 'test'
+      ...
+    # Subtest: unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders
+    ok 2 - unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders
+      ---
+      duration_ms: 29.0571
+      type: 'test'
+      ...
+    # Subtest: same-name companies, site scope and cross-workspace grants remain distinct
+    ok 3 - same-name companies, site scope and cross-workspace grants remain distinct
+      ---
+      duration_ms: 14.6409
+      type: 'test'
+      ...
+    # Subtest: current counts exclude expired, scheduled and inactive identities; stable pagination and masked names
+    ok 4 - current counts exclude expired, scheduled and inactive identities; stable pagination and masked names
+      ---
+      duration_ms: 4591.4095
+      type: 'test'
+      ...
+    # Subtest: catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged
+    ok 5 - catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged
+      ---
+      duration_ms: 116.8756
+      type: 'test'
+      ...
+    1..5
+ok 3 - AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ---
+  duration_ms: 4816.1887
+  type: 'test'
+  ...
+# Subtest: AD01-04 proposed roles compare current authority at one exact scope without assigning access
+    # Subtest: catalogue is proposed only; exact revision and selection are required
+    ok 1 - catalogue is proposed only; exact revision and selection are required
+      ---
+      duration_ms: 54.9666
+      type: 'test'
+      ...
+    # Subtest: Site, Company and Workspace checks never match an unrelated grant
+    ok 2 - Site, Company and Workspace checks never match an unrelated grant
+      ---
+      duration_ms: 28.4932
+      type: 'test'
+      ...
+    # Subtest: inactive identity and future/expired grants remove matches
+    ok 3 - inactive identity and future/expired grants remove matches
+      ---
+      duration_ms: 23.6521
+      type: 'test'
+      ...
+    # Subtest: reviewer permissions and cleared working company are required on both reads
+    ok 4 - reviewer permissions and cleared working company are required on both reads
+      ---
+      duration_ms: 14.7872
+      type: 'test'
+      ...
+    # Subtest: hosted comparison masks identities; all reads preserve grants, users, audit and session state
+    ok 5 - hosted comparison masks identities; all reads preserve grants, users, audit and session state
+      ---
+      duration_ms: 851.5081
+      type: 'test'
+      ...
+    1..5
+ok 4 - AD01-04 proposed roles compare current authority at one exact scope without assigning access
+  ---
+  duration_ms: 988.2449
+  type: 'test'
+  ...
+# Subtest: AD01-05 proposed teams distinguish retained examples from current local identities
+    # Subtest: exact proposals, design-only gaps, current names and inactive local identities
+    ok 1 - exact proposals, design-only gaps, current names and inactive local identities
+      ---
+      duration_ms: 13.7539
+      type: 'test'
+      ...
+    # Subtest: a design-only ID collision is never resolved to a current identity
+    ok 2 - a design-only ID collision is never resolved to a current identity
+      ---
+      duration_ms: 674.7198
+      type: 'test'
+      ...
+    # Subtest: hosted identity behind a retained ID is unavailable and its data stays private
+    ok 3 - hosted identity behind a retained ID is unavailable and its data stays private
+      ---
+      duration_ms: 8.446
+      type: 'test'
+      ...
+    # Subtest: another workspace cannot resolve this workspace's identities even with inspection authority
+    ok 4 - another workspace cannot resolve this workspace's identities even with inspection authority
+      ---
+      duration_ms: 6.2903
+      type: 'test'
+      ...
+    # Subtest: repeated team reads preserve users, grants, sessions and all request/audit evidence
+    ok 5 - repeated team reads preserve users, grants, sessions and all request/audit evidence
+      ---
+      duration_ms: 87.1809
+      type: 'test'
+      ...
+    1..5
+ok 5 - AD01-05 proposed teams distinguish retained examples from current local identities
+  ---
+  duration_ms: 1061.1841
+  type: 'test'
+  ...
+1..5
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30811.4743

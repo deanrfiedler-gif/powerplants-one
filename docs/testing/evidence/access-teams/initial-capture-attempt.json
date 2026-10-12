@@ -1,0 +1,30 @@
+[
+  {
+    "file": "initial-native-390-teams.png",
+    "sha256": "cc89f8d97c3929ba68971285b395b23226b1edf073cc7fafcb2ff04c133a94d7",
+    "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "state": "Retained example proposals with separate current local identities; both rosters expanded",
+    "framing": "Team section only; SVG icons replaced by plain square placeholders before capture",
+    "overflow": false,
+    "usable": false,
+    "reason": "Element screenshot of nested scroll container clipped offscreen content; replaced by viewport capture."
+  },
+  {
+    "file": "initial-native-320-teams.png",
+    "sha256": "3fb18ccfd303ea351ef496434ef271f2cd0caee8b3c20e2d05ace620a34d29c0",
+    "source": "17c4827e1d9afe51058a721aa115c8a0fd5eca36",
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "state": "Retained example proposals with separate current local identities; both rosters expanded",
+    "framing": "Team section only; SVG icons replaced by plain square placeholders before capture",
+    "overflow": false,
+    "usable": false,
+    "reason": "Element screenshot of nested scroll container clipped offscreen content; replaced by viewport capture."
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-11T23:59:46.6494125+10:00",
+  "ports": [
+    3092,
+    55492,
+    55487
+  ],
+  "listeners_remaining": 0,
+  "scope": "Only the task compiled application and two owned temporary PostgreSQL clusters were stopped; private data/configuration retained outside Git."
+}

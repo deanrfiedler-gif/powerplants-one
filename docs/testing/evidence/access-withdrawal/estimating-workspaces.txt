@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original
+not ok 1 - E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original
+  ---
+  duration_ms: 119060.6898
+  type: 'test'
+  location: 'C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\ad01-approved-application\\powerplants-one\\tests\\database\\estimating-workspaces.test.ts:1:18956'
+  failureType: 'testCodeFailure'
+  error: 'canceling statement due to statement timeout'
+  code: '57014'
+  name: 'error'
+  stack: |-
+    C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async rows (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\estimating-workspaces.test.ts:57:4)
+    async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\ad01-approved-application\powerplants-one\tests\database\estimating-workspaces.test.ts:660:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 170740.7283

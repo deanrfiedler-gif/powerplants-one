@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-11T10:34:04.643Z",
+  "activity": [
+    {
+      "datname": "ppo_synthetic_test",
+      "state": "active",
+      "wait_event_type": null,
+      "wait_event": null,
+      "seconds": "21",
+      "phase": "-- Only run through db:reset with both explicit disposal flags. Disposable synth"
+    }
+  ],
+  "catalog": [
+    {
+      "relname": "pg_constraint",
+      "n_live_tup": "113",
+      "n_dead_tup": "4452",
+      "last_autovacuum": "2026-10-11T10:33:48.944Z",
+      "bytes": "2621440"
+    },
+    {
+      "relname": "pg_depend",
+      "n_live_tup": "31870",
+      "n_dead_tup": "821",
+      "last_autovacuum": "2026-10-11T10:32:50.178Z",
+      "bytes": "1974272"
+    },
+    {
+      "relname": "pg_statistic",
+      "n_live_tup": "453",
+      "n_dead_tup": "137",
+      "last_autovacuum": "2026-10-11T10:33:47.735Z",
+      "bytes": "335872"
+    },
+    {
+      "relname": "pg_proc",
+      "n_live_tup": "3715",
+      "n_dead_tup": "74",
+      "last_autovacuum": "2026-10-11T10:32:48.498Z",
+      "bytes": "2080768"
+    }
+  ]
+}

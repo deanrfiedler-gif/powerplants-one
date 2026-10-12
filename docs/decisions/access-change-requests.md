@@ -25,3 +25,7 @@ The execution ledger links tests for AT-01/AT-34 permission and isolation concer
 ## Controlled application continuation — 11 October 2026
 
 The [application contract](access-request-application.md) extends Approved version 2 with a separate, explicitly authorised local installation at version 3. Earlier no-apply statements describe the request/decision increment. Approval still changes no grant. Applied is distinct from current validity; hosted grant writes, administrative changes, teams and campaigns remain outside this continuation.
+
+## Requester withdrawal continuation — 11 October 2026
+
+The [withdrawal contract](access-request-withdrawal.md) adds reasoned closure of un-applied Submitted/Approved requests by the original requester under current read/propose authority. Original proposal/approval and installed access remain unchanged. A fresh proposal needs fresh independent review. Earlier held-request boundaries describe their source increments; grant revocation/editing, teams, campaigns and operational D-020 remain open.

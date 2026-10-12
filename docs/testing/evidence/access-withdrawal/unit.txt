@@ -1,0 +1,20 @@
+✔ AD-01 role comparisons preserve the seven retained proposals and exact revision deltas (36.8841ms)
+✔ AD-01 role routes retain the access destination with task-specific titles (1.3817ms)
+✔ all Maintenance and Warranty routes retain their Service shell parent (5.9247ms)
+✔ seven full ordered compositions retain withheld positions and My Work placement (0.6472ms)
+✔ permission and readiness filters retain relative order and never manufacture links (2.6771ms)
+✔ specific routes, genuine views and shared records select exactly their rail parent (18.7382ms)
+✔ shared context is explicit or remembered, independent of customer route spelling (186.6462ms)
+✔ every primary semantic glyph has a deliberate distinct active drawing on the same grid (62.6539ms)
+✔ the five later Service destinations each have their own rail icon (1.7113ms)
+✔ every forward SQL migration is registered exactly once; recovery is not a forward migration (145.8179ms)
+✔ local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions (37.4354ms)
+✔ duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid (4.2983ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6127.5527

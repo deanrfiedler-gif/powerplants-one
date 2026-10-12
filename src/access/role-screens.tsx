@@ -15,7 +15,14 @@ import {
 import { capabilityLabels } from "./capabilities";
 import type { RoleProposal } from "./roles";
 
-type Roles = { items: RoleProposal[] };
+import { SavedLocalTeams } from "./local-team-screens";
+import type { InspectedTeamPerson, TeamInspection } from "./teams";
+
+type Roles = {
+  items: RoleProposal[];
+  teams: TeamInspection[];
+  team_example_date: string;
+};
 type Person = {
   id: string;
   display_name: string;
@@ -49,14 +56,20 @@ function ProposalBoundary() {
   return (
     <p className="callout">
       Proposed bundles — not adopted policy (D-020). A matching set of grants
-      does not assign a role or approve a business action. Teams and access
-      changes are not available here.
+      does not assign a role or approve a business action. Team proposals confer
+      no access or review duty.
     </p>
   );
 }
 
 export function AccessRolesScreen() {
   const resource = useResource<Roles>("admin/access/roles");
+  const [teamFailure, setTeamFailure] = useState<unknown>(null);
+  const refresh = () => {
+    setTeamFailure(null);
+    resource.reload();
+  };
+  const error = teamFailure || resource.error;
   return (
     <>
       <Link href="/admin/access">Back to users and access</Link>
@@ -72,14 +85,17 @@ export function AccessRolesScreen() {
         bundle. Hosted tester provisioning remains with the operator; its fixed
         tester set is outside this catalogue.
       </p>
-      <ReadState
-        loading={resource.loading}
-        error={resource.error}
-        retry={resource.reload}
-      />
-      {resource.data && !resource.loading && !resource.error && (
+      <ReadState loading={resource.loading} error={error} retry={refresh} />
+      {resource.data && !resource.loading && !error && (
         <>
-          <div className="record-grid">
+          <p>
+            <a href="#proposed-teams">Inspect proposed teams</a>
+          </p>
+          <div
+            className="record-grid"
+            role="region"
+            aria-label="Role proposals"
+          >
             {resource.data.items.map((bundle) => (
               <article className="record-card" key={bundle.id}>
                 <h2>{bundle.name}</h2>
@@ -137,10 +153,76 @@ export function AccessRolesScreen() {
               </article>
             ))}
           </div>
-          <Button onClick={resource.reload}>Refresh proposed bundles</Button>
+          <section id="proposed-teams" aria-labelledby="proposed-teams-heading">
+            <h2 id="proposed-teams-heading">Proposed teams</h2>
+            <p className="callout">
+              Retained example as at {resource.data.team_example_date}. These
+              rosters are design proposals, not saved memberships. Source dates
+              do not describe current team membership. Teams do not grant access
+              or route reviews in this application.
+            </p>
+            <div className="record-grid">
+              {resource.data.teams.map((team) => (
+                <article
+                  className="record-card"
+                  key={team.id}
+                  aria-label={`${team.name} proposal`}
+                >
+                  <h3>{team.name}</h3>
+                  <p>{team.purpose}</p>
+                  <p className="narrative">Source team: {team.id}</p>
+                  <h4>Proposed lead</h4>
+                  <TeamPerson person={team.lead} />
+                  <details>
+                    <summary className="ppo-button ppo-button--quiet">
+                      Example roster for {team.name}
+                    </summary>
+                    <ul>
+                      {team.members.map((member) => (
+                        <li key={member.id} className="narrative">
+                          <TeamPerson person={member} />
+                          <p>
+                            Source dates: {member.from} to{" "}
+                            {member.to ?? "no end recorded"}.
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </article>
+              ))}
+            </div>
+          </section>
+          <SavedLocalTeams onDenied={setTeamFailure} />
+          <Button onClick={refresh}>Refresh proposals</Button>
         </>
       )}
     </>
+  );
+}
+
+function TeamPerson({ person }: { person: InspectedTeamPerson }) {
+  return (
+    <div>
+      <p>Source example: {person.name}</p>
+      {person.designOnly ? (
+        <p>Design-only identity — no application person link.</p>
+      ) : person.current ? (
+        <p>
+          Current local identity:{" "}
+          <Link href={`/admin/access/${person.current.id}`}>
+            {person.current.display_name}
+          </Link>
+          {" · "}
+          {person.current.active ? "Active identity" : "Inactive identity"}
+        </p>
+      ) : (
+        <p>
+          Local identity unavailable in this workspace — no application person
+          link.
+        </p>
+      )}
+    </div>
   );
 }
 

@@ -1,0 +1,847 @@
+{
+  "unique_selected_cases": 68,
+  "initial_recorded_results": 52,
+  "initial_passed": 48,
+  "initial_failed": 4,
+  "initial_run": "Interrupted; exact continuation selectors/files recorded in upgrade-files.json",
+  "all_covered_by_passes": true,
+  "cases": [
+    {
+      "name": "E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "FI07-03 changed recipient, source, service owner and permissions refuse fresh capture and retain originals",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "LC-12 populated previous-version upgrade preserves all Lead originals and permission grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "fresh combined installation retains both registries and both domains through repeat migration and seed",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "an existing Leads 0018 record and receipt survive the Projects upgrade exactly",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "not ok"
+        },
+        {
+          "log": "upgrade-isolated.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrade-isolated.txt"
+      ]
+    },
+    {
+      "name": "P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "SC-06 pack read adds registry readiness, actors and an advisory basis for staff only, and leaves the checked snapshot alone",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "populated 0050 upgrade preserves every old row/hash, registers 0051–0082 and exact authority/instrument additions",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "not ok"
+        },
+        {
+          "log": "policy-isolated.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "policy-isolated.txt"
+      ]
+    },
+    {
+      "name": "fresh installation applies only registered files through 0082, retains reserved gaps and repeats without changes",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "not ok"
+        },
+        {
+          "log": "policy-isolated.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "policy-isolated.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 25 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 48 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 71 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 72 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 74 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 76 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 77 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 78 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 79 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "not ok"
+        },
+        {
+          "log": "upgrade-isolated.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrade-isolated.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 80 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 81 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "PD upgrade from 82 preserves originals and exact new duties; repeat migration/seed is inert",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "prepared reads work without migration-ledger privilege and refresh changed relation result shapes",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 material: quotation retention leaves owned work actionable and returned native evidence requires fresh explicit disposition",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 Receipt immutable return, hold, receiving corrections and proposal replacements require fresh exact decisions",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 Receipt populated 0064 upgrade preserves prior generations grants histories allocations outputs and original operations",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 dependency executes exact native successor, conserves shared quantities, recovers originals and requires fresh disposition",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 dependency populated 0063 upgrade preserves all rows, accepted reviews, receipts, grants, histories and output bytes",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "ES07 Supply populated 0062 upgrade preserves all earlier commercial evidence, disposition, allocations, grants, identities and original bytes",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "quotation retention remains resolved through branch review; native result requires fresh explicit ES07 disposition",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "populated 0069 upgrade preserves isolated-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "populated 0069 upgrade preserves two-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-initial.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-initial.txt"
+      ]
+    },
+    {
+      "name": "populated 0069 upgrade preserves linear-chain originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0068 upgrade preserves isolated-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0068 upgrade preserves two-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0071 upgrade preserves isolated-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0071 upgrade preserves two-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0071 upgrade preserves linear-chain originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0071 upgrade preserves branch originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0071 upgrade preserves merge originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-a.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-a.txt"
+      ]
+    },
+    {
+      "name": "populated 0067 upgrade preserves isolated resolution, receiving, allocations, grants, original receipts and issued bytes",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    },
+    {
+      "name": "populated 0070 upgrade preserves isolated-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    },
+    {
+      "name": "populated 0070 upgrade preserves two-task originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    },
+    {
+      "name": "populated 0070 upgrade preserves linear-chain originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    },
+    {
+      "name": "populated 0070 upgrade preserves branch originals, every old row and output byte",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    },
+    {
+      "name": "P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    },
+    {
+      "name": "LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        },
+        {
+          "log": "upgrade-isolated.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt",
+        "upgrade-isolated.txt"
+      ]
+    },
+    {
+      "name": "LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts",
+      "results": [
+        {
+          "log": "upgrades-continuation-b.txt",
+          "result": "ok"
+        }
+      ],
+      "passing_evidence": [
+        "upgrades-continuation-b.txt"
+      ]
+    }
+  ]
+}

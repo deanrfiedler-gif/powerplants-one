@@ -1,0 +1,92 @@
+[
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/access-requests.test.ts",
+    "pattern": ".*",
+    "log": "requests.log",
+    "started_at": "2026-10-11T09:59:29.3195636Z",
+    "ended_at": "2026-10-11T10:01:16.6516722Z",
+    "exit_code": 1
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/access-application.test.ts",
+    "pattern": ".*",
+    "log": "application.log",
+    "started_at": "2026-10-11T10:01:17.3214080Z",
+    "ended_at": "2026-10-11T10:03:29.1257056Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/products-upgrade.test.ts",
+    "pattern": "PD upgrade from (25|80|81) ",
+    "log": "products.log",
+    "started_at": "2026-10-11T10:03:29.1490465Z",
+    "ended_at": "2026-10-11T10:07:05.2324056Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/field-timer-boundaries.test.ts",
+    "pattern": "^FI01 additive",
+    "log": "fi01.log",
+    "started_at": "2026-10-11T10:07:06.3509404Z",
+    "ended_at": "2026-10-11T10:09:51.1201795Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/field-customer-response.test.ts",
+    "pattern": "^FI07-07 populated",
+    "log": "fi07.log",
+    "started_at": "2026-10-11T10:09:51.1492000Z",
+    "ended_at": "2026-10-11T10:13:25.9880662Z",
+    "exit_code": 1
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/policy-persistence.test.ts",
+    "pattern": "populated 0050|fresh installation",
+    "log": "policy.log",
+    "started_at": "2026-10-11T10:13:26.3431563Z",
+    "ended_at": "2026-10-11T10:16:18.2600639Z",
+    "exit_code": 0
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/estimating.test.ts",
+    "pattern": "upgrade",
+    "log": "estimating.log",
+    "started_at": "2026-10-11T10:16:18.3123281Z",
+    "ended_at": "2026-10-11T10:22:20.8343723Z",
+    "exit_code": 1
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/estimating-workspaces.test.ts",
+    "pattern": "E2 migration formalises",
+    "log": "estimating-workspaces.log",
+    "started_at": "2026-10-11T10:22:21.3320223Z",
+    "ended_at": "2026-10-11T10:25:13.8666563Z",
+    "exit_code": 1
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/database/leads-projects-integration.test.ts",
+    "pattern": "fresh combined installation|main 0017",
+    "log": "leads-projects.log",
+    "started_at": "2026-10-11T10:25:14.0350231Z",
+    "ended_at": "2026-10-11T10:33:03.8108413Z",
+    "exit_code": 1
+  },
+  {
+    "source": "1e4eec78a983be30cecf6a7217f84565bc752570",
+    "test": "tests/demo/upgrade.test.ts",
+    "pattern": ".*",
+    "log": "demo.log",
+    "started_at": "2026-10-11T10:33:04.0562567Z",
+    "ended_at": "2026-10-11T10:41:41.2860810Z",
+    "exit_code": 0
+  }
+]

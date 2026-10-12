@@ -1,0 +1,7 @@
+{
+  "observed_at": "2026-10-11T10:38:04.1257163Z",
+  "utc_correction": "The command printed local 20:38:04 Australia/Brisbane; UTC is 10:38:04.",
+  "free_physical_memory_mb": 790,
+  "total_visible_memory_mb": 15804,
+  "observation": "Local compiled server already stopped. Low available memory was observed during the serial upgrade block; this does not establish the cause of any timeout. No application pool/SQL limits, durability settings or unrelated processes were changed."
+}
