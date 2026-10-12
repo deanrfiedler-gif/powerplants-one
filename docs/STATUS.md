@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Excel parser backup recovery — 12 October 2026
+
+Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.
+
 ## Remaining PR integration — 12 October 2026
 
 Dean authorised fixing and merging the remaining ready PRs, keeping backup PRs #404–#408 separate. The combined #429 contribution retains the exact heads of access #423/#427/#429 and design #422/#424/#426/#428. Dean confirmed the named Leads Figma version has been saved, resolving #426's draft checkpoint. All retained captures and original review fingerprints remain unchanged; design acceptance does not imply an application build or owner/device acceptance.
