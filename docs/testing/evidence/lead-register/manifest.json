@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-12",
+  "branch": "codex/leads-counts-follow-up",
+  "baseline": "ae83043b55058ba47334c3e9ba431d3538f2a8da",
+  "scope": "Synthetic Leads counts and follow-up backend; no visual or business acceptance",
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "os": "Windows"
+  },
+  "compiled_build_id": "_GI8svzWt7Fk1QrHuYEkb",
+  "source_sha256": {
+    "src/activities/activities.ts": "e7640bf47c41f0b4285dd68d785907ccf5163eccaa2a215aea010d0456abf55d",
+    "src/crm/leads/reads.ts": "42f8660cc47b43e9255bdbfa5b56694e2595ceece0a442efa8152c25da20ee81",
+    "src/crm/leads/register.ts": "8f8d7f126c68efedd4c7ec50df0ce9dd9cfc52088f0d29a65a16943a70e5b692",
+    "src/app/api/v1/crm/leads/counts/route.ts": "fcdc36de47cae8b2b941a159c1617b50721d18c48a7569cf7d7476dacd78f699",
+    "tests/database/leads.test.ts": "14ce8ca818d3d655852d604bda14fa8471eb0db3600e10a45102b74517f49b17",
+    "tests/helpers/lead-register-cases.ts": "9e1d68088cfa0eaa57e28a0b40b1c2cba7606323fafd33ab5664d6b6ecfb8a1c",
+    "tests/http/lead-register.test.ts": "de836f426fcee6db36a1abdc72a734b35441daa9bdc454de1b4f9a18be4ac0eb"
+  },
+  "checks": {
+    "database": {
+      "passed": 14,
+      "failed": 0,
+      "new_cases": 6,
+      "existing_cases": 8,
+      "command": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/leads.test.ts",
+      "qualification": "An unused import was removed during this run; final runtime logic unchanged. Final exact source also exercised by compiled HTTP."
+    },
+    "compiled_http": {
+      "passed": 2,
+      "failed": 0,
+      "command": "node --env-file=.env.local --import tsx --test tests/http/lead-register.test.ts"
+    },
+    "units": {
+      "passed": 740,
+      "failed": 4,
+      "total": 744,
+      "disposition": "One operator CLI startup timeout passes serial replay at the original deadline; three Windows path failures reproduce on unchanged main."
+    },
+    "unit_cli_replay": {
+      "passed": 9,
+      "failed": 0
+    },
+    "unchanged_main_affected_units": {
+      "passed": 10,
+      "failed": 3,
+      "files": [
+        "azure-demo.test.ts",
+        "document-store.test.ts",
+        "recovery.test.ts"
+      ]
+    },
+    "lint": "Full scan found one unused import; corrected and all changed TypeScript files pass focused replay",
+    "typecheck": "Passed",
+    "build": "Passed",
+    "foundation": "Passed",
+    "prototype": "Passed",
+    "naming": "Passed",
+    "design_register": {
+      "passed": true,
+      "entries": 358,
+      "unreviewed": 330,
+      "stale": 28,
+      "review_fingerprints_changed": false
+    }
+  },
+  "limits": [
+    "Full unrelated PostgreSQL suites and new visual/browser/restart acceptance not run locally",
+    "CI and independent review separate",
+    "No deployment"
+  ]
+}

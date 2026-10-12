@@ -36,7 +36,7 @@ const shape = (rs: Record<string, unknown>[]) =>
       return JSON.stringify(r);
     })
     .sort();
-for (const through of [25, 48, 71, 72, 74, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85])
+for (const through of [25, 48, 71, 72, 74, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86])
   test(`PD upgrade from ${through} preserves originals and exact new duties; repeat migration/seed is inert`, async () => {
     await database().query(
       await readFile(
@@ -129,19 +129,19 @@ for (const through of [25, 48, 71, 72, 74, 76, 77, 78, 79, 80, 81, 82, 83, 84, 8
       migrated.filter((r) => versions.has(r.version)),
       ledger,
     );
-    assert.equal(migrated.at(-1)?.version, 85);
+    assert.equal(migrated.at(-1)?.version, 86);
     if (through >= 71)
       assert.deepEqual(
         migrated.filter((r) => !versions.has(r.version)).map((r) => r.version),
         through === 71
-          ? [52, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85]
+          ? [52, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86]
           : through === 72
-            ? [52, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85]
+            ? [52, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86]
             : through === 74
-              ? [52, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85]
+              ? [52, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86]
               : through === 76
-                ? [52, 77, 78, 79, 80, 81, 82, 83, 84, 85]
-                : through === 77 ? [52, 78, 79, 80, 81, 82, 83, 84, 85] : through === 78 ? [52, 79, 80, 81, 82, 83, 84, 85] : through === 79 ? [52, 80, 81, 82, 83, 84, 85] : through === 80 ? [52, 81, 82, 83, 84, 85] : through === 81 ? [52, 82, 83, 84, 85] : through === 82 ? [52, 83, 84, 85] : through === 83 ? [52, 84, 85] : through === 84 ? [52, 85] : [52],
+                ? [52, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86]
+                : through === 77 ? [52, 78, 79, 80, 81, 82, 83, 84, 85, 86] : through === 78 ? [52, 79, 80, 81, 82, 83, 84, 85, 86] : through === 79 ? [52, 80, 81, 82, 83, 84, 85, 86] : through === 80 ? [52, 81, 82, 83, 84, 85, 86] : through === 81 ? [52, 82, 83, 84, 85, 86] : through === 82 ? [52, 83, 84, 85, 86] : through === 83 ? [52, 84, 85, 86] : through === 84 ? [52, 85, 86] : through === 85 ? [52, 86] : [52],
       );
     const users = await rows("SELECT * FROM ppo.users ORDER BY id"),
       receipts = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");

@@ -142,3 +142,7 @@ These are the Leads departures from today's page:
 ## Named version confirmation — 12 October 2026
 
 Dean confirmed in the PR completion session that the named Figma version "Leads — Pipedrive pattern, accepted" has been saved. This resolves the outstanding draft checkpoint in PR #426; implementation and application visual acceptance remain separate.
+
+## Backend implementation continuation — 12 October 2026
+
+Dean subsequently authorised the counts and follow-up backend work and opening a PR. The [read contract](lead-register-backend.md) implements L1/L2's API prerequisites with full authorised-match counts, MyLeads and explicit active follow-up filters. The existing list DTO is retained. [Execution evidence](../testing/evidence/lead-register/README.md) separates validation from acceptance. Page/shell implementation, default badge selection and any future terminal-count period presentation remain open. This does not change the accepted design, issued captures or visual review fingerprints.

@@ -1,4 +1,5 @@
 import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
+import { receiptAuthority as cpqReceiptAuthority } from "../cpq/context";
 import { estimatingBindingReceiptAuthority } from "../sales/estimating-binding";
 import { deliveryBindingReceiptAuthority } from "../sales/delivery-binding";
 import { productReceiptAuthority } from "../products/context";
@@ -78,7 +79,14 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "Activity" && r.command?.startsWith("SalesFollowup:")) {
+  if (r.command?.startsWith("Cpq:")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await cpqReceiptAuthority(c,p,r.record_id,r.command,operation_id);
+      if(r.command === "Cpq:Adopt") await acceptedEstimateContext(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "Activity" && r.command?.startsWith("SalesFollowup:")) {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await c.query("SELECT ppo.lock_crm_transfer_authority($1)", [p.workspace_id]);

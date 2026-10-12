@@ -5,6 +5,11 @@ import { workingCompanyCondition, workingCompanyFor } from "./working-company";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "cpq.read"
+  | "cpq.author"
+  | "cpq.review"
+  | "cpq.publish"
+  | "cpq.calculate"
   | "admin.access.read"
   | "admin.access.propose"
   | "admin.access.approve"

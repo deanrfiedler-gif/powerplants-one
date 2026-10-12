@@ -1,3 +1,4 @@
+import type { PoolClient } from "pg";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import type { QueryClient } from "../platform/permissions";
@@ -12,7 +13,7 @@ import { expected, insertVersion } from "./service";
 import { receivedFertigation } from "./fertigation/receiving-reads";
 
 import { writeLineage } from "./specialist/lineage";
-async function selectedBasis(c:QueryClient,p:Principal,id:string,optionId:string,revisionId:string) {
+export async function selectedBasis(c:QueryClient,p:Principal,id:string,optionId:string,revisionId:string) {
   const g=await workspaceAuthority(c,p,id,true);
   await requireDraftGroup(c,p,g);
   const option=await optionContext(c,g,optionId);
@@ -48,7 +49,11 @@ export async function adoptDiscoveryCosting(p:Principal,id:string,value:unknown)
     const g=await workspaceAuthority(c,p,input.id,true);
     await revisionAuthority(c,p,g,input.revision_id,true);
     return accepted;
-  },async c=>{
+  },c=>writeDiscoveryCosting(c,p,input),"Estimate",input.expected_estimate_version===0?"EstimateCreated":"EstimateVersionSaved");
+}
+
+// Internal transaction participant shared by manual costing and native CPQ adoption.
+export async function writeDiscoveryCosting(c:PoolClient,p:Principal,input:ReturnType<typeof costingInput>) {
     const {g,r,targets,e}=await selectedBasis(c,p,input.id,input.option_id,input.revision_id);
     expected(g.version,input.expected_workspace_version);
     expected(e?.version??0,input.expected_estimate_version);
@@ -68,5 +73,5 @@ export async function adoptDiscoveryCosting(p:Principal,id:string,value:unknown)
     await writeLineage(c,p,next,e?.current_version_id??null);
     return {...updated,audit_details:{saved_version_id:next,predecessor_id:e?.current_version_id??null,estimating_workspace_id:g.id,option_id:r.option_id,revision_id:r.id,
       scope_snapshot_id:r.scope_snapshot_id,answer_snapshot_id:r.answer_snapshot_id,scope_content_hash:r.content_hash,scope_context_hash:r.context_hash,reviewed_context_hash:targets.context_hash,arithmetic_policy:input.policy}};
-  },"Estimate",input.expected_estimate_version===0?"EstimateCreated":"EstimateVersionSaved");
+
 }

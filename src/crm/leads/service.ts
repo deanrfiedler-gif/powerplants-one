@@ -1,3 +1,4 @@
+import { carriedLeadActivity } from "./conversion-context";
 import { ACTIVE_PIPELINE_ID } from "../stages";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
@@ -384,33 +385,7 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
           });
           continue;
         }
-        if (a.site_id !== command.site_id || a.access_class !== "Internal")
-          throw new AppError(
-            422,
-            "LEAD_ACTIVITY_CONTEXT",
-            "A linked activity has a different site or access context. Preserve its history and review the conversion context.",
-          );
-        // Validate all future targets and the independent Activity owner, without creating the new target yet.
-        const future = {
-          ...a,
-          links: [
-            ...links,
-            {
-              object_type: "Organisation" as const,
-              object_id: context.organisation_id,
-            },
-            ...(context.site_id
-              ? [{ object_type: "Site" as const, object_id: context.site_id }]
-              : []),
-          ],
-        };
-        await authoriseActivityInput(c, p, future);
-        await relationshipContext(
-          c,
-          { ...p, actor_id: a.owner_id },
-          context,
-          "crm.opportunity.read",
-        );
+        await carriedLeadActivity(c, p, { ...a, links }, context);
         actions.push({ ...a, links });
       }
       if (

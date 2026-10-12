@@ -746,7 +746,7 @@ for (const topology of ["isolated-task", "two-task", "linear-chain"])
     );
     assert.deepEqual(
       now.filter((r) => r.version > 69).map((r) => r.version),
-      [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85],
+      [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86],
     );
     for (const {
       f,

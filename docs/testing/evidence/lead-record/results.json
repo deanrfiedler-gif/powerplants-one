@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "execution_date": "2026-10-12",
+  "environment": "Windows; PostgreSQL 16.15; ppo_synthetic_test; loopback compiled application",
+  "checks": [
+    {
+      "log": "record-db-initial.txt",
+      "result": "test-authoring parse failure before execution",
+      "sha256": "4d2a74b85c593694e922aabc6843edcfd26dba20428034c694bfde07df7369b2"
+    },
+    {
+      "log": "record-db.txt",
+      "result": "6 new database cases passed",
+      "sha256": "5342ae6f945dd83858b9d2c6baa62d703cebcd4259de63ccfc5f05f8b45a0836"
+    },
+    {
+      "log": "record-unit.txt",
+      "result": "5 focused unit cases passed",
+      "sha256": "f1fe9c4cb75bff88762d27383bb955f7f39b7ddf1baae4f7eacc5ab1699de0be"
+    },
+    {
+      "log": "record-full-db.txt",
+      "result": "34 passed; 2 unchanged-deadline timeouts",
+      "sha256": "356bbddc43017ac025a3a52e3eb30866e5b3b3ced94b14fca6b674c97e62aab4"
+    },
+    {
+      "log": "record-timeout-replay.txt",
+      "result": "2 isolated replays passed with unchanged source/assertions/deadlines",
+      "sha256": "ac516666802569a4edac1c237b16fe105070452e189d3acfdf3b517f2060c05b"
+    },
+    {
+      "log": "record-typecheck.txt",
+      "result": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "log": "record-lint-final.txt",
+      "result": "full lint passed",
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64"
+    },
+    {
+      "log": "record-lint-changed-final.txt",
+      "result": "final changed-file lint passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "log": "record-build.txt",
+      "result": "interrupted during memory pressure; not a pass",
+      "sha256": "a3cd2c626b9ba9824836f6e690456e3ce5350cc9ccceecedd8ce5e0942771a0b"
+    },
+    {
+      "log": "record-build-final.txt",
+      "result": "compiled build passed",
+      "sha256": "d952bafa9f04129ac93a2326bd4f3e67d6047700f15435d5e35836dc792d6c8b"
+    },
+    {
+      "log": "record-http-reset.txt",
+      "result": "disposable synthetic reset passed",
+      "sha256": "bf772773b3e3daac9b3578bb133659ce3347c939dbd676d32bc7860438104cdc"
+    },
+    {
+      "log": "record-http.txt",
+      "result": "3 connection-refused failures before listener readiness",
+      "sha256": "604d42f6bbb9ce12d121ba49ce078cb866a8ce97c52e3a01145689ccdf60a846"
+    },
+    {
+      "log": "record-http-final.txt",
+      "result": "3 compiled HTTP cases passed",
+      "sha256": "5fe097b942887580e73bad67910b0884a678db153bc844c1f2649fe842f36d57"
+    },
+    {
+      "log": "record-foundation.txt",
+      "result": "passed",
+      "sha256": "c9a1778f081b8bcdbda41b6e79347545d7fa4f79abdbea075db051a0ad78d9bf"
+    },
+    {
+      "log": "record-naming.txt",
+      "result": "passed",
+      "sha256": "e3939975f70936d7ea597eb24a1f9ea82667848dcee750ecd8e2b8ecdd9fb55b"
+    },
+    {
+      "log": "record-prototype.txt",
+      "result": "passed",
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    },
+    {
+      "log": "record-studio.txt",
+      "result": "passed; 330 unreviewed and 28 stale",
+      "sha256": "6715988d8719559d370ca8bb5efd84a423ced251c8257f9344aba6e743e6016a"
+    },
+    {
+      "log": "record-foundation-final.txt",
+      "result": "passed after final evidence update",
+      "sha256": "efd9bfdb6e617bf25ba6f22a7a33641d6cc37856a7a02aa43c061487953afa7b"
+    },
+    {
+      "log": "record-naming-final.txt",
+      "result": "passed after final evidence update",
+      "sha256": "e3939975f70936d7ea597eb24a1f9ea82667848dcee750ecd8e2b8ecdd9fb55b"
+    },
+    {
+      "log": "record-studio-final.txt",
+      "result": "passed after final evidence update",
+      "sha256": "6715988d8719559d370ca8bb5efd84a423ced251c8257f9344aba6e743e6016a"
+    }
+  ],
+  "limits": [
+    "No local UI/browser/device or owner acceptance",
+    "Full application database and unit estate left to contribution CI",
+    "CI on final PR head remains a merge gate",
+    "No production integration, migration, merge or deployment"
+  ]
+}
