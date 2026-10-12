@@ -18,6 +18,7 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    "cpq.read":"Read CPQ commercial evidence", "cpq.author":"Author CPQ releases", "cpq.review":"Review exact CPQ releases", "cpq.publish":"Publish reviewed CPQ releases", "cpq.calculate":"Calculate and adopt CPQ results",
     'admin.access.review.attest':'Record independent local single-grant Keep attestations',
     'admin.access.team.create':'Create local synthetic team records',
     'admin.access.apply':'Apply independently approved local synthetic access requests',
@@ -90,7 +91,7 @@
     'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter',
     'engineering.change.review':'Review engineering change proposals','engineering.change.decide':'Record technical decisions on engineering changes','engineering.change.receive':'Receive engineering change requests','engineering.change.verify':'Record retest results for engineering changes','engineering.change.close':'Close engineering changes',
     'engineering.commissioning.capture':'Capture commissioning test evidence','engineering.commissioning.review':'Review commissioning evidence and approve as-built records','engineering.commissioning.issue':'Issue and withdraw commissioning releases','engineering.commissioning.receive':'Receive commissioning and as-built releases'};
-  const FAMILY_NAMES={admin:'Access inspection',maintenance:"Maintenance",warranty:"Warranty",products:'Products',incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
+  const FAMILY_NAMES={cpq:"Configure, price and quote",admin:'Access inspection',maintenance:"Maintenance",warranty:"Warranty",products:'Products',incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
   const capability=key=>({key,label:LABELS[key],family:key.split('.')[0],familyName:FAMILY_NAMES[key.split('.')[0]],
     reads:/\.read(\.own)?$/.test(key),own:key.endsWith('.own'),
     restricted:key.startsWith('admin.')||key.startsWith('finance.')||key==='shared.finance.read'||key==='shared.internal.read',

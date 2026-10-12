@@ -1,6 +1,6 @@
 # Current prototype status
 
-**Updated:** 12 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 13 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
@@ -17,6 +17,10 @@ Repository writer: this user-authorised Lead record backend session, branch `cod
 ## Leads counts and follow-up backend — 12 October 2026
 
 Repository writer: this user-authorised Leads backend session, branch `codex/leads-counts-follow-up`, based on merged main `ae83043`. Dean requested implementation and PR publication while continuing UI design with Claude in Figma. The [read contract](decisions/lead-register-backend.md) adds full authorised-match counts, MyLeads and active follow-up filtering using existing Lead/Activity permissions and states. Hidden next activities remain unavailable, with explicit partial follow-up coverage. Existing commands and exact list/detail DTOs are retained; no migration, seed, capability or external integration is added. [Execution evidence](testing/evidence/lead-register/README.md) records validation and the supplied personal-trial audit provenance. The accepted page, shell, rail badge and separate record-page reads remain outstanding; visual review, business acceptance and deployment are not implied.
+
+## Native CPQ backend — 13 October 2026
+
+Repository writer: this authorised CPQ session, branch `codex/cpq-native`, started from main `ae83043` and reconciled through Leads main `ba7d4b1`. Dean assigned Figma/UI to Claude and this workstream to planning and backend implementation. The [delivery plan](delivery/cpq-backend-plan.md), [API handover](interfaces/cpq-api.md) and [runtime decision](decisions/cpq-native-runtime.md) distinguish the implemented core from the remaining enterprise work. Migration 0086 adds immutable rule revisions, independent exact-content reviews, company activations, saved calculation evidence and native estimate adoption. Five new CPQ duties have no seeded grants. Restricted arithmetic, typed unknowns, constraints, quantity resolution, synthetic price tiers and reasoned overrides produce explainable Ready/Blocked results. Native adoption retains unrelated costs and uses the existing estimate/quotation chain; ES-08 is unchanged. [Verification evidence](testing/evidence/cpq-backend/README.md) records 27 focused unit checks, all six backend scenarios in a clean complete run, and the complete CPQ HTTP flow passing. PR head `c21a44d` completed all 17 workflows: 55 checks passed and the optional controlled comparison was skipped. This includes 757 unit tests, 129 Estimating database tests with all six CPQ scenarios, 20 compiled HTTP tests and all application database/browser groups. PRs #451 and #452 then advanced main; the subsequent rebases preserve CPQ runtime/test bytes and every Leads/CPQ status and register entry. The intermediate `40b10ba` head also passed all 129 Estimating database cases, 20 compiled HTTP cases and 757 unit tests; final application CI was superseded by the second Leads integration. The strengthened Estimating workflow adds explicit compiled CPQ coverage; final combined-head CI on PR #453 remains the verification gate. No UI/Figma edits, operational rule approval, live source integration, merge or deployment are claimed.
 
 ## Backend PR integration — 12 October 2026
 
