@@ -12,11 +12,15 @@ This route is present in application source at ccc2251b. Review its specific wor
 2. Review the exact valve and master-source revisions and unresolved bindings
 3. Inspect calculated results and review evidence before preparing a controlled report
 
+## Page-specific guidance
+
+Rebuilt on 12 October 2026 with the record workspace ([workbench refinement record](../../../decisions/fertigation-workbench-refinement.md), "Built to the board"): a page head with Find a scope and New fertigation scope, and the saved scopes in the shared register table (ADR-0051 group 2) with Scope, Reference, Revision, State and Updated columns; the scope name opens its workspace. Empty and no-match states use the board's state sheet wording (board H). The design board holds no register artboard; this page follows the shared register pattern.
+
 ## Desktop
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review. A 1440 × 1000 capture is retained with the [board parity evidence](../../../testing/evidence/fertigation-board-parity/README.md).
 
 ## Mobile
 

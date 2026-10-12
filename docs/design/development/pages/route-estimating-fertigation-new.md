@@ -24,6 +24,8 @@ When a standalone r02 file holds fields that have no native field, the preview a
 - Kept values go to the notes of the native record they describe, or to a generated evidence reference named "Legacy r02 source values (unverified)"; none becomes a native technical value. The placements are stored with the import.
 - A held native export (attachment bytes not carried) is not placeable; its reasons are listed and Confirm stays disabled.
 
+On 12 October 2026 the page took the workbench's presentation kit (two panels, Scope and Discovery source and Production context, then the actions and the import section); the import's behaviour and the ADR-0044 placement are unchanged. Board 10's step indicator, summary tiles, Accept all proposed placements, source panels, progress panel and placement CSV remain not built (WP-L3 of the [live build prompt](../../../delivery/priva-fertigation-live-build-prompt.md)).
+
 ## Desktop
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.

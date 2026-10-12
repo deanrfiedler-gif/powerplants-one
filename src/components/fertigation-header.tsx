@@ -94,7 +94,7 @@ export function FertigationHeader({
             Report
           </ButtonLink>
           {!historical && dirty && (
-            <Button variant="secondary" icon="compare" onClick={onCompare}>
+            <Button variant="secondary" icon="compare" onClick={onCompare} className="fn-compare">
               Compare draft
             </Button>
           )}

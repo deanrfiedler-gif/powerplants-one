@@ -3104,7 +3104,9 @@
   #ppo-fertigation .fn-record-head h1 {
     font-size: 18px;
   }
-  #ppo-fertigation .fn-record-actions > :not(.fn-status-wrap):not(.fn-valves-jump) {
+  /* History and Report move to the bottom bar and the account menu; the status, the valve jump and
+     Compare draft (while dirty) stay in the header row. */
+  #ppo-fertigation .fn-record-actions > :not(.fn-status-wrap):not(.fn-valves-jump):not(.fn-compare) {
     display: none;
   }
   #ppo-fertigation .fn-record-actions {
@@ -3113,7 +3115,8 @@
   #ppo-fertigation .fn-record-divider {
     display: none;
   }
-  #ppo-fertigation :is(button, a).fn-valves-jump {
+  #ppo-fertigation :is(button, a).fn-valves-jump,
+  #ppo-fertigation :is(button, a).fn-compare {
     min-height: 36px;
     padding: 6px 10px;
     font-size: 13px;
