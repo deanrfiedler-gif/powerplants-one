@@ -25,3 +25,5 @@ Native cent rounding, saved shell preferences and data-dependent labels are expl
 Configure & price keeps its white desktop summary alongside the entire workspace column, including the header, tabs and action footer, as retained frame 16 shows. Rules studio keeps Quick test beside its definition body as frame 02 shows. At phone widths summary opens in the full-screen panel; Save precedes Use in the configuration footer.
 
 Native fields use an explicit accessible name from the visible label, with help as a separate description. Select options do not become part of the field name; the Review adjustment journey selects the exact Decision field.
+
+The formula dialog follows retained frame 05: an 880 px dialog with a 300 px insertion panel, searchable numeric facts/parameters and registered function insertions. Syntax checking is local; scenario calculations run through the read-only server validator. Apply changes only the working draft and invalidates its earlier test result. Authored unit metadata is shown without claiming dimensional inference.

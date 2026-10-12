@@ -13640,7 +13640,8 @@
         "docs/decisions/cpq-figma-ui.md",
         "docs/design/development/cpq-fixtures.json",
         "docs/decisions/cpq-figma-design.md",
-        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
+        "src/components/cpq-formula-editor.tsx"
       ],
       "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
       "visual_status": "Needs review",

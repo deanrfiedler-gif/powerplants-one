@@ -296,6 +296,20 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     page.getByRole("heading", { name: "Support spacing", exact: true }),
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("cpq-definition.png") });
+  await page.getByRole("button", { name: "Edit formula", exact: true }).click();
+  const formulaDialog = page.getByRole("dialog", { name: /^Quantity formula ·/ });
+  const proposedFormula = `max(${screenDefinition().rules[0].quantity}, 0)`;
+  await formulaDialog.getByLabel("Formula", { exact: true }).fill(proposedFormula);
+  await formulaDialog.getByRole("button", { name: "Run server test", exact: true }).click();
+  await expect(formulaDialog.getByText("Scenario expectations match", { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("cpq-formula.png") });
+  await formulaDialog.getByRole("button", { name: "Apply to draft", exact: true }).click();
+  await expect(page.getByLabel("Quantity formula", { exact: true })).toHaveValue(proposedFormula);
+  await page.getByRole("button", { name: "Edit formula", exact: true }).click();
+  await formulaDialog.getByLabel("Formula", { exact: true }).fill("min(");
+  await formulaDialog.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(page.getByLabel("Quantity formula", { exact: true })).toHaveValue(proposedFormula);
   await page.getByLabel("Quantity formula", { exact: false }).fill("ceil(");
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(

@@ -76234,6 +76234,7 @@
           "paragraphs": [],
           "steps": [
             "Select a rule, edit structured conditions and action, then run the test bench.",
+            "Use Edit formula to insert numeric facts, parameters and bounded functions. Run server test for the scenario, then Apply to draft; Cancel leaves the formula unchanged. Run the full Test bench again before creating a version.",
             "Save draft retains incomplete forms. Create version requires passing fixtures and known-value decision table coverage.",
             "Use History to compose a previous rule version into the current draft, then test again.",
             "Independent review approves exact content; a third authorised actor seals it. Make active is a separate command."
@@ -76255,7 +76256,8 @@
           "section_id": "information",
           "title": "Information and evidence",
           "paragraphs": [
-            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why.",
+            "Formulas support min(a,b), max(a,b), ceil(x), floor(x) and round(x,places). Rounding accepts 0–12 places and rounds signed ties away from zero. Displayed units are authored metadata; independent technical review must check physical dimensions."
           ],
           "steps": [],
           "headers": [],

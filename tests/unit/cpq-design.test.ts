@@ -40,6 +40,13 @@ test("schema-3 round functions use exact rationals and signed boundaries; schema
     ["round(1.5)", "2"],
     ["floor(1 / 3)", "0"],
     ["ceil(1 / 3)", "1"],
+    ["round(1.235, 2)", "1.24"],
+    ["round(-1.235, 2)", "-1.24"],
+    ["round(1 / 3, 12)", "0.333333333333"],
+    ["round(4.4, 0)", "4"],
+    ["min(1 / 3, 0.3)", "0.3"],
+    ["max(-2.1, -3.2)", "-2.1"],
+    ["max(min(20, 12), ceil(14.1))", "15"],
   ]) {
     assert.equal(
       evaluateFormula(
@@ -54,11 +61,20 @@ test("schema-3 round functions use exact rationals and signed boundaries; schema
     "ceil(1,2)",
     "Math.ceil(1)",
     "min(1)",
+    "max(1,2,3)",
+    "round(1,2,3)",
+    "floor(1,2)",
     "round()",
     "ceil(process.env)",
     "ceil(1);1",
   ])
     assert.throws(() => compileFormula(formula, new Set(), true));
+  for (const places of ["-1", "13", "1.5", "100000000000000000"])
+    assert.throws(() => evaluateFormula(compileFormula(`round(1.234, ${places})`, new Set(), true), new Map()), { code: "SCALE_INVALID" });
+  const selected = compileFormula("round(max(value, floor(minimum)), places)", new Set(["value", "minimum", "places"]), true);
+  assert.deepEqual(selected.dependencies, ["minimum", "places", "value"]);
+  assert.equal(evaluateFormula(selected, new Map([["value", "1.234"], ["minimum", "0"], ["places", "2"]])).exactDecimal(), "1.23");
+  assert.throws(() => evaluateFormula(selected, new Map()), { code: "FACT_MISSING" });
 });
 
 test("normalised schema-3 dictionary and inputs are idempotent; integers, text and NA remain distinct", () => {

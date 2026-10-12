@@ -5565,6 +5565,11 @@
           "id": "release",
           "label": "Release governance",
           "description": "Draft, tested version, review, seal and activation remain distinct."
+        },
+        {
+          "id": "formula",
+          "label": "Formula editor",
+          "description": "Local syntax and server scenario checks remain separate; Apply updates only the working draft."
         }
       ],
       "implementation": [
@@ -5587,6 +5592,10 @@
         {
           "path": "src/components/cpq-ui.tsx",
           "symbol": "CpqDialog"
+        },
+        {
+          "path": "src/components/cpq-formula-editor.tsx",
+          "symbol": "CpqFormulaEditor"
         }
       ],
       "dependencies": [

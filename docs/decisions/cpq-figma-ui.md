@@ -16,7 +16,7 @@ Alternatives rejected: embedding the Figma screenshot, a second browser-only rul
 
 ## Expanded design contract
 
-Add durable working drafts, immutable rule versions and release membership, seal separately from activation, Text facts and typed conditions, bounded ceil/floor/round functions, decision tables with exact finite-domain coverage and overlap findings, option availability, shared capacity constraints, line explanations and explicit override rebase/restore. Keep validation, testing, version creation, independent review, sealing and activation distinct. The backend remains the authority. Operational pricing thresholds are authored inputs; synthetic examples do not establish policy. Review/publish duties remain independently assigned.
+Add durable working drafts, immutable rule versions and release membership, seal separately from activation, Text facts and typed conditions, bounded ceil/floor/round/min/max functions, decision tables with exact finite-domain coverage and overlap findings, option availability, shared capacity constraints, line explanations and explicit override rebase/restore. Keep validation, testing, version creation, independent review, sealing and activation distinct. The backend remains the authority. Operational pricing thresholds are authored inputs; synthetic examples do not establish policy. Review/publish duties remain independently assigned.
 
 Configuration identity is the existing selected discovery option and immutable evaluations; no SYN-CPQ identifier type is invented. Rule keys and release revision labels provide navigation. Known operational policy questions remain open. All calculations and demonstrations are synthetic and excluding tax.
 

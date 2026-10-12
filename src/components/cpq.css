@@ -985,3 +985,20 @@
     padding: 16px;
   }
 }
+
+/* Retained formula dialog frame 05: editor plus a 300 px insertion panel. */
+.cpq-dialog:has(.cpq-formula-editor) { width: 880px; }
+.cpq-dialog:has(.cpq-formula-editor) > .cpq-dialog-body { padding: 0; }
+.cpq-formula-editor { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+.cpq-formula-editor > section, .cpq-formula-insert { padding: 24px; min-width: 0; }
+.cpq-formula-insert { background: #f6f7f9; border-left: 1px solid #e1e5eb; }
+.cpq-formula-insert .ppo-button { justify-content: flex-start; text-align: left; }
+.cpq-formula-insert small { display: block; margin-top: 4px; }
+.cpq-formula-editor .cpq-pill { white-space: normal; }
+.cpq-formula-units { background: #f6f7f9; border-radius: 6px; padding: 12px; }
+.cpq-formula-units p { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .cpq-formula-editor { grid-template-columns: 1fr; }
+  .cpq-formula-editor > section, .cpq-formula-insert { padding: 16px; }
+  .cpq-formula-insert { border-left: 0; border-top: 1px solid #e1e5eb; }
+}

@@ -1,5 +1,5 @@
 // Application-owned restricted arithmetic, adapted from the retained CCE reference.
-// Only registered scalar names and four arithmetic operators are executable.
+// Only registered scalar names, four arithmetic operators and schema-3 bounded functions are executable.
 const DECIMAL = /^-?\d{1,18}(?:\.\d{1,12})?$/;
 const SYMBOL = /^[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$/;
 
@@ -128,8 +128,8 @@ type Op = "+" | "-" | "*" | "/";
 type Expr =
   | {
       readonly kind: "call";
-      readonly fn: "ceil" | "floor" | "round";
-      readonly value: Expr;
+      readonly fn: "ceil" | "floor" | "round" | "min" | "max";
+      readonly args: readonly Expr[];
     }
   | { readonly kind: "literal"; readonly value: string }
   | { readonly kind: "fact"; readonly name: string }
@@ -160,8 +160,9 @@ export function compileFormula(
     fail("FORMULA_LIMIT", "Expected at most 2048 ASCII characters");
 
   const tokens: { text: string; offset: number }[] = [];
-  const lexer =
-    /\s+|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[()+*/-]/gy;
+  const lexer = functions
+    ? /\s+|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[(),+*/-]/gy
+    : /\s+|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[()+*/-]/gy;
   let offset = 0;
   while (offset < source.length) {
     lexer.lastIndex = offset;
@@ -192,17 +193,20 @@ export function compileFormula(
       left = { kind: "literal", value: text };
     } else if (
       functions &&
-      ["ceil", "floor", "round"].includes(text) &&
+      ["ceil", "floor", "round", "min", "max"].includes(text) &&
       tokens[at]?.text === "("
     ) {
       at++;
-      const value = expression(1, depth + 1);
-      if (tokens[at++]?.text !== ")")
-        fail(
-          "FORMULA_SYNTAX",
-          "A rounding function takes exactly one expression",
-        );
-      left = { kind: "call", fn: text as "ceil" | "floor" | "round", value };
+      const args = [expression(1, depth + 1)];
+      if (tokens[at]?.text === ",") {
+        at++;
+        args.push(expression(1, depth + 1));
+      }
+      if (tokens[at++]?.text !== ")" ||
+          (["ceil", "floor"].includes(text) && args.length !== 1) ||
+          (["min", "max"].includes(text) && args.length !== 2))
+        fail("FORMULA_SYNTAX", "Use ceil(x), floor(x), round(x[, places]), min(a, b) or max(a, b)");
+      left = { kind: "call", fn: text as "ceil" | "floor" | "round" | "min" | "max", args: Object.freeze(args) };
     } else if (
       text !== undefined &&
       SYMBOL.test(text) &&
@@ -235,8 +239,10 @@ export function compileFormula(
     if (++count > 256 || depth > 32)
       fail("FORMULA_LIMIT", "AST exceeds size/depth budget");
     if (node.kind === "fact") dependencies.add(node.name);
-    if (node.kind === "unary" || node.kind === "call")
+    if (node.kind === "unary")
       pending.push({ node: node.value, depth: depth + 1 });
+    if (node.kind === "call")
+      for (const arg of node.args) pending.push({ node: arg, depth: depth + 1 });
     if (node.kind === "binary") {
       pending.push({ node: node.left, depth: depth + 1 });
       pending.push({ node: node.right, depth: depth + 1 });
@@ -276,10 +282,19 @@ export function evaluateFormula(
     if (node.kind === "literal") return Fraction.fromDecimal(node.value);
     if (node.kind === "fact") return bindings.get(node.name)!;
     if (node.kind === "call") {
-      const v = visit(node.value, depth + 1),
-        n = v.numerator,
-        d = v.denominator;
-      const q = n / d,
+      const v = visit(node.args[0], depth + 1);
+      if (node.fn === "min" || node.fn === "max") {
+        const b = visit(node.args[1], depth + 1);
+        const smaller = v.numerator * b.denominator <= b.numerator * v.denominator;
+        return (node.fn === "min" ? smaller : !smaller) ? v : b;
+      }
+      const places = node.args[1] ? visit(node.args[1], depth + 1) : new Fraction(0n);
+      if (places.denominator !== 1n || places.numerator < 0n || places.numerator > 12n)
+        fail("SCALE_INVALID", "Rounding places must be an integer from 0 to 12");
+      const factor = 10n ** places.numerator,
+        n = v.numerator * factor,
+        d = v.denominator,
+        q = n / d,
         remainder = n % d;
       return new Fraction(
         node.fn === "ceil"
@@ -287,6 +302,7 @@ export function evaluateFormula(
           : node.fn === "floor"
             ? q - (remainder < 0n ? 1n : 0n)
             : q + (abs(remainder) * 2n >= d ? (n < 0n ? -1n : 1n) : 0n),
+        factor,
       );
     }
     if (node.kind === "unary") {

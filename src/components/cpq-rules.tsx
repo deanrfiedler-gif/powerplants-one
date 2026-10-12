@@ -6,6 +6,7 @@ import type { readRelease, listReleases, readRevision } from "../cpq/reads";
 import type { readDraft } from "../cpq/drafts";
 import type { validateDraft } from "../cpq/ui-reads";
 import { screenDefinition } from "../cpq/pilot";
+import { CpqFormulaEditor } from "./cpq-formula-editor";
 import { semanticChanges } from "../cpq/semantic-diff";
 import { useCrmResource, useCrmCommand } from "./crm-state";
 import { api, ErrorNotice } from "./business-ui";
@@ -228,6 +229,7 @@ function RulesEditor({
     ),
     [tab, setTab] = useState("Definition"),
     [details, setDetails] = useState(false),
+    [formulaEditor, setFormulaEditor] = useState(false),
     [tests, setTests] = useState<{ signature: string; value: Tests } | null>(
       null,
     ),
@@ -741,9 +743,12 @@ function RulesEditor({
                       </select>
                     </CpqField>
                   </div>
+                  <div className="cpq-section-head"><h3>Quantity formula</h3>
+                    <Button disabled={disabled} onClick={() => setFormulaEditor(true)}>Edit formula</Button>
+                  </div>
                   <CpqField
                     label="Quantity formula"
-                    help="Exact decimals · + − × ÷ · parentheses · ceil, floor and round. No JavaScript or external calls."
+                    help="Exact decimals · + − × ÷ · parentheses · ceil, floor, round, min and max. No JavaScript or external calls."
                   >
                     <textarea
                       className="cpq-formula"
@@ -1346,6 +1351,8 @@ function RulesEditor({
           </aside>
         )}
       </div>
+      {formulaEditor && rule && <CpqFormulaEditor definition={shown} rule={rule} company={company}
+        onClose={() => setFormulaEditor(false)} onApply={(quantity) => { editRule({ quantity }); setFormulaEditor(false); }} />}
       <footer className="cpq-footer">
         <div>
           <strong role="status">
