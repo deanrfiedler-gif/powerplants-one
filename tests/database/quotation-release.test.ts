@@ -531,7 +531,7 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
     sorted(after.filter((g) => !ids.has(g.id))),
     sorted([...quotationReleaseSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants)]),
   );
-  assert.equal(after.length - grants.length, 19);
+  assert.equal(after.length - grants.length, 20);
   assert.equal(
     (await rows("SELECT id FROM ppo.users")).length - users.length,
     2,

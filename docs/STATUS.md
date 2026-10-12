@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## AD-01 PR upgrade repair — 12 October 2026
+
+Repository writer: Dean's authorised PR repair session (`codex/pr-access-repair-oct12`). The populated ES-05 upgrade's exact new-grant set already included seed 0084, but its scalar total remained 19; it now expects 20. The complete original upgrade case passes locally with exact ledgers, grants, users, receipts and output preservation unchanged. [Repair evidence](testing/evidence/access-review-attestations/README.md#pr-repair--12-october-2026) separates this execution from the prior handover and final integrated CI. No runtime, migration, seed or permission change is introduced by the repair.
+
 ## AD-01 local review attestation foundation — 12 October 2026
 
 The [bounded contract](decisions/access-review-attestations.md) continues saved-team inspection #433 with a separate local review duty and immutable single-grant Keep observations. Commands refuse self-review, noncurrent rows and stale bases; original actor-bound receipt recovery does not reapply anything. No permission, validity, roster or request changes. Migration/seed 0084 add one explicit duty to the existing local Systems fixture, no users or hosted grants. Historical ledgers and all issued IDs remain preserved.
