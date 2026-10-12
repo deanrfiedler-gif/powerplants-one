@@ -7,7 +7,6 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 const dir=path.dirname(fileURLToPath(import.meta.url)),cluster=path.join(dir,'cluster');
 const req=createRequire(referenceRepository() + '/package.json'),{Client}=req('pg');
-const counts={};
 async function snapshot(){const result={};for(const database of ['ppo_synthetic_test','cce_contract_test_attempt_2','cce_native_populated_upgrade']){const c=new Client({host:'127.0.0.1',port:55478,user:'cceproof',database});await c.connect();try{assert.equal(path.resolve((await c.query('SHOW data_directory')).rows[0].data_directory).toLowerCase(),path.resolve(cluster).toLowerCase());await c.query("SET timezone='UTC';SET datestyle='ISO, YMD'");for(const table of ['estimate_versions','cce_rule_versions','cce_evaluation_runs','estimate_bom_snapshots']){const key=database+'.'+table;result[key]=(await c.query(`SELECT count(*)::int AS rows,encode(sha256(convert_to(coalesce(string_agg(j,E'\\n' ORDER BY j),''),'UTF8')),'hex') AS hash FROM (SELECT to_jsonb(t)::text j FROM ppo.${table} t) r`)).rows[0];}}finally{await c.end();}}return result;}
 const pgControl=process.env.CCE_PG_CTL;
 assert(pgControl && path.isAbsolute(pgControl), 'Set CCE_PG_CTL to the absolute PostgreSQL 16 pg_ctl executable path');

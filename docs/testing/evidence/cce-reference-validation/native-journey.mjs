@@ -2,7 +2,7 @@ import { referenceRepository } from './reference-environment.mjs';
 import {createRequire} from 'node:module';
 import {readFile,writeFile} from 'node:fs/promises';
 import {pathToFileURL,fileURLToPath} from 'node:url';
-import {randomUUID,createHash} from 'node:crypto';
+import {randomUUID} from 'node:crypto';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 const repo=referenceRepository(),dir=path.dirname(fileURLToPath(import.meta.url));

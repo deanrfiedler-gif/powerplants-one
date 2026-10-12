@@ -1,7 +1,7 @@
 {
   ".gitattributes": {
-    "bytes": 310,
-    "sha256": "ed3103917d619956ac68d60895a530a05716960c46e79e64469a114f878ee1ab"
+    "bytes": 291,
+    "sha256": "156bc56ed6d650d83cca8fe2475f4230739776b86490c8306a41dad768f9c073"
   },
   "arithmetic-oracle.json": {
     "bytes": 741129,
@@ -44,8 +44,8 @@
     "sha256": "67fdbaecd832c587f291026cca0061ef4eedbd75ad4a3108c835e907d765b29b"
   },
   "import-manifest.json": {
-    "bytes": 17815,
-    "sha256": "9fa896f9db756ea1a651b9e20a9742792ce44dd2c4e24a8686bc028253daa252"
+    "bytes": 17954,
+    "sha256": "0e693d168f99a16d1ced309a3da396e13c70068d5d4042f8144a7c11d345f50e"
   },
   "native-journey-attempt-1.json": {
     "bytes": 664,
@@ -60,8 +60,8 @@
     "sha256": "c8327f891af905759f291c8d44b9faf32a6f6494570c83fc0e5db516628da067"
   },
   "native-journey.mjs": {
-    "bytes": 7340,
-    "sha256": "822c08b2e912fd04bfab5575914d5ba57afbe4fafd8790262cd673bda54aeb1f"
+    "bytes": 7329,
+    "sha256": "b8cc734f38c77efeb152540b839d86769ea299a03011ed0fd46222898d91b157"
   },
   "native-parent-catalog.json": {
     "bytes": 28593,
@@ -248,8 +248,8 @@
     "sha256": "dbd3475e134e70e568636a8801ce80a776ac701cfc464a32b23f84b90df18c68"
   },
   "README.md": {
-    "bytes": 10693,
-    "sha256": "939e782b9a3907f49289a9f2b3abc440358bd9ab086fcf35dd37e0bcfc355bef"
+    "bytes": 11132,
+    "sha256": "59f8ccfb7524f474ca65428534a52df43a10efc054a3f3274ef99b39bb850c3b"
   },
   "reference-environment.mjs": {
     "bytes": 1181,
@@ -272,8 +272,8 @@
     "sha256": "744de01cb4cadafdff0dfc35ed34f370b30bfc881fb8de2faa1b690285334378"
   },
   "restart-check.mjs": {
-    "bytes": 2627,
-    "sha256": "06568875dc9a87d9206d70e86edd96f1edad15210eb7c45ca590e0d571830262"
+    "bytes": 2610,
+    "sha256": "468880a85ab186b10a7302e6d9a584aefa7713e63210b8f3fc7c4a3ff83349bf"
   },
   "restart-result.json": {
     "bytes": 2191,
@@ -284,8 +284,8 @@
     "sha256": "5605edf9d4a62ebf1a4020e151ea59dd3a83f3ed3a0740d4e090834a8787d0f1"
   },
   "schema-2020-check.cjs": {
-    "bytes": 3958,
-    "sha256": "373e47fee28399d0a37d57299e2c96281baefca482d17df9a53e32a48ac06fa1"
+    "bytes": 3856,
+    "sha256": "2fb6c9fcbc418e49035b56692486b3903d81e88a482d4fe92e97a7edac8c1f41"
   },
   "schema-coverage-result.json": {
     "bytes": 295,

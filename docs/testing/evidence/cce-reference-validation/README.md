@@ -84,3 +84,7 @@ Reference SQL remains outside `db/migrations/`. Actual implementation still requ
 Retained failures include the missing SQLSTATE 22003 expectation, use of an incomplete native DTO, raw-seed replay overlap, a workflow negative fixture that reached structural validation too early, and an initial shutdown wait that was shorter than the observed checkpoint. Corrections and precise limits are in Appendix E of the report and the original README. Publication-only failures or repairs belong in the publication ledger, not those earlier result files.
 
 No CCE browser UI, complete semantic compiler/action catalogue, atomic production adoption command, OS worker isolation, real provider adapter, later-migration compatibility, independent security review or business acceptance is established here. No Figma URL, licensed icon artwork, cluster data, installed dependencies or operational exports are included.
+
+## CI repair — 12 October 2026
+
+Repository lint found three unused bindings in the imported harnesses. These are removed and the import manifest records the adapted bytes; original hashes and historical result files remain unchanged. The two `.cjs` schema harnesses retain their intentional CommonJS imports under a file-specific lint rule. All other lint rules still apply. No SQL/native/restart result is reissued by this correction.

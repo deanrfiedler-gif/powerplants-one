@@ -5,6 +5,14 @@ import hooks from "eslint-plugin-react-hooks";
 export default defineConfig([
   ...tseslint.configs.recommended,
   {
+    // Retained schema harnesses deliberately use CommonJS and its local __dirname.
+    files: [
+      "docs/testing/evidence/cce-reference-validation/schema-2020-check.cjs",
+      "docs/testing/evidence/cce-reference-validation/schema-coverage.cjs",
+    ],
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
+  {
     files: ["docs/design/app-page-register/register-r05.js"],
     // Issued builder fragment deliberately strips image data from portable exports.
     rules: { "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^data_url$" }] },

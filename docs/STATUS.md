@@ -8,6 +8,10 @@
 
 Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.
 
+## PR repair and integration — 12 October 2026
+
+Repository writer: this PR repair session (`codex/pr-repair-oct12`), authorised by Dean to fix and merge open contributions. PRs #435, #430 and #433 passed all reported checks and were merged. The CCE publication is reconciled with current main without changing original provenance or historical outcomes; its lint repair removes unused harness bindings and recognises the two intentional CommonJS schema harnesses. Fresh CI determines readiness for this integrated head; draft design checkpoints and owner acceptance remain separate.
+
 ## CCE documentation publication — 12 October 2026
 
 Repository documentation writer for this bounded contribution: the CCE publication session on `docs/cce-reference-package`, based on `4228d470ca4c566a15e7c3397fc053b8f7bef4bc`. Dean authorised the documentation-only branch and PR. The [working specification](architecture/cce-technical-specification.md), [Figma prompt](delivery/cce-figma-design-prompt.md), [proposal/decision](decisions/cce-architecture-proposal.md) and [reference evidence](testing/evidence/cce-reference-validation/README.md) are now discoverable in Git. This records publication preparation; the PR and GitHub checks determine remote delivery separately.

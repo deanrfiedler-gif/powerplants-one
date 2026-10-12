@@ -1,7 +1,7 @@
 # Preserve published evidence bytes across Windows/Linux checkouts.
 .gitattributes text eol=lf
 *.cjs text eol=lf
-# This source retains the exact original CRLF bytes; CR is intentional evidence.
+# This adapted source retains the original CRLF line endings.
 schema-2020-check.cjs -text whitespace=cr-at-eol
 publication/*.txt text eol=lf
 provenance/prior-report.md.txt -text

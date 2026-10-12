@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const localRequire = require('node:module').createRequire(path.join(process.cwd(), 'package.json'));
 const Ajv = require('./validator/node_modules/ajv/dist/2020').default;
 const addFormats = require('./validator/node_modules/ajv-formats');
 const schema = JSON.parse(fs.readFileSync(path.join(__dirname, 'rule-schema.json'), 'utf8'));

@@ -23,7 +23,8 @@
     "Six database harness sources use explicit recorded-checkout resolution; restart executable supplied by environment",
     "Report and prompt are living repository documents; current-source reconciliation does not alter past test claims",
     "Expression test import uses .js resolution for repository TypeScript compatibility; implementation bytes unchanged",
-    "Superseded prior-report.md retained byte-for-byte as provenance/prior-report.md.txt; original broken heading links remain historical plain-text evidence"
+    "Superseded prior-report.md retained byte-for-byte as provenance/prior-report.md.txt; original broken heading links remain historical plain-text evidence",
+    "CI repair removes unused createHash, counts and localRequire bindings only; original digests and historical results remain unchanged"
   ],
   "files": [
     {
@@ -166,8 +167,8 @@
       "publishedPath": "native-journey.mjs",
       "originalBytes": 7300,
       "originalSha256": "08dfc4125f9915b54c56fef2e2b1f7b5193893781cf2249229e5fcef3cb12e25",
-      "publishedBytes": 7340,
-      "publishedSha256": "822c08b2e912fd04bfab5575914d5ba57afbe4fafd8790262cd673bda54aeb1f",
+      "publishedBytes": 7329,
+      "publishedSha256": "b8cc734f38c77efeb152540b839d86769ea299a03011ed0fd46222898d91b157",
       "transformed": true
     },
     {
@@ -301,8 +302,8 @@
       "publishedPath": "restart-check.mjs",
       "originalBytes": 2460,
       "originalSha256": "9cac0cad03daf8aa83e6c0820cac89c7e841dd054ecbbf3a34615acc1db34399",
-      "publishedBytes": 2627,
-      "publishedSha256": "06568875dc9a87d9206d70e86edd96f1edad15210eb7c45ca590e0d571830262",
+      "publishedBytes": 2610,
+      "publishedSha256": "468880a85ab186b10a7302e6d9a584aefa7713e63210b8f3fc7c4a3ff83349bf",
       "transformed": true
     },
     {
@@ -328,9 +329,9 @@
       "publishedPath": "schema-2020-check.cjs",
       "originalBytes": 3958,
       "originalSha256": "373e47fee28399d0a37d57299e2c96281baefca482d17df9a53e32a48ac06fa1",
-      "publishedBytes": 3958,
-      "publishedSha256": "373e47fee28399d0a37d57299e2c96281baefca482d17df9a53e32a48ac06fa1",
-      "transformed": false
+      "publishedBytes": 3856,
+      "publishedSha256": "2fb6c9fcbc418e49035b56692486b3903d81e88a482d4fe92e97a7edac8c1f41",
+      "transformed": true
     },
     {
       "archivePath": "schema-coverage-result.json",
