@@ -1,0 +1,11 @@
+# Saved-team member access: implementation observations
+
+Observed by Codex on 12 October 2026 (Australia/Brisbane), source `675f11f7b39d995a5161b7b01c96ac98bf04e345`. All six images in [captures.json](captures.json) were inspected. This is an implementation observation, not owner acceptance, independent review, an accepted Figma baseline or physical-device proof. Existing review fingerprints remain unchanged.
+
+Chrome/en-AU, synthetic Systems session, at 1440×960, 390×844 and 320×740. Each width has a real API-created member-access frame and a deliberately injected identity-limits presentation frame. The latter replaces the response with a zero-grant local member and masked identity to exercise rendering; it is not a persisted roster change. Actual SQL fixtures independently prove counts, inactive precedence and masking. The normal capture shows six recorded Current rows for the synthetic Site observer in the preserved application fixture, without claiming that these rows provide effective business access.
+
+All images are scrolled viewport captures. The member-access frame starts at Initial roster, with the team header/close/refresh controls above the frame. Identity-limits frames start at the member list. Icon artwork was replaced by plain placeholders in the DOM before capture; no image pixels were subsequently edited. The original creation history remains below current observations, with its own attribution and operation ID. The browser checks separately prove refresh, exact keyboard handover, failure/denial and late-response isolation.
+
+At all three widths the exact IDs, counts and explanation wrap inside the card, with no document-wide horizontal overflow detected. Local member links remain readable; the masked identity has explicit withholding copy and no access link or counts. At 320 pixels the card extends below the viewport and requires normal vertical scrolling. Desktop grid neighbours retain the existing stretched empty height beside an expanded card. The existing phone header truncates the title. These observations remain visible limits; no shared CSS or layout acceptance is implied.
+
+Full-page, physical-device, zoom, assistive-technology and owner visual/security review remain open. Campaigns, attestations, membership lifecycle, review routing and operational D-020 remain separate work.

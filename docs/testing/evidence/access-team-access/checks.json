@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+  "base": "bdd6f583b7f091da4e43f3a33a86f11db4e94b22",
+  "updated_parent": "83a67627edad2ce8f09da6dff7400b926e73a2e3",
+  "branch": "codex/ad01-team-access-inspection",
+  "status": "Local prototype validation complete; final pushed-head CI and owner acceptance separate",
+  "source_hash_method": "SHA-256 of exact Git blob LF bytes at source, not Windows working-copy bytes",
+  "source_sha256": {
+    "src/access/service.ts": "e8a136a27f0c2a76fe4424a7e47ab35213c7fb8707b8d46f55fbe3a1a20fb0c9",
+    "src/access/local-teams.ts": "a808f2b8259d018823dc7216b982aefed084e51aa510b67f5af1246ba5dab099",
+    "src/access/local-team-screens.tsx": "c3041d9f3e5af7cf1c6a8d18dd2a26eec259fa374fb0f3e98fafef564bfb3c75",
+    "tests/database/access-local-teams.test.ts": "ff01894ef1faa50fe2799690a26e995d564708f34e8141c0259c249d49bd3d60",
+    "tests/browser/access-team-access.spec.ts": "62d78bc65f5a6ba8b4ccfafd131e81eaa1affd0e14649cd1cc02a6cb0b90b8a4"
+  },
+  "checks": {
+    "database": {
+      "reported_cases": 45,
+      "initial_passed": 43,
+      "initial_failed": 2,
+      "complete_team_replay_passed": 17,
+      "all_cases_have_passing_coverage": true,
+      "note": "Includes Node parents; failed new fixture plus its parent. Existing access-inspection file passed unchanged."
+    },
+    "browser": {
+      "passed": 45,
+      "scenarios": 15,
+      "new_inspection_executions": 12,
+      "workers": 1,
+      "viewports": [
+        [
+          1440,
+          960
+        ],
+        [
+          390,
+          844
+        ],
+        [
+          320,
+          740
+        ]
+      ],
+      "locale": "en-AU"
+    },
+    "units": {
+      "unique_passed": 19,
+      "final_component_recheck_passed": 2,
+      "note": "Component rechecks repeat two of the 19 unique cases after record correction."
+    },
+    "build": {
+      "passed": true,
+      "compiled_runtime_commit": "8e387f1",
+      "source_difference": "675f11f changes only the delayed-response browser test; runtime blobs identical",
+      "typescript": true
+    },
+    "lint": {
+      "exit_code": 0,
+      "diagnostics": 0
+    },
+    "studio": {
+      "passed": true,
+      "initial_failed": true,
+      "unreviewed": 330,
+      "stale": 28,
+      "pending_component_reviews": 42
+    },
+    "foundation": {
+      "passed": true,
+      "issued_sources": 22,
+      "requirements": 78,
+      "local_links_checked": 8521,
+      "note": "Living source/contract assurance run; final evidence links additionally checked during packaging."
+    },
+    "naming": {
+      "passed": true,
+      "copied_instruction_characters": 7977
+    },
+    "captures": {
+      "count": 6,
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "document_overflow": false,
+      "review": "review.md",
+      "manifest": "captures.json"
+    },
+    "cleanup": {
+      "owned_services_stopped": true,
+      "record": "cleanup.json"
+    }
+  },
+  "limits": [
+    "No new migration, capability, seed or grant.",
+    "No membership changes, campaigns, attestation or routing.",
+    "No inherited team authority or effective-access claim from grant counts.",
+    "No owner visual/security, physical-device, zoom or assistive-technology acceptance.",
+    "No deployment, production integration or business transaction."
+  ],
+  "artifact_sha256": {
+    "captures.json": "8e1687ed5e9cc2383748064e72c837febdbe12281c6cb5694e7ebeeaa33050ce",
+    "cleanup.json": "b344944d12b1470b432eca017976d547077092752d45c9a2c89ac31ba17b1243",
+    "logs/browser.log": "dcbe5f6e342d9d6663130be735e443b864233924ec40ceb4a5bd22d51c22b8f8",
+    "logs/build-final.log": "026eaf24e8d6237b95a1bfdb989cfc28315491bb02ea7ae537f9bf558cdc9712",
+    "logs/build.log": "8fbed82c215e3238ba0e8b22258bbc861e22e9e243cf6d1537ebbcdbc23260bd",
+    "logs/capture.log": "73e381796b40c3779c6f5c4211c233c125c15863d413a865c45caf5b03bee845",
+    "logs/components-final.log": "9090edc572c3143dda7058e9da325d22fe1527788aed78cd3b6d158399c2f744",
+    "logs/database-replay.log": "6aeea79d8386157d68a768618ef177471dc88483f3a07ad7683b8ca9c551c470",
+    "logs/database.log": "a2fa3d61ca919b7878596918ac1a164b8399d66756d3165f2855599698f6b4ba",
+    "logs/foundation.log": "7268639a3cc048255059e0c36faa549f64e2d4d151da8d908b2e610ebee77e07",
+    "logs/lint-final.log": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "logs/lint.log": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "logs/naming.log": "467cbee9792b9907837efea6028825c12911768d67506d577e436ef77a0cd7ef",
+    "logs/studio-corrected.log": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
+    "logs/studio-final.log": "76250fb669f05053c260df4e78b2aaee86dd3a1670ad4b699a1dbc91296e870f",
+    "logs/studio.log": "6e13554895e1e4a45226111639dcfc9a33eae6370760b4c4ee2d2ada448833a8",
+    "logs/unit.log": "219dd5fdb279fd279d59da5216877959b40c1609b02c3f20046dceefe4453376",
+    "native-1440-identity-limits.png": "f0086cfd64fcb318ea81adea1a3400b485953b281ff273419d285f7545653323",
+    "native-1440-member-access.png": "8113593c7690e7ad6b6ca979771a5074a6e5ca611dae685c74e8f851662a91ea",
+    "native-320-identity-limits.png": "a96138d4d225be03535705e7633fd3c28abb612298f62041bf4c062ebb7a944b",
+    "native-320-member-access.png": "0d30441109357e7dfbcad65bde4c4c84d9bd20c716d1a37bf37ce5f7534fa5a0",
+    "native-390-identity-limits.png": "83297ba91328778624364e52dbdd67ca816a02868a156fd2c743beee65792e50",
+    "native-390-member-access.png": "54d10fdbcd5ff98924dcfa7328d9541cb1208805ade3f407399f9d711a44a415",
+    "README.md": "0971ae99dc23b608379fd3a31d9fe0f8a5f2e5ad0cab49fd077d87d0d6b17760",
+    "review.md": "f80be2e1f81cf8d13d37b144135f05fd662605ab3e3ae2e3c61f79128a66d65f"
+  }
+}

@@ -16,7 +16,7 @@ At 390 × 844 and 320 CSS px stack cards and fields, wrap long capability keys, 
 
 ## States and recovery
 
-Proposed/Draft never means adopted. Inactive, future, expired, unrelated-company and unrelated-site grants cannot match the selected scope. Any form change clears results; explicit Compare current grants repeats current server checks. Loading or errors hide prior results. Denied/working-company responses clear person context. Retry after those refusals reloads context; it cannot restore access. Hosted names are masked and authentication validity remains separate. No write control exists.
+Proposed/Draft never means adopted. Inactive, future, expired, unrelated-company and unrelated-site grants cannot match the selected scope. Any form change clears results; explicit Compare current grants repeats current server checks. Loading or errors hide prior results. Denied/working-company responses clear person context. Retry after those refusals reloads context; it cannot restore access. Hosted names are masked and authentication validity remains separate. Role comparison has no write control; local team creation is described below.
 
 ## Sources and handovers
 
@@ -39,7 +39,7 @@ Implementation observations at `17c4827`: [desktop section](../../../testing/evi
 
 ## Saved local team record inspection — 11 October 2026
 
-The [local team contract](../../../decisions/access-local-teams.md) adds immutable local records and initial rosters. `/admin/access/roles#saved-local-teams` reuses record-grid/card styles, Button, ReadState and Stamp. Retained team examples remain separately labelled. Incoming data is the local team API; outgoing inspection is the exact original roster and audit-linked creation history. There is no native creation/editing form or membership-derived authority.
+The [local team contract](../../../decisions/access-local-teams.md) adds immutable local records and initial rosters. `/admin/access/roles#saved-local-teams` reuses record-grid/card styles, Button, ReadState and Stamp. Retained team examples remain separately labelled. Incoming data is the local team API; outgoing inspection is the exact original roster and audit-linked creation history. Creation now has the bounded form described below. Membership editing and membership-derived authority remain absent.
 
 At desktop widths, use the existing card grid. At 390/320 px, stack cards and wrap UUIDs, names, purpose and reason using `narrative`. Keyboard Enter/Space opens/closes the selected roster; pagination and Refresh saved teams are shared buttons. Collection loading and unavailable reads hide saved cards; detail loading hides the previous roster while retaining the opener and its focus; denied inspection clears the protected catalogue. Identity activity is current, while the roster is the immutable initial record. No source join/expiry dates are copied into it.
 
@@ -48,3 +48,23 @@ Host fixtures live in `tests/browser/access-local-teams.spec.ts`; exact-record/c
 Actual implementation review: [six source-bound captures and observations](../../../testing/evidence/access-local-teams/review.md), source `039df64`, 1440/390/320 widths. No horizontal document overflow observed. Existing phone-title truncation, card height and vertical scrolling remain explicit limits; owner acceptance is still pending.
 
 Fresh roster details replace cached lead/creator labels on the selected card; closing retains the newer snapshot. Collection refresh/paging clears it. `access-local-teams.spec.ts` includes a distinct presentation fixture for this state; it does not claim a server identity change.
+
+## Native local team creation — 12 October 2026
+
+The [creation contract](../../../decisions/access-team-creation.md) adds a form inside Saved local teams using the existing Field, SelectField, ValidationFields, ErrorNotice, Button and recovery journal. Current creation context supplies active local identities and an explicit creation-duty flag; no name is preselected. Show exact IDs with names, explicit lead inclusion, 1–20 selected members and individual Remove controls. Name is at most 100 characters; purpose/reason are 10–1000. The initial roster remains immutable and grants no authority.
+
+At desktop and 390/320 widths use the existing vertical form fields and wrapped roster/receipt IDs. No new shared style/export or layout is adopted. Use native selects, labelled errors, keyboard buttons and the existing unsaved-navigation guard. Pending commands disable the form; explicit unchanged retry and original-result lookup reuse the actor/workspace/tab journal. A receipt shows exact team/operation IDs; Inspect saved team reads that exact roster even outside the current collection page. Recording another team is explicit. Refresh available people reviews unsubmitted draft loss; collection refresh preserves the form. Denial clears protected catalogue content. Storage failure sends nothing.
+
+Host fixtures: `tests/browser/access-team-creation.spec.ts`; current context/authority fixtures: `tests/database/access-local-teams.test.ts`. [Evidence](../../../testing/evidence/access-team-creation/README.md) separates functional checks from source-bound observations. Accepted native images, owner/device/zoom/screen-reader acceptance, membership editing and operational policy remain open. No review fingerprint is assigned.
+
+The closed native selector may clip its option text on phones. Show the complete selected lead UUID as wrapped text below it before submission; selected roster IDs also wrap. The receipt inspection action moves keyboard focus to its exact saved card.
+
+
+Final native team-creation observations: [source-bound capture review](../../../testing/evidence/access-team-creation/review.md). The twelve final frames and retained initial frames are implementation evidence; owner review and existing review fingerprints remain separate.
+
+
+## Saved-team current access — 12 October 2026
+
+Within the expanded immutable initial roster, show the shared statement-time observation and four labelled grant-row counts (Current, Scheduled, Expired, Inactive identity), plus total. A zero-grant member remains visible; inactive identity takes precedence over dates. Display all recorded members, without silently adding the lead. Keep original creation history underneath. For local identities, ButtonLink opens their exact Person access page, where company/site explanations and current server checks remain separate. Masked identities retain their original UUID and masked name but no count or access link.
+
+Refresh member access reloads only this detail and preserves a typed creation draft. The refresh control stays mounted and disabled during loading. Loading/error must hide earlier counts; denied inspection clears the protected catalogue. Rapid selection must not place a late response in a different team's card. Reuse existing cards/list, Button/ButtonLink, Stamp and ReadState; no new shared style or layout. Counts and UUIDs wrap at 390/320; the long card uses normal vertical scrolling. Accepted native Figma imagery, owner/physical-device/zoom/screen-reader review remain missing. No review fingerprint is assigned. Host fixtures: tests/browser/access-team-access.spec.ts and tests/database/access-local-teams.test.ts; [evidence](../../../testing/evidence/access-team-access/README.md) and [six observed captures](../../../testing/evidence/access-team-access/review.md).

@@ -1,0 +1,26 @@
+✔ AD01 teams: populated 0082 upgrade preserves history and adds exactly one local duty (51831.2061ms)
+▶ AD01 teams: creation, retention, authority and recovery
+  ✔ creation context is read-only, local, active, workspace-bound and current-duty gated (253.0395ms)
+  ✔ member access counts exact roster rows at one instant without writing evidence (406.9499ms)
+  ✔ atomic original roster, audit and receipt; no permission, session or request mutation (160.1531ms)
+  ✔ strict schema, exact IDs, explicit distinct bounded roster and version (40.8971ms)
+  ✔ read/approve, lead and membership confer no creation duty (55.8156ms)
+  ✔ current working company, inactive actor and expired duty refuse without mutation (83.1674ms)
+  ✔ deactivated or hosted participant refused; original replay survives later identity changes (160.7416ms)
+  ✔ same-operation concurrent retry records once; same-team concurrent operation conflicts (69.338ms)
+  ✔ authority mutation queued before creation is revalidated after table lock (30.5237ms)
+  ✔ SQL guards retain exact record, roster and evidence; incomplete insertion rolls back (226.2165ms)
+  ✔ another authorised actor cannot recover or collide with the original actor receipt (114.2866ms)
+  ✔ failed audit insertion rolls back team, roster and all receipts (45.1347ms)
+  ✔ current authority is required for original recovery and replay (49.9232ms)
+  ✔ bounded pages retain exact IDs when names repeat (742.8639ms)
+  ✔ hosted environment refuses every team API service before database access (1.2393ms)
+✔ AD01 teams: creation, retention, authority and recovery (2449.3406ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66758.9204
