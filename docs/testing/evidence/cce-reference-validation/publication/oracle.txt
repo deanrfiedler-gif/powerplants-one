@@ -1,0 +1,1 @@
+{"oracle":"Python fractions.Fraction","seed":20261012,"passed":5000,"localElapsedMs":96,"limit":"Generated differential arithmetic checks; not exhaustive parser security or production load testing"}

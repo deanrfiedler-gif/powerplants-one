@@ -1,0 +1,7 @@
+{
+  "schemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "mode": "strict native 2020-12; formats enabled; no coercion/defaults/removal",
+  "positiveCases": 5,
+  "negativeCases": 16,
+  "ajvVersion": "8.17.1"
+}

@@ -118,8 +118,25 @@ Not built yet: F1's "evidence for a declaration" and "mapped to a native field" 
 Corrections found while building, now reflected here and to be reflected on the board:
 
 - Native records a technical review with open findings (disposition "Reviewed; unresolved"), and a handover needs only a review of the exact revision. The board's "review unavailable while conflicts are open" was a design assumption, not native behaviour; the running screen shows the native rule.
-- An injection channel above its entered range is a candidate failure in native, not a scope finding. It appears in Next actions and Resolve alongside conflicts but is never added to finding counts.
+- An injection channel above its entered range is a candidate failure in native, not a scope finding. It appears in Next actions and Resolve alongside conflicts but is never added to finding counts. The capacity headroom and injection panels label it Candidate failure too (12 October 2026).
 - The engine gates timing on the scenario's phase and I/O on bank and controller phases, but raises a phase finding only for areas, crop groups, valves, masters, sources and scheduled groups. An undeclared scenario phase shows only as "timing incomplete". The declarations diagnose this and name the phase; the engine is unchanged, and adding the missing findings would need a new calculation edition.
+
+## Built to the board, 12 October 2026
+
+Dean asked for the module's UI page to be built to the design board ("one of the most important modules in the entire Powerplants One app … extremely professional, accurate, and user friendly"). The record workspace `route:/estimating/fertigation/[id]` is rebuilt to the [retained captures r01](../reference/ui/estimating/fertigation-design-board-r01/README.md); the [board parity register](../testing/priva-fertigation-board-parity.csv) records every region as a match, a fix, a departure with its authority, a gated item or an item not built. This is a build, not a visual review; nothing is registered in `ui-baselines.json`.
+
+| Item | Built as | Rule basis kept |
+|---|---|---|
+| D2 record header and context row | Scope name and reference, the native status words with the S6 timestamp, History, Report (saved customer report), Compare draft while dirty, Save revision; context row with the captured site and customer, the Discovery binding and its source state, the scope state, the operating scenario and the synthetic flag | The shell keeps navigation and branding; the scenario select edits `selected_scenario_id` in the draft like any other field |
+| D1 rail | Icons per section (Font Awesome Light once the Kit runs), the three scoping groups, severity badges, a check where a calculated view has no finding, Scope readiness above and the register, Discovery and edition links below | Badges stay hidden from the accessible name (FN-T94) |
+| D3 chart fills | `--fn-fill-conflict`, `--fn-fill-incomplete`, `--fn-fill-review`, `--fn-fill-neutral` and the timeline's prepare, deliver and flush fills, chart only | Status chips keep the shared status families |
+| D4 result states | One treatment per state: a dashed Not recorded token for an entered value that is absent, the engine's Unknown or Excluded in scenario words for a result, a basis tag (Calculated, Entered, Declared, Assumed) on every tile | Driven by `Result.state`, never inferred |
+| D5 comparison matrix | One table over the configured candidates against the engine's required range, the engine's status per row, Shortlist and Configure; families with no candidate offer Configure | No published envelope is drawn (ADR-0038) |
+| D6 presentation | Required duty build-up bars from the entered losses and the engine's pressure conversion; injection requirement bars; I/O banks channel by channel; the irrigation timeline and a first-cycle detail from the engine's events and intervals; a storage gauge from the engine's minimum, final and overflow with the entered capacity and reserve; the system concept from the scope's records; chart text fixed at 11–13 px | Values are placed on a scale and never recalculated |
+| Phone (board A) | Section picker with group headings and open counts, compact header, stacked panels, 2 × 2 tiles, 16 px inputs and 44 px targets, a Report / Save revision bar above the shell's tab bar | The shell's phone navigation is unchanged |
+| Registers | The shared register table (ADR-0051 group 2) inside each register panel with the board's columns per register, Find in register, filters and 25-row pages; the scope register uses it flush | FN-T61's above-the-fold rule keeps the registers tabbed within each section rather than stacked |
+
+Departures recorded in the parity register and awaiting Dean's decision: an SVG export of the system concept, and the device-to-channel allocation (F12). Gated behind calculation edition r02: first arrival and stock endurance (F11), the three proposed checks (F10), sensitivity and break-even. Not built: the import screen parity (WP-L3), the site visit (F8), the report pages at A4, a required save reason (A9).
 
 ## Not changed
 
@@ -164,4 +181,5 @@ If a departure or feature is rejected, the board reverts that part and this reco
 ## Related
 
 - Board: private claude.ai design canvas "Priva Fertigation Workbench".
+- Figma design accepted on 12 October 2026, to which the built page is to be aligned: [Priva Fertigation Workbench Figma design](fertigation-figma-design.md).
 - [ADR-0038](ADR-0038-priva-fertigation-native.md), [page contract](../design/development/pages/route-estimating-fertigation-id.md), [HTML module conformance](../standards/html-module-conformance.md).

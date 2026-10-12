@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 import { useDiscoveryNavigation } from "./discovery-navigation";
-import { RecordTabs } from "./record-ui";
+import { RegisterTable } from "./ui/register-table";
 import { FertigationArtifacts } from "./fertigation-artifacts";
 import { FertigationImport } from "./fertigation-import";
 import {
@@ -14,18 +14,8 @@ import {
   scopeDifferences,
 } from "./fertigation-comparison";
 import { FertigationHistoryActions } from "./fertigation-history-actions";
-import { FertigationScenarios } from "./fertigation-scenarios";
-import { FertigationCandidateDetails } from "./fertigation-candidate-details";
-import {
-  CapacityPanel,
-  EvidencePanel,
-  FindingsReview,
-  DeclarationsPanel,
-  NextActionsPanel,
-  OutputReadinessPanel,
-  ReadinessSummary,
-} from "./fertigation-cockpit";
-import { PumpDutyChart, TraceDrawer } from "./fertigation-trace";
+import { ReadinessSummary } from "./fertigation-cockpit";
+import { TraceDrawer } from "./fertigation-trace";
 import { ResolveDrawer } from "./fertigation-resolve";
 import {
   resolvables,
@@ -34,16 +24,18 @@ import {
 import type { TraceKey } from "../estimating/fertigation/trace";
 import { declarations } from "../estimating/fertigation/declarations";
 import {
-  candidateFailures,
   withLabels,
   countsByView,
   severityCounts,
 } from "../estimating/fertigation/guidance";
 import {
   FertigationFrame,
+  fertigationViewGroups,
   fertigationViews,
+  viewLabel,
   type FertigationView,
 } from "./fertigation-frame";
+import { FertigationHeader, PhoneBar, type StatusTone } from "./fertigation-header";
 import {
   FertigationDialog,
   FertigationEditor,
@@ -53,17 +45,31 @@ import {
   registerNames,
   type Register,
 } from "./fertigation-fields";
-import { blankScope, families } from "../estimating/fertigation/definition";
-import type {
-  Calculation,
-  Result,
-  Scope,
-} from "../estimating/fertigation/types";
-import type {
-  FertigationRecord,
-  ScopeRevision,
-  SourceBinding,
-} from "../estimating/fertigation/storage-types";
+import { blankScope } from "../estimating/fertigation/definition";
+import type { Calculation, Scope } from "../estimating/fertigation/types";
+import type { SourceBinding } from "../estimating/fertigation/storage-types";
+import {
+  Button,
+  Chip,
+  Empty,
+  Find,
+  Hint,
+  Icon,
+  Notice,
+  PageFoot,
+  Panel,
+  when,
+} from "./fertigation-ui";
+import { OverviewView } from "./fertigation-views/overview";
+import { GrowingView } from "./fertigation-views/growing";
+import { WaterView } from "./fertigation-views/water";
+import { RecipesView } from "./fertigation-views/recipes";
+import { ControlsView } from "./fertigation-views/controls";
+import { OperatingView } from "./fertigation-views/operating";
+import { ConfiguratorView } from "./fertigation-views/configurator";
+import { EvidenceView } from "./fertigation-views/evidence";
+import { ReviewView } from "./fertigation-views/review";
+import type { Detail, EditorRegister, ViewContext } from "./fertigation-views/context";
 
 const base = "estimating/fertigation";
 type SourceOption = {
@@ -86,23 +92,6 @@ type SourceOption = {
   } | null;
   proposal: Scope;
 };
-type Detail = {
-  scope: FertigationRecord;
-  revision: ScopeRevision;
-  source: {
-    workspace_version: number;
-    option_label: string;
-    revision: number;
-    scope_readiness: string;
-    selected: boolean;
-    current_revision_id: string;
-    context_hash: string;
-    changed?: boolean;
-  };
-  calculation: Calculation;
-  can_edit: boolean;
-  edit_blocker: string | null;
-};
 type Summary = {
   id: string;
   name: string;
@@ -115,21 +104,8 @@ type Summary = {
   option_id: string;
   estimating_workspace_id: string;
 };
-const when = (date: string | Date) => new Date(date).toLocaleString("en-AU");
-const show = (result?: Result) =>
-  !result
-    ? "Not assessed"
-    : result.state === "known" && result.value !== null
-      ? `${Number(result.value.toPrecision(8)).toLocaleString("en-AU")} ${result.unit}`
-      : human(result.state);
-function ResultValue({ result }: { result: Result }) {
-  return (
-    <span title={result.reason}>
-      {show(result)}
-      {result.state !== "known" && <small> · {result.reason}</small>}
-    </span>
-  );
-}
+
+/* ---------- Scope register ---------- */
 
 export function FertigationRegister() {
   const params = useSearchParams(),
@@ -149,100 +125,97 @@ export function FertigationRegister() {
   return (
     <FertigationFrame>
       <div className="fn-scroll">
-        <header className="fn-heading">
-          <div>
-            <h1>Priva Fertigation Configurator</h1>
-            <p>Native scopes linked to exact saved Discovery alternatives.</p>
-          </div>
-          {resource.data?.can_create && (
-            <Link
-              className="fn-button fn-primary"
-              href={`/estimating/fertigation/new?${context}`}
-            >
-              New fertigation scope
-            </Link>
+        <div className="fn-page fn-page-register">
+          <header className="fn-page-head">
+            <div className="fn-page-title">
+              <p className="fn-eyebrow">Estimating · ES-02</p>
+              <h1>Priva Fertigation Configurator</h1>
+              <p className="fn-lede">Native scopes linked to exact saved Discovery alternatives.</p>
+            </div>
+            <div className="fn-page-actions">
+              <Find value={search} onChange={(v) => { setSearch(v); setBefore(null); }} label="Search scopes" placeholder="Find a scope" />
+              {resource.data?.can_create && (
+                <Link className="fn-button fn-primary" href={`/estimating/fertigation/new?${context}`}>
+                  <Icon name="plus" className="fn-button-icon" />
+                  <span>New fertigation scope</span>
+                </Link>
+              )}
+            </div>
+          </header>
+          <ErrorNotice error={resource.error} />
+          {resource.loading && !resource.data && (
+            <p role="status" className="fn-loading">Loading permitted scopes…</p>
           )}
-        </header>
-        <div className="fn-toolbar">
-          <label>
-            Search scopes
-            <input
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setBefore(null);
-              }}
-            />
-          </label>
-        </div>
-        <ErrorNotice error={resource.error} />
-        {resource.loading && <p role="status">Loading permitted scopes…</p>}
-        {resource.data && (
-          <>
-            {resource.data.items.length ? (
-              <div className="fn-table-scroll">
-                <table>
+          {resource.data && (
+            <Panel title="Saved scopes" count={resource.data.items.length} flush className="fn-register-panel"
+              subtitle="Each scope is bound to one saved Discovery alternative; manufacturer confirmation remains separate"
+              foot={
+                <div className="fn-paging">
+                  <span>{resource.data.items.length} shown</span>
+                  <span className="fn-paging-actions">
+                    {before && <Button variant="quiet" size="sm" onClick={() => setBefore(null)}>First page</Button>}
+                    {resource.data.next_cursor && (
+                      <Button variant="quiet" size="sm" onClick={() => setBefore(resource.data!.next_cursor)}>Next page</Button>
+                    )}
+                  </span>
+                </div>
+              }
+            >
+              {resource.data.items.length ? (
+                <RegisterTable variant="panel" stale={resource.loading} caption="Saved fertigation scopes; the scope name opens its workspace.">
                   <thead>
                     <tr>
-                      <th>Scope</th>
-                      <th>Revision</th>
-                      <th>State</th>
-                      <th>Updated</th>
+                      <th scope="col"><span className="ppo-register-label">Scope</span></th>
+                      <th scope="col"><span className="ppo-register-label">Reference</span></th>
+                      <th scope="col" className="fn-col-num"><span className="ppo-register-label">Revision</span></th>
+                      <th scope="col"><span className="ppo-register-label">State</span></th>
+                      <th scope="col"><span className="ppo-register-label">Updated</span></th>
                     </tr>
                   </thead>
                   <tbody>
                     {resource.data.items.map((row) => (
                       <tr key={row.id}>
-                        <td>
-                          <Link href={`/estimating/fertigation/${row.id}`}>
-                            {row.name}
-                          </Link>
-                          <br />
-                          <small>{row.display_number}</small>
+                        <td className="ppo-register-wrap fn-col-label">
+                          <Link href={`/estimating/fertigation/${row.id}`} className="fn-row-title">{row.name}</Link>
                         </td>
-                        <td>{row.version}</td>
+                        <td><code className="fn-ref">{row.display_number}</code></td>
+                        <td className="fn-col-num">{row.version}</td>
                         <td>
-                          {row.state}
-                          <br />
-                          <small>Manufacturer confirmation separate</small>
+                          <Chip tone={row.state === "Archived" ? "neutral" : "existing"}>{row.state}</Chip>
                         </td>
                         <td>{when(row.updated_at)}</td>
                       </tr>
                     ))}
                   </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="fn-empty">
-                <h2>
-                  {search ? "No matching scopes" : "No saved fertigation scope"}
-                </h2>
-                <p>
+                </RegisterTable>
+              ) : (
+                <Empty
+                  icon={search ? "search" : "leaf"}
+                  title={search ? "No matching scopes" : "No saved fertigation scope"}
+                  action={
+                    search ? (
+                      <Button variant="secondary" size="sm" onClick={() => setSearch("")}>Clear search</Button>
+                    ) : resource.data.can_create ? (
+                      <Link className="fn-button fn-primary" href={`/estimating/fertigation/new?${context}`}>
+                        <span>Create native fertigation scope from saved Discovery</span>
+                      </Link>
+                    ) : undefined
+                  }
+                >
                   {search
                     ? "Try a different reference or clear the search."
                     : "Create a scope from a saved Discovery alternative. Unknown production context and technical inputs may remain incomplete."}
-                </p>
-                {search && (
-                  <button onClick={() => setSearch("")}>Clear filters</button>
-                )}
-              </div>
-            )}
-            <div className="fn-actions">
-              {before && (
-                <button onClick={() => setBefore(null)}>First page</button>
+                </Empty>
               )}
-              {resource.data.next_cursor && (
-                <button onClick={() => setBefore(resource.data!.next_cursor)}>
-                  Next page
-                </button>
-              )}
-            </div>
-          </>
-        )}
+            </Panel>
+          )}
+        </div>
       </div>
     </FertigationFrame>
   );
 }
+
+/* ---------- Create ---------- */
 
 export function FertigationCreate() {
   const params = useSearchParams(),
@@ -278,194 +251,138 @@ export function FertigationCreate() {
   return (
     <FertigationFrame message={command.status}>
       <div className="fn-scroll">
-        <h1>Create native fertigation scope</h1>
-        <p>
-          Capture a proposal against a saved Discovery revision. Existing Site,
-          Facility and installed Asset records retain their identity.
-        </p>
-        <ErrorNotice error={options.error ?? command.error} />
-        {options.loading && (
-          <p role="status">Loading permitted Discovery sources…</p>
-        )}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!source || pending) return;
-            const proposal = {
-                ...source.proposal,
+        <div className="fn-page fn-page-create">
+          <header className="fn-page-head">
+            <div className="fn-page-title">
+              <p className="fn-eyebrow">Priva Fertigation Configurator · create</p>
+              <h1>Create native fertigation scope</h1>
+              <p className="fn-lede">
+                Capture a proposal against a saved Discovery revision. Existing Site, Facility and installed Asset
+                records retain their identity.
+              </p>
+            </div>
+          </header>
+          <ErrorNotice error={options.error ?? command.error} />
+          {options.loading && <p role="status" className="fn-loading">Loading permitted Discovery sources…</p>}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!source || pending) return;
+              const proposal = { ...source.proposal, name, production_context: context },
+                system = source.configuration?.systems.find((x) => x.id === systemId);
+              void command.send(base, {
+                id: crypto.randomUUID(),
                 name,
-                production_context: context,
-              },
-              system = source.configuration?.systems.find(
-                (x) => x.id === systemId,
-              );
-            void command.send(base, {
-              id: crypto.randomUUID(),
-              name,
-              reason: "Create native fertigation scope from saved Discovery",
-              estimating_workspace_id: source.estimating_workspace_id,
-              option_id: source.option_id,
-              revision_id: source.revision_id,
-              expected_workspace_version: source.expected_workspace_version,
-              coverage: {
-                system_id: systemId || null,
-                area_ids: system?.coverage.area_ids ?? [],
-                facility_ids: source.facility_ids,
-              },
-              proposal,
-            });
-          }}
-        >
-          <fieldset disabled={pending}>
-            <div className="fn-fields">
-              <label>
-                Scope name
-                <input
-                  value={name}
-                  maxLength={200}
-                  required
-                  onChange={(e) => {
-                    setName(e.target.value);
-                    command.dirty();
-                  }}
-                />
-              </label>
-              <label>
-                Saved Discovery alternative
-                <select
-                  required
-                  value={source?.option_id ?? ""}
-                  onChange={(e) => {
-                    setSelected(e.target.value);
-                    setSystemId("");
-                    command.dirty();
-                  }}
-                >
-                  <option value="">Select a saved alternative</option>
-                  {options.data?.sources.map((x) => (
-                    <option key={x.option_id} value={x.option_id}>
-                      {x.option_label} · Revision {x.revision} ·{" "}
-                      {x.scope_readiness}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              {source && (
-                <label>
-                  Saved Fertigation system (optional)
-                  <select
-                    value={systemId}
-                    onChange={(e) => {
-                      setSystemId(e.target.value);
-                      command.dirty();
-                    }}
-                  >
-                    <option value="">
-                      Scope-level association; system not assigned
-                    </option>
-                    {source.configuration?.systems
-                      .filter((x) => x.family === "Fertigation")
-                      .map((x) => (
-                        <option key={x.id} value={x.id}>
-                          {x.name}
+                reason: "Create native fertigation scope from saved Discovery",
+                estimating_workspace_id: source.estimating_workspace_id,
+                option_id: source.option_id,
+                revision_id: source.revision_id,
+                expected_workspace_version: source.expected_workspace_version,
+                coverage: {
+                  system_id: systemId || null,
+                  area_ids: system?.coverage.area_ids ?? [],
+                  facility_ids: source.facility_ids,
+                },
+                proposal,
+              });
+            }}
+          >
+            <fieldset disabled={pending}>
+              <Panel title="Scope and Discovery source" subtitle="The saved alternative supplies the customer, site and facilities; the scope adds its own technical records.">
+                <div className="fn-fields">
+                  <label className="fn-field">
+                    <span>Scope name</span>
+                    <input value={name} maxLength={200} required onChange={(e) => { setName(e.target.value); command.dirty(); }} />
+                  </label>
+                  <label className="fn-field">
+                    <span>Saved Discovery alternative</span>
+                    <select required value={source?.option_id ?? ""} onChange={(e) => { setSelected(e.target.value); setSystemId(""); command.dirty(); }}>
+                      <option value="">Select a saved alternative</option>
+                      {options.data?.sources.map((x) => (
+                        <option key={x.option_id} value={x.option_id}>
+                          {x.option_label} · Revision {x.revision} · {x.scope_readiness}
                         </option>
                       ))}
-                  </select>
-                </label>
-              )}
-            </div>
-            {source && (
-              <p className="fn-note">
-                Origin: saved Discovery revision {source.revision}.{" "}
-                {source.site || "Site context retained in the source binding"}.
-                Optional missing technical data remains incomplete.
-              </p>
-            )}
-            <section className="fn-section">
-              <h2>Production context</h2>
-              <p>
-                Business context, growing system and physical process are
-                independent. Unknown is a valid starting point.
-              </p>
-              <ObjectFields
-                value={context as unknown as Record<string, unknown>}
-                template={context as unknown as Record<string, unknown>}
-                scope={blankScope()}
-                update={(value) => {
-                  setContext(value as unknown as Scope["production_context"]);
-                  command.dirty();
-                }}
-                prefix="create-context"
-              />
-            </section>
-            <div className="fn-actions">
-              <button
-                className="fn-primary"
-                disabled={!source || pending}
-                type="submit"
-              >
-                {command.busy ? "Creating…" : "Create saved scope"}
-              </button>
-              <Link href="/estimating/discovery">Return to Discovery</Link>
-            </div>
-          </fieldset>
-        </form>
-        {source && (
-          <FertigationImport
-            source={{
-              name,
-              estimating_workspace_id: source.estimating_workspace_id,
-              option_id: source.option_id,
-              revision_id: source.revision_id,
-              expected_workspace_version: source.expected_workspace_version,
-              coverage: {
-                system_id: systemId || null,
-                area_ids:
-                  source.configuration?.systems.find((s) => s.id === systemId)
-                    ?.coverage.area_ids ?? [],
-                facility_ids: source.facility_ids,
-              },
-            }}
-            disabled={command.busy || command.uncertain}
-            onPendingChange={setImportPending}
-            onImported={(id) => {
-              command.discard();
-              setSavedId(id);
-            }}
-          />
-        )}
-        {!options.loading && options.data?.sources.length === 0 && (
-          <p className="fn-note">
-            No eligible saved Discovery sources. Open Discovery and save an
-            active alternative first.
-          </p>
-        )}
-        {command.uncertain && (
-          <button onClick={() => void command.reconcile()}>
-            Confirm original create
-          </button>
-        )}
-        {navigation.leave && (
-          <FertigationDialog
-            title="Leave unsaved scope?"
-            close={navigation.stay}
-            decision
-          >
-            <div className="fn-dialog-body">
-              <p>Keep this proposal here, or explicitly discard it.</p>
-              <div className="fn-actions">
-                <button onClick={navigation.stay}>Stay</button>
-                <button disabled={pending} onClick={navigation.proceed}>
-                  Discard and leave
-                </button>
+                    </select>
+                  </label>
+                  {source && (
+                    <label className="fn-field">
+                      <span>Saved Fertigation system (optional)</span>
+                      <select value={systemId} onChange={(e) => { setSystemId(e.target.value); command.dirty(); }}>
+                        <option value="">Scope-level association; system not assigned</option>
+                        {source.configuration?.systems.filter((x) => x.family === "Fertigation").map((x) => (
+                          <option key={x.id} value={x.id}>{x.name}</option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
+                </div>
+                {source && (
+                  <Notice tone="info">
+                    Origin: saved Discovery revision {source.revision}. {source.site || "Site context retained in the source binding"}. Optional missing technical data remains incomplete.
+                  </Notice>
+                )}
+                {!options.loading && options.data?.sources.length === 0 && (
+                  <Notice tone="warning">No eligible saved Discovery sources. Open Discovery and save an active alternative first.</Notice>
+                )}
+              </Panel>
+              <Panel title="Production context" subtitle="Business context, growing system and physical process are independent. Unknown is a valid starting point.">
+                <ObjectFields
+                  value={context as unknown as Record<string, unknown>}
+                  template={context as unknown as Record<string, unknown>}
+                  scope={blankScope()}
+                  update={(value) => { setContext(value as unknown as Scope["production_context"]); command.dirty(); }}
+                  prefix="create-context"
+                />
+              </Panel>
+              <div className="fn-actions fn-create-actions">
+                <Button variant="primary" icon="save" disabled={!source || pending} type="submit">
+                  {command.busy ? "Creating…" : "Create saved scope"}
+                </Button>
+                <Link href="/estimating/discovery" className="fn-button fn-button-quiet"><span>Return to Discovery</span></Link>
               </div>
-            </div>
-          </FertigationDialog>
-        )}
+            </fieldset>
+          </form>
+          {source && (
+            <FertigationImport
+              source={{
+                name,
+                estimating_workspace_id: source.estimating_workspace_id,
+                option_id: source.option_id,
+                revision_id: source.revision_id,
+                expected_workspace_version: source.expected_workspace_version,
+                coverage: {
+                  system_id: systemId || null,
+                  area_ids: source.configuration?.systems.find((s) => s.id === systemId)?.coverage.area_ids ?? [],
+                  facility_ids: source.facility_ids,
+                },
+              }}
+              disabled={command.busy || command.uncertain}
+              onPendingChange={setImportPending}
+              onImported={(id) => { command.discard(); setSavedId(id); }}
+            />
+          )}
+          {command.uncertain && (
+            <Button variant="secondary" onClick={() => void command.reconcile()}>Confirm original create</Button>
+          )}
+          {navigation.leave && (
+            <FertigationDialog title="Leave unsaved scope?" close={navigation.stay} decision>
+              <div className="fn-dialog-body">
+                <p>Keep this proposal here, or explicitly discard it.</p>
+                <div className="fn-actions">
+                  <Button variant="primary" onClick={navigation.stay}>Stay</Button>
+                  <Button variant="secondary" disabled={pending} onClick={navigation.proceed}>Discard and leave</Button>
+                </div>
+              </div>
+            </FertigationDialog>
+          )}
+        </div>
       </div>
     </FertigationFrame>
   );
 }
+
+/* ---------- Workspace ---------- */
 
 export function FertigationWorkspace({ id }: { id: string }) {
   const params = useSearchParams(),
@@ -476,7 +393,18 @@ export function FertigationWorkspace({ id }: { id: string }) {
     );
   return (
     <>
-      {resource.loading && <p role="status">Loading exact permitted scope…</p>}
+      {resource.loading && !resource.data && (
+        <FertigationFrame>
+          <div className="fn-scroll">
+            <div className="fn-page">
+              <div className="fn-skeleton" aria-hidden="true">
+                <span /><span /><span /><span />
+              </div>
+              <p role="status" className="fn-loading">Loading exact permitted scope…</p>
+            </div>
+          </div>
+        </FertigationFrame>
+      )}
       <ErrorNotice error={resource.error} />
       {resource.data && (
         <Workspace
@@ -493,31 +421,17 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
   const params = useSearchParams(),
     scopeId = data.scope.id;
   const initialView =
-    fertigationViews.find(([id]) => id === params.get("view"))?.[0] ??
-    "overview";
+    fertigationViews.find(([id]) => id === params.get("view"))?.[0] ?? "overview";
   const [view, setView] = useState<FertigationView>(initialView),
     [section, setSection] = useState<Register>("valves"),
     [draft, setDraft] = useState<Scope | null>(null),
-    [baseRevision, setBaseRevision] = useState<ScopeRevision | null>(null),
+    [baseRevision, setBaseRevision] = useState<Detail["revision"] | null>(null),
     [baseVersion, setBaseVersion] = useState<number | null>(null),
     [reason, setReason] = useState(""),
-    [editor, setEditor] = useState<{
-      register:
-        | Register
-        | "production_context"
-        | "hydraulics"
-        | "services"
-        | "resilience"
-        | "groscales";
-      id?: string;
-      record: object;
-    } | null>(null),
+    [editor, setEditor] = useState<{ register: EditorRegister; id?: string; record: object } | null>(null),
     [editorOpen, setEditorOpen] = useState(false),
     [error, setError] = useState<unknown>(null),
-    [preview, setPreview] = useState<{
-      proposal: Scope;
-      calculation: Calculation;
-    } | null>(null),
+    [preview, setPreview] = useState<{ proposal: Scope; calculation: Calculation } | null>(null),
     [previewBusy, setPreviewBusy] = useState(false),
     [acceptedVersion, setAcceptedVersion] = useState(0),
     [artifactPending, setArtifactPending] = useState(false),
@@ -539,11 +453,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     after: SourceBinding;
     proposal_signature: string;
   } | null>(null);
-  const [removal, setRemoval] = useState<{
-    register: Register;
-    id: string;
-    label: string;
-  } | null>(null);
+  const [removal, setRemoval] = useState<{ register: Register; id: string; label: string } | null>(null);
   const continuation = useRef<(() => void) | null>(null),
     generation = useRef(0),
     previewRun = useRef(0);
@@ -565,30 +475,20 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     undefined,
     false,
   );
-  const pending =
-      command.busy || command.uncertain || artifactPending || historyPending,
+  const pending = command.busy || command.uncertain || artifactPending || historyPending,
     dirty = command.hasUnsavedChanges,
     navigation = useDiscoveryNavigation(
-      dirty ||
-        historyDirty ||
-        (!!editor && data.can_edit && !params.has("revision_id")),
+      dirty || historyDirty || (!!editor && data.can_edit && !params.has("revision_id")),
       pending,
     );
   const proposal = draft ?? data.revision.proposal,
     historical = params.has("revision_id"),
     canEdit =
-      data.can_edit &&
-      !historical &&
-      !pending &&
-      !historyDirty &&
-      acceptedVersion <= data.scope.version;
+      data.can_edit && !historical && !pending && !historyDirty && acceptedVersion <= data.scope.version;
   const activeCalculation =
-    preview?.proposal === proposal
-      ? preview.calculation
-      : !draft
-        ? data.calculation
-        : null;
+    preview?.proposal === proposal ? preview.calculation : !draft ? data.calculation : null;
   const sourceHref = `/estimating/discovery/${data.scope.estimating_workspace_id}?option=${data.scope.option_id}`;
+  const reportHref = `/api/v1/${base}/${scopeId}/report?revision_id=${data.revision.id}&audience=customer`;
   const conflict = baseVersion !== null && baseVersion !== data.scope.version;
   function update(next: Scope) {
     if (!canEdit) return;
@@ -608,17 +508,10 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     setView(next);
     const q = new URLSearchParams(location.search);
     q.set("view", next);
-    if (!dirty && !editorOpen)
-      history.replaceState(null, "", `${location.pathname}?${q}`);
+    if (!dirty && !editorOpen) history.replaceState(null, "", `${location.pathname}?${q}`);
+    document.querySelector<HTMLElement>("#ppo-fertigation .fn-scroll")?.scrollTo({ top: 0 });
   }
-  function edit(
-    register: typeof editor extends infer E
-      ? E extends { register: infer R }
-        ? R
-        : never
-      : never,
-    record?: object,
-  ) {
+  function edit(register: EditorRegister, record?: object) {
     if (
       editor?.register === register &&
       (record ? editor.id === (record as { id?: string }).id : true)
@@ -643,10 +536,10 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     setPreviewBusy(true);
     setError(null);
     try {
-      const response = await api<{ calculation: Calculation }>(
-        `${base}/${scopeId}/preview`,
-        { expected_version: baseVersion ?? data.scope.version, proposal },
-      );
+      const response = await api<{ calculation: Calculation }>(`${base}/${scopeId}/preview`, {
+        expected_version: baseVersion ?? data.scope.version,
+        proposal,
+      });
       if (generation.current === currentGeneration)
         setPreview({ proposal, calculation: response.calculation });
     } catch (e) {
@@ -662,43 +555,34 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
       reason: reason.trim() || "Save reviewed scope changes",
       expected_version: baseVersion ?? data.scope.version,
       expected_revision_id: (baseRevision ?? data.revision).id,
-      source_context_hash: (baseRevision ?? data.revision).binding
-        .upstream_context_hash,
+      source_context_hash: (baseRevision ?? data.revision).binding.upstream_context_hash,
       proposal,
     });
   }
-  const status = pending
-    ? historyPending
-      ? "History action pending"
-      : artifactPending
-        ? "Evidence or review action pending"
-        : command.status
+  const canSave = canEdit && dirty && !conflict && !editor && !historyDirty;
+  const [status, statusTone]: [string, StatusTone] = pending
+    ? [
+        historyPending
+          ? "History action pending"
+          : artifactPending
+            ? "Evidence or review action pending"
+            : command.status,
+        "pending",
+      ]
     : conflict
-      ? "Conflict — proposal retained"
+      ? ["Conflict — proposal retained", "conflict"]
       : editor && canEdit
-        ? "Editor entries not yet applied"
+        ? ["Editor entries not yet applied", "dirty"]
         : dirty
-          ? "Unsaved changes"
+          ? ["Unsaved changes", "dirty"]
           : acceptedVersion > data.scope.version
-            ? "Saved — loading accepted revision"
+            ? ["Saved — loading accepted revision", "saved"]
             : data.scope.state === "Archived"
-              ? `Archived · saved revision ${data.revision.version}`
+              ? [`Archived · saved revision ${data.revision.version}`, "readonly"]
               : historical
-                ? "Historical revision · read-only"
-                : `Saved revision ${data.revision.version}`;
-  if (denied(command.error) || denied(error))
-    return <ErrorNotice error={command.error ?? error} />;
-  const sectionRegisters: Record<string, Register[]> = {
-    growing: ["valves", "masters", "areas", "crop_groups"],
-    water: ["sources", "pipes", "filters", "water_samples"],
-    recipes: ["recipes", "stocks", "channels"],
-    controls: ["controllers", "banks", "sensors", "strategies"],
-    operating: ["groups", "scenarios"],
-    configurator: ["candidates"],
-    evidence: ["evidence", "actions"],
-  };
-  const registers = sectionRegisters[view] ?? [],
-    selectedRegister = registers.includes(section) ? section : registers[0];
+                ? ["Historical revision · read-only", "readonly"]
+                : [`Saved revision ${data.revision.version}`, "saved"];
+  if (denied(command.error) || denied(error)) return <ErrorNotice error={command.error ?? error} />;
   // Guidance always reads one consistent pair: the calculation on screen and
   // the proposal it was calculated from. A changed, uncalculated draft falls
   // back to the saved revision and says so.
@@ -713,27 +597,21 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     totalCounts = severityCounts(guidanceCalculation.findings);
   // Resolutions are offered only when the calculation on screen belongs to
   // the current proposal, so an applied edit never discards draft changes.
-  const resolveList = activeCalculation
-    ? resolvables(proposal, activeCalculation)
-    : [];
-  // Declarations use the same basis as the guidance; edits need the
-  // calculation to belong to the current draft.
+  const resolveList = activeCalculation ? resolvables(proposal, activeCalculation) : [];
   const declarationList = declarations(guidanceScope, guidanceCalculation),
     declarable = (code: string) =>
       activeCalculation
-        ? declarationList.find(
-            (d) => d.codes.includes(code) && d.options.some((o) => o.transform),
-          )
+        ? declarationList.find((d) => d.codes.includes(code) && d.options.some((o) => o.transform))
         : undefined;
   const resolveFor = (match: (key: string) => boolean) => {
     const items = resolveList.filter((r) => match(r.key));
     if (items.length) setResolving(items);
   };
   async function previewProposal(next: Scope) {
-    const response = await api<{ calculation: Calculation }>(
-      `${base}/${scopeId}/preview`,
-      { expected_version: baseVersion ?? data.scope.version, proposal: next },
-    );
+    const response = await api<{ calculation: Calculation }>(`${base}/${scopeId}/preview`, {
+      expected_version: baseVersion ?? data.scope.version,
+      proposal: next,
+    });
     return response.calculation;
   }
   function openRecord(recordId: string) {
@@ -745,6 +623,69 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
       }
     }
   }
+  function remove(register: Register, recordId: string) {
+    const text = JSON.stringify({
+      ...proposal,
+      [register]: proposal[register].filter((row) => row.id !== recordId),
+    });
+    if (text.includes(recordId)) {
+      setError({
+        message:
+          "This record is still referenced. Edit its group, allocation, control or source relationships explicitly before removal.",
+      });
+      return;
+    }
+    setRemoval({
+      register,
+      id: recordId,
+      label: proposal[register].find((row) => row.id === recordId)!.label,
+    });
+  }
+  const ctx: ViewContext = {
+    data,
+    scopeId,
+    proposal,
+    draft,
+    calculation: activeCalculation,
+    guidanceScope,
+    guidanceCalculation,
+    guidanceBasis,
+    canEdit,
+    historical,
+    dirty,
+    pending,
+    previewBusy,
+    section,
+    setSection,
+    calculate: () => void calculate(),
+    update,
+    edit,
+    remove,
+    changeView,
+    trace: setTrace,
+    resolveList,
+    resolveFor,
+    declarationList,
+    declarable,
+    declare: setDeclaring,
+    openRecord,
+    openHistory: () => setInspectHistory(true),
+    reportHref,
+  };
+  const captured = data.revision.binding.captured_discovery;
+  const site = captured?.site?.display_name ?? null,
+    customer = captured?.organisation?.display_name ?? null;
+  const views: Record<FertigationView, React.ReactNode> = {
+    overview: <OverviewView ctx={ctx} />,
+    growing: <GrowingView ctx={ctx} />,
+    water: <WaterView ctx={ctx} />,
+    recipes: <RecipesView ctx={ctx} />,
+    controls: <ControlsView ctx={ctx} />,
+    operating: <OperatingView ctx={ctx} />,
+    configurator: <ConfiguratorView ctx={ctx} />,
+    evidence: <EvidenceView ctx={ctx} />,
+    review: <ReviewView ctx={ctx} />,
+  };
   return (
     <FertigationFrame
       view={view}
@@ -752,786 +693,155 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
       sourceHref={sourceHref}
       message={status}
       counts={{ ...viewCounts, review: totalCounts }}
-      summary={
-        <ReadinessSummary compact counts={totalCounts} basis={guidanceBasis} />
-      }
+      summary={<ReadinessSummary compact counts={totalCounts} basis={guidanceBasis} />}
+      edition={guidanceCalculation.edition}
     >
-      <header className="fn-context">
-        <div>
-          <h1>Priva Fertigation Configurator</h1>
-          <p>
-            {proposal.name} · {data.scope.display_number} · Discovery{" "}
-            {data.source.option_label} / r{data.source.revision}
-          </p>
-          <span className="fn-status" role="status">
-            {status}
-          </span>
-        </div>
-        <div className="fn-actions">
-          <button
-            onClick={() => {
-              changeView("growing");
-              setSection("valves");
-            }}
-          >
-            Irrigation valves
-          </button>
-          {!historical && dirty && (
-            <button type="button" onClick={() => setCompareDraft(true)}>
-              Compare draft
-            </button>
-          )}
-          {!historical && (
-            <button
-              className="fn-primary"
-              onClick={() => save()}
-              disabled={!canEdit || !dirty || conflict || !!editor}
-            >
-              Save revision
-            </button>
-          )}
-        </div>
-      </header>
+      <FertigationHeader
+        name={proposal.name}
+        reference={data.scope.display_number}
+        status={status}
+        statusTone={statusTone}
+        savedAt={statusTone === "saved" || statusTone === "readonly" ? when(data.revision.created_at) : undefined}
+        historical={historical}
+        dirty={dirty}
+        canSave={canSave}
+        onHistory={() => setInspectHistory(true)}
+        onSave={() => save()}
+        onCompare={() => setCompareDraft(true)}
+        onValves={() => {
+          changeView("growing");
+          setSection("valves");
+        }}
+        reportHref={reportHref}
+        site={site}
+        customer={customer}
+        binding={`Bound to Discovery alternative ${data.source.option_label} · revision ${data.source.revision} · ${data.source.changed ? "source changed" : "source unchanged"}`}
+        sourceChanged={!!data.source.changed}
+        state={data.scope.state}
+        scenarios={proposal.scenarios.map((s) => ({ id: s.id, label: s.label }))}
+        scenarioId={proposal.selected_scenario_id}
+        onScenario={(id) => update({ ...proposal, selected_scenario_id: id })}
+        scenarioDisabled={!canEdit}
+      />
+      <PhoneBar reportHref={reportHref} canSave={canSave} historical={historical} onSave={() => save()} />
       <div className="fn-scroll">
-        <ErrorNotice error={command.error ?? error} />
-        {historyDirty && !inspectHistory && (
-          <p className="fn-note fn-warning">
-            History action entries are kept in memory. Complete or discard that
-            action before editing this scope.{" "}
-            <button onClick={() => setInspectHistory(true)}>
-              Resume history action
-            </button>
-          </p>
-        )}
-        {editor && !editorOpen && canEdit && (
-          <p className="fn-note fn-warning">
-            Editor entries are kept in memory. Apply them to the draft before
-            saving.{" "}
-            <button onClick={() => setEditorOpen(true)}>
-              Resume kept editor
-            </button>{" "}
-            <button
-              onClick={() => {
-                setEditor(null);
-                setError(null);
-              }}
-            >
-              Discard editor entries
-            </button>
-          </p>
-        )}
-        {command.uncertain && (
-          <p className="fn-note fn-warning">
-            The outcome is unknown. Editing is paused while the original
-            operation is confirmed.{" "}
-            <button onClick={() => void command.reconcile()}>
-              Confirm original save
-            </button>
-          </p>
-        )}
-        {conflict && (
-          <p className="fn-note fn-warning">
-            Another revision was saved. Your proposal remains in memory. Open
-            history to compare the exact saved revisions before starting a
-            successor.{" "}
-            <button onClick={() => setInspectHistory(true)}>
-              Open history
-            </button>
-          </p>
-        )}
-        {data.edit_blocker && (
-          <p className="fn-note fn-warning">{data.edit_blocker}</p>
-        )}
-        {data.source.changed && (
-          <p className="fn-note fn-warning">
-            Upstream Discovery or Facility context changed. The captured source
-            remains exact.{" "}
-            <button
-              disabled={!canEdit || conflict}
-              onClick={() =>
-                void api<NonNullable<typeof sourceReview>>(
-                  `${base}/${scopeId}/source-preview`,
-                  {
-                    revision_id: data.source.current_revision_id,
-                    coverage: {
-                      system_id: data.revision.binding.system_id,
-                      area_ids: data.revision.binding.area_ids,
-                      facility_ids: data.revision.binding.facility_ids,
-                    },
-                  },
-                ).then(setSourceReview, setError)
-              }
-            >
-              Review changed source
-            </button>
-          </p>
-        )}
-        {historical && (
-          <p className="fn-note">
-            Exact saved revision {data.revision.version},{" "}
-            {when(data.revision.created_at)}.{" "}
-            <Link href={`/estimating/fertigation/${scopeId}`}>
-              Open current scope
-            </Link>
-          </p>
-        )}
-        {view === "overview" && (
-          <>
-            <div className="fn-cockpit">
-              <OutputReadinessPanel
-                onView={changeView}
-                input={{
-                  dirty,
-                  historical,
-                  sourceChanged: !!data.source.changed,
-                  canEdit: data.can_edit,
-                  revision: data.revision.version,
-                  openFindings: data.calculation.findings.length,
-                }}
-              />
-              <NextActionsPanel
-                scope={guidanceScope}
-                findings={guidanceCalculation.findings}
-                basis={guidanceBasis}
-                onView={changeView}
-                candidates={candidateFailures(
-                  guidanceScope,
-                  guidanceCalculation,
-                )}
-                canResolve={(code) =>
-                  canEdit &&
-                  resolveList.some((r) => r.key.startsWith(`${code}:`))
-                }
-                onResolve={(code) =>
-                  resolveFor((key) => key.startsWith(`${code}:`))
-                }
-                canDeclare={(code) => canEdit && !!declarable(code)}
-                onDeclare={(code) =>
-                  setDeclaring(declarable(code)?.key ?? null)
-                }
-              />
-              <DeclarationsPanel
-                items={declarationList}
-                findings={guidanceCalculation.findings.length}
-                basis={guidanceBasis}
-                onView={changeView}
-                canOpen={!!activeCalculation}
-                onDeclare={setDeclaring}
-              />
-            </div>
-            <section className="fn-section">
-              <div className="fn-heading">
-                <h2>Scope at a glance</h2>
-                <button
-                  disabled={previewBusy || pending}
-                  onClick={() => void calculate()}
-                >
-                  {previewBusy ? "Calculating…" : "Validate & calculate draft"}
-                </button>
-              </div>
-              {!activeCalculation ? (
-                <p className="fn-note">
-                  Draft changed. Recalculate to inspect the current proposal;
-                  saved results remain attached to the earlier revision.
-                </p>
-              ) : (
-                <div className="fn-metrics">
-                  {[
-                    ["Connected flow", activeCalculation.connected_flow_m3h],
-                    ["Operating peak", activeCalculation.operating_peak_m3h],
-                    ["Daily crop demand", activeCalculation.daily_demand_m3],
-                    ["Represented area", activeCalculation.area_m2],
-                    ["Containers", activeCalculation.containers],
-                    ["Plants", activeCalculation.plants],
-                  ].map(([label, result]) => (
-                    <div className="fn-metric" key={label as string}>
-                      <small>{label as string}</small>
-                      <strong>{show(result as Result)}</strong>
-                      {(result as Result).state !== "known" && (
-                        <small>{(result as Result).reason}</small>
-                      )}
-                      {(label === "Connected flow" ||
-                        label === "Operating peak") && (
-                        <button
-                          type="button"
-                          className="fn-link"
-                          onClick={() =>
-                            setTrace(
-                              label === "Connected flow"
-                                ? "connected_flow"
-                                : "operating_peak",
-                            )
-                          }
-                        >
-                          How this is calculated
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-            {activeCalculation && (
-              <CapacityPanel
-                scope={proposal}
-                calculation={activeCalculation}
-                onView={changeView}
-                onTrace={() => setTrace("margin")}
-              />
-            )}
-            <EvidencePanel scope={proposal} onView={changeView} />
-            <section className="fn-section">
-              <div className="fn-heading">
-                <h2>Production context</h2>
-                <button
-                  disabled={!canEdit}
-                  onClick={() =>
-                    edit("production_context", proposal.production_context)
-                  }
-                >
-                  Edit production context
-                </button>
-              </div>
-              <p>{proposal.production_context.tags.map(human).join(" · ")}</p>
-              <p>
-                {proposal.production_context.crop_description ||
-                  "Crop or plant description not recorded"}
-              </p>
-              <div className="fn-fields">
-                <p>
-                  <strong>Growing system</strong>
-                  <br />
-                  {human(proposal.production_context.growing_system)}
-                </p>
-                <p>
-                  <strong>Irrigation method</strong>
-                  <br />
-                  {human(proposal.production_context.application_method)}
-                </p>
-                <p>
-                  <strong>Hydraulic arrangement</strong>
-                  <br />
-                  {human(proposal.production_context.hydraulic_arrangement)}
-                </p>
-                <p>
-                  <strong>Source</strong>
-                  <br />
-                  {proposal.production_context.source_note || "Not recorded"}
-                </p>
-              </div>
-              <p className="fn-note">
-                Canonical Facility facts remain source observations. Context
-                labels do not certify a process, controller, licence or
-                equipment selection.
-              </p>
-            </section>
-            <section className="fn-section">
-              <h2>Saved origin & exact revision</h2>
-              <div className="fn-fields">
-                <p>
-                  <strong>Captured customer</strong>
-                  <br />
-                  {data.revision.binding.captured_discovery?.organisation
-                    .display_name ?? "Not recorded"}
-                </p>
-                <p>
-                  <strong>Captured Site</strong>
-                  <br />
-                  {data.revision.binding.captured_discovery?.site
-                    ?.display_name ?? "Not recorded"}
-                </p>
-              </div>
-              <p className="fn-subtle">
-                Exact Discovery source: {data.revision.binding.revision_id}.
-                Additional Facility observations are captured separately by
-                version; editing this proposal does not change canonical
-                Facilities.
-              </p>
-              <p>
-                Native scope revision {data.revision.version} is bound to
-                Discovery revision {data.source.revision}. Existing manual
-                estimates and issued documents remain separate.
-              </p>
-              <p>
-                <Link
-                  href={`/estimating/fertigation/${scopeId}?revision_id=${data.revision.id}`}
-                >
-                  Open this exact saved revision
-                </Link>
-              </p>
-              <p className="fn-subtle">
-                Saved {when(data.revision.created_at)} ·{" "}
-                {data.revision.content_hash}
-              </p>
-            </section>
-          </>
-        )}
-        {registers.length > 0 && (
-          <>
-            <h2>{fertigationViews.find(([id]) => id === view)![1]}</h2>
-            {registers.length > 1 && (
-              <RecordTabs
-                id="fertigation-register"
-                label={`${view} registers`}
-                tabs={registers.map((id) => ({
-                  id,
-                  label: registerNames[id][0],
-                }))}
-                value={selectedRegister}
-                onChange={(value) => setSection(value as Register)}
-              />
-            )}
-            <section
-              role={registers.length > 1 ? "tabpanel" : undefined}
-              id={`fertigation-register-panel-${selectedRegister}`}
-              aria-labelledby={
-                registers.length > 1
-                  ? `fertigation-register-tab-${selectedRegister}`
-                  : undefined
-              }
-            >
-              <ScopeRegister
-                key={selectedRegister}
-                register={selectedRegister}
-                scope={proposal}
-                canEdit={canEdit}
-                calculation={activeCalculation}
-                onEdit={(record) => edit(selectedRegister, record)}
-                onAdd={() => edit(selectedRegister)}
-                onRemove={(recordId) => {
-                  const text = JSON.stringify({
-                    ...proposal,
-                    [selectedRegister]: proposal[selectedRegister].filter(
-                      (row) => row.id !== recordId,
-                    ),
-                  });
-                  if (text.includes(recordId)) {
-                    setError({
-                      message:
-                        "This record is still referenced. Edit its group, allocation, control or source relationships explicitly before removal.",
-                    });
-                    return;
-                  }
-                  setRemoval({
-                    register: selectedRegister,
-                    id: recordId,
-                    label: proposal[selectedRegister].find(
-                      (row) => row.id === recordId,
-                    )!.label,
-                  });
-                }}
-              />
-            </section>
-          </>
-        )}
-        {view === "growing" && (
-          <Topology
-            scope={proposal}
-            onValve={(valve) => edit("valves", valve)}
-          />
-        )}
-        {view === "water" && (
-          <section className="fn-section">
-            <div className="fn-heading">
-              <h2>Pump duty & curve evidence</h2>
-              <button
-                disabled={!canEdit}
-                onClick={() => edit("hydraulics", proposal.hydraulics)}
-              >
-                Edit hydraulic basis
-              </button>
-            </div>
-            <p>
-              {proposal.hydraulics.pump_model || "Pump not recorded"}. Required
-              duty uses entered losses at their recorded flow basis.
-            </p>
-            {activeCalculation && (
-              <>
-                <div className="fn-metrics">
-                  {(
-                    [
-                      [
-                        "Required head",
-                        "required_head",
-                        activeCalculation.hydraulic.required_head_m,
-                      ],
-                      [
-                        "Curve head at pump peak",
-                        "curve_head",
-                        activeCalculation.hydraulic.curve_head_m,
-                      ],
-                      [
-                        "Margin at duty",
-                        "margin",
-                        activeCalculation.hydraulic.margin_m,
-                      ],
-                    ] as const
-                  ).map(([label, key, result]) => (
-                    <div className="fn-metric" key={key}>
-                      <small>{label}</small>
-                      <strong>
-                        <ResultValue result={result} />
-                      </strong>
-                      <button
-                        type="button"
-                        className="fn-link"
-                        onClick={() => setTrace(key)}
-                      >
-                        How this is calculated
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <PumpDutyChart
-                  scope={proposal}
-                  calculation={activeCalculation}
-                />
-              </>
-            )}
-            <p className="fn-note">
-              Edit the hydraulic basis to capture exact curve points and source
-              conditions. No extrapolation or computed operating point is
-              implied.
-            </p>
-          </section>
-        )}
-        {view === "recipes" && (
-          <p className="fn-note">
-            Record an attributed requirement and its confirmed basis. EC does
-            not establish composition; pH difference does not establish an acid
-            dose.
-          </p>
-        )}
-        {view === "controls" && (
-          <section className="fn-section">
-            <div className="fn-heading">
-              <h2>GroScales scope</h2>
-              <button
-                disabled={!canEdit}
-                onClick={() => edit("groscales", proposal.groscales)}
-              >
-                Edit GroScales scope
-              </button>
-            </div>
-            <p>
-              Required: {human(proposal.groscales.required)} ·{" "}
-              {human(proposal.groscales.mode)}
-            </p>
-            <p className="fn-note">
-              Powerplants working scoping requirement: GroScales / Moisture
-              Balance needs Compact CC or Connext, rather than Compass. Exact
-              model, software, licences and wired/wireless hardware require
-              manufacturer confirmation.
-            </p>
-            {activeCalculation && (
-              <div className="fn-table-scroll">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Bank</th>
-                      <th>Required</th>
-                      <th>Available</th>
-                      <th>Spare</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {activeCalculation.io.map((row) => (
-                      <tr key={row.bank_id}>
-                        <td>
-                          {
-                            proposal.banks.find((x) => x.id === row.bank_id)
-                              ?.label
-                          }
-                        </td>
-                        <td>
-                          <ResultValue result={row.required} />
-                        </td>
-                        <td>
-                          <ResultValue result={row.available} />
-                        </td>
-                        <td>
-                          <ResultValue result={row.spare} />
-                        </td>
-                      </tr>
+        <div className="fn-page" data-view={view}>
+          <label className="fn-phone-picker">
+            <span>Section</span>
+            <span className="fn-select">
+              <select value={view} onChange={(e) => changeView(e.target.value as FertigationView)}>
+                {fertigationViewGroups.map(([group, ids]) => (
+                  <optgroup key={group} label={group}>
+                    {ids.map((id) => (
+                      <option key={id} value={id}>
+                        {fertigationViews.findIndex(([v]) => v === id) + 1} · {viewLabel(id)}
+                        {viewCounts[id]?.total ? ` · ${viewCounts[id].total} open` : ""}
+                      </option>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </section>
-        )}
-        {view === "operating" && (
-          <>
-            <section className="fn-section">
-              <h2>Scenario for review & output</h2>
-              <label>
-                Selected saved scenario
-                <select
-                  disabled={!canEdit}
-                  value={proposal.selected_scenario_id ?? ""}
-                  onChange={(e) =>
-                    update({
-                      ...proposal,
-                      selected_scenario_id: e.target.value || null,
-                    })
-                  }
-                >
-                  <option value="">Not selected</option>
-                  {proposal.scenarios.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <p className="fn-note">
-                One shared sequential circuit. Group order is explicit;
-                scenarios share the physical registers. Recirculating
-                consumption and independent parallel circuits remain outside
-                this model.
-              </p>
-              <button
-                disabled={previewBusy || pending}
-                onClick={() => void calculate()}
-              >
-                Validate & calculate draft
-              </button>
-              {activeCalculation && (
-                <>
-                  <p>
-                    Cycle:{" "}
-                    <ResultValue
-                      result={activeCalculation.schedule.cycle_seconds}
-                    />
-                  </p>
-                  <p>
-                    Final storage:{" "}
-                    <ResultValue result={activeCalculation.storage.final_m3} />
-                  </p>
-                  <div className="fn-table-scroll">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Group</th>
-                          <th>Delivery start (s)</th>
-                          <th>Delivery end (s)</th>
-                          <th>Finish (s)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {activeCalculation.schedule.events
-                          .slice(0, 100)
-                          .map((event, i) => (
-                            <tr key={i}>
-                              <td>
-                                {
-                                  proposal.groups.find(
-                                    (x) => x.id === event.group_id,
-                                  )?.label
-                                }
-                              </td>
-                              <td>{event.start}</td>
-                              <td>{event.end}</td>
-                              <td>{event.finish}</td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
-                  {activeCalculation.schedule.events.length > 100 && (
-                    <p>
-                      Showing the first 100 events. Exact saved output retains
-                      the complete schedule.
-                    </p>
-                  )}
-                </>
-              )}
-            </section>
-            <FertigationScenarios
-              proposal={proposal}
-              dirty={dirty}
-              revision={data.revision.version}
-              blocked={pending || !!editor}
-            />
-          </>
-        )}
-        {view === "configurator" && (
-          <section className="fn-section">
-            <h2>Candidate assessment</h2>
-            <p>
-              Requested families: {families.join(", ")}. Add an exact configured
-              candidate and its entered limits; absent manufacturer evidence
-              stays unverified.
-            </p>
-            <button
-              disabled={previewBusy || pending}
-              onClick={() => void calculate()}
-            >
-              Validate & compare candidates
-            </button>
-            {activeCalculation?.candidates.map((candidate) => (
-              <div className="fn-note" key={candidate.id}>
-                <strong>
-                  {
-                    proposal.candidates.find((x) => x.id === candidate.id)
-                      ?.label
-                  }
-                  : {human(candidate.status)}
-                </strong>
-                {candidate.failures.map((x) => (
-                  <p key={x}>{x}</p>
+                  </optgroup>
                 ))}
-                {candidate.unknowns.map((x) => (
-                  <p key={x}>{x}</p>
-                ))}
-              </div>
-            ))}
-            {activeCalculation && (
-              <FertigationCandidateDetails
-                scope={proposal}
-                calculation={activeCalculation}
-              />
+              </select>
+              <Icon name="chevron-down" className="fn-select-icon" />
+            </span>
+          </label>
+          <div className="fn-messages">
+            <ErrorNotice error={command.error ?? error} />
+            {historyDirty && !inspectHistory && (
+              <Notice tone="warning">
+                History action entries are kept in memory. Complete or discard that action before editing this scope.{" "}
+                <button type="button" className="fn-link" onClick={() => setInspectHistory(true)}>Resume history action</button>
+              </Notice>
             )}
-          </section>
-        )}
-        {view === "evidence" && (
-          <section className="fn-section">
-            <h2>Services, access & resilience</h2>
-            <div className="fn-actions">
-              <button
-                disabled={!canEdit}
-                onClick={() => edit("services", proposal.services)}
-              >
-                Edit services & access
-              </button>
-              <button
-                disabled={!canEdit}
-                onClick={() => edit("resilience", proposal.resilience)}
-              >
-                Edit alarms & responsibilities
-              </button>
-            </div>
-            <p className="fn-note">
-              Evidence references preserve attribution, exact source revision
-              and applicability. Prepare original PNG evidence below, then add
-              its reference to a saved successor. Other file formats and malware
-              scanning are not configured; a text reference alone does not claim
-              retained bytes.
-            </p>
-          </section>
-        )}
-        {view === "review" && (
-          <>
-            <section className="fn-section">
-              <div className="fn-heading">
-                <h2>Findings & review impact</h2>
+            {editor && !editorOpen && canEdit && (
+              <Notice tone="warning">
+                Editor entries are kept in memory. Apply them to the draft before saving.{" "}
+                <button type="button" className="fn-link" onClick={() => setEditorOpen(true)}>Resume kept editor</button>{" "}
+                <button type="button" className="fn-link" onClick={() => { setEditor(null); setError(null); }}>Discard editor entries</button>
+              </Notice>
+            )}
+            {command.uncertain && (
+              <Notice tone="warning">
+                The outcome is unknown. Editing is paused while the original operation is confirmed.{" "}
+                <button type="button" className="fn-link" onClick={() => void command.reconcile()}>Confirm original save</button>
+              </Notice>
+            )}
+            {conflict && (
+              <Notice tone="danger">
+                Another revision was saved. Your proposal remains in memory. Open history to compare the exact saved revisions before starting a successor.{" "}
+                <button type="button" className="fn-link" onClick={() => setInspectHistory(true)}>Open history</button>
+              </Notice>
+            )}
+            {data.edit_blocker && <Notice tone="neutral">{data.edit_blocker}</Notice>}
+            {data.source.changed && (
+              <Notice tone="warning">
+                Upstream Discovery or Facility context changed. The captured source remains exact.{" "}
                 <button
-                  disabled={previewBusy || pending}
-                  onClick={() => void calculate()}
+                  type="button"
+                  className="fn-link"
+                  disabled={!canEdit || conflict}
+                  onClick={() =>
+                    void api<NonNullable<typeof sourceReview>>(`${base}/${scopeId}/source-preview`, {
+                      revision_id: data.source.current_revision_id,
+                      coverage: {
+                        system_id: data.revision.binding.system_id,
+                        area_ids: data.revision.binding.area_ids,
+                        facility_ids: data.revision.binding.facility_ids,
+                      },
+                    }).then(setSourceReview, setError)
+                  }
                 >
-                  Validate & calculate draft
+                  Review changed source
                 </button>
-              </div>
-              {!activeCalculation ? (
-                <p>Recalculate the changed draft to see current findings.</p>
-              ) : (
-                <>
-                  <p>
-                    {activeCalculation.findings.length} findings ·{" "}
-                    {activeCalculation.edition}. No engineering or manufacturer
-                    approval is implied.
-                  </p>
-                  <FindingsReview
-                    scope={proposal}
-                    calculation={activeCalculation}
-                    onOpenRecord={openRecord}
-                    onView={changeView}
-                    canResolve={(id) =>
-                      canEdit && resolveList.some((r) => r.key === id)
-                    }
-                    onResolve={(id) => resolveFor((key) => key === id)}
+              </Notice>
+            )}
+            {historical && (
+              <Notice tone="neutral">
+                Revision {data.revision.version} · {when(data.revision.created_at)}. Inputs, results and retained reports are shown as saved. Nothing can be edited here.{" "}
+                <Link href={`/estimating/fertigation/${scopeId}`}>Return to current revision</Link>
+              </Notice>
+            )}
+            {dirty && !historical && (
+              <div className="fn-save-bar">
+                <label className="fn-field fn-save-reason">
+                  <span>Revision reason</span>
+                  <input
+                    value={reason}
+                    maxLength={1000}
+                    placeholder="Why this revision is being saved"
+                    onChange={(e) => setReason(e.target.value)}
                   />
-                </>
-              )}
-              <p className="fn-note fn-warning">
-                Engineering approval is not configured. Review notes retain
-                outstanding conditions; technical suitability and automatic
-                costing remain held.
-              </p>
-            </section>
-            <section className="fn-section">
-              <h2>Revision & output</h2>
-              <div className="fn-actions">
-                <button onClick={() => setInspectHistory(true)}>
-                  History & exact revisions
-                </button>
-                <a
-                  className="fn-button"
-                  href={`/api/v1/${base}/${scopeId}/export?revision_id=${data.revision.id}&format=json`}
-                  download
-                >
-                  Export exact saved scope
-                </a>
-                <a
-                  className="fn-button"
-                  href={`/api/v1/${base}/${scopeId}/export?revision_id=${data.revision.id}&format=valves`}
-                  download
-                >
-                  Export valve CSV
-                </a>
-                <a
-                  className="fn-button"
-                  href={`/api/v1/${base}/${scopeId}/report?revision_id=${data.revision.id}&audience=internal`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open saved internal report
-                </a>
+                </label>
+                <p className="fn-save-hint">
+                  A new revision requires a fresh review of its purpose and conditions. Earlier saved outputs stay
+                  exact; estimates are not repriced.
+                </p>
               </div>
-              <p>
-                Outputs refer to saved revision {data.revision.version}; draft
-                edits are not included.
-              </p>
-            </section>
-          </>
-        )}
-        {artifactsVisited && (
-          <div hidden={view !== "evidence" && view !== "review"}>
-            <FertigationArtifacts
-              scopeId={scopeId}
-              scopeVersion={data.scope.version}
-              revisionId={data.revision.id}
-              workspaceId={data.scope.estimating_workspace_id}
-              canEdit={data.can_edit && !historical}
-              dirty={dirty}
-              onPendingChange={setArtifactPending}
-              evidenceIds={proposal.evidence.map((e) => e.id)}
-              onAddEvidence={(evidence) =>
-                update({
-                  ...proposal,
-                  evidence: [...proposal.evidence, evidence],
-                })
-              }
-            />
+            )}
           </div>
-        )}
-        {dirty && (
-          <section className="fn-section">
-            <label>
-              Revision reason
-              <input
-                value={reason}
-                maxLength={1000}
-                onChange={(e) => setReason(e.target.value)}
+          {views[view]}
+          {artifactsVisited && (
+            <div hidden={view !== "evidence" && view !== "review"} className="fn-artifacts-host">
+              <FertigationArtifacts
+                scopeId={scopeId}
+                scopeVersion={data.scope.version}
+                revisionId={data.revision.id}
+                revisionNumber={data.revision.version}
+                workspaceId={data.scope.estimating_workspace_id}
+                optionLabel={data.source.option_label}
+                canEdit={data.can_edit && !historical}
+                dirty={dirty}
+                view={view === "evidence" ? "evidence" : view === "review" ? "review" : "other"}
+                onPendingChange={setArtifactPending}
+                evidenceIds={proposal.evidence.map((e) => e.id)}
+                onAddEvidence={(evidence) => update({ ...proposal, evidence: [...proposal.evidence, evidence] })}
               />
-            </label>
-            <p className="fn-note">
-              A new revision requires a fresh review of its purpose and
-              conditions. Earlier saved outputs stay exact. Estimates are not
-              repriced.
-            </p>
-          </section>
-        )}
+            </div>
+          )}
+          <PageFoot
+            left={`Fertigation scope · calculation edition ${guidanceCalculation.edition}`}
+            right={`${data.scope.display_number} · Revision ${data.revision.version} · synthetic data`}
+          />
+        </div>
       </div>
       {editor && (
         <FertigationEditor
@@ -1548,10 +858,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
               const rows = proposal[key] as { id: string; label: string }[];
               const row = record as { id: string; label: string };
               if (!row.label?.trim())
-                throw {
-                  message:
-                    "Enter a label / reference before applying this record.",
-                };
+                throw { message: "Enter a label / reference before applying this record." };
               update({
                 ...proposal,
                 [key]: rows.some((x) => x.id === row.id)
@@ -1570,13 +877,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
           open={inspectHistory}
           data={data}
           close={() => setInspectHistory(false)}
-          blocked={
-            dirty ||
-            !!editor ||
-            artifactPending ||
-            command.busy ||
-            command.uncertain
-          }
+          blocked={dirty || !!editor || artifactPending || command.busy || command.uncertain}
           historical={historical}
           pending={historyPending}
           onPendingChange={setHistoryPending}
@@ -1585,67 +886,47 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
         />
       )}
       {removal && (
-        <FertigationDialog
-          title="Remove record from draft?"
-          close={() => setRemoval(null)}
-          decision
-        >
+        <FertigationDialog title="Remove record from draft?" close={() => setRemoval(null)} decision>
           <div className="fn-dialog-body">
             <p>
-              Remove {removal.label} from this working scope. No remaining
-              group, allocation, source or control record refers to this
-              identity. Its owned service allocations will leave this draft with
-              it.
+              Remove {removal.label} from this working scope. No remaining group, allocation, source or control
+              record refers to this identity. Its owned service allocations will leave this draft with it.
             </p>
             <p>
-              Earlier saved revisions, outputs, reviews and installed Assets
-              remain unchanged. This becomes a saved removal only after Save
-              revision.
+              Earlier saved revisions, outputs, reviews and installed Assets remain unchanged. This becomes a saved
+              removal only after Save revision.
             </p>
             <div className="fn-actions">
-              <button
+              <Button
+                variant="danger"
                 disabled={!canEdit}
                 onClick={() => {
                   update({
                     ...proposal,
-                    [removal.register]: proposal[removal.register].filter(
-                      (row) => row.id !== removal.id,
-                    ),
+                    [removal.register]: proposal[removal.register].filter((row) => row.id !== removal.id),
                   });
-                  setReason(
-                    reason || `Remove ${removal.label} from the proposed scope`,
-                  );
+                  setReason(reason || `Remove ${removal.label} from the proposed scope`);
                   setRemoval(null);
                 }}
               >
                 Remove from draft
-              </button>
-              <button onClick={() => setRemoval(null)}>Keep record</button>
+              </Button>
+              <Button variant="secondary" onClick={() => setRemoval(null)}>Keep record</Button>
             </div>
           </div>
         </FertigationDialog>
       )}
       {compareDraft && (
-        <FertigationDialog
-          title={`Compare the working draft with revision ${data.revision.version}`}
-          close={() => setCompareDraft(false)}
-        >
+        <FertigationDialog title={`Compare the working draft with revision ${data.revision.version}`} close={() => setCompareDraft(false)}>
           <div className="fn-dialog-body">
             {!draft ? (
               <p>The draft has no unsaved changes.</p>
             ) : !activeCalculation ? (
               <>
-                <p className="fn-note">
-                  Calculate the draft to compare its results. Input changes are
-                  listed below either way.
-                </p>
-                <button
-                  type="button"
-                  disabled={previewBusy || pending}
-                  onClick={() => void calculate()}
-                >
+                <Notice tone="info">Calculate the draft to compare its results. Input changes are listed below either way.</Notice>
+                <Button variant="secondary" icon="calculate" disabled={previewBusy || pending} onClick={() => void calculate()}>
                   {previewBusy ? "Calculating…" : "Validate & calculate draft"}
-                </button>
+                </Button>
               </>
             ) : (
               <CalculationDelta
@@ -1657,17 +938,11 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 afterLabel="Working draft"
               />
             )}
-            {draft && (
-              <DraftInputChanges
-                before={data.revision.proposal}
-                after={draft}
-              />
-            )}
-            <p className="fn-subtle">
-              Revision {data.revision.version} stays read-only. Saving creates a
-              new revision with the reason you enter; earlier outputs keep their
-              binding.
-            </p>
+            {draft && <DraftInputChanges before={data.revision.proposal} after={draft} />}
+            <Hint>
+              Revision {data.revision.version} stays read-only. Saving creates a new revision with the reason you
+              enter; earlier outputs keep their binding.
+            </Hint>
           </div>
         </FertigationDialog>
       )}
@@ -1715,37 +990,29 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
         />
       )}
       {sourceReview && (
-        <FertigationDialog
-          title="Review upstream source refresh"
-          close={() => setSourceReview(null)}
-        >
+        <FertigationDialog title="Review upstream source refresh" close={() => setSourceReview(null)}>
           <div className="fn-dialog-body">
             <p>
-              This creates a new scope revision with the reviewed current
-              source. Earlier revisions and outputs retain the original binding.
-              No estimate is repriced.
+              This creates a new scope revision with the reviewed current source. Earlier revisions and outputs
+              retain the original binding. No estimate is repriced.
             </p>
-            <dl>
-              <dt>Captured Discovery revision</dt>
-              <dd>{sourceReview.before.revision_id}</dd>
-              <dt>Proposed Discovery revision</dt>
-              <dd>{sourceReview.after.revision_id}</dd>
-              <dt>Current Facility observations</dt>
-              <dd>
-                {sourceReview.after.facility_observations
-                  .map((o) => `${o.id} · version ${o.version}`)
-                  .join("; ") || "None selected"}
-              </dd>
+            <dl className="fn-facts">
+              <div><dt>Captured Discovery revision</dt><dd>{sourceReview.before.revision_id}</dd></div>
+              <div><dt>Proposed Discovery revision</dt><dd>{sourceReview.after.revision_id}</dd></div>
+              <div>
+                <dt>Current Facility observations</dt>
+                <dd>
+                  {sourceReview.after.facility_observations.map((o) => `${o.id} · version ${o.version}`).join("; ") || "None selected"}
+                </dd>
+              </div>
             </dl>
             <div className="fn-actions">
-              <button
-                className="fn-primary"
+              <Button
+                variant="primary"
                 disabled={pending}
                 onClick={() => {
                   void command.send(`${base}/${scopeId}/refresh-source`, {
-                    reason:
-                      reason.trim() ||
-                      "Explicitly reviewed upstream source refresh",
+                    reason: reason.trim() || "Explicitly reviewed upstream source refresh",
                     revision_id: sourceReview.after.revision_id,
                     coverage: {
                       system_id: sourceReview.after.system_id,
@@ -1761,20 +1028,14 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 }}
               >
                 Accept source refresh as new revision
-              </button>
-              <button onClick={() => setSourceReview(null)}>
-                Keep captured source
-              </button>
+              </Button>
+              <Button variant="secondary" onClick={() => setSourceReview(null)}>Keep captured source</Button>
             </div>
           </div>
         </FertigationDialog>
       )}
       {navigation.leave && (
-        <FertigationDialog
-          title="Unsaved scope changes"
-          close={navigation.stay}
-          decision
-        >
+        <FertigationDialog title="Unsaved scope changes" close={navigation.stay} decision>
           <div className="fn-dialog-body">
             <p>
               {pending
@@ -1782,21 +1043,12 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 : "Keep the working proposal, save a revision before leaving, or explicitly discard it."}
             </p>
             <div className="fn-actions">
-              <button onClick={navigation.stay}>Stay</button>
-              <button
-                disabled={
-                  pending ||
-                  !canEdit ||
-                  !dirty ||
-                  conflict ||
-                  !!editor ||
-                  historyDirty
-                }
-                onClick={() => save(navigation.proceed)}
-              >
+              <Button variant="secondary" onClick={navigation.stay}>Stay</Button>
+              <Button variant="primary" icon="save" disabled={pending || !canSave} onClick={() => save(navigation.proceed)}>
                 Save then continue
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="danger"
                 disabled={pending}
                 onClick={() => {
                   command.discard();
@@ -1809,7 +1061,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 }}
               >
                 Discard and leave
-              </button>
+              </Button>
             </div>
           </div>
         </FertigationDialog>
@@ -1818,354 +1070,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
   );
 }
 
-function ScopeRegister({
-  register,
-  scope,
-  canEdit,
-  calculation,
-  onEdit,
-  onAdd,
-  onRemove,
-}: {
-  register: Register;
-  scope: Scope;
-  canEdit: boolean;
-  calculation: Calculation | null;
-  onEdit: (record: object) => void;
-  onAdd: () => void;
-  onRemove: (id: string) => void;
-}) {
-  const [search, setSearch] = useState(""),
-    [phase, setPhase] = useState(""),
-    [page, setPage] = useState(0),
-    [area, setArea] = useState(""),
-    [master, setMaster] = useState("");
-  const rows = scope[register],
-    filtered = useMemo(
-      () =>
-        rows
-          .filter(
-            (row) =>
-              row.label.toLowerCase().includes(search.toLowerCase()) &&
-              (!phase || ("phase" in row && row.phase === phase)) &&
-              (!master || ("master_id" in row && row.master_id === master)) &&
-              (!area ||
-                ("allocations" in row &&
-                  row.allocations.some(
-                    (allocation) =>
-                      allocation.area_id === area ||
-                      scope.crop_groups.some(
-                        (crop) =>
-                          crop.id === allocation.crop_group_id &&
-                          crop.area_id === area,
-                      ),
-                  ))),
-          )
-          .toSorted(
-            (a, b) =>
-              a.label.localeCompare(b.label) || a.id.localeCompare(b.id),
-          ),
-      [rows, search, phase, master, area, scope.crop_groups],
-    );
-  return (
-    <>
-      <div className="fn-heading">
-        <div>
-          <h2>{registerNames[register][0]}</h2>
-          <small>
-            {rows.length} in this {canEdit ? "working scope" : "saved revision"}{" "}
-            · {filtered.length} matching
-          </small>
-        </div>
-        {canEdit && (
-          <button className="fn-primary" onClick={onAdd}>
-            + Add {registerNames[register][1]}
-          </button>
-        )}
-      </div>
-      <div className="fn-toolbar">
-        <label>
-          Search {registerNames[register][0].toLowerCase()}
-          <input
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(0);
-            }}
-          />
-        </label>
-        {register !== "evidence" && (
-          <label>
-            Phase filter
-            <select
-              value={phase}
-              onChange={(e) => {
-                setPhase(e.target.value);
-                setPage(0);
-              }}
-            >
-              <option value="">All phases</option>
-              {["unknown", "existing", "proposed", "future", "excluded"].map(
-                (p) => (
-                  <option key={p} value={p}>
-                    {human(p)}
-                  </option>
-                ),
-              )}
-            </select>
-          </label>
-        )}
-        {register === "valves" && (
-          <>
-            <label>
-              Area filter
-              <select
-                value={area}
-                onChange={(e) => {
-                  setArea(e.target.value);
-                  setPage(0);
-                }}
-              >
-                <option value="">All areas</option>
-                {scope.areas.map((row) => (
-                  <option key={row.id} value={row.id}>
-                    {row.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Master filter
-              <select
-                value={master}
-                onChange={(e) => {
-                  setMaster(e.target.value);
-                  setPage(0);
-                }}
-              >
-                <option value="">All masters</option>
-                {scope.masters.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </>
-        )}
-      </div>
-      {filtered.length === 0 ? (
-        <div className="fn-empty">
-          <h3>
-            {rows.length
-              ? "No matching records"
-              : `No ${registerNames[register][0].toLowerCase()} yet`}
-          </h3>
-          <p>
-            {rows.length
-              ? "Change the filters; all working records are retained."
-              : "Add the known identity and source. Missing optional technical details can remain unknown."}
-          </p>
-          {rows.length ? (
-            <button
-              onClick={() => {
-                setSearch("");
-                setPhase("");
-                setMaster("");
-                setArea("");
-                setPage(0);
-              }}
-            >
-              Clear filters
-            </button>
-          ) : (
-            canEdit && (
-              <button onClick={onAdd}>Add {registerNames[register][1]}</button>
-            )
-          )}
-        </div>
-      ) : (
-        <div className="fn-table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Label / reference</th>
-                <th>Phase / source</th>
-                {register === "valves" && (
-                  <>
-                    <th>Hydraulic basis</th>
-                    <th>Flow</th>
-                    <th>Served allocations</th>
-                  </>
-                )}
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.slice(page * 25, page * 25 + 25).map((row) => (
-                <tr key={row.id}>
-                  <td>
-                    <button className="fn-link" onClick={() => onEdit(row)}>
-                      {row.label}
-                    </button>
-                  </td>
-                  <td>
-                    {"phase" in row
-                      ? human(row.phase)
-                      : "kind" in row
-                        ? human(row.kind)
-                        : "Not recorded"}
-                  </td>
-                  {register === "valves" && "flow_basis" in row && (
-                    <>
-                      <td>
-                        {human(row.flow_basis)}
-                        <br />
-                        <small>
-                          {row.master_id
-                            ? scope.masters.find((x) => x.id === row.master_id)
-                                ?.label
-                            : "Master unassigned"}
-                        </small>
-                      </td>
-                      <td>
-                        {show(
-                          calculation?.valve_flows.find((x) => x.id === row.id)
-                            ?.flow,
-                        )}
-                      </td>
-                      <td>{row.allocations.length}</td>
-                    </>
-                  )}
-                  <td>
-                    <div className="fn-actions">
-                      <button onClick={() => onEdit(row)}>
-                        {canEdit ? "Edit" : "View"}
-                      </button>
-                      {canEdit && (
-                        <button onClick={() => onRemove(row.id)}>Remove</button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div className="fn-actions">
-        {page > 0 && (
-          <button onClick={() => setPage(page - 1)}>Previous 25</button>
-        )}
-        {(page + 1) * 25 < filtered.length && (
-          <button onClick={() => setPage(page + 1)}>Next 25</button>
-        )}
-      </div>
-    </>
-  );
-}
-
-function Topology({
-  scope,
-  onValve,
-}: {
-  scope: Scope;
-  onValve: (record: Scope["valves"][number]) => void;
-}) {
-  if (!scope.valves.length) return null;
-  return (
-    <section className="fn-section">
-      <h2>Represented valve paths</h2>
-      <p>
-        Concept only · not to scale · not for construction. Each physical valve
-        is shown with its actual recorded source and master.
-      </p>
-      <div className="fn-table-scroll">
-        <svg
-          className="fn-graph"
-          role="img"
-          aria-label="Water sources through assigned masters to irrigation valves"
-          viewBox={`0 0 850 ${Math.max(90, scope.valves.slice(0, 8).length * 64 + 30)}`}
-        >
-          {scope.valves.slice(0, 8).map((v, index) => {
-            const y = index * 64 + 20;
-            return (
-              <g key={v.id}>
-                <path
-                  d={`M220 ${y + 20}H300M530 ${y + 20}H610`}
-                  fill="none"
-                  stroke="#828e9f"
-                  strokeWidth="2"
-                />
-                <rect
-                  x="0"
-                  y={y}
-                  width="220"
-                  height="42"
-                  rx="5"
-                  fill="#f6f7f9"
-                  stroke="#cbd2dc"
-                />
-                <text x="10" y={y + 26} fontSize="13" fill="#242a37">
-                  {(
-                    scope.sources.find(
-                      (x) =>
-                        x.id ===
-                        (v.source_id ??
-                          scope.masters.find(
-                            (master) => master.id === v.master_id,
-                          )?.source_id),
-                    )?.label ?? "Source unassigned"
-                  ).slice(0, 29)}
-                </text>
-                <rect
-                  x="300"
-                  y={y}
-                  width="230"
-                  height="42"
-                  rx="5"
-                  fill="#f6f7f9"
-                  stroke="#cbd2dc"
-                />
-                <text x="310" y={y + 26} fontSize="13" fill="#242a37">
-                  {(
-                    scope.masters.find((x) => x.id === v.master_id)?.label ??
-                    "Master unassigned"
-                  ).slice(0, 30)}
-                </text>
-                <rect
-                  x="610"
-                  y={y}
-                  width="230"
-                  height="42"
-                  rx="5"
-                  fill="#edf5e9"
-                  stroke="#90ac83"
-                />
-                <text x="620" y={y + 26} fontSize="13" fill="#242a37">
-                  {v.label.slice(0, 30)}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-      <div className="fn-actions">
-        {scope.valves.slice(0, 8).map((v) => (
-          <button key={v.id} onClick={() => onValve(v)}>
-            Open {v.label}
-          </button>
-        ))}
-      </div>
-      {scope.valves.length > 8 && (
-        <p>
-          First eight physical paths shown; the valve register exposes all
-          records.
-        </p>
-      )}
-    </section>
-  );
-}
+/* ---------- History ---------- */
 
 function History({
   data,
@@ -2191,34 +1096,34 @@ function History({
   const scopeId = data.scope.id;
   const [before, setBefore] = useState<string | null>(null),
     resource = useCrmResource<{
-      items: {
-        id: string;
-        version: number;
-        reason: string;
-        created_at: string;
-        content_hash: string;
-      }[];
+      items: { id: string; version: number; reason: string; created_at: string; content_hash: string }[];
       next_cursor: string | null;
-    }>(
-      open
-        ? `${base}/${scopeId}/history${before ? `?before=${encodeURIComponent(before)}` : ""}`
-        : null,
-      true,
-    );
+    }>(open ? `${base}/${scopeId}/history${before ? `?before=${encodeURIComponent(before)}` : ""}` : null, true);
   return (
-    <FertigationDialog
-      title="History & exact revisions"
-      close={close}
-      open={open}
-      closeDisabled={pending}
-    >
+    <FertigationDialog title="History & exact revisions" close={close} open={open} closeDisabled={pending}>
       <div className="fn-dialog-body">
-        <p>
-          Every link rechecks access to that exact saved source. Origin
-          Discovery: {data.revision.binding.revision_id}.
+        <p className="fn-subtle">
+          Every link rechecks access to that exact saved source. Origin Discovery: {data.revision.binding.revision_id}.
         </p>
         <ErrorNotice error={resource.error} />
-        {resource.loading && <p>Loading history…</p>}
+        {resource.loading && <p className="fn-loading">Loading history…</p>}
+        <ol className="fn-history">
+          {resource.data?.items.map((r) => (
+            <li key={r.id} className={r.id === data.revision.id ? "fn-history-current" : undefined}>
+              <span className="fn-history-dot" aria-hidden="true" />
+              <div>
+                <Link href={`/estimating/fertigation/${scopeId}?revision_id=${r.id}`} className="fn-history-title">
+                  Revision {r.version}
+                </Link>
+                <small>{r.reason} · {when(r.created_at)}</small>
+                <code>{r.content_hash}</code>
+              </div>
+            </li>
+          ))}
+        </ol>
+        {resource.data?.next_cursor && (
+          <Button variant="quiet" size="sm" onClick={() => setBefore(resource.data!.next_cursor)}>Older revisions</Button>
+        )}
         <FertigationHistoryActions
           scope={data.scope}
           savedRevision={data.revision.id}
@@ -2233,32 +1138,7 @@ function History({
             onChanged();
           }}
         />
-        {resource.data && (
-          <FertigationComparison
-            scopeId={scopeId}
-            revisions={resource.data.items}
-          />
-        )}
-        {resource.data?.items.map((r) => (
-          <section className="fn-section" key={r.id}>
-            <h3>
-              <Link
-                href={`/estimating/fertigation/${scopeId}?revision_id=${r.id}`}
-              >
-                Revision {r.version}
-              </Link>
-            </h3>
-            <p>
-              {r.reason} · {when(r.created_at)}
-            </p>
-            <small>{r.content_hash}</small>
-          </section>
-        ))}
-        {resource.data?.next_cursor && (
-          <button onClick={() => setBefore(resource.data!.next_cursor)}>
-            Older revisions
-          </button>
-        )}
+        {resource.data && <FertigationComparison scopeId={scopeId} revisions={resource.data.items} />}
       </div>
     </FertigationDialog>
   );
@@ -2269,8 +1149,7 @@ function DraftInputChanges({ before, after }: { before: Scope; after: Scope }) {
   // Show record labels rather than identities; whole records read as added
   // or removed instead of their serialised content.
   const readable = (text: string) => {
-    const labelled = (value: string) =>
-      withLabels(after, withLabels(before, value));
+    const labelled = (value: string) => withLabels(after, withLabels(before, value));
     if (text.startsWith("[")) {
       try {
         const list = JSON.parse(text) as unknown[];

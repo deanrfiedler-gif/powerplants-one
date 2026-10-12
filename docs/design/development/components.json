@@ -631,7 +631,9 @@
       "used_on": [
         "route:/engineering/[id]/materials",
         "route:/engineering/[id]/materials/mapping",
-        "route:/engineering/[id]/materials/releases"
+        "route:/engineering/[id]/materials/releases",
+        "route:/estimating/fertigation",
+        "route:/estimating/fertigation/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -5459,6 +5461,69 @@
           "expected": "Load the directory without unrelated site/facility screen code while preserving styling, authority and actual next-record navigation.",
           "actual": "The refined controlled block passes 320 loads and 80 record openings, reduces initial script bytes by 6.91% and improves desktop receiving p95 within its block. Cold-load targets remain unmet; phone/order variation and runner contention remain explicit.",
           "action": "Review docs/testing/evidence/pt27-loading/direct-directory-refined/README.md, retained manifests/captures, full assurance and remaining cold-load limits before acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "cross-section",
+      "title": "Shared cross-section drawing",
+      "category": "Boards & cards",
+      "module": "ES",
+      "purpose": "One SVG component draws every greenhouse cross section at true proportion for the ES-08 Screen Configurator Workbench: the Configure live card and drawing sheet 02 cannot drift apart (design board departure D15).",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "es08-live",
+          "label": "Configure live section",
+          "description": "The mini variant on the Configure live card: two of the configured spans at true proportion, redrawn as inputs change. Host fixture: tests/browser/specialist-workbench.spec.ts, every roof profile drawn through the one component."
+        },
+        {
+          "id": "es08-sheet",
+          "label": "Drawing sheet 02",
+          "description": "The sheet variant inside a title-block frame with layers, the selected motor group highlighted and a bar scale. Host fixture: tests/browser/specialist-workbench.spec.ts, field selection across sheets."
+        },
+        {
+          "id": "es08-withheld",
+          "label": "Section withheld",
+          "description": "A drawing rule breach (Venlo span not a whole number of roofs, vent at or above the sawtooth rise, screen at or above the structure underside) withholds the section with its reason while the quantities stay valid (D14). Host fixture: tests/browser/specialist-workbench.spec.ts."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/specialist-section.tsx",
+          "symbol": "SectionDrawing"
+        }
+      ],
+      "dependencies": [
+        "src/estimating/specialist/drawing.ts",
+        "src/estimating/specialist/workbench.ts",
+        "src/components/specialist-sheets.tsx",
+        "src/components/specialist-workbench.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-G-Cross-Section-Engine-r01.png",
+        "anchor": "",
+        "status": "Owner-accepted design reference (23 September 2026); paired application acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/cross-section.md",
+      "used_on": [
+        "scope:ES-08"
+      ],
+      "desktop": "Sheet variant at 1,280 × 310 inside the sheet frame; card variant at 660 × 330; mini variant at 400 × 236 in the live card. Width and height share one scale; labels are SVG text so downloads stay self-contained.",
+      "mobile": "The SVG scales with its container; at 390 px the sheet text is small and the page relies on pinch zoom, as the design board's phone composition states.",
+      "keyboard": "Presentation only: the drawing carries an accessible name that states the profile, spans, gutter, top height and screen height. Selection and layers are ordinary buttons and checkboxes beside it.",
+      "limitations": "Truss webs identify the structure type only; they are not member sizes, bracing design or load paths. Gable and Arch ranges, the 0.45 m Venlo truss depth and the roof widths are proposed conventions. Real supplier profiles have not been compared.",
+      "gaps": [
+        {
+          "id": "cross-section-owner-review",
+          "expected": "Paired owner comparison of the application sections with the design board's section engine and families standard at 1,440 px and 390 px.",
+          "actual": "Application captures are retained in docs/reference/ui/specialist/workbench-native-r01; no owner review is recorded.",
+          "action": "Review the retained captures beside the design board; record the result in the ES-08 page record.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -69,3 +69,6 @@ The [team contract](access-team-inspection.md) extends the existing role catalog
 ## Durable local team continuation — 11 October 2026
 
 Dean's next-step instruction continues #427 with the [local team contract](../decisions/access-local-teams.md): dedicated local creation duty, explicit initial roster, immutable audit/receipt and saved-team inspection on the existing role catalogue. This is the record/API foundation. Native editing, membership lifecycle, review routing and campaigns remain open; team labels grant no permission or independent review duty. Preserve the receiving plan's future attester/reviewer separation and unresolved D-020. The [execution ledger](../testing/evidence/access-local-teams/README.md) separates functional proof, visual observations, owner acceptance and deployment.
+
+
+The next [review attestation foundation](access-review-attestations.md) records independent local single-grant Keep observations through a guarded API. The roster inspection itself remains read-only; native entry, assigned campaigns and operational review policy remain open.

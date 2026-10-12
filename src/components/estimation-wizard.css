@@ -1,14 +1,26 @@
-/* ES-02: native interior of the existing shell. Shared r22 tokens/menu rules. */
+/* ES-02 Estimation Wizard · discovery workspace.
+   Composition from design board r01 "In the app · ES-02 r04" (boards 05, S1–S5, V1–V6,
+   X1–X4, R1–R4, 09 and 10), behaviour from build plan r04. The shell owns the rail, header
+   and viewport; the shared secondary-menu rules in styles/my-work.css own the menu, the
+   local reset and the mw-* controls. This file owns the wizard interior only.
+   Control heights follow the design record's O1 recommendation: 44 px for fields and the
+   working-copy bar, the 40 px dense-grid allowance for toolbar and in-table controls. */
+#ppo-estimate-wizard {
+  --es02-summary: 380px;
+  --es02-control: 44px;
+  --es02-dense: 40px;
+  --es02-field-size: 14px;
+}
 #ppo-estimate-wizard .mw-content {
   display: flex;
   overflow: hidden;
+  background: var(--surface-white);
 }
 #ppo-estimate-wizard .es02-layout {
   display: flex;
   flex: 1;
   min-width: 0;
   min-height: 0;
-  background: var(--white);
 }
 #ppo-estimate-wizard .es02-main {
   display: flex;
@@ -16,29 +28,151 @@
   flex: 1;
   min-width: 0;
   min-height: 0;
+  position: relative;
 }
+#ppo-estimate-wizard .es02-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#ppo-estimate-wizard .es02-icon-sm,
+.es02-dialog .es02-icon-sm {
+  width: 16px;
+  height: 16px;
+}
+#ppo-estimate-wizard i.es02-icon {
+  display: inline-grid;
+  place-items: center;
+  font-size: 16px;
+}
+#ppo-estimate-wizard i.es02-icon-sm {
+  font-size: 14px;
+}
+
+/* Context row · board 05 item 6: identity, viewed alternative and save state. */
 #ppo-estimate-wizard .es02-context {
-  padding: 14px 24px 10px;
-  border-bottom: 1px solid var(--line-soft);
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 3px 18px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 24px;
+  align-items: start;
+  padding: 14px 24px 12px;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+#ppo-estimate-wizard .es02-context-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-context-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
 }
 #ppo-estimate-wizard .es02-context h1 {
   font-size: 20px;
-  line-height: 1.3;
-  grid-column: 1/-1;
+  line-height: 28px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
 }
-#ppo-estimate-wizard .es02-context p {
+#ppo-estimate-wizard .es02-context-meta {
+  color: var(--text-secondary);
   font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-context-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--text-secondary);
 }
-#ppo-estimate-wizard .es02-context .field {
-  grid-column: 2;
-  grid-row: 2/4;
-  margin: 0;
-  max-width: 270px;
+#ppo-estimate-wizard .es02-context-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
+#ppo-estimate-wizard .es02-context-controls .field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+#ppo-estimate-wizard .es02-context-controls .field label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-context-controls .field select {
+  width: auto;
+  min-width: 270px;
+  max-width: 360px;
+  min-height: var(--es02-dense);
+}
+
+/* Workspace tabs · equal width, 3 px navy underline, counts from saved records. */
+#ppo-estimate-wizard .record-tablist {
+  display: flex;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+  overflow: visible;
+}
+#ppo-estimate-wizard .record-tablist button {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .record-tablist button:hover {
+  color: var(--ink);
+  background: var(--surface-3);
+}
+#ppo-estimate-wizard .record-tablist button[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--navy);
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--neutral-surface);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* The one scroll owner of the main column. */
 #ppo-estimate-wizard .es02-scroll {
   flex: 1;
   min-height: 0;
@@ -46,565 +180,2165 @@
   padding: 0 24px 24px;
   scroll-padding-top: 16px;
 }
-#ppo-estimate-wizard .es02-summary {
-  width: 380px;
-  flex: 0 0 380px;
-  padding: 22px 24px;
-  overflow: auto;
-  border-left: 1px solid var(--line);
-  box-shadow: -14px 0 16px -18px rgba(36, 42, 55, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-height: 0;
+#ppo-estimate-wizard .es02-scroll:focus-visible {
+  outline: none;
 }
-#ppo-estimate-wizard .es02-summary h2 {
-  font-size: 18px;
-}
-#ppo-estimate-wizard .es02-summary h3 {
-  font-size: 15px;
-}
-#ppo-estimate-wizard .es02-summary p {
-  font-size: 13px;
-}
-#ppo-estimate-wizard .es02-summary hr {
-  border: 0;
-  border-top: 1px solid var(--line-soft);
-  width: 100%;
-  margin: 4px 0;
-}
-#ppo-estimate-wizard .es02-summary small {
-  color: var(--muted);
-  margin-top: auto;
-  padding-top: 18px;
-}
-#ppo-estimate-wizard .es02-summary .es02-money {
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 1.3;
-}
-#ppo-estimate-wizard h2 {
-  font-size: 18px;
-  margin: 16px 0 8px;
-}
-#ppo-estimate-wizard h3 {
-  font-size: 16px;
-  margin: 10px 0 8px;
-}
-#ppo-estimate-wizard p {
-  margin: 8px 0;
-  color: var(--text-secondary);
-}
-#ppo-estimate-wizard :is(button, .button) {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  min-height: 36px;
-  padding: 6px 10px;
-  border: 1px solid var(--line-strong);
-  border-radius: 6px;
-  background: var(--white);
-  color: var(--navy);
-  font: inherit;
-  line-height: 1.35;
-  text-decoration: none;
-}
-#ppo-estimate-wizard button:hover:not(:disabled) {
-  background: var(--surface-hover);
-}
-#ppo-estimate-wizard button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-#ppo-estimate-wizard
-  :is(button, a, input, select, summary, textarea):focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-#ppo-estimate-wizard button.es02-primary,
-#ppo-estimate-wizard a.button {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: var(--white);
-}
-#ppo-estimate-wizard a {
-  color: var(--link);
-}
-#ppo-estimate-wizard .record-tablist {
-  display: flex;
-  gap: 0;
-  padding: 0 24px;
-  border-bottom: 1px solid var(--line);
-  flex: none;
-}
-#ppo-estimate-wizard .record-tablist button {
-  border: 0;
-  border-bottom: 3px solid transparent;
-  border-radius: 0;
-  padding: 12px 16px;
-  background: none;
-}
-#ppo-estimate-wizard .record-tablist button[aria-selected="true"] {
-  border-bottom-color: var(--navy);
-  font-weight: 600;
-}
+
+/* Steps · number, name and a status line from findings, never from visits. */
 #ppo-estimate-wizard .es02-steps {
   display: flex;
-  gap: 5px;
-  padding: 14px 0;
+  gap: 6px;
+  padding: 14px 0 6px;
   flex-wrap: wrap;
 }
-#ppo-estimate-wizard .es02-steps button {
-  background: var(--paper);
-  border: 0;
-}
-#ppo-estimate-wizard .es02-steps button[aria-current="step"] {
-  color: var(--white);
-  background: var(--navy);
-}
-#ppo-estimate-wizard .es02-section-title {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: 10px 0;
-}
-#ppo-estimate-wizard .es02-section-title h2,
-#ppo-estimate-wizard .es02-section-title h3 {
-  margin: 0;
-}
-#ppo-estimate-wizard .es02-family-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-}
-#ppo-estimate-wizard .es02-family-grid > div {
-  border: 1px solid var(--line);
-  display: flex;
-  flex-wrap: wrap;
-  align-content: start;
-}
-#ppo-estimate-wizard .es02-family-grid button {
-  border: 0;
+#ppo-estimate-wizard .es02-step {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
+  gap: 1px;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: var(--paper);
+  color: var(--ink);
   text-align: left;
-  border-radius: 0;
-  flex: 1;
+  line-height: 18px;
 }
-#ppo-estimate-wizard .es02-family-grid button[aria-pressed="true"] {
+#ppo-estimate-wizard .es02-step:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-step strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-step small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-step small .es02-icon {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+}
+#ppo-estimate-wizard .es02-step small[data-tone="success"] {
+  color: var(--success);
+}
+#ppo-estimate-wizard .es02-step[aria-current="step"],
+#ppo-estimate-wizard .es02-step[aria-current="step"]:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-step[aria-current="step"] small {
+  color: rgba(255, 255, 255, 0.82);
+}
+#ppo-estimate-wizard .es02-step-select {
+  display: none;
+}
+
+/* Sections. Tables meet the usable edges of the column; prose keeps its padding. */
+#ppo-estimate-wizard .es02-section {
+  padding: 18px 0 0;
+}
+#ppo-estimate-wizard .es02-section + .es02-section {
+  margin-top: 8px;
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-estimate-wizard .es02-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+#ppo-estimate-wizard .es02-section-head > div {
+  flex: 1 1 280px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+#ppo-estimate-wizard .es02-section-head > .es02-actions {
+  flex: none;
+}
+#ppo-estimate-wizard .es02-section-head h2 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-section-head h3 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-section-head p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-section-head .es02-actions {
+  margin-left: auto;
+}
+#ppo-estimate-wizard .es02-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ppo-estimate-wizard .es02-section-note {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+  margin: 8px 0;
+}
+#ppo-estimate-wizard p.es02-note {
+  margin: 10px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-subtle {
+  color: var(--muted);
+}
+#ppo-estimate-wizard .es02-h3 {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  margin: 14px 0 8px;
+}
+
+/* Buttons. Primary is navy, never bright green; danger is a word with its tone. */
+#ppo-estimate-wizard :is(button, a).es02-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--es02-dense);
+  padding: 6px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+#ppo-estimate-wizard :is(button, a).es02-button:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+#ppo-estimate-wizard :is(button, a).es02-button-primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+#ppo-estimate-wizard :is(button, a).es02-button-primary:hover:not(:disabled) {
+  background: #343c4c;
+  color: #fff;
+}
+#ppo-estimate-wizard :is(button, a).es02-button-danger {
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+#ppo-estimate-wizard :is(button, a).es02-button-danger:hover:not(:disabled) {
+  background: var(--danger-surface);
+  color: var(--danger);
+}
+#ppo-estimate-wizard :is(button, a).es02-button-quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard :is(button, a).es02-button-quiet:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+#ppo-estimate-wizard :is(button, a).es02-button-tall {
+  min-height: var(--es02-control);
+  padding-inline: 14px;
+}
+#ppo-estimate-wizard :is(button, a).es02-button-sm {
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+#ppo-estimate-wizard button.es02-button-icon {
+  width: var(--es02-dense);
+  padding: 0;
+}
+#ppo-estimate-wizard :is(button, a).es02-button:disabled,
+#ppo-estimate-wizard :is(button, a).es02-button[aria-disabled="true"] {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  cursor: not-allowed;
+}
+#ppo-estimate-wizard :is(button, a).es02-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--link);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 24px;
+}
+#ppo-estimate-wizard :is(button, a).es02-link:hover:not(:disabled) {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+}
+#ppo-estimate-wizard :is(button, a).es02-link:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+}
+#ppo-estimate-wizard .es02-link .es02-icon,
+#ppo-estimate-wizard .es02-button .es02-icon {
+  width: 16px;
+  height: 16px;
+}
+#ppo-estimate-wizard .es02-button i.es02-icon,
+#ppo-estimate-wizard .es02-link i.es02-icon {
+  font-size: 14px;
+}
+#ppo-estimate-wizard .es02-reason {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* Tags · 12 px, radius 5 px; status is always a word. */
+#ppo-estimate-wizard .es02-tag,
+.es02-dialog .es02-tag,
+.es02-panel .es02-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-tag-success {
+  background: var(--success-surface);
+  border-color: var(--success-border);
+  color: var(--success);
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-tag-warning {
+  background: var(--warning-surface);
+  border-color: var(--warning-border);
+  color: var(--warning);
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-tag-danger {
+  background: var(--danger-surface);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-tag-info {
+  background: var(--info-surface);
+  border-color: var(--info-border);
+  color: var(--info);
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-tag[data-dot]::before,
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-dot {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-dot-warning {
+  background: #d99a1e;
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-dot-success {
+  background: var(--success);
+}
+:is(#ppo-estimate-wizard, .es02-dialog, .es02-panel) .es02-dot-neutral {
+  background: var(--hairline);
+}
+
+/* Strips: neutral surfaces with a small indicator; the words carry the meaning. */
+#ppo-estimate-wizard .es02-strip,
+.es02-dialog .es02-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  margin: 10px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-strip > .es02-icon,
+.es02-dialog .es02-strip > .es02-icon {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-strip strong {
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-strip-text {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-strip-text p {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-strip-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+#ppo-estimate-wizard .es02-strip-info,
+.es02-dialog .es02-strip-info {
+  background: var(--info-surface);
+  border-color: var(--info-border);
+}
+#ppo-estimate-wizard .es02-strip-info > .es02-icon,
+.es02-dialog .es02-strip-info > .es02-icon {
+  color: var(--info);
+}
+#ppo-estimate-wizard .es02-strip-warning {
+  background: var(--warning-tint, #fffaf1);
+  border-color: var(--warning-border);
+}
+#ppo-estimate-wizard .es02-strip-danger {
+  background: var(--danger-surface);
+  border-color: var(--danger-border);
+}
+#ppo-estimate-wizard .es02-strip-danger > .es02-icon {
+  color: var(--danger);
+}
+#ppo-estimate-wizard .es02-strip[role="alert"] {
+  margin-top: 14px;
+}
+
+/* Family cards · board 10: default, filter applied, no systems, shared infrastructure. */
+#ppo-estimate-wizard .es02-family-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+#ppo-estimate-wizard .es02-family {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 108px;
+  border: 1px solid var(--line);
+  background: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-family-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1;
+  width: 100%;
+  padding: 12px 12px 8px;
+  text-align: left;
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-family-filter:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-family-filter[aria-pressed="true"] {
   background: var(--neutral-surface);
 }
-#ppo-estimate-wizard .es02-family-grid button + button {
-  flex: 0 0 auto;
-  font-size: 12px;
-  align-self: end;
+#ppo-estimate-wizard .es02-family-filter strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
 }
+#ppo-estimate-wizard .es02-family-filter strong .es02-icon {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-family-filter span {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-family-filter small {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 16px;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-family-add {
+  align-self: flex-end;
+  margin: 0 10px 10px;
+}
+#ppo-estimate-wizard .es02-family-infra {
+  border-style: dashed;
+  background: var(--surface-2);
+}
+#ppo-estimate-wizard .es02-family-infra .es02-family-filter[aria-pressed="true"] {
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard .es02-families-row {
+  display: flex;
+  align-items: center;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: 1px dashed var(--line);
+  background: var(--surface-2);
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-families-row strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-families-row span {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-families-row .es02-link {
+  margin-left: auto;
+}
+
+/* Estimator-led information row · never a recommendation engine. */
+#ppo-estimate-wizard .es02-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 18px 0 10px;
+  padding: 12px 0 18px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-info-row > .es02-icon {
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+#ppo-estimate-wizard .es02-info-row > div {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-info-row strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-info-row p {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-info-row .es02-link {
+  flex: none;
+}
+
+/* Toolbar · search, filters, Columns, overflow and the one navy action, aligned. */
 #ppo-estimate-wizard .es02-toolbar {
   display: flex;
-  align-items: end;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 12px 0;
+  gap: 8px;
+  margin: 12px 0 10px;
 }
 #ppo-estimate-wizard .es02-toolbar .field {
   margin: 0;
-  flex: 1;
-  min-width: 130px;
+  flex: 0 1 auto;
+  min-width: 0;
 }
-#ppo-estimate-wizard .es02-toolbar details {
+#ppo-estimate-wizard .es02-toolbar .field label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-toolbar .field :is(input, select) {
+  min-height: var(--es02-dense);
+  width: auto;
+}
+#ppo-estimate-wizard .es02-search {
+  position: relative;
+  flex: 0 1 240px;
+  min-width: 160px;
+}
+#ppo-estimate-wizard .es02-search .es02-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+#ppo-estimate-wizard .es02-search i.es02-icon {
+  transform: translateY(-50%);
+}
+#ppo-estimate-wizard .es02-search .field input {
+  width: 100%;
+  padding-left: 36px;
+}
+#ppo-estimate-wizard .es02-toolbar .es02-spacer {
+  flex: 1 1 0;
+}
+#ppo-estimate-wizard .es02-columns {
   position: relative;
 }
-#ppo-estimate-wizard details > label {
-  display: block;
-  min-height: 36px;
-  padding: 4px;
+#ppo-estimate-wizard .es02-columns > summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--es02-dense);
+  padding: 6px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
 }
-#ppo-estimate-wizard .es02-guidance {
-  border-block: 1px solid var(--line-soft);
-  padding: 12px 0;
-  margin: 14px 0;
-  font-size: 13px;
+#ppo-estimate-wizard .es02-columns > summary::-webkit-details-marker {
+  display: none;
 }
-#ppo-estimate-wizard .es02-guidance p {
-  margin: 4px 0;
+#ppo-estimate-wizard .es02-columns[open] > summary {
+  background: var(--surface-hover);
 }
+#ppo-estimate-wizard .es02-columns-list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 320px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-dialog);
+  background: var(--surface-white);
+  box-shadow: var(--shadow);
+}
+#ppo-estimate-wizard .es02-columns-list > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+#ppo-estimate-wizard .es02-columns-list > div:last-child {
+  border-bottom: 0;
+}
+#ppo-estimate-wizard .es02-columns-list label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-columns-list label.es02-width {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-columns-list input[type="range"] {
+  width: 90px;
+}
+
+/* Attention strip · neutral surface, amber indicator, neutral count (r04 §4.5, board B1). */
 #ppo-estimate-wizard .es02-attention {
   display: flex;
-  gap: 10px;
   align-items: center;
-  background: var(--warning-surface);
-  padding: 8px 12px;
-  margin: 8px 0;
-  color: var(--ink);
+  gap: 10px;
   flex-wrap: wrap;
+  padding: 10px 14px;
+  margin: 0 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  font-size: 13px;
 }
-#ppo-estimate-wizard .es02-attention > span {
-  color: var(--warning);
+#ppo-estimate-wizard .es02-attention strong {
+  font-weight: 600;
 }
-#ppo-estimate-wizard .es02-attention button {
+#ppo-estimate-wizard .es02-attention span {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-attention .es02-link {
   margin-left: auto;
-  background: none;
-  border: 0;
 }
+
+/* Tables · flush with the column, single-line columns, local sideways scroll (B6). */
 #ppo-estimate-wizard .es02-table-scroll {
   max-width: 100%;
   min-width: 0;
   overflow-x: auto;
-  margin: 8px 0;
+  margin: 0 -24px;
+  padding: 0 24px;
   border-block: 1px solid var(--line);
+}
+#ppo-estimate-wizard .es02-table-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
 }
 #ppo-estimate-wizard table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 13px;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
 }
 #ppo-estimate-wizard :is(th, td) {
-  padding: 12px 10px;
-  min-height: 44px;
+  padding: 0 10px;
+  height: 46px;
   border-bottom: 1px solid var(--line-soft);
   white-space: nowrap;
   vertical-align: middle;
 }
 #ppo-estimate-wizard th {
+  height: 40px;
   font-weight: 500;
   color: var(--text-secondary);
-  background: var(--paper);
+  background: var(--surface-2);
+  border-bottom-color: var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
-#ppo-estimate-wizard td button {
+#ppo-estimate-wizard tbody tr:last-child td {
+  border-bottom: 0;
+}
+#ppo-estimate-wizard :is(th, td).es02-num {
+  text-align: right;
+}
+#ppo-estimate-wizard td.es02-wrap {
+  white-space: normal;
+  min-width: 220px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard td .es02-secondary {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard td button.es02-cell-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
   padding: 0;
-  min-height: 24px;
-  border: 0;
-  background: none;
-  justify-content: start;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  white-space: nowrap;
 }
-#ppo-estimate-wizard tr[data-selected="true"] {
+#ppo-estimate-wizard td button.es02-cell-link .es02-icon {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard td button.es02-cell-link:hover:not(:disabled) {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#ppo-estimate-wizard td button.es02-cell-link[aria-pressed="true"] {
+  color: var(--ink);
+}
+#ppo-estimate-wizard td button.es02-cell-evidence {
+  color: var(--link);
+  font-weight: 500;
+  min-height: 32px;
+  padding: 0;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+#ppo-estimate-wizard td button.es02-cell-evidence:hover:not(:disabled) {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#ppo-estimate-wizard tr[data-selected="true"] td {
   background: var(--neutral-surface);
 }
-#ppo-estimate-wizard .es02-table-footer {
+#ppo-estimate-wizard tr[data-selected="true"] td:first-child {
+  box-shadow: inset 3px 0 0 var(--navy);
+}
+#ppo-estimate-wizard tbody tr:hover td {
+  background: var(--surface-3);
+}
+#ppo-estimate-wizard tr[data-selected="true"]:hover td {
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard .es02-systems-table :is(th, td):first-child {
+  position: sticky;
+  left: 0;
+  background: var(--surface-white);
+  z-index: 1;
+}
+#ppo-estimate-wizard .es02-systems-table th:first-child {
+  background: var(--surface-2);
+  z-index: 3;
+}
+#ppo-estimate-wizard .es02-systems-table tbody tr:hover td:first-child {
+  background: var(--surface-3);
+}
+#ppo-estimate-wizard .es02-systems-table tr[data-selected="true"] td:first-child {
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard .es02-table-foot {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  align-items: center;
+  gap: 8px 16px;
   flex-wrap: wrap;
-  font-size: 12px;
+  margin: 0 -24px;
+  padding: 10px 24px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--text-secondary);
 }
+#ppo-estimate-wizard .es02-table-foot strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 18px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+#ppo-estimate-wizard td .es02-row-actions {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+#ppo-estimate-wizard .es02-menu-root {
+  position: relative;
+  display: inline-flex;
+}
+#ppo-estimate-wizard .es02-menu-list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 220px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-dialog);
+  background: var(--surface-white);
+  box-shadow: var(--shadow);
+}
+#ppo-estimate-wizard .es02-menu-list button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: var(--radius-control);
+  line-height: 20px;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-menu-list button:hover:not(:disabled),
+#ppo-estimate-wizard .es02-menu-list button:focus-visible {
+  background: var(--surface-hover);
+}
+#ppo-estimate-wizard .es02-menu-list button:disabled {
+  opacity: 0.5;
+}
+
+#ppo-estimate-wizard .es02-viewed-actions {
+  padding: 10px 0 2px;
+}
+#ppo-estimate-wizard .es02-viewed-actions .es02-reason {
+  margin-right: auto;
+}
+
+/* Editor · padded two-column form beneath the table. */
 #ppo-estimate-wizard .es02-editor {
-  padding: 14px 0;
-  border-top: 1px solid var(--line-soft);
-  margin-top: 14px;
+  padding: 18px 0 8px;
+  margin-top: 4px;
 }
+#ppo-estimate-wizard .es02-editor-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+#ppo-estimate-wizard .es02-editor-head h3 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-editor-head .es02-actions {
+  margin-left: auto;
+}
+#ppo-estimate-wizard p.es02-editor-prompt {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px dashed var(--line);
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+#ppo-estimate-wizard .es02-grid-2,
 #ppo-estimate-wizard .e2-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 4px 20px;
 }
+#ppo-estimate-wizard .es02-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px 20px;
+}
+#ppo-estimate-wizard .es02-span-2 {
+  grid-column: 1 / -1;
+}
+
+/* Fields · 44 px, border #828e9f (3.3 : 1), 14 px on desktop and 16 px on phones. */
 #ppo-estimate-wizard .field {
-  margin: 8px 0;
+  margin: 0 0 12px;
   min-width: 0;
+  font-size: var(--es02-field-size);
 }
-#ppo-estimate-wizard .field label {
+#ppo-estimate-wizard .field label,
+#ppo-estimate-wizard .es02-label {
   display: block;
   font-size: 13px;
-  margin-bottom: 4px;
+  line-height: 18px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--ink);
 }
 #ppo-estimate-wizard .field :is(input, select, textarea) {
   width: 100%;
-  min-height: 38px;
-  padding: 7px 10px;
+  min-height: var(--es02-control);
+  padding: 9px 12px;
   border: 1px solid var(--control-border);
-  border-radius: 6px;
-  background: var(--white);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  color: var(--ink);
   font: inherit;
+  font-size: var(--es02-field-size);
+  line-height: 20px;
+}
+#ppo-estimate-wizard .field select {
+  padding-right: 32px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23596779' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 10 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
 }
 #ppo-estimate-wizard .field textarea {
   min-height: 76px;
   resize: vertical;
 }
+#ppo-estimate-wizard .field :is(input, select, textarea):disabled {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .field :is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--danger);
+}
 #ppo-estimate-wizard .field small {
   display: block;
+  margin-top: 4px;
   font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+#ppo-estimate-wizard .field small.field-error {
+  color: var(--danger);
+}
+#ppo-estimate-wizard .es02-readonly {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--es02-control);
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: var(--es02-field-size);
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-readonly .es02-icon {
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+#ppo-estimate-wizard .es02-readonly a {
+  color: var(--link);
+}
+#ppo-estimate-wizard .es02-field {
+  margin: 0 0 12px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-field small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--muted);
 }
 #ppo-estimate-wizard input[type="checkbox"] {
   accent-color: var(--navy);
-  width: 17px;
-  height: 17px;
-  margin: 0 6px 0 0;
-  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex: none;
 }
+
+/* Checkbox chips: a validated multi-select that reads as the board's coverage chips. */
+#ppo-estimate-wizard .es02-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: var(--es02-control);
+  padding: 6px 8px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-chips-quiet {
+  border-color: var(--line);
+  background: var(--surface-white);
+  padding: 0;
+  border: 0;
+  min-height: 0;
+}
+#ppo-estimate-wizard .es02-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-chip:has(input:checked) {
+  background: var(--neutral-surface);
+  border-color: var(--hairline);
+}
+#ppo-estimate-wizard .es02-chip:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#ppo-estimate-wizard .es02-chip input {
+  width: 16px;
+  height: 16px;
+}
+#ppo-estimate-wizard .es02-chip input:disabled + span {
+  color: var(--muted);
+}
+#ppo-estimate-wizard fieldset:disabled .es02-chip {
+  cursor: default;
+}
+#ppo-estimate-wizard .es02-chips-empty {
+  align-self: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 2px 4px;
+}
+
+/* Checks: plain labelled checkboxes in a wrapping row. */
 #ppo-estimate-wizard .es02-checks {
   display: flex;
-  gap: 8px 18px;
+  gap: 6px 18px;
   flex-wrap: wrap;
-  margin: 10px 0;
+  margin: 4px 0 12px;
 }
-#ppo-estimate-wizard .es02-checks label {
-  min-height: 32px;
+#ppo-estimate-wizard .es02-checks label,
+#ppo-estimate-wizard label.e2-check {
   display: flex;
   align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
 }
+#ppo-estimate-wizard label.e2-check input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  accent-color: var(--navy);
+}
+
+/* Question blocks and typed facts: the legend names the record; the fields follow. */
 #ppo-estimate-wizard .es02-fields {
   margin: 0;
   border: 0;
   padding: 0;
   min-width: 0;
 }
-#ppo-estimate-wizard .es02-fact,
-#ppo-estimate-wizard .e2-question,
-#ppo-estimate-wizard .est-line {
-  border: 0;
-  border-top: 1px solid var(--line);
+#ppo-estimate-wizard fieldset.es02-fact,
+#ppo-estimate-wizard fieldset.e2-question,
+#ppo-estimate-wizard fieldset.est-line {
+  border: 1px solid var(--line);
   border-radius: 0;
-  padding: 14px 0;
-  margin: 14px 0;
+  padding: 14px 16px 4px;
+  margin: 12px 0;
   min-width: 0;
+  background: var(--surface-white);
 }
 #ppo-estimate-wizard legend {
   padding: 0 6px;
+  margin-left: -6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-fact-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+#ppo-estimate-wizard .es02-fact-head strong {
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-fact-head .es02-actions {
+  margin-left: auto;
+}
+#ppo-estimate-wizard details.es02-details > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--es02-dense);
+  padding: 6px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+}
+#ppo-estimate-wizard details.es02-details > summary::-webkit-details-marker {
+  display: none;
+}
+#ppo-estimate-wizard details.es02-details[open] > summary .es02-icon-toggle {
+  transform: rotate(180deg);
+}
+#ppo-estimate-wizard details.es02-details > summary:hover {
+  background: var(--surface-hover);
+}
+#ppo-estimate-wizard details.es02-details > .es02-details-body {
+  padding-top: 12px;
+}
+
+/* Evidence facts table inside the editor · Fact | Value | Source and state. */
+#ppo-estimate-wizard .es02-facts td {
+  white-space: normal;
+  height: auto;
+  min-height: 44px;
+  padding: 11px 10px;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-facts td:first-child {
+  font-weight: 500;
+}
+#ppo-estimate-wizard .es02-facts .es02-table-scroll {
+  margin: 0;
+  padding: 0;
+}
+
+/* Guidance surfaces and cards. */
+#ppo-estimate-wizard .es02-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+#ppo-estimate-wizard .es02-card {
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  background: var(--surface-white);
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+#ppo-estimate-wizard .es02-card-head strong,
+#ppo-estimate-wizard .es02-card > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   font-weight: 600;
 }
-#ppo-estimate-wizard details summary {
-  cursor: pointer;
-  min-height: 36px;
-  padding: 6px 0;
-  font-weight: 500;
+#ppo-estimate-wizard .es02-card-head .es02-tag {
+  margin-left: auto;
 }
+#ppo-estimate-wizard .es02-card p,
+#ppo-estimate-wizard .es02-card li {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-card ul {
+  list-style: disc;
+  padding-left: 18px;
+  margin: 4px 0 8px;
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-card ul li {
+  color: var(--ink);
+  margin: 2px 0;
+}
+#ppo-estimate-wizard .es02-card-head .es02-icon {
+  color: var(--text-secondary);
+}
+
+/* Tiles · Pricing totals and Review summary. */
+#ppo-estimate-wizard .es02-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+#ppo-estimate-wizard .es02-tile {
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  background: var(--surface-white);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-tile > span {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-tile > strong {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-tile > strong.es02-tile-money {
+  font-size: 20px;
+}
+#ppo-estimate-wizard .es02-tile > small {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 16px;
+}
+#ppo-estimate-wizard .es02-tile > .es02-tile-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+#ppo-estimate-wizard .es02-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  margin: 14px 0;
+}
+#ppo-estimate-wizard .es02-facts-grid > div {
+  padding: 12px 14px;
+  border-right: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-facts-grid > div:nth-child(3n) {
+  border-right: 0;
+}
+#ppo-estimate-wizard .es02-facts-grid > div:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+#ppo-estimate-wizard .es02-facts-grid span {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-facts-grid strong {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Findings by effect · each row opens its step and field (board P9). */
+#ppo-estimate-wizard .es02-finding-group {
+  border: 1px solid var(--line);
+  margin: 0 0 10px;
+  background: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-finding-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 14px;
+}
+#ppo-estimate-wizard .es02-finding-head strong {
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-finding-head span {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-finding-head .es02-count {
+  margin-left: auto;
+}
+#ppo-estimate-wizard .es02-finding-head .es02-icon {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-finding-icon {
+  display: inline-flex;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-finding-icon[data-tone="success"] {
+  color: var(--success);
+}
+#ppo-estimate-wizard .es02-finding-group p {
+  padding: 12px 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-finding-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-finding-row:last-child {
+  border-bottom: 0;
+}
+#ppo-estimate-wizard button.es02-finding-row:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-finding-row > span:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-finding-row small {
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-finding-row .es02-icon {
+  color: var(--text-secondary);
+}
+
+/* Working-copy bar · ends at the main column, never under the summary. */
 #ppo-estimate-wizard .es02-bottom {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 12px 24px;
+  min-height: 57px;
+  padding: 8px 24px;
   border-top: 1px solid var(--line);
-  background: var(--white);
+  background: var(--surface-white);
   flex: none;
 }
-#ppo-estimate-wizard .es02-bottom span {
+#ppo-estimate-wizard .es02-bottom-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin-right: auto;
+  font-size: 13px;
+  color: var(--text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-bottom .es02-button {
+  min-height: var(--es02-control);
+  padding-inline: 14px;
+}
+
+/* Summary panel · white, square, flush right, full height, left-only shadow (r04 §4.4). */
+#ppo-estimate-wizard .es02-summary {
+  width: var(--es02-summary);
+  flex: 0 0 var(--es02-summary);
+  padding: 22px 24px;
+  overflow: auto;
+  border-left: 1px solid var(--line);
+  box-shadow: -14px 0 16px -18px rgba(36, 42, 55, 0.5);
+  background: var(--surface-white);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  font-size: 13.5px;
+}
+#ppo-estimate-wizard .es02-summary h2 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+#ppo-estimate-wizard .es02-summary h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-summary h3 .es02-count {
+  margin-left: auto;
+}
+#ppo-estimate-wizard .es02-summary-eyebrow {
   font-size: 12px;
   color: var(--text-secondary);
 }
-#ppo-estimate-wizard .es02-finding {
-  display: block;
-  text-align: left;
-  margin: 6px 0;
-  color: var(--warning);
-  border: 0;
-  padding: 4px 0;
+#ppo-estimate-wizard .es02-summary-viewing {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
 }
-.es02-dialog {
-  width: min(900px, calc(100vw - 24px));
-  max-height: calc(100dvh - 40px);
-  overflow: auto;
+#ppo-estimate-wizard .es02-summary-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 2px 0 8px;
+}
+#ppo-estimate-wizard .es02-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+#ppo-estimate-wizard .es02-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 26px;
+  padding: 2px 0;
+}
+#ppo-estimate-wizard .es02-row dt {
+  color: var(--text-secondary);
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-row dd {
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-summary hr {
+  border: 0;
+  border-top: 1px solid var(--line-soft);
+  width: 100%;
+  margin: 12px 0;
+}
+#ppo-estimate-wizard .es02-summary .es02-money {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.2px;
+}
+#ppo-estimate-wizard .es02-summary .es02-strip {
+  margin: 10px 0;
+}
+#ppo-estimate-wizard .es02-summary .es02-button {
+  align-self: flex-start;
+}
+#ppo-estimate-wizard .es02-summary-findings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0 4px;
+}
+#ppo-estimate-wizard .es02-summary-finding {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
   border: 1px solid var(--line);
-  border-radius: 6px;
-  background: white;
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  text-align: left;
+  line-height: 18px;
+}
+#ppo-estimate-wizard .es02-summary-finding:hover:not(:disabled) {
+  background: var(--surface-3);
   color: var(--ink);
-  padding: 24px;
+}
+#ppo-estimate-wizard .es02-summary-finding .es02-dot {
+  margin-top: 5px;
+}
+#ppo-estimate-wizard .es02-summary-finding > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-summary-finding strong {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-summary-finding small {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-estimate-wizard .es02-summary-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+}
+#ppo-estimate-wizard .es02-summary-foot {
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+#ppo-estimate-wizard .es02-summary-close {
+  display: none;
+}
+
+/* Summary bar and sheet below 1200 px (board P4). */
+#ppo-estimate-wizard .es02-summary-bar {
+  display: none;
+}
+
+/* Dialogs · 640 px, radius 10 px, scrim rgb(23 35 55 / 40%). */
+.es02-dialog {
+  width: min(640px, calc(100vw - 24px));
+  max-height: calc(100dvh - 40px);
+  padding: 0;
+  border: 1px solid var(--line, #e1e5eb);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink, #242a37);
+  font: 14px/1.45 Roboto, Verdana, sans-serif;
+  box-shadow: 0 16px 52px rgba(36, 42, 55, 0.17), 0 2px 8px rgba(36, 42, 55, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+.es02-dialog:not([open]) {
+  display: none;
 }
 .es02-dialog::backdrop {
-  background: rgba(36, 42, 55, 0.3);
+  background: rgb(23 35 55 / 40%);
 }
-.es02-dialog .es02-section-title {
+.es02-dialog-wide {
+  width: min(900px, calc(100vw - 24px));
+}
+.es02-dialog .es02-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px 14px;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+.es02-dialog .es02-dialog-head > div {
+  flex: 1;
+  min-width: 0;
+}
+.es02-dialog h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.es02-dialog .es02-dialog-head p {
+  margin: 2px 0 0;
+  color: var(--text-secondary, #596779);
+  font-size: 13px;
+}
+.es02-dialog .es02-dialog-body {
+  padding: 16px 24px;
+  overflow: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.es02-dialog .es02-dialog-foot {
   display: flex;
   align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 14px 24px 18px;
+  border-top: 1px solid var(--line-soft, #e9ecf1);
+}
+.es02-dialog .es02-dialog-foot > span {
+  margin-right: auto;
+  color: var(--text-secondary, #596779);
+  font-size: 13px;
+}
+.es02-dialog .es02-dialog-foot .es02-button {
+  min-height: 44px;
+  padding-inline: 14px;
+}
+#ppo-estimate-wizard .es02-dialog :is(h3) {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 6px 0 2px;
+}
+#ppo-estimate-wizard .es02-dialog p {
+  color: var(--ink);
+}
+#ppo-estimate-wizard .es02-dialog fieldset.es02-confirm {
+  border: 1px solid var(--line);
+  padding: 12px 14px 6px;
+  margin: 0;
+}
+#ppo-estimate-wizard .es02-dialog fieldset.es02-confirm legend {
+  margin-left: 0;
+}
+#ppo-estimate-wizard .es02-dialog fieldset.es02-confirm > label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-weight: 400;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-dialog fieldset.es02-confirm > label input {
+  margin-top: 1px;
+}
+#ppo-estimate-wizard .es02-dialog .es02-changes {
+  margin: 0;
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-estimate-wizard .es02-dialog .es02-changes li {
+  display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line-soft);
 }
-.es02-dialog fieldset > label {
-  display: block;
-  margin: 8px 0;
+#ppo-estimate-wizard .es02-dialog .es02-changes li span:last-child {
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
-.es02-dialog button {
-  background: var(--navy);
-  color: #fff;
-  min-height: 38px;
-  padding: 8px 14px;
-  margin: 8px 6px 8px 0;
-  border-radius: 6px;
+#ppo-estimate-wizard .es02-dialog .es02-dialog-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
-.es02-dialog pre,
-#ppo-estimate-wizard pre {
+#ppo-estimate-wizard .es02-dialog pre {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font:
-    13px/1.5 Roboto,
-    Verdana,
-    sans-serif;
+  font: 13px/1.5 Roboto, Verdana, sans-serif;
   max-width: 100%;
+  margin: 0;
+}
+
+/* Evidence panel · 440 px, overlays the summary, never replaces it (board P7). */
+.es02-panel {
+  position: fixed;
+  z-index: 45;
+  inset: 64px 0 0 auto;
+  margin: 0;
+  width: min(440px, 100vw);
+  height: calc(100dvh - 64px);
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--line, #e1e5eb);
+  border-radius: 0;
+  background: #fff;
+  color: var(--ink, #242a37);
+  font: 14px/1.45 Roboto, Verdana, sans-serif;
+  box-shadow: -18px 0 40px -24px rgba(36, 42, 55, 0.45);
+  display: flex;
+  flex-direction: column;
+}
+.es02-panel:not([open]) {
+  display: none;
+}
+.es02-panel .es02-panel-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 22px 12px;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+.es02-panel .es02-panel-head > div {
+  flex: 1;
+  min-width: 0;
+}
+.es02-panel .es02-eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #596779);
+  margin-bottom: 2px;
+}
+.es02-panel h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.es02-panel .es02-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 22px 16px;
+}
+.es02-panel .es02-panel-foot {
+  padding: 12px 22px 18px;
+  border-top: 1px solid var(--line-soft, #e9ecf1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+.es02-panel .es02-panel-foot p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted, #667181);
+}
+.es02-panel .es02-panel-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-soft, #e9ecf1);
+}
+.es02-panel .es02-panel-row > span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary, #596779);
+  margin-bottom: 2px;
+}
+.es02-panel .es02-panel-quote {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--line-strong, #dce2e9);
+  background: var(--surface-2, #f7f8fa);
+  line-height: 20px;
+}
+.es02-panel .es02-panel-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+.es02-panel .es02-panel-fact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line, #e1e5eb);
+  border-radius: 6px;
+  line-height: 18px;
+}
+.es02-panel .es02-panel-fact > span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.es02-panel .es02-panel-fact strong {
+  font-weight: 600;
+}
+.es02-panel .es02-panel-fact .es02-secondary {
+  color: var(--text-secondary, #596779);
+}
+#ppo-estimate-wizard .es02-panel .field {
+  margin-bottom: 10px;
+}
+#ppo-estimate-wizard .es02-panel .es02-h3 {
+  margin-top: 16px;
+}
+#ppo-estimate-wizard .es02-panel .es02-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+#ppo-estimate-wizard .es02-panel .es02-sources a {
+  color: var(--link);
+}
+
+/* Compare views · markers carry a glyph and a word (P6). */
+#ppo-estimate-wizard .es02-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-change-success {
+  color: var(--success);
+}
+#ppo-estimate-wizard .es02-change-warning {
+  color: var(--warning);
+}
+#ppo-estimate-wizard .es02-change-danger {
+  color: var(--danger);
+}
+#ppo-estimate-wizard .es02-change-neutral {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-compare-sides {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+#ppo-estimate-wizard .es02-compare-side {
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-compare-side > span:first-child {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+#ppo-estimate-wizard .es02-compare-side strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+#ppo-estimate-wizard .es02-compare-side p {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-compare-counts {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-compare-counts .es02-subtle {
+  margin-left: auto;
 }
 #ppo-estimate-wizard .es02-diff {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0;
 }
+#ppo-estimate-wizard .es02-diff > div {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  min-width: 0;
+}
+#ppo-estimate-wizard .es02-diff > div > strong {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+#ppo-estimate-wizard pre.es02-value {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 13px/1.5 Roboto, Verdana, sans-serif;
+  margin: 0;
+}
+
+/* Quiet legacy panels embedded in Requirements (Sales context, fertigation notes). */
+#ppo-estimate-wizard .es02-context-panels :is(.crm-panel, .est-panel) {
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 14px 16px;
+  margin: 10px 0;
+  background: var(--surface-2);
+}
+#ppo-estimate-wizard .es02-context-panels :is(.crm-panel, .est-panel) h2 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+#ppo-estimate-wizard .es02-context-panels :is(.crm-panel, .est-panel) p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin: 4px 0;
+}
+#ppo-estimate-wizard .es02-context-panels summary {
+  cursor: pointer;
+  font-weight: 500;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+#ppo-estimate-wizard .es02-context-panels a {
+  color: var(--link);
+}
+#ppo-estimate-wizard .es02-context-panels .ppo-button {
+  min-height: var(--es02-dense);
+}
+
+/* Shared menu rules the frame expects. */
 #ppo-estimate-wizard button.mw-menu-edge,
 #ppo-estimate-wizard button.mw-menu-strip {
   border-radius: 0;
   min-height: 0;
   padding: 0;
 }
+#ppo-estimate-wizard .mw-menu li a .es02-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .mw-menu li a[aria-current="page"] .es02-icon {
+  color: var(--ink);
+}
+
+/* Width 1500 px and below: the summary keeps 380 px (board B2); the column gains width from
+   the menu (P3) and tighter gutters, not from the summary. */
 @media (max-width: 1500px) {
+  #ppo-estimate-wizard .es02-scroll,
+  #ppo-estimate-wizard .es02-context,
+  #ppo-estimate-wizard .es02-bottom {
+    padding-inline: 20px;
+  }
+  #ppo-estimate-wizard .es02-table-scroll,
+  #ppo-estimate-wizard .es02-table-foot {
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
   #ppo-estimate-wizard .es02-summary {
-    width: 320px;
-    flex-basis: 320px;
-  }
-  #ppo-estimate-wizard .es02-scroll {
-    padding-inline: 16px;
-  }
-  #ppo-estimate-wizard .es02-context {
-    padding-inline: 16px;
-  }
-  #ppo-estimate-wizard .es02-family-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 20px 20px;
   }
 }
+
+/* Below 1200 px: no docked menu, the summary is a bar that opens a sheet, the actions stay
+   in view and the page keeps one scroll owner (board P4, R1). */
 @media (max-width: 1199px) {
-  #ppo-estimate-wizard .es02-layout {
+  #ppo-estimate-wizard .es02-summary {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-summary-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px 18px;
+    flex-wrap: wrap;
+    margin: 8px 0 4px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    background: var(--surface-2);
+    font-size: 13px;
+  }
+  #ppo-estimate-wizard .es02-summary-bar > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+  }
+  #ppo-estimate-wizard .es02-summary-bar strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  #ppo-estimate-wizard .es02-summary-bar .es02-button {
+    margin-left: auto;
+  }
+  #ppo-estimate-wizard .es02-context {
+    padding-inline: 20px;
+  }
+  #ppo-estimate-wizard .es02-context-controls .field select {
+    min-width: 200px;
+  }
+  #ppo-estimate-wizard .es02-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ppo-estimate-wizard .es02-facts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ppo-estimate-wizard .es02-facts-grid > div:nth-child(3n) {
+    border-right: 1px solid var(--line-soft);
+  }
+  #ppo-estimate-wizard .es02-facts-grid > div:nth-child(2n) {
+    border-right: 0;
+  }
+  #ppo-estimate-wizard .es02-facts-grid > div:nth-last-child(-n + 3) {
+    border-bottom: 1px solid var(--line-soft);
+  }
+  #ppo-estimate-wizard .es02-facts-grid > div:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+  /* The sheet: the same summary, as a labelled modal from the right edge. */
+  #ppo-estimate-wizard dialog.es02-summary-sheet {
+    display: flex;
+    position: fixed;
+    inset: 64px 0 0 auto;
+    margin: 0;
+    width: min(420px, 100vw);
+    height: calc(100dvh - 64px);
+    max-height: none;
+    max-width: none;
+    border: 0;
+    border-left: 1px solid var(--line);
+    padding: 0;
+    background: var(--surface-white);
+    box-shadow: -18px 0 40px -24px rgba(36, 42, 55, 0.45);
+  }
+  #ppo-estimate-wizard dialog.es02-summary-sheet:not([open]) {
+    display: none;
+  }
+  #ppo-estimate-wizard dialog.es02-summary-sheet::backdrop {
+    background: rgb(23 35 55 / 40%);
+  }
+  #ppo-estimate-wizard dialog.es02-summary-sheet .es02-summary {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    border-left: 0;
+    box-shadow: none;
+  }
+  #ppo-estimate-wizard dialog.es02-summary-sheet .es02-summary-close {
+    display: inline-flex;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+}
+
+/* Phones (board R2–R4): the step is a select with previous and next (P5), the actions are a
+   sticky bar above the shell's phone navigation, fields read at 16 px and every control is 44 px
+   (B3, B4), and tables scroll inside labelled regions. */
+@media (max-width: 780px) {
+  #ppo-estimate-wizard {
+    --es02-control: 44px;
+    --es02-dense: 44px;
+    --es02-field-size: 16px;
+  }
+  #ppo-estimate-wizard .mw-content {
     overflow: auto;
     display: block;
+  }
+  #ppo-estimate-wizard .es02-layout {
+    display: block;
+    min-height: 100%;
   }
   #ppo-estimate-wizard .es02-main {
     min-height: 100%;
   }
   #ppo-estimate-wizard .es02-scroll {
     overflow: visible;
-  }
-  #ppo-estimate-wizard .es02-summary {
-    width: 100%;
-    border-left: 0;
-    border-top: 1px solid var(--line);
-    box-shadow: none;
-    overflow: visible;
-  }
-  #ppo-estimate-wizard .es02-bottom {
-    position: static;
+    padding: 0 12px 24px;
   }
   #ppo-estimate-wizard .es02-context {
     grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 12px 10px;
   }
-  #ppo-estimate-wizard .es02-context .field {
-    grid-column: auto;
-    grid-row: auto;
+  #ppo-estimate-wizard .es02-context h1 {
+    font-size: 18px;
+    line-height: 24px;
   }
-}
-@media (max-width: 600px) {
-  #ppo-estimate-wizard .e2-grid,
-  #ppo-estimate-wizard .es02-diff {
-    grid-template-columns: 1fr;
+  #ppo-estimate-wizard .es02-context-controls {
+    justify-content: flex-start;
   }
-  #ppo-estimate-wizard .es02-context,
-  #ppo-estimate-wizard .es02-scroll {
-    padding-inline: 12px;
+  #ppo-estimate-wizard .es02-context-controls .field {
+    flex: 1 1 100%;
+    display: block;
   }
-  #ppo-estimate-wizard .record-tablist {
-    padding: 0;
+  #ppo-estimate-wizard .es02-context-controls .field label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  #ppo-estimate-wizard .es02-context-controls .field select {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+  #ppo-estimate-wizard .es02-context-controls .es02-summary-toggle {
+    display: none;
   }
   #ppo-estimate-wizard .record-tablist button {
     padding: 10px 8px;
+    font-size: 14px;
   }
   #ppo-estimate-wizard .es02-steps {
-    gap: 4px;
+    display: none;
   }
-  #ppo-estimate-wizard .es02-steps button {
+  #ppo-estimate-wizard .es02-step-select {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    gap: 8px;
+    align-items: end;
+    padding: 12px 0 4px;
+  }
+  #ppo-estimate-wizard .es02-step-select .field {
+    margin: 0;
+  }
+  #ppo-estimate-wizard .es02-step-select .field label {
     font-size: 12px;
-    min-height: 40px;
+    color: var(--text-secondary);
+    font-weight: 400;
   }
-  #ppo-estimate-wizard .es02-bottom {
-    padding: 10px 12px;
+  #ppo-estimate-wizard .es02-step-select .es02-button {
+    width: 44px;
+    padding: 0;
   }
-  #ppo-estimate-wizard .es02-bottom span {
-    flex-basis: 100%;
+  #ppo-estimate-wizard .es02-summary-bar {
+    margin: 6px 0 2px;
+  }
+  #ppo-estimate-wizard .es02-summary-bar .es02-button {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-table-scroll,
+  #ppo-estimate-wizard .es02-table-foot {
+    margin-inline: -12px;
+    padding-inline: 12px;
+  }
+  #ppo-estimate-wizard .es02-grid-2,
+  #ppo-estimate-wizard .e2-grid,
+  #ppo-estimate-wizard .es02-grid-3,
+  #ppo-estimate-wizard .es02-diff,
+  #ppo-estimate-wizard .es02-compare-sides,
+  #ppo-estimate-wizard .es02-facts-grid {
+    grid-template-columns: 1fr;
+  }
+  #ppo-estimate-wizard .es02-facts-grid > div {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--line-soft) !important;
+  }
+  #ppo-estimate-wizard .es02-facts-grid > div:last-child {
+    border-bottom: 0 !important;
   }
   #ppo-estimate-wizard .es02-family-grid {
-    gap: 6px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
   }
-  #ppo-estimate-wizard .es02-summary {
-    padding: 20px 12px;
+  #ppo-estimate-wizard .es02-family {
+    flex: 0 0 auto;
+    min-height: 0;
+    scroll-snap-align: start;
+  }
+  #ppo-estimate-wizard .es02-family-filter {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    min-height: 44px;
+  }
+  #ppo-estimate-wizard .es02-family-filter small {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-family-add {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-toolbar .field :is(input, select) {
+    width: 100%;
+  }
+  #ppo-estimate-wizard .es02-search {
+    flex: 1 1 100%;
+  }
+  #ppo-estimate-wizard .es02-bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  #ppo-estimate-wizard .es02-bottom-state {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+  #ppo-estimate-wizard .es02-bottom .es02-button-primary {
+    flex: 1 1 auto;
+  }
+  #ppo-estimate-wizard .es02-bottom .es02-step-nav {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-bottom .es02-summary-toggle {
+    display: inline-flex;
+  }
+  #ppo-estimate-wizard .es02-section-head .es02-actions {
+    margin-left: 0;
+  }
+  #ppo-estimate-wizard .es02-editor-head .es02-actions {
+    margin-left: 0;
+  }
+  #ppo-estimate-wizard .es02-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ppo-estimate-wizard dialog.es02-summary-sheet {
+    inset: auto 0 0 0;
+    width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 72px);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 12px 12px 0 0;
+  }
+  #ppo-estimate-wizard dialog.es02-summary-sheet .es02-summary {
+    padding: 20px 16px;
+  }
+  .es02-panel {
+    width: 100vw;
+    border-left: 0;
+  }
+  .es02-dialog .es02-dialog-head,
+  .es02-dialog .es02-dialog-body,
+  .es02-dialog .es02-dialog-foot {
+    padding-inline: 16px;
   }
 }
-
-#ppo-estimate-wizard .es02-summary {
-  gap: 10px;
+@media (min-width: 781px) {
+  #ppo-estimate-wizard .es02-bottom .es02-summary-toggle {
+    display: none;
+  }
 }
-#ppo-estimate-wizard .es02-summary p {
-  margin: 2px 0;
-}
-#ppo-estimate-wizard .es02-summary h3 {
-  margin: 8px 0;
-}
-#ppo-estimate-wizard .es02-columns[open] {
-  flex-basis: 100%;
-}
-#ppo-estimate-wizard .es02-columns > div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 6px;
-  border-bottom: 1px solid var(--line-soft);
-}
-#ppo-estimate-wizard .es02-columns label {
-  min-width: 130px;
-}
-#ppo-estimate-wizard .es02-columns input[type="range"] {
-  display: block;
-  max-width: 180px;
-}
-#ppo-estimate-wizard .es02-systems-table :is(th, td):first-child {
-  position: sticky;
-  left: 0;
-  background: var(--white);
-  z-index: 1;
-}
-#ppo-estimate-wizard .es02-systems-table th:first-child {
-  background: var(--paper);
-}
-#ppo-estimate-wizard
-  .es02-systems-table
-  tr[data-selected="true"]
-  td:first-child {
-  background: var(--neutral-surface);
-}
-
-.es02-dialog.es02-inspector {
-  position: fixed;
-  inset: 64px 0 0 auto;
-  margin: 0;
-  border-radius: 0;
-  width: min(640px, 100vw);
-  height: calc(100dvh - 64px);
-  max-height: calc(100dvh - 64px);
-  border-right: 0;
-  border-bottom: 0;
-}
-
-#ppo-estimate-wizard .es02-steps button {
-  flex-direction: column;
-  align-items: start;
-  gap: 2px;
-}
-#ppo-estimate-wizard .es02-steps small {
-  font-size: 11px;
-  opacity: 0.85;
-}
-
-#ppo-estimate-wizard .es02-context {
-  position: relative;
-}
-#ppo-estimate-wizard .es02-context h1 {
-  padding-right: 100px;
-}
-#ppo-estimate-wizard .es02-summary-toggle {
-  position: absolute;
-  right: 24px;
-  top: 12px;
-  font-size: 12px;
-  min-height: 30px;
+@media (max-width: 400px) {
+  #ppo-estimate-wizard .es02-tiles {
+    grid-template-columns: 1fr;
+  }
+  #ppo-estimate-wizard .es02-context-controls .field,
+  #ppo-estimate-wizard .es02-step-select {
+    font-size: 15px;
+  }
 }

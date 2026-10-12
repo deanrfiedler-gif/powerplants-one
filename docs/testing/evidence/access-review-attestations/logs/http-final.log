@@ -1,0 +1,14 @@
+▶ AD01 review HTTP: exact basis, independent command and original receipt envelopes
+  ✔ reader can inspect basis but cannot attest; unauthenticated request is refused (131.9617ms)
+  ✔ origin and payload guards precede writes (175.0475ms)
+  ✔ accepted command, unchanged replay and lost-response recovery return one exact receipt (491.213ms)
+  ✔ read-only history/filter handover retains exact team, subject, basis and audit linkage (430.346ms)
+✔ AD01 review HTTP: exact basis, independent command and original receipt envelopes (2670.9707ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3862.2062

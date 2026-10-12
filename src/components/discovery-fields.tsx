@@ -12,6 +12,7 @@ import type { discoveryFormOptions } from "../estimating/discovery-form-options"
 import { applicableQuestions } from "../estimating/discovery-questions";
 import { emptyConfiguration } from "../estimating/configuration-definition";
 import { Field, SelectField } from "./business-ui";
+import { StateTag } from "./estimation-wizard-ui";
 export type FormOptions = Awaited<ReturnType<typeof discoveryFormOptions>>;
 export const labels = (values: readonly string[]) =>
   values.map((id) => ({
@@ -212,6 +213,10 @@ function AnswerFields({
         {q.id} · {q.label}
         {q.required ? " · Required" : " · Optional"}
       </legend>
+      <div className="es02-fact-head">
+        <StateTag value={a.state} />
+        {a.source && <span className="es02-subtle">{a.source}</span>}
+      </div>
       <SelectField
         label={`${q.id} answer state`}
         name={`${q.id}.state`}
@@ -335,187 +340,63 @@ export function DiscoveryFields({
   options,
   onChange,
   step,
+  part,
 }: {
   value: DiscoveryInput;
   options: FormOptions;
   onChange: (v: DiscoveryInput) => void;
   step?: "Requirements" | "Configuration" | "Scope & delivery";
+  // Requirements is drawn as two sections on design board r01: the opportunity and site
+  // (scope membership and effort) and the brief (work in scope and its questions).
+  part?: "scope" | "brief";
 }) {
   const s = value.scope,
     owner = { owner_id: options.owner.id, reason: "" };
   const scope = (patch: Partial<DiscoveryScope>) =>
     onChange({ ...value, scope: { ...s, ...patch } });
   const questions = applicableQuestions(s, value.answers, options.definition);
-  return (
+  const requirements = !step || step === "Requirements",
+    showScope = requirements && (!part || part === "scope"),
+    showBrief = requirements && (!part || part === "brief"),
+    showQuestions = !requirements || showBrief;
+  const effort = (
     <>
-      {(!step || step === "Requirements") && <>
-      <h3>Scope membership</h3>
-      <SelectField
-        label="Site declaration"
-        name="scope.mode"
-        value={s.mode}
-        options={labels(["Site", "NoSiteRequired", "Unknown"])}
-        onChange={(v) =>
-          scope({
-            mode: v as DiscoveryScope["mode"],
-            site_id: null,
-            site_reason: v === "Site" ? null : "",
-            follow_up: v === "Unknown" ? owner : null,
-            facility_ids: [],
-            equipment_ids: [],
-            systems: s.systems.map((x) => ({ ...x, facility_ids: [] })),
-          })
-        }
-        required
-      />
-      {s.mode === "Site" ? (
+      <h3 className="es02-h3">Estimating effort</h3>
+      <div className="e2-grid">
         <SelectField
-          label="Existing Site"
-          name="scope.site_id"
-          value={s.site_id ?? ""}
-          options={options.sites}
-          onChange={(site_id) =>
-            scope({
-              site_id: site_id || null,
-              facility_ids: [],
-              equipment_ids: [],
-              systems: s.systems.map((x) => ({ ...x, facility_ids: [] })),
+          label="Effort declaration"
+          name="effort.value"
+          value={value.effort.value}
+          options={labels(["Full", "Express", "Unknown"])}
+          onChange={(v) =>
+            onChange({
+              ...value,
+              effort: {
+                value: v as DiscoveryInput["effort"]["value"],
+                source: null,
+                follow_up: v === "Unknown" ? owner : null,
+              },
             })
           }
           required
         />
-      ) : (
-        <Field
-          label="Site declaration reason"
-          name="scope.site_reason"
-          value={s.site_reason ?? ""}
-          onChange={(site_reason) => scope({ site_reason })}
-          maxLength={1000}
-          required
-        />
-      )}
-      {s.follow_up && (
-        <FollowUpFields
-          label="Site"
-          value={s.follow_up}
-          owners={options.owners}
-          onChange={(follow_up) => scope({ follow_up })}
-        />
-      )}{" "}
-      {s.mode === "Site" && (
-        <>
-          <Membership
-            label="Facilities"
-            items={options.facilities}
-            selected={s.facility_ids}
-            max={10}
-            onChange={(facility_ids) =>
-              scope({
-                facility_ids,
-                systems: s.systems.map((x) => ({
-                  ...x,
-                  facility_ids: x.facility_ids.filter((id) =>
-                    facility_ids.includes(id),
-                  ),
-                })),
+        {value.effort.follow_up ? null : (
+          <Field
+            label="Effort source"
+            name="effort.source"
+            value={value.effort.source ?? ""}
+            onChange={(source) =>
+              onChange({
+                ...value,
+                effort: { ...value.effort, source: source || null },
               })
             }
+            required
+            maxLength={500}
           />
-          <Membership
-            label="Existing equipment"
-            items={options.equipment.map((e) => ({
-              ...e,
-              display_name: `${e.display_name} · ${e.identity_status} · ${e.lifecycle_status}`,
-            }))}
-            selected={s.equipment_ids}
-            max={100}
-            onChange={(equipment_ids) => scope({ equipment_ids })}
-          />
-          <p>
-            Equipment references retain recorded identity and lifecycle status.
-            Selecting equipment does not verify its configuration or add a
-            Facility.
-          </p>
-        </>
-      )}
-      <fieldset className="est-line">
-        <legend>Supported work systems</legend>
-        {systemLabels.map((item) => {
-          const selected = s.systems.find((x) => x.tag === item.id);
-          return (
-            <div key={item.id}>
-              <label className="e2-check">
-                <input
-                  type="checkbox"
-                  checked={!!selected}
-                  onChange={(e) =>
-                    scope({
-                      systems: e.target.checked
-                        ? [...s.systems, { tag: item.id, facility_ids: [] }]
-                        : s.systems.filter((x) => x.tag !== item.id),
-                    })
-                  }
-                />
-                {item.display_name}
-              </label>
-              {selected && s.facility_ids.length > 0 && (
-                <Membership
-                  label={`${item.display_name} Facilities`}
-                  items={options.facilities.filter((f) =>
-                    s.facility_ids.includes(f.id),
-                  )}
-                  selected={selected.facility_ids}
-                  max={10}
-                  onChange={(facility_ids) =>
-                    scope({
-                      systems: s.systems.map((x) =>
-                        x.tag === item.id ? { ...x, facility_ids } : x,
-                      ),
-                    })
-                  }
-                />
-              )}
-            </div>
-          );
-        })}
-      </fieldset>
-      <label className="e2-check">
-        <input
-          type="checkbox"
-          checked={s.unsupported_scope !== null}
-          onChange={(e) =>
-            scope({ unsupported_scope: e.target.checked ? owner : null })
-          }
-        />
-        Additional scope needs specialist clarification
-      </label>
-      {s.unsupported_scope && (
-        <FollowUpFields
-          label="Additional scope"
-          value={s.unsupported_scope}
-          owners={options.owners}
-          onChange={(unsupported_scope) => scope({ unsupported_scope })}
-        />
-      )}
-      <h3>Estimating effort</h3>
-      <SelectField
-        label="Effort declaration"
-        name="effort.value"
-        value={value.effort.value}
-        options={labels(["Full", "Express", "Unknown"])}
-        onChange={(v) =>
-          onChange({
-            ...value,
-            effort: {
-              value: v as DiscoveryInput["effort"]["value"],
-              source: null,
-              follow_up: v === "Unknown" ? owner : null,
-            },
-          })
-        }
-        required
-      />
-      {value.effort.follow_up ? (
+        )}
+      </div>
+      {value.effort.follow_up && (
         <FollowUpFields
           label="Effort"
           value={value.effort.follow_up}
@@ -524,60 +405,228 @@ export function DiscoveryFields({
             onChange({ ...value, effort: { ...value.effort, follow_up } })
           }
         />
-      ) : (
-        <Field
-          label="Effort source"
-          name="effort.source"
-          value={value.effort.source ?? ""}
-          onChange={(source) =>
-            onChange({
-              ...value,
-              effort: { ...value.effort, source: source || null },
-            })
-          }
-          required
-          maxLength={500}
-        />
       )}
-      </>}
-      <h3>Applicable questions</h3>
-      <p>
-        {options.definition.id} · {options.definition.revision}. Unconfirmed
-        required answers need an owned follow-up. Confirmed answers require an
-        explicit acknowledgement in the comparison before saving.
-      </p>
-      {questions.filter(q => !step || (step === "Requirements" ? ["Q01", "Q02", "Q03"] : step === "Configuration" ? ["Q05", "Q06"] : ["Q04", "Q07", "Q08", "Q09", "Q10"]).includes(q.id)).map((q) => (
-        <AnswerFields
-          key={q.id}
-          question={q}
-          value={
-            value.answers.find((a) => a.question_id === q.id) ?? {
-              question_id: q.id,
-              state: "Empty",
-              value: null,
-              source: null,
-              follow_up: owner,
-            }
-          }
-          options={options}
-          onChange={(answer) =>
-            onChange({
-              ...value,
-              answers: preserveAnswerOrder(
-                value.answers,
-                answer,
-                options.definition.questions,
-              ),
-            })
-          }
-        />
-      ))}
-      {Object.values(options.more).some(Boolean) && (
-        <p role="status">
-          These choices show the first 100 permitted records in each category.
-          Saved memberships outside this page remain explicit and are checked
-          again on save.
-        </p>
+    </>
+  );
+  return (
+    <>
+      {showScope && (
+        <>
+          <h3 className="es02-h3">Scope membership</h3>
+          <div className="e2-grid">
+            <SelectField
+              label="Site declaration"
+              name="scope.mode"
+              value={s.mode}
+              options={labels(["Site", "NoSiteRequired", "Unknown"])}
+              onChange={(v) =>
+                scope({
+                  mode: v as DiscoveryScope["mode"],
+                  site_id: null,
+                  site_reason: v === "Site" ? null : "",
+                  follow_up: v === "Unknown" ? owner : null,
+                  facility_ids: [],
+                  equipment_ids: [],
+                  systems: s.systems.map((x) => ({ ...x, facility_ids: [] })),
+                })
+              }
+              required
+            />
+            {s.mode === "Site" ? (
+              <SelectField
+                label="Existing Site"
+                name="scope.site_id"
+                value={s.site_id ?? ""}
+                options={options.sites}
+                onChange={(site_id) =>
+                  scope({
+                    site_id: site_id || null,
+                    facility_ids: [],
+                    equipment_ids: [],
+                    systems: s.systems.map((x) => ({ ...x, facility_ids: [] })),
+                  })
+                }
+                required
+              />
+            ) : (
+              <Field
+                label="Site declaration reason"
+                name="scope.site_reason"
+                value={s.site_reason ?? ""}
+                onChange={(site_reason) => scope({ site_reason })}
+                maxLength={1000}
+                required
+              />
+            )}
+          </div>
+          {s.follow_up && (
+            <FollowUpFields
+              label="Site"
+              value={s.follow_up}
+              owners={options.owners}
+              onChange={(follow_up) => scope({ follow_up })}
+            />
+          )}
+          {s.mode === "Site" && (
+            <>
+              <Membership
+                label="Facilities"
+                items={options.facilities}
+                selected={s.facility_ids}
+                max={10}
+                onChange={(facility_ids) =>
+                  scope({
+                    facility_ids,
+                    systems: s.systems.map((x) => ({
+                      ...x,
+                      facility_ids: x.facility_ids.filter((id) =>
+                        facility_ids.includes(id),
+                      ),
+                    })),
+                  })
+                }
+              />
+              <Membership
+                label="Existing equipment"
+                items={options.equipment.map((e) => ({
+                  ...e,
+                  display_name: `${e.display_name} · ${e.identity_status} · ${e.lifecycle_status}`,
+                }))}
+                selected={s.equipment_ids}
+                max={100}
+                onChange={(equipment_ids) => scope({ equipment_ids })}
+              />
+              <p className="es02-note">
+                Equipment references retain recorded identity and lifecycle
+                status. Selecting equipment does not verify its configuration or
+                add a Facility.
+              </p>
+            </>
+          )}
+          {effort}
+        </>
+      )}
+      {showBrief && (
+        <>
+          <fieldset className="est-line">
+            <legend>Work in this scope</legend>
+            <p className="es02-note">
+              These tags decide which questions apply. They are not the equipment
+              families.
+            </p>
+            {systemLabels.map((item) => {
+              const selected = s.systems.find((x) => x.tag === item.id);
+              return (
+                <div key={item.id}>
+                  <label className="e2-check">
+                    <input
+                      type="checkbox"
+                      checked={!!selected}
+                      onChange={(e) =>
+                        scope({
+                          systems: e.target.checked
+                            ? [...s.systems, { tag: item.id, facility_ids: [] }]
+                            : s.systems.filter((x) => x.tag !== item.id),
+                        })
+                      }
+                    />
+                    {item.display_name}
+                  </label>
+                  {selected && s.facility_ids.length > 0 && (
+                    <Membership
+                      label={`${item.display_name} Facilities`}
+                      items={options.facilities.filter((f) =>
+                        s.facility_ids.includes(f.id),
+                      )}
+                      selected={selected.facility_ids}
+                      max={10}
+                      onChange={(facility_ids) =>
+                        scope({
+                          systems: s.systems.map((x) =>
+                            x.tag === item.id ? { ...x, facility_ids } : x,
+                          ),
+                        })
+                      }
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </fieldset>
+          <label className="e2-check">
+            <input
+              type="checkbox"
+              checked={s.unsupported_scope !== null}
+              onChange={(e) =>
+                scope({ unsupported_scope: e.target.checked ? owner : null })
+              }
+            />
+            Additional scope needs specialist clarification
+          </label>
+          {s.unsupported_scope && (
+            <FollowUpFields
+              label="Additional scope"
+              value={s.unsupported_scope}
+              owners={options.owners}
+              onChange={(unsupported_scope) => scope({ unsupported_scope })}
+            />
+          )}
+        </>
+      )}
+      {showQuestions && (
+        <>
+          <h3 className="es02-h3">
+            {requirements ? "Brief questions" : "Applicable questions"}
+          </h3>
+          <p className="es02-note">
+            {options.definition.id} · {options.definition.revision}. Unconfirmed
+            required answers need an owned follow-up. Confirmed answers require an
+            explicit acknowledgement in the comparison before saving.
+          </p>
+          {questions
+            .filter((q) =>
+              !step ||
+              (step === "Requirements"
+                ? ["Q01", "Q02", "Q03"]
+                : step === "Configuration"
+                  ? ["Q05", "Q06"]
+                  : ["Q04", "Q07", "Q08", "Q09", "Q10"]
+              ).includes(q.id),
+            )
+            .map((q) => (
+              <AnswerFields
+                key={q.id}
+                question={q}
+                value={
+                  value.answers.find((a) => a.question_id === q.id) ?? {
+                    question_id: q.id,
+                    state: "Empty",
+                    value: null,
+                    source: null,
+                    follow_up: owner,
+                  }
+                }
+                options={options}
+                onChange={(answer) =>
+                  onChange({
+                    ...value,
+                    answers: preserveAnswerOrder(
+                      value.answers,
+                      answer,
+                      options.definition.questions,
+                    ),
+                  })
+                }
+              />
+            ))}
+          {Object.values(options.more).some(Boolean) && (
+            <p className="es02-note" role="status">
+              These choices show the first 100 permitted records in each
+              category. Saved memberships outside this page remain explicit and
+              are checked again on save.
+            </p>
+          )}
+        </>
       )}
     </>
   );

@@ -1,0 +1,68 @@
+
+Running 15 tests using 1 worker
+
+(node:30112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (18.7s)
+  ok  2 [desktop] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (953ms)
+  ok  3 [desktop] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (6.1s)
+  ok  4 [desktop] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (7.6s)
+  ok  5 [desktop] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (4.9s)
+(node:35056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [phone] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (4.7s)
+  ok  7 [phone] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (635ms)
+  ok  8 [phone] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (3.9s)
+  ok  9 [phone] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (5.6s)
+  ok 10 [phone] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (3.4s)
+(node:19616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page (18.3s)
+(node:21996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [narrow] › tests\browser\access-inspection.spec.ts:95:1 › AD-01 direct HTTP requests enforce current inspection permission and expose no write method (3.7s)
+  ok 13 [narrow] › tests\browser\access-inspection.spec.ts:149:1 › AD-01 denied page clears people; failed reads retry without displaying retained data (4.3s)
+  ok 14 [narrow] › tests\browser\access-inspection.spec.ts:194:1 › AD-01 capability catalogue shows unassigned keys and drills through exact site grants (4.9s)
+  ok 15 [narrow] › tests\browser\access-inspection.spec.ts:279:1 › AD-01 catalogue retries unavailable reads and clears holders after authority loss (3.2s)
+
+
+  1) [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]') with timeout 5000ms
+      - waiting for locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]')
+
+
+      20 |       'a[href="/admin/access/30000000-0000-4000-8000-000000000005"]',
+      21 |     ),
+    > 22 |   ).toBeVisible();
+         |     ^
+      23 |   await page.getByLabel("Find a person", { exact: true }).fill("not-a-person");
+      24 |   await page.getByRole("button", { name: "Search identities" }).click();
+      25 |   await expect(
+        at <WORKTREE>\tests\browser\access-inspection.spec.ts:22:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-review-attestations\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-narrow\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\tmp\ad01-review-attestations\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-narrow\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\tmp\ad01-review-attestations\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-narrow\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\tmp\ad01-review-attestations\browser-results\access-inspection-AD-01-pe-f1795-lanation-on-the-native-page-narrow\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [narrow] › tests\browser\access-inspection.spec.ts:4:1 › AD-01 people and exact company/site explanation on the native page
+  14 passed (2.3m)

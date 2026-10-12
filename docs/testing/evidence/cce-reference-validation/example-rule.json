@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "name": "Synthetic support spacing",
+  "when": {
+    "nodeId": "00000000-0000-4000-8000-000000000001",
+    "kind": "all",
+    "children": [
+      {
+        "nodeId": "00000000-0000-4000-8000-000000000002",
+        "kind": "boolean",
+        "factId": "site.is_outdoor",
+        "operator": "IS_TRUE"
+      }
+    ]
+  },
+  "actions": [
+    {
+      "actionId": "00000000-0000-4000-8000-000000000003",
+      "outputSlot": "installation.brackets",
+      "explanation": "Synthetic bracket allowance.",
+      "kind": "MATERIAL_REQUIREMENT",
+      "productId": "00000000-0000-4000-8000-000000000004",
+      "unit": "each",
+      "resolution": {
+        "group": "installation.brackets.base",
+        "policy": "HIGHEST_PRIORITY"
+      },
+      "quantity": {
+        "language": "cce-arithmetic-v1",
+        "expression": "distance_m / spacing_m * per_span + spare",
+        "bindings": {
+          "distance_m": "installation.distance"
+        },
+        "parameters": {
+          "spacing_m": {
+            "type": "decimal",
+            "value": "10",
+            "unit": "m"
+          },
+          "per_span": {
+            "type": "decimal",
+            "value": "2",
+            "unit": "each"
+          },
+          "spare": {
+            "type": "decimal",
+            "value": "5",
+            "unit": "each"
+          }
+        }
+      },
+      "rounding": {
+        "increment": "1",
+        "mode": "CEILING",
+        "stage": "AFTER_GROUP_RESOLUTION"
+      }
+    }
+  ]
+}

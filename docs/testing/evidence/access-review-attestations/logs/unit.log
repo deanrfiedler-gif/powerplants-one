@@ -1,0 +1,30 @@
+✔ AD-01 role comparisons preserve the seven retained proposals and exact revision deltas (22.0491ms)
+✔ AD-01 role routes retain the access destination with task-specific titles (1.2149ms)
+✔ AD-01 team examples preserve source IDs, people, lead, dates and fixed example clock (15.7562ms)
+✔ working catalogue binds all renderers, reference anchors and consumer keys (11609.8581ms)
+✔ dependency edits invalidate recorded reviews; newline normalisation preserves them (257.4781ms)
+✔ all Maintenance and Warranty routes retain their Service shell parent (7.2461ms)
+✔ seven full ordered compositions retain withheld positions and My Work placement (0.9118ms)
+✔ permission and readiness filters retain relative order and never manufacture links (3.8575ms)
+✔ specific routes, genuine views and shared records select exactly their rail parent (3.7547ms)
+✔ shared context is explicit or remembered, independent of customer route spelling (129.9974ms)
+✔ every primary semantic glyph has a deliberate distinct active drawing on the same grid (54.6066ms)
+✔ the five later Service destinations each have their own rail icon (0.6818ms)
+✔ every forward SQL migration is registered exactly once; recovery is not a forward migration (18.2233ms)
+✔ local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions (11.2435ms)
+✔ duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid (2.1803ms)
+✔ read-only navigation does not imply creation or elevate an identity (4.7231ms)
+✔ nested pages resolve to their actual workspace instead of a remembered Sales selection (2.7734ms)
+✔ seven workspace preferences validate schema and retain r15 identifiers (2.1653ms)
+✔ More finds workspace names and existing page names, including former rail destinations (3.7056ms)
+✔ AU-08 the Service rail is grouped without reordering, and other rails stay flat (4.7715ms)
+✔ NR-18 a working company narrows scoped checks for its own actor only, and only inside a request (23.3961ms)
+✔ NR-18 a choice entered while resolving the identity reaches the rest of that request only (9.4986ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12597.1056

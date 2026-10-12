@@ -1,0 +1,1 @@
+{"dialect":"https://json-schema.org/draft/2020-12/schema","validConditionCases":13,"invalidConditionCases":10,"documentedSemanticGapsAccepted":3,"semanticGaps":["reversed range","duplicate node IDs","fact dictionary type unavailable to structural schema"]}

@@ -153,6 +153,22 @@ async function compareSave(page: Page, reason: string) {
     page.getByRole("dialog", { name: "Review discovery revision" }),
   ).toHaveCount(0);
 }
+async function openStep(page: Page, label: string) {
+  const selector = page.getByRole("combobox", { name: /^Step \d of 5$/ });
+  if (await selector.isVisible())
+    await selector.selectOption(label.replace(/^\d+\. /, ""));
+  else await page.getByRole("button", { name: label, exact: true }).click();
+}
+async function expectSummary(page: Page, ...texts: string[]) {
+  const summary = page.getByRole("complementary", { name: "Estimate summary", exact: true });
+  const sheetNeeded = !(await summary.isVisible());
+  if (sheetNeeded)
+    await page.locator(".es02-bottom").getByRole("button", { name: "Summary", exact: true }).click();
+  await expect(summary).toBeVisible();
+  for (const text of texts) await expect(summary).toContainText(text);
+  if (sheetNeeded)
+    await page.getByRole("button", { name: "Close estimate summary", exact: true }).click();
+}
 async function fillQuestion(
   page: Page,
   id: string,
@@ -164,7 +180,7 @@ async function fillQuestion(
       : ["Q05", "Q06"].includes(id)
         ? "2. Configuration"
         : "3. Scope & delivery";
-    await page.getByRole("button", { name: label, exact: true }).click();
+    await openStep(page, label);
   }
   const q = discoveryDefinition.questions.find((q) => q.id === id)!;
   await page
@@ -384,8 +400,16 @@ test("ES02-T27/T28/T54/T58: stale discovery retains its proposal and reconciles 
       exact: true,
     }),
   ).toBeDisabled();
-  await capture(page, info, "successor-uncertain", ".es02-dialog");
   await page.unroute(`**/api/v1/${s.path}`);
+  // Refresh the saved read while the accepted POST response is still lost.
+  // Its new version invalidates the comparison and closes the review dialog;
+  // the original command must remain recoverable from the workspace banner.
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(page.getByRole("tab", { name: "Revisions 3", exact: true })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Review discovery revision", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("status").filter({ hasText: "Save outcome uncertain" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Confirm original save outcome", exact: true })).toBeVisible();
+  await capture(page, info, "successor-uncertain", ".es02-context");
   await page
     .getByRole("button", { name: "Confirm original save outcome", exact: true })
     .click();
@@ -419,18 +443,14 @@ test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alte
       (a: { question_id: string }) => a.question_id,
     ),
   ).toEqual(["Q05", "Q06"]);
-  await page
-    .getByRole("button", { name: "1. Requirements", exact: true })
-    .click();
+  await openStep(page, "1. Requirements");
   await page
     .getByRole("checkbox", { name: "Defined labour", exact: true })
     .uncheck();
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .check();
-  await page
-    .getByRole("button", { name: "2. Configuration", exact: true })
-    .click();
+  await openStep(page, "2. Configuration");
   await expect(
     page.getByLabel("Q05 Product description", { exact: true }),
   ).toHaveValue("SYN sensor reference");
@@ -495,12 +515,7 @@ test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alte
   await page
     .getByLabel("Viewed alternative", { exact: true })
     .selectOption(b.option.id);
-  await expect(
-    page.getByRole("complementary", { name: "Estimate summary" }),
-  ).toContainText("Viewed alternative · not selected");
-  await expect(
-    page.getByRole("complementary", { name: "Estimate summary" }),
-  ).toContainText("Incomplete");
+  await expectSummary(page, "Viewed alternative · not selected", "Incomplete");
   await page
     .getByRole("button", { name: "Select this option", exact: true })
     .click();
@@ -510,9 +525,7 @@ test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alte
   await page
     .getByRole("button", { name: "Confirm select", exact: true })
     .click();
-  await expect(
-    page.getByRole("complementary", { name: "Estimate summary" }),
-  ).toContainText("Selected alternative");
+  await expectSummary(page, "Selected alternative");
   await page
     .getByLabel("Viewed alternative", { exact: true })
     .selectOption(s.input.option_id);
@@ -545,14 +558,15 @@ test("ES02-T41/T42/T58: draft survives step changes and identity loss clears pro
   await page
     .getByLabel("Q01 Included work", { exact: true })
     .fill("SYN private unsaved E2 proposal");
+  // At phone widths the steps are a select with previous and next (design board P5).
   for (const step of [
-    "2. Configuration",
-    "3. Scope & delivery",
-    "4. Pricing",
-    "5. Review",
-    "1. Requirements",
+    "Configuration",
+    "Scope & delivery",
+    "Pricing",
+    "Review",
+    "Requirements",
   ])
-    await page.getByRole("button", { name: step, exact: true }).click();
+    await page.getByLabel(/^Step \d of 5/).selectOption(step);
   await expect(
     page.getByLabel("Q01 Included work", { exact: true }),
   ).toHaveValue("SYN private unsaved E2 proposal");
@@ -604,7 +618,5 @@ test("ES02-T70: an empty form becomes an explicit valid incomplete first revisio
   await expect(
     page.getByRole("tab", { name: "Revisions 1", exact: true }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("complementary", { name: "Estimate summary" }),
-  ).toContainText("Incomplete");
+  await expectSummary(page, "Incomplete");
 });

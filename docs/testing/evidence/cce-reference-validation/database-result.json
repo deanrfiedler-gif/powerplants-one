@@ -1,0 +1,104 @@
+{
+  "scope": "Synthetic contract-parent harness, not the native service writer",
+  "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+  "passed": 24,
+  "failed": 0,
+  "cases": [
+    {
+      "id": "DB-01",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-02",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-03",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-04",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-05",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-06",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-07",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-08",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-09",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-10",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-11",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-12",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-13",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-14",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-15",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-16",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-17",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-18",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-19",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-20",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-21",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-22",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-23",
+      "status": "PASS"
+    },
+    {
+      "id": "DB-24",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "prepared": "2026-10-12",
+  "timezone": "Australia/Brisbane",
+  "repositoryCommit": "ba1f4e3c155ce6a45dc15e87689de01d42a47e1f",
+  "node": "24.21.0",
+  "typescript": {
+    "version": "6.0.3",
+    "strictExpressionCheck": "PASS"
+  },
+  "expressionSuite": {
+    "positive": 20,
+    "refused": 43,
+    "generated": 220,
+    "status": "PASS"
+  },
+  "results": {
+    "native-schema-result.json": {
+      "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+      "latestMigrationVersion": 77,
+      "migrationCount": 76,
+      "cceDdlApplied": true,
+      "scope": "Unseeded fresh native schema; service writer and populated upgrade not established"
+    },
+    "database-result.json": {
+      "scope": "Synthetic contract-parent harness, not the native service writer",
+      "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+      "passed": 24,
+      "failed": 0
+    },
+    "native-journey-result.json": {
+      "limits": [
+        "No new CCE service route implemented",
+        "Native save and evidence attachment were separate transactions",
+        "No quotation rendering or complete historical upgrade suite"
+      ],
+      "sourceEstimateId": "a8d5786b-ff09-4e30-b5cd-06d39b946461"
+    },
+    "schema-result.json": {
+      "schemaDialect": "https://json-schema.org/draft/2020-12/schema",
+      "mode": "strict native 2020-12; formats enabled; no coercion/defaults/removal",
+      "positiveCases": 5,
+      "negativeCases": 16,
+      "ajvVersion": "8.17.1"
+    },
+    "schema-coverage-result.json": {
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "validConditionCases": 13,
+      "invalidConditionCases": 10,
+      "documentedSemanticGapsAccepted": 3,
+      "semanticGaps": [
+        "reversed range",
+        "duplicate node IDs",
+        "fact dictionary type unavailable to structural schema"
+      ]
+    },
+    "oracle-result.json": {
+      "oracle": "Python fractions.Fraction",
+      "seed": 20261012,
+      "passed": 5000,
+      "localElapsedMs": 150,
+      "limit": "Generated differential arithmetic checks; not exhaustive parser security or production load testing"
+    },
+    "workflow-result.json": {
+      "profile": "Synthetic material-only end-to-end reference; no production CCE routes",
+      "passed": 34
+    },
+    "persisted-workflow-result.json": {
+      "scope": "Material-only harness with synthetic contract parents; not a native production adoption command",
+      "passed": 4,
+      "runId": "940d09a0-3569-4c27-8df4-13cbadf47a4c",
+      "snapshotId": "cab6b6fa-fa38-4b35-88d3-8971c5b3e5e6"
+    },
+    "commercial-result.json": {
+      "passed": 8,
+      "limits": "Synthetic examples only; operating rates, tax, billing policy and business-day calendars are not accepted"
+    },
+    "populated-upgrade-result.json": {
+      "passed": true,
+      "method": "Clone current native seeded proof; remove only candidate CCE objects; apply candidate DDL; compare every retained native table and migration ledger",
+      "nativeTables": 369,
+      "nativeRows": 646,
+      "estimateVersions": 3,
+      "migrationLedger": {
+        "rows": 76,
+        "hash": "607e46a0167d7dbb380035b9393b1d68206c4164f034f1c3839eb4a088ef4fb7"
+      },
+      "limits": [
+        "Current populated baseline only; no separate historical migration-0026 upgrade or issued document bytes",
+        "No proof of CCE service-level adoption atomicity"
+      ]
+    },
+    "restart-result.json": {
+      "passed": true,
+      "checkedTableSets": 12,
+      "method": "Actual owned PostgreSQL stop/start; compare exact retained-row digests",
+      "limits": "No application restart, worker lease or external delivery recovery proof",
+      "clusterStoppedAtCompletion": true
+    },
+    "report-integrity.json": {
+      "path": "<original-report-export>",
+      "bytes": 190371,
+      "wordsIncludingCode": 22562,
+      "proseWords": 16444,
+      "codeBlocks": 33,
+      "jsonBlocks": 8,
+      "internalLinks": 16,
+      "sha256": "d09260bb40920809700bf8c2b7cfe9cf3acb628876e4f3885303cf03622d2f0d",
+      "status": "PASS"
+    }
+  },
+  "limits": "Synthetic and local bounded evidence. See report sections 8 and 10. No CCE production implementation, external writes or owner acceptance."
+}

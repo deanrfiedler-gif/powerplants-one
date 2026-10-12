@@ -10,7 +10,11 @@ import type { ToneIcon } from "../engineering/changes/model";
 import type { OutlineName as CommissioningOutlineName, MarkName as CommissioningMarkName } from "../engineering/commissioning/components/client/commissioning-ui";
 import type { AdditionalIconName as AcceptanceIconName } from "../projects/acceptance/icon";
 import type { LeadsIconName } from "./leads-workspace";
+import type { FertigationIconName } from "./fertigation-icons";
 import type { GanttIconName } from "./projects-gantt";
+import type { WizardIconName } from "./estimation-wizard-ui";
+
+import type { SpecialistIconName } from "./specialist-ui";
 
 // ADR-0050: each semantic icon name maps to one Font Awesome Pro icon, drawn in Classic Light,
 // and in Classic Solid where the app marks a selected item. Every catalogue keeps its own names
@@ -337,9 +341,42 @@ export const acceptanceFontAwesome = {
 } satisfies Record<AcceptanceIconName, FontAwesomeIcon>;
 
 // src/components/fertigation-frame.tsx: the conflict mark on fertigation chips and view badges.
+// src/components/fertigation-icons.tsx: the workbench's section rail and action glyphs.
 export const fertigationFontAwesome = {
   conflict: "triangle-exclamation",
-} satisfies Record<"conflict", FontAwesomeIcon>;
+  overview: "grid-2",
+  growing: "map",
+  water: "droplet",
+  recipes: "flask",
+  controls: "sliders",
+  operating: "clock",
+  configurator: "layer-group",
+  evidence: "file-lines",
+  review: "clipboard-check",
+  history: "clock-rotate-left",
+  report: "print",
+  save: "floppy-disk",
+  plus: "plus",
+  search: "magnifying-glass",
+  edit: "pen",
+  download: "download",
+  "chevron-down": "chevron-down",
+  "chevron-up": "chevron-up",
+  info: "circle-info",
+  check: "check",
+  back: "arrow-left",
+  list: "list",
+  leaf: "leaf",
+  compare: "code-compare",
+  lock: "lock",
+  user: "user",
+  file: "file",
+  flask: "flask",
+  upload: "arrow-up-from-bracket",
+  swap: "right-left",
+  calculate: "calculator",
+  external: "arrow-up-right-from-square",
+} satisfies Record<FertigationIconName, FontAwesomeIcon>;
 
 // src/components/leads-workspace.tsx: Leads' own back, sort and search glyphs.
 export const leadsFontAwesome = {
@@ -360,3 +397,63 @@ export const ganttFontAwesome = {
   sliders: "sliders",
   fit: "expand",
 } satisfies Record<GanttIconName, FontAwesomeIcon>;
+
+// src/components/estimation-wizard-ui.tsx: the ES-02 Estimation Wizard (design board r01, board 10).
+export const estimationWizardFontAwesome = {
+  search: "magnifying-glass",
+  columns: "table-columns",
+  more: "ellipsis",
+  plus: "plus",
+  check: "check",
+  "chevron-right": "chevron-right",
+  "chevron-left": "chevron-left",
+  "chevron-down": "chevron-down",
+  "arrow-left": "arrow-left",
+  "arrow-right": "arrow-right",
+  external: "arrow-up-right-from-square",
+  document: "file-lines",
+  info: "circle-info",
+  warning: "triangle-exclamation",
+  summary: "list",
+  save: "floppy-disk",
+  compare: "arrow-right-arrow-left",
+  history: "clock-rotate-left",
+  copy: "copy",
+  eye: "eye",
+  archive: "box-archive",
+  close: "xmark",
+  user: "user",
+  plug: "plug",
+  filter: "filter",
+  family: "table-list",
+  climate: "temperature-half",
+  controls: "sliders",
+  water: "droplet",
+  automation: "conveyor-belt",
+  structures: "warehouse",
+  services: "screwdriver-wrench",
+  infrastructure: "network-wired",
+  other: "circle-question",
+  added: "square-plus",
+  changed: "square-pen",
+  removed: "square-minus",
+  unchanged: "square-check",
+  incomparable: "square-xmark",
+} satisfies Record<WizardIconName, FontAwesomeIcon>;
+
+// src/components/specialist-ui.tsx: the ES-08 Screen Configurator Workbench controls and sheets.
+export const specialistFontAwesome = {
+  "chevron-left": "chevron-left",
+  "chevron-right": "chevron-right",
+  "chevron-down": "chevron-down",
+  close: "xmark",
+  search: "magnifying-glass",
+  download: "download",
+  print: "print",
+  "arrow-right": "arrow-right",
+  warning: "triangle-exclamation",
+  info: "circle-info",
+  check: "check",
+  drawing: "pen-ruler",
+  spinner: "spinner",
+} satisfies Record<SpecialistIconName, FontAwesomeIcon>;

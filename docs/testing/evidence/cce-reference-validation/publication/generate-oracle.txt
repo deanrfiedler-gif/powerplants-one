@@ -1,0 +1,1 @@
+{"oracle": "Python standard-library fractions.Fraction", "seed": 20261012, "cases": 5000}

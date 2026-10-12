@@ -1,0 +1,982 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ppo:cce:rule-definition:1",
+  "title": "PPO CCE bounded rule definition",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "when": {
+      "$ref": "#/$defs/condition"
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "name",
+    "when",
+    "actions"
+  ],
+  "$defs": {
+    "decimal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "decimal"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "unit"
+      ]
+    },
+    "integer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "integer"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^-?[0-9]{1,18}$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "unit"
+      ]
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "text"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "enumeration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "enum"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "enumSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "enum_set"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      },
+      "required": [
+        "type",
+        "values"
+      ]
+    },
+    "decimalRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "decimal_range"
+        },
+        "lower": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        },
+        "upper": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "lowerInclusive": {
+          "type": "boolean"
+        },
+        "upperInclusive": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "lower",
+        "upper",
+        "unit",
+        "lowerInclusive",
+        "upperInclusive"
+      ]
+    },
+    "decimalComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ",
+            "GT",
+            "GTE",
+            "LT",
+            "LTE"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/decimal"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "integerComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ",
+            "GT",
+            "GTE",
+            "LT",
+            "LTE"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/integer"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "textComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ",
+            "CONTAINS",
+            "STARTS_WITH"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "enumComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/enumeration"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "enumSetComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "IN",
+            "NOT_IN"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/enumSet"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "decimalRangeComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "BETWEEN"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/decimalRange"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "boolean": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "boolean"
+        },
+        "operator": {
+          "enum": [
+            "IS_TRUE",
+            "IS_FALSE"
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator"
+      ]
+    },
+    "known": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "known"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind"
+      ]
+    },
+    "constant": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "const": "constant"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "value"
+      ]
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "enum": [
+            "all",
+            "any"
+          ]
+        },
+        "children": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "children"
+      ]
+    },
+    "not": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "const": "not"
+        },
+        "child": {
+          "$ref": "#/$defs/condition"
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "child"
+      ]
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "const": "collection"
+        },
+        "collectionId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "quantifier": {
+          "enum": [
+            "ANY_MATCH",
+            "ALL_MATCH"
+          ]
+        },
+        "emptyPolicy": {
+          "enum": [
+            "TRUE",
+            "FALSE",
+            "UNKNOWN"
+          ]
+        },
+        "where": {
+          "$ref": "#/$defs/condition"
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "collectionId",
+        "quantifier",
+        "emptyPolicy",
+        "where"
+      ]
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/decimalComparison"
+        },
+        {
+          "$ref": "#/$defs/integerComparison"
+        },
+        {
+          "$ref": "#/$defs/textComparison"
+        },
+        {
+          "$ref": "#/$defs/enumComparison"
+        },
+        {
+          "$ref": "#/$defs/enumSetComparison"
+        },
+        {
+          "$ref": "#/$defs/decimalRangeComparison"
+        },
+        {
+          "$ref": "#/$defs/boolean"
+        },
+        {
+          "$ref": "#/$defs/known"
+        },
+        {
+          "$ref": "#/$defs/constant"
+        },
+        {
+          "$ref": "#/$defs/group"
+        },
+        {
+          "$ref": "#/$defs/not"
+        },
+        {
+          "$ref": "#/$defs/collection"
+        }
+      ]
+    },
+    "expression": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "const": "cce-arithmetic-v1"
+        },
+        "expression": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "bindings": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+          }
+        },
+        "parameters": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/decimal"
+          }
+        }
+      },
+      "required": [
+        "language",
+        "expression",
+        "bindings",
+        "parameters"
+      ]
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "policy": {
+          "enum": [
+            "SUM",
+            "MAX_REQUIREMENT",
+            "UNIQUE",
+            "HIGHEST_PRIORITY",
+            "ANY_EQUAL"
+          ]
+        }
+      },
+      "required": [
+        "group",
+        "policy"
+      ]
+    },
+    "rounding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "increment": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^(0\\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(\\.[0-9]+)?)$"
+        },
+        "mode": {
+          "enum": [
+            "FLOOR",
+            "CEILING",
+            "HALF_UP",
+            "HALF_EVEN"
+          ]
+        },
+        "stage": {
+          "enum": [
+            "PER_CONTRIBUTION",
+            "AFTER_GROUP_RESOLUTION"
+          ]
+        }
+      },
+      "required": [
+        "increment",
+        "mode",
+        "stage"
+      ]
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "MATERIAL_REQUIREMENT"
+        },
+        "productId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "resolution": {
+          "$ref": "#/$defs/resolution"
+        },
+        "quantity": {
+          "$ref": "#/$defs/expression"
+        },
+        "rounding": {
+          "$ref": "#/$defs/rounding"
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "productId",
+        "unit",
+        "resolution",
+        "quantity",
+        "rounding"
+      ]
+    },
+    "labour": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "LABOUR_REQUIREMENT"
+        },
+        "labourCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "unit": {
+          "const": "person_hours"
+        },
+        "resolution": {
+          "$ref": "#/$defs/resolution"
+        },
+        "hours": {
+          "$ref": "#/$defs/expression"
+        },
+        "rounding": {
+          "$ref": "#/$defs/rounding"
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "labourCode",
+        "unit",
+        "resolution",
+        "hours",
+        "rounding"
+      ]
+    },
+    "margin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "TARGET_MARGIN"
+        },
+        "commercialScope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "costBasisPolicyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "margin": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "commercialScope",
+        "costBasisPolicyId",
+        "margin"
+      ]
+    },
+    "milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "MILESTONE_PROPOSAL"
+        },
+        "milestoneKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "anchor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "offsetDays": {
+          "type": "integer",
+          "minimum": -36500,
+          "maximum": 36500
+        },
+        "calendarMode": {
+          "enum": [
+            "CALENDAR_DAYS",
+            "BUSINESS_DAYS"
+          ]
+        },
+        "calendarId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "dependsOn": {
+          "type": "array",
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "milestoneKey",
+        "name",
+        "anchor",
+        "offsetDays",
+        "calendarMode",
+        "calendarId",
+        "timezone",
+        "dependsOn"
+      ]
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "REVIEW_REQUIREMENT"
+        },
+        "severity": {
+          "enum": [
+            "WARNING",
+            "BLOCK"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "severity",
+        "message"
+      ]
+    },
+    "action": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/material"
+        },
+        {
+          "$ref": "#/$defs/labour"
+        },
+        {
+          "$ref": "#/$defs/margin"
+        },
+        {
+          "$ref": "#/$defs/milestone"
+        },
+        {
+          "$ref": "#/$defs/review"
+        }
+      ]
+    }
+  }
+}

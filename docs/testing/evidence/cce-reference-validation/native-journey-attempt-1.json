@@ -1,0 +1,14 @@
+{
+  "cases": [
+    {
+      "id": "NATIVE-01",
+      "status": "PASS",
+      "detail": "Existing native CRM and estimate commands created a synthetic estimate with 480.00 cost and 720.00 sell."
+    }
+  ],
+  "error": {
+    "message": "The expression evaluated to a falsy value:\n\n  assert(columns.includes('cost_schema_version'))\n",
+    "code": "ERR_ASSERTION",
+    "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(columns.includes('cost_schema_version'))\n\n    at <anonymous> (<evidence-workdir>\\native-journey.mjs:25:42)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

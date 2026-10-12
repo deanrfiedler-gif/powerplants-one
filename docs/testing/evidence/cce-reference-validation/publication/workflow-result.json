@@ -1,0 +1,229 @@
+{
+  "profile": "Synthetic material-only end-to-end reference; no production CCE routes",
+  "passed": 34,
+  "cases": [
+    {
+      "id": "WF-01",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-02",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-03",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-04",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-05",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-06",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-07",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-08",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-09",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-10",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-11",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-12",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-13",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-14",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-15",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-16",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-17",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-18",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-19",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-20",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-21",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-22",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-23",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-24",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-25",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-26",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-27",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-28",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-29",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-30",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-31",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-32",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-33",
+      "status": "PASS"
+    },
+    {
+      "id": "WF-34",
+      "status": "PASS"
+    }
+  ],
+  "example": {
+    "status": "READY",
+    "baseHash": "43dd8e71d7da2ff369371bac2c58a9fa9be524e484be96820c36e2a963b33530",
+    "base": [
+      {
+        "lineKey": "[\"installation.brackets\",\"00000000-0000-4000-8000-000000000004\",\"each\"]",
+        "productId": "00000000-0000-4000-8000-000000000004",
+        "unit": "each",
+        "quantity": "33"
+      }
+    ],
+    "effective": [
+      {
+        "lineKey": "[\"installation.brackets\",\"00000000-0000-4000-8000-000000000004\",\"each\"]",
+        "productId": "00000000-0000-4000-8000-000000000004",
+        "unit": "each",
+        "quantity": "33",
+        "cost": "79.2"
+      }
+    ],
+    "trace": [
+      {
+        "ruleId": "rule-a",
+        "version": 1,
+        "pass": true,
+        "nodes": [
+          {
+            "nodeId": "00000000-0000-4000-8000-000000000002",
+            "factId": "site.is_outdoor",
+            "input": {
+              "state": "CONFIRMED",
+              "value": true
+            },
+            "result": true
+          },
+          {
+            "nodeId": "00000000-0000-4000-8000-000000000001",
+            "factId": null,
+            "input": null,
+            "result": true
+          }
+        ]
+      }
+    ],
+    "resolution": [
+      {
+        "group": "[\"installation.brackets\",\"00000000-0000-4000-8000-000000000004\",\"each\",\"installation.brackets.base\"]",
+        "policy": "HIGHEST_PRIORITY",
+        "winnerIds": [
+          "rule-a"
+        ],
+        "loserIds": [],
+        "expressions": [
+          {
+            "formula": "distance_m / spacing_m * per_span + spare",
+            "substitutions": {
+              "spacing_m": "10",
+              "per_span": "2",
+              "spare": "5",
+              "distance_m": "140"
+            }
+          }
+        ],
+        "rounding": {
+          "increment": "1",
+          "mode": "CEILING",
+          "stage": "AFTER_GROUP_RESOLUTION"
+        },
+        "exact": [
+          {
+            "numerator": "33",
+            "denominator": "1",
+            "exactDecimal": "33"
+          }
+        ],
+        "quantity": {
+          "numerator": "33",
+          "denominator": "1",
+          "exactDecimal": "33"
+        }
+      }
+    ],
+    "cost": "79.2",
+    "sell": "99",
+    "currency": "AUD",
+    "evidenceHash": "f53b024eb54379f4ff34cfd4b7ca44bbe08722420c35f18c51a62e94dcdb03ae"
+  }
+}

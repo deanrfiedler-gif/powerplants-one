@@ -30592,7 +30592,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "Local review API boundary: docs/decisions/access-review-attestations.md. A dedicated independent duty records one current grant Keep observation with an exact basis. No native attestation control or campaign completion is delivered; roster inspection records no review. Evidence: docs/testing/evidence/access-review-attestations/README.md."
           ],
           "steps": [],
           "rows": [],
@@ -57366,27 +57367,31 @@
           "rows": [
             [
               "Page context",
-              "Screen Systems configurations · selected view · Record workspace"
+              "Screen Systems configurations · selected view · Record workspace. The heading names the workbench; the record line beneath it names the configuration, its display number and draft version."
             ],
             [
-              "This page’s focus",
-              "Specialist configuration view. The task sequence below is specific to this view."
+              "Module header",
+              "Draft status, Method & limitations, the context band (estimate, facility, structure, definition, review state), the seven views and the readiness strip: Geometry, Structural grid, Cloth width, Roll fit, Manual quantities and Release, each stated in words."
             ],
             [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
+              "Configure",
+              "Six sections (Structure, Cloth & edges, Bed & wire, Drive & motors, Supports & tape, Commercial) with a live plan or section, the calculation working and untested-option notices. On a phone the sections become a stepper."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Drawings",
+              "Toolbar with roof profile, layers and sheet navigation; sheets 01–05 with title blocks; field inspector; legend; cut schedule; coverage reconciliation; SVG, CSV and print exports."
+            ],
+            [
+              "Parts & working, Pricing, Compare & save",
+              "The positions table with its working panel, the priced lines with the price bridge, and the comparison with the record-run checklist and Send to estimate."
             ],
             [
               "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
+              "Save draft records a reason and a receipt. Save review run records an immutable run. Apply reviewed changes writes a synthetic contribution to the bound estimate. Read the resulting state; an outcome-unknown receipt must be resolved before another write."
             ],
             [
               "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "User guide explains the task. The design board captures and the retained application captures show the accepted composition and the built page; an image is not evidence of current deployment."
             ]
           ],
           "headers": [
@@ -57414,7 +57419,10 @@
           ],
           "steps": [
             "Enter the configuration UUID from the target environment.",
-            "Choose a supported view: configure, parts, pricing, compare, definition or history.",
+            "Choose a supported view: configure, drawings, parts, pricing, compare, definition or history. The module header keeps the context band, the seven views and the six readiness gates on every view.",
+            "Configure: enter the six sections once. Options are segmented buttons; every field shows its source cell. Roof profile, pitch, gutter height, roof width, vent and roll width are drawing-only inputs remembered in this browser; their errors withhold the drawings, never the quantities.",
+            "Drawings: read the five sheets (plan, cross section, longitudinal section, bay section, screen cut), select a field to inspect it on every sheet, and use the cut schedule and the unpriced coverage cross-check. Sheets are marked Estimating study · not for fabrication.",
+            "Parts & working, Pricing and Compare & save: inspect each position's working, the illustrative price bridge and the line changes by stable key; choose every required decision and the acknowledgement before saving a run.",
             "Inspect that view in the same configuration context; saved runs, working inputs and reviewed definitions remain distinct evidence.",
             "Wider workflow outcome: A reproducible specialist configuration with an exact input/rule basis."
           ],
@@ -57440,28 +57448,28 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Draft / unsaved changes",
+              "The status beside the heading says whether the draft is saved; unsaved changes live in this browser until Save draft records them with a reason."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Validation withheld",
+              "A quantity input names its rule; the Geometry gate reads Withheld and the plan, section, quantities and price are withheld. A drawing-only error reads Drawing withheld and keeps the quantities."
+            ],
+            [
+              "Untested option",
+              "Calculated and shown, marked unvalidated; the Release gate counts it. Engineering review covers the branch."
             ],
             [
               "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Retain the original operation context. Check the receipt, retry the original unchanged, or resolve its outcome before another write."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Read-only / locked / access refused",
+              "The header status says Read-only with the reason; inspect, compare and export, but do not try another identity to bypass the boundary."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Roll fit",
+              "Not checked shows a notice. Too narrow keeps the procurement unit unconfirmed and blocks Send to estimate; saving a run is still allowed (DEC-R2)."
             ]
           ],
           "headers": [
@@ -57542,7 +57550,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Guide revision r01 · Draft for review · Prepared 23 September 2026, updated 12 October 2026 for the built workbench. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -57556,10 +57564,11 @@
       ],
       "source_paths": [
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
+        "src/components/specialist-workbench.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the native Screen Configurator Workbench built from the accepted design board on 12 October 2026: seven views including Drawings, the module header gates, drawing-only inputs and the record-run checklist.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-CONFIGURATIONS-ID-VIEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -57568,6 +57577,7 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
+        "src/components/specialist-workbench.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
@@ -75186,7 +75196,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the native AD-01 decision, the retained AD-01 HTML, the capability catalogue execution record and the related People/Person access guides."
+            "See the native AD-01 decision, the retained AD-01 HTML, the capability catalogue execution record and the related People/Person access guides.",
+            "Local review API boundary: docs/decisions/access-review-attestations.md. A dedicated independent duty records one current grant Keep observation with an exact basis. No native attestation control or campaign completion is delivered; roster inspection records no review. Evidence: docs/testing/evidence/access-review-attestations/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -75514,7 +75525,8 @@
             "See the native AD-01 decision, retained AD-01 HTML, role comparison execution ledger and person/capability guides.",
             "Team boundary and provenance: docs/decisions/access-team-inspection.md; implementation evidence: docs/testing/evidence/access-teams/README.md.",
             "Local record contract: docs/decisions/access-local-teams.md. Database, browser and review evidence: docs/testing/evidence/access-local-teams/README.md.",
-            "Native creation and recovery: docs/decisions/access-team-creation.md; docs/testing/evidence/access-team-creation/README.md."
+            "Native creation and recovery: docs/decisions/access-team-creation.md; docs/testing/evidence/access-team-creation/README.md.",
+            "Local review API boundary: docs/decisions/access-review-attestations.md. A dedicated independent duty records one current grant Keep observation with an exact basis. No native attestation control or campaign completion is delivered; roster inspection records no review. Evidence: docs/testing/evidence/access-review-attestations/README.md."
           ],
           "steps": [],
           "headers": [],

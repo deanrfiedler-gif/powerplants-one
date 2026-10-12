@@ -251,7 +251,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0083 adds immutable local team/roster evidence and one creation duty for the existing
   // local Systems fixture only. Team APIs refuse hosted mode; no tester user/grant
   // changes or authority-table write permissions. Generic table grants add no API authority.
-  if (latestMigrationVersion !== 83) throw Error("Review the existing-demo upgrade for this release.");
+  // 0084 adds immutable local single-grant attestations and one existing-local duty.
+  // Review APIs refuse hosted mode; no hosted users/grants or runtime authority writes.
+  if (latestMigrationVersion !== 84) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

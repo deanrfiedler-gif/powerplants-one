@@ -745,3 +745,8 @@ The [creation contract](../decisions/access-team-creation.md) continues #429 usi
 ## Saved-team access inspection continuation — 12 October 2026
 
 The [inspection contract](../decisions/access-team-inspection-current.md) continues #430 with read-only current member grant-state counts and exact person-access links. This prepares inspection without adopting review campaigns, routing, attestations, membership editing or operational D-020. Current identity/grant observations and immutable creation evidence remain separate; hosted identities are masked and not linked.
+
+
+## Local review attestation foundation — 12 October 2026
+
+The [attestation contract](../decisions/access-review-attestations.md) adds local independent Keep observations of one exact current saved-member grant, guarded by a separate duty, unchanged basis and immutable audit/receipt. No access, membership or validity is changed. API delivery does not complete the retained campaign workflow; native entry, routing, other decisions and operational D-020 remain open. All existing parent IDs, NFR-01–NFR-12, CRM-08 and FIN-06 are preserved.

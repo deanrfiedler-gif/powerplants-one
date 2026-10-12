@@ -1521,7 +1521,15 @@
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-B-Structure-Families-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
-        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-docked-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-02-Drawings-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-03-Parts-working-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-04-Pricing-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-05-Compare-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [],
       "scope_status": "unbuilt",
@@ -5101,7 +5109,7 @@
       "title": "Users, roles, teams and access review",
       "kind": "scope",
       "module": "AD",
-      "summary": "Native inspection and local access requests, plus immutable synthetic team records and initial-roster inspection. Membership grants no authority.",
+      "summary": "Native access administration and team inspection, plus a local independent single-grant Keep attestation API. Teams confer no authority; campaign/native review controls remain open.",
       "path": "/admin/access",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -5116,7 +5124,8 @@
         "src/access/local-teams.ts",
         "src/access/local-team-screens.tsx",
         "src/access/team-creation.tsx",
-        "src/app/api/v1/admin/access/teams/context/route.ts"
+        "src/app/api/v1/admin/access/teams/context/route.ts",
+        "src/access/reviews.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -5142,11 +5151,12 @@
         "docs/decisions/access-request-application.md",
         "docs/decisions/access-local-teams.md",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Saved-team current access: 45 database cases covered by passing runs, 45 browser checks at three widths, 19 selected units with 2 component rechecks, final build/types/lint and documented assurance. Initial fixture/register failures retained. No membership authority or review attestation; owner acceptance remains open.",
+      "functional_status": "Prior native inspection/creation proof retained. Local review attestation API and migration/seed 0084 verification are recorded separately in docs/testing/evidence/access-review-attestations/README.md; no native entry or owner acceptance claimed.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6145,7 +6155,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6162,14 +6172,41 @@
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png",
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
         "docs/testing/evidence/es02-design-board-r01/build-configuration-1440x960.png",
-        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png"
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-02-Desktop-Configuration-Full-Length-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-03-Desktop-Requirements-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-04-Desktop-Scope-and-Delivery-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-05-Desktop-Pricing-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-06-Desktop-Review-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-07-Desktop-1920-Navigation-Open-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-08-Desktop-Navigation-Collapsed-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-09-Desktop-Alternatives-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-10-Desktop-Revisions-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-11-Desktop-Saved-Revision-Comparison-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-12-Desktop-Compare-Alternatives-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-13-Desktop-Evidence-Panel-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-14-Desktop-Save-Discovery-Revision-Dialog-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-15-Desktop-Unsaved-Discovery-Dialog-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-16-Desktop-Discovery-r04-Saved-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-17-Desktop-Unsaved-Changes-Popover-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-18-Desktop-Add-System-Menu-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-19-Tablet-and-Phone-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-20-Desktop-States-1-to-4-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-21-Desktop-States-5-to-7-and-Catalogue-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-22-Family-Colour-Options-r01.png"
       ],
       "dependencies": [
         "src/components/sales-estimating-link.tsx",
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/estimation-wizard.tsx"
+        "src/components/estimation-wizard.tsx",
+        "src/components/estimation-wizard.css",
+        "src/components/estimation-wizard-ui.tsx",
+        "src/components/configuration-editor.tsx",
+        "src/components/discovery-fields.tsx",
+        "docs/decisions/es02-wizard-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6638,7 +6675,17 @@
       "design_path": "docs/design/development/pages/route-projects-id.md",
       "html_path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
       "image_paths": [
-        "docs/blueprints/projects-visuals/project-detail-desktop.png"
+        "docs/blueprints/projects-visuals/project-detail-desktop.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-02-Desktop-Schedule-Gantt-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-03-Desktop-Baselines-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-04-Desktop-Acceptance-Not-Started-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-05-Desktop-Files-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-06-Desktop-History-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-07-Desktop-Record-Baseline-Dialog-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-08-Desktop-Register-Open-Project-Page-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-09-Desktop-States-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-10-Phone-List-Tabs-Action-Sheet-r01.png"
       ],
       "dependencies": [
         "src/components/quotation-material-resolution.tsx",
@@ -6664,7 +6711,8 @@
         "src/projects/baseline-model.ts",
         "src/components/project-baselines.tsx",
         "docs/decisions/project-schedule-baselines.md",
-        "docs/testing/evidence/project-baselines/README.md"
+        "docs/testing/evidence/project-baselines/README.md",
+        "docs/decisions/project-record-page-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7037,7 +7085,13 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-04.png",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-05.png",
         "docs/testing/evidence/job-pack-i5/application-1440.png",
-        "docs/testing/evidence/job-pack-i5/application-320.png"
+        "docs/testing/evidence/job-pack-i5/application-320.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-02-Desktop-Record-Page-and-Preparation-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-03-Desktop-History-Decisions-and-Issue-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -7046,7 +7100,8 @@
         "docs/delivery/job-pack-i6-handover.md",
         "docs/delivery/job-pack-i7-handover.md",
         "docs/decisions/job-pack-integration.md",
-        "docs/delivery/job-pack-integration-handover.md"
+        "docs/delivery/job-pack-integration-handover.md",
+        "docs/decisions/job-pack-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7074,10 +7129,13 @@
       "guide_key": "guide.page.service.packs.new",
       "design_path": "docs/design/development/pages/route-service-packs-new.md",
       "html_path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-02-Desktop-Record-Page-and-Preparation-r01.png"
+      ],
       "dependencies": [
         "docs/decisions/job-pack-integration.md",
-        "docs/delivery/job-pack-integration-handover.md"
+        "docs/delivery/job-pack-integration-handover.md",
+        "docs/decisions/job-pack-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7105,8 +7163,14 @@
       "guide_key": "guide.page.service.packs",
       "design_path": "docs/design/development/pages/route-service-packs.md",
       "html_path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-01-Desktop-Register-and-Selection-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/job-pack-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7383,7 +7447,19 @@
       "guide_key": "guide.page.service.work-orders.id",
       "design_path": "docs/design/development/pages/route-service-work-orders-id.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-01-Desktop-Authorisation-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-02-Desktop-Scope-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-03-Desktop-Visits-None-Proposed-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-04-Desktop-Evidence-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-05-Desktop-History-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-06-Desktop-Review-Criterion-Panel-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-07-Desktop-Edit-Scope-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-08-Desktop-Authorise-Dialog-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-09-Desktop-Visits-Successor-Draft-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-10-Desktop-States-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-11-Phone-List-Tabs-Action-Sheet-r01.png"
+      ],
       "dependencies": [
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
@@ -7393,7 +7469,8 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/work-order-record-page-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7553,11 +7630,16 @@
       "guide_key": "guide.page.work.actions",
       "design_path": "docs/design/development/pages/route-work-actions.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-02-Desktop-My-Actions-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-04-Desktop-Record-Outcome-Dialog-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7585,13 +7667,17 @@
       "guide_key": "guide.page.work",
       "design_path": "docs/design/development/pages/route-work.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
         "src/components/saved-view-controls.tsx",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7623,13 +7709,15 @@
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/reviews-all-permitted.png",
         "docs/testing/evidence/sh-platform/captures/returned-detail-phone.png",
-        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png"
+        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-06-Desktop-Reviews-Handovers-r01.png"
       ],
       "dependencies": [
         "src/components/review-workspace.tsx",
         "src/reviews/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7657,11 +7745,14 @@
       "guide_key": "guide.page.work.team",
       "design_path": "docs/design/development/pages/route-work-team.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-05-Desktop-Team-Queue-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7692,13 +7783,15 @@
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/notifications-inbox-desktop.png",
         "docs/testing/evidence/sh-platform/captures/notifications-inbox-320.png",
-        "docs/testing/evidence/sh-platform/captures/preferences-phone.png"
+        "docs/testing/evidence/sh-platform/captures/preferences-phone.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-08-Desktop-Updates-Inbox-r01.png"
       ],
       "dependencies": [
         "src/components/notification-workspace.tsx",
         "src/notifications/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7727,11 +7820,14 @@
       "guide_key": "guide.page.work.waiting",
       "design_path": "docs/design/development/pages/route-work-waiting.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-07-Desktop-Blocked-Waiting-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7759,7 +7855,10 @@
       "guide_key": "guide.page.work.id",
       "design_path": "docs/design/development/pages/route-work-id.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-03-Desktop-Activity-Window-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
@@ -7769,7 +7868,8 @@
         "src/sales/followup.ts",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -8663,7 +8763,7 @@
       "title": "Screen Systems configurations · selected view",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Screen Configurator Workbench: seven views (Configure, Drawings, Parts & working, Pricing, Compare & save, Definition review, Run history) built from the owner-accepted design board on 12 October 2026; source presence does not establish deployment or acceptance.",
       "path": "/estimating/configurations/[id]/[view]",
       "source_paths": [
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx"
@@ -8675,9 +8775,19 @@
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-01-Configure-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
         "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
-        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-01-Configure-docked-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-02-Drawings-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-03-Parts-working-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-04-Pricing-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-05-Compare-1440-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
+        "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/es08-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8758,8 +8868,25 @@
       "guide_key": "guide.page.estimating.fertigation.id",
       "design_path": "docs/design/development/pages/route-estimating-fertigation-id.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-02-Desktop-Growing-Areas-and-Irrigation-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-03-Desktop-Water-and-Hydraulics-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-04-Desktop-Recipes-and-Dosing-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-05-Desktop-Controls-and-IO-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-06-Desktop-Operating-Plan-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-07-Desktop-Unit-Configurator-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-08-Desktop-Evidence-and-Delivery-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-09-Desktop-Scope-Review-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-10-Desktop-Resolve-a-Conflict-Drawer-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-11-Desktop-Calculation-Trace-Drawer-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-12-Desktop-History-Dialog-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-13-Phone-Overview-Valve-List-Section-Sheet-r01.png",
+        "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-14-Desktop-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/fertigation-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -13060,7 +13187,8 @@
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -13103,7 +13231,8 @@
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -13230,7 +13359,8 @@
         "docs/decisions/access-team-inspection.md",
         "docs/decisions/access-local-teams.md",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "docs/decisions/access-review-attestations.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",

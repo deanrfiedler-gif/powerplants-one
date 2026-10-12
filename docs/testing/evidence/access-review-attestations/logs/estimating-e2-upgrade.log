@@ -1,0 +1,43 @@
+✖ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (29850.6618ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46933.0084
+
+✖ failing tests:
+
+test at tests\database\estimating-workspaces.test.ts:1:18956
+✖ E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original (29850.6618ms)
+  error: character with byte sequence 0xe2 0x86 0x92 in encoding "UTF8" has no equivalent in encoding "WIN1252"
+      at <WORKTREE>\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (<WORKTREE>\scripts\database.ts:62:7)
+      at async transaction (<WORKTREE>\src\platform\database.ts:46:20)
+      at async seed (<WORKTREE>\scripts\database.ts:50:3)
+      at async TestContext.reset (<WORKTREE>\scripts\database.ts:116:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 175,
+    severity: 'ERROR',
+    code: '22P05',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'mbutils.c',
+    line: '1908',
+    routine: 'report_untranslatable_char'
+  }

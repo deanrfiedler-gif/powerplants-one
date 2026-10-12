@@ -9,6 +9,15 @@ async function call(page:Page,path:string,body?:unknown) {
   const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:new URL(page.url()).origin,"Content-Type":"application/json"},data:body});
   expect(r.ok(),await r.text()).toBe(true);return r.json();
 }
+async function reviewScopeForCosting(page:Page) {
+  const footer=page.locator(".es02-bottom");
+  await expect(footer).toBeVisible();
+  const summary=page.getByRole("complementary",{name:"Estimate summary",exact:true});
+  if(!(await summary.isVisible()))
+    await footer.getByRole("button",{name:"Summary",exact:true}).click();
+  await expect(summary).toBeVisible();
+  await summary.getByRole("link",{name:"Review scope for manual costing",exact:true}).click();
+}
 test("E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor",async({page},info)=>{
   await page.goto("/estimating/discovery");
   await expect(page.getByRole("region",{name:"Local demonstration identity",exact:true})).toHaveAttribute("aria-busy","false");
@@ -17,7 +26,7 @@ test("E2 browser explicitly adopts exact discovery into manual costs, reconciles
   await expect(page.getByRole("region",{name:"Local demonstration identity",exact:true})).toHaveAttribute("aria-busy","false");
   const api=(path:string,body?:unknown)=>call(page,path,body),s=await createCostingWorkspace(api),title=`SYN Discovery cost ${randomUUID()}`;
   await page.goto(`/estimating/discovery/${s.input.id}`);
-  await page.getByRole("link",{name:"Review scope for manual costing",exact:true}).click();
+  await reviewScopeForCosting(page);
   await page.getByRole("button",{name:"Review selected scope for costing",exact:true}).click();
   await expect(page.getByRole("region",{name:"Reviewed discovery cost basis",exact:true})).toBeVisible();
   await page.getByLabel("Estimate title",{exact:true}).fill(title);
@@ -46,7 +55,7 @@ test("E2 browser explicitly adopts exact discovery into manual costs, reconciles
   const successor=await costingScopeSuccessor(api,s);await page.reload();
   await expect(page.getByText("Latest discovery is revision 2 · Complete. It has not replaced this saved cost basis.",{exact:true})).toBeVisible();
   await page.getByRole("link",{name:"Review discovery and explicit scope adoption",exact:true}).click();
-  await page.getByRole("link",{name:"Review scope for manual costing",exact:true}).click();
+  await reviewScopeForCosting(page);
   await page.getByRole("button",{name:"Review selected scope for costing",exact:true}).click();
   await expect(page.getByLabel("Estimate title",{exact:true})).toHaveValue(title);
   await expect(page.getByLabel("Unit sell AUD 1",{exact:true})).toHaveValue("175.00");
