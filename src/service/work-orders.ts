@@ -1,4 +1,5 @@
 import { policyImpactHolds } from "../scheduling/policy-holds";
+import { visitScopeReviewRequired } from "./work-order-register-model";
 import { createHash, randomUUID } from "node:crypto";
 import { currentAssessment } from "../maintenance/assessments";
 import { agreementRevision } from "../maintenance/context";
@@ -1072,10 +1073,9 @@ export async function readWorkOrder(p: Principal, id: string) {
   ).rows;
   for (const v of visits) {
     const r = scopes.find((s) => s.id === v.scope_revision_id);
-    v.scope_review_required =
-      v.scope_revision_id !== w.authorised_scope_revision_id ||
-      v.scope_revision_id !== w.scope_revision_id ||
-      r?.version !== v.scope_version;
+    v.scope_review_required = visitScopeReviewRequired(
+      w.scope_revision_id, w.authorised_scope_revision_id, r?.version, v,
+    );
     v.readiness = r ? await readiness(c, p, r, v.id) : [];
     v.policy_impacts = await hasPermission(c, p, "schedule.read", w.company_id, w.site_id) ? await policyImpactHolds(c, p, v.id) : null;
   }

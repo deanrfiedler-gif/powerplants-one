@@ -100,6 +100,6 @@ PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
 UI: ui-build-sequence.md; figma-ui-implementation.md. AD-01: access-review-attestations.md; local Keep API; native reviews, campaigns and D-020 open.
 
-PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.
+PJ-03: project-schedule-baselines.md. PJ-04: project-raid-backend.md. Service owns bookings.
 
 [Backend](../delivery/backend-completion-plan.md).

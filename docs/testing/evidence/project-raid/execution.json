@@ -1,0 +1,76 @@
+{
+  "recorded_local_date": "2026-10-13",
+  "source_commit": "572f7841e239c85749644760c3b4ff0bfa0b65fd",
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "document_chrome": "155.0.8059.40",
+    "database": "ppo_synthetic_test",
+    "data": "Synthetic"
+  },
+  "checks": {
+    "raid_database": {
+      "passed": 6,
+      "failed": 0
+    },
+    "selected_regression_upgrade": {
+      "passed": 5,
+      "failed": 0,
+      "cases": [
+        "E2 populated 0025 upgrade across identity backfill 0026",
+        "Products reserved 0052 after integrated 0087",
+        "PJ09 project closure and original RAID recovery",
+        "PJ03 populated 0077 upgrade",
+        "Local hosted-demo upgrade with saved originals and repeated execution"
+      ]
+    },
+    "unit": {
+      "passed": 5,
+      "failed": 0
+    },
+    "compiled_http": {
+      "passed": 2,
+      "failed": 0
+    },
+    "postgresql_restart": {
+      "passed": true,
+      "processes": "Separate write/verify Node processes around real PostgreSQL stop/start",
+      "retained": [
+        "Project schedule",
+        "RAID current revision",
+        "RAID history",
+        "Native Activity link",
+        "Original save and operation-read receipts"
+      ]
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "production_build": "passed",
+    "studio": "passed; 358 entries, 204 routes, 330 unreviewed and 28 stale reviews unchanged",
+    "foundation": "passed",
+    "naming": "passed"
+  },
+  "limits": [
+    "Full unrelated application suites and browser/device reviews are delegated to their existing CI jobs, not claimed as locally executed",
+    "Native PJ-04 page, visual review and owner acceptance remain open",
+    "CI is independent and attached to the pull request; no merge or deployment performed"
+  ],
+  "normalised_lf_sha256": {
+    "src/projects/raid.ts": "d2af1128e7679e8ddc5b0e7c789963d23ea0167a59d251e18a82dad264511944",
+    "src/projects/raid-validation.ts": "9e0985865129db565e471e32cfbae2c3ab13c55602e3ca60fe5cada640572cc8",
+    "src/app/api/v1/projects/[id]/raid/route.ts": "fe904d4486d59011882b68df4bcdac1b7527ef35e35ddbe24bf8b12141d2505d",
+    "src/shared/receipts.ts": "3d72e6a1df09c66627ff777597a47f9857993abb2f1a22ee3d51765fdf8b7794",
+    "db/migrations/0087-project-raid.sql": "97cd7dbeda90ea579b1bb68a06f1d4ce7448a06296fec9dc43f0a75b381125db",
+    "scripts/migration-registry.ts": "f958c6ad31bc54727928d4ef48d800dd278674c39ea2e15f2f46a06bcaef3bf8",
+    "scripts/demo-upgrade.ts": "946792d7e115a65699b845cb7b52ec0934567ab5506649dd1c491a331b57cc49",
+    "scripts/projects-restart-proof.ts": "b2013b3839e5051b504b380a37d9d453acf4ae9fdf9acaf72034e673515d2937",
+    "tests/helpers/project-raid.ts": "c37c8c96202aefc95e1cd643aa7b76608b3239351874c1a1b4f5d6250d344d5a",
+    "tests/unit/project-raid.test.ts": "f5ec9df89fdf66231b2761d1eb5bd7c56466f41079d5867da023533ff8f2bd22",
+    "tests/database/project-raid.test.ts": "d61930e1f3417ef959d2daa511122970808cb48b79e9b5d44404d60467479cf3",
+    "tests/database/project-acceptance.test.ts": "04bf36cccfde265fa3e0f9dc55c6d74e56b50dd044dcba6de8f56f795cb81bb1",
+    "tests/http/project-raid.test.ts": "db77d02d1b161528e13732e6e3742cf020a07c4d7c36415ac1085b38200dfc64",
+    ".github/workflows/projects-gantt.yml": "121a2c26f4559c3ea4e95f18947954026bb38eaeff22becae9c0dec788a64dc0"
+  }
+}
