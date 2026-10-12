@@ -74,6 +74,7 @@ export function ReadinessSummary({
     <div
       className={compact ? "fn-readiness fn-readiness-compact" : "fn-readiness"}
     >
+      {compact && <p className="fn-readiness-eyebrow">Scope readiness</p>}
       <p className="fn-readiness-total">
         <strong>{counts.total}</strong> open{" "}
         {counts.total === 1 ? "finding" : "findings"}
@@ -111,9 +112,12 @@ export function ReadinessSummary({
 export function OutputReadinessPanel({
   input,
   onView,
+  links,
 }: {
   input: Parameters<typeof outputReadiness>[0];
   onView: (view: FertigationView) => void;
+  /** Where an available output opens: the exact export and the saved customer report. */
+  links?: { export?: string; report?: string };
 }) {
   const rows = outputReadiness(input);
   const stateLabel = {
@@ -121,27 +125,54 @@ export function OutputReadinessPanel({
     blocked: "Unavailable",
     needs: "Needs a step",
   };
+  const action = (key: (typeof rows)[number]["key"], state: (typeof rows)[number]["state"]) => {
+    if (key === "export" && links?.export)
+      return (
+        <a className="fn-button fn-button-secondary fn-button-sm" href={links.export} download>
+          <span>Export</span>
+        </a>
+      );
+    if (key === "report" && links?.report)
+      return (
+        <a className="fn-button fn-button-secondary fn-button-sm" href={links.report} target="_blank" rel="noreferrer">
+          <span>Preview report</span>
+        </a>
+      );
+    if (key === "review")
+      return (
+        <button type="button" className="fn-button fn-button-secondary fn-button-sm" onClick={() => onView("review")}>
+          <span>{state === "available" ? "Record review" : "Open review"}</span>
+        </button>
+      );
+    if (key === "handover")
+      return (
+        <button type="button" className="fn-button fn-button-secondary fn-button-sm" onClick={() => onView("review")}>
+          <span>Requirements</span>
+        </button>
+      );
+    return null;
+  };
   return (
     <section className="fn-panel" aria-labelledby="fn-outputs-title">
       <header className="fn-panel-head">
-        <h2 id="fn-outputs-title">What this scope can produce now</h2>
-        <p>
-          The server&rsquo;s own preconditions. Open findings travel with each
-          output; they never block it.
-        </p>
+        <div className="fn-panel-title">
+          <h3 id="fn-outputs-title">What this scope can produce now</h3>
+          <p>Each output is gated by the server&rsquo;s own preconditions, never by a percentage score. Open findings travel with it.</p>
+        </div>
       </header>
       <ul className="fn-output-list">
         {rows.map((r) => (
           <li key={r.key}>
-            <div>
+            <div className="fn-output-body">
               <strong>{r.label}</strong>
               <small>{r.reason}</small>
             </div>
             <span
-              className={`fn-chip fn-chip-${r.state === "available" ? "success" : r.state === "needs" ? "neutral" : "incomplete"}`}
+              className={`fn-chip fn-chip-${r.state === "available" ? "success" : r.state === "needs" ? "outline" : "incomplete"}`}
             >
               {stateLabel[r.state]}
             </span>
+            <span className="fn-output-action">{action(r.key, r.state)}</span>
           </li>
         ))}
       </ul>
@@ -192,15 +223,20 @@ export function NextActionsPanel({
   return (
     <section className="fn-panel" aria-labelledby="fn-actions-title">
       <header className="fn-panel-head">
-        <h2 id="fn-actions-title">Next actions</h2>
-        <p>Conflicts first, then missing inputs, then review · {basis}</p>
+        <div className="fn-panel-title">
+          <h3 id="fn-actions-title">Next actions</h3>
+          <p>Conflicts first, then what gates the most outputs · {basis}</p>
+        </div>
       </header>
       {actions.length === 0 && !candidates.length ? (
         <p className="fn-panel-empty">No open findings on this calculation.</p>
       ) : (
         <ol className="fn-next-list">
-          {candidates.map((c) => (
-            <li key={`candidate|${c.candidate_id}`}>
+          {candidates.map((c, index) => (
+            <li key={`candidate|${c.candidate_id}`} className="fn-next-conflict">
+              <span className="fn-next-number" aria-hidden="true">
+                {index + 1}
+              </span>
               <div className="fn-next-body">
                 <strong>{c.label} is outside its entered limits</strong>
                 <small>{c.failures.join(" ")}</small>
@@ -226,8 +262,11 @@ export function NextActionsPanel({
               </span>
             </li>
           ))}
-          {actions.slice(0, Math.max(limit - candidates.length, 3)).map((a) => (
-            <li key={`${a.severity}|${a.code}`}>
+          {actions.slice(0, Math.max(limit - candidates.length, 3)).map((a, index) => (
+            <li key={`${a.severity}|${a.code}`} className={`fn-next-${a.severity}`}>
+              <span className="fn-next-number" aria-hidden="true">
+                {candidates.length + index + 1}
+              </span>
               <div className="fn-next-body">
                 <strong>
                   {a.summary}
@@ -258,14 +297,14 @@ export function NextActionsPanel({
           ))}
         </ol>
       )}
-      {actions.length > limit && (
+      {findings.length > 0 && (
         <p className="fn-panel-foot">
           <button
             type="button"
             className="fn-link"
             onClick={() => onView("review")}
           >
-            All {findings.length} findings by responsible role
+            All {findings.length} open {findings.length === 1 ? "check" : "checks"} by responsible role
           </button>
         </p>
       )}
@@ -313,12 +352,14 @@ export function DeclarationsPanel({
   return (
     <section className="fn-panel" aria-labelledby="fn-declarations-title">
       <header className="fn-panel-head">
-        <h2 id="fn-declarations-title">Declarations this draft needs</h2>
-        <p>
-          {items.length} {items.length === 1 ? "declaration" : "declarations"}{" "}
-          address {covered} of {findings}{" "}
-          {findings === 1 ? "finding" : "findings"} · {basis}
-        </p>
+        <div className="fn-panel-title">
+          <h3 id="fn-declarations-title">Declarations this draft needs</h3>
+          <p>
+            {items.length} {items.length === 1 ? "declaration" : "declarations"}{" "}
+            address {covered} of {findings}{" "}
+            {findings === 1 ? "finding" : "findings"} · {basis}
+          </p>
+        </div>
       </header>
       <ol className="fn-next-list">
         {items.map((d) => {
@@ -394,23 +435,33 @@ export function CapacityPanel({
   return (
     <section className="fn-panel" aria-labelledby={titleId}>
       <header className="fn-panel-head">
-        <h2 id={titleId}>Capacity headroom</h2>
-        <p>
-          Each limit the scope records, loaded by its calculated demand. The
-          line marks 100%; entered capacities stay unverified until evidence is
-          recorded.
-        </p>
+        <div className="fn-panel-title">
+          <h3 id={titleId}>Capacity headroom</h3>
+          <p>
+            Every capacity limit in the circuit on one scale · demand as a share of the entered capacity
+          </p>
+        </div>
+        <ul className="fn-legend fn-panel-actions">
+          <li><span className="fn-swatch fn-swatch-within" aria-hidden="true" />Within capacity</li>
+          <li><span className="fn-swatch fn-swatch-storage" aria-hidden="true" />Relies on storage</li>
+          <li><span className="fn-swatch fn-swatch-over" aria-hidden="true" />Over capacity</li>
+        </ul>
       </header>
       <div className="fn-table-scroll">
         <table className="fn-capacity">
           <thead>
             <tr>
               <th scope="col">Constraint</th>
-              <th scope="col">
-                Load <span className="fn-scale">on a 0–200% scale</span>
+              <th scope="col" className="fn-capacity-axis">
+                <span className="fn-scale" aria-hidden="true">
+                  <span>0%</span>
+                  <span>100%</span>
+                  <span>200%</span>
+                </span>
+                <span className="sr-only">Load on a 0–200% scale</span>
               </th>
               <th scope="col" className="fn-number">
-                Load
+                Use
               </th>
               <th scope="col">Status</th>
             </tr>
@@ -441,23 +492,26 @@ export function CapacityPanel({
                       <span className="fn-capacity-limit" />
                     </div>
                   </td>
-                  <td className="fn-number">
+                  <td className={`fn-number fn-capacity-use fn-capacity-use-${r.state}`}>
                     {pct === null ? "—" : `${pct}%`}
                   </td>
-                  <td>
-                    <span
-                      className={`fn-chip fn-chip-${r.state === "over" ? "conflict" : r.state === "storage" ? "incomplete" : r.state === "unknown" ? "neutral" : "success"}`}
-                    >
-                      {stateText[r.state]}
-                    </span>
-                    <small>{r.note}</small>
+                  <td className="fn-capacity-status">
+                    {r.state === "over" ? (
+                      <span className="fn-chip fn-chip-conflict">
+                        <ConflictMark />
+                        Conflict
+                      </span>
+                    ) : r.state === "unknown" ? (
+                      <span className="fn-chip fn-chip-unknown">Not assessable</span>
+                    ) : null}
+                    <small>{r.note || stateText[r.state]}</small>
                     {onTrace && r.key === "pump_head" && (
                       <button
                         type="button"
                         className="fn-link"
                         onClick={() => onTrace("required_head")}
                       >
-                        How this is calculated
+                        trace
                       </button>
                     )}
                   </td>
@@ -467,6 +521,10 @@ export function CapacityPanel({
           </tbody>
         </table>
       </div>
+      <p className="fn-panel-foot">
+        Each bar divides a calculated demand by the entered capacity for the selected scenario. The 100% rule is the
+        limit; entered capacities remain unverified until evidence is recorded.
+      </p>
     </section>
   );
 }
@@ -488,11 +546,13 @@ export function EvidencePanel({
   return (
     <section className="fn-panel" aria-labelledby="fn-evidence-title">
       <header className="fn-panel-head">
-        <h2 id="fn-evidence-title">Evidence coverage</h2>
-        <p>
-          {coverage.total} active records, each counted once by its strongest
-          linked evidence
-        </p>
+        <div className="fn-panel-title">
+          <h3 id="fn-evidence-title">Evidence maturity</h3>
+          <p>
+            {coverage.total} active records, each counted once by its strongest
+            linked evidence
+          </p>
+        </div>
       </header>
       {coverage.total > 0 && (
         <div className="fn-evidence-bar" aria-hidden="true">
@@ -517,7 +577,7 @@ export function EvidencePanel({
       </dl>
       {coverage.weakest.length > 0 && (
         <p className="fn-panel-foot">
-          Weakest links:{" "}
+          Weakest links in the sizing chain:{" "}
           {coverage.weakest
             .slice(0, 6)
             .map((w) => w.label || "Unnamed record")

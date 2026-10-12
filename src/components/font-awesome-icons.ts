@@ -10,6 +10,7 @@ import type { ToneIcon } from "../engineering/changes/model";
 import type { OutlineName as CommissioningOutlineName, MarkName as CommissioningMarkName } from "../engineering/commissioning/components/client/commissioning-ui";
 import type { AdditionalIconName as AcceptanceIconName } from "../projects/acceptance/icon";
 import type { LeadsIconName } from "./leads-workspace";
+import type { FertigationIconName } from "./fertigation-icons";
 import type { GanttIconName } from "./projects-gantt";
 
 // ADR-0050: each semantic icon name maps to one Font Awesome Pro icon, drawn in Classic Light,
@@ -337,9 +338,42 @@ export const acceptanceFontAwesome = {
 } satisfies Record<AcceptanceIconName, FontAwesomeIcon>;
 
 // src/components/fertigation-frame.tsx: the conflict mark on fertigation chips and view badges.
+// src/components/fertigation-icons.tsx: the workbench's section rail and action glyphs.
 export const fertigationFontAwesome = {
   conflict: "triangle-exclamation",
-} satisfies Record<"conflict", FontAwesomeIcon>;
+  overview: "grid-2",
+  growing: "map",
+  water: "droplet",
+  recipes: "flask",
+  controls: "sliders",
+  operating: "clock",
+  configurator: "layer-group",
+  evidence: "file-lines",
+  review: "clipboard-check",
+  history: "clock-rotate-left",
+  report: "print",
+  save: "floppy-disk",
+  plus: "plus",
+  search: "magnifying-glass",
+  edit: "pen",
+  download: "download",
+  "chevron-down": "chevron-down",
+  "chevron-up": "chevron-up",
+  info: "circle-info",
+  check: "check",
+  back: "arrow-left",
+  list: "list",
+  leaf: "leaf",
+  compare: "code-compare",
+  lock: "lock",
+  user: "user",
+  file: "file",
+  flask: "flask",
+  upload: "arrow-up-from-bracket",
+  swap: "right-left",
+  calculate: "calculator",
+  external: "arrow-up-right-from-square",
+} satisfies Record<FertigationIconName, FontAwesomeIcon>;
 
 // src/components/leads-workspace.tsx: Leads' own back, sort and search glyphs.
 export const leadsFontAwesome = {

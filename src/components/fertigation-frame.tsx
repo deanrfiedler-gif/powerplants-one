@@ -2,11 +2,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { SeverityCounts } from "../estimating/fertigation/guidance";
+import { calculationEdition } from "../estimating/fertigation/definition";
 import { useIdentity } from "./business-session";
 import { useScopePreferences } from "./scope-preferences";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
-import { FontAwesomeGlyph } from "./font-awesome";
-import { fertigationFontAwesome } from "./font-awesome-icons";
+import { FertigationIcon, type FertigationIconName } from "./fertigation-icons";
 import "./fertigation-workbench.css";
 
 export const fertigationViews = [
@@ -22,12 +22,22 @@ export const fertigationViews = [
 ] as const;
 export type FertigationView = (typeof fertigationViews)[number][0];
 
-/** Menu grouping follows the scoping sequence; view order is unchanged. */
+/** Menu grouping follows the scoping sequence (design board K); view order is unchanged. */
 export const fertigationViewGroups: [string, FertigationView[]][] = [
   ["Define the farm", ["overview", "growing", "water", "recipes"]],
   ["Test the operating basis", ["controls", "operating", "configurator"]],
   ["Prepare the scope", ["evidence", "review"]],
 ];
+
+export const viewLabel = (view: FertigationView) =>
+  fertigationViews.find(([id]) => id === view)![1];
+
+/** "Define the farm · 2 of 9": the group a view belongs to and its place in the sequence. */
+export function viewEyebrow(view: FertigationView) {
+  const group = fertigationViewGroups.find(([, ids]) => ids.includes(view))![0];
+  const index = fertigationViews.findIndex(([id]) => id === view) + 1;
+  return `${group} · ${index} of ${fertigationViews.length}`;
+}
 
 const countWords = (c: SeverityCounts) =>
   [
@@ -42,24 +52,19 @@ const countWords = (c: SeverityCounts) =>
 /** The conflict mark on fertigation chips and view badges: Font Awesome Light once the Kit is running
  * (ADR-0050), the outline triangle until then. Visual only; its words always stand beside it. */
 export function ConflictMark() {
-  return (
-    <FontAwesomeGlyph
-      icon={fertigationFontAwesome.conflict}
-      className="fn-mark"
-      fallback={
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 4 2.5 20h19z" />
-          <path d="M12 10v4" />
-        </svg>
-      }
-    />
-  );
+  return <FertigationIcon name="conflict" className="fn-mark" />;
 }
 
 /** Visual only; the words are given by aria-describedby outside the button,
  * so each view keeps its exact accessible name. */
 function ViewBadge({ counts }: { counts?: SeverityCounts }) {
-  if (!counts?.total) return null;
+  if (!counts) return null;
+  if (!counts.total)
+    return (
+      <span className="fn-menu-clear" aria-hidden="true">
+        <FertigationIcon name="check" className="fn-mark" />
+      </span>
+    );
   const tone = counts.conflict
     ? "conflict"
     : counts.incomplete
@@ -81,6 +86,7 @@ export function FertigationFrame({
   message = "",
   counts,
   summary,
+  edition = calculationEdition,
 }: {
   children: ReactNode;
   view?: FertigationView;
@@ -90,6 +96,7 @@ export function FertigationFrame({
   /** Open findings per view, from the calculation the page is showing. */
   counts?: Partial<Record<FertigationView, SeverityCounts>>;
   summary?: ReactNode;
+  edition?: string;
 }) {
   const identity = useIdentity();
   const preference = useScopePreferences(
@@ -107,18 +114,15 @@ export function FertigationFrame({
       contentId="fertigation-content"
       message={message}
       menu={
-        <>
-          <div className="mw-menu-title">
-            <strong>Fertigation</strong>
-          </div>
-          {summary}
-          <nav aria-label="Fertigation views">
-            <ul>
-              <li>
-                <Link href="/estimating/fertigation">Scope register</Link>
-              </li>
-            </ul>
-            {onView &&
+        <div className="fn-rail">
+          {summary ?? (
+            <div className="mw-menu-title">
+              <strong>Fertigation</strong>
+              <span>Priva scoping workbench</span>
+            </div>
+          )}
+          <nav aria-label="Fertigation views" className="fn-rail-nav">
+            {onView ? (
               fertigationViewGroups.map(([group, ids]) => (
                 <div key={group} className="fn-menu-group">
                   <p className="fn-menu-group-title" id={`fn-menu-${ids[0]}`}>
@@ -126,9 +130,6 @@ export function FertigationFrame({
                   </p>
                   <ul aria-labelledby={`fn-menu-${ids[0]}`}>
                     {ids.map((id) => {
-                      const label = fertigationViews.find(
-                        ([v]) => v === id,
-                      )![1];
                       const c = counts?.[id];
                       return (
                         <li key={id}>
@@ -143,7 +144,12 @@ export function FertigationFrame({
                               menu.closeOverlay(false);
                             }}
                           >
-                            <span className="fn-menu-label">{label}</span>
+                            <FertigationIcon
+                              name={id as FertigationIconName}
+                              className="fn-menu-icon"
+                              selected={view === id}
+                            />
+                            <span className="fn-menu-label">{viewLabel(id)}</span>
                             <ViewBadge counts={c} />
                           </button>
                           {!!c?.total && (
@@ -156,25 +162,37 @@ export function FertigationFrame({
                     })}
                   </ul>
                 </div>
-              ))}
-            <ul>
-              <li>
-                <Link href={sourceHref ?? "/estimating/discovery"}>
-                  {sourceHref
-                    ? "Return to Discovery alternative"
-                    : "Discovery workspaces"}
+              ))
+            ) : (
+              <ul className="fn-menu-plain">
+                <li>
+                  <Link href="/estimating/fertigation" aria-current="page">
+                    <FertigationIcon name="list" className="fn-menu-icon" />
+                    <span className="fn-menu-label">Scope register</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
+            <div className="fn-rail-foot">
+              {onView && (
+                <Link href="/estimating/fertigation" className="fn-rail-link">
+                  <FertigationIcon name="list" className="fn-rail-link-icon" />
+                  Scope register
                 </Link>
-              </li>
-            </ul>
+              )}
+              <Link
+                href={sourceHref ?? "/estimating/discovery"}
+                className="fn-rail-link"
+              >
+                <FertigationIcon name="back" className="fn-rail-link-icon" />
+                {sourceHref
+                  ? "Return to Discovery alternative"
+                  : "Discovery workspaces"}
+              </Link>
+              <p className="fn-rail-edition">Calculation edition {edition}</p>
+            </div>
           </nav>
-          <p className="fn-menu-note">
-            ES-02 · Fertigation
-            <br />
-            Native scope capture
-            <br />
-            Supplier confirmation remains separate
-          </p>
-        </>
+        </div>
       }
     >
       {children}
