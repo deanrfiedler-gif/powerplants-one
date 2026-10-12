@@ -1,6 +1,12 @@
 # Native Estimating and Quotation programme
 
+## CCE reference package — 12 October 2026
+
+The [CCE specification](../architecture/cce-technical-specification.md), [Figma brief](cce-figma-design-prompt.md) and [validation evidence](../testing/evidence/cce-reference-validation/README.md) are published as proposed architecture and bounded synthetic reference work. The [publication decision](../decisions/cce-architecture-proposal.md) preserves EST parent IDs, native ES-04–07 receiving and the ES-08 Screen Systems family. Historical CCE database results use `ba1f4e3` through migration 0077; the documentation branch starts at `4228d47` through 0083. No later database compatibility, complete CCE UI, atomic adoption command, provider integration or owner acceptance is asserted.
+
 > **Current direction — 8 October 2026:** [Independent PPO product direction](../decisions/product-direction-quality.md) supersedes CREMS reconstruction/parity prerequisites in older handovers. Current PPO requirements, owner decisions and tested rules govern new work. Retained checkpoints and evidence below remain historical.
+
+The owner-confirmed CCE UI scope is rule/condition and configuration-data authoring plus CPQ. Existing estimating wizard, quotation, review and delivery pages are integration points; this package does not propose rebuilding them.
 
 ## Four-task Project diamond continuation — 7 October 2026
 

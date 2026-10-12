@@ -1,0 +1,10 @@
+{
+  "codeBlocks": 33,
+  "validJsonBlocks": 8,
+  "fullReferenceBlocksMatch": {
+    "reference-schema.sql": true,
+    "expression.ts": true,
+    "rule-schema.json": true
+  },
+  "referenceJavaScriptSyntaxFailures": []
+}

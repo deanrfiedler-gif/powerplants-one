@@ -1,0 +1,1 @@
+{"passed":8,"cases":[{"id":"FIN-01","status":"PASS"},{"id":"FIN-02","status":"PASS"},{"id":"FIN-03","status":"PASS"},{"id":"FIN-04","status":"PASS"},{"id":"FIN-05","status":"PASS"},{"id":"FIN-06","status":"PASS"},{"id":"FIN-07","status":"PASS"},{"id":"FIN-08","status":"PASS"}]}

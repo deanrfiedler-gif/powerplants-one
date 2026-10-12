@@ -1,0 +1,25 @@
+{
+  "status": "failed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 8550,
+  "files_scanned_for_markers": 5567,
+  "errors": [
+    "docs\\architecture\\cce-technical-specification.md: unknown heading: #appendix-a-postgresql-reference-ddl",
+    "docs\\architecture\\cce-technical-specification.md: unknown heading: #appendix-b-rule-language-reference",
+    "docs\\architecture\\cce-technical-specification.md: unknown heading: #appendix-c-executable-exact-arithmetic-example",
+    "docs\\architecture\\cce-technical-specification.md: unknown heading: #appendix-d-worked-examples",
+    "docs\\architecture\\cce-technical-specification.md: unknown heading: #appendix-e-evidence-sources-and-verification-record",
+    "docs\\architecture\\cce-technical-specification.md: unknown heading: #appendix-f-reproducibility-and-bounded-workflow",
+    "docs\\testing\\evidence\\cce-reference-validation\\provenance\\prior-report.md: unknown heading: #appendix-a-postgresql-reference-ddl",
+    "docs\\testing\\evidence\\cce-reference-validation\\provenance\\prior-report.md: unknown heading: #appendix-b-rule-language-reference",
+    "docs\\testing\\evidence\\cce-reference-validation\\provenance\\prior-report.md: unknown heading: #appendix-c-executable-exact-arithmetic-example",
+    "docs\\testing\\evidence\\cce-reference-validation\\provenance\\prior-report.md: unknown heading: #appendix-d-worked-examples",
+    "docs\\testing\\evidence\\cce-reference-validation\\provenance\\prior-report.md: unknown heading: #appendix-e-evidence-sources-and-verification-record"
+  ],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}

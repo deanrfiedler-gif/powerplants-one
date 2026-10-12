@@ -1,0 +1,3455 @@
+# Powerplants One — Configurator & Condition Engine
+
+<!-- versioning: git; committed history is authoritative -->
+
+## Architecture research and technical implementation specification
+
+| Document control | Value |
+|---|---|
+| Prepared for | Dean Fiedler |
+| Product | Powerplants One (PPO) |
+| UI scope | Rule/condition and configuration-data authoring plus CPQ; existing wizard/quotation pages are integration points |
+| Prepared | 12 October 2026, Australia/Brisbane |
+| Document status | Proposed architecture with executed bounded reference validation; implementation and business acceptance remain open |
+| Owner | Dean Fiedler; technical and commercial rule owners to be assigned |
+| Review status | Author review and executable validation; independent engineering/security review and business acceptance not recorded |
+| Repository baseline inspected | `ba1f4e3c155ce6a45dc15e87689de01d42a47e1f` |
+| Existing parent scope | EST-01–EST-09; BP-04 / PPO-010; relevant IF-01–IF-03 and AT-03/04/05/26/27/28 boundaries |
+| Delivery form | Repository working specification plus retained reference evidence; SQL was applied only to isolated synthetic test databases |
+| Working path | `docs/architecture/cce-technical-specification.md` |
+| Publication reconciliation baseline | `4228d470ca4c566a15e7c3397fc053b8f7bef4bc`; historical execution baseline remains unchanged |
+
+This document develops the original CCE proposal into an engineering specification. It preserves the five requested research areas and adds the contracts required to implement them without creating ambiguous calculation behaviour, mutable historical evidence or uncontrolled downstream writes.
+
+**Recommended architecture:** a restricted, typed rule language; immutable rule versions; explicitly published ruleset releases; bounded exact arithmetic; persisted evaluation evidence; separate estimate adoption; and asynchronous, reconciled downstream handovers.
+
+**Meaning of requirements:** “must” and “shall” describe the proposed implementation contract in this document. They do not declare adoption, implemented functionality, operational approval or production readiness. All numerical examples are synthetic.
+
+**Recorded validation outcome at `ba1f4e3`:** candidate SQL applied against that PPO schema; 24 database scenarios, five native command probes, four persisted workflow scenarios, 34 workflow scenarios and eight worked-example checks passed. A native JSON Schema 2020-12 validator exercised the schema, and 5,000 independent arithmetic cases matched exactly. Populated native data at that baseline and selected database-restart digests were preserved. See Section 8 for precise scope and Appendix E for failures, corrections and limits.
+
+**Reading paths:** architecture and engineering — Sections 1–7 and Appendices A–C; implementation acceptance — Sections 8–10; evidence review and reproduction — Appendices E–F and the [published evidence package](../testing/evidence/cce-reference-validation/README.md).
+
+## Repository publication and current-source reconciliation
+
+Dean authorised this documentation-only branch and pull request on 12 October 2026. The [decision record](../decisions/cce-architecture-proposal.md) distinguishes that publication decision from the proposed architecture and unresolved operating policies. The [Figma prompt](../delivery/cce-figma-design-prompt.md) is the maintained design brief.
+
+Database, native-command and restart results in Sections 8 and Appendix E were executed at `ba1f4e3c155ce6a45dc15e87689de01d42a47e1f`, with 76 registered migrations through 0077. The publication branch starts at `4228d470ca4c566a15e7c3397fc053b8f7bef4bc`, which includes migration 0083. Those later migrations were not covered by the historical CCE database proof. References below to the then-current schema or current-baseline clone mean the recorded execution baseline. Publication checks and any fresh pure reference checks have their own [ledger](../testing/evidence/cce-reference-validation/publication-validation.json); they do not extend the historical database claim.
+
+The native Estimating programme already includes saved scope/cost sources, ES-04 review and ES-05–07 quotation receiving and continuation. The generic CCE is an additive proposal that must use those boundaries, not replace them. ES-08 remains the Screen Systems family; existing Fertigation and Screen configuration evidence retains its authority and identifiers. The report's wider action schema is not fully implemented by its material-only reference harness. The [programme handover](../delivery/estimating-programme-handover.md), [BP-04](../blueprints/BP-04-estimating-quotation.md) and [independent PPO direction](../decisions/product-direction-quality.md) govern integration.
+
+[ADR-0053](../decisions/ADR-0053-figma-page-design.md) now adopts Figma and the private “PPO - Design” working file. Accepted Reviews & approvals, Intake & workload and Cost sources designs must be considered when developing Section 3's proposed patterns. The proposed explanation panel does not silently supersede an accepted register record-window layout. Public design evidence must be icon-free, and private Figma file URLs must not enter this repository.
+
+The original export and archive hashes, per-file transformations and retained original evidence manifest are in the [import manifest](../testing/evidence/cce-reference-validation/import-manifest.json). Existing historical source snapshots are unchanged. SQL and harness files remain documentation/reference material outside the application migration registry and runtime suites.
+
+## Contents
+
+1. [Database schema and historical immutability](#1-database-schema-and-historical-immutability)
+2. [Sandbox-safe mathematical expression parsing](#2-sandbox-safe-mathematical-expression-parsing)
+3. [Rule authoring and CPQ user experience](#3-rule-authoring-and-cpq-user-experience)
+4. [Conflict resolution, dependencies and manual overrides](#4-conflict-resolution-dependencies-and-manual-overrides)
+5. [Third-party integration architecture](#5-third-party-integration-architecture)
+6. [Application commands and API contracts](#6-application-commands-and-api-contracts)
+7. [Security, performance and operation](#7-security-performance-and-operation)
+8. [Verification and acceptance matrix](#8-verification-and-acceptance-matrix)
+9. [Implementation sequence and repository integration](#9-implementation-sequence-and-repository-integration)
+10. [Decisions, assumptions and unresolved obligations](#10-decisions-assumptions-and-unresolved-obligations)
+11. [Appendix A — PostgreSQL reference DDL](#appendix-a-postgresql-reference-ddl)
+12. [Appendix B — Rule language reference](#appendix-b-rule-language-reference)
+13. [Appendix C — Executable exact-arithmetic example](#appendix-c-executable-exact-arithmetic-example)
+14. [Appendix D — Worked examples](#appendix-d-worked-examples)
+15. [Appendix E — Evidence, sources and verification record](#appendix-e-evidence-sources-and-verification-record)
+16. [Appendix F — Reproducibility and bounded workflow](#appendix-f-reproducibility-and-bounded-workflow)
+
+## Architectural position and improvements to the initial proposal
+
+**Owner-confirmed module boundary — 12 October 2026:** this proposal covers rule/condition and supporting configuration-data authoring, plus the CPQ configuration workspace and its evaluation engine. The estimating wizard, quotation, review and downstream workflow pages already exist. They are receiving/source integration points, not pages to recreate under this module. Historical estimate snapshots, commercial/milestone manifests and provider examples below specify evidence and handover contracts; they do not expand the UI scope into the entire estimation process. The [Figma brief](../delivery/cce-figma-design-prompt.md) applies this boundary to its deliverables.
+
+
+The initial response was a useful design exploration. This revision adds executed database, schema, arithmetic and bounded workflow evidence to the detailed architecture. It distinguishes successful local proofs from missing native CCE commands, owner decisions and provider contracts. Production readiness is not inferred from document length or a collection of component passes.
+
+| Topic | Improvement in this report |
+|---|---|
+| Historical integrity | Preserve the complete ruleset, frozen inputs, costs, policies, engine identity, overrides and result; not only matching rules |
+| Rule publication | Separate immutable version creation, technical validation, publication and release activation |
+| Release race conditions | Every member insertion changes and locks a parent assembly counter; sealing checks the complete assembly |
+| Evaluation/adoption | Save immutable evaluation runs before accepting a native estimate successor |
+| Evidence ownership | Define database-enforced invariants separately from mandatory command validation and operational controls |
+| Rule semantics | Specify typed facts, recursive conditions, three-valued logic, collection scope and action-specific payloads |
+| Formula security | Treat parsers as attack surfaces; use an intentionally small language and bounded exact arithmetic |
+| Overrides | Preserve persistent manual intent and explicitly resolve rebasing against changed generated results |
+| Commercial logic | Separate quantity, cost, markup, gross margin, sell price, tax and billing allocation |
+| Integration | Use authorized handover intents, durable operation identity, destination mappings and unknown-outcome reconciliation |
+| Delivery quality | Include executable examples, failure contracts, test cases and explicit unverified obligations |
+
+### Relationship to the current PPO implementation
+
+PPO already has immutable native estimate versions, exact discovery-cost bindings and a Specialist Workbench that uses reduced BigInt rational arithmetic. The CCE should reuse the transaction, authorization, operation receipt, source-lineage and estimate receiving mechanisms. It must not create an independent quotation authority.
+
+ADR-0034 deliberately rejected a general formula evaluator for the earlier bounded specialist implementation. This report proposes a separately scoped extension, not a retroactive reinterpretation of that decision. Before implementation, record an ADR selecting the restricted language, its limits, integration approach and rejected alternatives. A candidate decision is specified in Section 9.
+
+Dean’s 8 October product direction makes CREMS historical context. No reconstruction of undocumented CREMS formulas is required to define and test independent PPO rules. Existing parent requirement IDs and historical reference bytes remain unchanged. MYOB remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring responsibility. [PPO product direction](https://github.com/deanrfiedler-gif/powerplants-one/blob/ba1f4e3c155ce6a45dc15e87689de01d42a47e1f/docs/decisions/product-direction-quality.md), [Specialist Workbench ADR](https://github.com/deanrfiedler-gif/powerplants-one/blob/ba1f4e3c155ce6a45dc15e87689de01d42a47e1f/docs/decisions/ADR-0034-es08-specialist-workbench.md).
+
+### Scope boundary
+
+Included: rule authoring, compilation, calculation, BOM/labour proposals, commercial policy evaluation, milestone proposals, immutable evidence, reviewed adoption and adapter contracts.
+
+Excluded from automatic authority: technical engineering approval, live procurement, invoice posting, customer communication, project rescheduling and operational migration. These remain commands in their owning domains. A completed calculation supplies evidence to those commands; it does not execute them.
+
+## 1. Database schema and historical immutability
+
+### 1.1 Domain entities
+
+| Entity | Responsibility | Mutability |
+|---|---|---|
+| `cce_rules` | Permanent rule identity and editable registry metadata | Selected metadata only; identity immutable |
+| `cce_rule_versions` | Exact semantic definition, priority, schema and language ABI | Insert only |
+| `cce_ruleset_releases` | Engine and execution contract plus a bounded assembly of rule versions | Assembly counter changes, followed by one-way sealing |
+| `cce_ruleset_members` | Exact version membership within a release | Insert only while release is unsealed |
+| `cce_release_heads` | Scope’s default release for new evaluations | Explicit compare-and-swap update |
+| `cce_evaluation_runs` | Successful or blocked calculation with frozen inputs and evidence | Insert only |
+| `estimate_bom_snapshots` | Exact adoption binding from an eligible run to a native estimate version | Insert only |
+
+Editable authoring work belongs in the existing draft/revision mechanism or a separately scoped draft aggregate. It must not share the immutable published-definition table. Similarly, an evaluation job’s mutable queue state is separate from a completed immutable run.
+
+```mermaid
+erDiagram
+    CCE_RULES ||--o{ CCE_RULE_VERSIONS : versions
+    CCE_RULE_VERSIONS ||--o{ CCE_RULESET_MEMBERS : included_as
+    CCE_RULESET_RELEASES ||--o{ CCE_RULESET_MEMBERS : contains
+    CCE_RULESET_RELEASES ||--o{ CCE_RELEASE_HEADS : selected_by
+    CCE_RULESET_RELEASES ||--o{ CCE_EVALUATION_RUNS : evaluates
+    CCE_EVALUATION_RUNS ||--o| ESTIMATE_BOM_SNAPSHOTS : adopted_as
+    ESTIMATE_VERSIONS ||--o| ESTIMATE_BOM_SNAPSHOTS : retains
+```
+
+### 1.2 Non-negotiable persistence invariants
+
+1. A rule version has exactly one logical parent rule, workspace and company.
+2. Version numbers are unique per rule and have an exact predecessor. Version allocation is serialized on the rule root.
+3. A release includes no more than one version of a logical rule.
+4. A sealed release cannot accept a new member or change its members, engine identity or policies.
+5. Runtime evaluation resolves a release once. It never reads “latest rule version” during the run.
+6. The release contains the full applicable membership, including rules that do not match the evaluated facts.
+7. Historical recovery reads retained results without executing a current or historical formula engine.
+8. New calculations and explicit rebases produce new runs. Adoptions create new native estimate versions.
+9. A blocked run cannot be adopted. An unknown cost cannot become a zero-cost line.
+10. Every adopted snapshot is bound to the exact estimate, company, run and native version.
+11. Cross-company links are refused by composite foreign keys.
+12. A repeated operation ID with changed command content is a conflict, not another operation.
+
+### 1.3 Evidence required for reproduction
+
+The reproducibility envelope contains:
+
+- Source scope, discovery and configuration revision IDs and hashes.
+- CFO fact values, types, units, value states, explicit assumptions and provenance.
+- Complete release membership and immutable rule-version hashes.
+- Engine build, expression ABI, condition semantics and snapshot schema version.
+- Catalogue identities, retained descriptions, cost/rate records and effective dates.
+- Currency, frozen FX rate and direction, tax basis and rounding policy.
+- Unit conversion definitions and calendar/timezone inputs when relevant.
+- Every contribution, resolution result, suppression and diagnostic.
+- The generated base, exact manual override overlay and final effective result.
+- The receiving proposal’s native estimate fields and expected predecessor.
+- Actor, operation identity, timestamps and review references.
+
+Immutable foreign keys can retain this evidence without duplicating all rule definitions into each run. Exported audit packages should expand those references into a self-contained bundle with exact retained bytes and a manifest. Database backups and referenced artifact retention remain necessary.
+
+### 1.4 Value representation
+
+Use UUIDs for internal identities, `timestamptz` for instants, `date` for date-only commitments, explicit external company/entity strings, and `numeric` for persisted quantized decimals. Use decimal strings at API boundaries. Preserve exact rational numerator/denominator pairs for intermediate values that cannot be represented as finite decimals.
+
+JSONB is appropriate for heterogeneous condition trees and evidence envelopes. Identity, relationship, sequence, state and selection fields remain ordinary relational columns. A JSONB object check is not a complete schema check, and a foreign key does not validate business authorization. [PostgreSQL JSON types](https://www.postgresql.org/docs/16/datatype-json.html), [PostgreSQL constraints](https://www.postgresql.org/docs/16/ddl-constraints.html).
+
+PostgreSQL constrained numeric types round to their declared scale. The application must quantize at a documented business boundary before insertion, and reject out-of-range/non-finite values. Implicit database rounding must not determine commercial policy. [PostgreSQL numeric types](https://www.postgresql.org/docs/16/datatype-numeric.html).
+
+### 1.5 Freeze and adopt are different operations
+
+**Evaluation run:** records what a particular input and release produced, even when the result is blocked. It is not a quote or a saved cost version.
+
+**Estimate adoption:** accepts one exact eligible run, after rechecking source versions and permissions, into the existing estimate successor mechanism. An adopted run is not reusable for a different estimate. Reusing equivalent calculation logic on another estimate creates another scoped run.
+
+The reference schema permits one aggregate CCE adoption per native estimate version. The run’s receiving proposal covers the entire intended successor, including retained manual lines and other existing contributions. It must not imply that a partial generated BOM equals the whole estimate total.
+
+Each run is anchored to an existing commercial option. Before first costing, its estimate and base estimate-version references are both null. Adoption locks that option and uses the established first-estimate creation path; a competing first create produces a conflict. For later runs, both estimate references are present and the option must match the estimate. A null estimate reference is not permission to bind an unrelated or historical version.
+
+### 1.6 Publication transaction and release concurrency
+
+Publication has two meaningful identities: the immutable semantic version and the release activation event. Saving an immutable version does not make it executable by ordinary estimate users.
+
+The parent assembly counter in Appendix A is deliberate. A member insert updates the release row before inserting its member. Sealing also updates that row and verifies the member count. This serializes the two paths and makes assembly changes visible as row modifications under stricter transaction isolation. Merely locking an otherwise unchanged parent row is a weaker protocol for membership-sensitive readers.
+
+The command workflow is:
+
+```text
+BEGIN
+  Authorize actor and source scope.
+  Insert unsealed release with exact engine/contract/validation references.
+  Insert all intended members; each insertion increments parent generation.
+  Validate member versions, graph, fixture evidence and intended membership hash.
+  Seal the release.
+  Compare-and-swap the current scope head using expected head generation.
+  Append activation audit event and original-operation receipt.
+COMMIT
+```
+
+Validation evidence must bind the intended member identities and hashes. The command checks that binding before sealing. SQL sealing guards establish structural integrity; they do not verify engineering approval or independently prove fixture results.
+
+An intentionally empty release is permitted only with an explicit reason. This provides a reviewable no-automation state without deleting history. It must not be used to silently remove already adopted estimate lines.
+
+Use a fixed lock order across commands: operation identity, scope/release head where applicable, source aggregates in sorted identity order, estimate root, then child records. Deadlock and serialization retries must repeat the complete database transaction under the same logical operation identity. They must not repeat external business actions. PostgreSQL’s isolation and locking guarantees require deliberate retry handling. [Transaction isolation](https://www.postgresql.org/docs/16/transaction-iso.html), [explicit locking](https://www.postgresql.org/docs/16/explicit-locking.html).
+
+### 1.7 Calculation transaction boundaries
+
+Build the input envelope through a coherent read. Prefer exact immutable source revisions; when several mutable pointers are consulted, use a suitable read transaction and capture every expected source version. Evaluate outside long-running database locks.
+
+At adoption:
+
+```text
+BEGIN
+  Recover or reserve original command identity.
+  Reauthorize exact historical and current source references.
+  Lock estimate and relevant source roots.
+  Verify expected estimate predecessor and complete source version vector.
+  Verify the run remains eligible for receiving.
+  Create the native estimate successor through the established writer.
+  Write existing discovery/cost/specialist lineage required by that writer.
+  Insert the immutable CCE adoption snapshot.
+  Write audit, operation receipt and applicable internal outbox event.
+COMMIT
+```
+
+Changed input returns `STALE_SOURCE`; changed estimate returns `ESTIMATE_VERSION_CONFLICT`. The client retains the proposed work and requests explicit recalculation or comparison. A server must not recalculate against newer values and silently accept a different result.
+
+### 1.8 Hashes, signatures and portable evidence
+
+Use distinct hashes for distinct questions:
+
+| Hash | Meaning |
+|---|---|
+| Definition hash | Exact semantic rule version and versioned fields |
+| Release hash | Exact engine/contract and ordered membership with version hashes |
+| Calculation signature | Normalized inputs, cost basis, release, policies and overrides |
+| Evidence hash | Entire retained run, including actor/time/operation metadata |
+| Request hash | Normalized command body used to detect operation-ID reuse |
+| Artifact hash | Exact retained document or export bytes |
+
+The database helper in Appendix A hashes PostgreSQL’s JSONB text representation. That is a local evidence checksum, not a claim of cross-language canonical JSON. For portable signatures, select and version a canonical format, retain the exact signed bytes and record key identity and algorithm. RFC 8785 defines JSON canonicalization; decimal strings avoid forcing high-precision business numbers into JSON number interoperability limits. [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785).
+
+For rule versions, the checksum omits both `content_hash` and the generated `predecessor_number`; the latter is already determined by the hashed `version_number`. The trigger constructs its payload from named base columns because generated values are unavailable in BEFORE triggers. A stored-row verifier must use the same projection and the hash functions' fixed UTC timezone and ISO date style. Adding an evidence column requires a reviewed hash-contract update. [PostgreSQL generated columns](https://www.postgresql.org/docs/16/ddl-generated-columns.html).
+
+An SHA-256 checksum is not an authorization signature. A privileged database administrator can alter schema and controls. Application immutability, administrative change control, backups and any independent immutable archive provide different protections.
+
+### 1.9 Query and indexing design
+
+The hot read path is company/scope head → release → membership → versions. It should use B-tree indexes and bounded queries, not repeatedly scan condition JSON during calculation.
+
+The primary indexes are registry-by-scope, release-by-scope, reverse membership-by-version, run-by-estimate and snapshot-by-estimate. Foreign-key columns on frequently joined or checked child paths need explicit index review; PostgreSQL does not automatically index every referencing side.
+
+Use a compiler-derived dependency projection for impact analysis: `(workspace, company, rule_version, dependency_kind, dependency_id)`. Rebuild it from immutable definitions and label it derived. Do not maintain a second editable truth about dependencies.
+
+Add GIN indexes only for measured authoring or audit queries. Consider partitioning run history only after measured retention volume and query patterns justify its extra key/constraint complexity. Retained engine artifacts and large output files belong in the established controlled storage mechanism; the database stores exact identity and digest.
+
+## 2. Sandbox-safe mathematical expression parsing
+
+### 2.1 Technology decision
+
+The best initial fit for PPO is a restricted arithmetic language interpreted in TypeScript using exact rational arithmetic. This keeps the established runtime and limits the amount of user-programmable behaviour.
+
+| Alternative | Strength | Constraint or rejection reason |
+|---|---|---|
+| Restricted arithmetic DSL | Small auditable grammar, exact arithmetic, stable semantics | PPO owns parser tests, language evolution and fuzzing |
+| Mathjs | Rich parser and broad mathematical functions | Much larger language/attack surface; requires patched dependency, AST allowlist and isolation |
+| Original expr-eval | Familiar arithmetic API | Security advisory and maintenance position make it unsuitable as an unexamined default |
+| Python/Go evaluator service | Useful where language-specific capabilities are essential | Adds a runtime, transport, deployment and cross-language conformance burden |
+| General JavaScript/Python execution | Maximum flexibility | Rejected: turns rule authors into arbitrary code authors |
+
+The original `expr-eval` advisory lists versions through 2.0.2 as affected with no patched original-package version. Mathjs’s maintainer disclosed an expression-parser issue affecting versions from 13.1.0 to before 15.2.0. These observations justify dependency review and defence in depth, not a claim that a particular alternative has no vulnerabilities. [expr-eval advisory](https://github.com/advisories/GHSA-jc85-fpwf-qm7x), [mathjs advisory](https://github.com/josdejong/mathjs/security/advisories/GHSA-5v89-rwgr-qj6g).
+
+### 2.2 Threat model
+
+Treat formula text, imported definitions, UI state and external payloads as untrusted. A legitimate author can accidentally create an expensive expression; a compromised author account can deliberately probe the interpreter.
+
+| Threat | Required control |
+|---|---|
+| Runtime code execution | No eval, Function constructor, module loading, callbacks or host-language compilation |
+| Prototype/property traversal | Resolve exact registered symbols through a scalar map; never walk an arbitrary object path |
+| CPU exhaustion | Bound source length, tokens, AST depth/nodes, arithmetic size, collection cardinality and run work |
+| Memory exhaustion | Bound input/output sizes and use a supervisor-enforced memory budget |
+| Decimal corruption | Parse canonical strings directly into rational/decimal representation |
+| Hidden nondeterminism | No current time, randomness, network or live catalogue lookup inside evaluation |
+| Scope leakage | Fresh per-run bindings, permission-aware source resolution and tenant-aware caches |
+| Output injection | Escape explanations as text; reject executable markup and uncontrolled templates |
+| Validation bypass | Server compilation and semantic validation on every publishable definition |
+
+Node’s VM API is not a security boundary for untrusted code. A separate process limits failure propagation but is not automatically a complete operating-system sandbox. The production worker needs explicit filesystem/network/credential restrictions appropriate to its host. [Node VM documentation](https://nodejs.org/api/vm.html).
+
+### 2.3 Grammar and compilation
+
+The initial expression grammar supports decimal literals, registered symbols, parentheses, unary signs and four arithmetic operators:
+
+```text
+expression := term (("+" | "-") term)*
+term       := unary (("*" | "/") unary)*
+unary      := ("+" | "-") unary | primary
+primary    := decimal | registered_symbol | "(" expression ")"
+```
+
+Excluded: exponentiation, implicit multiplication, arrays, object literals, indexing, function calls, assignments, comparisons, loops, recursion and user-defined functions. Conditions have their own typed language; rounding has its own action contract.
+
+The compiler performs lexical validation, parsing, a complete AST validation pass, symbol resolution and dependency extraction. A semantic pass checks dimensions, scopes and output type. Cache compiled definitions by definition hash, language ABI and engine build. Cached ASTs must contain no estimate-specific mutable values.
+
+The executable example in Appendix C demonstrates bounded parsing and exact arithmetic. It is intentionally not a complete rule engine or a substitute for dimensional analysis, authorization or OS isolation.
+
+The prohibition on executing user code applies to rule/formula text. Ajv may compile an application-owned, trusted structural schema into a validator; user-authored rules are data passed to that validator. Do not accept author-uploaded JSON Schema documents, JavaScript validators or custom callbacks as part of this rule language. Schema changes are controlled application releases.
+
+### 2.4 Context Fact Object contract
+
+The CFO is a source snapshot, not a general object exposed to the interpreter. Every fact has a stable ID and declared value state. Examples:
+
+```json
+{
+  "schemaVersion": 1,
+  "facts": {
+    "installation.distance": {
+      "type": "decimal",
+      "state": "CONFIRMED",
+      "value": "140",
+      "unit": "m",
+      "scopeId": "system-2",
+      "sourceRevisionId": "synthetic-survey-revision-3"
+    },
+    "site.is_outdoor": {
+      "type": "boolean",
+      "state": "CONFIRMED",
+      "value": true,
+      "scopeId": "site-1"
+    },
+    "site.wind_category": {
+      "type": "enum",
+      "state": "UNKNOWN",
+      "value": null,
+      "scopeId": "site-1",
+      "reason": "Engineering confirmation outstanding"
+    }
+  }
+}
+```
+
+The server constructs approved bindings such as `distance_m → installation.distance`. A token resembling `CFO.SPECIFICATION.DISTANCE` can be supported as a registered symbol, but it is never interpreted as JavaScript property access. Hyphenated business identifiers are mapped through bindings rather than embedded as subtraction-like syntax.
+
+Separate `UNKNOWN`, `ASSUMED`, `CONFIRMED` and `NOT_APPLICABLE` in the fact model. Eligibility rules decide which states are permitted. Do not convert a missing value to zero, false, an empty string or the first enum option.
+
+### 2.5 Exact arithmetic and unit semantics
+
+Parse decimal strings directly into reduced fractions. For `0.1 + 0.2`, the exact result is `3/10`. For `1/3`, retain `1/3` until a declared quantization boundary. A display value is never reused as an exact input.
+
+The expression `((distance / 10) * 2) + 5` contains insufficient unit information by itself. The rule contract must identify the divisor as spacing in metres, the multiplier as brackets per span and the final constant as bracket count. A typed parameter representation permits the compiler to verify:
+
+```text
+(metres / metres) × count + count = count
+```
+
+Use explicit quantity rules for linear dimensions, areas, volumes, time and counts. Reject mixing metres with feet before normalization, currency with hours, or products with incompatible purchase/sales units. Conversion factors and pack sizes are versioned inputs.
+
+### 2.6 Rounding contract
+
+Each rounding operation records mode, increment, stage and the pre-rounded exact value. Define at least `FLOOR`, `CEILING`, `HALF_UP` and, only if required, `HALF_EVEN`. Specify signed behaviour: “half up” can mean different things for negative values across libraries. The first material/labour profile should reject negative quantities; credits or reductions require explicitly typed actions.
+
+Rounding can occur per contribution, per resolved group, per line extension, per tax group or at total level. These are not equivalent. For inventory packs, keep installed requirement and procurement requirement distinct:
+
+```text
+installed requirement = 33 brackets
+pack size = 10 brackets
+procurement requirement = ceiling(33 / 10) = 4 packs
+excess stock = 7 brackets
+```
+
+Do not automatically bill four packs if the commercial agreement prices installed units.
+
+### 2.7 Worker protocol
+
+The evaluator accepts an already scoped envelope: immutable release bundle, frozen scalar facts, costs, explicit business date/calendar and override set. It returns a bounded result and diagnostics. It has no application database connection and makes no remote calls.
+
+The supervisor enforces a deadline and resource budget, terminates failed work and returns a stable failure code. A timer in the same blocked JavaScript event loop cannot stop synchronous work. Mathjs also recommends isolation for resource-intensive expressions. [Mathjs security guidance](https://mathjs.org/docs/expressions/security.html).
+
+Use a process pool only when measurements justify it. For a small initial prototype, an isolated child process within the existing deployment can provide the boundary without adding an independent microservice. Warm-process reuse must clear per-run data and must not share mutable bindings.
+
+## 3. Rule authoring and CPQ user experience
+
+The delivered UI scope is the rule/condition data-entry module and CPQ workspace. The existing estimating wizard provides source context and receives configuration results. Existing quoting, approvals and delivery pages retain their ownership. This section describes CCE-owned controls plus explicit interface behaviour, not a replacement estimation application.
+
+### 3.1 Product model and information architecture
+
+Separate rule categories by user intent: configuration selection, compatibility validation, advisory messages, quantity calculation, commercial proposal and milestone proposal. Salesforce CPQ’s documented selection, validation, filtering and alert categories provide an established reference, not a mandate to duplicate its screens. [Salesforce CPQ product rules](https://trailhead.salesforce.com/content/learn/modules/salesforce-cpq-features/product-and-price-rules).
+
+| Workspace region | Required content |
+|---|---|
+| Rule context | Stable rule code, scope, owner, working state and published-version comparison |
+| Conditions | Typed nested groups, field/operator/value controls and explicit collection scope |
+| Actions | Separate forms for materials, labour, commercial policies, milestones and review requirements |
+| Test panel | Synthetic fixtures, expected result, actual result, trace and diagnostics |
+| Impact panel | Affected release scopes and saved estimates eligible for explicit comparison |
+| Publication panel | Exact source hash, validation evidence, reason and activation choice |
+
+On desktop, use a flexible centre editor with an adjacent test/explanation panel. On small screens, use Conditions, Actions and Test tabs. Preserve one underlying draft state. Avoid compressing a nested builder into a horizontally scrolling table.
+
+Decision tables are preferable for repetitive matrices such as equipment family × voltage × environment. Nested builders are preferable for a small number of irregular conditions. Both must compile to the same internal rule language.
+
+### 3.2 Versioned fact dictionary
+
+The fact dictionary defines identity, label, domain, primitive type, unit, allowed operators, allowed values, scope, nullability, minimum/maximum and source authority. Field types must not be guessed from the current estimate’s values.
+
+| Type | Operators | Value editor |
+|---|---|---|
+| Integer/decimal | EQ, NEQ, GT, GTE, LT, LTE, BETWEEN, IS_KNOWN | Bounded numeric text with unit |
+| Text | EQ, NEQ, CONTAINS, STARTS_WITH, IS_KNOWN | Text input |
+| Boolean | IS_TRUE, IS_FALSE, IS_KNOWN | Fixed choice |
+| Enum | EQ, NEQ, IN, NOT_IN, IS_KNOWN | Controlled values |
+| Date | BEFORE, AFTER, ON, BETWEEN, IS_KNOWN | Date control with declared semantics |
+| Collection | ANY_MATCH, ALL_MATCH, COUNT | Scoped collection predicate |
+
+Case sensitivity, whitespace normalization, Unicode normalization, range inclusivity and enum identity comparison are explicit language rules. Text labels are not enum keys. Free-form regular expressions are excluded from the initial language.
+
+React Query Builder offers field-dependent operator/value controls and validation maps. It is a candidate editor library only; preserve a PPO adapter between UI state and the durable domain schema. [Component API](https://react-querybuilder.js.org/docs/components/querybuilder), [validation API](https://react-querybuilder.js.org/docs/utils/validation).
+
+### 3.3 Frontend state model
+
+Represent persistence, semantic validation and publication as independent state dimensions:
+
+```typescript
+type DraftState = {
+  rawDocument: unknown;
+  localRevision: number;
+  serverRevision: number | null;
+  persistence: "UNSAVED" | "SAVING" | "SAVED" | "UNCERTAIN" | "CONFLICT";
+  validation: "INCOMPLETE" | "INVALID" | "PENDING" | "VALID";
+  validationBasisHash: string | null;
+  simulationBasisHash: string | null;
+  publication: "NOT_PUBLISHED" | "PUBLISHED_VERSION_EXISTS";
+};
+```
+
+This permits a saved incomplete draft, a valid unsaved edit, or a published version with newer unvalidated edits. A single `isValid` or `isPublished` flag cannot accurately represent these states.
+
+### 3.4 Validation lifecycle
+
+1. Load and pin dictionary, action schema and reference catalogue identities.
+2. Preserve raw text during entry. `-`, `1.` and an empty value remain incomplete input rather than becoming zero.
+3. On field changes, reset incompatible operators and values in one state transition.
+4. Validate required fields, primitive types, range bounds and group structure locally.
+5. Debounce server semantic validation; cancel or ignore responses for older local revisions.
+6. Bind the result to the draft hash, dictionary version, reference versions and engine build.
+7. Execute fixtures through the same evaluator implementation used by estimate preview.
+8. Mark publication eligible only for the exact validated and tested document.
+9. Recheck authoritative conditions on the server when publication is requested.
+
+Example: switching from numeric Distance with `GT 100` to text Site Description clears the operator and value and explains why. It must not reinterpret the comparison lexically.
+
+Group validation checks nonempty ALL/ANY, exactly one child for NOT, unique node/action IDs, bounded depth, explicit unconditional rules, and no ambiguous scope. Formula diagnostics identify source spans so the editor can highlight the relevant token.
+
+### 3.5 Authoring actions and commercial clarity
+
+Each action editor uses a discriminated form. A milestone action must not display a required SKU field. A material action selects an internal product, installed unit, quantity expression, resolution group and rounding rule. A labour action selects a labour category, hours basis, crew interpretation and rate source. A pricing action selects a policy target and permitted parameter rather than directly mutating an arbitrary line property.
+
+Show gross margin and markup with their definitions. Warn through a concrete calculation comparison when the author switches basis. Keep billing allocation separate from operational milestone creation.
+
+Publication should show a semantic diff: condition changed, quantity rule changed, priority changed, cost-source dependency changed, output identity changed or rounding stage changed. Formatting-only edits should not obscure a material policy change.
+
+### 3.6 CPQ preview and existing-estimate handover
+
+Open CPQ from an existing saved scope/estimate or an authoring test. Reuse wizard facts and link to their owning page for changes; edit only configuration-specific fields owned by CPQ. Hand the exact reviewed configuration result to the existing estimate command/page, subject to the receiving contract in Section 6. Do not build a second enquiry wizard, quote editor, review queue or project workspace.
+
+Input edits mark the previous result as based on earlier inputs. They do not erase the saved result. After debouncing, a new preview is shown with a line-level difference: Added, Removed, Quantity changed, Price changed, Override needs review or Unresolved.
+
+The primary save/adopt action identifies the exact calculation being accepted. A stale preview cannot be silently promoted to a newer calculation. Preserve the current proposal through transient failure, permission change and source conflict, subject to the application’s secure identity-change handling.
+
+Never present an absent cost as zero or hide a failed rule behind a successful total. A blocked section should identify the missing fact, affected output and person/action needed to resolve it.
+
+### 3.7 Logic Explanation Panel
+
+Each generated line exposes “Why this line?”. The panel presents:
+
+1. Stable line purpose and its scope/equipment instance.
+2. Ruleset and exact rule/action versions.
+3. Passed, failed and unknown condition results relevant to the decision.
+4. Captured fact values and source versions, subject to permission.
+5. Formula, substitutions, exact intermediate value and rounding.
+6. Applied and suppressed contributors with resolution reasons.
+7. Generated base, manual override and effective result.
+8. Cost/rate source and currency details where the user may view them.
+9. Outstanding assumptions, expiry or review requirements.
+
+```text
+Cable brackets — 33 each                         [Why this line?]
+
+Rule: Support spacing, version 7
+Release: Installation ruleset, exact saved release
+Scope: System 2 / equipment instance 4
+Facts: distance 140 m; spacing 10 m; brackets/span 2; spares 5
+Calculation: ((140 / 10) × 2) + 5 = 33
+Rounding: whole units; ceiling after group resolution
+Resolution: selected base requirement; priority 450
+Manual override: none
+```
+
+Use deterministic text templates over saved structured evidence. Do not explain a historic line using current rule text. Do not place an interactive audit workflow inside a hover-only tooltip. WAI’s tooltip pattern is for descriptive content; a disclosure or dialog supports interactive detail. [WAI tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
+
+### 3.8 Accessibility and design-system integration
+
+Provide explicit labels, field-level errors and an error summary that moves focus to the invalid control. Announce asynchronous validation without repeatedly interrupting typing. Keep keyboard focus stable when controls change. Offer keyboard alternatives to drag-and-drop. Use text and icons in addition to colour for rule states.
+
+Treat the explanation panel as a shared component with compact and expanded states. For PPO implementation, update the living design register, component catalogue, consumer bindings, guide content and state fixtures. Missing visual references and stale reviews remain visible. No page or component review is conferred by this report.
+
+## 4. Conflict resolution, dependencies and manual overrides
+
+### 4.1 Formal execution model
+
+Let `F` be frozen facts, `R` a sealed release, `C` a frozen cost basis, `O` an override set and `P` versioned execution policies. The engine computes:
+
+```text
+contributions = evaluate_rules(F, R)
+base = resolve_and_round(contributions, P)
+effective_quantities = apply_overrides(base, O, P)
+priced = calculate_cost_and_price(effective_quantities, C, P)
+milestones = derive_milestone_proposals(F, priced, P)
+result = validate(priced, milestones, F, O, P)
+```
+
+The same normalized inputs produce the same semantic result. Actor and timestamp fields belong to the evidence envelope and may differ between otherwise identical runs.
+
+No current time, randomness, network access or unversioned mutable lookup is permitted in these functions. Supply the business date, timezone, calendar and exchange-rate basis as inputs.
+
+### 4.2 Contributions and identity
+
+A contribution identifies its rule version, stable action ID, scoped target, resolution group, unit, exact value and trace. The target includes option, area/system, equipment instance, internal product, intended use and allocation context. SKU alone is insufficient.
+
+Use separate identities for:
+
+- **Contribution identity:** the particular rule/action invocation in a run.
+- **Semantic output identity:** the durable purpose to which manual intent can attach.
+- **Display row identity:** the projection used in the current UI.
+- **External line identity:** the destination-specific record mapping.
+
+Aggregation may merge several contributions into one display row. It must preserve their identities and explanations. The same product serving two equipment instances should remain distinguishable even when a procurement view later aggregates it.
+
+### 4.3 Resolution policies
+
+| Policy | Interpretation | A=5, B=10 |
+|---|---|---:|
+| SUM | Independent requirements | 15 |
+| MAX_REQUIREMENT | Minimum requirements for the same purpose | 10 |
+| UNIQUE | Exactly one matching alternative allowed | Conflict |
+| HIGHEST_PRIORITY | Declared exception overrides a general requirement | Winner’s value |
+| ANY_EQUAL | Multiple matches permitted only when values agree | Conflict |
+
+Hit policies are an established decision-table concept. PPO’s numerical rule priority is an explicit local semantic choice, not an assertion that every DMN engine implements the same notion of priority. [Decision-table hit policies](https://docs.camunda.io/docs/8.8/components/modeler/dmn/decision-table-hit-policy/).
+
+For highest-priority groups, larger numbers win. Equal highest-priority matches are a conflict, even if a stable UUID sort could choose a repeatable winner. Deterministic selection is not the same as justified business precedence.
+
+The compiler requires a consistent policy, target type and unit within each resolution group. Mixing SUM and HIGHEST_PRIORITY for the same group is invalid. Static overlap analysis catches simple contradictions and obvious overlaps; arbitrary numeric predicates may still require runtime conflict detection.
+
+### 4.4 Modifier sequencing
+
+Replace unconstrained “multiply the current line” actions with named, versioned modifier phases. Define whether factors compound, whether additions are before or after factors, whether modifiers apply to one scope or a whole group, and how caps/floors behave.
+
+For example:
+
+```text
+resolved base quantity
+→ declared installation allowances
+→ quantity quantization
+→ manual quantity overlay
+→ unit costs and line extensions
+→ commercial policy and explicit price overlay
+→ final validation
+```
+
+An exclusive product selection is different from a quantity override. A removal/suppression rule must explicitly identify the output purpose it suppresses and its precedence. Avoid a global “remove SKU” action that can erase unrelated demand.
+
+### 4.5 Three-valued conditions and errors
+
+Predicate results are TRUE, FALSE or UNKNOWN. Invalid types, forbidden units and failed arithmetic are errors, not additional truth values.
+
+| Operation | Semantics |
+|---|---|
+| ALL | FALSE if any child false; otherwise UNKNOWN if any unknown; otherwise TRUE |
+| ANY | TRUE if any child true; otherwise UNKNOWN if any unknown; otherwise FALSE |
+| NOT | TRUE↔FALSE; UNKNOWN remains UNKNOWN |
+| IS_KNOWN | Explicitly evaluates whether the fact’s value state permits use |
+
+Empty ALL/ANY groups are rejected in authoring even though some mathematical definitions assign them identities. An unconditional rule uses a visible constant predicate. Required unknowns block receiving or trigger an explicitly approved allowance policy; they never disappear as false conditions without explanation.
+
+For collection predicates, declare whether zero matching instances is meaningful. A rule about all selected equipment must not accidentally pass for an empty equipment selection unless that behaviour is explicitly intended.
+
+### 4.6 Dependency graph
+
+Initial rules read frozen facts and emit contributions once. Generated parts are not fed back into the same matching phase. This eliminates rule-chaining cycles in that phase.
+
+Derived facts use statically declared dependencies. Publication performs a topological sort; undefined references, self-dependencies and cycles are errors. Preserve the graph and resolved order with the release’s compilation evidence. The graph algorithm is linear in vertices plus edges.
+
+Cross-stage dependencies are allowed only in the declared forward direction. If labour depends on the manually resolved BOM, labour evaluation is a later stage. Materials may not then depend on that labour result. Milestone dependencies form a separately validated graph.
+
+```mermaid
+flowchart LR
+    F[Frozen input facts] --> D[Derived facts]
+    D --> Q[Material contributions]
+    Q --> R[Resolution and quantity rounding]
+    R --> O[Manual quantity overlay]
+    O --> L[Optional labour from resolved quantities]
+    L --> C[Cost and pricing]
+    C --> M[Milestone proposals and final validation]
+```
+
+“Repeat until stable” and arbitrary fixed-point evaluation are excluded. An iteration cap would stop a crash but would not establish a meaningful or deterministic business result.
+
+### 4.7 Persistent manual intent
+
+Maintain a generated base, an append-only override history and an effective projection. A user deleting an automatic row creates a suppression event; it does not delete calculation evidence.
+
+| Override | Meaning |
+|---|---|
+| SET_QUANTITY | Explicit absolute replacement quantity |
+| SUPPRESS_LINE | Exclude a semantic output from the effective result |
+| ADD_MANUAL_LINE | Add a independently identified manual item |
+| SET_SELL_PRICE | Replace an authorized commercial value |
+| REVOKE_OVERRIDE | Stop applying a previous override while retaining its history |
+
+Every event records stable target, base run, base value/hash, sequence, reason and server actor/time. A SET operation is not a DELTA operation. Do not silently reinterpret absolute quantities as adjustments on rebase.
+
+On reload, display the saved run and saved override projection. On explicit recalculation, compare old generated base, current manual choice and new generated base:
+
+| Change | Outcome |
+|---|---|
+| Compatible target and unchanged basis | Carry forward the user choice |
+| New generated quantity or policy | Retain the choice, mark basis changed, require disposition before receiving |
+| Target disappears | Mark orphaned; do not silently create a manual item |
+| Product/unit/scope changes | Require explicit remapping or a new manual contribution |
+| Suppressed line returns with same meaning | Preserve suppression |
+| Action changes meaning | Use a new semantic identity or invalidate prior bindings |
+
+Hard adopted constraints apply after the overlay. A proposed manual choice that violates one remains visible with a blocked receiving state and required resolution. The engine must neither silently discard the choice nor accept it as authority to bypass an engineering requirement.
+
+### 4.8 Commercial model
+
+Cost, proposed sell, approved sell, quoted value and accepted contract value are distinct states. Cost source refresh is an explicit new basis. A rule change cannot update an accepted price.
+
+```text
+gross_profit = sell_ex_tax - included_cost
+gross_margin = gross_profit / sell_ex_tax
+sell_for_target_margin = included_cost / (1 - target_margin)
+sell_for_markup = included_cost × (1 + markup)
+```
+
+The target-margin input must be below 1. Zero sell makes margin undefined. Negative gross profit is a possible commercial result that needs policy handling; it must not be hidden by clamping to zero.
+
+Define included cost categories, freight/duty treatment, labour burden, FX conversion direction, allowances, discount basis and tax treatment. An auditable pricing waterfall shows base cost, additions, target policy, discounts, manual price choice and resulting margin. A target margin is a proposal mechanism, not an independent authorization to quote.
+
+### 4.9 Labour and scheduling semantics
+
+Distinguish person-hours, crew-hours, elapsed duration and rate category. Four people working two hours is eight person-hours; it is not eight elapsed hours. Equipment setup can include fixed effort, per-unit effort, per-area effort and complexity factors. Each component needs a defined basis and separate contribution identity.
+
+Labour estimates may inform project budgets. They are not actual attendance, approved timesheets, payroll or invoiced labour. A schedule derived from labour additionally needs crew capacity, calendars, resource availability and sequencing. The CCE can propose milestones without becoming the scheduling system.
+
+### 4.10 Milestones and billing allocations
+
+Every milestone needs a stable key, purpose, anchor, signed offset, calendar mode, timezone and dependencies. “Fourteen days before delivery” is offset -14 from the delivery anchor. An unresolved anchor produces an unresolved date.
+
+Keep operational milestones and billing schedule entries separate. Adding an inspection does not implicitly move 15% into a deposit. Billing allocation changes use their own authorized policy and must preserve the total contractual allocation.
+
+Use integer basis points for percentage allocations and currency minor units for the final allocation algorithm. One possible policy is largest-remainder allocation with a stable tie-breaker; another is an explicit remainder line. Select one and test exact conservation. Independent rounding of every percentage can over-allocate the contract total.
+
+## 5. Third-party integration architecture
+
+### 5.1 Ownership and handover
+
+The canonical CCE manifest is provider-neutral. An approved handover projects it into the destination’s transaction model. MYOB is PPO’s intended ERP authority; Xero and QuickBooks are illustrative adapter targets.
+
+MYOB’s contract-based REST API operates through configured endpoint entities and versions. Verify the actual environment, company keys, supported entities, command semantics and permissions before implementing a write adapter. Do not manufacture endpoint names from a generic ERP model. [MYOB contract-based REST API](https://enterprise-support.myob.com/adv/contract-based-rest-api).
+
+```text
+Frozen calculation
+→ native estimate version
+→ applicable commercial acceptance
+→ authorized handover intent
+→ transactional outbox
+→ destination adapter
+→ external receipt and reconciliation
+```
+
+### 5.2 Canonical manifest
+
+Use stable internal identities, exact source references and decimal strings. Separate generated material demand, labour budget, commercial lines, milestone proposals and billing schedule.
+
+```json
+{
+  "schemaVersion": 1,
+  "companyId": "synthetic-company",
+  "estimateVersionId": "synthetic-estimate-version-4",
+  "snapshotId": "synthetic-cce-snapshot",
+  "currency": "AUD",
+  "taxBasis": "EXCLUSIVE",
+  "materials": [{
+    "lineId": "brackets",
+    "productId": "synthetic-product-bracket",
+    "quantity": "33",
+    "unit": "each",
+    "unitCost": "2.00",
+    "extendedCost": "66.00",
+    "commercialLineId": "brackets-sale"
+  }],
+  "labour": [{
+    "lineId": "installation",
+    "labourCode": "INSTALLATION",
+    "personHours": "2",
+    "unitCost": "50.00",
+    "extendedCost": "100.00",
+    "commercialLineId": "installation-sale"
+  }],
+  "commercialLines": [
+    {"lineId":"brackets-sale","quantity":"33","unitSell":"2.50","extendedSell":"82.50"},
+    {"lineId":"installation-sale","quantity":"2","unitSell":"62.50","extendedSell":"125.00"}
+  ],
+  "commercial": {
+    "costTotal": "166.00",
+    "sellTotalExTax": "207.50",
+    "grossProfit": "41.50",
+    "grossMargin": "0.20"
+  },
+  "milestones": [{
+    "key": "site-inspection",
+    "anchor": "delivery",
+    "offsetDays": -14,
+    "calendarMode": "CALENDAR_DAYS",
+    "dependsOn": []
+  }],
+  "billingSchedule": [
+    {"key":"deposit","allocationBasisPoints":1500},
+    {"key":"delivery","allocationBasisPoints":8500}
+  ]
+}
+```
+
+These are readable synthetic identifiers, not actual UUID fixtures. The adapter validates the real production DTO independently. A BOM with hundreds of components can correspond to a single fixed-price commercial line. Preserve demand-to-commercial-line allocation so components are not invoiced again underneath an already priced package.
+
+### 5.3 Destination mappings
+
+| Canonical field | Xero Accounting | QuickBooks Online |
+|---|---|---|
+| Company context | Tenant ID | Realm ID |
+| Customer | `Contact.ContactID` | `CustomerRef.value` |
+| Product/service | Optional mapped `ItemCode` | `SalesItemLineDetail.ItemRef.value` |
+| Quantity | `LineItems[].Quantity` | `SalesItemLineDetail.Qty` |
+| Unit sell | `UnitAmount` | `SalesItemLineDetail.UnitPrice` |
+| Line sell | Validated line amount | `Line[].Amount` |
+| Revenue/tax | Company-mapped account and tax fields | Company item/account configuration and applicable tax fields |
+| Update identity | Provider record identity and supported concurrency/reconciliation | Record `Id` and current `SyncToken` |
+
+Invoice APIs describe the destination-specific fields; tax and currency behaviours require contract tests for the intended company and jurisdiction. [Xero Invoice API](https://developer.xero.com/documentation/api/accounting/invoices), [QBO Invoice API](https://developer.intuit.com/app/developer/qbo/docs/api/accounting/all-entities/invoice).
+
+Example Xero projection, with intentionally unresolved mappings:
+
+```json
+{
+  "Invoices": [{
+    "Type": "ACCREC",
+    "Contact": {"ContactID": "<resolved-contact-uuid>"},
+    "Status": "DRAFT",
+    "CurrencyCode": "AUD",
+    "LineAmountTypes": "Exclusive",
+    "Reference": "<authorized-handover-reference>",
+    "LineItems": [{
+      "Description": "Cable brackets",
+      "Quantity": 33,
+      "UnitAmount": 2.5,
+      "AccountCode": "<mapped-revenue-account>",
+      "TaxType": "<mapped-tax-type>"
+    }]
+  }]
+}
+```
+
+Example QBO sales-line shape:
+
+```json
+{
+  "CustomerRef": {"value": "<resolved-customer-id>"},
+  "Line": [{
+    "Description": "Cable brackets",
+    "Amount": 82.5,
+    "DetailType": "SalesItemLineDetail",
+    "SalesItemLineDetail": {
+      "ItemRef": {"value": "<resolved-item-id>"},
+      "Qty": 33,
+      "UnitPrice": 2.5
+    }
+  }]
+}
+```
+
+These are shape examples, not dispatchable documents. Resolve required company-specific dates, accounts, taxes, terms, currency and mappings first. Xero supports DRAFT status; do not assume an equivalent non-posting preview exists in every invoice API. Internal cost and margin must not be placed in customer-facing invoice text.
+
+The internal exact decimal representation must be converted to each provider’s accepted numeric format under that adapter’s precision rules. Validate the serialized request and returned result. Never assume all internal precision survives a remote API.
+
+### 5.4 Mapping registry
+
+Maintain a versioned mapping keyed by local company, connection, external company, entity type and stable internal ID. Retain external ID, validity/status, verification time and source evidence. A matching display name is insufficient to establish identity.
+
+Missing or ambiguous customer, product, tax or account mappings hold the handover. Do not create products or customers as an implicit side effect of invoice preparation. Such creation requires a separately supported command and reconciliation contract.
+
+### 5.5 Delivery ledger and outbox
+
+Reuse PPO’s outbox mechanism, extending its domain contract through reviewed changes. Keep immutable intent separate from mutable delivery scheduling and append-only attempt history.
+
+Each intent records event ID, source snapshot, approval/handover reference, destination connection/company, adapter version, mapping revision, exact payload/hash and logical idempotency key. A unique key covers destination, company, accepted handover, document purpose and billing instalment.
+
+```text
+Pending → Claimed → Submitted → Confirmed
+                      ↓
+                 OutcomeUnknown
+                      ↓
+     ReconciledConfirmed / ReconciledAbsent / NeedsReview
+```
+
+Claim work in a short transaction with a lease and fencing token. Perform the network call outside the transaction. A worker that loses its lease cannot finalize a later attempt using an old token. Lease expiry does not establish that a remote operation failed.
+
+Preserve the exact outbound payload across retries. Use bounded backoff and jitter for transient failures, respect provider throttling guidance, and place mapping/validation failures into actionable holds. A timeout after submission enters OutcomeUnknown. Reconcile before creating a replacement transaction.
+
+Provider idempotency is supplementary. Xero documents a six-minute idempotency-key retention period, so durable local reconciliation is still required beyond that window. [Xero idempotency](https://developer.xero.com/documentation/guides/idempotent-requests/idempotency/).
+
+### 5.6 Inbound synchronization and divergence
+
+Verify webhook authenticity using the provider’s supported mechanism, deduplicate deliveries, retain minimal receipt metadata and process out-of-order events safely. Use notifications to trigger an authorized current-state read where appropriate; a webhook payload is not automatically a complete authoritative record.
+
+Reconcile remote customer, currency, line mappings, totals, status and version. Retain external changes as divergence against the original handover. Do not rewrite historical estimate evidence to match an edited invoice. Corrections follow the owning financial system’s supported correction/credit/void workflow.
+
+### 5.7 Project and milestone deployment
+
+A project adapter consumes an accepted project-handover manifest containing source version, milestone keys, dates/anchors, owners, dependencies, calendars, labour budgets, scope and exclusions.
+
+Deploy in two passes: create/reconcile tasks and retain external IDs, then create dependency edges using confirmed IDs. Asana’s APIs provide task creation and a separate dependency operation; milestone tasks represent a point in time. [Create task](https://developers.asana.com/reference/createtask), [milestone semantics](https://developers.asana.com/go/reference/stories), [set dependencies](https://developers.asana.com/go/reference/adddependenciesfortask).
+
+An inspection with three days of preparation needs a preparation task plus a milestone. Labour hours do not automatically define task duration. External progress updates affect project execution state, not the original estimate. Accepted scope changes become variations with their own identity and authorization.
+
+### 5.8 Provider contract inventory and evidence status
+
+PPO's intended ERP family is already identified as **MYOB Acumatica**. The unresolved issue is the actual tenant contract. MYOB documents a contract-based API whose entities and actions belong to a named, versioned endpoint; selecting a familiar entity name from another ERP or another Acumatica deployment is insufficient evidence. [MYOB contract-based REST API](https://enterprise-support.myob.com/adv/contract-based-rest-api).
+
+| Contract item | Required retained evidence | Current status |
+|---|---|---|
+| Provider instance and company | Approved instance identifier; external tenant/company/branch keys; internal company mapping | Not inspected |
+| Endpoint contract | Actual endpoint name/version and exported entity/field/action definitions | Not inspected; no endpoint invented |
+| Authentication | Supported integration identity, scopes, token/session lifecycle and revocation | Not tested |
+| Item/customer mapping | Approved external entity IDs, status, unit conversion and scoped mapping version | Proposed contract only |
+| Command semantics | Create versus update, business action, validation side effects and allowed initial status | Must be verified per entity/action |
+| Concurrency | Provider version/token semantics; conditional update behaviour | Must be tested per provider |
+| Unknown outcome | Recoverable operation/correlation key, bounded search/readback and escalation path | In-memory state model passed; provider behaviour untested |
+| Amount reconciliation | Currency, unit precision, tax/account mapping, line/total rounding and allocation | Synthetic arithmetic passed; destination reconciliation untested |
+| Limits and failure policy | Pagination, throttling, retry headers, partial response and error classification | Provider/environment verification pending |
+
+Xero's documented idempotency cache lasts six minutes. Consequently, a durable PPO intent cannot rely on that cache for recovery after an extended outage: preserve original identity and reconcile before issuing another create request. This is an architectural deduction from the provider's bounded retention, not a claim that an adapter was tested. [Xero idempotent requests](https://developer.xero.com/documentation/guides/idempotent-requests/idempotency/).
+
+The QuickBooks payload remains an illustrative mapping. Its developer portal returned a JavaScript bootstrap page during this revision's direct retrieval; no new claim of a verified realm contract, current complete schema or sandbox execution is made. Validate the actual Invoice contract, entity references and update token before adapter implementation. [QuickBooks Invoice reference](https://developer.intuit.com/app/developer/qbo/docs/api/accounting/all-entities/invoice).
+
+Asana's task-creation contract requires a workspace, which can be supplied through a project or parent association, and the `tasks:write` scope. Store the destination workspace/project mapping explicitly; task creation and dependency deployment remain separate reconciliation units. No project tool is selected for PPO by this illustration. [Asana task creation](https://developers.asana.com/reference/createtask).
+
+The proposed CCE-to-ERP handover primarily traces to **IF-02** for item/cost inputs and **IF-03** for approved commercial conversion. **IF-05** remains the blueprint's initially read-only financial interface; illustrative invoice payloads here do not authorize invoice writes. **IF-06** preserves SharePoint document ownership. This report does not alter those interface authorities.
+
+## 6. Application commands and API contracts
+
+### 6.1 Proposed command surface
+
+The routes below are proposed interface names, not existing PPO endpoints. Reuse the application’s established authentication, Origin checks, body bounds, command envelopes and original-operation recovery.
+
+| Command | Purpose | Principal concurrency basis |
+|---|---|---|
+| SaveRuleDraft | Recoverable incomplete authoring | Expected draft revision |
+| CreateRuleVersion | Compile and freeze a semantic version | Rule root version and predecessor |
+| ValidateRelease | Validate exact intended release bundle | Bundle hash and engine build |
+| PublishRelease | Seal and optionally activate release | Expected scope head generation |
+| EvaluateEstimate | Persist a frozen complete/blocked calculation | Input/release/override signature |
+| CompareEstimateRun | Show differences without adoption | Exact run IDs |
+| AdoptEstimateRun | Create native estimate successor | Exact run and expected native predecessor |
+| RecordOverride | Append manual intent | Expected override sequence/base run |
+| RebaseOverrides | Resolve old/new generated base | Explicit source and destination runs |
+| ResolveOperation | Recover original accepted/failed operation | Original operation identity |
+
+Authorization capability names must be aligned with PPO’s actual permission model during implementation. This document does not allocate new production grants.
+
+### 6.2 Evaluation request
+
+```json
+{
+  "operationId": "<uuid>",
+  "optionId": "<uuid>",
+  "estimateId": "<uuid-or-null-before-first-costing>",
+  "expectedEstimateVersionId": "<uuid-or-null>",
+  "sourceRevisionIds": ["<exact-revision-uuid>"],
+  "releaseId": "<sealed-release-uuid>",
+  "overrideRevision": 12,
+  "businessDate": "2026-10-12"
+}
+```
+
+The client identifies intended sources; the server loads and authorizes their actual content. Do not accept a caller-supplied actor, approval flag, trusted cost total or unrestricted CFO as authoritative production input.
+
+An asynchronous response may return 202 with a job ID. A completed result returns a run ID, calculation signature, READY/BLOCKED state, bounded summary and diagnostics. A failed worker job is distinct from a domain-blocked immutable run.
+
+### 6.3 Adoption request
+
+```json
+{
+  "operationId": "<uuid>",
+  "runId": "<exact-ready-run-uuid>",
+  "expectedEstimateVersionId": "<uuid-or-null>",
+  "expectedSourceVectorHash": "<sha256>",
+  "reason": "Adopt reviewed configuration result."
+}
+```
+
+The server rereads the run, verifies the source vector and constructs the native successor itself. It must not trust a browser-submitted copy of the final manifest. Same operation/same payload recovers the original result after current authorization; same operation/different payload returns a conflict.
+
+### 6.4 Error taxonomy
+
+| Code | Meaning | User recovery |
+|---|---|---|
+| RULE_SCHEMA_INVALID | Structural language error | Correct highlighted fields |
+| FACT_TYPE_MISMATCH | Operator/value incompatible with dictionary | Select valid operator/value |
+| FACT_UNRESOLVED | Required business value unknown | Resolve or explicitly allow under policy |
+| FORMULA_FORBIDDEN_TOKEN | Unsupported expression syntax | Use allowed formula controls |
+| UNIT_MISMATCH | Incompatible dimensions or units | Correct binding/conversion |
+| DIVIDE_BY_ZERO | Invalid arithmetic domain | Correct inputs or rule boundary |
+| RULE_CONFLICT | Resolution group lacks a valid winner | Correct scope or priority policy |
+| DEPENDENCY_CYCLE | Invalid calculation graph | Remove cyclic edge |
+| OVERRIDE_REVIEW_REQUIRED | Manual intent has changed basis | Review old/new comparison |
+| STALE_SOURCE | Relevant source changed | Explicitly recalculate/compare |
+| ESTIMATE_VERSION_CONFLICT | Another edit advanced the estimate | Compare against current successor |
+| OPERATION_PAYLOAD_CONFLICT | Reused identity with changed content | Retain original operation and start a new one deliberately |
+| COMPUTATION_LIMIT | Bounded execution budget exceeded | Simplify/split rules or review measured limits |
+| EXTERNAL_OUTCOME_UNKNOWN | Remote write may have succeeded | Reconcile original intent |
+
+Use field paths, node IDs and trace IDs rather than only prose. Keep internal stack traces and private cost details out of unauthorized responses.
+
+## 7. Security, performance and operation
+
+### 7.1 Authorization and audit
+
+Check workspace/company scope, current user authority, rule ownership where applicable, source visibility and permission to view costs. Historical access must recheck the original saved sources; access to a newer site or option does not grant access to an older hidden basis.
+
+Use a migration-owner role for DDL. Runtime roles must not own tables, disable triggers, truncate evidence or bypass RLS. Composite foreign keys prevent invalid relationships but do not grant row visibility. RLS is an optional additional boundary that must be tested against the actual service role and connection-pool transaction handling. [PostgreSQL row security](https://www.postgresql.org/docs/16/ddl-rowsecurity.html).
+
+Audit authoring, publication, activation, override disposition, evaluation adoption and outbound handover separately. A validation report is not an approval event. Keep full facts and costs in permission-controlled evidence; operational logs should carry identifiers, hashes, sizes, timings and bounded diagnostics.
+
+### 7.2 Resource limits
+
+Initial engineering limits below are proposed test inputs, not measured capacity promises:
+
+| Resource | Initial bound |
+|---|---:|
+| Formula text | 2,048 ASCII characters |
+| Formula tokens / AST nodes | 256 each |
+| AST depth | 32 |
+| Decimal input | 18 integer digits, 12 fractional digits |
+| Intermediate numerator/denominator | 512 decimal digits each |
+| Rule condition depth | 8 |
+| Conditions per rule | 100 |
+| Actions per rule | 100 |
+| Rules per release | 1,000 |
+| Emitted contributions per run | 10,000 |
+| Retained run evidence | 2 MiB in the reference design |
+
+These ceilings are independent rejection limits, not a promise that every maximum can be combined. Measure realistic and worst-case fixtures before setting production deadlines, concurrency, queue length and memory budgets. The run evidence limit may be reached before the contribution limit.
+
+### 7.3 Performance plan
+
+Measure cold/warm compilation, CFO materialization, evaluation, resolution, evidence serialization, database commit and UI rendering separately. Use representative fixtures with wide collections, nested predicates, many nonmatching rules and large traces.
+
+Record p50/p95/p99, throughput, timeout rate, peak worker memory, payload bytes, database query count and queue wait. A candidate interaction target is sub-second ordinary preview after debounce, but an accepted service objective requires a defined workload and measured environment.
+
+Cache immutable compiled releases by workspace/company, release hash and engine build. Fact-specific results additionally require full calculation signature and authorization-aware retrieval. Never share mutable maps across users. Retire cache entries by capacity/retention policy; activation changes which key is selected rather than mutating an existing cached release.
+
+### 7.4 Observability and recovery
+
+Correlate HTTP request, operation, evaluation job, run, adoption, outbox intent and external receipt identities. Metrics distinguish domain blocks from infrastructure failures. Alert on sustained worker failures, publication failures, calculation-limit frequency, repeated source conflicts and unresolved external outcomes.
+
+After application or database restart, recover saved runs, original operation receipts, override state and pending delivery intents. Historical display must not depend on an available evaluator process. A broken or withdrawn engine build should block new calculations while retained saved results remain readable under current permissions.
+
+### 7.5 Retention and historical engine builds
+
+Retain the engine build/source needed to explain historical semantics, but do not automatically execute an old vulnerable runtime to display a quote. Reproduction in a controlled test environment is separate from historical retrieval. Corrections create new records and explicit links to prior evidence.
+
+Define retention for authoring drafts, blocked runs, accepted runs, audit logs and integration attempts independently. An accepted snapshot’s reachable evidence cannot be deleted merely because a generic run-retention period elapsed.
+
+## 8. Verification and acceptance matrix
+
+### 8.1 Required acceptance catalogue
+
+The following are local CCE test labels, not new parent requirement IDs.
+
+| Test | Scenario | Required observable result |
+|---|---|---|
+| CCE-DB-01 | Cross-company rule/version/member/run link | Database rejects the relationship |
+| CCE-DB-02 | Wrong predecessor or skipped rule version | Database rejects invalid lineage |
+| CCE-DB-03 | Update/delete/truncate immutable evidence | Refused for runtime role and by retained guards |
+| CCE-DB-04 | Member insert races with sealing | No member can appear after sealed membership hash |
+| CCE-DB-05 | Two release activations use same expected head | One succeeds; other conflicts |
+| CCE-DB-06 | Adopt blocked run | Refused without native estimate successor |
+| CCE-DB-07 | Same operation, same/different content | Original recovery / explicit payload conflict |
+| CCE-DB-08 | Failure after native successor but before receipt | Entire transaction rolls back |
+| CCE-DB-09 | Old estimate after rule/cost/catalogue change | Original facts, totals and trace remain unchanged |
+| CCE-DB-10 | Repeatable-read assembly/publication race | Serialization/conflict handling preserves membership integrity |
+| CCE-LANG-01 | Decimal arithmetic and repeating fractions | Exact expected numerator/denominator |
+| CCE-LANG-02 | Forbidden syntax and unregistered symbols | Rejected before evaluation |
+| CCE-LANG-03 | Huge/deep expressions and long literals | Bounded refusal, no host-process crash |
+| CCE-LANG-04 | Invalid dimensions and scope | Publish/evaluation diagnostic identifies cause |
+| CCE-LANG-05 | Unsupported ABI or AST type | Fail closed, no compatibility guess |
+| CCE-RULE-01 | ALL/ANY/NOT with unknowns | Documented three-valued truth table |
+| CCE-RULE-02 | SUM/MAX/UNIQUE/priority collisions | Declared result and complete suppression trace |
+| CCE-RULE-03 | Equal highest priorities | Conflict, never arbitrary winner |
+| CCE-RULE-04 | Permuted rule input order | Same semantic output/hash |
+| CCE-RULE-05 | Direct/indirect dependency cycle | Publication refused with cycle path |
+| CCE-RULE-06 | Large acyclic expansion | Bounded output refusal |
+| CCE-OVR-01 | Manual suppression then reload | Suppression retained; base trace preserved |
+| CCE-OVR-02 | Rebase changed generated quantity | User value retained and review required |
+| CCE-OVR-03 | Orphaned or changed-unit target | Explicit unresolved state |
+| CCE-OVR-04 | Override breaches adopted hard constraint | Proposed value retained; receiving blocked |
+| CCE-UI-01 | Change numeric field to text | Incompatible operator/value reset atomically |
+| CCE-UI-02 | Stale asynchronous validation arrives last | Old result ignored |
+| CCE-UI-03 | Keyboard/mobile authoring and explanation | Complete task without hover or drag-only controls |
+| CCE-UI-04 | Lost accepted response and reload | Original operation recovered without duplicate |
+| CCE-FIN-01 | Margin versus markup and zero sell | Correct formula and explicit undefined margin |
+| CCE-FIN-02 | Quantity/price/tax rounding boundaries | Exact independently specified amounts |
+| CCE-FIN-03 | Billing allocation of odd minor units | Exact conservation of contract total |
+| CCE-INT-01 | Provider accepts then connection drops | OutcomeUnknown; original reconciled before retry |
+| CCE-INT-02 | Duplicate/out-of-order webhook | Idempotent state reconciliation |
+| CCE-INT-03 | External tax/amount differs | Hold with explainable difference |
+| CCE-INT-04 | Worker lease expires during HTTP call | Stale worker cannot finalize new lease |
+| CCE-REC-01 | App/database restart | Original run, override, receipt and intent recover |
+| CCE-SEC-01 | Historical permission revoked | Saved private source/cost remains inaccessible |
+| CCE-UPG-01 | Upgrade from populated older histories | Original rows, hashes, receipts and issued bytes preserved |
+
+Property tests should include permutation invariance, exact conservation of totals, no effect from nonmatching independent rules, idempotent original-operation recovery and replay of frozen inputs. Use independently calculated fixtures rather than tests that restate the implementation algorithm.
+
+Fuzz the tokenizer/compiler with bounded arbitrary input. The expected outcome is a valid bounded AST or a typed refusal; never host execution, excessive resource use or a process crash. A small handwritten language still requires adversarial testing and independent review.
+
+### 8.2 Executed validation and its boundaries
+
+Validation was performed on 12 October 2026 against repository commit `ba1f4e3c155ce6a45dc15e87689de01d42a47e1f`, using Node.js 24.21.0 and PostgreSQL 16.15 on Windows. All database activity used a new task-owned cluster bound to `127.0.0.1:55478`. Existing application databases were not used. Test dependencies were installed in a temporary directory, outside the repository.
+
+Use these evidence states consistently:
+
+- **PASS — bounded:** the stated executable scenario passed in the named environment. It proves only the stated boundary.
+- **PARTIAL:** a component or synthetic model passed, but its complete application or provider path remains unproved.
+- **NOT EXECUTED:** a testable obligation has no execution evidence in this report.
+- **OPEN DECISION:** an accountable owner must select the intended behaviour before a meaningful acceptance test can be written.
+
+| Evidence set | Actual result | What it establishes | What it does not establish |
+|---|---|---|---|
+| Native schema installation | All 76 registered migrations through 0077 applied; candidate CCE DDL applied | SQL parses and creates its keys, indexes and triggers against the current native parent schema | Migration-registry integration, all historical upgrade starting points or production deployment |
+| Current populated installation | 369 native tables, 646 rows, three estimate versions and the 76-row migration ledger preserved exactly | Candidate DDL does not rewrite retained rows in this populated current-baseline clone | Earlier historical upgrade paths, document bytes outside the database or every possible native state |
+| Database harness | 24 scenarios passed | Retention guards, scoped relationships, lineage, sealing, hashes, adoption checks, rollback and specific concurrent-write outcomes | Full command authorization, original-operation recovery or a complete application RLS deployment |
+| Native command probe | Five scenarios passed | Existing PPO create/save/read commands remain usable; the CCE guard accepts an exact native successor; stale and unrelated-workspace operations are rejected | New CCE adoption endpoint or atomic native save plus CCE snapshot plus receipt/outbox |
+| Native JSON Schema 2020-12 | 18 positive fixtures and 26 negative fixtures passed; three semantic gaps demonstrated | All five action shapes and all 12 condition alternatives are structurally exercised with Ajv 8.17.1 strict mode and formats | Business semantics, dictionary correctness or certification of every JSON Schema feature |
+| Expression checks | 20 positive, 43 refusal and 220 generated checks passed; strict TypeScript check passed | Bounded arithmetic implementation and its exercised syntax/error cases | Complete security audit, process isolation or exhaustive malformed-input coverage |
+| Independent arithmetic oracle | 5,000 cases matched Python `fractions.Fraction` exactly | Independent numerator/denominator agreement across generated signed decimal arithmetic | Approved commercial formulas or production throughput |
+| Bounded workflow | 34 scenarios passed, including 18 ALL/ANY truth combinations and three NOT cases | Material quantity, selected conflict policies, unit checks, rounding, overrides, deterministic ordering and a delivery-state model | Full action catalogue, collection semantics, frontend or a real integration adapter |
+| Persisted workflow | Four scenarios passed | Stored published rule → calculation → frozen run → atomic fixture adoption → reopened explanation; blocked adoption; retained history; override reload | Full native CCE command integration; fixture-parent adoption is distinct from native service adoption |
+| Worked commercial examples | Eight scenarios passed | Exact arithmetic for proportional/commenced spans, margin/markup, billing-cent conservation, labour effort and a calendar-day offset | Operational rates, tax, business calendars, staffing or approved payment terms |
+| Database restart | Twelve table-set digests preserved across an actual PostgreSQL stop/start | Retained native versions, CCE versions, runs and snapshots survive this clean restart | Crash recovery, backup restore, application restart, worker leases or external delivery recovery |
+
+Do not combine these counts into a percentage of “production readiness”. A large arithmetic test count does not compensate for an unimplemented authorization or receiving boundary.
+
+### 8.3 Requirement-to-enforcement traceability
+
+The `TR-CCE-*`, `DB-*`, `WF-*`, `NATIVE-*`, `E2E-*` and `FIN-*` identifiers below are local report/evidence labels. They do not replace or rename PPO parent IDs. Parent mappings follow BP-04: EST-03 covers immutable estimate/option lineage; EST-04 cost provenance; EST-05 pricing/precision; EST-06 specialist configuration; EST-07 approval authority; EST-08/09 controlled handover and reconciliation.
+
+| Local invariant / parent context | Persistence or service enforcement | Command / diagnostic | Executed evidence | Remaining acceptance / owner role |
+|---|---|---|---|---|
+| TR-CCE-01 Scoped identity / EST-03, EST-06 | Composite company/workspace FKs; authenticated service scope | Create rule/run; invalid relationship | DB-02, DB-12; NATIVE-05 | Cross-company permutations for every command and receipt; platform engineering |
+| TR-CCE-02 Exact version chain / EST-03, EST-06 | Version uniqueness and predecessor-number FK | Create successor; constraint refusal | DB-03 | Rule-author conflict UX and original-request recovery; CCE engineering |
+| TR-CCE-03 Historical immutability / EST-03, EST-06 | Update/delete/truncate guards; immutable native versions | Read exact version | DB-04, DB-15, DB-18; NATIVE-03; E2E-03 | Administrative retention and backup controls; platform operations |
+| TR-CCE-04 Complete published membership / EST-06 | Member insert changes parent generation; one-way sealing | Seal release; incomplete/incompatible rejection | DB-06–11, DB-19–20 | Validation evidence must be bound to actual compiler/fixtures; CCE engineering |
+| TR-CCE-05 Activation CAS / EST-06, EST-07 | Versioned head and expected-version UPDATE | Activate release; conflict on zero rows | DB-21 | Activation authorization, audit, rollback-to-prior-release command; product/platform |
+| TR-CCE-06 Typed authored rules / EST-02, EST-06 | Closed JSON Schema plus fact-dictionary semantic compiler | Validate; `RULE_SCHEMA_INVALID`, `OPERATOR_TYPE` | Schema suites; WF-02, WF-18–19 | Complete enum/range/collection/scope semantics; domain engineering |
+| TR-CCE-07 Safe exact formula / EST-05, EST-06 | Restricted AST, symbol map and rational arithmetic | Compile/evaluate; typed refusal | Expression suite; 5,000 oracle cases; WF-05–06 | Independent security review and isolated-worker failure injection; security/platform |
+| TR-CCE-08 Dimensional correctness / EST-04, EST-06 | Symbol dimensions and action output unit | Validate; `UNIT_MISMATCH` | WF-03 | Currency, area, volume, conversions and product-specific unit contracts; engineering |
+| TR-CCE-09 Unknown facts / EST-02, EST-06 | Explicit states and three-valued conditions | Evaluate; `FACT_UNKNOWN` | WF-04, WF-21, WF-31–32 | Assumption authority and empty collections; domain owner |
+| TR-CCE-10 Deterministic conflicts / EST-06 | Group key, policy, stable ordering; no arbitrary winner | Evaluate; `RULE_CONFLICT` | WF-07–11 | MAX_REQUIREMENT/ANY_EQUAL runtime implementation; CCE engineering |
+| TR-CCE-11 Dependency safety / EST-06 | Output/input separation; DAG validation | Publish; `DEPENDENCY_CYCLE` | WF-20, WF-33 | Cycle-path UI, complete milestone graph and expansion budgets; CCE engineering |
+| TR-CCE-12 Persistent override intent / EST-06 | Immutable override evidence and conservative basis hash | Rebase; `OVERRIDE_REBASE_REQUIRED` | WF-12–14, WF-23, WF-26, WF-30; E2E-04 | Authority, hard engineering constraints and orphan decisions; estimating/engineering |
+| TR-CCE-13 Complete frozen run / EST-03–06 | Immutable release, CFO, costs, policies, result and trace | Save evaluation; READY/BLOCKED | DB-12–13; E2E-01–03 | Full source-vector locks and compiler-build verification in real command; platform |
+| TR-CCE-14 Atomic receiving / EST-03, EST-06 | Native writer + CCE snapshot + lineage + receipt/outbox in one transaction | Adopt; stale/hash/context refusal | DB-14, DB-17, DB-23; E2E-01; native shape via NATIVE-02 | **New native CCE adoption command remains unimplemented**; estimating engineering |
+| TR-CCE-15 Original-operation identity / EST-03, EST-09 | Scoped request ID plus payload digest and platform receipt | Resolve original operation | DB-16, DB-22; delivery model WF-25 | Same/different payload recovery under actual API races; platform |
+| TR-CCE-16 Exact commercial amounts / EST-04, EST-05 | Versioned cost/pricing policies and quantization boundaries | Price; `MARGIN_INVALID`, precision hold | WF-15–17, WF-27–28; FIN-01–07 | Approved rates, freight/FX/discount/tax and zero-sell policy; Finance |
+| TR-CCE-17 Auditable explanation / EST-06, EST-08 | Stored conditions, substitutions, winners/losers, rounding and overrides | Read exact run | WF-01, WF-07; E2E-01 | Cost-redacted serializer, browser interaction and accessibility; product/platform |
+| TR-CCE-18 Unknown external outcome / EST-09, IF-03 | Durable delivery intent and reconciled original identity | Deliver/resolve; reconciliation required | In-memory state model WF-24–25 | Durable outbox, crash/lease tests and actual provider sandbox; integrations |
+| TR-CCE-19 Existing history preserved / EST-03 | Additive candidate schema and native immutable history | Install/upgrade | Current populated installation; NATIVE-03 | Full repository historical upgrade matrix and external issued bytes; database engineering |
+| TR-CCE-20 Recovery / EST-03, EST-09 | Durable rows, immutable hashes and owned restart | Recover exact history | Twelve table-set restart comparison | Crash/restore, worker/receipt/outbox recovery and accepted recovery targets; operations |
+
+### 8.4 Concrete concurrency schedules exercised
+
+**READ COMMITTED publication:** session A inserts a member while holding the release-row lock. Session B attempts sealing and is observed waiting on a PostgreSQL lock. A commits. B seals a release containing the committed member and updated generation. A member cannot join after sealing.
+
+**REPEATABLE READ publication:** B first establishes its snapshot; A then inserts a member and holds the parent update. B attempts sealing and waits. After A commits, B receives SQLSTATE `40001`. B rolls back; a fresh attempt seals the complete assembly. The service must retry the entire authorized transaction, including freshness checks, rather than reuse the old snapshot.
+
+**Competing activation:** two sessions use expected head version 1. The first commits version 2. The waiting update affects zero rows and cannot overwrite it.
+
+**Duplicate evaluation request:** two inserts use one scoped request ID. One commits; the other receives `23505`. This establishes uniqueness only. A real command must subsequently recover the original receipt and compare payload identity; a unique violation is not itself successful idempotent replay.
+
+**Competing adoption:** two transactions create candidate fixture-native successors for one run. Only one CCE adoption commits. The losing transaction receives a uniqueness refusal and rolls back its candidate native version; one adopted successor remains. The native production command must provide the equivalent atomic transaction around its additional authorization, lineage, receipt and outbox work.
+
+### 8.5 Release gates still required
+
+Before integrating the proposed language, review the ADR and implement a native CCE command slice with all existing source and operation-recovery checks. Before accepting a specific rule, obtain independent expected values and policy ownership. Before operational integration, verify the actual tenant contract and complete provider reconciliation tests. Before deployment, close the service-role, browser/accessibility, resource-isolation, performance, historical-upgrade and recovery obligations in this matrix.
+
+## 9. Implementation sequence and repository integration
+
+### 9.1 Candidate ADR
+
+**Title:** Restricted CCE rule language, immutable release and estimate adoption.
+
+**Context:** PPO needs maintainable configuration rules while preserving existing exact estimate and specialist evidence. Rule authors are domain experts, not arbitrary-code developers. Current TypeScript/PostgreSQL infrastructure and private synthetic scope remain.
+
+**Proposed decision:** implement a small typed condition/action language with exact arithmetic, immutable release membership and separate evaluation/adoption. Reuse current application authorization, receipts, outbox, identity and native estimate writers. Isolate evaluator execution within the current deployment boundary.
+
+**Alternatives:** broad mathjs language; original expr-eval; separate Python/Go service; full DMN platform; code-only rules; arbitrary scripting. Compare capability, maintenance, security, authoring usability and operational cost. The restricted language sacrifices broad mathematics to make allowed behaviour explicit and testable.
+
+**Revisit when:** requirements need solver/optimization capabilities, complex approved functions, cross-language execution, substantially higher measured throughput or nontrivial decision-table interchange. Do not grow the initial DSL into a general programming language by incremental exceptions.
+
+Assign an actual ADR number only through the repository’s existing decision process. This report does not reserve one.
+
+### 9.2 Delivery increments
+
+| Increment | Deliverable | Exit evidence |
+|---|---|---|
+| A — Contract | Fact dictionary, action schemas, numeric/rounding semantics, ADR | Reviewed synthetic examples and unresolved decisions |
+| B — Engine | Restricted compiler, exact evaluator, condition evaluator and resolver | Unit/property/fuzz tests and deterministic traces |
+| C — Persistence | Rule versions, sealed releases, runs and adoption bindings | Actual PostgreSQL integrity, concurrency and populated-upgrade proof |
+| D — Receiving | Native estimate integration, stale-source checks and operation recovery | End-to-end saved successor and exact historical recovery |
+| E — Authoring and CPQ UI | Authoring data/registry, typed builder, fixtures, publication diff, CPQ preview/explanation and existing-estimate handover | Desktop/mobile/accessibility evidence and design-register updates |
+| F — Overrides | Persistent overlay and explicit rebase workflow | Reload, orphan and changed-basis proofs |
+| G — Commercial/milestones | Approved bounded policies and project proposals | Independent arithmetic/calendar/allocation cases |
+| H — Adapter preparation | Canonical manifest and synthetic destination adapters | Timeout/duplicate/reconciliation contract tests |
+
+Live adapters, operational values and production deployment have their own acceptance boundary. Code delivery does not establish that boundary.
+
+### 9.3 PPO integration obligations
+
+Before writing a migration, inspect the live schema and all later amendments; this report’s isolated-baseline catalog observations are not a substitute. Preserve native estimate policy and existing lineage. Introduce explicit receiving compatibility rather than widening old arithmetic constraints merely to make a new result fit.
+
+Follow repository requirements for exact migration registry assertions, populated historical upgrades, permission seed snapshots and hosted-demo upgrade review. If a business identity type changes, observe the existing deferred-constraint handling around `ppo.business_identities` before ALTER operations. If capabilities change, regenerate the access-review model and update its dependent contracts as required by AGENTS.md.
+
+For UI changes, maintain the working design register, component documentation, fixtures, guides and consumer bindings. Run studio checks and relevant application validation. No issued reference snapshot is rewritten as routine maintenance.
+
+Use a small branch/PR per coherent increment. Record actual validation, failed attempts, environmental limits and remaining owner acceptance separately. This report is maintained in the repository as a proposed specification. Its publication does not adopt the architecture or authorise implementation; see the [publication and architecture proposal](../decisions/cce-architecture-proposal.md).
+
+## 10. Decisions, assumptions and unresolved obligations
+
+### 10.1 Established context and tested technical facts
+
+| Item | Evidence classification | Current conclusion |
+|---|---|---|
+| Intended ERP family | Existing PPO direction / README | MYOB Acumatica is intended ERP authority; this report does not select Xero or QuickBooks for PPO |
+| Business documents and CAD | Existing project instructions | SharePoint owns business documents; native CAD retains authoring responsibility |
+| Current implementation baseline | Repository observation | TypeScript/React/PostgreSQL, native immutable estimate versions and bounded specialist arithmetic already exist |
+| Generic CCE language | Proposed new decision | Requires a new scoped ADR; ADR-0034's existing bounded implementation is not retroactively expanded |
+| SQL parent compatibility | Executed local proof | Candidate DDL applied against the current migrated native schema; required fields and composite keys were inspected in that live test database |
+| Native successor shape | Executed bounded probe | The CCE guard accepts the persisted representation produced by existing native estimate commands |
+| Arithmetic and schema | Executed bounded proof | Exact reference arithmetic and native 2020-12 structural validation pass the recorded suites |
+| Operational authority | Unresolved / outside this artifact | No synthetic formula, test pass or document edit approves an operating rule or external transaction |
+
+### 10.2 Decision register
+
+`DEC-CCE-*` labels are local proposed-decision keys, not allocated repository ADR numbers or replacements for D-009 and other retained parent decisions. Owner roles below are proposed accountabilities; appointment and approval are not inferred.
+
+| Decision | Status and precise unresolved question | Synthetic reference choice | Closure evidence / required before | Proposed accountable role |
+|---|---|---|---|---|
+| DEC-CCE-01 Language adoption | PROPOSED: adopt a restricted arithmetic extension, or retain only explicitly coded calculators? | Four arithmetic operators and typed conditions | Reviewed ADR, language compatibility policy and threat review before native CCE implementation | Engineering owner |
+| DEC-CCE-02 Quantity basis | OPEN: proportional length, commenced span, minimum kit, procurement packs, or installed units for each output? | 140 m → 33 brackets; separate 145 m proportional/commenced examples | Signed rule intent plus boundary fixtures before operational rule publication | Engineering/estimating |
+| DEC-CCE-03 Cost basis | OPEN: allowed source kinds, expiry, landed allocation, labour burden and FX basis? | Explicit synthetic AUD unit costs; missing/wrong currency blocks | Cost-source ownership and exact receiving fixtures before commercial adoption | Estimating/Finance |
+| DEC-CCE-04 Price policy | OPEN: gross margin versus markup; discount order, floors, rounding, below-cost and zero-sell authority? | Explicit 20% gross margin in worked examples only | Approved versioned policy and independent amount cases before operational pricing | Commercial/Finance |
+| DEC-CCE-05 Manual intervention | OPEN: permitted fields, limits, required reasons, hard constraints and who resolves changed basis? | Absolute SET_QUANTITY or SUPPRESS; conservative rebase hold | Override authority matrix and acceptance scenarios before operational overrides | Estimating/engineering |
+| DEC-CCE-06 Publication authority | OPEN: author, reviewer, publisher and activator roles; whether independent review is mandatory by scope? | No organizational approval inferred from technical validation | Reviewed access/segregation contract before enabling publication | Product/platform owner |
+| DEC-CCE-07 Stable scope and slot identity | OPEN: exact system/area/equipment instance keys and compatibility rules for replaced products/units? | One material scope with a stable slot/product/unit key | Mapping contract and split/merge/replacement fixtures before multi-system rollout | Product/engineering |
+| DEC-CCE-08 Calendar and effort | OPEN: calendar owner, holidays, lead/lag interpretation, timezones, utilization and crew constraints? | Person-hours retained as effort; calendar-day offset example only | Pinned calendar and scheduling contract before business-day/dependency deployment | Projects/operations |
+| DEC-CCE-09 Billing allocation | OPEN: approved deposit/stage percentages, base amount, tax treatment and residual-cent tie-breaker? | Largest remainder; deposit wins the demonstrated tie | Finance-approved conservation fixtures before billing handover | Finance |
+| DEC-CCE-10 ERP tenant contract | OPEN: exact Acumatica instance/build, endpoint name/version, entity/action, company keys and scopes? | No live endpoint assumed | Scoped tenant contract inventory and sandbox receipts before adapter writes | ERP/integration owner |
+| DEC-CCE-11 Historical correction | OPEN: which corrected rules require review of open offers, accepted work or formal variation? | Comparison creates a new run; historical results remain unchanged | Defined affected-estimate review workflow before operational correction rollout | Commercial/engineering |
+| DEC-CCE-12 Service objectives | OPEN: workload distribution, latency, recovery, retention and archive periods? | Bounded demonstration limits; no service target claimed met | Measured workload and agreed targets before deployment | Engineering/operations |
+| DEC-CCE-13 Canonical evidence | PROPOSED: local JSONB checksums versus portable signed evidence and key management? | UTC/ISO PostgreSQL checksum; reference workflow has its own documented sorted-key digest | Versioned canonicalization and verification fixtures before cross-runtime signatures | Platform/security |
+
+### 10.3 Untested assumptions and implementation gaps
+
+| Key | Assumption or gap | Why current evidence is insufficient | Required proof |
+|---|---|---|---|
+| GAP-01 | Actual CCE adoption command composes with the native writer | Native save and CCE evidence were separate transactions in the native probe; the atomic test used contract parents | One real command with source locks, current grants, native lineage, snapshot, receipt and outbox; inject failure at each write |
+| GAP-02 | Release validation evidence is trustworthy | SQL enforces structure and membership, not the truth of a compiler/test label | Bind evidence to exact definitions, dictionary, policies, build and test artifacts; reject forged/stale evidence |
+| GAP-03 | Entire JSON rule language is executable | Structural schema has more alternatives than the material-only workflow implementation | Compile/evaluate every enabled action and condition; reject unsupported profiles before publication |
+| GAP-04 | Runtime roles enforce complete isolation | One non-owner read role and scoped FKs were tested; superuser bypass remains possible by design | Actual service-role grants, pool context cleanup, write policies and authority revocation tests |
+| GAP-05 | Arbitrary adversarial workloads cannot exhaust the service | Bounded parser tests and arithmetic generation do not test an OS-isolated worker | Worker timeout/memory termination, crash recovery, malicious-input fuzzing and independent security review |
+| GAP-06 | Full upgrade history remains compatible | Fresh native installation and one populated current-baseline clone passed | Repository's historical upgrade suite, migration registry checks and issued-file hash preservation |
+| GAP-07 | Business rules are operationally correct | Expected values in the executable profile are synthetic | Domain-owner sources, accepted ranges and independently derived boundary fixtures |
+| GAP-08 | Frontend authoring and explanation are usable and accessible | No CCE browser implementation or human usability observation exists in this task | Keyboard/mobile/accessibility tests, realistic rule-author tasks and source-cost redaction checks |
+| GAP-09 | External handover is durable and duplicate-safe | Delivery test is an in-memory provider model; no actual outbox worker or sandbox was exercised | Durable intent/attempt store, lease fencing, delayed response, duplicate webhook and provider reconciliation tests |
+| GAP-10 | Recovery targets are met | A clean database stop/start preserved selected rows; its first 20-second wait expired during checkpointing | Crash/backup restore and full app/worker recovery against agreed RPO/RTO; performance and I/O investigation |
+| GAP-11 | Quantization fits every native receiving profile | One compatible native estimate shape was probed | Declared precision/unit/category limits and negative receiving tests for each enabled profile |
+| GAP-12 | The report's optional RLS recipe is adopted | The harness exercised a representative read policy, not an installed application policy set | Reviewed deployment migration and actual-role tests across all CCE tables |
+
+These open items do not invalidate the bounded passes. They identify exactly where implementation, domain decisions or independent assurance must continue. No owner acceptance or production readiness is inferred.
+
+<a id="appendix-a-postgresql-reference-ddl"></a>
+
+## Appendix A: PostgreSQL reference DDL
+
+### A.1 Preconditions and verification boundary
+
+The following SQL defines the seven CCE tables, supporting domains, indexes and integrity triggers. It is **tested reference DDL**, not an adopted repository migration or production certification. It applied successfully on PostgreSQL 16.15 over all 76 current PPO migrations through 0077, passed a 24-scenario contract-parent harness and preserved all retained native rows in a populated current-baseline clone. The exact native CCE service transaction and historical upgrade matrix remain open; see Sections 8.2–8.4.
+
+The live definitions of `ppo.companies`, `ppo.users`, `ppo.estimating_options`, `ppo.estimates` and `ppo.estimate_versions` were inspected in the freshly migrated isolated database. The required compound keys and native fields `predecessor_id`, `content_hash`, `cost_total`, `sell_total`, `lines`, `scope`, `title`, `policy`, `cost_schema_version` and `estimates.option_id` exist at the recorded baseline. Their catalog evidence is retained. Recheck the actual target at integration time; this does not inspect or certify the hosted database. The application read DTO omits some persisted fields and is not the native writer contract.
+
+The receiving proposal must use the native writer's exact representation. It contains `nativeLines`, `nativeScope`, `nativeTitle`, `nativePolicy` and `nativeCostSchemaVersion`. The CCE must not change an existing policy identifier or source hash merely to make a proposed calculation acceptable. An incompatible result is held for a separately reviewed receiving-contract change.
+
+### A.2 Enforcement map
+
+| Invariant | Enforcement |
+|---|---|
+| Workspace/company relationship | Composite FK |
+| Rule version uniqueness and predecessor | Unique keys and self-referencing FK |
+| One version of a rule per release | Membership PK |
+| Closed published membership | Parent generation update, one-way seal and immutable members |
+| Exact engine/scope compatibility | Seal trigger plus command semantic compiler |
+| No blocked-run adoption | READY state included in composite FK |
+| Exact run/option/native successor | Adoption trigger and native FK contracts |
+| Original definitions and evidence retained | Update/delete/truncate guards plus restricted roles |
+| Valid business formula/unit/authority | Mandatory server semantic validation and receiving policy |
+| Valid publication evidence | Publication command binds evidence to the intended bundle |
+| Stale-source and initial-estimate race | Command locks, source vector and original-operation protocol |
+| Native version plus snapshot atomicity | Existing writer transaction; all required lineage/receipt/outbox in same transaction |
+
+The schema cannot infer organizational authority or prove a stored READY label merely from its text. Runtime DML must be reachable through validated, authorized commands. In a stored-procedure deployment, grant execution only on the reviewed command procedures and revoke direct DML; those application procedures are outside this reference DDL. In PPO's existing service-transaction model, enforce the same boundary through its authenticated command services and least-privilege database role. Do not expose SQL access to rule authors.
+
+An adoption created later through direct privileged SQL could attach evidence outside the intended command timeline; database constraints alone are not a substitute for the atomic receiving protocol. Tests must challenge both the SQL invariants and the actual service boundary.
+
+### A.3 Definitions
+
+```sql
+-- CCE reference schema for PostgreSQL 16.
+-- Proposed, not an applied PPO migration. Required parent contracts:
+-- ppo.companies(workspace_id,id), ppo.users(workspace_id,id),
+-- ppo.estimates(workspace_id,company_id,id), and
+-- ppo.estimating_options(workspace_id,company_id,id),
+-- ppo.estimate_versions(workspace_id,company_id,id),
+-- ppo.estimate_versions(workspace_id,estimate_id,id).
+-- Adoption guard additionally expects the native fields listed in the report.
+
+BEGIN;
+
+CREATE DOMAIN ppo.cce_sha256 AS bytea
+  CHECK (octet_length(VALUE) = 32);
+CREATE DOMAIN ppo.cce_amount AS numeric(24,6)
+  CHECK (VALUE >= 0 AND VALUE < 'Infinity'::numeric);
+
+CREATE TABLE ppo.cce_rules (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  rule_code varchar(80) NOT NULL,
+  scope_code varchar(80) NOT NULL,
+  display_name varchar(200) NOT NULL,
+  owner_id uuid NOT NULL,
+  lock_version bigint NOT NULL DEFAULT 1 CHECK (lock_version > 0),
+  retired_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  created_by uuid NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,id),
+  UNIQUE (workspace_id,company_id,rule_code),
+  FOREIGN KEY (workspace_id,company_id)
+    REFERENCES ppo.companies(workspace_id,id),
+  FOREIGN KEY (workspace_id,owner_id) REFERENCES ppo.users(workspace_id,id),
+  FOREIGN KEY (workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),
+  CHECK (rule_code ~ '^[A-Z][A-Z0-9_-]{2,79}$'),
+  CHECK (length(btrim(scope_code)) > 0),
+  CHECK (length(btrim(display_name)) > 0)
+);
+
+CREATE TABLE ppo.cce_rule_versions (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  rule_id uuid NOT NULL,
+  version_number integer NOT NULL CHECK (version_number > 0),
+  predecessor_id uuid,
+  predecessor_number integer GENERATED ALWAYS AS
+    (version_number - 1) STORED,
+  definition_schema_version integer NOT NULL
+    CHECK (definition_schema_version > 0),
+  engine_abi varchar(80) NOT NULL,
+  priority integer NOT NULL CHECK (priority BETWEEN 0 AND 100000),
+  definition jsonb NOT NULL,
+  content_hash ppo.cce_sha256 NOT NULL,
+  change_reason text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  created_by uuid NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,id),
+  UNIQUE (workspace_id,company_id,rule_id,version_number),
+  UNIQUE (workspace_id,company_id,rule_id,id,version_number),
+  FOREIGN KEY (workspace_id,company_id,rule_id)
+    REFERENCES ppo.cce_rules(workspace_id,company_id,id),
+  FOREIGN KEY (workspace_id,company_id,rule_id,
+               predecessor_id,predecessor_number)
+    REFERENCES ppo.cce_rule_versions(
+      workspace_id,company_id,rule_id,id,version_number),
+  FOREIGN KEY (workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),
+  CHECK ((version_number=1 AND predecessor_id IS NULL)
+      OR (version_number>1 AND predecessor_id IS NOT NULL)),
+  CHECK (length(btrim(engine_abi)) > 0),
+  CHECK (length(btrim(change_reason)) BETWEEN 1 AND 2000),
+  CHECK (jsonb_typeof(definition)='object'
+    AND definition ?& ARRAY['name','when','actions']
+    AND jsonb_typeof(definition->'name')='string'
+    AND jsonb_typeof(definition->'when')='object'
+    AND jsonb_typeof(definition->'actions')='array'
+    AND jsonb_array_length(definition->'actions') BETWEEN 1 AND 100
+    AND octet_length(definition::text)<=262144)
+);
+
+CREATE TABLE ppo.cce_ruleset_releases (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  scope_code varchar(80) NOT NULL,
+  engine_abi varchar(80) NOT NULL,
+  engine_build_sha256 ppo.cce_sha256 NOT NULL,
+  execution_contract jsonb NOT NULL,
+  validation_evidence jsonb NOT NULL,
+  expected_member_count integer NOT NULL
+    CHECK (expected_member_count BETWEEN 0 AND 1000),
+  assembly_generation integer NOT NULL DEFAULT 0
+    CHECK (assembly_generation BETWEEN 0 AND 1000),
+  empty_release_reason text,
+  sealed boolean NOT NULL DEFAULT false,
+  sealed_at timestamptz,
+  sealed_by uuid,
+  content_hash ppo.cce_sha256,
+  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  created_by uuid NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,id),
+  UNIQUE (workspace_id,company_id,id,sealed),
+  UNIQUE (workspace_id,company_id,scope_code,id,sealed),
+  FOREIGN KEY (workspace_id,company_id)
+    REFERENCES ppo.companies(workspace_id,id),
+  FOREIGN KEY (workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),
+  FOREIGN KEY (workspace_id,sealed_by) REFERENCES ppo.users(workspace_id,id),
+  CHECK (length(btrim(scope_code)) > 0 AND length(btrim(engine_abi)) > 0),
+  CHECK (assembly_generation <= expected_member_count),
+  CHECK (jsonb_typeof(execution_contract)='object'
+    AND octet_length(execution_contract::text)<=1048576),
+  CHECK (jsonb_typeof(validation_evidence)='object'
+    AND octet_length(validation_evidence::text)<=262144),
+  CHECK ((expected_member_count=0 AND empty_release_reason IS NOT NULL
+          AND length(btrim(empty_release_reason)) BETWEEN 1 AND 2000)
+      OR (expected_member_count>0 AND empty_release_reason IS NULL)),
+  CHECK ((NOT sealed AND sealed_at IS NULL AND sealed_by IS NULL
+          AND content_hash IS NULL)
+      OR (sealed AND sealed_at IS NOT NULL AND sealed_by IS NOT NULL
+          AND content_hash IS NOT NULL))
+);
+
+CREATE TABLE ppo.cce_ruleset_members (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  release_id uuid NOT NULL,
+  rule_id uuid NOT NULL,
+  rule_version_id uuid NOT NULL,
+  version_number integer NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,release_id,rule_id),
+  FOREIGN KEY (workspace_id,company_id,release_id)
+    REFERENCES ppo.cce_ruleset_releases(workspace_id,company_id,id),
+  FOREIGN KEY (workspace_id,company_id,rule_id,rule_version_id,version_number)
+    REFERENCES ppo.cce_rule_versions(
+      workspace_id,company_id,rule_id,id,version_number)
+);
+
+CREATE TABLE ppo.cce_release_heads (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  scope_code varchar(80) NOT NULL,
+  release_id uuid NOT NULL,
+  release_sealed boolean NOT NULL DEFAULT true CHECK (release_sealed),
+  lock_version bigint NOT NULL DEFAULT 1 CHECK (lock_version>0),
+  changed_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  changed_by uuid NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,scope_code),
+  FOREIGN KEY (workspace_id,company_id,scope_code,release_id,release_sealed)
+    REFERENCES ppo.cce_ruleset_releases(
+      workspace_id,company_id,scope_code,id,sealed),
+  FOREIGN KEY (workspace_id,changed_by) REFERENCES ppo.users(workspace_id,id)
+);
+
+CREATE TABLE ppo.cce_evaluation_runs (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  option_id uuid NOT NULL,
+  estimate_id uuid,
+  base_estimate_version_id uuid,
+  release_id uuid NOT NULL,
+  release_sealed boolean NOT NULL DEFAULT true CHECK (release_sealed),
+  run_schema_version integer NOT NULL CHECK (run_schema_version>0),
+  request_id uuid NOT NULL,
+  request_hash ppo.cce_sha256 NOT NULL,
+  calculation_signature ppo.cce_sha256 NOT NULL,
+  source_vector_hash ppo.cce_sha256 NOT NULL,
+  result_state text NOT NULL CHECK (result_state IN ('READY','BLOCKED')),
+  fact_snapshot jsonb NOT NULL,
+  cost_basis_snapshot jsonb NOT NULL,
+  base_manifest jsonb NOT NULL,
+  override_snapshot jsonb NOT NULL,
+  effective_manifest jsonb NOT NULL,
+  receiving_proposal jsonb NOT NULL,
+  execution_trace jsonb NOT NULL,
+  diagnostics jsonb NOT NULL,
+  currency varchar(3) NOT NULL CHECK (currency ~ '^[A-Z]{3}$'),
+  cost_total ppo.cce_amount,
+  sell_total ppo.cce_amount,
+  content_hash ppo.cce_sha256 NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  created_by uuid NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,id),
+  UNIQUE (workspace_id,company_id,request_id),
+  UNIQUE (workspace_id,company_id,id,option_id),
+  UNIQUE (workspace_id,company_id,id,release_id,result_state),
+  FOREIGN KEY (workspace_id,company_id,estimate_id)
+    REFERENCES ppo.estimates(workspace_id,company_id,id),
+  FOREIGN KEY (workspace_id,company_id,option_id)
+    REFERENCES ppo.estimating_options(workspace_id,company_id,id),
+  FOREIGN KEY (workspace_id,estimate_id,base_estimate_version_id)
+    REFERENCES ppo.estimate_versions(workspace_id,estimate_id,id),
+  FOREIGN KEY (workspace_id,company_id,release_id,release_sealed)
+    REFERENCES ppo.cce_ruleset_releases(workspace_id,company_id,id,sealed),
+  FOREIGN KEY (workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),
+  CHECK ((estimate_id IS NULL)=(base_estimate_version_id IS NULL)),
+  CHECK (jsonb_typeof(fact_snapshot)='object'),
+  CHECK (jsonb_typeof(cost_basis_snapshot)='object'),
+  CHECK (jsonb_typeof(base_manifest)='object'),
+  CHECK (jsonb_typeof(override_snapshot)='array'),
+  CHECK (jsonb_typeof(effective_manifest)='object'),
+  CHECK (jsonb_typeof(receiving_proposal)='object'),
+  CHECK (jsonb_typeof(execution_trace)='object'),
+  CHECK (jsonb_typeof(diagnostics)='array'),
+  CHECK ((result_state='READY' AND cost_total IS NOT NULL
+          AND sell_total IS NOT NULL
+          AND receiving_proposal ?& ARRAY[
+            'nativeLines','nativeScope','nativeTitle',
+            'nativePolicy','nativeCostSchemaVersion'])
+      OR (result_state='BLOCKED' AND cost_total IS NULL
+          AND sell_total IS NULL AND jsonb_array_length(diagnostics)>0))
+);
+
+CREATE TABLE ppo.estimate_bom_snapshots (
+  workspace_id uuid NOT NULL,
+  company_id uuid NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  estimate_id uuid NOT NULL,
+  option_id uuid NOT NULL,
+  estimate_version_id uuid NOT NULL,
+  run_id uuid NOT NULL,
+  release_id uuid NOT NULL,
+  run_state text NOT NULL DEFAULT 'READY' CHECK (run_state='READY'),
+  snapshot_schema_version integer NOT NULL CHECK (snapshot_schema_version>0),
+  request_id uuid NOT NULL,
+  request_hash ppo.cce_sha256 NOT NULL,
+  run_evidence_hash ppo.cce_sha256 NOT NULL,
+  native_content_hash text NOT NULL
+    CHECK (native_content_hash ~ '^[a-f0-9]{64}$'),
+  final_manifest jsonb NOT NULL CHECK (jsonb_typeof(final_manifest)='object'),
+  currency varchar(3) NOT NULL CHECK (currency ~ '^[A-Z]{3}$'),
+  cost_total ppo.cce_amount NOT NULL,
+  sell_total ppo.cce_amount NOT NULL,
+  reason text NOT NULL CHECK (length(btrim(reason)) BETWEEN 1 AND 2000),
+  content_hash ppo.cce_sha256 NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  created_by uuid NOT NULL,
+  PRIMARY KEY (workspace_id,company_id,id),
+  UNIQUE (workspace_id,company_id,estimate_version_id),
+  UNIQUE (workspace_id,company_id,run_id),
+  UNIQUE (workspace_id,company_id,request_id),
+  FOREIGN KEY (workspace_id,company_id,estimate_version_id)
+    REFERENCES ppo.estimate_versions(workspace_id,company_id,id),
+  FOREIGN KEY (workspace_id,estimate_id,estimate_version_id)
+    REFERENCES ppo.estimate_versions(workspace_id,estimate_id,id),
+  FOREIGN KEY (workspace_id,company_id,run_id,option_id)
+    REFERENCES ppo.cce_evaluation_runs(workspace_id,company_id,id,option_id),
+  FOREIGN KEY (workspace_id,company_id,run_id,release_id,run_state)
+    REFERENCES ppo.cce_evaluation_runs(
+      workspace_id,company_id,id,release_id,result_state),
+  FOREIGN KEY (workspace_id,created_by) REFERENCES ppo.users(workspace_id,id)
+);
+
+CREATE INDEX cce_rule_registry ON ppo.cce_rules(
+  workspace_id,company_id,scope_code,id) WHERE retired_at IS NULL;
+CREATE INDEX cce_release_registry ON ppo.cce_ruleset_releases(
+  workspace_id,company_id,scope_code,created_at DESC,id) WHERE sealed;
+CREATE INDEX cce_member_version ON ppo.cce_ruleset_members(
+  workspace_id,company_id,rule_version_id,release_id);
+CREATE INDEX cce_run_estimate ON ppo.cce_evaluation_runs(
+  workspace_id,company_id,estimate_id,created_at DESC,id);
+CREATE INDEX cce_run_option ON ppo.cce_evaluation_runs(
+  workspace_id,company_id,option_id,created_at DESC,id);
+CREATE INDEX cce_run_release ON ppo.cce_evaluation_runs(
+  workspace_id,company_id,release_id);
+CREATE INDEX cce_snapshot_estimate ON ppo.estimate_bom_snapshots(
+  workspace_id,company_id,estimate_id,created_at DESC,id);
+
+CREATE FUNCTION ppo.cce_reject_change() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog AS $$
+BEGIN
+  RAISE EXCEPTION 'CCE evidence is retained; create a successor'
+    USING ERRCODE='23514';
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_hash_evidence() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog
+  SET timezone='UTC' SET datestyle='ISO, YMD' AS $$
+DECLARE body jsonb;
+BEGIN
+  IF TG_TABLE_NAME='cce_rule_versions' THEN
+    -- Generated predecessor_number is unavailable in BEFORE triggers.
+    -- Hash its authoritative inputs; omit the derived column explicitly.
+    body := jsonb_build_object(
+      'workspace_id',NEW.workspace_id,'company_id',NEW.company_id,
+      'id',NEW.id,'rule_id',NEW.rule_id,
+      'version_number',NEW.version_number,'predecessor_id',NEW.predecessor_id,
+      'definition_schema_version',NEW.definition_schema_version,
+      'engine_abi',NEW.engine_abi,'priority',NEW.priority,
+      'definition',NEW.definition,'change_reason',NEW.change_reason,
+      'created_at',NEW.created_at,'created_by',NEW.created_by
+    );
+  ELSE
+    body := to_jsonb(NEW)-'content_hash';
+  END IF;
+  IF octet_length(body::text)>2097152 THEN
+    RAISE EXCEPTION 'CCE evidence exceeds 2 MiB' USING ERRCODE='23514';
+  END IF;
+  NEW.content_hash := sha256(convert_to(body::text,'UTF8'));
+  RETURN NEW;
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_guard_rule_root() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog AS $$
+BEGIN
+  IF (to_jsonb(NEW)-ARRAY['display_name','owner_id','retired_at','lock_version'])
+     IS DISTINCT FROM
+     (to_jsonb(OLD)-ARRAY['display_name','owner_id','retired_at','lock_version'])
+     OR NEW.lock_version<>OLD.lock_version+1 THEN
+    RAISE EXCEPTION 'Retain rule identity and advance expected version'
+      USING ERRCODE='23514';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_guard_release() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog
+  SET timezone='UTC' SET datestyle='ISO, YMD' AS $$
+DECLARE member_count integer; members jsonb; body jsonb;
+BEGIN
+  IF TG_OP='INSERT' THEN
+    IF NEW.sealed OR NEW.assembly_generation<>0 OR NEW.content_hash IS NOT NULL THEN
+      RAISE EXCEPTION 'Release must start as an empty unsealed assembly';
+    END IF;
+    RETURN NEW;
+  END IF;
+  IF OLD.sealed THEN
+    RAISE EXCEPTION 'Sealed release is immutable' USING ERRCODE='23514';
+  END IF;
+
+  IF NOT NEW.sealed THEN
+    IF NEW.assembly_generation<>OLD.assembly_generation+1
+       OR (to_jsonb(NEW)-'assembly_generation')
+          IS DISTINCT FROM (to_jsonb(OLD)-'assembly_generation') THEN
+      RAISE EXCEPTION 'Only member assembly progression is permitted';
+    END IF;
+    RETURN NEW;
+  END IF;
+
+  IF (to_jsonb(NEW)-ARRAY['sealed','sealed_at','sealed_by','content_hash'])
+     IS DISTINCT FROM
+     (to_jsonb(OLD)-ARRAY['sealed','sealed_at','sealed_by','content_hash']) THEN
+    RAISE EXCEPTION 'Sealing cannot alter the release definition';
+  END IF;
+  IF NEW.sealed_at IS NULL OR NEW.sealed_by IS NULL THEN
+    RAISE EXCEPTION 'Sealing actor and time required';
+  END IF;
+
+  SELECT count(*)::integer,
+    coalesce(jsonb_agg(jsonb_build_object(
+      'ruleId',m.rule_id,'versionId',m.rule_version_id,
+      'versionNumber',m.version_number,'hash',encode(v.content_hash,'hex')
+    ) ORDER BY m.rule_id),'[]'::jsonb)
+  INTO member_count,members
+  FROM ppo.cce_ruleset_members m
+  JOIN ppo.cce_rule_versions v
+    ON v.workspace_id=m.workspace_id AND v.company_id=m.company_id
+   AND v.id=m.rule_version_id
+  WHERE m.workspace_id=NEW.workspace_id AND m.company_id=NEW.company_id
+    AND m.release_id=NEW.id;
+
+  IF member_count<>NEW.expected_member_count
+     OR member_count<>NEW.assembly_generation THEN
+    RAISE EXCEPTION 'Release membership does not match complete assembly';
+  END IF;
+  IF EXISTS (
+    SELECT 1 FROM ppo.cce_ruleset_members m
+    JOIN ppo.cce_rule_versions v
+      ON v.workspace_id=m.workspace_id AND v.company_id=m.company_id
+     AND v.id=m.rule_version_id
+    JOIN ppo.cce_rules r
+      ON r.workspace_id=m.workspace_id AND r.company_id=m.company_id
+     AND r.id=m.rule_id
+    WHERE m.workspace_id=NEW.workspace_id AND m.company_id=NEW.company_id
+      AND m.release_id=NEW.id
+      AND (v.engine_abi<>NEW.engine_abi OR r.scope_code<>NEW.scope_code)
+  ) THEN
+    RAISE EXCEPTION 'Incompatible engine ABI or release scope';
+  END IF;
+
+  body := (to_jsonb(NEW)-'content_hash') || jsonb_build_object('members',members);
+  NEW.content_hash := sha256(convert_to(body::text,'UTF8'));
+  RETURN NEW;
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_guard_member_insert() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog AS $$
+BEGIN
+  -- UPDATE both serializes membership and records a real parent-row change.
+  UPDATE ppo.cce_ruleset_releases
+  SET assembly_generation=assembly_generation+1
+  WHERE workspace_id=NEW.workspace_id AND company_id=NEW.company_id
+    AND id=NEW.release_id AND NOT sealed
+    AND assembly_generation<expected_member_count;
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Release unavailable, sealed or assembly already complete'
+      USING ERRCODE='23514';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_guard_head() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog AS $$
+BEGIN
+  IF TG_OP='INSERT' THEN
+    IF NEW.lock_version<>1 THEN RAISE EXCEPTION 'Initial head version must be 1'; END IF;
+  ELSIF (NEW.workspace_id,NEW.company_id,NEW.scope_code)
+     IS DISTINCT FROM (OLD.workspace_id,OLD.company_id,OLD.scope_code)
+     OR NEW.lock_version<>OLD.lock_version+1 THEN
+    RAISE EXCEPTION 'Retain head identity and increment expected version';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_check_adoption() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog AS $$
+DECLARE r ppo.cce_evaluation_runs; v ppo.estimate_versions; e ppo.estimates;
+BEGIN
+  SELECT * INTO STRICT r FROM ppo.cce_evaluation_runs
+    WHERE workspace_id=NEW.workspace_id AND company_id=NEW.company_id
+      AND id=NEW.run_id;
+  SELECT * INTO STRICT v FROM ppo.estimate_versions
+    WHERE workspace_id=NEW.workspace_id AND company_id=NEW.company_id
+      AND id=NEW.estimate_version_id;
+  SELECT * INTO STRICT e FROM ppo.estimates
+    WHERE workspace_id=NEW.workspace_id AND company_id=NEW.company_id
+      AND id=NEW.estimate_id;
+
+  IF r.result_state<>'READY'
+     OR e.option_id IS DISTINCT FROM r.option_id
+     OR (r.estimate_id IS NOT NULL AND r.estimate_id<>NEW.estimate_id)
+     OR NEW.run_evidence_hash IS DISTINCT FROM r.content_hash
+     OR NEW.final_manifest IS DISTINCT FROM r.effective_manifest
+     OR NEW.currency IS DISTINCT FROM r.currency
+     OR NEW.cost_total IS DISTINCT FROM r.cost_total
+     OR NEW.sell_total IS DISTINCT FROM r.sell_total
+     OR NEW.native_content_hash IS DISTINCT FROM v.content_hash
+     OR v.predecessor_id IS DISTINCT FROM r.base_estimate_version_id
+     OR v.cost_total IS DISTINCT FROM r.cost_total
+     OR v.sell_total IS DISTINCT FROM r.sell_total
+     OR v.lines IS DISTINCT FROM (r.receiving_proposal->'nativeLines')
+     OR v.scope IS DISTINCT FROM (r.receiving_proposal->'nativeScope')
+     OR v.title IS DISTINCT FROM (r.receiving_proposal->>'nativeTitle')
+     OR v.policy IS DISTINCT FROM (r.receiving_proposal->>'nativePolicy')
+     OR v.cost_schema_version IS DISTINCT FROM
+        ((r.receiving_proposal->>'nativeCostSchemaVersion')::integer) THEN
+    RAISE EXCEPTION 'Adoption must match exact ready run and native successor'
+      USING ERRCODE='23514';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE FUNCTION ppo.cce_check_run_context() RETURNS trigger
+LANGUAGE plpgsql SET search_path=pg_catalog AS $$
+BEGIN
+  IF NEW.estimate_id IS NOT NULL AND NOT EXISTS (
+    SELECT 1 FROM ppo.estimates e
+    WHERE e.workspace_id=NEW.workspace_id AND e.company_id=NEW.company_id
+      AND e.id=NEW.estimate_id AND e.option_id=NEW.option_id
+  ) THEN
+    RAISE EXCEPTION 'Run estimate and option must share exact context';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER cce_rule_root_guard BEFORE UPDATE ON ppo.cce_rules
+  FOR EACH ROW EXECUTE FUNCTION ppo.cce_guard_rule_root();
+CREATE TRIGGER cce_release_guard BEFORE INSERT OR UPDATE ON ppo.cce_ruleset_releases
+  FOR EACH ROW EXECUTE FUNCTION ppo.cce_guard_release();
+CREATE TRIGGER cce_member_guard BEFORE INSERT ON ppo.cce_ruleset_members
+  FOR EACH ROW EXECUTE FUNCTION ppo.cce_guard_member_insert();
+CREATE TRIGGER cce_head_guard BEFORE INSERT OR UPDATE ON ppo.cce_release_heads
+  FOR EACH ROW EXECUTE FUNCTION ppo.cce_guard_head();
+CREATE TRIGGER cce_adoption_check BEFORE INSERT ON ppo.estimate_bom_snapshots
+  FOR EACH ROW EXECUTE FUNCTION ppo.cce_check_adoption();
+CREATE TRIGGER cce_run_context BEFORE INSERT ON ppo.cce_evaluation_runs
+  FOR EACH ROW EXECUTE FUNCTION ppo.cce_check_run_context();
+
+DO $$
+DECLARE t text;
+BEGIN
+  FOREACH t IN ARRAY ARRAY['cce_rule_versions','cce_evaluation_runs','estimate_bom_snapshots'] LOOP
+    EXECUTE format('CREATE TRIGGER cce_evidence_hash BEFORE INSERT ON ppo.%I
+      FOR EACH ROW EXECUTE FUNCTION ppo.cce_hash_evidence()',t);
+  END LOOP;
+  FOREACH t IN ARRAY ARRAY['cce_rule_versions','cce_ruleset_members',
+                           'cce_evaluation_runs','estimate_bom_snapshots'] LOOP
+    EXECUTE format('CREATE TRIGGER cce_immutable BEFORE UPDATE OR DELETE ON ppo.%I
+      FOR EACH ROW EXECUTE FUNCTION ppo.cce_reject_change()',t);
+  END LOOP;
+  FOREACH t IN ARRAY ARRAY['cce_rules','cce_ruleset_releases','cce_release_heads'] LOOP
+    EXECUTE format('CREATE TRIGGER cce_retained BEFORE DELETE ON ppo.%I
+      FOR EACH ROW EXECUTE FUNCTION ppo.cce_reject_change()',t);
+  END LOOP;
+  FOREACH t IN ARRAY ARRAY['cce_rules','cce_rule_versions','cce_ruleset_releases',
+    'cce_ruleset_members','cce_release_heads','cce_evaluation_runs','estimate_bom_snapshots'] LOOP
+    EXECUTE format('CREATE TRIGGER cce_no_truncate BEFORE TRUNCATE ON ppo.%I
+      FOR EACH STATEMENT EXECUTE FUNCTION ppo.cce_reject_change()',t);
+    EXECUTE format('REVOKE ALL ON TABLE ppo.%I FROM PUBLIC',t);
+  END LOOP;
+END;
+$$;
+
+COMMIT;
+```
+
+### A.4 Deployment notes
+
+- Execute this only as a new, reviewed migration after resolving live-schema compatibility. Do not run it against an operational database as a copy-and-paste experiment.
+- The DDL uses PostgreSQL's built-in UUID and SHA-256 functions; it does not require a new digest extension.
+- Use ordinary member INSERT statements. Do not use `ON CONFLICT DO NOTHING` on member insertion: a BEFORE trigger can have executed before the row is skipped. Any assembly-count inconsistency fails sealing, but silent conflict suppression is not the intended command protocol.
+- The registry and head triggers enforce version progression, but the command must still compare the caller's expected version in its UPDATE predicate and check the returned row count.
+- Trigger creation order is not business orchestration. The named adoption check validates the persisted source before evidence hashing, and all constraints are checked before commit.
+- The operation-ID unique keys on runs and adoptions supplement the platform's command receipts; they do not replace the receipt contract for failed or uncertain operations.
+- Sealed publication/activation and retirement remain separate events. Retiring a registry rule does not mutate an old release; replacing the active release changes only future default selection.
+- Review retention and backup reachability from every accepted snapshot through run, release, rule versions and external artifacts.
+- Do not partition these tables until the foreign-key and unique-key consequences have been explicitly designed and measured.
+
+### A.5 Example compare-and-swap activation
+
+```sql
+-- Executed by an authorized command in the same transaction as its audit/receipt.
+UPDATE ppo.cce_release_heads
+SET release_id = $1,
+    lock_version = lock_version + 1,
+    changed_at = clock_timestamp(),
+    changed_by = $2
+WHERE workspace_id = $3
+  AND company_id = $4
+  AND scope_code = $5
+  AND lock_version = $6
+RETURNING release_id, lock_version;
+```
+
+Zero returned rows means conflict or unavailable context, not permission to overwrite a newer head. First activation uses an explicit create-if-absent command with expected generation zero; concurrent first activations must not silently replace each other.
+
+### A.6 Row-level-security integration recipe
+
+If PPO adopts session-context RLS for these tables, apply equivalent company/workspace policies to every CCE table, including members, heads and snapshots. Set context using transaction-local settings after server authentication. Do not accept those settings directly from a client or allow arbitrary SQL.
+
+```sql
+-- Optional policy example; not part of the preceding reference migration.
+ALTER TABLE ppo.cce_evaluation_runs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ppo.cce_evaluation_runs FORCE ROW LEVEL SECURITY;
+
+CREATE POLICY cce_run_company_scope ON ppo.cce_evaluation_runs
+USING (
+  workspace_id = nullif(current_setting('app.workspace_id', true), '')::uuid
+  AND company_id = nullif(current_setting('app.company_id', true), '')::uuid
+)
+WITH CHECK (
+  workspace_id = nullif(current_setting('app.workspace_id', true), '')::uuid
+  AND company_id = nullif(current_setting('app.company_id', true), '')::uuid
+);
+```
+
+This is tenant isolation, not full business authorization. It does not replace source visibility, internal-cost permission, owner checks or current grants. Table owners, privileged roles and security-definer functions need explicit review. Never claim RLS is deployed because this example exists in a document.
+
+<a id="appendix-b-rule-language-reference"></a>
+
+## Appendix B: Rule language reference
+
+### B.1 Structural schema
+
+The following is a closed structural schema for the initial bounded language, validated with the native JSON Schema 2020-12 implementation in Ajv 8.17.1 strict mode and ajv-formats 3.0.1. It includes recursive conditions and five distinct action shapes. It deliberately contains no executable callbacks or general object mutation action. JSON Schema's versioned vocabulary and reference rules are defined by its specification. [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-core).
+
+The implementation must additionally validate dictionary-based types, enum membership, fact scope, formula syntax, graph constraints, dimensions and catalogue identities. A schema cannot infer that a particular fact ID is a numeric fact in a particular published dictionary.
+
+Date predicates and general COUNT expressions described as UI extension patterns are not enabled in this initial structural profile. Introduce them through a versioned language extension and fixtures. The collection profile includes explicit empty-collection semantics.
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ppo:cce:rule-definition:1",
+  "title": "PPO CCE bounded rule definition",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "when": {
+      "$ref": "#/$defs/condition"
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "name",
+    "when",
+    "actions"
+  ],
+  "$defs": {
+    "decimal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "decimal"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "unit"
+      ]
+    },
+    "integer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "integer"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^-?[0-9]{1,18}$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "unit"
+      ]
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "text"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "enumeration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "enum"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "enumSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "enum_set"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      },
+      "required": [
+        "type",
+        "values"
+      ]
+    },
+    "decimalRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "decimal_range"
+        },
+        "lower": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        },
+        "upper": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "lowerInclusive": {
+          "type": "boolean"
+        },
+        "upperInclusive": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "lower",
+        "upper",
+        "unit",
+        "lowerInclusive",
+        "upperInclusive"
+      ]
+    },
+    "decimalComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ",
+            "GT",
+            "GTE",
+            "LT",
+            "LTE"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/decimal"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "integerComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ",
+            "GT",
+            "GTE",
+            "LT",
+            "LTE"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/integer"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "textComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ",
+            "CONTAINS",
+            "STARTS_WITH"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "enumComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "EQ",
+            "NEQ"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/enumeration"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "enumSetComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "IN",
+            "NOT_IN"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/enumSet"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "decimalRangeComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "operator": {
+          "enum": [
+            "BETWEEN"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/decimalRange"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator",
+        "value"
+      ]
+    },
+    "boolean": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "boolean"
+        },
+        "operator": {
+          "enum": [
+            "IS_TRUE",
+            "IS_FALSE"
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind",
+        "operator"
+      ]
+    },
+    "known": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "factId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "kind": {
+          "const": "known"
+        }
+      },
+      "required": [
+        "nodeId",
+        "factId",
+        "kind"
+      ]
+    },
+    "constant": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "const": "constant"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "value"
+      ]
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "enum": [
+            "all",
+            "any"
+          ]
+        },
+        "children": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "children"
+      ]
+    },
+    "not": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "const": "not"
+        },
+        "child": {
+          "$ref": "#/$defs/condition"
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "child"
+      ]
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "const": "collection"
+        },
+        "collectionId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+        },
+        "quantifier": {
+          "enum": [
+            "ANY_MATCH",
+            "ALL_MATCH"
+          ]
+        },
+        "emptyPolicy": {
+          "enum": [
+            "TRUE",
+            "FALSE",
+            "UNKNOWN"
+          ]
+        },
+        "where": {
+          "$ref": "#/$defs/condition"
+        }
+      },
+      "required": [
+        "nodeId",
+        "kind",
+        "collectionId",
+        "quantifier",
+        "emptyPolicy",
+        "where"
+      ]
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/decimalComparison"
+        },
+        {
+          "$ref": "#/$defs/integerComparison"
+        },
+        {
+          "$ref": "#/$defs/textComparison"
+        },
+        {
+          "$ref": "#/$defs/enumComparison"
+        },
+        {
+          "$ref": "#/$defs/enumSetComparison"
+        },
+        {
+          "$ref": "#/$defs/decimalRangeComparison"
+        },
+        {
+          "$ref": "#/$defs/boolean"
+        },
+        {
+          "$ref": "#/$defs/known"
+        },
+        {
+          "$ref": "#/$defs/constant"
+        },
+        {
+          "$ref": "#/$defs/group"
+        },
+        {
+          "$ref": "#/$defs/not"
+        },
+        {
+          "$ref": "#/$defs/collection"
+        }
+      ]
+    },
+    "expression": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "const": "cce-arithmetic-v1"
+        },
+        "expression": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "bindings": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]{0,159}$"
+          }
+        },
+        "parameters": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/decimal"
+          }
+        }
+      },
+      "required": [
+        "language",
+        "expression",
+        "bindings",
+        "parameters"
+      ]
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "policy": {
+          "enum": [
+            "SUM",
+            "MAX_REQUIREMENT",
+            "UNIQUE",
+            "HIGHEST_PRIORITY",
+            "ANY_EQUAL"
+          ]
+        }
+      },
+      "required": [
+        "group",
+        "policy"
+      ]
+    },
+    "rounding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "increment": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^(0\\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(\\.[0-9]+)?)$"
+        },
+        "mode": {
+          "enum": [
+            "FLOOR",
+            "CEILING",
+            "HALF_UP",
+            "HALF_EVEN"
+          ]
+        },
+        "stage": {
+          "enum": [
+            "PER_CONTRIBUTION",
+            "AFTER_GROUP_RESOLUTION"
+          ]
+        }
+      },
+      "required": [
+        "increment",
+        "mode",
+        "stage"
+      ]
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "MATERIAL_REQUIREMENT"
+        },
+        "productId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "resolution": {
+          "$ref": "#/$defs/resolution"
+        },
+        "quantity": {
+          "$ref": "#/$defs/expression"
+        },
+        "rounding": {
+          "$ref": "#/$defs/rounding"
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "productId",
+        "unit",
+        "resolution",
+        "quantity",
+        "rounding"
+      ]
+    },
+    "labour": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "LABOUR_REQUIREMENT"
+        },
+        "labourCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "unit": {
+          "const": "person_hours"
+        },
+        "resolution": {
+          "$ref": "#/$defs/resolution"
+        },
+        "hours": {
+          "$ref": "#/$defs/expression"
+        },
+        "rounding": {
+          "$ref": "#/$defs/rounding"
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "labourCode",
+        "unit",
+        "resolution",
+        "hours",
+        "rounding"
+      ]
+    },
+    "margin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "TARGET_MARGIN"
+        },
+        "commercialScope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "costBasisPolicyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "margin": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^-?[0-9]{1,18}(\\.[0-9]{1,12})?$"
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "commercialScope",
+        "costBasisPolicyId",
+        "margin"
+      ]
+    },
+    "milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "MILESTONE_PROPOSAL"
+        },
+        "milestoneKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "anchor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "offsetDays": {
+          "type": "integer",
+          "minimum": -36500,
+          "maximum": 36500
+        },
+        "calendarMode": {
+          "enum": [
+            "CALENDAR_DAYS",
+            "BUSINESS_DAYS"
+          ]
+        },
+        "calendarId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "dependsOn": {
+          "type": "array",
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "milestoneKey",
+        "name",
+        "anchor",
+        "offsetDays",
+        "calendarMode",
+        "calendarId",
+        "timezone",
+        "dependsOn"
+      ]
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "outputSlot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "kind": {
+          "const": "REVIEW_REQUIREMENT"
+        },
+        "severity": {
+          "enum": [
+            "WARNING",
+            "BLOCK"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      },
+      "required": [
+        "actionId",
+        "outputSlot",
+        "explanation",
+        "kind",
+        "severity",
+        "message"
+      ]
+    },
+    "action": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/material"
+        },
+        {
+          "$ref": "#/$defs/labour"
+        },
+        {
+          "$ref": "#/$defs/margin"
+        },
+        {
+          "$ref": "#/$defs/milestone"
+        },
+        {
+          "$ref": "#/$defs/review"
+        }
+      ]
+    }
+  }
+}
+```
+
+### B.2 Mandatory semantic validation after JSON Schema
+
+1. Require the JSON schema version to match the relational definition schema version.
+2. Require unique node IDs and action IDs within the rule; preserve durable action identity across compatible successors.
+3. Enforce total condition count and depth across the tree, not only each immediate array.
+4. Resolve every fact/collection against the pinned dictionary and the rule's scope.
+5. Check operator compatibility against the dictionary type, not merely the supplied value discriminator.
+6. Check enum membership, range order and range inclusivity.
+7. Reject duplicate symbol names across bindings and typed parameters.
+8. Compile formulas from approved symbols only, extract dependencies and validate dimensions.
+9. Reject unsupported primitive types, expression ABIs and calendar identities.
+10. Resolve products, labour codes, costs and currencies through approved scoped references.
+11. Require one resolution policy and compatible units/targets per group.
+12. Validate target margin range and policy authority independently of its decimal syntax.
+13. Require a pinned calendar for BUSINESS_DAYS, validate timezone and detect milestone dependency cycles.
+14. Verify that explanation strings cannot expose hidden costs or render executable markup.
+15. Bind passing fixtures to the exact definition, dictionary, policies and engine build.
+
+The JSON schema does not enforce all these conditions and must not be described as a complete rule validator.
+
+### B.3 Synthetic valid rule
+
+```json
+{
+  "schemaVersion": 1,
+  "name": "Synthetic support spacing",
+  "when": {
+    "nodeId": "00000000-0000-4000-8000-000000000001",
+    "kind": "all",
+    "children": [
+      {
+        "nodeId": "00000000-0000-4000-8000-000000000002",
+        "kind": "boolean",
+        "factId": "site.is_outdoor",
+        "operator": "IS_TRUE"
+      }
+    ]
+  },
+  "actions": [
+    {
+      "actionId": "00000000-0000-4000-8000-000000000003",
+      "outputSlot": "installation.brackets",
+      "explanation": "Synthetic bracket allowance.",
+      "kind": "MATERIAL_REQUIREMENT",
+      "productId": "00000000-0000-4000-8000-000000000004",
+      "unit": "each",
+      "resolution": {
+        "group": "installation.brackets.base",
+        "policy": "HIGHEST_PRIORITY"
+      },
+      "quantity": {
+        "language": "cce-arithmetic-v1",
+        "expression": "distance_m / spacing_m * per_span + spare",
+        "bindings": {
+          "distance_m": "installation.distance"
+        },
+        "parameters": {
+          "spacing_m": {
+            "type": "decimal",
+            "value": "10",
+            "unit": "m"
+          },
+          "per_span": {
+            "type": "decimal",
+            "value": "2",
+            "unit": "each"
+          },
+          "spare": {
+            "type": "decimal",
+            "value": "5",
+            "unit": "each"
+          }
+        }
+      },
+      "rounding": {
+        "increment": "1",
+        "mode": "CEILING",
+        "stage": "AFTER_GROUP_RESOLUTION"
+      }
+    }
+  ]
+}
+```
+
+<a id="appendix-c-executable-exact-arithmetic-example"></a>
+
+## Appendix C: Executable exact-arithmetic example
+
+### C.1 Usage and scope
+
+Save the implementation below as `expression.ts`. It is self-contained so the downloaded report can be evaluated independently. For PPO integration, reuse/refactor the existing rational implementation only after checking compatibility and regression coverage; this demonstration does not replace it.
+
+The module allows only the grammar in Section 2. It freezes compiled trees, extracts dependencies, bounds complete AST depth and refuses deserialized/caller-invented AST objects. Exact scalar bindings are copied for each evaluation. No formula can execute a function or traverse a host object.
+
+The module does not implement units, condition evaluation, commercial rounding, authorization, publication or OS resource isolation. Those are explicit surrounding contracts, not hidden claims of this example.
+
+```typescript
+// Restricted CCE arithmetic reference implementation.
+// Self-contained demonstration; not a replacement for PPO's adopted engine.
+const DECIMAL = /^-?\d{1,18}(?:\.\d{1,12})?$/;
+const SYMBOL = /^[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$/;
+
+export class CceError extends Error {
+  constructor(readonly code: string, message: string) {
+    super(message);
+    this.name = "CceError";
+  }
+}
+
+const fail = (code: string, message: string): never => {
+  throw new CceError(code, message);
+};
+
+const abs = (n: bigint): bigint => n < 0n ? -n : n;
+function gcd(a: bigint, b: bigint): bigint {
+  a = abs(a); b = abs(b);
+  while (b !== 0n) { const remainder = a % b; a = b; b = remainder; }
+  return a || 1n;
+}
+
+export class Fraction {
+  readonly numerator: bigint;
+  readonly denominator: bigint;
+
+  constructor(n: bigint, d: bigint = 1n) {
+    if (d === 0n) fail("DIVIDE_BY_ZERO", "Division by zero");
+    // Inputs originate from bounded literals or two bounded operands.
+    if (abs(n).toString().length > 1026 || abs(d).toString().length > 1026)
+      fail("COMPUTATION_LIMIT", "Intermediate arithmetic exceeds its budget");
+    if (d < 0n) { n = -n; d = -d; }
+    const divisor = gcd(n, d);
+    this.numerator = n / divisor;
+    this.denominator = d / divisor;
+    if (abs(this.numerator).toString().length > 512 ||
+        this.denominator.toString().length > 512)
+      fail("COMPUTATION_LIMIT", "Reduced arithmetic exceeds its budget");
+    Object.freeze(this);
+  }
+
+  static fromDecimal(value: string): Fraction {
+    if (typeof value !== "string" || !DECIMAL.test(value))
+      fail("DECIMAL_INVALID", "Expected a bounded decimal string");
+    const [whole, fraction = ""] = value.split(".");
+    return new Fraction(BigInt(whole + fraction), 10n ** BigInt(fraction.length));
+  }
+
+  add(b: Fraction): Fraction {
+    return new Fraction(this.numerator*b.denominator + b.numerator*this.denominator,
+                        this.denominator*b.denominator);
+  }
+  subtract(b: Fraction): Fraction {
+    return new Fraction(this.numerator*b.denominator - b.numerator*this.denominator,
+                        this.denominator*b.denominator);
+  }
+  multiply(b: Fraction): Fraction {
+    return new Fraction(this.numerator*b.numerator, this.denominator*b.denominator);
+  }
+  divide(b: Fraction): Fraction {
+    return new Fraction(this.numerator*b.denominator, this.denominator*b.numerator);
+  }
+  negate(): Fraction { return new Fraction(-this.numerator, this.denominator); }
+
+  // Returns null for a value that cannot be represented exactly at this scale.
+  exactDecimal(maxPlaces = 12): string | null {
+    if (!Number.isInteger(maxPlaces) || maxPlaces < 0 || maxPlaces > 12)
+      fail("SCALE_INVALID", "Scale must be an integer from 0 to 12");
+    const factor = 10n ** BigInt(maxPlaces);
+    const scaled = this.numerator * factor;
+    if (scaled % this.denominator !== 0n) return null;
+    const integer = scaled / this.denominator;
+    const digits = abs(integer).toString().padStart(maxPlaces + 1, "0");
+    const value = maxPlaces === 0 ? digits :
+      `${digits.slice(0, -maxPlaces)}.${digits.slice(-maxPlaces)}`
+        .replace(/0+$/, "").replace(/\.$/, "");
+    return (integer < 0n ? "-" : "") + value;
+  }
+
+  evidence(): { numerator: string; denominator: string; exactDecimal: string | null } {
+    return {
+      numerator: this.numerator.toString(),
+      denominator: this.denominator.toString(),
+      exactDecimal: this.exactDecimal()
+    };
+  }
+}
+
+type Op = "+" | "-" | "*" | "/";
+type Expr =
+  | { readonly kind: "literal"; readonly value: string }
+  | { readonly kind: "fact"; readonly name: string }
+  | { readonly kind: "unary"; readonly op: "+" | "-"; readonly value: Expr }
+  | { readonly kind: "binary"; readonly op: Op; readonly left: Expr; readonly right: Expr };
+
+export type CompiledFormula = Readonly<{
+  tree: Expr;
+  dependencies: readonly string[];
+}>;
+const compiledHere = new WeakSet<object>();
+
+export function compileFormula(
+  source: string,
+  allowedSymbols: ReadonlySet<string>
+): CompiledFormula {
+  if (typeof source !== "string" || source.length > 2048 ||
+      !/^[\x09\x0A\x0D\x20-\x7E]*$/.test(source))
+    fail("FORMULA_LIMIT", "Expected at most 2048 ASCII characters");
+
+  const tokens: { text: string; offset: number }[] = [];
+  const lexer = /\s+|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[()+*/-]/gy;
+  let offset = 0;
+  while (offset < source.length) {
+    lexer.lastIndex = offset;
+    const match = lexer.exec(source);
+    if (!match) fail("FORMULA_FORBIDDEN_TOKEN", `Invalid token at ${offset}`);
+    const text = match![0];
+    if (text.trim()) tokens.push({ text, offset });
+    offset = lexer.lastIndex;
+    if (tokens.length > 256) fail("FORMULA_LIMIT", "More than 256 tokens");
+  }
+
+  let at = 0;
+  const precedence = (text: string | undefined): number =>
+    text === "+" || text === "-" ? 1 : text === "*" || text === "/" ? 2 : 0;
+
+  function expression(min = 1, depth = 0): Expr {
+    if (depth > 32) fail("FORMULA_LIMIT", "Parser nesting exceeds 32");
+    const token = tokens[at++];
+    const text = token?.text;
+    let left: Expr;
+    if (text === "(") {
+      left = expression(1, depth + 1);
+      if (tokens[at++]?.text !== ")") fail("FORMULA_SYNTAX", "Missing closing parenthesis");
+    } else if (text === "+" || text === "-") {
+      left = { kind: "unary", op: text, value: expression(3, depth + 1) };
+    } else if (text !== undefined && DECIMAL.test(text)) {
+      left = { kind: "literal", value: text };
+    } else if (text !== undefined && SYMBOL.test(text) && allowedSymbols.has(text)) {
+      left = { kind: "fact", name: text };
+    } else {
+      return fail("FORMULA_SYMBOL_OR_LITERAL", "Expected approved symbol or bounded decimal");
+    }
+    while (precedence(tokens[at]?.text) >= min) {
+      const op = tokens[at++].text as Op;
+      const right = expression(precedence(op) + 1, depth + 1);
+      left = { kind: "binary", op, left, right };
+    }
+    return left;
+  }
+
+  const tree = expression();
+  if (at !== tokens.length) fail("FORMULA_SYNTAX", "Unexpected trailing input");
+
+  // Parsing recursion alone does not bound a left-associated AST's depth.
+  const pending: { node: Expr; depth: number }[] = [{ node: tree, depth: 0 }];
+  const dependencies = new Set<string>();
+  let count = 0;
+  while (pending.length) {
+    const { node, depth } = pending.pop()!;
+    if (++count > 256 || depth > 32) fail("FORMULA_LIMIT", "AST exceeds size/depth budget");
+    if (node.kind === "fact") dependencies.add(node.name);
+    if (node.kind === "unary") pending.push({ node: node.value, depth: depth + 1 });
+    if (node.kind === "binary") {
+      pending.push({ node: node.left, depth: depth + 1 });
+      pending.push({ node: node.right, depth: depth + 1 });
+    }
+    Object.freeze(node);
+  }
+  const compiled = Object.freeze({
+    tree,
+    dependencies: Object.freeze([...dependencies].sort())
+  });
+  compiledHere.add(compiled);
+  return compiled;
+}
+
+export function evaluateFormula(
+  compiled: CompiledFormula,
+  facts: ReadonlyMap<string, string>
+): Fraction {
+  if (!compiledHere.has(compiled))
+    fail("FORMULA_UNTRUSTED_AST", "Compile definitions in this process before evaluation");
+
+  // Copy only registered referenced scalar values into fresh exact bindings.
+  const bindings = new Map<string, Fraction>();
+  for (const name of compiled.dependencies) {
+    const value = facts.get(name);
+    if (typeof value !== "string") fail("FACT_MISSING", `Missing decimal fact ${name}`);
+    bindings.set(name, Fraction.fromDecimal(value!));
+  }
+  let visited = 0;
+  function visit(node: Expr, depth = 0): Fraction {
+    if (++visited > 256 || depth > 32) fail("COMPUTATION_LIMIT", "Evaluation budget exceeded");
+    if (node.kind === "literal") return Fraction.fromDecimal(node.value);
+    if (node.kind === "fact") return bindings.get(node.name)!;
+    if (node.kind === "unary") {
+      const value = visit(node.value, depth + 1);
+      return node.op === "-" ? value.negate() : value;
+    }
+    const a = visit(node.left, depth + 1), b = visit(node.right, depth + 1);
+    switch (node.op) {
+      case "+": return a.add(b);
+      case "-": return a.subtract(b);
+      case "*": return a.multiply(b);
+      case "/": return a.divide(b);
+      default: return fail("FORMULA_OPERATION", "Unsupported operation");
+    }
+  }
+  return visit(compiled.tree);
+}
+```
+
+### C.2 Feeding the Context Fact Object into the evaluator
+
+```typescript
+import { compileFormula, evaluateFormula } from './expression.ts';
+
+// CFO structure is validated by the server before binding.
+const CFO = { SPECIFICATION: { DISTANCE: '140' } };
+const facts = new Map([
+  ['CFO.SPECIFICATION.DISTANCE', CFO.SPECIFICATION.DISTANCE]
+]);
+
+const compiled = compileFormula(
+  '((CFO.SPECIFICATION.DISTANCE / 10) * 2) + 5',
+  new Set(facts.keys())
+);
+
+console.log(evaluateFormula(compiled, facts).evidence());
+// { numerator: '33', denominator: '1', exactDecimal: '33' }
+```
+
+For the typed rule in Appendix B, the server resolves `distance_m` from the CFO and `spacing_m`, `per_span` and `spare` from validated immutable parameters. It checks dimensions before passing their exact scalar strings to this numeric module.
+
+### C.3 Reproducible focused checks
+
+Save the next block as `expression-check.ts` beside `expression.ts`. From an environment with the existing TypeScript runner available, execute `node --import tsx expression-check.ts`. These are demonstration checks, not the complete acceptance matrix.
+
+```typescript
+import assert from "node:assert/strict";
+import { CceError, Fraction, compileFormula, evaluateFormula } from "./expression.ts";
+
+const facts = new Map([
+  ["CFO.SPECIFICATION.DISTANCE", "140"],
+  ["distance_m", "140"],
+  ["negative", "-0.25"]
+]);
+const allowed = new Set(facts.keys());
+const calculate = (s: string, values = facts) => evaluateFormula(compileFormula(s, allowed), values);
+let positiveCases = 0, refusalCases = 0, generatedCases = 0;
+const exactCases: [string, string][] = [
+  ["((CFO.SPECIFICATION.DISTANCE / 10) * 2) + 5", "33"],
+  ["0.1 + 0.2", "0.3"], ["8 / 4 / 2", "1"], ["2 + 3 * 4", "14"],
+  ["-(2 + 3) * 4", "-20"], ["2*-3+4", "-2"], ["1/3 + 2/3", "1"],
+  ["-0.125 + 0.25", "0.125"], ["negative * 4", "-1"], ["0/5", "0"],
+  ["00012.5000 / 5", "2.5"], ["+2--3", "5"], ["distance_m/10", "14"],
+  [" 2 +\n 3 ", "5"], ["1/8", "0.125"], ["999999999999999999+1", "1000000000000000000"]
+];
+for (const [source, expected] of exactCases) {
+  assert.equal(calculate(source).exactDecimal(), expected, source); positiveCases++;
+}
+assert.deepEqual(calculate("1/3").evidence(), {numerator:"1",denominator:"3",exactDecimal:null});
+positiveCases++;
+assert.equal(Fraction.fromDecimal("-0.000").exactDecimal(), "0"); positiveCases++;
+const reusable = compileFormula("distance_m+1", allowed);
+assert.equal(evaluateFormula(reusable, new Map([["distance_m","1"]])).exactDecimal(), "2");
+assert.equal(evaluateFormula(reusable, new Map([["distance_m","9"]])).exactDecimal(), "10");
+assert.deepEqual(reusable.dependencies, ["distance_m"]); positiveCases++;
+assert.ok(Object.isFrozen(reusable) && Object.isFrozen(reusable.tree)); positiveCases++;
+
+const bad = [
+  "CFO.__proto__", "CFO.SPECIFICATION.DISTANCE.toString()", "process.exit()",
+  "2**100", "1/0", "1;2", "[1,2]", "2x", "NaN", "1e400", "", " ",
+  "1+".repeat(200)+"1", "(".repeat(40)+"1"+")".repeat(40),
+  "1+".repeat(34)+"1", "9".repeat(2049), "1234567890123456789", "0.1234567890123",
+  "1//2", "1%2", "x=1", "1<2", "1?2:3", "CFO['x']", "'1'", "Math.random()",
+  "2(3)", "1,2", "1..2", "1/*x*/+2", "2π", "1\u200b+2", "(1+2", "1+2)"
+];
+for (const source of bad) {
+  assert.throws(() => calculate(source), CceError, source); refusalCases++;
+}
+for (const value of ["NaN", "Infinity", "1e3", "", "1.2.3"]) {
+  assert.throws(() => calculate("distance_m", new Map([["distance_m", value]])), CceError);
+  refusalCases++;
+}
+assert.throws(() => calculate("distance_m", new Map()), CceError); refusalCases++;
+assert.throws(() => evaluateFormula(JSON.parse(JSON.stringify(reusable)), facts), CceError); refusalCases++;
+assert.throws(() => Fraction.fromDecimal("1").exactDecimal(13), CceError); refusalCases++;
+assert.throws(() => new Fraction(10n**513n), CceError); refusalCases++;
+
+// Independent exact oracle for bounded integer operations; no binary rounding.
+for (let a=-5; a<=5; a++) for (let b=1; b<=5; b++) {
+  for (const op of ["+","-","*","/"]) {
+    const got = calculate(`(${a})${op}${b}`);
+    const expectedN = op==="+" ? BigInt(a+b) : op==="-" ? BigInt(a-b) :
+      op==="*" ? BigInt(a*b) : BigInt(a);
+    const expectedD = op==="/" ? BigInt(b) : 1n;
+    assert.equal(got.numerator*expectedD, expectedN*got.denominator);
+    generatedCases++;
+  }
+}
+console.log(JSON.stringify({positiveCases,refusalCases,generatedCases,
+  example:calculate("((CFO.SPECIFICATION.DISTANCE / 10) * 2) + 5").evidence()}));
+```
+
+<a id="appendix-d-worked-examples"></a>
+
+## Appendix D: Worked examples
+
+### D.1 Proportional versus commenced-span quantity
+
+| Input/policy | 140 m | 145 m |
+|---|---:|---:|
+| Proportional: `(distance / 10) × 2 + 5` | 33 | 34 |
+| Per commenced span: `ceiling(distance / 10) × 2 + 5` | 33 | 35 |
+
+Rounding only the final proportional result is not equivalent to rounding the span count first. The authoring form must make this distinction visible. Both examples are synthetic; neither is an adopted engineering rule.
+
+### D.2 Conflict groups and extras
+
+```text
+installation.cable.base:
+  General rule A: quantity 5, priority 100
+  Outdoor rule B: quantity 10, priority 450
+  Policy: HIGHEST_PRIORITY → 10
+
+installation.cable.spares:
+  Service spare rule C: quantity 2
+  Policy: SUM → 2
+
+Final compatible cable requirement: 12
+```
+
+Changing B's priority to 100 creates a conflict in the base group. The engine must not choose A or B by creation order. The spare group remains explainable, but the complete result is not adoptable until the base conflict is resolved.
+
+### D.3 Manual rebase
+
+```text
+Old generated cable quantity: 20 m
+Salesperson override: SET_QUANTITY 18 m
+Reason: confirmed measured route
+New generated cable quantity after new scope: 24 m
+```
+
+The new preview shows generated 24 m, retained manual proposal 18 m and “Override basis changed”. Receiving is held until the user retains, replaces or revokes the override under current policy. It must not silently turn the original absolute value into 22 m by treating it as a -2 m delta.
+
+### D.4 Exact cost and gross margin
+
+```text
+33 brackets × AUD 2.00 cost       = AUD 66.00
+2 person-hours × AUD 50.00 cost   = AUD 100.00
+Total included cost              = AUD 166.00
+
+Target gross margin              = 20%
+Sell ex tax = 166 / (1 - 0.20)    = AUD 207.50
+Gross profit = 207.50 - 166       = AUD 41.50
+Gross margin = 41.50 / 207.50     = 20%
+Markup = 41.50 / 166              = 25%
+```
+
+The invoice projection can price brackets at AUD 2.50 and labour at AUD 62.50, provided that line pricing is the accepted commercial representation. Tax is excluded from this example because no operational tax mapping has been adopted.
+
+### D.5 Billing allocation with exact conservation
+
+Allocate AUD 207.50 over 15% and 85% using a declared largest-remainder policy:
+
+```text
+Contract total: 20,750 cents
+15% exact share: 3,112.5 cents
+85% exact share: 17,637.5 cents
+Floored shares: 3,112 + 17,637 = 20,749 cents
+One remaining cent assigned using the declared stable tie-breaker.
+If deposit wins the tie: AUD 31.13 + AUD 176.37 = AUD 207.50.
+```
+
+Independently rounding both exact shares upward would produce AUD 207.51. The chosen tie-breaker is part of the policy and trace, not an incidental array order.
+
+### D.6 Labour scaling and elapsed time
+
+Four units at 4.5 person-hours each produce 18 person-hours. A two-person crew does not automatically imply nine elapsed hours: parallelism, task sequence, access, working calendars and capacity still matter. The CCE records effort; a scheduling contract resolves duration.
+
+### D.7 Historical rule correction
+
+An estimate saved in April used release A and rule version 3. In October, version 4 corrects an allowance. Opening the April estimate reads its retained result and version-3 evidence. “Compare with current rules” produces a new October run and a difference report. Adopting it requires a new estimate version or, after commercial acceptance, the applicable variation process. The original April artifact remains unchanged.
+
+<a id="appendix-e-evidence-sources-and-verification-record"></a>
+
+## Appendix E: Evidence, sources and verification record
+
+### E.1 Execution record and limits
+
+This revision replaces the previous “PostgreSQL not run” and “draft-07 compatibility only” evidence statements. The earlier Docker limitation was real, but native PostgreSQL 16.15 was subsequently located and used. The original report is retained in the evidence bundle as provenance; its superseded verification statements are not the current status.
+
+| Check | Observed outcome |
+|---|---|
+| Source baseline | `ba1f4e3c155ce6a45dc15e87689de01d42a47e1f`; no repository changes made |
+| PostgreSQL | 16.15, Visual C++ 1944, 64-bit; new loopback-only task cluster |
+| Native migration source | 76 registered files through 0077; exact file digests retained |
+| Native parent catalog | Actual columns/types/defaults and constraints retained in `native-parent-catalog.json` |
+| Reference SQL | Applied successfully to current native schema and synthetic contract parents |
+| Populated current-baseline installation | Exact retained-row hashes matched for 369 native tables / 646 rows, including three estimate versions; migration ledger unchanged |
+| Database scenarios | 24 passed, including observed two-session lock waits and repeatable-read serialization refusal |
+| Native command probe | Five passed; native save and snapshot attachment were separate transactions |
+| JSON Schema | Ajv 8.17.1 / ajv-formats 3.0.1; native 2020-12 class, strict mode, format checking, no coercion, defaults or unknown-property removal |
+| Schema fixtures | 18 structurally valid, 26 structurally invalid, three intentionally structurally valid semantic-gap demonstrations |
+| Expression suite | 20 positive + 43 refusal + 220 generated cases passed |
+| Independent arithmetic | 5,000 generated cases matched Python standard-library rational arithmetic |
+| TypeScript | Restricted expression implementation passed strict no-emit compilation with TypeScript 6.0.3 |
+| Workflow | 34 material-profile scenarios passed; ALL/ANY/NOT combinations included |
+| Persistence | Four workflow scenarios passed, including exact reopened explanations and persisted manual intent |
+| Worked examples | Eight arithmetic/allocation/effort/calendar-day scenarios passed |
+| Database restart | Twelve selected table-set digests matched before/after actual clean stop/start; task cluster stopped afterward |
+| Browser/human review | Not performed for a CCE authoring UI |
+| Provider writes | None; no MYOB, Xero, QuickBooks or project-system sandbox transaction |
+| Production changes | None; no application migration, PR, deployment or operational transaction |
+
+The native parent probe uses persisted `estimate_versions` fields; the application read DTO is not assumed to expose the entire database representation. The test database is a locally migrated synthetic instance, not the hosted demo or an operational database.
+
+#### Test-development failures and corrective actions
+
+| Observation | Classification | Correction and retained boundary |
+|---|---|---|
+| Numeric infinity was rejected with `22003`, while the first harness expected only constraint-class refusals | Test assertion too narrow | Accepted PostgreSQL numeric overflow as the correct refusal; all 24 scenarios then passed. SQL was not weakened. |
+| Native read DTO omitted `cost_schema_version` | Test adapter assumed read/write symmetry | Read exact persisted version fields for the compatibility probe; five native scenarios then passed. |
+| Replaying raw seed SQL triggered the existing overlapping-equipment-configuration guard | Test setup replay error | Rolled back the attempted replay and reused the already established isolated fixture. No existing repository guard was changed. |
+| First workflow type-mismatch fixture omitted the decimal unit | Invalid test input failed at an earlier layer | Supplied a structurally valid decimal fixture so the dictionary-type check was exercised. |
+| Original database stop exceeded a 20-second wait | Test timeout during local checkpointing | Server log later confirmed clean shutdown after approximately 45 seconds. Repeated proof used a 50-second bounded wait and passed. A 20-second recovery target is not claimed. |
+
+During workflow review, the reference profile was tightened to bound definition traversal before structural validation, include frozen source/rule/policy context in override-basis hashes, retain expression substitutions and rounding in trace, and reload persisted published definitions before the persistence demonstration. The final executed source files and hashes are included in the bundle.
+
+Ajv's native 2020-12 implementation supports the dialect used here. Passing these fixtures is schema validation evidence, not a formal certification of the validator or completeness of business rules. The structural tests deliberately show that reversed ranges, duplicate node IDs and dictionary-type mismatches still require semantic validation. [Ajv JSON Schema versions](https://ajv.js.org/json-schema.html#draft-2020-12-breaking).
+
+The first report's TypeScript command-line invocation issue remains historical: the corrected `--ignoreConfig` strict check passes. The report assembly also validates fenced JSON, internal links, schema references, embedded-source consistency, unresolved markers and evidence-set counts. These checks concern artifact integrity, not owner acceptance.
+
+### E.2 Primary technical sources
+
+Sources were reviewed for this research on 12 October 2026 (Australia/Brisbane). Software advisories and provider APIs can change; implementation must pin and verify its actual dependencies and contracts.
+
+| Source | Relevance and limit |
+|---|---|
+| [PostgreSQL 16 constraints](https://www.postgresql.org/docs/16/ddl-constraints.html) | Relational integrity mechanisms; does not validate PPO business rules |
+| [PostgreSQL 16 JSON types](https://www.postgresql.org/docs/16/datatype-json.html) | JSONB behaviour and indexing |
+| [PostgreSQL 16 numeric types](https://www.postgresql.org/docs/16/datatype-numeric.html) | Exact numeric storage and scale behaviour |
+| [PostgreSQL 16 transaction isolation](https://www.postgresql.org/docs/16/transaction-iso.html) | Snapshot/isolation and retry considerations |
+| [PostgreSQL 16 explicit locking](https://www.postgresql.org/docs/16/explicit-locking.html) | Locking and concurrency protocol foundation |
+| [PostgreSQL 16 row security](https://www.postgresql.org/docs/16/ddl-rowsecurity.html) | RLS controls and privilege limits |
+| [Node.js VM documentation](https://nodejs.org/api/vm.html) | VM is not a security boundary for untrusted code |
+| [Mathjs expression security](https://mathjs.org/docs/expressions/security.html) | Parser and resource-exhaustion considerations |
+| [Mathjs maintainer advisory GHSA-5v89-rwgr-qj6g](https://github.com/josdejong/mathjs/security/advisories/GHSA-5v89-rwgr-qj6g) | Specific expression-parser vulnerability and affected versions |
+| [expr-eval advisory GHSA-jc85-fpwf-qm7x](https://github.com/advisories/GHSA-jc85-fpwf-qm7x) | Specific variable-object code-execution advisory |
+| [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-core) | Structural schema vocabulary/reference framework |
+| [Ajv dialect support](https://ajv.js.org/json-schema.html#draft-2020-12-breaking) | Native validator class and dialect separation |
+| [PostgreSQL generated columns](https://www.postgresql.org/docs/16/ddl-generated-columns.html) | BEFORE-trigger hash projection excludes generated values |
+| [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) | Canonical JSON for a separately selected portable-signature contract |
+| [Salesforce CPQ product and price rules](https://trailhead.salesforce.com/content/learn/modules/salesforce-cpq-features/product-and-price-rules) | Established distinction between rule purposes |
+| [React Query Builder component API](https://react-querybuilder.js.org/docs/components/querybuilder) | Candidate editor controls, not a PPO dependency decision |
+| [React Query Builder validation](https://react-querybuilder.js.org/docs/utils/validation) | Field/group validation presentation |
+| [Camunda decision-table hit policies](https://docs.camunda.io/docs/8.8/components/modeler/dmn/decision-table-hit-policy/) | Explicit multiple-match semantics |
+| [WAI tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/) | Appropriate scope of tooltip interactions |
+| [MYOB contract-based REST API](https://enterprise-support.myob.com/adv/contract-based-rest-api) | Supported interface family; actual tenant endpoints remain unverified |
+| [Xero invoices](https://developer.xero.com/documentation/api/accounting/invoices) | Destination invoice shape and statuses |
+| [Xero idempotency](https://developer.xero.com/documentation/guides/idempotent-requests/idempotency/) | Provider deduplication contract and retention limitation |
+| [QuickBooks Online invoices](https://developer.intuit.com/app/developer/qbo/docs/api/accounting/all-entities/invoice) | Destination invoice/item and update contract |
+| [Asana task creation](https://developers.asana.com/reference/createtask) | Project-task projection example |
+| [Asana milestone semantics](https://developers.asana.com/go/reference/stories) | Milestones as point-in-time task subtype |
+| [Asana dependencies](https://developers.asana.com/go/reference/adddependenciesfortask) | Separate dependency deployment operation |
+
+### E.3 PPO sources inspected
+
+The local checkout baseline is recorded in document control. Repository references below identify the existing evidence and architectural context; they do not claim this CCE proposal has been adopted there.
+
+- `README.md` and `docs/STATUS.md` — current prototype scope and delivery/acceptance distinctions.
+- `docs/blueprints/BP-01-master-blueprint.md` and `docs/blueprints/BP-04-estimating-quotation.md` — estimating scope and retained parent requirements.
+- `docs/decisions/product-direction-quality.md` — independently defined PPO rules; CREMS remains historical.
+- `docs/decisions/ADR-0027-estimating-discovery-cost-basis.md` — exact source receiving and immutable estimate basis.
+- `docs/decisions/ADR-0034-es08-specialist-workbench.md` — bounded specialist engine, rational arithmetic and exact contributions.
+- `src/estimating/specialist/rational.ts` — existing exact arithmetic representation inspected for reuse considerations.
+- Current migration registry and all 76 registered migration files through 0077 — executed in an isolated database; exact source hashes retained. Native parent columns and constraints were read from that migrated database.
+- Existing native CRM/estimating commands, read models and synthetic helpers — exercised in five bounded compatibility scenarios.
+- Current populated native clone — 369 native tables and the migration ledger compared before/after candidate DDL.
+- `AGENTS.md`, `CONTRIBUTING.md` and `docs/standards/naming-conventions.md` — repository integration and evidence requirements.
+
+### E.4 Required evidence before implementation acceptance
+
+Retain the bounded PostgreSQL, schema, arithmetic and workflow evidence supplied here. Extend it with the complete native CCE adoption transaction, strict HTTP authorization and original-operation recovery, historical upgrade matrix, adversarial worker tests, browser/accessibility observations, quotation regression and independently owned expected values for every operating rule. Operational readiness additionally requires accepted integration, retention, backup, support and deployment controls. Sections 8.3 and 10.3 are the remaining-work ledger.
+
+<a id="appendix-f-reproducibility-and-bounded-workflow"></a>
+
+## Appendix F: Reproducibility and bounded workflow
+
+### F.1 Evidence package
+
+The [published evidence directory](../testing/evidence/cce-reference-validation/README.md), imported from the original companion archive, contains the executed reference sources, fixtures, result ledgers, source hashes, validator lockfile and prior-report snapshot. It excludes the PostgreSQL cluster, installed dependencies, credentials, operational data and raw production exports. It is a research evidence package, not an application release.
+
+| File | Purpose |
+|---|---|
+| `reference-schema.sql` | Exact candidate SQL included in Appendix A |
+| `rule-schema.json`, `example-rule.json` | Exact structural schema and synthetic authored rule |
+| `expression.ts`, `expression-check.ts` | Exact arithmetic implementation and focused tests |
+| `generate-oracle.py`, `arithmetic-oracle.json`, `oracle-check.mjs` | Reproducible independent arithmetic cases, seed 20261012 |
+| `schema-2020-check.cjs`, `schema-coverage.cjs` | Native dialect, action/condition shape and semantic-gap demonstrations |
+| `reference-workflow.mjs`, `workflow-check.mjs` | Explicit material-only profile and 34 scenarios |
+| `workflow-fixture.json`, `workflow-result.json` | Concrete CFO/rule/cost input and exact output/explanation |
+| `database-check.mjs`, `database-result.json` | Contract-parent schema and 24 database scenarios |
+| `native-schema.mjs`, `native-schema-result.json` | Current repository migration installation and exact source ledger |
+| `native-parent-catalog.json` | Live test-schema parent keys, types and constraints |
+| `native-journey.mjs`, `native-journey-result.json` | Five bounded existing-native-command probes |
+| `persist-workflow.mjs`, `persisted-workflow-result.json` | Four persisted material-profile scenarios |
+| `populated-upgrade.mjs`, `populated-upgrade-result.json` | Current populated-baseline installation and retained-table digests |
+| `commercial-check.mjs`, `commercial-result.json` | Eight exact worked-example checks |
+| `restart-check.mjs`, `restart-result.json` | Actual clean database restart and twelve table-set digests |
+| `verification-summary.json`, `SHA256SUMS.json` | Evidence-set index and exact packaged-file hashes |
+| `validator/package.json`, `validator/package-lock.json` | Pinned test-only validator dependencies |
+| `README.md` | Execution sequence, local prerequisites and destructive-boundary safeguards |
+
+The database scripts deliberately pin the task's cluster, port and synthetic database names. They must not be pointed at an existing application database. They are retained execution evidence; reusing them on another workstation requires replacing the repository/root paths and checking the exact target guards. The pure expression/schema/workflow checks can be reproduced without a database.
+
+The SQL is a first-install candidate, not an idempotent reapplication script. Run each database installation in its prescribed new disposable database. The populated-baseline script removes only the candidate CCE objects in a newly cloned disposable database before measuring its installation; it retains every native table and migration ledger. It does not modify the source database.
+
+### F.2 What the executable workflow implements
+
+The material profile follows this concrete sequence:
+
+```text
+Bound JSON envelope
+  → validate the native 2020-12 schema
+  → resolve fact types and approved symbols
+  → compile restricted arithmetic and check dimensions
+  → evaluate three-valued ALL / ANY / NOT predicates
+  → emit exact material contributions
+  → resolve SUM / UNIQUE / HIGHEST_PRIORITY groups
+  → quantize quantities at the stated boundary
+  → retain absolute overrides or stop for rebase review
+  → price from explicit synthetic AUD cost sources
+  → emit conditions, substitutions, winners/losers and rounding evidence
+  → save immutable run and atomically adopt into fixture-native parents
+  → reopen the retained result and explanation
+```
+
+The persistence test reloads a rule through its stored sealed-release membership before calculating. Runtime rule identity matches the stored rule UUID; the frozen execution contract retains the fact dictionary. It verifies that a later version cannot change the original saved BOM and that a blocked result cannot become an adopted snapshot.
+
+**Enabled:** material actions; numeric/boolean predicates; nested ALL/ANY/NOT; exact scalar arithmetic; simple length/count/effort dimensions; three conflict policies; nonnegative quantization; suppression and absolute quantity overrides; synthetic AUD cost and target-margin calculation.
+
+**Not implemented by this profile:** labour/margin/milestone action dispatch, collection execution, enum/text/range execution, MAX_REQUIREMENT/ANY_EQUAL resolution, currency conversions, catalogue lookup, full scope expansion, engineering hard-constraint authority, native CCE API routes, source permissions, job supervision, frontend, durable delivery worker or real provider calls. These remain explicit implementation obligations even where their structural shapes or mathematical examples are tested.
+
+The reference workflow's sorted-key digest is a local profile contract. It does not implement an RFC 8785 signing service. Its test operation identities and build markers do not prove authenticated publication evidence or platform receipt recovery.
+
+### F.3 A concrete explanation record
+
+For the synthetic 140 m fixture, the recorded rule substitutes `distance_m=140`, `spacing_m=10`, `per_span=2` and `spare=5`. It produces an exact quantity of `33/1`, applies a one-unit ceiling at group resolution, calculates cost `33 × 2.40 = 79.20`, and a synthetic 20% gross-margin sell amount of `99.00`. This fixture uses a different unit cost from Appendix D.4; both explicitly declare their own cost basis.
+
+The result retains the condition truth values, exact substitutions, winning rule, suppressed alternatives where present, exact fraction and quantization policy. Setting an absolute manual quantity of 40 yields cost 96.00 and sell 120.00 in this fixture. Saving and reloading the override reproduces the result. Changing the frozen source requires rebase review even when rounding leaves the generated quantity unchanged.
+
+An explanation panel must render retained trace data from the chosen snapshot. It must not reconstruct the explanation using today's rule definition, display labels or costs. Apply the reader's current source and cost visibility before returning that trace to the browser.
+
+### F.4 Interpretation of the evidence
+
+This package establishes a tested reference implementation for a bounded material scenario and a tested persistence design on local PostgreSQL. It does not establish that the complete proposed engine has been added to PPO. Sections 8.3 and 10.3 identify the remaining command, UI, security, integration and operational work without conflating it with the passes already recorded.

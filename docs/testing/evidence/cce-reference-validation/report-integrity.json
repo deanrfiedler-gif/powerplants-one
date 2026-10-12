@@ -1,0 +1,11 @@
+{
+  "path": "<original-report-export>",
+  "bytes": 190371,
+  "wordsIncludingCode": 22562,
+  "proseWords": 16444,
+  "codeBlocks": 33,
+  "jsonBlocks": 8,
+  "internalLinks": 16,
+  "sha256": "d09260bb40920809700bf8c2b7cfe9cf3acb628876e4f3885303cf03622d2f0d",
+  "status": "PASS"
+}

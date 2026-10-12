@@ -1,0 +1,1 @@
+{"positiveCases":20,"refusalCases":43,"generatedCases":220,"example":{"numerator":"33","denominator":"1","exactDecimal":"33"}}

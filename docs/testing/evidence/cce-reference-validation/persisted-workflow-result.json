@@ -1,0 +1,28 @@
+{
+  "scope": "Material-only harness with synthetic contract parents; not a native production adoption command",
+  "passed": 4,
+  "cases": [
+    {
+      "id": "E2E-01",
+      "status": "PASS",
+      "detail": "Validated authored rule, evaluated and resolved material, persisted exact run, atomically adopted into contract-parent fixture, reopened identical explanation."
+    },
+    {
+      "id": "E2E-02",
+      "status": "PASS",
+      "detail": "Persisted blocked result cannot be adopted."
+    },
+    {
+      "id": "E2E-03",
+      "status": "PASS",
+      "detail": "Later authored version leaves historical BOM and trace unchanged."
+    },
+    {
+      "id": "E2E-04",
+      "status": "PASS",
+      "detail": "Persisted manual override survives reload and exact recalculation."
+    }
+  ],
+  "runId": "940d09a0-3569-4c27-8df4-13cbadf47a4c",
+  "snapshotId": "cab6b6fa-fa38-4b35-88d3-8971c5b3e5e6"
+}

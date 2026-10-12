@@ -1,0 +1,7 @@
+
+> powerplants-one@0.1.0 typecheck
+> tsc --noEmit
+
+.next/types/validator.ts(629,39): error TS2307: Cannot find module '../../src/app/(business)/work/[id]/page.js' or its corresponding type declarations.
+.next/types/validator.ts(638,39): error TS2307: Cannot find module '../../src/app/(business)/work/new/page.js' or its corresponding type declarations.
+docs/testing/evidence/cce-reference-validation/expression-check.ts(2,69): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
