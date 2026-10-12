@@ -13,6 +13,12 @@ import {
 } from "../shared/validation";
 import type { DiscoveryScope } from "./discovery";
 import {
+  catalogueGroups,
+  categoryBelongsToFamily,
+  equipmentCatalogueDefinition,
+  type CategoryId,
+} from "./equipment-catalogue";
+import {
   configurationDefinition,
   configurationFields,
   equipmentFamilies,
@@ -86,7 +92,10 @@ export function parseConfiguration(
     "responsibilities",
     "follow_ups",
   ]);
-  if (r.schema_version !== 1 || r.definition_id !== configurationDefinition)
+  if (!(
+    (r.schema_version === 1 && r.definition_id === configurationDefinition) ||
+    (r.schema_version === 2 && r.definition_id === equipmentCatalogueDefinition)
+  ))
     invalid(
       "configuration.schema_version",
       "This configuration definition is unsupported; preserve the recorded source.",
@@ -187,6 +196,7 @@ export function parseConfiguration(
         "lineage",
         "name",
         "family",
+        ...(r.schema_version === 2 ? ["category_id"] : []),
         "type",
         "intent",
         "proposed_work",
@@ -221,14 +231,31 @@ export function parseConfiguration(
         "coverage",
         "Define explicit area membership, attributed non-area scope, or an owned unknown without area IDs.",
       );
+    let category: { category_id: CategoryId | null } | Record<string, never> =
+      {};
+    if (r.schema_version === 2) {
+      if (
+        s.family === "Infrastructure"
+          ? s.category_id !== null
+          : !categoryBelongsToFamily(String(s.family), s.category_id)
+      )
+        invalid(
+          "system.category_id",
+          "Select an exact category in its recorded family; shared infrastructure has no category.",
+        );
+      category = { category_id: s.category_id as CategoryId | null };
+    }
     return {
       ...entity(s),
       name: narrative(s.name, "system.name", 100),
       family: choice(
         s.family,
         "system.family",
-        equipmentFamilies.map((f) => f.id),
+        (r.schema_version === 2 ? catalogueGroups : equipmentFamilies).map(
+          (f) => f.id,
+        ),
       ),
+      ...category,
       type: narrative(s.type, "system.type", 100),
       intent: choice(s.intent, "system.intent", [
         "New",
@@ -416,8 +443,8 @@ export function parseConfiguration(
     );
   for (const a of arrays) a.sort((a, b) => a.id.localeCompare(b.id));
   return {
-    schema_version: 1,
-    definition_id: configurationDefinition,
+    schema_version: r.schema_version as 1 | 2,
+    definition_id: r.definition_id as Configuration["definition_id"],
     areas,
     systems,
     facts,
@@ -451,7 +478,20 @@ export function configurationFindings(
   for (const s of config.systems) {
     if (s.coverage.mode === "Unknown")
       add(s.id, "coverage", "Configuration", `Confirm coverage — ${s.name}`);
-    for (const field of requiredSystemFields(s)) {
+    // Classification alone makes no technical-suitability claim. r02 requires
+    // the supply description and confirmation of every explicitly captured fact.
+    const fields =
+      config.schema_version === 2
+        ? [
+            ...new Set([
+              "SupplyDescription" as const,
+              ...config.facts
+                .filter((f) => f.system_id === s.id)
+                .map((f) => f.field),
+            ]),
+          ]
+        : requiredSystemFields(s);
+    for (const field of fields) {
       const f = config.facts.find(
           (f) => f.system_id === s.id && f.field === field,
         ),
@@ -461,7 +501,7 @@ export function configurationFindings(
           s.id,
           field,
           "Configuration",
-          `${field === "VerifiedCapacity" ? "Confirm controller capacity" : field === "EquipmentModel" ? "Confirm existing sensor model" : "Confirm supply description"} — ${s.name}`,
+          `${config.schema_version === 2 ? `Confirm ${d.label.toLowerCase()}` : field === "VerifiedCapacity" ? "Confirm controller capacity" : field === "EquipmentModel" ? "Confirm existing sensor model" : "Confirm supply description"} — ${s.name}`,
         );
     }
   }
@@ -483,6 +523,37 @@ export function configurationOwners(config: Configuration) {
     ...config.responsibilities.map((r) => r.follow_up),
     ...config.follow_ups,
   ].filter((x): x is OwnedUnknown => x !== null);
+}
+// Reclassification is explicit. For a surviving system it cannot erase the
+// source's evidence obligations; retain them as owned unknowns when unresolved.
+export function requireConfigurationSuccessor(
+  previous: Configuration | undefined,
+  next: Configuration | undefined,
+) {
+  if (!previous) return;
+  if (previous.schema_version === 2 && next?.schema_version !== 2)
+    invalid(
+      "configuration.definition_id",
+      "Retain the successor configuration definition.",
+    );
+  if (next?.schema_version !== 2) return;
+  for (const system of previous.systems) {
+    if (!next.systems.some((s) => s.id === system.id)) continue;
+    const fields = new Set([
+      ...(previous.schema_version === 1 ? requiredSystemFields(system) : []),
+      ...previous.facts
+        .filter((f) => f.system_id === system.id)
+        .map((f) => f.field),
+    ]);
+    for (const field of fields)
+      if (
+        !next.facts.some((f) => f.system_id === system.id && f.field === field)
+      )
+        invalid(
+          "configuration.facts",
+          "Retain the surviving system's recorded fact requirements, with an owned unknown where unresolved.",
+        );
+  }
 }
 export function configurationConfirmations(
   config: Configuration | undefined,
@@ -506,6 +577,7 @@ export function configurationConfirmations(
       ? null
       : {
           entity: e,
+          ...(c.schema_version === 2 ? { definition: c.definition_id } : {}),
           evidence:
             "evidence_ids" in e
               ? c.evidence.filter((v) => e.evidence_ids.includes(v.id))
@@ -554,7 +626,7 @@ export function copyConfiguration(
     ...config.follow_ups,
   ]) {
     const h = digest({
-      definition: configurationDefinition,
+      definition: config.definition_id,
       sourceRevision,
       allocation,
       entity: e.id,
