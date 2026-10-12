@@ -8860,7 +8860,7 @@
       "title": "Priva Fertigation Configurator · detail",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Native saved fertigation scope aligned to the accepted nine-view Figma workbench, with desktop registers, phone valve list and exact revision workflows. Owner visual acceptance and hosted deployment are separate.",
       "path": "/estimating/fertigation/[id]",
       "source_paths": [
         "src/app/(business)/estimating/fertigation/[id]/page.tsx"
@@ -8885,7 +8885,8 @@
         "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-14-Desktop-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/fertigation-figma-design.md"
+        "docs/decisions/fertigation-figma-design.md",
+        "docs/decisions/fertigation-figma-implementation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

@@ -227,6 +227,7 @@ export function NextActionsPanel({
           <h3 id="fn-actions-title">Next actions</h3>
           <p>Conflicts first, then what gates the most outputs · {basis}</p>
         </div>
+        {findings.length > 0 && <button type="button" className="fn-link" onClick={() => onView("review")}>All {findings.length} open checks</button>}
       </header>
       {actions.length === 0 && !candidates.length ? (
         <p className="fn-panel-empty">No open findings on this calculation.</p>
@@ -296,17 +297,6 @@ export function NextActionsPanel({
             </li>
           ))}
         </ol>
-      )}
-      {findings.length > 0 && (
-        <p className="fn-panel-foot">
-          <button
-            type="button"
-            className="fn-link"
-            onClick={() => onView("review")}
-          >
-            All {findings.length} open {findings.length === 1 ? "check" : "checks"} by responsible role
-          </button>
-        </p>
       )}
     </section>
   );

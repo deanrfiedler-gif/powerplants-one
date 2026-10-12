@@ -68,3 +68,7 @@ NAV CI repair: a Sales handover's validated `view` changes retain mounted dirty 
 Equipment's mounted Configuration/Movement/identity panels declare the same narrow retained `view` contract through useCrmCommand. The exact equipment ID, other query state and unknown-command lock remain. EQ03 browser proof checks retained r02 fields, preview, original recovery and successor identity across view changes and reload.
 
 Pending and unknown commands may switch only these explicitly declared mounted views. The command owner, original body and draft remain mounted; a different record, unrelated query, reload or unload stays guarded at pending priority. Discovery keeps its independent stronger contract. EQ03 checks a refused Home transition, mounted view switching and original recovery together; CR03 checks an immediate successor-to-Brief transition while the command settles.
+
+## Fertigation consumer
+
+The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The route-scoped composition does not change the shared control API. Paired owner acceptance remains open.
