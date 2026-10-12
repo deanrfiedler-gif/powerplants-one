@@ -46,7 +46,7 @@ The register entry frame, where "Open work order" leads to this page, is not ret
 | Item | Identity |
 |---|---|
 | Figma file | "PPO — Design" in Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Work order record page — shared record layout, accepted", to be saved by Dean |
+| Named version | "Work order record page — shared record layout, accepted"; Dean confirmed on 12 October 2026 that this named version is saved |
 | Accepted frames | Page "Work order record page (accepted)" `312:2`: Authorisation `315:2094`, Scope r01 `316:639`, Visits `318:1001`, Evidence `318:1769`, History `318:2514`, review side panel `319:2118`, scope editor `327:45008`, Authorise dialog `320:2567`, successor visits `321:2930`, states section `327:31344`, phone list `326:54385`, Details `325:4093`, Authorisation `326:53619`, Scope `326:53942` and the action sheet `326:54183` |
 | Capture copies | Page "Captures (icon-free)": `334:51911`, `334:52752`, `334:53498`, `334:54123`, `334:54798`, `334:55509`, `334:56385`, `334:57171`, `334:57952`, `334:58668`, `334:59134` (images 01–11 in order) |
 

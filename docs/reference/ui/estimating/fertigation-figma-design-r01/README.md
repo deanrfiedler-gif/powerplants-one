@@ -41,7 +41,7 @@ Image 13 shows, left to right: the phone Overview; Growing areas & irrigation wi
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design" in Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "ES-02 Priva Fertigation Workbench — Pipedrive pattern, accepted", to be saved by Dean |
+| Named version | "ES-02 Priva Fertigation Workbench — Pipedrive pattern, accepted"; Dean confirmed on 12 October 2026 that this named version is saved |
 | Accepted frames | Page "ES-02 Priva Fertigation Workbench (accepted)" `408:4`: Overview `410:525`, Growing areas & irrigation `413:93899`, Water & hydraulics `414:3807`, Recipes & dosing `415:89832`, Controls & I/O `415:93446`, Operating plan `416:93421`, Unit configurator `417:92044`, Evidence & delivery `415:90652`, Scope review `417:93115`; overlay copies `419:96216`, `419:97167`, `419:98118`; phone Overview `418:94059`, phone valve list `418:94364`, phone section sheet `420:5697`; states `419:94281`; notes `421:9574` |
 | Capture copies | Page "Captures (icon-free)": `432:100895`, `432:101896`, `432:102681`, `432:103404`, `432:104029`, `432:104737`, `432:105700`, `432:106426`, `432:107114`, `432:107917`, `432:108937`, `432:109952`, `432:110971`, `432:111818` (images 01–14 in order) |
 

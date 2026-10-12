@@ -138,7 +138,7 @@ The application should adopt these when the page is aligned to this design.
   This is a recommendation, not Dean's decision.
 - **Aligning the application page:** to this design, in a follow-up, including the FN-T61 test change.
 - **Shell rollout:** the Shell v2 rollout to this route follows the shell decision for the other pages.
-- **Named version:** Dean saves the named version. The pull request that adds this record stays a draft until he confirms it.
+- **Named version:** Dean confirmed on 12 October 2026 that the named version is saved, resolving the draft checkpoint for this record. This is his confirmation, not an independent inspection of Figma version history.
 - **Not yet done:** a Present-mode click-through in Figma desktop and a contrast measurement of the new chart fills. The darker outlines are chosen to carry each mark, and no ratio is claimed.
 - **No baseline:** no UI baseline is registered, and no owner visual review of the running page is implied.
 

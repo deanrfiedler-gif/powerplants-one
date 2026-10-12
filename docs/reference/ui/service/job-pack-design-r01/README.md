@@ -66,7 +66,7 @@ Offsets are the frame's top-left corner in the image, in pixels.
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Job pack — Pipedrive pattern, accepted" |
+| Named version | "Job pack — Pipedrive pattern, accepted"; Dean confirmed on 12 October 2026 that this named version is saved |
 | Accepted page | "Job pack (accepted)", with the frames listed above, the notes card `311:9244` and the page components listed in the decision |
 | Capture copies | Page "Captures (icon-free)": boards `327:23715`, `327:31762`, `327:35594`, `327:41980`, `327:43932` (frame `327:43933`), `327:45856` and `327:48031` (images 01–07 in order) |
 

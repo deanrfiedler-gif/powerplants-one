@@ -45,7 +45,7 @@ Image 08 is retained because the snapshot's footer differs from the accepted Pro
 | Item | Identity |
 |---|---|
 | Figma file | "PPO — Design" in Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Project record page — shared record layout, accepted", to be saved by Dean |
+| Named version | "Project record page — shared record layout, accepted"; Dean confirmed on 12 October 2026 that this named version is saved |
 | Accepted frames | Page "Project record page (accepted)" `345:2`: Overview `345:5185`, Schedule `348:516`, Baselines `349:674`, Acceptance `351:994`, Files `351:1601`, History `352:1663`, Record baseline dialog `368:3579`, register entry `355:70824`, states section `358:5184`, phone list `355:71007`, Details `354:5184`, Overview `355:2281`, Schedule list `355:2665` and the action sheet `362:3714` |
 | Capture copies | Page "Captures (icon-free)": `375:41168`, `375:41376`, `375:41752`, `375:41945`, `375:42037`, `375:42168`, `375:42257`, `375:42499`, `375:46106`, `375:46107` (images 01–10 in order) |
 
