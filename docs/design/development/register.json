@@ -7470,11 +7470,15 @@
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
-        "docs/decisions/work-order-record-page-design.md"
+        "docs/decisions/work-order-record-page-design.md",
+        "src/service/work-order-register.ts",
+        "src/service/work-order-register-model.ts",
+        "docs/decisions/work-order-register-backend.md",
+        "docs/testing/evidence/work-order-register/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. BC-01 additive register/record backend: execution in docs/testing/evidence/work-order-register/README.md; frontend integration and global menu counts remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7541,11 +7545,15 @@
         "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-06-Phone-Record-View-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/work-orders-design.md"
+        "docs/decisions/work-orders-design.md",
+        "src/service/work-order-register.ts",
+        "src/service/work-order-register-model.ts",
+        "docs/decisions/work-order-register-backend.md",
+        "docs/testing/evidence/work-order-register/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "BC-01 additive register/record backend: execution in docs/testing/evidence/work-order-register/README.md; frontend integration and global menu counts remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

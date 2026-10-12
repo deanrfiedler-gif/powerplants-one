@@ -4,6 +4,12 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Work orders backend — 12 October 2026
+
+Repository writer for this bounded contribution: the Work orders backend chat on `codex/work-orders-backend`, isolated from merged main `fe7794b`. Dean authorised proceeding with SV-03 after Reviews/Quotations, while Leads #451/#452 and CPQ #453 remain separate contributions. The [contract](decisions/work-order-register-backend.md) adds register and record projections using native scope/readiness/visit authority: five authorisation states, earliest active visit and exact scope review, owner/request/update fields, explicit candidate-window counts, native evidence metadata and bounded history. No command, schema, capability, seed or integration change is required. [Evidence](testing/evidence/work-order-register/README.md) records execution separately from accepted page implementation, review, owner acceptance and deployment. All scope IDs and review fingerprints remain unchanged.
+
+All seven new database scenarios and all seventeen original P04 cases have passing execution, with the original readiness timeout and unchanged-main/candidate replays retained separately. Three focused units and three compiled HTTP cases pass, as do build, type/lint and repository checks. The [execution ledger](testing/evidence/work-order-register/README.md) retains the test-hook and expiry-fixture corrections. Full PR CI, independent review, frontend integration and deployment remain separate.
+
 ## Backend PR integration — 12 October 2026
 
 Current repository writer: this backend-completion chat. Dean authorised monitoring, repairing and merging PR #449 followed by #450 only after all applicable checks pass. PR #449 integrates catalogue main `ae83043b55058ba47334c3e9ba431d3538f2a8da`, preserving both original contributions, migration 0085 and all catalogue upgrade assertions. Shared status/register conflicts retain both decisions; the build sequence is regenerated from the combined register without changing visual review fingerprints. PR #450 remains the dependent Quotations increment.
