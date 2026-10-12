@@ -256,7 +256,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0085 adds the opt-in ES-02 r02 catalogue guard and extends the installed
   // configuration trigger. No backfill, table, seed, user, permission, identity
   // ALTER or output change. Existing r01 writes and hosted grant boundaries remain.
-  if (latestMigrationVersion !== 85) throw Error("Review the existing-demo upgrade for this release.");
+  // 0086 adds CPQ tables and capabilities with no seeded grants/users.
+  // Existing hosted identities receive no CPQ authority; adapters remain synthetic.
+  if (latestMigrationVersion !== 86) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

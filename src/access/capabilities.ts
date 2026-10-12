@@ -3,6 +3,11 @@ import type { Capability } from "../platform/permissions";
 // Display copy, never an authorisation rule. Exhaustive against the server contract.
 // Initial descriptions follow the retained AD-01 design; proposed capabilities are excluded.
 export const capabilityLabels = {
+  "cpq.read": "Read CPQ releases and commercial calculation evidence",
+  "cpq.author": "Author CPQ rule releases",
+  "cpq.review": "Independently review exact CPQ releases",
+  "cpq.publish": "Publish reviewed CPQ releases",
+  "cpq.calculate": "Calculate and adopt CPQ results in owned estimates",
   "acceptance.close.project": "Close whole projects",
   "acceptance.close.stage": "Close acceptance stages",
   "acceptance.commercial": "Record commercial acceptance disposition",
