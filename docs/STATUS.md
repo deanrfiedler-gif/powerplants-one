@@ -4,6 +4,14 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Open PR integration — 12 October 2026
+
+Repository writer: this authorised repair/merge session (`codex/pr-final-integration-oct12`). PRs #435, #430 and #433 were merged after all 51 reported checks passed (one optional skip). The remaining contribution preserves the exact original heads and repaired successors of #431, #432, #434, #436 and #439–#445. Their shared documentation/register conflicts are resolved together, with the full combined-head CI as the final merge gate.
+
+Concrete repairs are the ES-05 twentieth-grant assertion for seed 0084, three CCE harness lint bindings and intentional CommonJS handling, all three new icon catalogue sizes, the adopted collapsed Estimating-menu browser control, and the geometry audit's source-pinned schematic link. Issued captures, parent IDs, historical outcomes, permissions and test deadlines are preserved. New Figma proposals stay proposals; named-version save confirmations remain unconfirmed where recorded, and no visual review fingerprint or owner acceptance is granted by repository integration.
+
+The seven protected-main check names were re-read on 12 October and match the configured list below; strict up-to-date checking is off, administrator enforcement is on, and zero approving reviews are required. No protection was changed. PR #436's earlier final browser gate did not start because GitHub reported a billing lock, while its 50 other reported checks succeeded; current runs are executing, and fresh combined CI replaces that unavailable gate.
+
 ## Project record page design accepted — 12 October 2026
 
 Dean asked for the individual project record page in Figma (`/projects/[id]`, PJ-02 with PJ-03 and a PJ-09 summary) and for it to be checked against his Wrike free trial. He accepted the drawing after two polish passes: "Proceed with your recommendations". The [decision](decisions/project-record-page-design.md) is the third record type on the shared record layout. It has Overview, Schedule, Baselines, Acceptance, Files and History tabs. Schedule keeps today’s Gantt with the details column folded. A key dates strip (start, today, baseline finish, forecast finish, target) replaces the checks bar on project records only. Overview leads with a Needs attention card. The Gantt bars are pastel at Dean’s request, with no dark navy. [Ten icon-free captures](reference/ui/projects/project-record-page-design-r01/README.md) are retained with hashes. The Wrike observation is recorded as a bounded account observation, not a requirement. Nothing is built. The new reads, the proposed project notes, SharePoint document links and MYOB summary, the build and the shell rollout are not decided. No parent ID changes.
