@@ -15,11 +15,26 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design (12 October 2026): the [project record page decision](../../../decisions/project-record-page-design.md), with captures 01–09 in [Project record page design r01](../../../reference/ui/projects/project-record-page-design-r01/README.md). It is the third record type on the shared record layout. The app still shows the Gantt with dialogs, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the Projects rail with Projects selected; the breadcrumb "Projects / Project register / reference", which returns to the register; no secondary menu. Below the top bar come a one-row header, a state banner when one applies, the key dates strip, then a 380 px details column and a main column with view tabs, each scrolling on its own.
+- **Header:** title and Lifecycle tag, the position in the register view with previous/next, Record baseline (current coordinator only) and Add task (Project edit), and "…" (Sales handovers, Record a customer need for Sales, Open Acceptance & closeout, Copy link). Below: reference, the coordinator with an avatar, and origin.
+- **Key dates strip:** start, today, baseline finish, forecast finish and target, with "+n days against baseline" and "n days before target" in calendar days. It replaces the checks bar on project records only; when tasks are undated it says how many instead of drawing a timeline.
+- **Details column:** Summary (record facts only), Customer and site, Project team (from task owners, external owners marked), Origin, Related work and a one-line Commercial placeholder.
+- **Main column:** view tabs Overview, Schedule, Baselines, Acceptance, Files and History. Overview leads with Needs attention, then milestones against baseline, progress by phase, baseline and acceptance summaries and recent history. Schedule keeps today’s Gantt with the details folded to a 44 px labelled strip; bars are pastel with a darker outline, today is violet and red only means overdue. Record baseline opens a confirmation dialog with label, reason and review acknowledgement.
+- **States:** closed, read-only viewer, schedule not ready for a baseline, editor who is not the coordinator, dependency warning and a newer saved version (capture 09).
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (12 October 2026): capture 10 in [Project record page design r01](../../../reference/ui/projects/project-record-page-design-r01/README.md).
+
+- **At 390 × 844:** tapping a project in the list opens the record page directly: back, previous/next, the Lifecycle tag and attention line, then Details, Overview, Schedule and History tabs over scrolling content, with "…", Record baseline and Add task fixed at the bottom. Details opens with a key dates card and every section except Summary collapsed; Baselines, Acceptance and Files open from Details. Schedule is a list grouped by phase, because the Gantt is off below 780 px.
+- **Actions:** "…" opens an action sheet with the record actions.
+- **Not drawn yet:** the phone History, Baselines, Acceptance and Files views and the phone versions of the states.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -35,6 +50,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 - [project-detail-desktop.png](../../../blueprints/projects-visuals/project-detail-desktop.png)
 - [ppo-projects-gantt-content-r10.html](../../../reference/ui/projects/ppo-projects-gantt-content-r10.html)
+- Accepted Figma design: [Project record page design r01 captures](../../../reference/ui/projects/project-record-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The r10 Gantt reference above stays unchanged; the accepted design keeps the Gantt inside the Schedule tab. Images of the task panel, the phone History, Baselines, Acceptance and Files views, and loading and denied states are still missing.
 
 ## Behaviour, handovers and verification
 

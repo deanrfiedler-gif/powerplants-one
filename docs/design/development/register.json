@@ -6628,7 +6628,17 @@
       "design_path": "docs/design/development/pages/route-projects-id.md",
       "html_path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
       "image_paths": [
-        "docs/blueprints/projects-visuals/project-detail-desktop.png"
+        "docs/blueprints/projects-visuals/project-detail-desktop.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-02-Desktop-Schedule-Gantt-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-03-Desktop-Baselines-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-04-Desktop-Acceptance-Not-Started-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-05-Desktop-Files-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-06-Desktop-History-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-07-Desktop-Record-Baseline-Dialog-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-08-Desktop-Register-Open-Project-Page-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-09-Desktop-States-r01.png",
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-10-Phone-List-Tabs-Action-Sheet-r01.png"
       ],
       "dependencies": [
         "src/components/quotation-material-resolution.tsx",
@@ -6654,7 +6664,8 @@
         "src/projects/baseline-model.ts",
         "src/components/project-baselines.tsx",
         "docs/decisions/project-schedule-baselines.md",
-        "docs/testing/evidence/project-baselines/README.md"
+        "docs/testing/evidence/project-baselines/README.md",
+        "docs/decisions/project-record-page-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

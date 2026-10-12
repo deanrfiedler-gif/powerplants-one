@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Project record page design accepted — 12 October 2026
+
+Dean asked for the individual project record page in Figma (`/projects/[id]`, PJ-02 with PJ-03 and a PJ-09 summary) and for it to be checked against his Wrike free trial. He accepted the drawing after two polish passes: "Proceed with your recommendations". The [decision](decisions/project-record-page-design.md) is the third record type on the shared record layout. It has Overview, Schedule, Baselines, Acceptance, Files and History tabs. Schedule keeps today’s Gantt with the details column folded. A key dates strip (start, today, baseline finish, forecast finish, target) replaces the checks bar on project records only. Overview leads with a Needs attention card. The Gantt bars are pastel at Dean’s request, with no dark navy. [Ten icon-free captures](reference/ui/projects/project-record-page-design-r01/README.md) are retained with hashes. The Wrike observation is recorded as a bounded account observation, not a requirement. Nothing is built. The new reads, the proposed project notes, SharePoint document links and MYOB summary, the build and the shell rollout are not decided. No parent ID changes.
+
 ## Remaining PR integration — 12 October 2026
 
 Dean authorised fixing and merging the remaining ready PRs, keeping backup PRs #404–#408 separate. The combined #429 contribution retains the exact heads of access #423/#427/#429 and design #422/#424/#426/#428. Dean confirmed the named Leads Figma version has been saved, resolving #426's draft checkpoint. All retained captures and original review fingerprints remain unchanged; design acceptance does not imply an application build or owner/device acceptance.
