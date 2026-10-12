@@ -7410,7 +7410,19 @@
       "guide_key": "guide.page.service.work-orders.id",
       "design_path": "docs/design/development/pages/route-service-work-orders-id.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-01-Desktop-Authorisation-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-02-Desktop-Scope-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-03-Desktop-Visits-None-Proposed-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-04-Desktop-Evidence-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-05-Desktop-History-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-06-Desktop-Review-Criterion-Panel-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-07-Desktop-Edit-Scope-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-08-Desktop-Authorise-Dialog-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-09-Desktop-Visits-Successor-Draft-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-10-Desktop-States-r01.png",
+        "docs/reference/ui/service/work-order-record-page-design-r01/PPO-Work-Order-Record-11-Phone-List-Tabs-Action-Sheet-r01.png"
+      ],
       "dependencies": [
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
@@ -7420,7 +7432,8 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/work-order-record-page-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
