@@ -2403,3 +2403,8 @@ The [local team contract](../decisions/access-local-teams.md) adds explicit loca
 ## AD-01 native local team creation
 
 The [creation contract](../decisions/access-team-creation.md) exposes the existing local initial-roster command with explicit member selection and actor-bound unchanged recovery. It adds no grant, policy, migration or external integration. Membership editing, review campaigns, D-020 and owner acceptance remain open; all existing parent IDs and authority boundaries are preserved.
+
+
+## AD-01 saved-team access inspection
+
+The [inspection contract](../decisions/access-team-inspection-current.md) adds a current grant-row summary for each recorded local team member, with exact person-access handover. It preserves immutable initial membership and audit history; it adds no grant, review attestation, operational policy or authority inheritance. All existing parent IDs, NFR-01–NFR-12, CRM-08, FIN-06 and unresolved D-020 remain unchanged.

@@ -47,3 +47,6 @@ Native creation now follows the [bounded form/recovery contract](access-team-cre
 ## Integration — 12 October 2026
 
 The integration after merged Projects 0081 moves this unpublished migration and seed from 0082 to 0083. Stable team/grant IDs and historical evidence retain their original bytes.
+
+
+Current member access inspection follows the [bounded read contract](access-team-inspection-current.md). The initial roster and command/audit evidence stay immutable; current grant-state counts are timestamped read observations, not access inherited from a team or completed review evidence.

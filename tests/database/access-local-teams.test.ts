@@ -201,6 +201,106 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
     },
   );
   await t.test(
+    "member access counts exact roster rows at one instant without writing evidence",
+    async () => {
+      const granted = randomUUID(),
+        empty = randomUUID();
+      for (const id of [granted, empty])
+        await rows(
+          "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,'SYN Member inspection')",
+          [id, ws],
+        );
+      const input = cmd({ member_ids: [granted, empty] });
+      await createLocalTeam(creator, input);
+      const company = "20000000-0000-4000-8000-000000000001";
+      const site = (
+        await rows(
+          "SELECT id FROM ppo.sites WHERE workspace_id=$1 AND company_id=$2 ORDER BY id LIMIT 1",
+          [ws, company],
+        )
+      )[0].id;
+      await rows(
+        `INSERT INTO ppo.permission_grants(workspace_id,user_id,capability,scope_type,scope_id,company_id,site_id,valid_from,valid_to) VALUES
+        ($1,$2,'shared.read','Workspace',$1,NULL,NULL,clock_timestamp()-interval '1 day',NULL),
+        ($1,$2,'shared.read','Company',$3,$3,NULL,clock_timestamp()+interval '1 day',NULL),
+        ($1,$2,'shared.read','Site',$4,$3,$4,clock_timestamp()-interval '2 days',clock_timestamp()-interval '1 day')`,
+        [ws, granted, company, site],
+      );
+      const tables = [
+        "users",
+        "permission_grants",
+        "sessions",
+        "working_companies",
+        "access_teams",
+        "access_team_members",
+        "access_team_operations",
+        "access_change_requests",
+        "audit_events",
+      ];
+      const before = await snap(tables);
+      const detail = await localTeam(reader, input.team_id);
+      assert.deepEqual(
+        detail.members.map((m) => m.user_id),
+        [granted, empty].sort(),
+      );
+      assert(!detail.members.some((m) => m.user_id === creator.actor_id));
+      assert.deepEqual(
+        detail.members.find((m) => m.user_id === granted).grant_counts,
+        { recorded: 3, current: 1, scheduled: 1, expired: 1, inactive: 0 },
+      );
+      assert.deepEqual(
+        detail.members.find((m) => m.user_id === empty).grant_counts,
+        { recorded: 0, current: 0, scheduled: 0, expired: 0, inactive: 0 },
+      );
+      assert.equal(
+        new Set(detail.members.map((m) => new Date(m.checked_at).toISOString()))
+          .size,
+        1,
+      );
+      assert(Number.isFinite(new Date(detail.members[0].checked_at).getTime()));
+      await localTeam(reader, input.team_id);
+      assert.deepEqual(await snap(tables), before);
+      await rows("UPDATE ppo.users SET active=false WHERE id=$1", [granted]);
+      const inactive = await localTeam(reader, input.team_id);
+      assert.deepEqual(
+        inactive.members.find((m) => m.user_id === granted).grant_counts,
+        { recorded: 3, current: 0, scheduled: 0, expired: 0, inactive: 3 },
+      );
+      assert.deepEqual(inactive.history, detail.history);
+      await assert.rejects(localTeam(person, input.team_id), code("Forbidden"));
+      await rows(
+        "INSERT INTO ppo.working_companies(workspace_id,user_id,company_id) VALUES($1,$2,$3)",
+        [ws, reader.actor_id, company],
+      );
+      try {
+        await assert.rejects(
+          localTeam(reader, input.team_id),
+          code("WorkingCompanySelected"),
+        );
+      } finally {
+        await rows(
+          "DELETE FROM ppo.working_companies WHERE workspace_id=$1 AND user_id=$2",
+          [ws, reader.actor_id],
+        );
+      }
+      await rows(
+        "UPDATE ppo.permission_grants SET valid_to='2026-01-02' WHERE workspace_id=$1 AND user_id=$2 AND capability='admin.access.read'",
+        [ws, reader.actor_id],
+      );
+      try {
+        await assert.rejects(
+          localTeam(reader, input.team_id),
+          code("Forbidden"),
+        );
+      } finally {
+        await rows(
+          "UPDATE ppo.permission_grants SET valid_to=NULL WHERE workspace_id=$1 AND user_id=$2 AND capability='admin.access.read'",
+          [ws, reader.actor_id],
+        );
+      }
+    },
+  );
+  await t.test(
     "atomic original roster, audit and receipt; no permission, session or request mutation",
     async () => {
       const before = await snap([
@@ -428,6 +528,12 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
             (m) => m.user_id === person.actor_id,
           )?.display_name,
           "Hosted identity (masked)",
+        );
+        assert.equal(
+          (await localTeam(creator, input.team_id)).members.find(
+            (m) => m.user_id === person.actor_id,
+          )?.grant_counts,
+          null,
         );
       } finally {
         await rows(

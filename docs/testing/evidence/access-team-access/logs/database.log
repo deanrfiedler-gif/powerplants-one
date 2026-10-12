@@ -1,0 +1,90 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (44936.0855ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (101.8014ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (72.5171ms)
+  ✔ grant eligibility differentiates company and exact site scope (118.93ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (93.7624ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (22.4421ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (345.731ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (5386.4251ms)
+  ✔ reads preserve every identity, grant and audit row (423.5562ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (6622.5091ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (135.9995ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (78.7579ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (33.6076ms)
+  ✔ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (31437.9045ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (576.381ms)
+✔ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (32307.7914ms)
+▶ AD01-04 proposed roles compare current authority at one exact scope without assigning access
+  ✔ catalogue is proposed only; exact revision and selection are required (213.4924ms)
+  ✔ Site, Company and Workspace checks never match an unrelated grant (113.6257ms)
+  ✔ inactive identity and future/expired grants remove matches (91.7794ms)
+  ✔ reviewer permissions and cleared working company are required on both reads (45.5703ms)
+  ✔ hosted comparison masks identities; all reads preserve grants, users, audit and session state (272.7295ms)
+✔ AD01-04 proposed roles compare current authority at one exact scope without assigning access (822.2515ms)
+▶ AD01-05 proposed teams distinguish retained examples from current local identities
+  ✔ exact proposals, design-only gaps, current names and inactive local identities (36.5119ms)
+  ✔ a design-only ID collision is never resolved to a current identity (298.9354ms)
+  ✔ hosted identity behind a retained ID is unavailable and its data stays private (19.4064ms)
+  ✔ another workspace cannot resolve this workspace's identities even with inspection authority (22.7756ms)
+  ✔ repeated team reads preserve users, grants, sessions and all request/audit evidence (373.2606ms)
+✔ AD01-05 proposed teams distinguish retained examples from current local identities (2492.1092ms)
+✔ AD01 teams: populated 0082 upgrade preserves history and adds exactly one local duty (51982.11ms)
+▶ AD01 teams: creation, retention, authority and recovery
+  ✔ creation context is read-only, local, active, workspace-bound and current-duty gated (423.8228ms)
+  ✖ member access counts exact roster rows at one instant without writing evidence (107.303ms)
+  ✔ atomic original roster, audit and receipt; no permission, session or request mutation (285.575ms)
+  ✔ strict schema, exact IDs, explicit distinct bounded roster and version (111.3595ms)
+  ✔ read/approve, lead and membership confer no creation duty (60.8101ms)
+  ✔ current working company, inactive actor and expired duty refuse without mutation (174.0893ms)
+  ✔ deactivated or hosted participant refused; original replay survives later identity changes (268.5699ms)
+  ✔ same-operation concurrent retry records once; same-team concurrent operation conflicts (182.1986ms)
+  ✔ authority mutation queued before creation is revalidated after table lock (71.619ms)
+  ✔ SQL guards retain exact record, roster and evidence; incomplete insertion rolls back (712.592ms)
+  ✔ another authorised actor cannot recover or collide with the original actor receipt (182.5823ms)
+  ✔ failed audit insertion rolls back team, roster and all receipts (138.9179ms)
+  ✔ current authority is required for original recovery and replay (134.1434ms)
+  ✔ bounded pages retain exact IDs when names repeat (1416.4358ms)
+  ✔ hosted environment refuses every team API service before database access (1.7018ms)
+✖ AD01 teams: creation, retention, authority and recovery (4297.9131ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 43
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 162153.6649
+
+✖ failing tests:
+
+test at tests\database\access-local-teams.test.ts:1:5401
+✖ member access counts exact roster rows at one instant without writing evidence (107.303ms)
+  error: new row for relation "users" violates check constraint "users_issuer_check"
+      at <workspace>\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async rows (<workspace>\tests\database\access-local-teams.test.ts:27:4)
+      at async TestContext.<anonymous> (<workspace>\tests\database\access-local-teams.test.ts:230:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (<workspace>\tests\database\access-local-teams.test.ts:203:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 354,
+    severity: 'ERROR',
+    code: '23514',
+    detail: 'Failing row contains (7365a2a5-f75f-4931-9daf-ada98e2d5e1c, 10000000-0000-4000-8000-000000000001, PPO-EntraDemo, 7365a2a5-f75f-4931-9daf-ada98e2d5e1c, SYN Private replacement, t, t).',
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: 'ppo',
+    table: 'users',
+    column: undefined,
+    dataType: undefined,
+    constraint: 'users_issuer_check',
+    file: 'execMain.c',
+    line: '2114',
+    routine: 'ExecConstraints'
+  }

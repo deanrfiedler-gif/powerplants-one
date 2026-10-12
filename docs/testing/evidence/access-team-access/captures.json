@@ -1,0 +1,80 @@
+{
+  "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+  "captured_at": "2026-10-11T21:59:05.409Z",
+  "browser": "155.0.8059.40",
+  "locale": "en-AU",
+  "captures": [
+    {
+      "file": "native-1440-member-access.png",
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "state": "member-access",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "8113593c7690e7ad6b6ca979771a5074a6e5ca611dae685c74e8f851662a91ea",
+      "overflow": false,
+      "framing": "Scrolled viewport; icon artwork replaced by plain placeholders in DOM"
+    },
+    {
+      "file": "native-1440-identity-limits.png",
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "state": "identity-limits",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "f0086cfd64fcb318ea81adea1a3400b485953b281ff273419d285f7545653323",
+      "overflow": false,
+      "framing": "Scrolled viewport; icon artwork replaced by plain placeholders in DOM"
+    },
+    {
+      "file": "native-390-member-access.png",
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "state": "member-access",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "54d10fdbcd5ff98924dcfa7328d9541cb1208805ade3f407399f9d711a44a415",
+      "overflow": false,
+      "framing": "Scrolled viewport; icon artwork replaced by plain placeholders in DOM"
+    },
+    {
+      "file": "native-390-identity-limits.png",
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "state": "identity-limits",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "83297ba91328778624364e52dbdd67ca816a02868a156fd2c743beee65792e50",
+      "overflow": false,
+      "framing": "Scrolled viewport; icon artwork replaced by plain placeholders in DOM"
+    },
+    {
+      "file": "native-320-member-access.png",
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "state": "member-access",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "0d30441109357e7dfbcad65bde4c4c84d9bd20c716d1a37bf37ce5f7534fa5a0",
+      "overflow": false,
+      "framing": "Scrolled viewport; icon artwork replaced by plain placeholders in DOM"
+    },
+    {
+      "file": "native-320-identity-limits.png",
+      "source": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
+      "state": "identity-limits",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "sha256": "a96138d4d225be03535705e7633fd3c28abb612298f62041bf4c062ebb7a944b",
+      "overflow": false,
+      "framing": "Scrolled viewport; icon artwork replaced by plain placeholders in DOM"
+    }
+  ]
+}

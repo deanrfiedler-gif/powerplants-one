@@ -61,3 +61,10 @@ The closed native selector may clip its option text on phones. Show the complete
 
 
 Final native team-creation observations: [source-bound capture review](../../../testing/evidence/access-team-creation/review.md). The twelve final frames and retained initial frames are implementation evidence; owner review and existing review fingerprints remain separate.
+
+
+## Saved-team current access — 12 October 2026
+
+Within the expanded immutable initial roster, show the shared statement-time observation and four labelled grant-row counts (Current, Scheduled, Expired, Inactive identity), plus total. A zero-grant member remains visible; inactive identity takes precedence over dates. Display all recorded members, without silently adding the lead. Keep original creation history underneath. For local identities, ButtonLink opens their exact Person access page, where company/site explanations and current server checks remain separate. Masked identities retain their original UUID and masked name but no count or access link.
+
+Refresh member access reloads only this detail and preserves a typed creation draft. The refresh control stays mounted and disabled during loading. Loading/error must hide earlier counts; denied inspection clears the protected catalogue. Rapid selection must not place a late response in a different team's card. Reuse existing cards/list, Button/ButtonLink, Stamp and ReadState; no new shared style or layout. Counts and UUIDs wrap at 390/320; the long card uses normal vertical scrolling. Accepted native Figma imagery, owner/physical-device/zoom/screen-reader review remain missing. No review fingerprint is assigned. Host fixtures: tests/browser/access-team-access.spec.ts and tests/database/access-local-teams.test.ts; [evidence](../../../testing/evidence/access-team-access/README.md) and [six observed captures](../../../testing/evidence/access-team-access/review.md).

@@ -75367,8 +75367,8 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native proposal inspection and local team creation",
-      "source_commit": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "content_mode": "Native proposal inspection, local team creation and current member access",
+      "source_commit": "675f11f7b39d995a5161b7b01c96ac98bf04e345",
       "related_entry_keys": [
         "scope:AD-01",
         "route:/admin/access",
@@ -75382,7 +75382,8 @@
           "paragraphs": [
             "Inspect seven retained business/approval role proposals, including exact source revisions and capability lists.",
             "Also inspect the two retained team examples without treating their rosters as saved memberships.",
-            "Saved local teams shows actual immutable initial rosters separately from retained proposals. Team membership and lead labels confer no access or review duty."
+            "Saved local teams shows actual immutable initial rosters separately from retained proposals. Team membership and lead labels confer no access or review duty.",
+            "Expanded saved rosters show current grant-row counts for each original member and link to exact Person access; membership grants no authority and this is not a completed access review."
           ],
           "steps": [],
           "headers": [],
@@ -75499,7 +75500,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use native details summaries with keyboard Enter/Space; Tab follows links and shared buttons. Cards stack and keys wrap at 390/320 px. Online reads are required. Physical-device, zoom and screen-reader acceptance remain open.",
-            "The lead selector can clip long option text on phones. Check the full selected lead ID in the wrapped text below it; selected roster IDs also remain visible before saving."
+            "The lead selector can clip long option text on phones. Check the full selected lead ID in the wrapped text below it; selected roster IDs also remain visible before saving.",
+            "Member counts and IDs wrap within the saved card. Refresh member access updates the timestamped observation without discarding an unsubmitted team draft. A masked identity has no access link or counts."
           ],
           "steps": [],
           "headers": [],
@@ -75530,7 +75532,7 @@
         }
       ],
       "prepared_at": "2026-10-12",
-      "runtime_evidence": "See docs/testing/evidence/access-team-creation/README.md and prior local-team/role ledgers; owner review pending"
+      "runtime_evidence": "See docs/testing/evidence/access-team-access/README.md; owner review pending"
     },
     {
       "guide_key": "guide.route-admin-access-requests-id",
