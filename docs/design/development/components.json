@@ -323,7 +323,11 @@
         "route:/admin/access/roles",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -633,7 +637,9 @@
         "route:/engineering/[id]/materials/mapping",
         "route:/engineering/[id]/materials/releases",
         "route:/estimating/fertigation",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "route:/estimating/cpq",
+        "route:/estimating/rules"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -5524,6 +5530,92 @@
           "expected": "Paired owner comparison of the application sections with the design board's section engine and families standard at 1,440 px and 390 px.",
           "actual": "Application captures are retained in docs/reference/ui/specialist/workbench-native-r01; no owner review is recorded.",
           "action": "Review the retained captures beside the design board; record the result in the ES-08 page record.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "cpq-workbench",
+      "title": "CPQ configuration and rule authoring",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Typed CPQ editing, saved evaluations, explanations, comparisons and independently governed release authoring.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "working",
+          "label": "Working preview",
+          "description": "Edited facts recalculate without writing a saved evaluation."
+        },
+        {
+          "id": "blocked",
+          "label": "Incomplete or conflicting",
+          "description": "Unknown facts, shared capacity, decision overlaps and stale overrides block use."
+        },
+        {
+          "id": "history",
+          "label": "Immutable history",
+          "description": "Saved evaluation and rule versions retain their exact basis."
+        },
+        {
+          "id": "release",
+          "label": "Release governance",
+          "description": "Draft, tested version, review, seal and activation remain distinct."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/cpq-configure.tsx",
+          "symbol": "CpqConfigure"
+        },
+        {
+          "path": "src/components/cpq-rules.tsx",
+          "symbol": "CpqRules"
+        },
+        {
+          "path": "src/components/cpq-results.tsx",
+          "symbol": "CpqWhy"
+        },
+        {
+          "path": "src/components/cpq-rule-fields.tsx",
+          "symbol": "ConditionEditor"
+        },
+        {
+          "path": "src/components/cpq-ui.tsx",
+          "symbol": "CpqDialog"
+        }
+      ],
+      "dependencies": [
+        "src/components/cpq.css",
+        "src/cpq/types.ts",
+        "docs/design/development/cpq-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/decisions/cpq-figma-ui.md",
+        "anchor": "",
+        "status": "Private Figma frame references; paired acceptance pending"
+      },
+      "specification": "docs/design/development/components/cpq-workbench.md",
+      "used_on": [
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ],
+      "desktop": "At 1440 × 960 retain the existing 64 px shell header and 240 px rail. CPQ outline is 240 px; rule definition starts with it collapsed. Header, readiness and view tabs precede the scroll region. Configure has a 380 px summary; rule authoring has a 380 px quick test. Why uses a 400 px drawer. White cards, #e1e5eb borders, #f6f7f9 background, Roboto 14/20 body and 20/26 page title. Option cards use #e9f1fa with a #365d8b selected border. Reuse scoped shared buttons and product icons.",
+      "mobile": "At 390 × 844 and 320 px, replace the outline with the native selector/menu overlay, stack fields and line cards, and keep Save/Use actions reachable in the footer. Summary and Why fill the screen; confirmation becomes a bottom sheet. No horizontal page overflow. Inputs/targets use at least 44 px. Tab navigation, condition reordering buttons, modal Escape and focus return remain usable. Browser emulation does not establish device or screen-reader acceptance.",
+      "keyboard": "Native labelled fields, radio options, button reordering, disclosure tables and modal focus/return. No drag-only operation.",
+      "limitations": "Online synthetic scope; frozen authored prices; no live ERP, real schedule, customer send or quotation approval.",
+      "gaps": [
+        {
+          "id": "cpq-paired-review",
+          "expected": "Full paired visual and physical-device acceptance against a named saved Figma version.",
+          "actual": "Implementation and browser verification in progress; no public source image with licensed glyphs.",
+          "action": "Record bounded browser evidence and retain owner/device acceptance as pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

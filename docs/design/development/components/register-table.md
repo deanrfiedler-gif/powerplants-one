@@ -56,3 +56,7 @@ Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
 
 When a module adopts the table, record its departures first, keep its tests' behaviour, and remove its copy of the rules in the same PR.
+
+## CPQ consumers
+
+The configuration and rule registers/workbenches reuse this implementation. CPQ-scoped styling and fixture states are documented in [the host contract](cpq-workbench.md); source behaviours and existing gallery fixtures are unchanged. tests/browser/cpq.spec.ts supplies the real synthetic host. Paired visual and owner acceptance remain separate.

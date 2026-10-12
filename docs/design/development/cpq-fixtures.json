@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "owner": "Dean Fiedler",
+  "scope_ids": [
+    "ES-02",
+    "ES-03"
+  ],
+  "source": "src/cpq/pilot.ts",
+  "synthetic": true,
+  "states": [
+    {
+      "key": "ready",
+      "source": "screenDefinition / screenInput",
+      "expected": "Explicitly selected template passes an independent fixture; never auto-active."
+    },
+    {
+      "key": "unknown",
+      "source": "tests/unit/cpq-design.test.ts",
+      "expected": "Null, false, zero and Not applicable remain distinct."
+    },
+    {
+      "key": "shared",
+      "source": "tests/unit/cpq-design.test.ts",
+      "expected": "Shared group and configuration outputs occur once, unknown group blocks."
+    },
+    {
+      "key": "override",
+      "source": "tests/unit/cpq-design.test.ts",
+      "expected": "Stale value remains visible, explicit rebase or restore required."
+    },
+    {
+      "key": "governance",
+      "source": "tests/database/cpq.test.ts",
+      "expected": "Working draft, immutable version, review, seal and activation retain independent evidence."
+    },
+    {
+      "key": "browser",
+      "source": "tests/browser/cpq.spec.ts",
+      "expected": "Desktop/phone host exercise; execution status in handover."
+    }
+  ]
+}

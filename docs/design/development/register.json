@@ -1245,7 +1245,8 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/estimation-wizard.tsx"
+        "src/components/estimation-wizard.tsx",
+        "docs/decisions/cpq-figma-ui.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -1261,7 +1262,11 @@
         "route:/estimating/discovery/new",
         "route:/estimating/discovery",
         "scope:CS-08",
-        "scope:ES-01"
+        "scope:ES-01",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "reviewer": null
     },
@@ -1291,7 +1296,8 @@
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/testing/evidence/estimating-native-cost-sources/README.md",
-        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json",
+        "docs/decisions/cpq-figma-ui.md"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -1308,7 +1314,11 @@
         "route:/estimating/cost-sources/new",
         "route:/estimating/cost-sources/[id]",
         "route:/estimating/estimates/[id]/sources",
-        "scope:ES-04"
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "reviewer": null
     },
@@ -13480,6 +13490,158 @@
         "scope:AD-01",
         "route:/admin/access",
         "route:/admin/access/requests/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cpq/[id]",
+      "title": "Configure & price",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Configure a selected discovery option, explain quantities and prices, compare saved evaluations and deliberately use a saved result in the native estimate.",
+      "path": "/estimating/cpq/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/cpq/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cpq-id",
+      "design_path": "docs/design/development/pages/route-estimating-cpq-id.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/components/cpq-configure.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cpq",
+      "title": "Configurations",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Search the latest saved evaluations and working configurations. Start configuration from a complete selected discovery option.",
+      "path": "/estimating/cpq",
+      "source_paths": [
+        "src/app/(business)/estimating/cpq/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cpq",
+      "design_path": "docs/design/development/pages/route-estimating-cpq.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/components/cpq-register.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/rules/[id]",
+      "title": "Rule and release authoring",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Author typed conditions, safe formulas, parameters, parts, options, structures, decision tables, capacities and milestone proposals, with immutable rule and release versions.",
+      "path": "/estimating/rules/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/rules/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-rules-id",
+      "design_path": "docs/design/development/pages/route-estimating-rules-id.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/components/cpq-rules.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules"
+      ]
+    },
+    {
+      "key": "route:/estimating/rules",
+      "title": "Rules studio",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Find company rule definitions and continue working authoring drafts.",
+      "path": "/estimating/rules",
+      "source_paths": [
+        "src/app/(business)/estimating/rules/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-rules",
+      "design_path": "docs/design/development/pages/route-estimating-rules.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/components/cpq-register.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules/[id]"
       ]
     }
   ]

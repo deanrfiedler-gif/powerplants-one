@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## CPQ application and expanded design contract — 13 October 2026
+
+Dean requested native CPQ pages matching the supplied Figma and explicitly expanded the backend scope to cover its additional states and information. Branch `codex/cpq-figma-ui`, from merged CPQ main `7e4ef3b`, adds the configuration/rule registers and workbenches, migration 0087, opt-in schema 3, durable incomplete drafts, immutable rule composition, separate sealing/activation, typed authoring, server previews, explanations, override review, shared outputs and milestone proposals. The [decision](decisions/cpq-figma-ui.md), [API contract](interfaces/cpq-api.md) and [execution handover](delivery/cpq-ui-handover.md) separate actual verification from pending visual/owner acceptance and deployment. The existing five CPQ duties receive no automatic grants; operational rules and external integrations remain outside this synthetic implementation. All parent IDs and issued references are retained.
+
 ## Leads PR integration — 12 October 2026
 
 Current repository writer: this authorised Leads CI repair and merge session. Dean requested checking, repairing and merging PR #451 followed by dependent PR #452 once all applicable checks pass. PR #451 integrates main `fe7794b` (merged Reviews and Quotations backends), preserving both contributions and resolving only the shared status and document-register additions. PR #452 incorporates the reconciled #451 head `8dd3ba6` so both contributions are verified with the merged backends before the dependency-ordered merges. Original implementation evidence remains pinned to its executed source; fresh combined-head CI is the merge gate.

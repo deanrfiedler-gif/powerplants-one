@@ -205,3 +205,7 @@ Host fixtures: `tests/browser/access-team-creation.spec.ts`; current context/aut
 ## AD-01 saved-team access host
 
 The [read contract](../../../decisions/access-team-inspection-current.md) reuses Button/ButtonLink, Stamp and ReadState within the expanded saved roster. Exact local-person links and Refresh member access retain ordinary keyboard semantics; masked identities have no access link. Refresh preserves the creation draft but hides previous counts until a fresh result arrives. Unavailable and denied reads remain distinct; denial clears protected content. Counts/UUIDs wrap on 390/320 widths without new CSS. Host state: tests/browser/access-team-access.spec.ts; [evidence](../../../testing/evidence/access-team-access/README.md). Owner/device/zoom/screen-reader review and accepted native imagery remain missing; no review fingerprint is assigned.
+
+## CPQ consumers
+
+The configuration and rule registers/workbenches reuse this implementation. CPQ-scoped styling and fixture states are documented in [the host contract](cpq-workbench.md); source behaviours and existing gallery fixtures are unchanged. tests/browser/cpq.spec.ts supplies the real synthetic host. Paired visual and owner acceptance remain separate.

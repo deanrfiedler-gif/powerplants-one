@@ -23,4 +23,3 @@ Configuration identity is the existing selected discovery option and immutable e
 ## Verification and handover
 
 Maintain page/component registers and guides in this contribution. Test actual persistence, exact preview/save/use separation, independent release duties, changed basis, unknown inputs, override retention, denial, keyboard and responsive layouts. Link results in the delivery evidence; owner/device acceptance and deployment are separate.
-
