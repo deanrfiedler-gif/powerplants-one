@@ -15,6 +15,7 @@ import {
   localTeams,
   localTeam,
   recoverLocalTeam,
+  localTeamContext,
 } from "../../src/access/local-teams";
 import { submitAccessRequest } from "../../src/access/requests";
 import { accessTeamSeedGrants } from "../helpers/engineering-materials-grants";
@@ -146,6 +147,160 @@ test(
 
 test("AD01 teams: creation, retention, authority and recovery", async (t) => {
   await t.test(
+    "creation context is read-only, local, active, workspace-bound and current-duty gated",
+    async () => {
+      const tables = [
+        "users",
+        "permission_grants",
+        "sessions",
+        "access_teams",
+        "access_team_members",
+        "access_team_operations",
+        "audit_events",
+      ];
+      const before = await snap(tables);
+      const context = await localTeamContext(creator);
+      assert.deepEqual(context.actor, {
+        actor_id: creator.actor_id,
+        workspace_id: ws,
+      });
+      assert.equal(context.can_create, true);
+      assert.deepEqual(
+        context.people,
+        await rows(
+          "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND active AND issuer='PPO-LocalSynthetic' ORDER BY display_name,id",
+          [ws],
+        ),
+      );
+      assert(context.people.some((p) => p.id === creator.actor_id));
+      assert.deepEqual(await localTeamContext(reader), {
+        actor: { actor_id: reader.actor_id, workspace_id: ws },
+        can_create: false,
+        people: [],
+      });
+      await assert.rejects(localTeamContext(person), code("Forbidden"));
+      await assert.rejects(
+        localTeamContext({ ...creator, workspace_id: randomUUID() }),
+        code("Forbidden"),
+      );
+      await rows("UPDATE ppo.users SET active=false WHERE id=$1", [
+        person.actor_id,
+      ]);
+      try {
+        assert(
+          !(await localTeamContext(creator)).people.some(
+            (p) => p.id === person.actor_id,
+          ),
+        );
+      } finally {
+        await rows("UPDATE ppo.users SET active=true WHERE id=$1", [
+          person.actor_id,
+        ]);
+      }
+      assert.deepEqual(await snap(tables), before);
+    },
+  );
+  await t.test(
+    "member access counts exact roster rows at one instant without writing evidence",
+    async () => {
+      const granted = randomUUID(),
+        empty = randomUUID();
+      for (const id of [granted, empty])
+        await rows(
+          "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,'SYN Member inspection')",
+          [id, ws],
+        );
+      const input = cmd({ member_ids: [granted, empty] });
+      await createLocalTeam(creator, input);
+      const company = "20000000-0000-4000-8000-000000000001";
+      const site = (
+        await rows(
+          "SELECT id FROM ppo.sites WHERE workspace_id=$1 AND company_id=$2 ORDER BY id LIMIT 1",
+          [ws, company],
+        )
+      )[0].id;
+      await rows(
+        `INSERT INTO ppo.permission_grants(workspace_id,user_id,capability,scope_type,scope_id,company_id,site_id,valid_from,valid_to) VALUES
+        ($1,$2,'shared.read','Workspace',$1,NULL,NULL,clock_timestamp()-interval '1 day',NULL),
+        ($1,$2,'shared.read','Company',$3,$3,NULL,clock_timestamp()+interval '1 day',NULL),
+        ($1,$2,'shared.read','Site',$4,$3,$4,clock_timestamp()-interval '2 days',clock_timestamp()-interval '1 day')`,
+        [ws, granted, company, site],
+      );
+      const tables = [
+        "users",
+        "permission_grants",
+        "sessions",
+        "working_companies",
+        "access_teams",
+        "access_team_members",
+        "access_team_operations",
+        "access_change_requests",
+        "audit_events",
+      ];
+      const before = await snap(tables);
+      const detail = await localTeam(reader, input.team_id);
+      assert.deepEqual(
+        detail.members.map((m) => m.user_id),
+        [granted, empty].sort(),
+      );
+      assert(!detail.members.some((m) => m.user_id === creator.actor_id));
+      assert.deepEqual(
+        detail.members.find((m) => m.user_id === granted).grant_counts,
+        { recorded: 3, current: 1, scheduled: 1, expired: 1, inactive: 0 },
+      );
+      assert.deepEqual(
+        detail.members.find((m) => m.user_id === empty).grant_counts,
+        { recorded: 0, current: 0, scheduled: 0, expired: 0, inactive: 0 },
+      );
+      assert.equal(
+        new Set(detail.members.map((m) => new Date(m.checked_at).toISOString()))
+          .size,
+        1,
+      );
+      assert(Number.isFinite(new Date(detail.members[0].checked_at).getTime()));
+      await localTeam(reader, input.team_id);
+      assert.deepEqual(await snap(tables), before);
+      await rows("UPDATE ppo.users SET active=false WHERE id=$1", [granted]);
+      const inactive = await localTeam(reader, input.team_id);
+      assert.deepEqual(
+        inactive.members.find((m) => m.user_id === granted).grant_counts,
+        { recorded: 3, current: 0, scheduled: 0, expired: 0, inactive: 3 },
+      );
+      assert.deepEqual(inactive.history, detail.history);
+      await assert.rejects(localTeam(person, input.team_id), code("Forbidden"));
+      await rows(
+        "INSERT INTO ppo.working_companies(workspace_id,user_id,company_id) VALUES($1,$2,$3)",
+        [ws, reader.actor_id, company],
+      );
+      try {
+        await assert.rejects(
+          localTeam(reader, input.team_id),
+          code("WorkingCompanySelected"),
+        );
+      } finally {
+        await rows(
+          "DELETE FROM ppo.working_companies WHERE workspace_id=$1 AND user_id=$2",
+          [ws, reader.actor_id],
+        );
+      }
+      await rows(
+        "UPDATE ppo.permission_grants SET valid_to='2026-01-02' WHERE workspace_id=$1 AND user_id=$2 AND capability='admin.access.read'",
+        [ws, reader.actor_id],
+      );
+      try {
+        await assert.rejects(
+          localTeam(reader, input.team_id),
+          code("Forbidden"),
+        );
+      } finally {
+        await rows(
+          "UPDATE ppo.permission_grants SET valid_to=NULL WHERE workspace_id=$1 AND user_id=$2 AND capability='admin.access.read'",
+          [ws, reader.actor_id],
+        );
+      }
+    },
+  );
+  await t.test(
     "atomic original roster, audit and receipt; no permission, session or request mutation",
     async () => {
       const before = await snap([
@@ -268,6 +423,10 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
       );
       try {
         await assert.rejects(
+          localTeamContext(creator),
+          code("WorkingCompanySelected"),
+        );
+        await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("WorkingCompanySelected"),
         );
@@ -285,6 +444,7 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
         creator.actor_id,
       ]);
       try {
+        await assert.rejects(localTeamContext(creator), code("Forbidden"));
         await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("Forbidden"),
@@ -298,6 +458,8 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
         "UPDATE ppo.permission_grants SET valid_to='2026-01-02' WHERE capability='admin.access.team.create'",
       );
       try {
+        assert.equal((await localTeamContext(creator)).can_create, false);
+        assert.deepEqual((await localTeamContext(creator)).people, []);
         await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("Forbidden"),
@@ -352,6 +514,11 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
         person.actor_id,
       ]);
       try {
+        assert(
+          !(await localTeamContext(creator)).people.some(
+            (p) => p.id === person.actor_id,
+          ),
+        );
         await assert.rejects(
           createLocalTeam(creator, cmd()),
           code("InvalidData"),
@@ -361,6 +528,12 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
             (m) => m.user_id === person.actor_id,
           )?.display_name,
           "Hosted identity (masked)",
+        );
+        assert.equal(
+          (await localTeam(creator, input.team_id)).members.find(
+            (m) => m.user_id === person.actor_id,
+          )?.grant_counts,
+          null,
         );
       } finally {
         await rows(
@@ -564,6 +737,7 @@ test("AD01 teams: creation, retention, authority and recovery", async (t) => {
       process.env.PPO_ENV = "azure-demo";
       try {
         for (const run of [
+          () => localTeamContext(creator),
           () => createLocalTeam(creator, cmd()),
           () => localTeams(creator),
           () => localTeam(creator, randomUUID()),

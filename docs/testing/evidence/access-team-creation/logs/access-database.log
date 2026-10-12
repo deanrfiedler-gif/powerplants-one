@@ -1,0 +1,57 @@
+✔ AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty (84302.8218ms)
+▶ AD01-02 workspace authority, masking, scope explanation and read-only preservation
+  ✔ ordinary identities cannot enumerate people or read explanations (86.6236ms)
+  ✔ list and detail preserve exact company keys and refuse another workspace (54.023ms)
+  ✔ grant eligibility differentiates company and exact site scope (67.6949ms)
+  ✔ inactive, future and expired subjects/grants cannot produce a positive explanation (81.612ms)
+  ✔ expired reviewer authority is rechecked; Company inspection grants are rejected by the schema (54.7333ms)
+  ✔ working company narrows subject explanations and requires reviewer workspace context (303.3686ms)
+  ✔ hosted names/subject keys cannot leak through search or detail (4623.2067ms)
+  ✔ reads preserve every identity, grant and audit row (429.4668ms)
+✔ AD01-02 workspace authority, masking, scope explanation and read-only preservation (5809.9473ms)
+▶ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning
+  ✔ complete catalogue includes unassigned and hosted-only keys; literal search and domains (111.8981ms)
+  ✔ unauthorised, expired and company-narrowed reviewers cannot inspect the catalogue or holders (53.74ms)
+  ✔ same-name companies, site scope and cross-workspace grants remain distinct (30.4939ms)
+  ✔ current counts exclude expired, scheduled and inactive identities; stable pagination and masked names (22214.6286ms)
+  ✔ catalogue and holder reads leave identities, grants, audit, sessions and working-company rows unchanged (370.482ms)
+✔ AD01-03 capability catalogue and holders preserve workspace authority and grant meaning (22802.5141ms)
+▶ AD01-04 proposed roles compare current authority at one exact scope without assigning access
+  ✔ catalogue is proposed only; exact revision and selection are required (148.031ms)
+  ✔ Site, Company and Workspace checks never match an unrelated grant (81.5596ms)
+  ✔ inactive identity and future/expired grants remove matches (54.2609ms)
+  ✔ reviewer permissions and cleared working company are required on both reads (32.5746ms)
+  ✔ hosted comparison masks identities; all reads preserve grants, users, audit and session state (3419.783ms)
+✔ AD01-04 proposed roles compare current authority at one exact scope without assigning access (3777.0522ms)
+▶ AD01-05 proposed teams distinguish retained examples from current local identities
+  ✔ exact proposals, design-only gaps, current names and inactive local identities (27.6644ms)
+  ✔ a design-only ID collision is never resolved to a current identity (3196.867ms)
+  ✔ hosted identity behind a retained ID is unavailable and its data stays private (20.9351ms)
+  ✔ another workspace cannot resolve this workspace's identities even with inspection authority (18.9986ms)
+  ✔ repeated team reads preserve users, grants, sessions and all request/audit evidence (273.2962ms)
+✔ AD01-05 proposed teams distinguish retained examples from current local identities (4570.0583ms)
+✔ AD01 teams: populated 0081 upgrade preserves history and adds exactly one local duty (209435.641ms)
+▶ AD01 teams: creation, retention, authority and recovery
+  ✔ creation context is read-only, local, active, workspace-bound and current-duty gated (618.1634ms)
+  ✔ atomic original roster, audit and receipt; no permission, session or request mutation (407.8575ms)
+  ✔ strict schema, exact IDs, explicit distinct bounded roster and version (142.2734ms)
+  ✔ read/approve, lead and membership confer no creation duty (95.0626ms)
+  ✔ current working company, inactive actor and expired duty refuse without mutation (223.3015ms)
+  ✔ deactivated or hosted participant refused; original replay survives later identity changes (340.0303ms)
+  ✔ same-operation concurrent retry records once; same-team concurrent operation conflicts (186.1241ms)
+  ✔ authority mutation queued before creation is revalidated after table lock (92.3331ms)
+  ✔ SQL guards retain exact record, roster and evidence; incomplete insertion rolls back (654.9557ms)
+  ✔ another authorised actor cannot recover or collide with the original actor receipt (160.2778ms)
+  ✔ failed audit insertion rolls back team, roster and all receipts (121.0825ms)
+  ✔ current authority is required for original recovery and replay (150.5761ms)
+  ✔ bounded pages retain exact IDs when names repeat (1661.7942ms)
+  ✔ hosted environment refuses every team API service before database access (5.0281ms)
+✔ AD01 teams: creation, retention, authority and recovery (4899.481ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 393232.1265

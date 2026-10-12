@@ -1,0 +1,152 @@
+{
+  "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+  "captured_at": "2026-10-11T21:15:01.398Z",
+  "captures": [
+    {
+      "file": "native-1440-form.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "form",
+      "sha256": "4d79b70a3419a7a7f82919a1abe2bf275743d8ee9c0f65f70471b2a6c5060659",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-1440-pending.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "pending",
+      "sha256": "667f382a3699547564c5c23db7bae59409baddeaa27a46bceb12b504811f9356",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-1440-result.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "result",
+      "sha256": "415f0e4f059a489c800d308ad2c9f77502fdb6e785c4369093f2c25bc1609948",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-1440-roster.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "roster",
+      "sha256": "cd171741f43ceda8fe89b6e1febd7600236c8612a9c447b420622c520b9303d1",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-390-form.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "form",
+      "sha256": "cb9315f208b2f5b2394f37eda3c211b65658aecd43a56653b22ce333dff16391",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-390-pending.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "pending",
+      "sha256": "937b7397da7a32a9c37898adb50822f405c7a97fc95b4bcff5c425727a3c497d",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-390-result.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "result",
+      "sha256": "7b6225c198a3a9fdbd95bcb8852c2ca6e9776c0dfd3fafc9a09b3e5a552dff0c",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-390-roster.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "roster",
+      "sha256": "00b01de4652712e0fbb52fb17a1ee4f669d70b7d2a832120a5ade2e24b9ce401",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-320-form.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "form",
+      "sha256": "bb14d44dc2668677a1409fab18c3c0cdfcd2842cc8c84a4c90a90a6ab8febecf",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-320-pending.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "pending",
+      "sha256": "dbce9083ae95dbee275d30dcf1dcb7416a72860518a8cef613bfb66b9645b9b6",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-320-result.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "result",
+      "sha256": "1cc5e49aa68b2d4adf673f43dff7b09736ae917d853a81e34ced99b52cb1d6d6",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    },
+    {
+      "file": "native-320-roster.png",
+      "source": "999042e8926076beb12ca04f8fdf2cfa3496a6e6",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "state": "roster",
+      "sha256": "389d5a16cbe1f88ee37948b62c4e8cc1a5d43584be2c7de81edf173e9719ed6c",
+      "overflow": false,
+      "framing": "Native viewport; SVG/icon artwork replaced by plain placeholders before capture"
+    }
+  ],
+  "browser": "155.0.8059.40",
+  "locale": "en-AU"
+}
