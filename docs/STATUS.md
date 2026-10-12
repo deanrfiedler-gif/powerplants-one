@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Cost sources register backend — 12 October 2026
+
+Repository writer: this Cost sources backend chat on `codex/cost-sources-backend`, based on merged main `fe7794b` after #449/#450. Dean authorised proceeding with ES-03 as the next BC-01 increment. The [contract](decisions/cost-source-register-backend.md) adds an independent register read with exact first-tier cost, owner/author attribution, current review eligibility, company/supplier/state/expiry views, complete permission-scoped search counts and bounded paging. Native source and estimate commands, original reads and current authority remain the source of truth. [Execution evidence](testing/evidence/cost-source-register/README.md) records checks and limits. Leads #451/#452, Work orders #454 and CPQ #453 remain separate contributions. Page/shell integration, owner acceptance and deployment are separate.
+
 ## Backend PR integration — 12 October 2026
 
 Current repository writer: this backend-completion chat. Dean authorised monitoring, repairing and merging PR #449 followed by #450 only after all applicable checks pass. PR #449 integrates catalogue main `ae83043b55058ba47334c3e9ba431d3538f2a8da`, preserving both original contributions, migration 0085 and all catalogue upgrade assertions. Shared status/register conflicts retain both decisions; the build sequence is regenerated from the combined register without changing visual review fingerprints. PR #450 remains the dependent Quotations increment.
