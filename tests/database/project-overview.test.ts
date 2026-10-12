@@ -235,7 +235,7 @@ test("PJ01-01 native receiving retains exact attribution, refuses stale linking,
     ...crmBase(),
     expected_version: 6,
     need_summary: "SYN revised commercial source need",
-    scope_details: "SYN changed controls scope after acceptance",
+    scope_details: { inclusions: "SYN changed controls scope after acceptance" },
   });
   const changed = (await readProjectOverview(f.p, f.project.id)).receiving
     .items[0];
