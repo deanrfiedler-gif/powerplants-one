@@ -7,6 +7,14 @@ import { discoveryInput } from "../helpers/estimating-discovery";
 import { discoveryDefinition } from "../../src/estimating/discovery-definition";
 test.describe.configure({ timeout: 240000 });
 test.use({ actionTimeout: 15000 });
+// The step row is five buttons on desktop and a select with previous and next on phones
+// (design board r01, P5); both reach the same step.
+async function goStep(page: Page, label: string) {
+  const select = page.getByLabel(/^Step \d of 5/);
+  if (await select.isVisible())
+    await select.selectOption(label.replace(/^\d\. /, ""));
+  else await page.getByRole("button", { name: label, exact: true }).click();
+}
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
@@ -164,7 +172,7 @@ async function fillQuestion(
       : ["Q05", "Q06"].includes(id)
         ? "2. Configuration"
         : "3. Scope & delivery";
-    await page.getByRole("button", { name: label, exact: true }).click();
+    await goStep(page, label);
   }
   const q = discoveryDefinition.questions.find((q) => q.id === id)!;
   await page
@@ -419,18 +427,14 @@ test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alte
       (a: { question_id: string }) => a.question_id,
     ),
   ).toEqual(["Q05", "Q06"]);
-  await page
-    .getByRole("button", { name: "1. Requirements", exact: true })
-    .click();
+  await goStep(page, "1. Requirements");
   await page
     .getByRole("checkbox", { name: "Defined labour", exact: true })
     .uncheck();
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .check();
-  await page
-    .getByRole("button", { name: "2. Configuration", exact: true })
-    .click();
+  await goStep(page, "2. Configuration");
   await expect(
     page.getByLabel("Q05 Product description", { exact: true }),
   ).toHaveValue("SYN sensor reference");

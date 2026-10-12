@@ -124,9 +124,12 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
     name: "Priva Fertigation Configurator",
     exact: true,
   });
+  // The Estimating menu starts collapsed at 1440 px and below (design board r01, P3) and is
+  // an overlay on phones: open it through whichever control the width shows.
   if (!(await entry.isVisible()))
     await page
-      .getByRole("button", { name: "Estimating menu", exact: true })
+      .getByRole("button", { name: /^(Estimating menu|Show menu|Expand Estimating menu)$/ })
+      .first()
       .click();
   await entry.click();
   await page

@@ -3090,8 +3090,15 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
             <button
               type="button"
               className="es02-button es02-summary-toggle"
-              onClick={() => setSheetOpen(true)}
-              aria-haspopup="dialog"
+              onClick={() => {
+                // Phones show the summary as a section after the form; wider
+                // overlay widths open it as a sheet.
+                if (menu.phone)
+                  document
+                    .querySelector("#ppo-estimate-wizard .es02-layout > .es02-summary")
+                    ?.scrollIntoView({ block: "start", behavior: "smooth" });
+                else setSheetOpen(true);
+              }}
             >
               <Icon name="summary" className="es02-icon es02-icon-sm" />
               Summary

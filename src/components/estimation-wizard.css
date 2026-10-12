@@ -2226,6 +2226,16 @@
   #ppo-estimate-wizard .es02-summary-bar .es02-button {
     display: none;
   }
+  #ppo-estimate-wizard .es02-layout > .es02-summary {
+    display: flex;
+    width: 100%;
+    flex: none;
+    padding: 20px 12px 24px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    box-shadow: none;
+    overflow: visible;
+  }
   #ppo-estimate-wizard .es02-table-scroll,
   #ppo-estimate-wizard .es02-table-foot {
     margin-inline: -12px;

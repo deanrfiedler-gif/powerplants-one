@@ -13,6 +13,7 @@ import { Icon as MaterialsIcon } from "../../src/engineering/materials/component
 import { ToneMark } from "../../src/engineering/changes/components/client/changes-ui";
 import { Mark } from "../../src/engineering/commissioning/components/client/commissioning-ui";
 import { GanttIcon } from "../../src/components/projects-gantt";
+import { Icon as WizardIcon } from "../../src/components/estimation-wizard-ui";
 
 // ADR-0050: the owner's Font Awesome Kit draws the icons on online pages; the local drawings remain
 // wherever the Kit is not configured or not yet running.
@@ -30,7 +31,7 @@ test("every mapped icon is a plain Font Awesome name and every catalogue is mapp
     navigationFontAwesome: 64, shellFontAwesome: 35, productFontAwesome: 51, myWorkFontAwesome: 45, secondaryMenuFontAwesome: 5,
     jobPackFontAwesome: 12, materialsFontAwesome: 25, changesOutlineFontAwesome: 4, changesToneFontAwesome: 9,
     commissioningOutlineFontAwesome: 5, commissioningMarkFontAwesome: 9, acceptanceFontAwesome: 4, fertigationFontAwesome: 1,
-    leadsFontAwesome: 3, ganttFontAwesome: 9,
+    leadsFontAwesome: 3, ganttFontAwesome: 9, estimationWizardFontAwesome: 39,
   });
   for (const [catalogue, map] of Object.entries(mappings)) {
     for (const [name, icon] of Object.entries(map)) assert.match(icon, /^[a-z0-9]+(-[a-z0-9]+)*$/, `${catalogue}.${name}`);
@@ -63,6 +64,7 @@ test("module icons also render their local drawings until the Kit runs, and the 
     renderToStaticMarkup(createElement(ToneMark, { icon: "dot" })),
     renderToStaticMarkup(createElement(Mark, { icon: "unsent" })),
     renderToStaticMarkup(createElement(GanttIcon, { name: "fit" })),
+    renderToStaticMarkup(createElement(WizardIcon, { name: "check" })),
   ]) {
     assert.match(html, /^<svg[ >]/);
     assert.doesNotMatch(html, /ppo-fa|fa-light|fa-solid/);
