@@ -19,6 +19,8 @@ the page. It does not change the configuration definition, the data model, any A
 business rules of [build plan r04](../reference/ui/estimating/PPO-ES-02-Estimation-Wizard-Discovery-Alternatives-and-Revisions-Refinement-Build-Plan-r04.md),
 and it is not visual acceptance of the result: that review is Dean's and is still to be recorded.
 
+**Later on 12 October 2026** Dean accepted a Figma design for this page, to which the built page is to be aligned: [ES-02 Estimation Wizard Figma design](es02-wizard-figma-design.md). This record is unchanged otherwise.
+
 Scope stays `scope:ES-02`, route `/estimating/discovery/[id]`, parents PPO-010 and
 EST-01–EST-09 under [ADR-0035](ADR-0035-es02-structured-discovery.md). All 78 parent IDs are
 unchanged. No migration, seed, permission grant or external integration is added.
