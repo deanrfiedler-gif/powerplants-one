@@ -100,3 +100,9 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** The drawer over the register keeps context; Convert to deal is clear. The close button's focus ring is a heavy square unlike the theme focus ring.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Record backend reads — 12 October 2026
+
+The [backend contract](../../../decisions/lead-record-backend.md) adds readiness and summary to the existing detail API. Desktop and phone consumers should distinguish `ReadyForReview` from permission and from a successful conversion; qualification and exact source comparisons still happen in the native conversion form. Missing and unavailable facts remain different states. Last activity means the latest change to a visible linked Activity, with explicit visible-only scope; age means elapsed 24-hour periods since capture. Display the same semantics on both viewports.
+
+Incoming: saved Lead/current resolution and authorised Activity records. Outgoing: the existing LC-11 conversion review and Activity destination; no command is invoked by reading. The existing r20 Record workspace and stable key are retained. The accepted Figma readiness-bar wording needs this distinction when implemented; captures and review fingerprints remain unchanged. This is backend delivery only: no page/component geometry, shell or guide workflow changes. Grouped history, customer open work and visual/device acceptance remain outstanding. [Verification](../../../testing/evidence/lead-record/README.md).

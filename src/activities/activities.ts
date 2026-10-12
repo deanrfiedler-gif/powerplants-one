@@ -537,8 +537,11 @@ export async function activityCommand(
   );
 }
 export async function readActivity(p: Principal, id: string) {
-  const c = database(),
-    a = await visibleActivity(c, p, id);
+  return readActivityWithClient(database(), p, id);
+}
+// Preserve the exact detail DTO when a composite read already owns a transaction.
+export async function readActivityWithClient(c: QueryClient, p: Principal, id: string) {
+  const a = await visibleActivity(c, p, id);
   const links = [];
   for (const l of await activityLinks(c, p, id)) {
     const row =

@@ -44,7 +44,7 @@ const ledger = () =>
   rows("SELECT * FROM public.ppo_migrations ORDER BY version");
 
 test("fresh combined installation retains both registries and both domains through repeat migration and seed", async () => {
-  await atVersion(85);
+  await atVersion(86);
   await exerciseBoth();
 });
 
@@ -72,7 +72,7 @@ test("an existing Leads 0018 record and receipt survive the Projects upgrade exa
   );
   await migrate();
   await seed();
-  assert.deepEqual(await readLead(p, input.id), before);
+  sameLead(await readLead(p, input.id), before);
   assert.deepEqual(
     await readOperation(p, input.operation_id),
     accepted.receipt,
@@ -132,7 +132,7 @@ async function exerciseBoth() {
   const hashes = await ledger();
   assert.deepEqual(
     hashes.filter((r) => r.version >= 18).map((r) => r.version),
-    [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85],
+    [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86],
   );
   assert.deepEqual(
     (
@@ -149,7 +149,7 @@ async function exerciseBoth() {
   await seed();
   await closeDatabase();
   assert.deepEqual(await ledger(), hashes);
-  assert.deepEqual(await readLead(p, lead.id), beforeLead);
+  sameLead(await readLead(p, lead.id), beforeLead);
   sameSchedule(await readSchedule(p, project.id), beforeProject);
   assert.deepEqual(await readOperation(p, lead.operation_id), captured.receipt);
   assert.deepEqual(
@@ -205,4 +205,28 @@ function sameSchedule(
   // observed_at is the read time, not persisted project/task evidence.
   assert.ok(Date.parse(actual.observed_at) >= Date.parse(before.observed_at));
   assert.deepEqual({ ...actual, observed_at: before.observed_at }, before);
+}
+
+// Preserve every original detail field across historical schemas. Readiness is
+// a current-schema/access projection; observation time and age are not stored.
+// The focused LREC tests independently verify these new derived semantics.
+function sameLead(actual: Awaited<ReturnType<typeof readLead>>, before: Awaited<ReturnType<typeof readLead>>) {
+  const { record_summary: currentSummary, conversion_readiness: currentReadiness, ...currentSaved } = actual;
+  const { record_summary: originalSummary, conversion_readiness: originalReadiness, ...originalSaved } = before;
+  assert.deepEqual(currentSaved, originalSaved);
+  assert.deepEqual({ ...currentSummary, observed_at: originalSummary.observed_at, age_days: originalSummary.age_days }, originalSummary);
+  assert(Date.parse(currentSummary.observed_at) >= Date.parse(originalSummary.observed_at));
+  assert.equal(currentSummary.age_days, Math.max(0, Math.floor((Date.parse(currentSummary.observed_at) - Date.parse(actual.created_at)) / 86_400_000)));
+  // 0018 predates the active five-stage pipeline. Only its pipeline/context
+  // eligibility should change on upgrade; do not discard other readiness facts.
+  if (currentReadiness.state !== originalReadiness.state) {
+    assert.equal(originalReadiness.state, "Unavailable");
+    assert.equal(currentReadiness.state, "NeedsAttention");
+    assert.equal(originalReadiness.checks.find(c => c.key === "customer_context")?.state, "Unavailable");
+    assert.equal(currentReadiness.checks.find(c => c.key === "customer_context")?.state, "Complete");
+    assert.deepEqual(currentReadiness.checks.filter(c => c.key !== "customer_context"), originalReadiness.checks.filter(c => c.key !== "customer_context"));
+    assert.equal(currentReadiness.authority, originalReadiness.authority);
+    assert.equal(currentReadiness.lifecycle, originalReadiness.lifecycle);
+    assert.equal(currentReadiness.context_source, originalReadiness.context_source);
+  } else assert.deepEqual(currentReadiness, originalReadiness);
 }

@@ -1,3 +1,4 @@
+import { registerLeadRecordTests } from "../helpers/lead-record-cases";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -19,12 +20,15 @@ import { activityCommand, readActivity } from "../../src/activities/activities";
 import { readOperation } from "../../src/shared/receipts";
 import { leadCreate, leadConvert } from "../helpers/leads";
 import { CRM, crmBase, crmAction } from "../helpers/crm";
+import { registerLeadRegisterTests } from "../helpers/lead-register-cases";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 beforeEach(reset);
 after(closeDatabase);
+registerLeadRegisterTests();
+registerLeadRecordTests();
 const principal = async (profile = "coordinator") =>
   (await createSession(profile)).principal;
 const code = (value: string) => (e: unknown) =>

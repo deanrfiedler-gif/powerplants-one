@@ -323,12 +323,12 @@ test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit re
   assert.deepEqual(await snapshot(), before);
   const ledger = await rows("public.ppo_migrations");
   assert.deepEqual(
-    ledger.filter((r) => r.row.version !== 85),
+    ledger.filter((r) => r.row.version < 85),
     oldLedger,
   );
   assert.deepEqual(
-    ledger.filter((r) => r.row.version === 85).map((r) => r.row.version),
-    [85],
+    ledger.filter((r) => r.row.version >= 85).map((r) => r.row.version),
+    [85, 86],
   );
   await migrate();
   await seed();

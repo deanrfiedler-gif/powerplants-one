@@ -243,6 +243,8 @@ async function validProposal(
   ).rowCount;
   if (!person)
     invalid("subject_id", "Choose an active local synthetic person.");
+  if (b.capability.startsWith("cpq.") && b.scope_type === "Site")
+    invalid("scope_type", "CPQ duties require Company or Workspace scope.");
   if (b.scope_type === "Workspace") {
     if (b.scope_id !== p.workspace_id || b.company_id || b.site_id)
       invalid("scope_type", "Workspace scope has no company or site.");

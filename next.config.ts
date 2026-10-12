@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 const config: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
+  // The isolated CPQ worker loads the existing TypeScript runtime in Node.
+  serverExternalPackages: ["tsx"],
   async redirects() {
     return [
       { source: "/crm/opportunities/:path*", destination: "/sales/opportunities/:path*", permanent: true },

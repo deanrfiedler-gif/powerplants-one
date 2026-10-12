@@ -1,5 +1,9 @@
 # Documentation index
 
+[Lead record readiness and summary backend](decisions/lead-record-backend.md) — saved-context conversion review and scoped age/activity summary; [execution evidence](testing/evidence/lead-record/README.md).
+
+[Leads counts and follow-up backend](decisions/lead-register-backend.md) — permission-scoped full counts, active follow-up views and [execution evidence](testing/evidence/lead-register/README.md); Figma page integration remains separate.
+
 [CCE architecture and reference package](architecture/cce-technical-specification.md) — proposed rule-authoring and CPQ module, [Figma brief](delivery/cce-figma-design-prompt.md), [recorded validation](testing/evidence/cce-reference-validation/README.md) and [publication decision](decisions/cce-architecture-proposal.md). Historical execution remains pinned to `ba1f4e3`; publication does not adopt the architecture or implement the module.
 
 Start with [current status](STATUS.md) and the [First Prototype Definition & Architecture package](prototype/README.md). The [working master](blueprints/BP-01-master-blueprint.md) retains the complete seven-domain direction.

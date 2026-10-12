@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "implementation_commit": "b7509820b2d40026aab6aeb79c7f52fe5e73de27",
+  "base_commit": "d02b2583cd6784d596b5a5bb69ff0a8db21c38d4",
+  "build_id": "GyRqsXZZPB5UCDpxJ7WSl",
+  "source_files": [
+    {
+      "path": "src/crm/leads/reads.ts",
+      "sha256": "da71ba27d6a86ba988b57af2feec3bc40fff7e2b9e3a6c0628aab38c5eac6c67"
+    },
+    {
+      "path": "src/crm/leads/service.ts",
+      "sha256": "7ebd9e67fa792ff98849a5bfd9f552a1dd0e1799ffa8c33a83c55bb81c35644c"
+    },
+    {
+      "path": "src/crm/leads/record.ts",
+      "sha256": "54f549324c6537dd272712521b2e2b36bb9842d0c407e7eee7b6db379b667363"
+    },
+    {
+      "path": "src/crm/leads/conversion-context.ts",
+      "sha256": "74a9cf68e2af837fadb268ad2a0b1c247903de9ee45d584bfa742c4e669637a7"
+    },
+    {
+      "path": "tests/database/leads.test.ts",
+      "sha256": "802f597606e7b87ff4bb0e0970ae33ac91fc788c812206beb4cba9d2b73b120a"
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "sha256": "27f2cc31875a95544ad74727c0f5f9722d44b8136fede331fead4a68729a171e"
+    },
+    {
+      "path": "tests/helpers/lead-record-cases.ts",
+      "sha256": "bb3b1f2976d21b9489f5d6342045abc8b243ca900a5ab93ec5eebcf7ee4af1f0"
+    },
+    {
+      "path": "tests/unit/lead-record.test.ts",
+      "sha256": "9730d56398b41d7146cadd9e4a16a139adc9ae909073915bf44eaed58d6fd794"
+    },
+    {
+      "path": "tests/http/lead-record.test.ts",
+      "sha256": "2ee50d5eb63bc656e1c368eee35c87d3348ade2259995f84ad79c950ed6a553c"
+    }
+  ]
+}
