@@ -11,6 +11,7 @@ import type { OutlineName as CommissioningOutlineName, MarkName as Commissioning
 import type { AdditionalIconName as AcceptanceIconName } from "../projects/acceptance/icon";
 import type { LeadsIconName } from "./leads-workspace";
 import type { GanttIconName } from "./projects-gantt";
+import type { SpecialistIconName } from "./specialist-ui";
 
 // ADR-0050: each semantic icon name maps to one Font Awesome Pro icon, drawn in Classic Light,
 // and in Classic Solid where the app marks a selected item. Every catalogue keeps its own names
@@ -360,3 +361,20 @@ export const ganttFontAwesome = {
   sliders: "sliders",
   fit: "expand",
 } satisfies Record<GanttIconName, FontAwesomeIcon>;
+
+// src/components/specialist-ui.tsx: the ES-08 Screen Configurator Workbench controls and sheets.
+export const specialistFontAwesome = {
+  "chevron-left": "chevron-left",
+  "chevron-right": "chevron-right",
+  "chevron-down": "chevron-down",
+  close: "xmark",
+  search: "magnifying-glass",
+  download: "download",
+  print: "print",
+  "arrow-right": "arrow-right",
+  warning: "triangle-exclamation",
+  info: "circle-info",
+  check: "check",
+  drawing: "pen-ruler",
+  spinner: "spinner",
+} satisfies Record<SpecialistIconName, FontAwesomeIcon>;

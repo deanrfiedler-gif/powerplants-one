@@ -1,8 +1,12 @@
 # Current prototype status
 
-**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 12 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
+
+## ES-08 Screen Configurator Workbench — 12 October 2026
+
+Dean asked for the Screen Configurator Workbench page to be built from the [design board he accepted on 23 September](decisions/es08-design-board.md). The [build record](decisions/es08-workbench-build.md) retains what was built, the points the decision left to implementation and seven adaptations for his review. The workbench now has the board's module header with its context band, seven views and six-gate readiness strip; Configure with its six sections, segmented options, source cells, drawing-only inputs and live plan or section; the new Drawings view with five sheets, field inspector, cut schedule and coverage cross-check; Parts & working with a persistent working panel; Pricing with the price bridge; Compare & save with a scratch baseline, in-place decisions and the record-run checklist; and the sixteen states of artboard C. One shared cross-section component draws every section. The recovered engine, commands, receipts, recovery and receiving are unchanged; no migration, capability, grant or seed is added. Drawing-only inputs are remembered per browser pending a separate persistence decision. Nine unit cases check the geometry against the decision's r10 figures; the browser spec is rewritten for the board's controls. Captures at 1,440 px and 390 px are retained as [workbench native r01](reference/ui/specialist/workbench-native-r01/README.md). Owner visual acceptance, the UI baseline register, engineering and business acceptance remain separate.
 
 ## GitHub Actions queue repair — 11 October 2026
 
