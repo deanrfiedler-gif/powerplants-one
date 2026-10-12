@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Design PR follow-up — 12 October 2026
+
+Repository writer: this authorised repair/merge session (`codex/pr-design-followup-oct12`). PRs #446 (My Work) and #447 (Estimation Wizard) arrived during the repair run. Their original heads are retained above the #441 integration, with both sets of documentation, captures and page guidance preserved. Dean confirmed that the Wizard named Figma version is saved on 12 October, resolving its draft checkpoint; #446 already records his My Work save. Their acceptance covers the designs as documented, not the remaining implementation, open questions or visual review fingerprints. Full combined-head CI remains the merge gate.
+
 ## Open PR integration — 12 October 2026
 
 Repository writer: this authorised repair/merge session (`codex/pr-final-integration-oct12`). PRs #435, #430 and #433 were merged after all 51 reported checks passed (one optional skip). The remaining contribution preserves the exact original heads and repaired successors of #431, #432, #434, #436 and #439–#445. Their shared documentation/register conflicts are resolved together, with the full combined-head CI as the final merge gate.
@@ -23,6 +27,10 @@ Dean asked which UI page to design next in Figma, took Claude's recommendation o
 ## Estimating PR integration repair — 12 October 2026
 
 Repository writer: Dean's authorised PR repair session (`codex/pr-ui-repair-oct12`). The combined contribution preserves the original heads of wizard #439, fertigation #440, Screen Configurator #441 and candidate wording #445. Conflicting index/status additions and icon catalogues retain each contribution. The exact icon-catalogue test now covers all three delivered catalogues, and the native Discovery-to-fertigation browser journey opens the adopted collapsed desktop menu or phone menu. The historical geometry audit links the deleted schematic at its recorded source commit. No test deadline, calculation, source capture, review fingerprint, migration or production authority changes. Full CI on the combined head is the merge gate; retained and proposed Figma designs remain separate from owner visual acceptance.
+
+## ES-02 Estimation Wizard Figma design accepted — 12 October 2026
+
+Dean asked for the Estimation Wizard (`/estimating/discovery/[id]`, ES-02), already built from the design board in pull request 439, to be designed in Figma on the accepted conventions, and asked during the drawing that its rail and style align with the other Figma pages. After an audit and polish he accepted it: "Proceed with your recommendations." The [decision](decisions/es02-wizard-figma-design.md) puts the page on the labelled Shell v2 rail (rail 240, main 820, summary 380 at 1440 px) with the shared record header, Record / View tabs, the viewed-alternative select beside the tabs, content-fitted grids and Record / Banner states. The family overview turns pastel green only when every system in a family is confirmed. It adds Add system by family then category, compare alternatives, the saved-revision outcome, an unsaved-changes popover, a phone system editor and a catalogue of the other fourteen states, and lists 18 differences the application should adopt. [Twenty-two icon-free captures](reference/ui/estimating/es02-wizard-figma-design-r01/README.md) are retained with hashes. Nothing is built. The six-family definition, migration and ADR-0035 amendment come next (Q8); the timing data model and the Technical details catalogue stay open. No parent ID changes.
 
 ## ES-02 Estimation Wizard page built to the design board — 12 October 2026
 

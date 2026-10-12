@@ -6155,7 +6155,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6172,7 +6172,29 @@
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png",
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
         "docs/testing/evidence/es02-design-board-r01/build-configuration-1440x960.png",
-        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png"
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-02-Desktop-Configuration-Full-Length-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-03-Desktop-Requirements-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-04-Desktop-Scope-and-Delivery-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-05-Desktop-Pricing-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-06-Desktop-Review-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-07-Desktop-1920-Navigation-Open-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-08-Desktop-Navigation-Collapsed-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-09-Desktop-Alternatives-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-10-Desktop-Revisions-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-11-Desktop-Saved-Revision-Comparison-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-12-Desktop-Compare-Alternatives-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-13-Desktop-Evidence-Panel-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-14-Desktop-Save-Discovery-Revision-Dialog-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-15-Desktop-Unsaved-Discovery-Dialog-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-16-Desktop-Discovery-r04-Saved-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-17-Desktop-Unsaved-Changes-Popover-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-18-Desktop-Add-System-Menu-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-19-Tablet-and-Phone-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-20-Desktop-States-1-to-4-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-21-Desktop-States-5-to-7-and-Catalogue-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-22-Family-Colour-Options-r01.png"
       ],
       "dependencies": [
         "src/components/sales-estimating-link.tsx",
@@ -6183,7 +6205,8 @@
         "src/components/estimation-wizard.css",
         "src/components/estimation-wizard-ui.tsx",
         "src/components/configuration-editor.tsx",
-        "src/components/discovery-fields.tsx"
+        "src/components/discovery-fields.tsx",
+        "docs/decisions/es02-wizard-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
