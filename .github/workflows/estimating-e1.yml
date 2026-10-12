@@ -72,7 +72,7 @@ jobs:
           PY
       - name: E1 PostgreSQL proof
         if: matrix.suite == 'database'
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         if: matrix.suite == 'browser'
         run: npm run build

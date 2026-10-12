@@ -36,7 +36,7 @@ node --import tsx --test --test-concurrency=1 tests/http/quotation-release.test.
 
 ## Limits
 
-Catalogue PR #448 merged as `ae83043b55058ba47334c3e9ba431d3538f2a8da` after these local checks. This evidence identifies the unchanged PR #449 dependency and exact new runtime bytes; it does not claim a combined catalogue/backend proof. Reconcile the stack with current main and run the relevant combined CI before merging.
+Catalogue PR #448 merged as `ae83043b55058ba47334c3e9ba431d3538f2a8da` after these local checks. This evidence identifies the unchanged PR #449 dependency and exact new runtime bytes; it does not claim a combined catalogue/backend proof. The subsequent merge preparation incorporates current main through review-queue head `54fb611541567136575267e2afad684d901a8c32`. Eight of these nine source/test fingerprints remain unchanged; the ES-05 database file additionally retains main's exact migration-0085 upgrade assertion. The original local proof is preserved, and fresh combined-head CI is required before merging.
 
 This is a backend API increment. The accepted Quotations page, shell rollout, selection/export and global menu counts remain separate work. Counts describe one authorised candidate window; update ordering describes quotation revision updates, not every later lifecycle event. Historical authority checks have a bounded candidate count, but this is not a production capacity proof. No new browser, visual, restart or business acceptance is claimed.
 

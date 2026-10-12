@@ -72,6 +72,15 @@ export function compareSavedDiscovery(
     for (const field of ["state", "value", "source", "follow_up"] as const)
       add("answer", id, id, field, a?.[field], b?.[field]);
   }
+  for (const field of ["schema_version", "definition_id"] as const)
+    add(
+      "configuration",
+      before.id,
+      after.id,
+      field,
+      before.input?.configuration?.[field],
+      after.input?.configuration?.[field],
+    );
   const pair = (
     a:
       | Configuration["areas"][number]

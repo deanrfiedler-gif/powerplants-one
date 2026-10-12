@@ -1,5 +1,7 @@
 # Decision control
 
+[ADR-0054 — Versioned Estimating equipment catalogue](ADR-0054-es02-equipment-catalogue.md) records the authorised backend-only six-family/108-category successor, preserved r01 history and explicit classification/evidence rules.
+
 [CCE architecture proposal and documentation publication](cce-architecture-proposal.md) — Dean authorised publication of the report, Figma brief and bounded reference evidence on 12 October 2026. Architecture adoption, operating rules and implementation remain open; existing estimating and specialist scopes are preserved.
 
 [Project schedule baselines and forecast comparison](project-schedule-baselines.md) records the 11 October audit follow-up: independent immutable revisions, current coordinator authority, explicit calendar-day comparison and manual successor review. PRJ-02/04/07 and PJ-03 remain the governing scope; no Service booking or commercial approval authority is added.

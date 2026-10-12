@@ -6,7 +6,7 @@ Owner: Dean Fiedler. Date: 12 October 2026. Status: Dean authorised proceeding w
 
 ## Scope and source
 
-Starting integrated source: `6c164712f7120c89c0d2f5dd24833865696b4968`. The backend-completion session owns this contribution after the catalogue writer completed and opened draft PR #448 at `9f8587a8133df7c9bf83c2359c25fd964a07af43`. ES-02's six-family/108-category work is delivered separately in draft PR #448; reconcile its final contribution and do not duplicate it.
+Starting integrated source: `6c164712f7120c89c0d2f5dd24833865696b4968`. The backend-completion session owns this contribution after the catalogue writer completed and opened draft PR #448 at `9f8587a8133df7c9bf83c2359c25fd964a07af43`. ES-02's six-family/108-category work merged separately in PR #448 as ae83043b55058ba47334c3e9ba431d3538f2a8da and is reconciled into the backend PR stack; do not duplicate it.
 
 This plan derives from BP-01, the live development register, the CRM/Projects gap register, current native handovers and the 12 October discussion. Keep all 78 parent IDs and existing ES/PJ/FN/other scope keys. CREMS and competitor parity are not prerequisites. MYOB, SharePoint and native CAD retain their existing authority. No operational connection, communication, transaction, migration or deployment is performed by adopting this plan.
 
@@ -47,5 +47,5 @@ These package keys are local tracking labels, not new parent requirements. Prior
 | BC-01 Reviews & approvals | Backend implemented and locally verified; PR review/CI separate | [Execution evidence](../testing/evidence/estimating-review-queue/README.md). Read-only ES-04/ES-05 queue; source commands remain the decision authority. Page and global-count contract remain open |
 | BC-01 Quotations register | Backend implemented and locally verified on `codex/quotation-register`, based on PR #449; CI/review separate | [Read contract](../decisions/quotation-register-backend.md) and [execution evidence](../testing/evidence/quotation-register/README.md): one row per current quotation and exact revision history; native ES-05/06/07 authority. Accepted page implementation remains separate |
 | BC-01 remaining projections | Next backend increments | Lead/Work Order/Cost Source/Engineering reads; define each exact source contract and receiving proof before implementation |
-| ES-02 catalogue | PR #448 merged as `ae83043b55058ba47334c3e9ba431d3538f2a8da` after this increment's local proof | Reconcile the stacked backend contributions with current main before merge; catalogue code is not duplicated here |
+| ES-02 catalogue | PR #448 merged; reconciled into the #449/#450 stack | Preserve migration 0085 and exact upgrade assertions; combined-head CI remains the merge gate |
 | BC-02-11 | Remaining authorised programme | No implementation or acceptance inferred from this plan |

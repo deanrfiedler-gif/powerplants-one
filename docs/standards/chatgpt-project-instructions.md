@@ -6,9 +6,9 @@ Public repo; private demo.
 
 ## 2. Delivery
 
-Preserve BP-01 domains and shared records.
+Retain BP-01 domains/shared records.
 
-Test joined journeys; separate proof and owner acceptance.
+Test joined journeys; separate proof/owner acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -16,7 +16,7 @@ Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P0
 
 ## 3. Sources
 
-Read AGENTS.md, README, docs/STATUS.md and ADRs; verify Git.
+Read AGENTS.md, README, docs/STATUS.md and ADRs.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
@@ -58,9 +58,9 @@ HTML: html-module-conformance.md.
 
 ## 8. Authority
 
-Complete authorised work; ask for consequential blockers only.
+Complete authorised work; ask only for blockers.
 
-Keep unrelated work. Use branch/PR; merge needs authority/checks/review. Respect permissions; update specs/registers.
+Preserve unrelated work; use branch/PR. Merge needs authority/checks/review. Update specs/registers.
 
 Repo work grants no paid service, deployment, access, transactions, migration or messaging. Secrets/operational data stay outside Git; use synthetic/redacted fixtures.
 
@@ -68,7 +68,7 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Check screens; record environment. Recheck access after storage, before metadata/bytes.
 
-ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CCE](../decisions/cce-architecture-proposal.md); retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
+ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CCE](../decisions/cce-architecture-proposal.md); retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
@@ -102,4 +102,4 @@ UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-atte
 
 PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.
 
-Backend: [plan](../delivery/backend-completion-plan.md).
+[Backend](../delivery/backend-completion-plan.md).

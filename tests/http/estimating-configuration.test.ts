@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { test } from "node:test";
 import { crmBase, crmCreate } from "../helpers/crm";
 import { structuredDiscovery } from "../helpers/estimating-configuration";
+import { catalogueDiscovery } from "../helpers/estimating-catalogue";
 const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
 async function session(profile = "coordinator") {
   const response = await fetch(origin + "/api/v1/local-session", {
@@ -127,4 +128,91 @@ test("ES02 HTTP: exact structured create/receipt/history/summary/evidence/compar
     422,
   );
   assert.equal((await call(cookie, path)).body.workspace.version, 1);
+});
+
+test("ES02-CAT-08 HTTP: opt-in r02 catalogue and exact saved classification keep existing session, origin and recovery boundaries", async () => {
+  const cookie = await session(),
+    opportunity = crmCreate();
+  assert.equal(
+    (await call(cookie, "crm/opportunities", opportunity)).status,
+    201,
+  );
+  const path = `estimating/workspaces/form-options?opportunity_id=${opportunity.id}`;
+  const legacy = await call(cookie, path);
+  assert.equal(legacy.status, 200);
+  assert.equal(legacy.body.configuration_catalogue, undefined);
+  const catalogue = await call(
+    cookie,
+    path + "&configuration_definition=PPO-ES02-CONFIG-r02",
+  );
+  assert.equal(catalogue.status, 200);
+  assert.match(catalogue.headers.get("cache-control")!, /no-store/);
+  assert.equal(
+    catalogue.body.configuration_catalogue.families.reduce(
+      (n: number, f: { categories: unknown[] }) => n + f.categories.length,
+      0,
+    ),
+    108,
+  );
+  const discovery = catalogueDiscovery(true);
+  const preview = await call(cookie, "estimating/workspaces/preview", {
+    opportunity_id: opportunity.id,
+    discovery,
+  });
+  assert.equal(preview.status, 200, JSON.stringify(preview.body));
+  const command = {
+    ...crmBase(),
+    id: randomUUID(),
+    option_id: randomUUID(),
+    revision_id: randomUUID(),
+    opportunity_id: opportunity.id,
+    discovery,
+    expected_opportunity_version: preview.body.expected_opportunity_version,
+    context_hash: preview.body.context_hash,
+    confirmed_question_ids: preview.body.required_confirmation_ids,
+    configuration_confirmations: preview.body.configuration_confirmations,
+  };
+  const forbidden = await fetch(origin + "/api/v1/estimating/workspaces", {
+    method: "POST",
+    headers: {
+      Cookie: cookie,
+      Origin: "https://unrelated.invalid",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(command),
+  });
+  assert.equal(forbidden.status, 403);
+  const saved = await call(cookie, "estimating/workspaces", command);
+  assert.equal(saved.status, 201, JSON.stringify(saved.body));
+  assert.deepEqual(
+    (await call(cookie, "estimating/workspaces", command)).body,
+    saved.body,
+  );
+  assert.deepEqual(
+    (await call(cookie, `operations/${command.operation_id}`)).body,
+    saved.body,
+  );
+  const read = await call(cookie, `estimating/workspaces/${command.id}`);
+  assert.equal(read.status, 200);
+  assert.match(JSON.stringify(read.body), /water-priva-nutrijet-inline/);
+  discovery.configuration.systems[0].family = "Water";
+  assert.equal(
+    (
+      await call(cookie, "estimating/workspaces/preview", {
+        opportunity_id: opportunity.id,
+        discovery,
+      })
+    ).status,
+    422,
+  );
+  assert.equal((await call("", path)).status, 401);
+  assert.equal(
+    (
+      await call(
+        await session("second-company"),
+        path + "&configuration_definition=PPO-ES02-CONFIG-r02",
+      )
+    ).status,
+    404,
+  );
 });
