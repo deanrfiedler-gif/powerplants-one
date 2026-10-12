@@ -11,6 +11,7 @@ import type { OutlineName as CommissioningOutlineName, MarkName as Commissioning
 import type { AdditionalIconName as AcceptanceIconName } from "../projects/acceptance/icon";
 import type { LeadsIconName } from "./leads-workspace";
 import type { GanttIconName } from "./projects-gantt";
+import type { WizardIconName } from "./estimation-wizard-ui";
 
 // ADR-0050: each semantic icon name maps to one Font Awesome Pro icon, drawn in Classic Light,
 // and in Classic Solid where the app marks a selected item. Every catalogue keeps its own names
@@ -360,3 +361,46 @@ export const ganttFontAwesome = {
   sliders: "sliders",
   fit: "expand",
 } satisfies Record<GanttIconName, FontAwesomeIcon>;
+
+// src/components/estimation-wizard-ui.tsx: the ES-02 Estimation Wizard (design board r01, board 10).
+export const estimationWizardFontAwesome = {
+  search: "magnifying-glass",
+  columns: "table-columns",
+  more: "ellipsis",
+  plus: "plus",
+  check: "check",
+  "chevron-right": "chevron-right",
+  "chevron-left": "chevron-left",
+  "chevron-down": "chevron-down",
+  "arrow-left": "arrow-left",
+  "arrow-right": "arrow-right",
+  external: "arrow-up-right-from-square",
+  document: "file-lines",
+  info: "circle-info",
+  warning: "triangle-exclamation",
+  summary: "list",
+  save: "floppy-disk",
+  compare: "arrow-right-arrow-left",
+  history: "clock-rotate-left",
+  copy: "copy",
+  eye: "eye",
+  archive: "box-archive",
+  close: "xmark",
+  user: "user",
+  plug: "plug",
+  filter: "filter",
+  family: "table-list",
+  climate: "temperature-half",
+  controls: "sliders",
+  water: "droplet",
+  automation: "conveyor-belt",
+  structures: "warehouse",
+  services: "screwdriver-wrench",
+  infrastructure: "network-wired",
+  other: "circle-question",
+  added: "square-plus",
+  changed: "square-pen",
+  removed: "square-minus",
+  unchanged: "square-check",
+  incomparable: "square-xmark",
+} satisfies Record<WizardIconName, FontAwesomeIcon>;

@@ -6117,7 +6117,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6141,7 +6141,11 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/estimation-wizard.tsx"
+        "src/components/estimation-wizard.tsx",
+        "src/components/estimation-wizard.css",
+        "src/components/estimation-wizard-ui.tsx",
+        "src/components/configuration-editor.tsx",
+        "src/components/discovery-fields.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

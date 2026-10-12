@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Field, SelectField } from "./business-ui";
 import { FollowUpFields, labels, type FormOptions } from "./discovery-fields";
 import {
@@ -14,35 +14,166 @@ import {
   type DiscoveryFinding,
   type Family,
   type ProposedSystem,
+  type Responsibility,
   type ScopeState,
 } from "../estimating/configuration-definition";
 import { useIdentity } from "./business-session";
 import { useScopePreferences, systemColumns } from "./scope-preferences";
+import {
+  Icon,
+  StateTag,
+  Tag,
+  TableScroll,
+  plural,
+  type WizardIconName,
+} from "./estimation-wizard-ui";
 
-const checks = (
-  options: { id: string; label: string }[],
-  values: string[],
-  change: (ids: string[]) => void,
-) => (
-  <div className="es02-checks">
-    {options.map((o) => (
-      <label key={o.id}>
-        <input
-          type="checkbox"
-          checked={values.includes(o.id)}
-          onChange={(e) =>
-            change(
-              e.target.checked
-                ? [...values, o.id]
-                : values.filter((id) => id !== o.id),
-            )
-          }
-        />
-        {o.label}
-      </label>
-    ))}
-  </div>
-);
+// ES-02 configuration editors, composed to design board r01 (boards S1–S3 and 10): a flush
+// single-line table with one selected row, and a padded two-column editor beneath it. Every
+// change here edits the working proposal only; nothing saves, selects or confirms.
+
+// A finding or summary row asks an editor to show its record and field (board P9).
+export type Focus = { entity_id: string | null; field: string; nonce: number };
+
+// Family presentation: an outline glyph and the kind of system each family holds. The family
+// list itself is the configuration definition's (PPO-ES02-CONFIG-r01); the six-family decision
+// of 23 September 2026 needs its successor definition before it can appear here.
+const familyGlyph: Record<Family, WizardIconName> = {
+  ControlsClimate: "controls",
+  Fertigation: "water",
+  MonitoringWeather: "climate",
+  NurseryMachinery: "automation",
+  Infrastructure: "infrastructure",
+  Other: "other",
+};
+const familyHint: Record<Family, string> = {
+  ControlsClimate: "Controllers, fans, heating, screens",
+  Fertigation: "Dosing, irrigation, water treatment",
+  MonitoringWeather: "Sensors, weather stations",
+  NurseryMachinery: "Benches, trolleys, potting",
+  Infrastructure: "Network, power, shared services",
+  Other: "Unsupported or historical values",
+};
+export const familyLabel = (id: string) =>
+  equipmentFamilies.find((f) => f.id === id)?.label ?? id;
+export const familyIcon = (id: string): WizardIconName =>
+  familyGlyph[id as Family] ?? "other";
+const intentLabel = (intent: ProposedSystem["intent"]) =>
+  intent === "RetainExpand" ? "Retain + expand" : intent;
+// "Greenhouse 1 + Greenhouse 2" reads as "Greenhouses 1 + 2" in a single-line column; the
+// saved membership is unchanged and the full label stays in the cell's title.
+const compactCoverage = (label: string) => {
+  const parts = label.split(" + ");
+  if (parts.length < 2) return label;
+  const matches = parts.map((p) => /^(.*\S)\s+(\d+)$/.exec(p));
+  const prefix = matches[0]?.[1];
+  if (!prefix || /s$/i.test(prefix) || matches.some((m) => !m || m[1] !== prefix))
+    return label;
+  return `${prefix}s ${matches.map((m) => m![2]).join(" + ")}`;
+};
+
+// Checkbox chips: a validated multi-select that keeps real checkboxes and labels.
+function Chips({
+  label,
+  options,
+  values,
+  onChange,
+  empty = "Nothing to choose from",
+  max,
+}: {
+  label: string;
+  options: { id: string; label: string }[];
+  values: string[];
+  onChange: (ids: string[]) => void;
+  empty?: string;
+  max?: number;
+}) {
+  return (
+    <div className="es02-chips" role="group" aria-label={label}>
+      {options.length === 0 && (
+        <span className="es02-chips-empty">{empty}</span>
+      )}
+      {options.map((o) => (
+        <label key={o.id} className="es02-chip">
+          <input
+            type="checkbox"
+            checked={values.includes(o.id)}
+            disabled={
+              max !== undefined && !values.includes(o.id) && values.length >= max
+            }
+            onChange={(e) =>
+              onChange(
+                e.target.checked
+                  ? [...values, o.id]
+                  : values.filter((id) => id !== o.id),
+              )
+            }
+          />
+          <span>{o.label}</span>
+        </label>
+      ))}
+    </div>
+  );
+}
+function LabelledChips({
+  label,
+  hint,
+  ...rest
+}: Parameters<typeof Chips>[0] & { hint?: ReactNode }) {
+  return (
+    <div className="es02-field">
+      <span className="es02-label">{label}</span>
+      <Chips label={label} {...rest} />
+      {hint && <small>{hint}</small>}
+    </div>
+  );
+}
+function RowMenu({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(false),
+    id = useId();
+  return (
+    <div
+      className="es02-menu-root"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") setOpen(false);
+      }}
+    >
+      <button
+        type="button"
+        className="es02-button es02-button-icon"
+        aria-label={label}
+        title={label}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={() => setOpen(!open)}
+      >
+        <Icon name="more" />
+      </button>
+      {open && (
+        <div
+          id={id}
+          className="es02-menu-list"
+          role="menu"
+          aria-label={label}
+          onClick={() => setOpen(false)}
+        >
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
 type Props = {
   value: Configuration;
   onChange: (value: Configuration) => void;
@@ -51,7 +182,30 @@ type Props = {
   onEvidence: (id?: string) => void;
   readOnly?: boolean;
   evaluated?: boolean;
+  focus?: Focus | null;
 };
+
+// Focus a field by its element id once the editor has rendered the record.
+function useFieldFocus(
+  focus: Focus | null | undefined,
+  owns: (focus: Focus) => boolean,
+  select: (focus: Focus) => void,
+  elementId: (focus: Focus) => string | null,
+) {
+  const applied = useRef<number>(0);
+  useEffect(() => {
+    if (!focus || applied.current === focus.nonce || !owns(focus)) return;
+    applied.current = focus.nonce;
+    select(focus);
+    const id = elementId(focus);
+    window.setTimeout(() => {
+      const element = id ? document.getElementById(id) : null;
+      element?.scrollIntoView({ block: "center" });
+      element?.focus({ preventScroll: true });
+    }, 60);
+  }, [focus, owns, select, elementId]);
+}
+
 export function FamilyOverview({
   value,
   filter,
@@ -59,6 +213,7 @@ export function FamilyOverview({
   onAdd,
   onConfigure,
   readOnly = false,
+  variant = "compact",
 }: {
   value: Configuration;
   filter?: string;
@@ -66,82 +221,131 @@ export function FamilyOverview({
   onAdd?: (family: Family) => void;
   onConfigure?: () => void;
   readOnly?: boolean;
+  variant?: "full" | "compact";
 }) {
   const counts = configurationCounts(value);
-  return (
-    <section
-      className="es02-families"
-      aria-label="Equipment families in this estimate"
-    >
-      <div className="es02-section-title">
-        <h2>Equipment families in this estimate</h2>
-        {onConfigure && (
-          <button type="button" onClick={onConfigure}>
-            Configure systems →
-          </button>
-        )}
-        {onFilter && (
+  const names = (family: string) =>
+    value.systems
+      .filter((s) => s.family === family)
+      .map((s) => s.name || "New system")
+      .join(" · ");
+  const cards = equipmentFamilies.filter(
+    (f) => f.id !== "Infrastructure" && (f.id !== "Other" || counts.families.Other > 0),
+  );
+  const infra = counts.families.Infrastructure;
+  const card = (f: (typeof equipmentFamilies)[number], infraCard = false) => {
+    const count = counts.families[f.id];
+    return (
+      <div
+        key={f.id}
+        className={`es02-family${infraCard ? " es02-family-infra" : ""}`}
+      >
+        <button
+          type="button"
+          className="es02-family-filter"
+          disabled={!onFilter && !onConfigure}
+          aria-pressed={onFilter ? filter === f.id : undefined}
+          aria-label={`${f.label} ${count} systems`}
+          onClick={() => (onFilter ? onFilter(f.id) : onConfigure?.())}
+        >
+          <strong>
+            <Icon name={familyGlyph[f.id]} />
+            {f.label}
+          </strong>
+          <span>{plural(count, "system")}</span>
+          <small>{count ? names(f.id) : variant === "full" ? familyHint[f.id] : ""}</small>
+        </button>
+        {onAdd && !infraCard && (
           <button
             type="button"
-            onClick={() => onFilter("")}
-            aria-pressed={!filter}
+            className="es02-button es02-button-sm es02-family-add"
+            disabled={readOnly}
+            aria-label={`Add ${f.label} system`}
+            onClick={() => onAdd(f.id)}
           >
-            All families
+            <Icon name="plus" className="es02-icon es02-icon-sm" />
+            Add
           </button>
         )}
       </div>
+    );
+  };
+  const infraFamily = equipmentFamilies.find((f) => f.id === "Infrastructure")!;
+  return (
+    <section
+      className="es02-section es02-families"
+      aria-label="Equipment families in this estimate"
+    >
+      <div className="es02-section-head">
+        <div>
+          <h2>Equipment families in this estimate</h2>
+          <p>
+            {plural(counts.systems, "system")} · each counted once
+          </p>
+        </div>
+        <div className="es02-actions">
+          {onConfigure && (
+            <button type="button" className="es02-link" onClick={onConfigure}>
+              Configure systems
+              <Icon name="arrow-right" className="es02-icon es02-icon-sm" />
+            </button>
+          )}
+          {onFilter && (
+            <button
+              type="button"
+              className="es02-button"
+              onClick={() => onFilter("")}
+              aria-pressed={!filter}
+            >
+              All families
+            </button>
+          )}
+        </div>
+      </div>
       <div className="es02-family-grid">
-        {equipmentFamilies.slice(0, 4).map((f) => (
-          <div key={f.id}>
-            <button
-              type="button"
-              disabled={!onFilter && !onConfigure}
-              aria-pressed={filter === f.id}
-              onClick={() => (onFilter ? onFilter(f.id) : onConfigure?.())}
-            >
-              {f.label}
-              <span className="mw-tag">{counts.families[f.id]} systems</span>
-            </button>
-            {onAdd && (
-              <button
-                type="button"
-                disabled={readOnly}
-                aria-label={`Add ${f.label} system`}
-                onClick={() => onAdd(f.id)}
-              >
-                + Add
-              </button>
-            )}
-          </div>
-        ))}
+        {cards.map((f) => card(f))}
+        {variant === "compact" && card(infraFamily, true)}
       </div>
-      <div className="es02-toolbar">
-        {equipmentFamilies
-          .slice(4)
-          .filter((f) => f.id !== "Other" || counts.families.Other > 0)
-          .map((f) => (
-            <button
-              type="button"
-              key={f.id}
-              aria-pressed={filter === f.id}
-              onClick={() => (onFilter ? onFilter(f.id) : onConfigure?.())}
-            >
-              {f.label} <span className="mw-tag">{counts.families[f.id]}</span>
+      {variant === "full" && (
+        <div className="es02-families-row">
+          <strong>
+            <Icon name="infrastructure" />
+            Shared infrastructure
+          </strong>
+          <span>
+            {plural(infra, "system")}
+            {infra ? ` · ${names("Infrastructure")}` : ""} · covers all areas and is
+            counted once
+          </span>
+          {onConfigure && (
+            <button type="button" className="es02-link" onClick={onConfigure}>
+              Filter
             </button>
-          ))}
-      </div>
+          )}
+        </div>
+      )}
     </section>
   );
 }
+
 export function AreasEditor({
   value,
   onChange,
   options,
   onEvidence,
   readOnly = false,
-}: Omit<Props, "options"> & { options: Pick<FormOptions, "owner" | "owners" | "facilities"> }) {
+  focus,
+}: Omit<Props, "options"> & {
+  options: Pick<FormOptions, "owner" | "owners" | "facilities">;
+}) {
   const [selected, setSelected] = useState<string | null>(null),
     a = value.areas.find((a) => a.id === selected);
+  useFieldFocus(
+    focus,
+    (f) => value.areas.some((a) => a.id === f.entity_id),
+    (f) => setSelected(f.entity_id),
+    (f) => (f.field === "state" ? "area.state" : "area.label"),
+  );
   const update = (patch: Partial<Area>) =>
     a &&
     onChange({
@@ -149,130 +353,199 @@ export function AreasEditor({
       areas: value.areas.map((x) => (x.id === a.id ? { ...x, ...patch } : x)),
     });
   const own = { owner_id: options.owner.id, reason: "" };
+  const growing = value.areas.filter((x) => x.purpose === "Growing").length;
+  const remove = (area: Area) => {
+    const dependants =
+      value.systems.filter((s) => s.coverage.area_ids.includes(area.id)).length +
+      value.responsibilities.filter((r) => r.area_ids.includes(area.id)).length;
+    if (dependants) {
+      window.alert(
+        `${dependants} working systems or responsibilities refer to this area. Reassign their membership before removing it.`,
+      );
+      return;
+    }
+    if (
+      window.confirm(
+        `Remove ${area.label || "this area"} from the working proposal? Saved history and prices remain unchanged.`,
+      )
+    ) {
+      onChange({ ...value, areas: value.areas.filter((x) => x.id !== area.id) });
+      setSelected(null);
+    }
+  };
   return (
-    <section aria-label="Estimating areas">
-      <div className="es02-section-title">
-        <h2>Estimating areas</h2>
-        <button
-          type="button"
-          disabled={readOnly}
-          onClick={() => {
-            const id = crypto.randomUUID();
-            onChange({
-              ...value,
-              areas: [
-                ...value.areas,
-                {
-                  id,
-                  lineage: null,
-                  label: "",
-                  facility_id: null,
-                  purpose: "Unknown",
-                  use: null,
-                  stage: null,
-                  source: "",
-                  evidence_ids: [],
-                  state: "Unknown",
-                  follow_up: own,
-                },
-              ],
-            });
-            setSelected(id);
-          }}
-        >
-          + Add area
-        </button>
+    <section className="es02-section" aria-label="Estimating areas">
+      <div className="es02-section-head">
+        <div>
+          <h2>Areas</h2>
+          <p>
+            Stable estimating areas within the one site. An ancillary location is
+            scoped, but it is not a growing area.
+          </p>
+        </div>
+        <div className="es02-actions">
+          <button
+            type="button"
+            className="es02-button"
+            disabled={readOnly}
+            onClick={() => {
+              const id = crypto.randomUUID();
+              onChange({
+                ...value,
+                areas: [
+                  ...value.areas,
+                  {
+                    id,
+                    lineage: null,
+                    label: "",
+                    facility_id: null,
+                    purpose: "Unknown",
+                    use: null,
+                    stage: null,
+                    source: "",
+                    evidence_ids: [],
+                    state: "Unknown",
+                    follow_up: own,
+                  },
+                ],
+              });
+              setSelected(id);
+            }}
+          >
+            <Icon name="plus" className="es02-icon es02-icon-sm" />
+            Add area
+          </button>
+        </div>
       </div>
-      <div className="es02-table-scroll">
-        <table>
-          <thead>
-            <tr>
-              {[
-                "Area",
-                "Facility",
-                "Use/crop context",
-                "Stage",
-                "Evidence/state",
-                "Actions",
-              ].map((x) => (
-                <th key={x}>{x}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {value.areas.map((a) => (
-              <tr key={a.id}>
-                <td>
-                  <button type="button" onClick={() => setSelected(a.id)}>
-                    {a.label || "New area"}
-                  </button>{" "}
-                  · {a.purpose}
-                </td>
-                <td>
-                  {options.facilities.find((f) => f.id === a.facility_id)
-                    ?.display_name ??
-                    (a.facility_id ? "Saved Facility" : "Not linked")}
-                </td>
-                <td>{a.use ?? "Not recorded"}</td>
-                <td>{a.stage ?? "Not recorded"}</td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={() => onEvidence(a.evidence_ids[0])}
-                  >
-                    {a.source || "Evidence not recorded"}
-                  </button>{" "}
-                  · {a.state}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    disabled={readOnly}
-                    onClick={() => {
-                      const dependants =
-                        value.systems.filter((s) =>
-                          s.coverage.area_ids.includes(a.id),
-                        ).length +
-                        value.responsibilities.filter((r) =>
-                          r.area_ids.includes(a.id),
-                        ).length;
-                      if (dependants) {
-                        window.alert(
-                          `${dependants} working systems or responsibilities refer to this area. Reassign their membership before removing it.`,
-                        );
-                        return;
-                      }
-                      if (
-                        window.confirm(
-                          `Remove ${a.label || "this area"} from the working proposal? Saved history and prices remain unchanged.`,
-                        )
-                      ) {
-                        onChange({
-                          ...value,
-                          areas: value.areas.filter((x) => x.id !== a.id),
-                        });
-                        setSelected(null);
-                      }
-                    }}
-                  >
-                    Remove
-                  </button>
-                </td>
+      {value.areas.length > 0 ? (
+        <TableScroll label="Estimating areas table">
+          <table>
+            <thead>
+              <tr>
+                {[
+                  "Area",
+                  "Facility",
+                  "Use / crop context",
+                  "Stage",
+                  "Evidence / state",
+                  "Actions",
+                ].map((x) => (
+                  <th key={x} scope="col">
+                    {x}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {!value.areas.length && (
-        <p>
+            </thead>
+            <tbody>
+              {value.areas.map((area) => (
+                <tr key={area.id} data-selected={area.id === selected}>
+                  <td>
+                    <button
+                      type="button"
+                      className="es02-cell-link"
+                      aria-pressed={area.id === selected}
+                      onClick={() => setSelected(area.id)}
+                    >
+                      {area.label || "New area"}
+                    </button>
+                  </td>
+                  <td>
+                    {options.facilities.find((f) => f.id === area.facility_id)
+                      ?.display_name ?? (
+                      <span className="es02-secondary">
+                        {area.facility_id
+                          ? "Saved Facility"
+                          : "Proposed · no Facility record"}
+                      </span>
+                    )}
+                  </td>
+                  <td>
+                    {area.purpose === "Growing"
+                      ? "Growing area"
+                      : area.purpose === "Ancillary"
+                        ? "Ancillary location"
+                        : "Purpose unknown"}
+                    {area.use ? ` · ${area.use}` : ""}
+                  </td>
+                  <td>
+                    {area.stage ?? <span className="es02-secondary">—</span>}
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="es02-cell-evidence"
+                      onClick={() => onEvidence(area.evidence_ids[0])}
+                    >
+                      {area.source || "Evidence not recorded"}
+                    </button>{" "}
+                    <StateTag value={area.state} />
+                  </td>
+                  <td>
+                    <RowMenu label={`Actions for ${area.label || "new area"}`}>
+                      <button
+                        type="button"
+                        role="menuitem"
+                        onClick={() => setSelected(area.id)}
+                      >
+                        Edit area
+                      </button>
+                      <button
+                        type="button"
+                        role="menuitem"
+                        onClick={() => onEvidence(area.evidence_ids[0])}
+                      >
+                        View evidence
+                      </button>
+                      <button
+                        type="button"
+                        role="menuitem"
+                        disabled={readOnly}
+                        onClick={() => remove(area)}
+                      >
+                        Remove area
+                      </button>
+                    </RowMenu>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </TableScroll>
+      ) : (
+        <p className="es02-empty">
           No estimating areas recorded. NoSiteRequired scope can use attributed
           non-area coverage.
         </p>
       )}
+      {value.areas.length > 0 && (
+        <p className="es02-table-foot">
+          <span>
+            <strong>{plural(growing, "growing area")}</strong> ·{" "}
+            {plural(value.areas.length, "scoped location")}
+          </span>
+          <span>Up to 10 Facilities per scope</span>
+        </p>
+      )}
       {a && (
-        <fieldset disabled={readOnly} className="es02-editor">
-          <h3>{a.label || "New estimating area"}</h3>
-          <div className="e2-grid">
+        <fieldset
+          disabled={readOnly}
+          className="es02-editor es02-fields"
+          aria-label="Selected area editor"
+        >
+          <div className="es02-editor-head">
+            <h3>{a.label || "New estimating area"}</h3>
+            <StateTag value={a.state} />
+            <div className="es02-actions">
+              <button
+                type="button"
+                className="es02-button es02-button-danger"
+                onClick={() => remove(a)}
+              >
+                Remove area
+              </button>
+            </div>
+          </div>
+          <div className="es02-grid-3">
             <Field
               label="Area name"
               name="area.label"
@@ -312,13 +585,6 @@ export function AreasEditor({
               onChange={(stage) => update({ stage: stage || null })}
               maxLength={100}
             />
-            <Field
-              label="Area source"
-              name="area.source"
-              value={a.source}
-              onChange={(source) => update({ source })}
-              maxLength={500}
-            />
             <SelectField
               label="Area state"
               name="area.state"
@@ -332,12 +598,26 @@ export function AreasEditor({
                 })
               }
             />
+            <div className="es02-span-2">
+              <Field
+                label="Area source"
+                name="area.source"
+                value={a.source}
+                onChange={(source) => update({ source })}
+                maxLength={500}
+              />
+            </div>
           </div>
-          {checks(
-            value.evidence.map((e) => ({ id: e.id, label: e.observation })),
-            a.evidence_ids,
-            (evidence_ids) => update({ evidence_ids }),
-          )}
+          <LabelledChips
+            label="Area evidence"
+            options={value.evidence.map((e) => ({
+              id: e.id,
+              label: e.observation || "New observation",
+            }))}
+            values={a.evidence_ids}
+            onChange={(evidence_ids) => update({ evidence_ids })}
+            empty="No evidence recorded yet"
+          />
           {a.follow_up && (
             <FollowUpFields
               label="Area"
@@ -351,6 +631,7 @@ export function AreasEditor({
     </section>
   );
 }
+
 export function SystemsEditor({
   value,
   onChange,
@@ -359,18 +640,30 @@ export function SystemsEditor({
   onEvidence,
   readOnly = false,
   evaluated = true,
+  focus,
 }: Props) {
   const [family, setFamily] = useState(""),
     [area, setArea] = useState(""),
     [search, setSearch] = useState(""),
     [selected, setSelected] = useState<string | null>(null),
-    [review, setReview] = useState(false);
+    [review, setReview] = useState(false),
+    [technical, setTechnical] = useState(false);
   const identity = useIdentity(),
     preferences = useScopePreferences(
       `${identity.workspace_id}:${identity.actor_id}:es02-systems`,
     );
+  const technicalId = useId();
   const columns = preferences.value.order,
     hidden = preferences.value.hidden;
+  const defaultWidth: Record<string, number> = {
+    System: 170,
+    "Area coverage": 150,
+    "Equipment ref.": 130,
+    Intent: 120,
+    Evidence: 130,
+    State: 130,
+    Family: 150,
+  };
   const moveColumn = (column: string, direction: number) => {
     const order = [...columns],
       index = order.indexOf(column),
@@ -389,7 +682,30 @@ export function SystemsEditor({
       .filter((s) => !review || findings.some((f) => f.entity_id === s.id)),
     system = rows.find((s) => s.id === selected);
   const configFindings = findings.filter((f) => f.step === "Configuration"),
+    findingSystems = new Set(configFindings.map((f) => f.entity_id)).size,
     own = { owner_id: options.owner.id, reason: "" };
+  const clearFilters = () => {
+    setFamily("");
+    setArea("");
+    setSearch("");
+    setReview(false);
+  };
+  useFieldFocus(
+    focus,
+    (f) => value.systems.some((s) => s.id === f.entity_id),
+    (f) => {
+      clearFilters();
+      setSelected(f.entity_id);
+      if (f.field !== "coverage") setTechnical(true);
+    },
+    (f) => {
+      if (f.field === "coverage") return "coverage.mode";
+      const fact = value.facts.find(
+        (x) => x.system_id === f.entity_id && x.field === f.field,
+      );
+      return fact ? `${fact.id}.state` : "add-fact";
+    },
+  );
   const changeFilter = (fn: () => void) => {
     fn();
     setSelected(null);
@@ -428,11 +744,32 @@ export function SystemsEditor({
         },
       ],
     });
-    setFamily("");
-    setArea("");
-    setSearch("");
-    setReview(false);
+    clearFilters();
     setSelected(id);
+  };
+  const removeSystem = (target: ProposedSystem) => {
+    const factIds = value.facts
+      .filter((f) => f.system_id === target.id)
+      .map((f) => f.id);
+    if (
+      window.confirm(
+        `Remove ${target.name || "this system"}, its ${factIds.length} working facts and their follow-ups, and its responsibility memberships? Saved history and costs remain unchanged.`,
+      )
+    ) {
+      onChange({
+        ...value,
+        systems: value.systems.filter((s) => s.id !== target.id),
+        facts: value.facts.filter((f) => f.system_id !== target.id),
+        follow_ups: value.follow_ups.filter(
+          (f) => !factIds.includes(f.fact_id ?? ""),
+        ),
+        responsibilities: value.responsibilities.map((r) => ({
+          ...r,
+          system_ids: r.system_ids.filter((id) => id !== target.id),
+        })),
+      });
+      setSelected(null);
+    }
   };
   const fact = (
     f: ConfigurationFact,
@@ -453,6 +790,37 @@ export function SystemsEditor({
           : x,
       ),
     });
+  const stateWord = (s: ProposedSystem) => {
+    const needs = configFindings.filter((f) => f.entity_id === s.id);
+    return !evaluated
+      ? "Not checked"
+      : needs.length
+        ? needs
+            .map((f) =>
+              f.field === "VerifiedCapacity"
+                ? "Confirm capacity"
+                : f.field === "EquipmentModel"
+                  ? "Confirm model"
+                  : f.field === "coverage"
+                    ? "Confirm coverage"
+                    : "To confirm",
+            )
+            .join(" · ")
+        : "Confirmed";
+  };
+  const equipmentLabel = (s: ProposedSystem) =>
+    s.equipment_ids
+      .map(
+        (id) =>
+          options.equipment.find((e) => e.id === id)?.display_name ??
+          "Saved equipment",
+      )
+      .join(", ");
+  const systemFacts = system
+    ? value.facts.filter((f) => f.system_id === system.id)
+    : [];
+  const fieldLabel = (id: string) =>
+    configurationFields.find((d) => d.id === id)?.label ?? id;
   return (
     <>
       <FamilyOverview
@@ -461,34 +829,48 @@ export function SystemsEditor({
         onFilter={(f) => changeFilter(() => setFamily(f))}
         onAdd={add}
         readOnly={readOnly}
+        variant="compact"
       />
-      <div className="es02-guidance">
-        <strong>Suggested configuration, estimator-led decisions.</strong>
-        <p>
-          Requirements, source evidence and review decisions stay with the
-          draft. Equipment suitability needs a technical review.
-        </p>
-        <button type="button" onClick={() => onEvidence()}>
+      <div className="es02-info-row">
+        <Icon name="info" />
+        <div>
+          <strong>Suggested configuration, estimator-led decisions.</strong>
+          <p>
+            Requirements, source evidence and review decisions stay with the
+            draft. Equipment suitability needs a technical review.
+          </p>
+        </div>
+        <button type="button" className="es02-link" onClick={() => onEvidence()}>
+          <Icon name="document" className="es02-icon es02-icon-sm" />
           View configuration evidence
         </button>
       </div>
-      <section aria-label="Systems & configuration">
-        <h2>Systems & configuration</h2>
-        <p>
-          Define systems, area coverage and the evidence behind each
-          configuration.
-        </p>
+      <section className="es02-section" aria-label="Systems & configuration">
+        <div className="es02-section-head">
+          <div>
+            <h2>Systems & configuration</h2>
+            <p>
+              Define systems, area coverage and the evidence behind each
+              configuration.
+            </p>
+          </div>
+        </div>
         <div className="es02-toolbar">
-          <Field
-            label="Search systems"
-            name="system-search"
-            value={search}
-            onChange={(q) => changeFilter(() => setSearch(q))}
-          />
+          <div className="es02-search">
+            <Icon name="search" className="es02-icon es02-icon-sm" />
+            <Field
+              label="Search systems"
+              name="system-search"
+              placeholder="Search systems"
+              value={search}
+              onChange={(q) => changeFilter(() => setSearch(q))}
+            />
+          </div>
           <SelectField
             label="Area filter"
             name="area-filter"
             value={area || "all"}
+            empty="All areas"
             options={[
               { id: "all", display_name: "All areas" },
               ...value.areas.map((a) => ({ id: a.id, display_name: a.label })),
@@ -496,97 +878,132 @@ export function SystemsEditor({
             onChange={(a) => changeFilter(() => setArea(a === "all" ? "" : a))}
           />
           <details className="es02-columns">
-            <summary>Columns</summary>
-            {columns.map((c, i) => (
-              <div key={c}>
-                <label>
-                  <input
-                    type="checkbox"
-                    disabled={c === "System"}
-                    checked={!hidden.includes(c)}
-                    onChange={(e) =>
-                      preferences.save({
-                        ...preferences.value,
-                        hidden: e.target.checked
-                          ? hidden.filter((h) => h !== c)
-                          : [...hidden, c],
-                      })
-                    }
-                  />
-                  {c}
-                </label>
-                <label>
-                  Width (px)
-                  <input
-                    type="range"
-                    aria-label={`${c} column width`}
-                    min={110}
-                    max={600}
-                    step={10}
-                    value={preferences.value.widths[c] ?? 180}
-                    onChange={(e) =>
-                      preferences.save({
-                        ...preferences.value,
-                        widths: {
-                          ...preferences.value.widths,
-                          [c]: Number(e.target.value),
-                        },
-                      })
-                    }
-                  />
-                </label>
-                <button
-                  type="button"
-                  aria-label={`Move ${c} left`}
-                  disabled={i <= 1}
-                  onClick={() => moveColumn(c, -1)}
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Move ${c} right`}
-                  disabled={i === 0 || i === columns.length - 1}
-                  onClick={() => moveColumn(c, 1)}
-                >
-                  →
-                </button>
-              </div>
-            ))}
+            <summary>
+              <Icon name="columns" className="es02-icon es02-icon-sm" />
+              Columns
+            </summary>
+            <div className="es02-columns-list">
+              {columns.map((c, i) => (
+                <div key={c}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      disabled={c === "System"}
+                      checked={!hidden.includes(c)}
+                      onChange={(e) =>
+                        preferences.save({
+                          ...preferences.value,
+                          hidden: e.target.checked
+                            ? hidden.filter((h) => h !== c)
+                            : [...hidden, c],
+                        })
+                      }
+                    />
+                    {c}
+                  </label>
+                  <label className="es02-width">
+                    Width
+                    <input
+                      type="range"
+                      aria-label={`${c} column width`}
+                      min={110}
+                      max={600}
+                      step={10}
+                      value={preferences.value.widths[c] ?? 180}
+                      onChange={(e) =>
+                        preferences.save({
+                          ...preferences.value,
+                          widths: {
+                            ...preferences.value.widths,
+                            [c]: Number(e.target.value),
+                          },
+                        })
+                      }
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className="es02-button es02-button-sm es02-button-icon"
+                    aria-label={`Move ${c} left`}
+                    disabled={i <= 1}
+                    onClick={() => moveColumn(c, -1)}
+                  >
+                    <Icon name="arrow-left" className="es02-icon es02-icon-sm" />
+                  </button>
+                  <button
+                    type="button"
+                    className="es02-button es02-button-sm es02-button-icon"
+                    aria-label={`Move ${c} right`}
+                    disabled={i === 0 || i === columns.length - 1}
+                    onClick={() => moveColumn(c, 1)}
+                  >
+                    <Icon name="arrow-right" className="es02-icon es02-icon-sm" />
+                  </button>
+                </div>
+              ))}
+            </div>
           </details>
+          <RowMenu label="More table actions">
+            <button type="button" role="menuitem" onClick={clearFilters}>
+              Clear filters
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() =>
+                preferences.save({
+                  ...preferences.value,
+                  hidden: ["Family"],
+                  order: [...systemColumns],
+                  widths: {},
+                })
+              }
+            >
+              Reset columns
+            </button>
+          </RowMenu>
+          <span className="es02-spacer" />
           <button
             type="button"
-            className="es02-primary"
+            className="es02-button es02-button-primary"
             disabled={readOnly}
             onClick={() => add()}
           >
-            + Add system
+            <Icon name="plus" className="es02-icon es02-icon-sm" />
+            Add system
           </button>
         </div>
         {!evaluated && (
-          <p role="status">
-            Configuration not checked for this working proposal.
+          <p className="es02-attention" role="status">
+            <span className="es02-dot es02-dot-neutral" />
+            <strong>Configuration not checked</strong>
+            <span>for this working proposal.</span>
           </p>
         )}
         {evaluated && configFindings.length > 0 && (
           <div className="es02-attention">
-            <span aria-hidden="true">△</span> {configFindings.length}{" "}
-            configuration items need confirmation{" "}
+            <span className="es02-dot es02-dot-warning" />
+            <strong>
+              {plural(configFindings.length, "configuration finding")}
+            </strong>
+            <span>· on {plural(findingSystems, "system")}</span>
             <button
               type="button"
+              className="es02-link"
+              aria-pressed={review}
               onClick={() => {
-                setReview(!review);
-                setFamily("");
-                setArea("");
-                setSearch("");
+                const next = !review;
+                clearFilters();
+                setReview(next);
                 setSelected(null);
               }}
             >
               {review ? "Show all systems" : "Review items"}
+              <Icon name="chevron-right" className="es02-icon es02-icon-sm" />
             </button>
           </div>
         )}
-        <div className="es02-table-scroll">
+        <TableScroll label="Systems table">
           <table className="es02-systems-table">
             <thead>
               <tr>
@@ -595,8 +1012,9 @@ export function SystemsEditor({
                   .map((c) => (
                     <th
                       key={c}
+                      scope="col"
                       style={{
-                        minWidth: preferences.value.widths[c] ?? 140,
+                        minWidth: preferences.value.widths[c] ?? defaultWidth[c] ?? 140,
                         width: preferences.value.widths[c],
                       }}
                     >
@@ -607,50 +1025,43 @@ export function SystemsEditor({
             </thead>
             <tbody>
               {rows.map((s) => {
-                const needs = configFindings.filter(
-                  (f) => f.entity_id === s.id,
-                );
-                const cells = [
+                const state = stateWord(s);
+                const cells: ReactNode[] = [
                   <button
                     type="button"
                     key="name"
+                    className="es02-cell-link"
                     aria-pressed={system?.id === s.id}
                     onClick={() => setSelected(s.id)}
                   >
+                    <Icon name={familyGlyph[s.family] ?? "other"} className="es02-icon es02-icon-sm" />
                     {s.name || "New system"}
                   </button>,
-                  coverageLabel(s, value.areas),
-                  s.equipment_ids
-                    .map(
-                      (id) =>
-                        options.equipment.find((e) => e.id === id)
-                          ?.display_name ?? "Saved equipment",
-                    )
-                    .join(", ") || "Proposed",
-                  labels([s.intent])[0].display_name,
+                  <span key="coverage" title={coverageLabel(s, value.areas)}>
+                    {compactCoverage(coverageLabel(s, value.areas))}
+                  </span>,
+                  equipmentLabel(s) ? (
+                    <span title={equipmentLabel(s)}>
+                      {equipmentLabel(s)
+                        .split(", ")
+                        .map((e) => e.split(" · ")[0])
+                        .join(", ")}
+                    </span>
+                  ) : (
+                    <span className="es02-secondary">Proposed</span>
+                  ),
+                  intentLabel(s.intent),
                   <button
                     type="button"
                     key="evidence"
+                    className="es02-cell-evidence"
                     onClick={() => onEvidence(s.evidence_ids[0])}
                   >
                     {value.evidence.find((e) => e.id === s.evidence_ids[0])
-                      ?.observation ?? "Evidence not recorded"}
+                      ?.observation || "Evidence not recorded"}
                   </button>,
-                  !evaluated
-                    ? "Not checked"
-                    : needs.length
-                      ? needs
-                          .map((f) =>
-                            f.field === "VerifiedCapacity"
-                              ? "Confirm capacity"
-                              : f.field === "EquipmentModel"
-                                ? "Confirm model"
-                                : "To confirm",
-                          )
-                          .join(" · ")
-                      : "Confirmed",
-                  equipmentFamilies.find((f) => f.id === s.family)?.label ??
-                    s.family,
+                  <StateTag key="state" value={state} />,
+                  familyLabel(s.family),
                 ];
                 return (
                   <tr key={s.id} data-selected={system?.id === s.id}>
@@ -664,86 +1075,74 @@ export function SystemsEditor({
               })}
             </tbody>
           </table>
-        </div>
+        </TableScroll>
         {!rows.length && (
-          <p>
-            No matching systems.{" "}
-            <button
-              type="button"
-              onClick={() =>
-                changeFilter(() => {
-                  setFamily("");
-                  setArea("");
-                  setSearch("");
-                  setReview(false);
-                })
-              }
-            >
-              Clear filters
-            </button>
+          <p className="es02-empty">
+            <span>
+              {value.systems.length
+                ? `0 of ${plural(value.systems.length, "system")} · no selection. No systems match${search ? ` “${search}”` : ""}${family ? ` in ${familyLabel(family)}` : ""}${area ? ` in ${value.areas.find((a) => a.id === area)?.label ?? "this area"}` : ""}.`
+                : "No systems recorded yet. Add a system from a family card or the toolbar."}
+            </span>
+            {(search || family || area || review) && (
+              <button type="button" className="es02-button es02-button-sm" onClick={() => changeFilter(clearFilters)}>
+                Clear filters
+              </button>
+            )}
           </p>
         )}
-        <p className="es02-table-footer">
-          {rows.length === value.systems.length
-            ? `${value.systems.length} systems`
-            : `${rows.length} of ${value.systems.length} systems`}{" "}
-          · {system ? 1 : 0} selected{" "}
+        <p className="es02-table-foot">
+          <span>
+            <strong>
+              {rows.length === value.systems.length
+                ? plural(value.systems.length, "system")
+                : `${rows.length} of ${plural(value.systems.length, "system")}`}
+            </strong>{" "}
+            · {system ? 1 : 0} selected
+          </span>
           <span>Shared systems are counted once.</span>
         </p>
         {system ? (
           <section className="es02-editor" aria-label="Selected system editor">
-            <div className="es02-section-title">
+            <div className="es02-editor-head">
               <h3>{system.name || "New system"}</h3>
-              {system.intent !== "New" && (
-                <span className="mw-tag">Existing equipment</span>
-              )}
-              {system.equipment_ids.map((id) => (
-                <a
-                  key={id}
-                  href={`/equipment/${id}`}
-                  target="_blank"
-                  rel="noreferrer"
+              <Tag tone={system.intent === "New" ? "info" : "neutral"}>
+                {system.intent === "New" ? "Proposed system" : "Existing equipment"}
+              </Tag>
+              <div className="es02-actions">
+                {system.equipment_ids.map((id) => (
+                  <a
+                    key={id}
+                    className="es02-button"
+                    href={`/equipment/${id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Icon name="external" className="es02-icon es02-icon-sm" />
+                    View equipment
+                  </a>
+                ))}
+                <button
+                  type="button"
+                  className="es02-button"
+                  aria-expanded={technical}
+                  aria-controls={technicalId}
+                  onClick={() => setTechnical(!technical)}
                 >
-                  View equipment
-                </a>
-              ))}
-              <button
-                type="button"
-                disabled={readOnly}
-                onClick={() => {
-                  const factIds = value.facts
-                    .filter((f) => f.system_id === system.id)
-                    .map((f) => f.id);
-                  if (
-                    window.confirm(
-                      `Remove ${system.name || "this system"}, its ${factIds.length} working facts and their follow-ups, and its responsibility memberships? Saved history and costs remain unchanged.`,
-                    )
-                  ) {
-                    onChange({
-                      ...value,
-                      systems: value.systems.filter((s) => s.id !== system.id),
-                      facts: value.facts.filter(
-                        (f) => f.system_id !== system.id,
-                      ),
-                      follow_ups: value.follow_ups.filter(
-                        (f) => !factIds.includes(f.fact_id ?? ""),
-                      ),
-                      responsibilities: value.responsibilities.map((r) => ({
-                        ...r,
-                        system_ids: r.system_ids.filter(
-                          (id) => id !== system.id,
-                        ),
-                      })),
-                    });
-                    setSelected(null);
-                  }
-                }}
-              >
-                Remove system
-              </button>
+                  Technical details
+                  <Icon name="chevron-down" className="es02-icon es02-icon-sm es02-icon-toggle" />
+                </button>
+                <button
+                  type="button"
+                  className="es02-button es02-button-danger"
+                  disabled={readOnly}
+                  onClick={() => removeSystem(system)}
+                >
+                  Remove system
+                </button>
+              </div>
             </div>
             <fieldset disabled={readOnly} className="es02-fields">
-              <div className="e2-grid">
+              <div className="es02-grid-2">
                 <Field
                   label="System name"
                   name="system.name"
@@ -752,25 +1151,44 @@ export function SystemsEditor({
                   onChange={(name) => update({ name })}
                 />
                 <div>
-                  <h4>Equipment references</h4>
-                  {checks(
-                    options.equipment.map((e) => ({
-                      id: e.id,
-                      label: e.display_name,
-                    })),
-                    system.equipment_ids,
-                    (equipment_ids) => update({ equipment_ids }),
-                  )}
+                  <SelectField
+                    label="Equipment family"
+                    name="system.family"
+                    value={system.family}
+                    options={equipmentFamilies.map((f) => ({
+                      id: f.id,
+                      display_name: f.label,
+                    }))}
+                    onChange={(family) => update({ family: family as Family })}
+                  />
+                  <small className="es02-subtle" style={{ display: "block", marginTop: -8, marginBottom: 12, fontSize: 12 }}>
+                    Presentation family. Separate from the Product supply, Defined
+                    labour and Freight work tags.
+                  </small>
                 </div>
-                <SelectField
-                  label="Equipment family"
-                  name="system.family"
-                  value={system.family}
-                  options={equipmentFamilies.map((f) => ({
-                    id: f.id,
-                    display_name: f.label,
+                <LabelledChips
+                  label="Equipment references"
+                  options={options.equipment.map((e) => ({
+                    id: e.id,
+                    label: e.display_name,
                   }))}
-                  onChange={(family) => update({ family: family as Family })}
+                  values={system.equipment_ids}
+                  onChange={(equipment_ids) => update({ equipment_ids })}
+                  empty="No permitted equipment in this Site · the system stays Proposed"
+                  hint="Selecting equipment offers observed facts; it never confirms a requirement."
+                />
+                <SelectField
+                  label="Intent"
+                  name="system.intent"
+                  value={system.intent}
+                  options={[
+                    { id: "New", display_name: "New" },
+                    { id: "Retain", display_name: "Retain" },
+                    { id: "RetainExpand", display_name: "Retain + expand" },
+                  ]}
+                  onChange={(intent) =>
+                    update({ intent: intent as ProposedSystem["intent"] })
+                  }
                 />
                 <Field
                   label="System type"
@@ -780,331 +1198,544 @@ export function SystemsEditor({
                   onChange={(type) => update({ type })}
                 />
                 <SelectField
-                  label="Intent"
-                  name="system.intent"
-                  value={system.intent}
-                  options={labels(["New", "Retain", "RetainExpand"])}
-                  onChange={(intent) =>
-                    update({ intent: intent as ProposedSystem["intent"] })
+                  label="Area coverage"
+                  name="coverage.mode"
+                  value={system.coverage.mode}
+                  options={[
+                    { id: "Defined", display_name: "Defined area coverage" },
+                    { id: "NotAreaSpecific", display_name: "Not area-specific" },
+                    { id: "Unknown", display_name: "Unknown coverage" },
+                  ]}
+                  onChange={(mode) =>
+                    update({
+                      coverage: {
+                        mode: mode as ProposedSystem["coverage"]["mode"],
+                        area_ids: [],
+                        source: null,
+                        reason: mode === "Defined" ? null : "",
+                        follow_up: mode === "Unknown" ? own : null,
+                      },
+                    })
                   }
                 />
-                <Field
-                  label="Proposed work"
-                  name="system.proposed_work"
-                  value={system.proposed_work}
-                  maxLength={1000}
-                  multiline
-                  onChange={(proposed_work) => update({ proposed_work })}
-                />
-              </div>
-              <SelectField
-                label="Area coverage"
-                name="coverage.mode"
-                value={system.coverage.mode}
-                options={labels(["Defined", "NotAreaSpecific", "Unknown"])}
-                onChange={(mode) =>
-                  update({
-                    coverage: {
-                      mode: mode as ProposedSystem["coverage"]["mode"],
-                      area_ids: [],
-                      source: null,
-                      reason: mode === "Defined" ? null : "",
-                      follow_up: mode === "Unknown" ? own : null,
-                    },
-                  })
-                }
-              />
-              {system.coverage.mode === "Defined" ? (
-                checks(
-                  value.areas.map((a) => ({ id: a.id, label: a.label })),
-                  system.coverage.area_ids,
-                  (area_ids) =>
-                    update({ coverage: { ...system.coverage, area_ids } }),
-                )
-              ) : (
-                <>
-                  <Field
-                    label="Coverage reason"
-                    name="coverage.reason"
-                    value={system.coverage.reason ?? ""}
-                    onChange={(reason) =>
-                      update({ coverage: { ...system.coverage, reason } })
-                    }
-                    maxLength={500}
-                  />
-                  <Field
-                    label="Coverage source"
-                    name="coverage.source"
-                    value={system.coverage.source ?? ""}
-                    onChange={(source) =>
-                      update({
-                        coverage: {
-                          ...system.coverage,
-                          source: source || null,
-                        },
-                      })
-                    }
-                    maxLength={500}
-                  />
-                  {system.coverage.follow_up && (
-                    <FollowUpFields
-                      label="Coverage"
-                      value={system.coverage.follow_up}
-                      owners={options.owners}
-                      onChange={(follow_up) =>
-                        update({ coverage: { ...system.coverage, follow_up } })
+                <div className="es02-span-2">
+                  {system.coverage.mode === "Defined" ? (
+                    <LabelledChips
+                      label="Covered areas"
+                      options={value.areas.map((a) => ({ id: a.id, label: a.label || "New area" }))}
+                      values={system.coverage.area_ids}
+                      onChange={(area_ids) =>
+                        update({ coverage: { ...system.coverage, area_ids } })
                       }
+                      empty="Add an area in Requirements first"
+                      hint={`Defined area coverage · ${system.coverage.area_ids.length} of ${plural(value.areas.length, "scoped location")}. Adding an area never extends this system on its own.`}
                     />
+                  ) : (
+                    <div className="es02-grid-2">
+                      <Field
+                        label="Coverage reason"
+                        name="coverage.reason"
+                        value={system.coverage.reason ?? ""}
+                        onChange={(reason) =>
+                          update({ coverage: { ...system.coverage, reason } })
+                        }
+                        maxLength={500}
+                      />
+                      <Field
+                        label="Coverage source"
+                        name="coverage.source"
+                        value={system.coverage.source ?? ""}
+                        onChange={(source) =>
+                          update({
+                            coverage: { ...system.coverage, source: source || null },
+                          })
+                        }
+                        maxLength={500}
+                      />
+                      {system.coverage.follow_up && (
+                        <div className="es02-span-2">
+                          <FollowUpFields
+                            label="Coverage"
+                            value={system.coverage.follow_up}
+                            owners={options.owners}
+                            onChange={(follow_up) =>
+                              update({ coverage: { ...system.coverage, follow_up } })
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
                   )}
-                </>
-              )}
-              <h3>System evidence</h3>
-              {checks(
-                value.evidence.map((e) => ({ id: e.id, label: e.observation })),
-                system.evidence_ids,
-                (evidence_ids) => update({ evidence_ids }),
-              )}
-              <button
-                type="button"
-                onClick={() => onEvidence(system.evidence_ids[0])}
-              >
-                View evidence
-              </button>
-              <details open>
-                <summary>Technical details</summary>
-                <p>
+                </div>
+                <div className="es02-span-2">
+                  <Field
+                    label="Proposed work"
+                    name="system.proposed_work"
+                    value={system.proposed_work}
+                    maxLength={1000}
+                    multiline
+                    onChange={(proposed_work) => update({ proposed_work })}
+                  />
+                </div>
+                <div className="es02-span-2">
+                  <LabelledChips
+                    label="System evidence"
+                    options={value.evidence.map((e) => ({
+                      id: e.id,
+                      label: e.observation || "New observation",
+                    }))}
+                    values={system.evidence_ids}
+                    onChange={(evidence_ids) => update({ evidence_ids })}
+                    empty="No evidence recorded yet"
+                    hint={
+                      <button
+                        type="button"
+                        className="es02-link"
+                        onClick={() => onEvidence(system.evidence_ids[0])}
+                      >
+                        View evidence
+                      </button>
+                    }
+                  />
+                </div>
+              </div>
+            </fieldset>
+            <h4 className="es02-h3">Evidence</h4>
+            {systemFacts.length ? (
+              <div className="es02-facts">
+                <TableScroll label={`Evidence facts for ${system.name || "this system"}`}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Fact</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Source and state</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {systemFacts.map((f) => (
+                        <tr key={f.id}>
+                          <td>
+                            {fieldLabel(f.field)}
+                            <br />
+                            <span className="es02-secondary">{f.role}</span>
+                          </td>
+                          <td>
+                            <strong>
+                              {f.value == null || f.value === ""
+                                ? f.state === "Unknown"
+                                  ? "Not yet verified"
+                                  : "No value"
+                                : `${f.value}${f.unit === "Zones" ? ` ${Number(f.value) === 1 ? "zone" : "zones"}` : ""}`}
+                            </strong>
+                          </td>
+                          <td>
+                            {f.source || (
+                              <span className="es02-secondary">
+                                {f.state === "Unknown" ? "Check required" : "No source"}
+                              </span>
+                            )}{" "}
+                            <StateTag value={f.state === "Unknown" ? "Not verified" : f.state} />
+                            {f.follow_up && (
+                              <>
+                                <br />
+                                <span className="es02-secondary">
+                                  Follow-up ·{" "}
+                                  {f.follow_up.reason || "reason to record"} ·{" "}
+                                  {options.owners.find((o) => o.id === f.follow_up?.owner_id)
+                                    ?.display_name ?? "Recorded owner"}
+                                </span>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </TableScroll>
+              </div>
+            ) : (
+              <p className="es02-note">
+                No typed facts recorded for this system. Technical details holds
+                the supported facts; required capacity and observed capability
+                stay separate.
+              </p>
+            )}
+            <div id={technicalId} hidden={!technical} className="es02-details-body">
+              <fieldset disabled={readOnly} className="es02-fields" aria-label="Technical details">
+                <p className="es02-note">
                   Required capacity and observed equipment capability are
                   separate. No calculator or engineering certification is
                   implied.
                 </p>
-                {value.facts
-                  .filter((f) => f.system_id === system.id)
-                  .map((f) => (
-                    <fieldset className="es02-fact" key={f.id}>
-                      <legend>
-                        {configurationFields.find((d) => d.id === f.field)
-                          ?.label ?? f.field}
-                      </legend>
-                      <div className="e2-grid">
-                        <SelectField
-                          label="Fact role"
-                          name={`${f.id}.role`}
-                          value={f.role}
-                          options={labels([
-                            "Requirement",
-                            "Observation",
-                            "Capability",
-                            "Assumption",
-                          ])}
-                          onChange={(role) =>
-                            fact(f, { role: role as ConfigurationFact["role"] })
-                          }
-                        />
-                        <SelectField
-                          label="Fact state"
-                          name={`${f.id}.state`}
-                          value={f.state}
-                          options={labels([
-                            "Answered",
-                            "Confirmed",
-                            "Unknown",
-                            "Assumed",
-                          ])}
-                          onChange={(state) =>
-                            fact(
-                              f,
-                              {
-                                state: state as ScopeState,
-                                ...(state === "Unknown" ? { value: null } : {}),
-                                follow_up:
-                                  state === "Confirmed"
-                                    ? null
-                                    : (f.follow_up ?? own),
-                              },
-                              true,
-                            )
-                          }
-                        />
-                        <Field
-                          label={`${configurationFields.find((d) => d.id === f.field)?.label} (${f.unit})`}
-                          name={`${f.id}.value`}
-                          value={f.value == null ? "" : String(f.value)}
-                          onChange={(v) =>
-                            fact(f, {
-                              value:
-                                f.unit === "Zones"
-                                  ? v === ""
-                                    ? null
-                                    : Number(v)
-                                  : v,
-                              ...(f.state === "Unknown"
-                                ? {
-                                    state: "Answered",
-                                    follow_up: f.follow_up ?? own,
-                                  }
-                                : {}),
-                            })
-                          }
-                          type={f.unit === "Zones" ? "number" : "text"}
-                        />
-                        <Field
-                          label="Fact source"
-                          name={`${f.id}.source`}
-                          value={f.source}
-                          onChange={(source) => fact(f, { source })}
-                          maxLength={500}
-                        />
+                {systemFacts.map((f) => (
+                  <fieldset className="es02-fact" key={f.id}>
+                    <legend>{fieldLabel(f.field)}</legend>
+                    <div className="es02-fact-head">
+                      <StateTag value={f.state} />
+                      <div className="es02-actions">
+                        <button
+                          type="button"
+                          className="es02-link"
+                          onClick={() => {
+                            if (window.confirm("Remove this working fact and its follow-ups?"))
+                              onChange({
+                                ...value,
+                                facts: value.facts.filter((x) => x.id !== f.id),
+                                follow_ups: value.follow_ups.filter((x) => x.fact_id !== f.id),
+                              });
+                          }}
+                        >
+                          Remove fact
+                        </button>
                       </div>
-                      {checks(
-                        value.evidence.map((e) => ({
-                          id: e.id,
-                          label: e.observation,
-                        })),
-                        f.evidence_ids,
-                        (evidence_ids) => fact(f, { evidence_ids }),
-                      )}
-                      {f.follow_up && (
-                        <FollowUpFields
-                          label={`Fact ${f.field}`}
-                          value={f.follow_up}
-                          owners={options.owners}
-                          onChange={(follow_up) => fact(f, { follow_up }, true)}
-                        />
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "Remove this working fact and its follow-ups?",
-                            )
+                    </div>
+                    <div className="es02-grid-2">
+                      <SelectField
+                        label="Fact role"
+                        name={`${f.id}.role`}
+                        value={f.role}
+                        options={labels(["Requirement", "Observation", "Capability", "Assumption"])}
+                        onChange={(role) => fact(f, { role: role as ConfigurationFact["role"] })}
+                      />
+                      <SelectField
+                        label="Fact state"
+                        name={`${f.id}.state`}
+                        value={f.state}
+                        options={labels(["Answered", "Confirmed", "Unknown", "Assumed"])}
+                        onChange={(state) =>
+                          fact(
+                            f,
+                            {
+                              state: state as ScopeState,
+                              ...(state === "Unknown" ? { value: null } : {}),
+                              follow_up: state === "Confirmed" ? null : (f.follow_up ?? own),
+                            },
+                            true,
                           )
-                            onChange({
-                              ...value,
-                              facts: value.facts.filter((x) => x.id !== f.id),
-                              follow_ups: value.follow_ups.filter(
-                                (x) => x.fact_id !== f.id,
-                              ),
-                            });
-                        }}
-                      >
-                        Remove fact
-                      </button>
-                    </fieldset>
-                  ))}
-                <SelectField
-                  label="Add technical fact"
-                  name="add-fact"
-                  value=""
-                  options={configurationFields
-                    .filter(
-                      (d) =>
-                        !value.facts.some(
-                          (f) => f.system_id === system.id && f.field === d.id,
-                        ),
-                    )
-                    .map((d) => ({ id: d.id, display_name: d.label }))}
-                  onChange={(id) => {
-                    const d = configurationFields.find((f) => f.id === id);
-                    if (d)
-                      onChange({
-                        ...value,
-                        facts: [
-                          ...value.facts,
-                          {
-                            id: crypto.randomUUID(),
-                            lineage: null,
-                            system_id: system.id,
-                            field: d.id,
-                            role: d.role,
-                            value: null,
-                            unit: d.unit,
-                            state: "Unknown",
-                            source: "",
-                            evidence_ids: [],
-                            follow_up: own,
-                          },
-                        ],
-                      });
-                  }}
-                />
-              </details>
-            </fieldset>
+                        }
+                      />
+                      <Field
+                        label={`${fieldLabel(f.field)} (${f.unit})`}
+                        name={`${f.id}.value`}
+                        value={f.value == null ? "" : String(f.value)}
+                        onChange={(v) =>
+                          fact(f, {
+                            value: f.unit === "Zones" ? (v === "" ? null : Number(v)) : v,
+                            ...(f.state === "Unknown"
+                              ? { state: "Answered", follow_up: f.follow_up ?? own }
+                              : {}),
+                          })
+                        }
+                        type={f.unit === "Zones" ? "number" : "text"}
+                      />
+                      <Field
+                        label="Fact source"
+                        name={`${f.id}.source`}
+                        value={f.source}
+                        onChange={(source) => fact(f, { source })}
+                        maxLength={500}
+                      />
+                    </div>
+                    <LabelledChips
+                      label={`${fieldLabel(f.field)} evidence`}
+                      options={value.evidence.map((e) => ({ id: e.id, label: e.observation || "New observation" }))}
+                      values={f.evidence_ids}
+                      onChange={(evidence_ids) => fact(f, { evidence_ids })}
+                      empty="No evidence recorded yet"
+                    />
+                    {f.follow_up && (
+                      <FollowUpFields
+                        label={`Fact ${f.field}`}
+                        value={f.follow_up}
+                        owners={options.owners}
+                        onChange={(follow_up) => fact(f, { follow_up }, true)}
+                      />
+                    )}
+                  </fieldset>
+                ))}
+                <div className="es02-grid-2">
+                  <SelectField
+                    label="Add technical fact"
+                    name="add-fact"
+                    value=""
+                    empty="Choose a supported fact…"
+                    options={configurationFields
+                      .filter((d) => !value.facts.some((f) => f.system_id === system.id && f.field === d.id))
+                      .map((d) => ({ id: d.id, display_name: d.label }))}
+                    onChange={(id) => {
+                      const d = configurationFields.find((f) => f.id === id);
+                      if (d)
+                        onChange({
+                          ...value,
+                          facts: [
+                            ...value.facts,
+                            {
+                              id: crypto.randomUUID(),
+                              lineage: null,
+                              system_id: system.id,
+                              field: d.id,
+                              role: d.role,
+                              value: null,
+                              unit: d.unit,
+                              state: "Unknown",
+                              source: "",
+                              evidence_ids: [],
+                              follow_up: own,
+                            },
+                          ],
+                        });
+                    }}
+                  />
+                </div>
+              </fieldset>
+            </div>
           </section>
         ) : (
-          <p className="es02-editor">
-            Select a visible system to edit its configuration. Working edits
-            remain in the proposal when filters change.
+          <p className="es02-editor-prompt">
+            Select a system to edit its configuration. Working edits stay in the
+            proposal when filters change.
           </p>
         )}
       </section>
     </>
   );
 }
+
+const partyLabel = (party: Responsibility["party"]) =>
+  party === "PPO" ? "Powerplants" : party;
+const participationLabel = (p: Responsibility["participation"]) =>
+  p === "Optional" ? "Optional extra" : p;
+
 export function ResponsibilitiesEditor({
   value,
   onChange,
   options,
   readOnly = false,
+  focus,
 }: Props) {
   const own = { owner_id: options.owner.id, reason: "" };
+  const [selected, setSelected] = useState<string | null>(null),
+    r = value.responsibilities.find((x) => x.id === selected);
+  useFieldFocus(
+    focus,
+    (f) => value.responsibilities.some((x) => x.id === f.entity_id),
+    (f) => setSelected(f.entity_id),
+    (f) => (f.entity_id ? `${f.entity_id}.${f.field === "party" ? "party" : "work"}` : null),
+  );
+  const update = (patch: Partial<Responsibility>) =>
+    r &&
+    onChange({
+      ...value,
+      responsibilities: value.responsibilities.map((x) =>
+        x.id === r.id ? { ...x, ...patch } : x,
+      ),
+    });
+  const subject = (x: Responsibility) =>
+    [
+      ...x.system_ids.map((id) => value.systems.find((s) => s.id === id)?.name ?? "Saved system"),
+      ...x.area_ids.map((id) => value.areas.find((a) => a.id === id)?.label ?? "Saved area"),
+    ].join(" · ");
+  const included = value.responsibilities.filter((x) => x.participation === "Included").length,
+    optional = value.responsibilities.filter((x) => x.participation === "Optional").length,
+    excluded = value.responsibilities.filter((x) => x.participation === "Excluded").length,
+    gaps = value.responsibilities.filter((x) => x.party === "Unknown").length;
+  const removeItem = (x: Responsibility) => {
+    if (window.confirm(`Remove ${x.work || "this work item"} from the working proposal?`)) {
+      onChange({
+        ...value,
+        responsibilities: value.responsibilities.filter((y) => y.id !== x.id),
+      });
+      setSelected(null);
+    }
+  };
   return (
-    <fieldset
-      disabled={readOnly}
-      className="es02-fields"
-      aria-label="Scope responsibilities"
-    >
-      <h2>Responsibilities & requested timing</h2>
-      <p>
-        Participation records discovery scope only. Optional and excluded items
-        do not alter manual estimate totals.
-      </p>
-      {value.responsibilities.map((r) => {
-        const update = (patch: Partial<typeof r>) =>
-          onChange({
-            ...value,
-            responsibilities: value.responsibilities.map((x) =>
-              x.id === r.id ? { ...x, ...patch } : x,
-            ),
-          });
-        return (
-          <fieldset className="es02-fact" key={r.id}>
-            <legend>{r.work || "New responsibility"}</legend>
-            <div className="e2-grid">
-              <Field
-                label="Work item"
-                name={`${r.id}.work`}
-                value={r.work}
-                multiline
-                maxLength={1000}
-                onChange={(work) => update({ work })}
-              />
+    <>
+      <section className="es02-section" aria-label="Scope responsibilities">
+        <div className="es02-section-head">
+          <div>
+            <h2>Scope & responsibilities</h2>
+            <p>
+              Responsibility labels are proposals. They book nothing and commit
+              nobody.
+            </p>
+          </div>
+          <div className="es02-actions">
+            <button
+              type="button"
+              className="es02-button"
+              disabled={readOnly}
+              onClick={() => {
+                const id = crypto.randomUUID();
+                onChange({
+                  ...value,
+                  responsibilities: [
+                    ...value.responsibilities,
+                    {
+                      id,
+                      lineage: null,
+                      area_ids: [],
+                      system_ids: [],
+                      work: "",
+                      participation: "Included",
+                      party: "Unknown",
+                      requested_on: null,
+                      source: "",
+                      state: "Unknown",
+                      follow_up: own,
+                    },
+                  ],
+                });
+                setSelected(id);
+              }}
+            >
+              <Icon name="plus" className="es02-icon es02-icon-sm" />
+              Add work item
+            </button>
+          </div>
+        </div>
+        {value.responsibilities.length > 0 ? (
+          <TableScroll label="Scope and responsibilities table">
+            <table>
+              <thead>
+                <tr>
+                  {[
+                    "Area / system",
+                    "Work item",
+                    "Inclusion",
+                    "Responsible",
+                    "Requested timing",
+                    "Source",
+                    "Confirmation",
+                    "Next action",
+                    "Actions",
+                  ].map((h) => (
+                    <th key={h} scope="col">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {value.responsibilities.map((x) => (
+                  <tr key={x.id} data-selected={x.id === selected}>
+                    <td>{subject(x) || <span className="es02-secondary">—</span>}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="es02-cell-link"
+                        aria-pressed={x.id === selected}
+                        onClick={() => setSelected(x.id)}
+                      >
+                        {x.work || "New work item"}
+                      </button>
+                    </td>
+                    <td>
+                      <Tag tone={x.participation === "Included" ? "neutral" : x.participation === "Optional" ? "info" : "danger"}>
+                        {participationLabel(x.participation)}
+                      </Tag>
+                    </td>
+                    <td>
+                      {x.party === "Unknown" ? (
+                        <span className="es02-secondary">Unknown</span>
+                      ) : (
+                        partyLabel(x.party)
+                      )}
+                    </td>
+                    <td>{x.requested_on ?? <span className="es02-secondary">—</span>}</td>
+                    <td>{x.source || <span className="es02-secondary">—</span>}</td>
+                    <td>
+                      <StateTag value={x.state === "Unknown" ? "Deferred" : x.state} />
+                    </td>
+                    <td>
+                      {x.party === "Unknown"
+                        ? "Assign party"
+                        : x.follow_up?.reason || <span className="es02-secondary">—</span>}
+                    </td>
+                    <td>
+                      <RowMenu label={`Actions for ${x.work || "new work item"}`}>
+                        <button type="button" role="menuitem" onClick={() => setSelected(x.id)}>
+                          Edit work item
+                        </button>
+                        <button type="button" role="menuitem" disabled={readOnly} onClick={() => removeItem(x)}>
+                          Remove work item
+                        </button>
+                      </RowMenu>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableScroll>
+        ) : (
+          <p className="es02-empty">
+            No work items recorded. Add the work each party is proposed to carry
+            out; nothing here books or commits anyone.
+          </p>
+        )}
+        {value.responsibilities.length > 0 && (
+          <p className="es02-table-foot">
+            <span>
+              <strong>{included} included</strong> · {optional} optional extra ·{" "}
+              {excluded} excluded
+            </span>
+            <span>{plural(gaps, "responsibility gap", "No responsibility gaps")}</span>
+          </p>
+        )}
+        {r && (
+          <fieldset disabled={readOnly} className="es02-editor es02-fields" aria-label="Selected work item editor">
+            <div className="es02-editor-head">
+              <h3>{r.work || "New work item"}</h3>
+              <StateTag value={r.state} />
+              <div className="es02-actions">
+                <button type="button" className="es02-button es02-button-danger" onClick={() => removeItem(r)}>
+                  Remove work item
+                </button>
+              </div>
+            </div>
+            <div className="es02-grid-2">
+              <div className="es02-span-2">
+                <Field
+                  label="Work item"
+                  name={`${r.id}.work`}
+                  value={r.work}
+                  multiline
+                  maxLength={1000}
+                  onChange={(work) => update({ work })}
+                />
+              </div>
               <SelectField
                 label="Participation"
                 name={`${r.id}.participation`}
                 value={r.participation}
-                options={labels(["Included", "Excluded", "Optional"])}
+                options={[
+                  { id: "Included", display_name: "Included" },
+                  { id: "Optional", display_name: "Optional extra" },
+                  { id: "Excluded", display_name: "Excluded" },
+                ]}
                 onChange={(participation) =>
-                  update({
-                    participation: participation as typeof r.participation,
-                  })
+                  update({ participation: participation as Responsibility["participation"] })
                 }
               />
               <SelectField
                 label="Responsible party"
                 name={`${r.id}.party`}
                 value={r.party}
-                options={labels(["PPO", "Customer", "Supplier", "Unknown"])}
-                onChange={(party) => update({ party: party as typeof r.party })}
+                options={[
+                  { id: "PPO", display_name: "Powerplants" },
+                  { id: "Customer", display_name: "Customer" },
+                  { id: "Supplier", display_name: "Supplier" },
+                  { id: "Unknown", display_name: "Unknown" },
+                ]}
+                onChange={(party) => update({ party: party as Responsibility["party"] })}
               />
               <Field
                 label="Requested date"
                 name={`${r.id}.date`}
                 type="date"
                 value={r.requested_on ?? ""}
-                onChange={(requested_on) =>
-                  update({ requested_on: requested_on || null })
-                }
+                onChange={(requested_on) => update({ requested_on: requested_on || null })}
+                hint="A requested date is not a delivery commitment."
               />
               <Field
                 label="Responsibility source"
@@ -1117,33 +1748,29 @@ export function ResponsibilitiesEditor({
                 label="Responsibility state"
                 name={`${r.id}.state`}
                 value={r.state}
-                options={labels([
-                  "Answered",
-                  "Confirmed",
-                  "Unknown",
-                  "Assumed",
-                ])}
+                options={labels(["Answered", "Confirmed", "Unknown", "Assumed"])}
                 onChange={(state) =>
                   update({
                     state: state as ScopeState,
-                    follow_up:
-                      state === "Confirmed" ? null : (r.follow_up ?? own),
+                    follow_up: state === "Confirmed" ? null : (r.follow_up ?? own),
                   })
                 }
               />
+              <LabelledChips
+                label="Areas"
+                options={value.areas.map((a) => ({ id: a.id, label: a.label || "New area" }))}
+                values={r.area_ids}
+                onChange={(area_ids) => update({ area_ids })}
+                empty="No areas recorded"
+              />
+              <LabelledChips
+                label="Systems"
+                options={value.systems.map((s) => ({ id: s.id, label: s.name || "New system" }))}
+                values={r.system_ids}
+                onChange={(system_ids) => update({ system_ids })}
+                empty="No systems recorded"
+              />
             </div>
-            <h3>Areas</h3>
-            {checks(
-              value.areas.map((a) => ({ id: a.id, label: a.label })),
-              r.area_ids,
-              (area_ids) => update({ area_ids }),
-            )}
-            <h3>Systems</h3>
-            {checks(
-              value.systems.map((s) => ({ id: s.id, label: s.name })),
-              r.system_ids,
-              (system_ids) => update({ system_ids }),
-            )}
             {r.follow_up && (
               <FollowUpFields
                 label="Responsibility"
@@ -1152,130 +1779,104 @@ export function ResponsibilitiesEditor({
                 onChange={(follow_up) => update({ follow_up })}
               />
             )}
+          </fieldset>
+        )}
+      </section>
+      <section className="es02-section" aria-label="Discovery follow-ups">
+        <div className="es02-section-head">
+          <div>
+            <h2>Discovery follow-ups</h2>
+            <p>
+              Owned questions that keep discovery incomplete until they are
+              answered. A linked Activity is only ever an existing permitted one.
+            </p>
+          </div>
+          <div className="es02-actions">
             <button
               type="button"
+              className="es02-button"
+              disabled={readOnly}
               onClick={() =>
                 onChange({
                   ...value,
-                  responsibilities: value.responsibilities.filter(
-                    (x) => x.id !== r.id,
-                  ),
+                  follow_ups: [
+                    ...value.follow_ups,
+                    { id: crypto.randomUUID(), lineage: null, ...own, due_on: null, fact_id: null, activity_id: null },
+                  ],
                 })
               }
             >
-              Remove responsibility
+              <Icon name="plus" className="es02-icon es02-icon-sm" />
+              Add discovery follow-up
             </button>
-          </fieldset>
-        );
-      })}
-      <button
-        type="button"
-        onClick={() =>
-          onChange({
-            ...value,
-            responsibilities: [
-              ...value.responsibilities,
-              {
-                id: crypto.randomUUID(),
-                lineage: null,
-                area_ids: [],
-                system_ids: [],
-                work: "",
-                participation: "Included",
-                party: "Unknown",
-                requested_on: null,
-                source: "",
-                state: "Unknown",
-                follow_up: own,
-              },
-            ],
-          })
-        }
-      >
-        + Add responsibility
-      </button>
-      <h2>Discovery follow-ups</h2>
-      {value.follow_ups.map((f) => {
-        const update = (patch: Partial<typeof f>) =>
-          onChange({
-            ...value,
-            follow_ups: value.follow_ups.map((x) =>
-              x.id === f.id ? { ...x, ...patch } : x,
-            ),
-          });
-        return (
-          <fieldset className="es02-fact" key={f.id}>
-            <FollowUpFields
-              label="Discovery follow-up"
-              value={f}
-              owners={options.owners}
-              onChange={(v) => update(v)}
-            />
-            <Field
-              label="Recorded discovery due date"
-              name={`${f.id}.due`}
-              type="date"
-              value={f.due_on ?? ""}
-              onChange={(due_on) => update({ due_on: due_on || null })}
-            />
-            <SelectField
-              label="Originating fact"
-              name={`${f.id}.fact`}
-              value={f.fact_id ?? ""}
-              options={value.facts.map((v) => ({
-                id: v.id,
-                display_name: `${value.systems.find((s) => s.id === v.system_id)?.name} · ${v.field}`,
-              }))}
-              onChange={(fact_id) => update({ fact_id: fact_id || null })}
-            />
-            <Field
-              label="Existing Activity ID (optional)"
-              name={`${f.id}.activity`}
-              value={f.activity_id ?? ""}
-              onChange={(activity_id) =>
-                update({ activity_id: activity_id || null })
-              }
-              hint="Only an actual permitted Activity is accepted. Its live due date is separate; no Activity is created or completed here."
-            />
-            <button
-              type="button"
-              onClick={() =>
-                onChange({
-                  ...value,
-                  follow_ups: value.follow_ups.filter((x) => x.id !== f.id),
-                })
-              }
-            >
-              Remove follow-up
-            </button>
-          </fieldset>
-        );
-      })}
-      <button
-        type="button"
-        onClick={() =>
-          onChange({
-            ...value,
-            follow_ups: [
-              ...value.follow_ups,
-              {
-                id: crypto.randomUUID(),
-                lineage: null,
-                ...own,
-                due_on: null,
-                fact_id: null,
-                activity_id: null,
-              },
-            ],
-          })
-        }
-      >
-        + Add discovery follow-up
-      </button>
-      <p>
-        Delivery routing: Not configured. Requested dates do not create
-        commitments.
-      </p>
-    </fieldset>
+          </div>
+        </div>
+        <fieldset disabled={readOnly} className="es02-fields">
+          {value.follow_ups.length === 0 && (
+            <p className="es02-note">No discovery follow-ups recorded.</p>
+          )}
+          {value.follow_ups.map((f) => {
+            const update = (patch: Partial<typeof f>) =>
+              onChange({
+                ...value,
+                follow_ups: value.follow_ups.map((x) => (x.id === f.id ? { ...x, ...patch } : x)),
+              });
+            return (
+              <fieldset className="es02-fact" key={f.id}>
+                <legend>{f.reason || "New follow-up"}</legend>
+                <div className="es02-fact-head">
+                  <span className="es02-subtle">
+                    {f.due_on ? `Recorded due ${f.due_on}` : "Due date unknown"}
+                  </span>
+                  <div className="es02-actions">
+                    <button
+                      type="button"
+                      className="es02-link"
+                      onClick={() =>
+                        onChange({ ...value, follow_ups: value.follow_ups.filter((x) => x.id !== f.id) })
+                      }
+                    >
+                      Remove follow-up
+                    </button>
+                  </div>
+                </div>
+                <FollowUpFields
+                  label="Discovery follow-up"
+                  value={f}
+                  owners={options.owners}
+                  onChange={(v) => update(v)}
+                />
+                <div className="es02-grid-3">
+                  <Field
+                    label="Recorded discovery due date"
+                    name={`${f.id}.due`}
+                    type="date"
+                    value={f.due_on ?? ""}
+                    onChange={(due_on) => update({ due_on: due_on || null })}
+                  />
+                  <SelectField
+                    label="Originating fact"
+                    name={`${f.id}.fact`}
+                    value={f.fact_id ?? ""}
+                    options={value.facts.map((v) => ({
+                      id: v.id,
+                      display_name: `${value.systems.find((s) => s.id === v.system_id)?.name} · ${v.field}`,
+                    }))}
+                    onChange={(fact_id) => update({ fact_id: fact_id || null })}
+                  />
+                  <Field
+                    label="Existing Activity ID (optional)"
+                    name={`${f.id}.activity`}
+                    value={f.activity_id ?? ""}
+                    onChange={(activity_id) => update({ activity_id: activity_id || null })}
+                    hint="Only an actual permitted Activity is accepted. No Activity is created or completed here."
+                  />
+                </div>
+              </fieldset>
+            );
+          })}
+        </fieldset>
+      </section>
+    </>
   );
 }

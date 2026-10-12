@@ -7,7 +7,7 @@ import { usePendingWork } from "./pending-work";
 import { guardBrowserNavigation } from "./navigation-intent";
 
 export function RecordTabs({ id, label, tabs, value, onChange }: {
-  id: string; label: string; tabs: { id: string; label: string }[];
+  id: string; label: string; tabs: { id: string; label: React.ReactNode }[];
   value: string; onChange: (value: string) => void;
 }) {
   return <div className="record-tablist" role="tablist" aria-label={label}>

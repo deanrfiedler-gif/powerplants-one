@@ -1,6 +1,6 @@
 # Discovery workspace — design reference
 
-Stable entry: `route:/estimating/discovery/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `route:/estimating/discovery/[id]`. Owner: Dean Fiedler. Status: **Built to design board r01 on 12 October 2026; visual review pending**.
 Source baseline: `72b27694462a176529dc68343526dfda215cd298`. Application destination: `/estimating/discovery/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -17,41 +17,27 @@ The [ES-02 design board record](../../../decisions/es02-design-board.md) holds t
 
 ## Desktop
 
-Keep the r04 rules: breadcrumb **Estimating / Estimation Wizard**; global search and quick add centred on the whole viewport; secondary menu 240 px expanded or 24 px collapsed, with an edge control inside its boundary; exactly three tabs and five steps; the summary white, flush right and full height, starting around 360–400 px; one vertical scroll owner per view, with local horizontal scrolling for tables; the bottom bar ending at the main column's edge.
+Built on 12 October 2026 to [design board r01](../../../decisions/es02-wizard-ui-build.md) on Dean's instruction; the board's proposals P3, P4, P5, P6, P7 and P9, the O1 recommendation and build findings B1–B4 and B6 are in the page. P1/P2 (six families and categories) wait for the successor configuration definition and P8 belongs to the shell.
 
-Measured on the running build (`main` `72b2769`, local synthetic, Configuration step, 24 September 2026):
+Composition, top to bottom in the main column: context row (title, synthetic marker, customer · site · owner, save state with an amber dot for a working copy; viewed alternative and the Summary toggle on the right); equal-width tabs **Discovery / Alternatives [n] / Revisions [n]** with a 3 px navy underline; five 44 px steps, each with a status line derived from findings (never from visits); the step content; the working-copy bar (**Previous · Save discovery revision · Continue**, with the reason a disabled Save is disabled). The summary is white, square, flush right and full height at 380 px, with a left-only shadow, and scrolls on its own. One scroll owner per column; tables scroll sideways inside labelled, focusable regions.
 
-| Viewport | Estimating menu | Main column | Summary | Steps | Action bar |
-|---|---|---|---|---|---|
-| 1440 × 960 | 240 px at x 76 | 804 px at x 316, 772 px of content | 320 px at x 1120 | One row, 48 px | At the foot of the column; the column scrolls inside itself |
-| 1024 × 768 | Not shown | 948 px; the page scrolls as a whole | Stacked after the whole form, from 2,048 px down | One row, 48 px | Static at the end of the form |
-
-The build narrows the summary from 380 px to 320 px at 1500 px and below (B2), fills the configuration attention strip with amber (B1), and gives desktop controls a height of 36 px (O1).
-
-Proposed by design board r01, not accepted:
-
-| Viewport | Menu | Main column | Summary | Notes |
+| Viewport | Estimating menu | Main column | Summary | Notes |
 |---|---|---|---|---|
-| 1920 × 1200 | 240 px | 1,224 px | 380 px | Menu open |
-| 1440 × 960 | 24 px | 960 px | 380 px | P3: collapsed by default at 1440 px and below; a saved preference still wins |
-| 1024 × 768 | Not shown | Full width | A labelled bar that opens the full summary | P4; actions stay in view |
+| 1920 × 1200 | 240 px open | 1,224 px | 380 px | Menu open by default above 1440 px |
+| 1440 × 1000 | 24 px collapsed | 960 px | 380 px | P3: collapsed by default at 1440 px and below; a remembered choice wins |
+| 1024 × 768 | Overlay | Full width | Labelled bar that opens a sheet | P4; the working-copy bar stays in view |
 
-The other desktop proposals are family-then-category selection when adding a system (P2), a right-side evidence panel (P7), and summary findings as linked rows that open their step and field (P9). On the board, as in the build, each step button shows its number, name and a one-line status. The board's attention strip is neutral with a small amber indicator, as r04 §4.5 requires.
+Control heights follow the O1 recommendation: 44 px fields and working-copy actions, 40 px toolbar and in-table controls. Status is always a word in a tag; the attention strip is neutral with an amber dot; the evidence panel is a 440 px non-modal overlay that never replaces the summary.
 
 ## Mobile
 
-Measured on the running build:
+At 780 px and below the step row becomes **Step n of 5** with a select and previous/next buttons (P5); the summary bar sits under it and the bottom bar carries **Summary** and **Save discovery revision** above the shell's phone navigation (P4); fields read at 16 px and every control is 44 px (B3, B4); family cards become a scrolling row; two- and three-column grids stack; tables keep local sideways scrolling in labelled regions. No viewport scrolls sideways (checked at 390 × 844 during the build).
 
-| Viewport | Steps | Summary | Action bar | Breadcrumb |
-|---|---|---|---|---|
-| 390 × 844 | Two rows, 45 px | Stacked after the form, from 2,624 px down | Static at the end of the form | Both crumbs truncated |
-| 320 × 700 | Two rows, 45 px | Stacked after the form, from 2,755 px down | Static at the end of the form | Both crumbs truncated |
+The phone breadcrumb still shows both crumbs (P8 is a shell change). Real-device checks and Dean's visual review are not recorded; this entry stays **Needs review**.
 
-No viewport scrolls sideways. On phones every field renders at 14–14.4 px (B3), controls are 30–38 px high (B4), and the Areas and Systems table scroll regions cannot be reached by keyboard (B6).
+### Previous measurements (superseded)
 
-Proposed by design board r01 (boards R2–R4), not accepted: the current page alone in the header at 16 px (P8); a 44 px step select with previous and next buttons (P5); a sticky action bar with **Summary** and **Save discovery revision**, the summary opening as a sheet (P4); 16 px field text and 44 px controls throughout; wide tables in a labelled, focusable region that scrolls sideways.
-
-The mobile composition has not been visually accepted for this entry. Boards R2–R4 are compositions, not device captures, and a desktop image is not mobile evidence.
+Measured on the earlier build (`main` `72b2769`, 24 September 2026): at 1440 × 960 the menu was 240 px, the main column 804 px and the summary 320 px; at 1024 × 768 and on phones the summary stacked after the whole form and the action bar sat at the form's end; phone fields rendered at 14–14.4 px and controls at 30–38 px. Those findings (B1–B4, B6) are corrected by the 12 October build.
 
 ## Shared components and states
 
@@ -61,10 +47,11 @@ Board 08 catalogues 24 states from r04 §9 and the §3.5 working-copy lifecycle:
 
 ## Visual references
 
+- [ES-02 page build record](../../../decisions/es02-wizard-ui-build.md) — what the 12 October 2026 build adopted from the board and what it left out
 - [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) — functional study r03
 - [read-only-summary.png](../../../testing/evidence/es02-native-r01/read-only-summary.png) — application capture, ES-02 native r01
 
-Design board r01, proposed and not accepted ([retained captures and hashes](../../../reference/ui/estimating/design-board-r01/README.md)):
+Design board r01, adopted as the page's composition on 12 October 2026 ([retained captures and hashes](../../../reference/ui/estimating/design-board-r01/README.md)):
 
 - [S0 · Configuration, menu open](../../../reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S0-Configuration-1920-Menu-Open-r01.png) — desktop 1920 × 1200
 - [S1 · Requirements](../../../reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S1-Requirements-r01.png) — desktop 1440 × 1680

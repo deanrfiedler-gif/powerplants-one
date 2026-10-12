@@ -83,7 +83,7 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
   await page
     .getByLabel("Proposed work", { exact: true })
     .fill("Retain controller and expand zones — working review");
-  await expect(summary).toContainText("working copy of r03");
+  await expect(summary).toContainText("Working copy of r03");
   await expect(
     page.getByRole("button", { name: "Save discovery revision", exact: true }),
   ).toBeEnabled();
@@ -133,7 +133,7 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
   await expect(page).toHaveURL(new RegExp(fixture.workspace_id));
   await page.getByRole("tab", { name: "Revisions 3" }).click();
   await expect(
-    page.getByRole("heading", { name: "Immutable discovery revisions" }),
+    page.getByRole("heading", { name: /^Revisions · Alternative A/ }),
   ).toBeVisible();
   await page.getByLabel("Baseline saved revision").selectOption(fixture.r02);
   await page.getByLabel("Target saved revision").selectOption(fixture.r03);
@@ -354,7 +354,7 @@ test("ES02-T64: maximum area/system scope stays editable and scrolls locally", a
   const started = Date.now();
   await page.goto(fixture.route);
   const summary = page.getByRole("complementary", { name: "Estimate summary" });
-  await expect(summary).toContainText("40 systems");
+  await expect(summary).toContainText(/Systems\s*40/);
   await page.getByLabel("Search systems", { exact: true }).fill("system 40");
   await page
     .getByRole("button", { name: "SYN system 40", exact: true })

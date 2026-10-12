@@ -1,8 +1,12 @@
 # Current prototype status
 
-**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 12 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
+
+## ES-02 Estimation Wizard page built to the design board — 12 October 2026
+
+Dean asked for the Estimation Wizard page to be built to the ES-02 design board (page *In the app · ES-02 r04*). The discovery workspace at `/estimating/discovery/[id]` now follows the board's composition: context row, equal-width tabs with counts, five steps with finding-derived status, family cards, a flush systems table with a selected-system editor and evidence facts, a scope and responsibilities table, pricing tiles, review findings by effect, alternatives and revisions registers, a changes-since list in the save dialog, a 380 px summary whose findings open their step and field, a summary bar and sheet below 1200 px, a phone step select and a non-modal evidence panel. The [build record](decisions/es02-wizard-ui-build.md) lists the adopted proposals (P3–P7, P9), the O1 recommendation and corrected findings (B1–B4, B6), and what still waits: the six-family definition (P1/P2) and the phone breadcrumb (P8). Data, APIs, migrations and business rules are unchanged. Local checks and the compiled ES-02 browser proof are recorded in the pull request; Dean's visual review is pending and the page entry stays *Needs review*.
 
 ## GitHub Actions queue repair — 11 October 2026
 

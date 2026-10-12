@@ -12,6 +12,8 @@ export const systemColumns = [
 ];
 type Preferences = {
   menu: boolean;
+  // True only when the owner has chosen; the default then belongs to the workspace.
+  menuSet: boolean;
   hidden: string[];
   order: string[];
   widths: Record<string, number>;
@@ -50,6 +52,7 @@ export function useScopePreferences(scope: string) {
     const order = Array.isArray(v?.order) ? v.order.filter(allowed) : [];
     return {
       menu: v?.menu !== false,
+      menuSet: typeof v?.menu === "boolean",
       hidden: Array.isArray(v?.hidden) ? v.hidden.filter(allowed) : ["Family"],
       order: ["System", ...new Set([...order, ...systemColumns.slice(1)])],
       widths: Object.fromEntries(
