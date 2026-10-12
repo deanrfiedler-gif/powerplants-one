@@ -1,6 +1,6 @@
 # Discovery workspace — design reference
 
-Stable entry: `route:/estimating/discovery/[id]`. Owner: Dean Fiedler. Status: **Built to design board r01 on 12 October 2026; visual review pending**.
+Stable entry: `route:/estimating/discovery/[id]`. Owner: Dean Fiedler. Status: **Built to design board r01 on 12 October 2026; Figma design accepted the same day, alignment pending; visual review pending**.
 Source baseline: `72b27694462a176529dc68343526dfda215cd298`. Application destination: `/estimating/discovery/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -17,6 +17,13 @@ The [ES-02 design board record](../../../decisions/es02-design-board.md) holds t
 
 ## Desktop
 
+Accepted design (12 October 2026): the [ES-02 Estimation Wizard Figma design decision](../../../decisions/es02-wizard-figma-design.md), with captures 01–18 in [Figma design r01](../../../reference/ui/estimating/es02-wizard-figma-design-r01/README.md). The running page is still the board build described below. Align it to the design in a follow-up, adopting the differences the decision lists; the family overview and Category field wait for the six-family definition (Q8).
+
+- **Layout at 1440 × 1000:** the labelled Shell v2 rail (240 px, Estimation wizard current; the user may collapse it to 76 px), main column 820 px and the 380 px summary on the right; at 1920 × 1200, 240 / 1300 / 380; in Alternatives, Revisions and the comparisons the summary closes and the main column is 1200 px. Breadcrumb "Estimating & quotation / Estimation wizard".
+- **Header and tabs:** the record-header structure with a 20 px title, the Synthetic preview tag, a meta line ending in the save state with its change count, Summary and "…"; Record / View tabs with counts and the viewed-alternative select at the right of the tab row.
+- **Content:** five equal 48 px steps; family tiles as filters (grey when empty, white with an amber dot while systems need confirming, pastel green only when all are confirmed; neutral count badges) and a Shared infrastructure strip; content-fitted grids with 48 px rows, wide grids scrolling sideways in labelled regions; Record / Banner state messages; one navy primary action per view.
+- **Overlays and outcomes:** the 440 px evidence panel, the Save discovery revision dialog, the unsaved discovery dialog, the saved-revision banner, the unsaved-changes popover and the Add system menu (captures 13–18).
+
 Built on 12 October 2026 to [design board r01](../../../decisions/es02-wizard-ui-build.md) on Dean's instruction; the board's proposals P3, P4, P5, P6, P7 and P9, the O1 recommendation and build findings B1–B4 and B6 are in the page. P1/P2 (six families and categories) wait for the successor configuration definition and P8 belongs to the shell.
 
 Composition, top to bottom in the main column: context row (title, synthetic marker, customer · site · owner, save state with an amber dot for a working copy; viewed alternative and the Summary toggle on the right); equal-width tabs **Discovery / Alternatives [n] / Revisions [n]** with a 3 px navy underline; five 44 px steps, each with a status line derived from findings (never from visits); the step content; the working-copy bar (**Previous · Save discovery revision · Continue**, with the reason a disabled Save is disabled). The summary is white, square, flush right and full height at 380 px, with a left-only shadow, and scrolls on its own. One scroll owner per column; tables scroll sideways inside labelled, focusable regions.
@@ -30,6 +37,8 @@ Composition, top to bottom in the main column: context row (title, synthetic mar
 Control heights follow the O1 recommendation: 44 px fields and working-copy actions, 40 px toolbar and in-table controls. Status is always a word in a tag; the attention strip is neutral with an amber dot; the evidence panel is a 440 px non-modal overlay that never replaces the summary.
 
 ## Mobile
+
+Accepted design (12 October 2026): capture 19 in [Figma design r01](../../../reference/ui/estimating/es02-wizard-figma-design-r01/README.md). Phones use the accepted phone record pattern: a back arrow with the record title, a status row, equal Discovery / Alternatives / Revisions tabs, the viewed alternative and the step select (previous and next, 44 px), systems as list rows that open a system editor page, and a Summary / Save discovery revision footer with no bottom tab bar; the summary opens as a sheet. At 1024 × 768 the rail collapses to 76 px and the summary becomes a labelled bar. Not drawn yet: phone Alternatives and Revisions.
 
 At 780 px and below the step row becomes **Step n of 5** with a select and previous/next buttons (P5); the summary bar sits under it and the bottom bar carries **Summary** and **Save discovery revision** above the shell's phone navigation (P4); fields read at 16 px and every control is 44 px (B3, B4); family cards become a scrolling row; two- and three-column grids stack; tables keep local sideways scrolling in labelled regions. No viewport scrolls sideways (checked at 390 × 844 during the build).
 
@@ -46,6 +55,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Board 08 catalogues 24 states from r04 §9 and the §3.5 working-copy lifecycle: loading, no workspace, filtered empty, unsaved, checking, incomplete, saving, accepted, rejected, unknown outcome, invalid, stale source, stale workspace, denied, read-only, identity loss, no costing, unpriced, legacy basis, archived, limit reached, unavailable integration, rendering, and recovery after reload. Initial loading, unknown save outcome, stale workspace and read-only are drawn full size (X1–X4). Status always carries words, not colour alone, and comparison markers carry a glyph and a word (P6). A draft is preserved when guidance or a reference is opened.
 
 ## Visual references
+
+Accepted Figma design (12 October 2026): [ES-02 Estimation Wizard Figma design r01 captures](../../../reference/ui/estimating/es02-wizard-figma-design-r01/README.md), twenty-two icon-free PNGs (design compositions, not application captures), recorded by the [design decision](../../../decisions/es02-wizard-figma-design.md). The board captures below stay unchanged; the Figma design governs appearance.
 
 - [ES-02 page build record](../../../decisions/es02-wizard-ui-build.md) — what the 12 October 2026 build adopted from the board and what it left out
 - [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) — functional study r03

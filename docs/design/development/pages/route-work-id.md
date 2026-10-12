@@ -19,11 +19,17 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 03 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The activity opens as a window over My actions, like every accepted record window, with close, previous and next. The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+
+- **Window:** title, "38 days overdue" and status tags; Activity facts (when, owner, purpose, outcome); Linked to with names first and record numbers second; Contact with call and email links; a plain rule note; footer "…" (Open full activity page), Reschedule and Complete. The right side holds Next step and Linked records, then History.
+
 ## Mobile
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+
+Accepted design (12 October 2026): capture 09 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (right): a full-screen activity with back and "…", the same facts, Call and Email buttons, and Reschedule and Complete fixed at the bottom.
 
 ## Shared components and states
 
@@ -34,6 +40,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-My-Work-and-Action-Centre-r01.html](../../../reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html)
+- Accepted Figma design: [My Work page design r01 captures](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The earlier references above stay as historical design records.
 
 ## Behaviour, handovers and verification
 

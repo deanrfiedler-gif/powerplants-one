@@ -6155,7 +6155,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6172,7 +6172,29 @@
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png",
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
         "docs/testing/evidence/es02-design-board-r01/build-configuration-1440x960.png",
-        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png"
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-02-Desktop-Configuration-Full-Length-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-03-Desktop-Requirements-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-04-Desktop-Scope-and-Delivery-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-05-Desktop-Pricing-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-06-Desktop-Review-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-07-Desktop-1920-Navigation-Open-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-08-Desktop-Navigation-Collapsed-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-09-Desktop-Alternatives-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-10-Desktop-Revisions-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-11-Desktop-Saved-Revision-Comparison-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-12-Desktop-Compare-Alternatives-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-13-Desktop-Evidence-Panel-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-14-Desktop-Save-Discovery-Revision-Dialog-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-15-Desktop-Unsaved-Discovery-Dialog-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-16-Desktop-Discovery-r04-Saved-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-17-Desktop-Unsaved-Changes-Popover-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-18-Desktop-Add-System-Menu-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-19-Tablet-and-Phone-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-20-Desktop-States-1-to-4-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-21-Desktop-States-5-to-7-and-Catalogue-r01.png",
+        "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-22-Family-Colour-Options-r01.png"
       ],
       "dependencies": [
         "src/components/sales-estimating-link.tsx",
@@ -6183,7 +6205,8 @@
         "src/components/estimation-wizard.css",
         "src/components/estimation-wizard-ui.tsx",
         "src/components/configuration-editor.tsx",
-        "src/components/discovery-fields.tsx"
+        "src/components/discovery-fields.tsx",
+        "docs/decisions/es02-wizard-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7607,11 +7630,16 @@
       "guide_key": "guide.page.work.actions",
       "design_path": "docs/design/development/pages/route-work-actions.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-02-Desktop-My-Actions-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-04-Desktop-Record-Outcome-Dialog-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7639,13 +7667,17 @@
       "guide_key": "guide.page.work",
       "design_path": "docs/design/development/pages/route-work.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
         "src/components/saved-view-controls.tsx",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7677,13 +7709,15 @@
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/reviews-all-permitted.png",
         "docs/testing/evidence/sh-platform/captures/returned-detail-phone.png",
-        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png"
+        "docs/testing/evidence/sh-platform/captures/receiver-desktop.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-06-Desktop-Reviews-Handovers-r01.png"
       ],
       "dependencies": [
         "src/components/review-workspace.tsx",
         "src/reviews/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7711,11 +7745,14 @@
       "guide_key": "guide.page.work.team",
       "design_path": "docs/design/development/pages/route-work-team.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-05-Desktop-Team-Queue-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7746,13 +7783,15 @@
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/notifications-inbox-desktop.png",
         "docs/testing/evidence/sh-platform/captures/notifications-inbox-320.png",
-        "docs/testing/evidence/sh-platform/captures/preferences-phone.png"
+        "docs/testing/evidence/sh-platform/captures/preferences-phone.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-08-Desktop-Updates-Inbox-r01.png"
       ],
       "dependencies": [
         "src/components/notification-workspace.tsx",
         "src/notifications/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7781,11 +7820,14 @@
       "guide_key": "guide.page.work.waiting",
       "design_path": "docs/design/development/pages/route-work-waiting.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-07-Desktop-Blocked-Waiting-r01.png"
+      ],
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7813,7 +7855,10 @@
       "guide_key": "guide.page.work.id",
       "design_path": "docs/design/development/pages/route-work-id.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-03-Desktop-Activity-Window-r01.png",
+        "docs/reference/ui/my-work/my-work-page-design-r01/PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png"
+      ],
       "dependencies": [
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
@@ -7823,7 +7868,8 @@
         "src/sales/followup.ts",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/my-work-page-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",

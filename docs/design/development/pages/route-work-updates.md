@@ -15,6 +15,10 @@ Use Inbox, Grouped changes, Owned escalations and Preferences to coordinate curr
 
 Keep four labelled view controls, source-state notices, saved views and list actions in the existing My Work shell. Notice rows must keep selection, source text and actions aligned. Preferences expose dirty/save status without stretching labels. Retain the existing 1440/1280/1024 layout and test the intermediate 768 width. The merged global design-workspace and information controls remain available.
 
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 08 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+
+- **Layout:** the breadcrumb "My Work / Updates & preferences" (the page heading no longer reads "Notifications"); view tabs Inbox, Grouped changes, Owned escalations and Preferences; toolbar read state and location; the Inbox as a grid with a selection column, because it has the only bulk actions in My Work (mark read or unread, archive or restore). Unread notices are bold.
+
 ## Mobile
 
 At 390 and 320 CSS px, wrap filters and notice actions, stack preference fields and retain readable source labels. Use Tab and Escape with the native detail dialog and return focus to its opener. Offline notification writes are not supported. Verification covered widths 430, 390 and 320; physical-device and owner acceptance remain pending.
@@ -31,6 +35,7 @@ Loading, empty, partial/unavailable, denied, stale and save-error states are dis
 - [notifications-inbox-320.png](../../../testing/evidence/sh-platform/captures/notifications-inbox-320.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
 - [preferences-phone.png](../../../testing/evidence/sh-platform/captures/preferences-phone.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
 - [PPO-Notification-Inbox-and-Preferences-r01.html](../../../reference/ui/notifications/PPO-Notification-Inbox-and-Preferences-r01.html) — retained design reference.
+- Accepted Figma design: [My Work page design r01 captures](../../../reference/ui/my-work/my-work-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The earlier references above stay as historical design records.
 
 ## Behaviour, handovers and verification
 
