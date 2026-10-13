@@ -599,7 +599,7 @@ test("DK-B08 existing Service Report issue exact PDF is linked without rendering
     code("NativeRecoveryRequired"),
   );
 });
-test("DK-B09 populated 0088 upgrade preserves originals, adds only 0089 and reapplication is inert", async () => {
+test("DK-B09 populated 0088 upgrade preserves originals, adds 0089/0090 and reapplication is inert", async () => {
   await database().query(
     await readFile(
       new URL("../../db/migrations/0001-recover.sql", import.meta.url),
@@ -643,7 +643,7 @@ test("DK-B09 populated 0088 upgrade preserves originals, adds only 0089 and reap
   );
   assert.deepEqual(
     after.filter((x) => x.version > 88).map((x) => x.version),
-    [89],
+    [89, 90],
   );
   assert.equal(
     (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,

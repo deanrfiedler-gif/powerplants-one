@@ -265,7 +265,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Populated/repeated local and hosted upgrades remain required verification.
   // 0089 adds empty library tables and three default-denied capabilities. No seed,
   // user, grant or provider integration is added; existing runtime privileges apply.
-  if (latestMigrationVersion !== 89) throw Error("Review the existing-demo upgrade for this release.");
+  // 0090 adds two empty distribution tables, retention/transition/native-route guards and
+  // three additive outbox kinds. No grants,
+  // seeds, identity changes or external effects; ordinary runtime table privileges apply.
+  if (latestMigrationVersion !== 90) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

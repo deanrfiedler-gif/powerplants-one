@@ -8,7 +8,7 @@ Public repo; private demo.
 
 Retain BP-01 domains/shared records.
 
-Test joined journeys; separate proof/owner acceptance.
+Test journeys; separate proof/acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -104,4 +104,4 @@ PJ: follow the contracts in STATUS; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md).
 
-DK: STATUS contracts; native authority.
+DK: STATUS; native issue/recovery; synthetic delivery.
