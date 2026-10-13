@@ -41,3 +41,7 @@ Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
 
 Backend catalogue amendment (ADR-0054): retain the existing r01 area fixture, states and discovery consumer binding. The shared source now calls its existing family-icon fallback for unfamiliar saved family IDs. Backend r02 fixtures are in `tests/helpers/estimating-catalogue.ts`; six-family/category authoring and visual review remain separate UI work.
+
+## ES-02 Figma consumer
+
+The [Estimation Wizard host](estimation-journey.md) now adopts the accepted Figma record layout using this existing control. Its host fixtures cover desktop and phone save/revision continuity; source and review remain separate. The component implementation is unchanged outside the scoped ES-02 consumer.

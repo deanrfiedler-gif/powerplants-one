@@ -8,7 +8,6 @@ import {
   useEffect,
   useRef,
   useState,
-  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import {
@@ -20,9 +19,8 @@ import {
 } from "./business-ui";
 import { useCrmResource, useCrmCommand, denied } from "./crm-state";
 import { useIdentity } from "./business-session";
+import { changesSince } from "./estimation-wizard-changes";
 import { RecordTabs } from "./record-ui";
-import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
-import { useScopePreferences } from "./scope-preferences";
 import { useDiscoveryNavigation } from "./discovery-navigation";
 import {
   DiscoveryFields,
@@ -32,6 +30,7 @@ import {
   type FormOptions,
 } from "./discovery-fields";
 import {
+  RowMenu,
   AreasEditor,
   FamilyOverview,
   ResponsibilitiesEditor,
@@ -78,8 +77,10 @@ import {
 } from "./estimation-wizard-ui";
 import "./discovery.css";
 import "./estimation-wizard.css";
+import "./estimation-wizard-figma.css";
 
-// ES-02 Estimation Wizard · discovery workspace. Composition from design board r01
+// ES-02 Estimation Wizard · accepted Figma composition over the existing native workflow.
+// Historical design board r01
 // "In the app · ES-02 r04" (boards 05, S1–S5, V1–V6, X1–X4, R1–R4); behaviour from
 // build plan r04. One opportunity, one site, one viewed alternative; five steps keep one
 // working copy; Save creates an immutable revision. Review here is a completeness and
@@ -125,12 +126,6 @@ const longDate = (value: string | Date) =>
     year: "numeric",
   });
 const rev = (version: number) => `r${pad(version)}`;
-const wideQuery = "(min-width: 1441px)";
-const subscribeWide = (changed: () => void) => {
-  const media = window.matchMedia(wideQuery);
-  media.addEventListener("change", changed);
-  return () => media.removeEventListener("change", changed);
-};
 const valueText = (value: unknown): string =>
   value === null || value === undefined
     ? "Not recorded"
@@ -355,7 +350,15 @@ function SummaryPanel({
       <h2>Estimate summary</h2>
       <span className="es02-summary-eyebrow">Viewing</span>
       <span className="es02-summary-viewing">
-        {dirty ? `Working copy of ${rev(version)}` : `Discovery ${rev(version)} · saved`}
+        {dirty
+          ? `Working copy of ${rev(version)}`
+          : `Discovery ${rev(version)} · saved`}
+      </span>
+      <span className="es02-summary-eyebrow">
+        Alternative {label} ·{" "}
+        {selected
+          ? "the selected alternative"
+          : "viewed alternative · not selected"}
       </span>
       <div className="es02-summary-tags">
         {dirty ? (
@@ -371,10 +374,6 @@ function SummaryPanel({
           <Tag>Saved discovery</Tag>
         )}
       </div>
-      <span className="es02-summary-eyebrow">
-        Alternative {label} ·{" "}
-        {selected ? "Selected alternative" : "Viewed alternative · not selected"}
-      </span>
       <dl className="es02-rows">
         <Row label="Discovery readiness">
           <Tag tone={readinessTone}>{readiness}</Tag>
@@ -420,7 +419,9 @@ function SummaryPanel({
             Saved estimate · Estimate v{pad(s.version)}
           </span>
           <span className="es02-money">{money(s.sell_total)}</span>
-          <span className="es02-subtle">Excluding tax · tax not calculated</span>
+          <span className="es02-subtle">
+            Excluding tax · tax not calculated
+          </span>
           <dl className="es02-rows">
             <Row label="Cost basis">
               {s.basis
@@ -429,7 +430,7 @@ function SummaryPanel({
             </Row>
           </dl>
           {s.basis && (version !== s.basis.revision || dirty) && (
-            <Strip tone="info">
+            <Strip tone="neutral">
               Newer discovery is not yet costed. Saved prices remain unchanged.
             </Strip>
           )}
@@ -464,12 +465,15 @@ function SummaryPanel({
               >
                 <Dot tone="warning" />
                 <span>
-                  <strong>{name ? f.message.replace(` — ${name}`, "") : f.message}</strong>
+                  <strong>
+                    {name ? f.message.replace(` — ${name}`, "") : f.message}
+                  </strong>
                   <small>
                     {name ? `${name} · ` : ""}
                     {f.step}
                   </small>
                 </span>
+                <Icon name="chevron-right" className="es02-icon es02-icon-sm" />
               </button>
             );
           })}
@@ -608,7 +612,13 @@ function Pricing({
     costTotal = decimal(
       total.items.reduce((n, l) => n + scaled(l.cost_total, 2), 0n),
     );
-  const categories = ["Product", "Labour", "Freight", "Engineering", "Subcontract"];
+  const categories = [
+    "Product",
+    "Labour",
+    "Freight",
+    "Engineering",
+    "Subcontract",
+  ];
   return (
     <section className="es02-section" aria-label="Pricing">
       {basisStrip}
@@ -668,7 +678,11 @@ function Pricing({
                     ["Source · effective"],
                     ["Allowance"],
                   ].map(([h, num]) => (
-                    <th key={h} scope="col" className={num ? "es02-num" : undefined}>
+                    <th
+                      key={h}
+                      scope="col"
+                      className={num ? "es02-num" : undefined}
+                    >
                       {h}
                     </th>
                   ))}
@@ -732,10 +746,20 @@ function Pricing({
                       </td>
                       <td className="es02-num">{lines.length}</td>
                       <td className="es02-num">
-                        {decimal(lines.reduce((n, l) => n + scaled(l.cost_total, 2), 0n))}
+                        {decimal(
+                          lines.reduce(
+                            (n, l) => n + scaled(l.cost_total, 2),
+                            0n,
+                          ),
+                        )}
                       </td>
                       <td className="es02-num">
-                        {decimal(lines.reduce((n, l) => n + scaled(l.sell_total, 2), 0n))}
+                        {decimal(
+                          lines.reduce(
+                            (n, l) => n + scaled(l.sell_total, 2),
+                            0n,
+                          ),
+                        )}
                       </td>
                     </tr>
                   );
@@ -767,7 +791,9 @@ function Pricing({
         </div>
         <div className="es02-tile">
           <span>Sell total</span>
-          <strong className="es02-tile-money">{money(summary.sell_total)}</strong>
+          <strong className="es02-tile-money">
+            {money(summary.sell_total)}
+          </strong>
           <small>Estimate v{pad(summary.version)} · excluding tax</small>
         </div>
         <div className="es02-tile">
@@ -797,12 +823,12 @@ function Pricing({
       </div>
       <p className="es02-note">
         Exact base-10 arithmetic on the saved version. Approval and pricing
-        exceptions belong to Estimate review (ES-04); supplier source validity to
-        ES-03. Packages have no adopted saved membership and supplier-price
+        exceptions belong to Estimate review (ES-04); supplier source validity
+        to ES-03. Packages have no adopted saved membership and supplier-price
         refresh is not configured. Screen Systems contributions can be reviewed
-        and explicitly adopted through the specialist workbench; saved quantities,
-        prices and their exact source basis remain unchanged until a successor
-        estimate is saved.
+        and explicitly adopted through the specialist workbench; saved
+        quantities, prices and their exact source basis remain unchanged until a
+        successor estimate is saved.
       </p>
     </section>
   );
@@ -912,10 +938,7 @@ function ComparisonView({ comparison }: { comparison: Comparison }) {
     );
   };
   return (
-    <section
-      className="es02-section"
-      aria-label="Saved revision comparison"
-    >
+    <section className="es02-section" aria-label="Saved revision comparison">
       <div className="es02-section-head">
         <div>
           <h2>Saved revision comparison</h2>
@@ -957,7 +980,9 @@ function ComparisonView({ comparison }: { comparison: Comparison }) {
         </span>
       </div>
       {!comparison.differences.length ? (
-        <p className="es02-empty">No differences between the two saved sources.</p>
+        <p className="es02-empty">
+          No differences between the two saved sources.
+        </p>
       ) : (
         <TableScroll label="Saved revision differences table">
           <table>
@@ -978,7 +1003,9 @@ function ComparisonView({ comparison }: { comparison: Comparison }) {
                   <td>
                     <strong>{d.entity}</strong>
                     <br />
-                    <span className="es02-secondary">{String(d.entity_id).slice(0, 8)}…</span>
+                    <span className="es02-secondary">
+                      {String(d.entity_id).slice(0, 8)}…
+                    </span>
                   </td>
                   <td>{d.field}</td>
                   <td className="es02-wrap">
@@ -1047,7 +1074,10 @@ function History({
   const compareRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (compareRequest)
-      compareRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+      compareRef.current?.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
   }, [compareRequest]);
   const items = history.data?.items ?? [];
   const sources = [
@@ -1064,7 +1094,12 @@ function History({
         display_name: `Alternative ${o.option.label} · ${rev(o.revision.version)} · ${o.revision.scope_readiness}`,
       })),
   ];
-  const compare = (a: string, b: string, ac = baselineCost, tc = targetCost) => {
+  const compare = (
+    a: string,
+    b: string,
+    ac = baselineCost,
+    tc = targetCost,
+  ) => {
     setComparison(null);
     setError(null);
     void api<Comparison>(`estimating/workspaces/${id}/compare`, {
@@ -1145,7 +1180,10 @@ function History({
             type="button"
             className="es02-button"
             onClick={() =>
-              compareRef.current?.scrollIntoView({ block: "start", behavior: "smooth" })
+              compareRef.current?.scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+              })
             }
           >
             <Icon name="compare" className="es02-icon es02-icon-sm" />
@@ -1203,7 +1241,8 @@ function History({
                       )}
                     </td>
                     <td>
-                      {basisVersion === r.version && summary?.status === "Available" ? (
+                      {basisVersion === r.version &&
+                      summary?.status === "Available" ? (
                         `Estimate v${pad(summary.version)}`
                       ) : (
                         <span className="es02-secondary">—</span>
@@ -1232,7 +1271,10 @@ function History({
                               setBaselineCost(null);
                               setTargetCost(null);
                               compare(previous.id, r.id, null, null);
-                              compareRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+                              compareRef.current?.scrollIntoView({
+                                block: "start",
+                                behavior: "smooth",
+                              });
                             }}
                           >
                             Compare with {rev(previous.version)}
@@ -1256,7 +1298,11 @@ function History({
           </p>
         )}
       </section>
-      <section className="es02-section" aria-label="Compare saved sources" ref={compareRef}>
+      <section
+        className="es02-section"
+        aria-label="Compare saved sources"
+        ref={compareRef}
+      >
         <div className="es02-section-head">
           <div>
             <h2>Compare saved sources</h2>
@@ -1324,7 +1370,9 @@ function History({
             Compare saved revisions
           </button>
           {baseline && target && baseline === target && (
-            <span className="es02-reason">Choose two different saved sources.</span>
+            <span className="es02-reason">
+              Choose two different saved sources.
+            </span>
           )}
         </div>
       </section>
@@ -1338,23 +1386,28 @@ function History({
           footer={
             <>
               <span>Saved revisions are immutable.</span>
-              {detail.can_edit && inspect.input && inspect.option_id === optionId && (
-                <button
-                  type="button"
-                  className="es02-button es02-button-primary"
-                  onClick={() => {
-                    onStartingPoint(inspect);
-                    setInspect(null);
-                  }}
-                >
-                  Use as starting point
-                </button>
-              )}
+              {detail.can_edit &&
+                inspect.input &&
+                inspect.option_id === optionId && (
+                  <button
+                    type="button"
+                    className="es02-button es02-button-primary"
+                    onClick={() => {
+                      onStartingPoint(inspect);
+                      setInspect(null);
+                    }}
+                  >
+                    Use as starting point
+                  </button>
+                )}
             </>
           }
         >
           {inspect.input ? (
-            <ScopeView input={inspect.input} context={inspect.observed_context} />
+            <ScopeView
+              input={inspect.input}
+              context={inspect.observed_context}
+            />
           ) : (
             <p>E1 manual basis — E2 questionnaire not recorded.</p>
           )}
@@ -1393,64 +1446,6 @@ export function DiscoveryDetail({ id }: { id: string }) {
   );
 }
 
-// Changes between the saved revision and the working copy, named for the save dialog.
-function changesSince(
-  before: DiscoveryInput | null,
-  after: DiscoveryInput,
-): { label: string; change: "Added" | "Changed" | "Removed" }[] {
-  const out: { label: string; change: "Added" | "Changed" | "Removed" }[] = [];
-  const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
-  const compareSet = <T extends { id: string }>(
-    label: string,
-    name: (x: T) => string,
-    a: T[] = [],
-    b: T[] = [],
-  ) => {
-    for (const x of b) {
-      const y = a.find((v) => v.id === x.id);
-      if (!y) out.push({ label: `${label} · ${name(x)}`, change: "Added" });
-      else if (!same(x, y)) {
-        const fields = Object.keys(x).filter(
-          (k) => !same((x as Record<string, unknown>)[k], (y as Record<string, unknown>)[k]),
-        );
-        out.push({
-          label: `${name(x)} · ${fields.join(", ").replace(/_/g, " ")}`,
-          change: "Changed",
-        });
-      }
-    }
-    for (const y of a)
-      if (!b.some((x) => x.id === y.id))
-        out.push({ label: `${label} · ${name(y)}`, change: "Removed" });
-  };
-  const bc = before?.configuration,
-    ac = after.configuration;
-  compareSet("Area", (a) => a.label || "New area", bc?.areas, ac?.areas);
-  compareSet("System", (s) => s.name || "New system", bc?.systems, ac?.systems);
-  compareSet(
-    "Fact",
-    (f) =>
-      `${ac?.systems.find((s) => s.id === f.system_id)?.name ?? "System"} · ${f.field}`,
-    bc?.facts,
-    ac?.facts,
-  );
-  compareSet("Evidence", (e) => e.observation || "New observation", bc?.evidence, ac?.evidence);
-  compareSet("Work item", (r) => r.work || "New work item", bc?.responsibilities, ac?.responsibilities);
-  compareSet("Follow-up", (f) => f.reason || "New follow-up", bc?.follow_ups, ac?.follow_ups);
-  for (const x of after.answers) {
-    const y = before?.answers.find((a) => a.question_id === x.question_id);
-    const label = `${x.question_id} · ${discoveryDefinition.questions.find((q) => q.id === x.question_id)?.label ?? x.question_id}`;
-    if (!y) {
-      if (x.state !== "Empty") out.push({ label, change: "Added" });
-    } else if (!same(x, y)) out.push({ label, change: "Changed" });
-  }
-  if (before && !same(before.scope, after.scope))
-    out.push({ label: "Scope membership", change: "Changed" });
-  if (before && !same(before.effort, after.effort))
-    out.push({ label: "Estimating effort", change: "Changed" });
-  return out;
-}
-
 function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
   const params = useSearchParams(),
     identity = useIdentity(),
@@ -1478,7 +1473,12 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
     [reason, setReason] = useState(""),
     [focus, setFocus] = useState<Focus | null>(null),
     [sheetOpen, setSheetOpen] = useState(false),
-    [compareRequest, setCompareRequest] = useState(0);
+    [compareRequest, setCompareRequest] = useState(0),
+    [changesOpen, setChangesOpen] = useState(false),
+    [addRequest, setAddRequest] = useState<{
+      family: string;
+      nonce: number;
+    } | null>(null);
   const current =
       d.options.find((o) => o.option.id === viewed) ??
       d.options.find((o) => o.option.id === d.workspace.selected_option_id)!,
@@ -1511,22 +1511,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
   );
   const frozen = command.busy || command.uncertain,
     dirty = command.hasUnsavedChanges,
-    navigation = useDiscoveryNavigation(dirty, frozen),
-    preferences = useScopePreferences(
-      `${identity.workspace_id}:${identity.actor_id}:es02`,
-    );
-  // Board P3: with no remembered choice the Estimating menu starts collapsed at 1440 px
-  // and below, so the summary keeps 380 px and the main column 960 px; a remembered
-  // choice always wins.
-  const wide = useSyncExternalStore(
-    subscribeWide,
-    () => window.matchMedia(wideQuery).matches,
-    () => true,
-  );
-  const menu = useSecondaryMenu(
-    preferences.value.menuSet ? preferences.value.menu : wide,
-    (open) => preferences.save({ ...preferences.value, menu: open, menuSet: true }),
-  );
+    navigation = useDiscoveryNavigation(dirty, frozen);
   const input =
       draft ??
       (r.input
@@ -1545,7 +1530,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
         : null),
     canEdit = d.can_edit && current.option.state === "Active",
     scope = input?.scope;
-  const optionPath = `estimating/workspaces/form-options?opportunity_id=${d.workspace.opportunity_id}&workspace_id=${id}&scope_mode=${scope?.mode ?? "Site"}${scope?.site_id ? `&site_id=${scope.site_id}` : ""}`;
+  const optionPath = `estimating/workspaces/form-options?configuration_definition=PPO-ES02-CONFIG-r02&opportunity_id=${d.workspace.opportunity_id}&workspace_id=${id}&scope_mode=${scope?.mode ?? "Site"}${scope?.site_id ? `&site_id=${scope.site_id}` : ""}`;
   const options = useCrmResource<FormOptions>(
     canEdit
       ? `${optionPath}&selected_facility_ids=${scope?.facility_ids.join(",") ?? ""}&selected_equipment_ids=${scope?.equipment_ids.join(",") ?? ""}&search=${encodeURIComponent(lookupSearch)}`
@@ -1778,6 +1763,10 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
   const openFinding = (f: DiscoveryFinding) => {
     openStep(f.step);
     setSheetOpen(false);
+    if (input?.configuration?.evidence.some((e) => e.id === f.entity_id)) {
+      setEvidence({ selected: f.entity_id! });
+      return;
+    }
     if (f.entity_id)
       setFocus((prev) => ({
         entity_id: f.entity_id,
@@ -1814,21 +1803,24 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 ? "Unavailable"
                 : "Not yet costed",
           };
-    if (!evaluated) return { text: readiness === "Checking…" ? "Checking…" : "Not checked" };
+    if (!evaluated)
+      return { text: readiness === "Checking…" ? "Checking…" : "Not checked" };
     if (s === "Review")
       return {
         text: readiness,
-        tone: readiness === "Complete" ? "success" : undefined,
+        tone: readiness === "Complete" ? "success" : "warning",
       };
     const own = findings.filter(
       (f) => f.step === s && f.category === "Readiness",
     );
     if (s === "Configuration") {
       const n = new Set(own.map((f) => f.entity_id ?? f.key)).size;
-      return n ? { text: `${n} to confirm` } : { text: "Complete", tone: "success" };
+      return n
+        ? { text: `${n} to confirm`, tone: "warning" }
+        : { text: "Complete", tone: "success" };
     }
     return own.length
-      ? { text: "Needs review" }
+      ? { text: "Needs review", tone: "warning" }
       : { text: "Complete", tone: "success" };
   };
   const saveReason = !canEdit
@@ -1917,7 +1909,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
         {summary.data?.status === "Available" ? (
           <>
             Saved estimate v{pad(summary.data.version)}
-            {summary.data.basis ? ` · on ${rev(summary.data.basis.revision)}` : ""}{" "}
+            {summary.data.basis
+              ? ` · on ${rev(summary.data.basis.revision)}`
+              : ""}{" "}
             <strong>{money(summary.data.sell_total)}</strong>
           </>
         ) : summary.data?.status === "Unavailable" ? (
@@ -1964,93 +1958,259 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
     return (
       <ErrorNotice error={command.error ?? options.error ?? preview?.error} />
     );
-  const menuLink = (href: string, icon: Parameters<typeof Icon>[0]["name"], label: string, current = false) => (
-    <Link href={href} aria-current={current ? "page" : undefined}>
-      <Icon name={icon} className="mw-icon" />
-      <span>{label}</span>
-    </Link>
-  );
+  const changes = input ? changesSince(r.input, input) : [];
+  const openChanges = () => setChangesOpen(!changesOpen);
+  const discardDraft = () =>
+    navigation.request(() => {
+      command.discard();
+      setDraft(null);
+      setBase(null);
+      setHistorical(null);
+      setChangesOpen(false);
+    });
   return (
-    <SecondaryMenuFrame
-      state={menu}
+    <section
       id="ppo-estimate-wizard"
-      name="Estimating"
-      menuId="es02-menu"
-      contentId="es02-content"
-      message={command.status}
-      menu={
-        <>
-          <div className="mw-menu-title">
-            <strong>Estimating</strong>
-          </div>
-          <nav aria-label="Estimating destinations">
-            <ul>
-              <li>{menuLink("/estimating/discovery", "summary", "Discovery register")}</li>
-              <li>{menuLink(`/estimating/discovery/${id}`, "controls", "Estimation Wizard", true)}</li>
-              <li>
-                <SpecialistEntry workspaceId={id} optionId={current.option.id} />
-              </li>
-              <li>{menuLink(`/estimating/cpq/${id}?option_id=${current.option.id}`, "controls", "Configure & price")}</li>
-              <li>
-                {menuLink(
-                  `/estimating/fertigation?estimating_workspace_id=${id}&option_id=${current.option.id}`,
-                  "water",
-                  "Priva Fertigation Configurator",
-                )}
-              </li>
-              <li>{menuLink("/estimating?tab=estimates", "document", "Saved manual estimates")}</li>
-              {summary.data?.status === "Available" && (
-                <li>
-                  {menuLink(
-                    `/estimating/estimates/${summary.data.estimate_id}`,
-                    "copy",
-                    "Draft quotations",
-                  )}
-                </li>
-              )}
-            </ul>
-          </nav>
-        </>
-      }
+      data-module-layout="full-bleed"
+      data-read-only={!canEdit || undefined}
+      aria-label="Estimation wizard"
     >
+      <div className="sr-only" role="status">
+        {command.status}
+      </div>
       <div className="es02-layout">
         <div className="es02-main">
           <header className="es02-context">
+            <Link
+              className="es02-phone-back es02-button es02-button-icon"
+              href="/estimating/discovery"
+              aria-label="Back to Estimation wizard"
+            >
+              <Icon name="chevron-left" />
+            </Link>
             <div className="es02-context-identity">
               <div className="es02-context-title">
                 <h1>{d.context.title}</h1>
                 <Tag>Synthetic preview</Tag>
               </div>
-              <p className="es02-context-meta">
-                {r.observed_context?.organisation.display_name ??
-                  "Customer context"}{" "}
-                ·{" "}
-                {r.observed_context?.site?.display_name ??
-                  r.input?.scope.mode ??
-                  "Legacy scope"}{" "}
-                · Owner {d.context.owner}
-              </p>
-              <p className="es02-context-state">
-                {command.uncertain ? (
-                  <>
-                    <Dot tone="warning" />
-                    Save outcome unknown · reconciling
-                  </>
-                ) : dirty ? (
-                  <>
-                    <Dot tone="warning" />
-                    Working copy of {rev(r.version)} · Unsaved changes
-                  </>
-                ) : (
-                  <>
-                    <Dot tone="neutral" />
-                    Saved discovery {rev(r.version)} · {shortDateTime(r.created_at)}
-                    {!canEdit ? " · view only" : ""}
-                  </>
-                )}
-              </p>
+              <div className="es02-context-meta">
+                <span>
+                  {r.observed_context?.organisation.display_name ??
+                    "Customer context"}{" "}
+                  ·{" "}
+                  {r.observed_context?.site?.display_name ??
+                    r.input?.scope.mode ??
+                    "Legacy scope"}
+                </span>
+                <span className="es02-owner">
+                  <span className="es02-avatar" aria-hidden="true">
+                    {d.context.owner
+                      .split(/\s+/)
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join("")}
+                  </span>
+                  {d.context.owner}
+                  {d.workspace.owner_id === identity.actor_id ? " (you)" : ""}
+                </span>
+                <div className="es02-context-state">
+                  <Dot
+                    tone={dirty || command.uncertain ? "warning" : "neutral"}
+                  />
+                  {dirty && !command.uncertain ? (
+                    <button
+                      type="button"
+                      className="es02-state-trigger"
+                      aria-expanded={changesOpen}
+                      aria-controls="es02-unsaved-changes"
+                      onClick={openChanges}
+                    >
+                      Working copy of {rev(r.version)} ·{" "}
+                      {plural(changes.length, "unsaved change")}
+                    </button>
+                  ) : (
+                    <span>
+                      {command.uncertain
+                        ? "Save outcome unknown · reconciling"
+                        : `Saved discovery ${rev(r.version)} · ${shortDateTime(r.created_at)}${!canEdit ? " · view only" : ""}`}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="es02-context-controls">
+              {tab === "Discovery" && (
+                <button
+                  type="button"
+                  className="es02-button es02-summary-toggle"
+                  aria-label={`${summaryOpen ? "Hide" : "Show"} estimate summary`}
+                  aria-pressed={summaryOpen}
+                  onClick={() =>
+                    window.matchMedia("(min-width: 1200px)").matches
+                      ? setSummaryOpen(!summaryOpen)
+                      : setSheetOpen(true)
+                  }
+                >
+                  <Icon name="summary" className="es02-icon es02-icon-sm" />
+                  Summary
+                </button>
+              )}
+              <RowMenu label="Workspace actions">
+                <SpecialistEntry
+                  workspaceId={id}
+                  optionId={current.option.id}
+                  role="menuitem"
+                />
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => setEvidence({})}
+                >
+                  View configuration evidence
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => setTab("Revisions")}
+                >
+                  View revision history
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => setTab("Alternatives")}
+                >
+                  Compare alternatives
+                </button>
+                <Link
+                  role="menuitem"
+                  href={`/estimating/cpq/${id}?option_id=${current.option.id}`}
+                >
+                  Configure &amp; price
+                </Link>
+                <Link
+                  role="menuitem"
+                  href={`/estimating/fertigation?estimating_workspace_id=${id}&option_id=${current.option.id}`}
+                >
+                  Priva Fertigation Configurator
+                </Link>
+              </RowMenu>
+            </div>
+            {changesOpen && dirty && (
+              <div
+                id="es02-unsaved-changes"
+                className="es02-unsaved-popover"
+                role="region"
+                aria-label="Unsaved changes"
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    setChangesOpen(false);
+                    document
+                      .querySelector<HTMLButtonElement>(".es02-state-trigger")
+                      ?.focus();
+                  }
+                }}
+              >
+                <div className="es02-popover-head">
+                  <div>
+                    <h2>{plural(changes.length, "unsaved change")}</h2>
+                    <p>Since discovery {rev(r.version)}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="es02-button es02-button-icon"
+                    aria-label="Close unsaved changes"
+                    onClick={openChanges}
+                  >
+                    <Icon name="close" />
+                  </button>
+                </div>
+                <ul>
+                  {changes.map((change, index) => (
+                    <li key={index}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          openFinding({
+                            key: `change-${index}`,
+                            category: "Information",
+                            action: "ReviewField",
+                            message: change.label,
+                            step: change.step,
+                            entity_id: change.entity_id,
+                            field: change.field,
+                          });
+                          setChangesOpen(false);
+                        }}
+                      >
+                        <span>
+                          <strong>{change.label}</strong>
+                          <small>{change.step}</small>
+                        </span>
+                        <ChangeMarker change={change.change} />
+                        <Icon name="chevron-right" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <div className="es02-popover-foot">
+                  <button
+                    type="button"
+                    className="es02-button"
+                    disabled={frozen}
+                    onClick={discardDraft}
+                  >
+                    Discard changes…
+                  </button>
+                  <button
+                    type="button"
+                    className="es02-button es02-button-primary"
+                    disabled={saveDisabled}
+                    onClick={() => {
+                      setChangesOpen(false);
+                      setSavingReview(true);
+                    }}
+                  >
+                    Save discovery revision
+                  </button>
+                </div>
+              </div>
+            )}
+          </header>
+          <div className="es02-view-row">
+            <RecordTabs
+              id="es02-tabs"
+              label="Estimating workspace views"
+              tabs={[
+                { id: "Discovery", label: "Discovery" },
+                {
+                  id: "Alternatives",
+                  label: (
+                    <>
+                      Alternatives{" "}
+                      <span className="es02-count">{d.options.length}</span>
+                    </>
+                  ),
+                },
+                {
+                  id: "Revisions",
+                  label:
+                    current.history_count === null ? (
+                      "Revisions"
+                    ) : (
+                      <>
+                        Revisions{" "}
+                        <span className="es02-count">
+                          {current.history_count}
+                        </span>
+                      </>
+                    ),
+                },
+              ]}
+              value={tab}
+              onChange={setTab}
+            />
+            <div className="es02-viewed-option">
               <SelectField
                 disabled={frozen}
                 label="Viewed alternative"
@@ -2058,52 +2218,12 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 value={current.option.id}
                 options={d.options.map((o) => ({
                   id: o.option.id,
-                  display_name: `${o.option.label} · ${o.option.id === d.workspace.selected_option_id ? "Selected" : "Alternative"} · ${o.option.state}`,
+                  display_name: `${o.option.label} · ${o.option.id === d.workspace.selected_option_id ? "Selected" : o.option.state}`,
                 }))}
                 onChange={goOption}
               />
-              <button
-                type="button"
-                className="es02-button es02-summary-toggle"
-                aria-label={`${summaryOpen ? "Hide" : "Show"} estimate summary`}
-                aria-pressed={summaryOpen}
-                onClick={() =>
-                  menu.docked ? setSummaryOpen(!summaryOpen) : setSheetOpen(true)
-                }
-              >
-                <Icon name="summary" className="es02-icon es02-icon-sm" />
-                Summary
-              </button>
             </div>
-          </header>
-          <RecordTabs
-            id="es02-tabs"
-            label="Estimating workspace views"
-            tabs={[
-              { id: "Discovery", label: "Discovery" },
-              {
-                id: "Alternatives",
-                label: (
-                  <>
-                    Alternatives <span className="es02-count">{d.options.length}</span>
-                  </>
-                ),
-              },
-              {
-                id: "Revisions",
-                label:
-                  current.history_count === null ? (
-                    "Revisions"
-                  ) : (
-                    <>
-                      Revisions <span className="es02-count">{current.history_count}</span>
-                    </>
-                  ),
-              },
-            ]}
-            value={tab}
-            onChange={setTab}
-          />
+          </div>
           <div
             className="es02-scroll"
             role="tabpanel"
@@ -2116,6 +2236,27 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
               </p>
             ) : (
               <>
+                {accepted > 0 && !dirty && afterRead && (
+                  <Strip
+                    tone="info"
+                    title={`Discovery ${rev(r.version)} saved`}
+                    actions={
+                      <button
+                        type="button"
+                        className="es02-link"
+                        onClick={() => setTab("Revisions")}
+                      >
+                        View revision
+                      </button>
+                    }
+                  >
+                    {r.created_by === identity.actor_id
+                      ? "Saved by you"
+                      : "Saved by the recorded actor"}{" "}
+                    · {shortDateTime(r.created_at)} · {r.scope_readiness}.{" "}
+                    {r.reason}
+                  </Strip>
+                )}
                 {command.uncertain && (
                   <Strip
                     tone="warning"
@@ -2165,8 +2306,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                       </button>
                     }
                   >
-                    Saved discovery and permitted amounts stay readable. Reopening
-                    asks for a reason and does not select the alternative.
+                    Saved discovery and permitted amounts stay readable.
+                    Reopening asks for a reason and does not select the
+                    alternative.
                   </Strip>
                 )}
                 {stale && (
@@ -2228,6 +2370,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                             {status.tone === "success" && (
                               <Icon name="check" className="es02-icon" />
                             )}
+                            {status.tone === "warning" && (
+                              <Dot tone="warning" />
+                            )}
                             {status.text}
                           </small>
                         </button>
@@ -2268,31 +2413,43 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                     <>
                       <ValidationFields
                         error={
-                          preview?.signature === signature ? preview.error : null
+                          preview?.signature === signature
+                            ? preview.error
+                            : null
                         }
                       >
                         <div className="es02-fields">
                           <div hidden={step !== "Requirements"}>
-                            <section className="es02-section" aria-label="Opportunity & site">
+                            <section
+                              className="es02-section"
+                              aria-label="Opportunity & site"
+                            >
                               <div className="es02-section-head">
                                 <div>
                                   <h2>Opportunity & site</h2>
                                   <p>
-                                    Resolved from canonical records. Editing scope
-                                    here does not change those records.
+                                    Resolved from canonical records. Editing
+                                    scope here does not change those records.
                                   </p>
                                 </div>
                               </div>
                               <div className="es02-grid-3">
                                 <div className="es02-field">
-                                  <span className="es02-label">Opportunity</span>
-                                  <div className="es02-readonly">{d.context.title}</div>
-                                  <small>Workspace version {d.workspace.version}</small>
+                                  <span className="es02-label">
+                                    Opportunity
+                                  </span>
+                                  <div className="es02-readonly">
+                                    {d.context.title}
+                                  </div>
+                                  <small>
+                                    Workspace version {d.workspace.version}
+                                  </small>
                                 </div>
                                 <div className="es02-field">
                                   <span className="es02-label">Customer</span>
                                   <div className="es02-readonly">
-                                    {r.observed_context?.organisation.display_name ?? "Customer context"}
+                                    {r.observed_context?.organisation
+                                      .display_name ?? "Customer context"}
                                   </div>
                                 </div>
                                 <div className="es02-field">
@@ -2306,25 +2463,40 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   <small>One site per saved revision</small>
                                 </div>
                                 <div className="es02-field">
-                                  <span className="es02-label">Estimating owner</span>
+                                  <span className="es02-label">
+                                    Estimating owner
+                                  </span>
                                   <div className="es02-readonly">
                                     {d.context.owner}
-                                    <Icon name="user" className="es02-icon es02-icon-sm" />
+                                    <Icon
+                                      name="user"
+                                      className="es02-icon es02-icon-sm"
+                                    />
                                   </div>
                                 </div>
                                 <div className="es02-field">
-                                  <span className="es02-label">Delivery routing</span>
-                                  <div className="es02-readonly">Not configured</div>
+                                  <span className="es02-label">
+                                    Delivery routing
+                                  </span>
+                                  <div className="es02-readonly">
+                                    Not configured
+                                  </div>
                                   <small>
-                                    Stays Not configured until a routing rule set is adopted.
+                                    Stays Not configured until a routing rule
+                                    set is adopted.
                                   </small>
                                 </div>
                               </div>
                               <div className="es02-context-panels">
                                 <WorkspaceSalesBriefs id={id} />
-                                <FertigationReceivedNotes items={current.fertigation_handovers} />
+                                <FertigationReceivedNotes
+                                  items={current.fertigation_handovers}
+                                />
                               </div>
-                              <fieldset className="es02-fields" disabled={!canEdit || frozen || !options.data}>
+                              <fieldset
+                                className="es02-fields"
+                                disabled={!canEdit || frozen || !options.data}
+                              >
                                 <DiscoveryFields
                                   value={input}
                                   options={available}
@@ -2341,17 +2513,24 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                 />
                               </fieldset>
                             </section>
-                            <section className="es02-section" aria-label="Brief">
+                            <section
+                              className="es02-section"
+                              aria-label="Brief"
+                            >
                               <div className="es02-section-head">
                                 <div>
                                   <h2>Brief</h2>
                                   <p>
-                                    Answers keep their state and source. An Assumed
-                                    answer does not satisfy a required Confirmed one.
+                                    Answers keep their state and source. An
+                                    Assumed answer does not satisfy a required
+                                    Confirmed one.
                                   </p>
                                 </div>
                               </div>
-                              <fieldset className="es02-fields" disabled={!canEdit || frozen || !options.data}>
+                              <fieldset
+                                className="es02-fields"
+                                disabled={!canEdit || frozen || !options.data}
+                              >
                                 <DiscoveryFields
                                   value={input}
                                   options={available}
@@ -2370,11 +2549,27 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   onChange={updateConfig}
                                   options={available}
                                   findings={findings}
-                                  onEvidence={(selected) => setEvidence({ selected })}
+                                  onEvidence={(selected) =>
+                                    setEvidence({ selected })
+                                  }
                                   focus={step === "Requirements" ? focus : null}
                                 />
                                 <FamilyOverview
                                   value={input.configuration}
+                                  findings={findings}
+                                  evaluated={!!evaluated}
+                                  readOnly={!canEdit || frozen}
+                                  onAdd={
+                                    input.configuration.schema_version === 2
+                                      ? (family) => {
+                                          setAddRequest((prev) => ({
+                                            family,
+                                            nonce: (prev?.nonce ?? 0) + 1,
+                                          }));
+                                          setStep("Configuration");
+                                        }
+                                      : undefined
+                                  }
                                   onConfigure={() => setStep("Configuration")}
                                   variant="full"
                                 />
@@ -2384,13 +2579,16 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                           <div hidden={step !== "Configuration"}>
                             {input.configuration ? (
                               <SystemsEditor
+                                addRequest={addRequest}
                                 readOnly={!canEdit || frozen || !options.data}
                                 evaluated={!!evaluated}
                                 value={input.configuration}
                                 onChange={updateConfig}
                                 options={available}
                                 findings={findings}
-                                onEvidence={(selected) => setEvidence({ selected })}
+                                onEvidence={(selected) =>
+                                  setEvidence({ selected })
+                                }
                                 focus={step === "Configuration" ? focus : null}
                               />
                             ) : (
@@ -2403,28 +2601,39 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                       <button
                                         type="button"
                                         className="es02-button es02-button-primary"
-                                        onClick={() => updateConfig(emptyConfiguration())}
+                                        onClick={() =>
+                                          updateConfig(emptyConfiguration())
+                                        }
                                       >
-                                        Add structured configuration to this proposal
+                                        Add structured configuration to this
+                                        proposal
                                       </button>
                                     )
                                   }
                                 >
-                                  Its questionnaire and saved cost basis remain exact.
+                                  Its questionnaire and saved cost basis remain
+                                  exact.
                                 </Strip>
                               </section>
                             )}
-                            <section className="es02-section" aria-label="Configuration questions">
+                            <section
+                              className="es02-section"
+                              aria-label="Configuration questions"
+                            >
                               <div className="es02-section-head">
                                 <div>
                                   <h2>Configuration questions</h2>
                                   <p>
-                                    Questionnaire answers that describe the configuration
-                                    in words. They do not generate systems or lines.
+                                    Questionnaire answers that describe the
+                                    configuration in words. They do not generate
+                                    systems or lines.
                                   </p>
                                 </div>
                               </div>
-                              <fieldset className="es02-fields" disabled={!canEdit || frozen || !options.data}>
+                              <fieldset
+                                className="es02-fields"
+                                disabled={!canEdit || frozen || !options.data}
+                              >
                                 <DiscoveryFields
                                   value={input}
                                   options={available}
@@ -2443,8 +2652,12 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                 onChange={updateConfig}
                                 options={available}
                                 findings={findings}
-                                onEvidence={(selected) => setEvidence({ selected })}
-                                focus={step === "Scope & delivery" ? focus : null}
+                                onEvidence={(selected) =>
+                                  setEvidence({ selected })
+                                }
+                                focus={
+                                  step === "Scope & delivery" ? focus : null
+                                }
                               />
                             )}
                             <div className="es02-cards">
@@ -2460,40 +2673,89 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                         : "Not captured"}
                                   </Tag>
                                 </div>
-                                <p>{answerText(answer("Q02")?.value ?? null)}</p>
+                                <p>
+                                  {answerText(answer("Q02")?.value ?? null)}
+                                </p>
                                 <p className="es02-subtle">
-                                  “No exclusions declared” is its own answer. It is
-                                  different from not yet captured.
+                                  “No exclusions declared” is its own answer. It
+                                  is different from not yet captured.
                                 </p>
                               </div>
                               <div className="es02-card">
                                 <div className="es02-card-head">
                                   <strong>Assumptions</strong>
-                                  <StateTag value={answer("Q03")?.state ?? "Empty"} />
+                                  <StateTag
+                                    value={answer("Q03")?.state ?? "Empty"}
+                                  />
                                 </div>
-                                <p>{answerText(answer("Q03")?.value ?? null)}</p>
+                                <p>
+                                  {answerText(answer("Q03")?.value ?? null)}
+                                </p>
                                 <p className="es02-subtle">
-                                  Assumed answers still need confirming before discovery
-                                  can be Complete.
+                                  Assumed answers still need confirming before
+                                  discovery can be Complete.
                                 </p>
                               </div>
                             </div>
-                            <section className="es02-section" aria-label="Delivery questions">
+                            <section
+                              className="es02-section"
+                              aria-label="Timing"
+                            >
+                              <div className="es02-section-head">
+                                <h2>Timing</h2>
+                                <Tag>Proposed fields</Tag>
+                              </div>
+                              <p className="es02-note">
+                                Timing fields are shown for design review.
+                                Requested dates can be recorded against
+                                individual work items; no delivery commitment is
+                                created here.
+                              </p>
+                              <dl className="es02-grid-3 es02-proposed-timing">
+                                <div>
+                                  <dt>Requested completion</dt>
+                                  <dd>Not recorded</dd>
+                                  <small>Customer preference</small>
+                                </div>
+                                <div>
+                                  <dt>Estimated duration on site</dt>
+                                  <dd>Not recorded</dd>
+                                  <small>Estimator proposal</small>
+                                </div>
+                                <div>
+                                  <dt>Agreed commitment</dt>
+                                  <dd>Not agreed</dd>
+                                  <small>Separate delivery authority</small>
+                                </div>
+                              </dl>
+                            </section>
+                            <section
+                              className="es02-section"
+                              aria-label="Delivery questions"
+                            >
                               <div className="es02-section-head">
                                 <div>
                                   <h2>Delivery questions</h2>
                                   <p>
                                     {tags.length
                                       ? `Shown for the work in scope: ${tags
-                                          .map((t) => t.replace(/([a-z])([A-Z])/g, "$1 $2"))
+                                          .map((t) =>
+                                            t.replace(
+                                              /([a-z])([A-Z])/g,
+                                              "$1 $2",
+                                            ),
+                                          )
                                           .join(", ")}.`
                                       : "Choose the work in scope in the Brief to see its delivery questions."}{" "}
-                                    Delivery routing stays Not configured; requested
-                                    dates do not create commitments.
+                                    Delivery routing stays Not configured;
+                                    requested dates do not create commitments.
                                   </p>
                                 </div>
                               </div>
-                              <fieldset className="es02-fields" disabled={!canEdit || frozen || !options.data}>
+                              <fieldset
+                                className="es02-fields"
+                                disabled={!canEdit || frozen || !options.data}
+                              >
                                 <DiscoveryFields
                                   value={input}
                                   options={available}
@@ -2517,7 +2779,10 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                         />
                       )}
                       {step === "Review" && (
-                        <section className="es02-section" aria-label="Discovery review">
+                        <section
+                          className="es02-section"
+                          aria-label="Discovery review"
+                        >
                           <div className="es02-tiles">
                             <div className="es02-tile">
                               <span>Discovery readiness</span>
@@ -2535,14 +2800,22 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                 </Tag>
                               </div>
                               <small>
-                                {dirty ? "Working preview of this copy" : "Saved with this revision"}
+                                {dirty
+                                  ? "Working preview of this copy"
+                                  : "Saved with this revision"}
                               </small>
                             </div>
                             <div className="es02-tile">
                               <span>Last saved revision</span>
                               <div className="es02-tile-tags">
                                 <strong>{rev(r.version)}</strong>
-                                <StateTag value={r.kind === "LegacyManual" ? "Legacy manual basis" : r.scope_readiness} />
+                                <StateTag
+                                  value={
+                                    r.kind === "LegacyManual"
+                                      ? "Legacy manual basis"
+                                      : r.scope_readiness
+                                  }
+                                />
                               </div>
                               <small>{longDate(r.created_at)}</small>
                             </div>
@@ -2568,24 +2841,74 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   ? `From Estimate v${pad(summary.data.version)}`
                                   : "Needs a saved estimate"}
                               </strong>
-                              <small>Prepared from the manual estimate; render state is not approval.</small>
+                              <small>
+                                Prepared from the manual estimate; render state
+                                is not approval.
+                              </small>
                             </div>
                           </div>
                           <div className="es02-section-head">
                             <div>
                               <h2>Findings by effect</h2>
-                              <p>Each finding opens its step and field. Your working copy is kept.</p>
+                              <p>
+                                Each finding opens its step and field. Your
+                                working copy is kept.
+                              </p>
                             </div>
                           </div>
                           {(() => {
-                            const blocking = findings.filter((f) => f.category === "Readiness"),
-                              informational = findings.filter((f) => f.category === "Information"),
+                            const blocking = findings.filter(
+                                (f) => f.category === "Readiness",
+                              ),
+                              informational = findings.filter(
+                                (f) => f.category === "Information",
+                              ),
                               adoption = [
-                                ...(dirty ? [{ key: "unsaved", text: "Save discovery before reviewing it for costing", meta: "Unsaved changes" }] : []),
-                                ...(readiness !== "Complete" ? [{ key: "readiness", text: `Discovery ${rev(r.version)} is ${readiness === "Checking…" || readiness === "Not checked" ? "not yet checked" : readiness}, so it cannot become the cost basis`, meta: "Readiness" }] : []),
-                                ...(!selected ? [{ key: "selected", text: `Alternative ${current.option.label} is not the selected alternative`, meta: "Selection" }] : []),
-                                ...(current.option.state !== "Active" ? [{ key: "state", text: `Alternative ${current.option.label} is ${current.option.state.toLowerCase()}`, meta: "State" }] : []),
-                                ...(!d.can_edit ? [{ key: "authority", text: "Current authority holds adoption", meta: "Access" }] : []),
+                                ...(dirty
+                                  ? [
+                                      {
+                                        key: "unsaved",
+                                        text: "Save discovery before reviewing it for costing",
+                                        meta: "Unsaved changes",
+                                      },
+                                    ]
+                                  : []),
+                                ...(readiness !== "Complete"
+                                  ? [
+                                      {
+                                        key: "readiness",
+                                        text: `Discovery ${rev(r.version)} is ${readiness === "Checking…" || readiness === "Not checked" ? "not yet checked" : readiness}, so it cannot become the cost basis`,
+                                        meta: "Readiness",
+                                      },
+                                    ]
+                                  : []),
+                                ...(!selected
+                                  ? [
+                                      {
+                                        key: "selected",
+                                        text: `Alternative ${current.option.label} is not the selected alternative`,
+                                        meta: "Selection",
+                                      },
+                                    ]
+                                  : []),
+                                ...(current.option.state !== "Active"
+                                  ? [
+                                      {
+                                        key: "state",
+                                        text: `Alternative ${current.option.label} is ${current.option.state.toLowerCase()}`,
+                                        meta: "State",
+                                      },
+                                    ]
+                                  : []),
+                                ...(!d.can_edit
+                                  ? [
+                                      {
+                                        key: "authority",
+                                        text: "Current authority holds adoption",
+                                        meta: "Access",
+                                      },
+                                    ]
+                                  : []),
                               ],
                               saving = previewFailed ? 1 : 0;
                             const group = (
@@ -2598,7 +2921,10 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                               <div className="es02-finding-group">
                                 <div className="es02-finding-head">
                                   {tone === "success" ? (
-                                    <span className="es02-finding-icon" data-tone="success">
+                                    <span
+                                      className="es02-finding-icon"
+                                      data-tone="success"
+                                    >
                                       <Icon name="check" />
                                     </span>
                                   ) : tone === "neutral" ? (
@@ -2614,13 +2940,23 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                               </div>
                             );
                             const row = (f: DiscoveryFinding) => (
-                              <button type="button" key={f.key} className="es02-finding-row" onClick={() => openFinding(f)}>
+                              <button
+                                type="button"
+                                key={f.key}
+                                className="es02-finding-row"
+                                onClick={() => openFinding(f)}
+                              >
                                 <span>{f.message}</span>
                                 <small>
                                   {f.step}
-                                  {f.entity_id ? ` · ${f.field.replace(/([a-z])([A-Z])/g, "$1 $2")}` : ""}
+                                  {f.entity_id
+                                    ? ` · ${f.field.replace(/([a-z])([A-Z])/g, "$1 $2")}`
+                                    : ""}
                                 </small>
-                                <Icon name="chevron-right" className="es02-icon es02-icon-sm" />
+                                <Icon
+                                  name="chevron-right"
+                                  className="es02-icon es02-icon-sm"
+                                />
                               </button>
                             );
                             return (
@@ -2631,7 +2967,10 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   saving,
                                   saving ? (
                                     <div style={{ padding: "8px 14px" }}>
-                                      <ErrorNotice error={preview?.error} focusOnError={false} />
+                                      <ErrorNotice
+                                        error={preview?.error}
+                                        focusOnError={false}
+                                      />
                                     </div>
                                   ) : (
                                     <p>
@@ -2645,24 +2984,39 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   "Prevents Complete discovery",
                                   "Saving is still allowed",
                                   blocking.length,
-                                  blocking.length ? blocking.map(row) : <p>No open readiness findings.</p>,
-                                  !evaluated ? "neutral" : blocking.length ? "warning" : "success",
+                                  blocking.length ? (
+                                    blocking.map(row)
+                                  ) : (
+                                    <p>No open readiness findings.</p>
+                                  ),
+                                  !evaluated
+                                    ? "neutral"
+                                    : blocking.length
+                                      ? "warning"
+                                      : "success",
                                 )}
                                 {group(
                                   "Prevents current scope adoption",
-                                  summary.data?.status === "Available" && summary.data.basis
+                                  summary.data?.status === "Available" &&
+                                    summary.data.basis
                                     ? `Costing stays on Discovery ${rev(summary.data.basis.revision)}`
                                     : "No costing basis adopted yet",
                                   adoption.length,
                                   adoption.length ? (
                                     adoption.map((a) => (
-                                      <div key={a.key} className="es02-finding-row">
+                                      <div
+                                        key={a.key}
+                                        className="es02-finding-row"
+                                      >
                                         <span>{a.text}</span>
                                         <small>{a.meta}</small>
                                       </div>
                                     ))
                                   ) : (
-                                    <p>This saved, Complete, selected discovery can be reviewed for manual costing.</p>
+                                    <p>
+                                      This saved, Complete, selected discovery
+                                      can be reviewed for manual costing.
+                                    </p>
                                   ),
                                 )}
                                 {group(
@@ -2672,7 +3026,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   <>
                                     {informational.map(row)}
                                     <div className="es02-finding-row">
-                                      <span>Delivery routing is Not configured</span>
+                                      <span>
+                                        Delivery routing is Not configured
+                                      </span>
                                       <small>Scope & delivery</small>
                                     </div>
                                   </>,
@@ -2684,36 +3040,57 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                           {(() => {
                             const config = input.configuration;
                             const unanswered = input.answers.filter(
-                              (a) => a.state === "Empty" || a.state === "Deferred" || a.value === "Unknown",
+                              (a) =>
+                                a.state === "Empty" ||
+                                a.state === "Deferred" ||
+                                a.value === "Unknown",
                             );
                             const assumed =
-                              input.answers.filter((a) => a.state === "Assumed").length +
+                              input.answers.filter((a) => a.state === "Assumed")
+                                .length +
                               (config
-                                ? [...config.areas, ...config.facts, ...config.responsibilities].filter(
-                                    (x) => x.state === "Assumed",
-                                  ).length
+                                ? [
+                                    ...config.areas,
+                                    ...config.facts,
+                                    ...config.responsibilities,
+                                  ].filter((x) => x.state === "Assumed").length
                                 : 0);
-                            const gaps = config?.responsibilities.filter((x) => x.party === "Unknown").length ?? 0;
+                            const gaps =
+                              config?.responsibilities.filter(
+                                (x) => x.party === "Unknown",
+                              ).length ?? 0;
                             const q02 = answer("Q02");
                             return (
                               <div className="es02-facts-grid">
                                 <div>
                                   <span>Evidence recorded</span>
                                   <strong>
-                                    {config ? plural(config.evidence.length, "observation") : "No structured configuration"}
+                                    {config
+                                      ? plural(
+                                          config.evidence.length,
+                                          "observation",
+                                        )
+                                      : "No structured configuration"}
                                   </strong>
                                 </div>
                                 <div>
                                   <span>Unanswered requirements</span>
                                   <strong>
                                     {unanswered.length
-                                      ? unanswered.map((a) => `${a.question_id} ${a.state === "Deferred" ? "Deferred" : a.value === "Unknown" ? "Unknown" : "Empty"}`).join(" · ")
+                                      ? unanswered
+                                          .map(
+                                            (a) =>
+                                              `${a.question_id} ${a.state === "Deferred" ? "Deferred" : a.value === "Unknown" ? "Unknown" : "Empty"}`,
+                                          )
+                                          .join(" · ")
                                       : "None"}
                                   </strong>
                                 </div>
                                 <div>
                                   <span>Assumptions</span>
-                                  <strong>{assumed ? `${assumed} Assumed` : "None"}</strong>
+                                  <strong>
+                                    {assumed ? `${assumed} Assumed` : "None"}
+                                  </strong>
                                 </div>
                                 <div>
                                   <span>Exclusions</span>
@@ -2734,7 +3111,8 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   <strong>
                                     {summary.data?.status === "Available"
                                       ? summary.data.basis
-                                        ? summary.data.basis.revision === r.version && !dirty
+                                        ? summary.data.basis.revision ===
+                                            r.version && !dirty
                                           ? `Estimate v${pad(summary.data.version)} on ${rev(r.version)} · aligned`
                                           : `Estimate v${pad(summary.data.version)} on ${rev(summary.data.basis.revision)} · ${dirty ? "working copy" : rev(r.version)} not yet costed`
                                         : "E1 manual basis · no discovery basis"
@@ -2747,21 +3125,15 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                           <div className="es02-card">
                             <div className="es02-card-head">
                               <strong>Actions</strong>
-                              <span className="es02-subtle" style={{ marginLeft: "auto", fontSize: 13 }}>
-                                Review is a completeness and source check, not commercial approval.
+                              <span
+                                className="es02-subtle"
+                                style={{ marginLeft: "auto", fontSize: 13 }}
+                              >
+                                Review is a completeness and source check, not
+                                commercial approval.
                               </span>
                             </div>
                             <div className="es02-actions">
-                              <button
-                                type="button"
-                                className="es02-button es02-button-primary"
-                                disabled={saveDisabled}
-                                aria-label="Save discovery revision from review"
-                                onClick={() => setSavingReview(true)}
-                              >
-                                <Icon name="save" className="es02-icon es02-icon-sm" />
-                                Save discovery revision
-                              </button>
                               <button
                                 type="button"
                                 className="es02-button"
@@ -2770,7 +3142,10 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   setCompareRequest((n) => n + 1);
                                 }}
                               >
-                                <Icon name="compare" className="es02-icon es02-icon-sm" />
+                                <Icon
+                                  name="compare"
+                                  className="es02-icon es02-icon-sm"
+                                />
                                 Compare revisions
                               </button>
                               {costing ? (
@@ -2778,32 +3153,52 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   Review scope for manual costing
                                 </Link>
                               ) : (
-                                <button type="button" className="es02-button" disabled>
+                                <button
+                                  type="button"
+                                  className="es02-button"
+                                  disabled
+                                >
                                   Review scope for manual costing
                                 </button>
                               )}
                               {summary.data?.status === "Available" && (
-                                <Link href={`/estimating/estimates/${summary.data.estimate_id}`} className="es02-button">
-                                  <Icon name="external" className="es02-icon es02-icon-sm" />
+                                <Link
+                                  href={`/estimating/estimates/${summary.data.estimate_id}`}
+                                  className="es02-button"
+                                >
+                                  <Icon
+                                    name="external"
+                                    className="es02-icon es02-icon-sm"
+                                  />
                                   Open manual estimate and Draft quotation
                                 </Link>
                               )}
                             </div>
                             <p className="es02-note">
-                              Review scope for manual costing needs a saved, Complete,
-                              selected discovery. The server assigns the revision number
-                              and time when it accepts a save. Survey, supplier source and
-                              specialist calculator integrations are unavailable; manual
+                              Review scope for manual costing needs a saved,
+                              Complete, selected discovery. The server assigns
+                              the revision number and time when it accepts a
+                              save. Survey, supplier source and specialist
+                              calculator integrations are unavailable; manual
                               attributed discovery remains usable.
                             </p>
                           </div>
-                          <details className="es02-details" style={{ marginTop: 14 }}>
+                          <details
+                            className="es02-details"
+                            style={{ marginTop: 14 }}
+                          >
                             <summary>
                               Full proposal as it will be saved
-                              <Icon name="chevron-down" className="es02-icon es02-icon-sm es02-icon-toggle" />
+                              <Icon
+                                name="chevron-down"
+                                className="es02-icon es02-icon-sm es02-icon-toggle"
+                              />
                             </summary>
                             <div className="es02-details-body">
-                              <ScopeView input={input} context={r.observed_context} />
+                              <ScopeView
+                                input={input}
+                                context={r.observed_context}
+                              />
                             </div>
                           </details>
                         </section>
@@ -2817,8 +3212,8 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                       <div>
                         <h2>Alternatives</h2>
                         <p>
-                          Commercial alternatives for this workspace, each with its
-                          own revision chain.
+                          Commercial alternatives for this workspace, each with
+                          its own revision chain.
                         </p>
                       </div>
                       <div className="es02-actions">
@@ -2830,32 +3225,53 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                             setCompareRequest((n) => n + 1);
                           }}
                         >
-                          <Icon name="compare" className="es02-icon es02-icon-sm" />
+                          <Icon
+                            name="compare"
+                            className="es02-icon es02-icon-sm"
+                          />
                           Compare alternatives
                         </button>
                         <button
                           type="button"
                           className="es02-button"
-                          disabled={!canEdit || !r.input || d.options.length >= 10 || frozen}
+                          disabled={
+                            !canEdit ||
+                            !r.input ||
+                            d.options.length >= 10 ||
+                            frozen
+                          }
                           onClick={() => beginBranch("CopyDiscovery")}
                         >
-                          <Icon name="copy" className="es02-icon es02-icon-sm" />
+                          <Icon
+                            name="copy"
+                            className="es02-icon es02-icon-sm"
+                          />
                           Copy discovery to alternative
                         </button>
                         <button
                           type="button"
                           className="es02-button es02-button-primary"
-                          disabled={!canEdit || d.options.length >= 10 || frozen}
+                          disabled={
+                            !canEdit || d.options.length >= 10 || frozen
+                          }
                           onClick={() => beginBranch("Fresh")}
                         >
-                          <Icon name="plus" className="es02-icon es02-icon-sm" />
+                          <Icon
+                            name="plus"
+                            className="es02-icon es02-icon-sm"
+                          />
                           New alternative
                         </button>
                       </div>
                     </div>
                     {d.options.length >= 10 && (
-                      <Strip tone="neutral" icon="warning" title="Alternative limit reached">
-                        Ten alternatives, archived included. Nothing is deleted to free a slot.
+                      <Strip
+                        tone="neutral"
+                        icon="warning"
+                        title="Alternative limit reached"
+                      >
+                        Ten alternatives, archived included. Nothing is deleted
+                        to free a slot.
                       </Strip>
                     )}
                     <TableScroll label="Alternatives table">
@@ -2874,7 +3290,13 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                               "Owner",
                               "Actions",
                             ].map((h) => (
-                              <th key={h} scope="col" className={h === "Priced amount" ? "es02-num" : undefined}>
+                              <th
+                                key={h}
+                                scope="col"
+                                className={
+                                  h === "Priced amount" ? "es02-num" : undefined
+                                }
+                              >
                                 {h}
                               </th>
                             ))}
@@ -2883,15 +3305,25 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                         <tbody>
                           {d.options.map((o) => {
                             const isCurrent = o.option.id === current.option.id,
-                              isSelected = o.option.id === d.workspace.selected_option_id;
+                              isSelected =
+                                o.option.id === d.workspace.selected_option_id;
                             return (
                               <tr key={o.option.id} data-selected={isCurrent}>
                                 <td>
                                   <strong>{o.option.label}</strong>
-                                  {isCurrent ? <span className="es02-secondary"> · viewing</span> : null}
+                                  {isCurrent ? (
+                                    <span className="es02-secondary">
+                                      {" "}
+                                      · viewing
+                                    </span>
+                                  ) : null}
                                 </td>
                                 <td>
-                                  {isSelected ? <Tag tone="success">Selected</Tag> : <span className="es02-secondary">—</span>}
+                                  {isSelected ? (
+                                    <Tag tone="success">Selected</Tag>
+                                  ) : (
+                                    <span className="es02-secondary">—</span>
+                                  )}
                                 </td>
                                 <td>
                                   <StateTag value={o.option.state} />
@@ -2910,7 +3342,13 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   </span>
                                 </td>
                                 <td>
-                                  <StateTag value={o.revision.kind === "LegacyManual" ? "Legacy manual basis" : o.revision.scope_readiness} />
+                                  <StateTag
+                                    value={
+                                      o.revision.kind === "LegacyManual"
+                                        ? "Legacy manual basis"
+                                        : o.revision.scope_readiness
+                                    }
+                                  />
                                 </td>
                                 <td>
                                   {o.cost.status === "Available" ? (
@@ -2918,17 +3356,25 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                       Estimate v{pad(o.cost.version)}
                                       <span className="es02-secondary">
                                         {" · "}
-                                        {o.cost.basis ? `on ${rev(o.cost.basis.revision)}` : "E1 manual basis"}
+                                        {o.cost.basis
+                                          ? `on ${rev(o.cost.basis.revision)}`
+                                          : "E1 manual basis"}
                                       </span>
                                     </>
                                   ) : (
                                     <span className="es02-secondary">
-                                      {o.cost.status === "NoEstimate" ? "Not yet costed" : "Unavailable"}
+                                      {o.cost.status === "NoEstimate"
+                                        ? "Not yet costed"
+                                        : "Unavailable"}
                                     </span>
                                   )}
                                 </td>
                                 <td className="es02-num">
-                                  {o.cost.status === "Available" ? money(o.cost.amount ?? null) : <span className="es02-secondary">—</span>}
+                                  {o.cost.status === "Available" ? (
+                                    money(o.cost.amount ?? null)
+                                  ) : (
+                                    <span className="es02-secondary">—</span>
+                                  )}
                                 </td>
                                 <td>{shortDate(o.revision.created_at)}</td>
                                 <td>{d.context.owner}</td>
@@ -2953,7 +3399,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                       canEdit={canEdit}
                                       canReopen={d.can_edit}
                                       frozen={frozen}
-                                      onAction={(a) => chooseAction(a, o.option.id)}
+                                      onAction={(a) =>
+                                        chooseAction(a, o.option.id)
+                                      }
                                     />
                                   </span>
                                 </td>
@@ -2999,11 +3447,16 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                     <p className="es02-table-foot">
                       <span>
                         <strong>{d.options.length} of 10 alternatives</strong> ·{" "}
-                        {d.options.filter((o) => o.option.state === "Archived").length} archived ·
-                        archived alternatives still count towards the limit
+                        {
+                          d.options.filter((o) => o.option.state === "Archived")
+                            .length
+                        }{" "}
+                        archived · archived alternatives still count towards the
+                        limit
                       </span>
                       <span>
-                        Amounts come from each alternative’s own saved estimate. Alternatives are never summed.
+                        Amounts come from each alternative’s own saved estimate.
+                        Alternatives are never summed.
                       </span>
                     </p>
                     <div className="es02-cards">
@@ -3012,21 +3465,31 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                           <Icon name="eye" />
                           <strong>Viewing is not selecting</strong>
                         </div>
-                        <p>Viewing, editing or comparing another alternative never changes the selected alternative.</p>
+                        <p>
+                          Viewing, editing or comparing another alternative
+                          never changes the selected alternative.
+                        </p>
                       </div>
                       <div className="es02-card">
                         <div className="es02-card-head">
                           <Icon name="copy" />
                           <strong>Copies start unconfirmed</strong>
                         </div>
-                        <p>A copied alternative keeps the source lineage; copied Confirmed answers become Answered and no costs are copied.</p>
+                        <p>
+                          A copied alternative keeps the source lineage; copied
+                          Confirmed answers become Answered and no costs are
+                          copied.
+                        </p>
                       </div>
                       <div className="es02-card">
                         <div className="es02-card-head">
                           <Icon name="archive" />
                           <strong>Selected cannot be archived</strong>
                         </div>
-                        <p>Select, archive and reopen each ask for a reason. Reopening does not select.</p>
+                        <p>
+                          Select, archive and reopen each ask for a reason.
+                          Reopening does not select.
+                        </p>
                       </div>
                     </div>
                   </section>
@@ -3057,15 +3520,24 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                             : a,
                         );
                         if (v.configuration) {
-                          v.configuration.facts = v.configuration.facts.map((f) =>
-                            f.state === "Confirmed" ? { ...f, state: "Answered", follow_up } : f,
+                          v.configuration.facts = v.configuration.facts.map(
+                            (f) =>
+                              f.state === "Confirmed"
+                                ? { ...f, state: "Answered", follow_up }
+                                : f,
                           );
-                          v.configuration.areas = v.configuration.areas.map((a) =>
-                            a.state === "Confirmed" ? { ...a, state: "Answered", follow_up } : a,
+                          v.configuration.areas = v.configuration.areas.map(
+                            (a) =>
+                              a.state === "Confirmed"
+                                ? { ...a, state: "Answered", follow_up }
+                                : a,
                           );
-                          v.configuration.responsibilities = v.configuration.responsibilities.map((a) =>
-                            a.state === "Confirmed" ? { ...a, state: "Answered", follow_up } : a,
-                          );
+                          v.configuration.responsibilities =
+                            v.configuration.responsibilities.map((a) =>
+                              a.state === "Confirmed"
+                                ? { ...a, state: "Answered", follow_up }
+                                : a,
+                            );
                         }
                         update(v);
                         setHistorical(source.id);
@@ -3077,15 +3549,17 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
               </>
             )}
             <ErrorNotice error={command.error} />
-            {dirty && preview?.signature === signature && tab !== "Discovery" && (
-              <ErrorNotice error={preview.error} />
-            )}
+            {dirty &&
+              preview?.signature === signature &&
+              tab !== "Discovery" && <ErrorNotice error={preview.error} />}
           </div>
           <footer className="es02-bottom">
             <span className="es02-bottom-state">
               <Dot tone={dirty || command.uncertain ? "warning" : "neutral"} />
               {workingLabel}
-              {tab !== "Discovery" && dirty ? " is kept while you view other records." : ""}
+              {tab !== "Discovery" && dirty
+                ? " is kept while you view other records."
+                : ""}
             </span>
             {saveReason && dirty && (
               <span className="es02-reason">{saveReason}</span>
@@ -3104,7 +3578,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 type="button"
                 className="es02-button es02-step-nav"
                 disabled={step === "Requirements"}
-                onClick={() => openStep(steps[Math.max(0, steps.indexOf(step) - 1)])}
+                onClick={() =>
+                  openStep(steps[Math.max(0, steps.indexOf(step) - 1)])
+                }
               >
                 <Icon name="arrow-left" className="es02-icon es02-icon-sm" />
                 Previous
@@ -3119,20 +3595,23 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 Return to Discovery
               </button>
             )}
-            <button
-              type="button"
-              className="es02-button es02-button-primary"
-              disabled={saveDisabled}
-              onClick={() => setSavingReview(true)}
-            >
-              Save discovery revision
-            </button>
-            {tab === "Discovery" && (
+            {canEdit && (
+              <button
+                type="button"
+                className="es02-button es02-button-primary"
+                disabled={saveDisabled}
+                onClick={() => setSavingReview(true)}
+              >
+                Save discovery revision
+              </button>
+            )}
+            {tab === "Discovery" && step !== "Review" && (
               <button
                 type="button"
                 className="es02-button es02-step-nav"
-                disabled={step === "Review"}
-                onClick={() => openStep(steps[Math.min(4, steps.indexOf(step) + 1)])}
+                onClick={() =>
+                  openStep(steps[Math.min(4, steps.indexOf(step) + 1)])
+                }
               >
                 Continue
                 <Icon name="arrow-right" className="es02-icon es02-icon-sm" />
@@ -3140,7 +3619,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
             )}
           </footer>
         </div>
-        {summaryOpen && summaryPanel()}
+        {tab === "Discovery" &&
+          summaryOpen &&
+          summaryPanel(() => setSummaryOpen(false))}
         {sheetOpen && (
           <SummarySheet close={() => setSheetOpen(false)}>
             {summaryPanel(() => setSheetOpen(false))}
@@ -3189,7 +3670,11 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
           close={navigation.stay}
           footer={
             <>
-              <button type="button" className="es02-button" onClick={navigation.stay}>
+              <button
+                type="button"
+                className="es02-button"
+                onClick={navigation.stay}
+              >
                 Stay
               </button>
               <button
@@ -3299,7 +3784,11 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
               >
                 Cancel
               </button>
-              <button className="es02-button es02-button-primary" disabled={frozen} type="submit">
+              <button
+                className="es02-button es02-button-primary"
+                disabled={frozen}
+                type="submit"
+              >
                 Confirm {action.toLowerCase()}
               </button>
             </div>
@@ -3318,7 +3807,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
           close={() => setEvidence(null)}
         />
       )}
-    </SecondaryMenuFrame>
+    </section>
   );
 }
 
@@ -3361,17 +3850,37 @@ function AlternativeMenu({
         <Icon name="more" className="es02-icon es02-icon-sm" />
       </button>
       {open && (
-        <div className="es02-menu-list" role="menu" aria-label={`Alternative ${label} actions`} onClick={() => setOpen(false)}>
+        <div
+          className="es02-menu-list"
+          role="menu"
+          aria-label={`Alternative ${label} actions`}
+          onClick={() => setOpen(false)}
+        >
           {state === "Archived" ? (
-            <button type="button" role="menuitem" disabled={!canReopen || frozen} onClick={() => onAction("Reopen")}>
+            <button
+              type="button"
+              role="menuitem"
+              disabled={!canReopen || frozen}
+              onClick={() => onAction("Reopen")}
+            >
               Reopen alternative {label}
             </button>
           ) : (
             <>
-              <button type="button" role="menuitem" disabled={!canEdit || selected || frozen} onClick={() => onAction("Select")}>
+              <button
+                type="button"
+                role="menuitem"
+                disabled={!canEdit || selected || frozen}
+                onClick={() => onAction("Select")}
+              >
                 Select alternative {label}
               </button>
-              <button type="button" role="menuitem" disabled={!canEdit || selected || frozen} onClick={() => onAction("Archive")}>
+              <button
+                type="button"
+                role="menuitem"
+                disabled={!canEdit || selected || frozen}
+                onClick={() => onAction("Archive")}
+              >
                 Archive alternative {label}
               </button>
             </>
@@ -3382,7 +3891,13 @@ function AlternativeMenu({
   );
 }
 
-function SummarySheet({ children, close }: { children: ReactNode; close: () => void }) {
+function SummarySheet({
+  children,
+  close,
+}: {
+  children: ReactNode;
+  close: () => void;
+}) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const d = ref.current!;
@@ -3443,7 +3958,9 @@ function SaveReview({
     [facts, setFacts] = useState<string[]>([]);
   const proposed = preview.compiled.scope_readiness,
     blocking = findings.filter((f) => f.category === "Readiness").length,
-    confirmations = preview.required_confirmation_ids.length + preview.configuration_confirmations.length;
+    confirmations =
+      preview.required_confirmation_ids.length +
+      preview.configuration_confirmations.length;
   const ready =
     !busy &&
     reason.trim() !== "" &&
@@ -3452,9 +3969,11 @@ function SaveReview({
   const describe = (f: Preview["configuration_confirmations"][number]) => {
     const c = preview.compiled.input.configuration;
     const area = c?.areas.find((a) => a.id === f.fact_id);
-    if (area) return `${area.label} · Area · ${area.state} · ${area.source || "no source"}`;
+    if (area)
+      return `${area.label} · Area · ${area.state} · ${area.source || "no source"}`;
     const resp = c?.responsibilities.find((r) => r.id === f.fact_id);
-    if (resp) return `${resp.work} · Work item · ${resp.party} · ${resp.source || "no source"}`;
+    if (resp)
+      return `${resp.work} · Work item · ${resp.party} · ${resp.source || "no source"}`;
     const fact = c?.facts.find((v) => v.id === f.fact_id);
     return fact
       ? `${c?.systems.find((s) => s.id === fact.system_id)?.name} · ${fact.field.replace(/([a-z])([A-Z])/g, "$1 $2")} · ${fact.value ?? "no value"}${fact.unit === "Zones" ? " zones" : ""} · ${fact.source || "no source"}`
@@ -3463,13 +3982,18 @@ function SaveReview({
   return (
     <Dialog
       title="Save discovery revision"
-      label="Review discovery revision"
+      label="Save discovery revision"
       subtitle={`Alternative ${optionLabel} · saves an immutable successor to ${rev(version)}`}
       close={close}
       footer={
         <>
           <span>The server assigns the revision number and time.</span>
-          <button type="button" className="es02-button" disabled={busy} onClick={close}>
+          <button
+            type="button"
+            className="es02-button"
+            disabled={busy}
+            onClick={close}
+          >
             Cancel
           </button>
           <button
@@ -3507,15 +4031,17 @@ function SaveReview({
           ))}
           {changes.length > 12 && (
             <li>
-              <span className="es02-subtle">and {changes.length - 12} more</span>
+              <span className="es02-subtle">
+                and {changes.length - 12} more
+              </span>
               <span />
             </li>
           )}
         </ul>
       ) : (
         <p className="es02-subtle">
-          The working copy differs from {rev(version)} in ways this summary does not
-          list; the saved comparison shows every field.
+          The working copy differs from {rev(version)} in ways this summary does
+          not list; the saved comparison shows every field.
         </p>
       )}
       <form
@@ -3557,7 +4083,10 @@ function SaveReview({
                   }
                 />
                 <span
-                  title={discoveryDefinition.questions.find((q) => q.id === id)?.label ?? id}
+                  title={
+                    discoveryDefinition.questions.find((q) => q.id === id)
+                      ?.label ?? id
+                  }
                 >
                   I confirm {id} in this exact proposal
                 </span>
@@ -3577,7 +4106,8 @@ function SaveReview({
                   }
                 />
                 <span>
-                  I confirm {describe(f)} — with the reviewed value, units and sources
+                  I confirm {describe(f)} — with the reviewed value, units and
+                  sources
                 </span>
               </label>
             ))}
@@ -3656,10 +4186,20 @@ function EvidencePanel({
           })),
         ...value.systems
           .filter((s) => s.evidence_ids.includes(evidence.id))
-          .map((s) => ({ key: s.id, title: s.name || "New system", meta: "System evidence", state: "Cited" })),
+          .map((s) => ({
+            key: s.id,
+            title: s.name || "New system",
+            meta: "System evidence",
+            state: "Cited",
+          })),
         ...value.areas
           .filter((a) => a.evidence_ids.includes(evidence.id))
-          .map((a) => ({ key: a.id, title: a.label || "New area", meta: "Area evidence", state: a.state })),
+          .map((a) => ({
+            key: a.id,
+            title: a.label || "New area",
+            meta: "Area evidence",
+            state: a.state,
+          })),
       ]
     : [];
   const addManual = () => {
@@ -3686,17 +4226,22 @@ function EvidencePanel({
     <Panel
       eyebrow="Evidence"
       label="Configuration evidence"
-      title={evidence ? evidence.observation || "New observation" : "Configuration evidence"}
-      tag={
-        sourceState && (
-          <StateTag value={sourceState} />
-        )
+      title={
+        evidence
+          ? evidence.observation || "New observation"
+          : "Configuration evidence"
       }
+      tag={sourceState && <StateTag value={sourceState} />}
       close={close}
       footer={
         <>
           {evidence?.source_type === "Asset" && evidence.source_id && (
-            <a className="es02-button" href={`/equipment/${evidence.source_id}`} target="_blank" rel="noreferrer">
+            <a
+              className="es02-button"
+              href={`/equipment/${evidence.source_id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
               <Icon name="external" className="es02-icon es02-icon-sm" />
               Open source record
             </a>
@@ -3713,7 +4258,11 @@ function EvidencePanel({
         label="Evidence observation"
         name="evidence-choice"
         value={chosen}
-        empty={value.evidence.length ? "Choose an observation…" : "No evidence recorded yet"}
+        empty={
+          value.evidence.length
+            ? "Choose an observation…"
+            : "No evidence recorded yet"
+        }
         options={value.evidence.map((e) => ({
           id: e.id,
           display_name: e.observation || "New observation",
@@ -3722,7 +4271,11 @@ function EvidencePanel({
       />
       {canEdit && (
         <div className="es02-actions" style={{ marginBottom: 10 }}>
-          <button type="button" className="es02-button es02-button-sm" onClick={addManual}>
+          <button
+            type="button"
+            className="es02-button es02-button-sm"
+            onClick={addManual}
+          >
             <Icon name="plus" className="es02-icon es02-icon-sm" />
             Add manual evidence
           </button>
@@ -3741,14 +4294,18 @@ function EvidencePanel({
             {evidence.source_id
               ? `${evidence.source_id} · recorded version ${evidence.source_version ?? "unknown"}`
               : "No source record"}
-            {evidence.observed_on ? ` · observed ${longDate(evidence.observed_on)}` : ""}
+            {evidence.observed_on
+              ? ` · observed ${longDate(evidence.observed_on)}`
+              : ""}
           </div>
           <div className="es02-panel-row">
             <span>Current state</span>
             {sourceState}
           </div>
           {evidence.observation && (
-            <blockquote className="es02-panel-quote">{evidence.observation}</blockquote>
+            <blockquote className="es02-panel-quote">
+              {evidence.observation}
+            </blockquote>
           )}
           <fieldset disabled={!canEdit} className="es02-fields">
             <h3 className="es02-h3">Recorded observation</h3>
@@ -3842,7 +4399,9 @@ function EvidencePanel({
               ))}
             </div>
           ) : (
-            <p className="es02-note">No working fact, system or area cites this observation yet.</p>
+            <p className="es02-note">
+              No working fact, system or area cites this observation yet.
+            </p>
           )}
         </>
       )}
@@ -3852,7 +4411,12 @@ function EvidencePanel({
           <p className="es02-note">No permitted equipment in this Site.</p>
         )}
         {options.equipment.map((e) => (
-          <a key={e.id} href={`/equipment/${e.id}`} target="_blank" rel="noreferrer">
+          <a
+            key={e.id}
+            href={`/equipment/${e.id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             {e.display_name}
           </a>
         ))}
@@ -3866,8 +4430,13 @@ function EvidencePanel({
                 <span>
                   <strong>{f.reason || "New follow-up"}</strong>{" "}
                   <span className="es02-secondary">
-                    · {options.owners.find((o) => o.id === f.owner_id)?.display_name ?? "Recorded owner"} ·{" "}
-                    {f.due_on ? `Recorded due ${longDate(f.due_on)}` : "Due date unknown"}
+                    ·{" "}
+                    {options.owners.find((o) => o.id === f.owner_id)
+                      ?.display_name ?? "Recorded owner"}{" "}
+                    ·{" "}
+                    {f.due_on
+                      ? `Recorded due ${longDate(f.due_on)}`
+                      : "Due date unknown"}
                     {f.activity_id
                       ? ` · Activity current date: ${saved.data?.activities.find((a) => a.id === f.activity_id)?.due_at ?? "Unknown"}`
                       : ""}

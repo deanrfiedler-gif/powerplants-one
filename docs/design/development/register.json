@@ -1236,7 +1236,7 @@
       "title": "Estimation Wizard · discovery, alternatives & revisions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored. ADR-0054 adds opt-in backend r02 catalogue persistence; the native editor remains r01 and category UI implementation is separate.",
+      "summary": "Native ES-02 Figma record page: five shared-draft steps, six-family/category authoring, explicit historical-catalogue review, field-linked unsaved changes, immutable saves, exact saved-cost summary and phone system editor. Owner/device visual review and deployment remain separate.",
       "path": "/estimating/discovery",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1258,11 +1258,15 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "src/components/estimation-wizard.tsx",
-        "docs/decisions/cpq-figma-ui.md"
+        "docs/decisions/cpq-figma-ui.md",
+        "src/components/estimation-wizard-figma.css",
+        "src/components/estimation-catalogue-ui.tsx",
+        "src/components/estimation-wizard-changes.ts",
+        "docs/decisions/es02-wizard-figma-implementation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Implementation and tests are recorded in docs/testing/evidence/es02-figma/README.md. Existing recovery, immutable revisions and saved-cost boundaries remain; visual and business acceptance are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6243,7 +6247,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored. ADR-0054 adds opt-in backend r02 catalogue persistence; the native editor remains r01 and category UI implementation is separate.",
+      "summary": "Native ES-02 Figma record page: five shared-draft steps, six-family/category authoring, explicit historical-catalogue review, field-linked unsaved changes, immutable saves, exact saved-cost summary and phone system editor. Owner/device visual review and deployment remain separate.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6294,11 +6298,15 @@
         "src/components/estimation-wizard-ui.tsx",
         "src/components/configuration-editor.tsx",
         "src/components/discovery-fields.tsx",
-        "docs/decisions/es02-wizard-figma-design.md"
+        "docs/decisions/es02-wizard-figma-design.md",
+        "src/components/estimation-wizard-figma.css",
+        "src/components/estimation-catalogue-ui.tsx",
+        "src/components/estimation-wizard-changes.ts",
+        "docs/decisions/es02-wizard-figma-implementation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Implementation and tests are recorded in docs/testing/evidence/es02-figma/README.md. Existing recovery, immutable revisions and saved-cost boundaries remain; visual and business acceptance are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

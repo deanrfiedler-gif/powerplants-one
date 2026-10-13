@@ -1,5 +1,14 @@
 "use client";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import {
+  AddSystemMenu,
+  CatalogueUpgrade,
+  categoryOptions,
+} from "./estimation-catalogue-ui";
+import {
+  catalogueGroups,
+  type CategoryId,
+} from "../estimating/equipment-catalogue";
 import { Field, SelectField } from "./business-ui";
 import { FollowUpFields, labels, type FormOptions } from "./discovery-fields";
 import {
@@ -35,10 +44,15 @@ import {
 // A finding or summary row asks an editor to show its record and field (board P9).
 export type Focus = { entity_id: string | null; field: string; nonce: number };
 
-// Family presentation: an outline glyph and the kind of system each family holds. The family
-// list itself is the configuration definition's (PPO-ES02-CONFIG-r01); the six-family decision
-// of 23 September 2026 needs its successor definition before it can appear here.
-const familyGlyph: Record<Family, WizardIconName> = {
+// The persisted definition selects the catalogue. Historical family IDs retain
+// their labels until the estimator explicitly reviews r02 classifications.
+const familyGlyph: Record<string, WizardIconName> = {
+  Climate: "climate",
+  Controls: "controls",
+  Water: "water",
+  Automation: "automation",
+  Structures: "structures",
+  Services: "services",
   ControlsClimate: "controls",
   Fertigation: "water",
   MonitoringWeather: "climate",
@@ -46,7 +60,13 @@ const familyGlyph: Record<Family, WizardIconName> = {
   Infrastructure: "infrastructure",
   Other: "other",
 };
-const familyHint: Record<Family, string> = {
+const familyHint: Record<string, string> = {
+  Climate: "Lighting, ventilation, heating and screens",
+  Controls: "Controllers, sensors and monitoring",
+  Water: "Irrigation, dosing and water treatment",
+  Automation: "Handling, machinery and growing systems",
+  Structures: "Greenhouses, covers and structural systems",
+  Services: "Design, installation and service",
   ControlsClimate: "Controllers, fans, heating, screens",
   Fertigation: "Dosing, irrigation, water treatment",
   MonitoringWeather: "Sensors, weather stations",
@@ -55,7 +75,8 @@ const familyHint: Record<Family, string> = {
   Other: "Unsupported or historical values",
 };
 export const familyLabel = (id: string) =>
-  equipmentFamilies.find((f) => f.id === id)?.label ?? id;
+  [...catalogueGroups, ...equipmentFamilies].find((f) => f.id === id)?.label ??
+  id;
 export const familyIcon = (id: string): WizardIconName =>
   familyGlyph[id as Family] ?? "other";
 const intentLabel = (intent: ProposedSystem["intent"]) =>
@@ -67,7 +88,11 @@ const compactCoverage = (label: string) => {
   if (parts.length < 2) return label;
   const matches = parts.map((p) => /^(.*\S)\s+(\d+)$/.exec(p));
   const prefix = matches[0]?.[1];
-  if (!prefix || /s$/i.test(prefix) || matches.some((m) => !m || m[1] !== prefix))
+  if (
+    !prefix ||
+    /s$/i.test(prefix) ||
+    matches.some((m) => !m || m[1] !== prefix)
+  )
     return label;
   return `${prefix}s ${matches.map((m) => m![2]).join(" + ")}`;
 };
@@ -99,7 +124,9 @@ function Chips({
             type="checkbox"
             checked={values.includes(o.id)}
             disabled={
-              max !== undefined && !values.includes(o.id) && values.length >= max
+              max !== undefined &&
+              !values.includes(o.id) &&
+              values.length >= max
             }
             onChange={(e) =>
               onChange(
@@ -128,7 +155,7 @@ function LabelledChips({
     </div>
   );
 }
-function RowMenu({
+export function RowMenu({
   label,
   children,
 }: {
@@ -214,80 +241,67 @@ export function FamilyOverview({
   onConfigure,
   readOnly = false,
   variant = "compact",
+  findings = [],
+  evaluated = false,
 }: {
   value: Configuration;
   filter?: string;
   onFilter?: (id: string) => void;
-  onAdd?: (family: Family) => void;
+  onAdd?: (family: ProposedSystem["family"]) => void;
   onConfigure?: () => void;
   readOnly?: boolean;
   variant?: "full" | "compact";
+  findings?: readonly DiscoveryFinding[];
+  evaluated?: boolean;
 }) {
-  const counts = configurationCounts(value);
-  const names = (family: string) =>
-    value.systems
-      .filter((s) => s.family === family)
-      .map((s) => s.name || "New system")
-      .join(" · ");
-  const cards = equipmentFamilies.filter(
-    (f) => f.id !== "Infrastructure" && (f.id !== "Other" || counts.families.Other > 0),
+  const counts = configurationCounts(value, findings);
+  const groups =
+    value.schema_version === 2 ? catalogueGroups : equipmentFamilies;
+  const cards = groups.filter(
+    (f) =>
+      f.id !== "Infrastructure" &&
+      (f.id !== "Other" || counts.families.Other > 0),
   );
-  const infra = counts.families.Infrastructure;
-  const card = (f: (typeof equipmentFamilies)[number], infraCard = false) => {
-    const count = counts.families[f.id];
-    return (
-      <div
-        key={f.id}
-        className={`es02-family${infraCard ? " es02-family-infra" : ""}`}
-      >
-        <button
-          type="button"
-          className="es02-family-filter"
-          disabled={!onFilter && !onConfigure}
-          aria-pressed={onFilter ? filter === f.id : undefined}
-          aria-label={`${f.label} ${count} systems`}
-          onClick={() => (onFilter ? onFilter(f.id) : onConfigure?.())}
-        >
-          <strong>
-            <Icon name={familyGlyph[f.id]} />
-            {f.label}
-          </strong>
-          <span>{plural(count, "system")}</span>
-          <small>{count ? names(f.id) : variant === "full" ? familyHint[f.id] : ""}</small>
-        </button>
-        {onAdd && !infraCard && (
-          <button
-            type="button"
-            className="es02-button es02-button-sm es02-family-add"
-            disabled={readOnly}
-            aria-label={`Add ${f.label} system`}
-            onClick={() => onAdd(f.id)}
-          >
-            <Icon name="plus" className="es02-icon es02-icon-sm" />
-            Add
-          </button>
-        )}
-      </div>
-    );
+  const state = (id: string) => {
+    const systems = value.systems.filter((s) => s.family === id);
+    const count = systems.length;
+    const pending = systems.filter((s) =>
+      findings.some(
+        (f) =>
+          f.step === "Configuration" &&
+          f.category === "Readiness" &&
+          f.entity_id === s.id,
+      ),
+    ).length;
+    return {
+      count,
+      tone: !count ? "empty" : !evaluated || pending ? "pending" : "confirmed",
+      text: !count
+        ? "No systems"
+        : !evaluated
+          ? "Not checked"
+          : pending
+            ? `${pending} to confirm`
+            : "Confirmed",
+    };
   };
-  const infraFamily = equipmentFamilies.find((f) => f.id === "Infrastructure")!;
+  const infra = state("Infrastructure");
   return (
     <section
       className="es02-section es02-families"
+      data-variant={variant}
       aria-label="Equipment families in this estimate"
     >
       <div className="es02-section-head">
         <div>
           <h2>Equipment families in this estimate</h2>
-          <p>
-            {plural(counts.systems, "system")} · each counted once
-          </p>
+          <p>{plural(counts.systems, "system")}, each counted once</p>
         </div>
         <div className="es02-actions">
           {onConfigure && (
             <button type="button" className="es02-link" onClick={onConfigure}>
               Configure systems
-              <Icon name="arrow-right" className="es02-icon es02-icon-sm" />
+              <Icon name="arrow-right" />
             </button>
           )}
           {onFilter && (
@@ -303,27 +317,79 @@ export function FamilyOverview({
         </div>
       </div>
       <div className="es02-family-grid">
-        {cards.map((f) => card(f))}
-        {variant === "compact" && card(infraFamily, true)}
+        {cards.map((f) => {
+          const status = state(f.id);
+          return (
+            <div key={f.id} className="es02-family" data-state={status.tone}>
+              <button
+                type="button"
+                className="es02-family-filter"
+                disabled={!onFilter && !onConfigure}
+                aria-pressed={onFilter ? filter === f.id : undefined}
+                aria-label={`${f.label} ${status.count} systems`}
+                onClick={() => (onFilter ? onFilter(f.id) : onConfigure?.())}
+              >
+                <strong>
+                  <Icon name={familyIcon(f.id)} />
+                  {f.label}
+                  {status.count > 0 && (
+                    <span className="es02-count">{status.count}</span>
+                  )}
+                </strong>
+                {variant === "full" && (
+                  <small>
+                    {status.count
+                      ? value.systems
+                          .filter((s) => s.family === f.id)
+                          .map((s) => s.name || "New system")
+                          .join(" · ")
+                      : familyHint[f.id]}
+                  </small>
+                )}
+                <span className="es02-family-state">
+                  {status.tone === "confirmed" ? (
+                    <Icon name="check" />
+                  ) : status.tone === "pending" ? (
+                    <span className="es02-dot es02-dot-warning" />
+                  ) : null}
+                  {status.text}
+                </span>
+              </button>
+              {variant === "full" && onAdd && !readOnly && (
+                <button
+                  type="button"
+                  className="es02-button es02-family-add"
+                  aria-label={`Add ${f.label} system`}
+                  onClick={() => onAdd(f.id)}
+                >
+                  <Icon name="plus" />
+                  Add
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
-      {variant === "full" && (
-        <div className="es02-families-row">
-          <strong>
-            <Icon name="infrastructure" />
-            Shared infrastructure
-          </strong>
-          <span>
-            {plural(infra, "system")}
-            {infra ? ` · ${names("Infrastructure")}` : ""} · covers all areas and is
-            counted once
-          </span>
-          {onConfigure && (
-            <button type="button" className="es02-link" onClick={onConfigure}>
-              Filter
-            </button>
-          )}
-        </div>
-      )}
+      <div className="es02-families-row" data-state={infra.tone}>
+        <strong>
+          <Icon name="infrastructure" />
+          Shared infrastructure
+        </strong>
+        <span>
+          {infra.tone === "confirmed" && <Icon name="check" />}
+          {plural(infra.count, "system")} · {infra.text.toLowerCase()} · counted
+          once across its area coverage
+        </span>
+        <button
+          type="button"
+          className="es02-link"
+          onClick={() =>
+            onFilter ? onFilter("Infrastructure") : onConfigure?.()
+          }
+        >
+          Filter
+        </button>
+      </div>
     </section>
   );
 }
@@ -356,7 +422,8 @@ export function AreasEditor({
   const growing = value.areas.filter((x) => x.purpose === "Growing").length;
   const remove = (area: Area) => {
     const dependants =
-      value.systems.filter((s) => s.coverage.area_ids.includes(area.id)).length +
+      value.systems.filter((s) => s.coverage.area_ids.includes(area.id))
+        .length +
       value.responsibilities.filter((r) => r.area_ids.includes(area.id)).length;
     if (dependants) {
       window.alert(
@@ -369,7 +436,10 @@ export function AreasEditor({
         `Remove ${area.label || "this area"} from the working proposal? Saved history and prices remain unchanged.`,
       )
     ) {
-      onChange({ ...value, areas: value.areas.filter((x) => x.id !== area.id) });
+      onChange({
+        ...value,
+        areas: value.areas.filter((x) => x.id !== area.id),
+      });
       setSelected(null);
     }
   };
@@ -379,15 +449,15 @@ export function AreasEditor({
         <div>
           <h2>Areas</h2>
           <p>
-            Stable estimating areas within the one site. An ancillary location is
-            scoped, but it is not a growing area.
+            Stable estimating areas within the one site. An ancillary location
+            is scoped, but it is not a growing area.
           </p>
         </div>
         <div className="es02-actions">
           <button
             type="button"
             className="es02-button"
-            disabled={readOnly}
+            hidden={readOnly}
             onClick={() => {
               const id = crypto.randomUUID();
               onChange({
@@ -641,13 +711,40 @@ export function SystemsEditor({
   readOnly = false,
   evaluated = true,
   focus,
-}: Props) {
+  addRequest,
+}: Props & { addRequest?: { family: string; nonce: number } | null }) {
   const [family, setFamily] = useState(""),
     [area, setArea] = useState(""),
     [search, setSearch] = useState(""),
     [selected, setSelected] = useState<string | null>(null),
     [review, setReview] = useState(false),
-    [technical, setTechnical] = useState(false);
+    [technical, setTechnical] = useState(false),
+    [upgrade, setUpgrade] = useState(false),
+    [mobileEditor, setMobileEditor] = useState(false);
+  const groups =
+    value.schema_version === 2 ? catalogueGroups : equipmentFamilies;
+  const editorRef = useRef<HTMLElement>(null);
+  const openSystem = (id: string) => {
+    setSelected(id);
+    setMobileEditor(true);
+    window.setTimeout(
+      () =>
+        editorRef.current?.querySelector<HTMLInputElement>("input")?.focus(),
+      0,
+    );
+  };
+  const closeSystem = () => {
+    setMobileEditor(false);
+    window.setTimeout(
+      () =>
+        document
+          .querySelector<HTMLButtonElement>(
+            `.es02-system-cards [data-system-id="${selected}"]`,
+          )
+          ?.focus(),
+      0,
+    );
+  };
   const identity = useIdentity(),
     preferences = useScopePreferences(
       `${identity.workspace_id}:${identity.actor_id}:es02-systems`,
@@ -675,8 +772,8 @@ export function SystemsEditor({
   const rows = filterSystems(value, { family, area, search })
       .sort(
         (a, b) =>
-          equipmentFamilies.findIndex((f) => f.id === a.family) -
-            equipmentFamilies.findIndex((f) => f.id === b.family) ||
+          groups.findIndex((f) => f.id === a.family) -
+            groups.findIndex((f) => f.id === b.family) ||
           a.name.localeCompare(b.name),
       )
       .filter((s) => !review || findings.some((f) => f.entity_id === s.id)),
@@ -696,10 +793,14 @@ export function SystemsEditor({
     (f) => {
       clearFilters();
       setSelected(f.entity_id);
-      if (f.field !== "coverage") setTechnical(true);
+      setMobileEditor(true);
+      if (!["coverage", "name", "family", "category_id"].includes(f.field))
+        setTechnical(true);
     },
     (f) => {
       if (f.field === "coverage") return "coverage.mode";
+      if (["name", "family", "category_id"].includes(f.field))
+        return `system.${f.field}`;
       const fact = value.facts.find(
         (x) => x.system_id === f.entity_id && x.field === f.field,
       );
@@ -718,7 +819,10 @@ export function SystemsEditor({
         s.id === system.id ? { ...s, ...patch } : s,
       ),
     });
-  const add = (family: Family = "Other") => {
+  const add = (
+    family: ProposedSystem["family"] = "Other",
+    category_id?: CategoryId | null,
+  ) => {
     const id = crypto.randomUUID();
     onChange({
       ...value,
@@ -729,6 +833,9 @@ export function SystemsEditor({
           lineage: null,
           name: "",
           family,
+          ...(value.schema_version === 2
+            ? { category_id: category_id ?? null }
+            : {}),
           type: "",
           intent: "New",
           proposed_work: "",
@@ -745,7 +852,7 @@ export function SystemsEditor({
       ],
     });
     clearFilters();
-    setSelected(id);
+    openSystem(id);
   };
   const removeSystem = (target: ProposedSystem) => {
     const factIds = value.facts
@@ -769,6 +876,7 @@ export function SystemsEditor({
         })),
       });
       setSelected(null);
+      setMobileEditor(false);
     }
   };
   const fact = (
@@ -822,12 +930,40 @@ export function SystemsEditor({
   const fieldLabel = (id: string) =>
     configurationFields.find((d) => d.id === id)?.label ?? id;
   return (
-    <>
+    <div
+      className="es02-configuration"
+      data-mobile-editor={mobileEditor && !!system ? "open" : undefined}
+    >
+      {upgrade && (
+        <CatalogueUpgrade
+          value={value}
+          ownerId={options.owner.id}
+          onChange={onChange}
+          close={() => setUpgrade(false)}
+        />
+      )}
+      {value.schema_version === 1 && (
+        <div className="es02-legacy-catalogue">
+          <span>
+            Historical equipment catalogue · original classifications retained
+          </span>
+          {!readOnly && (
+            <button
+              type="button"
+              className="es02-button"
+              onClick={() => setUpgrade(true)}
+            >
+              Use six-family catalogue
+            </button>
+          )}
+        </div>
+      )}
       <FamilyOverview
         value={value}
         filter={family}
         onFilter={(f) => changeFilter(() => setFamily(f))}
-        onAdd={add}
+        findings={findings}
+        evaluated={evaluated}
         readOnly={readOnly}
         variant="compact"
       />
@@ -840,7 +976,11 @@ export function SystemsEditor({
             draft. Equipment suitability needs a technical review.
           </p>
         </div>
-        <button type="button" className="es02-link" onClick={() => onEvidence()}>
+        <button
+          type="button"
+          className="es02-link"
+          onClick={() => onEvidence()}
+        >
           <Icon name="document" className="es02-icon es02-icon-sm" />
           View configuration evidence
         </button>
@@ -928,7 +1068,10 @@ export function SystemsEditor({
                     disabled={i <= 1}
                     onClick={() => moveColumn(c, -1)}
                   >
-                    <Icon name="arrow-left" className="es02-icon es02-icon-sm" />
+                    <Icon
+                      name="arrow-left"
+                      className="es02-icon es02-icon-sm"
+                    />
                   </button>
                   <button
                     type="button"
@@ -937,7 +1080,10 @@ export function SystemsEditor({
                     disabled={i === 0 || i === columns.length - 1}
                     onClick={() => moveColumn(c, 1)}
                   >
-                    <Icon name="arrow-right" className="es02-icon es02-icon-sm" />
+                    <Icon
+                      name="arrow-right"
+                      className="es02-icon es02-icon-sm"
+                    />
                   </button>
                 </div>
               ))}
@@ -963,15 +1109,24 @@ export function SystemsEditor({
             </button>
           </RowMenu>
           <span className="es02-spacer" />
-          <button
-            type="button"
-            className="es02-button es02-button-primary"
-            disabled={readOnly}
-            onClick={() => add()}
-          >
-            <Icon name="plus" className="es02-icon es02-icon-sm" />
-            Add system
-          </button>
+          {!readOnly &&
+            (value.schema_version === 2 ? (
+              <AddSystemMenu
+                key={addRequest?.nonce ?? 0}
+                onAdd={add}
+                initialFamily={addRequest?.family ?? family}
+                autoOpen={!!addRequest}
+              />
+            ) : (
+              <button
+                type="button"
+                className="es02-button es02-button-primary"
+                onClick={() => add()}
+              >
+                <Icon name="plus" />
+                Add system
+              </button>
+            ))}
         </div>
         {!evaluated && (
           <p className="es02-attention" role="status">
@@ -1003,6 +1158,27 @@ export function SystemsEditor({
             </button>
           </div>
         )}
+        <div className="es02-system-cards" aria-label="Systems list">
+          {rows.map((s) => (
+            <button
+              type="button"
+              key={s.id}
+              data-system-id={s.id}
+              aria-label={s.name || "New system"}
+              onClick={() => openSystem(s.id)}
+            >
+              <Icon name={familyIcon(s.family)} />
+              <span>
+                <strong>{s.name || "New system"}</strong>
+                <span>{compactCoverage(coverageLabel(s, value.areas))}</span>
+                <small>
+                  {intentLabel(s.intent)} · {stateWord(s)}
+                </small>
+              </span>
+              <Icon name="chevron-right" />
+            </button>
+          ))}
+        </div>
         <TableScroll label="Systems table">
           <table className="es02-systems-table">
             <thead>
@@ -1014,7 +1190,8 @@ export function SystemsEditor({
                       key={c}
                       scope="col"
                       style={{
-                        minWidth: preferences.value.widths[c] ?? defaultWidth[c] ?? 140,
+                        minWidth:
+                          preferences.value.widths[c] ?? defaultWidth[c] ?? 140,
                         width: preferences.value.widths[c],
                       }}
                     >
@@ -1032,9 +1209,12 @@ export function SystemsEditor({
                     key="name"
                     className="es02-cell-link"
                     aria-pressed={system?.id === s.id}
-                    onClick={() => setSelected(s.id)}
+                    onClick={() => openSystem(s.id)}
                   >
-                    <Icon name={familyIcon(s.family) ?? "other"} className="es02-icon es02-icon-sm" />
+                    <Icon
+                      name={familyIcon(s.family) ?? "other"}
+                      className="es02-icon es02-icon-sm"
+                    />
                     {s.name || "New system"}
                   </button>,
                   <span key="coverage" title={coverageLabel(s, value.areas)}>
@@ -1044,15 +1224,18 @@ export function SystemsEditor({
                     <span>
                       {s.equipment_ids.map((id, i) => {
                         const [reference, ...rest] = (
-                          options.equipment.find((e) => e.id === id)?.display_name ??
-                          "Saved equipment"
+                          options.equipment.find((e) => e.id === id)
+                            ?.display_name ?? "Saved equipment"
                         ).split(" · ");
                         return (
                           <span key={id}>
                             {i > 0 ? ", " : ""}
                             {reference}
                             {rest.length > 0 && (
-                              <span className="es02-secondary"> · {rest.join(" · ")}</span>
+                              <span className="es02-secondary">
+                                {" "}
+                                · {rest.join(" · ")}
+                              </span>
                             )}
                           </span>
                         );
@@ -1096,7 +1279,9 @@ export function SystemsEditor({
                   {plural(value.systems.length, "system")} · no selection
                   {search ? ` · nothing matches “${search}”` : ""}
                   {family ? ` in ${familyLabel(family)}` : ""}
-                  {area ? ` in ${value.areas.find((a) => a.id === area)?.label ?? "this area"}` : ""}
+                  {area
+                    ? ` in ${value.areas.find((a) => a.id === area)?.label ?? "this area"}`
+                    : ""}
                   {review ? " · no systems carry a finding" : ""}.
                 </>
               ) : (
@@ -1104,7 +1289,11 @@ export function SystemsEditor({
               )}
             </span>
             {(search || family || area || review) && (
-              <button type="button" className="es02-button es02-button-sm" onClick={() => changeFilter(clearFilters)}>
+              <button
+                type="button"
+                className="es02-button es02-button-sm"
+                onClick={() => changeFilter(clearFilters)}
+              >
                 Clear filters
               </button>
             )}
@@ -1122,11 +1311,31 @@ export function SystemsEditor({
           <span>Shared systems are counted once.</span>
         </p>
         {system ? (
-          <section className="es02-editor" aria-label="Selected system editor">
+          <section
+            ref={editorRef}
+            className="es02-editor es02-system-editor"
+            aria-label="Selected system editor"
+          >
+            <header className="es02-system-phone-head">
+              <button
+                type="button"
+                className="es02-button es02-button-icon"
+                aria-label="Back to systems"
+                onClick={closeSystem}
+              >
+                <Icon name="chevron-left" />
+              </button>
+              <div>
+                <strong>{system.name || "New system"}</strong>
+                <small>Configuration · working copy</small>
+              </div>
+            </header>
             <div className="es02-editor-head">
               <h3>{system.name || "New system"}</h3>
               <Tag tone={system.intent === "New" ? "info" : "neutral"}>
-                {system.intent === "New" ? "Proposed system" : "Existing equipment"}
+                {system.intent === "New"
+                  ? "Proposed system"
+                  : "Existing equipment"}
               </Tag>
               <div className="es02-actions">
                 {system.equipment_ids.map((id) => (
@@ -1149,16 +1358,22 @@ export function SystemsEditor({
                   onClick={() => setTechnical(!technical)}
                 >
                   Technical details
-                  <Icon name="chevron-down" className="es02-icon es02-icon-sm es02-icon-toggle" />
+                  <Icon
+                    name="chevron-down"
+                    className="es02-icon es02-icon-sm es02-icon-toggle"
+                  />
                 </button>
-                <button
-                  type="button"
-                  className="es02-button es02-button-danger"
-                  disabled={readOnly}
-                  onClick={() => removeSystem(system)}
-                >
-                  Remove system
-                </button>
+                {!readOnly && (
+                  <RowMenu label="System actions">
+                    <button
+                      type="button"
+                      role="menuitem"
+                      onClick={() => removeSystem(system)}
+                    >
+                      Remove system
+                    </button>
+                  </RowMenu>
+                )}
               </div>
             </div>
             <fieldset disabled={readOnly} className="es02-fields">
@@ -1175,27 +1390,50 @@ export function SystemsEditor({
                     label="Equipment family"
                     name="system.family"
                     value={system.family}
-                    options={equipmentFamilies.map((f) => ({
+                    options={groups.map((f) => ({
                       id: f.id,
                       display_name: f.label,
                     }))}
-                    onChange={(family) => update({ family: family as Family })}
+                    onChange={(family) =>
+                      update({
+                        family: family as ProposedSystem["family"],
+                        ...(value.schema_version === 2
+                          ? { category_id: null }
+                          : {}),
+                      })
+                    }
                   />
-                  <small className="es02-subtle" style={{ display: "block", marginTop: -8, marginBottom: 12, fontSize: 12 }}>
-                    Presentation family. Separate from the Product supply, Defined
-                    labour and Freight work tags.
+                  <small
+                    className="es02-subtle"
+                    style={{
+                      display: "block",
+                      marginTop: -8,
+                      marginBottom: 12,
+                      fontSize: 12,
+                    }}
+                  >
+                    Presentation family. Separate from the Product supply,
+                    Defined labour and Freight work tags.
                   </small>
                 </div>
-                <LabelledChips
-                  label="Equipment references"
-                  options={options.equipment.map((e) => ({
-                    id: e.id,
-                    label: e.display_name,
-                  }))}
-                  values={system.equipment_ids}
-                  onChange={(equipment_ids) => update({ equipment_ids })}
-                  empty="No permitted equipment in this Site · the system stays Proposed"
-                  hint="Selecting equipment offers observed facts; it never confirms a requirement."
+                {value.schema_version === 2 &&
+                  system.family !== "Infrastructure" && (
+                    <SelectField
+                      label="Category"
+                      name="system.category_id"
+                      value={system.category_id ?? ""}
+                      options={categoryOptions(system.family)}
+                      onChange={(category_id) =>
+                        update({ category_id: category_id as CategoryId })
+                      }
+                    />
+                  )}
+                <Field
+                  label="System type"
+                  name="system.type"
+                  value={system.type}
+                  maxLength={100}
+                  onChange={(type) => update({ type })}
                 />
                 <SelectField
                   label="Intent"
@@ -1210,12 +1448,16 @@ export function SystemsEditor({
                     update({ intent: intent as ProposedSystem["intent"] })
                   }
                 />
-                <Field
-                  label="System type"
-                  name="system.type"
-                  value={system.type}
-                  maxLength={100}
-                  onChange={(type) => update({ type })}
+                <LabelledChips
+                  label="Equipment references"
+                  options={options.equipment.map((e) => ({
+                    id: e.id,
+                    label: e.display_name,
+                  }))}
+                  values={system.equipment_ids}
+                  onChange={(equipment_ids) => update({ equipment_ids })}
+                  empty="No permitted equipment in this Site · the system stays Proposed"
+                  hint="Selecting equipment offers observed facts; it never confirms a requirement."
                 />
                 <SelectField
                   label="Area coverage"
@@ -1223,7 +1465,10 @@ export function SystemsEditor({
                   value={system.coverage.mode}
                   options={[
                     { id: "Defined", display_name: "Defined area coverage" },
-                    { id: "NotAreaSpecific", display_name: "Not area-specific" },
+                    {
+                      id: "NotAreaSpecific",
+                      display_name: "Not area-specific",
+                    },
                     { id: "Unknown", display_name: "Unknown coverage" },
                   ]}
                   onChange={(mode) =>
@@ -1242,7 +1487,10 @@ export function SystemsEditor({
                   {system.coverage.mode === "Defined" ? (
                     <LabelledChips
                       label="Covered areas"
-                      options={value.areas.map((a) => ({ id: a.id, label: a.label || "New area" }))}
+                      options={value.areas.map((a) => ({
+                        id: a.id,
+                        label: a.label || "New area",
+                      }))}
                       values={system.coverage.area_ids}
                       onChange={(area_ids) =>
                         update({ coverage: { ...system.coverage, area_ids } })
@@ -1267,7 +1515,10 @@ export function SystemsEditor({
                         value={system.coverage.source ?? ""}
                         onChange={(source) =>
                           update({
-                            coverage: { ...system.coverage, source: source || null },
+                            coverage: {
+                              ...system.coverage,
+                              source: source || null,
+                            },
                           })
                         }
                         maxLength={500}
@@ -1279,7 +1530,9 @@ export function SystemsEditor({
                             value={system.coverage.follow_up}
                             owners={options.owners}
                             onChange={(follow_up) =>
-                              update({ coverage: { ...system.coverage, follow_up } })
+                              update({
+                                coverage: { ...system.coverage, follow_up },
+                              })
                             }
                           />
                         </div>
@@ -1323,7 +1576,9 @@ export function SystemsEditor({
             <h4 className="es02-h3">Evidence</h4>
             {systemFacts.length ? (
               <div className="es02-facts">
-                <TableScroll label={`Evidence facts for ${system.name || "this system"}`}>
+                <TableScroll
+                  label={`Evidence facts for ${system.name || "this system"}`}
+                >
                   <table>
                     <thead>
                       <tr>
@@ -1352,18 +1607,25 @@ export function SystemsEditor({
                           <td>
                             {f.source || (
                               <span className="es02-secondary">
-                                {f.state === "Unknown" ? "Check required" : "No source"}
+                                {f.state === "Unknown"
+                                  ? "Check required"
+                                  : "No source"}
                               </span>
                             )}{" "}
-                            <StateTag value={f.state === "Unknown" ? "Not verified" : f.state} />
+                            <StateTag
+                              value={
+                                f.state === "Unknown" ? "Not verified" : f.state
+                              }
+                            />
                             {f.follow_up && (
                               <>
                                 <br />
                                 <span className="es02-secondary">
                                   Follow-up ·{" "}
                                   {f.follow_up.reason || "reason to record"} ·{" "}
-                                  {options.owners.find((o) => o.id === f.follow_up?.owner_id)
-                                    ?.display_name ?? "Recorded owner"}
+                                  {options.owners.find(
+                                    (o) => o.id === f.follow_up?.owner_id,
+                                  )?.display_name ?? "Recorded owner"}
                                 </span>
                               </>
                             )}
@@ -1381,8 +1643,16 @@ export function SystemsEditor({
                 stay separate.
               </p>
             )}
-            <div id={technicalId} hidden={!technical} className="es02-details-body">
-              <fieldset disabled={readOnly} className="es02-fields" aria-label="Technical details">
+            <div
+              id={technicalId}
+              hidden={!technical}
+              className="es02-details-body"
+            >
+              <fieldset
+                disabled={readOnly}
+                className="es02-fields"
+                aria-label="Technical details"
+              >
                 <p className="es02-note">
                   Required capacity and observed equipment capability are
                   separate. No calculator or engineering certification is
@@ -1398,11 +1668,17 @@ export function SystemsEditor({
                           type="button"
                           className="es02-link"
                           onClick={() => {
-                            if (window.confirm("Remove this working fact and its follow-ups?"))
+                            if (
+                              window.confirm(
+                                "Remove this working fact and its follow-ups?",
+                              )
+                            )
                               onChange({
                                 ...value,
                                 facts: value.facts.filter((x) => x.id !== f.id),
-                                follow_ups: value.follow_ups.filter((x) => x.fact_id !== f.id),
+                                follow_ups: value.follow_ups.filter(
+                                  (x) => x.fact_id !== f.id,
+                                ),
                               });
                           }}
                         >
@@ -1415,21 +1691,36 @@ export function SystemsEditor({
                         label="Fact role"
                         name={`${f.id}.role`}
                         value={f.role}
-                        options={labels(["Requirement", "Observation", "Capability", "Assumption"])}
-                        onChange={(role) => fact(f, { role: role as ConfigurationFact["role"] })}
+                        options={labels([
+                          "Requirement",
+                          "Observation",
+                          "Capability",
+                          "Assumption",
+                        ])}
+                        onChange={(role) =>
+                          fact(f, { role: role as ConfigurationFact["role"] })
+                        }
                       />
                       <SelectField
                         label="Fact state"
                         name={`${f.id}.state`}
                         value={f.state}
-                        options={labels(["Answered", "Confirmed", "Unknown", "Assumed"])}
+                        options={labels([
+                          "Answered",
+                          "Confirmed",
+                          "Unknown",
+                          "Assumed",
+                        ])}
                         onChange={(state) =>
                           fact(
                             f,
                             {
                               state: state as ScopeState,
                               ...(state === "Unknown" ? { value: null } : {}),
-                              follow_up: state === "Confirmed" ? null : (f.follow_up ?? own),
+                              follow_up:
+                                state === "Confirmed"
+                                  ? null
+                                  : (f.follow_up ?? own),
                             },
                             true,
                           )
@@ -1441,9 +1732,17 @@ export function SystemsEditor({
                         value={f.value == null ? "" : String(f.value)}
                         onChange={(v) =>
                           fact(f, {
-                            value: f.unit === "Zones" ? (v === "" ? null : Number(v)) : v,
+                            value:
+                              f.unit === "Zones"
+                                ? v === ""
+                                  ? null
+                                  : Number(v)
+                                : v,
                             ...(f.state === "Unknown"
-                              ? { state: "Answered", follow_up: f.follow_up ?? own }
+                              ? {
+                                  state: "Answered",
+                                  follow_up: f.follow_up ?? own,
+                                }
                               : {}),
                           })
                         }
@@ -1459,7 +1758,10 @@ export function SystemsEditor({
                     </div>
                     <LabelledChips
                       label={`${fieldLabel(f.field)} evidence`}
-                      options={value.evidence.map((e) => ({ id: e.id, label: e.observation || "New observation" }))}
+                      options={value.evidence.map((e) => ({
+                        id: e.id,
+                        label: e.observation || "New observation",
+                      }))}
                       values={f.evidence_ids}
                       onChange={(evidence_ids) => fact(f, { evidence_ids })}
                       empty="No evidence recorded yet"
@@ -1481,7 +1783,13 @@ export function SystemsEditor({
                     value=""
                     empty="Choose a supported fact…"
                     options={configurationFields
-                      .filter((d) => !value.facts.some((f) => f.system_id === system.id && f.field === d.id))
+                      .filter(
+                        (d) =>
+                          !value.facts.some(
+                            (f) =>
+                              f.system_id === system.id && f.field === d.id,
+                          ),
+                      )
                       .map((d) => ({ id: d.id, display_name: d.label }))}
                     onChange={(id) => {
                       const d = configurationFields.find((f) => f.id === id);
@@ -1510,6 +1818,13 @@ export function SystemsEditor({
                 </div>
               </fieldset>
             </div>
+            <button
+              type="button"
+              className="es02-button es02-system-done"
+              onClick={closeSystem}
+            >
+              Done
+            </button>
           </section>
         ) : (
           <p className="es02-editor-prompt">
@@ -1518,7 +1833,7 @@ export function SystemsEditor({
           </p>
         )}
       </section>
-    </>
+    </div>
   );
 }
 
@@ -1541,7 +1856,10 @@ export function ResponsibilitiesEditor({
     focus,
     (f) => value.responsibilities.some((x) => x.id === f.entity_id),
     (f) => setSelected(f.entity_id),
-    (f) => (f.entity_id ? `${f.entity_id}.${f.field === "party" ? "party" : "work"}` : null),
+    (f) =>
+      f.entity_id
+        ? `${f.entity_id}.${f.field === "party" ? "party" : "work"}`
+        : null,
   );
   const update = (patch: Partial<Responsibility>) =>
     r &&
@@ -1553,15 +1871,29 @@ export function ResponsibilitiesEditor({
     });
   const subject = (x: Responsibility) =>
     [
-      ...x.system_ids.map((id) => value.systems.find((s) => s.id === id)?.name ?? "Saved system"),
-      ...x.area_ids.map((id) => value.areas.find((a) => a.id === id)?.label ?? "Saved area"),
+      ...x.system_ids.map(
+        (id) => value.systems.find((s) => s.id === id)?.name ?? "Saved system",
+      ),
+      ...x.area_ids.map(
+        (id) => value.areas.find((a) => a.id === id)?.label ?? "Saved area",
+      ),
     ].join(" · ");
-  const included = value.responsibilities.filter((x) => x.participation === "Included").length,
-    optional = value.responsibilities.filter((x) => x.participation === "Optional").length,
-    excluded = value.responsibilities.filter((x) => x.participation === "Excluded").length,
+  const included = value.responsibilities.filter(
+      (x) => x.participation === "Included",
+    ).length,
+    optional = value.responsibilities.filter(
+      (x) => x.participation === "Optional",
+    ).length,
+    excluded = value.responsibilities.filter(
+      (x) => x.participation === "Excluded",
+    ).length,
     gaps = value.responsibilities.filter((x) => x.party === "Unknown").length;
   const removeItem = (x: Responsibility) => {
-    if (window.confirm(`Remove ${x.work || "this work item"} from the working proposal?`)) {
+    if (
+      window.confirm(
+        `Remove ${x.work || "this work item"} from the working proposal?`,
+      )
+    ) {
       onChange({
         ...value,
         responsibilities: value.responsibilities.filter((y) => y.id !== x.id),
@@ -1584,7 +1916,7 @@ export function ResponsibilitiesEditor({
             <button
               type="button"
               className="es02-button"
-              disabled={readOnly}
+              hidden={readOnly}
               onClick={() => {
                 const id = crypto.randomUUID();
                 onChange({
@@ -1639,7 +1971,9 @@ export function ResponsibilitiesEditor({
               <tbody>
                 {value.responsibilities.map((x) => (
                   <tr key={x.id} data-selected={x.id === selected}>
-                    <td>{subject(x) || <span className="es02-secondary">—</span>}</td>
+                    <td>
+                      {subject(x) || <span className="es02-secondary">—</span>}
+                    </td>
                     <td>
                       <button
                         type="button"
@@ -1651,7 +1985,15 @@ export function ResponsibilitiesEditor({
                       </button>
                     </td>
                     <td>
-                      <Tag tone={x.participation === "Included" ? "neutral" : x.participation === "Optional" ? "info" : "danger"}>
+                      <Tag
+                        tone={
+                          x.participation === "Included"
+                            ? "neutral"
+                            : x.participation === "Optional"
+                              ? "info"
+                              : "danger"
+                        }
+                      >
                         {participationLabel(x.participation)}
                       </Tag>
                     </td>
@@ -1662,22 +2004,43 @@ export function ResponsibilitiesEditor({
                         partyLabel(x.party)
                       )}
                     </td>
-                    <td>{x.requested_on ?? <span className="es02-secondary">—</span>}</td>
-                    <td>{x.source || <span className="es02-secondary">—</span>}</td>
                     <td>
-                      <StateTag value={x.state === "Unknown" ? "Deferred" : x.state} />
+                      {x.requested_on ?? (
+                        <span className="es02-secondary">—</span>
+                      )}
+                    </td>
+                    <td>
+                      {x.source || <span className="es02-secondary">—</span>}
+                    </td>
+                    <td>
+                      <StateTag
+                        value={x.state === "Unknown" ? "Deferred" : x.state}
+                      />
                     </td>
                     <td>
                       {x.party === "Unknown"
                         ? "Assign party"
-                        : x.follow_up?.reason || <span className="es02-secondary">—</span>}
+                        : x.follow_up?.reason || (
+                            <span className="es02-secondary">—</span>
+                          )}
                     </td>
                     <td>
-                      <RowMenu label={`Actions for ${x.work || "new work item"}`}>
-                        <button type="button" role="menuitem" onClick={() => setSelected(x.id)}>
+                      <RowMenu
+                        label={`Actions for ${x.work || "new work item"}`}
+                      >
+                        <button
+                          type="button"
+                          role="menuitem"
+                          onClick={() => setSelected(x.id)}
+                        >
                           Edit work item
                         </button>
-                        <button type="button" role="menuitem" disabled={readOnly} onClick={() => removeItem(x)}>
+                        <button
+                          type="button"
+                          role="menuitem"
+                          disabled={readOnly}
+                          onClick={() => removeItem(x)}
+                        >
                           Remove work item
                         </button>
                       </RowMenu>
@@ -1699,16 +2062,26 @@ export function ResponsibilitiesEditor({
               <strong>{included} included</strong> · {optional} optional extra ·{" "}
               {excluded} excluded
             </span>
-            <span>{plural(gaps, "responsibility gap", "No responsibility gaps")}</span>
+            <span>
+              {plural(gaps, "responsibility gap", "No responsibility gaps")}
+            </span>
           </p>
         )}
         {r && (
-          <fieldset disabled={readOnly} className="es02-editor es02-fields" aria-label="Selected work item editor">
+          <fieldset
+            disabled={readOnly}
+            className="es02-editor es02-fields"
+            aria-label="Selected work item editor"
+          >
             <div className="es02-editor-head">
               <h3>{r.work || "New work item"}</h3>
               <StateTag value={r.state} />
               <div className="es02-actions">
-                <button type="button" className="es02-button es02-button-danger" onClick={() => removeItem(r)}>
+                <button
+                  type="button"
+                  className="es02-button es02-button-danger"
+                  onClick={() => removeItem(r)}
+                >
                   Remove work item
                 </button>
               </div>
@@ -1734,7 +2107,10 @@ export function ResponsibilitiesEditor({
                   { id: "Excluded", display_name: "Excluded" },
                 ]}
                 onChange={(participation) =>
-                  update({ participation: participation as Responsibility["participation"] })
+                  update({
+                    participation:
+                      participation as Responsibility["participation"],
+                  })
                 }
               />
               <SelectField
@@ -1747,14 +2123,18 @@ export function ResponsibilitiesEditor({
                   { id: "Supplier", display_name: "Supplier" },
                   { id: "Unknown", display_name: "Unknown" },
                 ]}
-                onChange={(party) => update({ party: party as Responsibility["party"] })}
+                onChange={(party) =>
+                  update({ party: party as Responsibility["party"] })
+                }
               />
               <Field
                 label="Requested date"
                 name={`${r.id}.date`}
                 type="date"
                 value={r.requested_on ?? ""}
-                onChange={(requested_on) => update({ requested_on: requested_on || null })}
+                onChange={(requested_on) =>
+                  update({ requested_on: requested_on || null })
+                }
                 hint="A requested date is not a delivery commitment."
               />
               <Field
@@ -1768,24 +2148,36 @@ export function ResponsibilitiesEditor({
                 label="Responsibility state"
                 name={`${r.id}.state`}
                 value={r.state}
-                options={labels(["Answered", "Confirmed", "Unknown", "Assumed"])}
+                options={labels([
+                  "Answered",
+                  "Confirmed",
+                  "Unknown",
+                  "Assumed",
+                ])}
                 onChange={(state) =>
                   update({
                     state: state as ScopeState,
-                    follow_up: state === "Confirmed" ? null : (r.follow_up ?? own),
+                    follow_up:
+                      state === "Confirmed" ? null : (r.follow_up ?? own),
                   })
                 }
               />
               <LabelledChips
                 label="Areas"
-                options={value.areas.map((a) => ({ id: a.id, label: a.label || "New area" }))}
+                options={value.areas.map((a) => ({
+                  id: a.id,
+                  label: a.label || "New area",
+                }))}
                 values={r.area_ids}
                 onChange={(area_ids) => update({ area_ids })}
                 empty="No areas recorded"
               />
               <LabelledChips
                 label="Systems"
-                options={value.systems.map((s) => ({ id: s.id, label: s.name || "New system" }))}
+                options={value.systems.map((s) => ({
+                  id: s.id,
+                  label: s.name || "New system",
+                }))}
                 values={r.system_ids}
                 onChange={(system_ids) => update({ system_ids })}
                 empty="No systems recorded"
@@ -1808,7 +2200,8 @@ export function ResponsibilitiesEditor({
             <h2>Discovery follow-ups</h2>
             <p>
               Owned questions that keep discovery incomplete until they are
-              answered. A linked Activity is only ever an existing permitted one.
+              answered. A linked Activity is only ever an existing permitted
+              one.
             </p>
           </div>
           <div className="es02-actions">
@@ -1821,7 +2214,14 @@ export function ResponsibilitiesEditor({
                   ...value,
                   follow_ups: [
                     ...value.follow_ups,
-                    { id: crypto.randomUUID(), lineage: null, ...own, due_on: null, fact_id: null, activity_id: null },
+                    {
+                      id: crypto.randomUUID(),
+                      lineage: null,
+                      ...own,
+                      due_on: null,
+                      fact_id: null,
+                      activity_id: null,
+                    },
                   ],
                 })
               }
@@ -1839,7 +2239,9 @@ export function ResponsibilitiesEditor({
             const update = (patch: Partial<typeof f>) =>
               onChange({
                 ...value,
-                follow_ups: value.follow_ups.map((x) => (x.id === f.id ? { ...x, ...patch } : x)),
+                follow_ups: value.follow_ups.map((x) =>
+                  x.id === f.id ? { ...x, ...patch } : x,
+                ),
               });
             return (
               <fieldset className="es02-fact" key={f.id}>
@@ -1853,7 +2255,12 @@ export function ResponsibilitiesEditor({
                       type="button"
                       className="es02-link"
                       onClick={() =>
-                        onChange({ ...value, follow_ups: value.follow_ups.filter((x) => x.id !== f.id) })
+                        onChange({
+                          ...value,
+                          follow_ups: value.follow_ups.filter(
+                            (x) => x.id !== f.id,
+                          ),
+                        })
                       }
                     >
                       Remove follow-up
@@ -1888,7 +2295,9 @@ export function ResponsibilitiesEditor({
                     label="Existing Activity ID (optional)"
                     name={`${f.id}.activity`}
                     value={f.activity_id ?? ""}
-                    onChange={(activity_id) => update({ activity_id: activity_id || null })}
+                    onChange={(activity_id) =>
+                      update({ activity_id: activity_id || null })
+                    }
                     hint="Only an actual permitted Activity is accepted. No Activity is created or completed here."
                   />
                 </div>
