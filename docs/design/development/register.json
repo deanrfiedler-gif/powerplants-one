@@ -4360,7 +4360,11 @@
         "src/outputs/reads.ts",
         "src/outputs/model.ts",
         "docs/decisions/output-issue-register-backend.md",
-        "docs/contracts/output-register.md"
+        "docs/contracts/output-register.md",
+        "src/outputs/actions.ts",
+        "src/outputs/distribution.ts",
+        "docs/decisions/output-actions-backend.md",
+        "docs/contracts/output-actions.md"
       ],
       "guide_key": "guide.dk.03",
       "design_path": "docs/design/development/pages/scope-dk-03.md",
@@ -4375,7 +4379,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Read-only backend verification recorded in docs/testing/evidence/output-register/README.md. Native page, visual review and owner acceptance remain open.",
+      "functional_status": "Read and controlled action backend evidence recorded in docs/testing/evidence/output-register/README.md and docs/testing/evidence/output-actions/README.md. Native page, visual review and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

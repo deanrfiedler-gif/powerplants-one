@@ -23020,7 +23020,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Backend proof recorded separately in docs/testing/evidence/output-register/README.md; native page walkthrough remains pending.",
+      "runtime_evidence": "Backend proof recorded separately in docs/testing/evidence/output-register/README.md and docs/testing/evidence/output-actions/README.md; native page walkthrough remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23029,7 +23029,7 @@
             "Use Output, issue and distribution centre to work towards this outcome: Each output has a traceable issue and distribution history.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
             "Regeneration must not overwrite the exact previously issued document.",
-            "The first backend increment reads native Job Pack and Service Report outputs. The consolidated page remains planned. Other output families and generic publication or distribution commands remain separate work.",
+            "The backend reads native Job Pack and Service Report outputs and supports controlled native issue/recovery plus exact-recipient synthetic distribution. The consolidated page, live delivery providers and other output families remain planned.",
             "Prepared, issued, available, current for use, simulated sending and acknowledgement are different facts. Missing original files require native recovery. Report-content responses never stand in for attendance acceptance, technical approval or Finance authority. Bounded window counts are not complete totals."
           ],
           "steps": [],
@@ -23183,7 +23183,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Recover the original issue operation after interruption. A synthetic distribution attempt with an unknown outcome must be reconciled against that same attempt before another is prepared. Simulation is not verified sending or delivery. Missing issued bytes retain their original identity and require restoration; never substitute a newer file."
+          ],
           "steps": [],
           "rows": [
             [
