@@ -83,6 +83,12 @@ export function FertigationHeader({
           >
             <span className="fn-status">{status}</span>
           </span>
+          <span className="fn-phone-record-meta">
+            {compact
+              ? (scenarios.find((s) => s.id === scenarioId)?.label ??
+                "Scenario not selected")
+              : `${reference}${savedAt ? ` · ${savedAt.replace(/\s\d{4},/, ",").replace(/\s[A-Z]{3,5}$/, "")}` : ""}`}
+          </span>
         </div>
         <div className="fn-record-actions">
           <Button variant="secondary" icon="history" onClick={onHistory}>
@@ -199,6 +205,9 @@ export function FertigationHeader({
             </span>
           </label>
           <span className="fn-record-divider" aria-hidden="true" />
+          <span className="fn-phone-state">
+            <Chip tone="info">Scope {state.toLowerCase()}</Chip>
+          </span>
           <Chip tone="info">Synthetic demonstration</Chip>
         </div>
       </div>

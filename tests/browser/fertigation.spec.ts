@@ -1592,6 +1592,9 @@ test("FN-T118 accepted Figma workbench views, menus and phone sections preserve 
   );
   const phone = page.viewportSize()!.width < 781;
   if (phone) {
+    await expect(
+      page.locator(".ppo-shell-header .product-heading"),
+    ).toBeHidden();
     const picker = page.getByRole("button", {
       name: "Section: Overview",
       exact: true,
@@ -1600,6 +1603,12 @@ test("FN-T118 accepted Figma workbench views, menus and phone sections preserve 
     await expect(
       page.getByRole("dialog", { name: "Fertigation sections", exact: true }),
     ).toBeVisible();
+    const sectionButton = page
+      .getByRole("dialog", { name: "Fertigation sections", exact: true })
+      .getByRole("button", { name: "Overview", exact: true });
+    const sectionBox = (await sectionButton.boundingBox())!;
+    expect(sectionBox.height).toBeGreaterThanOrEqual(44);
+    expect(sectionBox.width).toBeGreaterThan(300);
     await page.screenshot({ path: info.outputPath("figma-section-sheet.png") });
     await page.keyboard.press("Escape");
     await expect(picker).toBeFocused();

@@ -1182,12 +1182,12 @@
     display: block;
   }
 }
-#ppo-fertigation .fn-phone-filter-toggle,
+#ppo-fertigation .fn-register-panel .fn-phone-filter-toggle,
 #ppo-fertigation .fn-phone-register-count {
   display: none;
 }
 @media (max-width: 780px) {
-  #ppo-fertigation .fn-phone-filter-toggle {
+  #ppo-fertigation .fn-register-panel .fn-phone-filter-toggle {
     display: inline-flex;
     width: 44px;
     min-width: 44px;
@@ -1513,5 +1513,119 @@
   }
   #ppo-fertigation .fn-page[data-view="overview"] {
     background: var(--paper);
+  }
+}
+
+/* Match the shared phone header's ID-level selector without changing other workspaces. */
+@media (max-width: 780px) {
+  .app-frame[data-shell-design="fertigation"]
+    .workspace
+    .ppo-shell-header:has(#header-menu)
+    .product-heading {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"]
+    .workspace
+    .topbar.ppo-shell-header:has(#header-menu) {
+    padding: 0 12px 0 16px;
+    gap: 4px;
+  }
+  #ppo-fertigation .mw-content {
+    background: var(--paper);
+  }
+  #ppo-fertigation .fn-record-row {
+    grid-template-columns: minmax(0, 1fr) 44px;
+  }
+  #ppo-fertigation .fn-record-menu {
+    width: 44px;
+    height: 44px;
+  }
+  #ppo-fertigation .fn-valve-row .crm-r38-menu-trigger {
+    width: 44px;
+    height: 44px;
+    right: 8px;
+    top: 40px;
+  }
+  #ppo-fertigation .fn-section-sheet header button {
+    width: 44px;
+    height: 44px;
+  }
+  /* The small ellipsis keeps a 44 px touch target within the row's padding. */
+  #ppo-fertigation .fn-next-menu {
+    width: 44px;
+    height: 44px;
+    margin: -6px -8px;
+  }
+}
+#ppo-fertigation
+  .fn-dialog
+  > header
+  button[aria-label^="Close "]:not(.fn-button) {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation
+    .fn-dialog
+    > header
+    button[aria-label^="Close "]:not(.fn-button) {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+#ppo-fertigation .fn-phone-record-meta,
+#ppo-fertigation .fn-phone-state {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-record-row {
+    display: block;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  #ppo-fertigation .fn-record-identity {
+    display: flex;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-record-name {
+    flex: 0 0 100%;
+  }
+  #ppo-fertigation .fn-phone-record-meta {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    padding-right: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--text-secondary);
+  }
+  #ppo-fertigation .fn-record-actions {
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+  }
+  #ppo-fertigation .fn-record-meta {
+    display: none;
+  }
+  #ppo-fertigation .fn-phone-state {
+    display: inline-flex;
+  }
+  #ppo-fertigation .fn-context-facts {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-context-scenario {
+    flex-basis: 100%;
   }
 }
