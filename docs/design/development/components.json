@@ -671,6 +671,14 @@
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -2064,7 +2072,8 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "route:/estimating/fertigation/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2118,6 +2127,14 @@
           "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -2157,7 +2174,8 @@
       },
       "specification": "docs/design/development/components/menu.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "route:/estimating/fertigation/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2169,6 +2187,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3436,6 +3462,14 @@
           "expected": "Baseline shell prefetch policy is restored; deliberate navigation, keyboard/touch, Back and access remain correct. Loading availability and performance require separate measured evidence.",
           "actual": "Both shell prefetch experiments are withdrawn. Unchanged main reproduces cold-wave readiness failures. Verified compiled traces and an untraced repeat complete without reproducing the 503s; the original cause remains unresolved. All attempts remain retained and no overall performance acceptance is inferred.",
           "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -5547,6 +5581,78 @@
           "expected": "Paired owner comparison of the application sections with the design board's section engine and families standard at 1,440 px and 390 px.",
           "actual": "Application captures are retained in docs/reference/ui/specialist/workbench-native-r01; no owner review is recorded.",
           "action": "Review the retained captures beside the design board; record the result in the ES-08 page record.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "fertigation-workbench",
+      "title": "Priva Fertigation Workbench",
+      "category": "Boards & cards",
+      "module": "ES",
+      "purpose": "Native saved scope presentation, engineering charts, revision actions and responsive section navigation.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "saved",
+          "label": "Saved reference scope",
+          "description": "FN-T118 uses boardReferenceScope with eight findings and a candidate failure, through the actual authorised Discovery host."
+        },
+        {
+          "id": "phone",
+          "label": "Phone sections and valves",
+          "description": "FN-T118 uses the same saved scope at 390 px, grouped section sheet and filtered valve list."
+        },
+        {
+          "id": "history",
+          "label": "Exact saved history",
+          "description": "Centred History retains the existing read-only revisions and reasoned copy, restore and archive workflows."
+        },
+        {
+          "id": "draft-recovery",
+          "label": "Draft and recovery",
+          "description": "Existing fertigation browser cases retain stale revision, failed editor, denied read and ambiguous command outcomes."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/fertigation-header.tsx",
+          "symbol": "FertigationHeader"
+        },
+        {
+          "path": "src/components/fertigation-frame.tsx",
+          "symbol": "FertigationSectionPicker"
+        }
+      ],
+      "dependencies": [
+        "src/components/fertigation-workbench.tsx",
+        "src/components/fertigation-figma.css",
+        "src/components/fertigation-charts.tsx",
+        "src/components/fertigation-views/registers.tsx"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-01-Desktop-Overview-r01.png",
+        "anchor": "",
+        "status": "Owner-accepted design; application visual acceptance separate"
+      },
+      "specification": "docs/design/development/components/fertigation-workbench.md",
+      "used_on": [
+        "route:/estimating/fertigation/[id]"
+      ],
+      "desktop": "Two 240 px navigation columns at 1440 px; 24 px content gutters; compact registers and headings outside cards. Explicit stored rail preferences prevail.",
+      "mobile": "Grouped section sheet, valve list and two-column metrics at 390 px; Report/Save above icon-only application tabs.",
+      "keyboard": "Native modal focus containment, Escape and focus restoration; shared popover keyboard controls; labels open the record inspector.",
+      "limitations": "Engine edition r01 and synthetic inputs; no supplier suitability approval. Other seven phone view designs and physical-device acceptance remain missing.",
+      "gaps": [
+        {
+          "id": "fertigation-owner-review",
+          "expected": "Paired owner acceptance of the running workbench against the accepted Figma frames.",
+          "actual": "Implementation and automated host verification are separate from owner visual acceptance.",
+          "action": "Review matched desktop and phone evidence without replacing retained references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

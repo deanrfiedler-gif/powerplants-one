@@ -45,9 +45,9 @@ export function ReviewView({ ctx }: { ctx: ViewContext }) {
         <Tile
           label="Calculation edition"
           size="sm"
-          value={(calc ?? data.calculation).edition}
+          value={`${(calc ?? data.calculation).edition.split("-").at(-1)} edition`}
           tag={<BasisTag basis="entered" />}
-          foot={calc ? ctx.guidanceBasis : "Saved revision; draft not recalculated"}
+          foot={`${(calc ?? data.calculation).edition} · ${calc ? ctx.guidanceBasis : "Saved revision; draft not recalculated"}`}
         />
       </Tiles>
       <Panel

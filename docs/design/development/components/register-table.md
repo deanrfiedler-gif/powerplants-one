@@ -56,3 +56,7 @@ Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
 
 When a module adopts the table, record its departures first, keep its tests' behaviour, and remove its copy of the rules in the same PR.
+
+## Fertigation consumer
+
+The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The route-scoped composition does not change the shared control API. Paired owner acceptance remains open.

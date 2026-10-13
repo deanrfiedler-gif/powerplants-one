@@ -393,7 +393,7 @@ export function IrrigationTimeline({
     right = 16,
     rowH = 30,
     top = 26;
-  const height = top + groups.length * rowH + 28;
+  const height = top + groups.length * rowH + 44;
   const plotW = Math.max(120, width - left - right);
   const x = (s: number) => left + ((s - windowStart) / (spanEnd - windowStart)) * plotW;
   const hourStep = (spanEnd - windowStart) / 3600 > 14 ? 7200 : 3600;
@@ -409,7 +409,7 @@ export function IrrigationTimeline({
       <svg width={width} height={height} role="img" aria-label={summary}>
         {ticks.map((t) => (
           <g key={t}>
-            <line x1={x(t)} x2={x(t)} y1={top - 4} y2={height - 24} className="fn-grid" />
+            <line x1={x(t)} x2={x(t)} y1={top - 4} y2={height - 40} className="fn-grid" />
             <text x={x(t)} y={top - 10} textAnchor="middle">{clock(t / 60)}</text>
           </g>
         ))}
@@ -431,8 +431,8 @@ export function IrrigationTimeline({
             </g>
           );
         })}
-        <line x1={x(last)} x2={x(last)} y1={top - 4} y2={height - 24} className="fn-timeline-end" />
-        <text x={x(last) + (x(last) > width - 220 ? -6 : 6)} y={height - 8} textAnchor={x(last) > width - 220 ? "end" : "start"} className="fn-timeline-note">
+        <line x1={x(last)} x2={x(last)} y1={top - 4} y2={height - 40} className="fn-timeline-end" />
+        <text x={x(last) + (x(last) > width - 220 ? -6 : 6)} y={height - 24} textAnchor={x(last) > width - 220 ? "end" : "start"} className="fn-timeline-note">
           Sequence ends {clock(last / 60)} · {fmt(Math.round((last - windowStart) / 60))} min
         </text>
         {last < windowEnd && x(windowEnd) - x(last) > 240 && (

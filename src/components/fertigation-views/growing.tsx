@@ -41,8 +41,9 @@ export function GrowingView({ ctx }: { ctx: ViewContext }) {
             icon="download"
             href={`/api/v1/estimating/fertigation/${ctx.scopeId}/export?revision_id=${data.revision.id}&format=valves`}
             download
+            aria-label="Export valve CSV"
           >
-            Export valve CSV
+            <span className="fn-desktop-label">Export valve CSV</span><span className="fn-mobile-label">CSV</span>
           </ButtonLink>
         }
       />
