@@ -131,6 +131,9 @@
 .es08-dialog--actions .es08-dialog-body > .ppo-button { justify-content: flex-start; }
 @media (min-width: 781px) {
   .app-frame[data-rail=expanded]:has(#ppo-specialist [data-view]) { --ppo-rail-width: 240px; }
+  /* The workbench names the current page; Page hierarchy retains its ancestors. */
+  .app-frame:has(#ppo-specialist [data-view]) .ppo-shell-header .ppo-crumbs li:not(:last-child) { display: none; }
+  .app-frame:has(#ppo-specialist [data-view]) .ppo-shell-header .ppo-crumbs li:last-child::before { content: none; }
 }
 @container es08 (max-width: 820px) {
   #ppo-specialist .es08-configure, #ppo-specialist .es08-drawgrid, #ppo-specialist .es08-comparegrid { grid-template-columns: 1fr; }

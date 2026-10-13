@@ -23,3 +23,5 @@ Fixtures: `scripts/es08-fixture.ts` and `tests/browser/specialist-workbench.spec
 Limits: schematic structural members, loads, procurement fit and supplied fabric suitability remain unapproved. Drawing-only inputs remain browser-local. Private Kit artwork is not committed. Reference presence, functional proof, paired visual inspection, owner acceptance and deployment remain separate in the page register and execution evidence.
 
 Phone dialogs explicitly remove the native browser maximum-width cap so working, actions and inspector surfaces can occupy their intended full viewport width. The browser proof checks 390 pixels and focus restoration.
+
+The adopted Shell v2 header shows the current workbench name at desktop widths. Its Page hierarchy control retains the Specialist configurations ancestor and keyboard focus return; collapsed ancestor fragments are not part of the visible title.
