@@ -97,10 +97,10 @@ export function WorkbenchHeader({ bench, view, onMethod, onActions }: { bench: B
         <Pill tone={dirty ? "warn" : "neutral"}>Draft v{cfg.version}</Pill><Icon name="warning" /><span>Readiness · {gates.filter(g => g.status === "ok").length} ok · {gates.filter(g => g.status === "neutral").length} not checked · {gates.filter(g => g.status === "warn" || g.status === "block").length} attention</span><Icon name="chevron-down" />
       </button>
       <dl className="es08-gates" aria-label="Readiness checks" data-expanded={readinessOpen || undefined}>
-        <div className="es08-readiness-label">Readiness</div>
+        <div className="es08-readiness-label"><dt>Readiness</dt><dd className="es08-sr">Checks for this configuration</dd></div>
         {gates.map(gate => <div key={gate.id} tabIndex={0} title={gate.detail} className={`es08-gate es08-gate--${gate.status}`}>
           <dt><Icon name={gate.status === "ok" ? "check" : gate.status === "neutral" ? "info" : "warning"} />{gate.label}</dt>
-          <dd className="es08-gate-value">{["grid", "cloth"].includes(gate.id) && gate.status === "ok" ? <span className="es08-sr"> · {gate.value}</span> : ` · ${gate.value}`}</dd>
+          <dd className="es08-gate-value">{["grid", "cloth"].includes(gate.id) && gate.status === "ok" ? <span className="es08-sr"> · {gate.value}</span> : ` · ${gate.id === "manual" ? gate.value.replace(" reviewed", "") : gate.value}`}</dd>
           <dd className="es08-gate-detail">{gate.detail}</dd>
         </div>)}
       </dl>

@@ -135,7 +135,7 @@ export async function compareEs08Design(
         actual,
         layouts,
         adaptations:
-          "ADR-0034 native shared shell; source visual vocabulary retained; source browser storage and pricing authority excluded",
+          "ADR-0034 shared shell and historical token provenance; private Figma page 406:2 adopted by PPO-ES08-FIGMA-IMPLEMENTATION-DEC; independent desktop/phone geometry and workflows in specialist-workbench.spec.ts; source browser storage and pricing authority excluded",
         owner_acceptance: "Pending",
       },
       null,

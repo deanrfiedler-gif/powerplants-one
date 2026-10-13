@@ -154,7 +154,7 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
       unit: fd.unit,
       src: fd.source ? `CALC_ENGINE!${fd.source}${fd.unit === "mm" || fd.unit === "mm NB" ? ` · ${fd.unit}` : ""}` : "No source cell",
       note: enabled ? pres.note || fd.note || undefined : pres.off,
-      options: fd.options?.map((o) => ({ value: o, label: optionLabel(fd.key, o) })),
+      options: fd.options?.map((o) => ({ value: o, label: fd.key === "truss" ? o[0] + o.slice(1).toLowerCase() : optionLabel(fd.key, o) })),
       value: p.inputs[fd.key].raw,
       disabled: frozen || !enabled,
       error: enabled ? (fd.key === "height" ? errors.height ?? dErr.height : errors[fd.key]) : undefined,
@@ -163,6 +163,10 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
       wide: pres.wide,
       onChange: (value) => setInput(fd.key, value),
     });
+  }
+  if (sec.id === "structure") {
+    const height = specs.findIndex(spec => spec.key === "height"), chord = specs.findIndex(spec => spec.key === "chordHeight");
+    if (height >= 0 && chord >= 0) specs.splice(chord, 0, ...specs.splice(height, 1));
   }
   if (sec.id === "cloth") {
     specs.push({

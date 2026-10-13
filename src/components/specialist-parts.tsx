@@ -11,7 +11,7 @@ import { Dialog, Icon, Notice, Pill, fmt, runLabel, type Tone } from "./speciali
 
 // Parts & working (design board artboard 03): a work queue of every source
 // position with its PPO part outcome, rule, calculation unit and review basis,
-// beside a persistent working panel. Part identity comes from the reviewed rule
+// with a modal working panel. Part identity comes from the reviewed rule
 // table, never a runtime description lookup.
 type Filter = "active" | "manual" | "zero" | "all";
 const stateTone: Record<Position["part_state"], Tone> = {
@@ -165,7 +165,7 @@ export function PartsView({ bench }: { bench: Bench }) {
                             aria-label={`Working for ${l.key}`}
                             title={`Working for ${l.key}`}
                             aria-expanded={l.key === working}
-                            aria-controls="es08-working-panel"
+                            aria-controls={selected ? "es08-working-panel" : undefined}
                             onClick={() => {
                               openerKey.current = l.key;
                               openWorking(l.key === working ? null : l.key);
@@ -196,8 +196,8 @@ export function PartsView({ bench }: { bench: Bench }) {
         </section>
       </div>
       {selected && (
-        <Dialog title={selected.label || selected.description} close={close} wide className="es08-dialog--side es08-working-overlay">
-          <p className="es08-working-reference es08-mono">{selected.key} · {selected.part_id ?? selected.part_state}</p><WorkingPanel bench={bench} position={selected} close={close} inDialog />
+        <Dialog id="es08-working-panel" title={selected.label || selected.description} description={<span className="es08-mono">{selected.key} · {selected.part_id ?? selected.part_state}</span>} close={close} wide className="es08-dialog--side es08-working-overlay">
+          <WorkingPanel bench={bench} position={selected} close={close} inDialog />
         </Dialog>
       )}
     </div>
@@ -241,7 +241,7 @@ function WorkingPanel({ bench, position: l, close, inDialog = false }: { bench: 
         </div>
         {l.row === 223 && (
           <Link href={`/estimating/configurations/${bench.id}/drawings#es08-sheet-05`} className="es08-link-icon">
-            <FontAwesomeGlyph icon="calculator" className="es08-icon" fallback={<Icon name="drawing" />} />
+            <Icon name="drawing" />
             Show on drawing
           </Link>
         )}
