@@ -71,7 +71,7 @@ jobs:
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/output-actions.test.ts
       - name: Historical registry and reserved Products upgrade
         run: |
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern="DK-B09|PD upgrade from (25|90) " tests/database/document-library.test.ts tests/database/products-upgrade.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern="DK-B09|PD upgrade from (25|90|91) " tests/database/document-library.test.ts tests/database/products-upgrade.test.ts
       - name: Compiled controlled output actions HTTP
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
