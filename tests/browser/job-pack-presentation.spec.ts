@@ -1,3 +1,4 @@
+import { openPackView, showPackReadiness } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import type { Pack } from "../../src/documents/components/client/job-pack-types";
@@ -41,19 +42,18 @@ test("SV05-I7 heading uses only the verified saved scope and retains references"
   await expect(page.locator("#jp-page-title")).toHaveText(
     pack.section_view!.scope!.summary,
   );
-  await expect(page.locator(".jp-work-context")).toContainText("Inspection");
-  await expect(page.locator(".jp-work-context")).toContainText(
+  await expect(page.locator("#s-1")).toContainText(
     revision.snapshot.work.reference,
   );
+  await page.getByRole("button", { name: "Page hierarchy", exact: true }).click();
   await expect(
-    page
-      .getByRole("navigation", { name: "Page location" })
-      .getByRole("link", { name: "Service", exact: true }),
-  ).toHaveAttribute("href", "/service/tickets");
+    page.locator("#page-hierarchy").getByRole("link", { name: "Job packs", exact: true }),
+  ).toHaveAttribute("href", "/service/packs");
+  await page.keyboard.press("Escape");
   pack.section_view!.scope!.summary = "SYN newer summary";
   await open();
   await expect(page.locator("#jp-page-title")).toHaveText(
-    `${revision.snapshot.work.reference} · ${revision.snapshot.appointment.reference}`,
+    revision.snapshot.work.reference,
   );
 });
 test("SV05-I7 action-required criteria stay visible while satisfied stage rows open by keyboard", async ({
@@ -61,6 +61,7 @@ test("SV05-I7 action-required criteria stay visible while satisfied stage rows o
 }) => {
   const { pack, open } = await setup(page);
   await open();
+  await showPackReadiness(page);
   const groups = page.locator(".jp-readiness-group");
   const present = ["Authorisation", "Booking", "Dispatch", "Completion"].filter(
     (s) => pack.criteria!.some((c) => c.blocking_stage === s),
@@ -118,6 +119,7 @@ test("SV05-I7 staff history and recovery show names and exact issue acknowledgem
     },
   ];
   await open();
+  await showPackReadiness(page);
   await expect(page.locator(".jp-job")).toContainText("SYN Recovery Owner");
   await expect(page.locator(".jp-job")).toContainText(
     "Recover the original output.",
@@ -129,9 +131,7 @@ test("SV05-I7 staff history and recovery show names and exact issue acknowledgem
   expect(visible).not.toMatch(
     /TaskCreated|SimulatedSent|ReviewRequired|PermittedException|NotApplicable/,
   );
-  await page
-    .getByRole("tab", { name: "Revision history", exact: true })
-    .click();
+  await openPackView(page, "Revision history");
   await expect(
     page.getByRole("link", {
       name: "Acknowledged by SYN Riley Technician · r01",

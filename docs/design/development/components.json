@@ -620,7 +620,10 @@
         "src/app/globals.css",
         "src/components/ui/register-table.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -633,7 +636,9 @@
         "route:/engineering/[id]/materials/mapping",
         "route:/engineering/[id]/materials/releases",
         "route:/estimating/fertigation",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "scope:SV-05",
+        "route:/service/packs"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -669,6 +674,14 @@
           "expected": "Verify the shared table against the linked design and desktop/mobile rules.",
           "actual": "Visual parity with EN-06 was checked by automated captures; no owner review is recorded.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2148,7 +2161,10 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2157,7 +2173,11 @@
       },
       "specification": "docs/design/development/components/menu.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SV-05",
+        "route:/service/packs",
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2169,6 +2189,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3213,7 +3241,10 @@
         "docs/decisions/navigation-consolidation.md",
         "src/components/shell-provider.tsx",
         "src/components/offline-entry.tsx",
-        "src/app/leads.css"
+        "src/app/leads.css",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3421,6 +3452,14 @@
           "expected": "Baseline shell prefetch policy is restored; deliberate navigation, keyboard/touch, Back and access remain correct. Loading availability and performance require separate measured evidence.",
           "actual": "Both shell prefetch experiments are withdrawn. Unchanged main reproduces cold-wave readiness failures. Verified compiled traces and an untraced repeat complete without reproducing the 503s; the original cause remains unresolved. All attempts remain retained and no overall performance acceptance is inferred.",
           "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3656,12 +3695,15 @@
       "dependencies": [
         "src/app/styles/job-pack.css",
         "src/documents/components/client/job-pack-screen.tsx",
-        "src/documents/components/client/job-pack-change-dialog.tsx"
+        "src/documents/components/client/job-pack-change-dialog.tsx",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted page-scoped r03 reference; owner acceptance of native application remains separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-dialog.md",
       "used_on": [
@@ -3680,6 +3722,14 @@
           "actual": "Exact source and application state fixtures are linked; no gallery renderer is bound.",
           "action": "Retain the visible reference-only entry and use the I4 application browser proof; consider a gallery fixture in shared-control alignment.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-dialog-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
@@ -3730,17 +3780,21 @@
         "src/documents/section-readers.ts",
         "src/documents/section-text.ts",
         "src/documents/section-view.ts",
-        "src/app/styles/job-pack.css"
+        "src/app/styles/job-pack.css",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted r03 page treatment with accepted D6-A implementation decision; native acceptance separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-sections.md",
       "used_on": [
         "scope:SV-05",
-        "route:/service/packs/[id]"
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
       ],
       "desktop": "Reuse labelled information grids and task lists inside the existing r03 paper.",
       "mobile": "Stack captured controls, wrap long prose and retain readable exact-text disclosures at 320 px.",
@@ -3754,6 +3808,14 @@
           "action": "Retain this visible binding and use the I6 application proof.",
           "priority": "Low",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-sections-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -3763,7 +3825,7 @@
       "title": "Job Pack readiness, crew and output rail",
       "category": "Boards & cards",
       "module": "SV",
-      "purpose": "Page-scoped r03 readiness, explicit crew response and output recovery facts. Uses server outcomes and current permissions.",
+      "purpose": "Readiness, exact crew response, record and original-output recovery in the accepted Figma status panel.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Reference only",
@@ -3787,6 +3849,16 @@
           "id": "recipient",
           "label": "Recipient",
           "description": "Current issue and crew facts without staff history or ownership projections."
+        },
+        {
+          "id": "collapsed",
+          "label": "Status collapsed",
+          "description": "Per-viewer presentation preference; no business data changes."
+        },
+        {
+          "id": "phone-readiness",
+          "label": "Phone readiness",
+          "description": "Coordinator readiness tab retains all stages and dispatch reasons."
         }
       ],
       "implementation": [
@@ -3806,20 +3878,24 @@
       "dependencies": [
         "src/documents/pack-view.ts",
         "src/documents/packs.ts",
-        "src/app/styles/job-pack.css"
+        "src/app/styles/job-pack.css",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-rail.md",
       "used_on": [
         "scope:SV-05",
-        "route:/service/packs/[id]"
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
       ],
-      "desktop": "Right rail in the accepted r03 column; fixed logical stage order, visible attention and collapsed satisfied rows.",
-      "mobile": "Rail follows the paper in normal module scrolling. Disclosures and actions retain 44 px targets and wrap long names/reasons.",
+      "desktop": "320 px status panel, with a 48 px collapsed strip remembered per viewer. Action-required criteria stay visible; satisfied stage rows use native disclosure.",
+      "mobile": "Coordinator Readiness tab; technician crew response follows the full exact saved paper. Original checks and dispatch reasons remain available.",
       "keyboard": "Native summary toggles with Enter or Space and shows focus. No action-required row is initially hidden.",
       "limitations": "Actual application state fixtures exist; no isolated catalogue renderer. Counts present server outcomes and grant no authority.",
       "gaps": [
@@ -3829,6 +3905,14 @@
           "actual": "Application fixtures cover the page-scoped implementation.",
           "action": "Retain the visible source/consumer bindings and use the I7 browser proof.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-rail-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
@@ -3886,12 +3970,15 @@
         "src/components/ui/button.tsx",
         "src/documents/packs.ts",
         "src/app/styles/job-pack.css",
-        "docs/testing/evidence/job-pack-i5/README.md"
+        "docs/testing/evidence/job-pack-i5/README.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-entry.md",
       "used_on": [
@@ -3916,6 +4003,14 @@
           "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
           "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
           "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-entry-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

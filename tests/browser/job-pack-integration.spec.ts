@@ -1,3 +1,4 @@
+import { openPackView } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import {
@@ -32,7 +33,7 @@ async function fixture(page: Page) {
   await expect(page.locator("#jp-panel-pack .jp-paper-section")).toHaveCount(9);
   return read.items[0];
 }
-test("SV05-I5 compiled shell and two-action pack header fit all widths and 200% zoom reflow", async ({
+test("SV05-I5 compiled shell and state-dependent pack header fit all widths and 200% zoom reflow", async ({
   page,
 }, info) => {
   test.skip(
@@ -44,24 +45,21 @@ test("SV05-I5 compiled shell and two-action pack header fit all widths and 200% 
     await page.setViewportSize(viewport);
     await assertJobPackHost(page);
     expect(
-      await page
-        .locator(".jp-heading-right .jp-button-row > :is(button,a)")
-        .count(),
-    ).toBeLessThanOrEqual(2);
+      await page.locator(".jp-heading-actions > .jp-primary").count(),
+    ).toBeLessThanOrEqual(1);
   }
   // A 1440 x 960 display at 200% browser zoom has a 720 x 480 CSS viewport.
   // CSS zoom alone does not rerun viewport media queries and is not equivalent.
   await page.setViewportSize({ width: 720, height: 480 });
   await assertJobPackHost(page);
-  await page.getByRole("tab", { name: /^Preparation/ }).focus();
-  await page.keyboard.press("Enter");
+  await openPackView(page, "Preparation");
   await expect(page.locator("#jp-panel-prepare")).toBeVisible();
 });
 test("SV05-I5 browser print shows saved work and excludes unsaved preparation and shell", async ({
   page,
 }) => {
   const pack = await fixture(page);
-  await page.getByRole("tab", { name: /^Preparation/ }).click();
+  await openPackView(page, "Preparation");
   await page
     .locator("#jp-panel-prepare textarea")
     .first()
@@ -94,7 +92,9 @@ test("SV05-I5 field and appointment handovers use current pack identity and hide
   page,
 }) => {
   await session(page);
-  let state: "existing" | "prepare" | "unavailable" | "denied" | "forbidden" | "failed" = "existing";
+  let state:
+    "existing" | "prepare" | "unavailable" | "denied" | "forbidden" | "failed" =
+    "existing";
   const id = "10000000-0000-4000-8000-000000000042";
   await page.route("**/api/v1/appointments/*/pack", (r) =>
     ["denied", "forbidden", "failed"].includes(state)
@@ -153,12 +153,16 @@ test("SV05-I5 field and appointment handovers use current pack identity and hide
   await expect(entry.getByRole("link")).toBeVisible();
   state = "denied";
   await entry.getByRole("button", { name: "Refresh pack status" }).click();
-  await expect(entry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
+  await expect(entry.getByRole("status")).toHaveText(
+    "Job pack access is unavailable to this identity.",
+  );
   await expect(entry.getByRole("alert")).toHaveCount(0);
   await expect(entry.getByRole("link")).toHaveCount(0);
   state = "forbidden";
   await entry.getByRole("button", { name: "Refresh pack status" }).click();
-  await expect(entry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
+  await expect(entry.getByRole("status")).toHaveText(
+    "Job pack access is unavailable to this identity.",
+  );
   await expect(entry.getByRole("link")).toHaveCount(0);
   state = "failed";
   await entry.getByRole("button", { name: "Refresh pack status" }).click();

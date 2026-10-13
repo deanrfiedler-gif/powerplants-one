@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Job Pack Figma application — 13 October 2026
+
+Dean authorised building the accepted Job Pack design in the application and delegated the open self-checking choice. The [implementation decision](decisions/job-pack-figma-implementation.md) retains existing checking permissions, exact revision/reason requirements and all controlled-output rules. Branch `codex/job-pack-figma-ui` implements the register, permitted row projection, confirmed visits without packs, record/preparation/history layout and phone views. No migration, seed, capability or dependency is added. [Execution evidence](testing/evidence/job-pack-figma-ui/README.md) separates focused verification from owner/device acceptance and deployment. The working register, component bindings and guides change together; issued references remain unchanged.
+
 **Updated:** 13 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).

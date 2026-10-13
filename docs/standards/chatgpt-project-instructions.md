@@ -8,7 +8,7 @@ Public repo; private demo.
 
 Retain BP-01 domains/shared records.
 
-Test joined journeys; separate proof/owner acceptance.
+Test joined journeys; separate proof/acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -26,7 +26,7 @@ BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissi
 
 MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces, ownership and operating rules before integration.
 
-Use synthetic fixtures; decide service-order/appointment/labour ownership. Cutover needs tested acceptance. Assess build/configure/integrate/retain per capability.
+Use synthetic fixtures; decide service-order/visit/labour ownership. Cutover needs tested acceptance. Assess build/configure/integrate/retain per capability.
 
 ## 5. Naming
 
@@ -44,7 +44,7 @@ Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commit
 
 P10 reads immutable P09 reviews and preserves field Drafts. Incomplete declarations block Finance despite accepted attendance. Allocate billable/non-billable quantities. SyntheticVerified is not live verification. Preserve processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Finance scope governs reads/output/receipts.
 
-Preserve issued revisions/hashes/scope/distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct; content changes need a new revision and acknowledgement.
+Job Packs: job-pack-figma-implementation.md. Preserve issued revisions/hashes/scope/distribution. Approval/issue/sent/delivered/acknowledged differ; changes need a new revision and acknowledgement.
 
 Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict; retain context and unsent evidence.
 

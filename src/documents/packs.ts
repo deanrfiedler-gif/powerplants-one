@@ -1,9 +1,12 @@
 import { policyImpactHolds } from "../scheduling/policy-holds";
 import { incidentHolds } from "../incidents/holds";
 import { sectionView } from "./section-view";
+import { readSection } from "./section-readers";
+import { readinessSummary } from "./pack-view";
+import type { PackRegisterRow, PackVisit } from "./pack-register";
 import { visibleActivity } from "../activities/activities";
 import { randomUUID } from "node:crypto";
-import { database, transaction } from "../platform/database";
+import { transaction } from "../platform/database";
 import type { Principal } from "../platform/identity";
 import { sharedOperation, canonical } from "../platform/operations";
 import { hasPermission, type QueryClient } from "../platform/permissions";
@@ -863,23 +866,141 @@ export async function readPack(p: Principal, id: string) {
   });
 }
 export async function listPacks(p: Principal) {
-  const c = database();
-  const rows = (
-    await c.query(
-      "SELECT id FROM ppo.packs WHERE workspace_id=$1 ORDER BY updated_at DESC",
-      [p.workspace_id],
-    )
-  ).rows;
-  const result = [];
-  for (const r of rows) {
-    try {
-      const { pack, a } = await packContext(c, p, r.id);
-      result.push({ ...pack, appointment_reference: a.display_number });
-    } catch (e) {
-      if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+  return transaction(async (c) => {
+    const rows = (
+      await c.query(
+        "SELECT id FROM ppo.packs WHERE workspace_id=$1 ORDER BY updated_at DESC",
+        [p.workspace_id],
+      )
+    ).rows;
+    const result: PackRegisterRow[] = [];
+    for (const r of rows) {
+      try {
+        const { pack, a, w } = await packContext(c, p, r.id);
+        const can_prepare = await hasPermission(
+          c,
+          p,
+          "pack.prepare",
+          a.company_id,
+          a.site_id,
+        );
+        const staff =
+          can_prepare ||
+          (await hasPermission(c, p, "pack.check", a.company_id, a.site_id)) ||
+          (await hasPermission(c, p, "pack.issue", a.company_id, a.site_id));
+        // Match the detail read: recipients never see an unissued successor or its preparer.
+        const issue = (
+          await c.query(
+            "SELECT id,revision_id,assignment_version,output_hash FROM ppo.pack_issues WHERE workspace_id=$1 AND id=$2",
+            [p.workspace_id, pack.current_issue_id],
+          )
+        ).rows[0];
+        const revisionId = staff
+          ? pack.current_revision_id
+          : issue?.assignment_version === a.assignment_version
+            ? issue.revision_id
+            : null;
+        const rev = (
+          await c.query(
+            "SELECT r.id,r.revision,r.snapshot,r.created_by,u.display_name AS prepared_by_name FROM ppo.pack_revisions r JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.created_by) WHERE r.workspace_id=$1 AND r.id=$2",
+            [p.workspace_id, revisionId],
+          )
+        ).rows[0];
+        const s = rev?.snapshot as PackSnapshot | undefined;
+        const structured = rev ? await sectionView(c, p, w, rev, staff) : null;
+        const scope = rev
+          ? readSection("scope", rev.snapshot, rev.id, structured)
+          : null;
+        const assessed = staff ? await packCriteria(c, p, { a, w }) : null;
+        const ready = await dispatchReadiness(c, p, a.id);
+        const job = staff
+          ? (
+              await c.query(
+                "SELECT state FROM ppo.pack_render_jobs WHERE workspace_id=$1 AND revision_id=$2 ORDER BY requested_at DESC LIMIT 1",
+                [p.workspace_id, revisionId],
+              )
+            ).rows[0]
+          : null;
+        const currentIssue =
+          staff || issue?.assignment_version === a.assignment_version
+            ? pack.current_issue_id
+            : null;
+        result.push({
+          id: pack.id,
+          display_number: pack.display_number,
+          status: pack.status,
+          needs_review: pack.needs_review,
+          appointment_id: a.id,
+          appointment_reference: a.display_number,
+          current_revision_id: revisionId ?? null,
+          current_issue_id: currentIssue ?? null,
+          revision: rev?.revision ?? null,
+          title:
+            scope?.kind === "scope"
+              ? scope.value.summary
+              : (s?.work.reference ?? w.display_number),
+          visit_at: a.start_at.toISOString(),
+          timezone: a.site_timezone,
+          customer: s?.customer.name ?? "Not available",
+          site: s?.site.name ?? "Not available",
+          site_id: a.site_id,
+          technicians:
+            s?.recipients.map((t) => ({ id: t.user_id, name: t.name })) ?? [],
+          prepared_by: staff ? (rev?.created_by ?? null) : null,
+          prepared_by_name: staff ? (rev?.prepared_by_name ?? null) : null,
+          updated_at: pack.updated_at.toISOString(),
+          job_state: job?.state ?? null,
+          readiness: assessed
+            ? {
+                satisfied: readinessSummary(assessed.criteria).satisfied,
+                total: assessed.criteria.length,
+              }
+            : null,
+          acknowledged: currentIssue
+            ? ready.recipients.filter(
+                (t) =>
+                  t.acknowledged_at && t.presented_hash === issue?.output_hash,
+              ).length
+            : null,
+          recipients: currentIssue ? ready.recipients.length : null,
+          dispatch_hold: ready.dispatch_hold,
+          can_prepare,
+        });
+      } catch (e) {
+        if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+      }
     }
-  }
-  return envelope(result);
+    return envelope(result);
+  });
+}
+
+// A genuine absence, scoped before counting. A hidden existing pack is never a new-pack opportunity.
+export async function visitsWithoutPack(p: Principal) {
+  return transaction(async (c) => {
+    const rows = (
+      await c.query(
+        "SELECT a.id FROM ppo.appointments a WHERE a.workspace_id=$1 AND a.status='Confirmed' AND a.actual_start_at IS NULL AND a.end_at>clock_timestamp() AND NOT EXISTS (SELECT 1 FROM ppo.packs k WHERE k.workspace_id=a.workspace_id AND k.appointment_id=a.id) ORDER BY a.start_at,a.id",
+        [p.workspace_id],
+      )
+    ).rows;
+    const result: PackVisit[] = [];
+    for (const row of rows)
+      try {
+        const { a, w } = await visibleAppointment(c, p, row.id, "pack.prepare");
+        const site = await visible(c, p, "Site", a.site_id);
+        result.push({
+          id: a.id,
+          display_number: a.display_number,
+          work_order_reference: w.display_number,
+          start_at: a.start_at.toISOString(),
+          site_timezone: a.site_timezone,
+          site_name: site.display_name,
+        });
+      } catch (e) {
+        if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+      }
+    return envelope(result);
+  });
 }
 export async function preparationOptions(p: Principal, id: string) {
   return transaction(async (c) => {

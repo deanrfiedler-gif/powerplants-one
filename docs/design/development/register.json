@@ -2387,7 +2387,7 @@
       "title": "Job-pack preparation and issue follow-through",
       "kind": "scope",
       "module": "SV",
-      "summary": "Job Pack I1-I7 and final I5 implement saved preparation, structured evidence, issue follow-through, canonical handovers and scoped A4 workbench printing. Evidence and owner/device review remain separate.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2406,7 +2406,14 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-04.png",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-05.png",
         "docs/testing/evidence/job-pack-i5/application-1440.png",
-        "docs/testing/evidence/job-pack-i5/application-320.png"
+        "docs/testing/evidence/job-pack-i5/application-320.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-01-Desktop-Register-and-Selection-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-02-Desktop-Record-Page-and-Preparation-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-03-Desktop-History-Decisions-and-Issue-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -2415,12 +2422,18 @@
         "docs/delivery/job-pack-i6-handover.md",
         "docs/delivery/job-pack-i7-handover.md",
         "docs/decisions/job-pack-integration.md",
-        "docs/delivery/job-pack-integration-handover.md"
+        "docs/delivery/job-pack-integration-handover.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7066,7 +7079,7 @@
       "title": "Job pack detail",
       "kind": "route",
       "module": "SV",
-      "summary": "Job Pack I1-I7 and final I5 implement saved preparation, structured evidence, issue follow-through, canonical handovers and scoped A4 workbench printing. Evidence and owner/device review remain separate.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs/[id]",
       "source_paths": [
         "src/app/(business)/service/packs/[id]/page.tsx"
@@ -7101,12 +7114,18 @@
         "docs/delivery/job-pack-i7-handover.md",
         "docs/decisions/job-pack-integration.md",
         "docs/delivery/job-pack-integration-handover.md",
-        "docs/decisions/job-pack-figma-design.md"
+        "docs/decisions/job-pack-figma-design.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7121,7 +7140,7 @@
       "title": "Create job pack",
       "kind": "route",
       "module": "SV",
-      "summary": "Job Pack I1-I7 and final I5 implement saved preparation, structured evidence, issue follow-through, canonical handovers and scoped A4 workbench printing. Evidence and owner/device review remain separate.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs/new",
       "source_paths": [
         "src/app/(business)/service/packs/new/page.tsx"
@@ -7135,12 +7154,18 @@
       "dependencies": [
         "docs/decisions/job-pack-integration.md",
         "docs/delivery/job-pack-integration-handover.md",
-        "docs/decisions/job-pack-figma-design.md"
+        "docs/decisions/job-pack-figma-design.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7155,7 +7180,7 @@
       "title": "Job pack register",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs",
       "source_paths": [
         "src/app/(business)/service/packs/page.tsx"
@@ -7169,12 +7194,18 @@
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/job-pack-figma-design.md"
+        "docs/decisions/job-pack-figma-design.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",

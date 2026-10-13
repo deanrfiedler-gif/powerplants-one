@@ -13106,10 +13106,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-13",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
@@ -13140,11 +13140,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the pack against the correct scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -13156,40 +13155,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Job-pack preparation and issue follow-through · Page + tabs"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ],
-            [
-              "Saved section details",
-              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
-            ],
-            [
-              "Pack title",
-              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
-            ],
-            [
-              "Pack readiness",
-              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
-            ],
-            [
-              "Revision history",
-              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -13214,17 +13193,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release.",
-            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Prepare the pack against the correct scope",
-            "Review exact source/template revisions and readiness",
-            "Issue the checked pack and track recipient acknowledgement",
-            "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
-            "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
-            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -13343,8 +13318,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -13365,9 +13341,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -13386,9 +13361,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "I4: source-change review and exact saved preparation printing; owner review remains pending.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-SV-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13398,7 +13375,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -44512,10 +44490,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-13",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
@@ -44546,11 +44524,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -44562,40 +44539,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Job pack detail · Record workspace"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ],
-            [
-              "Saved section details",
-              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
-            ],
-            [
-              "Pack title",
-              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
-            ],
-            [
-              "Pack readiness",
-              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
-            ],
-            [
-              "Revision history",
-              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -44620,23 +44577,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Preparation is entered in the Preparation view, one guided section per pack section. Each section shows the frozen context the last save composed, so entries are written against exactly what will be checked and issued.",
-            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form.",
-            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Open the Preparation view. The contents rail lists the nine sections and flags any that need attention.",
-            "Read the linked context for a section. Section 01 shows it in place; the others keep it behind View source details.",
-            "Complete the entry for each section. All nine are required, 1 to 6000 characters; a remaining-character count appears from 5,500.",
-            "In section 05 select the relevant service history, or explain in the note why none applies.",
-            "In section 06 select the exact document versions the crew works from. At least one is required; an unavailable source cannot be selected.",
-            "Choose Save preparation. The dialog lists every changed field and asks for the reason recorded with this save.",
-            "Confirm with Save preparation. A refusal is shown in the dialog, which stays open so the same entry can be retried unchanged.",
-            "Discard changes restores the last saved revision. Only unsaved entries are discarded.",
-            "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
-            "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
-            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -44776,9 +44723,9 @@
           "section_id": "mobile",
           "title": "On a phone",
           "paragraphs": [
-            "At 760 CSS px and below the page is a single column: the contents rail becomes a Jump to a section control, entries use 16 px text and controls keep a 44 px target.",
-            "The preparation action bar is fixed above the application's own navigation bar, so the save state and both actions stay reachable at every scroll position. Measured clear at 390 and 320 px wide.",
-            "Between 761 and 780 px the application shell is already in its phone layout while this page still uses its tablet layout. That band is checked explicitly at 770 px."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -44799,9 +44746,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -44814,9 +44760,11 @@
       "source_paths": [
         "src/app/(business)/service/packs/[id]/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "I4: source-change review and exact saved preparation printing; owner review remains pending.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -44826,7 +44774,8 @@
       "workflow_basis": [
         "src/app/(business)/service/packs/[id]/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -44841,18 +44790,16 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-13",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Create job pack to work towards this outcome: A reproducible issued pack is available to the intended crew.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Prepare the first immutable Job Pack revision for a confirmed appointment. With no appointment in the address, choose a permitted confirmed visit from Prepare job pack. If a pack already exists, open that pack rather than creating a duplicate."
           ],
           "steps": [],
           "rows": [],
@@ -44875,11 +44822,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Search the related register for an existing record before creating another.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -44891,24 +44837,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Create job pack · Creation form"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -44933,15 +44875,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save.",
-            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Open the route from the appointment. If a pack already exists it opens instead, with a message saying so.",
-            "Complete all nine entries, select the exact document versions, and select any relevant service history.",
-            "Choose Save preparation. The dialog lists every entry as added and asks for the reason recorded with this first save.",
-            "Confirm with Save preparation. On success the pack opens at its own address as Draft r01, awaiting check.",
-            "A refusal stays in the dialog with the entries retained, so the same save can be retried unchanged."
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -45069,9 +45009,9 @@
           "section_id": "mobile",
           "title": "On a phone",
           "paragraphs": [
-            "At 760 CSS px and below the page is a single column: the contents rail becomes a Jump to a section control, entries use 16 px text and controls keep a 44 px target.",
-            "The preparation action bar is fixed above the application's own navigation bar, so the save state and both actions stay reachable at every scroll position. Measured clear at 390 and 320 px wide.",
-            "Between 761 and 780 px the application shell is already in its phone layout while this page still uses its tablet layout. That band is checked explicitly at 770 px."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -45092,9 +45032,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -45107,9 +45046,11 @@
       "source_paths": [
         "src/app/(business)/service/packs/new/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS-NEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45119,7 +45060,8 @@
       "workflow_basis": [
         "src/app/(business)/service/packs/new/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -45134,10 +45076,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
@@ -45168,11 +45110,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the pack against the correct scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -45184,24 +45125,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Job pack register · Register / workspace"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -45225,12 +45162,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Prepare the pack against the correct scope",
-            "Review exact source/template revisions and readiness",
-            "Issue the checked pack and track recipient acknowledgement"
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -45334,8 +45272,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -45356,9 +45295,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -45371,9 +45309,11 @@
       "source_paths": [
         "src/app/(business)/service/packs/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45383,7 +45323,8 @@
       "workflow_basis": [
         "src/app/(business)/service/packs/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

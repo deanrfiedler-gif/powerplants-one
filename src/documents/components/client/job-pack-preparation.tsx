@@ -22,6 +22,7 @@ import { Badge, Icon } from "./job-pack-ui";
 import {
   SectionBody,
   SourceTag,
+  ChangedSectionSources,
   sectionId,
   sectionNumber,
 } from "./job-pack-sections";
@@ -218,6 +219,10 @@ export function PreparationForm({
                     </span>
                   )}
                 </div>
+                <ChangedSectionSources
+                  section={key}
+                  drift={pack?.basis_drift ?? []}
+                />
                 {pack &&
                   revision &&
                   // Section 01 is the visit's key facts, so its grid stays in view. The rest of the frozen

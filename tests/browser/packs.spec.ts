@@ -1,3 +1,4 @@
+import { openPackView, showPackReadiness } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -83,6 +84,14 @@ async function decide(
   confirm: string,
   reason: string,
 ) {
+  if (
+    !(await page
+      .getByRole("button", { name: trigger, exact: true })
+      .isVisible())
+  )
+    await page
+      .getByRole("button", { name: "Job pack actions", exact: true })
+      .click();
   await page.getByRole("button", { name: trigger, exact: true }).click();
   const dialog = page.getByRole("dialog");
   await expect(
@@ -178,7 +187,16 @@ async function appointment(page: Page, day: string) {
     scope_version: a.scope_version,
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
-    scheduling_policy_version: 1, scheduling_policy_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44", publication_head_version: 1, selected_policy: {id: "a0000000-0000-4000-8000-000000000001", version: 1, content_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44"},
+    scheduling_policy_version: 1,
+    scheduling_policy_hash:
+      "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+    publication_head_version: 1,
+    selected_policy: {
+      id: "a0000000-0000-4000-8000-000000000001",
+      version: 1,
+      content_hash:
+        "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+    },
     crew: [9, 2].map((n, i) => ({
       resource_id: id("a4", n),
       resource_version: 1,
@@ -230,7 +248,7 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   const pid = page.url().split("/").pop()!;
   // Save and print must consume the actual flat OperationReceipt returned by commandRoute.
   // Prove the preview is the immutable saved successor, before continuing the issue journey.
-  await page.getByRole("tab", { name: /^Preparation,/ }).click();
+  await openPackView(page, "Preparation");
   await page
     .locator("#section-identification")
     .fill("SYN revised arrival notes for the exact preparation preview.");
@@ -273,8 +291,9 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     9,
   );
   await expect(
-    page.getByRole("tab", { name: "Job pack, 9 sections", exact: true }),
+    page.getByRole("tab", { name: "Job pack", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
+  await showPackReadiness(page);
   await expect(page.getByText(/^\d+ of \d+ criteria satisfied/)).toBeVisible();
   await decide(
     page,
@@ -292,6 +311,7 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     "Queue output",
     "SYN exact checked revision queued for controlled issue",
   );
+  await showPackReadiness(page);
   await expect(
     page.getByRole("button", { name: "Process or recover original output" }),
   ).toBeEnabled();
@@ -370,13 +390,16 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   await page
     .getByRole("button", { name: /Acknowledge this exact issue/ })
     .click();
+  await page
+    .getByRole("button", { name: "Confirm acknowledgement", exact: true })
+    .click();
   await expect(page.locator(".business-error")).toBeVisible();
   await capture(page, info, "acknowledgement-response-lost");
   const replay = page.waitForRequest((request) =>
     request.url().endsWith(`/pack-issues/${issue.id}/acknowledge`),
   );
   await page
-    .getByRole("button", { name: /Acknowledge this exact issue/ })
+    .getByRole("button", { name: "Confirm acknowledgement", exact: true })
     .click();
   expect((await replay).postData()).toBe(acceptedBody);
   await expect(
@@ -386,6 +409,9 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   await identity(page, "second-technician");
   await page
     .getByRole("button", { name: /Acknowledge this exact issue/ })
+    .click();
+  await page
+    .getByRole("button", { name: "Confirm acknowledgement", exact: true })
     .click();
   await expect(
     page.getByText("Pack dispatch checks complete", { exact: true }),
