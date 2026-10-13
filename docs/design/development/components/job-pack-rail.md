@@ -10,8 +10,12 @@ Crew roles follow the issue's exact revision. Task creation, opens/downloads and
 
 ## Mobile
 
-The rail follows the paper in normal scroll. Long reason/name/source text wraps. Disclosures and actions keep at least 44 px targets; focus remains visible. No independent fixed-height lane is introduced.
+On coordinator phones, Readiness opens the status content in the same scroll surface; Pack and History return to their respective content. Recipient phones retain the applicable issue, crew acknowledgement and dispatch result together. Long reason/name/source text wraps. Disclosures and actions keep at least 44 px targets; focus remains visible.
 
 ## Fixtures, consumers and limits
 
 The retained pack read and `job-pack-presentation.spec.ts` exercise attention, satisfied disclosures, output failure with a named owner and earlier issue acknowledgements. Consumers are scope:SV-05 and route:/service/packs/[id]. The catalogue entry is reference-only because it has no isolated renderer. I5 supplies final paired page conformance; owner/device acceptance and deployment remain unclaimed.
+
+## Job Pack Figma application, 13 October 2026
+
+The [implementation decision](../../../decisions/job-pack-figma-implementation.md) binds this component to the accepted Figma Job Pack layout. Desktop uses the shared menu, register and 320 px status panel; phone uses compact register rows and coordinator Pack / Readiness / History tabs. Existing exact-content, permission, source and command contracts remain. The live host fixtures are `tests/ui/job-pack-fixture.tsx` and `job-pack-register-fixture.tsx`; states and consumer bindings are maintained in `components.json`. See [execution evidence](../../../testing/evidence/job-pack-figma-ui/README.md). Owner/device acceptance remains pending; no fingerprint is copied into a review record.

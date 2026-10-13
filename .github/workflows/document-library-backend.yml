@@ -70,7 +70,7 @@ jobs:
       - name: Exact revisions, scoped authority, findings, reviews, recovery and immutable SQL evidence
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/document-library.test.ts
       - name: Pending identity events across 0026 and reserved Products after newest history
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|89) ' tests/database/products-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90) ' tests/database/products-upgrade.test.ts
       - name: Compiled document library HTTP
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset

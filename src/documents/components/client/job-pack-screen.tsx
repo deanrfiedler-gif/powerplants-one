@@ -1,8 +1,16 @@
 "use client";
+import { PackListScreen } from "./job-pack-register";
+import { JobPackWorkspace, usePackPreference } from "./job-pack-workspace";
+import {
+  JobPackHeader,
+  JobPackMenu,
+  DispatchBar,
+  packTabKey,
+} from "./job-pack-chrome";
 import { printHeaderCss } from "../../print-view";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   api,
   useResource,
@@ -16,12 +24,11 @@ import {
 import { useUnsavedChanges } from "../../../components/record-ui";
 import { useIdentity } from "../../../components/business-session";
 import type { OperationReceipt } from "../../../platform/operations";
-import { sectionKeys, type PackInput, type SectionKey } from "../../validation";
+import { sectionKeys, type PackInput } from "../../validation";
 import { readSection } from "../../section-readers";
 import {
   driftSources,
   emptyInput,
-  formatDate,
   formatStamp,
   historyLabel,
   inputDiff,
@@ -30,7 +37,7 @@ import {
   revisionLabel,
   readableValue,
   statusPresentation,
-  zoneLabel,
+  packSectionTitles,
 } from "../../pack-view";
 import type {
   Pack,
@@ -40,19 +47,8 @@ import type {
   PackRevision,
   PackSource,
 } from "./job-pack-types";
-import {
-  Badge,
-  Icon,
-  KeyRow,
-  PackDialog,
-  Person,
-  type IconName,
-} from "./job-pack-ui";
-import {
-  ContentsRail,
-  PackSections,
-  sectionSources,
-} from "./job-pack-sections";
+import { Badge, Icon, KeyRow, PackDialog, type IconName } from "./job-pack-ui";
+import { PackSections, sectionSources } from "./job-pack-sections";
 import {
   CrewCard,
   OutputCard,
@@ -389,7 +385,15 @@ export function JobPackScreen({ id }: { id: string }) {
   const r = useResource<Envelope<Pack>>(`packs/${id}`),
     command = useCommand(),
     identity = useIdentity();
-  const [view, setView] = useState<View>("pack"),
+  const search = useSearchParams();
+  const initialView: View =
+    search.get("view") === "revisions" ? "revisions" : "pack";
+  const [statusOpen, setStatusOpen] = usePackPreference("status");
+  const [phoneTab, setPhoneTab] = useState(
+      initialView === "revisions" ? "history" : "pack",
+    ),
+    [ackConfirm, setAckConfirm] = useState(false);
+  const [view, setView] = useState<View>(initialView),
     [decision, setDecision] = useState<Decision | null>(null),
     // null means "no edits yet": the saved revision is shown as it stands, so a reload never
     // resurrects a stale draft and a fresh save clears the dirty state without waiting for the read.
@@ -459,8 +463,14 @@ export function JobPackScreen({ id }: { id: string }) {
     const el = scroller.current;
     if (el && next !== view) positions.current[view] = el.scrollTop;
     setView(next);
+    setPhoneTab(next === "revisions" ? "history" : "pack");
     requestAnimationFrame(() => {
       if (el) el.scrollTop = positions.current[next];
+      const tab = document.getElementById(`jp-tab-${next}`);
+      if (!tab?.getClientRects().length)
+        document
+          .getElementById(`jp-panel-${next}`)
+          ?.focus({ preventScroll: true });
     });
   }
   async function recover(jobId: string) {
@@ -498,7 +508,7 @@ export function JobPackScreen({ id }: { id: string }) {
     }
   }
   async function acknowledge() {
-    if (!p || !issue || !mine) return;
+    if (!p || !issue || !mine) return false;
     const key = `${issue.id}/${mine.assignment_id}/${identity.actor_id}`;
     // The captured time belongs to the first attempt; a retry after an uncertain response must send identical bytes.
     if (acknowledgement.current?.key !== key)
@@ -514,17 +524,39 @@ export function JobPackScreen({ id }: { id: string }) {
       acknowledgement.current = null;
       r.reload();
     }
+    return !!result;
   }
 
   const frame = (children: React.ReactNode) => (
-    <section
-      id="ppo-job-pack"
-      data-module-layout="full-bleed"
-      aria-labelledby="jp-page-title"
-      ref={scroller}
+    <JobPackWorkspace
+      menu={
+        isDenied(command.error) ||
+        isDenied(error) ||
+        isDenied(r.error) ? null : (
+          <JobPackMenu
+            pack={p}
+            revision={revision}
+            staff={staff}
+            view={view}
+            show={show}
+            jump={jump}
+            current={current[view === "prepare" ? "prepare" : "pack"]}
+            draft={draft}
+          />
+        )
+      }
     >
-      {children}
-    </section>
+      <section
+        className="jp-workspace"
+        aria-labelledby="jp-page-title"
+        ref={scroller}
+        data-status-open={statusOpen}
+        data-phone-tab={phoneTab}
+        data-recipient={!staff}
+      >
+        {children}
+      </section>
+    </JobPackWorkspace>
   );
   if (isDenied(command.error) || isDenied(error))
     return frame(
@@ -547,40 +579,11 @@ export function JobPackScreen({ id }: { id: string }) {
     printRevision =
       savedPrint && p && p.version >= savedPrint.version
         ? p.revisions.find((item) => item.revision === savedPrint.revision)
-        : undefined,
-    flagged: SectionKey[] = sectionKeys.filter(
-      (k) =>
-        (k === "readiness" && !!summary?.blocked.length) ||
-        sectionSources[k].some((s) => drifted.includes(s)),
-    ),
-    outstanding = (summary?.blocked.length ?? 0) + (drifted.length ? 1 : 0),
-    views: [View, string][] = [
-      ["pack", "Job pack"],
-      ...(staff ? ([["prepare", "Preparation"]] as [View, string][]) : []),
-      ["revisions", "Revision history"],
-    ];
+        : undefined;
   const scopeView = revision
     ? readSection("scope", revision.snapshot, revision.id, p?.section_view)
     : null;
   const scopeHeading = scopeView?.kind === "scope" ? scopeView.value : null;
-  const tabKeys = (e: React.KeyboardEvent) => {
-    const i = views.findIndex(([v]) => v === view),
-      next =
-        e.key === "ArrowRight"
-          ? (i + 1) % views.length
-          : e.key === "ArrowLeft"
-            ? (i + views.length - 1) % views.length
-            : e.key === "Home"
-              ? 0
-              : e.key === "End"
-                ? views.length - 1
-                : -1;
-    if (next < 0) return;
-    e.preventDefault();
-    show(views[next][0]);
-    document.getElementById(`jp-tab-${views[next][0]}`)?.focus();
-  };
-
   const sourceNotice =
     p && sourceChanged && staff ? (
       <div
@@ -595,6 +598,18 @@ export function JobPackScreen({ id }: { id: string }) {
             The saved revision is retained. Prepare a successor with current
             sources; checking and issuing still verify the exact source content.
           </span>
+          <p>
+            Affected sections:{" "}
+            {sectionKeys
+              .filter((key) =>
+                p.basis_drift?.some((item) =>
+                  sectionSources[key].includes(item.source),
+                ),
+              )
+              .map((key) => packSectionTitles[key])
+              .join("; ") || "Review source details below"}
+            .
+          </p>
           {!!p.basis_drift?.length && (
             <ul>
               {p.basis_drift.map((item) => (
@@ -633,106 +648,64 @@ export function JobPackScreen({ id }: { id: string }) {
 
   return frame(
     <>
-      <nav className="jp-breadcrumb" aria-label="Page location">
-        <Link href="/service/tickets">Service</Link>
-        <span aria-hidden="true">›</span>
-        <Link href="/service/packs">Job packs</Link>
-        <span aria-hidden="true">›</span>
-        <span>{p?.display_number ?? "Job pack"}</span>
-      </nav>
-      <header className="jp-heading">
-        <div>
-          <div className="jp-reference-line">
-            <span>{p?.display_number ?? "Job pack"}</span>
-            {p && (
-              <span>
-                Job pack · {p.status}
-                {revision ? ` ${revisionLabel(revision.revision)}` : ""}
-              </span>
-            )}
-            <span>Synthetic prototype</span>
-          </div>
-          <h1 id="jp-page-title">
-            {scopeHeading?.summary ||
-              (revision
-                ? `${revision.snapshot.work.reference} · ${revision.snapshot.appointment.reference}`
-                : (p?.display_number ?? "Job pack"))}
-          </h1>
-          {scopeHeading && (
-            <p className="jp-work-context">
-              {[
-                ...new Set(
-                  scopeHeading.items.map((i) => readableValue(i.task_kind)),
-                ),
-              ].join(" · ")}{" "}
-              · {revision?.snapshot.work.reference} ·{" "}
-              {revision?.snapshot.appointment.reference}
-            </p>
-          )}
-          {p && (
-            <div className="jp-subtitle">
-              {revision && (
-                <>
-                  <strong>{revision.snapshot.customer.name}</strong>
-                  <span aria-hidden="true">·</span>
-                  <span>{revision.snapshot.site.name}</span>
-                </>
-              )}
-              {status && <Badge tone={status.tone}>{status.label}</Badge>}
-              {dirty && (
-                <span className="jp-unsaved">
-                  <UnsavedBadge />
-                </span>
-              )}
-            </div>
-          )}
+      <JobPackHeader
+        pack={p}
+        revision={revision}
+        issue={issue}
+        title={
+          scopeHeading?.summary ||
+          revision?.snapshot.work.reference ||
+          p?.display_number ||
+          "Job pack"
+        }
+        staff={staff}
+        busy={busy}
+        dirty={dirty}
+        sourceChanged={sourceChanged}
+        jobState={jobState}
+        onPrepare={() => show("prepare")}
+        onCheck={() => setDecision({ kind: "check", decision: "Checked" })}
+        onReturn={() => setDecision({ kind: "check", decision: "Returned" })}
+        onIssue={() => setDecision({ kind: "issue" })}
+        onWithdraw={() => setDecision({ kind: "withdraw" })}
+        onRecover={() => {
+          const job = p?.jobs.find(
+            (j) => j.revision_id === p.current_revision_id,
+          );
+          if (job) void recover(job.id);
+        }}
+        onPrint={() => setPrintChoice(true)}
+        onSend={(recipient) => setDecision({ kind: "send", recipient })}
+      />
+      {staff && p && <DispatchBar pack={p} revision={revision} />}
+      {staff && (
+        <div
+          className="jp-phone-tabs"
+          role="tablist"
+          aria-label="Phone pack views"
+          onKeyDown={packTabKey}
+        >
+          {["pack", "readiness", "history"].map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              role="tab"
+              aria-selected={phoneTab === tab}
+              tabIndex={phoneTab === tab ? 0 : -1}
+              onClick={() => {
+                show(tab === "history" ? "revisions" : "pack");
+                setPhoneTab(tab);
+              }}
+            >
+              {tab === "pack"
+                ? "Pack"
+                : tab === "readiness"
+                  ? "Readiness"
+                  : "History"}
+            </button>
+          ))}
         </div>
-        {p && (
-          <div className="jp-heading-right">
-            <div className="jp-button-row">
-              {revision && issue?.revision_id !== revision.id && staff && (
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() => setPrintChoice(true)}
-                >
-                  <Icon name="print" />
-                  Print preview
-                </button>
-              )}
-              {issue && issue.revision_id === revision?.id && (
-                <Link
-                  className="jp-button jp-primary"
-                  href={`/documents/${issue.id}`}
-                >
-                  <Icon name="document" />
-                  Open exact issued document
-                </Link>
-              )}
-              {p.actions.can_prepare && (
-                <button
-                  type="button"
-                  className={issue ? undefined : "jp-primary"}
-                  disabled={busy}
-                  onClick={() => {
-                    show("prepare");
-                    document.getElementById("jp-tab-prepare")?.focus();
-                  }}
-                >
-                  <Icon name="edit" />
-                  Prepare successor revision
-                </button>
-              )}
-            </div>
-            {revision?.created_by_name && (
-              <div className="jp-person jp-small jp-muted">
-                <span>Prepared by</span>
-                <Person name={revision.created_by_name} />
-              </div>
-            )}
-          </div>
-        )}
-      </header>
+      )}
       <div className="jp-read-state">
         <ReadState
           loading={r.loading}
@@ -743,61 +716,12 @@ export function JobPackScreen({ id }: { id: string }) {
       </div>
       {p && (
         <>
-          <div
-            className="jp-tabs"
-            role="tablist"
-            aria-label="Job pack view"
-            onKeyDown={tabKeys}
-          >
-            {views.map(([v, title]) => (
-              <button
-                key={v}
-                type="button"
-                role="tab"
-                id={`jp-tab-${v}`}
-                aria-controls={`jp-panel-${v}`}
-                aria-selected={view === v}
-                tabIndex={view === v ? 0 : -1}
-                aria-label={
-                  v === "pack"
-                    ? "Job pack, 9 sections"
-                    : v === "prepare"
-                      ? `Preparation, ${outstanding} outstanding ${outstanding === 1 ? "item" : "items"}`
-                      : undefined
-                }
-                onClick={() => show(v)}
-              >
-                {title}
-                {v === "pack" && (
-                  <span className="jp-count" aria-hidden="true">
-                    9
-                  </span>
-                )}
-                {v === "prepare" && (
-                  <span className="jp-count" aria-hidden="true">
-                    {outstanding}
-                  </span>
-                )}
-              </button>
-            ))}
-            <span
-              className={`jp-tab-trailing${dirty ? " changed" : ""}`}
-              role="presentation"
-            >
-              <Icon name={dirty ? "warning" : "document"} />
-              {dirty
-                ? "Unsaved preparation changes"
-                : revision
-                  ? `${revisionLabel(revision.revision)} saved ${formatStamp(revision.created_at, zone)}`
-                  : "No saved revision"}
-            </span>
-          </div>
-
           <section
             id="jp-panel-pack"
             role="tabpanel"
+            tabIndex={-1}
             aria-labelledby="jp-tab-pack"
-            hidden={view !== "pack"}
+            hidden={staff && view !== "pack"}
           >
             {revision && (
               <>
@@ -828,35 +752,6 @@ export function JobPackScreen({ id }: { id: string }) {
               </>
             )}
             <div className="jp-layout">
-              {revision ? (
-                <ContentsRail
-                  prefix="s"
-                  title="Pack contents"
-                  label="Job pack sections"
-                  current={current.pack}
-                  flagged={flagged}
-                  onJump={jump}
-                  foot={
-                    <>
-                      Prepared against work order v
-                      {revision.snapshot.work.version} · appointment v
-                      {revision.snapshot.appointment.version}
-                      <br />
-                      Visit ·{" "}
-                      {formatDate(revision.snapshot.appointment.start_at, zone)}
-                      <br />
-                      Times in{" "}
-                      {zoneLabel(
-                        revision.snapshot.appointment.start_at,
-                        zone,
-                      )}{" "}
-                      ({zone})
-                    </>
-                  }
-                />
-              ) : (
-                <aside className="jp-contents" aria-label="Pack contents" />
-              )}
               <div className="jp-main-column">
                 {view === "pack" && sourceNotice}
                 {issue && issue.revision_id !== revision?.id && (
@@ -868,16 +763,28 @@ export function JobPackScreen({ id }: { id: string }) {
                     . The saved successor below has not been issued.
                   </p>
                 )}
-                {step && (
-                  <div className={`jp-notice ${step.tone}`.trim()}>
-                    <Icon name={step.icon} />
-                    <div>
-                      <strong>{step.title}</strong>
-                      <span>{step.text}</span>
+                {step &&
+                  (!staff ||
+                    ["Returned", "Withdrawn"].includes(p.status) ||
+                    (!sourceChanged &&
+                      [
+                        "Queued",
+                        "Running",
+                        "Durable",
+                        "Failed",
+                        "AuthorityLost",
+                      ].includes(jobState ?? ""))) && (
+                    <div className={`jp-notice ${step.tone}`.trim()}>
+                      <Icon name={step.icon} />
+                      <div>
+                        <strong>{step.title}</strong>
+                        <span>{step.text}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
+                {!decision && !ackConfirm && (
+                  <ErrorNotice error={command.error} />
                 )}
-                {!decision && <ErrorNotice error={command.error} />}
                 {revision ? (
                   <article
                     className="jp-paper"
@@ -910,57 +817,33 @@ export function JobPackScreen({ id }: { id: string }) {
                   </article>
                 )}
               </div>
+              {staff && (
+                <button
+                  type="button"
+                  className="jp-status-strip"
+                  aria-label="Expand status panel"
+                  onClick={() => setStatusOpen(true)}
+                >
+                  Status <Icon name="info" />
+                </button>
+              )}
               <aside
                 className="jp-right-rail"
                 aria-label="Preparation and issue summary"
               >
-                <ReadinessCard pack={p} revision={revision}>
-                  {p.actions.can_check &&
-                    ["Draft", "Returned"].includes(p.status) && (
-                      <>
-                        <button
-                          type="button"
-                          className="jp-primary jp-side-action"
-                          disabled={busy}
-                          onClick={() =>
-                            setDecision({ kind: "check", decision: "Checked" })
-                          }
-                        >
-                          Check this revision
-                        </button>
-                        <button
-                          type="button"
-                          className="jp-side-action"
-                          disabled={busy}
-                          onClick={() =>
-                            setDecision({ kind: "check", decision: "Returned" })
-                          }
-                        >
-                          Return preparation
-                        </button>
-                      </>
-                    )}
-                  {p.actions.can_issue && p.status === "Checked" && (
+                {staff && (
+                  <div className="jp-status-heading">
+                    <span>Status</span>
                     <button
                       type="button"
-                      className="jp-primary jp-side-action"
-                      disabled={busy}
-                      onClick={() => setDecision({ kind: "issue" })}
+                      aria-label="Collapse status panel"
+                      onClick={() => setStatusOpen(false)}
                     >
-                      Queue exact output for issue
+                      <Icon name="minus" />
                     </button>
-                  )}
-                  {p.actions.can_issue && issue && p.status !== "Withdrawn" && (
-                    <button
-                      type="button"
-                      className="jp-side-action"
-                      disabled={busy}
-                      onClick={() => setDecision({ kind: "withdraw" })}
-                    >
-                      Withdraw current issue
-                    </button>
-                  )}
-                </ReadinessCard>
+                  </div>
+                )}
+                {staff && <ReadinessCard pack={p} revision={revision} />}
                 <CrewCard pack={p} revision={revision} issue={issue}>
                   {p.actions.can_acknowledge &&
                     issue &&
@@ -971,12 +854,31 @@ export function JobPackScreen({ id }: { id: string }) {
                         type="button"
                         className="jp-primary jp-side-action"
                         disabled={busy}
-                        onClick={acknowledge}
+                        onClick={() => setAckConfirm(true)}
                       >
                         Acknowledge this exact issue as {identity.display_name}
                       </button>
                     )}
                 </CrewCard>
+                {!staff && (
+                  <div className="jp-recipient-dispatch">
+                    <strong>
+                      {p.readiness.dispatch_hold
+                        ? "Dispatch held"
+                        : "Pack dispatch checks complete"}
+                    </strong>
+                    {p.readiness.reasons.length > 0 && (
+                      <details>
+                        <summary>Dispatch hold details</summary>
+                        <ul>
+                          {p.readiness.reasons.map((reason) => (
+                            <li key={reason}>{reason}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                  </div>
+                )}
                 <RecordCard pack={p} revision={revision} issue={issue} />
                 {staff && (
                   <OutputCard
@@ -998,25 +900,11 @@ export function JobPackScreen({ id }: { id: string }) {
             <section
               id="jp-panel-prepare"
               role="tabpanel"
+              tabIndex={-1}
               aria-labelledby="jp-tab-prepare"
               hidden={view !== "prepare"}
             >
               <div className="jp-layout">
-                <ContentsRail
-                  prefix="p"
-                  title="Preparation"
-                  label="Preparation sections"
-                  current={current.prepare}
-                  flagged={flagged}
-                  onJump={jump}
-                  foot={
-                    <>
-                      The job records supply the context.
-                      <br />
-                      Add the instructions this visit needs.
-                    </>
-                  }
-                />
                 <div className="jp-main-column">
                   {view === "prepare" && sourceNotice}
                   {p.actions.can_prepare ? (
@@ -1074,8 +962,9 @@ export function JobPackScreen({ id }: { id: string }) {
           <section
             id="jp-panel-revisions"
             role="tabpanel"
+            tabIndex={-1}
             aria-labelledby="jp-tab-revisions"
-            hidden={view !== "revisions"}
+            hidden={!staff || view !== "revisions"}
           >
             <div className="jp-revision-layout">
               <article className="jp-paper">
@@ -1284,6 +1173,32 @@ export function JobPackScreen({ id }: { id: string }) {
               onClose={() => setPrep(null)}
             />
           )}
+          {ackConfirm && issue && mine && (
+            <PackDialog
+              title="Acknowledge this exact issue"
+              subtitle={`${p.display_number} · ${revisionLabel(issue.revision)}`}
+              busy={command.busy}
+              onClose={() => setAckConfirm(false)}
+              actions={
+                <button
+                  className="jp-primary"
+                  disabled={busy}
+                  onClick={async () => {
+                    if (await acknowledge()) setAckConfirm(false);
+                  }}
+                >
+                  Confirm acknowledgement
+                </button>
+              }
+            >
+              <p>
+                I have read this exact issued job pack for my assigned visit.
+                Acknowledgement does not clear other dispatch holds or authorise
+                extra work.
+              </p>
+              <ErrorNotice error={command.error} />
+            </PackDialog>
+          )}
           {decision && (
             <DecisionDialog
               pack={p}
@@ -1323,6 +1238,13 @@ type PreparationOptions = {
 // First preparation. The same frame and the same preparation view as the pack page, with only the
 // Preparation view available: there is no revision, no readiness and no record until the first save.
 export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
+  return appointmentId ? (
+    <FirstPreparationScreen appointmentId={appointmentId} />
+  ) : (
+    <PackListScreen initialPrepare />
+  );
+}
+function FirstPreparationScreen({ appointmentId }: { appointmentId: string }) {
   const router = useRouter(),
     r = useResource<PreparationOptions>(
       `appointments/${appointmentId}/pack-options`,
@@ -1383,164 +1305,137 @@ export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
       </section>
     );
   return (
-    <section
-      id="ppo-job-pack"
-      data-module-layout="full-bleed"
-      aria-labelledby="jp-page-title"
-      ref={scroller}
-    >
-      <nav className="jp-breadcrumb" aria-label="Page location">
-        <Link href="/service/tickets">Service</Link>
-        <span aria-hidden="true">›</span>
-        <Link href="/service/packs">Job packs</Link>
-        <span aria-hidden="true">›</span>
-        <span>Prepare</span>
-      </nav>
-      <header className="jp-heading">
-        <div>
-          <div className="jp-reference-line">
-            <span>{options?.work_order_reference ?? "Job pack"}</span>
-            <span>Job pack · first preparation</span>
-          </div>
-          <h1 id="jp-page-title">
-            {options
-              ? `${options.work_order_reference} · ${options.appointment.display_number}`
-              : "Prepare job pack"}
-          </h1>
-          <div className="jp-subtitle">
-            <Badge>Not yet saved</Badge>
-            {dirty && (
-              <span className="jp-unsaved">
-                <UnsavedBadge />
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="jp-heading-right">
-          <div className="jp-button-row">
-            <Link
-              className="jp-button"
-              href={`/service/appointments/${appointmentId}`}
-            >
-              Appointment
-            </Link>
-          </div>
-        </div>
-      </header>
-      <div className="jp-read-state">
-        <ReadState
-          loading={r.loading}
-          error={r.error}
-          retry={r.reload}
-          retained={!!options}
+    <JobPackWorkspace
+      menu={
+        <JobPackMenu
+          first
+          staff
+          view="prepare"
+          show={() => {}}
+          jump={jump}
+          current={current}
+          draft={draft}
         />
-        {existing && (
-          <p role="status">
-            A job pack already exists for this appointment — opening it.
-          </p>
-        )}
-      </div>
-      {options && !existing && (
-        <>
-          <div className="jp-tabs" role="tablist" aria-label="Job pack view">
-            <button
-              type="button"
-              role="tab"
-              id="jp-tab-prepare"
-              aria-controls="jp-panel-prepare"
-              aria-selected="true"
-              aria-label="Preparation, 9 outstanding items"
-            >
-              Preparation
-              <span className="jp-count" aria-hidden="true">
-                9
-              </span>
-            </button>
-            <span className="jp-tab-trailing" role="presentation">
-              <Icon name={dirty ? "warning" : "document"} />
-              {dirty ? "Unsaved preparation changes" : "No saved revision"}
-            </span>
-          </div>
-          <section
-            id="jp-panel-prepare"
-            role="tabpanel"
-            aria-labelledby="jp-tab-prepare"
-          >
-            <div className="jp-layout">
-              <ContentsRail
-                prefix="p"
-                title="Preparation"
-                label="Preparation sections"
-                current={current}
-                flagged={[]}
-                onJump={jump}
-                foot={
-                  <>
-                    The job records supply the context.
-                    <br />
-                    Add the instructions this visit needs.
-                  </>
-                }
-              />
-              <div className="jp-main-column">
-                <ValidationFields error={prep ? null : command.error}>
-                  <PreparationForm
-                    timeZone={options.appointment.site_timezone}
-                    sources={options.sources}
-                    history={options.history}
-                    value={value}
-                    onChange={setDraft}
-                    dirty={dirty}
-                    busy={command.busy}
-                    saveState={
-                      command.busy
-                        ? "Saving preparation…"
-                        : dirty
-                          ? "Unsaved changes"
-                          : "No unsaved changes"
-                    }
-                    error={prep ? null : command.error}
-                    onSave={() => setPrep("save")}
-                    onDiscard={() => setPrep("discard")}
-                  />
-                </ValidationFields>
-              </div>
-              <aside
-                className="jp-right-rail"
-                aria-label="Preparation guidance"
-              >
-                <PreparationStatusCard />
-                <PreparationGuidanceCard />
-              </aside>
+      }
+    >
+      <section
+        className="jp-workspace"
+
+        aria-labelledby="jp-page-title"
+        ref={scroller}
+      >
+        <header className="jp-heading jp-figma-heading">
+          <div>
+            <div className="jp-reference-line">
+              <span>{options?.work_order_reference ?? "Job pack"}</span>
+              <span>Job pack · first preparation</span>
             </div>
-          </section>
-          <footer className="jp-page-foot">
-            <span>Powerplants One · Service operations</span>
-            <span>Synthetic prototype — not for operational use</span>
-          </footer>
-          {prep === "save" && (
-            <PreparationChangeDialog
-              title="Record the first preparation"
-              subtitle={`${options.appointment.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
-              lead="Every entry below is recorded as added, with your reason, in the revision history. This save creates r01."
-              changes={changes}
-              command={command}
-              onConfirm={savePreparation}
-              onClose={() => setPrep(null)}
-            />
+            <h1 id="jp-page-title">
+              {options
+                ? `${options.work_order_reference} · ${options.appointment.display_number}`
+                : "Prepare job pack"}
+            </h1>
+            <div className="jp-subtitle">
+              <Badge>Not yet saved</Badge>
+              {dirty && (
+                <span className="jp-unsaved">
+                  <UnsavedBadge />
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="jp-heading-right">
+            <div className="jp-button-row">
+              <Link
+                className="jp-button"
+                href={`/service/appointments/${appointmentId}`}
+              >
+                Appointment
+              </Link>
+            </div>
+          </div>
+        </header>
+        <div className="jp-read-state">
+          <ReadState
+            loading={r.loading}
+            error={r.error}
+            retry={r.reload}
+            retained={!!options}
+          />
+          {existing && (
+            <p role="status">
+              A job pack already exists for this appointment — opening it.
+            </p>
           )}
-          {prep === "discard" && (
-            <DiscardDialog
-              subtitle={`${options.appointment.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
-              onConfirm={() => {
-                setDraft(null);
-                setPrep(null);
-              }}
-              onClose={() => setPrep(null)}
-            />
-          )}
-        </>
-      )}
-    </section>
+        </div>
+        {options && !existing && (
+          <>
+            <section
+              id="jp-panel-prepare"
+              role="tabpanel"
+              aria-labelledby="jp-tab-prepare"
+            >
+              <div className="jp-layout">
+                <div className="jp-main-column">
+                  <ValidationFields error={prep ? null : command.error}>
+                    <PreparationForm
+                      timeZone={options.appointment.site_timezone}
+                      sources={options.sources}
+                      history={options.history}
+                      value={value}
+                      onChange={setDraft}
+                      dirty={dirty}
+                      busy={command.busy}
+                      saveState={
+                        command.busy
+                          ? "Saving preparation…"
+                          : dirty
+                            ? "Unsaved changes"
+                            : "No unsaved changes"
+                      }
+                      error={prep ? null : command.error}
+                      onSave={() => setPrep("save")}
+                      onDiscard={() => setPrep("discard")}
+                    />
+                  </ValidationFields>
+                </div>
+                <aside
+                  className="jp-right-rail"
+                  aria-label="Preparation guidance"
+                >
+                  <PreparationStatusCard />
+                  <PreparationGuidanceCard />
+                </aside>
+              </div>
+            </section>
+            <footer className="jp-page-foot">
+              <span>Powerplants One · Service operations</span>
+              <span>Synthetic prototype — not for operational use</span>
+            </footer>
+            {prep === "save" && (
+              <PreparationChangeDialog
+                title="Record the first preparation"
+                subtitle={`${options.appointment.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
+                lead="Every entry below is recorded as added, with your reason, in the revision history. This save creates r01."
+                changes={changes}
+                command={command}
+                onConfirm={savePreparation}
+                onClose={() => setPrep(null)}
+              />
+            )}
+            {prep === "discard" && (
+              <DiscardDialog
+                subtitle={`${options.appointment.display_number} · ${changes.length} field${changes.length === 1 ? "" : "s"} changed`}
+                onConfirm={() => {
+                  setDraft(null);
+                  setPrep(null);
+                }}
+                onClose={() => setPrep(null)}
+              />
+            )}
+          </>
+        )}
+      </section>
+    </JobPackWorkspace>
   );
 }

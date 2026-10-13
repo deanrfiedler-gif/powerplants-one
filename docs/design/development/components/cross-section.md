@@ -39,3 +39,6 @@ Truss webs identify the structure type only; they are not member sizes, bracing 
 ## Verification and maintenance
 
 `tests/unit/specialist-workbench.test.ts` checks the heights against the decision's r10 figures (Venlo 4.6464 m and 4.8081 m, Gable 5.2929 m, Arch R 3.9554 m, Sawtooth 5.5957 m), curve symmetry, the Arch circle and every withholding rule. `tests/browser/specialist-workbench.spec.ts` draws every profile through the component and proves a drawing-only error withholds the section while the quantities stay valid. Automated checks do not grant design acceptance; record reviewer, date, viewport, result and evidence paths in the component review record.
+
+
+The 13 October Figma implementation reuses this exact geometry in its live card and sheets. Estimate and configuration title-block fields are separate. Selected fields open the phone inspector sheet; quantity authority and drawing-only storage are unchanged. See the Screen Configurator Workbench host for the new composition.

@@ -1,0 +1,1553 @@
+/* Accepted ES-02 Figma composition. Existing controls and engine outputs retain
+   their contracts; this edition is scoped to the fertigation record workspace. */
+#ppo-fertigation {
+  --fn-fill-conflict: #f2b5a7;
+  --fn-fill-incomplete: #f0cf8f;
+  --fn-fill-review: #b7d1ef;
+  --fn-fill-neutral: #b7d1ef;
+  --fn-fill-prepare: #dce2eb;
+  --fn-fill-deliver: #c8dfbd;
+  --fn-fill-flush: #b7d1ef;
+  --fn-outline-blue: #4a7bb7;
+  --fn-outline-green: #648954;
+  --fn-outline-amber: #aa7c29;
+  --fn-page-max: none;
+  --menu-width: 240px;
+}
+#ppo-fertigation .mw-content {
+  background: var(--surface, #f6f7f9);
+}
+#ppo-fertigation .fn-page {
+  padding: 24px 24px 32px;
+  gap: 24px;
+}
+#ppo-fertigation .fn-page-title h2 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+#ppo-fertigation .fn-page-head {
+  gap: 16px;
+  margin: 0;
+}
+#ppo-fertigation .fn-page-title {
+  gap: 4px;
+}
+#ppo-fertigation .fn-eyebrow {
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-fertigation .fn-lede {
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-fertigation .mw-menu {
+  width: 240px;
+  padding: 0;
+  background: var(--surface, #f6f7f9);
+  border-radius: 0;
+}
+#ppo-fertigation .fn-rail {
+  padding: 0 8px 8px;
+}
+#ppo-fertigation .fn-readiness-compact {
+  margin: 0;
+  padding: 14px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+#ppo-fertigation .fn-readiness-legend {
+  gap: 2px;
+}
+#ppo-fertigation .fn-readiness-legend li {
+  line-height: 18px;
+}
+#ppo-fertigation .fn-readiness-total {
+  font-size: 13px;
+}
+#ppo-fertigation .fn-readiness-total strong {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 700;
+}
+#ppo-fertigation .fn-readiness-bar {
+  height: 8px;
+  gap: 2px;
+  background: transparent;
+}
+#ppo-fertigation .fn-readiness-bar span {
+  border-radius: 3px;
+  border: 1px solid var(--fn-outline-blue);
+}
+#ppo-fertigation .fn-readiness-bar .fn-bar-conflict {
+  border-color: var(--danger);
+}
+#ppo-fertigation .fn-readiness-bar .fn-bar-incomplete {
+  border-color: var(--fn-outline-amber);
+}
+#ppo-fertigation .fn-menu-group {
+  margin: 0;
+  padding-top: 18px;
+}
+#ppo-fertigation .fn-menu-group-title {
+  margin: 0;
+  padding: 0 12px;
+  line-height: 16px;
+}
+#ppo-fertigation .fn-menu-group ul {
+  padding: 0;
+  gap: 2px;
+}
+#ppo-fertigation .fn-menu-group li {
+  margin: 0;
+}
+#ppo-fertigation .mw-menu nav .fn-menu-group button {
+  height: 40px;
+  min-height: 40px;
+  padding: 0 12px;
+  gap: 10px;
+  border-radius: 6px;
+}
+#ppo-fertigation .fn-menu-label {
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-fertigation .fn-menu-icon {
+  width: 16px;
+  height: 16px;
+}
+#ppo-fertigation .mw-menu nav button[aria-current="page"] {
+  color: var(--link);
+  background: #e3e8ee;
+  box-shadow: none;
+}
+#ppo-fertigation .fn-rail-foot {
+  margin-top: 0;
+  padding: 12px 12px 16px;
+  gap: 6px;
+}
+#ppo-fertigation .fn-rail-link {
+  font-size: 13px;
+  line-height: 20px;
+}
+#ppo-fertigation .fn-rail-edition {
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-fertigation .fn-record-head {
+  background: white;
+}
+#ppo-fertigation .fn-record-row {
+  padding: 18px 24px 0;
+  gap: 12px;
+  flex-wrap: nowrap;
+  min-height: 58px;
+}
+#ppo-fertigation .fn-record-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+#ppo-fertigation .fn-record-head h1 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  letter-spacing: 0;
+  min-width: 0;
+}
+#ppo-fertigation .fn-record-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#ppo-fertigation .fn-status-wrap {
+  flex: none;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-fertigation .fn-status-saved {
+  background: var(--success-surface);
+  color: var(--success);
+}
+#ppo-fertigation .fn-status-dirty,
+#ppo-fertigation .fn-status-pending {
+  background: var(--warning-surface);
+  color: var(--warning);
+}
+#ppo-fertigation .fn-status-conflict {
+  background: var(--danger-surface);
+  color: var(--danger);
+}
+#ppo-fertigation .fn-status-readonly {
+  background: var(--neutral-surface);
+  color: var(--neutral);
+}
+#ppo-fertigation .fn-record-actions {
+  flex: none;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+#ppo-fertigation .fn-record-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  padding: 6px 24px 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-fertigation .fn-record-meta > span + span::before {
+  content: "·";
+  margin-right: 8px;
+  color: var(--muted);
+}
+#ppo-fertigation .fn-context-row {
+  min-height: 43px;
+  padding: 6px 24px;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+#ppo-fertigation .fn-context-source {
+  flex: none;
+  gap: 6px;
+}
+#ppo-fertigation .fn-context-mark {
+  background: transparent;
+  width: 16px;
+  height: 16px;
+  border: 0;
+}
+#ppo-fertigation .fn-context-mark-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--success);
+}
+#ppo-fertigation .fn-context-text strong {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+}
+#ppo-fertigation .fn-context-facts {
+  flex: 1;
+  gap: 14px;
+  justify-content: space-between;
+}
+#ppo-fertigation .fn-context-scenario {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  border-left: 1px solid var(--line);
+  padding-left: 14px;
+}
+#ppo-fertigation .fn-context-scenario select {
+  min-height: 30px;
+  height: 30px;
+  width: 196px;
+  padding: 4px 28px 4px 10px;
+  font-size: 13px;
+}
+#ppo-fertigation .fn-context-facts > .fn-record-divider {
+  display: none;
+}
+#ppo-fertigation .fn-record-menu {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+}
+#ppo-fertigation .fn-record-menu .product-icon {
+  width: 16px;
+  height: 16px;
+}
+#ppo-fertigation .crm-r38-popover {
+  width: 280px;
+  padding: 6px 0;
+}
+#ppo-fertigation .crm-r38-popover > h2 {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+#ppo-fertigation .crm-r38-popover > :is(button, a) {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 0;
+  background: white;
+  text-align: left;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+  color: var(--ink);
+}
+#ppo-fertigation .crm-r38-popover > :is(button, a):hover {
+  background: var(--surface-hover);
+}
+#ppo-fertigation .crm-r38-popover > button:disabled {
+  opacity: 0.5;
+}
+/* Headings sit outside the cards; the existing semantic section owns both. */
+#ppo-fertigation .fn-panel:not(.fn-register-panel) {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+#ppo-fertigation .fn-panel:not(.fn-register-panel) > .fn-panel-head {
+  padding: 0 0 8px;
+  border: 0;
+  min-height: 29px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+#ppo-fertigation .fn-panel-title {
+  flex-direction: row;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+#ppo-fertigation .fn-panel-title h3,
+#ppo-fertigation .fn-panel-head h2 {
+  font-weight: 700;
+  line-height: 21px;
+}
+#ppo-fertigation .fn-panel-title p {
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-fertigation .fn-panel:not(.fn-register-panel) > :not(.fn-panel-head) {
+  background: white;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+#ppo-fertigation .fn-panel:not(.fn-register-panel) > .fn-panel-head + * {
+  border-top: 1px solid var(--line);
+  border-radius: 7px 7px 0 0;
+}
+#ppo-fertigation .fn-panel:not(.fn-register-panel) > :last-child {
+  border-bottom: 1px solid var(--line);
+  border-radius: 0 0 7px 7px;
+}
+#ppo-fertigation
+  .fn-panel:not(.fn-register-panel)
+  > .fn-panel-head
+  + :last-child {
+  border-radius: 7px;
+}
+#ppo-fertigation .fn-panel-body {
+  padding: 20px;
+}
+#ppo-fertigation .fn-panel-foot {
+  background: white;
+}
+#ppo-fertigation .fn-cockpit {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+#ppo-fertigation .fn-next-list li {
+  padding: 14px 20px;
+  gap: 12px;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+}
+#ppo-fertigation .fn-next-body {
+  display: contents;
+}
+#ppo-fertigation .fn-next-number {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+}
+#ppo-fertigation .fn-next-body strong {
+  grid-column: 2;
+  grid-row: 1;
+}
+#ppo-fertigation .fn-next-body small {
+  grid-column: 2 / -1;
+  grid-row: 2;
+}
+#ppo-fertigation .fn-next-meta {
+  grid-column: 2 / -1;
+  grid-row: 3;
+  margin: 0;
+}
+#ppo-fertigation .fn-next-actions {
+  grid-column: 3;
+  grid-row: 1;
+}
+#ppo-fertigation .fn-next-list li {
+  row-gap: 6px;
+}
+#ppo-fertigation .fn-next-body small {
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-fertigation .fn-next-body strong {
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-fertigation .fn-next-actions {
+  align-items: start;
+  flex-direction: row;
+  gap: 16px;
+}
+#ppo-fertigation .fn-next-actions button {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0;
+  min-height: 20px;
+  border: 0;
+  background: transparent;
+  color: var(--link);
+}
+#ppo-fertigation .fn-next-number {
+  width: 24px;
+  height: 24px;
+}
+#ppo-fertigation .fn-next-meta {
+  gap: 10px;
+}
+#ppo-fertigation .fn-next-body .fn-count {
+  background: none;
+  padding: 0 0 0 6px;
+  font-weight: 400;
+}
+#ppo-fertigation .fn-chip {
+  border-radius: 5px;
+  font-weight: 400;
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-fertigation .fn-cockpit .fn-next-list li {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+  gap: 6px;
+}
+#ppo-fertigation .fn-cockpit .fn-next-body small {
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-fertigation [aria-labelledby="fn-outputs-title"] .fn-panel-title p {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+#ppo-fertigation .fn-output-list .fn-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-height: 20px;
+  color: var(--link);
+}
+#ppo-fertigation .fn-tile {
+  padding: 16px;
+  gap: 8px;
+  border-radius: 7px;
+}
+#ppo-fertigation .fn-tile-value strong {
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 700;
+}
+#ppo-fertigation .fn-tile-sm .fn-tile-value strong {
+  font-size: 20px;
+}
+#ppo-fertigation .fn-tile-foot {
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-fertigation .fn-register-panel {
+  overflow: visible;
+  border-radius: 7px;
+}
+#ppo-fertigation .fn-register-panel .fn-panel-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+#ppo-fertigation .fn-register-panel .fn-panel-head {
+  padding: 12px;
+  display: block;
+}
+#ppo-fertigation .fn-register-panel .fn-panel-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ppo-fertigation .fn-register-filters {
+  padding: 0;
+  border: 0;
+  gap: 8px;
+  flex: 1;
+}
+#ppo-fertigation .fn-filter > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+#ppo-fertigation .fn-filter select {
+  min-height: 36px;
+  height: 36px;
+  font-size: 13px;
+  padding: 6px 24px 6px 10px;
+  max-width: 180px;
+}
+#ppo-fertigation .fn-register-panel .fn-find {
+  width: 176px;
+  flex: 0 1 176px;
+}
+#ppo-fertigation .fn-register-panel .fn-button {
+  min-height: 36px;
+  height: 36px;
+}
+#ppo-fertigation .record-tablist {
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  gap: 0;
+}
+#ppo-fertigation .record-tablist button {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+#ppo-fertigation .record-tablist button[aria-selected="true"] {
+  color: var(--link);
+  box-shadow: inset 0 -2px var(--link);
+}
+#ppo-fertigation .fn-registers {
+  gap: 8px;
+}
+#ppo-fertigation .fn-register-panel .ppo-register :is(th, td) {
+  height: 40px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  font-size: 13px;
+}
+#ppo-fertigation .fn-cell-lines {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 6px;
+}
+#ppo-fertigation .fn-register-panel .ppo-register .fn-col-actions {
+  position: sticky;
+  right: 0;
+  width: 44px;
+  min-width: 44px;
+  background: white;
+  border-left: 1px solid var(--line);
+  z-index: 1;
+  padding: 0 6px;
+}
+#ppo-fertigation .fn-col-actions .crm-r38-menu-trigger {
+  min-width: 30px;
+  height: 32px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+}
+#ppo-fertigation .fn-col-actions .product-icon {
+  width: 16px;
+  height: 16px;
+}
+#ppo-fertigation .fn-valve-list {
+  display: none;
+}
+/* Pastel charts retain a dark edge, typed statuses and the engine's numbers. */
+#ppo-fertigation
+  :is(
+    .fn-capacity-within,
+    .fn-swatch-within,
+    .fn-buildup-part,
+    .fn-iocell-used,
+    .fn-swatch-used
+  ) {
+  background: var(--fn-fill-neutral);
+  border: 1px solid var(--fn-outline-blue);
+}
+#ppo-fertigation
+  :is(
+    .fn-capacity-storage,
+    .fn-swatch-storage,
+    .fn-iocell-reserved,
+    .fn-swatch-reserved
+  ) {
+  background: var(--fn-fill-incomplete);
+  border: 1px solid var(--fn-outline-amber);
+}
+#ppo-fertigation
+  :is(.fn-capacity-over, .fn-swatch-over, .fn-buildup-shortfall) {
+  border: 1px solid var(--danger);
+}
+#ppo-fertigation
+  :is(
+    .fn-buildup-required,
+    .fn-buildup-margin,
+    .fn-iocell-demand,
+    .fn-swatch-demand-cell,
+    .fn-swatch-deliver
+  ) {
+  background: var(--fn-fill-deliver);
+  border: 1px solid var(--fn-outline-green);
+}
+#ppo-fertigation .fn-seg-prepare {
+  stroke: #8291a5;
+}
+#ppo-fertigation .fn-seg-deliver {
+  stroke: var(--fn-outline-green);
+}
+#ppo-fertigation .fn-seg-flush {
+  stroke: var(--fn-outline-blue);
+}
+#ppo-fertigation .fn-injection-axis {
+  width: calc((100% - 32px) * 1.6 / 3.4);
+  margin-left: calc((100% - 32px) * 0.9 / 3.4 + 16px);
+}
+#ppo-fertigation .fn-review-main {
+  display: contents;
+}
+#ppo-fertigation .fn-page[data-view="review"] {
+  grid-template-columns: minmax(0, 1fr) 312px;
+}
+#ppo-fertigation .fn-review-main > :is(.fn-page-head, .fn-tiles) {
+  grid-column: 1 / -1;
+}
+#ppo-fertigation .fn-review-main > .fn-panel {
+  grid-column: 1;
+}
+#ppo-fertigation .fn-page[data-view="review"] > .fn-artifacts-host {
+  grid-column: 2;
+  grid-row: span 2;
+}
+#ppo-fertigation .fn-review-filters .fn-segmented {
+  background: transparent;
+  border: 0;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+#ppo-fertigation .fn-review-filters .fn-segmented button {
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: white;
+}
+#ppo-fertigation .fn-review-filters .fn-segmented button[aria-pressed="true"] {
+  background: var(--neutral-surface);
+  color: var(--link);
+  border-color: var(--link);
+}
+.fn-dialog::backdrop {
+  background: transparent;
+}
+.fn-dialog.fn-decision[aria-label="History & exact revisions"] {
+  width: min(720px, calc(100vw - 32px));
+  max-width: 720px;
+  max-height: calc(100dvh - 48px);
+}
+#ppo-fertigation .fn-shortlisted {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#ppo-fertigation .fn-section-trigger {
+  display: none;
+}
+#ppo-fertigation .fn-section-sheet {
+  margin: auto 0 0;
+  width: 100%;
+  max-width: none;
+  max-height: calc(100dvh - 100px);
+  border: 1px solid var(--line);
+  border-radius: 12px 12px 0 0;
+  padding: 16px;
+}
+#ppo-fertigation .fn-section-sheet::backdrop {
+  background: transparent;
+}
+#ppo-fertigation .fn-section-sheet header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+#ppo-fertigation .fn-section-sheet h2 {
+  font-size: 18px;
+}
+#ppo-fertigation .fn-section-sheet h3 {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+#ppo-fertigation .fn-section-sheet nav button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 10px 12px;
+}
+#ppo-fertigation .fn-section-sheet nav button[aria-current="page"] {
+  background: var(--neutral-surface);
+  color: var(--link);
+}
+#ppo-fertigation .fn-section-sheet .fn-menu-icon {
+  width: 16px;
+  height: 16px;
+}
+#ppo-fertigation .fn-section-sheet .fn-sheet-count {
+  margin-left: auto;
+  font-size: 12px;
+}
+@media (min-width: 781px) {
+  .app-frame[data-shell-design="fertigation"][data-rail="expanded"]
+    .ppo-shell-header
+    .product-heading {
+    max-width: none;
+    flex: 0 1 auto;
+  }
+  .app-frame[data-shell-design="fertigation"] .ppo-breadcrumb-trigger {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"][data-rail="expanded"]
+    .ppo-header-centre {
+    width: min(403px, 30vw);
+  }
+}
+@media (max-width: 1100px) {
+  #ppo-fertigation .fn-record-identity {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  #ppo-fertigation .fn-record-head h1 {
+    font-size: 20px;
+  }
+  #ppo-fertigation .fn-page[data-view="review"] {
+    grid-template-columns: 1fr;
+  }
+  #ppo-fertigation .fn-page[data-view="review"] > .fn-artifacts-host {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+@media (max-width: 780px) {
+  .app-frame[data-shell-design="fertigation"] .mobile-brand,
+  .app-frame[data-shell-design="fertigation"] .ppo-header-menu-slot {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"] .ppo-shell-header {
+    height: 64px;
+    min-height: 64px;
+  }
+  .app-frame[data-shell-design="fertigation"] .ppo-phone-page-name {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 16px;
+  }
+  .app-frame[data-shell-design="fertigation"] .product-heading {
+    display: none;
+  }
+  #ppo-fertigation .mw-content {
+    overflow: auto;
+    background: white;
+    padding-bottom: 69px;
+  }
+  #ppo-fertigation .fn-scroll {
+    flex: none;
+    overflow: visible;
+  }
+  #ppo-fertigation .fn-page {
+    display: flex;
+    padding: 0 16px 32px;
+    gap: 16px;
+  }
+  #ppo-fertigation .fn-record-row {
+    padding: 12px 16px 0;
+    min-height: 0;
+  }
+  #ppo-fertigation .fn-record-identity {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-record-head h1 {
+    font-size: 17px;
+    line-height: 22px;
+    width: 100%;
+    white-space: normal;
+  }
+  #ppo-fertigation .fn-record-actions {
+    gap: 0;
+  }
+  #ppo-fertigation .fn-record-actions > .fn-button {
+    display: none;
+  }
+  #ppo-fertigation .fn-record-meta {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 6px 16px 8px;
+  }
+  #ppo-fertigation .fn-record-meta > span:not(:first-child) {
+    display: none;
+  }
+  #ppo-fertigation .fn-context-row {
+    border-top: 0;
+    padding: 0 16px 12px;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-context-source {
+    display: none;
+  }
+  #ppo-fertigation .fn-context-facts {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-context-scenario {
+    padding: 0;
+    border: 0;
+    display: block;
+  }
+  #ppo-fertigation .fn-context-scenario > span:first-child {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  #ppo-fertigation .fn-context-scenario select {
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+  }
+  #ppo-fertigation .fn-context-facts > .fn-chip {
+    align-self: flex-start;
+  }
+  #ppo-fertigation .fn-record-compact .fn-context-row {
+    display: none;
+  }
+  #ppo-fertigation .fn-record-compact .fn-record-meta {
+    display: none;
+  }
+  #ppo-fertigation .fn-record-compact .fn-record-row {
+    padding-bottom: 12px;
+  }
+  #ppo-fertigation .fn-section-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    border: 1px solid var(--control-border);
+    border-radius: 6px;
+    background: white;
+    text-align: left;
+  }
+  #ppo-fertigation .fn-section-trigger > span {
+    flex: 1;
+  }
+  #ppo-fertigation .fn-page-head {
+    order: -2;
+    align-items: center;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-page-title h2 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  #ppo-fertigation .fn-lede,
+  #ppo-fertigation .fn-page[data-view="overview"] .fn-page-actions {
+    display: none;
+  }
+  #ppo-fertigation .fn-page-actions {
+    flex: none;
+  }
+  #ppo-fertigation .fn-desktop-label {
+    display: none;
+  }
+  #ppo-fertigation .fn-mobile-label {
+    display: inline;
+  }
+  #ppo-fertigation .fn-tiles,
+  #ppo-fertigation .fn-tiles:has(> :nth-child(6)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-tile-foot {
+    display: none;
+  }
+  #ppo-fertigation .fn-tile {
+    padding: 12px;
+    min-height: 108px;
+  }
+  #ppo-fertigation .fn-tile-head {
+    flex-wrap: wrap;
+  }
+  #ppo-fertigation .fn-cockpit,
+  #ppo-fertigation .fn-overview-foot {
+    grid-template-columns: 1fr;
+  }
+  #ppo-fertigation .fn-next-list li {
+    grid-template-columns: 24px minmax(0, 1fr);
+    padding: 12px 16px;
+  }
+  #ppo-fertigation .fn-next-list li > .fn-next-actions {
+    grid-column: 2;
+    grid-row: 4;
+    flex-wrap: wrap;
+  }
+  #ppo-fertigation .fn-panel:not(.fn-register-panel) > .fn-panel-head {
+    flex-wrap: wrap;
+  }
+  #ppo-fertigation .fn-panel-title {
+    flex-direction: column;
+    gap: 4px;
+  }
+  #ppo-fertigation .fn-register-panel .fn-panel-actions {
+    flex-wrap: wrap;
+  }
+  #ppo-fertigation .fn-register-panel .fn-find {
+    flex: 1;
+    width: auto;
+  }
+  #ppo-fertigation .fn-register-filters {
+    flex-basis: 100%;
+    order: 3;
+    flex-wrap: wrap;
+  }
+  #ppo-fertigation .fn-register-panel:has(.fn-valve-list) .ppo-register {
+    display: none;
+  }
+  #ppo-fertigation .fn-valve-list {
+    display: flex;
+    flex-direction: column;
+  }
+  #ppo-fertigation .fn-valve-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-fertigation .fn-valve-row > .fn-row-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  #ppo-fertigation .fn-valve-row p {
+    grid-column: 1 / -1;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+  }
+  #ppo-fertigation .fn-valve-row .crm-r38-menu-trigger {
+    width: 32px;
+    min-height: 32px;
+  }
+  #ppo-fertigation .fn-phone-bar {
+    bottom: calc(64px + env(safe-area-inset-bottom));
+    height: 69px;
+    min-height: 69px;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-phone-bar .fn-button {
+    flex: 1;
+    height: 44px;
+  }
+  #ppo-fertigation .fn-injection-axis {
+    width: 100%;
+    margin: 0;
+  }
+  .fn-dialog.fn-decision[aria-label="History & exact revisions"] {
+    width: calc(100vw - 16px);
+  }
+}
+@media (min-width: 781px) {
+  .fn-mobile-label,
+  .ppo-phone-page-name {
+    display: none;
+  }
+}
+
+#ppo-fertigation .fn-tab-count {
+  margin-left: 8px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--neutral-surface);
+  font-size: 12px;
+}
+#ppo-fertigation .fn-status-wrap .fn-status {
+  color: inherit;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-section-trigger {
+    order: -4;
+  }
+  #ppo-fertigation .fn-record-row {
+    flex-direction: row;
+  }
+  #ppo-fertigation
+    .fn-record-head
+    .fn-record-row
+    .fn-record-actions
+    > .fn-record-menu {
+    display: grid;
+  }
+  #ppo-fertigation
+    .fn-record-head
+    .fn-record-actions
+    > .crm-r38-popover:popover-open {
+    display: block;
+  }
+  #ppo-fertigation .fn-valve-row .fn-row-title {
+    min-height: 32px;
+  }
+  #ppo-fertigation .fn-valve-row p {
+    margin: 0;
+  }
+}
+#ppo-fertigation .fn-valve-flow {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 14px;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-valve-row {
+    position: relative;
+  }
+  #ppo-fertigation .fn-valve-row .crm-r38-menu-trigger {
+    position: absolute;
+    right: 12px;
+    top: 48px;
+    border: 0;
+    background: transparent;
+  }
+  #ppo-fertigation .fn-valve-row p {
+    padding-right: 28px;
+  }
+  #ppo-fertigation .fn-section-sheet {
+    height: calc(100dvh - 140px);
+    padding: 24px 0 16px;
+  }
+  #ppo-fertigation .fn-section-sheet header {
+    padding: 0 16px;
+    margin-bottom: 20px;
+  }
+  #ppo-fertigation .fn-section-sheet h3 {
+    padding: 0 16px;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.55px;
+  }
+  #ppo-fertigation .fn-section-sheet nav button {
+    padding: 12px 20px;
+  }
+  #ppo-fertigation .fn-section-sheet header button {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+  }
+  #ppo-fertigation .fn-section-sheet header .product-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+#ppo-fertigation .crm-r38-popover > .fn-phone-history {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .crm-r38-popover > .fn-phone-history {
+    display: block;
+  }
+}
+#ppo-fertigation .fn-register-panel .fn-phone-filter-toggle,
+#ppo-fertigation .fn-phone-register-count {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-register-panel .fn-phone-filter-toggle {
+    order: -2;
+    display: inline-flex;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  #ppo-fertigation .fn-phone-register-count {
+    order: -3;
+    display: block;
+    flex: 1;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  #ppo-fertigation
+    .fn-register-panel:not(.fn-register-filtering)
+    .fn-register-filters,
+  #ppo-fertigation .fn-register-panel:not(.fn-register-filtering) .fn-find {
+    display: none;
+  }
+  #ppo-fertigation .fn-register-filtering .fn-find {
+    flex-basis: 100%;
+    order: 2;
+  }
+  #ppo-fertigation .fn-register-panel .fn-panel-actions {
+    align-items: center;
+  }
+}
+
+/* Paired desktop and phone review: beat the workspace element reset explicitly. */
+#ppo-fertigation {
+  font-family: PPOShellRoboto, Roboto, Verdana, sans-serif;
+}
+#ppo-fertigation .fn-readiness-legend {
+  flex-direction: column;
+  align-items: flex-start;
+}
+#ppo-fertigation .fn-role {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 0;
+}
+#ppo-fertigation .fn-next-list li {
+  row-gap: 4px;
+}
+#ppo-fertigation .fn-rail-link {
+  font-weight: 400;
+}
+#ppo-fertigation .fn-register-filters {
+  background: transparent;
+}
+#ppo-fertigation .fn-register-panel .ppo-register thead tr {
+  height: 40px;
+}
+#ppo-fertigation .fn-register-panel .ppo-register thead th {
+  padding: 8px 12px;
+}
+#ppo-fertigation .record-tablist {
+  width: 100%;
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background: transparent;
+}
+#ppo-fertigation .record-tablist button {
+  background: transparent;
+}
+#ppo-fertigation .fn-record-menu {
+  border: 1px solid var(--control-border);
+}
+@media (min-width: 781px) {
+  .app-frame[data-shell-design="fertigation"]
+    .header-account
+    .ppo-working-company {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"]
+    .ppo-shell-header
+    .ppo-header-centre {
+    position: static;
+    transform: none;
+    flex: 1 1 280px;
+    width: auto;
+    max-width: 460px;
+    margin-left: auto;
+  }
+  .app-frame[data-shell-design="fertigation"]
+    .ppo-shell-header
+    .ppo-header-utilities {
+    margin-left: 0;
+  }
+  #ppo-fertigation .fn-context-facts {
+    flex-wrap: nowrap;
+  }
+  #ppo-fertigation .fn-context-facts > .fn-chip {
+    white-space: nowrap;
+  }
+  #ppo-fertigation .fn-context-scenario {
+    flex: 1;
+  }
+  #ppo-fertigation .fn-filter {
+    flex: 0 1 110px;
+    min-width: 0;
+  }
+  #ppo-fertigation .fn-filter select {
+    min-width: 0;
+    max-width: 110px;
+    width: 100%;
+  }
+}
+@media (max-width: 780px) {
+  .app-frame[data-shell-design="fertigation"] .ppo-shell-header {
+    padding: 0 12px 0 16px;
+    gap: 4px;
+  }
+  .app-frame[data-shell-design="fertigation"] .ppo-shell-header #header-menu,
+  .app-frame[data-shell-design="fertigation"]
+    .ppo-shell-header
+    .ppo-studio-link,
+  .app-frame[data-shell-design="fertigation"]
+    .ppo-shell-header
+    #shell-mobile-search {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"] .ppo-phone-page-name {
+    flex: 1;
+    padding: 0;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  #ppo-fertigation .fn-page-head {
+    flex-direction: row;
+    align-items: flex-end;
+    text-align: left;
+  }
+  #ppo-fertigation .fn-page-title {
+    flex: 1;
+    min-width: 0;
+  }
+  #ppo-fertigation .fn-page-actions {
+    width: auto;
+  }
+  #ppo-fertigation .fn-valve-row > .fn-row-title {
+    justify-content: flex-start;
+    text-align: left;
+  }
+  #ppo-fertigation .fn-section-sheet nav button {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  #ppo-fertigation .fn-section-sheet h3 {
+    font-weight: 500;
+  }
+  #ppo-fertigation .fn-section-sheet .fn-rail-link {
+    display: block;
+    padding: 16px 20px;
+    border-top: 1px solid var(--line);
+    margin-top: 12px;
+  }
+  #ppo-fertigation
+    .fn-panel:not(.fn-register-panel)
+    > .fn-panel-head
+    .fn-panel-actions {
+    width: auto;
+  }
+}
+
+@media (min-width: 781px) {
+  #ppo-fertigation .fn-context-scenario > span:first-child {
+    white-space: nowrap;
+  }
+  #ppo-fertigation .fn-context-scenario .fn-select {
+    min-width: 0;
+    width: 196px;
+  }
+  #ppo-fertigation .fn-context-scenario select {
+    width: 196px;
+  }
+}
+@media (max-width: 780px) {
+  .app-frame[data-shell-design="fertigation"][data-rail]
+    .ppo-shell-header
+    .product-heading {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"] .topbar.ppo-shell-header {
+    display: flex;
+    padding: 0 12px 0 16px;
+  }
+  #ppo-fertigation .fn-section-sheet .fn-menu-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+  }
+}
+
+#ppo-fertigation .crm-r38-popover > .fn-phone-calculation {
+  display: none;
+}
+.fn-dialog > header button[aria-label^="Close "] {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+}
+.fn-dialog > header button[aria-label^="Close "] .product-icon {
+  width: 16px;
+  height: 16px;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .crm-r38-popover > .fn-phone-calculation {
+    display: block;
+  }
+  #ppo-fertigation .fn-section-sheet .mw-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+  }
+  #ppo-fertigation .fn-section-sheet::backdrop {
+    background: #242a3760;
+  }
+  #ppo-fertigation .fn-record-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px;
+  }
+  #ppo-fertigation .fn-record-identity {
+    display: contents;
+  }
+  #ppo-fertigation .fn-record-name {
+    grid-column: 1 / -1;
+  }
+  #ppo-fertigation .fn-status-wrap {
+    justify-self: start;
+  }
+  #ppo-fertigation .fn-record-actions {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  #ppo-fertigation .fn-record-menu {
+    height: 28px;
+    border: 0;
+  }
+}
+
+#ppo-fertigation .fn-next-action-set {
+  display: contents;
+}
+#ppo-fertigation .fn-next-menu {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-next-action-set .fn-next-actions {
+    display: none;
+  }
+  #ppo-fertigation .fn-next-menu {
+    display: grid;
+    place-items: center;
+    grid-column: 3;
+    grid-row: 1;
+    width: 28px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  #ppo-fertigation .fn-next-menu .product-icon {
+    width: 16px;
+    height: 16px;
+  }
+  #ppo-fertigation .fn-next-list li {
+    grid-template-columns: 24px minmax(0, 1fr) 28px;
+    gap: 4px 8px;
+  }
+  #ppo-fertigation .fn-next-panel > .fn-panel-head p,
+  #ppo-fertigation .fn-next-panel > .fn-panel-head > .fn-link {
+    display: none;
+  }
+  #ppo-fertigation .fn-next-panel > .fn-panel-head h3 {
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+    color: var(--text-secondary);
+  }
+  #ppo-fertigation .fn-next-panel > .fn-panel-head h3::after {
+    content: " · Conflicts first";
+  }
+  #ppo-fertigation .fn-next-panel {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+  #ppo-fertigation
+    .fn-next-panel.fn-panel:not(.fn-register-panel)
+    > .fn-panel-head {
+    padding: 0 16px 8px;
+  }
+  #ppo-fertigation .fn-next-panel .fn-next-list {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+  #ppo-fertigation .fn-page[data-view="overview"] {
+    background: var(--paper);
+  }
+}
+
+/* Match the shared phone header's ID-level selector without changing other workspaces. */
+@media (max-width: 780px) {
+  .app-frame[data-shell-design="fertigation"]
+    .workspace
+    .ppo-shell-header:has(#header-menu)
+    .product-heading {
+    display: none;
+  }
+  .app-frame[data-shell-design="fertigation"]
+    .workspace
+    .topbar.ppo-shell-header:has(#header-menu) {
+    padding: 0 12px 0 16px;
+    gap: 4px;
+  }
+  #ppo-fertigation .mw-content {
+    background: var(--paper);
+  }
+  #ppo-fertigation .fn-record-row {
+    grid-template-columns: minmax(0, 1fr) 44px;
+  }
+  #ppo-fertigation .fn-record-menu {
+    width: 44px;
+    height: 44px;
+  }
+  #ppo-fertigation .fn-valve-row .crm-r38-menu-trigger {
+    width: 44px;
+    height: 44px;
+    right: 8px;
+    top: 40px;
+  }
+  #ppo-fertigation .fn-section-sheet header button {
+    width: 44px;
+    height: 44px;
+  }
+  /* The small ellipsis keeps a 44 px touch target within the row's padding. */
+  #ppo-fertigation .fn-next-menu {
+    width: 44px;
+    height: 44px;
+    margin: -6px -8px;
+  }
+}
+#ppo-fertigation
+  .fn-dialog
+  > header
+  button[aria-label^="Close "]:not(.fn-button) {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation
+    .fn-dialog
+    > header
+    button[aria-label^="Close "]:not(.fn-button) {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+#ppo-fertigation .fn-phone-record-meta,
+#ppo-fertigation .fn-phone-state {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-record-row {
+    display: block;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  #ppo-fertigation .fn-record-identity {
+    display: flex;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-record-name {
+    flex: 0 0 100%;
+  }
+  #ppo-fertigation .fn-phone-record-meta {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    padding-right: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--text-secondary);
+  }
+  #ppo-fertigation .fn-record-actions {
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+  }
+  #ppo-fertigation .fn-record-meta {
+    display: none;
+  }
+  #ppo-fertigation .fn-phone-state {
+    display: inline-flex;
+  }
+  #ppo-fertigation .fn-context-facts {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  #ppo-fertigation .fn-context-scenario {
+    flex-basis: 100%;
+  }
+}
+
+/* The accepted phone valve register runs flush to the workspace edges. */
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-page[data-view="growing"] .fn-registers {
+    margin-inline: -16px;
+    gap: 0;
+  }
+  #ppo-fertigation .fn-page[data-view="growing"] .record-tablist {
+    padding-inline: 16px;
+  }
+  #ppo-fertigation .fn-page[data-view="growing"] .fn-register-panel {
+    margin: 0;
+    border-inline: 0;
+    border-radius: 0;
+  }
+  #ppo-fertigation
+    .fn-page[data-view="growing"]
+    .fn-register-panel
+    .fn-panel-head {
+    padding-inline: 16px;
+  }
+}

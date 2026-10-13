@@ -137,7 +137,7 @@ jobs:
         # Reuse the build verified by HTTP/restart checks. The same assertions
         # also pass in the full compiled suite; a second dev compilation can
         # leave an otherwise permitted workbook loading past its 5s assertion.
-        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts tests/browser/estimating-workload.spec.ts tests/browser/estimating-sources.spec.ts tests/browser/estimating-review.spec.ts tests/browser/quotation-release.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts tests/browser/estimating-workload.spec.ts tests/browser/estimating-sources.spec.ts tests/browser/estimating-review.spec.ts tests/browser/quotation-release.spec.ts tests/browser/cpq.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
       - name: Compiled ES-02, My Work, Engineering materials and shell regression
         if: matrix.suite == 'browser'
         env:

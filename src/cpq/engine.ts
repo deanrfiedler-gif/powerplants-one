@@ -6,6 +6,12 @@ import {
   Fraction,
 } from "./expression";
 import { hash, lineIdentity } from "./hash";
+import {
+  conditionEvidence,
+  prepareDesign,
+  price,
+  tableCoverage,
+} from "./design-runtime";
 import type {
   Calculation,
   CalculationInput,
@@ -23,13 +29,17 @@ export function evaluateCondition(
   c: Condition,
   values: Record<string, Scalar>,
   facts: Fact[],
+  notApplicable: string[] = [],
 ): Truth {
+  if (c.op === "ALWAYS") return true;
   if (c.op === "NOT") {
-    const v = evaluateCondition(c.item, values, facts);
+    const v = evaluateCondition(c.item, values, facts, notApplicable);
     return v === null ? null : !v;
   }
   if (c.op === "ALL" || c.op === "ANY") {
-    const v = c.items.map((i) => evaluateCondition(i, values, facts));
+    const v = c.items.map((i) =>
+      evaluateCondition(i, values, facts, notApplicable),
+    );
     return c.op === "ALL"
       ? v.includes(false)
         ? false
@@ -45,14 +55,24 @@ export function evaluateCondition(
   if (!("fact" in c))
     throw new CceError("CONDITION_INVALID", "Unsupported condition");
   const value = values[c.fact];
+  if (c.op === "KNOWN")
+    return (
+      value !== null && value !== undefined && !notApplicable.includes(c.fact)
+    );
+  if (c.op === "NOT_APPLICABLE") return notApplicable.includes(c.fact);
+  if (c.op === "IN")
+    return value === null || value === undefined
+      ? null
+      : c.values.includes(value);
+  if (!("value" in c))
+    throw new CceError("CONDITION_INVALID", "A comparison requires a literal");
   if (value === null || value === undefined) return null;
   const f = facts.find((f) => f.key === c.fact)!;
-  const comparison =
-    f.type === "Decimal"
-      ? Fraction.fromDecimal(String(value)).subtract(
-          Fraction.fromDecimal(String(c.value)),
-        ).numerator
-      : null;
+  const comparison = ["Decimal", "Integer"].includes(f.type)
+    ? Fraction.fromDecimal(String(value)).subtract(
+        Fraction.fromDecimal(String(c.value)),
+      ).numerator
+    : null;
   switch (c.op) {
     case "EQ":
       return comparison === null ? value === c.value : comparison === 0n;
@@ -74,6 +94,8 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
   const diagnostics: Diagnostic[] = [],
     lines: ResultLine[] = [],
     seenOverrides = new Set<string>();
+  const design =
+    d.schema_version === 3 ? prepareDesign(d, input, diagnostics) : null;
   const add = (
     code: string,
     message: string,
@@ -81,7 +103,9 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
     target: string | null = null,
   ) => diagnostics.push({ code, message, instance_id, target });
   const symbols = new Set(
-    d.facts.filter((f) => f.type === "Decimal").map((f) => f.key),
+    d.facts
+      .filter((f) => ["Decimal", "Integer"].includes(f.type))
+      .map((f) => f.key),
   );
   const compiled = new Map(
     d.rules.map((r) => [
@@ -90,24 +114,144 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
         r.quantity,
         new Set([
           ...symbols,
+          ...(r.parameters ?? []).map((p) => p.key),
           ...(r.phase === "Labour"
             ? d.parts
                 .filter((p) => p.category !== "Labour")
                 .map((p) => `bom_${p.key}`)
             : []),
         ]),
+        d.schema_version === 3,
       ),
     ]),
   );
-  for (const instance of [...input.instances].sort((a, b) =>
-    a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+  const contexts: {
+    instance: import("./types").Instance;
+    kind: "System" | "Shared" | "Configuration";
+    group_fact: string | null;
+  }[] = input.instances.map((instance) => ({
+    instance,
+    kind: "System",
+    group_fact: null,
+  }));
+  if (design) {
+    const specs = [
+      ...new Set(
+        d.parts
+          .filter((p) => p.scope && p.scope.kind !== "System")
+          .map((p) => JSON.stringify(p.scope)),
+      ),
+    ].map((s) => JSON.parse(s) as NonNullable<import("./types").Part["scope"]>);
+    for (const spec of specs) {
+      if (spec.kind === "Shared")
+        for (const i of input.instances) {
+          if (
+            typeof i.facts[spec.group_fact!] !== "string" ||
+            !String(i.facts[spec.group_fact!]).trim()
+          )
+            add(
+              "SharedGroupingUnknown",
+              "Choose the shared group before calculating shared equipment.",
+              i.id,
+              spec.group_fact,
+            );
+        }
+      const groups =
+        spec.kind === "Configuration"
+          ? ["configuration"]
+          : [
+              ...new Set(
+                input.instances
+                  .map((i) => i.facts[spec.group_fact!])
+                  .filter((v): v is string => typeof v === "string" && !!v),
+              ),
+            ].sort();
+      for (const group of groups) {
+        if (contexts.length >= 120) {
+          add(
+            "ScopeLimit",
+            "Split this configuration: more than 100 shared or configuration output groups.",
+          );
+          break;
+        }
+        const members =
+          spec.kind === "Configuration"
+            ? input.instances
+            : input.instances.filter(
+                (i) => i.facts[spec.group_fact!] === group,
+              );
+        const id = lineIdentity(
+          `cpq-scope:${spec.kind}:${spec.group_fact ?? ""}:${group}`,
+        );
+        if (input.instances.some((i) => i.id === id)) {
+          add(
+            "InstanceIdentityConflict",
+            "A system identity collides with a shared output identity.",
+          );
+          continue;
+        }
+        const instance = {
+          id,
+          not_applicable: d.facts
+            .filter((f) =>
+              members.every((i) => i.not_applicable?.includes(f.key)),
+            )
+            .map((f) => f.key),
+          label:
+            spec.kind === "Configuration"
+              ? "Configuration-wide"
+              : `Shared · ${group}`,
+          facts: Object.fromEntries(
+            d.facts.map((f) => {
+              const values = members.map((i) => i.facts[f.key] ?? null);
+              return [
+                f.key,
+                values.every((v) => v === values[0]) ? values[0] : null,
+              ];
+            }),
+          ),
+        };
+        contexts.push({
+          instance,
+          kind: spec.kind,
+          group_fact: spec.group_fact,
+        });
+        design.evidence.instances.push({
+          id,
+          label: instance.label,
+          kind: spec.kind,
+        });
+      }
+    }
+  }
+  for (const context of contexts.sort((a, b) =>
+    a.instance.id < b.instance.id ? -1 : a.instance.id > b.instance.id ? 1 : 0,
   )) {
+    const { instance } = context;
+    const inScope = (part: import("./types").Part) =>
+      !design ||
+      ((part.scope?.kind ?? "System") === context.kind &&
+        (part.scope?.group_fact ?? null) === context.group_fact);
     for (const f of d.facts)
-      if (f.required && instance.facts[f.key] === null)
+      if (
+        context.kind === "System" &&
+        f.required &&
+        instance.facts[f.key] === null
+      )
         add("FactRequired", `Record ${f.label} (${f.unit}).`, instance.id);
-    for (const c of d.constraints) {
-      const applies = evaluateCondition(c.when, instance.facts, d.facts),
-        valid = evaluateCondition(c.require, instance.facts, d.facts);
+    for (const c of context.kind === "System" ? d.constraints : []) {
+      const applies = evaluateCondition(
+          c.when,
+          instance.facts,
+          d.facts,
+          instance.not_applicable,
+        ),
+        valid = evaluateCondition(
+          c.require,
+          instance.facts,
+          d.facts,
+          instance.not_applicable,
+        );
       if (applies === null || (applies === true && valid === null))
         add("ConstraintUnknown", c.message, instance.id, c.key);
       else if (applies === true && !valid)
@@ -121,9 +265,45 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
     for (const phase of ["Materials", "Labour"] as const) {
       const groups = new Map<string, Contribution[]>();
       for (const rule of d.rules
-        .filter((r) => r.phase === phase)
+        .filter(
+          (r) =>
+            r.phase === phase &&
+            inScope(d.parts.find((p) => p.key === r.part)!),
+        )
         .sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0))) {
-        const applies = evaluateCondition(rule.when, instance.facts, d.facts);
+        const applies = evaluateCondition(
+          rule.when,
+          instance.facts,
+          d.facts,
+          instance.not_applicable,
+        );
+        const trace = design
+          ? ({
+              instance_id: instance.id,
+              rule: rule.key,
+              condition: conditionEvidence(
+                rule.when,
+                instance.facts,
+                d,
+                instance.not_applicable,
+              ),
+              outcome:
+                applies === null
+                  ? ("Unknown" as const)
+                  : applies
+                    ? ("Applied" as const)
+                    : ("NotApplicable" as const),
+            } as import("./types").RuleTrace)
+          : null;
+        if (trace) design!.evidence.rules.push(trace);
+        if (
+          design &&
+          context.kind === "System" &&
+          !design.enabled.get(instance.id)!.has(rule.key)
+        ) {
+          trace!.outcome = "TableExcluded";
+          continue;
+        }
         if (applies === null) {
           add(
             "RuleUnknown",
@@ -136,6 +316,8 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
         if (!applies) continue;
         const formula = compiled.get(rule.key)!,
           values = new Map<string, string>();
+        for (const parameter of rule.parameters ?? [])
+          values.set(parameter.key, parameter.value);
         for (const k of formula.dependencies) {
           if (k.startsWith("bom_")) values.set(k, bom.get(k)!);
           else if (typeof instance.facts[k] === "string")
@@ -148,7 +330,10 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
               "NegativeQuantity",
               "A generated quantity cannot be negative.",
             );
-          if (result.numerator === 0n) continue;
+          if (result.numerator === 0n) {
+            if (trace) trace.outcome = "Zero";
+            continue;
+          }
           const quantity = decimal(
             halfUp(result.numerator * 1000n, result.denominator),
             3,
@@ -174,6 +359,11 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
             contribution,
           ]);
         } catch (e) {
+          if (trace) {
+            trace.outcome = "Error";
+            trace.error =
+              e instanceof Error ? e.message : "Calculation failed.";
+          }
           add(
             e instanceof CceError ? e.code : "FormulaFailure",
             e instanceof Error ? e.message : "Calculation failed.",
@@ -187,8 +377,32 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
       )) {
         const part = d.parts.find((p) => p.key === partKey)!,
           target = `${instance.id}:${partKey}:${part.unit}`;
+        const detail: import("./types").LineDetail | null = design
+          ? {
+              target,
+              instance_id: instance.id,
+              part: part.key,
+              description: part.description,
+              unit: part.unit,
+              resolver: part.resolver,
+              contributions,
+              selected_rules: [],
+              basis_hash: hash({ target, part, contributions }),
+              base_quantity: null,
+              effective_quantity: null,
+              state: "Incomplete",
+              overrides: input.overrides.filter((o) => o.target === target),
+              source: part.source,
+              effective_from: part.effective_from,
+              effective_to: part.effective_to,
+              price_tier: null,
+              unit_sell: null,
+            }
+          : null;
+        if (detail) design!.evidence.lines.push(detail);
         let chosen = contributions;
         if (part.resolver === "UNIQUE" && contributions.length !== 1) {
+          if (detail) detail.state = "Conflict";
           add(
             "ContributionConflict",
             `More than one rule supplied ${part.description}.`,
@@ -201,6 +415,7 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
           const highest = Math.max(...contributions.map((c) => c.priority));
           chosen = contributions.filter((c) => c.priority === highest);
           if (chosen.length !== 1) {
+            if (detail) detail.state = "Conflict";
             add(
               "PriorityConflict",
               `Equal priorities supplied ${part.description}.`,
@@ -233,6 +448,23 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
               );
         const basis_hash = hash({ target, part, contributions }),
           overrides = input.overrides.filter((o) => o.target === target);
+        if (detail) {
+          detail.selected_rules = (
+            part.resolver === "MAX"
+              ? chosen.filter(
+                  (c) =>
+                    new Fraction(
+                      BigInt(c.exact.numerator),
+                      BigInt(c.exact.denominator),
+                    ).subtract(quantity).numerator === 0n,
+                )
+              : chosen
+          ).map((c) => c.rule);
+          detail.base_quantity = decimal(
+            halfUp(quantity.numerator * 1000n, quantity.denominator),
+            3,
+          );
+        }
         let suppressed = false,
           sellOverride: string | null = null;
         for (const o of overrides) {
@@ -244,13 +476,21 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
               instance.id,
               target,
             );
-            continue;
+            if (detail) detail.state = "NeedsReview";
+            else continue;
           }
           if (o.kind === "Suppress") suppressed = true;
           if (o.kind === "Quantity") quantity = Fraction.fromDecimal(o.value!);
           if (o.kind === "SellPrice") sellOverride = o.value;
         }
-        if (suppressed) continue;
+        if (suppressed) {
+          if (detail) {
+            detail.state =
+              detail.state === "NeedsReview" ? "NeedsReview" : "Excluded";
+            detail.effective_quantity = "0.000";
+          }
+          continue;
+        }
         if (quantity.numerator > 100000n * quantity.denominator) {
           add(
             "QuantityLimit",
@@ -265,6 +505,7 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
           halfUp(quantity.numerator * 1000n, quantity.denominator),
           3,
         );
+        if (detail) detail.effective_quantity = resolvedQuantity;
         if (resolvedQuantity === "0.000") {
           add(
             "QuantityLimit",
@@ -278,7 +519,9 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
         if (phase === "Materials") bom.set(`bom_${partKey}`, resolvedQuantity);
         if (
           input.pricing_date < part.effective_from ||
-          input.pricing_date > part.effective_to
+          input.pricing_date > part.effective_to ||
+          (part.price_context &&
+            input.pricing_date < part.price_context.recorded_at.slice(0, 10))
         ) {
           add(
             "PriceExpired",
@@ -301,7 +544,15 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
           );
           continue;
         }
-        const unit_sell = sellOverride ?? tier.unit_sell;
+        const unit_sell =
+          sellOverride ??
+          (design
+            ? price(tier.unit_cost, tier.unit_sell, design.evidence.pricing)
+            : tier.unit_sell);
+        if (detail) {
+          detail.price_tier = tier;
+          detail.unit_sell = unit_sell;
+        }
         if (
           Fraction.fromDecimal(unit_sell).subtract(
             Fraction.fromDecimal(tier.unit_cost),
@@ -315,6 +566,7 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
           );
           continue;
         }
+        if (detail && detail.state !== "NeedsReview") detail.state = "Ready";
         lines.push({
           target,
           basis_hash,
@@ -353,14 +605,26 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
       "The native estimate accepts at most 100 lines, including retained manual lines.",
     );
   if (!lines.length) add("NoCostLines", "No cost lines were generated.");
+  if (design)
+    design.evidence.readiness = {
+      configuration: diagnostics.length ? "NeedsAttention" : "Complete",
+      price: diagnostics.length
+        ? "Indicative"
+        : input.pricing || input.overrides.some((o) => o.kind === "SellPrice")
+          ? "RequiresApproval"
+          : "Complete",
+      adoption: diagnostics.length ? "Blocked" : "Ready",
+    };
   const body = {
-    engine: "PPO-CPQ-1" as const,
+    engine:
+      d.schema_version === 3 ? ("PPO-CPQ-3" as const) : ("PPO-CPQ-1" as const),
     ready: diagnostics.length === 0,
     lines,
     diagnostics,
     totals: calculate(lines.map((x) => x.line)),
     input_hash: hash(input),
     definition_hash: hash(d),
+    ...(design ? { explanation: design.evidence } : {}),
   };
   return { ...body, result_hash: hash(body) };
 }
@@ -386,6 +650,7 @@ export function testDefinition(d: Definition) {
       expected: f.expected,
       actual,
       result_hash: result.result_hash,
+      ...(d.schema_version === 3 ? { result, coverage: tableCoverage(d) } : {}),
     };
   });
 }

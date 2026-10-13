@@ -55,6 +55,7 @@ export type PackRecipient = {
   assignment_id: string;
   assignment_version: number;
   acknowledged_at: string | null;
+  presented_hash?: string | null;
 };
 export type Pack = {
   section_view?: SectionView | null;

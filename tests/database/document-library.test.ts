@@ -1,3 +1,4 @@
+import { saveDraft, readDraft } from "../../src/cpq/drafts";
 import { createProject } from "../../src/projects/service";
 import { projectInput } from "../helpers/projects";
 import { createEngineeringRequest } from "../../src/engineering/service";
@@ -599,69 +600,97 @@ test("DK-B08 existing Service Report issue exact PDF is linked without rendering
     code("NativeRecoveryRequired"),
   );
 });
-test("DK-B09 populated 0088 upgrade preserves originals, adds only 0089 and reapplication is inert", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
-  await database().query("DROP TABLE public.ppo_migrations");
-  await migrate(88);
-  await seed(88);
-  const tables = [
-    "business_identities",
-    "operation_receipts",
-    "audit_events",
-    "outbox_jobs",
-    "permission_grants",
-    "users",
-    "seed_receipts",
-    "project_calendar_revisions",
-  ];
-  const snapshot = async () => {
-    const result = [];
-    for (const t of tables)
-      result.push(
-        await rows(
-          `SELECT to_jsonb(t) AS value FROM ppo.${t} t ORDER BY to_jsonb(t)::text`,
-        ),
+for (const through of [88, 89])
+  test(`DK-B09 populated 00${through} upgrade preserves originals through 0090 and reapplication is inert`, async () => {
+    await database().query(
+      await readFile(
+        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
+        "utf8",
+      ),
+    );
+    await database().query("DROP TABLE public.ppo_migrations");
+    await migrate(through);
+    await seed(through);
+    const author = (await createSession("coordinator")).principal;
+    const draftInput = {
+      ...base(),
+      id: randomUUID(),
+      company_id: CRM.company,
+      kind: "Rules",
+      label: "SYN retained CPQ draft",
+      expected_version: 0,
+      content: { pending_rule: "ceil(" },
+    };
+    if (through === 89) {
+      await grantLibrary(author, ["cpq.read", "cpq.author"]);
+      await saveDraft(author, draftInput);
+    }
+    const priorDraft =
+      through === 89 ? await readDraft(author, draftInput.id) : null;
+    const tables = [
+      "business_identities",
+      "operation_receipts",
+      "audit_events",
+      "outbox_jobs",
+      "permission_grants",
+      "users",
+      "seed_receipts",
+      "project_calendar_revisions",
+      ...(through === 89 ? ["cpq_drafts", "cpq_draft_history"] : []),
+    ];
+    const snapshot = async () => {
+      const result = [];
+      for (const t of tables)
+        result.push(
+          await rows(
+            `SELECT to_jsonb(t) AS value FROM ppo.${t} t ORDER BY to_jsonb(t)::text`,
+          ),
+        );
+      return result;
+    };
+    const before = await snapshot(),
+      ledger = await rows(
+        "SELECT * FROM public.ppo_migrations ORDER BY version",
       );
-    return result;
-  };
-  const before = await snapshot(),
-    ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
-  await migrate();
-  await seed();
-  assert.deepEqual(await snapshot(), before);
-  const after = await rows(
-    "SELECT * FROM public.ppo_migrations ORDER BY version",
-  );
-  assert.deepEqual(
-    after.filter((x) => x.version <= 88),
-    ledger,
-  );
-  assert.deepEqual(
-    after.filter((x) => x.version > 88).map((x) => x.version),
-    [89],
-  );
-  assert.equal(
-    (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,
-    "0",
-  );
-  const { p } = await librarySetup(),
-    input = libraryInput(p.actor_id);
-  const created = await createDocument(p, input);
-  const populated = await snapshot();
-  await migrate();
-  await seed();
-  assert.deepEqual(await snapshot(), populated);
-  assert.deepEqual(
-    await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
-    after,
-  );
-  assert.deepEqual(await readOperation(p, input.operation_id), created.receipt);
-});
+    await migrate();
+    await seed();
+    assert.deepEqual(await snapshot(), before);
+    const after = await rows(
+      "SELECT * FROM public.ppo_migrations ORDER BY version",
+    );
+    assert.deepEqual(
+      after.filter((x) => x.version <= through),
+      ledger,
+    );
+    assert.deepEqual(
+      after.filter((x) => x.version > through).map((x) => x.version),
+      through === 88 ? [89, 90] : [90],
+    );
+    assert.equal(
+      (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,
+      "0",
+    );
+    if (priorDraft) {
+      assert.deepEqual(await readDraft(author, draftInput.id), priorDraft);
+      assert.equal((await saveDraft(author, draftInput)).replayed, true);
+      await saveDraft(author, { ...draftInput, ...base(), id: randomUUID() });
+    }
+    const { p } = await librarySetup(),
+      input = libraryInput(p.actor_id);
+    const created = await createDocument(p, input);
+    const populated = await snapshot();
+    await migrate();
+    await seed();
+    assert.deepEqual(await snapshot(), populated);
+    assert.deepEqual(
+      await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
+      after,
+    );
+    assert.deepEqual(
+      await readOperation(p, input.operation_id),
+      created.receipt,
+    );
+  });
 
 test("DK-B10 current register paging and source-exception filters use only permitted matches", async () => {
   const { p, reviewer } = await librarySetup(),

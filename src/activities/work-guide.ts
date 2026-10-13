@@ -17,8 +17,8 @@ export const myWorkGuide: PageGuide = {
     ["Needs a next activity", "Lists your open deals with nothing planned. A banner appears when activities still need a due date."],
   ],
   steps: [
-    ["Finish an activity", "Select Complete on its row and record the outcome."],
-    ["Move it", "Select Reschedule and choose a new date and time."],
+    ["Finish an activity", "Select the circle at the start of its row, then record the outcome. On a phone, open the activity and select Complete."],
+    ["Move it", "Open the row's actions menu and select Reschedule. On a phone, open the activity first. Choose a new date and time."],
     ["Open it", "Select its title to see the contact details, the record it belongs to and its history."],
     ["Add one", "Select Activity, or the + button on a phone."],
     ["Set missing dates", "Select Set dates in the banner."],
@@ -28,7 +28,7 @@ export const myWorkGuide: PageGuide = {
     ["Choose whose work", "Choose My work or Everyone I can see, if your access allows it."],
     ["Narrow the list", "Filters narrow by type and source."],
     ["Save a view", "Save a combination as a view and pin it in the side menu."],
-    ["Choose the cards", "Customise chooses which cards appear on the overview."],
+    ["Choose the cards", "Open More actions, then Customise overview to choose which cards appear."],
     ["Go further", "The side menu opens My actions (everything, not only today), Reviews & handovers, Blocked & waiting, Team queue, and Updates & preferences."],
   ],
   mobile:

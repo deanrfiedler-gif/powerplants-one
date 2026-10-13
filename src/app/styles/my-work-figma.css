@@ -1,0 +1,108 @@
+/* SH-02 Overview: accepted My Work frames 404:3 and 404:181.
+   Behaviour and authority stay in the existing resource, row and command components. */
+#ppo-my-work .mw-overview-figma { padding: 0; gap: 0; max-width: none; background: var(--surface); font-family: PPOShellRoboto, Roboto, sans-serif; }
+#ppo-my-work .mw-overview-figma > .mw-toolbar { flex: none; gap: 8px; min-height: 60px; padding: 9px 16px; border-bottom: 1px solid var(--line); background: var(--surface-white); }
+#ppo-my-work .mw-overview-figma .mw-toolbar .mw-button { min-height: 40px; padding: 8px 14px; font-size: 14px; border-color: var(--hairline); }
+#ppo-my-work .mw-overview-figma .mw-toolbar .mw-button-primary { min-width: 0; border-color: var(--navy); }
+#ppo-my-work .mw-overview-figma .mw-toolbar .mw-button-icon { width: 40px; padding: 0; }
+#ppo-my-work .mw-freshness { font-size: 14px; line-height: 20px; color: var(--text-secondary); white-space: nowrap; }
+#ppo-my-work .mw-overview-figma .mw-attention { flex: none; grid-template-columns: repeat(4,minmax(0,1fr)); border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+#ppo-my-work .mw-overview-figma .mw-attention-cell { min-height: 64px; padding: 14px 16px; gap: 12px; border-radius: 0; }
+#ppo-my-work .mw-overview-figma .mw-attention-cell + .mw-attention-cell { border-left: 1px solid var(--line-soft); }
+#ppo-my-work .mw-overview-figma .mw-attention-cell::before { display: none; }
+#ppo-my-work .mw-overview-figma .mw-attention-icon .mw-icon { width: 20px; height: 20px; }
+#ppo-my-work .mw-attention-value { font-size: 24px; font-weight: 700; line-height: 28px; }
+#ppo-my-work .mw-overview-figma .mw-attention-text span { font-size: 14px; line-height: 20px; }
+#ppo-my-work .mw-overview-figma .mw-attention-text small { font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-overview-figma .mw-attention-cell > .mw-icon { width: 16px; height: 16px; flex: none; }
+#ppo-my-work .mw-overview-figma .mw-columns { grid-template-columns: minmax(0,1fr) 320px; gap: 24px; padding: 24px; }
+#ppo-my-work .mw-overview-figma :is(.mw-main,.mw-side) { display: flex; flex-direction: column; gap: 24px; }
+#ppo-my-work .mw-overview-figma .mw-panel { border: 0; border-radius: 0; background: transparent; }
+#ppo-my-work .mw-overview-figma .mw-panel-head { padding: 0; min-height: 21px; gap: 8px 10px; margin-bottom: 8px; flex-wrap: nowrap; }
+#ppo-my-work .mw-overview-figma .mw-panel-head > div:not(.mw-menu-root) { display: flex; flex: 0 1 auto; align-items: baseline; gap: 10px; }
+#ppo-my-work .mw-overview-figma .mw-panel-head h2 { font-size: 16px; line-height: 21px; font-weight: 700; white-space: nowrap; }
+#ppo-my-work .mw-overview-figma .mw-panel-head p { font-size: 12px; line-height: 16px; white-space: nowrap; }
+#ppo-my-work .mw-overview-figma .mw-panel-head .mw-panel-icon { display: none; }
+#ppo-my-work .mw-overview-figma .mw-panel-head .mw-count { padding: 0 0 0 10px; background: none; font-size: 12px; font-weight: 400; color: var(--muted); }
+#ppo-my-work .mw-overview-figma .mw-panel-head .mw-button { min-height: 24px; padding: 0; border: 0; background: transparent; font-size: 14px; line-height: 20px; color: var(--text-secondary); gap: 4px; }
+#ppo-my-work .mw-overview-figma .mw-panel-link { font-size: 14px; }
+#ppo-my-work .mw-overview-figma .mw-side .mw-panel-head > div { display: contents; }
+#ppo-my-work .mw-overview-figma .mw-side .mw-panel-head p { display: none; }
+#ppo-my-work .mw-overview-figma .mw-side #mw-schedule-title + p { display: block; }
+#ppo-my-work .mw-overview-figma .mw-activities > section { border-inline: 1px solid var(--line); background: var(--surface-white); }
+#ppo-my-work .mw-overview-figma .mw-activities > section:first-of-type { border-top: 1px solid var(--line); border-radius: 6px 6px 0 0; }
+#ppo-my-work .mw-overview-figma .mw-group { margin: 0; padding: 8px 16px; min-height: 32px; font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: .66px; background: var(--paper); border-bottom: 1px solid var(--line-soft); }
+#ppo-my-work .mw-overview-figma .mw-group-overdue { background: var(--danger-surface); color: var(--danger); }
+#ppo-my-work .mw-overview-figma .mw-rows { padding: 0; }
+#ppo-my-work .mw-row.mw-row-compact { grid-template-columns: 28px 18px minmax(0,1fr) auto 28px; gap: 8px; min-height: 63px; padding: 10px 12px; }
+#ppo-my-work .mw-row-compact .mw-row-title { display: block; width: 100%; font-size: 14px; line-height: 20px; }
+#ppo-my-work .mw-row-compact .mw-row-title > span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ppo-my-work .mw-row-compact .mw-row-icon .mw-icon { width: 16px; height: 16px; }
+#ppo-my-work .mw-row-compact .mw-row-context { align-items: center; gap: 6px; font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-row-compact .mw-row-context > span:not(.mw-tag) { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#ppo-my-work .mw-row-compact .mw-tag { padding: 1px 6px; font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-row-compact .mw-row-when { text-align: right; max-width: 132px; }
+#ppo-my-work .mw-row-compact .mw-row-when strong { font-size: 14px; line-height: 20px; font-weight: 500; white-space: normal; }
+#ppo-my-work .mw-row-compact .mw-row-when span { font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-row-compact .mw-row-actions { grid-column: auto; }
+#ppo-my-work .mw-row-compact .mw-row-actions .mw-button { width: 28px; min-height: 32px; padding: 0; border: 0; }
+#ppo-my-work .mw-row-compact .mw-row-actions .mw-icon { width: 16px; height: 16px; }
+#ppo-my-work button.mw-done-ring { display: grid; place-items: center; width: 28px; height: 32px; padding: 0; color: var(--text-secondary); }
+#ppo-my-work .mw-done-ring > span { display: block; width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 50%; }
+#ppo-my-work .mw-done-ring:hover:not(:disabled) { color: var(--link); background: var(--neutral-surface); }
+#ppo-my-work .mw-done-ring:disabled { opacity: .4; cursor: not-allowed; }
+#ppo-my-work .mw-overview-figma .mw-panel-foot { min-height: 40px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 0 0 6px 6px; background: var(--surface); font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-overview-figma .mw-panel-foot .mw-link { font-size: 14px; }
+#ppo-my-work .mw-overview-figma :is(.mw-schedule,.mw-cards) { padding: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-white); }
+#ppo-my-work .mw-overview-figma .mw-schedule li { grid-template-columns: 44px minmax(0,1fr) auto; gap: 8px; padding: 12px 16px; min-height: 58px; }
+#ppo-my-work .mw-overview-figma :is(.mw-schedule-dot,.mw-schedule-type) { display: none; }
+#ppo-my-work .mw-overview-figma .mw-schedule :is(time,.mw-row-title) { font-size: 14px; line-height: 20px; }
+#ppo-my-work .mw-overview-figma .mw-schedule p { font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-overview-figma .mw-schedule .mw-tag { padding: 0; border: 0; color: var(--link); background: transparent; font-size: 12px; }
+#ppo-my-work .mw-overview-figma .mw-cards > li { display: flex; flex-wrap: wrap; gap: 4px 8px; padding: 12px 16px; min-height: 76px; }
+#ppo-my-work .mw-overview-figma .mw-cards > li > div:first-child { flex: 1 1 100%; }
+#ppo-my-work .mw-overview-figma .mw-cards .mw-row-title { font-size: 14px; line-height: 20px; }
+#ppo-my-work .mw-overview-figma .mw-cards p { font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-overview-figma .mw-card-side { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; }
+#ppo-my-work .mw-overview-figma .mw-card-side .mw-button { min-height: 24px; padding: 0; border: 0; background: transparent; color: var(--link); font-size: 12px; }
+#ppo-my-work .mw-overview-figma .mw-card-side .mw-button .mw-icon { display: none; }
+#ppo-my-work .mw-overview-figma .mw-notices { gap: 16px; }
+#ppo-my-work .mw-overview-figma .mw-strip { padding: 12px 16px; min-height: 64px; gap: 12px; border-radius: 6px; background: var(--surface-white); }
+#ppo-my-work .mw-overview-figma .mw-strip-date { background: var(--warning-tint); border-color: var(--warning-border); }
+#ppo-my-work .mw-overview-figma .mw-strip strong { font-size: 14px; line-height: 20px; font-weight: 500; }
+#ppo-my-work .mw-overview-figma .mw-strip p { font-size: 12px; line-height: 16px; }
+#ppo-my-work .mw-overview-figma .mw-strip .mw-icon { width: 18px; height: 18px; }
+#ppo-my-work .mw-overview-figma .mw-foot { margin: auto 24px 0; padding: 12px 0; font-size: 12px; }
+@container my-work-content (max-width: 880px) {
+  #ppo-my-work .mw-overview-figma .mw-columns { grid-template-columns: minmax(0,1fr); }
+  #ppo-my-work .mw-overview-figma .mw-side { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); }
+  #ppo-my-work .mw-overview-figma .mw-attention-cell { gap: 8px; padding-inline: 12px; }
+  #ppo-my-work .mw-overview-figma .mw-attention-text span { font-size: 13px; }
+  #ppo-my-work .mw-overview-figma .mw-panel-head { flex-wrap: wrap; }
+}
+@media (max-width: 780px) {
+  #ppo-my-work .mw-mobile { padding: 16px 0 88px; gap: 20px; font: 14px/20px PPOShellRoboto, Roboto, sans-serif; background: var(--surface); }
+  #ppo-my-work .mw-mobile :is(.mw-section-title,.mw-section-head,.mw-week,.mw-agenda-bar) { margin-inline: 16px; }
+  #ppo-my-work .mw-mobile .mw-section-head .mw-section-title { margin: 0; }
+  #ppo-my-work .mw-mobile .mw-section-title { font-size: 16px; line-height: 21px; font-weight: 700; }
+  #ppo-my-work .mw-mobile .mw-week { gap: 4px; }
+  #ppo-my-work .mw-mobile .mw-section-head { min-height: 24px; margin-bottom: 8px; margin-top: 0; }
+  #ppo-my-work .mw-mobile .mw-link { font-size: 14px; }
+  #ppo-my-work .mw-mobile .mw-tiles { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin: 0 16px; }
+  #ppo-my-work .mw-mobile .mw-tile > .mw-icon { width: 20px; height: 20px; }
+  #ppo-my-work .mw-mobile .mw-tile { color: var(--text-secondary); }
+  #ppo-my-work .mw-mobile .mw-list-panel { border-inline: 0; border-radius: 0; }
+  #ppo-my-work .mw-mobile .mw-list-panel > li > * { border-radius: 0; }
+  #ppo-my-work .mw-mobile .mw-attention-row { min-height: 46px; padding: 12px 16px; gap: 12px; font-size: 14px; line-height: 20px; }
+  #ppo-my-work .mw-mobile .mw-attention-row-icon .mw-icon { width: 16px; height: 16px; }
+  #ppo-my-work .mw-mobile .mw-attention-row strong { font-size: 16px; line-height: 20px; }
+  #ppo-my-work .mw-mobile .mw-attention-row > .mw-icon { width: 16px; height: 16px; }
+  #ppo-my-work .mw-mobile button.mw-agenda-row { grid-template-columns: 44px minmax(0,1fr) 18px; min-height: 59px; padding: 10px 16px; gap: 8px; }
+  #ppo-my-work .mw-mobile .mw-agenda-row time { padding: 0; border: 0; font-size: 14px; }
+  #ppo-my-work .mw-mobile .mw-agenda-title { font-size: 14px; line-height: 20px; }
+  #ppo-my-work .mw-mobile .mw-agenda-context { font-size: 12px; line-height: 16px; }
+  #ppo-my-work .mw-mobile .mw-foot { padding-inline: 16px; }
+  #ppo-my-work .mw-mobile .mw-waiting { gap: 0; }
+  #ppo-my-work .mw-mobile .mw-waiting .mw-row-title { font-size: 14px; }
+  #ppo-my-work .mw-mobile .mw-waiting p { font-size: 12px; line-height: 16px; }
+}

@@ -1,0 +1,12 @@
+{
+  "source": "PPO - Design, Projects accepted page 209:46; inspected 2026-10-13",
+  "authority": "User supplied this page for application implementation. Named version not independently confirmed.",
+  "desktop": {"node": "209:47", "width": 1440, "height": 900, "rail": 240, "header": 64, "menu": 240, "toolbar": 60, "row": 40, "header_row": 40, "columns": [44, 240, 200, 120, 110, 80, 180, 190, 140, 90, 170, 44]},
+  "selection": {"node": "209:301", "width": 360, "header": 52, "footer": 64, "overlays_grid": true},
+  "snapshot": {"node": "209:118", "width": 960, "record": 440, "footer": 64, "record_padding_x": 24, "record_padding_top": 20},
+  "phone": {"node": "209:457", "width": 390, "height": 844, "header": 64, "toolbar": 61, "row": 80, "padding_x": 16, "bottom_navigation": 64},
+  "phone_snapshot": {"node": "209:617", "width": 390, "height": 844, "header": 64, "footer": 64},
+  "typography": {"family": "Roboto", "body": 14, "line_height": 20, "small": 12, "small_line_height": 16, "heading": 16, "row_title_weight": 500},
+  "assets": {"logo": "public/brand/powerplants-logo-green-white.png", "icons": "Font Awesome Pro Classic Light, selected rail Classic Solid; exact named Kit icons via existing FontAwesomeGlyph"},
+  "limitations": "No licensed artwork or private Figma URL included. Current public icon-free image is missing. These are measurements, not a replacement screenshot or an accepted application review."
+}

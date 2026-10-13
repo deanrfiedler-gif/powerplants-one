@@ -172,7 +172,10 @@
         "docs/decisions/access-local-teams.md",
         "src/access/team-creation.tsx",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -323,12 +326,17 @@
         "route:/admin/access/roles",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "route:/projects",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "Legacy scoped button families do not all use Button/ButtonLink.",
+      "limitations": "Legacy scoped button families do not all use Button/ButtonLink. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "buttons-alignment",
@@ -497,6 +505,14 @@
           "action": "Review source-bound current-access captures with browser fixtures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -593,12 +609,12 @@
         {
           "id": "empty",
           "label": "No matches",
-          "description": "Rows exist but none match; the message says how to bring them back."
+          "description": "Rows exist but none match; the message says how to bring them back. Job Pack phone host: job-pack-register-fixture.tsx?empty=1 keeps the title and planner link separate at 390/320 px."
         },
         {
           "id": "loading",
           "label": "Loading",
-          "description": "First read in progress: no rows, and no result is inferred."
+          "description": "First read in progress: no rows, and no result is inferred. Job Pack also verifies independent visit loading, unavailable and recovered counts in its compiled host test."
         }
       ],
       "implementation": [
@@ -620,7 +636,14 @@
         "src/app/globals.css",
         "src/components/ui/register-table.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/components/client/job-pack-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -633,12 +656,17 @@
         "route:/engineering/[id]/materials/mapping",
         "route:/engineering/[id]/materials/releases",
         "route:/estimating/fertigation",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "route:/projects",
+        "scope:SV-05",
+        "route:/service/packs",
+        "route:/estimating/cpq",
+        "route:/estimating/rules"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
       "keyboard": "Sort buttons, row-title buttons and checkboxes are native, labelled controls with the shared focus ring. A row opens from its title, so inspecting never needs a pointer; the row click is only a larger target.",
-      "limitations": "No sticky header, scroll edge shadows, column resizing or phone row layout yet. The host owns data, sorting, paging and selection, and supplies chip icons from its own icon set.",
+      "limitations": "No sticky header, scroll edge shadows, column resizing or phone row layout yet. The host owns data, sorting, paging and selection, and supplies chip icons from its own icon set. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "register-table-adoption",
@@ -669,6 +697,30 @@
           "expected": "Verify the shared table against the linked design and desktop/mobile rules.",
           "actual": "Visual parity with EN-06 was checked by automated captures; no owner review is recorded.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification include independent packless-visit read states and observation time; owner/device acceptance not recorded. Hosted phone inspection found missing standalone empty-state spacing; the scoped correction and fixture are recorded in the execution evidence.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2079,7 +2131,8 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "route:/estimating/fertigation/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2133,6 +2186,14 @@
           "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -2151,6 +2212,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "es08-figma-host",
+          "label": "Screen Configurator Workbench",
+          "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
         }
       ],
       "implementation": [
@@ -2163,7 +2229,13 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2172,18 +2244,51 @@
       },
       "specification": "docs/design/development/components/menu.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "route:/projects",
+        "route:/estimating/fertigation/[id]",
+        "scope:ES-08",
+        "route:/estimating/configurations/[id]",
+        "route:/estimating/configurations/[id]/[view]",
+        "scope:SV-05",
+        "route:/service/packs",
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
-      "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
+      "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "menu-alignment",
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2453,7 +2558,10 @@
         "docs/decisions/access-local-teams.md",
         "src/access/team-creation.tsx",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2573,12 +2681,13 @@
         "route:/admin/access/roles",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "route:/projects"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue.",
+      "limitations": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "read-state-alignment",
@@ -2729,6 +2838,14 @@
           "expected": "Exact member handover and fresh/withheld read states remain understandable at desktop and phone widths.",
           "actual": "Existing native card/list and shared controls reused; accepted native image and owner/device review missing.",
           "action": "Review source-bound current-access captures with browser fixtures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3135,7 +3252,7 @@
         {
           "id": "nav-rail-modes",
           "label": "Rail modes",
-          "description": "Compact 76 px, labelled 232 px, short-height long Service rail, blocked storage, mobile More/Workspace and visible Sales labels. Fixture: tests/browser/navigation-safety.spec.ts; tests/browser/department-navigation.spec.ts"
+          "description": "Compact 76 px, labelled 240 px, saved identity preference, short-height long Service rail, blocked storage and accessible icon-only phone navigation. Existing navigation browser fixtures remain authoritative."
         },
         {
           "id": "nav-authorized-context",
@@ -3176,6 +3293,21 @@
           "id": "shell-activation-loading",
           "label": "Desktop rail loading and phone handover",
           "description": "Customers host retains the original desktop/phone prefetch policy and captures request observations; keyboard and touch open the exact permitted People route and Back restores Customers. Fixture: tests/browser/shell-loading.spec.ts; directory and navigation-safety fixtures cover receiving, saved views, authority and dirty-state recovery."
+        },
+        {
+          "id": "figma-my-work-overview",
+          "label": "Figma My Work overview",
+          "description": "Real compiled desktop/phone My Work host, outcome ring, row actions menu, saved views, unknown counts and denied identity. Fixtures: tests/browser/my-work.spec.ts; tests/browser/my-work-mobile.spec.ts. Source frames 404:3 and 404:181; no new isolated renderer."
+        },
+        {
+          "id": "projects-register-host",
+          "label": "Projects register",
+          "description": "Native synthetic desktop/phone selection, snapshot sequence, denied read and filters: tests/browser/projects-register.spec.ts."
+        },
+        {
+          "id": "es08-figma-host",
+          "label": "Screen Configurator Workbench",
+          "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
         }
       ],
       "implementation": [
@@ -3228,7 +3360,22 @@
         "docs/decisions/navigation-consolidation.md",
         "src/components/shell-provider.tsx",
         "src/components/offline-entry.tsx",
-        "src/app/leads.css"
+        "src/app/leads.css",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/components/client/my-work-shell.tsx",
+        "src/activities/components/client/my-work-overview.tsx",
+        "src/activities/components/client/my-work-mobile.tsx",
+        "src/activities/components/client/my-work-list.tsx",
+        "src/activities/work-guide.ts",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3272,12 +3419,14 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/customers",
-        "route:/people"
+        "route:/people",
+        "scope:ES-08",
+        "scope:SH-02"
       ],
-      "desktop": "76 px compact or 232 px labelled primary rail; accessible collapse button, identity/browser persistence and in-memory fallback. More contains ordinary permitted Workspace selection. Keep Home/More reachable with long and short rails; 1200 px secondary-menu docking remains.",
-      "mobile": "Retain the 780/781 px boundary, visible Sales labels and global shell on Leads. More provides labelled permitted Workspace selection; equivalent destinations retain date/scope/record meaning. Check 320 px without page overflow; touch targets aim for 44 px.",
+      "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
+      "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
       "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus.",
-      "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
+      "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "shell-host-review",
@@ -3436,6 +3585,38 @@
           "expected": "Baseline shell prefetch policy is restored; deliberate navigation, keyboard/touch, Back and access remain correct. Loading availability and performance require separate measured evidence.",
           "actual": "Both shell prefetch experiments are withdrawn. Unchanged main reproduces cold-wave readiness failures. Verified compiled traces and an untraced repeat complete without reproducing the 503s; the original cause remains unresolved. All attempts remain retained and no overall performance acceptance is inferred.",
           "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-fertigation-figma",
+          "expected": "Accepted fertigation record layout with the shared control contracts.",
+          "actual": "Fertigation adopts compact registers, action popovers and shared Shell v2 navigation and scoped record geometry; owner visual acceptance remains pending.",
+          "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "figma-shell-overview-review",
+          "expected": "Paired accepted Shell v2 and My Work overview review on desktop and phone.",
+          "actual": "First implementation authorised 13 October; exact sources and execution evidence recorded separately. Release preparation checks flowing search, whole Engineering breadcrumbs, retained legacy menus and Estimating reflow in both rail modes. Other My Work grids/detail overlays and module interiors remain.",
+          "action": "Review docs/testing/evidence/figma-ui/README.md and explicit runtime adaptations before recording owner/device acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3671,12 +3852,15 @@
       "dependencies": [
         "src/app/styles/job-pack.css",
         "src/documents/components/client/job-pack-screen.tsx",
-        "src/documents/components/client/job-pack-change-dialog.tsx"
+        "src/documents/components/client/job-pack-change-dialog.tsx",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted page-scoped r03 reference; owner acceptance of native application remains separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-dialog.md",
       "used_on": [
@@ -3695,6 +3879,14 @@
           "actual": "Exact source and application state fixtures are linked; no gallery renderer is bound.",
           "action": "Retain the visible reference-only entry and use the I4 application browser proof; consider a gallery fixture in shared-control alignment.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-dialog-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
@@ -3745,17 +3937,21 @@
         "src/documents/section-readers.ts",
         "src/documents/section-text.ts",
         "src/documents/section-view.ts",
-        "src/app/styles/job-pack.css"
+        "src/app/styles/job-pack.css",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted r03 page treatment with accepted D6-A implementation decision; native acceptance separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-sections.md",
       "used_on": [
         "scope:SV-05",
-        "route:/service/packs/[id]"
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
       ],
       "desktop": "Reuse labelled information grids and task lists inside the existing r03 paper.",
       "mobile": "Stack captured controls, wrap long prose and retain readable exact-text disclosures at 320 px.",
@@ -3769,6 +3965,14 @@
           "action": "Retain this visible binding and use the I6 application proof.",
           "priority": "Low",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-sections-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -3778,7 +3982,7 @@
       "title": "Job Pack readiness, crew and output rail",
       "category": "Boards & cards",
       "module": "SV",
-      "purpose": "Page-scoped r03 readiness, explicit crew response and output recovery facts. Uses server outcomes and current permissions.",
+      "purpose": "Readiness, exact crew response, record and original-output recovery in the accepted Figma status panel.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Reference only",
@@ -3802,6 +4006,16 @@
           "id": "recipient",
           "label": "Recipient",
           "description": "Current issue and crew facts without staff history or ownership projections."
+        },
+        {
+          "id": "collapsed",
+          "label": "Status collapsed",
+          "description": "Per-viewer presentation preference; no business data changes."
+        },
+        {
+          "id": "phone-readiness",
+          "label": "Phone readiness",
+          "description": "Coordinator readiness tab retains all stages and dispatch reasons."
         }
       ],
       "implementation": [
@@ -3821,20 +4035,24 @@
       "dependencies": [
         "src/documents/pack-view.ts",
         "src/documents/packs.ts",
-        "src/app/styles/job-pack.css"
+        "src/app/styles/job-pack.css",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-rail.md",
       "used_on": [
         "scope:SV-05",
-        "route:/service/packs/[id]"
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
       ],
-      "desktop": "Right rail in the accepted r03 column; fixed logical stage order, visible attention and collapsed satisfied rows.",
-      "mobile": "Rail follows the paper in normal module scrolling. Disclosures and actions retain 44 px targets and wrap long names/reasons.",
+      "desktop": "320 px status panel, with a 48 px collapsed strip remembered per viewer. Action-required criteria stay visible; satisfied stage rows use native disclosure.",
+      "mobile": "Coordinator Readiness tab; technician crew response follows the full exact saved paper. Original checks and dispatch reasons remain available.",
       "keyboard": "Native summary toggles with Enter or Space and shows focus. No action-required row is initially hidden.",
       "limitations": "Actual application state fixtures exist; no isolated catalogue renderer. Counts present server outcomes and grant no authority.",
       "gaps": [
@@ -3844,6 +4062,14 @@
           "actual": "Application fixtures cover the page-scoped implementation.",
           "action": "Retain the visible source/consumer bindings and use the I7 browser proof.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-rail-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
@@ -3901,12 +4127,15 @@
         "src/components/ui/button.tsx",
         "src/documents/packs.ts",
         "src/app/styles/job-pack.css",
-        "docs/testing/evidence/job-pack-i5/README.md"
+        "docs/testing/evidence/job-pack-i5/README.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
         "anchor": "",
-        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+        "status": "Accepted Figma layout (12 October) with preserved r03 exact-content/command contracts; owner application acceptance separate"
       },
       "specification": "docs/design/development/components/job-pack-entry.md",
       "used_on": [
@@ -3931,6 +4160,14 @@
           "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
           "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
           "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-entry-figma-owner-review",
+          "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
+          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -5506,6 +5743,11 @@
           "id": "es08-withheld",
           "label": "Section withheld",
           "description": "A drawing rule breach (Venlo span not a whole number of roofs, vent at or above the sawtooth rise, screen at or above the structure underside) withholds the section with its reason while the quantities stay valid (D14). Host fixture: tests/browser/specialist-workbench.spec.ts."
+        },
+        {
+          "id": "es08-figma-inspector",
+          "label": "Figma field inspection",
+          "description": "The same live geometry appears in the restyled sheets; selected fields open a bottom-sheet inspector on phones. Northbank synthetic fixture and tests/browser/specialist-workbench.spec.ts."
         }
       ],
       "implementation": [
@@ -5518,7 +5760,8 @@
         "src/estimating/specialist/drawing.ts",
         "src/estimating/specialist/workbench.ts",
         "src/components/specialist-sheets.tsx",
-        "src/components/specialist-workbench.css"
+        "src/components/specialist-workbench.css",
+        "src/components/specialist-figma.css"
       ],
       "reference": {
         "path": "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-G-Cross-Section-Engine-r01.png",
@@ -5527,7 +5770,9 @@
       },
       "specification": "docs/design/development/components/cross-section.md",
       "used_on": [
-        "scope:ES-08"
+        "scope:ES-08",
+        "route:/estimating/configurations/[id]",
+        "route:/estimating/configurations/[id]/[view]"
       ],
       "desktop": "Sheet variant at 1,280 × 310 inside the sheet frame; card variant at 660 × 330; mini variant at 400 × 236 in the live card. Width and height share one scale; labels are SVG text so downloads stay self-contained.",
       "mobile": "The SVG scales with its container; at 390 px the sheet text is small and the page relies on pinch zoom, as the design board's phone composition states.",
@@ -5539,6 +5784,265 @@
           "expected": "Paired owner comparison of the application sections with the design board's section engine and families standard at 1,440 px and 390 px.",
           "actual": "Application captures are retained in docs/reference/ui/specialist/workbench-native-r01; no owner review is recorded.",
           "action": "Review the retained captures beside the design board; record the result in the ES-08 page record.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "fertigation-workbench",
+      "title": "Priva Fertigation Workbench",
+      "category": "Boards & cards",
+      "module": "ES",
+      "purpose": "Native saved scope presentation, engineering charts, revision actions and responsive section navigation.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "saved",
+          "label": "Saved reference scope",
+          "description": "FN-T118 uses boardReferenceScope with eight findings and a candidate failure, through the actual authorised Discovery host."
+        },
+        {
+          "id": "phone",
+          "label": "Phone sections and valves",
+          "description": "FN-T118 uses the same saved scope at 390 px, grouped section sheet and filtered valve list."
+        },
+        {
+          "id": "history",
+          "label": "Exact saved history",
+          "description": "Centred History retains the existing read-only revisions and reasoned copy, restore and archive workflows."
+        },
+        {
+          "id": "draft-recovery",
+          "label": "Draft and recovery",
+          "description": "Existing fertigation browser cases retain stale revision, failed editor, denied read and ambiguous command outcomes."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/fertigation-header.tsx",
+          "symbol": "FertigationHeader"
+        },
+        {
+          "path": "src/components/fertigation-frame.tsx",
+          "symbol": "FertigationSectionPicker"
+        }
+      ],
+      "dependencies": [
+        "src/components/fertigation-workbench.tsx",
+        "src/components/fertigation-figma.css",
+        "src/components/fertigation-charts.tsx",
+        "src/components/fertigation-views/registers.tsx"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-01-Desktop-Overview-r01.png",
+        "anchor": "",
+        "status": "Owner-accepted design; application visual acceptance separate"
+      },
+      "specification": "docs/design/development/components/fertigation-workbench.md",
+      "used_on": [
+        "route:/estimating/fertigation/[id]"
+      ],
+      "desktop": "Two 240 px navigation columns at 1440 px; 24 px content gutters; compact registers and headings outside cards. Explicit stored rail preferences prevail.",
+      "mobile": "Grouped section sheet, valve list and two-column metrics at 390 px; Report/Save above icon-only application tabs.",
+      "keyboard": "Native modal focus containment, Escape and focus restoration; shared popover keyboard controls; labels open the record inspector.",
+      "limitations": "Engine edition r01 and synthetic inputs; no supplier suitability approval. Other seven phone view designs and physical-device acceptance remain missing.",
+      "gaps": [
+        {
+          "id": "fertigation-owner-review",
+          "expected": "Paired owner acceptance of the running workbench against the accepted Figma frames.",
+          "actual": "Implementation and automated host verification are separate from owner visual acceptance.",
+          "action": "Review matched desktop and phone evidence without replacing retained references.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "screen-configurator-workbench",
+      "title": "Screen Configurator Workbench",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Figma-aligned seven-view host with shared Bench state, context/readiness strips, source-attributed fields, menus, dynamic drawings, inspection panels and save recovery.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "seven-views",
+          "label": "Seven workbench views",
+          "description": "Synthetic Northbank at desktop/phone widths; menu sections/filters, all sheets, live results, pricing, comparison, findings and immutable history."
+        },
+        {
+          "id": "input-and-review",
+          "label": "Invalid and changed inputs",
+          "description": "Raw invalid drafts, drawing-only errors, untested options, missing rates and fourteen manual-review quantities use the existing rules."
+        },
+        {
+          "id": "receipt-recovery",
+          "label": "Saved, unknown and read-only",
+          "description": "Existing browser fixture covers original receipt recovery, late previews, permission withdrawal and exact receiving evidence."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/specialist-workbench.tsx",
+          "symbol": "SpecialistWorkspace"
+        },
+        {
+          "path": "src/components/specialist-header.tsx",
+          "symbol": "WorkbenchHeader"
+        },
+        {
+          "path": "src/components/specialist-menu.tsx",
+          "symbol": "WorkbenchMenu"
+        },
+        {
+          "path": "src/components/specialist-ui.tsx",
+          "symbol": "Segmented"
+        },
+        {
+          "path": "src/components/specialist-ui.tsx",
+          "symbol": "Dialog"
+        }
+      ],
+      "dependencies": [
+        "src/components/specialist-figma.css",
+        "src/components/specialist-workbench.css",
+        "src/components/specialist-configure.tsx",
+        "src/components/specialist-drawings.tsx",
+        "src/components/specialist-parts.tsx",
+        "src/components/specialist-pricing.tsx",
+        "src/components/specialist-compare.tsx",
+        "src/components/specialist-records.tsx",
+        "src/components/specialist-types.ts",
+        "scripts/es08-fixture.ts",
+        "docs/decisions/es08-figma-implementation.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
+        "anchor": "",
+        "status": "Historical behaviour reference; current requested visual source is private Figma page 406:2, identified by the implementation decision. Accepted named version and icon-free source capture missing."
+      },
+      "specification": "docs/design/development/components/screen-configurator-workbench.md",
+      "used_on": [
+        "scope:ES-08",
+        "route:/estimating/configurations/[id]",
+        "route:/estimating/configurations/[id]/[view]"
+      ],
+      "desktop": "Docked/collapsed secondary menu; compact record strips; two-column Configure; 440 px working overlay; full-width pricing and definition tables; persistent save footer.",
+      "mobile": "390/320 px header, expandable readiness, section stepper, labelled position/finding selects, save/actions footer, full-screen working and bottom-sheet field inspector.",
+      "keyboard": "Named controls, visible focus, native table headings, native modal focus/return and shared overflow-menu keyboard behaviour.",
+      "limitations": "Drawing inputs are browser-local; engineering and procurement authority remain unresolved; local fallback glyphs apply when the private Font Awesome Kit is unavailable.",
+      "gaps": [
+        {
+          "id": "es08-figma-owner-review",
+          "expected": "Owner comparison with the private Figma named version and retained icon-free source captures.",
+          "actual": "Direct implementation request recorded; version/captures and owner acceptance are not recorded.",
+          "action": "Review application evidence against the named private Figma source and record the result separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "cpq-workbench",
+      "title": "CPQ configuration and rule authoring",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Typed CPQ editing, saved evaluations, explanations, comparisons and independently governed release authoring.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "working",
+          "label": "Working preview",
+          "description": "Edited facts recalculate without writing a saved evaluation."
+        },
+        {
+          "id": "blocked",
+          "label": "Incomplete or conflicting",
+          "description": "Unknown facts, shared capacity, decision overlaps and stale overrides block use."
+        },
+        {
+          "id": "history",
+          "label": "Immutable history",
+          "description": "Saved evaluation and rule versions retain their exact basis."
+        },
+        {
+          "id": "release",
+          "label": "Release governance",
+          "description": "Draft, tested version, review, seal and activation remain distinct; the register retains the exact active version beside a newer saved draft and marks superseded publication inactive."
+        },
+        {
+          "id": "formula",
+          "label": "Formula editor",
+          "description": "Local syntax and server scenario checks remain separate; Apply updates only the working draft."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/cpq-configure.tsx",
+          "symbol": "CpqConfigure"
+        },
+        {
+          "path": "src/components/cpq-rules.tsx",
+          "symbol": "CpqRules"
+        },
+        {
+          "path": "src/components/cpq-results.tsx",
+          "symbol": "CpqWhy"
+        },
+        {
+          "path": "src/components/cpq-rule-fields.tsx",
+          "symbol": "ConditionEditor"
+        },
+        {
+          "path": "src/components/cpq-ui.tsx",
+          "symbol": "CpqDialog"
+        },
+        {
+          "path": "src/components/cpq-formula-editor.tsx",
+          "symbol": "CpqFormulaEditor"
+        },
+        {
+          "path": "src/components/cpq-register.tsx",
+          "symbol": "CpqRegister"
+        }
+      ],
+      "dependencies": [
+        "src/components/cpq.css",
+        "src/cpq/types.ts",
+        "docs/design/development/cpq-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
+        "anchor": "",
+        "status": "Owner-accepted icon-free Figma references; implementation visual acceptance pending"
+      },
+      "specification": "docs/design/development/components/cpq-workbench.md",
+      "used_on": [
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ],
+      "desktop": "At 1440 × 960 retain the existing 64 px shell header and 240 px rail. CPQ outline is 240 px; rule definition starts with it collapsed. Header, readiness and view tabs precede the scroll region. Configure has a white 380 px summary spanning the full workspace height beside the header, tabs, content and Save/Use footer; rule authoring has a 380 px quick test. Why uses a 400 px drawer. White cards, #e1e5eb borders, #f6f7f9 background, Roboto 14/20 body and 20/26 page title. Option cards use #e9f1fa with a #365d8b selected border. Reuse scoped shared buttons and product icons.",
+      "mobile": "At 390 × 844 and 320 px, replace the outline with the native selector/menu overlay, stack fields and line cards, and keep Save/Use actions reachable in the footer. Summary and Why fill the screen; confirmation becomes a bottom sheet. No horizontal page overflow. Inputs/targets use at least 44 px. Tab navigation, condition reordering buttons, modal Escape and focus return remain usable. Browser emulation does not establish device or screen-reader acceptance.",
+      "keyboard": "Native labelled fields, radio options, button reordering, disclosure tables and modal focus/return. No drag-only operation.",
+      "limitations": "Online synthetic scope; frozen authored prices; no live ERP, real schedule, customer send or quotation approval.",
+      "gaps": [
+        {
+          "id": "cpq-paired-review",
+          "expected": "Full paired visual and physical-device acceptance against a named saved Figma version.",
+          "actual": "Retained named-version source images are linked. Journeys pass at 3468ce6; 72dd7c2 captures confirm normal heading tracking and stacked cards but expose the scoped h2 overriding the dialog title size. The corrected cascade passes bounded browser probes; the full compiled journey and owner/device acceptance remain pending.",
+          "action": "Verify final typography, including dialog titles overriding the scoped h2 selector, choice-card layout and exact active/current version states in the same four route consumers; retain owner/device acceptance as pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

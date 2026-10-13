@@ -9,6 +9,7 @@ import {
 } from "../estimating/discovery-workspace-context";
 import { hash } from "./hash";
 import type { Calculation, CalculationInput, Definition } from "./types";
+import { draftAuthority } from "./drafts";
 
 export type Duty =
   "cpq.read" | "cpq.author" | "cpq.review" | "cpq.publish" | "cpq.calculate";
@@ -160,7 +161,9 @@ export async function receiptAuthority(
   command: string,
   operationId: string,
 ) {
-  if (command === "Cpq:Adopt") {
+  if (command === "Cpq:Draft") {
+    await draftAuthority(c, p, id, true);
+  } else if (command === "Cpq:Adopt") {
     const a = (
       await c.query<{ details: { cpq_run_id: string } }>(
         "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",

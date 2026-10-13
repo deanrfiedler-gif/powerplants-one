@@ -4,7 +4,14 @@ import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
 import { sharedOperation } from "../platform/operations";
 import { AppError, unavailable } from "../platform/errors";
-import { common, commonKeys, object, uuid, label } from "../shared/validation";
+import {
+  common,
+  commonKeys,
+  object,
+  uuid,
+  label,
+  invalid,
+} from "../shared/validation";
 import {
   selectedBasis,
   writeDiscoveryCosting,
@@ -14,9 +21,11 @@ import { costingInput } from "../estimating/cost-basis-validation";
 import { arithmeticPolicy, type CostLine } from "../estimating/math";
 import { scope, parseLines } from "../estimating/validation";
 import { active, duty, run, type Binding, type Run } from "./context";
-import { calculationInput, digest } from "./validation";
+import { digest } from "./validation";
+import { boundInput, sourceFacts } from "./source-facts";
 import { calculateIsolated } from "./runner";
 import { hash } from "./hash";
+import { saveCalculatedDraft } from "./drafts";
 
 async function basis(
   c: QueryClient,
@@ -77,6 +86,7 @@ export async function previewCalculation(
       discovery: b.r.input,
       selected_scope: b.targets.compiled,
       current_estimate: b.saved,
+      source_facts: sourceFacts(b.head.revision.definition, b.r.input),
       synthetic: true,
     };
   });
@@ -90,7 +100,21 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
     "binding_hash",
     "parent_id",
     "input",
+    "draft",
   ]);
+  const draft =
+    r.draft === undefined
+      ? null
+      : object(r.draft, ["id", "expected_version", "label"]);
+  if (
+    draft &&
+    (!Number.isSafeInteger(draft.expected_version) ||
+      Number(draft.expected_version) < 0)
+  )
+    invalid(
+      "expected_version",
+      "Use the exact draft version, or zero for a new draft.",
+    );
   const input = {
     ...common(r),
     workspace_id: uuid(id, "workspace_id"),
@@ -100,6 +124,15 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
     binding_hash: digest(r.binding_hash, "binding_hash"),
     parent_id: r.parent_id === null ? null : uuid(r.parent_id, "parent_id"),
     input: r.input,
+    ...(draft
+      ? {
+          draft: {
+            id: uuid(draft.id, "draft_id"),
+            expected_version: Number(draft.expected_version),
+            label: label(draft.label, "label", 200),
+          },
+        }
+      : {}),
   };
   return sharedOperation(
     p,
@@ -148,9 +181,10 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
         )
           throw unavailable();
       }
-      const proposal = calculationInput(
+      const proposal = boundInput(
+          b.head.revision.definition,
           input.input,
-          b.head.revision.definition.facts,
+          b.r.input,
         ),
         result = await calculateIsolated(b.head.revision.definition, proposal);
       const content_hash = hash({
@@ -183,6 +217,16 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
           ],
         )
       ).rows[0];
+      if (input.draft)
+        await saveCalculatedDraft(c, p, {
+          ...input.draft,
+          company_id: b.g.company_id,
+          reason: input.reason,
+          binding: b.binding,
+          binding_hash: input.binding_hash,
+          run_id: saved.id,
+          content: proposal,
+        });
       return {
         ...saved,
         audit_details: {
@@ -197,6 +241,42 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
     "CpqRun",
     "CpqChanged",
   );
+}
+// Live preview has identical validation and source binding to Save, with no
+// persisted run, audit, receipt or estimate write. Save rechecks this exact basis.
+export async function evaluatePreview(
+  p: Principal,
+  id: string,
+  value: unknown,
+) {
+  const q = object(value, [
+    "option_id",
+    "revision_id",
+    "binding_hash",
+    "input",
+  ]);
+  return transaction(async (c) => {
+    const b = await basis(
+      c,
+      p,
+      uuid(id, "workspace_id"),
+      uuid(q.option_id, "option_id"),
+      uuid(q.revision_id, "revision_id"),
+    );
+    if (hash(b.binding) !== digest(q.binding_hash, "binding_hash"))
+      throw new AppError(
+        409,
+        "CpqBasisChanged",
+        "Discovery, estimate or active rules changed. Refresh the basis and compare before saving.",
+      );
+    const input = boundInput(b.head.revision.definition, q.input, b.r.input);
+    return {
+      binding_hash: hash(b.binding),
+      input,
+      result: await calculateIsolated(b.head.revision.definition, input),
+      synthetic: true,
+    };
+  });
 }
 async function receiving(c: QueryClient, p: Principal, id: string) {
   const saved = await run(c, p, id, true),
@@ -275,6 +355,7 @@ export async function previewAdoption(p: Principal, id: string) {
       binding: r.b.binding,
       retained_lines: r.retained,
       generated_lines: r.generated,
+      milestone_proposals: r.saved.result.explanation?.milestones ?? [],
       title: r.b.saved?.title ?? null,
       scope: r.b.saved?.scope ?? null,
       synthetic: true,
@@ -361,6 +442,7 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
           cpq_run_id: x.saved.id,
           cpq_result_hash: x.saved.result.result_hash,
           cpq_release_revision_id: x.saved.release_revision_id,
+          cpq_milestone_proposals: x.saved.result.explanation?.milestones ?? [],
         },
       };
     },

@@ -8,6 +8,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { expectFlowingShellHeader, readShellHeaderGeometry } from "./shell-header-geometry";
 export async function compareEs08Design(
   page: Page,
   context: BrowserContext,
@@ -88,13 +89,8 @@ export async function compareEs08Design(
             exact: true,
           })
           .click();
-      const search = (await page.locator(".ppo-global-search").boundingBox())!,
-        add = (await page
-          .getByRole("button", { name: "Quick add", exact: true })
-          .boundingBox())!,
-        centre = (search.x + add.x + add.width) / 2;
-      expect(Math.abs(centre - width / 2)).toBeLessThanOrEqual(2);
-      layouts.push({ width, collapsed, centre });
+      const header = await expectFlowingShellHeader(page);
+      layouts.push({ width, collapsed, header });
       if (collapsed) {
         const strip = page.getByRole("button", {
           name: "Expand Specialist configuration menu",
@@ -111,21 +107,19 @@ export async function compareEs08Design(
       }
     }
   }
-  // Negative control: a padded/offset app header must fail the independent centring contract.
+  // Negative control: offsetting search into Quick add must violate the spacing contract.
   const search = page.locator(".ppo-global-search");
   await search.evaluate(
     (e) => ((e as HTMLElement).style.transform = "translateX(20px)"),
   );
-  const shifted = (await search.boundingBox())!,
-    add = (await page
-      .getByRole("button", { name: "Quick add", exact: true })
-      .boundingBox())!;
-  expect(
-    Math.abs((shifted.x + add.x + add.width) / 2 - 1280 / 2),
-  ).toBeGreaterThan(2);
-  await search.evaluate((e) =>
-    (e as HTMLElement).style.removeProperty("transform"),
-  );
+  try {
+    expect((await readShellHeaderGeometry(page)).quickAddGap).toBeLessThan(0);
+  } finally {
+    await search.evaluate((e) =>
+      (e as HTMLElement).style.removeProperty("transform"),
+    );
+  }
+  await expectFlowingShellHeader(page);
   await page.setViewportSize({ width: 1920, height: 1200 });
   await writeFile(
     info.outputPath("es08-source-comparison.json"),
@@ -135,7 +129,7 @@ export async function compareEs08Design(
         actual,
         layouts,
         adaptations:
-          "ADR-0034 native shared shell; source visual vocabulary retained; source browser storage and pricing authority excluded",
+          "ADR-0034 native workspace with adopted Figma Shell v2 flowing header; private Figma page 406:2 adopted by PPO-ES08-FIGMA-IMPLEMENTATION-DEC; independent desktop/phone geometry and workflows in specialist-workbench.spec.ts; source browser storage and pricing authority excluded",
         owner_acceptance: "Pending",
       },
       null,

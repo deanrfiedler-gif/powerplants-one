@@ -4,13 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { definition } from "../estimating/specialist/definition";
 import type { Position } from "../estimating/specialist/types";
 import { clothWorking, formulaCells, manualReview } from "../estimating/specialist/workbench";
+import { FontAwesomeGlyph } from "./font-awesome";
 import { ResolvedAdjustment } from "./specialist-records";
 import type { Bench } from "./specialist-types";
-import { Dialog, Icon, Notice, Pill, Segmented, fmt, runLabel, useCompact, type Tone } from "./specialist-ui";
+import { Dialog, Icon, Notice, Pill, fmt, runLabel, type Tone } from "./specialist-ui";
 
 // Parts & working (design board artboard 03): a work queue of every source
 // position with its PPO part outcome, rule, calculation unit and review basis,
-// beside a persistent working panel. Part identity comes from the reviewed rule
+// with a modal working panel. Part identity comes from the reviewed rule
 // table, never a runtime description lookup.
 type Filter = "active" | "manual" | "zero" | "all";
 const stateTone: Record<Position["part_state"], Tone> = {
@@ -25,7 +26,8 @@ const isActive = (l: Position) => !l.excluded && (l.effective_quantity === null 
 export function PartsView({ bench }: { bench: Bench }) {
   const { calculation: c, frozen, fresh, working, openWorking } = bench,
     [search, setSearch] = useState(""),
-    [filter, setFilter] = useState<Filter>("active"),
+    filter = bench.partsFilter,
+    setFilter = bench.setPartsFilter,
     [section, setSection] = useState("All"),
     positions = c?.positions ?? [],
     manual = manualReview(c),
@@ -48,7 +50,6 @@ export function PartsView({ bench }: { bench: Bench }) {
         `${l.key} ${l.description} ${l.source} ${l.part_id ?? ""} ${l.label} ${l.rule}`.toLowerCase().includes(search.trim().toLowerCase()),
     ),
     selected = positions.find((l) => l.key === working) ?? null,
-    compact = useCompact(),
     openerKey = useRef<string | null>(null);
   const diagnostics = (key: string) => (c?.diagnostics ?? []).filter((d) => d.key === key && d.severity !== "Error" && d.code !== "SpecialistManualReviewRequired");
   const close = () => {
@@ -57,7 +58,7 @@ export function PartsView({ bench }: { bench: Bench }) {
     requestAnimationFrame(() => document.getElementById(`es08-working-${key}`)?.focus());
   };
   return (
-    <div className="es08-view">
+    <div className="es08-view es08-parts-view">
       <div className="es08-view-head">
         <div>
           <h2>Parts &amp; working</h2>
@@ -79,7 +80,7 @@ export function PartsView({ bench }: { bench: Bench }) {
             <Icon name="search" />
             <input id="es08-part-search" type="search" placeholder="Search PPO part, description, rule ID or cell" value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
-          <Segmented label="Position state" options={filters} value={filter} onChange={(x) => setFilter(x as Filter)} />
+          <div role="group" aria-label="Position state" className="es08-mobile-filter"><select aria-label="Position state" value={filter} onChange={e => setFilter(e.target.value as Filter)}>{filters.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}</select></div>
           <label className="es08-select">
             <span className="es08-sr">Section</span>
             <select value={section} onChange={(e) => setSection(e.target.value)}>
@@ -91,7 +92,7 @@ export function PartsView({ bench }: { bench: Bench }) {
             </select>
           </label>
         </div>
-        <Pill tone="warn">Provisional PPO part identity · MYOB mapping pending</Pill>
+        <span className="es08-sub">{shown.length} of {positions.length} positions</span>
       </div>
       {manual.outstanding > 0 && c && (
         <Notice tone="warn" title={bench.data.current_run ? `Basis changed since run ${runLabel(bench.data.current_run.sequence)}.` : "Manual quantities need a review basis."} action={<Link href={`/estimating/configurations/${bench.id}/compare`}>See what changed</Link>}>
@@ -99,7 +100,7 @@ export function PartsView({ bench }: { bench: Bench }) {
         </Notice>
       )}
       {!fresh && c && <p className="es08-sub es08-stale-note" role="status">Showing the last calculation while the inputs are re-checked.</p>}
-      <div className={`es08-partsgrid ${selected && !compact ? "es08-partsgrid--open" : ""}`}>
+      <div className="es08-partsgrid">
         <section className="es08-card es08-table-card" aria-labelledby="es08-parts-h">
           <h3 id="es08-parts-h" className="es08-sr">Source positions</h3>
           {!c && <p className="es08-empty">Waiting for the first calculation.</p>}
@@ -128,8 +129,10 @@ export function PartsView({ bench }: { bench: Bench }) {
                 <thead>
                   <tr>
                     <th scope="col">PPO part</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Source position</th>
                     <th scope="col" className="es08-num">Review qty</th>
+                    <th scope="col">Unit</th>
                     <th scope="col">Basis</th>
                     <th scope="col">
                       <span className="es08-sr">Actions</span>
@@ -143,22 +146,13 @@ export function PartsView({ bench }: { bench: Bench }) {
                       <tr key={l.key} data-selected={l.key === working || undefined}>
                         <td>
                           {l.part_id ? <div className="es08-mono es08-strong">{l.part_id}</div> : <Pill tone={stateTone[l.part_state]}>{l.part_state}</Pill>}
-                          <div className="es08-sub">{l.part_id ? l.description : l.part_candidates.length ? `Candidates: ${l.part_candidates.join(", ")}` : l.part_note || l.part_basis}</div>
                         </td>
-                        <td>
-                          <div className="es08-strong">{l.label}</div>
-                          <div className="es08-mono es08-sub">
-                            {l.key} · {l.section} · {l.source.replace("CALC_ENGINE!", "")}
-                          </div>
-                          {notes.slice(0, 1).map((d) => (
-                            <div key={d.code} className="es08-field-warn">
-                              {d.message} · {d.code}
-                            </div>
-                          ))}
-                        </td>
+                        <td title={l.description || l.label}>{l.part_id ? l.description : l.label}</td>
+                        <td title={notes.map(d => `${d.message} · ${d.code}`).join("; ")}><span className="es08-sub">{l.key} · {l.section}</span></td>
                         <td className="es08-num">
-                          <span className="es08-qty">{l.effective_quantity ? fmt(Number(l.effective_quantity.display), l.effective_quantity.display.includes(".") ? 2 : 0) : "—"}</span> <span className="es08-sub">{l.effective_quantity ? l.unit : "unresolved"}</span>
+                          <span className="es08-qty">{l.effective_quantity ? fmt(Number(l.effective_quantity.display), l.effective_quantity.display.includes(".") ? 2 : 0) : "—"}</span>
                         </td>
+                        <td>{l.effective_quantity ? l.unit : "unresolved"}</td>
                         <td>
                           <Pill tone={statusTone[l.status]}>{l.status === "Manual" && c.manual_review_required.includes(l.key) ? "Manual · needs review" : l.status}</Pill>
                           <div className="es08-sub">{l.excluded ? "Estimator exclusion" : l.manual ? "No surviving formula · REV-01" : l.row === 223 ? (bench.gates[3].status === "ok" ? "Roll fit confirmed" : "Procurement unit unconfirmed") : "Calculation unit"}</div>
@@ -167,15 +161,17 @@ export function PartsView({ bench }: { bench: Bench }) {
                           <button
                             type="button"
                             id={`es08-working-${l.key}`}
-                            className="ppo-button es08-button--sm"
+                            className="es08-icon-button"
+                            aria-label={`Working for ${l.key}`}
+                            title={`Working for ${l.key}`}
                             aria-expanded={l.key === working}
-                            aria-controls="es08-working-panel"
+                            aria-controls={selected ? "es08-working-panel" : undefined}
                             onClick={() => {
                               openerKey.current = l.key;
                               openWorking(l.key === working ? null : l.key);
                             }}
                           >
-                            Working
+                            <FontAwesomeGlyph icon="calculator" className="es08-icon" fallback={<Icon name="drawing" />} />
                           </button>
                           {l.manual && (
                             <button type="button" className="ppo-button es08-button--sm es08-button--warn" disabled={frozen || !fresh} onClick={bench.openManual}>
@@ -198,24 +194,9 @@ export function PartsView({ bench }: { bench: Bench }) {
             </div>
           )}
         </section>
-        {selected && !compact && (
-          <aside
-            id="es08-working-panel"
-            className="es08-card es08-working"
-            aria-labelledby="es08-work-title"
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                e.stopPropagation();
-                close();
-              }
-            }}
-          >
-            <WorkingPanel bench={bench} position={selected} close={close} />
-          </aside>
-        )}
       </div>
-      {selected && compact && (
-        <Dialog title={`${selected.key} working`} close={close} wide className="es08-dialog--side">
+      {selected && (
+        <Dialog id="es08-working-panel" title={selected.label || selected.description} description={<span className="es08-mono">{selected.key} · {selected.part_id ?? selected.part_state}</span>} close={close} wide className="es08-dialog--side es08-working-overlay">
           <WorkingPanel bench={bench} position={selected} close={close} inDialog />
         </Dialog>
       )}

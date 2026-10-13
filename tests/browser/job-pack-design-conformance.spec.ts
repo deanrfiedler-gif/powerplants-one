@@ -50,7 +50,7 @@ const tokensOf = (page: Page, names: string[]) =>
       names,
     );
 
-test("SC-06 the running Job Pack page carries the accepted r03 tokens and geometry", async ({
+test("SC-06 the running Job Pack page retains exact-content tokens with accepted Figma geometry", async ({
   page,
   browser,
 }, info) => {
@@ -97,11 +97,6 @@ test("SC-06 the running Job Pack page carries the accepted r03 tokens and geomet
       },
       [layout, rail],
     );
-  const acceptedGeometry = await measure(
-    reference,
-    "#panel-pack .layout",
-    "#panel-pack .contents",
-  );
   await reference.context().close();
 
   await page.setViewportSize(viewports[0]);
@@ -110,28 +105,28 @@ test("SC-06 the running Job Pack page carries the accepted r03 tokens and geomet
   const geometry = await measure(
     page,
     "#jp-panel-pack .jp-layout",
-    "#jp-panel-pack .jp-contents",
+    "#ppo-job-pack .mw-menu",
   );
-  expect(geometry).toEqual(acceptedGeometry);
-  expect(geometry.padding).toBe("24px");
-  expect([geometry.first, geometry.last, geometry.columns]).toEqual([
-    "220px",
-    "258px",
-    3,
-  ]);
+  expect(geometry.padding).toBe("0px");
+  expect([geometry.last, geometry.columns]).toEqual(["320px", 2]);
+  expect(
+    await page
+      .locator("#ppo-job-pack .mw-menu")
+      .evaluate((el) => el.getBoundingClientRect().width),
+  ).toBe(240);
   // Authorised host adaptation: the module, not the window, owns scrolling.
   expect(
     await page
       .locator("#ppo-job-pack")
       .evaluate((el) => [
-        getComputedStyle(el).overflowY,
+        getComputedStyle(el.querySelector(".jp-workspace")!).overflowY,
         el.getAttribute("data-module-layout"),
         document.documentElement.scrollHeight <= innerHeight,
       ]),
   ).toEqual(["auto", "full-bleed", true]);
 });
 
-test("SC-06 no horizontal overflow at the four declared viewports, 16 px padding on a phone", async ({
+test("SC-06 no horizontal overflow at the four declared viewports, with a flush shell host", async ({
   page,
 }, info) => {
   test.skip(
@@ -149,7 +144,7 @@ test("SC-06 no horizontal overflow at the four declared viewports, 16 px padding
     expect(m, `${viewport.width}x${viewport.height}`).toEqual({
       page: true,
       module: true,
-      padding: viewport.width <= 760 ? "16px" : "24px",
+      padding: "0px",
     });
   }
 });
@@ -159,25 +154,23 @@ test("SC-06 negative control: the last section is reachable by scrolling (r02 au
 }, info) => {
   test.skip(
     info.project.name.startsWith("mobile"),
-    "The contents rail is a desktop control; a phone uses the jump select.",
+    "The docked menu is measured on desktop; phone overlay navigation is covered separately.",
   );
   await page.setViewportSize(viewports[0]);
   await openPack(page);
-  const current = page.locator(
-    '#jp-panel-pack .jp-contents nav a[aria-current="true"]',
-  );
+  const current = page.locator('.jp-view-menu button[aria-current="location"]');
   await expect(current).toContainText("Job and visit");
   // In approved r02 the scroll-spy stopped at section 07 because 08 and 09 never crossed its threshold.
   // This scroll lands within the first second of a compiled page's life, which is how the first build of this page
   // was caught ignoring every scroll until 600 ms after load.
   await page
-    .locator("#ppo-job-pack")
+    .locator(".jp-workspace")
     .evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
   await expect(current).toContainText("Completion requirements");
   // A contents jump holds its own selection instead of yielding to the scroll position it causes.
   await page
-    .getByRole("navigation", { name: "Job pack sections", exact: true })
-    .getByRole("link", { name: /Site controls/ })
+    .getByRole("navigation", { name: "Job pack navigation", exact: true })
+    .getByRole("button", { name: /Site controls/ })
     .click();
   await expect(current).toContainText("Site controls");
   await expect(page.locator("#s-8")).toBeFocused();
@@ -188,7 +181,7 @@ test("SC-06 negative control: scroll-spy answers from the first moment of the pa
 }, info) => {
   test.skip(
     info.project.name.startsWith("mobile"),
-    "The contents rail is a desktop control; a phone uses the jump select.",
+    "The docked menu is measured on desktop; phone overlay navigation is covered separately.",
   );
   // The first build of this page held its jump lock from time zero, so every scroll in the first 600 ms after load
   // was ignored. Only a compiled page is fast enough to reach that window. Slowing the page clock a thousandfold
@@ -202,9 +195,9 @@ test("SC-06 negative control: scroll-spy answers from the first moment of the pa
   await openPack(page);
   expect(await page.evaluate(() => performance.now())).toBeLessThan(600);
   await page
-    .locator("#ppo-job-pack")
+    .locator(".jp-workspace")
     .evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
   await expect(
-    page.locator('#jp-panel-pack .jp-contents nav a[aria-current="true"]'),
+    page.locator('.jp-view-menu button[aria-current="location"]'),
   ).toContainText("Completion requirements");
 });

@@ -13,7 +13,8 @@
     "src/components/ui/controls.css",
     "src/app/layout.tsx",
     "src/components/product-navigation.tsx",
-    "src/components/shell-provider.tsx"
+    "src/components/shell-provider.tsx",
+    "src/app/styles/figma-shell.css"
   ],
   "entries": [
     {
@@ -34,11 +35,16 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Prior My Work proof retained. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
+      "functional_status": "Prior My Work proof retained. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate. Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "3ec2727f8ae3d2996d099de09a20511f135eac21c83ba333a64321673dea59d9",
       "reviewed_at": "2026-10-09",
@@ -48,7 +54,7 @@
         "route:/work"
       ],
       "reviewer": "Dean Fiedler",
-      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate."
+      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "scope:SH-02",
@@ -67,11 +73,16 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "267e067bec7e250ce4d84eb84f9b57a938790db9c0768a986d8b7a04ec0acfa6",
       "reviewed_at": "2026-10-09",
@@ -88,7 +99,8 @@
         "route:/work/new",
         "route:/sales/tasks"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": " Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "scope:SH-03",
@@ -1245,7 +1257,8 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/estimation-wizard.tsx"
+        "src/components/estimation-wizard.tsx",
+        "docs/decisions/cpq-figma-ui.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -1261,7 +1274,11 @@
         "route:/estimating/discovery/new",
         "route:/estimating/discovery",
         "scope:CS-08",
-        "scope:ES-01"
+        "scope:ES-01",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "reviewer": null
     },
@@ -1291,7 +1308,8 @@
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/testing/evidence/estimating-native-cost-sources/README.md",
-        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json",
+        "docs/decisions/cpq-figma-ui.md"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -1308,7 +1326,11 @@
         "route:/estimating/cost-sources/new",
         "route:/estimating/cost-sources/[id]",
         "route:/estimating/estimates/[id]/sources",
-        "scope:ES-04"
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "reviewer": null
     },
@@ -1508,7 +1530,7 @@
       "title": "Specialist configuration workbench",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native Screen Systems engine, exact runs, resolved parts, estimate receiving and the seven-view accepted-board workbench exist. ES-08 scope metadata is reconciled against merged PR #441; engineering, owner and visual acceptance remain separate. Other calculators require their own validated scope.",
+      "summary": "Screen Configurator Workbench uses the requested Figma composition across seven native views, view-specific contents, working/inspector panels and phone actions. Exact synthetic runs, receiving authority and pending-operation recovery remain in the existing backend; owner review and deployment are separate.",
       "path": "/estimating/configurations",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1531,7 +1553,11 @@
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/es08-figma-implementation.md",
+        "src/components/specialist-figma.css",
+        "src/components/specialist-menu.tsx"
+      ],
       "scope_status": "Native synthetic backend and workbench present; review separate",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -2416,7 +2442,7 @@
       "title": "Job-pack preparation and issue follow-through",
       "kind": "scope",
       "module": "SV",
-      "summary": "Job Pack I1-I7 and final I5 implement saved preparation, structured evidence, issue follow-through, canonical handovers and scoped A4 workbench printing. Evidence and owner/device review remain separate.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2435,7 +2461,14 @@
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-04.png",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-05.png",
         "docs/testing/evidence/job-pack-i5/application-1440.png",
-        "docs/testing/evidence/job-pack-i5/application-320.png"
+        "docs/testing/evidence/job-pack-i5/application-320.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-01-Desktop-Register-and-Selection-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-02-Desktop-Record-Page-and-Preparation-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-03-Desktop-History-Decisions-and-Issue-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -2444,12 +2477,18 @@
         "docs/delivery/job-pack-i6-handover.md",
         "docs/delivery/job-pack-i7-handover.md",
         "docs/decisions/job-pack-integration.md",
-        "docs/delivery/job-pack-integration-handover.md"
+        "docs/delivery/job-pack-integration-handover.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -6842,7 +6881,7 @@
       "title": "Project register",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
+      "summary": "Native Projects register from Figma 209:46: authorised schedule facts, views, filters, sorting, selection/export and exact-project snapshots. Existing schedule and closeout handovers remain. PJ-01/PJ-02 receiving and overview APIs remain separately documented backend reads.",
       "path": "/projects",
       "source_paths": [
         "src/app/(business)/projects/page.tsx"
@@ -6859,7 +6898,13 @@
         "src/projects/overview.ts",
         "src/projects/overview-model.ts",
         "src/projects/portfolio.ts",
-        "src/sales/delivery-binding.ts"
+        "src/sales/delivery-binding.ts",
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7149,7 +7194,7 @@
       "title": "Job pack detail",
       "kind": "route",
       "module": "SV",
-      "summary": "Job Pack I1-I7 and final I5 implement saved preparation, structured evidence, issue follow-through, canonical handovers and scoped A4 workbench printing. Evidence and owner/device review remain separate.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs/[id]",
       "source_paths": [
         "src/app/(business)/service/packs/[id]/page.tsx"
@@ -7184,12 +7229,18 @@
         "docs/delivery/job-pack-i7-handover.md",
         "docs/decisions/job-pack-integration.md",
         "docs/delivery/job-pack-integration-handover.md",
-        "docs/decisions/job-pack-figma-design.md"
+        "docs/decisions/job-pack-figma-design.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7204,7 +7255,7 @@
       "title": "Create job pack",
       "kind": "route",
       "module": "SV",
-      "summary": "Job Pack I1-I7 and final I5 implement saved preparation, structured evidence, issue follow-through, canonical handovers and scoped A4 workbench printing. Evidence and owner/device review remain separate.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs/new",
       "source_paths": [
         "src/app/(business)/service/packs/new/page.tsx"
@@ -7218,12 +7269,18 @@
       "dependencies": [
         "docs/decisions/job-pack-integration.md",
         "docs/delivery/job-pack-integration-handover.md",
-        "docs/decisions/job-pack-figma-design.md"
+        "docs/decisions/job-pack-figma-design.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7238,7 +7295,7 @@
       "title": "Job pack register",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Accepted Figma Job Pack layout implemented over saved revisions, scoped register reads, readiness and exact issue commands. Visual owner/device acceptance and deployment remain separate.",
       "path": "/service/packs",
       "source_paths": [
         "src/app/(business)/service/packs/page.tsx"
@@ -7252,12 +7309,18 @@
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/job-pack-figma-design.md"
+        "docs/decisions/job-pack-figma-design.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md",
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/pack-register.ts",
+        "src/documents/components/client/job-pack-workspace.tsx",
+        "src/documents/components/client/job-pack-chrome.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See docs/testing/evidence/job-pack-figma-ui/README.md for executed checks and limits",
+      "deployment_status": "Not verified for this implementation",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7768,11 +7831,16 @@
         "src/components/saved-view-controls.tsx",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
-        "docs/decisions/my-work-page-design.md"
+        "docs/decisions/my-work-page-design.md",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Scheduling Step 4 proof remains in docs/testing/evidence/scheduling-policy-enforcement/README.md. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
+      "functional_status": "Scheduling Step 4 proof remains in docs/testing/evidence/scheduling-policy-enforcement/README.md. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate. Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "a07a312d25a7b27462d1a1944d54d77936f3695e0682feccb750f7d7d6d22d9c",
       "reviewed_at": "2026-10-09",
@@ -7782,7 +7850,8 @@
         "scope:SH-01",
         "scope:SH-02"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": " Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "route:/work/reviews",
@@ -8826,16 +8895,21 @@
       "title": "Screen Systems configurations · detail",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Screen Configurator Workbench uses the requested Figma composition across seven native views, view-specific contents, working/inspector panels and phone actions. Exact synthetic runs, receiving authority and pending-operation recovery remain in the existing backend; owner review and deployment are separate.",
       "path": "/estimating/configurations/[id]",
       "source_paths": [
-        "src/app/(business)/estimating/configurations/[id]/page.tsx"
+        "src/app/(business)/estimating/configurations/[id]/page.tsx",
+        "src/app/(business)/estimating/configurations/[id]/layout.tsx"
       ],
       "guide_key": "guide.page.estimating.configurations.id",
       "design_path": "docs/design/development/pages/route-estimating-configurations-id.md",
       "html_path": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/es08-figma-implementation.md",
+        "src/components/specialist-figma.css",
+        "src/components/specialist-menu.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8854,10 +8928,11 @@
       "title": "Screen Systems configurations · selected view",
       "kind": "route",
       "module": "ES",
-      "summary": "Screen Configurator Workbench: seven views (Configure, Drawings, Parts & working, Pricing, Compare & save, Definition review, Run history) built from the owner-accepted design board on 12 October 2026; source presence does not establish deployment or acceptance.",
+      "summary": "Screen Configurator Workbench uses the requested Figma composition across seven native views, view-specific contents, working/inspector panels and phone actions. Exact synthetic runs, receiving authority and pending-operation recovery remain in the existing backend; owner review and deployment are separate.",
       "path": "/estimating/configurations/[id]/[view]",
       "source_paths": [
-        "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx"
+        "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
+        "src/app/(business)/estimating/configurations/[id]/layout.tsx"
       ],
       "guide_key": "guide.page.estimating.configurations.id.view",
       "design_path": "docs/design/development/pages/route-estimating-configurations-id-view.md",
@@ -8877,7 +8952,10 @@
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/es08-figma-design.md"
+        "docs/decisions/es08-figma-design.md",
+        "docs/decisions/es08-figma-implementation.md",
+        "src/components/specialist-figma.css",
+        "src/components/specialist-menu.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -8951,7 +9029,7 @@
       "title": "Priva Fertigation Configurator · detail",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Native saved fertigation scope aligned to the accepted nine-view Figma workbench, with desktop registers, phone valve list and exact revision workflows. Owner visual acceptance and hosted deployment are separate.",
       "path": "/estimating/fertigation/[id]",
       "source_paths": [
         "src/app/(business)/estimating/fertigation/[id]/page.tsx"
@@ -8976,7 +9054,8 @@
         "docs/reference/ui/estimating/fertigation-figma-design-r01/PPO-Fertigation-Figma-14-Desktop-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/fertigation-figma-design.md"
+        "docs/decisions/fertigation-figma-design.md",
+        "docs/decisions/fertigation-figma-implementation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -9566,11 +9645,16 @@
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation.mmd",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd",
-        "docs/testing/evidence/pt27-loading/README.md"
+        "docs/testing/evidence/pt27-loading/README.md",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "See NAV implementation ledger; source, functional proof and acceptance remain separate",
+      "functional_status": "See NAV implementation ledger; source, functional proof and acceptance remain separate Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "037a41e7f1e3966da4cef65d255af55d67613ddd2766367d942f84e755756e7c",
       "reviewed_at": "2026-10-09",
@@ -9578,7 +9662,7 @@
       "build_rank": null,
       "related_keys": [],
       "reviewer": "Dean Fiedler",
-      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged."
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "system:theme",
@@ -13580,6 +13664,217 @@
         "scope:AD-01",
         "route:/admin/access",
         "route:/admin/access/requests/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cpq/[id]",
+      "title": "Configure & price",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Configure a selected discovery option, explain quantities and prices, compare saved evaluations and deliberately use a saved result in the native estimate.",
+      "path": "/estimating/cpq/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/cpq/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cpq-id",
+      "design_path": "docs/design/development/pages/route-estimating-cpq-id.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-16-Configure-Greenhouse-2-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-17-Shared-Capacity-Conflict-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-18-Solution-Overview-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-19-Materials-and-Labour-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-20-Why-This-Line-Cable-Brackets-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-21-Pricing-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-22-Compare-with-Evaluation-2-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-23-Use-in-Estimate-Dialog-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-24-Used-in-Estimate-v05-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-25-Line-Actions-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-26-Adjust-Quantity-Dialog-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-27-Reopened-Adjustments-Kept-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-28-Input-Changed-Recalculating-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-29-Quantity-Needs-Review-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-30-Review-Adjustment-Dialog-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-31-Calculated-Value-Restored-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-32-History-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-33-Saved-Evaluation-3-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-34-Compare-with-Release-R5-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-35-Why-This-Line-Equal-Priority-Conflict-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-36-Blockers-Resolved-Evaluation-6-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-37-Propose-Successor-v06-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-38-Tablet-Configure-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-40-Phones-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-41-Exceptional-States-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-44-Why-This-Line-Panel-Views-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-configure.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cpq",
+      "title": "Configurations",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Search the latest saved evaluations and working configurations. Start configuration from a complete selected discovery option.",
+      "path": "/estimating/cpq",
+      "source_paths": [
+        "src/app/(business)/estimating/cpq/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cpq",
+      "design_path": "docs/design/development/pages/route-estimating-cpq.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-15-Configure-and-Price-Register-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-register.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/rules/[id]",
+      "title": "Rule and release authoring",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Author typed conditions, safe formulas, parameters, parts, options, structures, decision tables, capacities and milestone proposals, with immutable rule and release versions.",
+      "path": "/estimating/rules/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/rules/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-rules-id",
+      "design_path": "docs/design/development/pages/route-estimating-rules-id.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-02-Rule-Editor-Definition-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-03-Rule-Editor-Text-Fact-Change-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-04-Test-Run-1-Failed-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-05-Formula-Editor-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-06-Test-Run-2-Passed-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-07-Changes-vs-v7-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-08-Create-Version-8-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-09-Release-R6-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-10-Decision-Table-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-11-Fact-Dictionary-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-12-Product-Structure-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-13-Rule-History-Version-6-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-14-Action-Forms-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-39-Tablet-Rule-Editor-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-40-Phones-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-41-Exceptional-States-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-42-Components-A-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-43-Components-B-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-rules.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
+        "src/components/cpq-formula-editor.tsx"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules"
+      ]
+    },
+    {
+      "key": "route:/estimating/rules",
+      "title": "Rules studio",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Find company rule definitions and continue working authoring drafts.",
+      "path": "/estimating/rules",
+      "source_paths": [
+        "src/app/(business)/estimating/rules/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-rules",
+      "design_path": "docs/design/development/pages/route-estimating-rules.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-01-Rules-Registry-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-register.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules/[id]"
       ]
     }
   ]

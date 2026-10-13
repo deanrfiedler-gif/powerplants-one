@@ -57,7 +57,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "In the Figma overview increment, freshness appears in the toolbar and Customise overview is in More actions. The circle at the start of an activity opens Record outcome; the row actions menu opens Reschedule or Set date. Opening the title retains full activity details."
+          ],
           "steps": [],
           "rows": [
             [
@@ -213,7 +215,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "On a phone, the three labelled quick actions are Emails, Leads and Tasks. The bottom navigation uses icons with accessible names. Open an activity to complete or reschedule it. Weather stays hidden until a provider is connected."
           ],
           "steps": [],
           "rows": [],
@@ -322,7 +325,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "In the Figma overview increment, freshness appears in the toolbar and Customise overview is in More actions. The circle at the start of an activity opens Record outcome; the row actions menu opens Reschedule or Set date. Opening the title retains full activity details."
+          ],
           "steps": [],
           "rows": [
             [
@@ -478,7 +483,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "On a phone, the three labelled quick actions are Emails, Leads and Tasks. The bottom navigation uses icons with accessible names. Open an activity to complete or reschedule it. Weather stays hidden until a provider is connected."
           ],
           "steps": [],
           "rows": [],
@@ -6965,11 +6971,11 @@
       "title": "Specialist configuration workbench",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native synthetic workbench; owner guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -6978,9 +6984,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Specialist configuration workbench to work towards this outcome: A reproducible specialist configuration with an exact input/rule basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "ES-08 is the Screen Systems family. Fertigation and other calculators need their own validated scope and must not be relabelled ES-08."
+            "Configure the Screen Systems family with an explicit source, reproducible calculation and exact saved evidence. The seven native views share one proposal and preserve server-side authority.",
+            "The Figma composition is implemented under the 13 October request; this guide remains Draft and does not approve engineering rules, procurement quantities or ERP transactions."
           ],
           "steps": [],
           "rows": [],
@@ -7003,11 +7008,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review required inputs and unresolved assumptions",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a permitted configuration and check its saved Discovery revision, option and definition in the context strip.",
+            "Use the Configure secondary menu for the six sections, or the phone stepper. Inputs retain their source and drawing-only/check-only distinction.",
+            "Inspect live results and readiness. Review all required manual quantities against the current basis before recording a run.",
+            "Use Drawings for linked field selection, Parts for filtered positions and calculation working, Pricing for illustrative and native receiving rates, and Compare & save for exact changes and handover.",
+            "Enter a reason and Save draft. On a phone, Workbench actions contains the reason and Review calculation. Confirm the server result; resolve the original receipt if the outcome is unknown.",
+            "Open Run history to inspect an exact saved run. Its overflow menu exports evidence or starts a successor draft; the earlier run remains immutable."
           ],
           "rows": [],
           "headers": []
@@ -7169,8 +7175,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On phones, expand Readiness to inspect all gates. Scroll the view tabs; use the section arrows and Next section for Configure. Save stays visible and Workbench actions contains the save reason and calculation review.",
+            "Selecting a field on the plan opens its inspector sheet. Working opens a full-screen modal. Escape or Close restores the previous control; wider tables scroll within their own region. No offline save authority is added."
           ],
           "steps": [],
           "rows": [],
@@ -7211,9 +7217,10 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe the requested Figma workbench menu, inspection panels, mobile actions and existing durable recovery; owner guide review remains separate.",
       "document_id": "PPO-GUIDE-ES-08",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -7223,7 +7230,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -13130,10 +13138,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-13",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
@@ -13164,11 +13172,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the pack against the correct scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -13180,40 +13187,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Job-pack preparation and issue follow-through · Page + tabs"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ],
-            [
-              "Saved section details",
-              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
-            ],
-            [
-              "Pack title",
-              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
-            ],
-            [
-              "Pack readiness",
-              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
-            ],
-            [
-              "Revision history",
-              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -13238,17 +13225,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release.",
-            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Prepare the pack against the correct scope",
-            "Review exact source/template revisions and readiness",
-            "Issue the checked pack and track recipient acknowledgement",
-            "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
-            "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
-            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -13367,8 +13350,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -13389,9 +13373,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -13410,9 +13393,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "I4: source-change review and exact saved preparation printing; owner review remains pending.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-SV-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13422,7 +13407,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -42613,18 +42599,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-13",
+      "source_commit": "c3ff5b90d0730f55583b6ee73f9d1af4a449695e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Backend verification: docs/testing/evidence/project-overview/README.md. This guide has no new UI walkthrough.",
+      "runtime_evidence": "Native register walkthrough: docs/testing/evidence/projects-register/README.md. Separate backend verification: docs/testing/evidence/project-overview/README.md. Owner guide review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Project register to work towards this outcome: Project health has evidence and an accountable response.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A colour indicator alone does not explain delivery health or acceptance."
+            "Find permitted projects, inspect saved schedule facts and open the exact schedule or Acceptance & closeout context. The register performs no bulk business changes.",
+            "Task risk is an explicit saved task status. Milestone overdue is a date comparison in the site time zone; neither is an overall project-health judgement."
           ],
           "steps": [],
           "rows": [],
@@ -42634,9 +42619,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Project owner, milestones, health evidence, completeness and recovery actions.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a signed-in identity with access to the project and its customer/site. Counts and filter choices include only authorised projects. Confirm the environment and customer/site before opening a record."
           ],
           "steps": [],
           "rows": [],
@@ -42645,57 +42628,33 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Select the project and check its reporting basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Start with Active projects, ordered by target date with unknown dates last.",
+            "Choose a project view, Coordinator or Customer. Use the actions menu to search.",
+            "Open a row to inspect facts and history. Choose Open schedule for changes or Acceptance & closeout for the controlled lifecycle workflow."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Project register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The secondary menu contains Active, My projects, Closed, All projects and three Needs attention views. My projects means active projects coordinated by you.",
+            "The desktop table exposes Project, Next milestone, Milestone date, Target date, At risk, Customer, Site, Coordinator, Status and Reference. Sortable headers show their direction; the column menu controls visibility.",
+            "The toolbar shows the number of all matching projects and its observation time. The Projects rail badge counts all authorised active projects independently of filters. Previous/Next pages use transient tokens."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Project owner, milestones, health evidence, completeness and recovery actions.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
-            "The new backend can return the exact accepted Sales context beside current Project facts. Missing task dates keep the full forecast unknown; restricted linked records keep coverage partial. Phase counts and explained attention are coordination facts, not a health score or acceptance."
+            "Next milestone is the earliest incomplete milestone, with undated milestones last. Completed markers do not block later milestones. No remaining milestones differs from Unscheduled.",
+            "At risk counts non-milestone tasks explicitly marked AtRisk. Snapshot task totals and phase summaries also exclude milestone markers. Customer, site, coordinator, target and lifecycle come from the saved project. Sales sources retain their independent permissions."
           ],
           "steps": [],
           "rows": [],
@@ -42705,13 +42664,12 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Select rows with their checkboxes, or Select all projects on this page. Open in sequence inspects them in current order.",
+            "Export list downloads only the displayed selected rows. The actions menu exports the displayed page. Exports never include undisplayed pages or change project records.",
+            "Clear selection or change a filter to discard transient selection. Hide panel preserves selection.",
+            "Use the refresh control for a fresh read. View, filters and sorting survive reload, shared URLs and browser Back."
           ],
-          "steps": [
-            "Select the project and check its reporting basis",
-            "Review overdue milestones and explained health",
-            "Open the underlying issue before assigning recovery work"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -42719,9 +42677,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Project health has evidence and an accountable response.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A colour indicator alone does not explain delivery health or acceptance."
+            "Opening a snapshot preserves the register context. Previous/Next follows the selected set, or displayed page if there is no selection. Close or Escape returns to the register.",
+            "Open schedule hands over the exact project UUID to its existing Gantt and saved commands. Closing and reopening remain controlled by Acceptance & closeout. Phases group tasks without changing lifecycle."
           ],
           "steps": [],
           "rows": [],
@@ -42731,46 +42688,20 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Backend categories are Needs attention, Information needed, No current flags and Closed. No current flags does not mean overall delivery health has been accepted. The accepted Overview page and its controls still need implementation; use existing native Sales handover, schedule, baseline and Activity workflows meanwhile."
+            "Active and Closed are lifecycle states. Closed schedules remain read-only until an authorised reopen through closeout.",
+            "Loading and failures are explicit. A failed refresh cannot export retained rows; access refusal clears protected results. Missing targets read Not set, while empty filtered results explain how to clear filters.",
+            "Snapshot Sales source and history failures are independent and offer retry. No linked handover is distinct from restricted or unavailable Sales data."
           ],
           "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
-          ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare project owner, milestones, health evidence, completeness and recovery actions. Follow the task sequence and check that project health has evidence and an accountable response. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Project register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A colour indicator alone does not explain delivery health or acceptance."
+            "Synthetic example: an incomplete milestone dated yesterday and one AtRisk task place an active project in Overdue milestones and Tasks at risk. Completing that milestone lets the next incomplete marker become visible.",
+            "A project without a target appears under No target date and sorts after known targets. Exporting a selected row leaves its version and schedule history unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -42779,45 +42710,22 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If a page token no longer resolves after changes, refresh the register from its first page. Check active filters before assuming a project is missing.",
+            "After a denied read, use the normal authorised access route. A local UUID is not assumed to exist in the hosted environment.",
+            "If a snapshot cannot load, retry its read or close it and refresh the register. Schedule-save recovery remains in the existing schedule workflow."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Phone view uses compact rows, a view selector, filters and the New project action. Tap opens a snapshot; press and hold selects. Moving the pointer cancels a pending hold. Shift+Space is the keyboard selection alternative.",
+            "The snapshot fills the phone viewport with fixed schedule/closeout actions. Escape closes it. Tab reaches native buttons and checkboxes; arrow keys move between fact tabs.",
+            "The Projects bar exposes Work, Projects, Programme, Acceptance and More where permitted. This register requires current online reads; no offline scheduling workflow is introduced."
           ],
           "steps": [],
           "rows": [],
@@ -42827,8 +42735,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Projects register implementation decision, Figma measurements, page contract and execution record. Existing native schedule, baseline and closeout guides remain authoritative for their own commands.",
+            "The supplied Wrike audit is a bounded reference, not an adopted feature backlog or proof of PPO business rules."
           ],
           "steps": [],
           "rows": [],
@@ -42838,9 +42746,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft prepared 13 October 2026. Execution evidence is separate from owner acceptance, physical-device review and deployment. No review fingerprint is set by this edit.",
+            "The supplied Figma frames are the requested visual source. The older register PNG and Gantt HTML remain retained history; they do not replace the current Figma design."
           ],
           "steps": [],
           "rows": [],
@@ -42854,9 +42761,16 @@
       "source_paths": [
         "src/app/(business)/projects/page.tsx",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md",
+        "docs/testing/evidence/projects-register/README.md"
       ],
-      "change_summary": "PJ-01/PJ-02 backend attribution and completeness contract; accepted page implementation and guide review remain separate.",
+      "change_summary": "Implemented Figma Projects register workflow with separately verified PJ-01/PJ-02 backend context; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42867,6 +42781,12 @@
         "src/app/(business)/projects/page.tsx",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md",
         "docs/decisions/project-overview-backend.md",
         "docs/testing/evidence/project-overview/README.md"
       ],
@@ -44604,10 +44524,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-13",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
@@ -44638,11 +44558,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -44654,40 +44573,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Job pack detail · Record workspace"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ],
-            [
-              "Saved section details",
-              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
-            ],
-            [
-              "Pack title",
-              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
-            ],
-            [
-              "Pack readiness",
-              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
-            ],
-            [
-              "Revision history",
-              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -44712,23 +44611,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Preparation is entered in the Preparation view, one guided section per pack section. Each section shows the frozen context the last save composed, so entries are written against exactly what will be checked and issued.",
-            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form.",
-            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Open the Preparation view. The contents rail lists the nine sections and flags any that need attention.",
-            "Read the linked context for a section. Section 01 shows it in place; the others keep it behind View source details.",
-            "Complete the entry for each section. All nine are required, 1 to 6000 characters; a remaining-character count appears from 5,500.",
-            "In section 05 select the relevant service history, or explain in the note why none applies.",
-            "In section 06 select the exact document versions the crew works from. At least one is required; an unavailable source cannot be selected.",
-            "Choose Save preparation. The dialog lists every changed field and asks for the reason recorded with this save.",
-            "Confirm with Save preparation. A refusal is shown in the dialog, which stays open so the same entry can be retried unchanged.",
-            "Discard changes restores the last saved revision. Only unsaved entries are discarded.",
-            "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
-            "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
-            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -44868,9 +44757,9 @@
           "section_id": "mobile",
           "title": "On a phone",
           "paragraphs": [
-            "At 760 CSS px and below the page is a single column: the contents rail becomes a Jump to a section control, entries use 16 px text and controls keep a 44 px target.",
-            "The preparation action bar is fixed above the application's own navigation bar, so the save state and both actions stay reachable at every scroll position. Measured clear at 390 and 320 px wide.",
-            "Between 761 and 780 px the application shell is already in its phone layout while this page still uses its tablet layout. That band is checked explicitly at 770 px."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -44891,9 +44780,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -44906,9 +44794,11 @@
       "source_paths": [
         "src/app/(business)/service/packs/[id]/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "I4: source-change review and exact saved preparation printing; owner review remains pending.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -44918,7 +44808,8 @@
       "workflow_basis": [
         "src/app/(business)/service/packs/[id]/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -44933,18 +44824,16 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-13",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Create job pack to work towards this outcome: A reproducible issued pack is available to the intended crew.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Prepare the first immutable Job Pack revision for a confirmed appointment. With no appointment in the address, choose a permitted confirmed visit from Prepare job pack. If a pack already exists, open that pack rather than creating a duplicate."
           ],
           "steps": [],
           "rows": [],
@@ -44967,11 +44856,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Search the related register for an existing record before creating another.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -44983,24 +44871,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Create job pack · Creation form"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -45025,15 +44909,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save.",
-            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Open the route from the appointment. If a pack already exists it opens instead, with a message saying so.",
-            "Complete all nine entries, select the exact document versions, and select any relevant service history.",
-            "Choose Save preparation. The dialog lists every entry as added and asks for the reason recorded with this first save.",
-            "Confirm with Save preparation. On success the pack opens at its own address as Draft r01, awaiting check.",
-            "A refusal stays in the dialog with the entries retained, so the same save can be retried unchanged."
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -45161,9 +45043,9 @@
           "section_id": "mobile",
           "title": "On a phone",
           "paragraphs": [
-            "At 760 CSS px and below the page is a single column: the contents rail becomes a Jump to a section control, entries use 16 px text and controls keep a 44 px target.",
-            "The preparation action bar is fixed above the application's own navigation bar, so the save state and both actions stay reachable at every scroll position. Measured clear at 390 and 320 px wide.",
-            "Between 761 and 780 px the application shell is already in its phone layout while this page still uses its tablet layout. That band is checked explicitly at 770 px."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -45184,9 +45066,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -45199,9 +45080,11 @@
       "source_paths": [
         "src/app/(business)/service/packs/new/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS-NEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45211,7 +45094,8 @@
       "workflow_basis": [
         "src/app/(business)/service/packs/new/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -45226,10 +45110,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/job-pack-figma-ui/README.md; source tests do not grant guide or business approval.",
       "sections": [
         {
           "section_id": "purpose",
@@ -45260,11 +45144,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the pack against the correct scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Job packs and choose All job packs, Prepared by me, a state or an attention view. Technician and Site filters refine the permitted rows.",
+            "Open a pack to inspect it; the desktop record window has Readiness and Crew tabs, Revision history and Open job pack.",
+            "To start a pack, choose Prepare job pack and a confirmed visit without a pack. Supply the nine notes and record a reason when saving.",
+            "Check the exact saved revision, resolve readiness at its source and request exact output only when your role permits it. Review the confirmed result before continuing."
           ],
           "rows": [],
           "headers": []
@@ -45276,24 +45159,20 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Job pack register · Register / workspace"
+              "Register",
+              "Visit-day groups, neutral counts and earliest-visit sorting. Column settings hide optional columns. Selection offers only Open in sequence and Export list."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
+              "Secondary menu",
+              "Job pack, Preparation and Revision history, followed by nine contents entries. The shell menu control collapses the menu or opens it on a phone."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Header and status",
+              "The primary action follows status and permission. Other actions are under Job pack actions. Collapse status panel remembers a display preference for this viewer."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Phone",
+              "The register uses compact rows and Filter job packs. Coordinators use Pack, Readiness and History tabs. Technicians receive only the applicable issued content and exact acknowledgement."
             ]
           ],
           "headers": [
@@ -45317,12 +45196,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Changing content creates a new immutable revision. The current pack.check permission may check a revision prepared by the same person; a reason and exact revision remain mandatory."
           ],
           "steps": [
-            "Prepare the pack against the correct scope",
-            "Review exact source/template revisions and readiness",
-            "Issue the checked pack and track recipient acknowledgement"
+            "Use Preparation to edit notes and select exact sources; Save preparation opens the change/reason dialog.",
+            "Use Check this revision or Return preparation on the saved revision. If sources changed, review them and prepare a successor.",
+            "On a checked revision, Queue exact output for issue requires issue permission. Pending output can be refreshed; failed output is recovered against its original job.",
+            "Use Open exact issued document to read the controlled output. Explicit acknowledgement belongs to that issue and assignment, not to opening or downloading it."
           ],
           "rows": [],
           "headers": []
@@ -45426,8 +45306,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The register phone toolbar contains the view picker, count and Filter job packs. Tapping a row opens the full record. Use the Job packs menu button to reach Preparation or a numbered section.",
+            "Tab lists support directional keys, Home and End. Escape closes the top menu or dialog and restores focus. Long saved content and all nine sections remain readable at 390 and 320 CSS px.",
+            "This module requires a live permitted read. Layout preferences are local display settings, not offline business storage. Workbench printing excludes unsaved changes and does not replace the exact issued document."
           ],
           "steps": [],
           "rows": [],
@@ -45448,9 +45329,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide, updated 13 October 2026. Owner, physical-device and assistive-technology review are not recorded.",
+            "Review against the actual deployed release and the linked implementation evidence. A test pass or Git edit does not approve this guide."
           ],
           "steps": [],
           "rows": [],
@@ -45463,9 +45343,11 @@
       "source_paths": [
         "src/app/(business)/service/packs/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md",
+        "docs/testing/evidence/job-pack-figma-ui/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Figma application: permitted register views, exact revision actions, viewer layout preferences and phone workflows.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-PACKS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45475,7 +45357,8 @@
       "workflow_basis": [
         "src/app/(business)/service/packs/page.tsx",
         "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/job-pack-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -48465,7 +48348,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "In the Figma overview increment, freshness appears in the toolbar and Customise overview is in More actions. The circle at the start of an activity opens Record outcome; the row actions menu opens Reschedule or Set date. Opening the title retains full activity details."
+          ],
           "steps": [],
           "rows": [
             [
@@ -48628,7 +48513,8 @@
           "paragraphs": [
             "On a phone, My Work menu opens personal views. The Sales bar has labelled My Work, Deals, Activities, Contacts and More destinations. Activities opens the selected local day within Sales; personal agenda links retain their stated personal selection.",
             "Use Tab and Shift+Tab for controls, Enter or Space for buttons, and Escape to close menus or the guide and return focus. My Work subviews expose the full authorized path through Page hierarchy.",
-            "The guide fills the phone screen and closes back to the current page. Hosted mode does not offer local Offline entry; the local Offline workspace retains its supported originals and recovery. A portable guide does not grant offline business authority."
+            "The guide fills the phone screen and closes back to the current page. Hosted mode does not offer local Offline entry; the local Offline workspace retains its supported originals and recovery. A portable guide does not grant offline business authority.",
+            "On a phone, the three labelled quick actions are Emails, Leads and Tasks. The bottom navigation uses icons with accessible names. Open an activity to complete or reschedule it. Weather stays hidden until a provider is connected."
           ],
           "steps": [],
           "rows": [],
@@ -57138,11 +57024,11 @@
       "title": "Screen Systems configurations · detail",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native synthetic workbench; owner guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -57151,9 +57037,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Screen Systems configurations · detail to work towards this outcome: A reproducible specialist configuration with an exact input/rule basis.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "ES-08 is the Screen Systems family. Fertigation and other calculators need their own validated scope and must not be relabelled ES-08."
+            "Configure the Screen Systems family with an explicit source, reproducible calculation and exact saved evidence. The seven native views share one proposal and preserve server-side authority.",
+            "The Figma composition is implemented under the 13 October request; this guide remains Draft and does not approve engineering rules, procurement quantities or ERP transactions."
           ],
           "steps": [],
           "rows": [],
@@ -57176,11 +57061,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a permitted configuration and check its saved Discovery revision, option and definition in the context strip.",
+            "Use the Configure secondary menu for the six sections, or the phone stepper. Inputs retain their source and drawing-only/check-only distinction.",
+            "Inspect live results and readiness. Review all required manual quantities against the current basis before recording a run.",
+            "Use Drawings for linked field selection, Parts for filtered positions and calculation working, Pricing for illustrative and native receiving rates, and Compare & save for exact changes and handover.",
+            "Enter a reason and Save draft. On a phone, Workbench actions contains the reason and Review calculation. Confirm the server result; resolve the original receipt if the outcome is unknown.",
+            "Open Run history to inspect an exact saved run. Its overflow menu exports evidence or starts a successor draft; the earlier run remains immutable."
           ],
           "rows": [],
           "headers": []
@@ -57343,8 +57229,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On phones, expand Readiness to inspect all gates. Scroll the view tabs; use the section arrows and Next section for Configure. Save stays visible and Workbench actions contains the save reason and calculation review.",
+            "Selecting a field on the plan opens its inspector sheet. Working opens a full-screen modal. Escape or Close restores the previous control; wider tables scroll within their own region. No offline save authority is added."
           ],
           "steps": [],
           "rows": [],
@@ -57380,9 +57266,10 @@
       "source_paths": [
         "src/app/(business)/estimating/configurations/[id]/page.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe the requested Figma workbench menu, inspection panels, mobile actions and existing durable recovery; owner guide review remains separate.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-CONFIGURATIONS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -57392,7 +57279,8 @@
       "workflow_basis": [
         "src/app/(business)/estimating/configurations/[id]/page.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -57403,11 +57291,11 @@
       "title": "Screen Systems configurations · selected view",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native synthetic workbench; owner guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -57416,10 +57304,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on specialist configuration view within the registered workflow.",
-            "Use Screen Systems configurations · selected view to work towards this outcome: A reproducible specialist configuration with an exact input/rule basis.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "ES-08 is the Screen Systems family. Fertigation and other calculators need their own validated scope and must not be relabelled ES-08."
+            "Configure the Screen Systems family with an explicit source, reproducible calculation and exact saved evidence. The seven native views share one proposal and preserve server-side authority.",
+            "The Figma composition is implemented under the 13 October request; this guide remains Draft and does not approve engineering rules, procurement quantities or ERP transactions."
           ],
           "steps": [],
           "rows": [],
@@ -57442,11 +57328,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Enter the configuration UUID from the target environment.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a permitted configuration and check its saved Discovery revision, option and definition in the context strip.",
+            "Use the Configure secondary menu for the six sections, or the phone stepper. Inputs retain their source and drawing-only/check-only distinction.",
+            "Inspect live results and readiness. Review all required manual quantities against the current basis before recording a run.",
+            "Use Drawings for linked field selection, Parts for filtered positions and calculation working, Pricing for illustrative and native receiving rates, and Compare & save for exact changes and handover.",
+            "Enter a reason and Save draft. On a phone, Workbench actions contains the reason and Review calculation. Confirm the server result; resolve the original receipt if the outcome is unknown.",
+            "Open Run history to inspect an exact saved run. Its overflow menu exports evidence or starts a successor draft; the earlier run remains immutable."
           ],
           "rows": [],
           "headers": []
@@ -57620,8 +57507,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On phones, expand Readiness to inspect all gates. Scroll the view tabs; use the section arrows and Next section for Configure. Save stays visible and Workbench actions contains the save reason and calculation review.",
+            "Selecting a field on the plan opens its inspector sheet. Working opens a full-screen modal. Escape or Close restores the previous control; wider tables scroll within their own region. No offline save authority is added."
           ],
           "steps": [],
           "rows": [],
@@ -57658,9 +57545,10 @@
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
         "src/components/specialist-workbench.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
-      "change_summary": "Updated for the native Screen Configurator Workbench built from the accepted design board on 12 October 2026: seven views including Drawings, the module header gates, drawing-only inputs and the record-run checklist.",
+      "change_summary": "Describe the requested Figma workbench menu, inspection panels, mobile actions and existing durable recovery; owner guide review remains separate.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-CONFIGURATIONS-ID-VIEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -57671,7 +57559,8 @@
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
         "src/components/specialist-workbench.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -58213,7 +58102,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -58305,6 +58194,18 @@
             [
               "Declarations this draft needs",
               "Lists what the draft still has to declare, with the findings each addresses and who normally answers it. From recorded values means the draft already holds the answer; Your declaration means you state a fact the draft does not record; Needs new input means the information must be gathered."
+            ],
+            [
+              "Record actions",
+              "History opens exact revisions. The Scope actions (three dots) menu contains Report, Irrigation valves, Compare draft, exact exports and the entry points for copy, restore and archive."
+            ],
+            [
+              "Registers",
+              "Select a tab, filter or search. Open the record label or its row action menu to edit/view it. Remove is shown only with editing permission."
+            ],
+            [
+              "Phone sections",
+              "Use the section picker to open the grouped sheet. More stays the current application tab; Report and Save remain above it."
             ]
           ],
           "headers": [
@@ -58336,7 +58237,7 @@
             "Review the exact valve and master-source revisions and unresolved bindings",
             "Inspect calculated results and review evidence before preparing a controlled report",
             "Work the Next actions list from the top; use Resolve to preview an option's consequences before applying it to the working draft.",
-            "Use Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason.",
+            "Use Scope actions > Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason.",
             "After importing an r02 project, work the Declarations list: use Declare, read what the draft records, preview each option's consequences and apply the ones that are true. Phases usually come first because density, valve flow and timing wait on them."
           ],
           "rows": [],
@@ -58454,7 +58355,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "The section sheet traps focus while open. Escape or Close sections returns to the picker. Find and filter opens the phone register search and filters. Valve cards show the same filtered and paged records as the desktop table; their menus open the same editor. History and Validate & calculate draft open from Scope actions on a phone. Each Next actions row has a three-dot menu for its resolve, declaration and section actions."
           ],
           "steps": [],
           "rows": [],
@@ -58488,9 +58390,10 @@
       "source_paths": [
         "src/app/(business)/estimating/fertigation/[id]/page.tsx",
         "docs/blueprints/BP-04-estimating-quotation.md",
-        "docs/delivery/priva-fertigation-native-handover.md"
+        "docs/delivery/priva-fertigation-native-handover.md",
+        "src/components/fertigation-header.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Align the draft guide with accepted Figma record and row menus, phone sections, and exact revision history.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-FERTIGATION-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -58500,7 +58403,8 @@
       "workflow_basis": [
         "src/app/(business)/estimating/fertigation/[id]/page.tsx",
         "docs/blueprints/BP-04-estimating-quotation.md",
-        "docs/delivery/priva-fertigation-native-handover.md"
+        "docs/delivery/priva-fertigation-native-handover.md",
+        "docs/decisions/fertigation-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -75978,6 +75882,636 @@
       ],
       "prepared_at": "2026-10-11",
       "runtime_evidence": "Nine withdrawal database checks and 51 browser scenarios have passing coverage across the recorded runs: docs/testing/evidence/access-withdrawal/README.md. Initial failures and corrected/unchanged replays remain explicit. Earlier application evidence retains its own source."
+    },
+    {
+      "guide_key": "guide.route-estimating-cpq-id",
+      "entry_key": "route:/estimating/cpq/[id]",
+      "title": "Configure & price",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Configure a selected discovery option, explain quantities and prices, compare saved evaluations and deliberately use a saved result in the native estimate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Confirm selected discovery, release and pricing date. Enter facts and choices; review configuration, shared capacity, BOM and pricing.",
+            "Save configuration retains an immutable evaluation when valid, or a working draft when incomplete. Preview never saves.",
+            "Review stale adjustments or changed source with Compare. Save the new evaluation before Use in estimate.",
+            "Use in estimate opens the exact receiving preview. Confirm title and scope to create a native estimate version."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Confirm selected discovery, release and pricing date. Enter facts and choices; review configuration, shared capacity, BOM and pricing.",
+            "Save configuration retains an immutable evaluation when valid, or a working draft when incomplete. Preview never saves.",
+            "Review stale adjustments or changed source with Compare. Save the new evaluation before Use in estimate.",
+            "Use in estimate opens the exact receiving preview. Confirm title and scope to create a native estimate version."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-cpq",
+      "entry_key": "route:/estimating/cpq",
+      "title": "Configurations",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Search the latest saved evaluations and working configurations. Start configuration from a complete selected discovery option."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose the company and search by project or configuration.",
+            "Open a saved evaluation or continue its working configuration.",
+            "New configuration selects an authorised complete discovery option."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Choose the company and search by project or configuration.",
+            "Open a saved evaluation or continue its working configuration.",
+            "New configuration selects an authorised complete discovery option."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-rules-id",
+      "entry_key": "route:/estimating/rules/[id]",
+      "title": "Rule and release authoring",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Author typed conditions, safe formulas, parameters, parts, options, structures, decision tables, capacities and milestone proposals, with immutable rule and release versions."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Select a rule, edit structured conditions and action, then run the test bench.",
+            "Use Edit formula to insert numeric facts, parameters and bounded functions. Run server test for the scenario, then Apply to draft; Cancel leaves the formula unchanged. Run the full Test bench again before creating a version.",
+            "Save draft retains incomplete forms. Create version requires passing fixtures and known-value decision table coverage.",
+            "Use History to compose a previous rule version into the current draft, then test again.",
+            "Independent review approves exact content; a third authorised actor seals it. Make active is a separate command."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why.",
+            "Formulas support min(a,b), max(a,b), ceil(x), floor(x) and round(x,places). Rounding accepts 0–12 places and rounds signed ties away from zero. Displayed units are authored metadata; independent technical review must check physical dimensions."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Select a rule, edit structured conditions and action, then run the test bench.",
+            "Save draft retains incomplete forms. Create version requires passing fixtures and known-value decision table coverage.",
+            "Use History to compose a previous rule version into the current draft, then test again.",
+            "Independent review approves exact content; a third authorised actor seals it. Make active is a separate command."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-rules",
+      "entry_key": "route:/estimating/rules",
+      "title": "Rules studio",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Find company rule definitions and continue working authoring drafts."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Search rules by name and state. Active releases follows the exact company activation, including an older active version beside a newer draft. Older active rows open read only; Return to working draft restores the editable current version.",
+            "Authors can start an explicit synthetic Screen systems template or reopen a working draft.",
+            "Use the release editor to test and version; the register does not activate rules."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Search rules by name and state. Active releases follows the exact company activation, including an older active version beside a newer draft. Older active rows open read only; Return to working draft restores the editable current version.",
+            "Authors can start an explicit synthetic Screen systems template or reopen a working draft.",
+            "Use the release editor to test and version; the register does not activate rules."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     }
   ]
 }

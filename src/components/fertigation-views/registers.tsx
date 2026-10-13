@@ -2,6 +2,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import type { Phase, Scope } from "../../estimating/fertigation/types";
 import type { EvidenceStrength } from "../../estimating/fertigation/guidance";
+import { WorklistMenu } from "../crm-worklist-tools";
 import { RecordTabs } from "../record-ui";
 import { RegisterTable } from "../ui/register-table";
 import { human, registerNames, type Register } from "../fertigation-fields";
@@ -399,7 +400,14 @@ const subtitles: Partial<Record<Register, string>> = {
   actions: "Design, supply, install, connect, configure, test, train and maintain.",
 };
 
-export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: Register }) {
+export function ScopeRegister({
+  ctx,
+  register,
+}: {
+  ctx: ViewContext;
+  register: Register;
+}) {
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const { proposal: scope, canEdit } = ctx;
   const [search, setSearch] = useState(""),
     [phase, setPhase] = useState(""),
@@ -421,11 +429,16 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
                     (allocation) =>
                       allocation.area_id === area ||
                       scope.crop_groups.some(
-                        (crop) => crop.id === allocation.crop_group_id && crop.area_id === area,
+                        (crop) =>
+                          crop.id === allocation.crop_group_id &&
+                          crop.area_id === area,
                       ),
                   ))),
           )
-          .toSorted((a, b) => a.label.localeCompare(b.label) || a.id.localeCompare(b.id)),
+          .toSorted(
+            (a, b) =>
+              a.label.localeCompare(b.label) || a.id.localeCompare(b.id),
+          ),
       [rows, search, phase, master, area, scope.crop_groups],
     );
   const columns = columnsFor(register, ctx);
@@ -439,9 +452,88 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
       count={rows.length}
       subtitle={subtitles[register]}
       flush
-      className="fn-register-panel"
+      className={`fn-register-panel${filtersOpen ? " fn-register-filtering" : ""}`}
       actions={
         <>
+          <span className="fn-phone-register-count">
+            {rows.length} {register === "valves" ? "valves" : "records"} ·{" "}
+            {filtered.length} matching
+          </span>
+          <Button
+            variant="secondary"
+            icon="search"
+            className="fn-phone-filter-toggle"
+            aria-label={`Find and filter ${plural.toLowerCase()}`}
+            aria-expanded={filtersOpen}
+            onClick={() => setFiltersOpen(!filtersOpen)}
+          >
+            <span className="sr-only">Find and filter</span>
+          </Button>
+          {register !== "evidence" && (
+            <div className="fn-register-filters">
+              <label className="fn-filter">
+                <span>Phase filter</span>
+                <select
+                  value={phase}
+                  onChange={(e) => {
+                    setPhase(e.target.value);
+                    setPage(0);
+                  }}
+                >
+                  <option value="">Phase</option>
+                  {[
+                    "unknown",
+                    "existing",
+                    "proposed",
+                    "future",
+                    "excluded",
+                  ].map((p) => (
+                    <option key={p} value={p}>
+                      {human(p)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {register === "valves" && (
+                <>
+                  <label className="fn-filter">
+                    <span>Area filter</span>
+                    <select
+                      value={area}
+                      onChange={(e) => {
+                        setArea(e.target.value);
+                        setPage(0);
+                      }}
+                    >
+                      <option value="">Area</option>
+                      {scope.areas.map((row) => (
+                        <option key={row.id} value={row.id}>
+                          {row.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="fn-filter">
+                    <span>Master filter</span>
+                    <select
+                      value={master}
+                      onChange={(e) => {
+                        setMaster(e.target.value);
+                        setPage(0);
+                      }}
+                    >
+                      <option value="">Master</option>
+                      {scope.masters.map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </>
+              )}
+            </div>
+          )}
           <Find
             value={search}
             onChange={(v) => {
@@ -451,8 +543,16 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
             label={`Search ${plural.toLowerCase()}`}
           />
           {canEdit && (
-            <Button variant="secondary" icon="plus" onClick={() => ctx.edit(register)}>
-              + Add {singular}
+            <Button
+              variant="secondary"
+              icon="plus"
+              aria-label={`+ Add ${singular}`}
+              onClick={() => ctx.edit(register)}
+            >
+              <span className="fn-desktop-label">Add {singular}</span>
+              <span className="fn-mobile-label">
+                Add {register === "valves" ? "valve" : singular}
+              </span>
             </Button>
           )}
         </>
@@ -461,16 +561,25 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
         filtered.length > PAGE || page > 0 ? (
           <div className="fn-paging">
             <span>
-              {page * PAGE + 1}–{Math.min((page + 1) * PAGE, filtered.length)} of {filtered.length}
+              {page * PAGE + 1}–{Math.min((page + 1) * PAGE, filtered.length)}{" "}
+              of {filtered.length}
             </span>
             <span className="fn-paging-actions">
               {page > 0 && (
-                <Button variant="quiet" size="sm" onClick={() => setPage(page - 1)}>
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  onClick={() => setPage(page - 1)}
+                >
                   Previous {PAGE}
                 </Button>
               )}
               {(page + 1) * PAGE < filtered.length && (
-                <Button variant="quiet" size="sm" onClick={() => setPage(page + 1)}>
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  onClick={() => setPage(page + 1)}
+                >
                   Next {PAGE}
                 </Button>
               )}
@@ -478,74 +587,20 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
           </div>
         ) : (
           <span>
-            {rows.length} in this {canEdit ? "working scope" : "saved revision"} · {filtered.length} matching
+            {rows.length} in this {canEdit ? "working scope" : "saved revision"}{" "}
+            · {filtered.length} matching
           </span>
         )
       }
     >
-      {register !== "evidence" && (
-        <div className="fn-register-filters">
-          <label className="fn-filter">
-            <span>Phase filter</span>
-            <select
-              value={phase}
-              onChange={(e) => {
-                setPhase(e.target.value);
-                setPage(0);
-              }}
-            >
-              <option value="">All phases</option>
-              {["unknown", "existing", "proposed", "future", "excluded"].map((p) => (
-                <option key={p} value={p}>
-                  {human(p)}
-                </option>
-              ))}
-            </select>
-          </label>
-          {register === "valves" && (
-            <>
-              <label className="fn-filter">
-                <span>Area filter</span>
-                <select
-                  value={area}
-                  onChange={(e) => {
-                    setArea(e.target.value);
-                    setPage(0);
-                  }}
-                >
-                  <option value="">All areas</option>
-                  {scope.areas.map((row) => (
-                    <option key={row.id} value={row.id}>
-                      {row.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="fn-filter">
-                <span>Master filter</span>
-                <select
-                  value={master}
-                  onChange={(e) => {
-                    setMaster(e.target.value);
-                    setPage(0);
-                  }}
-                >
-                  <option value="">All masters</option>
-                  {scope.masters.map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </>
-          )}
-        </div>
-      )}
       {filtered.length === 0 ? (
         <Empty
           icon={rows.length ? "search" : "plus"}
-          title={rows.length ? "No matching records" : `No ${plural.toLowerCase()} yet`}
+          title={
+            rows.length
+              ? "No matching records"
+              : `No ${plural.toLowerCase()} yet`
+          }
           action={
             rows.length ? (
               <Button
@@ -563,7 +618,12 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
               </Button>
             ) : (
               canEdit && (
-                <Button variant="secondary" size="sm" icon="plus" onClick={() => ctx.edit(register)}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  icon="plus"
+                  onClick={() => ctx.edit(register)}
+                >
                   Add {singular}
                 </Button>
               )
@@ -575,64 +635,168 @@ export function ScopeRegister({ ctx, register }: { ctx: ViewContext; register: R
             : "Add the known identity and source. Missing optional technical details can remain unknown."}
         </Empty>
       ) : (
-        <RegisterTable
-          variant="panel"
-          caption={`${plural}: the row label opens the record; Edit, View and Remove act on one record.`}
-        >
-          <thead>
-            <tr>
-              <th scope="col">
-                <span className="ppo-register-label">Label / reference</span>
-              </th>
-              {columns.map((c) => (
-                <th scope="col" key={c.key} className={c.className}>
-                  <span className="ppo-register-label">{c.head}</span>
+        <>
+          {register === "valves" && (
+            <div className="fn-valve-list" aria-label="Irrigation valves">
+              {(shown as Scope["valves"]).map((valve) => {
+                const allocations = valve.allocations
+                  .map((a) =>
+                    [
+                      scope.crop_groups.find((c) => c.id === a.crop_group_id)
+                        ?.label ??
+                        scope.areas.find((x) => x.id === a.area_id)?.label ??
+                        "Unassigned",
+                      known(a.container_count)
+                        ? `${fmt(a.container_count, 0)} containers`
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(" · "),
+                  )
+                  .join(", ");
+                return (
+                  <article className="fn-valve-row" key={valve.id}>
+                    <button
+                      type="button"
+                      className="fn-row-title"
+                      aria-label={valve.label}
+                      onClick={() => ctx.edit("valves", valve)}
+                    >
+                      {valve.label}
+                    </button>
+                    <strong className="fn-valve-flow">
+                      <ResultValue
+                        result={
+                          ctx.calculation?.valve_flows.find(
+                            (v) => v.id === valve.id,
+                          )?.flow
+                        }
+                      />
+                    </strong>
+                    <WorklistMenu
+                      label={`Actions for ${valve.label}`}
+                      icon="more"
+                    >
+                      <button
+                        data-menu-close
+                        type="button"
+                        onClick={() => ctx.edit("valves", valve)}
+                      >
+                        {canEdit ? "Edit" : "View"}
+                      </button>
+                      {canEdit && (
+                        <button
+                          data-menu-close
+                          type="button"
+                          onClick={() => ctx.remove("valves", valve.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </WorklistMenu>
+                    <p>
+                      {scope.masters.find((m) => m.id === valve.master_id)
+                        ?.label ?? "Master unassigned"}{" "}
+                      <PhaseChip phase={valve.phase} />
+                    </p>
+                    <p>{allocations || "No allocation"}</p>
+                    <p>
+                      {human(valve.flow_basis)}{" "}
+                      <EvidenceChip strength={strongest(scope, valve)} />
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+          <RegisterTable
+            variant="panel"
+            caption={`${plural}: the row label opens the record; Edit, View and Remove act on one record.`}
+          >
+            <thead>
+              <tr>
+                <th scope="col">
+                  <span className="ppo-register-label">Label / reference</span>
                 </th>
-              ))}
-              <th scope="col" className="fn-col-actions">
-                <span className="ppo-register-label">Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {shown.map((row) => (
-              <tr key={row.id}>
-                <td className="ppo-register-wrap fn-col-label">
-                  <button type="button" className="fn-row-title" onClick={() => ctx.edit(register, row)}>
-                    {row.label || <Token>Unlabelled record</Token>}
-                  </button>
-                  {register === "areas" && (
-                    <small>{(row as Scope["areas"][number]).context.crop_description}</small>
-                  )}
-                </td>
                 {columns.map((c) => (
-                  <td key={c.key} className={`ppo-register-wrap${c.className ? ` ${c.className}` : ""}`}>
-                    {c.cell(row)}
-                  </td>
+                  <th scope="col" key={c.key} className={c.className}>
+                    <span className="ppo-register-label">{c.head}</span>
+                  </th>
                 ))}
-                <td className="fn-col-actions">
-                  <span className="fn-row-actions">
-                    <Button variant="quiet" size="sm" onClick={() => ctx.edit(register, row)}>
-                      {canEdit ? "Edit" : "View"}
-                    </Button>
-                    {canEdit && (
-                      <Button variant="quiet" size="sm" onClick={() => ctx.remove(register, row.id)}>
-                        Remove
-                      </Button>
-                    )}
-                  </span>
-                </td>
+                <th scope="col" className="fn-col-actions">
+                  <span className="ppo-register-label">Actions</span>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </RegisterTable>
+            </thead>
+            <tbody>
+              {shown.map((row) => (
+                <tr key={row.id}>
+                  <td className="ppo-register-wrap fn-col-label">
+                    <button
+                      type="button"
+                      className="fn-row-title"
+                      onClick={() => ctx.edit(register, row)}
+                    >
+                      {row.label || <Token>Unlabelled record</Token>}
+                    </button>
+                    {register === "areas" && (
+                      <small>
+                        {
+                          (row as Scope["areas"][number]).context
+                            .crop_description
+                        }
+                      </small>
+                    )}
+                  </td>
+                  {columns.map((c) => (
+                    <td
+                      key={c.key}
+                      className={`ppo-register-wrap${c.className ? ` ${c.className}` : ""}`}
+                    >
+                      {c.cell(row)}
+                    </td>
+                  ))}
+                  <td className="fn-col-actions">
+                    <WorklistMenu
+                      label={`Actions for ${row.label}`}
+                      icon="more"
+                    >
+                      <button
+                        data-menu-close
+                        type="button"
+                        onClick={() => ctx.edit(register, row)}
+                      >
+                        {canEdit ? "Edit" : "View"}
+                      </button>
+                      {canEdit && (
+                        <button
+                          data-menu-close
+                          type="button"
+                          onClick={() => ctx.remove(register, row.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </WorklistMenu>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </RegisterTable>
+        </>
       )}
     </Panel>
   );
 }
 
 /** The register tabs of a view and the chosen register's panel. */
-export function RegisterTabs({ ctx, view }: { ctx: ViewContext; view: FertigationView }) {
+export function RegisterTabs({
+  ctx,
+  view,
+}: {
+  ctx: ViewContext;
+  view: FertigationView;
+}) {
   const registers = viewRegisters[view] ?? [];
   if (!registers.length) return null;
   const selected = registers.includes(ctx.section) ? ctx.section : registers[0];
@@ -642,7 +806,19 @@ export function RegisterTabs({ ctx, view }: { ctx: ViewContext; view: Fertigatio
         <RecordTabs
           id="fertigation-register"
           label={`${view} registers`}
-          tabs={registers.map((id) => ({ id, label: registerNames[id][0] }))}
+          tabs={registers.map((id) => ({
+            id,
+            label: (
+              <>
+                {registerNames[id][0]}
+                {id === selected && (
+                  <span className="fn-tab-count" aria-hidden="true">
+                    {scopeCount(ctx, id)}
+                  </span>
+                )}
+              </>
+            ),
+          }))}
           value={selected}
           onChange={(value) => ctx.setSection(value as Register)}
         />
@@ -650,10 +826,18 @@ export function RegisterTabs({ ctx, view }: { ctx: ViewContext; view: Fertigatio
       <div
         role={registers.length > 1 ? "tabpanel" : undefined}
         id={`fertigation-register-panel-${selected}`}
-        aria-labelledby={registers.length > 1 ? `fertigation-register-tab-${selected}` : undefined}
+        aria-labelledby={
+          registers.length > 1
+            ? `fertigation-register-tab-${selected}`
+            : undefined
+        }
       >
         <ScopeRegister key={selected} ctx={ctx} register={selected} />
       </div>
     </div>
   );
+}
+
+function scopeCount(ctx: ViewContext, register: Register) {
+  return ctx.proposal[register].length;
 }

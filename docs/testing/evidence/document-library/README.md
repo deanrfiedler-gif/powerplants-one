@@ -2,7 +2,11 @@
 
 Owner: Dean Fiedler. Branch: `codex/document-library-backend`, based on `a4b55fc531e8d6b377221144bf987f100198caf8` from dependent Projects PR #466. Scope: synthetic Document Register, Linked Library and Revision/Review backend. Independent review, accepted native UI, owner acceptance, merge and deployment are separate.
 
-Contract: [architecture and boundaries](../../../decisions/document-library-backend.md), [API](../../../contracts/document-library.md). Migration 0089, no seed/user/grant additions, three default-denied document capabilities, DOC identity. Issued reference bytes and parent IDs are preserved.
+Contract: [architecture and boundaries](../../../decisions/document-library-backend.md), [API](../../../contracts/document-library.md). Migration 0090 in the combined #463 release (0089 in the source evidence below), no seed/user/grant additions, three default-denied document capabilities, DOC identity. Issued reference bytes and parent IDs are preserved.
+
+## Combined release integration
+
+The combined #463 candidate includes Projects calendar 0088 and CPQ 0089 before the unchanged library SQL at 0090. Source-bound results below retain their original migration numbering and hashes. The combined upgrade proof now retains populated 0088 rows and populated 0089 CPQ drafts/history, verifies both identity types after 0090, and preserves original ledgers on repeat migration/seed. Fresh candidate CI is recorded on #463; earlier evidence is not relabelled as final-head proof.
 
 ## Verification ledger
 

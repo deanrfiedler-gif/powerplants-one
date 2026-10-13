@@ -16,8 +16,9 @@ import "./leads.css";
 import "./projects-gantt.css";
 import "./engineering.css";
 import "./field-technicians.css";
-import "./styles/job-pack.css";
 import "./styles/my-work.css";
+import "./styles/job-pack.css";
+import "./styles/job-pack-figma.css";
 import "./styles/sh-platform.css";
 import "./styles/my-work-mobile.css";
 import "./styles/engineering-review-base.css";
@@ -36,10 +37,13 @@ import "./styles/planner-demand.css";
 import "./styles/scheduling-workspaces.css";
 import "../components/ui/controls.css";
 import "../components/ui/register-table.css";
+import "./styles/projects-register.css";
 import "./styles/development.css";
 import "./styles/supply.css";
 import "./styles/work-timer.css";
 import "./styles/component-catalogue.css";
+import "./styles/figma-shell.css";
+import "./styles/my-work-figma.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",

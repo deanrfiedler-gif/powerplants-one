@@ -122,16 +122,24 @@ test("PJ04-05 scoped kind/state/owner search and signed pages preserve all five 
   assert.equal(filtered.items!.length,1); assert.equal(filtered.items![0].kind,"Decision");
   assert.deepEqual((await readRaid(p,project.id,{state:"Closed"})).items,[]);
 });
-test("PJ04-06 populated 0086 upgrade preserves originals, adds only 0087 and 0088 and repeats without writes",async()=>{
+for (const through of [86, 87])
+test(`PJ04-06 populated 00${through} upgrade preserves originals through 0090 and repeats without writes`,async()=>{
   await database().query(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));
-  await database().query("DROP TABLE public.ppo_migrations"); await migrate(86); await seed(86);
+  await database().query("DROP TABLE public.ppo_migrations"); await migrate(through); await seed(through);
   const {p,project}=await setup(), action=raidAction(project.id); await createActivity(p,action); await saveTask(p,project.id,taskInput());
   const tables=["projects","project_tasks","project_dependencies","project_schedule_events","activities","activity_links","business_identities","operation_receipts","audit_events","outbox_jobs","permission_grants","users","seed_receipts"];
+  const existing=through===87 ? {...raidInput(),action_ids:[action.id]} : null;
+  if(existing) {
+    await saveRaid(p,project.id,existing);
+    tables.push("project_raid_entries","project_raid_revisions");
+  }
+  const existingRecord=existing ? await current(p,project.id,existing.id) : null;
   const snapshot=()=>Promise.all(tables.map(t=>database().query(`SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`).then(r=>r.rows)));
   const before=await snapshot(), ledger=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
   await migrate(); await seed(); assert.deepEqual(await snapshot(),before);
   const after=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
-  assert.deepEqual(after.filter(r=>r.version<=86),ledger); assert.deepEqual(after.filter(r=>r.version>86).map(r=>r.version),[87, 88, 89]);
+  assert.deepEqual(after.filter(r=>r.version<=through),ledger); assert.deepEqual(after.filter(r=>r.version>through).map(r=>r.version),through===86 ? [87, 88, 89, 90] : [88, 89, 90]);
+  if(existing) assert.deepEqual(await current(p,project.id,existing.id),existingRecord);
   const input={...raidInput(),action_ids:[action.id]}; await saveRaid(p,project.id,input);
   const recorded=await current(p,project.id,input.id), settled=await snapshot();
   await migrate(); await seed(); assert.deepEqual(await snapshot(),settled);

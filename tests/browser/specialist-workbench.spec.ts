@@ -33,7 +33,7 @@ async function login(page: Page, route = path + "/configure") {
   await expect(page.locator("#ppo-specialist h1")).toBeVisible();
 }
 // The seven views are the module header's own navigation (design board
-// departure D1); the shell's secondary menu lists the same links.
+// departure D1); the secondary menu now lists the current view contents.
 // A view link's accessible name includes its count badge ("Drawings 5 sheets"),
 // so match the label at the start of the name.
 async function view(page: Page, name: string) {
@@ -50,6 +50,7 @@ test("ES08 native seven views, shared shell, drawing set, dense parts and respon
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await page.setViewportSize({ width: 1920, height: 1200 });
   await login(page);
   await expect(gates(page)).toContainText("Model resolves · 1,843 m² floor");
   await expect(
@@ -68,7 +69,7 @@ test("ES08 native seven views, shared shell, drawing set, dense parts and respon
     await view(page, name);
     await expect(page).toHaveURL(new RegExp(slug + "$"));
     await expect(
-      page.getByRole("heading", { name: heading, exact: true, level: 2 }),
+      page.locator("#es08-content").getByRole("heading", { name: heading, exact: true, level: 2 }),
     ).toBeVisible();
     // The module header, its seven views and the six gates stay on every view (D8).
     await expect(gates(page)).toBeVisible();
@@ -143,7 +144,7 @@ test("ES08 native seven views, shared shell, drawing set, dense parts and respon
     }
     if (slug === "parts") {
       await page
-        .getByRole("group", { name: "Position state", exact: true })
+        .getByRole("navigation", { name: "Position state", exact: true })
         .getByRole("button", { name: /^All · / })
         .click();
       await expect(page.locator(".es08-table--parts tbody tr")).toHaveCount(
@@ -151,12 +152,10 @@ test("ES08 native seven views, shared shell, drawing set, dense parts and respon
       );
       const opener = page
         .getByRole("row", { name: /CE-LINE-223 · / })
-        .getByRole("button", { name: "Working", exact: true });
+        .getByRole("button", { name: "Working for CE-LINE-223", exact: true });
       await opener.click();
-      // A persistent panel beside the table on desktop; a side dialog on a phone.
-      const panel = page
-        .getByRole("complementary", { name: "Standard screen cloth", exact: true })
-        .or(page.getByRole("dialog", { name: "CE-LINE-223 working", exact: true }));
+      // Figma working panel overlays the desktop table and fills a phone.
+      const panel = page.getByRole("dialog", { name: "Standard screen cloth", exact: true });
       await expect(panel).toBeVisible();
       await expect(panel).toContainText("24 × 20.0 m × 4.3 m = 2,064.0 m²");
       await page.screenshot({ path: info.outputPath("es08-working-1920.png") });
@@ -170,9 +169,10 @@ test("ES08 native seven views, shared shell, drawing set, dense parts and respon
         "definition_bundle_hash",
       );
       await page.keyboard.press("Escape");
+      await page.getByRole("button", { name: "Run R01 actions", exact: true }).click();
       const download = page.waitForEvent("download");
       await page
-        .getByRole("button", { name: "Export evidence", exact: true })
+        .getByRole("menuitem", { name: "Export evidence", exact: true })
         .click();
       expect((await download).suggestedFilename()).toMatch(/PPO-ES08-review/);
       // The export is a download, not a departure: the leave guard stays
@@ -210,7 +210,7 @@ test("ES08 native seven views, shared shell, drawing set, dense parts and respon
       });
       await save.scrollIntoViewIfNeeded();
       const box = (await save.boundingBox())!;
-      expect(box.y + box.height).toBeLessThan(height - 50);
+      expect(box.y + box.height).toBeLessThanOrEqual(height - 8);
       // The phone stepper replaces the section list (design board D).
       await expect(
         page.getByRole("button", { name: "Next section", exact: true }).first(),
@@ -252,7 +252,7 @@ test("ES08 durable raw draft, manual re-review, native receiving, exact history 
   await page
     .getByRole("checkbox", { name: /I understand run R02 is a local design record/ })
     .check();
-  await expect(gates(page)).toContainText("14 of 14 reviewed");
+  await expect(gates(page)).toContainText("14 of 14");
   // Hold the resource reload behind the accepted command read. The old
   // resource must not restore the previous version while that reload waits.
   let releaseRefresh!: () => void;
@@ -436,7 +436,7 @@ test("ES08 reload recovery after accepted and unaccepted saves retains only a mi
   );
   await page.locator("#es08-bays").fill("13");
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
-  await expect(page.getByText(/Outcome unknown/).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Outcome unknown/ })).toBeVisible();
   const stored = await page.evaluate(() =>
     Object.entries(sessionStorage).filter(([k]) =>
       k.startsWith("ppo:es08:pending"),
@@ -461,7 +461,7 @@ test("ES08 reload recovery after accepted and unaccepted saves retains only a mi
   );
   await page.locator("#es08-bays").fill("14");
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
-  await expect(page.getByText(/Outcome unknown/).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Outcome unknown/ })).toBeVisible();
   await page.reload();
   await page
     .getByRole("button", { name: "Resolve original outcome", exact: true })
@@ -486,7 +486,7 @@ test("ES08 create recovery through reload, read-only review and permission withd
   await page
     .getByRole("button", { name: "Create configuration", exact: true })
     .click();
-  await expect(page.getByText(/Outcome unknown/).first()).toBeVisible();
+  await expect(page.getByRole("status").filter({ hasText: /Outcome unknown/ })).toBeVisible();
   await page.reload();
   await page
     .getByRole("button", { name: "Resolve original outcome", exact: true })
@@ -503,7 +503,7 @@ test("ES08 create recovery through reload, read-only review and permission withd
   await expect(
     page.getByRole("button", { name: "Save draft", exact: true }),
   ).toBeDisabled();
-  await expect(page.locator(".es08-status").filter({ hasText: /^Read-only/ })).toBeVisible();
+  await expect(page.locator(".es08-notices").getByRole("heading", { name: "Read-only", exact: true })).toBeVisible();
   await page.screenshot({ path: info.outputPath("es08-read-only.png") });
   fixture("revoke-read");
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
@@ -566,5 +566,90 @@ test("ES08-T52 late preview cannot replace a newer calculation", async ({
   await expect(gates(page)).toHaveText(current, {
     useInnerText: true,
   });
+  // The compact strip hides its detailed floor figure; assert that figure
+  // explicitly so a stale preview cannot pass on the generic “Valid” label.
+  await expect(gates(page)).toContainText("2,150 m² floor");
   await expect(page.locator("#es08-bays")).toHaveValue("14");
+});
+
+
+test("ES08 Figma contents, findings filter, working focus and phone actions retain one proposal", async ({ page }, info) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await login(page);
+  const expandRail = page.getByRole("button", { name: "Expand primary navigation", exact: true });
+  if (await expandRail.isVisible()) await expandRail.click();
+  // Independent dimensions read from Figma frame 416:92770. These check the
+  // shared rail/menu and module bands, not a screenshot generated by this code.
+  await expect.poll(async () => (await page.locator(".es08-main").boundingBox())?.x).toBe(480);
+  expect((await page.locator(".es08-header-top").boundingBox())!.height).toBe(101);
+  expect(Math.abs((await page.locator(".es08-context").boundingBox())!.height - 75)).toBeLessThanOrEqual(2);
+  expect(Math.abs((await page.locator(".es08-views").boundingBox())!.height - 45)).toBeLessThanOrEqual(2);
+  expect((await gates(page).boundingBox())!.height).toBeLessThanOrEqual(43);
+  await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+  const visibleCrumbs = page.locator(".ppo-crumbs li:visible");
+  await expect(visibleCrumbs).toHaveCount(1);
+  await expect(visibleCrumbs).toHaveText("Screen Configurator Workbench");
+  const hierarchy = page.getByRole("button", { name: "Page hierarchy", exact: true });
+  await hierarchy.click();
+  await expect(page.locator("#page-hierarchy").getByRole("link", { name: "Specialist configurations", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(hierarchy).toBeFocused();
+  await page.screenshot({ path: info.outputPath("es08-figma-configure-docked-1440.png") });
+  const sections = page.getByRole("navigation", { name: "Configuration sections" });
+  await sections.getByRole("button", { name: /2.*Cloth/ }).click();
+  await expect(page.locator("#es08-roll-width")).toBeVisible();
+  await page.locator("#es08-roll-width").fill("4200");
+  await expect(page.locator("#es08-roll-width")).toHaveAttribute("aria-invalid", "true");
+  await page.locator("#es08-roll-width").fill("");
+  await view(page, "Definition review");
+  await page.getByRole("navigation", { name: "Finding kinds" }).getByRole("button", { name: /AUD/ }).click();
+  await expect(page.locator(".es08-findings > li")).toHaveCount(3);
+  await expect(page.locator(".es08-findings")).not.toContainText("REV-01");
+  await page.getByRole("navigation", { name: "Finding kinds" }).getByRole("button", { name: /All findings/ }).click();
+  await expect(page.locator(".es08-findings > li")).toHaveCount(38);
+  await view(page, "Parts & working");
+  await page.getByRole("button", { name: "Working for CE-LINE-223" }).click();
+  const working = page.getByRole("dialog", { name: "Standard screen cloth", exact: true });
+  await expect(working).toBeVisible();
+  expect((await working.boundingBox())!.width).toBe(440);
+  await page.screenshot({ path: info.outputPath("es08-figma-working-1440.png") });
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Working for CE-LINE-223" })).toBeFocused();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await view(page, "Configure");
+  await expect(page.locator(".es08-header h1")).toBeVisible();
+  await expect(page.locator(".topbar.ppo-shell-header")).toBeHidden();
+  // Phone frame 425:5176: compact header and actions stay at viewport edges.
+  const phoneHeader = (await page.locator(".es08-header-top").boundingBox())!;
+  expect(phoneHeader.y).toBe(0);
+  expect(phoneHeader.height).toBe(64);
+  expect((await page.locator(".es08-actions").boundingBox())!.y).toBe(772);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  await page.getByRole("button", { name: /^Draft v.*Readiness/ }).click();
+  await expect(gates(page)).toBeVisible();
+  await page.getByRole("button", { name: /^Draft v.*Readiness/ }).click();
+  await page.getByRole("button", { name: "Workbench actions", exact: true }).click();
+  const actions = page.getByRole("dialog", { name: "Workbench actions", exact: true });
+  await actions.getByLabel("Reason for next saved change").fill("Synthetic phone review");
+  await expect(actions.getByRole("button", { name: "Review calculation" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Workbench actions", exact: true })).toBeFocused();
+  await page.getByRole("button", { name: "Save draft", exact: true }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Saved to the server" })).toBeVisible();
+  await view(page, "Parts & working");
+  await page.getByRole("button", { name: "Working for CE-LINE-223" }).click();
+  expect((await working.boundingBox())!.width).toBe(390);
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Working for CE-LINE-223" })).toBeFocused();
+  await view(page, "Definition review");
+  await page.getByRole("combobox", { name: "Finding kind" }).selectOption("AUD");
+  await expect(page.locator(".es08-findings > li")).toHaveCount(3);
+  await page.getByRole("combobox", { name: "Finding kind" }).selectOption("All");
+  await expect(page.locator(".es08-findings > li")).toHaveCount(38);
+  await view(page, "Drawings");
+  await page.getByRole("button", { name: "Select field B05 group B", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Selected screen field B05·B", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Select field B05 group B", exact: true })).toBeFocused();
+  await page.screenshot({ path: info.outputPath("es08-figma-phone-drawings.png") });
 });

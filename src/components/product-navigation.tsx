@@ -183,7 +183,7 @@ function ProductNavigationView({
     // A selected More link draws its glyph filled, as the selected rail item does; phone bar cells keep their own marker.
     const contents = (
       <>
-        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} active={!mobile && selected} />
+        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} active={selected} />
         <span>{label}</span>
       </>
     );
@@ -229,7 +229,7 @@ function ProductNavigationView({
         onClick={() => setMore(false)}
         suppressHydrationWarning
       >
-        <ProductIcon name={entry.icon} />
+        <ProductIcon name={entry.icon} active={current?.id === item.id} />
         <span>{entry.label}</span>
       </Link>
     );
@@ -362,6 +362,7 @@ function ProductNavigationView({
         {wide && <button className="ppo-rail-item ppo-rail-toggle" disabled={!shell.context?.preference_scope} aria-label={shell.railExpanded ? "Collapse primary navigation" : "Expand primary navigation"} aria-expanded={shell.railExpanded} aria-controls="primary-navigation" onClick={() => shell.setRailExpanded(!shell.railExpanded)}>
           <ProductIcon name={shell.railExpanded ? "collapse" : "expand"} /><span className="ppo-rail-label">Collapse navigation</span>
         </button>}
+        {wide && (workspace.id === "projects" ? <span className="pj-workspace-label" aria-hidden="true">Projects</span> : <div className="ppo-rail-department" aria-hidden="true">{workspace.label}</div>)}
         {wide && <nav id="primary-navigation" className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
           const focused = document.activeElement;
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
@@ -374,6 +375,7 @@ function ProductNavigationView({
               onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
               <ProductIcon name={item.icon} active={activeId === item.id} />
               <span className="ppo-rail-label">{item.label}</span>
+              {item.id === "projects" && <span id="header-project-count" />}
             </Link>);
             // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.
             return section.label ? <div key={section.label} role="group" aria-label={section.label} className="ppo-rail-group">
@@ -432,12 +434,12 @@ function ProductNavigationView({
         </dialog>
       )}
       <nav
-        className={`mobile-navigation${workspace.id === "sales" ? " ppo-phone-bar-r07" : ""}`}
+        className={`mobile-navigation${workspace.id === "sales" || workspace.id === "projects" ? " ppo-phone-bar-r07" : ""}${workspace.id === "projects" ? " pj-phone-navigation" : ""}`}
         aria-label="Mobile navigation"
       >
         {workspace.id === "sales"
           ? salesPhoneBar.filter((entry) => allowed(destination(entry.id))).map(phoneCell)
-          : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)]
+          : (workspace.id === "projects" ? [destination("work"), destination("projects"), destination("programme"), destination("acceptance")] : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)])
               .filter((item): item is ShellDestination => !!item && allowed(item))
               .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
               .map((item) => link(item, true))}
@@ -445,6 +447,7 @@ function ProductNavigationView({
           <button
             ref={toggle}
             id="navigation-toggle"
+            aria-current={(/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new")) ? "page" : undefined}
             aria-label="More"
             title="More"
             aria-haspopup="dialog"
@@ -479,10 +482,11 @@ export function ProductHeader() {
   const commissioning = page?.workspace === "engineering" ? commissioningPath(path) : undefined;
   const control = materials || changes || commissioning ? undefined : controlPath(path);
   const acceptance = path.startsWith("/projects/acceptance");
-  const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance ? { view: undefined } : undefined);
-  const view = page?.id === "work" ? (path === "/work" ? undefined : workViewForPath(path)?.label) : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
+  const projectsRegister = path === "/projects";
+  const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance || projectsRegister ? { view: undefined } : undefined);
+  const view = page?.id === "work" ? (path === "/work" ? undefined : workViewForPath(path)?.label) : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : projectsRegister ? "Project register" : undefined;
   const subview = crumb?.view?.label;
-  const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
+  const workspaceRoot = workspaces.find((w) => w.id === (page?.id === "work" && path === "/work" ? workspaceForLocation(path, new URLSearchParams(query), shell.preview, shell.context?.navigation ?? []) : page?.workspace));
   const currentModule =
     page?.workspace === "estimate"
       ? "Estimating"
@@ -493,10 +497,11 @@ export function ProductHeader() {
   // belongs to, the destination itself, and the view that a workspace's own secondary menu names. The
   // rail carries the product identity, so "Powerplants One" is no longer repeated beside every page.
   const rootDestination = workspaceRoot ? destination(workspaceRoot.primary) : undefined;
-  // The workspace under the name its own people use for it; Estimating and Service are already
-  // shortened for the page guide, and the breadcrumb uses the same two names.
+  // The overview carries its selected department, including the full Estimating label from Figma.
+  // Service retains its established short breadcrumb name.
   const rootLabel =
-    page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
+    page?.workspace === "service" ? "Service" : workspaceRoot?.label;
+  const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
   const crumbs: HierarchyCrumb[] = [];
   if (label) {
     if (rootLabel && rootLabel !== label && !crumb)
@@ -515,7 +520,17 @@ export function ProductHeader() {
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
-  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  const screenWorkbench = /^\/estimating\/configurations\/[^/]+\/(configure|drawings|parts|pricing|compare|definition|history)$/.test(path);
+  if (screenWorkbench) {
+    const parent = crumbs.find(c => c.key === "page");
+    if (parent) parent.href = "/estimating/configurations";
+    crumbs.push({ key: "workbench", label: "Screen Configurator Workbench", kind: "page" });
+  }
+  if (record && shell.context && !screenWorkbench) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  if (fertigation) {
+    crumbs.splice(0, crumbs.length, { key: "page", label: "Scope register", kind: "page", href: shell.context ? "/estimating/fertigation" : undefined });
+    if (record && shell.context) crumbs.push({ key: "record", label: record.reference, kind: "record" });
+  }
   // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
   // and updates it in the same commit as the route, before the route announcer reads document.title.
   const title = documentTitle({
@@ -544,6 +559,7 @@ export function ProductHeader() {
     <>
       <title>{title}</title>
       <header className="topbar ppo-shell-header">
+        {fertigation && <span className="ppo-phone-page-name">Priva fertigation scope</span>}
         <Link
           className="mobile-brand"
           href="/"
@@ -563,7 +579,7 @@ export function ProductHeader() {
         <div id="header-menu" className="ppo-header-menu-slot" />
         {crumbs.length ? (
           <nav className="product-heading" aria-label="Breadcrumb">
-            {crumbs.length > 1 && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
+            {crumbs.length > 1 && !projectsRegister && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
             <ol className="ppo-crumbs" title={crumbs.map((c) => c.label).join(" / ")}>
               {crumbs.map((crumb, index) => (
                 <li key={crumb.key} data-crumb={crumb.kind}>
