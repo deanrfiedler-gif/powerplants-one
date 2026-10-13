@@ -29,6 +29,10 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
+#ppo-job-pack .jp-paper-heading > .jp-badge {
+  flex: none;
+  white-space: nowrap;
+}
 #ppo-job-pack[data-pack-design="figma"] {
   padding: 0;
   overflow: hidden;

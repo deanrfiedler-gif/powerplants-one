@@ -45,10 +45,14 @@ test("SV05-I7 heading uses only the verified saved scope and retains references"
   await expect(page.locator("#s-1")).toContainText(
     revision.snapshot.work.reference,
   );
-  await page.getByRole("button", { name: "Page hierarchy", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Page hierarchy", exact: true })
+    .click();
   await expect(
-    page.locator("#page-hierarchy").getByRole("link", { name: "Job packs", exact: true }),
-  ).toHaveAttribute("href", "/service/packs");
+    page
+      .locator("#page-hierarchy")
+      .getByRole("link", { name: "Service", exact: true }),
+  ).toHaveAttribute("href", "/service/tickets");
   await page.keyboard.press("Escape");
   pack.section_view!.scope!.summary = "SYN newer summary";
   await open();

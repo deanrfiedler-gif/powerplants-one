@@ -208,7 +208,7 @@ export function JobPackHeader({
 }) {
   const status = p ? statusPresentation(p, jobState) : null;
   const primary = !p ? null : sourceChanged &&
-    !p.needs_review &&
+    (p.status !== "Issued" || !p.needs_review) &&
     !["Withdrawn", "Returned"].includes(p.status) &&
     p.actions.can_prepare ? (
     <button className="jp-primary" disabled={busy} onClick={onPrepare}>

@@ -38,6 +38,9 @@ test("Figma record owns one scroll surface, remembers its panels, and keeps all 
 }) => {
   await page.goto(url("job-pack-figma-record"));
   await expect(page.locator("#jp-panel-pack .jp-paper-section")).toHaveCount(9);
+  await expect(page.locator(".jp-heading-actions > .jp-primary")).toHaveText(
+    "Review changed sources",
+  );
   await page
     .getByRole("button", { name: "Collapse status panel", exact: true })
     .click();

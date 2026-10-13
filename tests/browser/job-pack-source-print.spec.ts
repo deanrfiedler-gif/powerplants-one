@@ -80,7 +80,10 @@ test("SV05-I4 changed sources can be refreshed without inventing note changes", 
   await expect(notice).toContainText("Affected sections:");
   const comparison = page.locator("#p-3 .jp-section-changes");
   await expect(comparison).toContainText("Work order · record version");
-  await expect(comparison.locator("dt")).toHaveText(["Saved revision", "Current source"]);
+  await expect(comparison.locator("dt")).toHaveText([
+    "Saved revision",
+    "Current source",
+  ]);
   await expect(comparison.locator("dd")).toHaveText(["v3", "v13"]);
   await expect(page.locator("#p-5 .jp-section-changes")).toHaveCount(0);
   await notice.getByRole("button", { name: "Refresh saved sources…" }).click();
