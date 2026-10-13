@@ -40,3 +40,14 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.estimating.configurations.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+
+## Figma implementation — 13 October 2026
+
+Dean directly requested the live implementation of private Figma page `406:2`. See [the implementation decision](../../../decisions/es08-figma-implementation.md) for source nodes, r20 page types, shared components, incoming/outgoing handovers and declared adaptations. No parent scope or requirement IDs change. Issued HTML and historical captures above remain unchanged.
+
+Desktop: flush record/context/readiness/tab bands, view-specific secondary menu, 24 px content padding, 16 px card gaps and sticky save bar. Configure uses two columns; Parts uses a 440 px overlay; Pricing puts the bridge below the table; Definition uses full-width findings/parameters; History exposes further actions through the shared overflow menu. Drawings retain dynamic shared geometry and separate estimate/configuration title-block facts.
+
+Phone: compact record header, expandable readiness details, scrolling tabs, six-section stepper, persistent Save/Next controls and a Workbench actions sheet carrying the reason and calculation review. Parts working fills the screen; drawing selection opens an inspector bottom sheet. Verify keyboard focus/return, contained table scrolling, changed/invalid raw drafts and pending receipt recovery at 390 and 320 px.
+
+The [component host](../components/screen-configurator-workbench.md) records states and bindings. [Execution evidence](../../../testing/evidence/es08-figma/README.md) separates functional checks and visual inspection. Missing source images: icon-free Figma source captures and an accepted named version are not recorded. No review fingerprint, owner acceptance or deployment status is inferred from implementation.

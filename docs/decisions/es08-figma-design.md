@@ -2,12 +2,14 @@
 document_id: PPO-ES08-FIGMA-DESIGN-DEC
 date: 2026-10-12
 owner: Dean Fiedler
-status: Proposal awaiting owner review; not accepted; application changes, captures and UI baseline acceptance separate
+status: Design proposal; implementation requested 13 October 2026; named version, captures and owner visual acceptance separate
 source_commit: a198e5ffcc4ccf02606794f9ed66d2a90864418f
 versioning: git
 ---
 
 # ES-08 Screen Configurator Workbench Figma design — proposal
+
+**13 October implementation request:** Dean has now directly requested building the live workbench to match this Figma page. The [implementation decision](es08-figma-implementation.md) supersedes this record's earlier application-code restriction for that work. The proposal history and questions below remain traceable; the build request does not establish a saved named version or owner acceptance of the resulting application.
 
 On 12 October 2026 Dean asked for the ES-08 Screen Configurator Workbench to be designed in Figma "so that it looks, reads and behaves like the other Powerplants One pages already designed and accepted there". The page was [built the same day](es08-workbench-build.md) straight from the [ES-08 design board](es08-design-board.md), before ES-08 had a Figma design, so its look and format follow the board rather than the Figma pages accepted since [ADR-0053](ADR-0053-figma-page-design.md). This record names the Figma page and its nodes, the accepted patterns reused, the new components, every difference from the built page as a proposed application change, and what Dean still has to decide.
 

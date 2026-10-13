@@ -7,6 +7,7 @@ import { useCrmResource } from "./crm-state";
 import { definition } from "../estimating/specialist/definition";
 import type { Position } from "../estimating/specialist/types";
 import { basePath, type Bench, type Detail, type HistoryRead, type Options, type Rebase } from "./specialist-types";
+import { WorklistMenu } from "./crm-worklist-tools";
 import { Dialog, Pill, Segmented, readable, runLabel } from "./specialist-ui";
 
 // Definition review and Run history carry over from workbench r03 unchanged in
@@ -33,10 +34,15 @@ export function DefinitionView({ bench }: { bench: Bench }) {
           <section className="es08-card" aria-labelledby="es08-findings-h">
             <div className="es08-card-head es08-card-head--stack">
               <h3 id="es08-findings-h">Source findings</h3>
+              <label className="es08-mobile-filter es08-stack-label">Finding kind
+                <select value={bench.findingFilter} onChange={e => bench.setFindingFilter(e.target.value)}>
+                  {["All", "REV", "AUD", "WAS"].map(kind => <option key={kind} value={kind}>{kind === "All" ? "All findings" : kind} · {findings.filter(f => kind === "All" || f.id.startsWith(kind)).length}</option>)}
+                </select>
+              </label>
               <p className="es08-sub">Native exact arithmetic differs at three binary rounding boundaries; see the native definition evidence. Tests do not approve engineering.</p>
             </div>
             <ul className="es08-findings">
-              {findings.map((f) => (
+              {findings.filter(f => bench.findingFilter === "All" || f.id.startsWith(bench.findingFilter)).map((f) => (
                 <li key={f.id}>
                   <details className="es08-details">
                     <summary>
@@ -96,19 +102,15 @@ export function DefinitionView({ bench }: { bench: Bench }) {
               <h3 id="es08-params-h">Configuration parameter proposal</h3>
               <p className="es08-sub">Bound parameters feed the recovered rules; recorded-only parameters are retained for review.</p>
             </div>
-            <div className="es08-params">
-              {definition.catalogue.parameters.map((param) => (
-                <label key={param.id} className="es08-param">
-                  <span>
-                    <span className="es08-mono es08-strong">{param.id}</span>
-                    <span className="es08-sub"> {param.unit}</span>
-                  </span>
-                  <input id={`es08-parameter.${param.id}`} inputMode="decimal" disabled={frozen} value={p.parameters[param.id].raw} onChange={(e) => change((s) => { s.parameters[param.id] = { raw: e.target.value, reason: bench.reason }; })} />
-                  <span className="es08-sub">
-                    {param.bound ? "Bound" : "Recorded only"} · {param.consumer ?? "no consumer"} · default {param.default}
-                  </span>
-                </label>
-              ))}
+            <div className="es08-table-scroll" tabIndex={0}>
+              <table className="es08-table es08-parameter-table">
+                <thead><tr><th>Parameter</th><th>Unit</th><th>Binding</th><th>Consumer</th><th>Default</th><th>Proposal</th></tr></thead>
+                <tbody>{definition.catalogue.parameters.map(param => <tr key={param.id}>
+                  <th scope="row" className="es08-mono">{param.id}</th><td>{param.unit}</td><td><Pill tone={param.bound ? "ok" : "neutral"}>{param.bound ? "Bound" : "Recorded only"}</Pill></td>
+                  <td className="es08-mono">{param.consumer ?? "—"}</td><td className="es08-num">{param.default}</td>
+                  <td><input id={`es08-parameter.${param.id}`} aria-label={`${param.id} proposal`} inputMode="decimal" disabled={frozen} value={p.parameters[param.id].raw} onChange={e => change(s => { s.parameters[param.id] = { raw: e.target.value, reason: bench.reason }; })} /></td>
+                </tr>)}</tbody>
+              </table>
             </div>
           </section>
           <section className="es08-card" aria-labelledby="es08-manifest-h">
@@ -306,12 +308,13 @@ export function HistoryView({ bench }: { bench: Bench }) {
                         <button type="button" className="ppo-button es08-button--sm" onClick={() => void inspect(r.id)}>
                           Inspect
                         </button>
-                        <button type="button" className="ppo-button es08-button--sm" onClick={() => void inspect(r.id, true)}>
+                        <WorklistMenu label={`Run ${runLabel(r.sequence)} actions`} choices text="…" className="es08-run-menu">
+                        <button role="menuitem" data-menu-close type="button" className="secondary crm-menu-choice" onClick={() => void inspect(r.id, true)}>
                           Export evidence
                         </button>
-                        <button
+                        <button role="menuitem" data-menu-close
                           type="button"
-                          className="ppo-button es08-button--sm"
+                          className="secondary crm-menu-choice"
                           disabled={frozen}
                           onClick={() =>
                             command.send(`${basePath}/${data.configuration.id}/from-run`, "CreateSpecialistDraftFromRun", {
@@ -323,6 +326,7 @@ export function HistoryView({ bench }: { bench: Bench }) {
                         >
                           Create draft from run
                         </button>
+                        </WorklistMenu>
                         </div>
                       </td>
                     </tr>

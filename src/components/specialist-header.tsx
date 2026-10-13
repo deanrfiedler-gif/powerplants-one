@@ -1,19 +1,20 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { definition, viewLabels, views } from "../estimating/specialist/definition";
 import { activeLines } from "../estimating/specialist/workbench";
 import { usePublishRecordIdentity } from "../shell/record-identity";
 import type { Bench } from "./specialist-types";
-import { Dot, Pill, fmt, readable, runLabel, type Tone } from "./specialist-ui";
+import { Icon, Pill, fmt, readable, runLabel, type Tone } from "./specialist-ui";
 
 // The shared module header of the design board (artboard F): breadcrumb,
 // heading, draft status and Method & limitations; the five-cell context band;
 // the seven views; and the six-gate readiness strip visible on every view
 // (departure D8). The shell owns the information icon (D11), so there is no
 // module Help button.
-const gateTone: Record<string, Tone> = { ok: "ok", warn: "warn", neutral: "neutral", block: "danger" };
-export function WorkbenchHeader({ bench, view, onMethod }: { bench: Bench; view: string; onMethod: () => void }) {
+export function WorkbenchHeader({ bench, view, onMethod, onActions }: { bench: Bench; view: string; onMethod: () => void; onActions: () => void }) {
   const { data, calculation: c, geometry: g, drawing, signature, gates, dirty, canEdit, command } = bench,
+    [readinessOpen, setReadinessOpen] = useState(false),
     cfg = data.configuration,
     run = data.current_run,
     parameters = definition.catalogue.parameters.filter((p) => bench.proposal.parameters[p.id]?.raw !== p.default).length,
@@ -32,38 +33,22 @@ export function WorkbenchHeader({ bench, view, onMethod }: { bench: Bench; view:
           ? { tone: "warn" as Tone, text: "Unsaved changes in this browser" }
           : { tone: "ok" as Tone, text: `Draft v${cfg.version} · saved ${readable(data.draft.created_at)}` };
   const badges: Record<string, string | null> = {
-    drawings: "5 sheets",
-    parts: c ? `${active} active` : null,
-    compare: pending ? `${pending} decision${pending === 1 ? "" : "s"}` : null,
-    definition: `${definition.issues.length} findings`,
+    drawings: "5",
+    parts: c ? `${active}` : null,
+    compare: pending ? `${pending}` : null,
+    definition: `${definition.issues.length}`,
   };
   return (
     <header className="es08-header">
       <div className="es08-header-top">
+        <Link className="es08-phone-back" href="/estimating/configurations" aria-label="Back to specialist configurations"><Icon name="chevron-left" /></Link>
         <div className="es08-header-title">
-          <nav aria-label="Breadcrumb" className="es08-crumbs">
-            <Link href="/estimating">Estimating</Link>
-            <span aria-hidden="true">/</span>
-            <Link href="/estimating/configurations">Configurations</Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">ES-08 · Screen Systems</span>
-          </nav>
-          <h1>Screen Configurator Workbench</h1>
-          <p className="es08-record">
-            <strong>{cfg.name}</strong>
-            <span className="es08-mono">{cfg.display_number}</span>
-            <span>Draft v{cfg.version}</span>
-            <Pill tone="neutral">Synthetic</Pill>
-          </p>
+          <div className="es08-title-line"><h1>{cfg.name}</h1><Pill>Draft v{cfg.version}</Pill></div>
+          <p className="es08-record-line"><span className="es08-record-reference">{cfg.display_number} · </span>Screen Configurator Workbench<span className="es08-desktop-status"> · <span role="status">{status.text}</span> · synthetic</span><span className="es08-phone-version"> · Draft v{cfg.version}</span></p>
         </div>
         <div className="es08-header-actions">
-          <span role="status" className={`es08-status es08-status--${status.tone}`}>
-            <Dot tone={status.tone} />
-            {status.text}
-          </span>
-          <button type="button" className="ppo-button" onClick={onMethod}>
-            Method &amp; limitations
-          </button>
+          <button type="button" className="ppo-button" onClick={onMethod}>Method &amp; limitations</button>
+          <button type="button" className="ppo-button es08-more" aria-label="More workbench actions" onClick={onActions}>…</button>
         </div>
       </div>
       <dl className="es08-context" aria-label="Estimate context">
@@ -101,35 +86,33 @@ export function WorkbenchHeader({ bench, view, onMethod }: { bench: Bench; view:
         <div>
           <dt>Review state</dt>
           <dd>
-            <Pill tone="warn">Engineering acceptance open</Pill>
+            <span className="es08-tone-warn">Engineering acceptance open</span>
           </dd>
           <dd className="es08-sub">
             {run ? `Run ${runLabel(run.sequence)} saved ${readable(run.created_at)}` : "No saved run · no approval recorded"}
           </dd>
         </div>
       </dl>
+      <button className="es08-readiness-summary" type="button" aria-expanded={readinessOpen} onClick={() => setReadinessOpen(!readinessOpen)}>
+        <Pill tone={dirty ? "warn" : "neutral"}>Draft v{cfg.version}</Pill><Icon name="warning" /><span>Readiness · {gates.filter(g => g.status === "ok").length} ok · {gates.filter(g => g.status === "neutral").length} not checked · {gates.filter(g => g.status === "warn" || g.status === "block").length} attention</span><Icon name="chevron-down" />
+      </button>
+      <dl className="es08-gates" aria-label="Readiness checks" data-expanded={readinessOpen || undefined}>
+        <div className="es08-readiness-label"><dt>Readiness</dt><dd className="es08-sr">Checks for this configuration</dd></div>
+        {gates.map(gate => <div key={gate.id} tabIndex={0} title={gate.detail} className={`es08-gate es08-gate--${gate.status}`}>
+          <dt><Icon name={gate.status === "ok" ? "check" : gate.status === "neutral" ? "info" : "warning"} />{gate.label}</dt>
+          <dd className="es08-gate-value">{["grid", "cloth"].includes(gate.id) && gate.status === "ok" ? <span className="es08-sr"> · {gate.value}</span> : ` · ${gate.id === "manual" ? gate.value.replace(" reviewed", "") : gate.value}`}</dd>
+          <dd className="es08-gate-detail">{gate.detail}</dd>
+        </div>)}
+      </dl>
       <nav aria-label="Workbench views" className="es08-views">
         {views.map((v, i) => (
-          <Link key={v} href={`/estimating/configurations/${bench.id}/${v}`} aria-current={view === v ? "page" : undefined}>
-            {viewLabels[i]}
+          <Link key={v} href={`/estimating/configurations/${bench.id}/${v}`} aria-current={view === v ? "page" : undefined} aria-label={`${viewLabels[i]}${badges[v] ? ` ${badges[v]}${v === "drawings" ? " sheets" : v === "parts" ? " active" : v === "definition" ? " findings" : ""}` : ""}`}>
+            {bench.phone ? ({ parts: "Parts", compare: "Compare", definition: "Definition", history: "History" } as Record<string, string>)[v] ?? viewLabels[i] : viewLabels[i]}
             {badges[v] && <span className={`es08-count ${v === "definition" || v === "compare" ? "es08-count--warn" : ""}`}>{badges[v]}</span>}
           </Link>
         ))}
       </nav>
-      <dl className="es08-gates" aria-label="Readiness checks">
-        {gates.map((gate) => (
-          <div key={gate.id} className={`es08-gate es08-gate--${gate.status}`}>
-            <dt>{gate.label}</dt>
-            <dd className="es08-gate-value">
-              <Dot tone={gateTone[gate.status]} />
-              {gate.value}
-            </dd>
-            <dd className="es08-sub" title={gate.detail}>
-              {gate.detail}
-            </dd>
-          </div>
-        ))}
-      </dl>
+
     </header>
   );
 }

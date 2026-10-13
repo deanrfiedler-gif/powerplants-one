@@ -21,10 +21,11 @@ import {
   sections,
   type SectionId,
 } from "../estimating/specialist/workbench";
+import { sectionReadiness } from "./specialist-menu";
 import { SectionDrawing } from "./specialist-section";
 import { LivePlan, ridgeName } from "./specialist-sheets";
 import type { Bench } from "./specialist-types";
-import { Dot, Icon, Notice, Pill, Segmented, fmt, runLabel, type Tone } from "./specialist-ui";
+import { Icon, Pill, Segmented, fmt, runLabel, type Tone } from "./specialist-ui";
 
 // Configure (design board artboard 01): six sections entered once, options as
 // segmented buttons (D10), every field with its source cell, a live plan or
@@ -51,7 +52,6 @@ type Spec = {
   text?: boolean;
 };
 const r03Profiles = ["Gable", "Arch", "Venlo"];
-const tone: Record<string, Tone> = { ok: "ok", warn: "warn", neutral: "neutral", block: "danger" };
 export function ConfigureView({ bench, section, setSection }: { bench: Bench; section: SectionId; setSection: (id: SectionId) => void }) {
   const { proposal: p, change, frozen, calculation: c, drawing, setDrawing, errors, drawingErrors: dErr, untested, geometry: g } = bench,
     v = Object.fromEntries(definition.fields.map((f) => [f.key, p.inputs[f.key].raw])),
@@ -154,7 +154,7 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
       unit: fd.unit,
       src: fd.source ? `CALC_ENGINE!${fd.source}${fd.unit === "mm" || fd.unit === "mm NB" ? ` · ${fd.unit}` : ""}` : "No source cell",
       note: enabled ? pres.note || fd.note || undefined : pres.off,
-      options: fd.options?.map((o) => ({ value: o, label: optionLabel(fd.key, o) })),
+      options: fd.options?.map((o) => ({ value: o, label: fd.key === "truss" ? o[0] + o.slice(1).toLowerCase() : optionLabel(fd.key, o) })),
       value: p.inputs[fd.key].raw,
       disabled: frozen || !enabled,
       error: enabled ? (fd.key === "height" ? errors.height ?? dErr.height : errors[fd.key]) : undefined,
@@ -163,6 +163,10 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
       wide: pres.wide,
       onChange: (value) => setInput(fd.key, value),
     });
+  }
+  if (sec.id === "structure") {
+    const height = specs.findIndex(spec => spec.key === "height"), chord = specs.findIndex(spec => spec.key === "chordHeight");
+    if (height >= 0 && chord >= 0) specs.splice(chord, 0, ...specs.splice(height, 1));
   }
   if (sec.id === "cloth") {
     specs.push({
@@ -176,7 +180,7 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
       note: "Blank means not checked. One cut across the roll needs at least the cloth width (DEC-R2).",
       value: drawing.roll_width,
       disabled: frozen,
-      error: dErr.roll_width,
+      error: dErr.roll_width || (bench.gates[3].status === "block" ? bench.gates[3].detail : undefined),
       onChange: (value) => setDrawing({ ...drawing, roll_width: value }),
     });
     specs.push({
@@ -204,21 +208,6 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
       onChange: (value) => setDrawing({ ...drawing, fabric_reference: value.slice(0, 120) }),
     });
   }
-  const sectionStatus = (s: (typeof sections)[number]) => {
-    const keys = definition.fields.filter((f) => f.group === s.group).map((f) => f.key),
-      quantity = keys.filter((k) => errors[k] && fieldEnabled(k, v)).length,
-      drawingKeys = s.id === "structure" ? ["pitch", "gutter", "roof_width", "vent", "height"] : s.id === "cloth" ? ["roll_width"] : [],
-      drawingCount = drawingKeys.filter((k) => dErr[k as keyof typeof dErr]).length,
-      flagged = untested.filter((u) => keys.includes(u.key)).length;
-    if (quantity) return { tone: "block", text: `${quantity} to resolve` };
-    if (drawingCount) return { tone: "warn", text: `${drawingCount} drawing input${drawingCount === 1 ? "" : "s"} to resolve` };
-    if (flagged) return { tone: "warn", text: `${flagged} untested option${flagged === 1 ? "" : "s"}` };
-    if (s.id === "cloth") return drawing.roll_width.trim() === "" ? { tone: "neutral", text: "Roll width not entered" } : { tone: "ok", text: "Complete" };
-    if (s.id === "bed") return v.replaceLS === "No" ? { tone: "warn", text: "1 source warning" } : { tone: "ok", text: "Complete" };
-    if (s.id === "drive") return { tone: "neutral", text: "Torque band only" };
-    if (s.id === "commercial") return v.installation === "Yes" ? { tone: "warn", text: "Installation unavailable" } : { tone: "neutral", text: "Illustrative rates" };
-    return { tone: "ok", text: "Complete" };
-  };
   const quantityErrors = Object.keys(errors).filter((k) => definition.fields.some((f) => f.key === k)).length,
     drawingErrorCount = Object.keys(dErr).length,
     manual = manualReview(c),
@@ -265,28 +254,6 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
         </div>
       </div>
       <div className="es08-configure">
-        <nav aria-label="Configuration sections" className="es08-sections">
-          {sections.map((s) => {
-            const st = sectionStatus(s);
-            return (
-              <button key={s.id} type="button" aria-current={s.id === section ? "step" : undefined} onClick={() => setSection(s.id)}>
-                <span className="es08-section-n">{s.group + 1}</span>
-                <span className="es08-section-text">
-                  <span className="es08-section-title">{s.title}</span>
-                  <span className="es08-sub">{s.sub}</span>
-                  <span className={`es08-section-status es08-tone-${st.tone}`}>
-                    <Dot tone={tone[st.tone]} />
-                    {st.text}
-                  </span>
-                </span>
-              </button>
-            );
-          })}
-          <div className="es08-definition-note">
-            <span className="es08-pill es08-pill--neutral es08-mono">{definition.quantity_version}</span>
-            <p>Screen Systems only. Irrigation, climate and lighting need their own definitions.</p>
-          </div>
-        </nav>
         <section className="es08-card es08-form" aria-labelledby="es08-sec-title">
           <div className="es08-stepper" aria-label="Section">
             <button type="button" aria-label="Previous section" disabled={index === 0} onClick={prev}>
@@ -310,6 +277,7 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
               <span className="es08-eyebrow">{index + 1} of {sections.length} · Configuration</span>
               <h3 id="es08-sec-title">{sec.title}</h3>
               <p>{sec.intro}</p>
+              <span className={`es08-section-status es08-tone-${sectionReadiness(bench, sec).tone}`}><Icon name={sectionReadiness(bench, sec).tone === "ok" ? "check" : sectionReadiness(bench, sec).tone === "neutral" ? "info" : "warning"} />{sectionReadiness(bench, sec).text}</span>
             </div>
             <Pill tone="neutral">Source cells shown</Pill>
           </div>
@@ -472,26 +440,11 @@ export function ConfigureView({ bench, section, setSection }: { bench: Bench; se
               })}
             </ul>
           </section>
-          {untested.length > 0 && (
-            <Notice
-              tone="untested"
-              title={`${untested.length} selected option${untested.length === 1 ? " has" : "s have"} no historical example`}
-              action={
-                <Link href={`/estimating/configurations/${bench.id}/definition`}>Historical coverage in Definition review</Link>
-              }
-            >
-              No historical quote exercises {untested.map((u) => u.value).join(" or ")}. Results are unvalidated; they are shown, not blocked.
-            </Notice>
-          )}
-          {v.replaceLS === "No" && (
-            <Notice
-              tone="warn"
-              title="LS wire still generated"
-              action={<Link href={`/estimating/configurations/${bench.id}/parts`}>Review line in Parts &amp; working</Link>}
-            >
-              Replace LS wire is No, but the recovered formula still produces LS rolls (REV-17). Exclude CE-LINE-240 explicitly if the retained wire covers this scope.
-            </Notice>
-          )}
+          {(untested.length > 0 || v.replaceLS === "No") && <section className="es08-card es08-attention-card" aria-label="Needs attention">
+            <div className="es08-card-head"><Icon name="warning" /><h3>Needs attention</h3><Pill tone="warn">{untested.length + (v.replaceLS === "No" ? 1 : 0)} items</Pill></div>
+            {untested.length > 0 && <div className="es08-attention-item"><h4>{untested.length} selected option{untested.length === 1 ? " has" : "s have"} no historical example</h4><p>No historical quote exercises {untested.map(u => u.value).join(" or ")}. Results are unvalidated; they are shown, not blocked.</p><Link href={`/estimating/configurations/${bench.id}/definition`}>Historical coverage in Definition review</Link></div>}
+            {v.replaceLS === "No" && <div className="es08-attention-item"><h4>LS wire still generated</h4><p>Replace LS wire is No, but the recovered formula still produces LS rolls (REV-17). Exclude CE-LINE-240 explicitly if the retained wire covers this scope.</p><Link href={`/estimating/configurations/${bench.id}/parts`}>Review line in Parts &amp; working</Link></div>}
+          </section>}
         </aside>
       </div>
     </div>

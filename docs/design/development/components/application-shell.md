@@ -155,6 +155,9 @@ ProductNavigation retains the original main prefetch policy on desktop and phone
 
 Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-loading.spec.ts`, `directory-navigation.spec.ts` and `navigation-safety.spec.ts`. The [loading evidence](../../../testing/evidence/pt27-loading/README.md) records source-specific timing and receiving outcomes. Geometry, fonts, labels, icons and accepted reference bytes are unchanged. No new mockup image is needed for this transport-only change; actual captures and existing references remain separate from owner/device/visual acceptance. Existing stale reviews are preserved.
 
+
+ES-08 Figma implementation binds the configuration and view routes to the existing shell/menu patterns. Historical runs use WorklistMenu; no other consumer behaviour is changed. See the screen-configurator-workbench host and execution evidence for fixture, phone and review limits.
+
 ## Fertigation consumer
 
 The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The composition reuses the shared Shell v2 primary rail and phone navigation merged in PR #459; its header and record geometry remain scoped, without changing the shared control API. Paired owner acceptance remains open.

@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Screen Configurator Workbench Figma implementation — 13 October 2026
+
+Dean requested the live ES-08 workbench to match private Figma page `406:2`. [Implementation decision](decisions/es08-figma-implementation.md) records the seven views, view-specific secondary menu, compact record strips, working/inspector panels, phone footer and unchanged exact synthetic backend. The branch `codex/screen-configurator-figma` preserves all source snapshots and parent IDs, adds no migration or dependency, and updates the existing design register, component hosts and Draft guides. [Execution evidence](testing/evidence/es08-figma/README.md) records checks and local limits. Owner visual acceptance, named-version/source capture evidence and deployment remain separate.
+
 ## Final shell and backend integration — 13 October 2026
 
 Current repository writer for this integration: the conflict repair and merge session on `codex/pr459-integrated-oct13`. PR #459 preserves the published shell repair `28819b6` and combined backend #458 head `0213e8d` by ancestry. The status conflict retains both records; the build sequence is regenerated from the combined register. No runtime, test, retained reference or review-fingerprint bytes are changed by this merge. Backend #458 is intended to land first; fresh #459 CI verifies the shell against all four backend contributions before its merge. The supplied user instruction authorises these repository merges, with deployment and owner visual acceptance separate.
