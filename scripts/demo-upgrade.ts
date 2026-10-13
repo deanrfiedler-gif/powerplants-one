@@ -257,15 +257,17 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // configuration trigger. No backfill, table, seed, user, permission, identity
   // ALTER or output change. Existing r01 writes and hosted grant boundaries remain.
   // 0086 adds CPQ tables and capabilities with no seeded grants/users.
+  // 0087 adds empty typed RAID entries and immutable revisions, no seed/user/grant.
+  // Existing project.read/edit duties apply; no hosted authority or schedule changes.
   // Adapters remain synthetic. CPQ viewing/authoring/calculation is provisioned only
   // by the explicit hosted upgrade below, under the existing bounded tester checks.
-  // 0087 adds empty CPQ drafts, rule membership and seal evidence. No seed,
+  // 0088 adds empty CPQ drafts, rule membership and seal evidence. No seed,
   // grant, user or backfill; schema-1 releases/runs and current head remain intact.
   // The live UI request additionally enables three CPQ tester duties in Company A.
   // Existing revocations are never replaced, invitation/grant expiry is not extended,
   // and disabled/expired/inactive testers receive nothing. Review and publish are
   // deliberately absent: an author cannot approve or activate their own release.
-  if (latestMigrationVersion !== 87) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 88) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -327,11 +327,13 @@ test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit re
     oldLedger,
   );
   assert.deepEqual(
+    // rows() orders complete JSON snapshots; checksums can change that order.
+    // Compare the exact added version set numerically, retaining raw ledger checks above/below.
     ledger
       .filter((r) => r.row.version >= 85)
       .map((r) => r.row.version)
       .sort((a, b) => a - b),
-    [85, 86, 87],
+    [85, 86, 87, 88],
   );
   await migrate();
   await seed();

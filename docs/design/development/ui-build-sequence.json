@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "4ba914177fa13649284094cf5665fb07f43c63404c4594e8194453f0074e4928",
+  "register_sha256": "021a1ac2f95f0e9cd89656609506a740b54bb7813a819bfffc08bc801c42626b",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -20,12 +20,12 @@
   "build": "01"
  },
  "totals": {
-  "entries": 358,
-  "placed": 355,
+  "entries": 362,
+  "placed": 359,
   "excluded": 3,
-  "build": 44,
+  "build": 43,
   "refine": 106,
-  "review": 199,
+  "review": 204,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -1276,11 +1276,11 @@
    "counts": {
     "build": 1,
     "refine": 19,
-    "review": 25,
+    "review": 29,
     "decide": 0
    },
    "scopes": 13,
-   "routes": 32,
+   "routes": 36,
    "systems": 0,
    "entries": [
     {
@@ -1449,6 +1449,28 @@
      "placement": "Issued r02 rank"
     },
     {
+     "key": "route:/estimating/cpq",
+     "title": "Configurations",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/cpq",
+     "rank": 47,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-02"
+    },
+    {
+     "key": "route:/estimating/cpq/[id]",
+     "title": "Configure & price",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/cpq/[id]",
+     "rank": 47,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-02"
+    },
+    {
      "key": "route:/estimating/discovery",
      "title": "Discovery register",
      "kind": "route",
@@ -1524,6 +1546,28 @@
      "state": "refine",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/rules",
+     "title": "Rules studio",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/rules",
+     "rank": 47,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-02"
+    },
+    {
+     "key": "route:/estimating/rules/[id]",
+     "title": "Rule and release authoring",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/rules/[id]",
+     "rank": 47,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-02"
     },
     {
      "key": "scope:ES-08",
@@ -2206,9 +2250,9 @@
     "04"
    ],
    "counts": {
-    "build": 5,
+    "build": 4,
     "refine": 39,
-    "review": 43,
+    "review": 44,
     "decide": 0
    },
    "scopes": 27,
@@ -2728,7 +2772,7 @@
      "module": "PJ",
      "path": "/projects/risks",
      "rank": 80,
-     "state": "build",
+     "state": "review",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
     },
