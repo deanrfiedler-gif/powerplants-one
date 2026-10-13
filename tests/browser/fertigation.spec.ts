@@ -127,14 +127,13 @@ async function calculationControl(page: Page) {
   return control;
 }
 async function showRegisterFilters(page: Page) {
+  if (page.viewportSize()!.width >= 781) return;
   const toggle = page.getByRole("button", {
     name: "Find and filter irrigation valves",
     exact: true,
   });
-  if (
-    (await toggle.isVisible()) &&
-    (await toggle.getAttribute("aria-expanded")) === "false"
-  )
+  await expect(toggle).toBeVisible();
+  if ((await toggle.getAttribute("aria-expanded")) === "false")
     await toggle.click();
 }
 async function inspector(page: Page, add: string, label: string) {

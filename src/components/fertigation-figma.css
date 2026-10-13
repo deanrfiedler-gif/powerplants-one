@@ -1188,6 +1188,7 @@
 }
 @media (max-width: 780px) {
   #ppo-fertigation .fn-register-panel .fn-phone-filter-toggle {
+    order: -2;
     display: inline-flex;
     width: 44px;
     min-width: 44px;
@@ -1196,6 +1197,7 @@
     justify-content: center;
   }
   #ppo-fertigation .fn-phone-register-count {
+    order: -3;
     display: block;
     flex: 1;
     font-size: 13px;
@@ -1503,7 +1505,9 @@
     margin-left: -16px;
     margin-right: -16px;
   }
-  #ppo-fertigation .fn-next-panel > .fn-panel-head {
+  #ppo-fertigation
+    .fn-next-panel.fn-panel:not(.fn-register-panel)
+    > .fn-panel-head {
     padding: 0 16px 8px;
   }
   #ppo-fertigation .fn-next-panel .fn-next-list {
