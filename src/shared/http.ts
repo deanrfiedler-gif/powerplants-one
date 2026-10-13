@@ -47,6 +47,7 @@ export function commandRoute(
     input: unknown,
   ) => Promise<{ receipt: OperationReceipt; replayed: boolean }>,
   create = true,
+  maxBodyBytes = 65536,
 ) {
   return async (request: NextRequest, context: RouteContext) => {
     try {
@@ -56,7 +57,7 @@ export function commandRoute(
       const result = await work(
         p,
         params.id ?? "",
-        await jsonBody(request, 65536),
+        await jsonBody(request, maxBodyBytes),
       );
       return reply(result.receipt, create && !result.replayed ? 201 : 200);
     } catch (error) {

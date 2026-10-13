@@ -5,6 +5,7 @@ import { closeDatabase } from "../../src/platform/database";
 import { httpAcceptance } from "../helpers/acceptance-http";
 import { projectInput, taskInput } from "../helpers/projects";
 import { calendarInput, actualInput } from "../helpers/project-programme";
+import { addDays } from "../../src/projects/model";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 after(closeDatabase);
@@ -68,4 +69,15 @@ test("PJ03-HTTP01 compiled calendar and actual commands, exact recovery, program
     ).status,
     422,
   );
+});
+
+
+test("PJ03-HTTP02 accepts the complete bounded calendar with long Unicode reasons",async()=>{
+ const project=projectInput();
+ assert.equal((await h.call("coordinator","projects",project)).status,201);
+ const calendar={...calendarInput(1),exceptions:Array.from({length:366},(_,i)=>({date:addDays("2028-01-01",i),working:false,reason:"\u754c".repeat(200)}))};
+ const result=await h.call("coordinator",`projects/${project.id}/calendar`,calendar);
+ assert.equal(result.status,201);
+ const read=await h.call("coordinator",`projects/${project.id}/calendar`);
+ assert.equal(read.body.current.exceptions.length,366);
 });

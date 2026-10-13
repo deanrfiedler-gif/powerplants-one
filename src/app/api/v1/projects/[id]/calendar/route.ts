@@ -5,4 +5,5 @@ import {
 import { commandRoute, readRoute } from "../../../../../../shared/http";
 export const dynamic = "force-dynamic";
 export const GET = readRoute(readCalendar);
-export const POST = commandRoute(recordCalendar);
+// 366 exceptions with bounded Unicode reasons still fit this explicit ceiling.
+export const POST = commandRoute(recordCalendar, true, 262144);
