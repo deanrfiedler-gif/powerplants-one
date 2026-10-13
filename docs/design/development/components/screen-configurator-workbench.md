@@ -14,7 +14,7 @@ The host groups the workbench context facts, readiness checks, seven view links,
 
 ## Mobile
 
-390 px and 320 px. Compact title and expandable readiness; horizontally scrolling view tabs; section stepper and single-column fields. Save and Next section stay reachable. Workbench actions opens the reason, calculation review and method. The selected drawing field is available in a bottom sheet, and working uses a full-screen panel. Wide evidence/parameter tables scroll in their own containers.
+390 px and 320 px. Compact title and expandable readiness; horizontally scrolling view tabs; section stepper and single-column fields. Save and Next section stay reachable. Workbench actions opens the reason, calculation review and method. The selected drawing field is available in a bottom sheet, and working uses a full-screen panel. Wide evidence/parameter tables scroll in their own containers. Position and finding filters remain available as labelled selects when the secondary menu is hidden.
 
 Keyboard: all menu and section controls have names and current/pressed state; inputs preserve labels and field error associations; dialogs trap focus through native modal behaviour and restore the opener; history overflow supports arrows, Escape and choice selection. Drawing selection retains its named keyboard buttons. No custom ARIA grid is introduced.
 

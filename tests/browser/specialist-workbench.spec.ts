@@ -486,7 +486,7 @@ test("ES08 create recovery through reload, read-only review and permission withd
   await page
     .getByRole("button", { name: "Create configuration", exact: true })
     .click();
-  await expect(page.getByRole("heading", { name: /Outcome unknown/ })).toBeVisible();
+  await expect(page.getByRole("status").filter({ hasText: /Outcome unknown/ })).toBeVisible();
   await page.reload();
   await page
     .getByRole("button", { name: "Resolve original outcome", exact: true })
@@ -566,6 +566,9 @@ test("ES08-T52 late preview cannot replace a newer calculation", async ({
   await expect(gates(page)).toHaveText(current, {
     useInnerText: true,
   });
+  // The compact strip hides its detailed floor figure; assert that figure
+  // explicitly so a stale preview cannot pass on the generic “Valid” label.
+  await expect(gates(page)).toContainText("2,150 m² floor");
   await expect(page.locator("#es08-bays")).toHaveValue("14");
 });
 
@@ -583,6 +586,7 @@ test("ES08 Figma contents, findings filter, working focus and phone actions reta
   expect(Math.abs((await page.locator(".es08-views").boundingBox())!.height - 45)).toBeLessThanOrEqual(2);
   expect((await gates(page).boundingBox())!.height).toBeLessThanOrEqual(43);
   await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+  await page.screenshot({ path: info.outputPath("es08-figma-configure-docked-1440.png") });
   const sections = page.getByRole("navigation", { name: "Configuration sections" });
   await sections.getByRole("button", { name: /2.*Cloth/ }).click();
   await expect(page.locator("#es08-roll-width")).toBeVisible();
@@ -600,6 +604,7 @@ test("ES08 Figma contents, findings filter, working focus and phone actions reta
   const working = page.getByRole("dialog", { name: "Standard screen cloth", exact: true });
   await expect(working).toBeVisible();
   expect((await working.boundingBox())!.width).toBe(440);
+  await page.screenshot({ path: info.outputPath("es08-figma-working-1440.png") });
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Working for CE-LINE-223" })).toBeFocused();
   await page.setViewportSize({ width: 390, height: 844 });

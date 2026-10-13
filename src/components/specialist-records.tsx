@@ -34,6 +34,11 @@ export function DefinitionView({ bench }: { bench: Bench }) {
           <section className="es08-card" aria-labelledby="es08-findings-h">
             <div className="es08-card-head es08-card-head--stack">
               <h3 id="es08-findings-h">Source findings</h3>
+              <label className="es08-mobile-filter es08-stack-label">Finding kind
+                <select value={bench.findingFilter} onChange={e => bench.setFindingFilter(e.target.value)}>
+                  {["All", "REV", "AUD", "WAS"].map(kind => <option key={kind} value={kind}>{kind === "All" ? "All findings" : kind} · {findings.filter(f => kind === "All" || f.id.startsWith(kind)).length}</option>)}
+                </select>
+              </label>
               <p className="es08-sub">Native exact arithmetic differs at three binary rounding boundaries; see the native definition evidence. Tests do not approve engineering.</p>
             </div>
             <ul className="es08-findings">

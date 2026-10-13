@@ -5625,7 +5625,7 @@
         "route:/estimating/configurations/[id]/[view]"
       ],
       "desktop": "Docked/collapsed secondary menu; compact record strips; two-column Configure; 440 px working overlay; full-width pricing and definition tables; persistent save footer.",
-      "mobile": "390/320 px header, expandable readiness, section stepper, save/actions footer, full-screen working and bottom-sheet field inspector.",
+      "mobile": "390/320 px header, expandable readiness, section stepper, labelled position/finding selects, save/actions footer, full-screen working and bottom-sheet field inspector.",
       "keyboard": "Named controls, visible focus, native table headings, native modal focus/return and shared overflow-menu keyboard behaviour.",
       "limitations": "Drawing inputs are browser-local; engineering and procurement authority remain unresolved; local fallback glyphs apply when the private Font Awesome Kit is unavailable.",
       "gaps": [
