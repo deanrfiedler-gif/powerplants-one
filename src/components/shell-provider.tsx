@@ -26,8 +26,8 @@ const railPreferences = new Map<string, boolean>();
 function railSnapshot(key: string | null) {
   if (!key) return false;
   if (railPreferences.has(key)) return railPreferences.get(key)!;
-  try { const value = JSON.parse(localStorage.getItem(`${key}:rail`) ?? "null"); return value?.schema_version === 1 && value.expanded === true; }
-  catch { return false; }
+  try { const value = JSON.parse(localStorage.getItem(`${key}:rail`) ?? "null"); return value?.schema_version === 1 ? value.expanded === true : true; }
+  catch { return true; }
 }
 const subscribe = (notify: () => void) => {
   window.addEventListener(preferenceEvent, notify);

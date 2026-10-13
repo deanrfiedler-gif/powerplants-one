@@ -57,7 +57,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "In the Figma overview increment, freshness appears in the toolbar and Customise overview is in More actions. The circle at the start of an activity opens Record outcome; the row actions menu opens Reschedule or Set date. Opening the title retains full activity details."
+          ],
           "steps": [],
           "rows": [
             [
@@ -213,7 +215,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "On a phone, the three labelled quick actions are Emails, Leads and Tasks. The bottom navigation uses icons with accessible names. Open an activity to complete or reschedule it. Weather stays hidden until a provider is connected."
           ],
           "steps": [],
           "rows": [],
@@ -322,7 +325,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "In the Figma overview increment, freshness appears in the toolbar and Customise overview is in More actions. The circle at the start of an activity opens Record outcome; the row actions menu opens Reschedule or Set date. Opening the title retains full activity details."
+          ],
           "steps": [],
           "rows": [
             [
@@ -478,7 +483,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "On a phone, the three labelled quick actions are Emails, Leads and Tasks. The bottom navigation uses icons with accessible names. Open an activity to complete or reschedule it. Weather stays hidden until a provider is connected."
           ],
           "steps": [],
           "rows": [],
@@ -48376,7 +48382,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "In the Figma overview increment, freshness appears in the toolbar and Customise overview is in More actions. The circle at the start of an activity opens Record outcome; the row actions menu opens Reschedule or Set date. Opening the title retains full activity details."
+          ],
           "steps": [],
           "rows": [
             [
@@ -48539,7 +48547,8 @@
           "paragraphs": [
             "On a phone, My Work menu opens personal views. The Sales bar has labelled My Work, Deals, Activities, Contacts and More destinations. Activities opens the selected local day within Sales; personal agenda links retain their stated personal selection.",
             "Use Tab and Shift+Tab for controls, Enter or Space for buttons, and Escape to close menus or the guide and return focus. My Work subviews expose the full authorized path through Page hierarchy.",
-            "The guide fills the phone screen and closes back to the current page. Hosted mode does not offer local Offline entry; the local Offline workspace retains its supported originals and recovery. A portable guide does not grant offline business authority."
+            "The guide fills the phone screen and closes back to the current page. Hosted mode does not offer local Offline entry; the local Offline workspace retains its supported originals and recovery. A portable guide does not grant offline business authority.",
+            "On a phone, the three labelled quick actions are Emails, Leads and Tasks. The bottom navigation uses icons with accessible names. Open an activity to complete or reschedule it. Weather stays hidden until a provider is connected."
           ],
           "steps": [],
           "rows": [],

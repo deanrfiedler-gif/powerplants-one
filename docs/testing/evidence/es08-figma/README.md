@@ -53,3 +53,9 @@ Main d195e67 (merged backend PR #458) is retained by ancestry. The only merge co
 ## Final integrated replay
 
 Head `137592b` passed a normal Next build (compilation, TypeScript and route generation) and changed-file lint. The isolated extended-wait replay passed accepted/unaccepted-save reload recovery, creation recovery/read-only/permission withdrawal, and ES08-T52 late-preview ordering. Its Figma layout case caught the browser-native dialog maximum width: a requested 390-pixel phone panel rendered at 356 pixels. The phone dialog rule now explicitly sets `max-width: 100vw`; replay of that correction and final-head CI are recorded separately in the PR handover. No receipt or calculation code changed.
+
+## Shared shell integration
+
+Head `2e6109c` passed all 12 ES-08 desktop/phone browser cases under the committed CI deadlines in [run 38330480159](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38330480159/job/115079093846), including the corrected full-width phone dialog. Its normal local build, two Figma layout cases and five supplementary phone cases also passed. This evidence precedes the shared-shell integration below.
+
+Main `ad9f2eb` (PR #459) supplies the adopted Figma Shell v2 header and rail. The four integration conflicts preserve both status entries, both shell/component fixtures and consumers, and ES-08 source provenance. The design comparison now uses the shared flowing-header contract while retaining its deliberate search-offset negative control. The merged instructions contain 7,996 characters. Fresh combined-source validation and release evidence are recorded in PR #462; earlier captures do not establish acceptance of the new shell.

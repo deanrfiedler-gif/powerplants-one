@@ -152,9 +152,10 @@ test("N18/N19 primary rail expands, persists and retains endpoints in a short wi
   await page.goto("/work?department=service"); const renderedRead=await overview;
   expect(renderedRead.status()).toBe(200);expect(await renderedRead.finished()).toBeNull();
   expect((await renderedRead.json()).activities.items.map((a:{id:string})=>a.id)).toContain(fixture.initial_action.id);
+  await page.getByRole("button",{name:"Collapse primary navigation",exact:true}).click();
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toHaveAttribute("aria-expanded","true");
-  expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(232);
+  expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(240);
   await expect(page.getByText("Loading your work…", {exact:true})).not.toBeVisible();
   const row=page.locator(`.mw-activities [data-activity='${fixture.initial_action.id}'] .mw-row-main`);
   await expect(row).toBeVisible();expect((await row.boundingBox())!.width).toBeGreaterThanOrEqual(240);
@@ -162,6 +163,7 @@ test("N18/N19 primary rail expands, persists and retains endpoints in a short wi
   await page.screenshot({path:test.info().outputPath("expanded-desktop.png")});
   await page.reload(); await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await login(page,"observer");await page.reload();
+  await page.getByRole("button",{name:"Collapse primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Expand primary navigation",exact:true})).toBeEnabled();
   await login(page);await page.reload();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
@@ -181,6 +183,7 @@ test("N18 blocked storage retains expansion for the current identity and visit",
   // The session check re-reads the shell context but keeps the current one meanwhile,
   // so the first enabled toggle can be clicked straight away.
   await page.goto("/sales/opportunities");
+  await page.getByRole("button",{name:"Collapse primary navigation",exact:true}).click();
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await page.locator(".ppo-primary-nav").getByRole("link",{name:"Leads",exact:true}).click();

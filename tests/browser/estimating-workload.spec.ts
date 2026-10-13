@@ -24,6 +24,12 @@ async function setup(page: Page) {
   );
   await page.goto(`/estimating?q=${encodeURIComponent(input.title)}`);
   expect((await loaded).ok()).toBe(true);
+  // This journey exercises the persistent detail panel. Select the compact rail
+  // explicitly; the Figma expanded default leaves room for the drawer instead.
+  if ((page.viewportSize()?.width ?? 0) > 780) {
+    const collapse = page.getByRole("button", { name: "Collapse primary navigation", exact: true });
+    if (await collapse.isVisible()) await collapse.click();
+  }
   await expect(
     page.getByRole("heading", { name: input.title, exact: true }),
   ).toBeVisible();
@@ -231,6 +237,10 @@ test("ES01 register selects into the persistent panel from 1360 px, opens a draw
   await page.setViewportSize({ width: 1360, height: 900 });
   await page.goto(`/estimating?q=${encodeURIComponent(prefix)}`);
   const panel = page.locator("#est-workload-detail");
+  // At 1360px the expanded rail leaves less than the retained 1244px dock width.
+  await expect(page.locator(".est-workload-register")).toHaveAttribute("data-layout", "drawer");
+  await expect(panel).toHaveCount(0);
+  await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
   await expect(panel).toBeVisible();
   await expect(
     page

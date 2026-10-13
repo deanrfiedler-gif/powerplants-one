@@ -80,17 +80,13 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await page.screenshot({ path: info.outputPath("overview-header-320.png") });
   await page.setViewportSize({ width: 390, height: 844 });
 
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Good (morning|afternoon|evening), /);
-  await expect(page.locator(".mw-hello .mw-tag")).toHaveText("Sales");
-  // The workspace context carries r22's soft brand tint, not an outline.
-  expect(await style(page, ".mw-hello .mw-tag", "background-color")).toBe("rgb(234, 241, 229)");
-  expect(await style(page, ".mw-hello .mw-tag", "color")).toBe("rgb(69, 98, 59)");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My Work");
+  await expect(page.locator(".mw-hello")).toHaveCount(0);
 
-  // NAV: five labelled cells in order, with the same accessible names and Sales
-  // Activities scope as desktop. Keep equal geometry and visible touch targets.
+  // Shell v2: five icon-only cells retain their accessible names and exact Sales scope.
   const bar = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
   expect(await bar.locator(":scope > *").evaluateAll((cells) => cells.map((c) => `${c.tagName}:${c.getAttribute("aria-label")}`))).toEqual(["A:My Work", "A:Deals", "A:Activities", "A:Contacts", "BUTTON:More"]);
-  expect(await bar.locator(":scope > * > span").evaluateAll((labels) => labels.every((l) => l.getBoundingClientRect().width > 1))).toBe(true);
+  expect(await bar.locator(":scope > * > span").evaluateAll((labels) => labels.every((l) => l.getBoundingClientRect().width === 1))).toBe(true);
   expect(await bar.locator(":scope > *").evaluateAll((cells) => cells.every((c) => c.getBoundingClientRect().height >= 44))).toBe(true);
   const cells = await bar.locator(":scope > *").evaluateAll((all) => all.map((c) => Math.round(c.getBoundingClientRect().width)));
   expect(Math.max(...cells) - Math.min(...cells)).toBeLessThanOrEqual(1);
@@ -102,10 +98,10 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}&scope=sales&department=sales`);
   await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/contacts?department=sales");
 
-  // Quick Actions: five tiles in order, each with a visible label (phase 00 batch 2). This identity holds
+  // Accepted phone design: three available feature tiles with visible labels. This identity holds
   // no mail access, so that tile is a locked image, not a link, named for its access; no unread number is
   // shown to anyone, because the mailbox records no read state.
-  expect(await page.locator(".mw-tile-label").allInnerTexts()).toEqual(["Emails", "Leads", "Map", "Insights", "Tasks"]);
+  expect(await page.locator(".mw-tile-label").allInnerTexts()).toEqual(["Emails", "Leads", "Tasks"]);
   expect(await page.locator(".mw-tile").first().getAttribute("aria-label")).toBe("Emails: outside your current access");
   expect(await page.locator(".mw-tiles").innerText()).not.toMatch(/\d/);
   await expect(page.getByRole("img", { name: "Emails: outside your current access" })).toBeVisible();
@@ -176,7 +172,7 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   // r22 values read from the rendered components, and no sideways page scroll.
   expect(await style(page, ".mw-agenda-title", "color")).toBe("rgb(36, 42, 55)");
   expect(await style(page, ".mw-agenda-title", "font-weight")).toBe("500");
-  expect(await style(page, ".mw-agenda-title", "font-family")).toMatch(/^Roboto/);
+  expect(await style(page, ".mw-agenda-title", "font-family")).toMatch(/^PPOShellRoboto, Roboto/);
   expect(await style(page, ".mw-fab", "background-color")).toBe("rgb(36, 42, 55)");
   // One navy Create control, square with the theme's elevated-surface radius.
   expect(await page.locator(".mw-fab").evaluate((n) => [n.getBoundingClientRect().width, n.getBoundingClientRect().height, getComputedStyle(n).borderRadius])).toEqual([56, 56, "10px"]);
@@ -251,14 +247,9 @@ test("Create is a six-choice menu in order; Activity carries the visible agenda 
   await expect(menu).toBeHidden();
   await expect(create).toBeFocused();
 
-  // Insights needs a reporting module that does not exist, so the tile says so and promises nothing.
-  await page.getByRole("button", { name: "Insights", exact: true }).click();
-  const insights = page.getByRole("dialog", { name: "Insights" });
-  await expect(insights.getByText("Insights are not available yet.")).toBeVisible();
-  await expect(insights.getByRole("link")).toHaveCount(0);
-  await page.keyboard.press("Escape");
-  await expect(insights).toBeHidden();
-  await expect(page.getByRole("button", { name: "Insights", exact: true })).toBeFocused();
+  // The accepted design omits Map and Insights until those features exist.
+  await expect(page.getByRole("button", { name: "Insights", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Map", exact: true })).toHaveCount(0);
 
   // Scanning needs an extraction service that does not exist: it says so and offers the real form.
   await create.click();
