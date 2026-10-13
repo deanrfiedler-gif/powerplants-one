@@ -168,10 +168,6 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
   const teamOpen = navigation.data?.can_coordinate ?? false;
   const menu = (
     <>
-      <div className="mw-menu-title">
-        <strong>My Work</strong>
-        <span>Personal workspace</span>
-      </div>
       <nav aria-label="My Work views">
         <ul>
           {workViews
@@ -233,7 +229,7 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
   );
   return (
     <Context.Provider value={value}>
-      <SecondaryMenuFrame state={menuState} id="ppo-my-work" name="My Work" menuId="mw-menu" contentId="mw-content" attributes={{ "data-view": current }} menu={menu} message={message}>
+      <SecondaryMenuFrame state={menuState} id="ppo-my-work" name="My Work" menuId="mw-menu" contentId="mw-content" presentation="figma" attributes={{ "data-view": current }} menu={menu} message={message}>
         {children}
       </SecondaryMenuFrame>
     </Context.Provider>

@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import { formatTimestamp, zoneLabel } from "../../../shell/date-format";
+import { formatTimestamp, zoneAbbreviation, zoneLabel } from "../../../shell/date-format";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { useIdentity } from "../../../components/business-session";
 import { ErrorNotice, isDenied, type Failure } from "../../../components/business-ui";
 import {
   activeFilterCount,
@@ -21,10 +20,7 @@ import {
   clockTime,
   durationLabel,
   durationMinutes,
-  firstName,
-  greeting,
   localDay,
-  longDate,
   nextScheduleId,
   shortDate,
   WORK_TIMEZONE,
@@ -96,8 +92,8 @@ function Attention({
       <span className={`mw-attention-icon${tone && status === "ok" && value ? " mw-tone-overdue" : ""}`}>
         <Icon name={icon} />
       </span>
+      <strong className={`mw-attention-value${tone && status === "ok" && value ? " mw-tone-overdue" : ""}`}>{shown}</strong>
       <span className="mw-attention-text">
-        <strong className={tone && status === "ok" && value ? "mw-tone-overdue" : undefined}>{shown}</strong>
         <span>{label}</span>
         <small>{status === "unavailable" ? "Unavailable" : status === "not_permitted" ? "No access" : entity}</small>
       </span>
@@ -116,8 +112,7 @@ function Attention({
 }
 
 export function MyWorkOverview() {
-  const me = useIdentity(),
-    work = useMyWork(),
+  const work = useMyWork(),
     router = useRouter();
   const c = useCriteria(work.views?.views ?? null);
   const read = useWorkResource<Overview>(`work/overview?${overviewQuery(c.criteria)}`);
@@ -149,7 +144,7 @@ export function MyWorkOverview() {
           </span>
           <div>
             <h2 id="mw-schedule-title">Today&apos;s schedule</h2>
-            <p>Times in {zoneLabel(data.observed_at, WORK_TIMEZONE)}</p>
+            <p title={zoneLabel(data.observed_at, WORK_TIMEZONE)}>{zoneAbbreviation(data.observed_at, WORK_TIMEZONE)}</p>
           </div>
           <Link className="mw-link mw-panel-link" href={`/calendar?day=${data.day}`}>
             Calendar <Icon name="arrow-right" />
@@ -304,33 +299,10 @@ export function MyWorkOverview() {
   };
 
   return (
-    <div className="mw-page" aria-busy={read.loading}>
-      <header className="mw-intro">
-        <h1>
-          {greeting(now)}, {firstName(me.display_name)}
-        </h1>
-        <Tag tone="quiet">{work.department}</Tag>
-        <span className="mw-spacer" />
-        <time className="mw-date" dateTime={data?.day}>
-          {longDate(now)}
-        </time>
-        <button type="button" className="mw-button" onClick={() => setSettings("customise")}>
-          <Icon name="sliders" />
-          Customise
-        </button>
-      </header>
+    <div className="mw-page mw-overview-figma" aria-busy={read.loading}>
+      <h1 className="mw-sr">My Work</h1>
 
       <div className="mw-toolbar" role="toolbar" aria-label="My Work overview controls">
-        {data?.capabilities.can_create !== false && (
-          <button
-            type="button"
-            className="mw-button mw-button-primary"
-            onClick={() => (work.navigation?.sales ? dialogs.open({ kind: "create" }) : router.push("/work/new"))}
-          >
-            <Icon name="plus" />
-            Activity
-          </button>
-        )}
         <Menu
           name="Saved view"
           icon="bookmark"
@@ -350,7 +322,6 @@ export function MyWorkOverview() {
             { id: "manage", label: "Save or manage views…", onSelect: () => setSettings("views") },
           ]}
         />
-        <span className="mw-spacer" />
         <Menu
           name="Owner scope"
           icon="user"
@@ -366,6 +337,10 @@ export function MyWorkOverview() {
           <span>Filters</span>
           {filters > 0 && <span className="mw-count">{filters}</span>}
         </button>
+        <span className="mw-spacer" />
+        {data && <time className="mw-freshness" dateTime={data.observed_at} title={formatTimestamp(data.observed_at, WORK_TIMEZONE)}>updated {clockTime(data.observed_at, WORK_TIMEZONE)} {zoneAbbreviation(data.observed_at, WORK_TIMEZONE)}{read.stale || read.error ? " · not current" : ""}</time>}
+        <button type="button" className="mw-button mw-button-icon" aria-label="Refresh now" title="Refresh now" onClick={read.reload}><Icon name="refresh" /></button>
+        {data?.capabilities.can_create && <button type="button" className="mw-button mw-button-primary" onClick={() => (work.navigation?.sales ? dialogs.open({ kind: "create" }) : router.push("/work/new"))}><Icon name="plus" />Activity</button>}
         <Menu
           name="More actions"
           icon="dots"
@@ -374,6 +349,7 @@ export function MyWorkOverview() {
           align="end"
           items={[
             { id: "refresh", label: "Refresh now", onSelect: () => read.reload() },
+            { id: "customise", label: "Customise overview", onSelect: () => setSettings("customise") },
             { id: "views", label: "Save or manage views…", onSelect: () => setSettings("views") },
             { id: "calendar", label: "Open calendar", onSelect: () => router.push(`/calendar${data ? `?day=${data.day}` : ""}`) },
             { id: "full", label: "Full activity form", hint: "Sites, assets, customers and service requests", onSelect: () => router.push("/work/new") },
@@ -398,7 +374,7 @@ export function MyWorkOverview() {
             <Attention icon="alert" tone="overdue" value={data?.counts.overdue ?? null} label="Overdue" entity="Activities" href={query({ due: "Overdue" })} status={state()} />
             <Attention icon="calendar" value={data?.counts.due_today ?? null} label="Due today" entity="Activities" href={query({ due: "Today" })} status={state()} />
             <Attention
-              icon="mail"
+              icon="clock"
               value={data?.waiting.status === "ok" ? data.waiting.total : null}
               label="Waiting on others"
               entity="Requests"
@@ -406,7 +382,7 @@ export function MyWorkOverview() {
               status={state(data?.waiting)}
             />
             <Attention
-              icon="clock"
+              icon="dollar"
               value={data?.gaps.status === "ok" ? data.gaps.total : null}
               label="No next activity"
               entity="Opportunities"
@@ -422,9 +398,9 @@ export function MyWorkOverview() {
                   <header className="mw-panel-head">
                     <div>
                       <h2 id="mw-activities-title">
-                        {c.criteria.owner === "mine" ? "My activities" : "Activities"} <span className="mw-count">{data.activities.total}</span>
+                        {c.criteria.owner === "mine" ? "My activities" : "Activities"}
                       </h2>
-                      <p>Overdue and today</p>
+                      <p>{data.activities.total} · overdue and today</p>
                     </div>
                     <span className="mw-spacer" />
                     <Menu
@@ -477,7 +453,7 @@ export function MyWorkOverview() {
 
                 <section className="mw-notices" aria-label="Work outside the dated list">
                   {data.date_needed.total > 0 && (
-                    <div className="mw-strip">
+                    <div className="mw-strip mw-strip-date">
                       <span className="mw-panel-icon">
                         <Icon name="calendar-alert" />
                       </span>
@@ -587,7 +563,7 @@ function Group({
       </h3>
       <ul className="mw-rows">
         {rows.map((row) => (
-          <ActivityRow key={row.id} row={row} now={now} open={open} showOwner={showOwner} />
+          <ActivityRow key={row.id} row={row} now={now} open={open} showOwner={showOwner} compact />
         ))}
       </ul>
     </section>
