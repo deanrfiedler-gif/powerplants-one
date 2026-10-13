@@ -1,5 +1,7 @@
 # Decision control
 
+[Projects receiving and overview backend](project-overview-backend.md) records exact native Sales attribution and explained scoped portfolio reads; page and owner acceptance remain separate.
+
 [Projects RAID and owned actions backend](project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.
 
 [Leads counts and follow-up reads](lead-register-backend.md) records the authorised BC-01 backend increment, full authorised-match count semantics and unavailable-activity boundaries.
@@ -180,3 +182,5 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
 - [Quotation register backend](quotation-register-backend.md): one current revision per quotation, recorded lifecycle facts and permission-scoped history; accepted page implementation and global counts remain separate.
 
 - [Engineering workload register backend](engineering-workload-backend.md): user-authorised BC-01 scoped EN-01 reads; validation and acceptance separate.
+
+- [Projects register from Figma](projects-register-native.md): native desktop/phone register, saved schedule facts and scoped snapshots; Wrike remains reference and hosted release is separate.

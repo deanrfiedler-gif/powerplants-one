@@ -3,6 +3,9 @@ import type { Capability } from "../platform/permissions";
 // Display copy, never an authorisation rule. Exhaustive against the server contract.
 // Initial descriptions follow the retained AD-01 design; proposed capabilities are excluded.
 export const capabilityLabels = {
+  "document.read": "Read scoped library documents",
+  "document.register": "Register document revisions and references",
+  "document.review": "Independently review documents and finding responses",
   "cpq.read": "Read CPQ releases and commercial calculation evidence",
   "cpq.author": "Author CPQ rule releases",
   "cpq.review": "Independently review exact CPQ releases",

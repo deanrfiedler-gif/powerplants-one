@@ -13,9 +13,13 @@ import {
   version,
 } from "../shared/validation";
 import { hasPermission } from "../platform/permissions";
+import {
+  currentCalendar,
+  baselineCalendar,
+  programmeFor,
+} from "./programme-reads";
 import { projectRow, tasksFor } from "./service";
 import {
-  projectCalendar,
   type Baseline,
   type BaselineRead,
   type BaselineSummary,
@@ -98,6 +102,7 @@ export async function recordBaseline(p: Principal, id: string, value: unknown) {
           "Add at least one task and date every task before recording a baseline.",
         );
       const baselineId = randomUUID();
+      const calendar = await currentCalendar(c, p, id, project.timezone);
       const row = (
         await c.query<{ created_at: Date }>(
           `INSERT INTO ppo.project_schedule_baselines(id,workspace_id,company_id,project_id,revision,project_version,label,reason,calendar_key,snapshot,created_by,operation_id)
@@ -111,12 +116,17 @@ export async function recordBaseline(p: Principal, id: string, value: unknown) {
             project.version,
             command.label,
             command.reason,
-            projectCalendar,
+            calendar.key,
             p.actor_id,
             command.operation_id,
           ],
         )
       ).rows[0];
+      if ("id" in calendar)
+        await c.query(
+          "INSERT INTO ppo.project_baseline_calendars(baseline_id,calendar_id) VALUES($1,$2)",
+          [baselineId, calendar.id],
+        );
       return {
         id,
         version: project.version,
@@ -182,7 +192,16 @@ export async function readBaselines(
               [p.workspace_id, id, chosen],
             )
           ).rows[0];
+    const tasks = await tasksFor(c, p, id);
     if (chosen !== null && !selected) throw unavailable();
+    if (selected)
+      selected.calendar = await baselineCalendar(
+        c,
+        p,
+        id,
+        selected,
+        project.timezone,
+      );
     return {
       items: rows.slice(0, 20),
       selected: selected ?? null,
@@ -195,7 +214,15 @@ export async function readBaselines(
           updated_at: project.updated_at.toISOString(),
           can_edit: canEdit,
         },
-        tasks: await tasksFor(c, p, id),
+        tasks,
+        programme: await programmeFor(
+          c,
+          p,
+          id,
+          project.timezone,
+          tasks,
+          selected ?? null,
+        ),
         observed_at: new Date().toISOString(),
       },
     };

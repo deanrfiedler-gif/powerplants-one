@@ -473,44 +473,61 @@ export async function readDeliverySalesSources(
 ) {
   return transaction(async (c) => {
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
-    const d = await destination(c, p, kind, id);
-    const bindings = (await available(c))
-      ? (
-          await c.query<Binding>(
-            `SELECT * FROM ppo.sales_delivery_bindings WHERE workspace_id=$1 AND ${kind === "Projects" ? "project_id" : "work_order_id"}=$2 ORDER BY recorded_at`,
-            [p.workspace_id, id],
-          )
-        ).rows
-      : [];
-    const items = [];
-    for (const b of bindings)
-      try {
-        const { row, o, history } = await handoverRecord(c, p, b.handover_id);
-        const event = history.find(
-          (e) => e.id === b.acceptance_event_id && e.action === "Accept",
-        );
-        if (!event || !contextMatches(row, d)) throw unavailable();
-        items.push({
-          access: "Available" as const,
-          handover_id: row.id,
-          opportunity_id: row.opportunity_id,
-          opportunity_title: o.title,
-          acceptance_event_id: event.id,
-          revision: event.revision,
-          current: row.version === event.version && row.state === "Accepted",
-          source_changed:
-            !!row.source_hash &&
-            row.source_hash !== hashBasis(await handoverBasis(c, p, row)),
-          content: event.content,
-          compared_version: b.destination_version,
-          compared_site_id: b.destination_site_id,
-          reason: b.reason,
-          recorded_at: b.recorded_at.toISOString(),
-        });
-      } catch (e) {
-        if (!denied(e)) throw e;
-        items.push({ access: "Restricted" as const });
-      }
-    return { items };
+    return deliverySalesSourcesInSnapshot(c, p, kind, id);
   });
+}
+
+// Reused by the Project overview in its existing read-only snapshot.
+export async function deliverySalesSourcesInSnapshot(
+  c: QueryClient,
+  p: Principal,
+  kind: DeliveryKind,
+  id: string,
+) {
+  const d = await destination(c, p, kind, id);
+  const bindings = (await available(c))
+    ? (
+        await c.query<Binding>(
+          `SELECT * FROM ppo.sales_delivery_bindings WHERE workspace_id=$1 AND ${kind === "Projects" ? "project_id" : "work_order_id"}=$2 ORDER BY recorded_at`,
+          [p.workspace_id, id],
+        )
+      ).rows
+    : [];
+  const items = [];
+  for (const b of bindings)
+    try {
+      const { row, o, history } = await handoverRecord(c, p, b.handover_id);
+      const event = history.find(
+        (e) => e.id === b.acceptance_event_id && e.action === "Accept",
+      );
+      if (!event || !contextMatches(row, d)) throw unavailable();
+      items.push({
+        access: "Available" as const,
+        handover_id: row.id,
+        opportunity_id: row.opportunity_id,
+        opportunity_title: o.title,
+        acceptance_event_id: event.id,
+        revision: event.revision,
+        accepted_version: event.version,
+        accepted_source_hash: event.source_hash,
+        accepted_by: event.recorded_by,
+        accepted_at: event.recorded_at.toISOString(),
+        acceptance_note: event.note,
+        current_state: row.state,
+        receiving_owner_id: row.receiving_owner_id,
+        current: row.version === event.version && row.state === "Accepted",
+        source_changed:
+          !!row.source_hash &&
+          row.source_hash !== hashBasis(await handoverBasis(c, p, row)),
+        content: event.content,
+        compared_version: b.destination_version,
+        compared_site_id: b.destination_site_id,
+        reason: b.reason,
+        recorded_at: b.recorded_at.toISOString(),
+      });
+    } catch (e) {
+      if (!denied(e)) throw e;
+      items.push({ access: "Restricted" as const });
+    }
+  return { items };
 }

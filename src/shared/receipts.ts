@@ -1,3 +1,4 @@
+import { receiptAuthority as libraryReceiptAuthority } from "../library/context";
 import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
 import { receiptAuthority as cpqReceiptAuthority } from "../cpq/context";
 import { estimatingBindingReceiptAuthority } from "../sales/estimating-binding";
@@ -80,7 +81,13 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.command?.startsWith("Cpq:")) {
+  if (r.object_type === "LibraryDocument") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await libraryReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.command?.startsWith("Cpq:")) {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await cpqReceiptAuthority(c,p,r.record_id,r.command,operation_id);

@@ -309,3 +309,7 @@ export const registerTableFixture: {
   { id: fixtureId(303), key: "030", title: "SYN irrigation valve set for the north glasshouse, with a description long enough to wrap in the register", sub: null, quantity: "12 each", source: null, state: { tone: "neutral", label: "In review" }, owner: "SYN Engineer A" },
   { id: fixtureId(304), key: "040", title: "SYN sensor cable", sub: "Removed", quantity: "40 m", source: "SYN-DWG-103 · Rev C", state: { tone: "negative", label: "Mapping missing" }, owner: "SYN Engineer C", removed: true },
 ];
+
+export const projectCalendarFixture = {
+  key: "PPO-PJ-CALENDAR-02" as const, revision: 1, name: "Synthetic site calendar", timezone: "Australia/Sydney", weekdays: [1,2,3,4,5], exceptions: [{date:"2026-09-23",working:false,reason:"Synthetic site closure"}],
+};

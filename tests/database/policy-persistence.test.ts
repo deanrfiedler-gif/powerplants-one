@@ -126,7 +126,7 @@ async function clone(
   );
 }
 
-test("populated 0050 upgrade preserves every old row/hash, registers 0051–0085 and exact authority/instrument additions", async () => {
+test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090 and exact authority/instrument additions", async () => {
   const names = (await tables()).filter((t) => t !== "seed_receipts"),
     beforeRows = await snapshot(names);
   const oldLedger = (
@@ -174,12 +174,12 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0085
     )
   ).rows;
   assert.deepEqual(ledger.slice(0, oldLedger.length), oldLedger);
-  assert.equal(ledger.at(-1).version, 87);
+  assert.equal(ledger.at(-1).version, 90);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
     ],
   );
   const receipts = (
@@ -672,7 +672,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
   );
 });
 
-test("fresh installation applies only registered files through 0085, retains reserved gaps and repeats without changes", async () => {
+test("fresh installation applies only registered files through 0090, retains reserved gaps and repeats without changes", async () => {
   await database().query(await sql("migrations/0001-recover.sql"));
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
@@ -687,7 +687,7 @@ test("fresh installation applies only registered files through 0085, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
     ],
   );
   const first = await snapshot(await tables());

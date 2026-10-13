@@ -113,8 +113,10 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.equal((await readInvitedSession(database(), token, tenant)).actor_id, actor.actor_id);
   const grants = await rows("ppo.permission_grants");
   for (const old of oldGrants) assert.ok(grants.some(g => JSON.stringify(g) === JSON.stringify(old)));
-  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%' OR capability IN ('email.connect','schedule.read','service.work_order.read','service.ticket.read','service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage'))", [users])).rows;
-  assert.equal(additions.length, 18);
+  const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'crm.lead.%' OR capability LIKE 'project.%' OR capability LIKE 'engineering.%' OR capability LIKE 'cpq.%' OR capability IN ('email.connect','schedule.read','service.work_order.read','service.ticket.read','service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage'))", [users])).rows;
+  assert.equal(additions.length, 21);
+  assert.deepEqual(additions.filter(g => g.capability.startsWith("cpq.")).map(g => g.capability).sort(),
+    ["cpq.author", "cpq.calculate", "cpq.read"]);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND (capability LIKE 'engineering.material.%' OR capability LIKE 'engineering.change.%' OR capability LIKE 'engineering.commissioning.%' OR capability LIKE 'acceptance.%')", [users])).rowCount, 0);
   assert.ok(additions.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
   const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
@@ -129,7 +131,7 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.ok(schedule.resources.length > 0);
   await readUnassignedDemand(actor);
   // An explicit later revocation must survive both verify and upgrade retries.
-  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('project.edit','schedule.read','schedule.manage','service.readiness.assess')", [users[0]]);
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('project.edit','schedule.read','schedule.manage','service.readiness.assess','cpq.author','cpq.calculate','cpq.read')", [users[0]]);
   const retained = await rows("ppo.permission_grants"), migrated = await ledger(), receipts = await rows("ppo.seed_receipts");
   await upgradeExistingDemo(name, tenant, false);
   await upgradeExistingDemo(name, tenant, true);
@@ -151,6 +153,26 @@ test("an already-current demo requires explicit upgrade for missing booking gran
   const additions = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability IN ('service.work_order.edit','service.readiness.assess','schedule.contact','schedule.manage')", [users])).rows;
   assert.equal(additions.length, 4);
   assert.ok(additions.every(g => g.user_id === users[0] && g.scope_type === "Company" && g.scope_id === demoCompany));
+});
+
+test("an already-current demo adds only bounded CPQ authoring duties and preserves revocations", async () => {
+  await upgradeExistingDemo(name, tenant, true);
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability LIKE 'cpq.%'", [users]);
+  const before = await rows("ppo.permission_grants"), migrated = await ledger();
+  await assert.rejects(upgradeExistingDemo(name, tenant, false), /explicit upgrade-and-deploy/);
+  assert.deepEqual(await rows("ppo.permission_grants"), before);
+  await upgradeExistingDemo(name, tenant, true);
+  const cpq = (await database().query("SELECT * FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability LIKE 'cpq.%' ORDER BY capability", [users])).rows;
+  assert.deepEqual(cpq.map(g => g.capability), ["cpq.author", "cpq.calculate", "cpq.read"]);
+  assert.ok(cpq.every(g => g.user_id === users[0] && g.company_id === demoCompany && g.scope_type === "Company" && g.scope_id === demoCompany));
+  const limit = (await database().query("SELECT valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.edit'", [users[0]])).rows[0].valid_to;
+  assert.ok(cpq.every(g => g.valid_to.getTime() <= limit.getTime()));
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='cpq.author'", [users[0]]);
+  const retained = await rows("ppo.permission_grants");
+  await upgradeExistingDemo(name, tenant, false);
+  await upgradeExistingDemo(name, tenant, true);
+  assert.deepEqual(await rows("ppo.permission_grants"), retained);
+  assert.deepEqual(await ledger(), migrated);
 });
 
 test("a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums", async () => {
@@ -195,7 +217,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   // 0039 adds ES-02 child identity integrity without a synthetic seed.
   // 0040 adds ES-08 specialist evidence and immutable policy manifests; seed 40 adds no users or grants.
   // 0041 adds typed Facility details and additive synthetic identities, with no users/grants.
-  assert.equal(final.length, baseline.length + 70);
+  assert.equal(final.length, baseline.length + 73);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 

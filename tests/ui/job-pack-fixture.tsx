@@ -1,9 +1,6 @@
 import { createRoot } from "react-dom/client";
-import { ShellProvider } from "../../src/components/shell-provider";
-import {
-  ProductHeader,
-  ProductNavigation,
-} from "../../src/components/product-navigation";
+import { ApplicationFrame } from "../../src/components/application-frame";
+
 import { BusinessSession } from "../../src/components/business-session";
 import { JobPackScreen } from "../../src/documents/components/client/job-pack-screen";
 import { destinations } from "../../src/shell/navigation";
@@ -39,17 +36,9 @@ window.fetch = async (input) => {
   );
 };
 createRoot(document.getElementById("root")!).render(
-  <ShellProvider hosted={false} development>
-    <div className="app-frame">
-      <ProductNavigation />
-      <div className="workspace">
-        <ProductHeader />
-        <main id="main">
-          <BusinessSession>
-            <JobPackScreen id={pack.id} />
-          </BusinessSession>
-        </main>
-      </div>
-    </div>
-  </ShellProvider>,
+  <ApplicationFrame hosted={false} development>
+    <BusinessSession>
+      <JobPackScreen id={pack.id} />
+    </BusinessSession>
+  </ApplicationFrame>,
 );

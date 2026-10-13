@@ -5,11 +5,9 @@ import {
   ErrorNotice,
   ReadState,
   isDenied,
-  type Envelope,
   Stamp,
-  RegisterHeading,
 } from "./business-ui";
-import type { Pack, PackIssue as Issue } from "../documents/components/client/job-pack-types";
+import type { PackIssue as Issue } from "../documents/components/client/job-pack-types";
 // The pack detail page and its first-preparation view are
 // src/documents/components/client/job-pack-screen.tsx. This file keeps the register and the exact
 // issued document screen.
@@ -29,52 +27,7 @@ function Intro({
     </>
   );
 }
-export function PackListScreen() {
-  const r = useResource<Envelope<Pack>>("packs");
-  return (
-    <div className="business-page">
-      {/* The breadcrumb names this register, so the title band gives up its room. The environment
-          marker is not a title band and stays: this prototype must never read as operational. */}
-      <RegisterHeading
-        title="Job packs"
-        description="Prepare and check work instructions, issue exact documents, and follow each crew member’s acknowledgement."
-      >
-        <Link href="/schedule">Open service planner</Link>
-      </RegisterHeading>
-      <p className="source-stamp">Synthetic prototype — not for operational use</p>
-      <ErrorNotice error={r.error} />
-      {r.loading ? (
-        <p role="status">Loading job packs…</p>
-      ) : r.error ? null : r.data?.items.length ? (
-        <div className="pack-list">
-          {r.data.items.map((p) => (
-            <article key={p.id}>
-              <h2>
-                <Link href={`/service/packs/${p.id}`}>{p.display_number}</Link>
-              </h2>
-              <p>
-                {p.status} ·{" "}
-                {p.needs_review
-                  ? "Preparation or review required"
-                  : p.status === "Issued"
-                    ? "Issued"
-                    : "Not issued"}
-              </p>
-              <Link href={`/service/appointments/${p.appointment_id}`}>
-                {p.appointment_reference ?? "Appointment"}
-              </Link>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <p>
-          No job packs are available to this identity. Open a confirmed
-          appointment in the planner to prepare one.
-        </p>
-      )}
-    </div>
-  );
-}
+export { PackListScreen } from "../documents/components/client/job-pack-register";
 export function DocumentScreen({ id }: { id: string }) {
   const status = useResource<{
     pack_id: string;

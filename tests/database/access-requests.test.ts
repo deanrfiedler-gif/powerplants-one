@@ -86,7 +86,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     next.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80, 81, 82, 83, 84, 85, 86, 87],
+    [79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90],
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version <= 78),

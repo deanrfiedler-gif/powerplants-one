@@ -79,4 +79,6 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 
 - [Backend completion delivery plan](delivery/backend-completion-plan.md): authorised bounded backend work; delivery evidence, owner acceptance and deployment remain separate.
 - [Quotation register backend](decisions/quotation-register-backend.md): current quotation rows and exact revision history, scoped lifecycle facts and bounded filters; page implementation remains separate.
+
+[Projects receiving and overview backend](decisions/project-overview-backend.md) · [Execution evidence](testing/evidence/project-overview/README.md).
 - [Engineering workload backend](decisions/engineering-workload-backend.md) — BC-01 scoped register contract and [execution evidence](testing/evidence/engineering-workload/README.md); UI integration separate.

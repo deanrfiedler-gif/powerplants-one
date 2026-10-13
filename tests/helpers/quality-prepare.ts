@@ -1,3 +1,4 @@
+import { showPackReadiness } from "./job-pack-design";
 import { observedResponse } from "./observed-response";
 import {
   expect,
@@ -142,6 +143,8 @@ export async function issuePack(page: Page, pid: string) {
     "Queue output",
     "SYN exact checked revision queued for controlled issue.",
   );
+  // Output recovery lives in Readiness on the coordinator phone view.
+  await showPackReadiness(page);
   const response = await observedResponse(page, "pack-render",
     (r) =>
       /\/api\/v1\/render-jobs\/[^/]+\/retry$/.test(r.url()) &&

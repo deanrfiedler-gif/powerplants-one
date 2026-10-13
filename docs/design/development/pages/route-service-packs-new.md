@@ -1,81 +1,27 @@
-# Create job pack — design reference
+# Create job pack — application design
 
-Stable entry: `route:/service/packs/new`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `4c8fd6dba83794f6c64aee6859cadb913401fd64`. Application destination: `/service/packs/new?appointment_id={appointment_id}`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and task
+Stable entry: `route:/service/packs/new`. Owner: Dean Fiedler. **Application visual review: pending.**
 
-An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
+## Purpose
 
-1. Search the related register for an existing record before creating another.
-2. Complete the information requested by the creation form; keep unknown values explicit.
-3. Review the entered context, save through the page action and inspect the resulting record/confirmation.
-4. Then continue the wider workflow: Issue the checked pack and track recipient acknowledgement
+Prepare the first immutable revision for one confirmed visit. Page type: guided Preparation in the Job Pack record workspace, SV-05 / SC-06.
 
 ## Desktop
 
-Accepted successor design: the Preparation view of the [Job pack design decision](../../../decisions/job-pack-figma-design.md), capture 02 in [Job pack design r01](../../../reference/ui/service/job-pack-design-r01/README.md), titled "Prepare the first revision". The menu, header and status panel are those of the record page. The first save opens the reason dialog as "Record the first preparation". The app still shows the integrated r03 Preparation view described below.
-
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Match the linked page-specific reference; retain its accepted geometry.
-
-The Preparation view is the accepted r03 three-column composition: a contents rail listing the nine sections, the guided form, and a rail carrying Preparation status and Where information comes from. The module container owns the scroll, not the shell's `main`.
-
-Each section is title → linked context → any selection or read-only summary → the entry → its help text. Section 01 shows its linked context in place; sections 02 to 09 keep theirs behind **View source details**, so the nine entries stay scannable.
-
-Measured on the compiled application, 23 September 2026 (`4c8fd6d`), Preparation view with a saved revision:
-
-| Viewport | Preparation view columns | Module padding | Section padding | Action bar |
-|---|---|---|---|---|
-| 1440 × 960 | contents 220 px at x 100 / main 802 px at x 338 / rail 258 px at x 1158 | 24px | 22px | `sticky`, bottom 12px |
-| 1024 × 768 | contents 194 px at x 100 / main 690 px at x 310 / the guidance rail moves beneath the form | 24px | 20px | `sticky`, bottom 12px |
-| 820 × 800 | contents 194 px at x 100 / main 486 px at x 310 / the guidance rail moves beneath the form | 24px | 20px | `sticky`, bottom 12px |
-
-No horizontal page scroll was found at any of the six viewports. The **Exact text as it will be issued** disclosure, structured section content, the source-change notice and the readiness stage groups are later increments (I4, I6, I7); this entry records only what I3 delivers.
+Without an appointment, the register's Prepare job pack chooser offers permitted confirmed unstarted future visits genuinely lacking a pack. With an appointment, show the same 240 px contents menu and preparation paper as the record workspace. Existing packs redirect to their canonical record. Nine labelled notes and exact source/history selection retain existing validation. The first save requires a recorded reason and creates one immutable revision; uncertain retries retain the original operation.
 
 ## Mobile
 
-At 760 CSS px and below the page is a single column. The contents rail becomes a **Jump to a section** control, entries use 16 px text, and buttons and choices keep a 44 px target.
+Use one-column labelled fields and 44 px actions at 390/320 px. Job packs menu opens an overlay; a numbered item focuses the corresponding field section and closes the overlay. Keep unsaved changes across menu/guide use and ask before abandoning them. There is no issued paper before the first saved revision.
 
-The preparation action bar is **fixed above the application's own navigation bar** rather than sticky inside the scroll container. A sticky box may not be displaced above its containing block, and on a phone the form begins near the foot of the scrollport, so the sticky bar was clamped to the form's own top and fell behind the navigation bar — measured at 26 px of overlap at 390 px and 145 px at 320 px before the change. Fixed positioning keeps the save state and both actions clear at every scroll position; the r03 box, padding, radius and shadow are unchanged. Below 650 px of viewport height the bar returns to r03's static position.
+## Authority, states and review
 
-Between 761 and 780 px the shell is already in its phone layout while this page still uses its tablet layout, so 770 px is checked explicitly alongside 390 and 320 px.
+Use existing tokens, Button/RegisterTable, SecondaryMenuFrame, worklist menus and PackDialog; the saved sections/forms retain their documented specific controls. Incoming appointment/work-order/personal-job handovers retain stable IDs. Outgoing readiness, exact issued-document and field acknowledgement links retain current permission checks. Register row titles come from verified saved scope; unsupported structured content falls back to saved text. A summary cannot clear a dispatch hold. Selection never issues, checks, withdraws or acknowledges.
 
-Measured mobile composition, same run:
+Loading, empty, filtered-empty, denied reads, stale source, saved/unsaved preparation, pending/recoverable output, review-required and withdrawn states remain distinct. Denial clears protected content. Keyboard tab lists support arrows/Home/End, disclosures remain native and modal Escape returns focus. No offline business capability is introduced.
 
-| Viewport | Preparation view columns | Module padding | Section padding | Action bar |
-|---|---|---|---|---|
-| 770 × 900 | contents 194 px at x 24 / main 512 px at x 234 / the guidance rail moves beneath the form | 24px | 20px | `sticky`, bottom 12px |
-| 390 × 844 | contents 358 px at x 16 / main 358 px at x 16 / the guidance rail moves beneath the form | 16px | 17px 16px | `fixed`, bottom 72px |
-| 320 × 800 | contents 288 px at x 16 / main 288 px at x 16 / the guidance rail moves beneath the form | 16px | 17px 16px | `fixed`, bottom 72px |
+References: [accepted Figma decision](../../../decisions/job-pack-figma-design.md), [icon-free boards and frame offsets](../../../reference/ui/service/job-pack-design-r01/README.md), [implementation decision](../../../decisions/job-pack-figma-implementation.md), [execution evidence](../../../testing/evidence/job-pack-figma-ui/README.md). Earlier [r03 HTML](../../../reference/ui/job-pack/powerplants-one-job-pack-r03.html) and I1–I7 evidence retain their historical and exact-content provenance. Licensed Kit icons are supplied at runtime; local verification uses the original fallback drawings. No source image is missing.
 
-Mobile evidence for this entry is in `docs/testing/evidence/job-pack-i3/`. It is capture evidence, not an owner's visual acceptance.
-
-## Shared components and states
-
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
-
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
-
-## Visual references
-
-- Accepted Figma successor design: [Job pack design r01 captures](../../../reference/ui/service/job-pack-design-r01/README.md) (icon-free PNGs; not application captures)
-- [powerplants-one-job-pack-r03.html](../../../reference/ui/job-pack/powerplants-one-job-pack-r03.html)
-
-## Behaviour, handovers and verification
-
-The draft User Guide `guide.page.service.packs.new` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
-
-## I6 saved-section handover
-
-First preparation still uses the existing command and nine required notes. After the save opens the record, verified structured context and the exact saved-text disclosure are available in the shared Job pack/Preparation view. I6 adds no first-save field, permission or source-selection authority. See the [I6 handover](../../../delivery/job-pack-i6-handover.md).
-
-## I7 history selection context
-
-Existing history choices now show their recorded confidence, date and author/verification where supplied. These remain service-audience records selected by the existing command. A reported or suspected entry is not a verified cause; selecting it does not change its source record. No first-save field or authority changes.
-
-## I5 final integration
-
-The canonical appointment/Field Technicians handover uses JobPackEntry and the current permission-filtered read. The record keeps r03’s full-bleed detail page, shared shell navigation and adopted D8-A breadcrumb. At most two header actions; appointment link in section 01 and prior exact issue link beside the successor context. Browser print includes only saved sections and explicit workbench/reference/state/page context, with shell clipping released. Incoming appointment and outgoing exact pack/issue identities are preserved. [Conformance record](../../../decisions/job-pack-integration.md) and [handover](../../../delivery/job-pack-integration-handover.md) distinguish actual checks, reference captures, owner/device review and deployment. Historical uploaded images are unavailable; fresh r03 captures are labelled as such.
+The design source is accepted; application owner/device and assistive-technology review remain open. Functional verification, source availability and hosted deployment are separate fields. Review fingerprints remain unchanged until a real review is recorded. The draft page guide follows the same actual controls and remains unapproved.

@@ -432,8 +432,8 @@ export function ProjectsGantt({
       setTimelineOffset(timelineRail.current.scrollLeft);
   }, [left, sheet, timeline, effectiveView]);
   const issues = useMemo(
-    () => new Map(tasks.map((t) => [t.id, scheduleIssues(t, tasks)])),
-    [tasks],
+    () => new Map(tasks.map((t) => [t.id, scheduleIssues(t, tasks, schedule.programme?.calendar)])),
+    [tasks, schedule.programme?.calendar],
   );
   const filtered = tasks.filter(
     (t) =>
@@ -1502,7 +1502,7 @@ export function ProjectsGantt({
                 Milestone
               </span>
               <span className="legend-note">
-                Manual dates · Mon–Fri reference calendar
+                Manual dates · {schedule.programme?.calendar.key === "PPO-PJ-CALENDAR-02" ? `${schedule.programme.calendar.name} (revision ${schedule.programme.calendar.revision})` : "Mon–Fri reference calendar"}
               </span>
             </div>
           </section>

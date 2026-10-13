@@ -1,0 +1,1198 @@
+/* SC-06 / SV-05. Accepted Figma Job pack, 12 October. Existing exact-text and print contracts remain. */
+#ppo-job-pack .jp-section-changes {
+  margin: 12px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--warning-border);
+  border-left: 3px solid var(--warning-accent);
+  border-radius: 6px;
+  background: var(--warning-tint);
+  font-size: 13px;
+  line-height: 20px;
+}
+#ppo-job-pack .jp-section-changes p {
+  margin: 4px 0 12px;
+}
+#ppo-job-pack .jp-source-comparison + .jp-source-comparison {
+  margin-top: 12px;
+}
+#ppo-job-pack .jp-source-comparison dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 6px 0 0;
+}
+#ppo-job-pack .jp-source-comparison dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+#ppo-job-pack .jp-source-comparison dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-job-pack .jp-paper-heading > .jp-badge {
+  flex: none;
+  white-space: nowrap;
+}
+#ppo-job-pack[data-pack-design="figma"] {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  --menu-width: var(--ppo-secondary-menu-width, 240px);
+}
+:is(#ppo-job-pack, #ppo-pack-register)[data-pack-design="figma"] > .mw-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+#ppo-job-pack .jp-workspace {
+  min-height: 0;
+  min-width: 0;
+  flex: 1;
+  overflow: auto;
+  scroll-padding-top: 160px;
+}
+:is(#ppo-job-pack, #ppo-pack-register) :is(.jp-view-menu, .jpr-menu) {
+  padding: 8px;
+}
+:is(#ppo-job-pack, #ppo-pack-register) :is(.jp-view-menu, .jpr-menu) h2 {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  padding: 20px 12px 10px;
+  margin: 0;
+}
+:is(#ppo-job-pack, #ppo-pack-register)
+  :is(.jp-view-menu, .jpr-menu)
+  h2:first-child {
+  padding-top: 12px;
+}
+:is(#ppo-job-pack, #ppo-pack-register) :is(.jp-view-menu, .jpr-menu) button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  margin: 0 0 2px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+:is(#ppo-job-pack, #ppo-pack-register)
+  :is(.jp-view-menu, .jpr-menu)
+  button:hover {
+  background: var(--surface-hover);
+}
+:is(#ppo-job-pack, #ppo-pack-register)
+  :is(.jp-view-menu, .jpr-menu)
+  button:is([aria-selected="true"], [aria-current="page"]) {
+  background: #e3e8ef;
+  color: var(--link);
+  font-weight: 500;
+}
+:is(#ppo-job-pack, #ppo-pack-register)
+  :is(.jp-view-menu, .jpr-menu)
+  button
+  small {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+:is(#ppo-job-pack, #ppo-pack-register)
+  :is(.jp-view-menu, .jpr-menu)
+  :is(.jp-icon, .product-icon) {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--muted);
+}
+#ppo-job-pack .jp-menu-foot {
+  padding: 18px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+#ppo-job-pack .jp-view-menu button .jp-edited-dot {
+  color: var(--link);
+}
+#ppo-job-pack .jp-view-menu button .jp-source-dot {
+  color: var(--warning);
+}
+#ppo-job-pack .jp-heading.jp-figma-heading {
+  display: block;
+  background: var(--surface-white);
+  padding: 18px 24px;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+  min-height: 103px;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+}
+#ppo-job-pack .jp-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+#ppo-job-pack .jp-figma-heading h1 {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.4px;
+  overflow-wrap: anywhere;
+}
+#ppo-job-pack .jp-title-row > .jp-badge {
+  flex: none;
+  max-width: 190px;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 2px 8px;
+  font-weight: 400;
+}
+#ppo-job-pack .jp-heading-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+}
+#ppo-job-pack .jp-heading-actions button,
+#ppo-job-pack .jp-heading-actions > .jp-button {
+  min-height: 40px;
+  padding: 9px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+#ppo-job-pack .jp-heading-actions .jp-print-action {
+  width: 46px;
+  padding: 9px;
+}
+#ppo-job-pack .jp-record-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 8px;
+}
+#ppo-job-pack .jp-record-meta .jp-avatar {
+  width: 22px;
+  height: 22px;
+  background: var(--surface-2);
+  color: var(--ink);
+}
+#ppo-job-pack .jp-record-meta > span + span::before {
+  content: "·";
+  margin-right: 8px;
+}
+#ppo-job-pack .jp-dispatch-bar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 41px;
+  padding: 10px 24px;
+  background: var(--surface-white);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+#ppo-job-pack .jp-dispatch-bar strong {
+  font-size: 14px;
+  font-weight: 500;
+  border-right: 1px solid var(--line);
+  padding-right: 18px;
+}
+#ppo-job-pack .jp-dispatch-bar > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+#ppo-job-pack .jp-dispatch-bar .jp-icon {
+  width: 14px;
+  height: 14px;
+}
+#ppo-job-pack .jp-dispatch-bar .jp-attention {
+  color: var(--warning);
+}
+#ppo-job-pack .jp-dispatch-bar details {
+  position: relative;
+  margin-left: auto;
+}
+#ppo-job-pack .jp-dispatch-bar details ul {
+  position: absolute;
+  right: 0;
+  z-index: 6;
+  width: min(380px, 80vw);
+  padding: 16px 16px 16px 30px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  padding: 20px 24px;
+  align-items: start;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-paper-heading {
+  background: var(--surface-white);
+  padding: 18px 24px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-paper-section {
+  padding: 24px;
+  scroll-margin-top: 125px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-section-head :is(h2, h3) {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-source-tag {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--link);
+}
+@media (min-width: 781px) {
+  #ppo-job-pack[data-pack-design="figma"] .jp-source-tag {
+    max-width: 52%;
+    margin-left: auto;
+  }
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-as-at {
+  color: var(--muted);
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-info-grid {
+  gap: 16px 24px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-info-grid dt {
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 3px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-info-grid dd {
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-info-grid > .wide {
+  grid-column: auto;
+}
+#ppo-job-pack .jp-status-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+#ppo-job-pack .jp-status-heading button {
+  border: 0;
+  background: transparent;
+  min-height: 28px;
+  padding: 4px;
+}
+#ppo-job-pack .jp-status-strip {
+  display: none;
+}
+#ppo-job-pack
+  .jp-workspace[data-status-open="false"]
+  #jp-panel-pack
+  .jp-layout {
+  grid-template-columns: minmax(0, 1fr) 48px;
+  padding-right: 0;
+}
+#ppo-job-pack
+  .jp-workspace[data-status-open="false"]
+  #jp-panel-pack
+  .jp-right-rail {
+  display: none;
+}
+#ppo-job-pack .jp-workspace[data-status-open="false"] .jp-status-strip {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-content: flex-start;
+  gap: 16px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+  writing-mode: vertical-rl;
+  font-size: 12px;
+  background: var(--surface-2);
+  padding: 16px 12px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-side-heading {
+  padding: 16px 16px 0;
+  border: 0;
+  background: transparent;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-side-heading h2 {
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-side-body {
+  padding: 8px 16px 16px;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-readiness-context {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-job-pack[data-pack-design="figma"]
+  .jp-readiness-context
+  > div:first-child {
+  display: none;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-readiness-group {
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-readiness-group h3 {
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-readiness-group summary {
+  font-size: 12px;
+  min-height: 32px;
+  padding: 8px 0;
+  color: var(--link);
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-revision-layout {
+  padding: 20px 24px;
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+#ppo-job-pack .jp-phone-tabs {
+  display: none;
+}
+#ppo-job-pack .jp-page-foot {
+  padding: 12px 24px !important;
+  margin: 0;
+}
+#ppo-job-pack[data-pack-design="figma"] .jp-read-state:empty {
+  display: none;
+}
+#ppo-job-pack .jp-workspace[data-recipient="true"] .jp-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+#ppo-job-pack .jp-workspace[data-recipient="true"] .jp-right-rail {
+  display: block !important;
+}
+#ppo-pack-register .jpr-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 10px 16px;
+  background: var(--surface-white);
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+#ppo-pack-register .jpr-toolbar .ppo-button {
+  min-height: 40px;
+  font-size: 14px;
+  padding: 8px 14px;
+  gap: 8px;
+}
+#ppo-pack-register .jpr-toolbar .ppo-button--primary {
+  background: var(--navy);
+  color: var(--white);
+}
+#ppo-pack-register .jpr-toolbar .crm-r38-menu-trigger {
+  min-height: 40px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  background: var(--surface-white);
+}
+#ppo-pack-register .jpr-count {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+#ppo-pack-register .jpr-desktop {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+#ppo-pack-register .ppo-register {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface-white);
+}
+#ppo-pack-register .ppo-register-table {
+  table-layout: fixed;
+  width: 1985px;
+  min-width: 1985px;
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-pack-register .ppo-register-table :is(th, td) {
+  height: 40px;
+  padding: 0 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  vertical-align: middle;
+}
+#ppo-pack-register .ppo-register-table thead th {
+  font-weight: 500;
+  background: var(--surface-white);
+}
+#ppo-pack-register .ppo-register-table .ppo-register-sort {
+  height: 39px;
+  padding: 0;
+}
+#ppo-pack-register .ppo-register-table .jpr-select {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--surface-white);
+  padding: 0;
+  text-align: center;
+}
+#ppo-pack-register .ppo-register-table .jpr-actions {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: var(--surface-white);
+  padding: 0;
+  text-align: center;
+}
+#ppo-pack-register .jpr-actions button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+#ppo-pack-register .jpr-group th {
+  height: 32px;
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding-left: 56px;
+}
+#ppo-pack-register .jpr-reference {
+  display: inline;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+}
+#ppo-pack-register .jpr-menu button:not([aria-current="page"]) {
+  color: var(--ink);
+}
+#ppo-pack-register .jpr-reference small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+#ppo-pack-register input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  accent-color: var(--link);
+  margin: 0;
+  vertical-align: middle;
+}
+#ppo-pack-register .jpr-attention {
+  color: var(--warning);
+}
+#ppo-pack-register .jpr-selection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+#ppo-pack-register .jpr-environment {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 4px 16px;
+  background: var(--paper);
+  flex: none;
+}
+.jpr-window-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.jpr-window {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.jpr-window .ppo-button {
+  margin: 12px 8px 0 0;
+}
+.jpr-visits {
+  padding: 16px;
+  overflow: auto;
+}
+.jpr-visits article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-pack-register :is(.jpr-phone-list, .jpr-phone-view) {
+  display: none;
+}
+@media (max-width: 1199px) {
+  #ppo-job-pack[data-pack-design="figma"] .jp-layout {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 16px;
+    padding: 16px;
+  }
+  #ppo-job-pack .jp-title-row {
+    flex-wrap: wrap;
+  }
+  #ppo-job-pack .jp-figma-heading h1 {
+    font-size: 22px;
+  }
+  #ppo-job-pack .jp-heading-actions {
+    margin-left: auto;
+  }
+  #ppo-pack-register .jpr-toolbar {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-job-pack .jp-workspace {
+    scroll-padding-top: 0;
+  }
+  #ppo-job-pack .jp-heading.jp-figma-heading {
+    position: static;
+    padding: 16px;
+    min-height: 0;
+  }
+  #ppo-job-pack .jp-figma-heading h1 {
+    font-size: 18px;
+    line-height: 24px;
+    width: 100%;
+  }
+  #ppo-job-pack .jp-heading-actions {
+    width: 100%;
+    margin: 4px 0 0;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #ppo-job-pack .jp-heading-actions :is(button, .jp-button) {
+    min-height: 44px;
+    white-space: normal;
+  }
+  #ppo-job-pack .jp-record-meta {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  #ppo-job-pack .jp-dispatch-bar {
+    display: none;
+  }
+  #ppo-job-pack .jp-phone-tabs {
+    display: flex;
+    background: var(--surface-white);
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-job-pack .jp-phone-tabs button {
+    flex: 1;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    min-height: 44px;
+    background: transparent;
+    font-size: 14px;
+    padding: 10px 4px;
+  }
+  #ppo-job-pack .jp-phone-tabs button[aria-selected="true"] {
+    border-bottom-color: var(--green);
+    font-weight: 500;
+  }
+  #ppo-job-pack[data-pack-design="figma"] :is(.jp-layout, .jp-revision-layout) {
+    display: block;
+    padding: 12px 16px !important;
+  }
+  #ppo-job-pack .jp-status-strip,
+  #ppo-job-pack .jp-status-heading {
+    display: none !important;
+  }
+  #ppo-job-pack
+    .jp-workspace:not([data-recipient="true"])[data-phone-tab="pack"]
+    #jp-panel-pack
+    .jp-right-rail {
+    display: none !important;
+  }
+  #ppo-job-pack
+    .jp-workspace[data-phone-tab="readiness"]
+    #jp-panel-pack
+    .jp-main-column {
+    display: none;
+  }
+  #ppo-job-pack
+    .jp-workspace[data-phone-tab="readiness"]
+    #jp-panel-pack
+    .jp-right-rail {
+    display: block !important;
+  }
+  #ppo-job-pack .jp-workspace[data-recipient="true"] .jp-right-rail {
+    margin-top: 16px;
+  }
+  #ppo-job-pack[data-pack-design="figma"] .jp-paper-section {
+    padding: 18px 16px;
+    scroll-margin-top: 50px;
+  }
+  #ppo-job-pack[data-pack-design="figma"] .jp-paper-heading {
+    padding: 16px;
+  }
+  #ppo-job-pack[data-pack-design="figma"] .jp-info-grid {
+    grid-template-columns: 1fr;
+  }
+  #ppo-job-pack .jp-source-tag {
+    text-align: left;
+  }
+  #ppo-pack-register .jpr-desktop {
+    display: none;
+  }
+  #ppo-pack-register .jpr-phone-view {
+    display: block;
+  }
+  #ppo-pack-register .jpr-phone-list {
+    display: block;
+    flex: 1;
+    overflow: auto;
+    background: var(--surface-white);
+  }
+  #ppo-pack-register .jpr-phone-list h2 {
+    height: 32px;
+    padding: 8px 16px;
+    font-size: 11px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--paper);
+    color: var(--muted);
+  }
+  #ppo-pack-register .jpr-phone-list > a {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 16px;
+  }
+  #ppo-pack-register .jpr-phone-list strong {
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 500;
+  }
+  #ppo-pack-register .jpr-phone-list .jpr-state {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+  }
+  #ppo-pack-register .jpr-toolbar {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+  #ppo-pack-register .jpr-toolbar > .ppo-button--primary {
+    order: 4;
+    width: 100%;
+  }
+  #ppo-pack-register .jpr-toolbar > .crm-r38-menu-trigger {
+    font-size: 12px;
+    padding: 8px;
+    min-height: 44px;
+  }
+  #ppo-pack-register .jpr-count {
+    font-size: 12px;
+  }
+  #ppo-pack-register .jpr-selection {
+    flex-wrap: wrap;
+  }
+  .jpr-window {
+    grid-template-columns: 1fr;
+  }
+  .jpr-visits article {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+@media print {
+  #ppo-job-pack[data-pack-design="figma"] > .mw-content,
+  #ppo-job-pack .jp-workspace {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  #ppo-job-pack
+    :is(
+      .mw-menu,
+      .mw-menu-strip,
+      .mw-menu-edge,
+      .jp-phone-tabs,
+      .jp-dispatch-bar,
+      .jp-heading-actions,
+      .jp-status-strip
+    ) {
+    display: none !important;
+  }
+  #ppo-job-pack .jp-heading.jp-figma-heading {
+    position: static;
+    min-height: 0;
+    padding: 0;
+  }
+  #ppo-job-pack[data-pack-design="figma"] .jp-layout {
+    display: block;
+    padding: 0 !important;
+  }
+  #ppo-job-pack
+    .jp-workspace[data-phone-tab="readiness"]
+    #jp-panel-pack
+    .jp-main-column {
+    display: block !important;
+  }
+}
+
+:is(#ppo-job-pack, #ppo-pack-register)[data-pack-design="figma"] > .mw-menu {
+  padding: 0;
+}
+
+#ppo-job-pack[data-pack-design="figma"] .jp-right-rail {
+  grid-column: auto;
+  grid-template-columns: 1fr;
+}
+#ppo-job-pack .jp-right-rail .jp-dispatch {
+  display: none;
+}
+#ppo-job-pack .jp-view-menu button[aria-current="location"] {
+  background: var(--surface-white);
+  color: var(--link);
+  font-weight: 500;
+}
+@media (max-width: 780px) {
+  #ppo-job-pack .jp-right-rail .jp-dispatch {
+    display: block;
+  }
+}
+
+#ppo-pack-register .jpr-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+#ppo-pack-register .jpr-desktop {
+  min-width: 0;
+}
+#ppo-pack-register .ppo-register-table {
+  width: var(--jpr-table-width, 1985px);
+  min-width: var(--jpr-table-width, 1985px);
+}
+#ppo-pack-register .jpr-selection {
+  order: 2;
+  flex: 0 0 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 20px 24px;
+  background: var(--surface-white);
+  border-left: 1px solid var(--line);
+}
+#ppo-pack-register .jpr-selection strong {
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 12px;
+}
+#ppo-pack-register .jpr-phone-filter {
+  display: none;
+}
+.crm-r38-panel:has(.jpr-window) {
+  width: min(980px, calc(100vw - 32px));
+  max-width: 980px;
+}
+.jpr-window {
+  font-size: 14px;
+  line-height: 20px;
+}
+.jpr-window > div + div {
+  border-left: 1px solid var(--line);
+  padding-left: 24px;
+}
+.jpr-window h3 {
+  font-size: 20px;
+  line-height: 28px;
+  margin: 0 0 24px;
+}
+.jpr-window h4 {
+  font-size: 14px;
+  margin: 24px 0 12px;
+}
+.jpr-window dl > div {
+  margin-bottom: 16px;
+}
+.jpr-window dt {
+  font-size: 12px;
+  color: var(--muted);
+}
+.jpr-window dd {
+  margin: 4px 0 0;
+}
+.jpr-window-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.jpr-window-tabs button {
+  flex: 1;
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+}
+.jpr-window-tabs button[aria-selected="true"] {
+  border-bottom-color: var(--green);
+  font-weight: 500;
+}
+.jpr-criterion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.jpr-criterion strong {
+  font-weight: 500;
+  flex: 1;
+}
+.jpr-criterion small {
+  flex-basis: 100%;
+  font-size: 12px;
+  color: var(--muted);
+}
+.jpr-window .jpr-rule {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+.jpr-history {
+  display: inline-block;
+  margin-top: 20px;
+}
+.jpr-window-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
+}
+@media (max-width: 780px) {
+  #ppo-pack-register
+    .jpr-toolbar
+    > :is(.jpr-desktop-filter, .ppo-button, .crm-r38-menu-trigger) {
+    display: none;
+  }
+  #ppo-pack-register .jpr-phone-filter {
+    display: block;
+    order: 3;
+  }
+  #ppo-pack-register .jpr-count {
+    order: 2;
+  }
+  #ppo-pack-register .jpr-phone-view .crm-r38-menu-trigger {
+    padding: 6px 0;
+    border: 0;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  #ppo-pack-register .jpr-phone-filter .crm-r38-menu-trigger {
+    width: 44px;
+    height: 44px;
+    padding: 12px;
+    border: 0;
+  }
+  #ppo-pack-register .jpr-phone-list {
+    min-width: 0;
+    width: 100%;
+  }
+  #ppo-pack-register .jpr-phone-list > a {
+    gap: 2px;
+    padding: 12px 16px;
+  }
+  #ppo-pack-register .jpr-phone-list > a > span:nth-of-type(2) {
+    color: var(--muted);
+  }
+  #ppo-pack-register .jpr-selection {
+    display: none;
+  }
+  .jpr-window > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 16px 0 0;
+  }
+}
+
+:is(#ppo-job-pack, #ppo-pack-register) :is(.jp-view-menu, .jpr-menu) button {
+  justify-content: flex-start;
+}
+
+#ppo-pack-register .jpr-phone-title {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+#ppo-pack-register .jpr-phone-title strong {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-pack-register .jpr-phone-title time {
+  flex: none;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-pack-register .jpr-phone-list > a > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-pack-register .jpr-state .product-icon {
+  margin-left: auto;
+  flex: none;
+}
+
+#ppo-job-pack .jp-recipient-dispatch {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface-white);
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-job-pack .jp-recipient-dispatch summary {
+  margin-top: 8px;
+  min-height: 44px;
+  color: var(--link);
+}
+@media print {
+  #ppo-job-pack[data-pack-design] .jp-workspace .jp-right-rail {
+    display: none !important;
+  }
+}
+
+/* Shared worklist controls are scoped by their host; retain the same tokens in this host. */
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: 300px;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  color: var(--ink);
+  box-shadow: 0 10px 32px #242a372e;
+  font:
+    14px/20px Roboto,
+    Verdana,
+    sans-serif;
+}
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover h2 {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  margin: 4px 8px 8px;
+}
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover > :is(button, a) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 100%;
+  height: auto;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+}
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover > :is(button, a):hover {
+  background: var(--surface-hover);
+}
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover .product-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin-left: auto;
+}
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover > label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  min-height: 36px;
+  font-size: 13px;
+  font-weight: 400;
+}
+:is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover > select {
+  width: 100%;
+  min-height: 44px;
+  font:
+    16px/20px Roboto,
+    Verdana,
+    sans-serif;
+  margin: 0 0 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  padding: 8px;
+  background: var(--surface-white);
+  color: var(--ink);
+}
+#ppo-pack-register .crm-r38-panel {
+  padding: 0;
+  width: min(780px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 20px 70px #242a3740;
+  background: var(--surface-white);
+  color: var(--ink);
+}
+#ppo-pack-register .crm-r38-panel:has(.jpr-window) {
+  width: min(980px, calc(100vw - 32px));
+}
+#ppo-pack-register .crm-r38-panel[open] {
+  display: flex;
+  flex-direction: column;
+}
+#ppo-pack-register .crm-r38-panel::backdrop {
+  background: #242a372b;
+}
+#ppo-pack-register .crm-r38-panel > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-pack-register .crm-r38-panel > header h2 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+#ppo-pack-register .crm-r38-panel > header button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+#ppo-pack-register .crm-r38-panel-body {
+  overflow: auto;
+  min-height: 0;
+  padding: 20px 24px;
+}
+#ppo-pack-register .crm-r38-panel > footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 24px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+#ppo-pack-register .crm-r38-panel:has(.jpr-window) > footer {
+  display: none;
+}
+@media (max-width: 780px) {
+  :is(#ppo-job-pack, #ppo-pack-register) .crm-r38-popover > :is(button, a) {
+    min-height: 44px;
+  }
+  #ppo-pack-register .crm-r38-panel {
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+  #ppo-pack-register .crm-r38-panel-body {
+    padding: 16px;
+  }
+  #ppo-pack-register .jpr-window-nav {
+    gap: 12px;
+  }
+}

@@ -25,8 +25,8 @@ const number = sectionNumber;
 
 // Which linked records each section's frozen context was composed from.
 export const sectionSources: Record<SectionKey, BasisDrift["source"][]> = {
-  identification: ["Work order", "Appointment"],
-  customer_arrangements: ["Site record", "Appointment"],
+  identification: ["Work order", "Appointment", "Customer record"],
+  customer_arrangements: ["Site record", "Appointment", "Customer record"],
   scope: ["Work order"],
   equipment: ["Work order"],
   history: [],
@@ -76,6 +76,7 @@ export function SourceTag({
       "Work order": `work order v${s.work.version} · scope v${s.work.scope_version}`,
       Appointment: `appointment v${s.appointment.version}`,
       "Site record": `site record v${s.site.version}`,
+      "Customer record": `customer record v${s.customer.version}`,
       "Pack template": `template v${s.template.version}`,
     };
   return (
@@ -92,12 +93,53 @@ export function SourceTag({
   );
 }
 
+export function ChangedSectionSources({
+  section,
+  drift,
+}: {
+  section: SectionKey;
+  drift: BasisDrift[];
+}) {
+  const changes = drift.filter((item) =>
+    sectionSources[section].includes(item.source),
+  );
+  if (!changes.length) return null;
+  return (
+    <div className="jp-section-changes" aria-label="Source version comparison">
+      <strong>Review changed sources</strong>
+      <p>
+        The saved content below is retained. Saving composes a new revision from
+        current records.
+      </p>
+      {changes.map((item) => (
+        <div className="jp-source-comparison" key={item.field}>
+          <span>
+            {item.source} · {item.label}
+          </span>
+          <dl>
+            <div>
+              <dt>Saved revision</dt>
+              <dd>{item.from}</dd>
+            </div>
+            <div>
+              <dt>Current source</dt>
+              <dd>{item.to ?? "Current source unavailable"}</dd>
+            </div>
+          </dl>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Identification({
   revision,
   appointmentId,
+  staff,
 }: {
   revision: PackRevision;
   appointmentId: string;
+  staff: boolean;
 }) {
   const s = revision.snapshot,
     a = s.appointment;
@@ -109,9 +151,13 @@ function Identification({
         {s.work.reference} · v{s.work.version}
       </Pair>
       <Pair label="Appointment">
-        <Link href={`/service/appointments/${appointmentId}`}>
-          {a.reference}
-        </Link>{" "}
+        {staff ? (
+          <Link href={`/service/appointments/${appointmentId}`}>
+            {a.reference}
+          </Link>
+        ) : (
+          a.reference
+        )}{" "}
         · v{a.version}
       </Pair>
       <Pair label="Visit window" wide>
@@ -149,7 +195,15 @@ export function SectionBody({
     frozen = s.sections[section];
   if (section === "identification")
     return (
-      <Identification revision={revision} appointmentId={pack.appointment_id} />
+      <Identification
+        revision={revision}
+        appointmentId={pack.appointment_id}
+        staff={
+          pack.actions.can_prepare ||
+          pack.actions.can_check ||
+          pack.actions.can_issue
+        }
+      />
     );
   const structured = readSection(section, s, revision.id, pack.section_view);
   if (structured)

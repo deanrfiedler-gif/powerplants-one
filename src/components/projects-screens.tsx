@@ -361,7 +361,15 @@ function History({ id, onClose }: { id: string; onClose: () => void }) {
                   Version {e.project_version} ·{" "}
                   {e.event_type === "ProjectCreated"
                     ? "Project created"
-                    : "Task saved"}
+                    : e.event_type === "ProjectTaskSaved"
+                      ? "Task saved"
+                      : e.event_type === "ProjectCalendarRecorded"
+                        ? "Working calendar recorded"
+                        : e.event_type === "ProjectActualsRecorded"
+                          ? "Actual dates recorded"
+                          : e.event_type === "ProjectAcceptanceChanged"
+                            ? "Project acceptance changed"
+                            : "Project updated"}
                 </strong>
                 <span>
                   {e.actor_name} ·{" "}

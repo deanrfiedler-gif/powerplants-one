@@ -293,9 +293,13 @@ test("hosted identity mapping, persisted CRM and immediate removal stay scoped",
     "finance.read",
     "service.scope.authorise",
     "pack.issue",
+    "cpq.review",
+    "cpq.publish",
   ] as const)
     assert.equal(await hasPermission(db, p, cap, CRM.company), false);
   assert.equal(await hasPermission(db, p, "shared.read", CRM.companyB), false);
+  for (const cap of ["cpq.read", "cpq.author", "cpq.calculate"] as const)
+    assert.equal(await hasPermission(db, p, cap, CRM.companyB), false);
   const proposal = crmCreate();
   proposal.owner_id = p.actor_id;
   proposal.initial_action.owner_id = p.actor_id;
@@ -364,6 +368,7 @@ test("hosted tester switches to an attributable pack reviewer without widening T
   for (const capability of [
     "pack.issue", "pack.acknowledge", "schedule.manage", "schedule.contact",
     "service.work_order.edit", "service.readiness.assess", "finance.read", "field.read.own",
+    "cpq.read", "cpq.author", "cpq.calculate", "cpq.review", "cpq.publish",
   ] as const)
     assert.equal(await hasPermission(database(), reviewer, capability, CRM.company), false);
   assert.equal(await hasPermission(database(), tester, "pack.read", CRM.company), false);

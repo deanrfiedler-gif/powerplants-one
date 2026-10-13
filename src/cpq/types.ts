@@ -4,12 +4,21 @@ export type Scalar = string | boolean | null;
 export type Fact = {
   key: string;
   label: string;
-  type: "Decimal" | "Boolean" | "Choice";
+  type: "Decimal" | "Integer" | "Boolean" | "Choice" | "Text";
   unit: string;
   required: boolean;
   choices: string[];
+  description?: string;
+  scope?: "System" | "Global" | "Shared";
+  source?: string;
+  minimum?: string | null;
+  maximum?: string | null;
+  binding?: { question_id: string } | null;
 };
 export type Condition =
+  | { op: "ALWAYS" }
+  | { op: "IN"; fact: string; values: (string | boolean)[] }
+  | { op: "KNOWN" | "NOT_APPLICABLE"; fact: string }
   | { op: "ALL" | "ANY"; items: Condition[] }
   | { op: "NOT"; item: Condition }
   | {
@@ -18,6 +27,10 @@ export type Condition =
       value: string | boolean;
     };
 export type Part = {
+  scope?: {
+    kind: "System" | "Shared" | "Configuration";
+    group_fact: string | null;
+  };
   key: string;
   description: string;
   category: CostLine["category"];
@@ -26,7 +39,19 @@ export type Part = {
   source: string;
   effective_from: string;
   effective_to: string;
-  tiers: { minimum: string; unit_cost: string; unit_sell: string }[];
+  tiers: {
+    minimum: string;
+    unit_cost: string;
+    unit_sell: string;
+    source_unit_cost?: string;
+  }[];
+  price_context?: {
+    book: string;
+    policy: string;
+    source_currency: string;
+    currency_per_aud: string;
+    recorded_at: string;
+  };
 };
 export type Rule = {
   key: string;
@@ -36,6 +61,7 @@ export type Rule = {
   part: string;
   quantity: string;
   priority: number;
+  parameters?: { key: string; label: string; value: string; unit: string }[];
 };
 export type Constraint = {
   key: string;
@@ -47,6 +73,7 @@ export type Instance = {
   id: string;
   label: string;
   facts: Record<string, Scalar>;
+  not_applicable?: string[];
 };
 export type Override = {
   target: string;
@@ -59,6 +86,7 @@ export type CalculationInput = {
   pricing_date: string;
   instances: Instance[];
   overrides: Override[];
+  pricing?: { mode: "Margin" | "Markup"; percent: string } | null;
 };
 export type Fixture = {
   name: string;
@@ -71,7 +99,7 @@ export type Fixture = {
   };
 };
 export type Definition = {
-  schema_version: 1;
+  schema_version: 1 | 3;
   label: string;
   currency: "AUD";
   facts: Fact[];
@@ -79,6 +107,94 @@ export type Definition = {
   rules: Rule[];
   constraints: Constraint[];
   fixtures: Fixture[];
+  design?: DesignContract;
+};
+export type DesignContract = {
+  milestones?: {
+    key: string;
+    label: string;
+    when: Condition;
+    anchor: string;
+    offset_days: number;
+    calendar: "BusinessDays" | "CalendarDays";
+  }[];
+  option_sets: {
+    key: string;
+    label: string;
+    fact: string;
+    options: {
+      value: string;
+      label: string;
+      available_when: Condition;
+      reason: string;
+    }[];
+  }[];
+  structure: {
+    key: string;
+    label: string;
+    parent: string | null;
+    option_sets: string[];
+  }[];
+  shared_capacity: {
+    key: string;
+    label: string;
+    group_fact: string;
+    demand_fact: string;
+    capacity_fact: string;
+    message: string;
+  }[];
+  decision_tables: {
+    key: string;
+    label: string;
+    hit_policy: "UNIQUE" | "PRIORITY";
+    required: boolean;
+    columns: string[];
+    rows: { key: string; when: Condition; rules: string[]; priority: number }[];
+  }[];
+  pricing: {
+    mode: "Catalog" | "Margin" | "Markup";
+    percent: string;
+    allow_override: boolean;
+  };
+};
+export type ConditionEvidence = {
+  condition: Condition;
+  result: boolean | null;
+  actual?: Scalar;
+  children?: ConditionEvidence[];
+};
+export type RuleTrace = {
+  instance_id: string;
+  rule: string;
+  condition: ConditionEvidence;
+  outcome:
+    | "Applied"
+    | "NotApplicable"
+    | "Unknown"
+    | "Zero"
+    | "Error"
+    | "TableExcluded";
+  error?: string;
+};
+export type LineDetail = {
+  target: string;
+  instance_id: string;
+  part: string;
+  description: string;
+  unit: string;
+  resolver: Part["resolver"];
+  contributions: Contribution[];
+  selected_rules: string[];
+  basis_hash: string;
+  base_quantity: string | null;
+  effective_quantity: string | null;
+  state: "Ready" | "Excluded" | "Conflict" | "Incomplete" | "NeedsReview";
+  overrides: Override[];
+  source: string;
+  effective_from: string;
+  effective_to: string;
+  price_tier: Part["tiers"][number] | null;
+  unit_sell: string | null;
 };
 export type Diagnostic = {
   code: string;
@@ -102,7 +218,7 @@ export type ResultLine = {
   overrides: Override[];
 };
 export type Calculation = {
-  engine: "PPO-CPQ-1";
+  engine: "PPO-CPQ-1" | "PPO-CPQ-3";
   ready: boolean;
   lines: ResultLine[];
   diagnostics: Diagnostic[];
@@ -110,4 +226,54 @@ export type Calculation = {
   input_hash: string;
   definition_hash: string;
   result_hash: string;
+  explanation?: {
+    instances: {
+      id: string;
+      label: string;
+      kind: "System" | "Shared" | "Configuration";
+    }[];
+    rules: RuleTrace[];
+    lines: LineDetail[];
+    options: {
+      instance_id: string;
+      set: string;
+      value: string;
+      available: boolean | null;
+      reason: string;
+    }[];
+    capacity: {
+      key: string;
+      group: string;
+      demand: string | null;
+      capacity: string | null;
+      state: "Ready" | "Exceeded" | "Unknown";
+    }[];
+    tables: {
+      key: string;
+      instance_id: string;
+      matches: string[];
+      selected: string[];
+      state: "Matched" | "Gap" | "Conflict" | "Unknown";
+    }[];
+    pricing: {
+      mode: "Catalog" | "Margin" | "Markup";
+      percent: string;
+      source: "Release" | "Configuration";
+    };
+    milestones: {
+      key: string;
+      instance_id: string;
+      label: string;
+      anchor: string;
+      offset_days: number;
+      calendar: "BusinessDays" | "CalendarDays";
+      date: null;
+      state: "Proposed" | "Unknown";
+    }[];
+    readiness: {
+      configuration: "Complete" | "NeedsAttention";
+      price: "Complete" | "Indicative" | "RequiresApproval";
+      adoption: "Ready" | "Blocked";
+    };
+  };
 };

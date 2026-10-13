@@ -1,0 +1,39 @@
+# CPQ workbench controls
+
+<!-- versioning: git; committed history is authoritative -->
+
+Stable component `cpq-workbench`; ES-02/ES-03. Owner Dean Fiedler; Host example, not an isolated gallery fixture. Design reference: [implementation decision](../../../decisions/cpq-figma-ui.md). Private Figma frames and page-specific geometry are recorded in the four route contracts.
+
+## Desktop
+
+Typed conditions use field/operator/value rows, ALL/ANY/NOT groups and explicit Always. Changing a field clears the previous operator and value. Move up/down works without dragging. Whole-number facts reject fractions; unknowns stay blank and optional Not applicable stays explicit. Formulas accept only the bounded interpreter language. Why presents calculated, adjusted and effective values, selected contributions, exact price/FX provenance and reasons. Shared costs have their own group.
+
+Desktop summary/quick test is 380 px; Why is a 400 px drawer. At 390/320 px stack tables as labelled cards; use full-screen summary/Why and reachable native modal controls. Native focus trap, Escape and focus return are required. Reuse shared buttons, shell and register table; scoped CPQ geometry is intentional and must not affect other consumers.
+
+## Mobile
+
+At 390 and 320 px preserve every control and amount, 44 px targets, no horizontal page overflow, dialog Escape and focus return. Device and screen-reader acceptance remain pending.
+
+## Fixtures and consumers
+
+The rules register distinguishes the company activation from publication history. Active rows retain the exact rule/release version even while a newer saved draft exists. Older active rows open the immutable revision read only; returning to the working draft is explicit. A published release superseded by another company activation is labelled inactive. Keep these states in the register, editor, guide and database/browser fixtures together.
+
+Four route consumers `/estimating/cpq`, `/estimating/cpq/[id]`, `/estimating/rules`, `/estimating/rules/[id]`. `../cpq-fixtures.json` names state fixtures; tests/browser/cpq.spec.ts supplies authorised real synthetic records. Unit/database tests prove immutable evidence, calculation and handover. These fixtures never grant production authority.
+
+## Alignment and review
+
+Native cent rounding, saved shell preferences and data-dependent labels are explicit departures from literal design example values. No private Pro SVG or private Figma URL is committed. The named version and [44 icon-free source captures](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) are retained. Owner visual review, physical devices and screen readers remain open. Functional proof and deployment are tracked separately in docs/delivery/cpq-ui-handover.md. No review fingerprint is asserted by this change.
+
+Configure & price keeps its white desktop summary alongside the entire workspace column, including the header, tabs and action footer, as retained frame 16 shows. Rules studio keeps Quick test beside its definition body as frame 02 shows. At phone widths summary opens in the full-screen panel; Save precedes Use in the configuration footer.
+
+The expanded CPQ primary rail is 240 px at desktop widths; the saved collapsed preference is retained. Use the existing variable Roboto font and explicit normal-weight fields with zero input margins so legacy form styles cannot change CPQ spacing. Desktop footer actions remain on one line beside readable 14 px status copy, with the 80 px frame-16 footer. These overrides are scoped to CPQ; other shell consumers retain their dimensions.
+
+All CPQ headings use normal letter spacing. The application-wide negative tracking is inappropriate for the retained 20 px workbench title; dialog titles also use the frame-05 20 px / 26 px treatment. Compiled captures at `3468ce6` exposed this inherited spacing; browser assertions now cover the correction at desktop and phone widths. The captured geometry and successful interactions are bounded evidence, not owner acceptance.
+
+The dialog title rule must also include the `#ppo-cpq` ancestor: the workbench's generic `h2` selector otherwise wins by specificity and renders 16 px. Integrated CI at `72dd7c2` exposed this on both desktop and phone. Keep the 20 px / 26 px assertions; correct the scoped cascade rather than the expected geometry.
+
+Option cards follow frame 16 as full-width stacked rows at desktop and phone widths, with a 64 px minimum height that grows with content. Selection retains a two-pixel blue outline and pale surface; the native radio uses the dark ink colour. Labels use medium weight. Preserve configured choice order and let unavailable reasons wrap; selection never reorders the choices.
+
+Native fields use an explicit accessible name from the visible label, with help as a separate description. Select options do not become part of the field name; the Review adjustment journey selects the exact Decision field.
+
+The formula dialog follows retained frame 05: an 880 px dialog with a 300 px insertion panel, searchable numeric facts/parameters and registered function insertions. Header and action footer remain visible while content scrolls; the desktop editor and insertion list scroll independently. Syntax checking is local; scenario calculations run through the read-only server validator. Apply changes only the working draft and invalidates its earlier test result. Authored unit metadata is shown without claiming dimensional inference.

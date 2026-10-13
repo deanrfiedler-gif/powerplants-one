@@ -1,3 +1,4 @@
+import { calendarIssues, type WorkingCalendar } from "./calendar-model";
 // Shared, dependency-free schedule contract. All dates are calendar dates, never instants.
 export const phases = [
   "Planning",
@@ -48,7 +49,14 @@ export type Project = {
   updated_at: string;
   can_edit: boolean;
 };
-export type Schedule = { project: Project; tasks: Task[]; observed_at: string };
+export type Schedule = {
+  project: Project;
+  tasks: Task[];
+  observed_at: string;
+  programme?: Awaited<
+    ReturnType<typeof import("./programme-reads").programmeFor>
+  >;
+};
 export type Owner = { id: string; display_name: string; external: boolean };
 export type ProjectHistory = {
   items: {
@@ -91,7 +99,24 @@ export function nextWeekday(date: string) {
     next = addDays(next, 1);
   return next;
 }
-export function scheduleIssues(task: Task, tasks: readonly Task[]) {
+export function scheduleIssues(
+  task: Task,
+  tasks: readonly Task[],
+  calendar?: WorkingCalendar,
+) {
+  if (calendar?.key === "PPO-PJ-CALENDAR-02")
+    return calendarIssues(task, tasks, calendar).map((i) => {
+      const prior = tasks.find((t) => t.id === i.predecessor_id);
+      if (i.code === "NonworkingEndpoint")
+        return "A date falls on a nonworking day in the saved Project calendar.";
+      if (i.code === "PredecessorUnavailable")
+        return "A predecessor is unavailable.";
+      if (i.code === "DependencyDatesNeeded")
+        return `Set dates to check the link from ${prior?.title ?? "the predecessor"}.`;
+      if (i.code === "CalendarRangeExceeded")
+        return "The next working date exceeds the supported date range.";
+      return `${prior?.title ?? "Predecessor"}: dependency requires a start on or after ${formatDate(i.earliest_start!)}.`;
+    });
   const issues: string[] = [];
   if (
     task.start_date &&

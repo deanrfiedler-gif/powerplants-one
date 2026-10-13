@@ -10,7 +10,7 @@ import { bootstrapDemoSchedulingPolicy } from "./demo-policy-bootstrap";
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
   "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
   "email.connect", "schedule.read", "service.work_order.read", "service.ticket.read", "service.work_order.edit",
-  "service.readiness.assess", "schedule.contact", "schedule.manage"];
+  "service.readiness.assess", "schedule.contact", "schedule.manage", "cpq.read", "cpq.author", "cpq.calculate"];
 const gmailTables = ["ppo.mail_connections", "ppo.provider_messages", "ppo.mail_message_links", "ppo.mail_sync_checkpoints"];
 const read = (file: string) => readFile(new URL(`../db/${file}`, import.meta.url), "utf8");
 const hash = (sql: string) => createHash("sha256").update(sql).digest("hex");
@@ -257,10 +257,22 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // configuration trigger. No backfill, table, seed, user, permission, identity
   // ALTER or output change. Existing r01 writes and hosted grant boundaries remain.
   // 0086 adds CPQ tables and capabilities with no seeded grants/users.
-  // Existing hosted identities receive no CPQ authority; adapters remain synthetic.
   // 0087 adds empty typed RAID entries and immutable revisions, no seed/user/grant.
   // Existing project.read/edit duties apply; no hosted authority or schedule changes.
-  if (latestMigrationVersion !== 87) throw Error("Review the existing-demo upgrade for this release.");
+  // 0088 adds empty calendar/actual revision tables and baseline companions; existing
+  // rows and grants remain unchanged. Runtime table privileges are granted below.
+  // Populated/repeated local and hosted upgrades remain required verification.
+  // Adapters remain synthetic. CPQ viewing/authoring/calculation is provisioned only
+  // by the explicit hosted upgrade below, under the existing bounded tester checks.
+  // 0089 adds empty CPQ drafts, rule membership and seal evidence. No seed,
+  // grant, user or backfill; schema-1 releases/runs and current head remain intact.
+  // The live UI request additionally enables three CPQ tester duties in Company A.
+  // Existing revocations are never replaced, invitation/grant expiry is not extended,
+  // and disabled/expired/inactive testers receive nothing. Review and publish are
+  // deliberately absent: an author cannot approve or activate their own release.
+  // 0090 adds empty library tables and three default-denied capabilities. No seed,
+  // user, grant or provider integration is added; existing runtime privileges apply.
+  if (latestMigrationVersion !== 90) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

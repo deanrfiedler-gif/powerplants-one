@@ -1,3 +1,4 @@
+import { openPackView } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import type { Pack } from "../../src/documents/components/client/job-pack-types";
@@ -75,7 +76,16 @@ test("SV05-I4 changed sources can be refreshed without inventing note changes", 
     "Source changed since this draft was prepared",
   );
   await notice.getByRole("button", { name: "Review changed sources" }).click();
-  await expect(page.getByRole("tab", { name: /^Preparation,/ })).toBeFocused();
+  await expect(page.locator("#jp-panel-prepare")).toBeVisible();
+  await expect(notice).toContainText("Affected sections:");
+  const comparison = page.locator("#p-3 .jp-section-changes");
+  await expect(comparison).toContainText("Work order · record version");
+  await expect(comparison.locator("dt")).toHaveText([
+    "Saved revision",
+    "Current source",
+  ]);
+  await expect(comparison.locator("dd")).toHaveText(["v3", "v13"]);
+  await expect(page.locator("#p-5 .jp-section-changes")).toHaveCount(0);
   await notice.getByRole("button", { name: "Refresh saved sources…" }).click();
   const dialog = page.getByRole("dialog");
   await dialog
@@ -88,9 +98,7 @@ test("SV05-I4 changed sources can be refreshed without inventing note changes", 
   await expect(notice).toHaveCount(0);
   expect(submitted?.content).toEqual(current.input);
   expect(submitted?.reason).toBe("SYN refreshed changed schedule");
-  await page
-    .getByRole("tab", { name: "Revision history", exact: true })
-    .click();
+  await openPackView(page, "Revision history");
   await expect(page.locator(".jp-timeline")).toContainText(
     "SYN refreshed changed schedule",
   );
@@ -104,7 +112,7 @@ test("SV05-I4 saved print keeps unsaved entries and returns keyboard focus", asy
 }) => {
   const { pack, current, open } = await setup(page);
   await open();
-  await page.getByRole("tab", { name: /^Preparation,/ }).click();
+  await openPackView(page, "Preparation");
   await page.locator("#section-identification").fill("SYN unsaved visit note");
   const trigger = page.getByRole("button", {
     name: "Print preview",
@@ -155,7 +163,7 @@ test("SV05-I4 save and print replays original bytes and pins the saved successor
     } else await route.fulfill({ json: { record_version: acceptedVersion } });
   });
   await open();
-  await page.getByRole("tab", { name: /^Preparation,/ }).click();
+  await openPackView(page, "Preparation");
   await page.locator("#section-identification").fill("SYN saved print note");
   await page
     .getByRole("button", { name: "Print preview", exact: true })
@@ -202,7 +210,7 @@ test("SV05-I4 stale source refuses a save without opening a print or losing entr
     }),
   );
   await open();
-  await page.getByRole("tab", { name: /^Preparation,/ }).click();
+  await openPackView(page, "Preparation");
   await page
     .locator("#section-identification")
     .fill("SYN preserve refused proposal");

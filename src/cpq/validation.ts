@@ -1,6 +1,19 @@
-import { object, label, invalid, choice, uuid } from "../shared/validation";
+import {
+  object,
+  label,
+  invalid,
+  choice,
+  uuid,
+  instant,
+} from "../shared/validation";
 import { amount } from "../estimating/validation";
 import { compileFormula, Fraction } from "./expression";
+import {
+  designContract,
+  factMetadata,
+  parameters,
+  pricingInput,
+} from "./design-validation";
 import type {
   CalculationInput,
   Condition,
@@ -54,6 +67,8 @@ function distinct<T extends { key: string }>(items: T[], field: string) {
 }
 function scalar(value: unknown, fact: Fact): Scalar {
   if (value === null) return null;
+  if (fact.type === "Text" && typeof value === "string" && value.length <= 500)
+    return value;
   if (fact.type === "Boolean" && typeof value === "boolean") return value;
   if (
     fact.type === "Choice" &&
@@ -61,9 +76,11 @@ function scalar(value: unknown, fact: Fact): Scalar {
     fact.choices.includes(value)
   )
     return value;
-  if (fact.type === "Decimal" && typeof value === "string") {
+  if (["Decimal", "Integer"].includes(fact.type) && typeof value === "string") {
     try {
-      return Fraction.fromDecimal(value).exactDecimal()!;
+      const n = Fraction.fromDecimal(value);
+      if (fact.type !== "Integer" || n.denominator === 1n)
+        return n.exactDecimal()!;
     } catch {
       /* give field context */
     }
@@ -84,7 +101,7 @@ export function condition(
       "condition",
       "A condition may contain at most 100 nodes and 8 levels.",
     );
-  const r = object(value, ["op", "items", "item", "fact", "value"]);
+  const r = object(value, ["op", "items", "item", "fact", "value", "values"]);
   const op = choice(r.op, "op", [
     "ALL",
     "ANY",
@@ -95,7 +112,17 @@ export function condition(
     "GTE",
     "LT",
     "LTE",
+    "KNOWN",
+    "NOT_APPLICABLE",
+    "IN",
+    "ALWAYS",
   ] as const);
+  if (op === "ALWAYS") {
+    object(r, ["op"]);
+    if (!facts.some((f) => f.scope !== undefined))
+      invalid("op", "Always applies requires a schema-3 dictionary.");
+    return { op };
+  }
   if (op === "ALL" || op === "ANY") {
     object(r, ["op", "items"]);
     return {
@@ -109,24 +136,72 @@ export function condition(
     object(r, ["op", "item"]);
     return { op, item: condition(r.item, facts, depth + 1, budget) };
   }
-  object(r, ["op", "fact", "value"]);
   const f = facts.find((f) => f.key === r.fact);
   if (!f) return invalid("fact", "Choose a registered fact.");
+  if (op === "IN") {
+    object(r, ["op", "fact", "values"]);
+    if (
+      f.scope === undefined ||
+      !["Choice", "Text", "Boolean"].includes(f.type)
+    )
+      invalid(
+        "op",
+        "Membership requires a schema-3 choice, text or Boolean fact.",
+      );
+    const values = bounded(r.values, "values", 30, 1).map((v) => scalar(v, f));
+    if (values.includes(null) || new Set(values).size !== values.length)
+      invalid("values", "Choose distinct known values.");
+    return { op, fact: f.key, values: values as (string | boolean)[] };
+  }
+  if (op === "KNOWN" || op === "NOT_APPLICABLE") {
+    object(r, ["op", "fact"]);
+    if (f.scope === undefined)
+      invalid("op", "Fact state tests require a schema-3 dictionary.");
+    return { op, fact: f.key };
+  }
+  object(r, ["op", "fact", "value"]);
   const v = scalar(r.value, f);
-  if (v === null || (f.type !== "Decimal" && !["EQ", "NE"].includes(op)))
+  if (
+    v === null ||
+    (!["Decimal", "Integer"].includes(f.type) && !["EQ", "NE"].includes(op))
+  )
     invalid("condition", "Use typed comparisons with a known literal.");
   return { op, fact: f.key, value: v! };
 }
 export function calculationInput(
   value: unknown,
   facts: Fact[],
+  design = false,
 ): CalculationInput {
-  const r = object(value, ["pricing_date", "instances", "overrides"]);
+  const r = object(value, [
+    "pricing_date",
+    "instances",
+    "overrides",
+    ...(design ? ["pricing"] : []),
+  ]);
   const instances = bounded(r.instances, "instances", 20, 1).map((v) => {
-    const i = object(v, ["id", "label", "facts"]),
+    const i = object(v, [
+        "id",
+        "label",
+        "facts",
+        ...(design ? ["not_applicable"] : []),
+      ]),
       values = object(
         i.facts,
         facts.map((f) => f.key),
+      );
+    const not_applicable = design
+      ? bounded(i.not_applicable ?? [], "not_applicable", 40).map((v) => key(v))
+      : [];
+    if (
+      new Set(not_applicable).size !== not_applicable.length ||
+      not_applicable.some(
+        (k) => !facts.some((f) => f.key === k) || values[k] != null,
+      )
+    )
+      invalid(
+        "not_applicable",
+        "Not-applicable facts must be registered, unique and have no scalar value.",
       );
     return {
       id: uuid(i.id, "instance_id"),
@@ -134,6 +209,7 @@ export function calculationInput(
       facts: Object.fromEntries(
         facts.map((f) => [f.key, scalar(values[f.key] ?? null, f)]),
       ),
+      ...(design ? { not_applicable } : {}),
     };
   });
   if (new Set(instances.map((i) => i.id)).size !== instances.length)
@@ -167,6 +243,7 @@ export function calculationInput(
     pricing_date: date(r.pricing_date, "pricing_date"),
     instances,
     overrides,
+    ...(design ? { pricing: pricingInput(r.pricing ?? null) } : {}),
   };
 }
 export function definition(value: unknown): Definition {
@@ -181,9 +258,16 @@ export function definition(value: unknown): Definition {
     "rules",
     "constraints",
     "fixtures",
+    ...(typeof value === "object" &&
+    value !== null &&
+    "schema_version" in value &&
+    value.schema_version === 3
+      ? ["design"]
+      : []),
   ]);
-  if (r.schema_version !== 1)
-    invalid("schema_version", "Use CPQ definition schema 1.");
+  if (r.schema_version !== 1 && r.schema_version !== 3)
+    invalid("schema_version", "Use CPQ definition schema 1 or 3.");
+  const design = r.schema_version === 3;
   const facts = distinct(
     bounded(r.facts, "facts", 40, 1).map((v) => {
       const f = object(v, [
@@ -193,6 +277,9 @@ export function definition(value: unknown): Definition {
         "unit",
         "required",
         "choices",
+        ...(design
+          ? ["description", "scope", "source", "minimum", "maximum", "binding"]
+          : []),
       ]);
       if (typeof f.required !== "boolean")
         invalid("required", "Required must be explicit.");
@@ -200,6 +287,7 @@ export function definition(value: unknown): Definition {
         "Decimal",
         "Boolean",
         "Choice",
+        ...(design ? ["Text" as const, "Integer" as const] : []),
       ] as const);
       const choices = bounded(
         f.choices,
@@ -219,6 +307,7 @@ export function definition(value: unknown): Definition {
         unit: label(f.unit, "unit", 40),
         required: f.required as boolean,
         choices,
+        ...(design ? factMetadata(f, type) : {}),
       };
     }),
     "facts",
@@ -235,6 +324,8 @@ export function definition(value: unknown): Definition {
         "effective_from",
         "effective_to",
         "tiers",
+        ...(design ? ["price_context"] : []),
+        ...(design ? ["scope"] : []),
       ]);
       const from = date(p.effective_from, "effective_from"),
         to = date(p.effective_to, "effective_to");
@@ -243,8 +334,81 @@ export function definition(value: unknown): Definition {
           "effective_to",
           "Price validity must end on or after its start.",
         );
+      const scoped = design
+        ? object(p.scope ?? { kind: "System", group_fact: null }, [
+            "kind",
+            "group_fact",
+          ])
+        : null;
+      const scope = scoped
+        ? {
+            kind: choice(scoped.kind, "scope.kind", [
+              "System",
+              "Shared",
+              "Configuration",
+            ] as const),
+            group_fact:
+              scoped.group_fact === null
+                ? null
+                : key(scoped.group_fact, "group_fact"),
+          }
+        : undefined;
+      if (
+        scope &&
+        (scope.kind === "Shared"
+          ? !facts.some(
+              (f) =>
+                f.key === scope.group_fact &&
+                ["Choice", "Text"].includes(f.type),
+            )
+          : scope.group_fact !== null)
+      )
+        invalid(
+          "scope",
+          "Shared outputs need a registered grouping fact; system and configuration outputs have no group fact.",
+        );
+      let price_context: import("./types").Part["price_context"];
+      if (design && p.price_context) {
+        const pc = object(p.price_context, [
+          "book",
+          "policy",
+          "source_currency",
+          "currency_per_aud",
+          "recorded_at",
+        ]);
+        const currency = label(pc.source_currency, "source_currency", 3),
+          rate = label(pc.currency_per_aud, "currency_per_aud", 32);
+        if (!/^[A-Z]{3}$/.test(currency))
+          invalid(
+            "source_currency",
+            "Use a three-letter uppercase currency code.",
+          );
+        try {
+          if (Fraction.fromDecimal(rate).numerator <= 0n)
+            invalid("currency_per_aud", "Use a positive exact exchange rate.");
+        } catch {
+          invalid("currency_per_aud", "Use a positive exact decimal rate.");
+        }
+        if (
+          currency === "AUD" &&
+          Fraction.fromDecimal(rate).subtract(new Fraction(1n)).numerator !== 0n
+        )
+          invalid("currency_per_aud", "AUD source prices use a rate of one.");
+        price_context = {
+          book: label(pc.book, "book", 200),
+          policy: label(pc.policy, "policy", 200),
+          source_currency: currency,
+          currency_per_aud: rate,
+          recorded_at: instant(pc.recorded_at, "recorded_at"),
+        };
+      }
       const tiers = bounded(p.tiers, "tiers", 10, 1).map((t) => {
-        const x = object(t, ["minimum", "unit_cost", "unit_sell"]);
+        const x = object(t, [
+          "minimum",
+          "unit_cost",
+          "unit_sell",
+          ...(design ? ["source_unit_cost"] : []),
+        ]);
         const cost = amount(x.unit_cost, "unit_cost"),
           sell = amount(x.unit_sell, "unit_sell");
         if (
@@ -255,10 +419,47 @@ export function definition(value: unknown): Definition {
             "unit_sell",
             "Sell cannot be below cost under the native synthetic policy.",
           );
+        let source_unit_cost: string | undefined;
+        if (price_context) {
+          source_unit_cost = label(x.source_unit_cost, "source_unit_cost", 32);
+          let converted;
+          try {
+            const source = Fraction.fromDecimal(source_unit_cost);
+            if (source.numerator < 0n) throw Error("negative");
+            converted = source.divide(
+              Fraction.fromDecimal(price_context.currency_per_aud),
+            );
+          } catch {
+            invalid(
+              "source_unit_cost",
+              "Use a non-negative exact source cost.",
+            );
+          }
+          // Compare at the native cent scale, half-up, before any quantity extension.
+          const cents =
+            (converted!.numerator * 100n) / converted!.denominator +
+            (((converted!.numerator * 100n) % converted!.denominator) * 2n >=
+            converted!.denominator
+              ? 1n
+              : 0n);
+          if (
+            Fraction.fromDecimal(cost).subtract(new Fraction(cents, 100n))
+              .numerator !== 0n
+          )
+            invalid(
+              "unit_cost",
+              "AUD cost must equal source cost divided by currency-per-AUD, rounded half-up to cents.",
+            );
+        } else if (x.source_unit_cost !== undefined)
+          invalid(
+            "source_unit_cost",
+            "Record the frozen price context for a source-currency cost.",
+          );
         return {
           minimum: amount(x.minimum, "minimum", true),
           unit_cost: cost,
           unit_sell: sell,
+          ...(source_unit_cost !== undefined ? { source_unit_cost } : {}),
         };
       });
       if (
@@ -292,6 +493,8 @@ export function definition(value: unknown): Definition {
         effective_from: from,
         effective_to: to,
         tiers,
+        ...(price_context ? { price_context } : {}),
+        ...(scope ? { scope } : {}),
       };
     }),
     "parts",
@@ -306,6 +509,7 @@ export function definition(value: unknown): Definition {
           "part",
           "quantity",
           "priority",
+          ...(design ? ["parameters"] : []),
         ]),
         phase = choice(x.phase, "phase", ["Materials", "Labour"] as const),
         part = parts.find((p) => p.key === x.part);
@@ -317,15 +521,25 @@ export function definition(value: unknown): Definition {
         Number(x.priority) > 1000
       )
         invalid("priority", "Priority must be an integer from 0 to 1000.");
+      const params = design ? parameters(x.parameters ?? [], facts) : [];
       const quantity = label(x.quantity, "quantity", 2048),
         symbols = new Set(
-          facts.filter((f) => f.type === "Decimal").map((f) => f.key),
+          facts
+            .filter((f) => ["Decimal", "Integer"].includes(f.type))
+            .map((f) => f.key),
         );
+      for (const parameter of params) symbols.add(parameter.key);
       if (phase === "Labour")
-        for (const p of parts.filter((p) => p.category !== "Labour"))
+        for (const p of parts.filter(
+          (p) =>
+            p.category !== "Labour" &&
+            (!design ||
+              (p.scope?.kind === part!.scope?.kind &&
+                p.scope?.group_fact === part!.scope?.group_fact)),
+        ))
           symbols.add(`bom_${p.key}`);
       try {
-        compileFormula(quantity, symbols);
+        compileFormula(quantity, symbols, design);
       } catch (e) {
         invalid("quantity", (e as Error).message);
       }
@@ -337,6 +551,7 @@ export function definition(value: unknown): Definition {
         part: part!.key,
         quantity,
         priority: Number(x.priority),
+        ...(design ? { parameters: params } : {}),
       };
     }),
     "rules",
@@ -360,7 +575,7 @@ export function definition(value: unknown): Definition {
       invalid("ready", "Use an explicit expected result.");
     return {
       name: label(x.name, "name", 100),
-      input: calculationInput(x.input, facts),
+      input: calculationInput(x.input, facts, design),
       expected: {
         ready: e.ready as boolean,
         cost: e.cost === null ? null : amount(e.cost, "cost"),
@@ -374,7 +589,7 @@ export function definition(value: unknown): Definition {
     };
   });
   return {
-    schema_version: 1,
+    schema_version: design ? 3 : 1,
     label: label(r.label, "label", 200),
     currency: choice(r.currency, "currency", ["AUD"] as const),
     facts,
@@ -382,5 +597,8 @@ export function definition(value: unknown): Definition {
     rules,
     constraints,
     fixtures,
+    ...(design
+      ? { design: designContract(r.design, facts, rules, parts) }
+      : {}),
   };
 }

@@ -83,3 +83,15 @@ The Reports mismatch predates this increment. Comparison from the last pin maint
 PR #419's [Contacts check](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38124416939/job/114425685332) refused the changed Projects and Reports pins. Comparison from the last pin review (`476dd05`) to `3100bef` finds one Projects addition: original `RecordProjectBaseline` receipt recovery now requires the current project coordinator. Task owner visibility, external affiliation validation and contact commands are unchanged. Reports now marks a shorter-than-200 result window Complete and rechecks current report access after reading retained presentation bytes. Neither change alters contact fields, recipient authority or the restricted-versus-empty precedent used by this design.
 
 Only the two working contract hashes are refreshed after this source review. Original source provenance, historical build manifest, fixtures and issued Contacts HTML remain unchanged. The deterministic build, model and browser checks verify compatibility separately from visual and business acceptance.
+
+## Project programme contract re-read — 13 October 2026
+
+PR #466's Contacts check at `15577d5` refused the changed Projects service pin. Source review against the preceding `1bb0cc2` finds an additive calendar/actual-date schedule projection and a coordinator check for original `RecordProjectCalendar` receipt recovery. The existing `tasksFor` Person visibility, `owner_unavailable`, external affiliation checks, Project context and contact commands are unchanged. The Contacts fixture and model still describe those boundaries accurately.
+
+Only the Projects working contract hash is refreshed after this review. The deterministic check must reproduce the issued Contacts HTML bytes; original provenance, historical manifests, fixtures and visual/business review remain unchanged. Execution is recorded in the [Project programme evidence](../../testing/evidence/project-programme/README.md).
+
+## Projects register and calendar integration contract re-read — 13 October 2026
+
+The combined conflict repair compares the merged Projects service against main `ad9f2eb`, register source `0252fcd` and calendar/actual-date source `960c935`. The register exports the unchanged `projectVisibility` predicate; the calendar increment adds its existing schedule projection and coordinator check for original calendar receipt recovery. Person/task-owner visibility, `owner_unavailable`, external affiliations, customer/site checks and contact commands are unchanged. No new Contacts behavior is introduced by combining those changes.
+
+After this source review, the Projects working contract pin is recomputed from the merged LF source. Issued HTML, original provenance, historical manifests, fixtures and review records are retained. Deterministic, model and native-browser verification remain separate from owner and business acceptance; execution results are recorded in PR #463.

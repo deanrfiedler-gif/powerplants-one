@@ -18,7 +18,7 @@ test("all Maintenance and Warranty routes retain their Service shell parent", ()
 test("seven full ordered compositions retain withheld positions and My Work placement", () => {
   const expected = {
     sales: "Pulse|Leads|Deals|Activities|Tasks|Sales Inbox|Sales-to-Estimating handovers|Won-deal receiving|Aftercare & renewal|Contacts|Products|Insights",
-    estimate: "My Work|Intake & workload|Intake|Estimation wizard|Specialist configurations|Cost sources|Quotations|Reviews & approvals",
+    estimate: "My Work|Intake & workload|Intake|Estimation wizard|Configure & price|Specialist configurations|Cost sources|Rules studio|Quotations|Reviews & approvals",
     engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Technical queries|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
     projects: "My Work|Projects|Programme|Delivery readiness|Risks & issues|Variations & obligations|Site assurance|Acceptance & closeout",
     service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|My jobs|My inspections|Incidents and actions|Inspection review|Equipment|Service agreements|Maintenance|Warranty",

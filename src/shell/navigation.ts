@@ -60,6 +60,8 @@ export type ShellDestination = {
   requiresAny?: Capability[];
 };
 export const destinations: ShellDestination[] = [
+  {id:"cpq",label:"Configure & price",icon:"nav-products",readiness:"ready",workspace:"estimate",href:"/estimating/cpq",requiresAll:["cpq.read","estimating.read"]},
+  {id:"rules-studio",label:"Rules studio",icon:"nav-documents",readiness:"ready",workspace:"estimate",href:"/estimating/rules",requires:["cpq.read"]},
   {id:"sales-estimating",label:"Sales-to-Estimating handovers",icon:"nav-inbox",readiness:"ready",workspace:"sales",href:"/sales/handoffs/estimating",requires:["crm.opportunity.read"]},
   {id:"sales-won",label:"Won-deal receiving",icon:"nav-approval",readiness:"ready",workspace:"sales",href:"/sales/handoffs/won",requires:["crm.opportunity.read"]},
   {id:"sales-aftercare",label:"Aftercare & renewal",icon:"nav-activities",readiness:"ready",workspace:"sales",href:"/sales/aftercare",requiresAll:["shared.internal.read","report.read"]},
@@ -316,7 +318,7 @@ export function workspacePreference(raw: string | null): WorkspaceId {
 }
 export const departmentRails: Record<WorkspaceId, readonly string[]> = {
   sales: ["pulse", "leads", "deals", "calendar", "tasks", "mail", "sales-estimating", "sales-won", "sales-aftercare", "contacts", "products", "insights"],
-  estimate: ["work", "estimates", "intake", "wizard", "configurations", "pricing", "quotations", "estimate-reviews"],
+  estimate: ["work", "estimates", "intake", "wizard", "cpq", "configurations", "pricing", "rules-studio", "quotations", "estimate-reviews"],
   engineering: ["work", "engineering", "basis", "drawings", "technical-queries", "materials", "changes", "technical-reviews", "commissioning"],
   projects: ["work", "projects", "programme", "readiness", "risks", "variations", "assurance", "acceptance"],
   service: ["work", "tickets", "orders", "planner", "technicians", "packs", "reports", "jobs", "inspection-capture", "incidents", "inspection-review", "equipment", "agreements", "maintenance", "warranty"],

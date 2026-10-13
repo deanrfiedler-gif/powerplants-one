@@ -13,6 +13,7 @@ import { sharedOperation } from "../platform/operations";
 import { companyContext, scopedOwner } from "../shared/authority";
 import { visibility, visible } from "../shared/reads";
 import { object, uuid, optionalId, invalid } from "../shared/validation";
+import { programmeFor } from "./programme-reads";
 import { parseProject, parseTask } from "./validation";
 import {
   hasCycle,
@@ -27,7 +28,7 @@ type ProjectRow = Omit<Project, "updated_at" | "can_edit"> & {
   workspace_id: string;
 };
 const projectSelect = `SELECT p.*,p.target_date::text AS target_date,o.display_name AS customer_name,s.display_name AS site_name,s.timezone,u.display_name AS coordinator_name FROM ppo.projects p JOIN ppo.organisations o ON (o.workspace_id,o.id)=(p.workspace_id,p.organisation_id) JOIN ppo.sites s ON (s.workspace_id,s.id)=(p.workspace_id,p.site_id) JOIN ppo.users u ON (u.workspace_id,u.id)=(p.workspace_id,p.coordinator_id)`;
-const projectVisibility = () =>
+export const projectVisibility = () =>
   `${scopeSql("p.company_id", "p.site_id", "project.read")} AND ${scopeSql("p.company_id", "p.site_id")} AND ${scopeSql("p.company_id", "p.site_id", "shared.internal.read")} AND ${visibility("Organisation", "o")} AND ${visibility("Site", "s")}`;
 export async function projectRow(
   c: QueryClient,
@@ -153,9 +154,11 @@ export async function readSchedule(
       row.company_id,
       row.site_id,
     );
+    const tasks = await tasksFor(c, p, id);
     return {
       project: projection(row, can_edit),
-      tasks: await tasksFor(c, p, id),
+      tasks,
+      programme: await programmeFor(c, p, id, row.timezone, tasks),
       observed_at: new Date().toISOString(),
     };
   });
@@ -277,7 +280,7 @@ export async function authoriseProjectReceipt(
   command: string,
 ) {
   const row = await projectRow(c, p, id);
-  if (command === "RecordProjectBaseline" && row.coordinator_id !== p.actor_id)
+  if (["RecordProjectBaseline", "RecordProjectCalendar"].includes(command) && row.coordinator_id !== p.actor_id)
     throw unavailable();
   if (
     !(await hasPermission(

@@ -155,13 +155,24 @@ ProductNavigation retains the original main prefetch policy on desktop and phone
 
 Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-loading.spec.ts`, `directory-navigation.spec.ts` and `navigation-safety.spec.ts`. The [loading evidence](../../../testing/evidence/pt27-loading/README.md) records source-specific timing and receiving outcomes. Geometry, fonts, labels, icons and accepted reference bytes are unchanged. No new mockup image is needed for this transport-only change; actual captures and existing references remain separate from owner/device/visual acceptance. Existing stale reviews are preserved.
 
-
-ES-08 Figma implementation binds the configuration and view routes to the existing shell/menu patterns. Historical runs use WorklistMenu; no other consumer behaviour is changed. See the screen-configurator-workbench host and execution evidence for fixture, phone and review limits.
-
 ## Fertigation consumer
 
 The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The composition reuses the shared Shell v2 primary rail and phone navigation merged in PR #459; its header and record geometry remain scoped, without changing the shared control API. Paired owner acceptance remains open.
 
+
+## Screen Configurator consumer
+
+ES-08 Figma implementation binds the configuration and view routes to the existing shell/menu patterns. Historical runs use WorklistMenu; no other consumer behaviour is changed. See the screen-configurator-workbench host and execution evidence for fixture, phone and review limits.
+
+## Job Pack Figma application, 13 October 2026
+
+The [implementation decision](../../../decisions/job-pack-figma-implementation.md) binds this component to the accepted Figma Job Pack layout. Desktop uses the shared menu, register and 320 px status panel; phone uses compact register rows and coordinator Pack / Readiness / History tabs. Existing exact-content, permission, source and command contracts remain. The live host fixtures are `tests/ui/job-pack-fixture.tsx` and `job-pack-register-fixture.tsx`; states and consumer bindings are maintained in `components.json`. See [execution evidence](../../../testing/evidence/job-pack-figma-ui/README.md). Owner/device acceptance remains pending; no fingerprint is copied into a review record.
+
+
+
+## Native CPQ workspaces
+
+The Estimating rail adds Configure & price (ES-02) and Rules studio (ES-03), using the existing permission-filtered destinations and glyphs. Their four routes use the full-bleed workspace allocation and SecondaryMenuFrame under `#ppo-cpq`. The shared My Work stylesheet adds that scope to its menu geometry without changing other consumers. CPQ owns its form, tab and footer reset. Existing rail preferences, mobile navigation, unsaved-change protection and Kit/fallback policy remain in effect. The four page specifications and [CPQ host fixtures](../cpq-fixtures.json) record their states; paired owner/device acceptance is pending.
 ## Figma application increment — 13 October 2026
 
 The [implementation decision](../../../decisions/figma-ui-implementation.md) records the exact inspected Shell v2 and My Work source frames, SH-01/SH-02 scope, r20 Overview / dashboard type, shared components and source-command handovers. The [execution ledger](../../../testing/evidence/figma-ui/README.md) separates compiled functional proof, visual comparison and remaining owner/device review.
@@ -175,3 +186,9 @@ Reuse the real application shell, SecondaryMenuFrame, ProductIcon/Icon, Menu and
 The release-preparation pass keeps long workspace breadcrumbs whole: show the current destination, or the module while its menu is docked; Page hierarchy exposes the ancestors. The search flows between the heading and utilities. Engineering retains its explicit shared-menu presentation, while My Work opts into Figma styling. Estimating keeps its 1244 px content-width docking rule; the wider default rail can therefore select the drawer at a viewport that docks with the compact rail. Host checks cover these distinct states without altering command or access assertions.
 
 The ES-02 and ES-08 consumer proofs share `tests/helpers/shell-header-geometry.ts` to measure flowing controls and quick-add spacing across their existing widths and menu states. ES-08 retains an offset negative control. ES-02 verifies the full-height More panel against the rail and reaches ancestors through Page hierarchy while preserving its dirty-draft stay/discard checks. These bindings replace superseded shell geometry assertions; reference hashes and owner review state remain separate.
+
+## Projects Figma consumer
+
+`route:/projects` reuses this component with scoped styling from `src/app/styles/projects-register.css`. [Decision](../../../decisions/projects-register-native.md) and [source measurements](../../projects-register/figma-measurements.json) define the requested departures: 40 px desktop rows/header and controls, pinned 44 px end cells, compact 80 px phone rows, a 240 px expanded rail and a five-item Projects phone bar. Generic consumer geometry remains intact. Native fixture/state examples are in `tests/browser/projects-register.spec.ts` (selection, export, exact snapshots, URL restoration and refused reads); this does not introduce a new isolated gallery renderer.
+
+Use the [execution record](../../../testing/evidence/projects-register/README.md) for actual checks and visual limitations. Owner/device review stays pending; no review fingerprint is assigned by this update.
