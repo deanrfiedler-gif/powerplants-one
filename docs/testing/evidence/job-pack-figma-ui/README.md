@@ -30,7 +30,7 @@ The fixture builder now follows both `./` and `../` stylesheet imports from the 
 
 The broad local shared UI run passed 33 cases, skipped 26 repeated viewport cases and failed four. The missing route contract was corrected; focused replays passed that contract, menu interaction and shell identity. One long shell/reference comparison repeatedly hit its unchanged 30-second deadline at different later steps on the loaded workstation. It is recorded as a local timeout, not a demonstrated application regression. On GitHub, the same UI job at `06c3972` passed 41 cases and skipped 36; its sole failure was the missing route contract. Final-head CI remains the integration gate.
 
-The branch integrates main `d195e67` without changing its accepted backend migrations. Job Pack adds no migration. The currently deployed demo was at schema 0084 when checked; releasing integrated main requires the existing reviewed additive 0085–0087 upgrade path, which preserves hosted users and grants. This records release scope, not a completed deployment.
+The branch integrates main `d195e67` without changing its accepted backend migrations. Job Pack adds no migration. The latest recorded deployment (GitHub run `38219240454`, commit `6c16471`) used schema 0084. Releasing integrated main may therefore require the existing reviewed additive 0085–0087 upgrade path, which preserves hosted users and grants; the release operator must verify the actual installed ledger. This records release scope, not a completed deployment.
 
 ## Remaining acceptance
 
