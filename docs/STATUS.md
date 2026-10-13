@@ -1,5 +1,9 @@
 # Current prototype status
 
+## DK-06 managed template drafts — 13 October 2026
+
+Dean authorised R2 on the catalogue contribution in PR #471. The [decision](decisions/document-template-drafts-backend.md) and [contract](contracts/document-template-drafts.md) add scoped structured proposals, immutable exact revisions, independent review observations and actor-private original recovery. Migration 0092 adds empty tables and three default-denied capabilities; no seed grants authority. Drafts never enter active template definitions or policies. The [execution ledger](testing/evidence/template-drafts/README.md) separates verification from independent/owner acceptance. R3 supported publication, R4 use assignment, native controls and deployment remain open.
+
 ## DK-06 template catalogue backend — 13 October 2026
 
 Current repository writer for this bounded contribution: the user-authorised DK-06 R1 session on `codex/template-catalogue-backend`, based on merged main `a333604`. The [decision](decisions/template-catalogue-backend.md) and [API contract](contracts/template-catalogue.md) add read-only current/historical template definitions, retained dependency fingerprints and permission-scoped native usage for OUT-09/OUT-10/OUT-14. Policy selection, renderer support and issued evidence remain separate. No migration, seed, capability or native writer changes. [Execution evidence](testing/evidence/template-catalogue/README.md) records actual verification; UI, managed drafts, publication, owner acceptance and deployment remain separate. Pending output-register/actions #468/#469 are independent. Six database cases, two focused units, one compiled HTTP journey, full build, TypeScript, changed-source lint and repository checks pass. The full local suite passes 792/795; all three Windows filesystem failures reproduce on untouched main `a333604`. PR CI and review remain separate.

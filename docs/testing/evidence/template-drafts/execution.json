@@ -1,0 +1,92 @@
+{
+  "scope": "DK-06 R2 synthetic backend",
+  "base_commit": "b524ea634da825d703f5633b2d83a74d86de37b7",
+  "source_hash_basis": "SHA-256 of UTF-8 source with CRLF normalised to LF",
+  "source_sha256": {
+    "db/migrations/0092-template-draft-proposals.sql": "7d734815661de6e17b2cf6c0a4a3ba47e6e403c4d6a5d887c33c55467be1eb97",
+    "scripts/demo-upgrade.ts": "cb3807a4cd0ac21e582d6fc871018332f5b431e9899bf4118edfa809b4c5882f",
+    "scripts/migration-registry.ts": "c22fa0a098ac9840a5f7cde1240801e4829fd2a9dac4ab652260857af54c4611",
+    "scripts/template-drafts-restart-proof.ts": "15279c92335b3d1092d825443eb79dd1d0d53e4831095a2c68a24b51af586845",
+    "src/access/capabilities.ts": "71928cbad0d192354f45eb8d39547426163e326b9b9b2ea189e801f2665bc6ed",
+    "src/app/api/v1/document-template-drafts/[id]/history/route.ts": "2c0d36c1632141b650448fe9fc211aad84f31726ac7b17ec8f46a40250467eff",
+    "src/app/api/v1/document-template-drafts/[id]/reviews/route.ts": "712e29d17cb8002fbe5f7b4357764bc2b17fe76db11c2f98af4382d706c1a427",
+    "src/app/api/v1/document-template-drafts/[id]/revisions/route.ts": "35578514f0f0b87164502ca90cd6ca07b0aeb373ee344ced368680915a37f58c",
+    "src/app/api/v1/document-template-drafts/[id]/route.ts": "27534a1a4354c43bac49867dfc4b50ff394891a9da5c7138932c545977f61b64",
+    "src/app/api/v1/document-template-drafts/bindings/route.ts": "b59f3ca774c9e2c4fb6a1dffec8bfebeb8eee6bd1efb27912f479f9dd1edfa4a",
+    "src/app/api/v1/document-template-drafts/route.ts": "e950be959a15d56be91fc6d9cc0c266d23c17c6553cd4adf612a61020d872cff",
+    "src/documents/drafts/commands.ts": "c176963ef2c3bf7ed4818aaa4dd4525d7021a33d2214b1772d10d89151d389ad",
+    "src/documents/drafts/context.ts": "c0a330facb54f8fc7ce42d962c9c2c1918392f8d2c6a53e44716d2a338c328b3",
+    "src/documents/drafts/reads.ts": "1c5a21b34411843132f769da7804f6d88e146a72dc1f83f685d5fd5b6242e83d",
+    "src/documents/drafts/validation.ts": "567c24df5dd9d3c0c114cc6810b10a99a2ab248d27724acaa2e2f9891e45dce7",
+    "src/platform/permissions.ts": "91ededf66d2870f5aa64ba0dbb8787dc329e12ef2edb3f8dca4744251859e6c7",
+    "src/shared/receipts.ts": "d7c28dc8cc9a77d339513233601afd8516b62ff70781d0b12f00890dc53d9ad8",
+    "tests/database/template-drafts-upgrade.test.ts": "aafcfbe900d392687014854423e21ce9d2361e77869abeafec9ff418a6d6ef52",
+    "tests/database/template-drafts.test.ts": "1c2c3856edd65fe51eeb050273b765e168dd7a403b0f0f57ba2ba577115c587b",
+    "tests/helpers/template-drafts.ts": "a9106833389f27892c28347cb01eb017792ef1f076c5b6a0fc2ed4a0a4013698",
+    "tests/http/template-drafts.test.ts": "92721afa376cd001683c5ef40766a487782cd44ca9742c0b088613e71d64b92a",
+    "tests/unit/template-drafts.test.ts": "64d863eecdf4f4a9557161a8a867b1f3040f1389f193c501ef59307e9037b555"
+  },
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test"
+  },
+  "results": {
+    "focused_units": {
+      "pass": 2
+    },
+    "r1_r2_database": {
+      "pass": 11
+    },
+    "populated_0090_upgrade": {
+      "pass": 1
+    },
+    "products_upgrades": {
+      "pass": 3,
+      "starting_versions": [
+        25,
+        90,
+        92
+      ]
+    },
+    "demo_upgrades": {
+      "pass": 6
+    },
+    "compiled_http": {
+      "pass": 2
+    },
+    "unit_suite": {
+      "pass": 794,
+      "fail": 3,
+      "limit": "Unchanged Windows filesystem cases reproduced on baseline a333604 in R1; exact relevant files remain unchanged"
+    },
+    "build": "Passed",
+    "typecheck": "Passed",
+    "focused_eslint": "Passed",
+    "access_review_model": {
+      "pass": 107,
+      "capabilities": 148
+    },
+    "access_review_browser": {
+      "status": "Baseline environment failure",
+      "completed_groups": 0,
+      "browser": "Chrome 155.0.8059.40",
+      "error": "Page.captureScreenshot: Unable to capture screenshot",
+      "baseline_commit": "a333604",
+      "baseline_html_sha256": "5791d5829394f9b0ddf416feaf814be73d549ab46bbe968f6a380b6918690263"
+    },
+    "restart": {
+      "result": "Passed",
+      "scope": "DK-06 R2 exact typed evidence and actor-private original receipts after PostgreSQL and application-process restart",
+      "evidence_hash": "5be5d8a2d2576630c572b9469183499eea0e3b279ec03e978de6a0ae6ec97f52",
+      "publication_eligible": false
+    }
+  },
+  "acceptance": {
+    "independent_review": "Pending",
+    "business_acceptance": "Pending",
+    "native_page": "Unbuilt",
+    "deployment": "Not performed"
+  }
+}

@@ -4440,7 +4440,7 @@
       "title": "Document and form template management",
       "kind": "scope",
       "module": "DK",
-      "summary": "Read-only catalogue and usage backend for exact Job pack, Service report and Finance template definitions. Managed drafts, review, publication, use assignment and the native page remain separate.",
+      "summary": "Exact catalogue/usage reads plus scoped structured draft proposals, immutable revisions and independent review evidence. Runtime publication, use assignment and native controls remain separate.",
       "path": "/documents/templates",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -4449,7 +4449,13 @@
         "src/app/api/v1/document-templates/[id]/route.ts",
         "src/app/api/v1/document-templates/[id]/usage/route.ts",
         "docs/decisions/template-catalogue-backend.md",
-        "docs/contracts/template-catalogue.md"
+        "docs/contracts/template-catalogue.md",
+        "src/documents/drafts/commands.ts",
+        "src/documents/drafts/reads.ts",
+        "src/documents/drafts/validation.ts",
+        "src/app/api/v1/document-template-drafts/route.ts",
+        "docs/decisions/document-template-drafts-backend.md",
+        "docs/contracts/document-template-drafts.md"
       ],
       "guide_key": "guide.dk.06",
       "design_path": "docs/design/development/pages/scope-dk-06.md",
@@ -4463,7 +4469,7 @@
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "DK-06 R1 backend verification is recorded separately in docs/testing/evidence/template-catalogue/README.md. Native page and owner acceptance remain open.",
+      "functional_status": "R1/R2 backend verification is recorded separately in docs/testing/evidence/template-catalogue/README.md and docs/testing/evidence/template-drafts/README.md. Native page and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

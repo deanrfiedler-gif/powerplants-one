@@ -3,6 +3,9 @@ import type { Capability } from "../platform/permissions";
 // Display copy, never an authorisation rule. Exhaustive against the server contract.
 // Initial descriptions follow the retained AD-01 design; proposed capabilities are excluded.
 export const capabilityLabels = {
+  "template.read": "Read scoped template proposals and review evidence",
+  "template.propose": "Create and revise structured template proposals",
+  "template.review": "Independently review exact template proposals",
   "document.read": "Read scoped library documents",
   "document.register": "Register document revisions and references",
   "document.review": "Independently review documents and finding responses",

@@ -272,7 +272,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // deliberately absent: an author cannot approve or activate their own release.
   // 0090 adds empty library tables and three default-denied capabilities. No seed,
   // user, grant or provider integration is added; existing runtime privileges apply.
-  if (latestMigrationVersion !== 90) throw Error("Review the existing-demo upgrade for this release.");
+  // 0092 adds four empty template-proposal/evidence tables with ordinary runtime
+  // privileges and three default-denied capabilities. It widens identity/audit
+  // constraints using the deferred-identity flush pair. No seed, tester grant,
+  // runtime template, policy, existing output or source bytes change.
+  if (latestMigrationVersion !== 92) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
