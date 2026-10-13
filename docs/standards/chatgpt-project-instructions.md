@@ -104,4 +104,4 @@ PJ: follow the contracts in STATUS; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md).
 
-DK-01/02: document-library-backend.md.
+DK: STATUS contracts; native authority.

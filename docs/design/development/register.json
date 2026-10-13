@@ -4317,16 +4317,26 @@
       "summary": "Consolidate existing domain-specific outputs into the Output, Issue & Distribution Centre; preserve generation/issue/delivery/acknowledgement distinctions.",
       "path": "/documents/issues",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/outputs/reads.ts",
+        "src/outputs/model.ts",
+        "docs/decisions/output-issue-register-backend.md",
+        "docs/contracts/output-register.md"
       ],
       "guide_key": "guide.dk.03",
       "design_path": "docs/design/development/pages/scope-dk-03.md",
       "html_path": "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/documents/context.ts",
+        "src/documents/worker.ts",
+        "src/reports/context.ts",
+        "src/reports/worker.ts",
+        "src/platform/permissions.ts"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Read-only backend verification recorded in docs/testing/evidence/output-register/README.md. Native page, visual review and owner acceptance remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
