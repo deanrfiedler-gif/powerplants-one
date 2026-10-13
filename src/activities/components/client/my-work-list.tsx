@@ -11,7 +11,7 @@ import {
   typeIcons,
   type ParentPreset,
 } from "./my-work-dialogs";
-import { Icon, Tag } from "./my-work-ui";
+import { Icon, Menu, Tag } from "./my-work-ui";
 
 // One place decides which dialog is open, so a list, the schedule and a notice all open the same
 // activity in the same way, and closing any of them returns to the same place in the page.
@@ -52,27 +52,30 @@ export function ActivityRow({
   open,
   showOwner = false,
   ownerAction = false,
+  compact = false,
 }: {
   row: WorkRow;
   now: string;
   open: (request: DialogRequest) => void;
   showOwner?: boolean;
   ownerAction?: boolean;
+  compact?: boolean;
 }) {
   const t = timing(row, now);
   const context = contextLine(row);
   const tag = row.linked.type === "Organisation" ? "Customer" : row.linked.type === "Ticket" ? "Service request" : row.linked.type === "Opportunity" ? "Deal" : row.linked.type;
   return (
-    <li className="mw-row" data-group={row.group} data-activity={row.id}>
+    <li className={`mw-row${compact ? " mw-row-compact" : ""}`} data-group={row.group} data-activity={row.id}>
+      {compact && <button type="button" className="mw-done-ring" disabled={!row.can_complete} aria-label={`Complete: ${row.summary}`} title={row.can_complete ? "Record outcome" : row.can_edit ? "Owner completes" : "View only"} onClick={() => open({ kind: "outcome", row })}><span aria-hidden="true" /></button>}
       <span className="mw-row-icon" title={activityTypeLabels[row.activity_type]}>
         <Icon name={typeIcons[row.activity_type]} />
         <span className="mw-sr">{activityTypeLabels[row.activity_type]}</span>
       </span>
       <div className="mw-row-main">
-        <button type="button" className="mw-row-title" onClick={() => open({ kind: "detail", row })}>
+        <button type="button" className="mw-row-title" title={compact ? row.summary : undefined} onClick={() => open({ kind: "detail", row })}>
           <span>
             {row.summary}
-            <Icon name="chevron-right" />
+            {!compact && <Icon name="chevron-right" />}
           </span>
         </button>
         <p className="mw-row-context">
@@ -88,7 +91,10 @@ export function ActivityRow({
         {t.detail && <span>{t.detail}</span>}
       </div>
       <div className="mw-row-actions">
-        {row.group === "Closed" ? (
+        {compact ? <Menu name={`Actions: ${row.summary}`} label="Activity actions" icon="dots" iconOnly quiet align="end" items={[
+          ...(row.can_edit ? [{ id: "reschedule", label: row.due_needed ? "Set date" : "Reschedule", onSelect: () => open({ kind: row.due_needed ? "date" : "reschedule", row }) }] : []),
+          { id: "detail", label: "Open activity", onSelect: () => open({ kind: "detail", row }) },
+        ]} /> : row.group === "Closed" ? (
           <span className="mw-muted">{row.status}</span>
         ) : (
           <>

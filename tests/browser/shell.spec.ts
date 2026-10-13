@@ -18,7 +18,7 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   await page.goto("/");
   await expect(page).toHaveURL(/\/work$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    /Good (morning|afternoon|evening), Coordinator/,
+    "My Work",
   );
   await page.keyboard.press("Tab");
   await expect(

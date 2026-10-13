@@ -12,10 +12,10 @@ test("N19/N31 labelled destinations and shell controls retain all established br
     if(width<=780){
       await expect(page.locator(".ppo-rail")).toBeHidden();
       await expect(page.getByRole("navigation",{name:"Mobile navigation",exact:true})).toBeVisible();
-      await expect(page.getByRole("navigation",{name:"Mobile navigation",exact:true}).getByText("Activities",{exact:true})).toBeVisible();
+      await expect(page.getByRole("navigation",{name:"Mobile navigation",exact:true}).getByRole("link",{name:"Activities",exact:true})).toBeVisible();
     }else{
       await expect(page.locator(".ppo-rail")).toBeVisible();
-      await page.getByRole("button",{name:/Expand primary navigation/}).click();
+      if(await page.getByRole("button",{name:/Expand primary navigation/}).isVisible()) await page.getByRole("button",{name:/Expand primary navigation/}).click();
       expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     }
     await page.getByRole("button",{name:"More",exact:true}).click();

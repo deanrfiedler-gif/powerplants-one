@@ -8,9 +8,10 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { expectFlowingShellHeader } from "./shell-header-geometry";
 
-// Independently load the issued sources. Host geometry is governed by the r04
-// refinement; original localStorage examples and commercial rules are not used.
+// Independently load the issued sources. Workspace geometry follows r04; the
+// global header follows adopted Shell v2. Source storage and rules are not used.
 export async function compareEs02Design(
   page: Page,
   context: BrowserContext,
@@ -98,15 +99,8 @@ export async function compareEs02Design(
           await page
             .getByRole("button", { name: "Hide estimate summary", exact: true })
             .click();
-        const search = (await page
-            .locator(".ppo-global-search")
-            .boundingBox())!,
-          add = (await page
-            .getByRole("button", { name: "Quick add", exact: true })
-            .boundingBox())!;
-        const centre = (search.x + add.x + add.width) / 2;
-        expect(Math.abs(centre - width / 2)).toBeLessThanOrEqual(2);
-        layouts.push({ width, menu, summary, searchCentre: centre });
+        const header = await expectFlowingShellHeader(page);
+        layouts.push({ width, menu, summary, header });
         if (!summary)
           await page
             .getByRole("button", { name: "Show estimate summary", exact: true })
@@ -114,13 +108,12 @@ export async function compareEs02Design(
       }
       const before = await page.locator(".es02-main").boundingBox();
       await page.getByRole("button", { name: "More", exact: true }).click();
-      expect(
-        Math.abs(
-          (await page.locator("#desktop-more-panel").boundingBox())!.x +
-            (await page.locator("#desktop-more-panel").boundingBox())!.width -
-            316,
-        ),
-      ).toBeLessThanOrEqual(1);
+      const more = (await page.locator("#desktop-more-panel").boundingBox())!;
+      const rail = (await page.locator(".ppo-rail").boundingBox())!;
+      expect(more.width).toBe(240);
+      expect(more.x).toBe(rail.x + rail.width);
+      expect(more.y).toBe(0);
+      expect(more.height).toBe(1200);
       expect(await page.locator(".es02-main").boundingBox()).toEqual(before);
       await page.keyboard.press("Escape");
       if (menu === "collapsed") {
@@ -148,7 +141,7 @@ export async function compareEs02Design(
         actual,
         layouts,
         adaptations:
-          "ADR-0033: r04 native five-step workspace, r22 shared shell, versioned persistence and exact saved costs; source preview storage/pricing rules excluded",
+          "ADR-0033: r04 native five-step workspace and retained r22 tokens; adopted Figma Shell v2 flowing header and More geometry; versioned persistence and exact saved costs; source preview storage/pricing rules excluded",
       },
       null,
       2,

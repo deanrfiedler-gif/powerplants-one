@@ -239,7 +239,7 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
   ).toBeVisible();
 });
 
-test("ES02-T65: Back, Forward, shell router, breadcrumb and installed reload review a dirty proposal once", async ({
+test("ES02-T65: Back, Forward, shell router, page hierarchy and installed reload review a dirty proposal once", async ({
   page,
   context,
 }, info) => {
@@ -303,10 +303,14 @@ test("ES02-T65: Back, Forward, shell router, breadcrumb and installed reload rev
   await warning.dismiss();
   await expect(page).toHaveURL(retained);
 
-  await page
-    .getByRole("navigation", { name: "Breadcrumb" })
-    .getByRole("link", { name: "Estimating", exact: true })
-    .click();
+  const leaveViaHierarchy = async () => {
+    const hierarchy = page.locator("#page-hierarchy");
+    if (!(await hierarchy.isVisible()))
+      await page.getByRole("button", { name: "Page hierarchy", exact: true }).click();
+    await expect(hierarchy).toBeVisible();
+    await hierarchy.getByRole("link", { name: "Estimating & quotation", exact: true }).click();
+  };
+  await leaveViaHierarchy();
   await stay();
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
   await search.fill("Northbank");
@@ -317,10 +321,7 @@ test("ES02-T65: Back, Forward, shell router, breadcrumb and installed reload rev
   await page.getByRole("button", { name: "More", exact: true }).click();
   await page.getByRole("button", { name: "Reload app", exact: true }).click();
   await stay();
-  await page
-    .getByRole("navigation", { name: "Breadcrumb" })
-    .getByRole("link", { name: "Estimating", exact: true })
-    .click();
+  await leaveViaHierarchy();
   await page
     .getByRole("button", {
       name: "Discard working changes then continue",
