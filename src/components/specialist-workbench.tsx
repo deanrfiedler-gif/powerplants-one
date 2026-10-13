@@ -11,8 +11,9 @@ import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { definition, views, viewLabels, type View } from "../estimating/specialist/definition";
 import type { DraftProposal, Decision, NativePriceProposal } from "../estimating/specialist/types";
 import { type DrawingModel, drawingErrors, num, readDrawing } from "../estimating/specialist/drawing";
-import { configurationSignature, inputErrors, readinessGates, sectionIds, sheetGeometry, untestedOptions, type SectionId } from "../estimating/specialist/workbench";
+import { configurationSignature, inputErrors, readinessGates, sectionIds, sections, sheetGeometry, untestedOptions, type SectionId } from "../estimating/specialist/workbench";
 import { useSpecialistCommand } from "./specialist-recovery";
+import { WorkbenchMenu } from "./specialist-menu";
 import { WorkbenchHeader } from "./specialist-header";
 import { ConfigureView } from "./specialist-configure";
 import { DrawingsView } from "./specialist-drawings";
@@ -21,15 +22,16 @@ import { PricingView } from "./specialist-pricing";
 import { CompareView } from "./specialist-compare";
 import { DefinitionView, HistoryView } from "./specialist-records";
 import { basePath, type Bench, type Detail, type Options, type Preview, type Receiving, type Register } from "./specialist-types";
-import { Dialog, Notice, Pill, fmt, readable, runLabel, usePhone } from "./specialist-ui";
+import { Dialog, Icon, Notice, Pill, fmt, readable, runLabel, usePhone } from "./specialist-ui";
 import "./specialist-workbench.css";
+import "./specialist-figma.css";
 
 // ES-08 Screen Configurator Workbench. The shared shell owns the rail, header
 // and viewport; this module owns its secondary menu, module header, views and
 // scroll surface. The design board decision (docs/decisions/es08-design-board.md)
 // fixes the composition; the recovered engine, commands, receipts and recovery
 // are unchanged from the r03 workbench.
-function Frame({ id, view, children, message = "" }: { id?: string; view?: string; children: ReactNode; message?: string }) {
+function Frame({ id, view, children, message = "", contents }: { id?: string; view?: string; children: ReactNode; message?: string; contents?: ReactNode }) {
   const identity = useIdentity(),
     preferences = useScopePreferences(`${identity.workspace_id}:${identity.actor_id}:es08`),
     menu = useSecondaryMenu(preferences.value.menu, (open) => preferences.save({ ...preferences.value, menu: open }));
@@ -41,7 +43,7 @@ function Frame({ id, view, children, message = "" }: { id?: string; view?: strin
       menuId="es08-menu"
       contentId="es08-content"
       message={message}
-      menu={
+      menu={contents ? <div onClick={() => menu.closeOverlay(false)}>{contents}</div> : (
         <>
           <Link className="es08-back" href="/estimating">
             ← Back to estimating
@@ -67,7 +69,7 @@ function Frame({ id, view, children, message = "" }: { id?: string; view?: strin
             Engineering approval remains open
           </p>
         </>
-      }
+      )}
     >
       {children}
     </SecondaryMenuFrame>
@@ -320,6 +322,7 @@ export function SpecialistWorkspace({ id }: { id: string }) {
         <p className="es08-empty">Unknown specialist view.</p>
       </Frame>
     );
+  if (resource.data) return <Editor key={`${resource.data.actor_id}:${id}`} initial={resource.data} view={view as View} reload={resource.reload} />;
   return (
     <Frame id={id} view={view}>
       <ErrorNotice error={resource.error} />
@@ -331,7 +334,7 @@ export function SpecialistWorkspace({ id }: { id: string }) {
           <span className="es08-sub">Loading the authorised configuration…</span>
         </div>
       )}
-      {resource.data && <Editor key={`${resource.data.actor_id}:${id}`} initial={resource.data} view={view as View} reload={resource.reload} />}
+
     </Frame>
   );
 }
@@ -368,6 +371,10 @@ function Editor({ initial, view, reload }: { initial: Detail; view: View; reload
     [working, setWorking] = useState<string | null>(null),
     [manualOpen, setManualOpen] = useState(false),
     [methodOpen, setMethodOpen] = useState(false),
+    [actionsOpen, setActionsOpen] = useState(false),
+    [savedRun, setSavedRun] = useState(false),
+    [partsFilter, setPartsFilter] = useState<Bench["partsFilter"]>("active"),
+    [findingFilter, setFindingFilter] = useState("All"),
     [receiving, setReceiving] = useState<Receiving | null>(null),
     [receivingError, setReceivingError] = useState<unknown>(null),
     [receivingDecisions, setReceivingDecisions] = useState<Decision[]>([]),
@@ -449,8 +456,11 @@ function Editor({ initial, view, reload }: { initial: Detail; view: View; reload
     setReceiving(null);
   };
   const saveDraft = () => command.send(`${path}/draft`, "SaveSpecialistDraft", { reason, expected_version: data.configuration.version, proposal });
-  const saveReview = () =>
-    command.send(`${path}/run`, "SaveSpecialistRun", { reason, expected_version: data.configuration.version, proposal, decisions, proposal_signature: preview?.proposal_signature });
+  const saveReview = async () => {
+    const accepted = await command.send(`${path}/run`, "SaveSpecialistRun", { reason, expected_version: data.configuration.version, proposal, decisions, proposal_signature: preview?.proposal_signature });
+    if (accepted) setSavedRun(true);
+    return accepted;
+  };
   const decide = (key: string, choice: Decision["choice"], receivingChoice = false) => {
     const fn = receivingChoice ? setReceivingDecisions : setDecisions;
     fn((previous) => [...previous.filter((d) => d.key !== key), { key, choice, reason }]);
@@ -536,14 +546,23 @@ function Editor({ initial, view, reload }: { initial: Detail; view: View; reload
       },
       apply,
       phone,
+      partsFilter, setPartsFilter, findingFilter, setFindingFilter,
     };
-  if (denied(command.error) || denied(error) || denied(receivingError)) return <ErrorNotice error={command.error ?? error ?? receivingError} />;
+  if (denied(command.error) || denied(error) || denied(receivingError)) return <Frame><ErrorNotice error={command.error ?? error ?? receivingError} /></Frame>;
+  const savingStatus = command.busy ? (command.pending ? "Checking original operation…" : "Saving…") : command.pending ? command.status : !initial.can_edit ? "Read-only" : dirty ? "Unsaved changes in this browser" : command.status;
+  const reviewCalculation = () => {
+    setPreviewKey("");
+    void api<Preview>(`${path}/preview`, { expected_version: data.configuration.version, proposal, decisions }).then((p) => { setPreview(p); setPreviewKey(proposalKey); }, setError);
+  };
   return (
-    <div className="es08-layout">
+    <Frame id={id} view={view} contents={<WorkbenchMenu bench={bench} view={view} section={section} setSection={setSection} />}>
+    <div className="es08-layout" data-view={view}>
       <div className="es08-main">
+        {phone && <WorkbenchHeader bench={bench} view={view} onMethod={() => setMethodOpen(true)} onActions={() => setActionsOpen(true)} />}
         <div className="es08-scroll">
-          <WorkbenchHeader bench={bench} view={view} onMethod={() => setMethodOpen(true)} />
+          {!phone && <WorkbenchHeader bench={bench} view={view} onMethod={() => setMethodOpen(true)} onActions={() => setActionsOpen(true)} />}
           <div className="es08-notices">
+            {savedRun && <Notice tone="ok" title={`Run ${runLabel(data.current_run?.sequence)} saved`} action={<Link href={`/estimating/configurations/${id}/history`}>View run {runLabel(data.current_run?.sequence)}</Link>}>The exact review run is retained.</Notice> }
             {initial.configuration.version !== data.configuration.version && dirty && (
               <Notice tone="warn" title="The server version changed" role="alert">
                 Your proposal is retained in this browser; compare the latest version before saving.
@@ -588,28 +607,27 @@ function Editor({ initial, view, reload }: { initial: Detail; view: View; reload
           {view === "definition" && <DefinitionView bench={bench} />}
           {view === "history" && <HistoryView bench={bench} />}
         </div>
+        {phone && view === "configure" && <div className="es08-phone-summary"><span>Standard cloth</span><strong>{geometry ? `${fmt(geometry.cloth, 0)} m²` : "Unavailable"}</strong><span>{geometry ? `${geometry.count} × ${fmt(geometry.cut, 1)} × ${geometry.clothWidth} m` : "Resolve inputs"}</span></div>}
         <footer className="es08-actions">
           <label className="es08-stack-label es08-reason">
             Reason for next saved change
             <input maxLength={1000} value={reason} disabled={frozen} onChange={(e) => setReason(e.target.value)} />
+            {!phone && <span role="status" className="es08-sub es08-action-status"><Icon name={dirty || command.pending ? "warning" : command.busy ? "spinner" : "check"} />{savingStatus}</span>}
           </label>
-          <button type="button" className="ppo-button" disabled={command.busy} onClick={() => {
-            setPreviewKey("");
-            void api<Preview>(`${path}/preview`, { expected_version: data.configuration.version, proposal, decisions }).then((p) => {
-              setPreview(p);
-              setPreviewKey(proposalKey);
-            }, setError);
-          }}>
-            Review calculation
-          </button>
-          <button type="button" className="ppo-button ppo-button--primary" disabled={frozen || !reason.trim()} onClick={() => void saveDraft()}>
-            Save draft
-          </button>
-          <span role="status" className="es08-sub es08-action-status">
-            {command.status}
-          </span>
+          <button type="button" className="ppo-button es08-phone-more" aria-label="Workbench actions" onClick={() => setActionsOpen(true)}>…</button>
+          <button type="button" className="ppo-button es08-review-action" disabled={command.busy || command.pending || !initial.can_edit} onClick={reviewCalculation}>Review calculation</button>
+          <button type="button" className={`ppo-button ${phone ? "" : "ppo-button--primary"}`} disabled={frozen || !reason.trim()} onClick={() => void saveDraft()}>Save draft</button>
+          {phone && view === "configure" && <button type="button" className="ppo-button ppo-button--primary" disabled={section === sections.at(-1)!.id} onClick={() => setSection(sections[sections.findIndex(s => s.id === section) + 1].id)}>Next section</button>}
         </footer>
+        {phone && !command.pending && command.status !== "Draft saved" && <p className="es08-phone-save-status" role="status">{savingStatus}</p>}
       </div>
+      {actionsOpen && <Dialog title="Workbench actions" close={() => setActionsOpen(false)} className="es08-dialog--actions">
+        <label className="es08-stack-label">Reason for next saved change<input value={reason} maxLength={1000} disabled={frozen} onChange={e => setReason(e.target.value)} /></label>
+        <p role="status">{savingStatus}</p>
+        <button type="button" className="ppo-button" disabled={command.busy || command.pending || !initial.can_edit} onClick={() => { reviewCalculation(); setActionsOpen(false); }}>Review calculation</button>
+        <button type="button" className="ppo-button" onClick={() => { setActionsOpen(false); setMethodOpen(true); }}>Method &amp; limitations</button>
+        <Link className="ppo-button" href={`/estimating/configurations/${id}/history`} onClick={() => setActionsOpen(false)}>Run history</Link>
+      </Dialog>}
       {manualOpen && (
         <ManualReview bench={bench} close={() => setManualOpen(false)} />
       )}
@@ -638,6 +656,7 @@ function Editor({ initial, view, reload }: { initial: Detail; view: View; reload
         </Dialog>
       )}
     </div>
+    </Frame>
   );
 }
 function ManualReview({ bench, close }: { bench: Bench; close: () => void }) {
