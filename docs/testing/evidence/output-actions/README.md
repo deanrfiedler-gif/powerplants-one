@@ -35,3 +35,7 @@ The write process retained both families, exact issued files, original receipts 
 ## Integration gate
 
 [PR #469](https://github.com/deanrfiedler-gif/powerplants-one/pull/469) depends on #468 and the earlier #467 library contribution. The separate combined release [PR #463](https://github.com/deanrfiedler-gif/powerplants-one/pull/463), inspected at `18b775ff91bf9e09b44450e958e15ec51dd58118`, reserves 0089 for `cpq-design-contract`, while #467 currently uses 0089 for `document-library`. This parent-stack collision must be reconciled and tested before integration. This contribution's 0090 is unoccupied in that inspected candidate; neither candidate nor existing migration bytes were silently rewritten. Keep this PR draft pending coordinated parent migration numbering and combined-source checks. Main merges/deployment remain under the separate release coordinator's hold. CI status is reported independently at handover; no queued run is recorded as a pass.
+
+## Parent integration continuation — 13 October 2026
+
+Dean subsequently authorised resolving and merging the open contributions. Main has published CPQ 0089 and Document Library 0090; Output Distribution is now 0091 with identical SQL bytes. The previous draft hold above describes its original checkpoint. The combined #469 retains #468/#471 by ancestry; exact upgrade assertions and the hosted gate are reconciled. [Current integration evidence](../document-pr-integration/README.md) records validation and remaining gates.
