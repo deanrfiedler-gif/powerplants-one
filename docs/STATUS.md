@@ -1,5 +1,12 @@
 # Current prototype status
 
+## PR check repairs - 14 October 2026
+
+Current repository writer: the user-authorised PR repair session on `codex/fix-pr472-oct14`. PR #472 incorporates main by ancestry, retaining distribution 0091 and draft proposals 0092 with exact upgrade ledgers and both reserved Products cases. The broad HTTP runner now isolates the draft proof, whose database reset previously removed tables beneath concurrent tests. It restores seeded permissions before the downstream Finance access proof, so template-fixture grants cannot leak into that check. Existing assertions and deadlines are retained. Verification is recorded in the PR; owner acceptance and deployment remain separate.
+
+## DK-06 managed template drafts — 13 October 2026
+
+Dean authorised R2 on the catalogue contribution in PR #471. The [decision](decisions/document-template-drafts-backend.md) and [contract](contracts/document-template-drafts.md) add scoped structured proposals, immutable exact revisions, independent review observations and actor-private original recovery. Migration 0092 adds empty tables and three default-denied capabilities; no seed grants authority. Drafts never enter active template definitions or policies. The [execution ledger](testing/evidence/template-drafts/README.md) separates verification from independent/owner acceptance. R3 supported publication, R4 use assignment, native controls and deployment remain open.
 ## Document PR conflict repair — 13 October 2026
 
 Current repository writer: the user-authorised conflict repair and merge session on `codex/document-integration-oct13`. Dean authorised professional completion of the draft as well as the ready contributions. PR #469 now integrates the original heads of Output Register #468, Output Actions #469 and Template Catalogue #471 with main `5eb55f0` by ancestry. Distribution is renumbered to 0091 with unchanged SQL, after the already-published 0089 CPQ and 0090 Document Library migrations. Historical ledgers, exact new versions, reserved Products installation and hosted-upgrade assertions are extended; original migration bytes and grants are retained.
