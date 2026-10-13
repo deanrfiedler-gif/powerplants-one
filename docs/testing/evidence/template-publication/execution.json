@@ -1,0 +1,78 @@
+{
+  "scope": "DK-06 R3 synthetic OUT-09 publication",
+  "base_commit": "96896d184cf9ae205bf00071ec1e85d951662e12",
+  "source_hash_basis": "SHA-256 of UTF-8 source with CRLF normalised to LF",
+  "source_sha256": {
+    "db/migrations/0093-template-publication.sql": "7e42a6319550192acb9abe01d877ff88a7a818440e68b9f0f79bbbc402ba78d3",
+    "scripts/demo-upgrade.ts": "ed04f79e20e1e5ac17aa5948f9f97aa5b0bffc460cd4510f09bf7216f4477769",
+    "scripts/migration-registry.ts": "0c443f444a08bafe5e441e8a4d1ac4d4650000d36332975ce9629418ee49990a",
+    "scripts/template-publication-restart-proof.ts": "d51b8c7666deacfc622a29ac5d7fa17d92055555bd469d695f1d1b4a1216faa9",
+    "src/access/capabilities.ts": "72ca90b56dc7865d8a09fa2350f6378864c78b537fcfb228b391d1303617095c",
+    "src/app/api/v1/document-template-drafts/[id]/publication/route.ts": "696587417017da1c0c6a05188ce28c41c6101f76b745d5775d79f82d4f8c3f24",
+    "src/app/api/v1/document-template-publications/[id]/route.ts": "491e75d24ee2d8a49a6ae606754b7f1328264b6874ad6742912d058654c9dd53",
+    "src/documents/context.ts": "a62463d695ea58db86873cb93878ccc9f1c45f08cb27f256484d15ab5908890a",
+    "src/documents/drafts/context.ts": "8b8bbc409b955ac6c80518943ef91583f539c9e2e44a26f36cd845023361a95b",
+    "src/documents/http.ts": "f3a9bddd3f66eba5b1eb83b5d1a12aec7b24af474251c767110d33d5471da663",
+    "src/documents/publication/definition.ts": "7cfac86f5c47ebc319c5a98c97b7beb7da7120c0990f3056fe2e6e6539933fa1",
+    "src/documents/publication/render.ts": "50bcbab001ece0f74c951da71d69eb4a2cc8da1ebd042a5b254dc427beacaf9e",
+    "src/documents/publication/service.ts": "d25f8a1693d91f4faded90264ca57092b81f08e8acd50616de782246c2090a4b",
+    "src/documents/template-catalogue.ts": "17f6254e22d95aaa1d75efd2b28a652e3c05ff94591468d4bc89885e8ae62690",
+    "src/documents/worker.ts": "338eb46a25bce89faa16d7e525988b286ca104f93ec964429d1202df1702f2d7",
+    "src/platform/operations.ts": "367b1597ebc1076fb8813da11240b86a7b56c0a9d40d9ede51d150a40379dcd2",
+    "src/platform/permissions.ts": "7f53fa08b8fdf4d959ce4eff80bfe005e467ddcf4c02538196db45fa5b09244d",
+    "src/shared/receipts.ts": "5cced3ccf7e567391953610faa845c46d4e5253699f86275d4cb2b467e30f33a",
+    "tests/database/template-publication-upgrade.test.ts": "8e189b5c0e1288792c7e418f0c1e1b2327463f3155b94fbf6e677dd294a43cc5",
+    "tests/database/template-publication.test.ts": "a78e9f9a50f1126616029047f703d23dedb406a53bff581095b5e7b4a95077c6",
+    "tests/helpers/template-publication.ts": "41358c3bc80a010f96dc094b665120bd8196ecb9d0243182ad6883f599c1a33c",
+    "tests/http/template-publication.test.ts": "95bc46f5cab7186d9209e2abc19f45f540654f154ec350274d0b67611ffb088e",
+    "tests/unit/template-publication.test.ts": "7c80c06ed8b868cee368ae7f380dc9beefc213d215b06dc272db390026568545"
+  },
+  "results": {
+    "database_scenarios": {
+      "pass": 17
+    },
+    "populated_0092_upgrade": "Passed",
+    "products_upgrades": {
+      "starting_versions": [
+        25,
+        92,
+        93
+      ],
+      "pass": 3
+    },
+    "demo_upgrades": {
+      "pass": 6
+    },
+    "units": {
+      "pass": 795,
+      "fail": 3,
+      "cancelled": 0,
+      "limit": "Unchanged Windows filesystem cases previously reproduced on a333604; source/tests unchanged"
+    },
+    "typecheck": "Passed",
+    "changed_source_eslint": "Passed",
+    "access_model": {
+      "pass": 107,
+      "capabilities": 149
+    },
+    "access_browser": {
+      "completed_groups": 0,
+      "status": "Baseline environment failure",
+      "error": "Page.captureScreenshot: Unable to capture screenshot"
+    },
+    "restart": {
+      "result": "Passed",
+      "scope": "R3 immutable publication and actor-private original recovery after PostgreSQL/process restart",
+      "evidence_hash": "43ddb13e9cd8c1484b4fa47867b5abdbf8dc1a198777344042c635d205a560c1",
+      "use_assigned": false
+    },
+    "build": "Pending",
+    "compiled_http": "Pending"
+  },
+  "acceptance": {
+    "independent_review": "Pending",
+    "business_acceptance": "Pending",
+    "native_page": "Unbuilt",
+    "deployment": "Not performed"
+  }
+}

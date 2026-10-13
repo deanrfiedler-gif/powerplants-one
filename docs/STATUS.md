@@ -1,5 +1,9 @@
 # Current prototype status
 
+## DK-06 supported template publication — 13 October 2026
+
+Dean authorised R3 after PR #472. The [decision](decisions/template-publication-backend.md) selects OUT-09 job packs: exact reviewed proposals become immutable supported definitions with an independent publisher, explicit Service approval and original-operation recovery. The new renderer retains all nine mandatory sections and fingerprints its supported sources; existing shared renderer bytes remain unchanged. Migration 0093 adds empty publication evidence and default-denied template.publish without seeds or grants. The [contract](contracts/template-publication.md) and [verification ledger](testing/evidence/template-publication/README.md) separate publication from R4 policy assignment, native controls, owner acceptance and deployment.
+
 ## DK-06 managed template drafts — 13 October 2026
 
 Dean authorised R2 on the catalogue contribution in PR #471. The [decision](decisions/document-template-drafts-backend.md) and [contract](contracts/document-template-drafts.md) add scoped structured proposals, immutable exact revisions, independent review observations and actor-private original recovery. Migration 0092 adds empty tables and three default-denied capabilities; no seed grants authority. Drafts never enter active template definitions or policies. The [execution ledger](testing/evidence/template-drafts/README.md) separates verification from independent/owner acceptance. R3 supported publication, R4 use assignment, native controls and deployment remain open.

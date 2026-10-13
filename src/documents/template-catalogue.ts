@@ -13,7 +13,9 @@ import { page } from "../shared/reads";
 import { packContext, issueContext } from "./context";
 import { reportContext } from "../reports/context";
 import { financeContext } from "../finance/context";
-import { supportedTemplateDefinition, type OutputFamily } from "./p11-template";
+import type { OutputFamily } from "./p11-template";
+import { supportedTemplateDefinition } from "./publication/definition";
+import { publicationContext } from "./publication/service";
 import { rendererVersion } from "./render";
 import { digest } from "./store";
 
@@ -42,6 +44,7 @@ const families = {
 } as const;
 type Template = {
   id: string;
+  publication_id?: string | null;
   version: number;
   definition: string;
   content_hash: string;
@@ -157,7 +160,25 @@ async function exactTemplate(
     )
   ).rows[0];
   if (!row) throw unavailable();
+  await definitionAuthority(c, p, family, row);
   return row;
+}
+async function definitionAuthority(
+  c: QueryClient,
+  p: Principal,
+  family: OutputFamily,
+  row: Template,
+) {
+  if (family !== "OUT-09" || row.version < 3) return;
+  const pub = (
+    await c.query(
+      "SELECT id FROM ppo.template_publications WHERE workspace_id=$1 AND template_id=$2",
+      [p.workspace_id, row.id],
+    )
+  ).rows[0];
+  // Unknown historical definitions remain inspectable under the R1 family scope.
+  if (pub) await publicationContext(c, p, pub.id);
+  row.publication_id = pub?.id ?? null;
 }
 async function projection(
   family: OutputFamily,
@@ -167,7 +188,11 @@ async function projection(
   let expected: string | null = null;
   let unavailableRuntime = false;
   try {
-    expected = await supportedTemplateDefinition(family, row.version);
+    expected = await supportedTemplateDefinition(
+      family,
+      row.version,
+      row.definition,
+    );
   } catch (e) {
     if (
       !["ENOENT", "EACCES", "EPERM"].includes(
@@ -191,6 +216,7 @@ async function projection(
   return {
     family,
     family_name: families[family].label,
+    publication_id: row.publication_id ?? null,
     id: row.id,
     version: row.version,
     content_hash: row.content_hash,
@@ -232,12 +258,28 @@ export async function listTemplates(
   const family = query(input),
     pg = pagination(p, family, input, "definitions");
   return readTransaction(p, family, async (c) => {
-    const rows = (
-      await c.query<Template>(
-        `${select(family)} WHERE t.workspace_id=$1 AND ($2::uuid IS NULL OR t.id>$2) ORDER BY t.id LIMIT $3`,
-        [p.workspace_id, pg.after, pg.limit + 1],
-      )
-    ).rows;
+    const rows: Template[] = [];
+    let after = pg.after;
+    while (rows.length <= pg.limit) {
+      const candidates = (
+        await c.query<Template>(
+          `${select(family)} WHERE t.workspace_id=$1 AND ($2::uuid IS NULL OR t.id>$2) ORDER BY t.id LIMIT 100`,
+          [p.workspace_id, after],
+        )
+      ).rows;
+      if (!candidates.length) break;
+      for (const row of candidates) {
+        after = row.id;
+        try {
+          await definitionAuthority(c, p, family, row);
+          rows.push(row);
+        } catch (e) {
+          if (!hidden(e)) throw e;
+        }
+        if (rows.length > pg.limit) break;
+      }
+      if (candidates.length < 100) break;
+    }
     const selected = rows.slice(0, pg.limit);
     return {
       items: await Promise.all(

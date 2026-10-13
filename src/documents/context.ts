@@ -24,8 +24,8 @@ import { documentStore, digest } from "./store";
 import { type PackSnapshot, rendererVersion } from "./render";
 import {
   completionInstructions,
-  supportedTemplateDefinition,
 } from "./p11-template";
+import { supportedTemplateDefinition } from "./publication/definition";
 import type { PackInput } from "./validation";
 export const fail = (message: string, code = "PackNotReady"): never => {
   throw new AppError(422, code, message);
@@ -253,7 +253,7 @@ export async function snapshot(
     !template ||
     template.renderer_version !== rendererVersion ||
     template.definition !==
-      (await supportedTemplateDefinition("OUT-09", template.version)) ||
+      (await supportedTemplateDefinition("OUT-09", template.version, template.definition)) ||
     template.content_hash !== digest(template.definition)
   )
     fail("The exact supported template is unavailable.", "TemplateUnavailable");
@@ -406,6 +406,7 @@ export async function snapshot(
       hash: template.content_hash,
       policy_version: template.policy_version,
       renderer_version: template.renderer_version,
+      ...(template.version >= 3 ? { definition: template.definition } : {}),
     },
     recipients: members.map((x) => ({
       assignment_id: x.id,

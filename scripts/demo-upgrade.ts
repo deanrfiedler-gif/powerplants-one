@@ -276,7 +276,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // privileges and three default-denied capabilities. It widens identity/audit
   // constraints using the deferred-identity flush pair. No seed, tester grant,
   // runtime template, policy, existing output or source bytes change.
-  if (latestMigrationVersion !== 92) throw Error("Review the existing-demo upgrade for this release.");
+  // 0093 adds empty immutable publication evidence and denied template.publish.
+  // Existing runtime privileges apply; no seed, tester grant, template or policy
+  // changes occur during upgrade. Publication later requires explicit scope and
+  // pack.check approval; legacy renderer bytes remain unchanged.
+  if (latestMigrationVersion !== 93) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -17,7 +17,8 @@ import {
   type ProposalBody,
 } from "./validation";
 
-export type Duty = "template.read" | "template.propose" | "template.review";
+export type Duty =
+  "template.read" | "template.propose" | "template.review" | "template.publish";
 export type Proposal = {
   id: string;
   workspace_id: string;
@@ -139,6 +140,18 @@ export async function captureBase(
     )
   ).rows[0];
   if (!r) throw unavailable();
+  if (family === "OUT-09" && r.version >= 3) {
+    const pub = (
+      await c.query(
+        "SELECT id FROM ppo.template_publications WHERE workspace_id=$1 AND template_id=$2",
+        [p.workspace_id, id],
+      )
+    ).rows[0];
+    if (pub) {
+      const { publicationContext } = await import("../publication/service");
+      await publicationContext(c, p, pub.id);
+    }
+  }
   if (r.content_hash !== hash || digest(r.definition) !== hash)
     throw new AppError(
       409,

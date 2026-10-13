@@ -8,6 +8,7 @@ export type Capability =
   | "template.read"
   | "template.propose"
   | "template.review"
+  | "template.publish"
   | "document.read"
   | "document.register"
   | "document.review"

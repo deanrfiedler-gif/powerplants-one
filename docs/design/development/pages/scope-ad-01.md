@@ -85,3 +85,5 @@ DK-01/DK-02 adds `document.read`, `document.register` and `document.review` to t
 ## Template proposal catalogue addition — 13 October 2026
 
 DK-06 R2 adds template.read, template.propose and template.review, bringing the native/generated catalogue to 148 values. No seed grants, hosted tester authority or native controls are added. [R2 evidence](../../../testing/evidence/template-drafts/README.md) records model verification and the local browser-capture limitation reproduced against unchanged main. Existing visual and owner review fingerprints remain unchanged.
+
+R3 adds default-denied `template.publish`, bringing the catalogue to 149 capabilities. No identity receives a seed grant. Publication also requires current Service pack-check authority; catalogue visibility confers neither duty. Model/browser verification is recorded in the [R3 ledger](../../../testing/evidence/template-publication/README.md).
