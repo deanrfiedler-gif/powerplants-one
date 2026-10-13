@@ -81,6 +81,20 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
       exact: true,
     });
     if (await expand.isVisible()) await expand.click();
+    const heading = page.getByRole("navigation", {
+      name: "Breadcrumb",
+      exact: true,
+    });
+    await expect(
+      heading.getByText("Project register", { exact: true }),
+    ).toBeVisible();
+    const headingBounds = (await heading.boundingBox())!;
+    const searchBounds = (await page
+      .locator(".ppo-header-centre")
+      .boundingBox())!;
+    expect(headingBounds.x + headingBounds.width).toBeLessThanOrEqual(
+      searchBounds.x,
+    );
     const row = page.locator(".pj-table-host tbody tr").first();
     await expect(row).toContainText("Overdue ·");
     expect((await row.boundingBox())!.height).toBe(design.desktop.row);
@@ -189,7 +203,9 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.screenshot({ path: info.outputPath("project-register-filtered.png") });
+  await page.screenshot({
+    path: info.outputPath("project-register-filtered.png"),
+  });
   // Exercise the shared overlay breakpoint and the smallest supported phone.
   const smaller = phone
     ? { width: 320, height: 740 }
