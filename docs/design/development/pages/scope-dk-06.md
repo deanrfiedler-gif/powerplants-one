@@ -39,3 +39,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.dk.06` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native backend receiving increment — 13 October 2026
+
+[DK-06 R1](../../../decisions/template-catalogue-backend.md) supplies a read-only catalogue and usage API for OUT-09, OUT-10 and OUT-14. The [contract](../../../contracts/template-catalogue.md) separates exact retained identity, dependency manifests, current policy selection and renderer support. Usage respects native family and consumer permissions; crew drafts and Finance details remain protected. File availability is not checked, and no publication or download event is created.
+
+The native `/documents/templates` page remains unbuilt. The retained HTML above is a standalone design source, not a deployed screen; accepted native desktop/phone comparison images are missing. A future page must expose unknown legacy dependencies, unsupported/changed definitions, scoped continuation and denied/empty reads using existing shared controls. Preserve the exact selected ID on desktop and phone, show dependency paths/hashes without clipping, and label current policy separately from support. Backend API verification is in the [execution ledger](../../../testing/evidence/template-catalogue/README.md); this does not update the visual review fingerprint.
