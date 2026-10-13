@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "dd98edb0a90795f960c88e7cdde56fce871a987b190ecffca7aa8e72c3c312ad",
+  "register_sha256": "72fe84ac98e597c5ba1a4b830c72a487f3281086088c93c940c7958238832c26",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -23,9 +23,9 @@
   "entries": 358,
   "placed": 355,
   "excluded": 3,
-  "build": 44,
+  "build": 43,
   "refine": 106,
-  "review": 199,
+  "review": 200,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -2206,9 +2206,9 @@
     "04"
    ],
    "counts": {
-    "build": 5,
+    "build": 4,
     "refine": 39,
-    "review": 43,
+    "review": 44,
     "decide": 0
    },
    "scopes": 27,
@@ -2728,7 +2728,7 @@
      "module": "PJ",
      "path": "/projects/risks",
      "rank": 80,
-     "state": "build",
+     "state": "review",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
     },

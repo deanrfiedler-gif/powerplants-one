@@ -1,0 +1,28 @@
+{
+  "base": "fe7794b08235c089f215bd5b41a17e33603df21c",
+  "executed_on": "2026-10-12",
+  "build_id": "4OQsqF5cLBGeXFnWFPRib",
+  "scope": "Local synthetic backend proof; PR CI, page, independent review, owner acceptance and deployment separate",
+  "checks": {
+    "database_distinct": 8,
+    "final_expanded_revocation_replay": 1,
+    "focused_units": 4,
+    "compiled_http": 4,
+    "build": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed after removing redundant instruction pointer",
+    "studio": "passed; 330 unreviewed, 28 stale; all original review fingerprints retained"
+  },
+  "sha256": {
+    "src/estimating/sources/register.ts": "8ee8cc24599f0e3c2a2f4779c0429d50a6b37c87b718ccec84c7b06dc1cd4ad4",
+    "src/app/api/v1/estimating/cost-sources/register/route.ts": "c9a94fee551291f673f1aa8813da501e636c4e04edbb2b41ee74f4c3a4a7cc79",
+    "tests/helpers/cost-source-register-cases.ts": "53df636f746dd913b9514ba288bc0aaf2ca8aa35f2839e11f519e537a54e69c3",
+    "tests/database/estimating-sources.test.ts": "cfbc5ff219ab7758b65ca3b1f8c18a7e6469a52f10eb08cabd8dd4c40e9cc034",
+    "tests/http/estimating-sources.test.ts": "a08e1ff35fdcb3177bc515410994f62eb7c5ecbc36270efca4ce0796cfb05425",
+    "tests/unit/cost-source-register.test.ts": "d6ce4f6b111318def4fca9bb6ec519083165ef47065805d12c0c6403a335b64a",
+    "tests/unit/estimating-sources.test.ts": "bc8d913848c6c2d03892e96c1bebaed76f8d1028671432f2f3deef85aee84d9d"
+  }
+}

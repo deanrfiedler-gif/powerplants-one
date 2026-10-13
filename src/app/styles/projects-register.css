@@ -614,6 +614,9 @@
   margin-left: auto;
 }
 @media (min-width: 781px) {
+  .app-frame:has(#ppo-projects) .ppo-header-centre {
+    left: 50%;
+  }
   .app-frame:has(#ppo-projects) .ppo-shell-header .ppo-crumb {
     font-size: 14px;
     line-height: 20px;
@@ -624,6 +627,13 @@
   .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-bottom {
     margin-top: 2px;
     padding: 0 8px;
+  }
+  .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-bottom .ppo-rail-item {
+    flex: 1;
+  }
+  .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-toggle[aria-expanded="true"] {
+    background: transparent;
+    box-shadow: none;
   }
   .app-frame[data-rail="expanded"]:has(#ppo-projects) .pj-workspace-label {
     display: block;

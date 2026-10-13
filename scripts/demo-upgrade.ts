@@ -258,7 +258,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // ALTER or output change. Existing r01 writes and hosted grant boundaries remain.
   // 0086 adds CPQ tables and capabilities with no seeded grants/users.
   // Existing hosted identities receive no CPQ authority; adapters remain synthetic.
-  if (latestMigrationVersion !== 86) throw Error("Review the existing-demo upgrade for this release.");
+  // 0087 adds empty typed RAID entries and immutable revisions, no seed/user/grant.
+  // Existing project.read/edit duties apply; no hosted authority or schedule changes.
+  if (latestMigrationVersion !== 87) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

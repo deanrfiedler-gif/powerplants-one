@@ -69,3 +69,9 @@ The inspector's Overview links exact basis and issues. Deliverables lists accoun
 Incoming: existing packages and permitted Project/Opportunity/customer/site context. Outgoing: package-scoped EN-02–EN-05 records and existing EN-06–EN-08 handovers. The r02 HTML remains an issued design source; new compositions require owner review. Browser evidence and current validation are recorded in `docs/delivery/engineering-native-control-handover.md`; no design/business/deployment approval is inferred.
 
 Native destinations use the department rail; contextual query and retained handover links wrap inside the EN-01 heading. The phone page must not overflow horizontally or shift its modal drawer outside the viewport. Existing intake/review-note browser journeys prove this boundary.
+
+## Register backend continuation — 13 October 2026
+
+The [BC-01 contract](../../../decisions/engineering-workload-backend.md) adds a separate Engineering register API with server ordering, complete permitted-match view/status counts, recorded-owner choices and source-bound pagination. The accepted desktop/phone composition remains to implement; the current page still calls its original list. Native command and technical-source authority remain unchanged. Filter choices include explicitly inactive recorded owners and do not recommend new assignment.
+
+The [execution ledger](../../../testing/evidence/engineering-workload/README.md) records actual backend and compiled HTTP proof separately from visual review. Existing review fingerprints and captures are preserved. New application captures are not produced because this increment changes no UI. No guide workflow or shared component changed.

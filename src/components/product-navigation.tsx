@@ -566,7 +566,7 @@ export function ProductHeader() {
         <div id="header-menu" className="ppo-header-menu-slot" />
         {crumbs.length ? (
           <nav className="product-heading" aria-label="Breadcrumb">
-            {crumbs.length > 1 && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
+            {crumbs.length > 1 && !projectsRegister && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
             <ol className="ppo-crumbs" title={crumbs.map((c) => c.label).join(" / ")}>
               {crumbs.map((crumb, index) => (
                 <li key={crumb.key} data-crumb={crumb.kind}>

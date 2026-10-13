@@ -5,10 +5,10 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs\design\development\register.json` (SHA-256 `dd98edb0a90795f9…`).
+- Register: `docs\design\development\register.json` (SHA-256 `72fe84ac98e597c5…`).
 - Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
 - 358 entries: 355 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
-- 199 built and awaiting owner review; 106 to refine; 44 to build; 6 awaiting a scope decision.
+- 200 built and awaiting owner review; 106 to refine; 43 to build; 6 awaiting a scope decision.
 - Review track starts at phase 00; build track starts at phase 01.
 
 | Phase | Title | After phases | Scopes | Routes | Review | Refine | Build | Decide |
@@ -18,7 +18,7 @@ Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register
 | 02 | Products, equipment and survey evidence | 01 | 15 | 14 | 28 | 0 | 1 | 0 |
 | 03 | Sales through quotation and handover | 01, 02 | 13 | 32 | 25 | 19 | 1 | 0 |
 | 04 | Service, job packs and field quality | 00, 01, 02 | 14 | 21 | 17 | 17 | 1 | 0 |
-| 05 | Engineering, project delivery and supply | 00, 01, 02, 03, 04 | 27 | 60 | 43 | 39 | 5 | 0 |
+| 05 | Engineering, project delivery and supply | 00, 01, 02, 03, 04 | 27 | 60 | 44 | 39 | 4 | 0 |
 | 06 | Finance, maintenance and customer lifecycle | 01, 02, 03, 04, 05 | 19 | 25 | 32 | 7 | 5 | 0 |
 | 07 | Connected communications and knowledge | 00, 01 | 6 | 3 | 0 | 5 | 4 | 0 |
 | 08 | Reporting and customer access | 01, 02, 03, 04, 05, 06, 07 | 12 | 0 | 0 | 0 | 12 | 0 |
@@ -319,7 +319,7 @@ Turn accepted scope into controlled design, project baselines, material fulfilme
 | 78 | `route:/projects/[id]` | Project detail & Gantt | To refine | Issued r02 rank |
 | 79 | `scope:PJ-03` | Baseline, forecast and dependency review | To refine | Issued r02 rank |
 | 79 | `route:/projects/programme` | Programme | To refine | Issued r02 rank |
-| 80 | `scope:PJ-04` | RAID, decisions and project actions | To build | Issued r02 rank |
+| 80 | `scope:PJ-04` | RAID, decisions and project actions | Built; owner review pending | Issued r02 rank |
 | 81 | `scope:PJ-05` | Contract obligations, notices and variations | To build | Issued r02 rank |
 | 82 | `scope:PJ-06` | Subcontractor and specialist packages | To build | Issued r02 rank |
 | 83 | `scope:SC-01` | Demand and material-readiness workspace | Built; owner review pending | Issued r02 rank |
