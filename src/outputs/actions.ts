@@ -4,11 +4,12 @@ import { unavailable } from "../platform/errors";
 import { choice, object, uuid } from "../shared/validation";
 import { readOperation } from "../shared/receipts";
 import { requestIssue, withdrawPack } from "../documents/packs";
-import { retryRenderJob, readRenderJob } from "../documents/worker";
+import { retryRenderJob, readRenderJob, readBundle } from "../documents/worker";
 import {
   requestReportIssue,
   retryReportJob,
   readReportJob,
+  readReportBundle,
 } from "../reports/worker";
 import { outputKinds, type OutputKind } from "./model";
 import {
@@ -106,7 +107,21 @@ export async function runOutputAction(
         kind === "JobPack"
           ? await retryRenderJob(p, jobId)
           : await retryReportJob(p, jobId);
-      return { type: "job" as const, job: publicJob(job) };
+      let availability = "NotIssued";
+      if (job.issue_id) {
+        availability = "ExactUnavailable";
+        if (job.output_manifest) {
+          try {
+            if (kind === "JobPack") await readBundle(p, job.output_manifest);
+            else await readReportBundle(p, job.output_manifest);
+            availability = "Available";
+          } catch {
+            /* Retain the original identity; never regenerate an issued file. */
+          }
+        }
+      }
+      await outputIssuer(database(), p, kind, id);
+      return { type: "job" as const, job: { ...publicJob(job), availability } };
     }
   }
 }

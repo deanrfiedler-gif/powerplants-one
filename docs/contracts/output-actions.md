@@ -15,7 +15,7 @@ Owner: Dean Fiedler. Implementation contract, 13 October 2026. [Decision](../dec
 | Action | Command and authority |
 |---|---|
 | RequestIssue | Existing pack issue payload (`operation_id`, `schema_version:1`, `reason`, `expected_version`) or existing report issue payload (also exact `revision_id`, `review_id`, `template_id`, `template_version`). Native checks and source/template rules apply. |
-| RecoverIssue | `{job_id}` for the exact parent/kind; resumes the native original job. Active leases remain owned, terminal stale jobs require native successor preparation, and issued missing files are never regenerated. |
+| RecoverIssue | `{job_id}` for the exact parent/kind; resumes the native original job. Active leases remain owned, terminal stale jobs require native successor preparation, and issued missing files are never regenerated. The response distinguishes output metadata from checked availability (Available/ExactUnavailable/NotIssued). |
 | WithdrawPack | Existing pack withdrawal payload. Reports use their own native amendment/review process; this action refuses ServiceReport. |
 | PrepareDistribution | Common operation fields plus `attempt_id`, `issue_id`, `recipient_id`, `expected_version`. Recipient is the exact pack-recipient ID or the report issue's frozen Person ID. Channel is server-fixed Synthetic. |
 | RecordDistribution | Common operation fields plus `attempt_id`, `expected_attempt_version`, `outcome`, `evidence`. Prepared can become SimulatedSent, SimulatedNotSent or OutcomeUnknown. |

@@ -672,6 +672,25 @@ test("DK03-C09 loss of recipient access during storage refuses distribution; wit
       );
   }
   assert.equal((await readDistribution(q.p, "JobPack", q.pack.id)).length, 0);
+  const before = await outputSnapshot();
+  try {
+    LocalSyntheticDocumentStore.prototype.read = async () => {
+      throw Error("SYN issued file unavailable");
+    };
+    const recovery = await runOutputAction(
+      q.p,
+      q.pack.id,
+      envelope("JobPack", "RecoverIssue", { job_id: q.job.id }),
+    );
+    assert.equal(
+      recovery.type === "job" && recovery.job.availability,
+      "ExactUnavailable",
+    );
+    assert.deepEqual(await outputSnapshot(), before);
+  } finally {
+    LocalSyntheticDocumentStore.prototype.read = original;
+  }
+
   await prepareDistribution(q.p, "JobPack", q.pack.id, cmd);
   await runOutputAction(
     q.p,

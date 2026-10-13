@@ -58,6 +58,7 @@ for (const kind of ["JobPack", "ServiceReport"] as const)
     );
     assert.equal(recover.status, 200, JSON.stringify(recover.body));
     assert.equal(recover.body.state, "Issued");
+    assert.equal(recover.body.availability, "Available");
     const current = await h.call("coordinator", path + `?kind=${kind}`);
     const issue = current.body.current_issue_id;
     const recipient = (

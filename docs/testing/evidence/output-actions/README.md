@@ -15,3 +15,5 @@ No accepted UI is implemented by this increment. Synthetic sending and reconcili
 ## Corrections retained
 
 The first local run passed C01, C02, C07 and C08. C03/C06 exposed a missing extension of the existing outbox-kind constraint; 0090 now additively permits the three distribution events. The first failing concurrent request also left its sibling running because the test used Promise.all; subsequent database reset hooks deadlocked. The proof now settles both requests before teardown. These failures and their corrected replays are kept distinct from acceptance. A single-client concurrent history read was replaced by one batched event query after the driver warned about concurrent queries on that client.
+
+The full local lint pass found one unused import in the new restart proof; it was removed. The first combined historical-upgrade batch exceeded the unchanged 120-second beforeEach setup deadline in DK-B09; no business assertion ran in that case. This setup failure is recorded separately from successful upgrade evidence.

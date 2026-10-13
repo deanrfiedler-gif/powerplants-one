@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { localConfig } from "../src/platform/config";
-import { closeDatabase, database } from "../src/platform/database";
+import { closeDatabase } from "../src/platform/database";
 import {
   prepareDistribution,
   recordDistributionOutcome,
