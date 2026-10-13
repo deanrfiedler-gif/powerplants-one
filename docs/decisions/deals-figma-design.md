@@ -20,14 +20,14 @@ Source SHA-256: `3b0d7806907bc97e9db37f5ae7d0cedf385abb6d9ec2781b0bedd1e8e7c4ca3
 | Incoming | Synthetic qualified opportunity, owner, stage/version, contact and current next activity |
 | Outgoing | Reviewable follow-up, stage and pipeline context within CRM; Won does not create an order or authorise Projects/ERP work |
 | Exceptions shown | Missing next action, overdue activity, rotting, forecast ahead, expired quotation, unknown estimate and external activity owner |
-| Proposed departures | Collapsed Sales rail around the standalone workspace; existing shared shell/controls; stacked phone list; simplified Figma controls and bounded navigation between six composed states |
+| Proposed departures | Collapsed Sales rail around the standalone workspace; existing shared shell/controls; 8px stage gutters instead of the issued 9px; stacked phone list; simplified Figma controls and bounded navigation between six composed states |
 | Verification | Editable structure, source totals/counts and rendered desktop/phone inspection; exact frame links and PNG evidence are in the execution record |
 
 ## User-directed visual refinement
 
 On 14 October Dean supplied a [stage/card screenshot](../testing/evidence/deals-figma/reference-columns.png), requested correctly positioned white chevrons and professional polish, then directed removal of the extra page container and consistency with other PPO tables. These are explicit user directions, not instructions inferred from the HTML.
 
-All four board compositions now use paired 9px outgoing points/incoming cut-ins across 78px headers. Cards retain 264px height and source spacing, with correct activity-type and expected-close icons, overlapping owner avatars, task counts and distinct overdue/rotting cues. The five desktop workspaces place their toolbar, status strip and worklist directly below the shared top bar; the rounded module frame and inset were removed.
+All four board compositions now use paired 8px outgoing points/incoming cut-ins across 78px headers. Following Dean's further request to refine column gaps and card borders, the 8px PPO spacing token replaces the issued 9px gutter in this proposal. Each column is exactly 264px wide, with 8px card insets and 248 x 264px cards; the whole-pixel positions keep the 1px inside neutral borders crisp. The 1932px card stack preserves the final card and bottom padding in the longest stage. Cards retain correct activity-type and expected-close icons, overlapping owner avatars, task counts and distinct overdue/rotting cues. The five desktop workspaces place their toolbar, status strip and worklist directly below the shared top bar; the rounded module frame and inset were removed.
 
 The list reuses the exact Grid components used by accepted Leads (`190:20513`): 40px white header and rows, 14px Roboto, 12px cell padding, fine right/bottom dividers, neutral stage tags, checkboxes, number alignment and action cells. Contact and next-activity due are separate columns. The 1604px grid scrolls horizontally within the 1364px workspace; all 18 rows fit vertically. Shared component masters and issued HTML remain unchanged.
 

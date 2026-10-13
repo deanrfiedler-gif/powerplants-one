@@ -2,7 +2,7 @@
 
 ## Deals Figma visual refinement — 14 October 2026
 
-Dean supplied a stage/card screenshot and requested corrected chevrons, removal of the extra module container and alignment with existing PPO tables. The [Deals design](decisions/deals-figma-design.md) now uses paired stage edges, source-aligned card details, a direct shared workspace and the accepted Leads grid components for its list. [Updated visual evidence](testing/evidence/deals-figma/README.md) covers all five desktop views. The user feedback defines this refinement; owner acceptance, runtime alignment and deployment remain separate.
+Dean supplied a stage/card screenshot and requested corrected chevrons, removal of the extra module container and alignment with existing PPO tables. The [Deals design](decisions/deals-figma-design.md) now uses paired stage edges, source-aligned card details, a direct shared workspace and the accepted Leads grid components for its list. [Updated visual evidence](testing/evidence/deals-figma/README.md) covers all five desktop views. A further spacing pass uses 8px gutters, whole-pixel column/card bounds and crisp 1px card borders, and fixes clipping at the bottom of the longest stage. The user feedback defines this refinement; owner acceptance, runtime alignment and deployment remain separate.
 
 ## Deals Figma design — 13 October 2026
 
