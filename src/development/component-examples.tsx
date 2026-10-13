@@ -52,6 +52,7 @@ import {
   plannerFixture,
   longSchedulingResourceName,
   projectFixture,
+  projectCalendarFixture,
   registerTableFixture,
   salesFixture,
 } from "./component-fixtures";
@@ -335,6 +336,7 @@ function GanttExample({ state }: { state: string }) {
     [task, setTask] = useState<string | null>(null);
   const schedule = {
     ...projectFixture,
+    ...(state === "saved-calendar" ? {programme:{calendar:projectCalendarFixture,comparison_calendar:null,baseline_revision:null,tasks:[]}} : {}),
     project: { ...projectFixture.project, can_edit: state !== "read-only" },
     tasks:
       state === "empty"

@@ -11,6 +11,8 @@ import { command } from "../../src/projects/acceptance/commands";
 import { readWorkspace, file } from "../../src/projects/acceptance/reads";
 import { readOperation } from "../../src/shared/receipts";
 import { saveTask, readSchedule } from "../../src/projects/service";
+import { recordCalendar, recordActuals, readCalendar, readActuals } from "../../src/projects/programme";
+import { calendarInput, actualInput } from "../helpers/project-programme";
 import { taskInput } from "../helpers/projects";
 import { raidInput } from "../helpers/project-raid";
 import { readProjectOverview } from "../../src/projects/overview";
@@ -139,7 +141,20 @@ test("PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Servic
     outcome: "Complete",
     evidence: "SYN verified whole-project basis",
   });
+  const calendar = calendarInput((await readSchedule(scheduleActor, project)).project.version);
+  const calendarOriginal = await recordCalendar(scheduleActor, project, calendar);
+  const actual = actualInput(calendarOriginal.receipt.record_version);
+  const actualOriginal = await recordActuals(scheduleActor, project, task.id, actual);
   await act("coordinator", project, null, "closeProject");
+  assert.equal((await readCalendar(scheduleActor, project)).can_record, false);
+  assert.equal((await readActuals(scheduleActor, project, task.id)).can_record, false);
+  assert.deepEqual((await recordCalendar(scheduleActor, project, calendar)).receipt, calendarOriginal.receipt);
+  assert.deepEqual((await recordActuals(scheduleActor, project, task.id, actual)).receipt, actualOriginal.receipt);
+  assert.deepEqual(await readOperation(scheduleActor, calendar.operation_id), calendarOriginal.receipt);
+  assert.deepEqual(await readOperation(scheduleActor, actual.operation_id), actualOriginal.receipt);
+  const version = (await readSchedule(scheduleActor, project)).project.version;
+  await assert.rejects(recordCalendar(scheduleActor, project, calendarInput(version, 1)), (e: unknown) => (e as {code: string}).code === "ProjectClosed");
+  await assert.rejects(recordActuals(scheduleActor, project, task.id, actualInput(version, 1)), (e: unknown) => (e as {code: string}).code === "ProjectClosed");
   assert.equal(
     (await readWorkspace(await p(), { project })).project.lifecycle,
     "Closed",

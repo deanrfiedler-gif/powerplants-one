@@ -15,6 +15,13 @@ import { raidInput, raidAction } from "../tests/helpers/project-raid";
 import { saveRaid, readRaid } from "../src/projects/raid";
 import { createActivity } from "../src/activities/activities";
 import { readProjectOverview } from "../src/projects/overview";
+import {
+  recordCalendar,
+  recordActuals,
+  readCalendar,
+  readActuals,
+} from "../src/projects/programme";
+import { calendarInput, actualInput } from "../tests/helpers/project-programme";
 import { readPortfolio } from "../src/projects/portfolio";
 import { readOperation } from "../src/shared/receipts";
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -38,6 +45,12 @@ try {
     raid.action_ids = [action.id];
     const raidResult = await saveRaid(p, project.id, raid);
     const raidRead = await readRaid(p, project.id, { id: raid.id });
+    const calendar = calendarInput(),
+      actual = actualInput();
+    const calendarSaved = await recordCalendar(p, project.id, calendar),
+      actualSaved = await recordActuals(p, project.id, task.id, actual);
+    const calendarRead = await readCalendar(p, project.id),
+      actualRead = await readActuals(p, project.id, task.id);
     const overview = await readProjectOverview(p, project.id);
     await mkdir(path, { recursive: true });
     await writeFile(
@@ -50,6 +63,12 @@ try {
         },
         project,
         task,
+        calendar,
+        actual,
+        calendar_receipt: calendarSaved.receipt,
+        actual_receipt: actualSaved.receipt,
+        calendarRead,
+        actualRead,
         overview,
         receipt: result.receipt,
         raid,
@@ -63,7 +82,32 @@ try {
       await readFile(path + "/synthetic-original.json", "utf8"),
     );
     const schedule = await readSchedule(p, proof.project.id);
-    assert.equal(schedule.project.version, 2);
+    assert.equal(schedule.project.version, 4);
+    assert.deepEqual(
+      await readCalendar(p, proof.project.id),
+      proof.calendarRead,
+    );
+    assert.deepEqual(
+      await readActuals(p, proof.project.id, proof.task.id),
+      proof.actualRead,
+    );
+    assert.deepEqual(
+      (await recordCalendar(p, proof.project.id, proof.calendar)).receipt,
+      proof.calendar_receipt,
+    );
+    assert.deepEqual(
+      (await recordActuals(p, proof.project.id, proof.task.id, proof.actual))
+        .receipt,
+      proof.actual_receipt,
+    );
+    assert.deepEqual(
+      await readOperation(p, proof.calendar.operation_id),
+      proof.calendar_receipt,
+    );
+    assert.deepEqual(
+      await readOperation(p, proof.actual.operation_id),
+      proof.actual_receipt,
+    );
     assert.equal(schedule.tasks.length, 1);
     assert.equal(schedule.tasks[0].finish_date, proof.task.finish_date);
     assert.deepEqual(
@@ -72,7 +116,7 @@ try {
     );
     assert.equal(
       (await projectHistory(p, proof.project.id, {})).items.length,
-      2,
+      4,
     );
     const raid = await readRaid(p, proof.project.id, { id: proof.raid.id });
     assert.deepEqual(raid.current, proof.raid_current);
@@ -105,7 +149,8 @@ try {
       path + "/result.json",
       JSON.stringify({
         passed: true,
-        project_version: 2,
+        project_version: 4,
+        calendar_actuals_and_originals_retained: true,
         tasks: 1,
         original_receipt_retained: true,
         raid_history_and_original_retained: true,

@@ -1,3 +1,4 @@
+import { currentCalendar } from "./programme-reads";
 import type { Principal } from "../platform/identity";
 import type { QueryClient } from "../platform/permissions";
 import { projectRow, tasksFor } from "./service";
@@ -144,7 +145,18 @@ export async function forecastPosition(
           mergePredecessor,
           mergeSuccessor,
           retainedPredecessor,
-          retainedIssues: scheduleIssues(mergePredecessor, tasks),
+          // The accepted material-withdrawal SQL contract still excludes weekend
+          // endpoints. Keep that stricter hold as well as current calendar warnings.
+          retainedIssues: [
+            ...new Set([
+              ...scheduleIssues(mergePredecessor, tasks),
+              ...scheduleIssues(
+                mergePredecessor,
+                tasks,
+                await currentCalendar(c, p, projectId, project.timezone),
+              ),
+            ]),
+          ],
         }
       : {}),
     ...(successor ? { successor } : {}),

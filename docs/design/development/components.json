@@ -925,6 +925,11 @@
           "id": "baseline-comparison",
           "label": "Baseline and forecast",
           "description": "Catalogue action explains the saved-project boundary. Native host fixtures in tests/browser/project-baselines.spec.ts cover empty history, recorded and slipped milestone, uncertain retry and stale refresh."
+        },
+        {
+          "id": "saved-calendar",
+          "label": "Saved Project calendar",
+          "description": "Synthetic date exception changes dependency warnings. Calendar name and revision are shown; geometry remains calendar days. Editing calendar and actuals remains API-only."
         }
       ],
       "implementation": [
@@ -944,7 +949,9 @@
         "src/components/project-task-panel.tsx",
         "src/projects/baseline-model.ts",
         "src/app/projects-gantt.css",
-        "docs/testing/evidence/project-baselines/README.md"
+        "docs/testing/evidence/project-baselines/README.md",
+        "src/projects/calendar-model.ts",
+        "docs/decisions/project-calendars-actuals.md"
       ],
       "reference": {
         "path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
@@ -983,6 +990,14 @@
           "expected": "PJ-03 planning workspace opens a labelled comparison dialog while preserving the Gantt and its original r10 reference.",
           "actual": "Baseline dialog and successor preview are new compositions without a matching issued mockup. Functional evidence is separate; paired visual acceptance pending.",
           "action": "Review desktop/mobile host evidence and accept or refine the proposed addition.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "gantt-calendar-actuals-controls",
+          "expected": "PJ-03 keeps baseline/current calendar bases distinct and actual dates separate from progress.",
+          "actual": "Backend and native warning consumers implemented; no calendar/actuals editing controls or paired visual review. No exact new-state image exists.",
+          "action": "Implement accepted editing surfaces and compare saved-calendar fixture on desktop/phone.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
