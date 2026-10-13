@@ -443,12 +443,14 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     definition: nextDefinition,
   });
   await page.goto("/estimating/rules");
-  await expect(
-    page.getByRole("link", {
+  const currentRuleHref = `/estimating/rules/${releaseId}?rule=${nextDefinition.rules[0].key}`;
+  const nextDraftLink = page
+    .getByRole("link", {
       name: "Support spacing — next draft",
       exact: true,
-    }),
-  ).toBeVisible();
+    })
+    .and(page.locator(`a[href="${currentRuleHref}"]`));
+  await expect(nextDraftLink).toBeVisible();
   const activeFilter = page.getByRole("button", {
     name: "Active releases",
     exact: true,
@@ -456,15 +458,15 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   if (!(await activeFilter.isVisible()))
     await page.locator("button.ppo-menu-toggle").click();
   await activeFilter.click();
-  await expect(
-    page.getByRole("link", {
-      name: "Support spacing — next draft",
-      exact: true,
-    }),
-  ).toHaveCount(0);
+  await expect(nextDraftLink).toHaveCount(0);
   await page.screenshot({ path: info.outputPath("cpq-active-rules.png") });
   await page
     .getByRole("link", { name: "Support spacing", exact: true })
+    .and(
+      page.locator(
+        `a[href="${currentRuleHref}&revision=${release.current.id}"]`,
+      ),
+    )
     .click();
   await expect(page).toHaveURL(new RegExp(`revision=${release.current.id}`));
   await expect(
