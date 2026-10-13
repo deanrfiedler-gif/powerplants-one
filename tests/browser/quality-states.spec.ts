@@ -1,3 +1,5 @@
+import { showPackReadiness } from "../helpers/job-pack-design";
+import { registerClock, registerRows } from "../fixtures/pack-register";
 import { test, expect } from "../helpers/browser-lifecycle";
 import type { Request, Response } from "@playwright/test";
 import { readFile, writeFile } from "node:fs/promises";
@@ -32,7 +34,7 @@ test("P11 PT-29 pack and report queues never turn failed reads into empty or iss
     ).toBeVisible();
     await expect(
       page.getByText(
-        /^(No job packs are available|No permitted submissions appear)/,
+        /^(No job packs are available|No job packs match this view|No permitted submissions appear)/,
       ),
     ).toHaveCount(0);
     await capture(page, info, `${kind}-failed-not-empty`);
@@ -43,8 +45,10 @@ test("P11 PT-29 pack and report queues never turn failed reads into empty or iss
       status: 200,
       contentType: "application/json",
       body: JSON.stringify({
+        observed_at: registerClock,
         items: [
           {
+            ...registerRows[0],
             id: "11111111-1111-4111-8111-111111111111",
             display_number: "SYN P11 unissued preparation",
             status: "Draft",
@@ -56,12 +60,18 @@ test("P11 PT-29 pack and report queues never turn failed reads into empty or iss
     }),
   );
   await page.goto("/service/packs");
-  await expect(
-    page.getByText("Draft · Not issued", { exact: true }),
-  ).toBeVisible();
-  await expect(page.getByText("Draft · Issued", { exact: true })).toHaveCount(
-    0,
-  );
+  const draftRow = page
+    .locator(".jpr-desktop tbody tr, .jpr-phone-list > a")
+    .filter({ hasText: "SYN P11 unissued preparation" })
+    .filter({ visible: true });
+  await expect(draftRow).toHaveCount(1);
+  if (info.project.name.startsWith("mobile")) {
+    await expect(draftRow.locator(".jpr-state")).toBeVisible();
+    await expect(draftRow.locator(".jpr-state")).toHaveText("Draft · not issued · 6 of 8 ready · Held");
+  } else {
+    await expect(draftRow.getByText("Draft · not issued", { exact: true })).toBeVisible();
+  }
+  await expect(draftRow.getByText(/^(Draft · issued|Issued)$/i)).toHaveCount(0);
   await capture(page, info, "draft-pack-not-issued");
 });
 
@@ -126,18 +136,24 @@ test("P11 PT-29 failed and stale output presentation never claims an issue", asy
     code: "DependencyUnavailable", message: "SYN renderer unavailable. Recover the original output.", retryable: true,
   } }));
   await page.goto(`/service/packs/${pack.id}`);
-  await expect(page.getByRole("tabpanel", { name: "Job pack, 9 sections", exact: true }).getByText("Output recovery needed", { exact: true })).toBeVisible();
-  await expect(page.getByText("The output could not be generated or stored. Recover the original output.", { exact: false }).first()).toBeVisible();
-  await page.getByRole("button", { name: "Process or recover original output", exact: true }).click();
+  await expect(page.locator(".jp-figma-heading").getByText("Output recovery needed", { exact: true })).toBeVisible();
+  await showPackReadiness(page);
+  const output = page.locator(".jp-side-card").filter({
+    has: page.getByRole("heading", { name: "Output and distribution", exact: true }),
+  });
+  await expect(output.getByText("The output could not be generated or stored. Recover the original output.", { exact: false }).first()).toBeVisible();
+  await output.getByRole("button", { name: "Process or recover original output", exact: true }).click();
   await expect(page.getByRole("alert").filter({ hasText: "SYN renderer unavailable" })).toBeVisible();
   await expect(page.locator('a[href^="/documents/"]')).toHaveCount(0);
   await capture(page, info, "SC-06-render-failed-no-issue", { injection: "retained synthetic pack read and renderer 503; not worker proof" });
   pack.jobs[0].state = "StaleSource";
   pack.jobs[0].error_code = "StaleSource";
   await page.reload();
-  await expect(page.getByText("The checked source changed", { exact: true })).toBeVisible();
+  await expect(page.locator(".jp-figma-heading").getByText("Source changed · successor needed", { exact: true })).toBeVisible();
+  await showPackReadiness(page);
   await expect(page.getByRole("button", { name: "Process or recover original output", exact: true })).toHaveCount(0);
-  await expect(page.getByText("Original attempt retained. Prepare and check a new revision with current sources.", { exact: true })).toBeVisible();
+  await expect(output.getByText("Original attempt retained. Prepare and check a new revision with current sources.", { exact: true })).toBeVisible();
+  await expect(page.locator('a[href^="/documents/"]')).toHaveCount(0);
   await capture(page, info, "SC-06-stale-output-requires-successor", { injection: "retained synthetic pack read; not worker proof" });
 });
 

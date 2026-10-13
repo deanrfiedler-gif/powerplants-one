@@ -44,7 +44,7 @@ Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commit
 
 P10 reads immutable P09 reviews and preserves field Drafts. Incomplete declarations block Finance despite accepted attendance. Allocate billable/non-billable quantities. SyntheticVerified is not live verification. Preserve processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Finance scope governs reads/output/receipts.
 
-Preserve issued revisions/hashes/scope/distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct; content changes need a new revision and acknowledgement.
+Job Packs: job-pack-figma-implementation.md. Preserve issued revisions/hashes/scope/distribution. Keep approval, issue, delivery and acknowledgement distinct; changes need a new revision/acknowledgement.
 
 Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict; retain context and unsent evidence.
 
@@ -68,7 +68,7 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Check screens/environment. Recheck access after storage, before metadata/bytes.
 
-ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CPQ](../decisions/cpq-native-runtime.md); retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike is reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
+ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CPQ](../decisions/cpq-native-runtime.md); retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike is reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Preserve each owner’s consent, receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
@@ -80,7 +80,7 @@ Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable 
 
 Sales: lead-to-delivery-continuity.md and sales-followup-continuity.md; outcome, Won and Lead-context decisions apply. Preserve native facts, source access and Activity owners; accept, create, link and plan separately.
 
-Equipment: ADR-0045 / equipment-native-completion-handover.md; reuse Assets, CS, Inspection and SH; read-only scanning. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
+Equipment: ADR-0045 / equipment-native-completion-handover.md; reuse Assets, CS, Inspection and SH; read-only scanning. Preserve originals/context. Recovery grants no controller-restore authority; support grants no replacement authority.
 
 SC-01–10: BP-08 / ADR-0049. Separate stock observations, custody, consumption, transactions and restricted credits. Live ERP: Not configured. Retain SC-08 source/hash warnings; SC-10 evidence is not owner acceptance.
 FI: field-quality-native-handover.md; field-closed-visit-guidance.md. Separate return attendance. FI-05: CS-06; induction needs Person.

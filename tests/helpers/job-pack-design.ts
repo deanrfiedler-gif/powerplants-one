@@ -56,12 +56,21 @@ export async function assertJobPackHost(page: Page) {
   });
   expect(facts).toMatchObject({
     layout: "full-bleed",
-    overflow: "auto",
+    overflow: "hidden",
     pageFits: true,
     moduleFits: true,
     utilityInHeader: true,
   });
-  expect(facts.padding).toBe(
-    (page.viewportSize()?.width ?? 1440) <= 760 ? "16px" : "24px",
-  );
+  expect(facts.padding).toBe("0px");
+}
+
+// The same views live in the docked menu on desktop and its dialog on narrow screens.
+export async function openPackView(page: Page, name: string | RegExp) {
+  const tab = page.getByRole("tab", { name, exact: typeof name === "string" });
+  if (!(await tab.isVisible())) await page.locator(".ppo-menu-toggle").click();
+  await tab.click();
+}
+export async function showPackReadiness(page: Page) {
+  const tab = page.getByRole("tab", { name: "Readiness", exact: true });
+  if (await tab.isVisible()) await tab.click();
 }

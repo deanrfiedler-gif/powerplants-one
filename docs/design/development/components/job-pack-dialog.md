@@ -24,3 +24,7 @@ Saved preparation opens an exact saved-revision link. Unsaved preparation offers
 ## Fixtures and evidence
 
 `tests/fixtures/job-pack-read.json` supplies synthetic application context. `tests/browser/job-pack-source-print.spec.ts` exercises saved/unsaved choices, stale refusal, lost response, later concurrent revision, permissions and six viewport sizes. `tests/browser/packs.spec.ts` exercises the actual save-and-print API during the P06 journey. [I4 evidence and limits](../../../delivery/job-pack-i4-handover.md) keep functional, visual, device and owner review separate. This entry does not grant a review fingerprint or declare gallery implementation.
+
+## Job Pack Figma application, 13 October 2026
+
+The [implementation decision](../../../decisions/job-pack-figma-implementation.md) binds this component to the accepted Figma Job Pack layout. Desktop uses the shared menu, register and 320 px status panel; phone uses compact register rows and coordinator Pack / Readiness / History tabs. Existing exact-content, permission, source and command contracts remain. The live host fixtures are `tests/ui/job-pack-fixture.tsx` and `job-pack-register-fixture.tsx`; states and consumer bindings are maintained in `components.json`. See [execution evidence](../../../testing/evidence/job-pack-figma-ui/README.md). Owner/device acceptance remains pending; no fingerprint is copied into a review record.
