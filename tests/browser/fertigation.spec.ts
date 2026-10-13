@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { remapScope } from "../../src/estimating/fertigation/history";
 import { boardReferenceScope } from "../helpers/fertigation-board-scope";
 import { randomUUID } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
@@ -1567,7 +1568,7 @@ test("FN-T118 accepted Figma workbench views, menus and phone sections preserve 
     (item: { option_id: string }) => item.option_id === discovery.option_id,
   );
   const scopeId = randomUUID(),
-    proposal = boardReferenceScope(scopeId);
+    proposal = remapScope(boardReferenceScope(), scopeId).proposal;
   await call(page, "estimating/fertigation", {
     ...crmBase(),
     id: scopeId,
