@@ -1529,3 +1529,25 @@
     flex-basis: 100%;
   }
 }
+
+/* The accepted phone valve register runs flush to the workspace edges. */
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-page[data-view="growing"] .fn-registers {
+    margin-inline: -16px;
+    gap: 0;
+  }
+  #ppo-fertigation .fn-page[data-view="growing"] .record-tablist {
+    padding-inline: 16px;
+  }
+  #ppo-fertigation .fn-page[data-view="growing"] .fn-register-panel {
+    margin: 0;
+    border-inline: 0;
+    border-radius: 0;
+  }
+  #ppo-fertigation
+    .fn-page[data-view="growing"]
+    .fn-register-panel
+    .fn-panel-head {
+    padding-inline: 16px;
+  }
+}

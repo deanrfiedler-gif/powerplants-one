@@ -17,3 +17,5 @@ At 390 × 844 and 320 px, the section trigger opens a native modal with the same
 Menu Escape returns focus to its trigger; dialog close restores focus. Selecting a row label or Edit opens the same existing inspector. Navigation does not mutate the saved proposal. Copy, restore and archive enter the retained history action workflow, which still requires the exact revision and reason. A Shortlisted tag retains an explicit Remove action.
 
 Missing evidence: owner paired acceptance, physical touch-device/screen-reader testing, and Figma phone designs for the other seven views. No accepted fingerprint is inferred from generated screenshots. SVG system export and device-to-channel allocation remain open scope, not hidden controls.
+
+The accepted phone valve register uses flush workspace edges and a contiguous tab/list surface; its filter and row-action controls retain their existing touch targets and native editor behavior.
