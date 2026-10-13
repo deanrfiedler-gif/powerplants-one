@@ -50,6 +50,105 @@ async function request(cookie: string, path: string, body?: unknown) {
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 }
+test("ES03 register HTTP joins native submit and review with compatible original reads", async () => {
+  const owner = await session("coordinator"),
+    reviewer = await session("estimating-source-reviewer"),
+    input = sourceInput();
+  const original = await request(owner, "estimating/cost-sources", input);
+  assert.equal(original.status, 201);
+  const path = `estimating/cost-sources/${input.id}`;
+  const legacy = await (
+    await request(owner, `estimating/cost-sources?q=${input.reference}`)
+  ).json();
+  const d = await (await request(owner, path)).json();
+  const register = `estimating/cost-sources/register?q=${input.reference}`;
+  const read = await request(owner, register);
+  assert.equal(read.status, 200);
+  assert.match(read.headers.get("cache-control")!, /no-store/);
+  const rows = await read.json();
+  assert.equal(rows.counts.all, 1);
+  assert.equal(rows.items[0].owner_id, CRM.owner);
+  assert.deepEqual(rows.items[0].tier_1, {
+    minimum_quantity: "1.000",
+    unit_cost: "100.00",
+  });
+  assert.deepEqual(
+    await (
+      await request(owner, `estimating/cost-sources?q=${input.reference}`)
+    ).json(),
+    legacy,
+  );
+  const submit = {
+    ...crmBase(),
+    expected_version: 1,
+    revision_id: d.revision.id,
+    action: "Submit",
+  };
+  assert.equal((await request(owner, `${path}/review`, submit)).status, 200);
+  assert.equal((await request(owner, `${path}/review`, submit)).status, 200);
+  const own = await (await request(owner, register)).json();
+  assert.equal(own.items[0].your_submission, true);
+  assert.equal(own.counts.awaiting_my_review, 0);
+  const awaiting = await (
+    await request(reviewer, `${register}&view=awaiting_my_review`)
+  ).json();
+  assert.equal(awaiting.matching_count, 1);
+  assert.equal(awaiting.items[0].revision_id, d.revision.id);
+  assert.equal(
+    (
+      await request(reviewer, `${path}/review`, {
+        ...crmBase(),
+        expected_version: 2,
+        revision_id: d.revision.id,
+        action: "Reviewed",
+      })
+    ).status,
+    200,
+  );
+  const completed = await (
+    await request(reviewer, `${register}&view=awaiting_my_review`)
+  ).json();
+  assert.equal(completed.counts.states.Reviewed, 1);
+  assert.equal(completed.counts.all, 1);
+  assert.equal(completed.matching_count, 0);
+  assert.equal(completed.items.length, 0);
+  assert.deepEqual(
+    (await (await request(owner, path)).json()).revision,
+    d.revision,
+  );
+});
+
+test("ES03 register HTTP denies unsupported queries, writes, foreign scope and revoked access", async () => {
+  const actor = await isolatedActor(CRM.owner),
+    input = sourceInput();
+  assert.equal(
+    (await request(actor.cookie, "estimating/cost-sources", input)).status,
+    201,
+  );
+  const path = `estimating/cost-sources/register?q=${input.reference}`;
+  const foreign = await session("second-company");
+  const hidden = await (await request(foreign, path)).json();
+  assert.equal(hidden.counts.all, 0);
+  assert.equal(hidden.items.length, 0);
+  assert.equal(hidden.next_offset, null);
+  assert.equal((await request("", path)).status, 401);
+  assert.equal((await request(actor.cookie, path, {})).status, 405);
+  for (const query of [
+    "limit=101",
+    "state=Approved",
+    "view=admin",
+    "validity=expiring_soon",
+    "unexpected=true",
+  ])
+    assert.equal((await request(actor.cookie, `${path}&${query}`)).status, 422);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='shared.read'",
+    [actor.user],
+  );
+  const denied = await request(actor.cookie, path);
+  assert.equal(denied.status, 403);
+  assert(!JSON.stringify(await denied.json()).includes(input.reference));
+});
 test("ES03 HTTP exact review, scoped reads, altered replay and revoked receipt authority", async () => {
   const ownerActor = await isolatedActor(CRM.owner),
     reviewerActor = await isolatedActor("e5030045-0000-4000-8000-000000000001"),

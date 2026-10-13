@@ -6,6 +6,8 @@ Stable entry: `route:/estimating/cost-sources`. Scope: ES-03, page-register orde
 
 ## Purpose and layout
 
+Backend availability: the additive [Cost sources register API](../../../decisions/cost-source-register-backend.md) supplies first-tier cost, owner/revision-author IDs, review eligibility, supplier/company and menu filters, full permission-scoped search counts and bounded paging. [Functional evidence](../../../testing/evidence/cost-source-register/README.md) is separate from page implementation. Menu counts cover the search/supplier/company basis before view/state/validity filters; the selected result has its own matching count. Expiry uses an explicit Brisbane date. Existing native list/detail UI remains compatible; accepted Figma grid, shell, selection/export and visual review are still pending. No review fingerprint is adopted.
+
 Find current permitted sources by reference, supplier, item or title and explicit source state. r20 page type: Register / worklist. Native layout is padded within the current shell; the shell owns the viewport and main content scrolling. No standalone masthead, second rail or nested viewport is carried from the reference. The native source/editor/comparison route split is a proposed adaptation of the five-view retained design, pending paired owner review.
 
 1. Search literal source text; Apply filters updates the URL.
