@@ -1,5 +1,5 @@
 "use client";
-import { useId, useMemo, useState } from "react";
+import { useId, useMemo, useState, type ReactNode } from "react";
 import {
   capacityRows,
   type CandidateFailure,
@@ -28,6 +28,7 @@ import {
   declaredCoverage,
   type Declaration,
 } from "../estimating/fertigation/declarations";
+import { WorklistMenu } from "./crm-worklist-tools";
 import { ConflictMark, fertigationViews, type FertigationView } from "./fertigation-frame";
 
 const viewLabel = (view: GuidanceView) =>
@@ -191,6 +192,10 @@ export function OutputReadinessPanel({
   );
 }
 
+function NextActionControls({ label, children }: { label: string; children: ReactNode }) {
+  return <div className="fn-next-action-set"><span className="fn-next-actions">{children}</span><WorklistMenu label={`Actions for ${label}`} icon="more" className="fn-next-menu">{children}</WorklistMenu></div>;
+}
+
 export function NextActionsPanel({
   scope,
   findings,
@@ -221,12 +226,13 @@ export function NextActionsPanel({
     [scope, findings],
   );
   return (
-    <section className="fn-panel" aria-labelledby="fn-actions-title">
+    <section className="fn-panel fn-next-panel" aria-labelledby="fn-actions-title">
       <header className="fn-panel-head">
         <div className="fn-panel-title">
           <h3 id="fn-actions-title">Next actions</h3>
           <p>Conflicts first, then what gates the most outputs · {basis}</p>
         </div>
+        {findings.length > 0 && <button type="button" className="fn-link" onClick={() => onView("review")}>All {findings.length} open checks</button>}
       </header>
       {actions.length === 0 && !candidates.length ? (
         <p className="fn-panel-empty">No open findings on this calculation.</p>
@@ -247,19 +253,20 @@ export function NextActionsPanel({
                   <RoleChip role="priva_specialist" />
                 </span>
               </div>
-              <span className="fn-next-actions">
+              <NextActionControls label={c.label}>
                 {canResolve?.("injection") && (
                   <button
+                    data-menu-close
                     type="button"
                     onClick={() => onResolve?.("injection")}
                   >
                     Resolve
                   </button>
                 )}
-                <button type="button" onClick={() => onView("configurator")}>
+                <button data-menu-close type="button" onClick={() => onView("configurator")}>
                   Open Unit configurator
                 </button>
-              </span>
+              </NextActionControls>
             </li>
           ))}
           {actions.slice(0, Math.max(limit - candidates.length, 3)).map((a, index) => (
@@ -278,35 +285,24 @@ export function NextActionsPanel({
                   <RoleChip role={a.role} />
                 </span>
               </div>
-              <span className="fn-next-actions">
+              <NextActionControls label={a.summary}>
                 {a.severity === "conflict" && canResolve?.(a.code) && (
-                  <button type="button" onClick={() => onResolve?.(a.code)}>
+                  <button data-menu-close type="button" onClick={() => onResolve?.(a.code)}>
                     Resolve
                   </button>
                 )}
                 {a.severity !== "conflict" && canDeclare?.(a.code) && (
-                  <button type="button" onClick={() => onDeclare?.(a.code)}>
+                  <button data-menu-close type="button" onClick={() => onDeclare?.(a.code)}>
                     Declare
                   </button>
                 )}
-                <button type="button" onClick={() => onView(a.view)}>
+                <button data-menu-close type="button" onClick={() => onView(a.view)}>
                   Open {viewLabel(a.view)}
                 </button>
-              </span>
+              </NextActionControls>
             </li>
           ))}
         </ol>
-      )}
-      {findings.length > 0 && (
-        <p className="fn-panel-foot">
-          <button
-            type="button"
-            className="fn-link"
-            onClick={() => onView("review")}
-          >
-            All {findings.length} open {findings.length === 1 ? "check" : "checks"} by responsible role
-          </button>
-        </p>
       )}
     </section>
   );

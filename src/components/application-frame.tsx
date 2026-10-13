@@ -30,7 +30,9 @@ export function ApplicationFrame({
 }
 function FrameContents({ children }: { children: React.ReactNode }) {
   const shell = useShell();
-  return <div className="app-frame" data-rail={shell.railExpanded ? "expanded" : "compact"}>
+  const path = usePathname();
+  const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
+  return <div className="app-frame" data-shell-design={fertigation ? "fertigation" : undefined} data-rail={shell.railExpanded ? "expanded" : "compact"}>
         <ProductNavigation />
         <div className="workspace">
           <ProductHeader />

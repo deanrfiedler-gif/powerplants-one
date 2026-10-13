@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { RecordIdentity } from "../shell/record-identity";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
@@ -30,9 +31,8 @@ import {
 } from "../estimating/fertigation/guidance";
 import {
   FertigationFrame,
-  fertigationViewGroups,
+  FertigationSectionPicker,
   fertigationViews,
-  viewLabel,
   type FertigationView,
 } from "./fertigation-frame";
 import { FertigationHeader, PhoneBar, type StatusTone } from "./fertigation-header";
@@ -696,6 +696,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
       summary={<ReadinessSummary compact counts={totalCounts} basis={guidanceBasis} />}
       edition={guidanceCalculation.edition}
     >
+      <RecordIdentity reference={data.scope.display_number} title={data.scope.name} />
       <FertigationHeader
         name={proposal.name}
         reference={data.scope.display_number}
@@ -708,11 +709,16 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
         onHistory={() => setInspectHistory(true)}
         onSave={() => save()}
         onCompare={() => setCompareDraft(true)}
+        onCalculate={() => void calculate()}
+        calculateDisabled={previewBusy || pending}
         onValves={() => {
           changeView("growing");
           setSection("valves");
         }}
         reportHref={reportHref}
+        exportHref={`/api/v1/estimating/fertigation/${scopeId}/export?revision_id=${data.revision.id}&format=json`}
+        valveExportHref={`/api/v1/estimating/fertigation/${scopeId}/export?revision_id=${data.revision.id}&format=valves`}
+        compact={view !== "overview"}
         site={site}
         customer={customer}
         binding={`Bound to Discovery alternative ${data.source.option_label} · revision ${data.source.revision} · ${data.source.changed ? "source changed" : "source unchanged"}`}
@@ -726,24 +732,7 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
       <PhoneBar reportHref={reportHref} canSave={canSave} historical={historical} onSave={() => save()} />
       <div className="fn-scroll">
         <div className="fn-page" data-view={view}>
-          <label className="fn-phone-picker">
-            <span>Section</span>
-            <span className="fn-select">
-              <select value={view} onChange={(e) => changeView(e.target.value as FertigationView)}>
-                {fertigationViewGroups.map(([group, ids]) => (
-                  <optgroup key={group} label={group}>
-                    {ids.map((id) => (
-                      <option key={id} value={id}>
-                        {fertigationViews.findIndex(([v]) => v === id) + 1} · {viewLabel(id)}
-                        {viewCounts[id]?.total ? ` · ${viewCounts[id].total} open` : ""}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
-              <Icon name="chevron-down" className="fn-select-icon" />
-            </span>
-          </label>
+          <FertigationSectionPicker view={view} onView={changeView} counts={{ ...viewCounts, review: totalCounts }} />
           <div className="fn-messages">
             <ErrorNotice error={command.error ?? error} />
             {historyDirty && !inspectHistory && (
@@ -1100,7 +1089,7 @@ function History({
       next_cursor: string | null;
     }>(open ? `${base}/${scopeId}/history${before ? `?before=${encodeURIComponent(before)}` : ""}` : null, true);
   return (
-    <FertigationDialog title="History & exact revisions" close={close} open={open} closeDisabled={pending}>
+    <FertigationDialog title="History & exact revisions" close={close} open={open} closeDisabled={pending} decision>
       <div className="fn-dialog-body">
         <p className="fn-subtle">
           Every link rechecks access to that exact saved source. Origin Discovery: {data.revision.binding.revision_id}.

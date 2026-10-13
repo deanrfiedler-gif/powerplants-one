@@ -447,6 +447,7 @@ function ProductNavigationView({
           <button
             ref={toggle}
             id="navigation-toggle"
+            aria-current={(/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new")) ? "page" : undefined}
             aria-label="More"
             title="More"
             aria-haspopup="dialog"
@@ -500,6 +501,7 @@ export function ProductHeader() {
   // Service retains its established short breadcrumb name.
   const rootLabel =
     page?.workspace === "service" ? "Service" : workspaceRoot?.label;
+  const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
   const crumbs: HierarchyCrumb[] = [];
   if (label) {
     if (rootLabel && rootLabel !== label && !crumb)
@@ -519,6 +521,10 @@ export function ProductHeader() {
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
   if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  if (fertigation) {
+    crumbs.splice(0, crumbs.length, { key: "page", label: "Scope register", kind: "page", href: shell.context ? "/estimating/fertigation" : undefined });
+    if (record && shell.context) crumbs.push({ key: "record", label: record.reference, kind: "record" });
+  }
   // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
   // and updates it in the same commit as the route, before the route announcer reads document.title.
   const title = documentTitle({
@@ -547,6 +553,7 @@ export function ProductHeader() {
     <>
       <title>{title}</title>
       <header className="topbar ppo-shell-header">
+        {fertigation && <span className="ppo-phone-page-name">Priva fertigation scope</span>}
         <Link
           className="mobile-brand"
           href="/"

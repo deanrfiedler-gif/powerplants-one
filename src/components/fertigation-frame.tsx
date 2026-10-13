@@ -1,13 +1,15 @@
 "use client";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import type { SeverityCounts } from "../estimating/fertigation/guidance";
 import { calculationEdition } from "../estimating/fertigation/definition";
 import { useIdentity } from "./business-session";
 import { useScopePreferences } from "./scope-preferences";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { FertigationIcon, type FertigationIconName } from "./fertigation-icons";
+import { ShellIcon } from "./shell-icon";
 import "./fertigation-workbench.css";
+import "./fertigation-figma.css";
 
 export const fertigationViews = [
   ["overview", "Overview"],
@@ -57,8 +59,15 @@ export function ConflictMark() {
 
 /** Visual only; the words are given by aria-describedby outside the button,
  * so each view keeps its exact accessible name. */
-function ViewBadge({ counts }: { counts?: SeverityCounts }) {
+function ViewBadge({
+  counts,
+  review = false,
+}: {
+  counts?: SeverityCounts;
+  review?: boolean;
+}) {
   if (!counts) return null;
+  if (!counts.total && !review) return null;
   if (!counts.total)
     return (
       <span className="fn-menu-clear" aria-hidden="true">
@@ -72,7 +81,10 @@ function ViewBadge({ counts }: { counts?: SeverityCounts }) {
       : "review";
   return (
     <span className={`mw-badge fn-badge-${tone}`} aria-hidden="true">
-      {tone === "conflict" && <ConflictMark />}
+      <FertigationIcon
+        name={tone === "conflict" ? "conflict" : "info"}
+        className="fn-mark"
+      />
       {counts[tone]}
     </span>
   );
@@ -149,8 +161,10 @@ export function FertigationFrame({
                               className="fn-menu-icon"
                               selected={view === id}
                             />
-                            <span className="fn-menu-label">{viewLabel(id)}</span>
-                            <ViewBadge counts={c} />
+                            <span className="fn-menu-label">
+                              {viewLabel(id)}
+                            </span>
+                            <ViewBadge counts={c} review={id === "review"} />
                           </button>
                           {!!c?.total && (
                             <span id={`fn-count-${id}`} className="sr-only">
@@ -197,5 +211,94 @@ export function FertigationFrame({
     >
       {children}
     </SecondaryMenuFrame>
+  );
+}
+
+/** Native modal keeps keyboard focus inside the phone section sheet. */
+export function FertigationSectionPicker({
+  view,
+  onView,
+  counts,
+}: {
+  view: FertigationView;
+  onView: (view: FertigationView) => void;
+  counts: Partial<Record<FertigationView, SeverityCounts>>;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null),
+    trigger = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const close = () => {
+    dialog.current?.close();
+    setOpen(false);
+    trigger.current?.focus();
+  };
+  return (
+    <>
+      <button
+        ref={trigger}
+        type="button"
+        className="fn-section-trigger"
+        aria-label={`Section: ${viewLabel(view)}`}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => {
+          dialog.current?.showModal();
+          setOpen(true);
+        }}
+      >
+        <FertigationIcon name={view} />
+        <span>
+          {fertigationViews.findIndex(([id]) => id === view) + 1} ·{" "}
+          {viewLabel(view)}
+        </span>
+        <small>{counts.review?.total ?? 0} open</small>
+        <FertigationIcon name="chevron-down" />
+      </button>
+      <dialog
+        ref={dialog}
+        className="fn-section-sheet"
+        aria-label="Fertigation sections"
+        onCancel={close}
+        onClose={() => setOpen(false)}
+      >
+        <header>
+          <h2>Go to a section</h2>
+          <button type="button" aria-label="Close sections" onClick={close}>
+            <ShellIcon name="close" />
+          </button>
+        </header>
+        <nav>
+          {fertigationViewGroups.map(([group, ids]) => (
+            <section key={group}>
+              <h3>{group}</h3>
+              {ids.map((id) => (
+                <button
+                  type="button"
+                  key={id}
+                  aria-label={viewLabel(id)}
+                  aria-current={view === id ? "page" : undefined}
+                  onClick={() => {
+                    onView(id);
+                    close();
+                  }}
+                >
+                  <FertigationIcon name={id} className="fn-menu-icon" />
+                  <span>
+                    {fertigationViews.findIndex(([key]) => key === id) + 1} ·{" "}
+                    {viewLabel(id)}
+                  </span>
+                  <span className="fn-sheet-count">
+                    <ViewBadge counts={counts[id]} review={id === "review"} />
+                  </span>
+                </button>
+              ))}
+            </section>
+          ))}
+        </nav>
+        <Link href="/estimating/fertigation" className="fn-rail-link">
+          Scope register
+        </Link>
+      </dialog>
+    </>
   );
 }

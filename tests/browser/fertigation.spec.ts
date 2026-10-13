@@ -1,4 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
+import { remapScope } from "../../src/estimating/fertigation/history";
+import { boardReferenceScope } from "../helpers/fertigation-board-scope";
 import { randomUUID } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { crmBase, crmCreate } from "../helpers/crm";
@@ -54,7 +56,7 @@ async function login(page: Page, route = "/estimating/discovery") {
     page.getByRole("button", { name: "Change identity", exact: true }),
   ).toBeVisible();
 }
-async function savedDiscovery(page: Page) {
+async function savedDiscovery(page: Page, visit = true) {
   await login(page);
   const opportunity = {
     ...crmCreate(),
@@ -78,29 +80,61 @@ async function savedDiscovery(page: Page) {
     confirmed_question_ids: preview.required_confirmation_ids,
   };
   await call(page, "estimating/workspaces", input);
-  await page.goto(
-    `/estimating/discovery/${input.id}?option=${input.option_id}`,
-  );
-  await expect(page.locator("#ppo-estimate-wizard")).toBeVisible();
+  if (visit) {
+    await page.goto(
+      `/estimating/discovery/${input.id}?option=${input.option_id}`,
+    );
+    await expect(page.locator("#ppo-estimate-wizard")).toBeVisible();
+  }
   return input;
 }
 async function moduleView(page: Page, label: string) {
-  await expect(
-    page.getByRole("button", { name: "Irrigation valves", exact: true }),
-  ).toBeVisible();
-  const nav = page.getByRole("navigation", { name: "Fertigation views" });
-  if (!(await nav.isVisible())) {
-    const expand = page.getByRole("button", {
-      name: "Expand Fertigation menu",
-      exact: true,
-    });
-    if (await expand.isVisible()) await expand.click();
-    else
-      await page
-        .getByRole("button", { name: "Fertigation menu", exact: true })
-        .click();
+  await expect(page.locator("#ppo-fertigation h1")).toBeVisible();
+  const picker = page.getByRole("button", { name: /^Section: / });
+  if (await picker.isVisible()) {
+    await picker.click();
+    await page
+      .getByRole("dialog", { name: "Fertigation sections", exact: true })
+      .getByRole("button", { name: label, exact: true })
+      .click();
+    return;
   }
+  const nav = page.getByRole("navigation", { name: "Fertigation views" });
+  if (!(await nav.isVisible()))
+    await page
+      .getByRole("button", { name: /^(Expand )?Fertigation menu$/ })
+      .click();
   await nav.getByRole("button", { name: label, exact: true }).click();
+}
+async function scopeAction(page: Page, label: string) {
+  await page
+    .getByRole("button", { name: "Scope actions", exact: true })
+    .click();
+  await page
+    .getByRole("dialog", { name: "Scope actions", exact: true })
+    .getByRole("button", { name: label, exact: true })
+    .click();
+}
+async function calculationControl(page: Page) {
+  const control = page.getByRole("button", {
+    name: "Validate & calculate draft",
+    exact: true,
+  });
+  if (!(await control.isVisible()))
+    await page
+      .getByRole("button", { name: "Scope actions", exact: true })
+      .click();
+  return control;
+}
+async function showRegisterFilters(page: Page) {
+  if (page.viewportSize()!.width >= 781) return;
+  const toggle = page.getByRole("button", {
+    name: "Find and filter irrigation valves",
+    exact: true,
+  });
+  await expect(toggle).toBeVisible();
+  if ((await toggle.getAttribute("aria-expanded")) === "false")
+    await toggle.click();
 }
 async function inspector(page: Page, add: string, label: string) {
   await page.getByRole("button", { name: `+ Add ${add}`, exact: true }).click();
@@ -126,7 +160,7 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
   });
   if (!(await entry.isVisible()))
     await page
-      .getByRole("button", { name: /^(Expand )?Estimating menu$/ })
+      .getByRole("button", { name: /^(Show menu|Estimating menu)$/ })
       .click();
   await entry.click();
   await page
@@ -168,9 +202,7 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
   await dialog
     .getByRole("button", { name: "Apply to draft", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Irrigation valves", exact: true })
-    .click();
+  await scopeAction(page, "Irrigation valves");
   await page
     .getByRole("tab", { name: "Mainline / master valves", exact: true })
     .click();
@@ -282,7 +314,13 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
     await expect(
       reopened.getByRole("button", { name: "SYN V-A1", exact: true }),
     ).toBeVisible();
-    await reopened.getByRole("button", { name: "View", exact: true }).click();
+    await reopened
+      .getByRole("button", { name: "Actions for SYN V-A1", exact: true })
+      .click();
+    await reopened
+      .getByRole("dialog", { name: "Actions for SYN V-A1", exact: true })
+      .getByRole("button", { name: "View", exact: true })
+      .click();
     const view = reopened.getByRole("dialog", {
       name: "View irrigation valve",
       exact: true,
@@ -385,6 +423,7 @@ test("FN-T56 native 100-area 1000-valve API and bounded register responsiveness"
   timings.ui_next_page_ms = performance.now() - started;
   await expect(page.locator("#ppo-fertigation tbody tr")).toHaveCount(25);
   started = performance.now();
+  await showRegisterFilters(page);
   await page
     .getByLabel("Search irrigation valves", { exact: true })
     .fill("1000");
@@ -458,9 +497,7 @@ test("FN-T62/65/87 native neutral context and failed editor preserve numeric unk
     .getByRole("button", { name: "Create saved scope", exact: true })
     .click();
   await expect(page).toHaveURL(/\/estimating\/fertigation\/[0-9a-f-]{36}$/);
-  await page
-    .getByRole("button", { name: "Irrigation valves", exact: true })
-    .click();
+  await scopeAction(page, "Irrigation valves");
   const dialog = await inspector(
     page,
     "irrigation valve",
@@ -549,9 +586,7 @@ test("FN-T62/65/87 native neutral context and failed editor preserve numeric unk
     await route.fulfill({ response });
   });
   try {
-    await page
-      .getByRole("button", { name: "Validate & calculate draft", exact: true })
-      .click();
+    await (await calculationControl(page)).click();
     await ready;
     await page
       .getByRole("button", { name: "Edit production context", exact: true })
@@ -567,12 +602,7 @@ test("FN-T62/65/87 native neutral context and failed editor preserve numeric unk
       .getByRole("button", { name: "Apply to draft", exact: true })
       .click();
     releasePreview();
-    await expect(
-      page.getByRole("button", {
-        name: "Validate & calculate draft",
-        exact: true,
-      }),
-    ).toBeEnabled();
+    await expect(await calculationControl(page)).toBeEnabled();
     await expect(
       page.getByText(
         "Draft changed. Recalculate to inspect the current proposal; saved results remain attached to the earlier revision.",
@@ -645,6 +675,12 @@ test("FN-T16/17/79/86 native restore copy archive preserve exact history and rec
   });
   const original = await call(page, `estimating/fertigation/${scopeId}`);
   await page.goto(`/estimating/fertigation/${scopeId}?view=growing`);
+  await page
+    .getByRole("button", {
+      name: "Actions for SYN original valve",
+      exact: true,
+    })
+    .click();
   await page.getByRole("button", { name: "Edit", exact: true }).click();
   const valve = page.getByRole("dialog", {
     name: "Edit irrigation valve",
@@ -841,24 +877,51 @@ test("FN-T07/T18/T49 compare shared scenarios, filter valve areas and review exa
   });
   const original = await call(page, `estimating/fertigation/${scopeId}`);
   await page.goto(`/estimating/fertigation/${scopeId}?view=growing`);
+  await showRegisterFilters(page);
   await page
     .getByRole("combobox", { name: "Area filter", exact: true })
     .selectOption(proposal.areas[0].id);
   await expect(
-    page.getByRole("row", { name: /SYN North valve/ }),
+    page
+      .locator(
+        page.viewportSize()!.width < 781
+          ? ".fn-valve-row"
+          : ".ppo-register tbody tr",
+      )
+      .filter({ hasText: "SYN North valve" }),
   ).toBeVisible();
-  await expect(page.getByRole("row", { name: /SYN South valve/ })).toHaveCount(
-    0,
-  );
+  await expect(
+    page
+      .locator(
+        page.viewportSize()!.width < 781
+          ? ".fn-valve-row"
+          : ".ppo-register tbody tr",
+      )
+      .filter({ hasText: "SYN South valve" }),
+  ).toHaveCount(0);
+  await showRegisterFilters(page);
   await page
     .getByRole("combobox", { name: "Area filter", exact: true })
     .selectOption(proposal.areas[1].id);
   await expect(
-    page.getByRole("row", { name: /SYN South valve/ }),
+    page
+      .locator(
+        page.viewportSize()!.width < 781
+          ? ".fn-valve-row"
+          : ".ppo-register tbody tr",
+      )
+      .filter({ hasText: "SYN South valve" }),
   ).toBeVisible();
-  await expect(page.getByRole("row", { name: /SYN North valve/ })).toHaveCount(
-    0,
-  );
+  await expect(
+    page
+      .locator(
+        page.viewportSize()!.width < 781
+          ? ".fn-valve-row"
+          : ".ppo-register tbody tr",
+      )
+      .filter({ hasText: "SYN North valve" }),
+  ).toHaveCount(0);
+  await showRegisterFilters(page);
   await page
     .getByRole("combobox", { name: "Area filter", exact: true })
     .selectOption("");
@@ -1236,6 +1299,8 @@ test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resol
     .getByRole("button", { name: /^Close How this is calculated/ })
     .click();
 
+  if (page.viewportSize()!.width < 781)
+    await root.locator(".fn-next-menu").first().click();
   await root
     .getByRole("button", { name: "Resolve", exact: true })
     .first()
@@ -1252,9 +1317,7 @@ test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resol
   await resolve.getByRole("button", { name: "Apply to working draft" }).click();
   await expect(page.locator(".fn-status")).toHaveText("Unsaved changes");
 
-  await root
-    .getByRole("button", { name: "Compare draft", exact: true })
-    .click();
+  await scopeAction(page, "Compare draft");
   const compare = page.getByRole("dialog", {
     name: "Compare the working draft with revision 1",
   });
@@ -1489,4 +1552,157 @@ test("FN-T116 an imported r02 draft lists its declarations, and recorded or decl
     ),
   ).toBe(true);
   expect(saved.revision.proposal.scenarios[0].source_id).toBeNull();
+});
+
+test("FN-T118 accepted Figma workbench views, menus and phone sections preserve saved scope", async ({
+  page,
+}, info) => {
+  test.setTimeout(180000);
+  const discovery = await savedDiscovery(page, false);
+  const options = await call(
+    page,
+    `estimating/fertigation/options?estimating_workspace_id=${discovery.id}`,
+  );
+  const source = options.sources.find(
+    (item: { option_id: string }) => item.option_id === discovery.option_id,
+  );
+  const scopeId = randomUUID(),
+    proposal = remapScope(boardReferenceScope(), scopeId).proposal;
+  await call(page, "estimating/fertigation", {
+    ...crmBase(),
+    id: scopeId,
+    name: proposal.name,
+    estimating_workspace_id: discovery.id,
+    option_id: source.option_id,
+    revision_id: source.revision_id,
+    expected_workspace_version: source.expected_workspace_version,
+    coverage: {
+      system_id: null,
+      area_ids: [],
+      facility_ids: source.facility_ids,
+    },
+    proposal,
+  });
+  const before = await call(page, `estimating/fertigation/${scopeId}`);
+  await page.goto(`/estimating/fertigation/${scopeId}`);
+  await expect(page.locator(".fn-status")).toHaveText("Saved revision 1");
+  await expect(page.locator(".app-frame")).toHaveAttribute(
+    "data-shell-design",
+    "fertigation",
+  );
+  const phone = page.viewportSize()!.width < 781;
+  if (phone) {
+    await expect(
+      page.locator(".ppo-shell-header .product-heading"),
+    ).toBeHidden();
+    const picker = page.getByRole("button", {
+      name: "Section: Overview",
+      exact: true,
+    });
+    await picker.click();
+    await expect(
+      page.getByRole("dialog", { name: "Fertigation sections", exact: true }),
+    ).toBeVisible();
+    const sectionButton = page
+      .getByRole("dialog", { name: "Fertigation sections", exact: true })
+      .getByRole("button", { name: "Overview", exact: true });
+    const sectionBox = (await sectionButton.boundingBox())!;
+    expect(sectionBox.height).toBeGreaterThanOrEqual(44);
+    expect(sectionBox.width).toBeGreaterThan(300);
+    await page.screenshot({ path: info.outputPath("figma-section-sheet.png") });
+    await page.keyboard.press("Escape");
+    await expect(picker).toBeFocused();
+  } else {
+    await expect(page.locator(".app-frame")).toHaveAttribute(
+      "data-rail",
+      "expanded",
+    );
+    await expect(
+      page.getByRole("navigation", { name: "Breadcrumb" }),
+    ).toContainText(before.scope.display_number);
+  }
+  const views = [
+    "Overview",
+    "Growing areas & irrigation",
+    "Water & hydraulics",
+    "Recipes & dosing",
+    "Controls & I/O",
+    "Operating plan",
+    "Unit configurator",
+    "Evidence & delivery",
+    "Scope review",
+  ];
+  const viewIds = [
+    "overview",
+    "growing",
+    "water",
+    "recipes",
+    "controls",
+    "operating",
+    "configurator",
+    "evidence",
+    "review",
+  ];
+  for (const [index, label] of views.entries()) {
+    await moduleView(page, label);
+    await expect(
+      page.locator(`.fn-page[data-view="${viewIds[index]}"]`),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.screenshot({
+      path: info.outputPath(`figma-view-${index + 1}.png`),
+    });
+  }
+  await moduleView(page, "Growing areas & irrigation");
+  const valve = proposal.valves.toSorted((a, b) =>
+    a.label.localeCompare(b.label),
+  )[0];
+  await page
+    .getByRole("button", { name: `Actions for ${valve.label}`, exact: true })
+    .click();
+  const menu = page.getByRole("dialog", {
+    name: `Actions for ${valve.label}`,
+    exact: true,
+  });
+  await menu.getByRole("button", { name: "Edit", exact: true }).click();
+  const editor = page.getByRole("dialog", {
+    name: "Edit irrigation valve",
+    exact: true,
+  });
+  await expect(
+    editor.getByLabel("Label / reference", { exact: true }),
+  ).toHaveValue(valve.label);
+  await editor
+    .getByRole("button", { name: "Close Edit irrigation valve", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Discard editor entries", exact: true })
+    .click();
+  await moduleView(page, "Overview");
+  if (phone) await scopeAction(page, "History");
+  else await page.getByRole("button", { name: "History", exact: true }).click();
+  const history = page.getByRole("dialog", {
+    name: "History & exact revisions",
+    exact: true,
+  });
+  await expect(history).toBeVisible();
+  if (!phone) {
+    const bounds = (await history.boundingBox())!;
+    expect(
+      Math.abs(bounds.x + bounds.width / 2 - page.viewportSize()!.width / 2),
+    ).toBeLessThan(2);
+  }
+  await page.screenshot({ path: info.outputPath("figma-history.png") });
+  await history
+    .getByRole("button", {
+      name: "Close History & exact revisions",
+      exact: true,
+    })
+    .click();
+  const after = await call(page, `estimating/fertigation/${scopeId}`);
+  expect(after.revision).toEqual(before.revision);
 });
