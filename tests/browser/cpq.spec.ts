@@ -142,6 +142,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     .getByRole("button", { name: "Configure", exact: true })
     .click();
   await expect(page.getByLabel(/^Cable run distance/)).toHaveValue("140");
+  await expect(page.locator(".cpq-header h1")).toHaveCSS("letter-spacing", "normal");
   await expect(
     page.getByRole("button", { name: "Save configuration", exact: true }),
   ).toBeEnabled();
@@ -304,6 +305,9 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await page.screenshot({ path: info.outputPath("cpq-definition.png") });
   await page.getByRole("button", { name: "Edit formula", exact: true }).click();
   const formulaDialog = page.getByRole("dialog", { name: /^Quantity formula ·/ });
+  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS("letter-spacing", "normal");
+  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS("font-size", "20px");
+  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS("line-height", "26px");
   const proposedFormula = `max(${screenDefinition().rules[0].quantity}, 0)`;
   await formulaDialog.getByLabel("Formula", { exact: true }).fill(proposedFormula);
   await formulaDialog.getByRole("button", { name: "Run server test", exact: true }).click();
