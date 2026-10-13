@@ -851,13 +851,21 @@
       "desktop": "Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag.",
       "mobile": "Use the actual mobile stage layout; long titles and activity descriptions wrap without obscuring actions.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review.",
+      "limitations": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review. The separate six-view r37 Figma proposal is documented in the specification; it does not replace the runtime r38 reference or change existing fixture/consumer bindings.",
       "gaps": [
         {
           "id": "sales-board-alignment",
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-board-figma-r37",
+          "expected": "Review the user-requested r37 Figma board, list and phone component references with the owning Deals page.",
+          "actual": "Six editable Figma views and synthetic fixture examples were created and visually inspected on 13 October 2026; see docs/testing/evidence/deals-figma/README.md. No runtime change or owner acceptance.",
+          "action": "Review proposed shell/mobile adaptations and resolve runtime r38 alignment before adopting the design.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

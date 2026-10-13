@@ -63,3 +63,15 @@ Mobile: stack fields/actions, keep every tab reachable and contain table/history
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.page.sales.opportunities` carries normal and recovery steps.
 
 Retained reference: `docs/reference/ui/crm/ppo-deal-pipeline_r38.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+
+## Figma Deals proposal — 13 October 2026
+
+Dean requested a Deals UI in the existing PPO Design file using the specifically supplied [r37 HTML](../../../reference/ui/deals/ppo-deal-pipeline_r37.html). The linked target was the accepted Leads page; that page was preserved and a dedicated [Deals (proposal) page](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=549-2) was created in the same file. This request does not replace the retained r38 application reference or grant design acceptance.
+
+- Desktop: [Board](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=549-3), [List](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=555-5333), [Snapshot](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=555-6027), [Filters](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=555-6470) and [Pipeline settings](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=555-6765), each 1440 x 960.
+- Mobile: [Phone list](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=555-7107), 390 x 844. Stacked rows are a proposed adaptation of the source List. No separate 320px or tablet capture was produced.
+- Reuse: existing Sales rail, shared top bar, Button, Roboto text styles and PPO tokens; new local Deals card variants, list rows, phone rows, fields, checkbox and source SVG icon components.
+- Fixtures: 18 source opportunities, 4/3/7/2/2 stage counts, $1,189,150.50 known open total; $500,690.25 weighted estimate remains illustrative. Unknown values retain “Not estimated”.
+- Layout: collapsed 76px Sales rail; one board scroll area, five fitting stages, 264px cards, r37 stage gutters, right snapshot and full-height central filter form. Module shell adaptation and phone composition remain proposals.
+
+[Decision and scope](../../../decisions/deals-figma-design.md), [visual evidence and limits](../../../testing/evidence/deals-figma/README.md). Editable-layer and visual inspection are design-delivery evidence only. Runtime filters, writes, drag/move commands, all HTML dialog families, accessibility/device acceptance and deployment were not implemented or verified by this Figma task. Owner/review status and existing fingerprints remain unchanged.

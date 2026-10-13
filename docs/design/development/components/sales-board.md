@@ -45,3 +45,11 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Deal return context
 
 Title links open the canonical Deal Workspace with the current local Deals URL as return context. Only the Deals route is accepted as a return destination. Existing snapshot, resize, move and date-edit controls retain their authority. Catalogue fixture links remain intercepted. CR-04 insights use the identical returned page without widening its query or weighting amounts.
+
+## Figma component reference — 13 October 2026
+
+The user-specified r37 design is now an editable [Deals proposal](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=549-2), separately from the runtime r38 reference. `Deals/Card` (`551:947`) supplies Default and Rotting variants with text properties; `Deals/List row` (`551:948`) and `Deals/Phone list row` (`555:7166`) carry source fixtures. Fields, checkbox options and 29 source SVG icon components support the composed views. Fills, strokes, spacing and radii reuse PPO tokens or scoped source-specific Deals tokens. Existing shared shell and Button definitions were reused without changing their masters.
+
+The 18 board/list/phone fixtures preserve the source names, stage counts, values, primary contacts where shown and next activities; rot, missing-action, overdue and unknown-value examples remain visible. New Figma components are references for `route:/sales/opportunities`, not new runtime exports or catalogue renderers. Existing consumer bindings and runnable state fixtures remain unchanged.
+
+[Evidence](../../../testing/evidence/deals-figma/README.md) records agent visual inspection at 1440 x 960 and 390 x 844. Owner/device acceptance, full HTML interaction coverage, 320px/tablet views and runtime alignment remain open.
