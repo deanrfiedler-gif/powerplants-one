@@ -13,6 +13,9 @@ Execution is in progress. Final source and results will be recorded after the re
 - Isolated first end-to-end case then passed: creation, independent review, original receipt, revision, retained reference, exact historic bytes and withdrawal.
 - Second run passed the first four cases; added evidence hardening exposed a PL/pgSQL CASE expression requiring parentheses while later resets read the updated migration. Corrected; fresh migration parse passed. These runs are diagnostic, not final-source proof.
 - Third database run passed 9/10, including native PDFs and populated/repeated upgrade. The last test fixture omitted the site_id companion on its Site grant; corrected to the existing scope contract. Additional exact source-author and storage-before-database-failure proofs were then added.
+- A combined local check ran all 775 existing units: 772 passed, three failed in Windows private-path/symlink tests. The same three failures reproduce in an unchanged `origin/main` archive at `ad9f2eb42285f46329d2ef138e6f635d369bacfa`. A canonical temporary directory gets past the short-path refusal but reaches Windows EPERM on symlink creation. No guard or test expectation was weakened.
+- Concurrent local units/build pressure coincided with 120-second reset-hook failures in the final database batch; six cases passed before it was stopped. Earlier nine-case passes remain recorded; final isolated execution is still required.
+- The first full compiled build passed. A scoped inverse linked-record read was then added; its final compiled API proof remains required.
 - Generated AD-01 capability model: 107 groups passed with 145 capabilities. Visual acceptance is not inferred.
 
 ## Required coverage

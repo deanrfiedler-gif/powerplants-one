@@ -1,6 +1,7 @@
 # DK-01/DK-02 document library backend
 
-Owner: Dean Fiedler  
+Owner: Dean Fiedler
+
 Review status: implementation decision for the requested synthetic backend; business acceptance and live integration remain open.
 
 ## Decision and scope

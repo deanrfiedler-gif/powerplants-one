@@ -29,6 +29,7 @@ import {
   readDocument,
   listDocuments,
   documentUsage,
+  linkedDocuments,
   documentHistory,
   downloadDocument,
 } from "../../src/library/reads";
@@ -118,6 +119,12 @@ test("DK-B01 persisted identity, exact review, successor, retained links, histor
   const usage = await documentUsage(p, input.id);
   assert.equal(usage.items[0].revision_id, input.revision_id);
   assert.equal(usage.items[0].needs_revision_assessment, true);
+  const linkedRead = await linkedDocuments(p, {
+    target_kind: "Site",
+    target_id: CRM.site,
+  });
+  assert.equal(linkedRead.items[0].revision.id, input.revision_id);
+  assert.equal(linkedRead.items[0].library_current, false);
   assert.deepEqual(
     (await linkDocument(p, input.id, link)).receipt,
     linked.receipt,
@@ -458,6 +465,22 @@ test("DK-B06 scoped declared usage is filtered and cannot retarget itself to a s
     purpose: "SYN engineering reference",
   });
   assert.equal((await documentUsage(p, input.id)).items.length, 2);
+  await assert.rejects(
+    linkedDocuments(observer, {
+      target_kind: "Project",
+      target_id: project.id,
+    }),
+    code("RecordUnavailable"),
+  );
+  assert.equal(
+    (
+      await linkedDocuments(p, {
+        target_kind: "EngineeringPackage",
+        target_id: engineering.id,
+      })
+    ).items[0].document.id,
+    input.id,
+  );
   const usage = await documentUsage(observer, input.id);
   assert.equal(usage.coverage, "Partial");
   assert.deepEqual(usage.items, []);

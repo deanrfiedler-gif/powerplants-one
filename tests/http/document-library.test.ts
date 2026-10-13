@@ -86,6 +86,18 @@ test("DK-HTTP01 compiled register, review, revision, history, links and receipts
     (await h.call("coordinator", path)).body.review_state,
     "Unreviewed",
   );
+  const linked = await h.call(
+    "coordinator",
+    "document-library/linked?target_kind=Site&target_id=" + CRM.site,
+  );
+  assert.equal(linked.status, 200);
+  assert.equal(
+    linked.body.items.find(
+      (x: { document: { id: string } }) => x.document.id === input.id,
+    ).revision.id,
+    input.revision_id,
+  );
+
   assert.equal(
     (await h.call("coordinator", path + "/history?limit=2")).body.items.length,
     2,

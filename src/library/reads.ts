@@ -11,9 +11,14 @@ import {
   optionalId,
   uuid,
 } from "../shared/validation";
-import { documentContext, revisionContext, targetContext } from "./context";
+import {
+  documentContext,
+  revisionContext,
+  targetContext,
+  targetRow,
+} from "./context";
 import { exactBytes, sourceAuthority } from "./sources";
-import type { DocumentRow, Revision } from "./types";
+import { targetKinds, type DocumentRow, type Revision } from "./types";
 async function readTransaction<T>(
   p: Principal,
   read: (c: PoolClient) => Promise<T>,
@@ -401,5 +406,56 @@ export async function downloadDocument(
         r.revision +
         (r.source.kind === "SyntheticText" ? ".txt" : ".pdf"),
     };
+  });
+}
+
+// Inverse lookup returns the linked revision itself, never a newer current file.
+export async function linkedDocuments(
+  p: Principal,
+  query: Record<string, string>,
+) {
+  object(query, ["target_kind", "target_id", "after", "limit"]);
+  const kind = choice(query.target_kind, "target_kind", targetKinds),
+    target_id = uuid(query.target_id, "target_id"),
+    after = optionalId(query.after, "after");
+  const limit = query.limit === undefined ? 25 : Number(query.limit);
+  if (!Number.isInteger(limit) || limit < 1 || limit > 50)
+    invalid("limit", "Choose 1–50 references.");
+  return readTransaction(p, async (c) => {
+    await targetRow(c, p, kind, target_id);
+    const items = [];
+    let scan = after;
+    for (;;) {
+      const links = (
+        await c.query(
+          "SELECT id,document_id,revision_id,purpose FROM ppo.library_links WHERE workspace_id=$1 AND target_kind=$2 AND target_id=$3 AND retired_at IS NULL AND ($4::uuid IS NULL OR id>$4) ORDER BY id LIMIT 100",
+          [p.workspace_id, kind, target_id, scan],
+        )
+      ).rows;
+      if (!links.length) return { items, next_after: null, synthetic: true };
+      for (const link of links) {
+        scan = link.id;
+        try {
+          const { d } = await documentContext(c, p, link.document_id),
+            r = await revisionContext(c, p, d, link.revision_id);
+          await targetContext(c, p, kind, target_id, d);
+          if (items.length === limit)
+            return {
+              items,
+              next_after: items.at(-1)!.link_id,
+              synthetic: true,
+            };
+          items.push({
+            link_id: link.id,
+            purpose: link.purpose,
+            document: d,
+            revision: publicRevision(r),
+            ...(await status(c, p, d, r)),
+          });
+        } catch (e) {
+          if (!hidden(e)) throw e;
+        }
+      }
+    }
   });
 }

@@ -11,6 +11,7 @@ All paths begin `/api/v1/document-library`. Read, source and selected working-co
 | Method and suffix | Result |
 |---|---|
 | GET root | One row per identity, current revision only. Default state Current; state All/Withdrawn includes retained withdrawals |
+| GET /linked?target_kind=KIND&target_id=UUID | Native-context lookup of active declared references, returning each linked exact revision even after a successor exists. Limit/after page by visible link UUID |
 | GET /:id | Exact selected revision or the current one; aggregate version, source hash/size, findings, retained review and separate availability/currentness |
 | GET /:id/content?revision_id=UUID | Required exact revision; protected attachment, private/no-store, nosniff, sandbox CSP. No mutable latest download |
 | GET /:id/history | Immutable event history, including original response/acceptance facts; exact revision attribution |
@@ -24,7 +25,7 @@ Hidden source records are omitted, without titles or source IDs. Unreadable rece
 
 ## Commands
 
-All commands use JSON, reject unknown fields, and return the existing operation receipt. Supply `schema_version: 1`, a UUID `operation_id`, and a nonempty single-line `reason` (up to 1,000 characters). Mutations use the current aggregate `expected_version` and exact `revision_id`; registering a successor uses `observed_revision_id` for the old current revision and `revision_id` for the new one. A new accepted operation returns 201; identical replay returns 200 with its original receipt. Current authority is rechecked first.
+All commands use JSON (up to 64 KiB per request), reject unknown fields, and return the existing operation receipt. Supply `schema_version: 1`, a UUID `operation_id`, and a nonempty single-line `reason` (up to 1,000 characters). Mutations use the current aggregate `expected_version` and exact `revision_id`; registering a successor uses `observed_revision_id` for the old current revision and `revision_id` for the new one. A new accepted operation returns 201; identical replay returns 200 with its original receipt. Current authority is rechecked first.
 
 | POST suffix | Additional fields and effect |
 |---|---|

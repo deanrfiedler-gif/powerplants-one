@@ -69,12 +69,11 @@ export function current(
       "Use the current exact revision for this action.",
     );
 }
-export async function targetContext(
+export async function targetRow(
   c: QueryClient,
   p: Principal,
   kind: TargetKind,
   id: string,
-  d: DocumentRow,
 ) {
   let row;
   try {
@@ -91,6 +90,16 @@ export async function targetContext(
       throw unavailable();
     throw e;
   }
+  return row;
+}
+export async function targetContext(
+  c: QueryClient,
+  p: Principal,
+  kind: TargetKind,
+  id: string,
+  d: DocumentRow,
+) {
+  const row = await targetRow(c, p, kind, id);
   const organisation =
     kind === "Organisation"
       ? row.id
