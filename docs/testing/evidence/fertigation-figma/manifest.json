@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "source_commit": "3b9695d3c83dfa3dddd158c506935ab50560017b",
+  "integrated_main": "d195e679ea16e0cac75104db00d5af79bde0d141",
+  "runtime": {
+    "timestamp": "2026-10-13T01:06:40.159Z",
+    "browser": "153.0.8010.12",
+    "buildId": "9AjgbmtBEUnmYEoTiP5Il",
+    "scopeId": "33322932-0b11-4352-9b28-431f87dd194a",
+    "iconFreeMethod": "Visibility-only CSS for semantic icon elements; no geometry or layout changes."
+  },
+  "fixture": "remapScope(boardReferenceScope(), scopeId).proposal; real CRM/Discovery/scope APIs; revision 1",
+  "source_hashes": {
+    "src/components/fertigation-figma.css": "95fceeb211c3446c31613a1f3081dc0ca2ef6e1275308746f3e12e6b82c3c271",
+    "src/components/fertigation-charts.tsx": "dc9b46ba60685c5354e3fc92c27f6492fcaf8db31dc840d2183780f3caba1d08",
+    "tests/browser/fertigation.spec.ts": "a3dc5dfc152d102edade8a9ca0317268095a269482f790704c2d95ca0e390a32"
+  },
+  "captures": [
+    {
+      "file": "desktop-growing.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 179611,
+      "sha256": "9753e777409d1cf6792dba3bcd5f66bd35c3e30fb7e60a2f6970f7913f533a98"
+    },
+    {
+      "file": "desktop-history.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 212015,
+      "sha256": "592e3f9974688f098545decfb233248fcdbf02ec6d8781fa41b347639cda71b6"
+    },
+    {
+      "file": "desktop-overview.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 212702,
+      "sha256": "de40028c1686cb64eba1a20501c6de27cf0518fc49668971ba39369fa18c3080"
+    },
+    {
+      "file": "desktop-review.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 203372,
+      "sha256": "6bb2d2c9c0458c734336f0d614bec169664d196684c0a134ab33de51b55acf54"
+    },
+    {
+      "file": "desktop-water.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 196311,
+      "sha256": "9d305b338ba45b7a1b8c72db350c8aeaeb2340e47b39df42cceafee87cb4df6a"
+    },
+    {
+      "file": "phone-growing.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 49070,
+      "sha256": "af9c414daccaf4b2b3f8ed2acaa619e0382f396f3c574e164a08d4aed418270c"
+    },
+    {
+      "file": "phone-overview.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 54646,
+      "sha256": "332224d3215b5a596bc7cf3f8fbf44df1f66a0dc9a22ce329a7a11cf6a696e27"
+    },
+    {
+      "file": "phone-sections.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 36616,
+      "sha256": "4937ddf67cb6d7b2744062b59fdc63fba6f60712878ec411bc626bd945a5372f"
+    }
+  ],
+  "acceptance": "Agent visual comparison only; owner visual acceptance pending",
+  "deployment": "Local compiled application; hosted deployment recorded separately"
+}

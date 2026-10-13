@@ -1,13 +1,43 @@
 # Fertigation Figma implementation evidence
 
-Date: 13 October 2026. Source branch: `codex/fertigation-figma-ui`, based on main `c3ff5b90d0730f55583b6ee73f9d1af4a449695e`. Scope: EST-02/03/06, existing record route and native r01 calculation.
+Date: 13 October 2026. Scope: EST-02/03/06, the existing record route and native r01 calculation. Application source: `3b9695d`; integrated main: `d195e67`. [PR #464](https://github.com/deanrfiedler-gif/powerplants-one/pull/464) carries the implementation and current-head CI.
 
-Reference: [accepted Figma design and frame identities](../../../decisions/fertigation-figma-design.md), retained [icon-free captures](../../../reference/ui/estimating/fertigation-figma-design-r01/README.md). Private live Figma screenshots and design-context inspection were used to compare geometry, type, colours and composition. Licensed artwork is not copied into this public evidence directory.
+The [accepted Figma design](../../../decisions/fertigation-figma-design.md) and its [retained icon-free frames](../../../reference/ui/estimating/fertigation-figma-design-r01/README.md) govern appearance. Private Figma screenshots and design context were inspected alongside the compiled application. Issued reference bytes are unchanged. Owner visual acceptance of the implementation remains pending.
 
-Fixture: `boardReferenceScope()` with synthetic imported inputs and explicitly documented synthetic declarations. Host setup uses a disposable PostgreSQL 16 cluster with database `ppo_synthetic_test`, independent of other local work. Chrome desktop 1440 × 1000 and phone emulation 390 × 844 are the target comparison widths.
+## Compiled visual evidence
 
-Documentation foundation passed: all 78 parent IDs, 22 issued sources, 9,157 local links and 5,744 marker-scan files retained. Initial TypeScript and targeted lint found a missing close-icon key and an unused import; both were corrected. All 125 targeted fertigation unit tests passed. TypeScript passed after the corrections. The studio register check passed with 358 page entries, 44 component entries and no integrity errors; pending/stale reviews stay visible.
+The final optimized build is `9AjgbmtBEUnmYEoTiP5Il`, served by the compiled local launcher against a disposable PostgreSQL 16 database named `ppo_synthetic_test`. Chromium 153.0.8010.12 captured desktop 1440 × 1000 and phone 390 × 844. The fixture is `remapScope(boardReferenceScope(), scopeId).proposal`, saved through the real CRM, Discovery and fertigation APIs; every child identity belongs to its new synthetic scope. No operational record or manufacturer authority is implied.
 
-The first complete local optimized build and targeted ESLint checks passed. CI on `2e98c28` passed the full E1 static, unit and PostgreSQL lane, including native fertigation and retained artifacts. Its browser lane exposed moved-control selectors, a hidden phone recalculation/trace entry and a reused fixture allocation ID; those are being corrected and rerun. Closing an editor intentionally keeps its entries, so the new navigation test explicitly discards its untouched editor before opening History.
+[manifest.json](manifest.json) records the source, build, timestamp, exact image hashes and dimensions; [geometry.json](geometry.json) records all nine desktop views with no document overflow. The two desktop rails measure 240 px each, the shell header 64 px and the content origin 480 px. All nine desktop views, the History window and the three phone compositions were visually inspected. Corrections include the overview order, phone context, filter toolbar, modal focus, row actions, pastel charts and non-overlapping timeline captions.
 
-Paired inspection of all nine desktop views, phone Overview/Growing areas, the phone section sheet and History identified workspace-reset specificity conflicts and wrapping. The corrections retain scoped styling, the existing account/page-guide access, real filters, row menus and calculation trace. Private iterative screenshots are not release evidence: some used an injected copy of the working stylesheet while the compiled application was rebuilt. Final compiled screenshots and browser outcomes are recorded separately below when complete. Owner visual acceptance and hosted deployment are pending.
+| State | Compiled application capture |
+|---|---|
+| Desktop Overview | [desktop-overview.png](desktop-overview.png) |
+| Desktop Growing areas | [desktop-growing.png](desktop-growing.png) |
+| Desktop Water and hydraulics | [desktop-water.png](desktop-water.png) |
+| Desktop Scope review | [desktop-review.png](desktop-review.png) |
+| Desktop History | [desktop-history.png](desktop-history.png) |
+| Phone Overview | [phone-overview.png](phone-overview.png) |
+| Phone section sheet | [phone-sections.png](phone-sections.png) |
+| Phone Growing areas | [phone-growing.png](phone-growing.png) |
+
+These public images hide semantic icon elements with visibility-only CSS, retaining their space. No layout override was injected for these final captures. The private local comparison used the existing owned SVG fallback because no hosted Font Awesome Kit was configured locally. Licensed Pro artwork and private Figma URLs are excluded. Earlier iterative screenshots that injected a working stylesheet are not included as compiled evidence.
+
+## Executed checks
+
+- All 125 targeted fertigation unit cases passed. The calculation/revision backend is unchanged.
+- Final optimized build, TypeScript, targeted ESLint and `git diff --check` passed.
+- `npm run studio:check` passed: 358 pages, 44 components, 21 runnable components, no integrity errors. Its 330 unreviewed pages, 28 stale reviews and 44 pending component reviews remain visible.
+- Foundation assurance passed with all 22 issued sources and 78 parent IDs; naming assurance passed, including the project instruction length limit. These are documentation checks, not business acceptance.
+- The first complete compiled browser run passed 18 of 20 cases (all ten desktop cases and eight phone cases). FN-T61 phone exceeded its original five-second saved-status deadline while the local trace recorded a 16.8-second detail refresh. FN-T07 phone exposed a test helper that checked visibility before the register loaded; the helper now waits for its phone filter control using the existing deadline. Both failures are retained as failures of that run.
+- Final compiled replay of FN-T61, FN-T07 and FN-T118 passed all six desktop/phone cases on application source `3b9695d`. Together with the complete run above, all 20 scenarios have passing execution; this is not claimed as one clean full-suite run. No timeout, assertion or server ownership constraint was weakened.
+
+FN-T118 exercises all nine destinations, desktop geometry and breadcrumbs, phone section focus/Escape and touch targets, row menu/editor equivalence, History, document overflow and unchanged saved proposal. Existing browser cases retain native create/edit/save, exact clean-context reopen, 1,000-valve responsiveness, import/placement/declarations, conflict resolution, history recovery and receiving effects. Closing an editor intentionally retains its entries; navigation tests explicitly discard those entries before leaving.
+
+Initial CI on `2e98c28` passed the E1 static, unit and PostgreSQL lane. Its browser failures identified moved-control selectors, phone recalculation/trace access and reused fixture allocation identities; those were corrected. The intermediate `6b27131` documentation failure was the 8,000-character instruction limit after merging main; the maintained instructions now contain 7,997 characters. Current-head CI is the merge gate; earlier passes do not certify a later source.
+
+## Delivery boundaries
+
+The shared account and Page guide controls remain accessible on the phone; navigation follows the signed-in identity's real permissions. Seven phone views have no separate accepted Figma frame, and physical-device/screen-reader acceptance has not been performed. Q8 system SVG export and device-to-channel allocation remain open. No accepted review fingerprint is inferred from these captures.
+
+Hosted deployment and invited-account verification are recorded separately from local implementation and owner visual acceptance. The module adds no migration, seed, capability, dependency or external integration. A release containing newer main changes must use the existing guarded demo workflow and its reviewed database upgrade path.

@@ -4,11 +4,11 @@ Stable component: `fertigation-workbench`. Owner: Dean Fiedler. Coverage: Host e
 
 The record host combines the existing fertigation header, presentation kit and charts with shared `RecordTabs`, `RegisterTable` and `WorklistMenu`. It follows the [accepted Figma decision](../../../decisions/fertigation-figma-design.md) and [implementation scope](../../../decisions/fertigation-figma-implementation.md). Its consumer is `route:/estimating/fertigation/[id]`; it is not a generic equipment configurator.
 
-Use `tests/helpers/fertigation-board-scope.ts` for the deterministic synthetic eight-finding/candidate-failure state. `FN-T118` in `tests/browser/fertigation.spec.ts` creates an authorised saved host through the real Discovery API and walks all nine views, the row editor, section sheet and history. Existing tests cover editing, stale revision, denied access and ambiguous command recovery. A standalone fixture may not fabricate a business session.
+Use `tests/helpers/fertigation-board-scope.ts` for the deterministic synthetic eight-finding/candidate-failure state. `FN-T118` in `tests/browser/fertigation.spec.ts` remaps every child identity for a new scope, creates an authorised saved host through the real Discovery API and walks all nine views, the row editor, section sheet and history. Existing tests cover editing, stale revision, denied access and ambiguous command recovery. A standalone fixture may not fabricate a business session.
 
 ## Desktop
 
-At 1440 × 1000, preserve the two 240 px navigation columns, record header/context strip, 24 px body gutters and independently scrolling workspace. Existing saved rail preferences remain effective. Register actions stay at the right edge of bounded tables. Headings sit outside cards; charts use their native calculated values and consistent scales.
+At 1440 × 1000, preserve the two 240 px navigation columns, record header/context strip, 24 px body gutters and independently scrolling workspace. Existing saved rail preferences remain effective. Register actions stay at the right edge of bounded tables. Headings sit outside cards; charts use their native calculated values and consistent scales. Timeline end and unused-window captions occupy separate lines so neither obscures the other.
 
 ## Mobile
 
