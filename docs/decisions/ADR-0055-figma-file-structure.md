@@ -14,6 +14,8 @@ Claude recommended one library file plus one design file per department, with on
 
 While the work was under way Dean added: "the other active session has finished with the Deals and Customer 360 pages, so you can now include those also."
 
+Dean then said he liked the six CPQ pages and the ES-02 and ES-08 labels on the Fertigation and Screen Configurator pages, and asked whether to use that approach for every design ("We don't have to. What is your professional opinion?"). Claude advised scope labels on new pages where a real scope ID exists, and numbered pages only for large modules. Dean replied: "I am happy for you to proceed however you believe is the most professional approach."
+
 This record keeps the decision, what was found, why the file stays whole for now, and the conditions for splitting it later.
 
 ## Context
@@ -44,11 +46,13 @@ Option D.
 3. **Names.**
    - Existing page names do not change, because the records and open pull requests above quote them. The node ID is the stable reference.
    - New pages are named "[Page name] · [scope ID]", for example "Quotations · ES-05", with no status in the name. Status lives in the decision record and the file index, so a page's name never changes at acceptance.
+   - Use a real scope ID. A page with none, such as a proposed extension like CPQ, is named without one, and an ID is never invented. A scope ID is not unique to a page (the Wizard and Fertigation are both ES-02), so the node ID and the route stay the identifiers, and the label is for scanning and traceability.
 4. **Template.** The page "Template · App page" is the starting point for a new app page. Its header holds the fields of the UI conformance declaration, so a decision record can be written straight from it. Below the header are sections for Desktop 1440, Tablet 1024, Phone 390 and 320, States, and Flows and notes. Existing pages keep their layout.
 5. **File index.** The Start here page carries a File index: every page with its node ID, route or scope, design status and decision record. It reports design status only. Build, review and deployment status stay in `docs/STATUS.md` and the design register.
 6. **Lock-in step.** Rule 3 of ADR-0053 gains one step: when a design is accepted and its named version is saved, add or update its row in the File index. A page that has no decision record yet is listed with the record shown as pending, and never as accepted.
 7. **Divider and template pages hold no design.** No record cites a frame on them.
 8. **Pages other sessions are drawing.** Under ADR-0053 rule 8, a session that is drawing a page keeps it. Restructuring reorders such a page and leaves its name and frames alone.
+9. **Page shape.** One Figma page holds one app page, drawn in the template's sections. A module may use numbered pages ("[Module] · 1 Read me, sources & decisions", "[Module] · 2 …") only when it has about 30 or more frames, or two or more journeys that share no frames. A module's own components do not justify a split, and stay on its page. Figma prototype links work only inside one page, so each journey stays on one page. The first numbered page holds the decisions, open questions and handover table, and every numbered page has its own File index row. CPQ, with about 55 frames and four journeys, is the model. Existing modules are not split, because records cite their page IDs.
 
 ## Deferred: splitting the file
 
