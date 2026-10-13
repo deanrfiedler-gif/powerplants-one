@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { beforeEach, after, test } from "node:test";
+import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import {
@@ -33,7 +33,9 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+// Each case creates distinct Projects. The authority case restores its exact grants,
+// and the populated-upgrade case deliberately rebuilds its own historical schema.
+before(reset);
 after(closeDatabase);
 const code = (name: string) => (e: unknown) =>
   e instanceof AppError && e.code === name;
@@ -255,30 +257,45 @@ test("PJ03-C04 current scope and edit authority precede new writes, history and 
     ),
     code("RecordUnavailable"),
   );
-  await database().query(
-    "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='project.edit'",
+  const grants = await rows(
+    "SELECT to_jsonb(g) value FROM ppo.permission_grants g WHERE workspace_id=$1 AND user_id=$2 AND capability IN ('project.read','project.edit')",
     [p.workspace_id, p.actor_id],
   );
-  assert.equal((await readCalendar(p, project.id)).can_record, false);
-  assert.equal((await readActuals(p, project.id, task.id)).can_record, false);
-  for (const op of [calendar, actual])
+  try {
+    await database().query(
+      "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='project.edit'",
+      [p.workspace_id, p.actor_id],
+    );
+    assert.equal((await readCalendar(p, project.id)).can_record, false);
+    assert.equal((await readActuals(p, project.id, task.id)).can_record, false);
+    for (const op of [calendar, actual])
+      await assert.rejects(
+        readOperation(p, op.operation_id),
+        code("RecordUnavailable"),
+      );
     await assert.rejects(
-      readOperation(p, op.operation_id),
+      recordCalendar(p, project.id, calendar),
       code("RecordUnavailable"),
     );
-  await assert.rejects(
-    recordCalendar(p, project.id, calendar),
-    code("RecordUnavailable"),
-  );
-  await assert.rejects(
-    recordActuals(p, project.id, task.id, actual),
-    code("RecordUnavailable"),
-  );
-  await database().query(
-    "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='project.read'",
-    [p.workspace_id, p.actor_id],
-  );
-  await assert.rejects(readCalendar(p, project.id), code("RecordUnavailable"));
+    await assert.rejects(
+      recordActuals(p, project.id, task.id, actual),
+      code("RecordUnavailable"),
+    );
+    await database().query(
+      "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='project.read'",
+      [p.workspace_id, p.actor_id],
+    );
+    await assert.rejects(
+      readCalendar(p, project.id),
+      code("RecordUnavailable"),
+    );
+  } finally {
+    for (const g of grants)
+      await database().query(
+        "INSERT INTO ppo.permission_grants SELECT * FROM jsonb_populate_record(NULL::ppo.permission_grants,$1::jsonb) ON CONFLICT DO NOTHING",
+        [JSON.stringify(g.value)],
+      );
+  }
 });
 test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline calendar and invalid calendar refuse commits", async () => {
   const { p, project } = await setup();
@@ -300,7 +317,9 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
       );
       await c.query("SET CONSTRAINTS ppo.programme_evidence IMMEDIATE");
     }),
-    (e: unknown) => (e as { code: string }).code === "23514" && /Exact programme revision/.test((e as Error).message),
+    (e: unknown) =>
+      (e as { code: string }).code === "23514" &&
+      /Exact programme revision/.test((e as Error).message),
   );
   assert.deepEqual(
     (
@@ -317,7 +336,14 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
       .ok,
     false,
   );
-  assert.equal((await rows("SELECT ppo.valid_project_calendar(ARRAY[[1,2],[3,4]], '[]') ok"))[0].ok, false);
+  assert.equal(
+    (
+      await rows(
+        "SELECT ppo.valid_project_calendar(ARRAY[[1,2],[3,4]], '[]') ok",
+      )
+    )[0].ok,
+    false,
+  );
   assert.equal(
     (
       await rows(
@@ -341,7 +367,9 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
       );
       await c.query("SET CONSTRAINTS ppo.baseline_calendar_evidence IMMEDIATE");
     }),
-    (e: unknown) => (e as { code: string }).code === "23514" && /Baseline requires its exact current calendar/.test((e as Error).message),
+    (e: unknown) =>
+      (e as { code: string }).code === "23514" &&
+      /Baseline requires its exact current calendar/.test((e as Error).message),
   );
   assert.equal((await readBaselines(p, project.id)).latest_revision, 0);
 });
@@ -371,14 +399,14 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
     "users",
     "seed_receipts",
   ];
-  const snapshot = () =>
-    Promise.all(
-      tables.map((t) =>
-        rows(
-          `SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
-        ),
-      ),
-    );
+  const snapshot = async () => {
+    const captured = [];
+    // Preserve every exact row without concurrent connection acquisition. The
+    // test owns this disposable database; commands remain serial.
+    for (const t of tables)
+      captured.push(await rows(`SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`));
+    return captured;
+  };
   const before = await snapshot(),
     ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
     schedule = await readSchedule(p, project.id);
