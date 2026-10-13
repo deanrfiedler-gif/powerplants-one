@@ -12,7 +12,7 @@ Test joined journeys; separate proof/owner acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
-Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P09.
+Follow P01–P12, STATUS, BP-03 §0 and BP-04. PPO-009 CRM differs from P09.
 
 ## 3. Sources
 
@@ -58,7 +58,7 @@ HTML: html-module-conformance.md.
 
 ## 8. Authority
 
-Complete authorised work; ask only for blockers.
+Complete authorised work; ask about blockers.
 
 Preserve unrelated work; use branch/PR. Merge needs authority/checks/review. Update specs/registers.
 
@@ -100,6 +100,6 @@ PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
 UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-attestations.md; local Keep API; native reviews, campaigns and D-020 open.
 
-PJ-03: project-schedule-baselines.md; coordinator baselines; Service owns bookings.
+PJ-03: project-schedule-baselines.md. PJ-04: project-raid-backend.md. Service owns bookings.
 
 [Backend](../delivery/backend-completion-plan.md).

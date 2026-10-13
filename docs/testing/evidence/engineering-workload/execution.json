@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-13",
+  "scope": [
+    "BC-01",
+    "EN-01",
+    "ENG-01",
+    "ENG-02",
+    "ENG-04",
+    "AT-01",
+    "PT-01"
+  ],
+  "base_commit": "7e4ef3b8ce28e1976fea621f9de33999c26fbe21",
+  "tested_runtime_commit": "3dfa98dd7bd10275434c4473dee88ec37613a3be",
+  "test_source_note": "HTTP test expectation corrected after this commit: native initial coordination is 201; replay is 200. Runtime and compiled build remain unchanged.",
+  "files": [
+    {
+      "path": ".github/workflows/engineering.yml",
+      "sha256_lf": "bad7c779cba19a58853e61363df6672feb56ab8e064bfa01fc03c556f49cf233"
+    },
+    {
+      "path": "src/engineering/service.ts",
+      "sha256_lf": "9db82ea85671c2c85175762009cd618e523d479c3c29ed744dfa91cc6f110514"
+    },
+    {
+      "path": "src/engineering/register.ts",
+      "sha256_lf": "6695a6ef11b072beba30b3b10a786be8f98fe712d04eb5804fdc8f245ac024ec"
+    },
+    {
+      "path": "src/engineering/register-query.ts",
+      "sha256_lf": "58ac12053c729347a8dbe3d612dfc8937604bbb23210426ac540759aeb68f637"
+    },
+    {
+      "path": "src/app/api/v1/engineering/register/route.ts",
+      "sha256_lf": "fca700b29e45246846fb52b3bde2c9b965028df6c7e63af894918af2fe267ab4"
+    },
+    {
+      "path": "tests/database/engineering-register.test.ts",
+      "sha256_lf": "de8688bc18bb6f72f4e2fe5a208849a3181d34a6c981823f8bfdd7acb727d0d4"
+    },
+    {
+      "path": "tests/database/engineering-control.test.ts",
+      "sha256_lf": "36bce0e5d1189d0423e4c5082bc28a566549d747d678b57a939468edb3000224"
+    },
+    {
+      "path": "tests/http/engineering-register.test.ts",
+      "sha256_lf": "74be2035815cc87181c1f4f023afca726b833584d4ce5c0ce55a482330c798b0"
+    },
+    {
+      "path": "tests/unit/engineering-register.test.ts",
+      "sha256_lf": "58533b57719999ba3b6899aefa160d369faf742a166524b63385ec1c09f50280"
+    }
+  ],
+  "executed": {
+    "database": {
+      "tests": 17,
+      "pass": 17,
+      "fail": 0
+    },
+    "compiled_http": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    "unit": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    "build": "Passed",
+    "typescript": "Passed",
+    "eslint": "Full repository passed; corrected HTTP test passed separately",
+    "foundation": "Passed",
+    "prototype": "Passed",
+    "naming": "Passed",
+    "studio": {
+      "errors": 0,
+      "entries": 358,
+      "unreviewed": 330,
+      "stale": 28
+    }
+  },
+  "retained_initial_results": [
+    "Focused database run 5/6: new assertion expected ValidationFailed instead of native InvalidData; corrected without changing runtime or deadline.",
+    "Compiled HTTP run 1/2: new assertion expected 200 for initial native coordination, whose existing route returns 201; corrected while retaining 200 replay assertion.",
+    "Reset without explicit disposable opt-ins refused. An interrupted private cluster later refused connections and briefly rejected them during automatic recovery; final complete run passed after recovery.",
+    "Initial build/typecheck attempts interrupted and not counted as passes. Final build and standalone TypeScript completed successfully."
+  ],
+  "boundaries": [
+    "No local unrelated full database/unit/browser suite rerun",
+    "CI separate",
+    "Owner/visual/device acceptance separate",
+    "No merge or deployment",
+    "No operational rules, adapters or production-capacity proof"
+  ]
+}

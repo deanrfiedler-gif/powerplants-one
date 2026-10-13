@@ -628,6 +628,16 @@ test("ES08 Figma contents, findings filter, working focus and phone actions reta
   await expect(page.getByRole("button", { name: "Workbench actions", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(page.getByRole("status").filter({ hasText: "Saved to the server" })).toBeVisible();
+  await view(page, "Parts & working");
+  await page.getByRole("button", { name: "Working for CE-LINE-223" }).click();
+  expect((await working.boundingBox())!.width).toBe(390);
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Working for CE-LINE-223" })).toBeFocused();
+  await view(page, "Definition review");
+  await page.getByRole("combobox", { name: "Finding kind" }).selectOption("AUD");
+  await expect(page.locator(".es08-findings > li")).toHaveCount(3);
+  await page.getByRole("combobox", { name: "Finding kind" }).selectOption("All");
+  await expect(page.locator(".es08-findings > li")).toHaveCount(38);
   await view(page, "Drawings");
   await page.getByRole("button", { name: "Select field B05 group B", exact: true }).click();
   await expect(page.getByRole("dialog", { name: "Selected screen field B05·B", exact: true })).toBeVisible();

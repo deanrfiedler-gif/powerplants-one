@@ -19,14 +19,14 @@ These are executed development checks, not owner acceptance or a claim that late
 | Changed-file ESLint | Passed for workbench components, product navigation, browser spec and design comparison helper before the supplementary phone select |
 | Development register | 358 entries, 44 components; no errors. Existing review status remains 330 unreviewed and 28 stale; this is not acceptance |
 | Foundation | Passed: 22 issued references and all 78 parent requirements retained |
-| Naming | Passed, including the 7,996-character maintained project instructions |
+| Naming | Passed, including the 7,995-character maintained project instructions |
 | Hosted prerequisites | [Check run 38325352303](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38325352303) passed. Check mode deployed no image and changed no business data |
 
 Local browser environment: Node 24.21.0, Playwright 1.63.0 and stable Chrome 155.0.8059.40. The isolated runner reuses the compiled loopback server on port 3048, with one worker and a 600-second local per-test ceiling for fixture setup on the shared Windows host. Committed CI deadlines and assertions are unchanged.
 
-The desktop seven-view tour passed locally: five drawing profiles, linked field selection, drawing-only withholding, all 143 positions, working-panel focus return, exact run export, and widths 1920/1440/1280/1024/960/390/320. Durable draft/native receiving also passed, including invalid raw input persistence, manual re-review, cancellation, exact history, retained manual estimate edits and deliberate deletions. The full local suite continues; its final outcome belongs in the PR handover rather than being inferred here.
+The desktop seven-view tour passed locally: five drawing profiles, linked field selection, drawing-only withholding, all 143 positions, working-panel focus return, exact run export, and widths 1920/1440/1280/1024/960/390/320. Durable draft/native receiving also passed, including invalid raw input persistence, manual re-review, cancellation, exact history, retained manual estimate edits and deliberate deletions. The local batch was stopped after five desktop cases when main advanced to d195e67 and final-source integration became necessary. Two cases passed; recovery and late-preview cases missed initial loading, and the creation assertion needed the status-selector repair below. The private extended-wait replay was also stopped for integration, with no passing outcome claimed. Final combined-source CI covers the full desktop/phone suite.
 
-A local recovery case missed the existing 5-second initial-heading assertion while the authorised-detail loader was pending, before recovery began. That result is retained; it is not attributed to an application regression without baseline comparison. Isolated replay and CI results are separate evidence. A later creation-case assertion was corrected to its existing visible status paragraph; editor recovery uses a notice heading. No creation or receipt handler changed.
+Local recovery and late-preview cases missed the existing 5-second initial-heading assertion while the authorised-detail loader was pending, before recovery began. That result is retained; it is not attributed to an application regression without baseline comparison. Isolated replay and CI results are separate evidence. A later creation-case assertion was corrected to its existing visible status paragraph; editor recovery uses a notice heading. No creation or receipt handler changed.
 
 ## Visual comparison
 
@@ -45,3 +45,7 @@ Initial PR head `84611b7` exposed five browser failures: ambiguous headings intr
 ## Remaining review
 
 Named accepted Figma version and icon-free source captures are not recorded. Physical-device, screen-reader and owner visual acceptance remain open. Final CI and deployment outcomes are recorded in the PR handover. No production rules, ERP transaction, CAD authoring or customer communication are introduced.
+
+## Integrated source
+
+Main d195e67 (merged backend PR #458) is retained by ancestry. The only merge conflict was the shared status insertion; both contributions were kept. The merged project instructions were shortened by ten characters without removing scope. Main adds the independently reviewed Project RAID migration 0087 and its guarded demo upgrade; ES-08 itself still changes no migration. Final release review must account for that combined main history.

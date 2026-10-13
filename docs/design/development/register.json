@@ -1628,11 +1628,15 @@
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
-        "src/engineering/control/guide.ts"
+        "src/engineering/control/guide.ts",
+        "src/engineering/register.ts",
+        "src/engineering/register-query.ts",
+        "src/app/api/v1/engineering/register/route.ts",
+        "docs/decisions/engineering-workload-backend.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native command, database and browser evidence retained in programme handover; acceptance separate",
+      "functional_status": "EN-01 register backend: 17 database and 2 compiled HTTP cases pass; accepted page/shell implementation and owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2044,16 +2048,24 @@
       "summary": "Implement risks, assumptions, issues, dependencies, decisions and linked project actions.",
       "path": "/projects/risks",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/projects/raid.ts",
+        "src/projects/raid-validation.ts",
+        "src/app/api/v1/projects/[id]/raid/route.ts",
+        "docs/decisions/project-raid-backend.md"
       ],
       "guide_key": "guide.pj.04",
       "design_path": "docs/design/development/pages/scope-pj-04.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/activities/activities.ts",
+        "src/projects/service.ts",
+        "src/shared/receipts.ts"
+      ],
+      "scope_status": "Backend implemented; page unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Backend verified locally: 11 database/upgrade, 5 unit, 2 HTTP and real restart; page/owner review separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6006,11 +6018,15 @@
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
         "src/engineering/control/guide.ts",
-        "docs/decisions/engineering-workload-design.md"
+        "docs/decisions/engineering-workload-design.md",
+        "src/engineering/register.ts",
+        "src/engineering/register-query.ts",
+        "src/app/api/v1/engineering/register/route.ts",
+        "docs/decisions/engineering-workload-backend.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native command, database and browser evidence retained in programme handover; acceptance separate",
+      "functional_status": "EN-01 register backend: 17 database and 2 compiled HTTP cases pass; accepted page/shell implementation and owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7474,11 +7490,15 @@
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
-        "docs/decisions/work-order-record-page-design.md"
+        "docs/decisions/work-order-record-page-design.md",
+        "src/service/work-order-register.ts",
+        "src/service/work-order-register-model.ts",
+        "docs/decisions/work-order-register-backend.md",
+        "docs/testing/evidence/work-order-register/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. BC-01 additive register/record backend: execution in docs/testing/evidence/work-order-register/README.md; frontend integration and global menu counts remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7545,11 +7565,15 @@
         "docs/reference/ui/service/work-orders-design-r01/PPO-Work-Orders-06-Phone-Record-View-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/work-orders-design.md"
+        "docs/decisions/work-orders-design.md",
+        "src/service/work-order-register.ts",
+        "src/service/work-order-register-model.ts",
+        "docs/decisions/work-order-register-backend.md",
+        "docs/testing/evidence/work-order-register/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "BC-01 additive register/record backend: execution in docs/testing/evidence/work-order-register/README.md; frontend integration and global menu counts remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10156,11 +10180,15 @@
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/testing/evidence/estimating-native-cost-sources/README.md",
         "docs/testing/evidence/estimating-native-cost-sources/manifest.json",
-        "docs/decisions/cost-sources-design.md"
+        "docs/decisions/cost-sources-design.md",
+        "src/estimating/sources/register.ts",
+        "src/app/api/v1/estimating/cost-sources/register/route.ts",
+        "docs/decisions/cost-source-register-backend.md",
+        "docs/testing/evidence/cost-source-register/README.md"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Implementation checks in progress; see cost-source handover",
+      "functional_status": "Native source workflow and additive register backend verified locally; accepted page integration and owner acceptance remain separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

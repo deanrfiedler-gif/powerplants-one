@@ -53,3 +53,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.service.work-orders` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Additive backend contract
+
+The [Work orders backend](../../../decisions/work-order-register-backend.md) supplies permission-scoped register and record projections. Counts explicitly cover one authorised candidate window; they must not be presented as global menu totals. Evidence and history identify their native source scope. The existing screen and commands remain compatible; accepted Figma page integration, global counts and visual review remain pending. [Execution evidence](../../../testing/evidence/work-order-register/README.md) records actual checks. No review fingerprint is changed.
