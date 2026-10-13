@@ -24,3 +24,7 @@ The AD-01 browser run fails at its first full-page screenshot with Page.captureS
 An initial build was deliberately stopped during compilation under local resource pressure to sequence checks and complete the catalogue evidence link. Final full build and compiled HTTP verification are pending. CI, independent review and owner acceptance are separate.
 
 The native worker proof uses an explicit SQL policy fixture solely to exercise the supported renderer. No R4 assignment command exists, and the publication isolation proof confirms publication itself does not move policy pointers. Existing shared renderer and R2 migration bytes are unchanged. All data is synthetic ppo_synthetic_test on PostgreSQL 16.15 and Node 24.21.0; private configuration/output logs remain outside Git.
+
+## Shared HTTP fixture correction
+
+R2 Application assurance job [115287652571](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38394942020/job/115287652571) ran the HTTP files concurrently against one database. Its catalogue reset failed because ppo.seed_receipts disappeared while other fixtures also reset the schema, followed by unrelated receiver failures. The test:http script now uses test-concurrency=1, matching the database suite. Assertions, request deadlines and runtime behaviour are unchanged. The complete compiled HTTP replay will verify this correction.
