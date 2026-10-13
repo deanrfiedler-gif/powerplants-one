@@ -5,6 +5,10 @@
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 
+## Document Register and Revision/Review backend — 13 October 2026
+
+Dean authorised DK-01/DK-02 as the first BC-03 increment. Branch `codex/document-library-backend` continues from Projects PR #466 at `a4b55fc`. The [decision](decisions/document-library-backend.md) and [API contract](contracts/document-library.md) add stable library identities, immutable exact revisions, declared links, findings with independent response acceptance, exact review decisions, withdrawal and bounded synthetic content recovery. Migration 0089 adds empty tables and three explicit document capabilities, with no seeded authority. Existing Job Pack and Service Report sources retain their own permission and exact-byte services. [Execution evidence](testing/evidence/document-library/README.md) records work in progress and actual failures separately from final verification, review and deployment. Native page integration, SharePoint, DK-03 publication/distribution and DK-06 templates remain separate.
+
 ## Project calendars and actual dates backend - 13 October 2026
 
 Dean authorised the next PJ-03 increment after PJ-01/PJ-02. Branch `codex/project-calendars-backend` continues from PR #461 (`1bb0cc2`), retaining #458 as an ancestry dependency. The [contract](decisions/project-calendars-actuals.md) adds immutable Project calendars, task actual-date revisions and working-day comparisons while preserving forecasts, old baseline rows, current permissions and Service booking authority. Migration 0088 adds empty revision/companion tables without seeds, grants or identity types. Native Gantt warnings consume the saved calendar; editing controls remain separate. [Execution evidence](testing/evidence/project-programme/README.md) records verification independently from review, owner acceptance, merge and deployment.

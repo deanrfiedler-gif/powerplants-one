@@ -103,3 +103,7 @@ UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-atte
 PJ project-{overview-backend,calendars-actuals,schedule-baselines,raid-backend}.md; Service books.
 
 [Plan](../delivery/backend-completion-plan.md).
+
+### Document library backend boundary
+
+DK-01/DK-02 uses stable internal library identities and exact immutable revisions. Registration, review, availability and currentness are distinct. Three scoped document capabilities add no automatic grants. Existing Job Pack and Service Report source authority still applies; SharePoint integration, DK-03 distribution and DK-06 template publication remain separate. A successor never retargets an existing declared reference. See `docs/decisions/document-library-backend.md` and the current status for delivery and verification.

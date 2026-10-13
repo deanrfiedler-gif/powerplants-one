@@ -39,3 +39,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.dk.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Synthetic backend handover — 13 October 2026
+
+The [backend contract](../../../decisions/document-library-backend.md) provides stable library identity, exact revisions, declared references, findings, independent review and original-content recovery through `/api/v1/document-library`. Existing exact Job Pack and Service Report services supply native bytes and source authority. Native receiving workspaces retain control of their own issued manifests and acceptance. DK-03 distribution and DK-06 template publication remain separate.
+
+The future page must show availability, currentness and review separately; never display a later revision as an old link's content. Preserve the original save operation for recovery. A finding response awaits independent acceptance; a successor starts unreviewed. Current-use eligibility is bounded library review evidence, not work authorisation. Reuse the shell, global information icon, shared Button/control patterns and exact viewer download protection when page work is authorised.
+
+Backend execution is recorded in [the evidence ledger](../../../testing/evidence/document-library/README.md). The standalone r01 remains the visual reference. No new application screenshots are available from this backend-only work; desktop/mobile page acceptance and deployment are pending. No review fingerprint is granted by this edit.
