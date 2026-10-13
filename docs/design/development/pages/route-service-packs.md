@@ -23,6 +23,8 @@ Job Pack uses each active read's loading/error state and observation time for co
 
 At 390/320 px, use compact flush three-line rows grouped by day, a view picker, count and Filter job packs. Filters also contain preparation and refresh. Row activation opens the full record. No page-level horizontal scroll; desktop grid scrolling stays within the register. Review 1440/1024/820/770/390/320 widths and effective 200% zoom.
 
+The empty phone list places its title and recovery action on separate lines, with 40 px vertical / 20 px horizontal inset and a 44 px planner-link target. The phone host supplies these scoped rules because it sits outside RegisterTable's desktop wrapper. Inspect the existing `job-pack-register-fixture.tsx?empty=1` state at both phone widths; the filtered-empty action remains distinct.
+
 ## Authority, states and review
 
 Use existing tokens, Button/RegisterTable, SecondaryMenuFrame, worklist menus and PackDialog; the saved sections/forms retain their documented specific controls. Incoming appointment/work-order/personal-job handovers retain stable IDs. Outgoing readiness, exact issued-document and field acknowledgement links retain current permission checks. Register row titles come from verified saved scope; unsupported structured content falls back to saved text. A summary cannot clear a dispatch hold. Selection never issues, checks, withdraws or acknowledges.
