@@ -35,7 +35,10 @@ Owner design acceptance, application integration, complete HTML interaction/dial
 - Naming check passed: 603 document records, 442 metadata documents, 304 Git masters; no errors.
 - The `studio:check` implementation (`scripts/check-development-register.ts`, run using the existing repository's tsx loader) passed: 362 entries, 46 component entries, 208 source routes; no integrity errors. Existing 334 unreviewed and 28 stale page reviews remain visible; all 46 component reviews remain pending.
 - `git diff --check` passed.
-- Repository-wide foundation check is running; its final result will be recorded before handover.
+- Repository-wide foundation check passed: 22 issued sources, all 78 parent requirements, 9,431 local links and 5,917 text files checked; no errors.
 - The first direct tsx invocation used a Windows drive path that Node treated as an unsupported URL scheme. Retrying with the required `file:///` URL passed; no source or dependency change was needed.
 - No application tests were added or run because no application behaviour changed.
+
+
+Handover: [PR #473](https://github.com/deanrfiedler-gif/powerplants-one/pull/473). CI, merge and owner acceptance remain separate.
 
