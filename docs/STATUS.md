@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Estimation Wizard CI repair - 14 October 2026
+
+Current repository writer for this repair: the user-authorised PR check session on `codex/fix-pr475-oct14`. The Fertigation browser journey now opens the accepted Wizard Workspace actions menu on desktop and phone. The E1 restart proof checks the current compact alternative labels and retains an explicit Active-state assertion alongside the unchanged original receipts, revisions and selected-option comparisons. No runtime or visual baseline change; fresh PR checks provide verification.
+
 ## Estimation Wizard Figma implementation — 13 October 2026
 
 Dean requested the live ES-02 page from accepted Figma page `383:2`. Branch `codex/estimation-wizard-figma` implements the shared-rail record layout, five steps, six-family/category authoring with explicit historical review, unsaved-change links, exact save review and phone system editor. The [decision](decisions/es02-wizard-figma-implementation.md) records retained backend boundaries and Q6 timing limitations. The [execution evidence](testing/evidence/es02-figma/README.md), working page/component register and Draft guides are maintained together. No migration, dependency or grant is added; owner/device acceptance and deployment remain separate.

@@ -228,9 +228,13 @@ export async function discoveryRestart({
     ).rows[0].n,
     0,
   );
+  assert.equal(
+    proof.detail.options.find((x) => x.option.id === proof.detail.workspace.selected_option_id)!.option.state,
+    "Active",
+  );
   await page.goto(`${process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000"}/estimating/discovery/${proof.id}`);
-  await expect(page.getByLabel("Viewed alternative", { exact: true })).toContainText("A · Alternative · Archived");
-  await expect(page.getByLabel("Viewed alternative", { exact: true })).toContainText("B · Selected · Active");
+  await expect(page.getByLabel("Viewed alternative", { exact: true })).toContainText("A · Archived");
+  await expect(page.getByLabel("Viewed alternative", { exact: true })).toContainText("B · Selected");
   await expect(page.getByRole("complementary", { name: "Estimate summary" })).toContainText("Incomplete");
   const screenshot = await page.screenshot({
       path: `${evidence}/e2-${phase}.png`,
