@@ -7087,6 +7087,7 @@
       "image_paths": [
         "docs/testing/evidence/department-navigation/sales-deals-populated.png",
         "docs/testing/evidence/deals-figma/board.png",
+        "docs/testing/evidence/deals-figma/list.png",
         "docs/testing/evidence/deals-figma/phone.png"
       ],
       "dependencies": [
@@ -7106,7 +7107,7 @@
         "scope:CR-04"
       ],
       "reviewer": null,
-      "notes": "Figma Deals proposal on 13 October 2026 uses the user-supplied r37, preserving the runtime r38 baseline. Six editable views and evidence are linked from the design contract; owner acceptance and runtime alignment remain pending."
+      "notes": "Figma Deals proposal uses the user-supplied r37, preserving the runtime r38 baseline. The 14 October user-directed polish matches the supplied stage/card screenshot, removes the extra module container and reuses accepted Leads grid components. Six editable views and evidence are linked from the design contract; owner acceptance and runtime alignment remain pending."
     },
     {
       "key": "route:/schedule",

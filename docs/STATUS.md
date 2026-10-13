@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Deals Figma visual refinement — 14 October 2026
+
+Dean supplied a stage/card screenshot and requested corrected chevrons, removal of the extra module container and alignment with existing PPO tables. The [Deals design](decisions/deals-figma-design.md) now uses paired stage edges, source-aligned card details, a direct shared workspace and the accepted Leads grid components for its list. [Updated visual evidence](testing/evidence/deals-figma/README.md) covers all five desktop views. The user feedback defines this refinement; owner acceptance, runtime alignment and deployment remain separate.
+
 ## Deals Figma design — 13 October 2026
 
 Dean requested the Deals UI in the existing PPO Design file from the supplied r37 HTML. The [design record](decisions/deals-figma-design.md) links a dedicated proposal page with desktop Board, List, Snapshot, Filters, Pipeline settings and phone List views. The accepted Leads page and issued HTML remain unchanged. [Evidence](testing/evidence/deals-figma/README.md) records editable components, source fixtures, rendered inspection and bounded prototype navigation. Owner acceptance, runtime integration, full interaction/accessibility coverage and deployment remain separate. The live page/component registers retain their existing review states and the runtime r38 baseline.
