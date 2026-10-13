@@ -1,5 +1,6 @@
 "use client";
 import { useId, type ReactNode } from "react";
+import { WorklistMenu } from "./crm-worklist-tools";
 import { Button, ButtonLink, Chip, Icon } from "./fertigation-ui";
 
 /*
@@ -10,7 +11,8 @@ import { Button, ButtonLink, Chip, Icon } from "./fertigation-ui";
  * branding above it; the module keeps only what belongs to the record.
  */
 
-export type StatusTone = "saved" | "dirty" | "conflict" | "pending" | "readonly";
+export type StatusTone =
+  "saved" | "dirty" | "conflict" | "pending" | "readonly";
 
 export function FertigationHeader({
   name,
@@ -24,8 +26,13 @@ export function FertigationHeader({
   onHistory,
   onSave,
   onCompare,
+  onCalculate,
+  calculateDisabled,
   onValves,
   reportHref,
+  exportHref,
+  valveExportHref,
+  compact = false,
   site,
   customer,
   binding,
@@ -47,8 +54,13 @@ export function FertigationHeader({
   onHistory: () => void;
   onSave: () => void;
   onCompare: () => void;
+  onCalculate: () => void;
+  calculateDisabled: boolean;
   onValves: () => void;
   reportHref: string;
+  exportHref: string;
+  valveExportHref: string;
+  compact?: boolean;
   site: string | null;
   customer: string | null;
   binding: string;
@@ -61,49 +73,104 @@ export function FertigationHeader({
 }) {
   const scenarioFieldId = useId();
   return (
-    <header className="fn-record-head">
+    <header className={`fn-record-head${compact ? " fn-record-compact" : ""}`}>
       <div className="fn-record-row">
         <div className="fn-record-identity">
-          <h1>
-            <span className="fn-record-name">{name}</span>
-            <span className="fn-record-ref">{reference}</span>
-          </h1>
+          <h1 className="fn-record-name">{name}</h1>
+          <span
+            className={`fn-status-wrap fn-status-${statusTone}`}
+            role="status"
+          >
+            <span className="fn-status">{status}</span>
+          </span>
+          <span className="fn-phone-record-meta">
+            {compact
+              ? (scenarios.find((s) => s.id === scenarioId)?.label ??
+                "Scenario not selected")
+              : `${reference}${savedAt ? ` · ${savedAt.replace(/\s\d{4},/, ",").replace(/\s[A-Z]{3,5}$/, "")}` : ""}`}
+          </span>
         </div>
         <div className="fn-record-actions">
-          <span className={`fn-status-wrap fn-status-${statusTone}`}>
-            <span className="fn-status-dot" aria-hidden="true" />
-            <span className="fn-status" role="status">
-              {status}
-            </span>
-            {savedAt && <span className="fn-status-time">· {savedAt}</span>}
-          </span>
-          <span className="fn-record-divider" aria-hidden="true" />
-          <Button variant="quiet" icon="list" onClick={onValves} className="fn-valves-jump">
-            Irrigation valves
-          </Button>
           <Button variant="secondary" icon="history" onClick={onHistory}>
             History
           </Button>
-          <ButtonLink
-            variant="secondary"
-            icon="report"
-            href={reportHref}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Report
-          </ButtonLink>
-          {!historical && dirty && (
-            <Button variant="secondary" icon="compare" onClick={onCompare} className="fn-compare">
-              Compare draft
-            </Button>
-          )}
           {!historical && (
-            <Button variant="primary" icon="save" onClick={onSave} disabled={!canSave}>
+            <Button
+              variant="primary"
+              icon="save"
+              onClick={onSave}
+              disabled={!canSave}
+            >
               Save revision
             </Button>
           )}
+          <WorklistMenu
+            label="Scope actions"
+            icon="more"
+            className="fn-record-menu"
+          >
+            <button
+              className="fn-phone-history"
+              data-menu-close
+              type="button"
+              onClick={onHistory}
+            >
+              History
+            </button>
+            <button
+              className="fn-phone-calculation"
+              data-menu-close
+              type="button"
+              disabled={calculateDisabled}
+              onClick={onCalculate}
+            >
+              Validate &amp; calculate draft
+            </button>
+            <a
+              data-menu-close
+              href={reportHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Report
+            </a>
+            <button data-menu-close type="button" onClick={onValves}>
+              Irrigation valves
+            </button>
+            <button
+              data-menu-close
+              type="button"
+              onClick={onCompare}
+              disabled={historical || !dirty}
+            >
+              Compare draft
+            </button>
+            <a data-menu-close href={exportHref} download>
+              Export exact saved scope
+            </a>
+            <a data-menu-close href={valveExportHref} download>
+              Export valve CSV
+            </a>
+            <button data-menu-close type="button" onClick={onHistory}>
+              Copy saved revision
+            </button>
+            <button data-menu-close type="button" onClick={onHistory}>
+              Restore saved revision
+            </button>
+            <button data-menu-close type="button" onClick={onHistory}>
+              Archive scope
+            </button>
+          </WorklistMenu>
         </div>
+      </div>
+      <div className="fn-record-meta">
+        <span>
+          {reference} · Scope {state.toLowerCase()}
+        </span>
+        <span className={sourceChanged ? "fn-context-changed" : undefined}>
+          {binding}
+        </span>
+        {savedAt && <span>saved {savedAt}</span>}
       </div>
       <div className="fn-context-row">
         <div className="fn-context-source">
@@ -115,20 +182,9 @@ export function FertigationHeader({
               {[site, customer].filter(Boolean).join(" · ") ||
                 "Site and customer from the Discovery binding"}
             </strong>
-            <span className={sourceChanged ? "fn-context-changed" : "fn-context-bound"}>
-              <Icon
-                name={sourceChanged ? "conflict" : "check"}
-                className="fn-context-bound-icon"
-              />
-              {binding}
-            </span>
           </div>
         </div>
         <div className="fn-context-facts">
-          <span className="fn-context-fact">
-            Scope
-            <Chip tone={state === "Archived" ? "neutral" : "existing"}>{state}</Chip>
-          </span>
           <label className="fn-context-scenario" htmlFor={scenarioFieldId}>
             <span>Operating scenario</span>
             <span className="fn-select">
@@ -149,9 +205,10 @@ export function FertigationHeader({
             </span>
           </label>
           <span className="fn-record-divider" aria-hidden="true" />
-          <Chip tone="info" icon="info">
-            Synthetic demonstration
-          </Chip>
+          <span className="fn-phone-state">
+            <Chip tone="info">Scope {state.toLowerCase()}</Chip>
+          </span>
+          <Chip tone="info">Synthetic demonstration</Chip>
         </div>
       </div>
     </header>
@@ -175,11 +232,22 @@ export function PhoneBar({
   return (
     <div className="fn-phone-bar">
       {children}
-      <ButtonLink variant="secondary" icon="report" href={reportHref} target="_blank" rel="noreferrer">
+      <ButtonLink
+        variant="secondary"
+        icon="report"
+        href={reportHref}
+        target="_blank"
+        rel="noreferrer"
+      >
         Report
       </ButtonLink>
       {!historical && (
-        <Button variant="primary" icon="save" onClick={onSave} disabled={!canSave}>
+        <Button
+          variant="primary"
+          icon="save"
+          onClick={onSave}
+          disabled={!canSave}
+        >
           Save revision
         </Button>
       )}

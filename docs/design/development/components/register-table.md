@@ -57,6 +57,11 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 
 When a module adopts the table, record its departures first, keep its tests' behaviour, and remove its copy of the rules in the same PR.
 
+
 ## CPQ consumers
 
 The configuration and rule registers/workbenches reuse this implementation. CPQ-scoped styling and fixture states are documented in [the host contract](cpq-workbench.md); source behaviours and existing gallery fixtures are unchanged. tests/browser/cpq.spec.ts supplies the real synthetic host. Paired visual and owner acceptance remain separate.
+
+## Fertigation consumer
+
+The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The route-scoped composition does not change the shared control API. Paired owner acceptance remains open.

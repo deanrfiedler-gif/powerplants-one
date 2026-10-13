@@ -18,6 +18,10 @@ The existing shell keeps its saved navigation preference. Data-dependent names, 
 
 ## Verification and final typography review
 
+At `87daf35`, all 781 unit tests, 138 Estimating database cases, 22 HTTP cases and 95 browser cases pass in [E1 38343855826](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38343855826); one separately marked browser case is skipped. Both CPQ journeys pass, including 320 px containment, the corrected formula title and exact active-version inspection beside a newer draft. Final desktop/phone captures were inspected. Hosted preparation, Projects, Products, CRM, reporting, Finance and access checks also pass. Broader application CI was still running when Fertigation PR #464 reached main `4a9d672`.
+
+That Fertigation integration preserves its new route-scoped styling and shell predicates, both host component records and both sets of shared-control consumer guidance. It adds no migration and leaves CPQ runtime/test bytes unchanged. The combined source requires fresh CI before merge/deployment; the prior passing evidence is retained, not relabelled as combined-source proof. Owner/device acceptance remains pending.
+
 Main `d195e67` is integrated, preserving Work orders, Cost sources, Engineering workload and Project RAID by ancestry. Issued RAID migration 0087 is unchanged; the unpublished CPQ design-contract migration moves to 0088. Exact upgrade ledgers and the hosted upgrade gate include both. The RAID proof starts with populated 0087 entries and verifies that CPQ's identity extension preserves their records and evidence.
 
 The subsequent integration of Shell v2 main `ad9f2eb` retains its shared header, navigation and My Work changes and their repaired consumer proofs. CPQ keeps its scoped geometry and final typography. Both status/component records are retained, and the build sequence is regenerated from the combined register. Final combined browser and application CI must run against this shell integration before deployment.

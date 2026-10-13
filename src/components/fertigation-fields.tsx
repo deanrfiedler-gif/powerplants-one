@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { ShellIcon } from "./shell-icon";
 import { ErrorNotice } from "./business-ui";
 import type { Scope } from "../estimating/fertigation/types";
 import { parseCurve } from "../estimating/fertigation/engine";
@@ -435,7 +436,7 @@ export function FertigationDialog({
           disabled={closeDisabled}
           aria-label={`Close ${title}`}
         >
-          Close
+          <ShellIcon name="close" />
         </button>
       </header>
       {children}

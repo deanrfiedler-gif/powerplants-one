@@ -62,6 +62,18 @@ export function OverviewView({ ctx }: { ctx: ViewContext }) {
           </Button>
         }
       />
+        <NextActionsPanel
+          scope={guidanceScope}
+          findings={guidanceCalculation.findings}
+          basis={guidanceBasis}
+          onView={ctx.changeView}
+          candidates={candidateFailures(guidanceScope, guidanceCalculation)}
+          canResolve={(code) => canEdit && ctx.resolveList.some((r) => r.key.startsWith(`${code}:`))}
+          onResolve={(code) => ctx.resolveFor((key) => key.startsWith(`${code}:`))}
+          canDeclare={(code) => canEdit && !!ctx.declarable(code)}
+          onDeclare={(code) => ctx.declare(ctx.declarable(code)?.key ?? null)}
+        />
+
       <div className="fn-cockpit">
         <OutputReadinessPanel
           onView={ctx.changeView}
@@ -78,18 +90,6 @@ export function OverviewView({ ctx }: { ctx: ViewContext }) {
             report: ctx.reportHref,
           }}
         />
-        <NextActionsPanel
-          scope={guidanceScope}
-          findings={guidanceCalculation.findings}
-          basis={guidanceBasis}
-          onView={ctx.changeView}
-          candidates={candidateFailures(guidanceScope, guidanceCalculation)}
-          canResolve={(code) => canEdit && ctx.resolveList.some((r) => r.key.startsWith(`${code}:`))}
-          onResolve={(code) => ctx.resolveFor((key) => key.startsWith(`${code}:`))}
-          canDeclare={(code) => canEdit && !!ctx.declarable(code)}
-          onDeclare={(code) => ctx.declare(ctx.declarable(code)?.key ?? null)}
-        />
-      </div>
       <DeclarationsPanel
         items={ctx.declarationList}
         findings={guidanceCalculation.findings.length}
@@ -98,6 +98,7 @@ export function OverviewView({ ctx }: { ctx: ViewContext }) {
         canOpen={!!calculation}
         onDeclare={ctx.declare}
       />
+      </div>
       {!calculation ? (
         <Notice tone="warning" role="status">
           Draft changed. Recalculate to inspect the current proposal; saved results remain attached to the earlier revision.

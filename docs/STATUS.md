@@ -7,6 +7,9 @@
 ## CPQ application and expanded design contract — 13 October 2026
 
 Dean requested native CPQ pages matching the supplied Figma and explicitly expanded the backend scope to cover its additional states and information. Branch `codex/cpq-figma-ui`, from merged CPQ main `7e4ef3b`, adds the configuration/rule registers and workbenches, migration 0088 after the merged Project RAID 0087, opt-in schema 3, durable incomplete drafts, immutable rule composition, separate sealing/activation, typed authoring, server previews, explanations, override review, shared outputs and milestone proposals. The [decision](decisions/cpq-figma-ui.md), [API contract](interfaces/cpq-api.md) and [execution handover](delivery/cpq-ui-handover.md) separate actual verification from pending visual/owner acceptance and deployment. The explicit hosted upgrade adds CPQ read/author/calculate for eligible existing Company A testers while retaining expiry and revocations; review/publish remain separate and unassigned. Operational rules and external integrations remain outside this synthetic implementation. All parent IDs and issued references are retained.
+
+Final CPQ source `87daf35` passes 781 units, 138 Estimating database cases, 22 HTTP cases and 95 browser cases, including both CPQ journeys. Hosted preparation, Projects and Products also pass. Fertigation main `4a9d672` is then integrated without changing CPQ runtime/test bytes or migration 0088; both component/register records and consumer guidance are preserved. Fresh combined-source CI and hosted deployment remain pending, with owner/device acceptance separate.
+
 ## Final shell and backend integration — 13 October 2026
 
 Current repository writer for this integration: the conflict repair and merge session on `codex/pr459-integrated-oct13`. PR #459 preserves the published shell repair `28819b6` and combined backend #458 head `0213e8d` by ancestry. The status conflict retains both records; the build sequence is regenerated from the combined register. No runtime, test, retained reference or review-fingerprint bytes are changed by this merge. Backend #458 is intended to land first; fresh #459 CI verifies the shell against all four backend contributions before its merge. The supplied user instruction authorises these repository merges, with deployment and owner visual acceptance separate.
@@ -142,6 +145,11 @@ Dean asked for the Figma My Work trial screen to be rebuilt "so it aligns with t
 ## Excel parser backup recovery — 12 October 2026
 
 Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.
+
+
+## Priva Fertigation Workbench Figma implementation — 13 October 2026
+
+Repository writer: this user-authorised UI session, branch `codex/fertigation-figma-ui`, integrating main `ad9f2eb`. Dean requested implementation in the live PPO application matching the supplied accepted Figma page. The [implementation decision](decisions/fertigation-figma-implementation.md) adopts the record header, grouped menus, compact registers, pastel charts, centred history and responsive phone composition on the existing `ppo-fertigation` route. Native calculations, exact revision workflows and permissions are retained; no migration, capability, dependency or operational integration is added. [Execution evidence](testing/evidence/fertigation-figma/README.md) distinguishes actual validation, owner visual acceptance and deployment. The live design register and draft guide are updated in the same contribution.
 
 
 ## Priva fertigation workbench Figma design accepted — 12 October 2026
