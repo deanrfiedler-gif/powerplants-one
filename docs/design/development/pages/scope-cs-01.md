@@ -33,7 +33,7 @@ Reference: docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html
 The detailed page guide is `guide.cs.01`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
 
 
-## Figma proposal — 13 October 2026
+## Figma proposal — refined 14 October 2026
 
 The [Customer 360 Figma design record](../../../decisions/customer-360-figma-design.md) adds an editable proposal on page node `554:2`, refined on 14 October after Dean requested alignment with the other PPO pages. Comparison used accepted Leads, Project record and My Work. Reuse the shared navy primary rail, light customer-view menu, global search/header, phone header/bottom tabs, PPO Roboto, colour/layout tokens, icons, Button and Tag. Full account mapping and site-party detail remains in Identity & mappings. The local Summary tile is reference-only, bound to this stable scope in the component catalogue. No native workflow is changed by the drawing.
 

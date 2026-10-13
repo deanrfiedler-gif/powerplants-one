@@ -30,4 +30,3 @@ The prototype supports desktop section-menu navigation, summary/record navigatio
 **Named Figma version: pending.** The connector used here cannot save a named version. Under ADR-0053, this proposal must not be relied on as an accepted baseline until its named version and owner decision are recorded. The private file URL is deliberately excluded from Git.
 
 No runtime code, route, migration, permission, fixture seed, external integration, deployment or accepted baseline changes. Existing native delivery and review records retain their meanings. Repository assurance results are recorded in the pull request; they do not grant acceptance.
-

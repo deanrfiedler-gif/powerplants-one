@@ -26,4 +26,3 @@ Restricted Finance displays the word Restricted and no financial amount, count o
 Reuse the current Button/Tag and PPO text/colour foundations. Native implementation must provide keyboard activation, focus visibility, a descriptive accessible name including scope, exact filtering and permission enforcement. No keyboard, screen-reader or device proof is claimed by a Figma frame.
 
 Owner review, a named saved Figma version, paired native rendering and runtime scope/permission tests remain open. Preserve existing review fingerprints and the distinction between source presence, agent visual inspection, functional proof and deployment.
-
