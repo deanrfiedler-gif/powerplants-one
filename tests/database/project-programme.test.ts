@@ -298,8 +298,9 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
         "INSERT INTO ppo.project_calendar_revisions SELECT $1,workspace_id,company_id,project_id,2,4,name,timezone,weekdays,exceptions,reason,reviewed,created_by,clock_timestamp(),$2,synthetic FROM ppo.project_calendar_revisions WHERE project_id=$3",
         [randomUUID(), randomUUID(), project.id],
       );
+      await c.query("SET CONSTRAINTS ppo.programme_evidence IMMEDIATE");
     }),
-    (e: unknown) => (e as { code: string }).code === "23514",
+    (e: unknown) => (e as { code: string }).code === "23514" && /Exact programme revision/.test((e as Error).message),
   );
   assert.deepEqual(
     (
@@ -316,6 +317,7 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
       .ok,
     false,
   );
+  assert.equal((await rows("SELECT ppo.valid_project_calendar(ARRAY[[1,2],[3,4]], '[]') ok"))[0].ok, false);
   assert.equal(
     (
       await rows(
@@ -337,8 +339,9 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
           randomUUID(),
         ],
       );
+      await c.query("SET CONSTRAINTS ppo.baseline_calendar_evidence IMMEDIATE");
     }),
-    (e: unknown) => (e as { code: string }).code === "23514",
+    (e: unknown) => (e as { code: string }).code === "23514" && /Baseline requires its exact current calendar/.test((e as Error).message),
   );
   assert.equal((await readBaselines(p, project.id)).latest_revision, 0);
 });
