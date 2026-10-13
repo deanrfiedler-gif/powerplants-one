@@ -41,7 +41,7 @@ test("the overview reconciles its four counts, the list, the schedule and the no
   expect(overview.body.observed_at).toBe(MY_WORK_NOW);
   scenario = await seedScenario(caller(page), new Date(MY_WORK_NOW));
   await open(page);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Good (morning|afternoon|evening), /);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My Work");
 
   // Four different sets. Two overdue plus four today are the six listed rows; the three
   // appointments repeat three of them; requests and opportunities are other kinds of record.
@@ -78,20 +78,28 @@ test("the overview reconciles its four counts, the list, the schedule and the no
     page.locator(selector).first().evaluate((node, p) => getComputedStyle(node).getPropertyValue(p), property);
   expect(await style(".mw-activities .mw-row-title", "color")).toBe("rgb(36, 42, 55)");
   expect(await style(".mw-activities .mw-row-title", "font-weight")).toBe("500");
-  expect(await style(".mw-activities .mw-row-title", "font-family")).toMatch(/^Roboto/);
+  expect(await style(".mw-activities .mw-row-title", "font-family")).toMatch(/^PPOShellRoboto, Roboto/);
   expect(await style(".mw-schedule .mw-row-title", "color")).toBe("rgb(36, 42, 55)");
   expect(await style(".mw-schedule .mw-row-title", "font-weight")).toBe("500");
   expect(await style(".mw-panel-foot .mw-link", "color")).toBe("rgb(53, 91, 128)");
   expect(await style(".mw-toolbar .mw-button-primary", "background-color")).toBe("rgb(36, 42, 55)");
-  expect(await style(".mw-activities", "background-color")).toBe("rgb(255, 255, 255)");
-  expect(await style(".mw-activities", "border-top-color")).toBe("rgb(225, 229, 235)");
-  expect(await style(".mw-activities", "border-top-left-radius")).toBe("7px");
+  expect(await style(".mw-activities > section", "background-color")).toBe("rgb(255, 255, 255)");
+  expect(await style(".mw-activities > section", "border-top-color")).toBe("rgb(225, 229, 235)");
+  expect(await style(".mw-activities > section", "border-top-left-radius")).toBe("6px");
   expect(await style(".mw-group-overdue", "color")).toBe("rgb(153, 59, 42)");
   expect(await style(".mw-group-overdue", "background-color")).toBe("rgb(255, 241, 237)");
   expect(await style(".mw-row-context .mw-tag", "color")).toBe("rgb(82, 96, 120)");
   expect(await style("#ppo-my-work", "background-color")).toBe("rgb(245, 246, 248)");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath("overview-expanded.png") });
+
+  // Customise moved into the toolbar menu; it remains reachable by keyboard and returns focus.
+  const moreActions = page.getByRole("toolbar", { name: "My Work overview controls" }).getByRole("button", { name: "More actions", exact: true });
+  await moreActions.click();
+  await page.getByRole("menuitem", { name: "Customise overview", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Customise overview", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(moreActions).toBeFocused();
 
   // Desktop: the header control and the edge handle both toggle; content, filters and scroll stay.
   const menu = page.getByRole("navigation", { name: "My Work views" });
@@ -122,9 +130,9 @@ test("the overview reconciles its four counts, the list, the schedule and the no
   await page.reload();
   await expect(page.getByRole("banner").getByRole("button", { name: "Show menu", exact: true })).toBeVisible();
   await expect(menu).toBeHidden();
-  // The 24px collapsed strip is the expand target; hover alone never opens it.
+  // The accepted 20px collapsed strip is the expand target; hover alone never opens it.
   const strip = page.locator(".mw-menu-strip");
-  await expect(strip).toHaveJSProperty("offsetWidth", 24);
+  await expect(strip).toHaveJSProperty("offsetWidth", 20);
   await strip.hover();
   await expect(menu).toBeHidden();
   await strip.click();
@@ -203,7 +211,8 @@ test("rescheduling moves the same appointment in the list and the schedule and k
   const moved = new Date(Date.parse(scenario.slots.meeting.starts_at) + 30 * 60000).toISOString();
   // S6: 24-hour, two-digit hours (src/shell/date-format.ts).
   const clock = (iso: string) => local(iso).slice(11, 16);
-  await row(page, "Discuss screen system scope").getByRole("button", { name: /^Reschedule: / }).click();
+  await row(page, "Discuss screen system scope").getByRole("button", { name: /^Actions: / }).click();
+  await page.getByRole("menuitem", { name: "Reschedule", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Reschedule" });
   await expect(dialog.getByText(/No external calendar is connected/)).toBeVisible();
   await dialog.getByLabel("Starts at", { exact: true }).fill(local(moved));
