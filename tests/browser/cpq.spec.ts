@@ -143,6 +143,13 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     .click();
   await expect(page.getByLabel(/^Cable run distance/)).toHaveValue("140");
   await expect(page.locator(".cpq-header h1")).toHaveCSS("letter-spacing", "normal");
+  const choices = page.getByRole("radiogroup", { name: "Screen cloth", exact: true });
+  const choiceBounds = (await choices.boundingBox())!;
+  const firstChoice = (await choices.locator(".cpq-option").nth(0).boundingBox())!;
+  const secondChoice = (await choices.locator(".cpq-option").nth(1).boundingBox())!;
+  expect(Math.abs(firstChoice.width - choiceBounds.width)).toBeLessThanOrEqual(1);
+  expect(Math.abs(secondChoice.width - choiceBounds.width)).toBeLessThanOrEqual(1);
+  expect(secondChoice.y).toBeGreaterThanOrEqual(firstChoice.y + firstChoice.height);
   await expect(
     page.getByRole("button", { name: "Save configuration", exact: true }),
   ).toBeEnabled();

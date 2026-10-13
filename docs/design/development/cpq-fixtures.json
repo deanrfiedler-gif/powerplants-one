@@ -41,7 +41,7 @@
     {
       "key": "configure-layout",
       "source": "tests/browser/cpq.spec.ts; docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-16-Configure-Greenhouse-2-r01.png",
-      "expected": "At 1440 px the expanded rail is 240 px and white 380 px summary aligns with header and footer; normal-weight inputs have zero margins, headings retain normal letter spacing, and Save precedes Use on one line in the 80 px footer. This is a bounded geometry check, not complete visual acceptance."
+      "expected": "At 1440 px the expanded rail is 240 px and white 380 px summary aligns with header and footer; normal-weight inputs have zero margins, headings retain normal letter spacing, options stack at full width, and Save precedes Use on one line in the 80 px footer. This is a bounded geometry check, not complete visual acceptance."
     },
     {
       "key": "formula-editor",

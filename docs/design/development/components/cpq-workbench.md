@@ -28,6 +28,8 @@ The expanded CPQ primary rail is 240 px at desktop widths; the saved collapsed p
 
 All CPQ headings use normal letter spacing. The application-wide negative tracking is inappropriate for the retained 20 px workbench title; dialog titles also use the frame-05 20 px / 26 px treatment. Compiled captures at `3468ce6` exposed this inherited spacing; browser assertions now cover the correction at desktop and phone widths. The captured geometry and successful interactions are bounded evidence, not owner acceptance.
 
+Option cards follow frame 16 as full-width stacked rows at desktop and phone widths, with a 64 px minimum height that grows with content. Selection retains a two-pixel blue outline and pale surface; the native radio uses the dark ink colour. Labels use medium weight. Preserve configured choice order and let unavailable reasons wrap; selection never reorders the choices.
+
 Native fields use an explicit accessible name from the visible label, with help as a separate description. Select options do not become part of the field name; the Review adjustment journey selects the exact Decision field.
 
 The formula dialog follows retained frame 05: an 880 px dialog with a 300 px insertion panel, searchable numeric facts/parameters and registered function insertions. Header and action footer remain visible while content scrolls; the desktop editor and insertion list scroll independently. Syntax checking is local; scenario calculations run through the read-only server validator. Apply changes only the working draft and invalidates its earlier test result. Authored unit metadata is shown without claiming dimensional inference.
