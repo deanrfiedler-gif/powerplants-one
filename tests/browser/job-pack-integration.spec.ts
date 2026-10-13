@@ -1,6 +1,7 @@
 import { openPackView } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { registerClock, registerRows } from "../fixtures/pack-register";
 import {
   assertJobPackHost,
   jobPackViewports,
@@ -33,6 +34,42 @@ async function fixture(page: Page) {
   await expect(page.locator("#jp-panel-pack .jp-paper-section")).toHaveCount(9);
   return read.items[0];
 }
+
+test("SV05 Figma register uses the compiled shell and shared controls with scoped attention views", async ({
+  page,
+}) => {
+  await session(page);
+  await page.route("**/api/v1/packs", (route) =>
+    route.fulfill({
+      json: { items: registerRows, observed_at: registerClock },
+    }),
+  );
+  await page.route("**/api/v1/packs/visits", (route) =>
+    route.fulfill({ json: { items: [], observed_at: registerClock } }),
+  );
+  await page.goto("/service/packs");
+  await expect(page.locator(".jpr-count")).toHaveText("6 job packs");
+  await expect(page.locator("#ppo-pack-register")).toHaveAttribute(
+    "data-module-layout",
+    "full-bleed",
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  const attention = page.getByRole("button", {
+    name: /^Readiness not satisfied/,
+  });
+  if (!(await attention.isVisible()))
+    await page.locator(".ppo-menu-toggle").click();
+  await expect(page.getByRole("button", { name: /^Prepared by me/ })).toHaveCSS(
+    "color",
+    "rgb(36, 42, 55)",
+  );
+  await attention.click();
+  await expect(page.locator(".jpr-count")).toHaveText("1 job pack");
+});
 test("SV05-I5 compiled shell and state-dependent pack header fit all widths and 200% zoom reflow", async ({
   page,
 }, info) => {

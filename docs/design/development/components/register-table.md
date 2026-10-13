@@ -59,4 +59,6 @@ When a module adopts the table, record its departures first, keep its tests' beh
 
 ## Job Pack Figma application, 13 October 2026
 
+Job Pack adopts 40 px rows and headers, 32 px visit-group rows, 44 px sticky selection/action columns and a separate compact phone list. Its reference buttons remain text controls. The component fixture builder includes every relative CSS import from the application layout, including shared controls and this table; presentation assertions check caption hiding, group alignment and reference/menu colours.
+
 The [implementation decision](../../../decisions/job-pack-figma-implementation.md) binds this component to the accepted Figma Job Pack layout. Desktop uses the shared menu, register and 320 px status panel; phone uses compact register rows and coordinator Pack / Readiness / History tabs. Existing exact-content, permission, source and command contracts remain. The live host fixtures are `tests/ui/job-pack-fixture.tsx` and `job-pack-register-fixture.tsx`; states and consumer bindings are maintained in `components.json`. See [execution evidence](../../../testing/evidence/job-pack-figma-ui/README.md). Owner/device acceptance remains pending; no fingerprint is copied into a review record.

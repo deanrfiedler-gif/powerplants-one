@@ -84,6 +84,21 @@ test("register views, columns, inspection and selection operate without offering
 }) => {
   await page.goto(url("job-pack-figma-register"));
   await expect(page.locator(".jpr-count")).toHaveText("6 job packs");
+  // Visual contract: shared controls must be included by the fixture, and global button colours
+  // must not turn navigation white or render pack references as filled primary actions.
+  await expect(page.getByRole("button", { name: /Prepared by me/ })).toHaveCSS(
+    "color",
+    "rgb(36, 42, 55)",
+  );
+  await expect(page.locator(".ppo-register-caption")).toHaveCSS("width", "1px");
+  await expect(page.locator(".jpr-reference").first()).toHaveCSS(
+    "background-color",
+    "rgba(0, 0, 0, 0)",
+  );
+  await expect(page.locator(".jpr-group th").first()).toHaveCSS(
+    "text-align",
+    "left",
+  );
   await page.getByRole("button", { name: /Readiness not satisfied/ }).click();
   await expect(page.locator(".jpr-count")).toHaveText("1 job pack");
   await page.getByRole("button", { name: /All job packs/ }).click();

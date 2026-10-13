@@ -269,6 +269,12 @@
   line-height: 16px;
   color: var(--link);
 }
+@media (min-width: 781px) {
+  #ppo-job-pack[data-pack-design="figma"] .jp-source-tag {
+    max-width: 52%;
+    margin-left: auto;
+  }
+}
 #ppo-job-pack[data-pack-design="figma"] .jp-as-at {
   color: var(--muted);
 }
@@ -469,6 +475,10 @@
   font-weight: 500;
   background: var(--surface-white);
 }
+#ppo-pack-register .ppo-register-table .ppo-register-sort {
+  height: 39px;
+  padding: 0;
+}
 #ppo-pack-register .ppo-register-table .jpr-select {
   position: sticky;
   left: 0;
@@ -505,8 +515,20 @@
   padding-left: 56px;
 }
 #ppo-pack-register .jpr-reference {
+  display: inline;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
   font-weight: 500;
+  text-align: left;
   white-space: nowrap;
+}
+#ppo-pack-register .jpr-menu button:not([aria-current="page"]) {
+  color: var(--ink);
 }
 #ppo-pack-register .jpr-reference small {
   color: var(--muted);

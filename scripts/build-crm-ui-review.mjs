@@ -47,8 +47,8 @@ await build({
   ],
 });
 const styles = await Promise.all(
-  [...(await readFile("src/app/layout.tsx", "utf8")).matchAll(/import "\.\/(.+\.css)";/g)]
-    .map((match) => readFile("src/app/" + match[1], "utf8")),
+  [...(await readFile("src/app/layout.tsx", "utf8")).matchAll(/import "(\.{1,2}\/.+\.css)";/g)]
+    .map((match) => readFile(resolve("src/app", match[1]), "utf8")),
 );
 await writeFile(
   out + "/review.css",
