@@ -22462,14 +22462,14 @@
       "title": "Document register and linked library",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Synthetic backend + planned workspace",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Backend checks are recorded in docs/testing/evidence/document-library/README.md; no page walkthrough or accepted visual review.",
       "sections": [
         {
           "section_id": "purpose",
@@ -22477,7 +22477,8 @@
           "paragraphs": [
             "Use Document register and linked library to work towards this outcome: The correct document is located with its source identity.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "SharePoint remains the intended business-document authority. A copied filename is not a stable document ID."
+            "SharePoint remains the intended business-document authority. A copied filename is not a stable document ID.",
+            "The synthetic backend now separates stable document identity, exact revisions, review and declared business-record references. The proposed native workspace is not connected by this backend contribution."
           ],
           "steps": [],
           "rows": [],
@@ -22489,7 +22490,8 @@
           "paragraphs": [
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
             "Prepare: Document identity, provider, revision, applicability and linked record.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority.",
+            "Document read, registration and review permissions are explicit and are not automatically granted. Existing Job Pack or Service Report source access remains required. SharePoint integration remains planned."
           ],
           "steps": [],
           "rows": [],
@@ -22573,7 +22575,8 @@
           "paragraphs": [
             "The correct document is located with its source identity.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "SharePoint remains the intended business-document authority. A copied filename is not a stable document ID."
+            "SharePoint remains the intended business-document authority. A copied filename is not a stable document ID.",
+            "A Reviewed decision applies to its exact content and purpose. It does not issue the document, authorise work or prove customer acceptance. A successor starts unreviewed and existing references retain their old revision."
           ],
           "steps": [],
           "rows": [],
@@ -22608,6 +22611,18 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Awaiting review",
+              "A finding response is saved; a separate reviewer must accept it before closure."
+            ],
+            [
+              "Review outdated",
+              "A later finding leaves the original decision intact but requires a successor revision and a new review before current use."
+            ],
+            [
+              "Exact content unavailable",
+              "Keep the retained revision reference. Synthetic recovery must reproduce the original bytes; native issue recovery belongs to its owning workflow."
             ]
           ],
           "headers": [
@@ -22688,7 +22703,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Draft for review. Backend delivery and guide/page acceptance remain separate. Running-workspace walkthrough has not been performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -22704,9 +22719,10 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/document-library-backend.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe exact library revisions, independent review and recovery while retaining draft guide and separate native-page status.",
       "document_id": "PPO-GUIDE-DK-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -22716,7 +22732,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/document-library-backend.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -22727,14 +22744,14 @@
       "title": "Document viewer, revision and review workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Synthetic backend + planned workspace",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Backend checks are recorded in docs/testing/evidence/document-library/README.md; no page walkthrough or accepted visual review.",
       "sections": [
         {
           "section_id": "purpose",
@@ -22742,7 +22759,8 @@
           "paragraphs": [
             "Use Document viewer, revision and review workspace to work towards this outcome: The viewed content can be identified precisely.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Opening a document does not acknowledge it. Changed bytes require a successor issue."
+            "Opening a document does not acknowledge it. Changed bytes require a successor issue.",
+            "The synthetic backend now separates stable document identity, exact revisions, review and declared business-record references. The proposed native workspace is not connected by this backend contribution."
           ],
           "steps": [],
           "rows": [],
@@ -22754,7 +22772,8 @@
           "paragraphs": [
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
             "Prepare: Exact issue identity, revision, hash and review context.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority.",
+            "Document read, registration and review permissions are explicit and are not automatically granted. Existing Job Pack or Service Report source access remains required. SharePoint integration remains planned."
           ],
           "steps": [],
           "rows": [],
@@ -22838,7 +22857,8 @@
           "paragraphs": [
             "The viewed content can be identified precisely.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Opening a document does not acknowledge it. Changed bytes require a successor issue."
+            "Opening a document does not acknowledge it. Changed bytes require a successor issue.",
+            "A Reviewed decision applies to its exact content and purpose. It does not issue the document, authorise work or prove customer acceptance. A successor starts unreviewed and existing references retain their old revision."
           ],
           "steps": [],
           "rows": [],
@@ -22873,6 +22893,18 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Awaiting review",
+              "A finding response is saved; a separate reviewer must accept it before closure."
+            ],
+            [
+              "Review outdated",
+              "A later finding leaves the original decision intact but requires a successor revision and a new review before current use."
+            ],
+            [
+              "Exact content unavailable",
+              "Keep the retained revision reference. Synthetic recovery must reproduce the original bytes; native issue recovery belongs to its owning workflow."
             ]
           ],
           "headers": [
@@ -22953,7 +22985,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Draft for review. Backend delivery and guide/page acceptance remain separate. Running-workspace walkthrough has not been performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -22970,9 +23002,10 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/document-library-backend.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe exact library revisions, independent review and recovery while retaining draft guide and separate native-page status.",
       "document_id": "PPO-GUIDE-DK-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -22982,7 +23015,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/document-library-backend.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -30422,7 +30456,8 @@
             "For native inspection, use the synthetic Systems identity with current Workspace access and clear the working company in the account panel.",
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
             "Prepare: User, organisation/team, capability, scope and review reason.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority.",
+            "The document library exposes separate read, register and review capabilities. They confer no native source access and are not part of the default hosted tester grants."
           ],
           "steps": [],
           "rows": [],

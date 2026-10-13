@@ -66,7 +66,7 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 ## 9. Verification
 
-Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Check screens; record environment. Recheck access after storage, before metadata/bytes.
+Run foundation/prototype/naming; test authority, replay/conflicts and integrity/reconciliation. Check screens/environment. Recheck access after storage before metadata/bytes.
 
 ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CPQ](../decisions/cpq-native-runtime.md); retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
@@ -100,6 +100,8 @@ PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
 UI: ui-build-sequence.md; SD-01–05; phase 00 review. AD-01: access-review-attestations.md; local Keep API; native reviews, campaigns and D-020 open.
 
-PJ project-{overview-backend,calendars-actuals,schedule-baselines,raid-backend}.md; Service books.
+PJ: follow the contracts in STATUS; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md).
+
+DK-01/02: document-library-backend.md.

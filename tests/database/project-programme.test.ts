@@ -422,7 +422,7 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
   );
   assert.deepEqual(
     after.filter((r) => r.version > 87).map((r) => r.version),
-    [88],
+    [88, 89],
   );
   assert.deepEqual(
     {

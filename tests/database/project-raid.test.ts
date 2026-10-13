@@ -131,7 +131,7 @@ test("PJ04-06 populated 0086 upgrade preserves originals, adds only 0087 and 008
   const before=await snapshot(), ledger=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
   await migrate(); await seed(); assert.deepEqual(await snapshot(),before);
   const after=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
-  assert.deepEqual(after.filter(r=>r.version<=86),ledger); assert.deepEqual(after.filter(r=>r.version>86).map(r=>r.version),[87, 88]);
+  assert.deepEqual(after.filter(r=>r.version<=86),ledger); assert.deepEqual(after.filter(r=>r.version>86).map(r=>r.version),[87, 88, 89]);
   const input={...raidInput(),action_ids:[action.id]}; await saveRaid(p,project.id,input);
   const recorded=await current(p,project.id,input.id), settled=await snapshot();
   await migrate(); await seed(); assert.deepEqual(await snapshot(),settled);
