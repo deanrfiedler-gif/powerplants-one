@@ -2002,7 +2002,7 @@
       "title": "Baseline, forecast and dependency review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority.",
+      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority. PJ-03 calendar and actual-date backend preserves revisions and names working-day comparison bases; editing controls remain separate.",
       "path": "/projects/programme",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2030,11 +2030,16 @@
         "src/projects/baseline-model.ts",
         "src/components/project-baselines.tsx",
         "docs/decisions/project-schedule-baselines.md",
-        "docs/testing/evidence/project-baselines/README.md"
+        "docs/testing/evidence/project-baselines/README.md",
+        "src/projects/programme.ts",
+        "src/projects/programme-reads.ts",
+        "src/projects/calendar-model.ts",
+        "docs/decisions/project-calendars-actuals.md",
+        "docs/testing/evidence/project-programme/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending.",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending. Calendar/actual verification is recorded separately in docs/testing/evidence/project-programme/README.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6694,7 +6699,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page. PJ-03 calendar and actual-date backend preserves revisions and names working-day comparison bases; editing controls remain separate.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6746,11 +6751,16 @@
         "src/projects/overview.ts",
         "src/projects/overview-model.ts",
         "src/projects/portfolio.ts",
-        "src/sales/delivery-binding.ts"
+        "src/sales/delivery-binding.ts",
+        "src/projects/programme.ts",
+        "src/projects/programme-reads.ts",
+        "src/projects/calendar-model.ts",
+        "docs/decisions/project-calendars-actuals.md",
+        "docs/testing/evidence/project-programme/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending. PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate.",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending. Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending. PJ-01/PJ-02 backend verification is recorded in docs/testing/evidence/project-overview/README.md; UI and owner acceptance remain separate. Calendar/actual verification is recorded separately in docs/testing/evidence/project-programme/README.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -9394,7 +9404,7 @@
       "title": "Programme",
       "kind": "route",
       "module": "PJ",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority.",
+      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance. PJ-03 baseline revisions preserve dated schedules; calendar-day forecast comparison and successor review use current authority. PJ-03 calendar and actual-date backend preserves revisions and names working-day comparison bases; editing controls remain separate.",
       "path": "/projects/programme",
       "source_paths": [
         "src/app/(business)/projects/programme/page.tsx"
@@ -9408,11 +9418,16 @@
         "src/projects/baseline-model.ts",
         "src/components/project-baselines.tsx",
         "docs/decisions/project-schedule-baselines.md",
-        "docs/testing/evidence/project-baselines/README.md"
+        "docs/testing/evidence/project-baselines/README.md",
+        "src/projects/programme.ts",
+        "src/projects/programme-reads.ts",
+        "src/projects/calendar-model.ts",
+        "docs/decisions/project-calendars-actuals.md",
+        "docs/testing/evidence/project-programme/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending.",
+      "functional_status": "Not recorded here Baseline increment verification is recorded separately in docs/testing/evidence/project-baselines/README.md. Owner acceptance remains pending. Calendar/actual verification is recorded separately in docs/testing/evidence/project-programme/README.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

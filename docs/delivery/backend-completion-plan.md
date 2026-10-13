@@ -55,3 +55,7 @@ These package keys are local tracking labels, not new parent requirements. Prior
 | BC-02 PJ-04 RAID and owned actions | Bounded backend locally verified; PR #458 CI/review separate | [Contract](../decisions/project-raid-backend.md) and [evidence](../testing/evidence/project-raid/README.md). Immutable owned records, same-project native Activity links and reasoned closure. Page, owner acceptance, receiving/health and calendars/actuals remain open |
 | BC-02 PJ-01/PJ-02 receiving and overview | Backend implemented on dependent `codex/projects-overview-backend`; CI/review separate | [Contract](../decisions/project-overview-backend.md), [execution evidence](../testing/evidence/project-overview/README.md). Existing native receiving is reused; portfolio/overview reads added. PJ-03 calendars/actuals and UI remain separate |
 | BC-03-11 | Remaining authorised programme | No implementation or acceptance inferred from this plan |
+
+## PJ-03 calendar and actual-date increment - 13 October 2026
+
+BC-02 continues on `codex/project-calendars-backend` from #461. [Contract](../decisions/project-calendars-actuals.md): reasoned date-only calendars, actual statements, exact baseline calendar retention and explicit working-day comparisons. [Evidence](../testing/evidence/project-programme/README.md) separates execution from acceptance. New editing surfaces and broader resource/effort/critical-path scheduling remain open; no booking, stock or financial effect is inferred.

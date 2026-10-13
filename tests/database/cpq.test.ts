@@ -460,7 +460,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
   assert.deepEqual(
     after.filter((r) => r.version > 85).map((r) => r.version),
-    [86, 87],
+    [86, 87, 88],
   );
   await migrate();
   await seed();

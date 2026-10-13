@@ -56,3 +56,10 @@ Incoming: permitted current schedule plus paged immutable baseline revisions. Ou
 Desktop: retain the fixed schedule underneath an on-demand scrolling dialog. Phone: let the schedule page scroll vertically, preserve a 240–360px task-list viewport, and scroll the action strip horizontally; wrap dialog controls and dates, use single-column comparison cards, visible close and keyboard focus return; no horizontal document overflow. New states: no baseline, undated schedule, recorded baseline, slipped milestone, changed dependency, older history, stale revision, read-only, denied and unknown submission.
 
 Proposed departure: the comparison dialog and successor preview are new compositions, with no exact issued HTML/image. Preserve r10 for the surrounding schedule. Owner and paired visual acceptance are pending; [functional evidence](../../../testing/evidence/project-baselines/README.md) is separate.
+
+
+## PJ-03 working calendar and actual-date backend
+
+The existing Gantt, task editor and baseline dialog use saved Project calendars for advisory dependency checks. Name the current calendar and revision; preserve calendar-day geometry and the explicitly labelled calendar-day comparison. Weekend shading still marks Saturday/Sunday rather than business availability. The `saved-calendar` catalogue state uses a synthetic 23 September closure. New baselines retain their exact calendar revision; actual-date evidence remains separate from task status/progress.
+
+Incoming: scoped programme/calendar/actual revisions. Outgoing: native task saves and immutable baseline receipts; calendar/actual commands are currently API-only. Reuse ProjectsGantt, ProjectTaskPanel, ProjectBaselines and their existing controls. Existing consumer bindings and r10 reference remain. No exact image for calendar editing or actual-date controls exists; these surfaces and paired acceptance remain open. Desktop and phone must retain scroll, keyboard access, calendar labels and advisory warnings without adding a sibling panel. Functional evidence: `docs/testing/evidence/project-programme/README.md`; source presence is not deployment or visual acceptance.

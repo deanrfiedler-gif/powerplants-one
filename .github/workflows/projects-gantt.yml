@@ -76,7 +76,7 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and selectors
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/sales-delivery-binding.test.ts tests/database/desktop-shell.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-programme.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/sales-delivery-binding.test.ts tests/database/desktop-shell.test.ts
       - name: Compiled Projects receiving, overview, RAID and Activity handovers
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -87,7 +87,7 @@ jobs:
             curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-raid.test.ts tests/http/project-overview.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-raid.test.ts tests/http/project-overview.test.ts tests/http/project-programme.test.ts
       - name: Original operation across PostgreSQL and application-process restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -104,7 +104,7 @@ jobs:
           node scripts/build-projects-ui-review.mjs
           npx playwright test --config=playwright.projects-ui.config.ts
       - name: Real HTTP and saved desktop and phone journeys
-        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/projects-gantt.spec.ts --output verification-evidence/projects-browser --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/projects-gantt.spec.ts tests/browser/project-programme.spec.ts --output verification-evidence/projects-browser --reporter=list
       - name: Retain bounded synthetic verification evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

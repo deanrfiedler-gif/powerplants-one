@@ -115,9 +115,9 @@ export function ProjectBaselines({
               {new Date(data.schedule.observed_at).toLocaleString()}.
             </p>
             <p>
-              Finish-to-start uses the next Monday–Friday date; start-to-start
-              uses the predecessor start. No holidays or automatic rescheduling.
-              Differences below are calendar days.
+              Finish-to-start uses the next working date in the current Project calendar; start-to-start
+              uses the predecessor start. Dates remain manually scheduled.
+              Differences below are calendar days. Current calendar: {data.schedule.programme?.calendar.name ?? "Synthetic Monday-Friday"}.
             </p>
             <div className="project-baseline-actions">
               <Button disabled={pending || resource.loading} onClick={reload}>
@@ -206,7 +206,7 @@ export function ProjectBaselines({
             )}
             <ul className="project-baseline-items">
               {rows.map((r) => {
-                const issues = scheduleIssues(r.task, data.schedule.tasks);
+                const issues = scheduleIssues(r.task, data.schedule.tasks, data.schedule.programme?.calendar);
                 return (
                   <li key={r.task.id}>
                     <h4>

@@ -44,3 +44,10 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 After selecting a project, the programme's ProjectsGantt host offers the same PJ-03 Baselines and forecast dialog as project detail. Reuse the current Planning workspace and Review/comparison controls; incoming project schedule/history and outgoing baseline or task receipts retain their owners. It compares one selected project; portfolio-wide baselines remain outside this increment.
 
 Desktop retains the fixed schedule; phone uses the same wrapping single-column dialog, labelled controls and focus return. No exact programme/baseline image is supplied. Keep r10 as the surrounding reference and paired review pending. See [PJ-03](scope-pj-03.md) and [verification](../../../testing/evidence/project-baselines/README.md).
+
+
+## PJ-03 working calendar and actual-date backend
+
+The existing Gantt, task editor and baseline dialog use saved Project calendars for advisory dependency checks. Name the current calendar and revision; preserve calendar-day geometry and the explicitly labelled calendar-day comparison. Weekend shading still marks Saturday/Sunday rather than business availability. The `saved-calendar` catalogue state uses a synthetic 23 September closure. New baselines retain their exact calendar revision; actual-date evidence remains separate from task status/progress.
+
+Incoming: scoped programme/calendar/actual revisions. Outgoing: native task saves and immutable baseline receipts; calendar/actual commands are currently API-only. Reuse ProjectsGantt, ProjectTaskPanel, ProjectBaselines and their existing controls. Existing consumer bindings and r10 reference remain. No exact image for calendar editing or actual-date controls exists; these surfaces and paired acceptance remain open. Desktop and phone must retain scroll, keyboard access, calendar labels and advisory warnings without adding a sibling panel. Functional evidence: `docs/testing/evidence/project-programme/README.md`; source presence is not deployment or visual acceptance.

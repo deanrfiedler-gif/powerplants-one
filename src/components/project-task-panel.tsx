@@ -113,7 +113,7 @@ export function ProjectTaskPanel({
     note: draft.note || null,
     owner_name: task?.owner_name ?? null,
   };
-  const issues = scheduleIssues(proposed, schedule.tasks),
+  const issues = scheduleIssues(proposed, schedule.tasks, schedule.programme?.calendar),
     current = schedule.tasks.find((t) => t.id === draft.id);
   const conflict =
     (command.error as Failure | null)?.code === "VersionConflict";
@@ -575,7 +575,7 @@ export function ProjectTaskPanel({
               {impacted.size > 0 && <div className="project-warning">
                 <h3>Successors to review</h3>
                 <p>Dates remain unchanged until their owner reviews them. Confirmed bookings remain with Service.</p>
-                <ul>{previewTasks.filter(t => impacted.has(t.id)).map(t => <li key={t.id}>{t.title} · {t.owner_name ?? "Unassigned"}{scheduleIssues(t, previewTasks).map((issue, i) => <p key={i}>{issue}</p>)}</li>)}</ul>
+                <ul>{previewTasks.filter(t => impacted.has(t.id)).map(t => <li key={t.id}>{t.title} · {t.owner_name ?? "Unassigned"}{scheduleIssues(t, previewTasks, schedule.programme?.calendar).map((issue, i) => <p key={i}>{issue}</p>)}</li>)}</ul>
               </div>}
               {issues.length > 0 && (
                 <div className="project-warning">

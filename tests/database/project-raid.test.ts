@@ -122,7 +122,7 @@ test("PJ04-05 scoped kind/state/owner search and signed pages preserve all five 
   assert.equal(filtered.items!.length,1); assert.equal(filtered.items![0].kind,"Decision");
   assert.deepEqual((await readRaid(p,project.id,{state:"Closed"})).items,[]);
 });
-test("PJ04-06 populated 0086 upgrade preserves originals, adds only 0087 and repeats without writes",async()=>{
+test("PJ04-06 populated 0086 upgrade preserves originals, adds only 0087–0088 and repeats without writes",async()=>{
   await database().query(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));
   await database().query("DROP TABLE public.ppo_migrations"); await migrate(86); await seed(86);
   const {p,project}=await setup(), action=raidAction(project.id); await createActivity(p,action); await saveTask(p,project.id,taskInput());
@@ -131,7 +131,7 @@ test("PJ04-06 populated 0086 upgrade preserves originals, adds only 0087 and rep
   const before=await snapshot(), ledger=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
   await migrate(); await seed(); assert.deepEqual(await snapshot(),before);
   const after=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
-  assert.deepEqual(after.filter(r=>r.version<=86),ledger); assert.deepEqual(after.filter(r=>r.version>86).map(r=>r.version),[87]);
+  assert.deepEqual(after.filter(r=>r.version<=86),ledger); assert.deepEqual(after.filter(r=>r.version>86).map(r=>r.version),[87, 88]);
   const input={...raidInput(),action_ids:[action.id]}; await saveRaid(p,project.id,input);
   const recorded=await current(p,project.id,input.id), settled=await snapshot();
   await migrate(); await seed(); assert.deepEqual(await snapshot(),settled);

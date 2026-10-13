@@ -13,6 +13,7 @@ import { sharedOperation } from "../platform/operations";
 import { companyContext, scopedOwner } from "../shared/authority";
 import { visibility, visible } from "../shared/reads";
 import { object, uuid, optionalId, invalid } from "../shared/validation";
+import { programmeFor } from "./programme-reads";
 import { parseProject, parseTask } from "./validation";
 import {
   hasCycle,
@@ -153,9 +154,11 @@ export async function readSchedule(
       row.company_id,
       row.site_id,
     );
+    const tasks = await tasksFor(c, p, id);
     return {
       project: projection(row, can_edit),
-      tasks: await tasksFor(c, p, id),
+      tasks,
+      programme: await programmeFor(c, p, id, row.timezone, tasks),
       observed_at: new Date().toISOString(),
     };
   });
@@ -277,7 +280,7 @@ export async function authoriseProjectReceipt(
   command: string,
 ) {
   const row = await projectRow(c, p, id);
-  if (command === "RecordProjectBaseline" && row.coordinator_id !== p.actor_id)
+  if (["RecordProjectBaseline", "RecordProjectCalendar"].includes(command) && row.coordinator_id !== p.actor_id)
     throw unavailable();
   if (
     !(await hasPermission(
