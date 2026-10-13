@@ -407,6 +407,7 @@ export function ScopeRegister({
   ctx: ViewContext;
   register: Register;
 }) {
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const { proposal: scope, canEdit } = ctx;
   const [search, setSearch] = useState(""),
     [phase, setPhase] = useState(""),
@@ -451,9 +452,23 @@ export function ScopeRegister({
       count={rows.length}
       subtitle={subtitles[register]}
       flush
-      className="fn-register-panel"
+      className={`fn-register-panel${filtersOpen ? " fn-register-filtering" : ""}`}
       actions={
         <>
+          <span className="fn-phone-register-count">
+            {rows.length} {register === "valves" ? "valves" : "records"} ·{" "}
+            {filtered.length} matching
+          </span>
+          <Button
+            variant="secondary"
+            icon="search"
+            className="fn-phone-filter-toggle"
+            aria-label={`Find and filter ${plural.toLowerCase()}`}
+            aria-expanded={filtersOpen}
+            onClick={() => setFiltersOpen(!filtersOpen)}
+          >
+            <span className="sr-only">Find and filter</span>
+          </Button>
           {register !== "evidence" && (
             <div className="fn-register-filters">
               <label className="fn-filter">
@@ -465,7 +480,7 @@ export function ScopeRegister({
                     setPage(0);
                   }}
                 >
-                  <option value="">All phases</option>
+                  <option value="">Phase</option>
                   {[
                     "unknown",
                     "existing",
@@ -490,7 +505,7 @@ export function ScopeRegister({
                         setPage(0);
                       }}
                     >
-                      <option value="">All areas</option>
+                      <option value="">Area</option>
                       {scope.areas.map((row) => (
                         <option key={row.id} value={row.id}>
                           {row.label}
@@ -507,7 +522,7 @@ export function ScopeRegister({
                         setPage(0);
                       }}
                     >
-                      <option value="">All masters</option>
+                      <option value="">Master</option>
                       {scope.masters.map((m) => (
                         <option key={m.id} value={m.id}>
                           {m.label}
@@ -531,9 +546,13 @@ export function ScopeRegister({
             <Button
               variant="secondary"
               icon="plus"
+              aria-label={`+ Add ${singular}`}
               onClick={() => ctx.edit(register)}
             >
-              + Add {singular}
+              <span className="fn-desktop-label">Add {singular}</span>
+              <span className="fn-mobile-label">
+                Add {register === "valves" ? "valve" : singular}
+              </span>
             </Button>
           )}
         </>
@@ -621,14 +640,18 @@ export function ScopeRegister({
             <div className="fn-valve-list" aria-label="Irrigation valves">
               {(shown as Scope["valves"]).map((valve) => {
                 const allocations = valve.allocations
-                  .map(
-                    (a) => [
+                  .map((a) =>
+                    [
                       scope.crop_groups.find((c) => c.id === a.crop_group_id)
                         ?.label ??
-                      scope.areas.find((x) => x.id === a.area_id)?.label ??
-                      "Unassigned",
-                      known(a.container_count) ? `${fmt(a.container_count, 0)} containers` : null,
-                    ].filter(Boolean).join(" · "),
+                        scope.areas.find((x) => x.id === a.area_id)?.label ??
+                        "Unassigned",
+                      known(a.container_count)
+                        ? `${fmt(a.container_count, 0)} containers`
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(" · "),
                   )
                   .join(", ");
                 return (
@@ -641,7 +664,15 @@ export function ScopeRegister({
                     >
                       {valve.label}
                     </button>
-                    <strong className="fn-valve-flow"><ResultValue result={ctx.calculation?.valve_flows.find(v => v.id === valve.id)?.flow} /></strong>
+                    <strong className="fn-valve-flow">
+                      <ResultValue
+                        result={
+                          ctx.calculation?.valve_flows.find(
+                            (v) => v.id === valve.id,
+                          )?.flow
+                        }
+                      />
+                    </strong>
                     <WorklistMenu
                       label={`Actions for ${valve.label}`}
                       icon="more"
@@ -665,10 +696,14 @@ export function ScopeRegister({
                     </WorklistMenu>
                     <p>
                       {scope.masters.find((m) => m.id === valve.master_id)
-                        ?.label ?? "Master unassigned"}{" "}<PhaseChip phase={valve.phase} />
+                        ?.label ?? "Master unassigned"}{" "}
+                      <PhaseChip phase={valve.phase} />
                     </p>
                     <p>{allocations || "No allocation"}</p>
-                    <p>{human(valve.flow_basis)} <EvidenceChip strength={strongest(scope, valve)} /></p>
+                    <p>
+                      {human(valve.flow_basis)}{" "}
+                      <EvidenceChip strength={strongest(scope, valve)} />
+                    </p>
                   </article>
                 );
               })}

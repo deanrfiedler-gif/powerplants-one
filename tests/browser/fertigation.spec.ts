@@ -114,6 +114,28 @@ async function scopeAction(page: Page, label: string) {
     .getByRole("button", { name: label, exact: true })
     .click();
 }
+async function calculationControl(page: Page) {
+  const control = page.getByRole("button", {
+    name: "Validate & calculate draft",
+    exact: true,
+  });
+  if (!(await control.isVisible()))
+    await page
+      .getByRole("button", { name: "Scope actions", exact: true })
+      .click();
+  return control;
+}
+async function showRegisterFilters(page: Page) {
+  const toggle = page.getByRole("button", {
+    name: "Find and filter irrigation valves",
+    exact: true,
+  });
+  if (
+    (await toggle.isVisible()) &&
+    (await toggle.getAttribute("aria-expanded")) === "false"
+  )
+    await toggle.click();
+}
 async function inspector(page: Page, add: string, label: string) {
   await page.getByRole("button", { name: `+ Add ${add}`, exact: true }).click();
   const dialog = page.getByRole("dialog", { name: `Edit ${add}`, exact: true });
@@ -292,7 +314,13 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
     await expect(
       reopened.getByRole("button", { name: "SYN V-A1", exact: true }),
     ).toBeVisible();
-    await reopened.getByRole("button", { name: "View", exact: true }).click();
+    await reopened
+      .getByRole("button", { name: "Actions for SYN V-A1", exact: true })
+      .click();
+    await reopened
+      .getByRole("dialog", { name: "Actions for SYN V-A1", exact: true })
+      .getByRole("button", { name: "View", exact: true })
+      .click();
     const view = reopened.getByRole("dialog", {
       name: "View irrigation valve",
       exact: true,
@@ -395,6 +423,7 @@ test("FN-T56 native 100-area 1000-valve API and bounded register responsiveness"
   timings.ui_next_page_ms = performance.now() - started;
   await expect(page.locator("#ppo-fertigation tbody tr")).toHaveCount(25);
   started = performance.now();
+  await showRegisterFilters(page);
   await page
     .getByLabel("Search irrigation valves", { exact: true })
     .fill("1000");
@@ -557,9 +586,7 @@ test("FN-T62/65/87 native neutral context and failed editor preserve numeric unk
     await route.fulfill({ response });
   });
   try {
-    await page
-      .getByRole("button", { name: "Validate & calculate draft", exact: true })
-      .click();
+    await (await calculationControl(page)).click();
     await ready;
     await page
       .getByRole("button", { name: "Edit production context", exact: true })
@@ -575,12 +602,7 @@ test("FN-T62/65/87 native neutral context and failed editor preserve numeric unk
       .getByRole("button", { name: "Apply to draft", exact: true })
       .click();
     releasePreview();
-    await expect(
-      page.getByRole("button", {
-        name: "Validate & calculate draft",
-        exact: true,
-      }),
-    ).toBeEnabled();
+    await expect(await calculationControl(page)).toBeEnabled();
     await expect(
       page.getByText(
         "Draft changed. Recalculate to inspect the current proposal; saved results remain attached to the earlier revision.",
@@ -855,6 +877,7 @@ test("FN-T07/T18/T49 compare shared scenarios, filter valve areas and review exa
   });
   const original = await call(page, `estimating/fertigation/${scopeId}`);
   await page.goto(`/estimating/fertigation/${scopeId}?view=growing`);
+  await showRegisterFilters(page);
   await page
     .getByRole("combobox", { name: "Area filter", exact: true })
     .selectOption(proposal.areas[0].id);
@@ -876,6 +899,7 @@ test("FN-T07/T18/T49 compare shared scenarios, filter valve areas and review exa
       )
       .filter({ hasText: "SYN South valve" }),
   ).toHaveCount(0);
+  await showRegisterFilters(page);
   await page
     .getByRole("combobox", { name: "Area filter", exact: true })
     .selectOption(proposal.areas[1].id);
@@ -897,6 +921,7 @@ test("FN-T07/T18/T49 compare shared scenarios, filter valve areas and review exa
       )
       .filter({ hasText: "SYN North valve" }),
   ).toHaveCount(0);
+  await showRegisterFilters(page);
   await page
     .getByRole("combobox", { name: "Area filter", exact: true })
     .selectOption("");
@@ -1274,6 +1299,8 @@ test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resol
     .getByRole("button", { name: /^Close How this is calculated/ })
     .click();
 
+  if (page.viewportSize()!.width < 781)
+    await root.locator(".fn-next-menu").first().click();
   await root
     .getByRole("button", { name: "Resolve", exact: true })
     .first()
@@ -1540,7 +1567,7 @@ test("FN-T118 accepted Figma workbench views, menus and phone sections preserve 
     (item: { option_id: string }) => item.option_id === discovery.option_id,
   );
   const scopeId = randomUUID(),
-    proposal = boardReferenceScope();
+    proposal = boardReferenceScope(scopeId);
   await call(page, "estimating/fertigation", {
     ...crmBase(),
     id: scopeId,
@@ -1596,8 +1623,22 @@ test("FN-T118 accepted Figma workbench views, menus and phone sections preserve 
     "Evidence & delivery",
     "Scope review",
   ];
+  const viewIds = [
+    "overview",
+    "growing",
+    "water",
+    "recipes",
+    "controls",
+    "operating",
+    "configurator",
+    "evidence",
+    "review",
+  ];
   for (const [index, label] of views.entries()) {
     await moduleView(page, label);
+    await expect(
+      page.locator(`.fn-page[data-view="${viewIds[index]}"]`),
+    ).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -1629,8 +1670,11 @@ test("FN-T118 accepted Figma workbench views, menus and phone sections preserve 
   await editor
     .getByRole("button", { name: "Close Edit irrigation valve", exact: true })
     .click();
+  await page
+    .getByRole("button", { name: "Discard editor entries", exact: true })
+    .click();
   await moduleView(page, "Overview");
-  if (phone) await scopeAction(page, "Copy saved revision");
+  if (phone) await scopeAction(page, "History");
   else await page.getByRole("button", { name: "History", exact: true }).click();
   const history = page.getByRole("dialog", {
     name: "History & exact revisions",

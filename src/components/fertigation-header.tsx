@@ -26,6 +26,8 @@ export function FertigationHeader({
   onHistory,
   onSave,
   onCompare,
+  onCalculate,
+  calculateDisabled,
   onValves,
   reportHref,
   exportHref,
@@ -52,6 +54,8 @@ export function FertigationHeader({
   onHistory: () => void;
   onSave: () => void;
   onCompare: () => void;
+  onCalculate: () => void;
+  calculateDisabled: boolean;
   onValves: () => void;
   reportHref: string;
   exportHref: string;
@@ -99,6 +103,23 @@ export function FertigationHeader({
             icon="more"
             className="fn-record-menu"
           >
+            <button
+              className="fn-phone-history"
+              data-menu-close
+              type="button"
+              onClick={onHistory}
+            >
+              History
+            </button>
+            <button
+              className="fn-phone-calculation"
+              data-menu-close
+              type="button"
+              disabled={calculateDisabled}
+              onClick={onCalculate}
+            >
+              Validate &amp; calculate draft
+            </button>
             <a
               data-menu-close
               href={reportHref}

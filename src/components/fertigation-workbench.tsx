@@ -709,6 +709,8 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
         onHistory={() => setInspectHistory(true)}
         onSave={() => save()}
         onCompare={() => setCompareDraft(true)}
+        onCalculate={() => void calculate()}
+        calculateDisabled={previewBusy || pending}
         onValves={() => {
           changeView("growing");
           setSection("valves");

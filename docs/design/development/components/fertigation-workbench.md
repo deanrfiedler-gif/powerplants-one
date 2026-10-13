@@ -12,7 +12,7 @@ At 1440 × 1000, preserve the two 240 px navigation columns, record header/conte
 
 ## Mobile
 
-At 390 × 844 and 320 px, the section trigger opens a native modal with the same groups/counts. Valve rows become cards using the same filtered/paged records. The Report/Save bar stays above the application tabs. Other dense registers retain bounded horizontal scrolling. Labels, states and unknown values remain visible in words.
+At 390 × 844 and 320 px, the section trigger opens a native modal with the same groups/counts. Valve rows become cards using the same filtered/paged records. The compact toolbar keeps Add valve visible; Find and filter expands the existing search and filters. History and recalculation are in Scope actions. Next actions rows expose the same resolving actions through phone menus; calculation trace links remain reachable. The Report/Save bar stays above the application tabs. Other dense registers retain bounded horizontal scrolling. Labels, states and unknown values remain visible in words.
 
 Menu Escape returns focus to its trigger; dialog close restores focus. Selecting a row label or Edit opens the same existing inspector. Navigation does not mutate the saved proposal. Copy, restore and archive enter the retained history action workflow, which still requires the exact revision and reason. A Shortlisted tag retains an explicit Remove action.
 

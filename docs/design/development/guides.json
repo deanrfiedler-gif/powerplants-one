@@ -58375,7 +58375,7 @@
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
             "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
-            "The section sheet traps focus while open. Escape or Close sections returns to the picker. Valve cards show the same filtered and paged records as the desktop table; their menus open the same editor. History opens from Scope actions on a phone."
+            "The section sheet traps focus while open. Escape or Close sections returns to the picker. Find and filter opens the phone register search and filters. Valve cards show the same filtered and paged records as the desktop table; their menus open the same editor. History and Validate & calculate draft open from Scope actions on a phone. Each Next actions row has a three-dot menu for its resolve, declaration and section actions."
           ],
           "steps": [],
           "rows": [],
