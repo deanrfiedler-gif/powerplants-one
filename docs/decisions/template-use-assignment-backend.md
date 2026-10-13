@@ -12,7 +12,7 @@ Adopt one explicit company/site scope, fixed OUT-09 purpose and Internal audienc
 
 ## Effective policy and preservation
 
-Each accepted assignment advances the site's policy version atomically and retains its own immutable identity, exact publication/hash, interval, actor, reason and original operation. Intervals are start-inclusive/end-exclusive, with an explicit nullable open end. A null requested start means the database server's current clock after obtaining the workspace lock; an explicit start must still be in the future when accepted. Caller clocks never select the runtime template.
+Each accepted assignment advances the site's policy version atomically and retains its own immutable identity, exact publication/hash, interval, actor, reason and original operation. Intervals are start-inclusive/end-exclusive, with an explicit nullable open end. A null requested start means the database server's current clock after obtaining the workspace lock; an explicit start must not predate that acceptance clock. Caller clocks never select the runtime template.
 
 Assignments cannot overlap. To succeed an open-ended assignment, name its exact predecessor explicitly; its effective end is derived from the successor's start. The original row is never rewritten. Closed intervals and a predecessor already succeeded cannot be implicitly extended, shortened or replaced. Retroactive edits, cancellation and interval rewriting are outside this bounded command.
 

@@ -2,7 +2,7 @@
 
 ## DK-06 controlled template use — 14 October 2026
 
-Dean authorised R4 after R3 PR #476. The [decision](decisions/template-use-assignment-backend.md) and [contract](contracts/template-use-assignment.md) add exact company/site OUT-09 assignment, versioned policy, trusted effective intervals, explicit open-ended succession and original-operation recovery. Native pack preparation/reservation/finalisation select the current exact definition and refuse stale use. Migration 0094 adds empty policy/assignment evidence and default-denied template.assign, preserving existing publication/renderer bytes and workspace pointers. [Verification](testing/evidence/template-use/README.md), independent review, native controls, owner acceptance and deployment remain separate.
+Dean authorised R4 after R3 PR #476. [PR #477](https://github.com/deanrfiedler-gif/powerplants-one/pull/477) retains the updated parent and both distribution/template migration histories. The [decision](decisions/template-use-assignment-backend.md) and [contract](contracts/template-use-assignment.md) add exact company/site OUT-09 assignment, versioned policy, trusted effective intervals, explicit open-ended succession and original-operation recovery. Native pack preparation/reservation/finalisation select the current exact definition and refuse stale use. Migration 0094 adds empty policy/assignment evidence and default-denied template.assign, preserving existing publication/renderer bytes and workspace pointers. [Verification](testing/evidence/template-use/README.md), independent review, native controls, owner acceptance and deployment remain separate.
 
 ## PR check repairs - 14 October 2026
 
