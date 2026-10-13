@@ -607,3 +607,4 @@ PPO-DK06-CATALOGUE-DEC,DK-06 template catalogue and usage backend,docs/decisions
 PPO-DK06-CATALOGUE-API,DK-06 read-only template catalogue API,docs/contracts/template-catalogue.md,,Implementation contract; business acceptance pending,Dean Fiedler,a333604,,,git,
 PPO-DK06-CATALOGUE-EVIDENCE,DK-06 template catalogue execution evidence,docs/testing/evidence/template-catalogue/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,a333604,,,git,
 PPO-ADR-0055,Figma file structure and index,docs/decisions/ADR-0055-figma-file-structure.md,,Adopted on the owner instruction 14 October 2026; splitting the file deferred,Dean Fiedler,65141dcb8a3e39f6516f69955e8260ed447d152b,,,git,
+PPO-FIGMA-LIBRARY-CHECK-EVIDENCE,Figma library check against the application,docs/testing/evidence/figma-library-check/README.md,,Executed read-only comparison; differences listed for the owner,Dean Fiedler,65141dcb8a3e39f6516f69955e8260ed447d152b,,,git,

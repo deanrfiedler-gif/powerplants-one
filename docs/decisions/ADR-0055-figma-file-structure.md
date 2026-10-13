@@ -69,6 +69,7 @@ If a trigger occurs:
 - **Pages:** nine divider pages and the Template page were added, and all 31 existing pages were reordered into the groups above. No page was renamed. No frame on any existing page except Start here was touched.
 - **Start here:** the File index was added, and the guide and foundations frames were moved right by 1,300 px with their content unchanged. The guide's introduction and its list of contents were corrected, because they were out of date.
 - **File index rows:** Deals and Customer 360 are listed as proposals with their pending records (draft pull requests #473 and #474).
+- **Library source line:** re-checked against `main` and rewritten. See Consequences.
 - **Repository:** this ADR, and corrections to the CPQ decision record, which still said no CPQ page was built after the pages had been built on 13 October.
 
 ## Consequences
@@ -76,7 +77,7 @@ If a trigger occurs:
 - No application code, dependency, route, permission, capability or parent requirement ID changes. All 78 parent IDs remain.
 - Earlier records stay accurate. Their page names and node IDs still resolve.
 - The File index is a copy of facts held in the repository, so it can go stale. It carries the date and the `main` commit it was checked against, and rule 6 keeps it current at each lock-in.
-- The Start here guide's library source line still reads `main` at `ed3ccb8` and `0e10459` on 11 October. It was not re-checked in this change. Tokens, shell parts and icons have changed in the application since then, so the library needs a check against current `main` (ADR-0053 rule 5).
+- The Start here guide's library source line was re-checked on 14 October 2026 against `main` at `65141dc` (ADR-0053 rule 5). The 33 colour variables that have a CSS variable match, and the differences are listed in the [library check](../testing/evidence/figma-library-check/README.md). No variable, style or component was changed.
 - Named versions still cover the whole file until a split.
 
 ## Verification
