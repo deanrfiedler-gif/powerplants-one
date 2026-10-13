@@ -373,7 +373,8 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
   );
   assert.equal((await readBaselines(p, project.id)).latest_revision, 0);
 });
-test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; reseeding and reapplying are inert", async () => {
+for (const through of [87, 88])
+test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and ledger through 0089; reseeding and reapplying are inert`, async () => {
   await database().query(
     await readFile(
       new URL("../../db/migrations/0001-recover.sql", import.meta.url),
@@ -381,10 +382,14 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
     ),
   );
   await database().query("DROP TABLE public.ppo_migrations");
-  await migrate(87);
-  await seed(87);
+  await migrate(through);
+  await seed(through);
   const { p, project } = await setup();
   await recordBaseline(p, project.id, baseline(2, 0));
+  if (through === 88) {
+    await recordCalendar(p, project.id, calendarInput());
+    await recordBaseline(p, project.id, baseline(3, 1));
+  }
   const tables = [
     "projects",
     "project_tasks",
@@ -399,6 +404,7 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
     "users",
     "seed_receipts",
   ];
+  if (through === 88) tables.push("project_calendar_revisions", "project_task_actual_revisions", "project_baseline_calendars");
   const snapshot = async () => {
     const captured = [];
     // Preserve every exact row without concurrent connection acquisition. The
@@ -417,12 +423,12 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(
-    after.filter((r) => r.version <= 87),
+    after.filter((r) => r.version <= through),
     ledger,
   );
   assert.deepEqual(
-    after.filter((r) => r.version > 87).map((r) => r.version),
-    [88],
+    after.filter((r) => r.version > through).map((r) => r.version),
+    through === 87 ? [88, 89] : [89],
   );
   assert.deepEqual(
     {
@@ -431,8 +437,8 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
     },
     schedule,
   );
-  await recordCalendar(p, project.id, calendarInput());
-  await recordBaseline(p, project.id, baseline(3, 1));
+  await recordCalendar(p, project.id, calendarInput(through === 88 ? 3 : 2, through === 88 ? 1 : 0));
+  await recordBaseline(p, project.id, baseline(through === 88 ? 4 : 3, through === 88 ? 2 : 1));
   const settled = await snapshot(),
     saved = await readCalendar(p, project.id);
   await migrate();

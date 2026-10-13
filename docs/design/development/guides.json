@@ -75842,6 +75842,636 @@
       ],
       "prepared_at": "2026-10-11",
       "runtime_evidence": "Nine withdrawal database checks and 51 browser scenarios have passing coverage across the recorded runs: docs/testing/evidence/access-withdrawal/README.md. Initial failures and corrected/unchanged replays remain explicit. Earlier application evidence retains its own source."
+    },
+    {
+      "guide_key": "guide.route-estimating-cpq-id",
+      "entry_key": "route:/estimating/cpq/[id]",
+      "title": "Configure & price",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Configure a selected discovery option, explain quantities and prices, compare saved evaluations and deliberately use a saved result in the native estimate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Confirm selected discovery, release and pricing date. Enter facts and choices; review configuration, shared capacity, BOM and pricing.",
+            "Save configuration retains an immutable evaluation when valid, or a working draft when incomplete. Preview never saves.",
+            "Review stale adjustments or changed source with Compare. Save the new evaluation before Use in estimate.",
+            "Use in estimate opens the exact receiving preview. Confirm title and scope to create a native estimate version."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Confirm selected discovery, release and pricing date. Enter facts and choices; review configuration, shared capacity, BOM and pricing.",
+            "Save configuration retains an immutable evaluation when valid, or a working draft when incomplete. Preview never saves.",
+            "Review stale adjustments or changed source with Compare. Save the new evaluation before Use in estimate.",
+            "Use in estimate opens the exact receiving preview. Confirm title and scope to create a native estimate version."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-cpq",
+      "entry_key": "route:/estimating/cpq",
+      "title": "Configurations",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Search the latest saved evaluations and working configurations. Start configuration from a complete selected discovery option."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose the company and search by project or configuration.",
+            "Open a saved evaluation or continue its working configuration.",
+            "New configuration selects an authorised complete discovery option."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Choose the company and search by project or configuration.",
+            "Open a saved evaluation or continue its working configuration.",
+            "New configuration selects an authorised complete discovery option."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-rules-id",
+      "entry_key": "route:/estimating/rules/[id]",
+      "title": "Rule and release authoring",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Author typed conditions, safe formulas, parameters, parts, options, structures, decision tables, capacities and milestone proposals, with immutable rule and release versions."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Select a rule, edit structured conditions and action, then run the test bench.",
+            "Use Edit formula to insert numeric facts, parameters and bounded functions. Run server test for the scenario, then Apply to draft; Cancel leaves the formula unchanged. Run the full Test bench again before creating a version.",
+            "Save draft retains incomplete forms. Create version requires passing fixtures and known-value decision table coverage.",
+            "Use History to compose a previous rule version into the current draft, then test again.",
+            "Independent review approves exact content; a third authorised actor seals it. Make active is a separate command."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why.",
+            "Formulas support min(a,b), max(a,b), ceil(x), floor(x) and round(x,places). Rounding accepts 0–12 places and rounds signed ties away from zero. Displayed units are authored metadata; independent technical review must check physical dimensions."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Select a rule, edit structured conditions and action, then run the test bench.",
+            "Save draft retains incomplete forms. Create version requires passing fixtures and known-value decision table coverage.",
+            "Use History to compose a previous rule version into the current draft, then test again.",
+            "Independent review approves exact content; a third authorised actor seals it. Make active is a separate command."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-rules",
+      "entry_key": "route:/estimating/rules",
+      "title": "Rules studio",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic CPQ workflow; review pending",
+      "source_commit": "7e4ef3b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose",
+          "paragraphs": [
+            "Find company rule definitions and continue working authoring drafts."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use the intended synthetic company and authorised CPQ duty. Configuration additionally requires an owned selected Active option with Complete discovery. Authors, reviewers and publishers are independently assigned."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Search rules by name and state. Active releases follows the exact company activation, including an older active version beside a newer draft. Older active rows open read only; Return to working draft restores the editable current version.",
+            "Authors can start an explicit synthetic Screen systems template or reopen a working draft.",
+            "Use the release editor to test and version; the register does not activate rules."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The outline selects context. View tabs separate work, tests, comparisons and history. The footer reports save state. Summary/Quick test moves into a sheet on a phone."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and evidence",
+          "paragraphs": [
+            "Unknown is distinct from zero, false and Not applicable. Discovery-bound facts are read only here. Quantity, source validity, price tier, exact rule contributions and adjustment reasons are available in Why."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Common tasks",
+          "paragraphs": [],
+          "steps": [
+            "Search rules by name and state. Active releases follows the exact company activation, including an older active version beside a newer draft. Older active rows open read only; Return to working draft restores the editable current version.",
+            "Authors can start an explicit synthetic Screen systems template or reopen a working draft.",
+            "Use the release editor to test and version; the register does not activate rules."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save draft, save evaluation, create version, review, seal, activate and use in estimate are separate actions. Successful estimate handover does not approve a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Incomplete drafts can be retained. Blocked evaluations show diagnostics. Changed source or override basis requires explicit comparison/review. Historical evaluations remain immutable. Price Requires approval is passed to the existing quotation workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "The explicit Screen systems template uses fictional prices and inputs for software verification. It is never automatically seeded or activated and does not establish engineering or commercial policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "For an uncertain command, recover its original operation before sending another. A version conflict retains local work; review current state before retrying. Revoked access clears protected forms. Reopen the working draft from its register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use labelled controls, tabs, Move up/down and native disclosure buttons. Escape closes dialogs and returns focus. Editing is online only; no offline save is offered."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Source and API contract: docs/interfaces/cpq-api.md. Functional/visual/deployment evidence: docs/delivery/cpq-ui-handover.md."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     }
   ]
 }

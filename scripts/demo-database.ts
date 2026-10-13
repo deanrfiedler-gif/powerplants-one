@@ -18,6 +18,7 @@ export const demoCapabilities = ["shared.read", "shared.internal.read", "activit
   "service.readiness.assess", "schedule.contact", "schedule.manage",
   "crm.opportunity.read", "crm.opportunity.create", "crm.opportunity.edit",
   "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
+  "cpq.read", "cpq.author", "cpq.calculate",
   "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit", "email.connect",
   "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit"] as const;
 

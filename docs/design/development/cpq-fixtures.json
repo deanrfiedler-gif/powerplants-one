@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "owner": "Dean Fiedler",
+  "scope_ids": [
+    "ES-02",
+    "ES-03"
+  ],
+  "source": "src/cpq/pilot.ts",
+  "synthetic": true,
+  "states": [
+    {
+      "key": "ready",
+      "source": "screenDefinition / screenInput",
+      "expected": "Explicitly selected template passes an independent fixture; never auto-active."
+    },
+    {
+      "key": "unknown",
+      "source": "tests/unit/cpq-design.test.ts",
+      "expected": "Null, false, zero and Not applicable remain distinct."
+    },
+    {
+      "key": "shared",
+      "source": "tests/unit/cpq-design.test.ts",
+      "expected": "Shared group and configuration outputs occur once, unknown group blocks."
+    },
+    {
+      "key": "override",
+      "source": "tests/unit/cpq-design.test.ts",
+      "expected": "Stale value remains visible, explicit rebase or restore required."
+    },
+    {
+      "key": "governance",
+      "source": "tests/database/cpq.test.ts",
+      "expected": "Working draft, immutable version, review, seal and activation retain independent evidence. The rules register preserves the active version beside a newer current draft and identifies superseded published releases as inactive."
+    },
+    {
+      "key": "browser",
+      "source": "tests/browser/cpq.spec.ts",
+      "expected": "Desktop/phone host exercise; execution status in handover."
+    },
+    {
+      "key": "configure-layout",
+      "source": "tests/browser/cpq.spec.ts; docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-16-Configure-Greenhouse-2-r01.png",
+      "expected": "At 1440 px the expanded rail is 240 px and white 380 px summary aligns with header and footer; normal-weight inputs have zero margins, headings retain normal letter spacing, options stack at full width, and Save precedes Use on one line in the 80 px footer. This is a bounded geometry check, not complete visual acceptance."
+    },
+    {
+      "key": "formula-editor",
+      "source": "tests/browser/cpq.spec.ts; tests/unit/cpq-design.test.ts",
+      "expected": "Bounded min/max and 0–12-place exact round; server test does not save; Apply/Cancel remain distinct and source-1 functions remain refused. The title is 20 px / 26 px with normal letter spacing both inside the scoped workbench and in a portal; header and actions stay visible while formula content scrolls."
+    }
+  ]
+}

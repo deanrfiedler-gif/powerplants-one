@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Status: backend implementation contract; UI owned separately by Claude. Read with [delivery plan](../delivery/cpq-backend-plan.md). All paths below start with `/api/v1`. All DTOs are internal commercial data; never expose them in a customer portal. Existing session, working-company selection, origin checks and private/no-store responses apply.
+Status: native backend and CPQ UI implementation contract, expanded by Dean's 13 October instruction. Read with [delivery plan](../delivery/cpq-backend-plan.md), [design decision](../decisions/cpq-figma-ui.md) and [UI handover](../delivery/cpq-ui-handover.md). All paths below start with `/api/v1`. All DTOs are internal commercial data; never expose them in a customer portal. Existing session, working-company selection, origin checks and private/no-store responses apply.
 
 ## Routes
 
@@ -32,7 +32,7 @@ All CPQ calls require `shared.read` and `cpq.read` in the current company; `cpq.
 
 Calculation and adoption also require current native estimating ownership, `estimating.read`/`estimating.edit`, source visibility and a selected Active option with Complete discovery. An independent reviewer cannot edit the estimate merely because they have a CPQ review duty.
 
-Release root transitions: Draft → Reviewed or Rejected → Published (only Reviewed/Published can activate). Appending a revision returns the root to Draft and never rewrites the active historical revision. A run is permanently Ready or Blocked. Later edits produce a new run with a parent pointer. A Ready run can become stale without changing its historical result; adoption rechecks the current basis.
+Schema-1 release roots retain Draft → Reviewed or Rejected → Published. Design schema 3 adds an explicit Sealed state: Draft → Reviewed → Sealed → Published; Rejected content must be revised. Seal requires the exact independently approved revision and a third actor. Sealing does not change the company head; activation is a separate command. Appending a revision returns the root to Draft and never rewrites the active historical revision. A run is permanently Ready or Blocked. Later edits produce a new run with a parent pointer. A Ready run can become stale without changing its historical result; adoption rechecks the current basis.
 
 ## Definition and input shape
 
@@ -49,6 +49,32 @@ Authoritative TypeScript DTOs are `src/cpq/types.ts`; strict semantic validation
 Expose the restricted quantity editor only to rule authors. Estimators should receive labelled controls, optional/unknown states, units and choices. Keep UUIDs/hashes in evidence drawers and API state, not ordinary user-facing input fields.
 
 ## Error and recovery UX
+
+### Design schema 3 additions
+
+Schema 1 retains its accepted fields and serialised results. Schema 2 belongs to the separate Products-binding workstream and is not claimed by this contribution. Schema 3 adds the following explicit fields; unknown fields still fail validation.
+
+- Facts: Integer/Text, description, System/Global/Shared scope, authored source, minimum/maximum and optional registered discovery `binding.question_id`. Bound values are read from the selected discovery and cannot be overridden by the browser. Integer rejects fractions. Instance `not_applicable` lists only optional null facts; it is distinct from unknown.
+- Conditions: `ALWAYS`, `KNOWN`, `NOT_APPLICABLE` and typed `IN`, plus the existing boolean/comparison operators. Empty groups remain invalid. Formulas add exact `ceil(x)`, `floor(x)`, `min(a,b)`, `max(a,b)` and `round(x,places)` with an integer precision of 0–12 (omitting places retains whole-number rounding); signed ties round away from zero. All arguments count toward the existing token, depth and evaluation budgets. Per-rule parameters have stable keys, labels, exact values and units. Arbitrary code/external lookups remain impossible.
+- Parts: optional scope `{kind: System|Shared|Configuration, group_fact}`. Shared requires a Text/Choice grouping fact and resolves once per group; Configuration resolves once. Shared facts that disagree become unknown, never an arbitrary first value. Labour BOM references must use material parts in the same output scope. Decision tables govern System rules only. Missing shared groups block. Frozen `price_context` records book, policy, source currency, source-currency units per AUD and recorded instant; each tier includes source unit cost and validates its rounded AUD conversion. Future/expired price evidence blocks use.
+- Design: option sets and typed availability, acyclic component structure, shared capacity grouped across systems, UNIQUE/PRIORITY decision tables and pricing policy. Known-value table coverage enumerates exact boundaries, valid integer/range partitions and equality classes, capped at 256 partitions. Unknown runtime inputs still block; coverage is not a general satisfiability proof. Explicit milestone proposals retain condition, anchor, signed offset (±365 days) and BusinessDays/CalendarDays. No calendar date is fabricated.
+- Results: condition/rule traces, resolution contributions (including non-winners), calculated/effective quantity, excluded/conflicting/needs-review line states, selected price tier, options, capacities, table outcomes, pricing basis and milestone proposals. Separate configuration, pricing and adoption readiness explains why a proposed price can require ES-05 approval while the saved estimate handover is available. All original evidence is hashed.
+- A stale schema-3 adjustment remains effective and visibly Needs review, blocking use. Explicit rebase resubmits its value/reason with the current basis hash; restore removes it in a newly saved evaluation. Schema-1 stale behaviour remains unchanged. Missing targets retain orphan diagnostics.
+
+| Method | Additional path | Contract |
+|---|---|---|
+| GET | `/cpq/configurations?company_id=UUID` | Latest authorised evaluation per option, up to 100 candidates; totals and calculator duty |
+| GET | `/cpq/rules?company_id=UUID` | Current saved and active rule members, exact revision, immutable rule version, `is_current`, `is_active` and author duty; active rows first, limit 100 |
+| POST | `/cpq/validate` | Company and definition; validate and test without saving, return fixture results and table coverage |
+| GET/POST | `/cpq/drafts` | Scoped draft list / receipt-backed CAS save; Rules or Configuration |
+| GET | `/cpq/drafts/:id` | Current draft plus immutable history metadata; hash verified |
+| GET | `/cpq/revisions/:id/compare?with=UUID` | Same-release semantic differences by stable keys |
+| POST | `/cpq/releases/:id/seal` | Envelope, expected version, revision ID and content hash; third-person exact seal |
+| POST | `/estimating/workspaces/:id/cpq/preview` | Option/revision/binding hash/input; same authoritative calculation as Save with no write |
+
+Draft commands contain `id`, company, kind, label, raw `content`, expected version and nullable source bindings. Rules bind release/base revision; Configuration binds estimating workspace, option, discovery revision, base release revision, optional base run and binding hash. Every binding is authorised; company/kind/option cannot be moved. Content is bounded to 60 KB, 24 levels and 6,000 nodes. No raw draft becomes executable until validated. A Rules draft can be attached once to a new release by version creation. Release save accepts optional `draft:{id,expected_version}` and atomically records the normalised version in that draft's history. Identical earlier rule bytes reuse their immutable rule version when composing a release.
+
+Calculate accepts optional `draft:{id,expected_version,label}` and atomically saves the run and matching draft revision. A draft version conflict rolls back the run, audit and receipt. Exact run reads add stable evaluation number and binding hash; list history includes saved time/author/input. Release reads add seals, activation history, rule versions, membership and caller duties. Adoption previews add `milestone_proposals`; the immutable adopted run and native estimate audit retain them as proposals, without creating scheduled dates. Existing customer quotation projection excludes this internal calculation evidence.
 
 | Code / state | Required UI behaviour |
 |---|---|

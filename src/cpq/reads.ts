@@ -5,6 +5,8 @@ import { hasPermission } from "../platform/permissions";
 import { object, uuid } from "../shared/validation";
 import { workspaceAuthority } from "../estimating/discovery-workspace-context";
 import { active, duty, release, revision, run } from "./context";
+import { hash } from "./hash";
+import { semanticChanges } from "./semantic-diff";
 
 export async function listReleases(
   p: Principal,
@@ -38,6 +40,12 @@ export async function readRelease(p: Principal, id: string) {
     return {
       release: root,
       current: await revision(c, p, root.current_revision_id),
+      current_author: (
+        await c.query<{ id: string; display_name: string }>(
+          "SELECT u.id,u.display_name FROM ppo.cpq_revisions v JOIN ppo.users u ON (u.workspace_id,u.id)=(v.workspace_id,v.created_by) WHERE v.workspace_id=$1 AND v.id=$2",
+          [p.workspace_id, root.current_revision_id],
+        )
+      ).rows[0],
       revisions: (
         await c.query(
           "SELECT id,version,predecessor_id,content_hash,created_by,created_at,reason FROM ppo.cpq_revisions WHERE workspace_id=$1 AND release_id=$2 ORDER BY version DESC LIMIT 100",
@@ -51,6 +59,35 @@ export async function readRelease(p: Principal, id: string) {
         )
       ).rows,
       active: await active(c, p, root.company_id),
+      seals: (
+        await c.query(
+          "SELECT s.* FROM ppo.cpq_seals s JOIN ppo.cpq_revisions v ON (v.workspace_id,v.id)=(s.workspace_id,s.revision_id) WHERE v.workspace_id=$1 AND v.release_id=$2 ORDER BY s.created_at DESC LIMIT 100",
+          [p.workspace_id, id],
+        )
+      ).rows,
+      activations: (
+        await c.query(
+          "SELECT a.* FROM ppo.cpq_activations a JOIN ppo.cpq_revisions v ON (v.workspace_id,v.id)=(a.workspace_id,a.revision_id) WHERE v.workspace_id=$1 AND v.release_id=$2 ORDER BY a.created_at DESC LIMIT 100",
+          [p.workspace_id, id],
+        )
+      ).rows,
+      rule_versions: (
+        await c.query(
+          "SELECT * FROM ppo.cpq_rule_versions WHERE workspace_id=$1 AND release_id=$2 ORDER BY rule_key,version DESC LIMIT 500",
+          [p.workspace_id, id],
+        )
+      ).rows,
+      members: (
+        await c.query(
+          "SELECT m.*,r.version FROM ppo.cpq_release_members m JOIN ppo.cpq_rule_versions r ON (r.workspace_id,r.id)=(m.workspace_id,m.rule_version_id) WHERE m.workspace_id=$1 AND m.revision_id=$2",
+          [p.workspace_id, root.current_revision_id],
+        )
+      ).rows,
+      capabilities: {
+        author: await hasPermission(c, p, "cpq.author", root.company_id),
+        review: await hasPermission(c, p, "cpq.review", root.company_id),
+        publish: await hasPermission(c, p, "cpq.publish", root.company_id),
+      },
       synthetic: true,
     };
   });
@@ -58,7 +95,16 @@ export async function readRelease(p: Principal, id: string) {
 export const readRevision = (p: Principal, id: string) =>
   transaction((c) => revision(c, p, id));
 export const readRun = (p: Principal, id: string) =>
-  transaction((c) => run(c, p, id));
+  transaction(async (c) => {
+    const r = await run(c, p, id);
+    const n = (
+      await c.query<{ n: number }>(
+        "SELECT count(*)::integer AS n FROM ppo.cpq_runs WHERE workspace_id=$1 AND option_id=$2 AND (created_at,id)<=(SELECT created_at,id FROM ppo.cpq_runs WHERE workspace_id=$1 AND id=$3)",
+        [p.workspace_id, r.option_id, r.id],
+      )
+    ).rows[0].n;
+    return { ...r, evaluation_number: n, binding_hash: hash(r.binding) };
+  });
 export async function runHistory(p: Principal, id: string) {
   return transaction(async (c) => {
     const g = await workspaceAuthority(c, p, id);
@@ -82,6 +128,9 @@ export async function runHistory(p: Principal, id: string) {
         result_hash: r.result.result_hash,
         totals: r.result.totals,
         diagnostic_count: r.result.diagnostics.length,
+        saved_at: r.updated_at,
+        saved_by: r.created_by,
+        input: r.input,
       });
     }
     return { items, limit: 50, synthetic: true };
@@ -118,6 +167,29 @@ export async function compareRuns(
         before: a.result.diagnostics,
         after: b.result.diagnostics,
       },
+      synthetic: true,
+    };
+  });
+}
+export async function compareRevisions(
+  p: Principal,
+  id: string,
+  query: Record<string, string>,
+) {
+  const q = object(query, ["with"]);
+  return transaction(async (c) => {
+    const before = await revision(c, p, id),
+      after = await revision(c, p, uuid(q.with, "with"));
+    if (before.release_id !== after.release_id)
+      throw new AppError(
+        422,
+        "CpqComparisonScope",
+        "Choose versions of the same rule set.",
+      );
+    return {
+      before: { id: before.id, content_hash: before.content_hash },
+      after: { id: after.id, content_hash: after.content_hash },
+      changes: semanticChanges(before.definition, after.definition),
       synthetic: true,
     };
   });

@@ -1990,6 +1990,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
               <li>
                 <SpecialistEntry workspaceId={id} optionId={current.option.id} />
               </li>
+              <li>{menuLink(`/estimating/cpq/${id}?option_id=${current.option.id}`, "controls", "Configure & price")}</li>
               <li>
                 {menuLink(
                   `/estimating/fertigation?estimating_workspace_id=${id}&option_id=${current.option.id}`,

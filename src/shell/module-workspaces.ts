@@ -5,6 +5,8 @@ export const moduleWorkspaces = [
   { route: "/service/packs/new", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-preparation" },
   { route: "/service/packs", moduleId: "SV-05", scope: "ppo-pack-register", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-register" },
   { route: "/service/packs/[id]", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-record" },
+  {route:"/estimating/cpq",moduleId:"ES-02",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-configure-implementation"},
+  {route:"/estimating/rules",moduleId:"ES-03",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-rules-implementation"},
   {route:"/maintenance/agreements",moduleId:"MA-01",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma01-native-r01"},
   {route:"/maintenance/agreements/[id]",moduleId:"MA-01",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma01-record-native-r01"},
   {route:"/maintenance/coverage",moduleId:"MA-02",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma02-native-r01"},
@@ -61,6 +63,6 @@ export function moduleWorkspaceForPath(path: string) {
   return moduleWorkspaces.find(workspace => workspace.route === path
     || (workspace.scope.startsWith("ppo-") && workspace.route.includes("[id]") && new RegExp("^"+workspace.route.replace("[id]","[0-9a-f-]{36}")+"$").test(path))
     || (workspace.scope === "ppo-survey" && /^\/surveys\/[0-9a-f-]{36}$/.test(path))
-    || (["ppo-fertigation", "ppo-specialist", "ppo-acceptance", "ppo-facilities"].includes(workspace.scope) && path.startsWith(workspace.route + "/"))
+    || (["ppo-fertigation", "ppo-specialist", "ppo-acceptance", "ppo-facilities", "ppo-cpq"].includes(workspace.scope) && path.startsWith(workspace.route + "/"))
     || (workspace.scope === "ppo-estimate-wizard" && /^\/estimating\/discovery\/[0-9a-f-]{36}$/.test(path)));
 }

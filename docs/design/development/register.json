@@ -1257,7 +1257,8 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/estimation-wizard.tsx"
+        "src/components/estimation-wizard.tsx",
+        "docs/decisions/cpq-figma-ui.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -1273,7 +1274,11 @@
         "route:/estimating/discovery/new",
         "route:/estimating/discovery",
         "scope:CS-08",
-        "scope:ES-01"
+        "scope:ES-01",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "reviewer": null
     },
@@ -1303,7 +1308,8 @@
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/testing/evidence/estimating-native-cost-sources/README.md",
-        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json",
+        "docs/decisions/cpq-figma-ui.md"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -1320,7 +1326,11 @@
         "route:/estimating/cost-sources/new",
         "route:/estimating/cost-sources/[id]",
         "route:/estimating/estimates/[id]/sources",
-        "scope:ES-04"
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
       ],
       "reviewer": null
     },
@@ -13628,6 +13638,217 @@
         "scope:AD-01",
         "route:/admin/access",
         "route:/admin/access/requests/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cpq/[id]",
+      "title": "Configure & price",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Configure a selected discovery option, explain quantities and prices, compare saved evaluations and deliberately use a saved result in the native estimate.",
+      "path": "/estimating/cpq/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/cpq/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cpq-id",
+      "design_path": "docs/design/development/pages/route-estimating-cpq-id.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-16-Configure-Greenhouse-2-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-17-Shared-Capacity-Conflict-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-18-Solution-Overview-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-19-Materials-and-Labour-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-20-Why-This-Line-Cable-Brackets-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-21-Pricing-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-22-Compare-with-Evaluation-2-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-23-Use-in-Estimate-Dialog-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-24-Used-in-Estimate-v05-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-25-Line-Actions-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-26-Adjust-Quantity-Dialog-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-27-Reopened-Adjustments-Kept-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-28-Input-Changed-Recalculating-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-29-Quantity-Needs-Review-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-30-Review-Adjustment-Dialog-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-31-Calculated-Value-Restored-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-32-History-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-33-Saved-Evaluation-3-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-34-Compare-with-Release-R5-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-35-Why-This-Line-Equal-Priority-Conflict-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-36-Blockers-Resolved-Evaluation-6-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-37-Propose-Successor-v06-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-38-Tablet-Configure-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-40-Phones-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-41-Exceptional-States-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-44-Why-This-Line-Panel-Views-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-configure.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cpq",
+      "title": "Configurations",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Search the latest saved evaluations and working configurations. Start configuration from a complete selected discovery option.",
+      "path": "/estimating/cpq",
+      "source_paths": [
+        "src/app/(business)/estimating/cpq/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cpq",
+      "design_path": "docs/design/development/pages/route-estimating-cpq.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-15-Configure-and-Price-Register-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-register.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules",
+        "route:/estimating/rules/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/rules/[id]",
+      "title": "Rule and release authoring",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Author typed conditions, safe formulas, parameters, parts, options, structures, decision tables, capacities and milestone proposals, with immutable rule and release versions.",
+      "path": "/estimating/rules/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/rules/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-rules-id",
+      "design_path": "docs/design/development/pages/route-estimating-rules-id.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-02-Rule-Editor-Definition-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-03-Rule-Editor-Text-Fact-Change-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-04-Test-Run-1-Failed-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-05-Formula-Editor-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-06-Test-Run-2-Passed-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-07-Changes-vs-v7-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-08-Create-Version-8-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-09-Release-R6-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-10-Decision-Table-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-11-Fact-Dictionary-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-12-Product-Structure-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-13-Rule-History-Version-6-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-14-Action-Forms-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-39-Tablet-Rule-Editor-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-40-Phones-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-41-Exceptional-States-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-42-Components-A-r01.png",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-43-Components-B-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-rules.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
+        "src/components/cpq-formula-editor.tsx"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules"
+      ]
+    },
+    {
+      "key": "route:/estimating/rules",
+      "title": "Rules studio",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Find company rule definitions and continue working authoring drafts.",
+      "path": "/estimating/rules",
+      "source_paths": [
+        "src/app/(business)/estimating/rules/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-rules",
+      "design_path": "docs/design/development/pages/route-estimating-rules.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/cpq-figma-design-r01/PPO-CPQ-Figma-01-Rules-Registry-r01.png"
+      ],
+      "dependencies": [
+        "src/components/cpq-register.tsx",
+        "src/components/cpq.css",
+        "docs/decisions/cpq-figma-ui.md",
+        "docs/design/development/cpq-fixtures.json",
+        "docs/decisions/cpq-figma-design.md",
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+      ],
+      "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/delivery/cpq-ui-handover.md for executed checks and limitations.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "scope:ES-03",
+        "scope:ES-04",
+        "route:/estimating/cpq",
+        "route:/estimating/cpq/[id]",
+        "route:/estimating/rules/[id]"
       ]
     }
   ]

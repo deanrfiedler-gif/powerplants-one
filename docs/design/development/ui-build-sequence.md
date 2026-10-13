@@ -5,10 +5,10 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs\design\development\register.json` (SHA-256 `8a5c67b89be52eab…`).
+- Register: `docs\design\development\register.json` (SHA-256 `6307bc705c0b289c…`).
 - Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
-- 358 entries: 355 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
-- 200 built and awaiting owner review; 106 to refine; 43 to build; 6 awaiting a scope decision.
+- 362 entries: 359 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
+- 204 built and awaiting owner review; 106 to refine; 43 to build; 6 awaiting a scope decision.
 - Review track starts at phase 00; build track starts at phase 01.
 
 | Phase | Title | After phases | Scopes | Routes | Review | Refine | Build | Decide |
@@ -16,7 +16,7 @@ Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register
 | 00 | Verify the existing baseline | — | 7 | 19 | 29 | 1 | 0 | 0 |
 | 01 | Shared controls and core records | — | 20 | 27 | 25 | 17 | 5 | 0 |
 | 02 | Products, equipment and survey evidence | 01 | 15 | 14 | 28 | 0 | 1 | 0 |
-| 03 | Sales through quotation and handover | 01, 02 | 13 | 32 | 25 | 19 | 1 | 0 |
+| 03 | Sales through quotation and handover | 01, 02 | 13 | 36 | 29 | 19 | 1 | 0 |
 | 04 | Service, job packs and field quality | 00, 01, 02 | 14 | 21 | 17 | 17 | 1 | 0 |
 | 05 | Engineering, project delivery and supply | 00, 01, 02, 03, 04 | 27 | 60 | 44 | 39 | 4 | 0 |
 | 06 | Finance, maintenance and customer lifecycle | 01, 02, 03, 04, 05 | 19 | 25 | 32 | 7 | 5 | 0 |
@@ -194,6 +194,8 @@ Refine the existing sales journey, connect survey-backed estimating, then comple
 | 46 | `route:/estimating/new` | Create estimate | To refine | Issued r02 rank |
 | 46 | `route:/estimating/quotes/[id]` | Quotation detail | To refine | Issued r02 rank |
 | 47 | `scope:ES-02` | Estimation Wizard · discovery, alternatives & revisions | To refine | Issued r02 rank |
+| 47 | `route:/estimating/cpq` | Configurations | Built; owner review pending | Added after r05; placed with ES-02 |
+| 47 | `route:/estimating/cpq/[id]` | Configure & price | Built; owner review pending | Added after r05; placed with ES-02 |
 | 47 | `route:/estimating/discovery` | Discovery register | To refine | Issued r02 rank |
 | 47 | `route:/estimating/discovery/[id]` | Discovery workspace | To refine | Issued r02 rank |
 | 47 | `route:/estimating/discovery/[id]/costing` | Discovery costing | To refine | Issued r02 rank |
@@ -201,6 +203,8 @@ Refine the existing sales journey, connect survey-backed estimating, then comple
 | 47 | `route:/estimating/fertigation` | Priva Fertigation Configurator | To refine | Issued r02 rank |
 | 47 | `route:/estimating/fertigation/[id]` | Priva Fertigation Configurator · detail | To refine | Issued r02 rank |
 | 47 | `route:/estimating/fertigation/new` | Priva Fertigation Configurator · create | To refine | Issued r02 rank |
+| 47 | `route:/estimating/rules` | Rules studio | Built; owner review pending | Added after r05; placed with ES-02 |
+| 47 | `route:/estimating/rules/[id]` | Rule and release authoring | Built; owner review pending | Added after r05; placed with ES-02 |
 | 48 | `scope:ES-08` | Specialist configuration workbench | Built; owner review pending | Issued r02 rank |
 | 48 | `route:/estimating/configurations` | Screen Systems configurations | To refine | Issued r02 rank |
 | 48 | `route:/estimating/configurations/[id]` | Screen Systems configurations · detail | To refine | Issued r02 rank |

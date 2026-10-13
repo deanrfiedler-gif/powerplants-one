@@ -17,6 +17,8 @@ import { active, duty, release, revision, type Release } from "./context";
 import { definition, digest } from "./validation";
 import { hash } from "./hash";
 import { testIsolated } from "./runner";
+import { tableCoverage } from "./design-runtime";
+import { retainVersionDraft } from "./drafts";
 
 export async function saveRelease(p: Principal, value: unknown) {
   const r = object(value, [
@@ -25,7 +27,10 @@ export async function saveRelease(p: Principal, value: unknown) {
     "company_id",
     "expected_version",
     "definition",
+    "draft",
   ]);
+  const sourceDraft =
+    r.draft === undefined ? null : object(r.draft, ["id", "expected_version"]);
   if (
     !Number.isSafeInteger(r.expected_version) ||
     Number(r.expected_version) < 0
@@ -40,6 +45,14 @@ export async function saveRelease(p: Principal, value: unknown) {
     company_id: uuid(r.company_id, "company_id"),
     expected_version: Number(r.expected_version),
     definition: definition(r.definition),
+    ...(sourceDraft
+      ? {
+          draft: {
+            id: uuid(sourceDraft.id, "draft_id"),
+            expected_version: version(sourceDraft.expected_version),
+          },
+        }
+      : {}),
   };
   return sharedOperation(
     p,
@@ -64,6 +77,19 @@ export async function saveRelease(p: Principal, value: unknown) {
     },
     async (c, prior) => {
       expected(prior?.version ?? 0, input.expected_version);
+      if (input.definition.schema_version === 3) {
+        const fixtures = await testIsolated(input.definition);
+        const coverage = tableCoverage(input.definition);
+        if (
+          fixtures.some((f) => !f.passed) ||
+          coverage.some((t) => !t.complete || t.issues.length)
+        )
+          throw new AppError(
+            409,
+            "CpqVersionTestsRequired",
+            "All fixtures and decision table coverage checks must pass before creating an immutable design version. Save incomplete work as a draft.",
+          );
+      }
       const id = randomUUID(),
         v = prior ? await revision(c, p, prior.current_revision_id) : null;
       const root = prior
@@ -108,6 +134,55 @@ export async function saveRelease(p: Principal, value: unknown) {
           p.actor_id,
         ],
       );
+      if (input.definition.schema_version === 3)
+        for (const rule of input.definition.rules) {
+          const previous = (
+            await c.query<{
+              id: string;
+              version: number;
+              content_hash: string;
+            }>(
+              "SELECT id,version,content_hash FROM ppo.cpq_rule_versions WHERE workspace_id=$1 AND release_id=$2 AND rule_key=$3 ORDER BY version DESC LIMIT 1",
+              [p.workspace_id, input.id, rule.key],
+            )
+          ).rows[0];
+          const content_hash = hash(rule);
+          const reusable = (
+            await c.query<{ id: string }>(
+              "SELECT id FROM ppo.cpq_rule_versions WHERE workspace_id=$1 AND release_id=$2 AND rule_key=$3 AND content_hash=$4 ORDER BY version LIMIT 1",
+              [p.workspace_id, input.id, rule.key, content_hash],
+            )
+          ).rows[0];
+          const ruleId = reusable?.id ?? randomUUID();
+          if (!reusable)
+            await c.query(
+              "INSERT INTO ppo.cpq_rule_versions(id,workspace_id,release_id,rule_key,version,content,content_hash,created_by,reason) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",
+              [
+                ruleId,
+                p.workspace_id,
+                input.id,
+                rule.key,
+                (previous?.version ?? 0) + 1,
+                rule,
+                content_hash,
+                p.actor_id,
+                input.reason,
+              ],
+            );
+          await c.query(
+            "INSERT INTO ppo.cpq_release_members(workspace_id,revision_id,rule_key,rule_version_id) VALUES($1,$2,$3,$4)",
+            [p.workspace_id, id, rule.key, ruleId],
+          );
+        }
+      if (input.draft)
+        await retainVersionDraft(c, p, {
+          ...input.draft,
+          release_id: input.id,
+          revision_id: id,
+          company_id: input.company_id,
+          content: input.definition,
+          reason: input.reason,
+        });
       return {
         ...root,
         audit_details: {
@@ -251,7 +326,11 @@ export async function activateRelease(
       if (
         root.current_revision_id !== v.id ||
         v.content_hash !== input.content_hash ||
-        !["Reviewed", "Published"].includes(root.state)
+        !(
+          v.definition.schema_version === 3
+            ? ["Sealed", "Published"]
+            : ["Reviewed", "Published"]
+        ).includes(root.state)
       )
         throw new AppError(
           409,
@@ -310,6 +389,95 @@ export async function activateRelease(
         ...updated,
         audit_details: {
           activation_id,
+          revision_id: v.id,
+          content_hash: v.content_hash,
+        },
+      };
+    },
+    "CpqRelease",
+    "CpqChanged",
+  );
+}
+export async function sealRelease(p: Principal, id: string, value: unknown) {
+  const r = object(value, [
+    ...commonKeys,
+    "expected_version",
+    "revision_id",
+    "content_hash",
+  ]);
+  const input = {
+    ...common(r),
+    id: uuid(id, "id"),
+    expected_version: version(r.expected_version),
+    revision_id: uuid(r.revision_id, "revision_id"),
+    content_hash: digest(r.content_hash, "content_hash"),
+  };
+  return sharedOperation(
+    p,
+    input,
+    "Cpq:Seal",
+    (c) => release(c, p, input.id, "cpq.publish"),
+    async (c, root) => {
+      expected(root.version, input.expected_version);
+      const v = await revision(c, p, input.revision_id);
+      if (
+        v.id !== root.current_revision_id ||
+        v.content_hash !== input.content_hash ||
+        root.state !== "Reviewed" ||
+        v.definition.schema_version !== 3
+      )
+        throw new AppError(
+          409,
+          "CpqSealBasisChanged",
+          "Seal the current approved design version and exact content hash.",
+        );
+      const review = (
+        await c.query<{ id: string; reviewer_id: string; outcome: string }>(
+          "SELECT * FROM ppo.cpq_reviews WHERE workspace_id=$1 AND revision_id=$2",
+          [p.workspace_id, v.id],
+        )
+      ).rows[0];
+      if (!review || review.outcome !== "Approved")
+        throw new AppError(
+          409,
+          "CpqReviewRequired",
+          "An approved review is required before sealing.",
+        );
+      if ([v.created_by, review.reviewer_id].includes(p.actor_id))
+        throw new AppError(
+          403,
+          "CpqIndependentPublication",
+          "A third authorised person must seal this release.",
+        );
+      await duty(
+        c,
+        { ...p, actor_id: review.reviewer_id },
+        root.company_id,
+        "cpq.review",
+      );
+      const sealId = randomUUID();
+      await c.query(
+        "INSERT INTO ppo.cpq_seals(id,workspace_id,revision_id,review_id,content_hash,created_by,reason) VALUES($1,$2,$3,$4,$5,$6,$7)",
+        [
+          sealId,
+          p.workspace_id,
+          v.id,
+          review.id,
+          v.content_hash,
+          p.actor_id,
+          input.reason,
+        ],
+      );
+      const saved = (
+        await c.query<Release>(
+          "UPDATE ppo.cpq_releases SET version=version+1,state='Sealed',updated_by=$3,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",
+          [p.workspace_id, root.id, p.actor_id],
+        )
+      ).rows[0];
+      return {
+        ...saved,
+        audit_details: {
+          seal_id: sealId,
           revision_id: v.id,
           content_hash: v.content_hash,
         },
