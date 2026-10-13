@@ -9,7 +9,7 @@ export async function publishedUse() {
   await publishTemplate(f.publisher, f.input.id, f.command);
   return f;
 }
-export async function useCommand(
+export async function assignmentCommand(
   p: Principal,
   f: Awaited<ReturnType<typeof publishedUse>>,
 ) {
@@ -35,8 +35,8 @@ export async function useCommand(
       "SYN Service approval of exact OUT-09 use for this company/site and effective interval.",
   };
 }
-export async function useFixture() {
+export async function assignmentFixture() {
   const f = await publishedUse();
   await grantDraft(f.publisher, ["template.assign"]);
-  return { ...f, use: await useCommand(f.publisher, f) };
+  return { ...f, use: await assignmentCommand(f.publisher, f) };
 }

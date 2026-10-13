@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
-import { publishedUse, useCommand } from "../helpers/template-use";
+import { publishedUse, assignmentCommand } from "../helpers/template-use";
 import { grantDraft } from "../helpers/template-drafts";
 import { queued, rows } from "../helpers/packs";
 import { readPublication } from "../../src/documents/publication/service";
@@ -95,7 +95,7 @@ test("R4 populated 0093 upgrade preserves publications, exact ledgers and queued
   );
   await grantDraft(f.publisher, ["template.assign"]);
   const use = {
-    ...(await useCommand(f.publisher, f)),
+    ...(await assignmentCommand(f.publisher, f)),
     effective_from: new Date(
       (await serverTime(database())).getTime() + 3600000,
     ).toISOString(),

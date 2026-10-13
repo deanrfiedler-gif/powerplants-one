@@ -4,7 +4,7 @@ import { reset } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { httpAcceptance } from "../helpers/acceptance-http";
-import { useFixture } from "../helpers/template-use";
+import { assignmentFixture } from "../helpers/template-use";
 import { base } from "../helpers/packs";
 import { randomUUID } from "node:crypto";
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -14,7 +14,7 @@ process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 after(closeDatabase);
 test("R4 compiled policy/assignment commands retain exact original recovery, scoped reads, explicit succession and current authority", async () => {
   await reset();
-  const f = await useFixture(),
+  const f = await assignmentFixture(),
     h = httpAcceptance(localConfig().origin),
     path = "document-template-use-assignments";
   const saved = await h.call("cs-reviewer", path, f.use);

@@ -18,7 +18,7 @@ import { readOperation } from "../../src/shared/receipts";
 import { readBundle, processRenderJob } from "../../src/documents/worker";
 import { readPack } from "../../src/documents/packs";
 import { withWorkingCompany } from "../../src/platform/working-company";
-import { publishedUse, useCommand, useFixture } from "../helpers/template-use";
+import { publishedUse, assignmentCommand, assignmentFixture } from "../helpers/template-use";
 import { grantDraft } from "../helpers/template-drafts";
 import { base, id, principal, queued, rows } from "../helpers/packs";
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -26,7 +26,7 @@ if (localConfig().database_name !== "ppo_synthetic_test")
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 after(closeDatabase);
-const select = async (f: Awaited<ReturnType<typeof useFixture>>) =>
+const select = async (f: Awaited<ReturnType<typeof assignmentFixture>>) =>
   selectedTemplate(database(), f.p.workspace_id, f.input);
 const query = (f: Awaited<ReturnType<typeof publishedUse>>) => ({
   company_id: f.input.company_id,
@@ -42,7 +42,7 @@ const until = async (at: string) => {
 test("R4 exact assignment is default-denied, scoped, immutable and independently recoverable after succession", async () => {
   await reset();
   const f = await publishedUse(),
-    input = await useCommand(f.publisher, f);
+    input = await assignmentCommand(f.publisher, f);
   assert.equal(
     (
       await rows(
@@ -80,7 +80,7 @@ test("R4 exact assignment is default-denied, scoped, immutable and independently
     input.id,
   );
   const later = {
-    ...(await useCommand(f.publisher, f)),
+    ...(await assignmentCommand(f.publisher, f)),
     predecessor_id: input.id,
   };
   await assignUse(f.publisher, later);
@@ -120,7 +120,7 @@ test("R4 exact assignment is default-denied, scoped, immutable and independently
 
 test("R4 server-timed half-open intervals retain legacy before activation, reject overlap and fail closed in gaps", async () => {
   await reset();
-  const f = await useFixture(),
+  const f = await assignmentFixture(),
     baseline = await select(f),
     now = await serverTime(database());
   const start = new Date(now.getTime() + 2500).toISOString(),
@@ -128,7 +128,7 @@ test("R4 server-timed half-open intervals retain legacy before activation, rejec
   const input = { ...f.use, effective_from: start, effective_to: end };
   await assignUse(f.publisher, input);
   assert.equal((await select(f)).id, baseline.id);
-  const next = await useCommand(f.publisher, f);
+  const next = await assignmentCommand(f.publisher, f);
   await assert.rejects(
     assignUse(f.publisher, { ...next, effective_from: start }),
     { code: "AmbiguousTemplateUse" },
@@ -164,7 +164,7 @@ test("R4 server-timed half-open intervals retain legacy before activation, rejec
     (await readUsePolicy(f.publisher, query(f))).hold,
     "TemplateUseUnavailable",
   );
-  await assignUse(f.publisher, await useCommand(f.publisher, f));
+  await assignUse(f.publisher, await assignmentCommand(f.publisher, f));
   assert.equal((await select(f)).policy_version, 2);
   assert.equal(
     (
@@ -179,7 +179,7 @@ test("R4 server-timed half-open intervals retain legacy before activation, rejec
 
 test("R4 concurrent intents, atomic rollback and direct SQL cannot leave a partial or overlapping policy graph", async () => {
   await reset();
-  const f = await useFixture();
+  const f = await assignmentFixture();
   await database().query(
     "CREATE FUNCTION ppo.reject_use_test() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.kind='TemplateUseAssigned' THEN RAISE EXCEPTION 'SYN use fault'; END IF; RETURN NEW; END $$; CREATE TRIGGER reject_use_test BEFORE INSERT ON ppo.outbox_jobs FOR EACH ROW EXECUTE FUNCTION ppo.reject_use_test()",
   );
@@ -230,7 +230,7 @@ test("R4 concurrent intents, atomic rollback and direct SQL cannot leave a parti
 
 test("R4 current permissions, working company, baseline and publication identity remain binding on reads and original recovery", async () => {
   await reset();
-  const f = await useFixture();
+  const f = await assignmentFixture();
   await assert.rejects(
     assignUse(f.publisher, { ...f.use, baseline_hash: "0".repeat(64) }),
     { code: "StaleTemplateBaseline" },
@@ -282,7 +282,7 @@ test("R4 current permissions, working company, baseline and publication identity
 
 test("R4 native worker uses the assigned definition without template-management grants and preserves issued bytes through succession", async () => {
   await reset();
-  const f = await useFixture();
+  const f = await assignmentFixture();
   await assignUse(f.publisher, f.use);
   await database().query(
     "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability LIKE 'template.%'",
@@ -300,7 +300,7 @@ test("R4 native worker uses the assigned definition without template-management 
   const bytes = await readBundle(q.p, issue.manifest);
   assert.ok(bytes.html.includes(f.input.body.title));
   await assignUse(f.publisher, {
-    ...(await useCommand(f.publisher, f)),
+    ...(await assignmentCommand(f.publisher, f)),
     predecessor_id: f.use.id,
   });
   assert.deepEqual((await readBundle(q.p, issue.manifest)).pdf, bytes.pdf);
@@ -316,14 +316,14 @@ test("R4 native worker uses the assigned definition without template-management 
 
 test("R4 policy change after storage refuses stale issue, preserves the original bundle and blocks direct stale reservations", async () => {
   await reset();
-  const f = await useFixture();
+  const f = await assignmentFixture();
   await assignUse(f.publisher, f.use);
   const q = await queued(),
     job = q.pack.jobs[0];
   const result = await processRenderJob(job.id, {
     afterStore: async () => {
       await assignUse(f.publisher, {
-        ...(await useCommand(f.publisher, f)),
+        ...(await assignmentCommand(f.publisher, f)),
         predecessor_id: f.use.id,
       });
     },

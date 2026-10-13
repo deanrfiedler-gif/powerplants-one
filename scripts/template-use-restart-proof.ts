@@ -7,7 +7,7 @@ import { digest } from "../src/documents/store";
 import { assignUse, readAssignment } from "../src/documents/use/service";
 import { selectedTemplate } from "../src/documents/use/policy";
 import { readOperation } from "../src/shared/receipts";
-import { useFixture } from "../tests/helpers/template-use";
+import { assignmentFixture } from "../tests/helpers/template-use";
 import { principal } from "../tests/helpers/packs";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -24,7 +24,7 @@ const snapshot = async () =>
   );
 try {
   if (process.argv[2] === "write") {
-    const f = await useFixture(),
+    const f = await assignmentFixture(),
       saved = await assignUse(f.publisher, f.use);
     await mkdir(path, { recursive: true });
     await writeFile(
