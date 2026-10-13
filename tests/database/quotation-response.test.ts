@@ -442,7 +442,7 @@ test("ES06 populated 0059 upgrade preserves release/review, receipts, grants, id
     )
   ).rows;
   assert.deepEqual(after.filter(r=>r.version<=59), ledger);
-  assert.deepEqual(after.filter(r=>r.version>59).map(r=>r.version), [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89]);
+  assert.deepEqual(after.filter(r=>r.version>59).map(r=>r.version), [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]);
   const upgradedSeeds = (await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")).rows;
   await assertAccessInspectionSeedLedger(seeds, upgradedSeeds);
   await migrate();

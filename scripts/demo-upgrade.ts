@@ -270,7 +270,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Existing revocations are never replaced, invitation/grant expiry is not extended,
   // and disabled/expired/inactive testers receive nothing. Review and publish are
   // deliberately absent: an author cannot approve or activate their own release.
-  if (latestMigrationVersion !== 89) throw Error("Review the existing-demo upgrade for this release.");
+  // 0090 adds empty library tables and three default-denied capabilities. No seed,
+  // user, grant or provider integration is added; existing runtime privileges apply.
+  if (latestMigrationVersion !== 90) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

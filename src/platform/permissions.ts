@@ -5,6 +5,9 @@ import { workingCompanyCondition, workingCompanyFor } from "./working-company";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "document.read"
+  | "document.register"
+  | "document.review"
   | "cpq.read"
   | "cpq.author"
   | "cpq.review"

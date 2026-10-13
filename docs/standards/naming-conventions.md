@@ -422,6 +422,7 @@ The synthetic format is the only enabled proposal for the current prototype. The
 | Finance handoff | FH | `SYN-PPO-FH-000001` | Does not replace ERP transaction numbers |
 | Requisition | REQ | `SYN-PPO-REQ-000001` | Future local demand/approval identity; not an ERP purchase order |
 | Variation | VAR | `SYN-PPO-VAR-000001` | Future local scope-change identity |
+| Library document | DOC | `SYN-PPO-DOC-000001` | Stable internal library identity; exact revisions are separate (DK-01/DK-02) |
 | Document transmittal | TRN | `SYN-PPO-TRN-000001` | Future exact issue/distribution package |
 
 These type codes are a proposed registry. Adding optional references to existing Organisation, Person, Site or revision records requires an explicit dictionary amendment. Do not silently add fields because a naming example mentions them. Existing `display_number` fields should use the common format where applicable.
