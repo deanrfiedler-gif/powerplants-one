@@ -277,18 +277,19 @@
         "src/components/customer-workspace.tsx",
         "src/shared/customer-360.ts",
         "docs/decisions/customer-360-figma-design.md",
-        "docs/reference/ui/customers/customer-360-figma-r01/README.md"
+        "docs/reference/ui/customers/customer-360-figma-r01/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r02/README.md"
       ],
       "guide_key": "guide.cs.01",
       "design_path": "docs/design/development/pages/scope-cs-01.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
       "image_paths": [
-        "docs/reference/ui/customers/customer-360-figma-r01/overview-desktop.png",
-        "docs/reference/ui/customers/customer-360-figma-r01/overview-phone.png"
+        "docs/reference/ui/customers/customer-360-figma-r02/overview-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r02/overview-phone.png"
       ],
       "dependencies": [],
       "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Figma proposal with editable desktop/phone examples; agent visual inspection recorded; named version and owner acceptance pending",
+      "visual_status": "Figma proposal refined against accepted PPO pages with shared navigation and compact desktop/phone layouts; agent visual inspection recorded; named version and owner acceptance pending",
       "functional_status": "Focused automated proof; see receiving handover",
       "deployment_status": "Local compiled verification; not deployed",
       "review_fingerprint": null,

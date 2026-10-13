@@ -29,6 +29,27 @@
       "target": "Accounts",
       "prototype_filter_applied": false
     }
-  ]
+  ],
+  "design_reference": "docs/reference/ui/customers/customer-360-figma-r02/README.md",
+  "presentation": {
+    "desktop": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "primary_rail_width": 240,
+      "customer_menu_width": 240,
+      "cell": [
+        228,
+        112
+      ]
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "layout": "Compact full-width rows with source scope; shared header and bottom navigation"
+    }
+  }
 }
-

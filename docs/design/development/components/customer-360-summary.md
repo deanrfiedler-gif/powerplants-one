@@ -5,13 +5,15 @@ Consumer: `scope:CS-01`. Figma local component `555:161360`; no runtime implemen
 
 ## Desktop
 
-Four 332 px cards per row inside the 1376 px workspace, with 16 px gaps. Each card exposes Label, Value and Scope text properties, Roboto type, PPO surface/border/radius variables and a source-register destination. The label is 14 px, the value 24 px and the scope 12 px. Counts always carry population and source limitations. Two rows show the eight CS-01 summaries.
+Four 228 × 112 px cells per row inside a 912 px white summary panel, within the 960 px customer workspace and full 1440 × 900 PPO shell. Two rows show the eight CS-01 summaries. Cell dividers replace the earlier separate-card gaps. The panel uses the shared 7 px card radius; each cell has 12 px padding.
+
+Each cell exposes Label, Value and Scope text properties, Roboto type, PPO surface/border variables and a source-register destination. Value and label share an auto-layout row. The label is 14 px, numeric value 24 px and scope 12 px. Restricted uses 14 px text with no amount or count. Counts always carry population and source limitations. The stable Figma component ID is retained; this is the 14 October visual refinement, not runtime adoption.
 
 The current prototype navigates to the full owning register. Runtime adoption must apply the exact counted scope and visibly represent active filters; the Figma navigation alone does not prove that behaviour.
 
 ## Mobile
 
-Stack cards in a 358 px content region at a 390 px viewport. Text wraps with no clipped scope. Phone Overview links its order summary to Phone Sales orders. Other sections are visual specifications, not a completed mobile prototype.
+Use compact full-width rows in the 390 × 844 phone shell, with 16 px side padding, leading icon, value/label, scope and trailing chevron. These rows are page-local compositions using shared PPO type and icons; they are not instances of the desktop Summary tile. Phone Overview links its order summary to Phone Sales orders. Both pages use the shared phone header/bottom navigation and open the customer-view drawer. Other phone destinations remain visual specifications.
 
 ## Fixtures and states
 

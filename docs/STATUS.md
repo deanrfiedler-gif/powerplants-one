@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Customer 360 Figma shell refinement — 14 October 2026
+
+Dean requested alignment with the other PPO pages, including the missing left navigation. The [Customer 360 design](decisions/customer-360-figma-design.md) now uses the shared navy rail, customer-view menu, global header and phone navigation, compared against accepted Leads, Project record and My Work. Ten desktop views/role examples were reflowed to 1440 × 900; Overview commitments and customer context are compacted; phone Overview/Sales orders and a view drawer use the same theme. Existing frame IDs, source records and permission distinctions are retained. New icon-free r02 captures and the reference-only Summary specification/fixtures are in the design master; r01 remains unchanged. Visual/structural checks do not grant owner acceptance. The named Figma version remains pending; no runtime or deployment change is claimed.
+
 ## Customer 360 Figma proposal — 13 October 2026
 
 Dean requested the Customer 360 UI in the private PPO - Design Figma file using the issued HTML/report. The new CS-01 proposal has eight editable desktop views, identity and permitted/restricted account examples, two exact order snapshots and phone Overview/Sales orders. The [design record](decisions/customer-360-figma-design.md) records its compact Overview departure, component reuse, source identities and prototype limits. Icon-free Overview captures and the reference-only Summary tile are registered in the working design master. Agent visual inspection and editable-layer checks are separate from owner review, application behaviour and deployment. A named Figma version remains pending before baseline reliance; the accepted Leads page and issued references are preserved.

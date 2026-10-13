@@ -3421,7 +3421,8 @@
         "route:/customers",
         "route:/people",
         "scope:ES-08",
-        "scope:SH-02"
+        "scope:SH-02",
+        "scope:CS-01"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -3617,6 +3618,14 @@
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
           "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "customer-360-figma-shell-alignment",
+          "expected": "Customer 360 uses the shared PPO rail, secondary menu, top bar and phone navigation.",
+          "actual": "14 October Figma proposal matches accepted Leads, Project record and My Work shell patterns; native CS-01 and owner acceptance remain separate.",
+          "action": "Review the r02 Customer 360 captures and pair the native consumer before adopting the proposed customer menu.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -6083,21 +6092,21 @@
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "anchor": "",
-        "status": "Issued source; new Figma adaptation remains proposed"
+        "status": "Issued source; 14 October Figma shell refinement remains proposed"
       },
       "specification": "docs/design/development/components/customer-360-summary.md",
       "used_on": [
         "scope:CS-01"
       ],
-      "desktop": "Four scoped summary cards per row; label, value and population are retained. Figma 1440 × 1100 viewport.",
-      "mobile": "Stack 358 px cards in a 390 × 844 viewport. Phone Overview and Sales orders have linked examples.",
+      "desktop": "Four 228 × 112 px summary cells per row in a 912 px panel inside the shared 1440 × 900 PPO shell; value, label and scoped population retained.",
+      "mobile": "Compact rows at 390 × 844 with shared phone header/bottom tabs and customer-view drawer. Overview and Sales orders link to each other.",
       "keyboard": "Native implementation must provide labelled keyboard activation and visible focus; Figma does not prove it.",
       "limitations": "Reference-only Figma component. Named version, exact-filter adoption, server enforcement and owner/device acceptance remain open.",
       "gaps": [
         {
           "id": "customer-360-summary-adoption",
           "expected": "Named Figma version, owner decision and exact counted-scope drill-through before adoption.",
-          "actual": "Editable proposed component and synthetic reference states; prototype opens full registers without applying filters.",
+          "actual": "Editable compact desktop component and page-local phone rows within the shared PPO shell; prototype opens full registers without applying filters.",
           "action": "Review proposal; save named version; implement and test scoped navigation and permissions in the owning CS-01 increment.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
