@@ -1,5 +1,8 @@
 # Current prototype status
 
+## Products discovery design proposal — 14 October 2026
+
+Dean authorised an inFlow/PPO comparison and desktop/mobile mockups, with REA only if necessary. The [proposal](decisions/products-discovery-proposal.md) recommends catalogue discovery/return-context improvements first, then a separately scoped read-only stock/demand handover once exact source mapping and permissions are proved. Six editable Figma screens and a state board use the existing PPO library; [icon-free captures](reference/ui/products-discovery/README.md) and current-source findings are retained. PD-01, SC-05 and parent requirement IDs remain unchanged. REA was not needed or used. Named Figma version is pending because the browser editor reported WebGL unavailable; owner acceptance, app implementation and deployment remain separate. Working page contracts/register record the proposal without refreshing accepted fingerprints.
 ## Document PR conflict repair — 13 October 2026
 
 Current repository writer: the user-authorised conflict repair and merge session on `codex/document-integration-oct13`. Dean authorised professional completion of the draft as well as the ready contributions. PR #469 now integrates the original heads of Output Register #468, Output Actions #469 and Template Catalogue #471 with main `5eb55f0` by ancestry. Distribution is renumbered to 0091 with unchanged SQL, after the already-published 0089 CPQ and 0090 Document Library migrations. Historical ledgers, exact new versions, reserved Products installation and hosted-upgrade assertions are extended; original migration bytes and grants are retained.

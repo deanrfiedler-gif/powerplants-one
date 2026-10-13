@@ -42,3 +42,10 @@ Proposed adaptation: native cards, semantic shared controls and stacked comparis
 ## Completion review scope — 7 October 2026
 
 The completion branch preserves the exact selected revision when handing detail to pricing and on reload. Published catalogue basis links to its immutable revision. Internal UUID detail is disclosed on demand while catalogue/technical revision, source basis and lifecycle remain visible. Four named local synthetic identities separate read, author, review and publication. Existing/hosted users gain no Products authority. The [completion evidence](../../../testing/evidence/products-native/README.md) records paired captures and verification; owner baseline, physical-device and screen-reader acceptance remain pending. Catalogue pagination and wider estimating selection are later work.
+
+
+## Products discovery proposal — 14 October 2026
+
+The [bounded proposal](../../../decisions/products-discovery-proposal.md) compares the inFlow sample discovery pattern with current PPO source. Private **PPO - Design**, page `653:38`, frames `653:46 / 657:371`. [catalogue-1440](../../../reference/ui/products-discovery/catalogue-1440.png) · [catalogue-390](../../../reference/ui/products-discovery/catalogue-390.png). The [capture index](../../../reference/ui/products-discovery/README.md) records source identities and hashes; named version and owner acceptance remain pending.
+
+This proposes a compact desktop catalogue, stacked phone cards, preserved return context, and an exact read-only handover between Products and stock/demand evidence. Existing scope IDs, source authority, permissions, native commands and the current design contract above remain intact. Products stock is currently Not configured; populated panels are fictional proposed states requiring an exact company/provider/item/unit mapping and a scoped read contract. No new stock balance, reservation or readiness calculation is adopted. The state board covers missing/incomplete/older evidence, loading, empty and unavailable reads. No app, guide workflow, shared component implementation, accepted fingerprint or deployment status changes in this contribution.

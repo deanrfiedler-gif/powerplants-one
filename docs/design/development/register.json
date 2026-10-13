@@ -11974,7 +11974,9 @@
         "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
-        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png",
+        "docs/reference/ui/products-discovery/product-1440.png",
+        "docs/reference/ui/products-discovery/product-390.png"
       ],
       "dependencies": [
         "src/supply/model.ts",
@@ -11983,7 +11985,9 @@
         "src/supply/components/forms.tsx",
         "src/supply/components/recovery.tsx",
         "src/supply/guide.ts",
-        "src/app/styles/supply.css"
+        "src/app/styles/supply.css",
+        "docs/decisions/products-discovery-proposal.md",
+        "docs/reference/ui/products-discovery/README.md"
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
@@ -11996,7 +12000,8 @@
       "build_rank": null,
       "related_keys": [
         "scope:SC-05"
-      ]
+      ],
+      "notes": "14 Oct: Products discovery Figma proposal and icon-free captures added. Proposed read-only stock/demand handover; named version, owner acceptance and implementation pending. Existing review evidence unchanged."
     },
     {
       "key": "route:/my-jobs/site-readiness",
@@ -12506,14 +12511,21 @@
       "guide_key": "guide.route-products-id",
       "design_path": "docs/design/development/pages/route-products-id.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/products-discovery/product-1440.png",
+        "docs/reference/ui/products-discovery/product-1024.png",
+        "docs/reference/ui/products-discovery/product-390.png",
+        "docs/reference/ui/products-discovery/unlinked-320.png"
+      ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
         "src/products/components/shared.tsx",
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/decisions/products-discovery-proposal.md",
+        "docs/reference/ui/products-discovery/README.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -12532,7 +12544,8 @@
         "scope:EN-07",
         "scope:EQ-07",
         "scope:EQ-06"
-      ]
+      ],
+      "notes": "14 Oct: Products discovery Figma proposal and icon-free captures added. Proposed read-only stock/demand handover; named version, owner acceptance and implementation pending. Existing review evidence unchanged."
     },
     {
       "key": "route:/products/compatibility",
@@ -12629,14 +12642,19 @@
       "guide_key": "guide.route-products",
       "design_path": "docs/design/development/pages/route-products.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/products-discovery/catalogue-1440.png",
+        "docs/reference/ui/products-discovery/catalogue-390.png"
+      ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
         "src/products/components/shared.tsx",
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/decisions/products-discovery-proposal.md",
+        "docs/reference/ui/products-discovery/README.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -12655,7 +12673,8 @@
         "scope:EN-07",
         "scope:EQ-07",
         "scope:EQ-06"
-      ]
+      ],
+      "notes": "14 Oct: Products discovery Figma proposal and icon-free captures added. Proposed read-only stock/demand handover; named version, owner acceptance and implementation pending. Existing review evidence unchanged."
     },
     {
       "key": "route:/products/pricing",
