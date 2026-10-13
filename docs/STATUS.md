@@ -4,6 +4,15 @@
 
 Dean requested the live ES-02 page from accepted Figma page `383:2`. Branch `codex/estimation-wizard-figma` implements the shared-rail record layout, five steps, six-family/category authoring with explicit historical review, unsaved-change links, exact save review and phone system editor. The [decision](decisions/es02-wizard-figma-implementation.md) records retained backend boundaries and Q6 timing limitations. The [execution evidence](testing/evidence/es02-figma/README.md), working page/component register and Draft guides are maintained together. No migration, dependency or grant is added; owner/device acceptance and deployment remain separate.
 
+## Document PR conflict repair — 13 October 2026
+
+Current repository writer: the user-authorised conflict repair and merge session on `codex/document-integration-oct13`. Dean authorised professional completion of the draft as well as the ready contributions. PR #469 now integrates the original heads of Output Register #468, Output Actions #469 and Template Catalogue #471 with main `5eb55f0` by ancestry. Distribution is renumbered to 0091 with unchanged SQL, after the already-published 0089 CPQ and 0090 Document Library migrations. Historical ledgers, exact new versions, reserved Products installation and hosted-upgrade assertions are extended; original migration bytes and grants are retained.
+
+The failed broad HTTP jobs exposed test isolation faults: output proofs reused a changed seeded booking, and catalogue/actions reset the shared database while other HTTP files ran. The HTTP suite now waits for the existing concurrent files, then runs each complete document proof against a fresh disposable database. Every test, business snapshot, permission assertion and deadline is retained. The current seven protected-main required contexts were re-read and remain unchanged; fresh combined-source CI is the merge gate. [Integration evidence](testing/evidence/document-pr-integration/README.md) separates local validation, CI, merge and owner acceptance. No deployment is part of this task.
+
+## DK-06 template catalogue backend — 13 October 2026
+
+Current repository writer for this bounded contribution: the user-authorised DK-06 R1 session on `codex/template-catalogue-backend`, based on merged main `a333604`. The [decision](decisions/template-catalogue-backend.md) and [API contract](contracts/template-catalogue.md) add read-only current/historical template definitions, retained dependency fingerprints and permission-scoped native usage for OUT-09/OUT-10/OUT-14. Policy selection, renderer support and issued evidence remain separate. No migration, seed, capability or native writer changes. [Execution evidence](testing/evidence/template-catalogue/README.md) records actual verification; UI, managed drafts, publication, owner acceptance and deployment remain separate. Pending output-register/actions #468/#469 are independent. Six database cases, two focused units, one compiled HTTP journey, full build, TypeScript, changed-source lint and repository checks pass. The full local suite passes 792/795; all three Windows filesystem failures reproduce on untouched main `a333604`. PR CI and review remain separate.
 
 ## Job Pack Figma application — 13 October 2026
 
@@ -12,6 +21,14 @@ Dean authorised building the accepted Job Pack design in the application and del
 **Updated:** 13 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
+
+## Controlled output actions backend — 13 October 2026
+
+Dean authorised DK-03 controlled issue, distribution and recovery for Job Packs and Service Reports. [PR #469](https://github.com/deanrfiedler-gif/powerplants-one/pull/469), branch `codex/output-actions-backend`, continues from PR #468. The [decision](decisions/output-actions-backend.md) and [API contract](contracts/output-actions.md) delegate issue, Job Pack withdrawal and original render recovery to native services. Migration 0090 adds two empty tables for exact-recipient synthetic attempts and immutable outcome/reconciliation evidence. Original operation receipts, current native permissions and retained bytes remain authoritative. No new grants, providers or real delivery claims are added. [Execution evidence](testing/evidence/output-actions/README.md) records passing database, upgrade, build, compiled API and real restart proof, plus baseline-confirmed local unit limits. PR #469 remains draft: release candidate #463 reserves 0089 for CPQ, colliding with parent #467 library 0089; coordinated numbering and combined-source checks precede integration. Review, acceptance, merge and deployment remain separate. UI, live delivery, further families and DK-06 remain separate.
+
+## Output, issue and distribution register backend — 13 October 2026
+
+Dean authorised the next DK-03 increment after DK-01/DK-02. [PR #468](https://github.com/deanrfiedler-gif/powerplants-one/pull/468), branch `codex/output-issue-register-backend`, continues from PR #467 at `38ba7e9`. The [decision](decisions/output-issue-register-backend.md) and [API contract](contracts/output-register.md) add read-only consolidated Job Pack/Service Report discovery and exact issue detail. Native permissions, original issue identities, preparation history, exact bytes and per-recipient facts remain authoritative. No migration, seed, grant or writer is added. [Execution evidence](testing/evidence/output-register/README.md) records 777 passing CI units and six database cases, plus passing final local compiled HTTP and real restart proof; corrected-proof CI is separate. Native page integration, further output families, generic publication/distribution commands, actual delivery evidence and DK-06 templates remain open; owner acceptance, merge and deployment are separate.
 
 ## Combined conflict integration — 13 October 2026
 

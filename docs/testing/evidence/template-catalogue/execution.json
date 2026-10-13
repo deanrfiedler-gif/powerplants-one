@@ -1,0 +1,56 @@
+{
+  "scope": "DK-06 R1 synthetic backend",
+  "base_commit": "a33360460fda80ecaac66870c1611a14ccebd49b",
+  "source_hash_basis": "Exact local working-file bytes exercised; Git line-ending normalization is separate",
+  "source_sha256": {
+    "src/documents/template-catalogue.ts": "052d80a47a172b12b26441eef66b29d3a369f729ea6340630a51b417faf310c6",
+    "src/app/api/v1/document-templates/route.ts": "928cd16bbc3c0e8c1b239c7b7307c55607eaaadc148997fbf0fe11bf885534fa",
+    "src/app/api/v1/document-templates/[id]/route.ts": "1ac945db6c876a542bd4f7d28192c16dc7987f54ff7644cffa7af1b29944141c",
+    "src/app/api/v1/document-templates/[id]/usage/route.ts": "b4908f7f3c2d8394dbedd8fb3e698f7b7d94a9610de0b89670cbd858cbd157b2",
+    "tests/unit/template-catalogue.test.ts": "b518961b5eea378d5b3e06e0211733edbfb2855d5a1828ae0fc3f8555722121b",
+    "tests/database/template-catalogue.test.ts": "59ff81a8beb8190516b11852f02d6223dc796de5cb2bd2565689178dc892c776",
+    "tests/http/template-catalogue.test.ts": "090f4d88a4fe84c8f1b1b4d4803224dd7502ae9d256ffcf58d8b1b1da26f3a58"
+  },
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test"
+  },
+  "results": {
+    "focused_units": {
+      "passed": 2,
+      "failed": 0
+    },
+    "database": {
+      "passed": 6,
+      "failed": 0,
+      "timeout_ms": 120000
+    },
+    "compiled_http": {
+      "passed": 1,
+      "failed": 0,
+      "timeout_ms": 120000
+    },
+    "full_units": {
+      "passed": 792,
+      "failed": 3,
+      "baseline_subset_passed": 1,
+      "baseline_subset_failed": 3,
+      "baseline_commit": "a33360460fda80ecaac66870c1611a14ccebd49b"
+    },
+    "build": "passed",
+    "typecheck": "passed",
+    "changed_source_lint": "passed",
+    "studio": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed"
+  },
+  "boundaries": {
+    "independent_review": "pending",
+    "owner_acceptance": "pending",
+    "deployment": "not performed",
+    "final_head_ci": "separate"
+  }
+}

@@ -23020,7 +23020,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Backend proof recorded separately in docs/testing/evidence/output-register/README.md and docs/testing/evidence/output-actions/README.md; native page walkthrough remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23028,7 +23028,9 @@
           "paragraphs": [
             "Use Output, issue and distribution centre to work towards this outcome: Each output has a traceable issue and distribution history.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Regeneration must not overwrite the exact previously issued document."
+            "Regeneration must not overwrite the exact previously issued document.",
+            "The backend reads native Job Pack and Service Report outputs and supports controlled native issue/recovery plus exact-recipient synthetic distribution. The consolidated page, live delivery providers and other output families remain planned.",
+            "Prepared, issued, available, current for use, simulated sending and acknowledgement are different facts. Missing original files require native recovery. Report-content responses never stand in for attendance acceptance, technical approval or Finance authority. Bounded window counts are not complete totals."
           ],
           "steps": [],
           "rows": [],
@@ -23040,7 +23042,8 @@
           "paragraphs": [
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
             "Prepare: Generated output, checked/approved revision, issue and distribution evidence.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority.",
+            "Native record access, current company and crew assignment still control visibility. A library permission does not grant pack or report access."
           ],
           "steps": [],
           "rows": [],
@@ -23180,7 +23183,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Recover the original issue operation after interruption. A synthetic distribution attempt with an unknown outcome must be reconciled against that same attempt before another is prepared. Simulation is not verified sending or delivery. Missing issued bytes retain their original identity and require restoration; never substitute a newer file."
+          ],
           "steps": [],
           "rows": [
             [
@@ -23239,7 +23244,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Draft for review. Business reviewer not yet nominated; running-page walkthrough not performed. Backend checks do not approve this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -23255,9 +23260,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/output-issue-register-backend.md",
+        "docs/contracts/output-register.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "First DK-03 backend reads documented; native page and visual review remain open.",
       "document_id": "PPO-GUIDE-DK-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -23815,7 +23822,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Backend verification: docs/testing/evidence/template-catalogue/README.md. Native page walkthrough and visual acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23823,7 +23830,8 @@
           "paragraphs": [
             "Use Document and form template management to work towards this outcome: Generated documents can identify their template basis.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A template change must not alter previously issued outputs."
+            "A template change must not alter previously issued outputs.",
+            "The first native increment supplies read-only template and usage APIs. The proposed page and authoring, review and publication controls are not implemented by that increment."
           ],
           "steps": [],
           "rows": [],
@@ -23893,7 +23901,8 @@
           "paragraphs": [
             "Template identity, revision, fields, applicability and approval basis.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Exact definition identity, current policy selection and renderer support are separate. Legacy dependencies may be unrecorded. Usage includes only currently permitted consumers; it provides no global total or proof of file availability."
           ],
           "steps": [],
           "rows": [],
@@ -24034,7 +24043,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Draft for review. Business reviewer and running-page walkthrough remain pending; backend execution evidence does not accept this guide.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -24050,9 +24059,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/template-management/PPO-Document-and-Form-Template-Management-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/template-catalogue-backend.md",
+        "docs/contracts/template-catalogue.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Record bounded native catalogue and usage backend separately from the proposed template authoring UI.",
       "document_id": "PPO-GUIDE-DK-06",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -24062,7 +24073,9 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/template-management/PPO-Document-and-Form-Template-Management-r01.html",
-        "docs/blueprints/contextual-help-design.md"
+        "docs/blueprints/contextual-help-design.md",
+        "docs/decisions/template-catalogue-backend.md",
+        "docs/contracts/template-catalogue.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
