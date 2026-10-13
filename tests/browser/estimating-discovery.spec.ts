@@ -609,7 +609,7 @@ test("ES02-T41/T42/T58: draft survives step changes and identity loss clears pro
   // shared session in another tab; its BroadcastChannel must clear this draft
   // at 320 px without navigating or reloading the protected page.
   const account = await page.context().newPage();
-  await account.goto("/my-work");
+  await account.goto("/estimating/discovery");
   await identity(account, "systems");
   await account.close();
   await expect(

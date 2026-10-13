@@ -21,3 +21,21 @@ Execution results are recorded below after the final source checks. Generated br
 The first focused run passed the real historical-catalogue save but found a test locator matching both hidden Requirements and visible Configuration family cards. The corrected assertion scopes to Configuration. A concurrent dev-server regeneration also left partial `.next/dev/types` output during TypeScript checking; final type/build verification is run after regeneration. Neither result is represented as a pass.
 
 Real-device and screen-reader acceptance, phone Alternatives/Revisions mockups, Q6 timing persistence and deployment remain open. The accepted design's synthetic prices and statuses are not production rules.
+
+## Integrated source and captured views
+
+The implementation commit `8071877` is integrated with main `65141dc` in `ce72790`. That main update contributes the separately authorised document backend and unchanged migration 0091; this UI contribution adds no migration. The isolated local database was advanced with the normal migration runner before final browser verification. Source files and capture hashes are recorded in `source-manifest.json`.
+
+Actual compiled-application captures with fallback icons: [desktop Configuration, 1440 × 1000](configuration-desktop.png), [phone Configuration, 390 × 844](configuration-phone.png) and [phone system editor, 390 × 844](system-phone.png). These show the saved r03 state and real r02 cost basis. They are execution evidence, not replacement Figma baselines or owner approval. Visual inspection also covered Requirements, Scope & delivery, Pricing and Review, 1024 px tablet, and 320 px phone. The narrowest page has no horizontal overflow and retains a 72 px footer.
+
+Earlier browser attempts exposed obsolete header/summary selectors and capitalisation in the retained tests. Tests now inspect the summary from Discovery and restore the prior tab. Identity loss at 320 px is driven by a real identity change in a second tab, exercising the existing BroadcastChannel lock without navigating/reloading the protected draft. The first second-tab route was unavailable to that role and was corrected to the permitted Discovery register. One test/capture attempt ran before the rebuilt local server was listening and received connection refused; the verified run starts after the compiled server reports readiness. The phone Infrastructure wrapping found during visual inspection was fixed before these final captures.
+
+Final checks: compiled build (including TypeScript), changed-source ESLint, design register assurance and 22 focused discovery/configuration unit tests pass. The complete compiled browser and final documentation results are recorded in the closing verification entry below. Full-repository lint and standalone TypeScript also passed earlier in this session. No hosted deployment or business transaction was performed.
+
+## Closing verification
+
+On the integrated source above, all **19 applicable compiled Chrome browser cases pass** across desktop and phone; five pre-existing desktop-only cases remain intentionally skipped in the mobile project. The desktop source helper also exercises 1920/1440/1280 px and both rail modes, while the existing journey captures 1024/768/390/320 px. No failing browser assertion remains.
+
+The local Playwright wrapper changes only the origin to port 3016, omits the warm-up dependency for the already-running compiled server, uses a 120-second outer timeout and 20-second assertion wait, and redirects output to ignored local artifacts. Existing explicit test/action deadlines and all business assertions are retained. This is functional/geometry evidence, not a performance acceptance result.
+
+The final integrated compiled build, TypeScript validation, changed-source ESLint, `npm run studio:check`, foundation assurance and naming assurance pass. The 22 focused discovery/configuration units pass. The register retains 334 unreviewed and 28 stale page reviews; all 46 component reviews remain pending. These statuses are preserved deliberately. GitHub CI, merge, hosted deployment and owner/device acceptance are not claimed by the local results.
