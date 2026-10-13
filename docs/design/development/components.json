@@ -6048,6 +6048,62 @@
         }
       ],
       "review": null
+    },
+    {
+      "id": "customer-360-summary",
+      "title": "Customer 360 scoped summary",
+      "category": "Boards & cards",
+      "module": "Customers",
+      "purpose": "Proposed count, evidence scope and owning-register navigation; restricted Finance has no numerical value.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "open-orders",
+          "label": "Open sales orders",
+          "description": "Four mapped-account open orders in the issued synthetic fixture."
+        },
+        {
+          "id": "conversion-unknown",
+          "label": "Unknown conversion",
+          "description": "One accepted quotation; no ERP order is asserted."
+        },
+        {
+          "id": "finance-restricted",
+          "label": "Restricted Finance",
+          "description": "Amounts, counts and balances are withheld."
+        }
+      ],
+      "implementation": [],
+      "dependencies": [
+        "docs/design/development/customer-360-summary-fixtures.json",
+        "docs/design/customer-360/model.js"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+        "anchor": "",
+        "status": "Issued source; new Figma adaptation remains proposed"
+      },
+      "specification": "docs/design/development/components/customer-360-summary.md",
+      "used_on": [
+        "scope:CS-01"
+      ],
+      "desktop": "Four scoped summary cards per row; label, value and population are retained. Figma 1440 × 1100 viewport.",
+      "mobile": "Stack 358 px cards in a 390 × 844 viewport. Phone Overview and Sales orders have linked examples.",
+      "keyboard": "Native implementation must provide labelled keyboard activation and visible focus; Figma does not prove it.",
+      "limitations": "Reference-only Figma component. Named version, exact-filter adoption, server enforcement and owner/device acceptance remain open.",
+      "gaps": [
+        {
+          "id": "customer-360-summary-adoption",
+          "expected": "Named Figma version, owner decision and exact counted-scope drill-through before adoption.",
+          "actual": "Editable proposed component and synthetic reference states; prototype opens full registers without applying filters.",
+          "action": "Review proposal; save named version; implement and test scoped navigation and permissions in the owning CS-01 increment.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
     }
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "scope": "CS-01",
+  "source": "docs/design/customer-360/model.js",
+  "source_date": "2026-09-16",
+  "synthetic": true,
+  "states": [
+    {
+      "id": "open-orders",
+      "label": "Open sales orders",
+      "value": "4",
+      "scope": "All customer sites; confirmed ERP accounts only; 4 with outstanding or undetermined supply",
+      "target": "Sales orders",
+      "prototype_filter_applied": false
+    },
+    {
+      "id": "conversion-unknown",
+      "label": "Accepted, conversion unresolved",
+      "value": "1",
+      "scope": "Accepted quotation with unknown conversion outcome; not an ERP order",
+      "target": "Deals & quotations",
+      "prototype_filter_applied": false
+    },
+    {
+      "id": "finance-restricted",
+      "label": "Customer account observations",
+      "value": "Restricted",
+      "scope": "Service coordinator; amounts, counts and balances withheld",
+      "target": "Accounts",
+      "prototype_filter_applied": false
+    }
+  ]
+}
+

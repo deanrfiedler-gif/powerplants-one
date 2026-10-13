@@ -31,3 +31,12 @@ Reference: docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html
 ## Verification and acceptance
 
 The detailed page guide is `guide.cs.01`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
+
+
+## Figma proposal — 13 October 2026
+
+The [Customer 360 Figma design record](../../../decisions/customer-360-figma-design.md) adds an editable proposal on page node `554:2`. Its compact identity summary precedes two rows of scoped commitments and an attention/source-health split. Full account mapping and site-party detail is retained in Identity & mappings. Reuse existing PPO Roboto, colour/layout tokens, Button and Tag; the local Summary tile is reference-only, bound to this stable scope in the component catalogue. No native workflow is changed by the drawing.
+
+Exact icon-free 1440 × 1100 desktop and 390 × 844 phone Overview captures are retained in `docs/reference/ui/customers/customer-360-figma-r01/`, with hashes and all frame IDs in its README. Desktop uses 32 px gutters, 16 px summary gaps, 24 px section/column gaps and a 640 px right-side order snapshot. Phone uses 16 px gutters and stacked 358 px cards. Desktop tabs and exact partial/stale snapshots have prototype reactions; phone Overview and Sales orders link to each other. Other phone sections and filter/search/customer-switch changes remain specifications.
+
+Missing evidence: named saved Figma version, retained screenshots of every other view/state, native paired comparison, complete phone workflow, browser click-through, keyboard/screen-reader/device acceptance and owner acceptance. None is inferred from the two captures. Existing functional/deployment records and review fingerprints remain unchanged.
