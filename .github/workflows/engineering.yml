@@ -73,7 +73,7 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and additive upgrade
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/engineering.test.ts tests/database/engineering-control.test.ts tests/database/engineering-materials.test.ts tests/database/engineering-changes.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts tests/database/department-navigation.test.ts tests/database/my-work.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/engineering.test.ts tests/database/engineering-register.test.ts tests/database/engineering-control.test.ts tests/database/engineering-materials.test.ts tests/database/engineering-changes.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts tests/database/department-navigation.test.ts tests/database/my-work.test.ts
       - name: Native and retained Engineering HTTP contracts
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -84,7 +84,7 @@ jobs:
             curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/engineering-control.test.ts tests/http/engineering-materials.test.ts tests/http/engineering-changes.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/engineering-register.test.ts tests/http/engineering-control.test.ts tests/http/engineering-materials.test.ts tests/http/engineering-changes.test.ts
       - name: Real HTTP and saved desktop and phone journeys
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/engineering.spec.ts tests/browser/engineering-control.spec.ts tests/browser/engineering-materials.spec.ts tests/browser/engineering-changes.spec.ts tests/browser/engineering-commissioning.spec.ts tests/browser/department-navigation.spec.ts --output verification-evidence/engineering-browser --reporter=list
       - name: Retain bounded synthetic verification evidence

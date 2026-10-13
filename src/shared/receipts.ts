@@ -48,6 +48,7 @@ import {
 import { acceptedEstimateContext, quoteContext } from "../estimating/context";
 import { discoveryReceiptAuthority } from "../estimating/discovery-workspace-context";
 import { authoriseProjectReceipt } from "../projects/service";
+import { raidReceiptAuthority } from "../projects/raid";
 import { reportContext, ownReport } from "../reports/context";
 import {
   fieldContext,
@@ -352,6 +353,13 @@ export async function readOperation(
       r.record_id,
       r.command,
     );
+  } else if (r.object_type === "ProjectRaidEntry") {
+    if (r.command !== "SaveProjectRaid") throw unavailable();
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      await raidReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
   } else if (r.object_type === "Project") {
     return transaction(async (c) => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);

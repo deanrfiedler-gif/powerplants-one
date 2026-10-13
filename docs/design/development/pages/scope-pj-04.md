@@ -39,3 +39,11 @@ No exact image or HTML reference is linked. Keep this gap visible.
 The draft User Guide `guide.pj.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Bounded backend — 13 October 2026
+
+[The native contract](../../../decisions/project-raid-backend.md) supplies typed owned revisions and linked Activities at `/api/v1/projects/:id/raid`. The `/projects/risks` page remains unbuilt and no visual acceptance is added. [Execution evidence](../../../testing/evidence/project-raid/README.md) records backend proof separately.
+
+Future controls must show Risk, Assumption, Issue, Dependency and Decision separately; manual Normal/High priority; owner; known UTC review deadline or date needed; response and interface responsibilities; and explicit outcome. Reuse shared record/list controls and native Activity handovers. Preserve drafts on conflict. Show saved action basis separately from current action status, and label partial source access without exposing hidden links. Existing Activities are created through their own workflow and explicitly linked; failed linkage leaves that saved Activity available in its Project. Closed records require explicit reopening. Closing a Project prevents new RAID changes.
+
+On desktop retain project context beside history; on phone stack the record and actions without hiding outcomes or partial-source warnings. No exact PJ-04 desktop/mobile image or HTML is available. The supplied Wrike trial audit is context, not a reviewed visual reference or permission to copy its screens.

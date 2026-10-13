@@ -1,5 +1,7 @@
 # Documentation index
 
+[Projects RAID and owned actions backend](decisions/project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.
+
 [Lead record readiness and summary backend](decisions/lead-record-backend.md) — saved-context conversion review and scoped age/activity summary; [execution evidence](testing/evidence/lead-record/README.md).
 
 [Leads counts and follow-up backend](decisions/lead-register-backend.md) — permission-scoped full counts, active follow-up views and [execution evidence](testing/evidence/lead-register/README.md); Figma page integration remains separate.
@@ -77,3 +79,4 @@ The [audit continuation handover](delivery/audit-continuation-handover.md) recor
 
 - [Backend completion delivery plan](delivery/backend-completion-plan.md): authorised bounded backend work; delivery evidence, owner acceptance and deployment remain separate.
 - [Quotation register backend](decisions/quotation-register-backend.md): current quotation rows and exact revision history, scoped lifecycle facts and bounded filters; page implementation remains separate.
+- [Engineering workload backend](decisions/engineering-workload-backend.md) — BC-01 scoped register contract and [execution evidence](testing/evidence/engineering-workload/README.md); UI integration separate.

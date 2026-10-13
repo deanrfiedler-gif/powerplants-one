@@ -14,6 +14,7 @@ on:
       - "scripts/projects-restart-proof.ts"
       - "scripts/build-projects-ui-review.mjs"
       - "tests/**/projects*"
+      - "tests/**/project-*"
       - "tests/projects-ui/**"
       - "playwright.projects-ui.config.ts"
       - ".github/workflows/projects-gantt.yml"
@@ -74,7 +75,18 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and selectors
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/desktop-shell.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/project-baselines.test.ts tests/database/project-raid.test.ts tests/database/desktop-shell.test.ts
+      - name: Compiled Projects RAID and owned Activity handover
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/project-raid-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-raid.test.ts
       - name: Original operation across PostgreSQL and application-process restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}

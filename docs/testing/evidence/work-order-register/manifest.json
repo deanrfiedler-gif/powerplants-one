@@ -1,0 +1,75 @@
+{
+  "base_commit": "fe7794b08235c089f215bd5b41a17e33603df21c",
+  "branch": "codex/work-orders-backend",
+  "build_id": "oTaRXiqzg4weFT00OCucE",
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15"
+  },
+  "checks": {
+    "new_database_scenarios_passing": 7,
+    "native_database_scenarios_with_passing_execution": 17,
+    "initial_combined_database": {
+      "passed": 21,
+      "failed": 1,
+      "timeout_ms": 120000
+    },
+    "unchanged_main_readiness_control": {
+      "passed": 1,
+      "test_ms": 21163.2118
+    },
+    "candidate_readiness_replay": {
+      "passed": 1,
+      "test_ms": 20768.0862
+    },
+    "expanded_database_run": {
+      "passed": 7,
+      "failed": 1,
+      "failure": "Already-expired Pass fixture refused by native command"
+    },
+    "corrected_expiry_case": {
+      "passed": 1,
+      "test_ms": 20392.6874
+    },
+    "units_passed": 3,
+    "compiled_http_passed": 3,
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio": "passed",
+    "visual_reviews_stale": 28,
+    "visual_reviews_unreviewed": 330
+  },
+  "source_hashes": {
+    "src/service/work-order-register.ts": "f412eda7cd5660237ffc0b01dc76e9c1a750b2da900fb53a6e66ebc455ad301c",
+    "src/service/work-order-register-model.ts": "bae9e6ea733f484ef66406f63bb062dc4c8513e9ca75bcc5fa3bc15688a83f1f",
+    "src/service/work-orders.ts": "723b25203b8c38c992fa348f16c4969abb159bf58453110635af0d720ca4c128",
+    "src/app/api/v1/service/work-orders/register/route.ts": "6d7bfeda803347bbd40f5878e941f4111e91c6d1fe46de9b97b9bc80d0b6b9b9",
+    "src/app/api/v1/service/work-orders/[id]/record/route.ts": "68ebcf2229b3d6145f1e801d3afdc1004e1dc6e4b77368cdb6a00761c808c0d1",
+    "tests/database/work-order-register.test.ts": "0b1da2ef78649d42206fa3f59b66d997e0ba4484f048c34b909d741dd50314fd",
+    "tests/database/work-orders.test.ts": "0217f7ee8a412f8a61dfc28163ab2b6521c4a20183964984f753020830191157",
+    "tests/http/work-order-register.test.ts": "5e5a1bce33717991f55f4da3213298c72b7b516a5338527fcc6eb6cec76ef610",
+    "tests/unit/work-order-register.test.ts": "53dc6fbf362f2ed0f4acf2f289219702915d5cdad2bd07634aad4c75927eba97"
+  },
+  "limits": [
+    "Counts describe an authorised candidate window, not global totals.",
+    "Initial timeout retained; control and candidate replay pass without establishing cause.",
+    "No whole-process restart, browser/visual, capacity, deployment or owner acceptance claim."
+  ],
+  "hash_basis": "SHA-256 of exact executed working-tree bytes; canonical LF hashes also identify repository text across checkouts.",
+  "canonical_lf_sha256": {
+    "src/service/work-order-register.ts": "f412eda7cd5660237ffc0b01dc76e9c1a750b2da900fb53a6e66ebc455ad301c",
+    "src/service/work-order-register-model.ts": "bae9e6ea733f484ef66406f63bb062dc4c8513e9ca75bcc5fa3bc15688a83f1f",
+    "src/service/work-orders.ts": "723b25203b8c38c992fa348f16c4969abb159bf58453110635af0d720ca4c128",
+    "src/app/api/v1/service/work-orders/register/route.ts": "6d7bfeda803347bbd40f5878e941f4111e91c6d1fe46de9b97b9bc80d0b6b9b9",
+    "src/app/api/v1/service/work-orders/[id]/record/route.ts": "68ebcf2229b3d6145f1e801d3afdc1004e1dc6e4b77368cdb6a00761c808c0d1",
+    "tests/database/work-order-register.test.ts": "0b1da2ef78649d42206fa3f59b66d997e0ba4484f048c34b909d741dd50314fd",
+    "tests/database/work-orders.test.ts": "0217f7ee8a412f8a61dfc28163ab2b6521c4a20183964984f753020830191157",
+    "tests/http/work-order-register.test.ts": "5e5a1bce33717991f55f4da3213298c72b7b516a5338527fcc6eb6cec76ef610",
+    "tests/unit/work-order-register.test.ts": "53dc6fbf362f2ed0f4acf2f289219702915d5cdad2bd07634aad4c75927eba97"
+  }
+}

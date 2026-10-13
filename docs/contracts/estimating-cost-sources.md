@@ -17,6 +17,7 @@ All paths below start `/api/v1/estimating`. Reads return no-store data. Commands
 | Method and path | Contract |
 |---|---|
 | GET `/cost-sources?q=&state=` | Literal case-insensitive reference/title/supplier/item search, strict state filter, latest 100 permitted sources, exact latest 50 reviewed revisions per source and permitted create-company choices. Omit empty filters. |
+| GET `/cost-sources/register` | Additive [register contract](../decisions/cost-source-register-backend.md): exact first-tier/owner/author/review and expiry facts; literal search/supplier and explicit company filters; state/ownership/review/expiry views; full authorised search counts and bounded current-result paging. Existing list semantics remain unchanged. |
 | POST `/cost-sources` | `id`, `company_id`, local `reference`, full `content`, common operation/reason. Creates Draft r1 and one event atomically. |
 | GET `/cost-sources/[id]?revision_id=` | Exact selected or current immutable evidence, revision/event history, authority-dependent actions and up to 100 permitted estimate-line bindings. |
 | POST `/cost-sources/[id]` | `expected_version`, complete successor `content`, common operation/reason. Fixed identity cannot change; Submitted source is frozen. Identical content is refused. |

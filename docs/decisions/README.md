@@ -1,5 +1,7 @@
 # Decision control
 
+[Projects RAID and owned actions backend](project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.
+
 [Leads counts and follow-up reads](lead-register-backend.md) records the authorised BC-01 backend increment, full authorised-match count semantics and unavailable-activity boundaries.
 
 [ADR-0054 — Versioned Estimating equipment catalogue](ADR-0054-es02-equipment-catalogue.md) records the authorised backend-only six-family/108-category successor, preserved r01 history and explicit classification/evidence rules.
@@ -176,3 +178,5 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
 - [Reviews & approvals queue backend](estimating-review-queue.md): authorised bounded backend work; delivery evidence, owner acceptance and deployment remain separate.
 
 - [Quotation register backend](quotation-register-backend.md): one current revision per quotation, recorded lifecycle facts and permission-scoped history; accepted page implementation and global counts remain separate.
+
+- [Engineering workload register backend](engineering-workload-backend.md): user-authorised BC-01 scoped EN-01 reads; validation and acceptance separate.
