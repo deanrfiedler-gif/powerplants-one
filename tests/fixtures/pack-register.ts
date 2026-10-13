@@ -1,5 +1,5 @@
 import type { PackRegisterRow } from "../../src/documents/pack-register";
-import packRead from "./job-pack-read.json";
+import packRead from "./job-pack-read.json" with { type: "json" };
 const pack = packRead.items[0],
   revision = pack.revisions[0];
 export const registerClock = "2026-11-23T00:00:00Z";

@@ -291,7 +291,10 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     9,
   );
   await expect(
-    page.getByRole("tab", { name: "Job pack", exact: true }),
+    page.getByRole("tab", {
+      name: info.project.name.startsWith("mobile") ? "Pack" : "Job pack",
+      exact: true,
+    }),
   ).toHaveAttribute("aria-selected", "true");
   await showPackReadiness(page);
   await expect(page.getByText(/^\d+ of \d+ criteria satisfied/)).toBeVisible();
@@ -424,7 +427,15 @@ test("P06 complete workbench preparation, check, queued output, exact document a
     "Withdraw issue",
     "SYN controlled withdrawal for document integrity demonstration",
   );
-  await expect(page.getByText("Dispatch held", { exact: true })).toBeVisible();
+  await showPackReadiness(page);
+  if (info.project.name.startsWith("mobile"))
+    await expect(
+      page.getByText("Dispatch held", { exact: true }),
+    ).toBeVisible();
+  else
+    await expect(page.locator(".jp-dispatch-bar > strong")).toHaveText(
+      "Dispatch held until",
+    );
   await capture(page, info, "withdrawn-original-retained");
   const after = await page.request.get(`/api/v1/pack-issues/${issue.id}/pdf`);
   expect(await after.body()).toEqual(bytes);
@@ -570,7 +581,11 @@ test("P06 unavailable read and unassigned identity expose honest recovery and no
 }, info) => {
   await page.goto("/service/packs");
   await identity(page, "observer");
-  await expect(page.getByText(/No job packs are available/)).toBeVisible();
+  await expect(
+    page
+      .getByText("No job packs are available", { exact: true })
+      .filter({ visible: true }),
+  ).toBeVisible();
   await capture(page, info, "unassigned-empty");
   await identity(page);
   await page.route("**/api/v1/packs", (route) =>

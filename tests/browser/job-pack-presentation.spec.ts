@@ -34,6 +34,30 @@ async function setup(page: Page) {
   };
   return { pack, revision, open };
 }
+test("SV05 Figma primary action follows source and issue state while review remains pending", async ({
+  page,
+}) => {
+  const { pack, open } = await setup(page);
+  pack.needs_review = true;
+  await open();
+  await expect(page.locator(".jp-heading-actions > .jp-primary")).toHaveText(
+    "Review changed sources",
+  );
+  // A saved successor keeps needs_review until issue; a fresh check must allow issuing it.
+  pack.status = "Checked";
+  pack.basis_drift = [];
+  pack.jobs = [];
+  await open();
+  await expect(
+    page.getByRole("button", { name: "Queue exact output for issue" }),
+  ).toBeEnabled();
+  pack.status = "Issued";
+  await open();
+  await expect(page.locator(".jp-heading-actions > .jp-primary")).toHaveText(
+    "Prepare successor revision",
+  );
+});
+
 test("SV05-I7 heading uses only the verified saved scope and retains references", async ({
   page,
 }) => {

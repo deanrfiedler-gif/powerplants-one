@@ -597,7 +597,7 @@ export function PackListScreen({
                       title={
                         all.length
                           ? "No job packs match this view"
-                          : "No job packs yet"
+                          : "No job packs are available"
                       }
                     >
                       <Button
@@ -858,7 +858,7 @@ export function PackListScreen({
                   title={
                     all.length
                       ? "No job packs match this view"
-                      : "No job packs yet"
+                      : "No job packs are available"
                   }
                 >
                   {all.length ? (

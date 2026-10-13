@@ -23,9 +23,10 @@ The accepted design left Q5 open. Asked whether to retain current permissions or
 - Register rows follow the detail read's scope and recipient rules. A technician cannot receive an unissued successor, staff preparer metadata or staff readiness detail. Unavailable data is not reported as zero.
 - The verified saved scope provides the job title. Unsupported or mismatched structured content keeps the saved reference/text fallback. D6, D7 and D9 of the earlier design remain applicable.
 - Every readiness criterion and additional dispatch hold remains authoritative on the server. Summary conditions never clear an incident, policy, customer agreement, crew or source hold.
+- A saved successor retains `needs_review` until issue. Current source drift drives the review action; a freshly Checked revision can queue its exact output, while an Issued revision needing review offers successor preparation.
 - Saving creates an immutable revision. Checks, output requests, withdrawal, recovery and acknowledgement use the existing command/version/idempotency rules. Selection cannot perform those commands.
 - An acknowledgement confirms the exact issue, assignment version and hash; opening, downloading or simulated sending is a different event. Failed acknowledgement leaves its confirmation and error available for retry.
-- Export contains only the permitted displayed register fields. Quoting and formula neutralisation cover user-supplied text.
+- Export contains only the permitted register fields. Quoting and formula neutralisation cover user-supplied text.
 
 ## Verification and release
 

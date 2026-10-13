@@ -222,7 +222,9 @@ export function JobPackHeader({
     <button className="jp-primary" disabled={busy || dirty} onClick={onCheck}>
       Check this revision
     </button>
-  ) : (p.status === "Returned" || p.needs_review) && p.actions.can_prepare ? (
+  ) : (["Returned", "Withdrawn"].includes(p.status) ||
+      (p.status === "Issued" && p.needs_review)) &&
+    p.actions.can_prepare ? (
     <button className="jp-primary" disabled={busy} onClick={onPrepare}>
       Prepare successor revision
     </button>
