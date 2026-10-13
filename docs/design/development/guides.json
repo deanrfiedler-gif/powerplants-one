@@ -58136,7 +58136,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -58228,6 +58228,18 @@
             [
               "Declarations this draft needs",
               "Lists what the draft still has to declare, with the findings each addresses and who normally answers it. From recorded values means the draft already holds the answer; Your declaration means you state a fact the draft does not record; Needs new input means the information must be gathered."
+            ],
+            [
+              "Record actions",
+              "History opens exact revisions. The Scope actions (three dots) menu contains Report, Irrigation valves, Compare draft, exact exports and the entry points for copy, restore and archive."
+            ],
+            [
+              "Registers",
+              "Select a tab, filter or search. Open the record label or its row action menu to edit/view it. Remove is shown only with editing permission."
+            ],
+            [
+              "Phone sections",
+              "Use the section picker to open the grouped sheet. More stays the current application tab; Report and Save remain above it."
             ]
           ],
           "headers": [
@@ -58259,7 +58271,7 @@
             "Review the exact valve and master-source revisions and unresolved bindings",
             "Inspect calculated results and review evidence before preparing a controlled report",
             "Work the Next actions list from the top; use Resolve to preview an option's consequences before applying it to the working draft.",
-            "Use Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason.",
+            "Use Scope actions > Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason.",
             "After importing an r02 project, work the Declarations list: use Declare, read what the draft records, preview each option's consequences and apply the ones that are true. Phases usually come first because density, valve flow and timing wait on them."
           ],
           "rows": [],
@@ -58377,7 +58389,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "The section sheet traps focus while open. Escape or Close sections returns to the picker. Find and filter opens the phone register search and filters. Valve cards show the same filtered and paged records as the desktop table; their menus open the same editor. History and Validate & calculate draft open from Scope actions on a phone. Each Next actions row has a three-dot menu for its resolve, declaration and section actions."
           ],
           "steps": [],
           "rows": [],
@@ -58411,9 +58424,10 @@
       "source_paths": [
         "src/app/(business)/estimating/fertigation/[id]/page.tsx",
         "docs/blueprints/BP-04-estimating-quotation.md",
-        "docs/delivery/priva-fertigation-native-handover.md"
+        "docs/delivery/priva-fertigation-native-handover.md",
+        "src/components/fertigation-header.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Align the draft guide with accepted Figma record and row menus, phone sections, and exact revision history.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-FERTIGATION-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -58423,7 +58437,8 @@
       "workflow_basis": [
         "src/app/(business)/estimating/fertigation/[id]/page.tsx",
         "docs/blueprints/BP-04-estimating-quotation.md",
-        "docs/delivery/priva-fertigation-native-handover.md"
+        "docs/delivery/priva-fertigation-native-handover.md",
+        "docs/decisions/fertigation-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

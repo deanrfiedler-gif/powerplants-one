@@ -208,9 +208,9 @@ export function FertigationArtifacts({
       <ErrorNotice
         error={ledger.error ?? files.error ?? command.error ?? uploadError}
       />
-      <p role="status" className="fn-artifacts-status">
-        {command.status} {uploadStatus}
-      </p>
+      {(command.status !== "No pending server action" || uploadStatus) && (
+        <p role="status" className="fn-artifacts-status">{command.status} {uploadStatus}</p>
+      )}
       {dirty && (
         <Notice tone="warning">
           Save the scope revision before preparing review, handover, report or attachment evidence.

@@ -158,6 +158,10 @@ Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-lo
 
 ES-08 Figma implementation binds the configuration and view routes to the existing shell/menu patterns. Historical runs use WorklistMenu; no other consumer behaviour is changed. See the screen-configurator-workbench host and execution evidence for fixture, phone and review limits.
 
+## Fertigation consumer
+
+The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The composition reuses the shared Shell v2 primary rail and phone navigation merged in PR #459; its header and record geometry remain scoped, without changing the shared control API. Paired owner acceptance remains open.
+
 ## Figma application increment — 13 October 2026
 
 The [implementation decision](../../../decisions/figma-ui-implementation.md) records the exact inspected Shell v2 and My Work source frames, SH-01/SH-02 scope, r20 Overview / dashboard type, shared components and source-command handovers. The [execution ledger](../../../testing/evidence/figma-ui/README.md) separates compiled functional proof, visual comparison and remaining owner/device review.

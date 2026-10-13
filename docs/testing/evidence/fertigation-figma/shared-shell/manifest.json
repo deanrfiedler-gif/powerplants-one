@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "source_commit": "7b6e1d479ddd2364f815cfedb713751da3676e15",
+  "integrated_main": "ad9f2eb42285f46329d2ef138e6f635d369bacfa",
+  "runtime": {
+    "timestamp": "2026-10-13T02:50:58.620Z",
+    "browser": "153.0.8010.12",
+    "buildId": "fVlODTztNqgpmdNSSwv3Y",
+    "scopeId": "33322932-0b11-4352-9b28-431f87dd194a",
+    "iconFreeMethod": "Visibility-only CSS for semantic icon elements; no geometry or layout changes."
+  },
+  "captures": [
+    {
+      "file": "public/desktop-growing.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 179928,
+      "sha256": "6681a7cce8cddfa4b5a95b929271082b0d1d11c81846de069067aa888a091c5b"
+    },
+    {
+      "file": "public/desktop-history.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 211951,
+      "sha256": "fbe40a455b1d79ecd4a6bb5e7c507c1440ae7a5cbb1accfce1fa11cdab8d8016"
+    },
+    {
+      "file": "public/desktop-overview.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 212864,
+      "sha256": "3959c2bd32c174bc49ddb83eccae056fa86bbb84d5d0312212764f88f4acf42a"
+    },
+    {
+      "file": "public/desktop-review.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 203143,
+      "sha256": "fcf8ea67e973abbc83e56530e1812259ce3c395e368f6ccd9fdff19b877f4787"
+    },
+    {
+      "file": "public/desktop-water.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 196611,
+      "sha256": "af938f03059d496e35d90ca507e8e7bf09f38f48cbc1b9a329af23b96ae3cf0c"
+    },
+    {
+      "file": "public/phone-growing.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 48978,
+      "sha256": "45e4b1309802d9d03ae46fc9020378bd36747c465769ca98644c3f381dda2aa0"
+    },
+    {
+      "file": "public/phone-overview.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 54640,
+      "sha256": "f1040c49934e16484f8bbfb967ec264c439e4b23c6870e5991e45a4d298e2ed2"
+    },
+    {
+      "file": "public/phone-sections.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 36617,
+      "sha256": "ef29c45d7222c70e39e0ad3ccc9aa1d28c19ae2f4073b4b0ab6243edaaf76cda"
+    }
+  ],
+  "source_hashes": {
+    "src/components/fertigation-figma.css": "cbd8fe64ebb2966e0bd5cb1c1f8df74a63943514037d06fb4c2304975cfffe0d",
+    "src/components/product-navigation.tsx": "2c14baf69f3c9b678275dc42329854a3f457b705c8cf8f208aa75bbfba7a04d6",
+    "tests/browser/fertigation.spec.ts": "cc9692352e34c8501e3d7b821905958204d60669b441834d0cd731f3a5d45f1a"
+  },
+  "acceptance": "Agent comparison only; owner visual acceptance pending",
+  "deployment": "Local compiled application; hosted release tracked separately in PR #464"
+}
