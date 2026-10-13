@@ -21,11 +21,8 @@ import {
   dayParts,
   durationLabel,
   durationMinutes,
-  firstName,
-  greeting,
   isCivilDay,
   localDay,
-  longDate,
   nextScheduleId,
   shortDate,
   timing,
@@ -131,7 +128,6 @@ function MyWorkMobileOverview() {
   const waitingHref = `/work/waiting${criteriaSearch({ ...defaultCriteria, owner: c.criteria.owner, company_id: c.criteria.company_id })}`;
   const opportunitiesHref = `/sales/opportunities?${new URLSearchParams({ next_action: "Needed", ...(mine ? { owner_id: me.actor_id } : {}) })}`;
   const can = (id: string) => shell.context?.navigation.includes(id) ?? false;
-  const name = firstName(me.display_name);
   const hidden = work.layout.hidden;
 
   // Needs attention: different kinds of obligation, each with its own unit and its own queue. They are
@@ -162,15 +158,7 @@ function MyWorkMobileOverview() {
           <strong>You are offline.</strong> My Work needs a connection. What you see was read earlier and may be out of date, and nothing can be saved until you reconnect.
         </p>
       )}
-      <header className="mw-hello">
-        <div>
-          <h1>{name === "there" ? greeting(now) : `${greeting(now)}, ${name}`}</h1>
-          <time className="mw-date" dateTime={today}>
-            {longDate(now)}
-          </time>
-        </div>
-        <Tag tone="context">{work.department}</Tag>
-      </header>
+      <h1 className="mw-sr">My Work</h1>
       {!sameCriteria(c.criteria, defaultCriteria) && (
         <p className="mw-scope-note">
           Showing {c.view ? `the saved view “${c.view.name}”${c.modified ? ", modified" : ""}` : "a filtered scope"}
@@ -185,13 +173,11 @@ function MyWorkMobileOverview() {
 
       <section aria-labelledby="mw-quick-title">
         <h2 id="mw-quick-title" className="mw-section-title">
-          Quick Actions
+          Quick actions
         </h2>
         <ul className="mw-tiles">
           <Tile icon="mail" label="Emails" href={can("mail") ? "/email" : null} />
           <Tile icon="target" label="Leads" href={can("leads") ? `/sales/leads?${new URLSearchParams({ owner_id: me.actor_id })}` : null} />
-          <Tile icon="pin" label="Map" onOpen={() => setSheet("map")} />
-          <Tile icon="insights" label="Insights" onOpen={() => setSheet("insights")} />
           <Tile icon="task" label="Tasks" href={queue({ activity_type: "Task" })} />
         </ul>
       </section>
@@ -468,7 +454,7 @@ function AgendaSection({
     <section aria-labelledby="mw-agenda-title" className="mw-agenda">
       <div className="mw-section-head">
         <h2 id="mw-agenda-title" className="mw-section-title" ref={heading} tabIndex={-1}>
-          Weekly agenda
+          {week.includes(today) ? "This week" : "Weekly agenda"}
         </h2>
         <div className="mw-week-nav">
           <button type="button" className="mw-icon-button" onClick={() => pick(addDays(selected, -7))} aria-label="Previous week">

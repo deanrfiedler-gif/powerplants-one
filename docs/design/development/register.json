@@ -13,7 +13,8 @@
     "src/components/ui/controls.css",
     "src/app/layout.tsx",
     "src/components/product-navigation.tsx",
-    "src/components/shell-provider.tsx"
+    "src/components/shell-provider.tsx",
+    "src/app/styles/figma-shell.css"
   ],
   "entries": [
     {
@@ -34,11 +35,16 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Prior My Work proof retained. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
+      "functional_status": "Prior My Work proof retained. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate. Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "3ec2727f8ae3d2996d099de09a20511f135eac21c83ba333a64321673dea59d9",
       "reviewed_at": "2026-10-09",
@@ -48,7 +54,7 @@
         "route:/work"
       ],
       "reviewer": "Dean Fiedler",
-      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate."
+      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "scope:SH-02",
@@ -67,11 +73,16 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "267e067bec7e250ce4d84eb84f9b57a938790db9c0768a986d8b7a04ec0acfa6",
       "reviewed_at": "2026-10-09",
@@ -88,7 +99,8 @@
         "route:/work/new",
         "route:/sales/tasks"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": " Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "scope:SH-03",
@@ -7701,11 +7713,16 @@
         "src/components/saved-view-controls.tsx",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
-        "docs/decisions/my-work-page-design.md"
+        "docs/decisions/my-work-page-design.md",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Scheduling Step 4 proof remains in docs/testing/evidence/scheduling-policy-enforcement/README.md. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
+      "functional_status": "Scheduling Step 4 proof remains in docs/testing/evidence/scheduling-policy-enforcement/README.md. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate. Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "a07a312d25a7b27462d1a1944d54d77936f3695e0682feccb750f7d7d6d22d9c",
       "reviewed_at": "2026-10-09",
@@ -7715,7 +7732,8 @@
         "scope:SH-01",
         "scope:SH-02"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": " Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "route:/work/reviews",
@@ -9495,11 +9513,16 @@
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation.mmd",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd",
-        "docs/testing/evidence/pt27-loading/README.md"
+        "docs/testing/evidence/pt27-loading/README.md",
+        "src/app/styles/figma-shell.css",
+        "src/app/styles/my-work-figma.css",
+        "docs/decisions/figma-ui-implementation.md",
+        "docs/testing/evidence/figma-ui/README.md",
+        "src/activities/work-guide.ts"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "See NAV implementation ledger; source, functional proof and acceptance remain separate",
+      "functional_status": "See NAV implementation ledger; source, functional proof and acceptance remain separate Figma overview increment at 33b23b7: 20 compiled My Work journeys and 15 shared-shell/department/layout cases passed; see docs/testing/evidence/figma-ui/README.md. This does not verify all subviews or grant visual acceptance.",
       "deployment_status": "Not verified",
       "review_fingerprint": "037a41e7f1e3966da4cef65d255af55d67613ddd2766367d942f84e755756e7c",
       "reviewed_at": "2026-10-09",
@@ -9507,7 +9530,7 @@
       "build_rank": null,
       "related_keys": [],
       "reviewer": "Dean Fiedler",
-      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged."
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
     },
     {
       "key": "system:theme",

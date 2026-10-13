@@ -160,7 +160,7 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
   });
   if (!(await entry.isVisible()))
     await page
-      .getByRole("button", { name: /^(Expand )?Estimating menu$/ })
+      .getByRole("button", { name: /^(Show menu|(Expand )?Estimating menu)$/ })
       .click();
   await entry.click();
   await page

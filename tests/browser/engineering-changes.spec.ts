@@ -41,7 +41,7 @@ const rows = (page: Page) => page.locator("#ppo-changes .em-register tbody tr");
 const colour = (page: Page, selector: string) => page.locator(selector).first().evaluate((e) => getComputedStyle(e).color);
 const rgb = (hex: string) => `rgb(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)})`;
 
-test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited contract, My Work's menu and honest counts", async ({ page }, info) => {
+test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audited menu contract and honest counts", async ({ page }, info) => {
   test.skip(info.project.name !== "desktop-chromium", "Desktop composition; the phone case is below.");
   const s = await build(`register ${Date.now()}`);
   await signIn(page, CHANGES.engineer.profile);
@@ -58,7 +58,7 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Engineering Change-Impact Review: Change register/);
   await expect(page.locator(".module-navigation")).toHaveCount(0);
 
-  // A04 A57: the actual My Work menu. Its geometry is measured here and compared with /work itself further down.
+  // A04 A57: the retained shared menu. My Work now opts into its Figma presentation; EN-07 keeps this baseline.
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
   const menu = page.locator("#ec-menu");
@@ -74,7 +74,7 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
       current: [k.backgroundColor, k.fontWeight].join("|"), marker: [marker.width, marker.backgroundColor, marker.left].join("|"), title: [t.fontSize, t.lineHeight, t.fontWeight].join("|"), icon: [i.width, i.height, i.strokeWidth].join("|") };
   }, scope);
   const mine = await measure("#ppo-changes");
-  expect(mine.width).toBe(240);
+  expect(mine).toMatchObject({ width: 240, title: "18px|24px|700", icon: "20px|20px|1.7px", link: "42px|8px 10px|12px|6px|14px|20px" });
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked"); // the person's later choice persists
   await expect(page.locator(".product-heading [data-crumb=view]")).toBeHidden();
@@ -164,11 +164,13 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   await expect(page.getByRole("region", { name: "Selected changes" })).toHaveCount(0);
   await page.locator(".ec-view select").selectOption("open");
 
-  // A57: My Work itself is unchanged, and EN-07's menu is that menu: the same computed geometry, measured on /work.
+  // A57: My Work uses the same frame with its explicit Figma presentation. EN-07 retains its measured baseline above.
   await page.goto("/work");
   if (await page.locator("#ppo-my-work[data-menu=collapsed]").count()) await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(page.locator("#ppo-my-work .mw-menu nav a[aria-current=page]")).toBeVisible();
-  expect(mine).toEqual(await measure("#ppo-my-work"));
+  await expect(page.locator("#ppo-my-work")).toHaveAttribute("data-menu-presentation", "figma");
+  await expect(page.locator("#ppo-my-work .mw-menu-title")).toHaveCount(0);
+  await expect(page.locator("#ppo-my-work .mw-menu")).toHaveJSProperty("offsetWidth", mine.width);
   // EN-07's preference never touched My Work's key.
   expect(await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("ppo.changes.")).length)).toBe(1);
   await s.dispose();

@@ -103,11 +103,12 @@ test("all seven actual department rails retain canonical order and dimensions", 
     await expect(nav.getByRole("link")).toHaveCount(expected.length);
     await expect.poll(() => nav.getByRole("link").evaluateAll(items => items.map(i => i.getAttribute("aria-label")))).toEqual(expected);
     expect(await page.locator(".ppo-rail").count()).toBe(1);
-    expect(await nav.locator("svg").first().evaluate(e => e.getBoundingClientRect().width)).toBe(25);
-    expect(await page.locator(".ppo-rail").evaluate(e => e.getBoundingClientRect().width)).toBe(76);
-    expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(48);
+    expect(await nav.locator("svg").first().evaluate(e => e.getBoundingClientRect().width)).toBe(20);
+    expect(await page.locator(".ppo-rail").evaluate(e => e.getBoundingClientRect().width)).toBe(240);
+    expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(44);
     const bounds = await nav.getByRole("link").first().boundingBox();
-    expect(Math.abs(bounds!.x + bounds!.width / 2 - 38)).toBeLessThanOrEqual(4); // scrollbar allowance
+    expect(bounds!.x).toBe(8);
+    expect(bounds!.width).toBe(224);
     await capture(page, `department-${department}-1440x900`);
   }
   expect(errors).toEqual([]);
@@ -122,6 +123,7 @@ test("Sales active drawings, real landing pages and More keyboard state", async 
     await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveCount(1);
     await capture(page, `sales-${label.toLowerCase().replaceAll(" ", "-")}`);
   }
+  await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
   await page.locator(".ppo-primary-nav [aria-current=page]").focus();
   await expect(page.getByRole("tooltip")).toHaveText("Activities");
   await capture(page, "active-keyboard-focus");
@@ -180,7 +182,8 @@ test("Programme chooser opens a supported schedule context and returns to the ch
   await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Programme");
   await expect(page.getByRole("link", { name: "Programme — choose another project", exact: true })).toBeVisible();
   const schedule = page.getByRole("region", { name: "Project schedule workspace", exact: true });
-  expect((await schedule.boundingBox())!.x).toBeLessThan(100);
+  const rail = await page.locator(".ppo-rail").boundingBox();
+  expect((await schedule.boundingBox())!.x).toBe(rail!.x + rail!.width);
   await capture(page, "programme-existing-schedule");
   await page.getByRole("link", { name: "Programme — choose another project", exact: true }).click();
   await expect(page).toHaveURL(/\/projects\/programme$/);
@@ -211,6 +214,7 @@ test("specific Engineering, Projects and Fertigation destinations preserve their
 test("short desktop keeps More and logo anchored while shortcuts scroll", async ({ page }) => {
   await login(page); await page.setViewportSize({ width: 1280, height: 400 });
   await page.goto("/work?department=service");
+  await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
   const more = page.locator("#desktop-more-toggle"), nav = page.locator(".ppo-primary-nav");
   await expect(nav.getByRole("link", { name: "Equipment", exact: true })).toBeAttached();
   const before = await more.boundingBox();

@@ -183,7 +183,7 @@ function ProductNavigationView({
     // A selected More link draws its glyph filled, as the selected rail item does; phone bar cells keep their own marker.
     const contents = (
       <>
-        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} active={!mobile && selected} />
+        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} active={selected} />
         <span>{label}</span>
       </>
     );
@@ -229,7 +229,7 @@ function ProductNavigationView({
         onClick={() => setMore(false)}
         suppressHydrationWarning
       >
-        <ProductIcon name={entry.icon} />
+        <ProductIcon name={entry.icon} active={current?.id === item.id} />
         <span>{entry.label}</span>
       </Link>
     );
@@ -362,7 +362,7 @@ function ProductNavigationView({
         {wide && <button className="ppo-rail-item ppo-rail-toggle" disabled={!shell.context?.preference_scope} aria-label={shell.railExpanded ? "Collapse primary navigation" : "Expand primary navigation"} aria-expanded={shell.railExpanded} aria-controls="primary-navigation" onClick={() => shell.setRailExpanded(!shell.railExpanded)}>
           <ProductIcon name={shell.railExpanded ? "collapse" : "expand"} /><span className="ppo-rail-label">Collapse navigation</span>
         </button>}
-        {wide && (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new")) && <p className="ppo-rail-department">{workspace.label}</p>}
+        {wide && <div className="ppo-rail-department" aria-hidden="true">{workspace.label}</div>}
         {wide && <nav id="primary-navigation" className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
           const focused = document.activeElement;
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
@@ -484,7 +484,7 @@ export function ProductHeader() {
   const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance ? { view: undefined } : undefined);
   const view = page?.id === "work" ? (path === "/work" ? undefined : workViewForPath(path)?.label) : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
   const subview = crumb?.view?.label;
-  const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
+  const workspaceRoot = workspaces.find((w) => w.id === (page?.id === "work" && path === "/work" ? workspaceForLocation(path, new URLSearchParams(query), shell.preview, shell.context?.navigation ?? []) : page?.workspace));
   const currentModule =
     page?.workspace === "estimate"
       ? "Estimating"
@@ -495,10 +495,10 @@ export function ProductHeader() {
   // belongs to, the destination itself, and the view that a workspace's own secondary menu names. The
   // rail carries the product identity, so "Powerplants One" is no longer repeated beside every page.
   const rootDestination = workspaceRoot ? destination(workspaceRoot.primary) : undefined;
-  // The workspace under the name its own people use for it; Estimating and Service are already
-  // shortened for the page guide, and the breadcrumb uses the same two names.
+  // The overview carries its selected department, including the full Estimating label from Figma.
+  // Service retains its established short breadcrumb name.
   const rootLabel =
-    page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
+    page?.workspace === "service" ? "Service" : workspaceRoot?.label;
   const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
   const crumbs: HierarchyCrumb[] = [];
   if (label) {

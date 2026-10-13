@@ -102,7 +102,7 @@ export function SecondaryMenuFrame({
   message: string;
   children: ReactNode;
   // Keep existing module baselines explicit; new/shared consumers use the refined menu.
-  presentation?: "shared" | "baseline";
+  presentation?: "shared" | "baseline" | "figma";
 }) {
   const { docked, phone, open, toggle, closeOverlay, overlay } = state;
   // A phone has three separate menus (this one, More and Create), so its trigger says which it is.

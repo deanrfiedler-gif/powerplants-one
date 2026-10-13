@@ -4,9 +4,19 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
-## Priva Fertigation Workbench Figma implementation — 13 October 2026
+## Final shell and backend integration — 13 October 2026
 
-Repository writer: this user-authorised UI session, branch `codex/fertigation-figma-ui`, integrating main `d195e67`. Dean requested implementation in the live PPO application matching the supplied accepted Figma page. The [implementation decision](decisions/fertigation-figma-implementation.md) adopts the record header, grouped menus, compact registers, pastel charts, centred history and responsive phone composition on the existing `ppo-fertigation` route. Native calculations, exact revision workflows and permissions are retained; no migration, capability, dependency or operational integration is added. [Execution evidence](testing/evidence/fertigation-figma/README.md) distinguishes actual validation, owner visual acceptance and deployment. The live design register and draft guide are updated in the same contribution.
+Current repository writer for this integration: the conflict repair and merge session on `codex/pr459-integrated-oct13`. PR #459 preserves the published shell repair `28819b6` and combined backend #458 head `0213e8d` by ancestry. The status conflict retains both records; the build sequence is regenerated from the combined register. No runtime, test, retained reference or review-fingerprint bytes are changed by this merge. Backend #458 is intended to land first; fresh #459 CI verifies the shell against all four backend contributions before its merge. The supplied user instruction authorises these repository merges, with deployment and owner visual acceptance separate.
+
+Backend integration local checks pass the design register, nine focused units and TypeScript. The catalogue upgrade replay reaches the unchanged 120-second deadline both here and on unmodified main `c3ff5b9`; it is not reported as a local pass. Fresh #458 GitHub documentation assurance passes foundation, prototype and naming checks. Full CI remains the merge gate for both final heads, with the original evidence and later CI outcomes separately recorded in their PRs.
+
+The later UI CI run at `6774035` passes the repaired ES-01 workload journeys but exposes obsolete ES-02 window-centering and inline-breadcrumb assumptions. The ES-02/ES-08 source helpers now verify contained, non-overlapping Shell v2 controls and retained quick-add spacing, including ES-08's deliberately offset negative control. The ES-02 dirty-navigation proof uses Page hierarchy while retaining its exact stay/discard assertions. The More panel is checked against its 240 px width, rail anchor and full viewport height. These are test/evidence corrections; application behavior, issued source hashes, deadlines and review fingerprints are unchanged. Fresh-head CI remains required.
+
+The CRM mobile continuation also keeps distinct exact colour checks for the desktop Shell v2 More panel and retained phone All modules sheet. Its board geometry, scrolling and persistence assertions are unchanged; the [execution ledger](testing/evidence/figma-ui/README.md) links both failed runs and records local validation limits.
+
+## Figma UI application implementation — 13 October 2026
+
+Repository writer: this user-authorised UI implementation session, branch `codex/figma-app-ui`, based on main `7e4ef3b`. Dean requested the supplied Figma designs in the application including shell, icons and styling. The [first increment](decisions/figma-ui-implementation.md) implements Shell v2 and the desktop/phone My Work overview using existing source-backed reads and commands. Backend extensions are authorised where needed, but this increment requires no new technology, migration, seed or capability. The [execution ledger](testing/evidence/figma-ui/README.md) records checks and comparison limits. [PR #459](https://github.com/deanrfiedler-gif/powerplants-one/pull/459) contains the implementation. The final compiled build, 26 focused unit tests, all 20 applicable My Work desktop/phone journeys and all 15 shared shell/department/layout cases pass, alongside lint and register/foundation/naming checks. Initial CI exposed superseded shell/rail presentation checks and long-breadcrumb truncation. The release-preparation continuation integrates main `c3ff5b9`, repairs those cases and records fresh checks separately in the execution ledger. Remaining module interiors and My Work grids/overlays are explicit follow-on work. Existing review fingerprints, issued reference bytes and parent IDs are preserved. Code delivery, visual acceptance and hosted deployment remain separate.
 
 ## Open PR conflict integration — 13 October 2026
 
@@ -129,6 +139,11 @@ Dean asked for the Figma My Work trial screen to be rebuilt "so it aligns with t
 ## Excel parser backup recovery — 12 October 2026
 
 Dean closed backup PRs #404–#408 and requested a recovery review, beginning with #405. The [parser recovery decision](decisions/excel-estimate-import-native.md) takes the useful source-reading library from `1b699b4` onto main `4228d47`, preserving the original snapshot. It adds no upload endpoint, schema, permission, saved estimate or UI. The original code accepted three malformed cases: missing string-formula caches, invalid date-system declarations and mismatched relationship content types. Regression cases reproduce all three against the original snapshot and pass after correction. [Verification and remaining scope](testing/evidence/excel-import-parser/README.md) distinguish generated synthetic-fixture/parser proof from native Excel compatibility and the complete import workflow. The backup branches remain retained.
+
+
+## Priva Fertigation Workbench Figma implementation — 13 October 2026
+
+Repository writer: this user-authorised UI session, branch `codex/fertigation-figma-ui`, integrating main `ad9f2eb`. Dean requested implementation in the live PPO application matching the supplied accepted Figma page. The [implementation decision](decisions/fertigation-figma-implementation.md) adopts the record header, grouped menus, compact registers, pastel charts, centred history and responsive phone composition on the existing `ppo-fertigation` route. Native calculations, exact revision workflows and permissions are retained; no migration, capability, dependency or operational integration is added. [Execution evidence](testing/evidence/fertigation-figma/README.md) distinguishes actual validation, owner visual acceptance and deployment. The live design register and draft guide are updated in the same contribution.
 
 
 ## Priva fertigation workbench Figma design accepted — 12 October 2026

@@ -27,7 +27,7 @@ Reused components: `ApplicationFrame`, `ProductNavigation`, `RecordIdentity`, `S
 - Pastel chart fills with dark outlines, named candidate failures, aligned chart scales, Shortlisted status with an explicit removal action, full-width review metrics and centred History.
 - Phone section sheet, compact record context, two-column metrics and Report/Save above the icon-only navigation with More current.
 
-The broad shell rollout is not part of this increment. Other modules keep their current geometry. Controls remain conditional on real permissions and state; the reference sample does not create business authority. The original design's Q8 system SVG export and device-to-channel allocation remain open. r02 engine proposals remain outside the r01 implementation. Font Awesome Pro artwork and private Figma URLs are not committed.
+Integration with main `ad9f2eb` adopts the shared Shell v2 rollout from PR #459. The module reuses its primary rail, initial expanded preference and phone navigation; only the fertigation header, secondary menu and record interior have scoped styling. Discovery retains its content-width threshold for a docked menu, so its entry test also exercises the desktop drawer trigger. Controls remain conditional on real permissions and state; the reference sample does not create business authority. The original design's Q8 system SVG export and device-to-channel allocation remain open. r02 engine proposals remain outside the r01 implementation. Font Awesome Pro artwork and private Figma URLs are not committed.
 
 ## Evidence and review
 

@@ -22,7 +22,7 @@
     {
       "id": "nav-rail-modes",
       "fixture": "tests/browser/navigation-safety.spec.ts; tests/browser/department-navigation.spec.ts",
-      "description": "Compact 76 px, labelled 232 px, short-height long Service rail, blocked storage, mobile More/Workspace and visible Sales labels."
+      "description": "Compact 76 px, labelled 240 px, saved identity preference, short-height long Service rail, blocked storage and accessible icon-only phone navigation. Existing navigation browser fixtures remain authoritative."
     },
     {
       "id": "nav-authorized-context",
@@ -63,6 +63,16 @@
       "id": "shell-activation-loading",
       "fixture": "tests/browser/shell-loading.spec.ts; tests/browser/directory-navigation.spec.ts; tests/browser/navigation-safety.spec.ts",
       "description": "Customers cold host and opened More menu capture the restored baseline shell prefetch policy. Actual desktop keyboard and phone touch navigation to People and Back retain the exact department URL. Existing fixtures cover record receiving, dirty cancellation and restricted identities."
+    },
+    {
+      "id": "figma-my-work-overview",
+      "fixture": "tests/browser/my-work.spec.ts; tests/browser/my-work-mobile.spec.ts",
+      "description": "Accepted overview presentation with real counts, outcome/reschedule/follow-up commands, menu focus return, hidden unconfigured weather and three quick actions. Other module interiors retain their existing baseline."
+    },
+    {
+      "id": "figma-shell-consumer-reflow",
+      "fixture": "tests/ui/desktop-shell.spec.ts; tests/browser/engineering-materials.spec.ts; tests/browser/engineering-changes.spec.ts; tests/browser/estimating-workload.spec.ts",
+      "description": "Flowing search and full-height More; whole Engineering destination breadcrumbs; retained Engineering menu separated from the opt-in My Work Figma presentation; Estimating panel/drawer follows available width with either rail mode."
     }
   ]
 }

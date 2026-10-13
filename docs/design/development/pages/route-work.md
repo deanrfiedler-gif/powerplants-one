@@ -18,7 +18,7 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
-Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 01 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The app still shows the earlier layout; building the accepted design and the shell rollout are separate decisions.
+Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 01 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The first application increment is authorised on 13 October and described below; other My Work screens remain a separate implementation increment.
 
 - **Layout at 1440 × 900:** the department rail with My Work selected; the breadcrumb "<department> / My Work"; the flush secondary menu with the six views and their counts, then Pinned views. Toolbar: View: Today's focus, owner, Filters, "updated hh:mm AEST", refresh, + Activity and "…" (Refresh now, Save or manage views…, Customise overview, Open calendar, Full activity form). The greeting and the department chip are removed.
 - **Summary strip:** Overdue, Due today, Waiting on others and No next activity, flush under the toolbar; each cell opens its view, and an unread count shows "—", never zero.
@@ -92,3 +92,13 @@ Built from the accepted canvas proposal ([decision](../../../decisions/ui-build-
   - the agenda header carries the year ("5–11 Oct 2026").
 - **Page guide (S9):** the information icon opens the My Work guide (`src/activities/work-guide.ts`). It stays a draft until Dean reviews it in the running app.
 - **Review state:** the 9 October review is stale until Dean looks at the built page again.
+
+## Figma application increment — 13 October 2026
+
+The [implementation decision](../../../decisions/figma-ui-implementation.md) records the exact inspected Shell v2 and My Work source frames, SH-01/SH-02 scope, r20 Overview / dashboard type, shared components and source-command handovers. The [execution ledger](../../../testing/evidence/figma-ui/README.md) separates compiled functional proof, visual comparison and remaining owner/device review.
+
+Desktop: 240 px labelled / 76 px compact rail; preserve the saved identity preference. The My Work secondary menu is 240 px, with a 20 px collapsed edge. At 1440 × 900, content starts at x=480; toolbar 60 px, summary 64 px, content gutters 24 px and side column 320 px. Narrower interiors stack side cards. Source-backed compact activity rows use a done ring for Record outcome and an actions menu for rescheduling. The page title and freshness no longer occupy a greeting block.
+
+Phone: 390 × 844 and 320 px containment; current page heading, Emails/Leads/Tasks with labels, flush attention and agenda lists, accessible icon-only 64 px navigation and reachable Create. Unconfigured weather remains hidden. Preserve full details, unknown counts, permission checks, focus return and draft protection. Shared tokens come from the existing theme and the explicit Shell v2 palette in `src/app/styles/figma-shell.css`; overview rules are scoped in `src/app/styles/my-work-figma.css`.
+
+Reuse the real application shell, SecondaryMenuFrame, ProductIcon/Icon, Menu and the existing Activity dialogs; no parallel renderer or new isolated fixture is claimed. The `figma-my-work-overview` host fixture and alignment item are in components.json and navigation-fixtures.json. Exact icon-free source images: `PPO-My-Work-01-Desktop-Overview-r01.png` and `PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png` in the retained My Work page-design capture set. Public standalone Shell v2 images are not supplied; the private inspected Figma frame and accepted module captures are the available reference. Runtime identity/guidance controls, unavailable counters and conditional weather are explicit adaptations. Other module interiors, My Work grids and detail/outcome overlay compositions still require their own implementation. Existing owner review fingerprints are preserved and stale; this edit grants no review.

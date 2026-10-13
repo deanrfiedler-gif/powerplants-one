@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }, info) => {
   await page.goto(fixture + "?mode=local");
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeVisible();
 });
-test("department shell fits laptop, desktop and compact viewports with centred search and fixed rail endpoints", async ({ page }, info) => {
+test("department shell fits laptop, desktop and compact viewports with flowing search and contained controls", async ({ page }, info) => {
   for (const [width, height] of [[1366, 768], [1920, 1080], [800, 500], [960, 540]]) {
     await page.setViewportSize({ width, height });
     const geometry = await page.evaluate(() => {
@@ -15,12 +15,9 @@ test("department shell fits laptop, desktop and compact viewports with centred s
       const top = document.querySelector(".ppo-shell-header")!.getBoundingClientRect();
       const more = document.querySelector("#desktop-more-toggle")!.getBoundingClientRect();
       const logo = document.querySelector(".ppo-rail .brand-logo")!.getBoundingClientRect();
-      const controls = [...document.querySelectorAll(".ppo-header-centre,.ppo-header-utilities,.header-account")].map(element => element.getBoundingClientRect());
+      const controls = [...document.querySelectorAll(".product-heading,.ppo-header-centre,.ppo-header-utilities,.header-account")].map(element => element.getBoundingClientRect());
       return { railWidth: rail.clientWidth, railFits: rail.scrollHeight <= rail.clientHeight, pageFits: document.documentElement.scrollWidth <= innerWidth,
         headerHeight: top.height, moreBottom: more.bottom, logoCentre: logo.left + logo.width / 2, logoWidth: logo.width, logoY: logo.top + logo.height / 2,
-        // Global search and the quick-add button beside it are one group: it is the combined box that is
-        // centred on the whole viewport, the navy rail included, not the text field on its own.
-        groupCentre: (document.querySelector(".ppo-global-search")!.getBoundingClientRect().left + document.querySelector(".ppo-quick-add")!.getBoundingClientRect().right) / 2,
         plusGap: document.querySelector(".ppo-quick-add")!.getBoundingClientRect().left - document.querySelector(".ppo-global-search")!.getBoundingClientRect().right,
         // The navy disc is the quick-add button's own ::before. It stays inside the 44px button; if that
         // button ever stops being its own containing block the disc resolves against the centred group
@@ -31,7 +28,7 @@ test("department shell fits laptop, desktop and compact viewports with centred s
         noOverlap: controls.every((rect, index) => index === 0 || controls[index - 1].right <= rect.left), zoom: getComputedStyle(document.documentElement).zoom };
     });
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
-    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(Math.abs(geometry.groupCentre - width / 2)).toBeLessThanOrEqual(2); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
+    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
     expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(25));
     expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal", "Contacts", "Products"]);
@@ -120,7 +117,7 @@ test("page guide is contextual and Supply selection requests its native readines
   await expect(page.getByLabel("Workspace", { exact: true })).toHaveValue("sales");
 });
 
-test("runtime shell matches the retained r17 reference typography, panel geometry and guide layout", async ({ page, context }, info) => {
+test("Figma shell keeps inherited r17 utility controls and its explicit header and More geometry", async ({ page, context }, info) => {
   const reference = await context.newPage();
   await page.setViewportSize({ width: 1536, height: 864 });
   await reference.setViewportSize({ width: 1536, height: 864 });
@@ -134,12 +131,10 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
   }, properties);
   const typography = ["font-size", "font-weight", "line-height", "letter-spacing"];
   await expect(page.getByRole("button", { name: "Account", exact: true })).toBeVisible();
-  // The product name is no longer repeated in a module breadcrumb, so r17's product typography is compared
-  // against what took its place in the header: the breadcrumb keeps the reference's 16px size and line box,
-  // while the current page is semibold rather than bold and its parent is quieter still. The retained r17
-  // reference file is unchanged; this is a recorded departure of the existing-modules UI refinement.
-  const productType = await style(reference.locator(".sh-product"), ["font-size", "line-height"]);
-  expect(await style(page.locator(".ppo-crumb-current"), ["font-size", "line-height"])).toEqual(productType);
+  // Shell v2 uses 14px breadcrumb labels. The retained r17 source is unchanged;
+  // inherited utility dialogs below continue to be compared against it.
+  expect(await style(page.locator(".ppo-crumb-current"), ["font-size", "line-height"]))
+    .toEqual({ "font-size": "14px", "line-height": "18.2px" });
   expect((await style(page.locator(".ppo-crumb-current"), ["font-weight"]))["font-weight"]).toBe("600");
   expect((await style(page.locator(".ppo-crumbs li").first().locator(".ppo-crumb"), ["font-weight"]))["font-weight"]).toBe("400");
   expect(await style(page.locator(".ppo-global-search input"), ["font-size", "font-weight", "height"])).toEqual(await style(reference.locator("#sh-global-search"), ["font-size", "font-weight", "height"]));
@@ -162,20 +157,32 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
     await expect(referencePanel).toBeVisible();
     await referencePanel.evaluate(element => element.getAnimations().forEach(animation => animation.finish()));
     const a = (await actualPanel.boundingBox())!, b = (await referencePanel.boundingBox())!;
-    expect(a.width, kind + " width").toBeCloseTo(b.width, 0);
-    // Global search and quick add now sit in one centred group, so both of their panels open 28px left of
-    // where the retained r17 reference anchors them: half of the 44px button and its 12px gap. Their own
-    // contract is asserted instead — the search panel flush with its field, the quick panel flush with the
-    // right edge of its button — and the other five panels keep r17's absolute anchor exactly.
-    if (kind === "search" || kind === "quick") {
-      const trigger = (await page.locator(kind === "search" ? ".ppo-global-search" : ".ppo-quick-add").boundingBox())!;
-      if (kind === "search") expect(a.x, "search panel follows its field").toBeCloseTo(trigger.x, 0);
-      else expect(a.x + a.width, "quick panel follows its button").toBeCloseTo(trigger.x + trigger.width, 0);
-      expect(b.x - a.x, kind + " offset from r17 anchor").toBeCloseTo(28, 0);
-    } else expect(a.x, kind + " horizontal anchor").toBeCloseTo(b.x, 0);
-    if (kind !== "more") expect(a.y, kind + " vertical anchor").toBeCloseTo(b.y, 0);
-    expect(await style(actualPanel, ["border-radius", "box-shadow", "border-color"])).toEqual(await style(referencePanel, ["border-radius", "box-shadow", "border-color"]));
-    expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight", "line-height"])).toEqual(await style(referencePanel.locator("h2"), ["font-size", "font-weight", "line-height"]));
+    if (kind === "more") {
+      const rail = (await page.locator(".ppo-rail").boundingBox())!;
+      expect(a.width).toBe(240);
+      expect(a.x).toBe(rail.x + rail.width);
+      expect(a.y).toBe(0);
+      expect(a.height).toBe(864);
+      expect(await style(actualPanel, ["border-radius", "background-color"]))
+        .toEqual({ "border-radius": "0px", "background-color": "rgb(246, 247, 249)" });
+      expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight"]))
+        .toEqual({ "font-size": "16px", "font-weight": "700" });
+    } else {
+      if (kind !== "search") expect(a.width, kind + " width").toBeCloseTo(b.width, 0);
+      // Search and quick-add follow their flowing triggers; utility panels keep
+      // their original anchors. No comparison assumes a viewport-centred search.
+      if (kind === "search" || kind === "quick") {
+        const trigger = (await page.locator(kind === "search" ? ".ppo-global-search" : ".ppo-quick-add").boundingBox())!;
+        if (kind === "search") {
+          expect(a.x, "search panel follows its field").toBeCloseTo(trigger.x, 0);
+          expect(a.width, "search panel uses its field width").toBeCloseTo(trigger.width, 0);
+        }
+        else expect(a.x + a.width, "quick panel follows its button").toBeCloseTo(trigger.x + trigger.width, 0);
+      } else expect(a.x, kind + " horizontal anchor").toBeCloseTo(b.x, 0);
+      expect(a.y, kind + " vertical anchor").toBeCloseTo(b.y, 0);
+      expect(await style(actualPanel, ["border-radius", "box-shadow", "border-color"])).toEqual(await style(referencePanel, ["border-radius", "box-shadow", "border-color"]));
+      expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight", "line-height"])).toEqual(await style(referencePanel.locator("h2"), ["font-size", "font-weight", "line-height"]));
+    }
     if (["quick", "help", "notifications", "guide"].includes(kind)) {
       const referenceTrigger = reference.locator(`[data-panel="${kind}"]:visible`).first();
       await referenceTrigger.evaluate(element => element.getAnimations().forEach(animation => animation.finish()));
@@ -211,7 +218,7 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       await actualPanel.locator(".ppo-panel-body").evaluate(element => { element.scrollTop = 0; });
     }
     if (kind === "more") {
-      // r17 geometry is retained; the navigation decision replaces planned links
+      // Shell v2 geometry is checked above; the navigation decision replaces planned links
       // with ready, permitted destinations, including native Supply Chain.
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
       // Native Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Footer count includes Help;
@@ -226,7 +233,9 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
       await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }
+    await page.bringToFront();
     await page.screenshot({ path: info.outputPath(`r17-runtime-${kind}.png`) });
+    await reference.bringToFront();
     await reference.screenshot({ path: info.outputPath(`r17-reference-${kind}.png`) });
     await page.keyboard.press("Escape");
     await reference.keyboard.press("Escape");

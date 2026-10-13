@@ -8,7 +8,6 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { usePathname } from "next/navigation";
 import type { ShellContext } from "../shell/model";
 import {
   preferenceKey, workspaceLanding,
@@ -24,11 +23,11 @@ import {
 const preferenceEvent = "ppo-shell-workspace";
 const visitPreferences = new Map<string, WorkspaceId>();
 const railPreferences = new Map<string, boolean>();
-function railSnapshot(key: string | null, fallback: boolean) {
-  if (!key) return fallback;
+function railSnapshot(key: string | null) {
+  if (!key) return false;
   if (railPreferences.has(key)) return railPreferences.get(key)!;
-  try { const value = JSON.parse(localStorage.getItem(`${key}:rail`) ?? "null"); return value?.schema_version === 1 && typeof value.expanded === "boolean" ? value.expanded : fallback; }
-  catch { return fallback; }
+  try { const value = JSON.parse(localStorage.getItem(`${key}:rail`) ?? "null"); return value?.schema_version === 1 ? value.expanded === true : true; }
+  catch { return true; }
 }
 const subscribe = (notify: () => void) => {
   window.addEventListener(preferenceEvent, notify);
@@ -85,9 +84,7 @@ export function ShellProvider({
     () => snapshot(userKey),
     () => "sales" as const,
   );
-  const path = usePathname();
-  const defaultExpanded = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
-  const railExpanded = useSyncExternalStore(subscribe, () => railSnapshot(userKey, defaultExpanded), () => defaultExpanded);
+  const railExpanded = useSyncExternalStore(subscribe, () => railSnapshot(userKey), () => false);
   useEffect(() => {
     let live = true,
       request: AbortController | undefined;
