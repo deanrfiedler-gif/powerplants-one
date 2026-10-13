@@ -3375,7 +3375,9 @@
         "docs/design/projects-register/figma-measurements.json",
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
-        "src/app/styles/job-pack-figma.css"
+        "src/app/styles/job-pack-figma.css",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -5671,6 +5673,11 @@
           "id": "same-name-receiving",
           "label": "Same-name organisation receiving",
           "description": "P03 in tests/browser/intake.spec.ts checks the exact other permitted organisation link and excludes the current record on desktop/phone. DuplicateCandidates is moved unchanged into its own client module so the receiving page no longer imports unrelated site/facility screens."
+        },
+        {
+          "id": "figma-customer-register",
+          "label": "Figma register and exact customer return",
+          "description": "Reference-only proposed desktop table/phone cards, all/name-descending/preset-search/due-today states, two exact customers and conditional return. docs/design/development/customer-register-fixtures.json; no runtime behaviour is changed. Shared Leads Grid headers and row/column rules align sixteen table instances; r04 retains current desktop evidence."
         }
       ],
       "implementation": [
@@ -5690,7 +5697,10 @@
         "src/app/(business)/customers/page.tsx",
         "src/app/styles/customers.css",
         "src/components/duplicate-candidates.tsx",
-        "src/components/customer-workspace.tsx"
+        "src/components/customer-workspace.tsx",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
@@ -5702,7 +5712,8 @@
         "route:/customers",
         "route:/people",
         "route:/contacts",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-01"
       ],
       "desktop": "Retain the existing register table, columns, real links and scoped content; activation loads the chosen destination.",
       "mobile": "Retain existing readable cards and touch activation at 390/320 CSS px.",
@@ -5722,6 +5733,14 @@
           "expected": "Load the directory without unrelated site/facility screen code while preserving styling, authority and actual next-record navigation.",
           "actual": "The refined controlled block passes 320 loads and 80 record openings, reduces initial script bytes by 6.91% and improves desktop receiving p95 within its block. Cold-load targets remain unmet; phone/order variation and runner contention remain explicit.",
           "action": "Review docs/testing/evidence/pt27-loading/direct-directory-refined/README.md, retained manifests/captures, full assurance and remaining cold-load limits before acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "crm-directory-figma-register-alignment",
+          "expected": "Review the register-to-exact-customer journey in the shared PPO theme, with retained search/filter/sort and scroll context.",
+          "actual": "Editable Figma register, two customer profiles and 48 conditional returns are structurally verified. Search is a fixed demonstration; runtime pairing, wider states and owner acceptance remain open. All sixteen table instances use the shared Figma Grid headers; body heights retain source detail.",
+          "action": "Review r03 captures and customer-register-fixtures.json, then compare native desktop/phone receiving and Back behaviour before adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

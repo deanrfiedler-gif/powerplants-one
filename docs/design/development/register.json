@@ -278,18 +278,27 @@
         "src/shared/customer-360.ts",
         "docs/decisions/customer-360-figma-design.md",
         "docs/reference/ui/customers/customer-360-figma-r01/README.md",
-        "docs/reference/ui/customers/customer-360-figma-r02/README.md"
+        "docs/reference/ui/customers/customer-360-figma-r02/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "guide_key": "guide.cs.01",
       "design_path": "docs/design/development/pages/scope-cs-01.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
       "image_paths": [
-        "docs/reference/ui/customers/customer-360-figma-r02/overview-desktop.png",
-        "docs/reference/ui/customers/customer-360-figma-r02/overview-phone.png"
+        "docs/reference/ui/customers/customer-360-figma-r03/willowbank-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/rothwell-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/register-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/register-phone.png",
+        "docs/reference/ui/customers/customer-360-figma-r02/overview-phone.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/sales-orders-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/quotations-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/sites-desktop.png"
       ],
       "dependencies": [],
       "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Figma proposal refined against accepted PPO pages with shared navigation and compact desktop/phone layouts; agent visual inspection recorded; named version and owner acceptance pending",
+      "visual_status": "Figma register and exact customer workspaces in shared PPO shell; agent visual/structural inspection recorded; named version and owner acceptance pending",
       "functional_status": "Focused automated proof; see receiving handover",
       "deployment_status": "Local compiled verification; not deployed",
       "review_fingerprint": null,
@@ -5889,12 +5898,18 @@
         "src/app/(business)/customers/[id]/page.tsx",
         "src/components/customer-workspace.tsx",
         "src/shared/customer-360.ts",
-        "src/components/duplicate-candidates.tsx"
+        "src/components/duplicate-candidates.tsx",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "guide_key": "guide.page.customers.id",
       "design_path": "docs/design/development/pages/route-customers-id.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/customer-360-figma-r03/willowbank-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/rothwell-desktop.png"
+      ],
       "dependencies": [],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
@@ -5946,22 +5961,29 @@
       "title": "Customer register",
       "kind": "route",
       "module": "CS",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Find a permitted customer in the register, then open that exact Customer 360 workspace and return to the same list context.",
       "path": "/customers",
       "source_paths": [
         "src/app/(business)/customers/page.tsx",
         "src/components/crm-directory.tsx",
         "src/crm/directory.ts",
         "src/app/layout.tsx",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "guide_key": "guide.page.customers",
       "design_path": "docs/design/development/pages/route-customers.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/customer-360-figma-r04/register-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/register-phone.png"
+      ],
       "dependencies": [],
       "scope_status": "refine",
-      "visual_status": "Needs review",
+      "visual_status": "Figma proposal: desktop table, phone cards and exact customer navigation; agent inspection recorded; owner/named-version review pending",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
@@ -5972,7 +5994,7 @@
         "scope:CS-01"
       ],
       "reviewer": null,
-      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md. The PT-27 candidate imports CrmDirectory and the existing customer stylesheet directly. Its initial client graph and actual record handover are compared on one runner; no timing, visual or owner acceptance is inferred from the import change."
+      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md. The PT-27 candidate imports CrmDirectory and the existing customer stylesheet directly. Its initial client graph and actual record handover are compared on one runner; no timing, visual or owner acceptance is inferred from the import change. The 14 October Figma extension demonstrates two synthetic customers, preset search, due-today filtering, desktop name sorting and conditional return-state navigation. It does not change the native directory or establish runtime persistence."
     },
     {
       "key": "route:/documents/[id]",
