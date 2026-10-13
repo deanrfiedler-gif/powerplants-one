@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "families": 2,
+  "exact_outputs_and_original_receipts_retained": true,
+  "unknown_outcomes_block_replacement": true,
+  "reconciliation_additive_and_repeat_safe": true,
+  "real_delivery_claimed": false
+}
