@@ -46,7 +46,7 @@
     {
       "key": "formula-editor",
       "source": "tests/browser/cpq.spec.ts; tests/unit/cpq-design.test.ts",
-      "expected": "Bounded min/max and 0–12-place exact round; server test does not save; Apply/Cancel remain distinct and source-1 functions remain refused. The title is 20 px / 26 px with normal letter spacing; header and actions stay visible while formula content scrolls."
+      "expected": "Bounded min/max and 0–12-place exact round; server test does not save; Apply/Cancel remain distinct and source-1 functions remain refused. The title is 20 px / 26 px with normal letter spacing both inside the scoped workbench and in a portal; header and actions stay visible while formula content scrolls."
     }
   ]
 }

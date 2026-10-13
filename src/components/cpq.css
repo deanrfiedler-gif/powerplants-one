@@ -92,7 +92,8 @@
   font-size: 16px;
   line-height: 23px;
 }
-.cpq-dialog > header h2 {
+.cpq-dialog > header h2,
+#ppo-cpq .cpq-dialog > header h2 {
   font-size: 20px;
   line-height: 26px;
 }

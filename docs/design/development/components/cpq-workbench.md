@@ -30,6 +30,8 @@ The expanded CPQ primary rail is 240 px at desktop widths; the saved collapsed p
 
 All CPQ headings use normal letter spacing. The application-wide negative tracking is inappropriate for the retained 20 px workbench title; dialog titles also use the frame-05 20 px / 26 px treatment. Compiled captures at `3468ce6` exposed this inherited spacing; browser assertions now cover the correction at desktop and phone widths. The captured geometry and successful interactions are bounded evidence, not owner acceptance.
 
+The dialog title rule must also include the `#ppo-cpq` ancestor: the workbench's generic `h2` selector otherwise wins by specificity and renders 16 px. Integrated CI at `72dd7c2` exposed this on both desktop and phone. Keep the 20 px / 26 px assertions; correct the scoped cascade rather than the expected geometry.
+
 Option cards follow frame 16 as full-width stacked rows at desktop and phone widths, with a 64 px minimum height that grows with content. Selection retains a two-pixel blue outline and pale surface; the native radio uses the dark ink colour. Labels use medium weight. Preserve configured choice order and let unavailable reasons wrap; selection never reorders the choices.
 
 Native fields use an explicit accessible name from the visible label, with help as a separate description. Select options do not become part of the field name; the Review adjustment journey selects the exact Decision field.
