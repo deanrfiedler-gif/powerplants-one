@@ -4,7 +4,8 @@ CREATE FUNCTION ppo.valid_project_calendar(days integer[], exceptions jsonb) RET
 LANGUAGE plpgsql IMMUTABLE AS $$
 DECLARE e jsonb; d date; seen text[] := '{}';
 BEGIN
- IF cardinality(days) NOT BETWEEN 1 AND 7 OR array_position(days,NULL) IS NOT NULL
+ IF cardinality(days) NOT BETWEEN 1 AND 7 OR array_ndims(days)<>1 THEN RETURN false; END IF;
+ IF array_position(days,NULL) IS NOT NULL
  OR NOT days <@ ARRAY[1,2,3,4,5,6,7] OR cardinality(days)<>(SELECT count(DISTINCT v) FROM unnest(days) v)
  OR jsonb_typeof(exceptions)<>'array' OR jsonb_array_length(exceptions)>366 THEN RETURN false; END IF;
  FOR e IN SELECT * FROM jsonb_array_elements(exceptions) LOOP

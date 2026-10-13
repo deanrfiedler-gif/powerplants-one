@@ -414,16 +414,32 @@ test("PJ03-C06 populated 0087 upgrade retains exact original rows and ledger; re
   );
 });
 
-
-test("PJ03-C07 calendar history has bounded pages and a permitted editor cannot assume coordinator duty", async()=>{
- const {p,project,task}=await setup();
- const editor=(await createSession("systems")).principal;
- await database().query(`INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to)
- SELECT workspace_id,$2,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability IN ('project.read','project.edit','shared.read','shared.internal.read') ON CONFLICT DO NOTHING`,[p.actor_id,editor.actor_id]);
- assert.equal((await readCalendar(editor,project.id)).can_record,false);
- await assert.rejects(recordCalendar(editor,project.id,calendarInput()),code("RecordUnavailable"));
- await recordActuals(editor,project.id,task.id,actualInput(2));
- for(let n=0;n<21;n++) await recordCalendar(p,project.id,calendarInput(3+n,n));
- const first=await readCalendar(p,project.id);assert.equal(first.items.length,20);assert.equal(first.next_cursor,2);
- const second=await readCalendar(p,project.id,{before:String(first.next_cursor)});assert.deepEqual(second.items.map(r=>r.revision),[1]);assert.equal(second.next_cursor,null);assert.equal(second.current.revision,21);
+test("PJ03-C07 calendar history has bounded pages and a permitted editor cannot assume coordinator duty", async () => {
+  const { p, project, task } = await setup();
+  const editor = (await createSession("systems")).principal;
+  await database().query(
+    `INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to)
+ SELECT workspace_id,$2,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability IN ('project.read','project.edit','shared.read','shared.internal.read') ON CONFLICT DO NOTHING`,
+    [p.actor_id, editor.actor_id],
+  );
+  assert.equal((await readCalendar(editor, project.id)).can_record, false);
+  await assert.rejects(
+    recordCalendar(editor, project.id, calendarInput()),
+    code("RecordUnavailable"),
+  );
+  await recordActuals(editor, project.id, task.id, actualInput(2));
+  for (let n = 0; n < 21; n++)
+    await recordCalendar(p, project.id, calendarInput(3 + n, n));
+  const first = await readCalendar(p, project.id);
+  assert.equal(first.items.length, 20);
+  assert.equal(first.next_cursor, 2);
+  const second = await readCalendar(p, project.id, {
+    before: String(first.next_cursor),
+  });
+  assert.deepEqual(
+    second.items.map((r) => r.revision),
+    [1],
+  );
+  assert.equal(second.next_cursor, null);
+  assert.equal(second.current.revision, 21);
 });
