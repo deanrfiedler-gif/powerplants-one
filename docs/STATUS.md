@@ -1,8 +1,8 @@
 # Current prototype status
 
-## DK-06 supported template publication — 13 October 2026
+## DK-06 supported template publication — 14 October 2026
 
-Dean authorised R3 after PR #472. The [decision](decisions/template-publication-backend.md) selects OUT-09 job packs: exact reviewed proposals become immutable supported definitions with an independent publisher, explicit Service approval and original-operation recovery. The new renderer retains all nine mandatory sections and fingerprints its supported sources; existing shared renderer bytes remain unchanged. Migration 0093 adds empty publication evidence and default-denied template.publish without seeds or grants. The [contract](contracts/template-publication.md) and [verification ledger](testing/evidence/template-publication/README.md) separate publication from R4 policy assignment, native controls, owner acceptance and deployment.
+Dean authorised R3 after PR #472. The [decision](decisions/template-publication-backend.md) selects OUT-09 job packs: exact reviewed proposals become immutable supported definitions with an independent publisher, explicit Service approval and original-operation recovery. The new renderer retains all nine mandatory sections and fingerprints its supported sources; existing shared renderer bytes remain unchanged. Migration 0093 adds empty publication evidence and default-denied template.publish without seeds or grants. [PR #476](https://github.com/deanrfiedler-gif/powerplants-one/pull/476), the [contract](contracts/template-publication.md) and [verification ledger](testing/evidence/template-publication/README.md) separate publication from R4 policy assignment, native controls, owner acceptance and deployment.
 
 ## DK-06 managed template drafts — 13 October 2026
 
@@ -16,7 +16,7 @@ Current repository writer for this bounded contribution: the user-authorised DK-
 
 Dean authorised building the accepted Job Pack design in the application and delegated the open self-checking choice. The [implementation decision](decisions/job-pack-figma-implementation.md) retains existing checking permissions, exact revision/reason requirements and all controlled-output rules. Branch `codex/job-pack-figma-ui` implements the register, permitted row projection, confirmed visits without packs, record/preparation/history layout and phone views. No migration, seed, capability or dependency is added. [Execution evidence](testing/evidence/job-pack-figma-ui/README.md) separates focused verification from owner/device acceptance and deployment. The working register, component bindings and guides change together; issued references remain unchanged. [PR #465](https://github.com/deanrfiedler-gif/powerplants-one/pull/465) records the passing integrated build, three real database scenarios and desktop/mobile controlled workflow checks. Combined CI and hosted release outcomes are recorded separately against their actual commits in that PR.
 
-**Updated:** 13 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 14 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 

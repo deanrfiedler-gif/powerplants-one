@@ -96,7 +96,7 @@ jobs:
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/document-library.test.ts
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-catalogue.test.ts
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-drafts.test.ts
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-publication.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-publication.test.ts tests/http/template-publication-base.test.ts
       - name: Exact originals across PostgreSQL and application-process restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}

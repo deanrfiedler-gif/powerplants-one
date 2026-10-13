@@ -18,6 +18,8 @@ Keep the existing fingerprinted renderer sources unchanged. Extend support throu
 
 Publication allocates the next workspace pack-template version (at least 3). Template version, schema version, renderer version, proposal revision, review and publication are distinct. Current support recomputes the literal dependency list and refuses drift. Definitions and publication evidence are immutable. Historical inspection/recovery needs current source authority but does not require today's runtime to reproduce yesterday's support.
 
+Copying a published definition into another draft retains that source's authority boundary. Every later draft read, history and original recovery rechecks the publication's company/site and frozen/current source bindings, including when the receiving draft is at another site.
+
 Publication never changes the pack-policy pointer, reserves a render, rewrites an output or assigns applicability. R4 retains explicit assignment/effective-time work. Existing legacy reservations and exact bytes remain unchanged. New supported definitions can be rendered against an explicit synthetic snapshot for proof; this is not policy adoption.
 
 Migration 0093 adds one empty publication table, one default-denied capability and its identity/audit type with the deferred-identity flush. No seed, grant, user or existing record changes. Reserved 0091 remains available to parallel DK-03 work.

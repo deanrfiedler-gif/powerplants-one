@@ -24,6 +24,8 @@ All endpoints start with /api/v1 and use existing session, origin, JSON, no-stor
 
 R2 draft endpoints retain their proposal-only flags; their false publication_eligible is not R3 readiness. Native controls remain unbuilt. Publication does not select a policy, define an effective interval or authorise a use assignment.
 
+A draft copied from a managed publication retains the source publication's current company/site and frozen/current binding authority. Draft reads, lists, history and original recovery recheck this authority; keeping access to the receiving draft alone cannot expose a source whose access was revoked. This check covers the captured published definition, without recursively expanding unrelated ancestor drafts.
+
 ## Exact command
 
 Require operation_id, schema_version:1, reason, id (publication UUID), template_id (new UUID), expected_version (proposal command version), revision_id, content_hash (proposal), review_id, runtime_version, definition_hash and approval_note (1–2000 characters). All fields are explicit; unknown properties are rejected. Obtain the version and definition hash from readiness; do not synthesize support or substitute another reviewed revision.
