@@ -16,6 +16,8 @@ At 390 and 320 px preserve every control and amount, 44 px targets, no horizonta
 
 ## Fixtures and consumers
 
+The rules register distinguishes the company activation from publication history. Active rows retain the exact rule/release version even while a newer saved draft exists. Older active rows open the immutable revision read only; returning to the working draft is explicit. A published release superseded by another company activation is labelled inactive. Keep these states in the register, editor, guide and database/browser fixtures together.
+
 Four route consumers `/estimating/cpq`, `/estimating/cpq/[id]`, `/estimating/rules`, `/estimating/rules/[id]`. `../cpq-fixtures.json` names state fixtures; tests/browser/cpq.spec.ts supplies authorised real synthetic records. Unit/database tests prove immutable evidence, calculation and handover. These fixtures never grant production authority.
 
 ## Alignment and review

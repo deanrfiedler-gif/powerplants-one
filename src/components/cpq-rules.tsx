@@ -67,7 +67,11 @@ const menus = [
 export function CpqRules({ id }: { id: string }) {
   const selectedCompany = useCpqCompany(),
     query = useSearchParams(),
-    draftId = query.get("draft");
+    draftId = query.get("draft"),
+    revisionId = query.get("revision");
+  const inspected = useCrmResource<
+    Wire<Awaited<ReturnType<typeof readRevision>>>
+  >(revisionId ? `cpq/revisions/${revisionId}` : null, true);
   const resource = useCrmResource<ReleaseView>(
     id === "new" ? null : `cpq/releases/${id}`,
     true,
@@ -87,7 +91,14 @@ export function CpqRules({ id }: { id: string }) {
     true,
   );
   const [start, setStart] = useState<Definition | null>(null),
-    error = resource.error ?? draft.error ?? registry.error;
+    error =
+      resource.error ??
+      draft.error ??
+      registry.error ??
+      inspected.error ??
+      (inspected.data && inspected.data.release_id !== id
+        ? new Error("The selected revision belongs to another rule set.")
+        : null);
   const content = draft.data?.draft.content as Definition | undefined;
   if (error)
     return (
@@ -100,7 +111,12 @@ export function CpqRules({ id }: { id: string }) {
         </div>
       </CpqFrame>
     );
-  if (resource.loading || draft.loading || registry.loading)
+  if (
+    resource.loading ||
+    draft.loading ||
+    registry.loading ||
+    inspected.loading
+  )
     return (
       <CpqFrame
         name="Rules studio"
@@ -180,16 +196,17 @@ export function CpqRules({ id }: { id: string }) {
     );
   return (
     <CpqDraftBoundary
-      key={id + ":" + (draftId ?? "")}
+      key={id + ":" + (draftId ?? "") + ":" + (revisionId ?? "")}
       href={id === "new" ? "/estimating/rules" : `/estimating/rules/${id}`}
     >
       <RulesEditor
-        key={id + ":" + (draftId ?? "")}
+        key={id + ":" + (draftId ?? "") + ":" + (revisionId ?? "")}
         company={company}
         initial={initial}
         initialRoot={resource.data}
         draft={draft.data}
         initialRule={query.get("rule")}
+        initialHistorical={inspected.data}
         canAuthor={
           resource.data?.capabilities.author ??
           registry.data?.capabilities.author ??
@@ -206,6 +223,7 @@ function RulesEditor({
   initialRoot,
   draft,
   initialRule,
+  initialHistorical,
   canAuthor,
   serverRoot,
 }: {
@@ -214,6 +232,7 @@ function RulesEditor({
   initialRoot: ReleaseView | null;
   draft: DraftView | null;
   initialRule: string | null;
+  initialHistorical: Wire<Awaited<ReturnType<typeof readRevision>>> | null;
   canAuthor: boolean;
   serverRoot: ReleaseView | null;
 }) {
@@ -242,7 +261,7 @@ function RulesEditor({
     >(null),
     [historical, setHistorical] = useState<Wire<
       Awaited<ReturnType<typeof readRevision>>
-    > | null>(null),
+    > | null>(initialHistorical),
     [hydrating, setHydrating] = useState(false);
   const intent = useRef("draft");
   const command = useCrmCommand(
@@ -743,8 +762,14 @@ function RulesEditor({
                       </select>
                     </CpqField>
                   </div>
-                  <div className="cpq-section-head"><h3>Quantity formula</h3>
-                    <Button disabled={disabled} onClick={() => setFormulaEditor(true)}>Edit formula</Button>
+                  <div className="cpq-section-head">
+                    <h3>Quantity formula</h3>
+                    <Button
+                      disabled={disabled}
+                      onClick={() => setFormulaEditor(true)}
+                    >
+                      Edit formula
+                    </Button>
                   </div>
                   <CpqField
                     label="Quantity formula"
@@ -1351,8 +1376,18 @@ function RulesEditor({
           </aside>
         )}
       </div>
-      {formulaEditor && rule && <CpqFormulaEditor definition={shown} rule={rule} company={company}
-        onClose={() => setFormulaEditor(false)} onApply={(quantity) => { editRule({ quantity }); setFormulaEditor(false); }} />}
+      {formulaEditor && rule && (
+        <CpqFormulaEditor
+          definition={shown}
+          rule={rule}
+          company={company}
+          onClose={() => setFormulaEditor(false)}
+          onApply={(quantity) => {
+            editRule({ quantity });
+            setFormulaEditor(false);
+          }}
+        />
+      )}
       <footer className="cpq-footer">
         <div>
           <strong role="status">

@@ -31,7 +31,7 @@
     {
       "key": "governance",
       "source": "tests/database/cpq.test.ts",
-      "expected": "Working draft, immutable version, review, seal and activation retain independent evidence."
+      "expected": "Working draft, immutable version, review, seal and activation retain independent evidence. The rules register preserves the active version beside a newer current draft and identifies superseded published releases as inactive."
     },
     {
       "key": "browser",

@@ -142,19 +142,40 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     .getByRole("button", { name: "Configure", exact: true })
     .click();
   await expect(page.getByLabel(/^Cable run distance/)).toHaveValue("140");
-  await expect(page.locator(".cpq-header h1")).toHaveCSS("letter-spacing", "normal");
-  const choices = page.getByRole("radiogroup", { name: "Screen cloth", exact: true });
+  await expect(page.locator(".cpq-header h1")).toHaveCSS(
+    "letter-spacing",
+    "normal",
+  );
+  const choices = page.getByRole("radiogroup", {
+    name: "Screen cloth",
+    exact: true,
+  });
   const choiceBounds = (await choices.boundingBox())!;
-  const firstChoice = (await choices.locator(".cpq-option").nth(0).boundingBox())!;
-  const secondChoice = (await choices.locator(".cpq-option").nth(1).boundingBox())!;
-  expect(Math.abs(firstChoice.width - choiceBounds.width)).toBeLessThanOrEqual(1);
-  expect(Math.abs(secondChoice.width - choiceBounds.width)).toBeLessThanOrEqual(1);
-  expect(secondChoice.y).toBeGreaterThanOrEqual(firstChoice.y + firstChoice.height);
+  const firstChoice = (await choices
+    .locator(".cpq-option")
+    .nth(0)
+    .boundingBox())!;
+  const secondChoice = (await choices
+    .locator(".cpq-option")
+    .nth(1)
+    .boundingBox())!;
+  expect(Math.abs(firstChoice.width - choiceBounds.width)).toBeLessThanOrEqual(
+    1,
+  );
+  expect(Math.abs(secondChoice.width - choiceBounds.width)).toBeLessThanOrEqual(
+    1,
+  );
+  expect(secondChoice.y).toBeGreaterThanOrEqual(
+    firstChoice.y + firstChoice.height,
+  );
   await expect(
     page.getByRole("button", { name: "Save configuration", exact: true }),
   ).toBeEnabled();
   if (!info.project.name.includes("mobile")) {
-    const expand = page.getByRole("button", { name: "Expand primary navigation", exact: true });
+    const expand = page.getByRole("button", {
+      name: "Expand primary navigation",
+      exact: true,
+    });
     if (await expand.isVisible()) await expand.click();
     // Retained Figma frame 16: the white 380 px summary spans the complete
     // workspace beside its header and footer. This catches the prior layout
@@ -166,15 +187,31 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     const header = (await page.locator(".cpq-header").boundingBox())!;
     const footer = (await page.locator(".cpq-footer").boundingBox())!;
     await expect(page.locator(".cpq-footer")).toHaveCSS("font-size", "14px");
-    await expect(page.getByLabel(/^Cable run distance/)).toHaveCSS("margin", "0px");
-    await expect(page.getByLabel(/^Cable run distance/)).toHaveCSS("font-weight", "400");
-    expect((await page.getByRole("complementary", { name: "Application navigation" }).boundingBox())!.width).toBe(240);
+    await expect(page.getByLabel(/^Cable run distance/)).toHaveCSS(
+      "margin",
+      "0px",
+    );
+    await expect(page.getByLabel(/^Cable run distance/)).toHaveCSS(
+      "font-weight",
+      "400",
+    );
+    expect(
+      (await page
+        .getByRole("complementary", { name: "Application navigation" })
+        .boundingBox())!.width,
+    ).toBe(240);
     expect(panel.width).toBe(380);
     expect(Math.abs(panel.y - header.y)).toBeLessThanOrEqual(1);
-    expect(Math.abs(panel.y + panel.height - footer.y - footer.height)).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(panel.y + panel.height - footer.y - footer.height),
+    ).toBeLessThanOrEqual(1);
     const actions = page.locator(".cpq-footer");
-    const save = (await actions.getByRole("button", { name: "Save configuration", exact: true }).boundingBox())!;
-    const use = (await actions.getByRole("button", { name: "Use in estimate", exact: true }).boundingBox())!;
+    const save = (await actions
+      .getByRole("button", { name: "Save configuration", exact: true })
+      .boundingBox())!;
+    const use = (await actions
+      .getByRole("button", { name: "Use in estimate", exact: true })
+      .boundingBox())!;
     expect(save.x).toBeLessThan(use.x);
     expect(Math.abs(save.y - use.y)).toBeLessThanOrEqual(1);
     expect(footer.height).toBeLessThanOrEqual(82);
@@ -224,7 +261,10 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     .getByRole("button", { name: "Materials & labour", exact: true })
     .click();
   await expect(
-    page.locator(".cpq-pill").filter({ hasText: /^Needs review$/ }).first(),
+    page
+      .locator(".cpq-pill")
+      .filter({ hasText: /^Needs review$/ })
+      .first(),
   ).toBeVisible();
   await adjust.click();
   adjustment = page.getByRole("dialog", {
@@ -232,14 +272,18 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     exact: true,
   });
   await expect(adjustment).toContainText("effective 40");
-  await adjustment.getByRole("combobox", { name: "Decision", exact: true }).selectOption("Keep");
+  await adjustment
+    .getByRole("combobox", { name: "Decision", exact: true })
+    .selectOption("Keep");
   await adjustment
     .getByLabel("Reason", { exact: false })
     .fill("SYN reviewed increased cable run; retain forty supports.");
   await adjustment
     .getByRole("button", { name: "Apply adjustment", exact: true })
     .click();
-  await expect(page.locator(".cpq-pill").filter({ hasText: /^Needs review$/ })).toHaveCount(0);
+  await expect(
+    page.locator(".cpq-pill").filter({ hasText: /^Needs review$/ }),
+  ).toHaveCount(0);
   // The server commits, but the browser loses the response. Recover the exact
   // receipt instead of creating a second evaluation or abandoning the draft.
   let intercepted = false;
@@ -311,26 +355,61 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("cpq-definition.png") });
   await page.getByRole("button", { name: "Edit formula", exact: true }).click();
-  const formulaDialog = page.getByRole("dialog", { name: /^Quantity formula ·/ });
-  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS("letter-spacing", "normal");
-  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS("font-size", "20px");
-  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS("line-height", "26px");
+  const formulaDialog = page.getByRole("dialog", {
+    name: /^Quantity formula ·/,
+  });
+  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS(
+    "letter-spacing",
+    "normal",
+  );
+  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS(
+    "font-size",
+    "20px",
+  );
+  await expect(formulaDialog.locator(":scope > header h2")).toHaveCSS(
+    "line-height",
+    "26px",
+  );
   const proposedFormula = `max(${screenDefinition().rules[0].quantity}, 0)`;
-  await formulaDialog.getByLabel("Formula", { exact: true }).fill(proposedFormula);
-  await formulaDialog.getByRole("button", { name: "Run server test", exact: true }).click();
-  await expect(formulaDialog.getByText("Scenario expectations match", { exact: true })).toBeVisible();
-  const formulaHeader = (await formulaDialog.locator(":scope > header").boundingBox())!;
-  const formulaFooter = (await formulaDialog.locator(":scope > footer").boundingBox())!;
+  await formulaDialog
+    .getByLabel("Formula", { exact: true })
+    .fill(proposedFormula);
+  await formulaDialog
+    .getByRole("button", { name: "Run server test", exact: true })
+    .click();
+  await expect(
+    formulaDialog.getByText("Scenario expectations match", { exact: true }),
+  ).toBeVisible();
+  const formulaHeader = (await formulaDialog
+    .locator(":scope > header")
+    .boundingBox())!;
+  const formulaFooter = (await formulaDialog
+    .locator(":scope > footer")
+    .boundingBox())!;
   expect(formulaHeader.y).toBeGreaterThanOrEqual(0);
-  expect(formulaFooter.y + formulaFooter.height).toBeLessThanOrEqual(page.viewportSize()!.height);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(formulaFooter.y + formulaFooter.height).toBeLessThanOrEqual(
+    page.viewportSize()!.height,
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
   await page.screenshot({ path: info.outputPath("cpq-formula.png") });
-  await formulaDialog.getByRole("button", { name: "Apply to draft", exact: true }).click();
-  await expect(page.getByLabel("Quantity formula", { exact: true })).toHaveValue(proposedFormula);
+  await formulaDialog
+    .getByRole("button", { name: "Apply to draft", exact: true })
+    .click();
+  await expect(
+    page.getByLabel("Quantity formula", { exact: true }),
+  ).toHaveValue(proposedFormula);
   await page.getByRole("button", { name: "Edit formula", exact: true }).click();
   await formulaDialog.getByLabel("Formula", { exact: true }).fill("min(");
-  await formulaDialog.getByRole("button", { name: "Cancel", exact: true }).click();
-  await expect(page.getByLabel("Quantity formula", { exact: true })).toHaveValue(proposedFormula);
+  await formulaDialog
+    .getByRole("button", { name: "Cancel", exact: true })
+    .click();
+  await expect(
+    page.getByLabel("Quantity formula", { exact: true }),
+  ).toHaveValue(proposedFormula);
   await page.getByLabel("Quantity formula", { exact: false }).fill("ceil(");
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(
@@ -353,4 +432,60 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     ),
   ).toBe(true);
   await page.screenshot({ path: info.outputPath("cpq-rules.png") });
+  release = await call(`cpq/releases/${releaseId}`);
+  const nextDefinition = screenDefinition();
+  nextDefinition.rules[0].description = "Support spacing — next draft";
+  await call("cpq/releases", {
+    ...crmBase(),
+    id: releaseId,
+    company_id: CRM.company,
+    expected_version: release.release.version,
+    definition: nextDefinition,
+  });
+  await page.goto("/estimating/rules");
+  await expect(
+    page.getByRole("link", {
+      name: "Support spacing — next draft",
+      exact: true,
+    }),
+  ).toBeVisible();
+  const activeFilter = page.getByRole("button", {
+    name: "Active releases",
+    exact: true,
+  });
+  if (!(await activeFilter.isVisible()))
+    await page.locator("button.ppo-menu-toggle").click();
+  await activeFilter.click();
+  await expect(
+    page.getByRole("link", {
+      name: "Support spacing — next draft",
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await page.screenshot({ path: info.outputPath("cpq-active-rules.png") });
+  await page
+    .getByRole("link", { name: "Support spacing", exact: true })
+    .click();
+  await expect(page).toHaveURL(new RegExp(`revision=${release.current.id}`));
+  await expect(
+    page.getByText(/Viewing immutable release version/),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("Quantity formula", { exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByLabel("Quantity formula", { exact: true }),
+  ).toHaveValue(screenDefinition().rules[0].quantity);
+  await page
+    .getByRole("button", { name: "Return to working draft", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: "Support spacing — next draft",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("Quantity formula", { exact: true }),
+  ).toBeEnabled();
 });

@@ -20,6 +20,8 @@ At 390 × 844 and 320 px, replace the outline with the native selector/menu over
 
 ## States, reusable components and handovers
 
+Opening an older active version from the register retains its exact immutable definition and disables authoring. Return to working draft explicitly restores the current draft; publication and company activation remain separate states.
+
 Reuse SecondaryMenuFrame, Button/ButtonLink, RegisterTable for registers, the existing session and receipt recovery. CPQ host controls supply typed fields, condition groups, tabs, explanations and native dialogs. Required states: loading, empty, read-only, incomplete draft, live preview, Ready/Blocked, pricing Requires approval, saved historical evaluation, changed source, retained stale adjustment, conflict, network-uncertain outcome and revoked access. Loading or error must not substitute a previous company’s data.
 
 Incoming: selected complete discovery, active company release, explicit synthetic price sources. Outgoing: exact saved run and native estimate version, with milestone proposals remaining unresolved. ES-04/ES-05 retain review and quotation approval. No order, customer communication or real schedule is created.

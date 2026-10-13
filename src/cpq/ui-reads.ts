@@ -99,14 +99,24 @@ export async function ruleRegister(
         release_version: number;
         rule: import("./types").Rule;
         rule_version: number | null;
+        is_active: boolean;
+        is_current: boolean;
         updated_at: string;
       }>(
-        `SELECT r.id AS release_id,r.label,r.state,v.id AS revision_id,v.version AS release_version,entry AS rule,rv.version AS rule_version,r.updated_at
-      FROM ppo.cpq_releases r JOIN ppo.cpq_revisions v ON (v.workspace_id,v.id)=(r.workspace_id,r.current_revision_id)
+        `SELECT r.id AS release_id,v.definition->>'label' AS label,
+      CASE WHEN v.id=r.current_revision_id THEN r.state ELSE 'Published' END AS state,
+      v.id AS revision_id,v.version AS release_version,entry AS rule,rv.version AS rule_version,
+      COALESCE(v.id=a.revision_id,false) AS is_active,v.id=r.current_revision_id AS is_current,v.created_at AS updated_at
+      FROM ppo.cpq_releases r
+      LEFT JOIN ppo.cpq_heads h ON (h.workspace_id,h.company_id)=(r.workspace_id,r.company_id)
+      LEFT JOIN ppo.cpq_activations a ON (a.workspace_id,a.id)=(h.workspace_id,h.activation_id)
+      JOIN ppo.cpq_revisions v ON (v.workspace_id,v.release_id)=(r.workspace_id,r.id)
+        AND (v.id=r.current_revision_id OR v.id=a.revision_id)
       CROSS JOIN LATERAL jsonb_array_elements(v.definition->'rules') entry
       LEFT JOIN ppo.cpq_release_members m ON m.workspace_id=v.workspace_id AND m.revision_id=v.id AND m.rule_key=entry->>'key'
       LEFT JOIN ppo.cpq_rule_versions rv ON (rv.workspace_id,rv.id)=(m.workspace_id,m.rule_version_id)
-      WHERE r.workspace_id=$1 AND r.company_id=$2 ORDER BY r.updated_at DESC,r.id,entry->>'key' LIMIT 100`,
+      WHERE r.workspace_id=$1 AND r.company_id=$2
+      ORDER BY is_active DESC,r.updated_at DESC,r.id,v.version DESC,entry->>'key' LIMIT 100`,
         [p.workspace_id, company],
       )
     ).rows;

@@ -76394,7 +76394,7 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Search rules by name and state. Open the rule to inspect its release.",
+            "Search rules by name and state. Active releases follows the exact company activation, including an older active version beside a newer draft. Older active rows open read only; Return to working draft restores the editable current version.",
             "Authors can start an explicit synthetic Screen systems template or reopen a working draft.",
             "Use the release editor to test and version; the register does not activate rules."
           ],
@@ -76426,7 +76426,7 @@
           "title": "Common tasks",
           "paragraphs": [],
           "steps": [
-            "Search rules by name and state. Open the rule to inspect its release.",
+            "Search rules by name and state. Active releases follows the exact company activation, including an older active version beside a newer draft. Older active rows open read only; Return to working draft restores the editable current version.",
             "Authors can start an explicit synthetic Screen systems template or reopen a working draft.",
             "Use the release editor to test and version; the register does not activate rules."
           ],

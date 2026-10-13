@@ -76,9 +76,9 @@ export function CpqRegister({ rules = false }: { rules?: boolean }) {
           />
           <CpqNav
             label={rules ? "Active releases" : "Needs attention"}
-            selected={state === (rules ? "Published" : "Blocked")}
+            selected={state === (rules ? "Active" : "Blocked")}
             icon="warning"
-            onClick={() => setState(rules ? "Published" : "Blocked")}
+            onClick={() => setState(rules ? "Active" : "Blocked")}
           />
           <hr />
           <CpqNav
@@ -165,10 +165,13 @@ export function CpqRegister({ rules = false }: { rules?: boolean }) {
         )}
         {rules ? (
           <RegisterTable
-            caption="Rules; open a rule to inspect or edit its current version."
+            caption="Current saved rule versions and the active company version; older active versions open read only."
             empty={
               !registry.data?.items.some((r) =>
-                matches(r.rule.description, r.state),
+                matches(
+                  r.rule.description + " " + r.rule.key,
+                  r.is_active ? "Active" : r.state,
+                ),
               ) && (
                 <RegisterEmpty title="No matching rules">
                   Create a rule set to start authoring.
@@ -189,13 +192,16 @@ export function CpqRegister({ rules = false }: { rules?: boolean }) {
             <tbody>
               {registry.data?.items
                 .filter((r) =>
-                  matches(r.rule.description + " " + r.rule.key, r.state),
+                  matches(
+                    r.rule.description + " " + r.rule.key,
+                    r.is_active ? "Active" : r.state,
+                  ),
                 )
                 .map((r) => (
-                  <tr key={r.release_id + r.rule.key}>
+                  <tr key={r.revision_id + r.rule.key}>
                     <td>
                       <Link
-                        href={`/estimating/rules/${r.release_id}?rule=${r.rule.key}`}
+                        href={`/estimating/rules/${r.release_id}?rule=${r.rule.key}${r.is_current ? "" : `&revision=${r.revision_id}`}`}
                       >
                         {r.rule.description}
                       </Link>
@@ -211,12 +217,12 @@ export function CpqRegister({ rules = false }: { rules?: boolean }) {
                         : `Release ${r.release_version}`}
                     </td>
                     <td>
-                      <CpqPill
-                        tone={r.state === "Published" ? "good" : "neutral"}
-                      >
-                        {r.state === "Published"
-                          ? "Published version"
-                          : r.state}
+                      <CpqPill tone={r.is_active ? "good" : "neutral"}>
+                        {r.is_active
+                          ? "Active version"
+                          : r.state === "Published"
+                            ? "Published · inactive"
+                            : r.state}
                       </CpqPill>
                     </td>
                     <td>{stamp(r.updated_at)}</td>

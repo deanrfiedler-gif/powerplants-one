@@ -8,6 +8,8 @@ Stable key: `route:/estimating/rules`. Scopes ES-02/ES-03; parent requirements E
 
 Find company rule definitions and continue working authoring drafts.
 
+The Active releases filter follows the exact company activation. A newer saved draft does not hide its older active rule version; that older row opens read only. Superseded publication is labelled Published · inactive. All rules includes both the current saved version and the active version when different.
+
 Private Figma supplied 13 October 2026; pages 464:2–464:7, exact frames 485:301. The implementation session inspected design context and rendered frames. Dean confirmed the named Figma version “CPQ — Configure & price and Rules studio, accepted” on 13 October. The [44 retained icon-free reference images](../../../reference/ui/estimating/cpq-figma-design-r01/README.md) and [accepted design decision](../../../decisions/cpq-figma-design.md) are now linked into the page register. Preserve these reference bytes; application screenshots are separate implementation evidence. See [implementation decision](../../../decisions/cpq-figma-ui.md).
 
 ## Desktop

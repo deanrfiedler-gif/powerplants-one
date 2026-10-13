@@ -64,7 +64,7 @@ Schema 1 retains its accepted fields and serialised results. Schema 2 belongs to
 | Method | Additional path | Contract |
 |---|---|---|
 | GET | `/cpq/configurations?company_id=UUID` | Latest authorised evaluation per option, up to 100 candidates; totals and calculator duty |
-| GET | `/cpq/rules?company_id=UUID` | Current rule members, immutable rule version and author duty; limit 100 |
+| GET | `/cpq/rules?company_id=UUID` | Current saved and active rule members, exact revision, immutable rule version, `is_current`, `is_active` and author duty; active rows first, limit 100 |
 | POST | `/cpq/validate` | Company and definition; validate and test without saving, return fixture results and table coverage |
 | GET/POST | `/cpq/drafts` | Scoped draft list / receipt-backed CAS save; Rules or Configuration |
 | GET | `/cpq/drafts/:id` | Current draft plus immutable history metadata; hash verified |

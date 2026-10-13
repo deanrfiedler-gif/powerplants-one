@@ -5564,7 +5564,7 @@
         {
           "id": "release",
           "label": "Release governance",
-          "description": "Draft, tested version, review, seal and activation remain distinct."
+          "description": "Draft, tested version, review, seal and activation remain distinct; the register retains the exact active version beside a newer saved draft and marks superseded publication inactive."
         },
         {
           "id": "formula",
@@ -5596,6 +5596,10 @@
         {
           "path": "src/components/cpq-formula-editor.tsx",
           "symbol": "CpqFormulaEditor"
+        },
+        {
+          "path": "src/components/cpq-register.tsx",
+          "symbol": "CpqRegister"
         }
       ],
       "dependencies": [
@@ -5624,7 +5628,7 @@
           "id": "cpq-paired-review",
           "expected": "Full paired visual and physical-device acceptance against a named saved Figma version.",
           "actual": "Retained named-version source images are linked. Compiled desktop/phone journeys pass at 3468ce6; paired captures exposed legacy heading tracking, now explicitly reset with the dialog title size; frame-16 option cards also use full-width stacked rows. Owner/device acceptance remains pending.",
-          "action": "Verify the final typography and choice-card layout in the same four route consumers and retain owner/device acceptance as pending.",
+          "action": "Verify final typography, choice-card layout and exact active/current version states in the same four route consumers; retain owner/device acceptance as pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

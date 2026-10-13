@@ -23,6 +23,7 @@ import {
   sealRelease,
 } from "../../src/cpq/releases";
 import { saveDraft, readDraft, listDrafts } from "../../src/cpq/drafts";
+import { ruleRegister } from "../../src/cpq/ui-reads";
 import { definition as validateDefinition } from "../../src/cpq/validation";
 import {
   readRelease,
@@ -268,6 +269,12 @@ test("design contract retains drafts, immutable rule versions and separate seals
   const sealed = await sealRelease(s.publisher, s.release_id, seal);
   assert.equal((await readRelease(s.p, s.release_id)).active, null);
   assert.equal(
+    (await ruleRegister(s.p, { company_id: CRM.company })).items.some(
+      (r) => r.is_active,
+    ),
+    false,
+  );
+  assert.equal(
     (await sealRelease(s.publisher, s.release_id, seal)).replayed,
     true,
   );
@@ -281,6 +288,14 @@ test("design contract retains drafts, immutable rule versions and separate seals
     expected_version: sealed.receipt.record_version,
   });
   const before = await readRelease(s.p, s.release_id);
+  const activeRows = (await ruleRegister(s.p, { company_id: CRM.company }))
+    .items;
+  assert.equal(activeRows.length, content.rules.length);
+  assert.ok(
+    activeRows.every(
+      (r) => r.is_active && r.is_current && r.revision_id === v.current.id,
+    ),
+  );
   content.rules[0].description = "SYN new explanation";
   await saveRelease(s.p, {
     ...crmBase(),
@@ -293,6 +308,35 @@ test("design contract retains drafts, immutable rule versions and separate seals
   assert.equal(after.rule_versions.length, 3);
   assert.equal(after.active?.revision.id, v.current.id);
   assert.equal(after.seals.length, 1);
+  const concurrentRows = (await ruleRegister(s.p, { company_id: CRM.company }))
+    .items;
+  assert.equal(concurrentRows.length, content.rules.length * 2);
+  assert.ok(
+    concurrentRows
+      .filter((r) => r.is_active)
+      .every(
+        (r) =>
+          !r.is_current &&
+          r.revision_id === v.current.id &&
+          r.state === "Published",
+      ),
+  );
+  assert.ok(
+    concurrentRows
+      .filter((r) => r.is_current)
+      .every(
+        (r) =>
+          !r.is_active &&
+          r.revision_id === after.current.id &&
+          r.state === "Draft",
+      ),
+  );
+  assert.equal(
+    concurrentRows.find(
+      (r) => r.is_active && r.rule.key === content.rules[0].key,
+    )?.rule.description,
+    v.current.definition.rules[0].description,
+  );
   await saveRelease(s.p, {
     ...crmBase(),
     id: s.release_id,
@@ -317,6 +361,53 @@ test("design contract retains drafts, immutable rule versions and separate seals
     [CRM.workspace, s.p.actor_id],
   );
   await assert.rejects(readOperation(s.p, draftInput.operation_id));
+});
+
+test("rule register distinguishes inactive published releases from the exact company activation", async () => {
+  const s = await published();
+  const otherId = randomUUID();
+  const saved = await saveRelease(s.p, {
+    ...crmBase(),
+    id: otherId,
+    company_id: CRM.company,
+    expected_version: 0,
+    definition: { ...cpqDefinition(), label: "SYN replacement release" },
+  });
+  const other = await readRelease(s.p, otherId);
+  const reviewed = await reviewRelease(s.reviewer, otherId, {
+    ...crmBase(),
+    expected_version: saved.receipt.record_version,
+    revision_id: other.current.id,
+    content_hash: other.current.content_hash,
+    outcome: "Approved",
+  });
+  await activateRelease(s.publisher, otherId, {
+    ...crmBase(),
+    expected_version: reviewed.receipt.record_version,
+    revision_id: other.current.id,
+    content_hash: other.current.content_hash,
+    expected_activation_version: 1,
+  });
+  const registry = await ruleRegister(s.p, { company_id: CRM.company });
+  assert.equal(
+    registry.items.filter((r) => r.is_active).length,
+    other.current.definition.rules.length,
+  );
+  assert.ok(
+    registry.items
+      .filter((r) => r.is_active)
+      .every(
+        (r) => r.release_id === otherId && r.revision_id === other.current.id,
+      ),
+  );
+  const previous = registry.items.filter((r) => r.release_id === s.release_id);
+  assert.equal(previous.length, s.view.current.definition.rules.length);
+  assert.ok(
+    previous.every(
+      (r) => r.state === "Published" && r.is_current && !r.is_active,
+    ),
+  );
+  await assert.rejects(ruleRegister(s.p, { company_id: CRM.companyB }));
 });
 
 test("CPQ release review/publication is independent, hash-bound, replayable and revoked before recovery", async () => {
