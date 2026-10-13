@@ -612,3 +612,6 @@ PPO-DK06-DRAFTS-EVIDENCE,DK-06 template drafts execution evidence,docs/testing/e
 PPO-DK06-PUBLICATION-DEC,DK-06 supported template publication,docs/decisions/template-publication-backend.md,,Synthetic implementation; review and acceptance separate,Dean Fiedler,96896d1,,,git,
 PPO-DK06-PUBLICATION-API,DK-06 template publication API,docs/contracts/template-publication.md,,Synthetic implementation; review and acceptance separate,Dean Fiedler,96896d1,,,git,
 PPO-DK06-PUBLICATION-EVIDENCE,DK-06 template publication evidence,docs/testing/evidence/template-publication/README.md,,Synthetic implementation; review and acceptance separate,Dean Fiedler,96896d1,,,git,
+PPO-DK06-USE-DEC,DK-06 controlled template use assignment,docs/decisions/template-use-assignment-backend.md,,Synthetic implementation; review and acceptance separate,Dean Fiedler,52f5636,,,git,
+PPO-DK06-USE-API,DK-06 controlled template use API,docs/contracts/template-use-assignment.md,,Synthetic implementation; review and acceptance separate,Dean Fiedler,52f5636,,,git,
+PPO-DK06-USE-EVIDENCE,DK-06 controlled template use evidence,docs/testing/evidence/template-use/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,52f5636,,,git,

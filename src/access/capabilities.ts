@@ -6,6 +6,7 @@ export const capabilityLabels = {
   "template.read": "Read scoped template proposals and review evidence",
   "template.propose": "Create and revise structured template proposals",
   "template.publish": "Publish exact supported template definitions",
+  "template.assign": "Assign published templates to scoped effective use",
   "template.review": "Independently review exact template proposals",
   "document.read": "Read scoped library documents",
   "document.register": "Register document revisions and references",

@@ -18,7 +18,7 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
-    "template.read":"Read scoped template proposals and review evidence", "template.propose":"Create and revise structured template proposals", "template.review":"Independently review exact template proposals", "template.publish":"Publish exact supported template definitions",
+    "template.read":"Read scoped template proposals and review evidence", "template.propose":"Create and revise structured template proposals", "template.review":"Independently review exact template proposals", "template.publish":"Publish exact supported template definitions", "template.assign":"Assign published templates to scoped effective use",
     "document.read":"Read scoped library documents", "document.register":"Register exact document revisions and references", "document.review":"Independently review document revisions and finding responses",
     "cpq.read":"Read CPQ commercial evidence", "cpq.author":"Author CPQ releases", "cpq.review":"Review exact CPQ releases", "cpq.publish":"Publish reviewed CPQ releases", "cpq.calculate":"Calculate and adopt CPQ results",
     'admin.access.review.attest':'Record independent local single-grant Keep attestations',

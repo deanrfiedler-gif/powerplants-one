@@ -349,12 +349,15 @@ export async function processRenderJob(
       return { processed: true, issue_id: issue.id, receipt };
     });
   } catch (e) {
-    const code = e instanceof AppError ? e.code : "RenderOrStorageFailure",
+    const code = (e as {constraint?:string}).constraint === "template_use_current" ? "StaleSource" : e instanceof AppError ? e.code : "RenderOrStorageFailure",
       state = [
         "StaleSource",
         "ScopeReviewRequired",
         "RecipientUnavailable",
         "TemplateUnavailable",
+        "TemplateUseUnavailable",
+        "TemplateBaselineChanged",
+        "AmbiguousTemplateUse",
         "PolicyUnavailable",
         "PackNotReady",
       ].includes(code)

@@ -1,5 +1,9 @@
 # Current prototype status
 
+## DK-06 controlled template use — 14 October 2026
+
+Dean authorised R4 after R3 PR #476. The [decision](decisions/template-use-assignment-backend.md) and [contract](contracts/template-use-assignment.md) add exact company/site OUT-09 assignment, versioned policy, trusted effective intervals, explicit open-ended succession and original-operation recovery. Native pack preparation/reservation/finalisation select the current exact definition and refuse stale use. Migration 0094 adds empty policy/assignment evidence and default-denied template.assign, preserving existing publication/renderer bytes and workspace pointers. [Verification](testing/evidence/template-use/README.md), independent review, native controls, owner acceptance and deployment remain separate.
+
 ## DK-06 supported template publication — 14 October 2026
 
 Dean authorised R3 after PR #472. The [decision](decisions/template-publication-backend.md) selects OUT-09 job packs: exact reviewed proposals become immutable supported definitions with an independent publisher, explicit Service approval and original-operation recovery. The new renderer retains all nine mandatory sections and fingerprints its supported sources; existing shared renderer bytes remain unchanged. Migration 0093 adds empty publication evidence and default-denied template.publish without seeds or grants. [PR #476](https://github.com/deanrfiedler-gif/powerplants-one/pull/476), the [contract](contracts/template-publication.md) and [verification ledger](testing/evidence/template-publication/README.md) separate publication from R4 policy assignment, native controls, owner acceptance and deployment.

@@ -1,4 +1,5 @@
 import { policyImpactHolds } from "../scheduling/policy-holds";
+import { selectedTemplate } from "./use/policy";
 import { incidentHolds } from "../incidents/holds";
 import { sectionView } from "./section-view";
 import { readSection } from "./section-readers";
@@ -637,12 +638,9 @@ async function currentBasis(
         )
       ).rows[0]
     : null;
-  const template = (
-    await c.query(
-      "SELECT t.version,p.version AS policy_version FROM ppo.pack_templates t JOIN ppo.pack_policy p ON (p.workspace_id,p.template_id)=(t.workspace_id,t.id) WHERE t.workspace_id=$1",
-      [p.workspace_id],
-    )
-  ).rows[0];
+  let template = null;
+  try { template = await selectedTemplate(c,p.workspace_id,a); }
+  catch(e) { if (!(e instanceof AppError && ["TemplateUseUnavailable","TemplateBaselineChanged","AmbiguousTemplateUse"].includes(e.code))) throw e; }
   return {
     appointment_version: a.version,
     schedule_version: a.schedule_version,

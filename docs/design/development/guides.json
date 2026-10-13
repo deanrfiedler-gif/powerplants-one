@@ -23815,7 +23815,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "R3 backend verification: docs/testing/evidence/template-publication/README.md. Native controls, walkthrough and visual acceptance pending.",
+      "runtime_evidence": "R4 backend verification: docs/testing/evidence/template-use/README.md. Native controls, walkthrough and visual acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23825,7 +23825,8 @@
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
             "A template change must not alter previously issued outputs.",
             "R1 supplies exact read-only template and usage APIs. R2 adds scoped structured proposals, immutable revisions and independent review evidence. Native authoring controls, supported publication and use assignment remain separate.",
-            "R3 adds an OUT-09 publication API: an authorised independent publisher with Service pack-check authority records approval of the exact reviewed revision and current supported definition. Publication preserves the nine mandatory sections and does not select a use policy. Recover an uncertain original unchanged; edits require fresh review. Native publishing controls remain unbuilt."
+            "R3 adds an OUT-09 publication API: an authorised independent publisher with Service pack-check authority records approval of the exact reviewed revision and current supported definition. Publication preserves the nine mandatory sections and does not select a use policy. Recover an uncertain original unchanged; edits require fresh review. Native publishing controls remain unbuilt.",
+            "R4 adds controlled OUT-09 company/site assignment of an exact supported publication. Record explicit effective dates and Service approval; an open predecessor requires explicit succession. Use trusted server selection, resolve overlaps and gaps, and recover an uncertain original unchanged. Previously issued outputs remain exact. Native assignment controls are not yet built."
           ],
           "steps": [],
           "rows": [],
@@ -24057,9 +24058,11 @@
         "docs/blueprints/contextual-help-design.md",
         "docs/decisions/template-catalogue-backend.md",
         "docs/contracts/template-catalogue.md",
-        "docs/contracts/template-publication.md"
+        "docs/contracts/template-publication.md",
+        "docs/decisions/template-use-assignment-backend.md",
+        "docs/contracts/template-use-assignment.md"
       ],
-      "change_summary": "R3 supported OUT-09 publication boundary and original recovery; native workflow remains planned.",
+      "change_summary": "R4 exact site use, effective intervals, explicit succession and original recovery; native workflow remains planned.",
       "document_id": "PPO-GUIDE-DK-06",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,

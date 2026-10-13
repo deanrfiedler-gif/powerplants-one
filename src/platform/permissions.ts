@@ -9,6 +9,7 @@ export type Capability =
   | "template.propose"
   | "template.review"
   | "template.publish"
+  | "template.assign"
   | "document.read"
   | "document.register"
   | "document.review"

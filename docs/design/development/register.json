@@ -4440,7 +4440,7 @@
       "title": "Document and form template management",
       "kind": "scope",
       "module": "DK",
-      "summary": "Exact catalogue, managed drafts and independent review, plus supported OUT-09 publication. Use assignment, other-family publication and native controls remain separate.",
+      "summary": "Exact catalogue, managed drafts/review, supported OUT-09 publication and controlled company/site use assignment. Other families and native controls remain separate.",
       "path": "/documents/templates",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -4460,7 +4460,13 @@
         "src/documents/publication/definition.ts",
         "src/documents/publication/render.ts",
         "docs/decisions/template-publication-backend.md",
-        "docs/contracts/template-publication.md"
+        "docs/contracts/template-publication.md",
+        "src/documents/use/policy.ts",
+        "src/documents/use/service.ts",
+        "src/app/api/v1/document-template-use-assignments/route.ts",
+        "src/app/api/v1/document-template-use-policies/route.ts",
+        "docs/decisions/template-use-assignment-backend.md",
+        "docs/contracts/template-use-assignment.md"
       ],
       "guide_key": "guide.dk.06",
       "design_path": "docs/design/development/pages/scope-dk-06.md",
@@ -4474,7 +4480,7 @@
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "R1/R2/R3 backend verification is recorded in docs/testing/evidence/template-publication/README.md and its predecessor ledgers. Native page, owner acceptance and deployment remain open.",
+      "functional_status": "R1–R4 backend verification is recorded in docs/testing/evidence/template-use/README.md and its predecessor ledgers. Native controls, owner acceptance and deployment remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

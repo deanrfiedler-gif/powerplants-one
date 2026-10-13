@@ -224,6 +224,7 @@ async function projection(
     runtime_support,
     renderer_version: row.renderer_version,
     selected_by_policy: row.selected_by_policy,
+    ...(family === "OUT-09" ? {policy_selection_scope:"WorkspaceDefaultOnly",scoped_use_policy:"document-template-use-policies"} : {}),
     policy_version: row.policy_version,
     definition_eligible:
       row.selected_by_policy &&

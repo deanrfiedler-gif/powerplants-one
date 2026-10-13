@@ -280,7 +280,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Existing runtime privileges apply; no seed, tester grant, template or policy
   // changes occur during upgrade. Publication later requires explicit scope and
   // pack.check approval; legacy renderer bytes remain unchanged.
-  if (latestMigrationVersion !== 93) throw Error("Review the existing-demo upgrade for this release.");
+  // 0094 adds empty scoped use-policy heads and immutable assignment intervals.
+  // No old pointer, grant, seed, user or output changes. Identity extension uses
+  // the deferred-event flush. New render guards are inert without an adopted site
+  // policy; the generic grants cover the two tables/view and guard functions.
+  // template.assign remains default-denied; this is not hosted use adoption.
+  if (latestMigrationVersion !== 94) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
