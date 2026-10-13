@@ -42,6 +42,14 @@ Integration source `a3bde50` includes main `ad9f2eb` and its shared Shell v2 rol
 
 The combined optimized build `LnVYfbmxBnGnHtTUE2xGP` and its TypeScript stage pass. The combined design register passes with the same coverage/review counts above. Foundation assurance passes with 22 issued sources, 78 parent IDs, 9,248 checked links and 5,788 marker-scanned files; naming passes with 598 document records and 7,998 project-instruction characters. The earlier `28b7fa7` E1 database/browser workflow completed successfully before this integration. Fresh combined-source browser, visual and CI outcomes are recorded in PR #464; the retained images above certify their stated earlier source only. No owner review fingerprint is adopted.
 
+### Final compiled composition
+
+Application source `7b6e1d4` finishes the flush phone valve register. Optimized build `fVlODTztNqgpmdNSSwv3Y`, its TypeScript stage and the design register pass. The fresh [combined-source manifest](shared-shell/manifest.json) records eight icon-free captures, source hashes and runtime identity; [geometry](shared-shell/geometry.json) covers all nine desktop views with no document overflow. The shared rails remain 240 px each and the shell header 64 px. The same synthetic fixture and visibility-only icon treatment described above apply.
+
+Representative combined captures: [Overview](shared-shell/public/desktop-overview.png), [Growing areas](shared-shell/public/desktop-growing.png), [Water](shared-shell/public/desktop-water.png), [Scope review](shared-shell/public/desktop-review.png), [History](shared-shell/public/desktop-history.png), [phone Overview](shared-shell/public/phone-overview.png), [phone valve register](shared-shell/public/phone-growing.png) and [phone section sheet](shared-shell/public/phone-sections.png). The fresh comparison confirms shared-shell containment and the corrected phone register edges; this remains agent comparison, not owner acceptance.
+
+The first combined browser attempt exposed an ambiguous FN-T61 selector matching both Show menu and Expand Estimating menu; that run was stopped after three passing cases and this failure. The selector now chooses the header Show menu / phone Estimating menu button. The native route, assertions and deadlines are unchanged. The full corrected desktop/phone run and final-head CI outcomes are recorded in PR #464, separately from the earlier source-pinned runs.
+
 ## Delivery boundaries
 
 The shared account and Page guide controls remain accessible on the phone; navigation follows the signed-in identity's real permissions. Seven phone views have no separate accepted Figma frame, and physical-device/screen-reader acceptance has not been performed. Q8 system SVG export and device-to-channel allocation remain open. No accepted review fingerprint is inferred from these captures.
