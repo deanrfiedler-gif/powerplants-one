@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { crmCreate } from "../helpers/crm";
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 async function session(profile: string) {
   const response = await fetch(`${origin}/api/v1/local-session`, {method: "POST", headers: {Origin: origin, "Content-Type": "application/json"}, body: JSON.stringify({profile})});
   assert.equal(response.status, 200);

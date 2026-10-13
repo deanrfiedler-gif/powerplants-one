@@ -14,7 +14,7 @@ import {
 import { largeFertigationScope } from "../helpers/fertigation-large";
 import { nativeExport } from "../../src/estimating/fertigation/output";
 import { calculate } from "../../src/estimating/fertigation/engine";
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 let fixture: Awaited<ReturnType<typeof fertigationFixture>>,
   cookie = "";
 async function signIn(profile = "coordinator") {

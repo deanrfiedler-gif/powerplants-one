@@ -3,7 +3,7 @@ import { randomUUID, randomBytes, createHash } from "node:crypto";
 import { after, test } from "node:test";
 import { database, closeDatabase } from "../../src/platform/database";
 import { CRM, crmCreate, crmAction, crmQualify } from "../helpers/crm";
-const origin = "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 after(closeDatabase);
 async function call(cookie: string, path: string, body?: unknown) {
   const r = await fetch(`${origin}/api/v1/${path}`, { method: body === undefined ? "GET" : "POST", headers: { Cookie: cookie, ...(body === undefined ? {} : { Origin: origin, "Content-Type": "application/json" }) }, body: body === undefined ? undefined : JSON.stringify(body) });
