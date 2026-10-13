@@ -353,7 +353,10 @@ export function PackListScreen({
   const selected = rows.filter((row) => selection.includes(row.id));
   const options =
     !visits.error && !visits.loading ? (visits.data?.items ?? []) : [];
-  const nextVisits = options.filter((v) => withinSevenDays(v.start_at, now));
+  const nextVisits = options.filter((v) =>
+    withinSevenDays(v.start_at, visits.data?.observed_at ?? now),
+  );
+  const activeRead = view === "visits" ? visits : r;
   const update = (key: string, value: string) => {
     change(key, value);
     setSelection([]);
@@ -386,12 +389,12 @@ export function PackListScreen({
             />
             <span>{label}</span>
             <small>
-              {r.loading ||
-              r.error ||
-              (key === "visits" && (visits.loading || visits.error))
-                ? "—"
-                : key === "visits"
-                  ? nextVisits.length
+              {key === "visits"
+                ? visits.loading || visits.error
+                  ? "—"
+                  : nextVisits.length
+                : r.loading || r.error
+                  ? "—"
                   : all.filter((row) =>
                       matchesPackView(row, key, identity.actor_id, now),
                     ).length}
@@ -526,12 +529,12 @@ export function PackListScreen({
           </WorklistMenu>
         </div>
         <span className="jpr-count">
-          {r.loading
+          {activeRead.loading
             ? "Loading…"
-            : r.error
+            : activeRead.error
               ? "Unavailable"
               : view === "visits"
-                ? `${nextVisits.length} visits`
+                ? `${nextVisits.length} visit${nextVisits.length === 1 ? "" : "s"}`
                 : `${rows.length} job pack${rows.length === 1 ? "" : "s"}`}
         </span>
         <Button
@@ -547,19 +550,24 @@ export function PackListScreen({
           <ProductIcon name="changes" />
         </Button>
         <WorklistMenu label="Register actions" icon="more">
-          <button
-            type="button"
-            data-menu-close
-            onClick={() => exportRows(rows)}
-          >
-            Export list
-          </button>
+          {view !== "visits" && (
+            <button
+              type="button"
+              data-menu-close
+              disabled={r.loading || !!r.error || !rows.length}
+              onClick={() => exportRows(rows)}
+            >
+              Export list
+            </button>
+          )}
           <Link href="/schedule">Open service planner</Link>
         </WorklistMenu>
       </div>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+      {view !== "visits" && (
+        <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+      )}
       <div className="jpr-body">
-        {selected.length > 0 && (
+        {view !== "visits" && selected.length > 0 && (
           <div
             className="jpr-selection"
             role="region"
@@ -882,8 +890,8 @@ export function PackListScreen({
       </div>
       <p className="jpr-environment">
         Synthetic prototype · not for operational use
-        {r.data &&
-          ` · Updated ${formatStamp(r.data.observed_at, "Australia/Brisbane")}`}
+        {!activeRead.loading && !activeRead.error && activeRead.data &&
+          ` · Updated ${formatStamp(activeRead.data.observed_at, "Australia/Brisbane")}`}
       </p>
       {prepare && (
         <WorklistPanel

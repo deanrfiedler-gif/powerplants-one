@@ -598,7 +598,7 @@
         {
           "id": "loading",
           "label": "Loading",
-          "description": "First read in progress: no rows, and no result is inferred."
+          "description": "First read in progress: no rows, and no result is inferred. Job Pack also verifies independent visit loading, unavailable and recovered counts in its compiled host test."
         }
       ],
       "implementation": [
@@ -623,7 +623,8 @@
         "src/development/component-fixtures.ts",
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
-        "src/app/styles/job-pack-figma.css"
+        "src/app/styles/job-pack-figma.css",
+        "src/documents/components/client/job-pack-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -680,7 +681,7 @@
         {
           "id": "register-table-figma-owner-review",
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
-          "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
+          "actual": "Actual component fixtures and focused verification include independent packless-visit read states and observation time; owner/device acceptance not recorded.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

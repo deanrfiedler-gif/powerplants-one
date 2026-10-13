@@ -16,6 +16,9 @@ The horizontally scrollable grid has 40 px single-line rows, 32 px group heading
 
 Prepare job pack lists confirmed unstarted future visits for which no pack exists and the viewer has prepare permission. A denied or hidden existing pack never becomes a new-pack opportunity. `/service/packs/new` without an appointment opens this chooser.
 
+
+Job Pack uses each active read's loading/error state and observation time for counts and freshness. An unavailable packless-visit read cannot display zero; its own retry restores the visit count. Visit discovery offers preparation and planner handovers, while pack CSV export and pack selection remain in pack views. `tests/browser/job-pack-integration.spec.ts` exercises a failed read, a held loading response and recovery to one eligible visit on desktop and phone.
+
 ## Mobile
 
 At 390/320 px, use compact flush three-line rows grouped by day, a view picker, count and Filter job packs. Filters also contain preparation and refresh. Row activation opens the full record. No page-level horizontal scroll; desktop grid scrolling stays within the register. Review 1440/1024/820/770/390/320 widths and effective 200% zoom.

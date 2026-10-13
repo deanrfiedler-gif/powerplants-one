@@ -70,6 +70,49 @@ test("SV05 Figma register uses the compiled shell and shared controls with scope
   await attention.click();
   await expect(page.locator(".jpr-count")).toHaveText("1 job pack");
 });
+test("SV05 packless visit counts distinguish unavailable, loading and recovered reads", async ({ page }) => {
+  await session(page);
+  await page.route("**/api/v1/packs", route => route.fulfill({
+    json: { items: registerRows, observed_at: registerClock },
+  }));
+  let unavailable = true;
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  await page.route("**/api/v1/packs/visits", async route => {
+    if (unavailable) {
+      await route.fulfill({ status: 503, json: {
+        code: "DependencyUnavailable", message: "SYN visits unavailable. Retry the read.", retryable: true,
+      } });
+      return;
+    }
+    await pending;
+    await route.fulfill({ json: {
+      observed_at: "2031-11-10T00:00:00Z",
+      items: [{ id: "22222222-2222-4222-8222-222222222222", display_number: "SYN visit without a pack",
+        work_order_reference: "SYN Work order", start_at: "2031-11-11T00:00:00Z",
+        site_timezone: "Australia/Brisbane", site_name: "SYN Site" }],
+    } });
+  });
+  await page.goto("/service/packs?view=visits");
+  await expect(page.getByRole("alert").filter({ hasText: "SYN visits unavailable" })).toBeVisible();
+  await expect(page.locator(".jpr-count")).toHaveText("Unavailable");
+  await expect(page.getByText("No confirmed visits without a pack", { exact: true })).toHaveCount(0);
+  unavailable = false;
+  await page.getByRole("button", { name: "Retry loading", exact: true }).click();
+  await expect(page.locator(".jpr-count")).toHaveText("Loading…");
+  release();
+  await expect(page.locator(".jpr-count")).toHaveText("1 visit");
+  await expect(page.locator(".jpr-visits > article")).toHaveCount(1);
+  await expect(page.locator(".jpr-environment")).toContainText("10 Nov 2031");
+  const actions = page.getByRole("button", { name: "Register actions", exact: true });
+  if (!test.info().project.name.startsWith("mobile")) {
+    await expect(actions).toBeVisible();
+    await actions.click();
+    await expect(page.getByRole("button", { name: "Export list", exact: true })).toHaveCount(0);
+    await page.keyboard.press("Escape");
+  }
+});
+
 test("SV05-I5 compiled shell and state-dependent pack header fit all widths and 200% zoom reflow", async ({
   page,
 }, info) => {
