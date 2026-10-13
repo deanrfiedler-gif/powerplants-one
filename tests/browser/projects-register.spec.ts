@@ -1,5 +1,15 @@
 import { test, expect, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
 import { projectInput, taskInput } from "../helpers/projects";
+const design = JSON.parse(
+  readFileSync(
+    new URL(
+      "../../docs/design/projects-register/figma-measurements.json",
+      import.meta.url,
+    ),
+    "utf8",
+  ),
+);
 
 test.setTimeout(180000);
 async function call(page: Page, baseURL: string, path: string, data?: unknown) {
@@ -44,7 +54,11 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
     finish_date: "2020-10-09",
     title: "SYN Fertigation skid on site",
   });
-  await page.goto(`/projects?q=${encodeURIComponent(prefix)}`);
+  const [registerRead] = await Promise.all([
+    page.waitForResponse((r) => r.url().includes("/api/v1/projects/register?")),
+    page.goto(`/projects?q=${encodeURIComponent(prefix)}`),
+  ]);
+  expect(registerRead.ok()).toBe(true);
   await expect(page.locator("#ppo-projects")).toBeVisible();
   await expect(page.getByText("2 projects", { exact: true }))
     .toBeVisible()
@@ -52,9 +66,15 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
       await expect(page.locator(".pj-observed")).toContainText("2 projects");
     });
   const phone = (page.viewportSize()?.width ?? 1440) <= 780;
-  const savedSnapshot = page.waitForResponse((r) =>
-    r.url().endsWith(`/api/v1/projects/${first.id}`),
-  );
+  const openSnapshot = async (action: () => Promise<unknown>) => {
+    const [read] = await Promise.all([
+      page.waitForResponse((r) =>
+        r.url().endsWith(`/api/v1/projects/${first.id}`),
+      ),
+      action(),
+    ]);
+    expect(read.ok()).toBe(true);
+  };
   if (!phone) {
     const expand = page.getByRole("button", {
       name: "Expand primary navigation",
@@ -63,10 +83,20 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
     if (await expand.isVisible()) await expand.click();
     const row = page.locator(".pj-table-host tbody tr").first();
     await expect(row).toContainText("Overdue ·");
-    expect((await row.boundingBox())!.height).toBe(40);
+    expect((await row.boundingBox())!.height).toBe(design.desktop.row);
+    expect(
+      (await page.locator(".pj-table-host thead").boundingBox())!.height,
+    ).toBe(design.desktop.header_row);
+    expect(
+      (await page.locator(".pj-toolbar.pj-desktop").boundingBox())!.height,
+    ).toBe(design.desktop.toolbar);
+    expect((await page.locator("#projects-menu").boundingBox())!.width).toBe(
+      design.desktop.menu,
+    );
     await expect(
       page.locator(".pj-table-host th[aria-sort=ascending]"),
     ).toContainText("Target date");
+    await page.screenshot({ path: info.outputPath("project-register.png") });
     await page
       .getByRole("checkbox", { name: `Select ${first.title}`, exact: true })
       .check();
@@ -76,26 +106,38 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
     await expect(
       page.getByRole("complementary", { name: "Selected projects" }),
     ).toBeVisible();
+    expect((await page.locator(".pj-bulk").boundingBox())!.width).toBe(
+      design.selection.width,
+    );
     const download = page.waitForEvent("download");
     await page
       .getByRole("button", { name: "Export list", exact: true })
       .click();
     expect((await download).suggestedFilename()).toBe("projects.csv");
-    await page
-      .getByRole("button", { name: "Open in sequence", exact: true })
-      .first()
-      .click();
+    await openSnapshot(() =>
+      page
+        .getByRole("button", { name: "Open in sequence", exact: true })
+        .first()
+        .click(),
+    );
   } else {
     const row = page.getByRole("button", {
       name: `Open ${first.title}`,
       exact: true,
     });
-    expect((await row.boundingBox())!.height).toBeGreaterThanOrEqual(80);
-    await row.click();
+    expect((await row.boundingBox())!.height).toBe(design.phone.row);
+    await page.screenshot({ path: info.outputPath("project-register.png") });
+    await openSnapshot(() => row.click());
   }
   const snapshot = page.getByRole("dialog", { name: first.title });
-  expect((await savedSnapshot).ok()).toBe(true);
   await expect(snapshot).toBeVisible();
+  expect((await snapshot.boundingBox())!.width).toBe(
+    phone ? design.phone_snapshot.width : design.snapshot.width,
+  );
+  if (!phone)
+    expect((await snapshot.locator(".pj-record").boundingBox())!.width).toBe(
+      design.snapshot.record,
+    );
   await expect(snapshot).toContainText("SYN Controller configuration");
   await expect(snapshot).toContainText("1 tasks · 0 complete · 1 at risk");
   await snapshot.getByRole("tab", { name: "Milestones (1)" }).click();
@@ -147,7 +189,47 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.screenshot({ path: info.outputPath("project-register.png") });
+  await page.screenshot({ path: info.outputPath("project-register-filtered.png") });
+  // Exercise the shared overlay breakpoint and the smallest supported phone.
+  const smaller = phone
+    ? { width: 320, height: 740 }
+    : { width: 1024, height: 768 };
+  await page.setViewportSize(smaller);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  const [smallRead] = await Promise.all([
+    page.waitForResponse((r) =>
+      r.url().endsWith(`/api/v1/projects/${second.id}`),
+    ),
+    phone
+      ? page
+          .getByRole("button", { name: `Open ${second.title}`, exact: true })
+          .click()
+      : page.locator(".pj-table-host .ppo-register-row-title").click(),
+  ]);
+  expect(smallRead.ok()).toBe(true);
+  const smallerSnapshot = page.getByRole("dialog", { name: second.title });
+  await expect(smallerSnapshot).toBeVisible();
+  for (const target of [
+    smallerSnapshot,
+    smallerSnapshot.getByRole("link", { name: "Open schedule", exact: true }),
+    smallerSnapshot.getByRole("link", {
+      name: "Acceptance & closeout",
+      exact: true,
+    }),
+  ]) {
+    const bounds = (await target.boundingBox())!;
+    expect(bounds.x).toBeGreaterThanOrEqual(0);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(smaller.width);
+    expect(bounds.y + bounds.height).toBeLessThanOrEqual(smaller.height);
+  }
+  await page.screenshot({
+    path: info.outputPath("project-snapshot-responsive.png"),
+  });
+  await page.keyboard.press("Escape");
   await page.goto(`/projects/${first.id}`);
   await expect(page.locator("#ppo-gantt-page")).toBeVisible();
   const schedule = await call(page, origin, `projects/${first.id}`);
@@ -155,21 +237,65 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
   expect(schedule.tasks).toHaveLength(2);
 });
 
-test("failed or forbidden register refresh never exports retained rows", async ({
+test("failed refresh disables retained rows and forbidden refresh clears them", async ({
   page,
   baseURL,
 }) => {
   await call(page, baseURL!, "local-session", { profile: "coordinator" });
-  await page.goto("/projects");
+  const saved = { ...projectInput(), title: `SYN Refresh ${Date.now()}` };
+  await call(page, baseURL!, "projects", saved);
+  const [initialRead] = await Promise.all([
+    page.waitForResponse((r) => r.url().includes("/api/v1/projects/register?")),
+    page.goto(`/projects?q=${encodeURIComponent(saved.title)}`),
+  ]);
+  expect(initialRead.ok()).toBe(true);
   await expect(page.locator("#ppo-projects")).toBeVisible();
+  const phone = (page.viewportSize()?.width ?? 1440) <= 780;
+  const rows = page.locator(
+    phone ? ".pj-phone-row" : ".pj-table-host tbody tr",
+  );
+  await expect(rows).toHaveCount(1);
+  let status = 503;
   await page.route("**/api/v1/projects/register?**", (route) =>
     route.fulfill({
-      status: 403,
+      status,
       contentType: "application/json",
-      body: JSON.stringify({ code: "Forbidden", message: "Access refused" }),
+      body: JSON.stringify(
+        status === 403
+          ? { code: "Forbidden", message: "Access refused" }
+          : { code: "Unavailable", message: "Synthetic service unavailable" },
+      ),
     }),
   );
-  await page.reload();
+  if (phone)
+    await page
+      .getByRole("button", { name: "Filter projects", exact: true })
+      .click();
+  await page
+    .getByRole("button", { name: "Refresh projects", exact: true })
+    .click();
+  await expect(page.locator("#ppo-projects").getByRole("alert")).toContainText(
+    "Synthetic service unavailable",
+  );
+  await expect(rows).toHaveCount(1);
+  if (phone) {
+    await expect(rows).toBeDisabled();
+  } else {
+    await expect(
+      page.getByRole("checkbox", { name: "Select all projects on this page" }),
+    ).toBeDisabled();
+    await page
+      .getByRole("button", { name: "Project register actions", exact: true })
+      .click();
+    await expect(
+      page.getByRole("button", { name: "Export this page (CSV)", exact: true }),
+    ).toBeDisabled();
+    await page.keyboard.press("Escape");
+  }
+  status = 403;
+  await page
+    .getByRole("button", { name: "Refresh projects", exact: true })
+    .click();
   await expect(page.locator("#ppo-projects").getByRole("alert")).toContainText(
     "Access refused",
   );

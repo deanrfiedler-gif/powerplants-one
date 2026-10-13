@@ -155,6 +155,34 @@ test("register reads all scoped matches, schedule facts and deterministic pages 
     ).rows,
     before.rows,
   );
+  // A legitimate cursor can lose its anchor when saved facts leave the active filter.
+  const otherRisk = { ...taskInput(), status: "AtRisk" };
+  await saveTask(p, projects[1].id, otherRisk);
+  const riskPage = await projectRegister(p, { ...q, view: "AtRisk", limit: 1 });
+  assert.ok(riskPage.next_cursor);
+  const anchor = riskPage.items[0];
+  const anchorTask = anchor.id === projects[0].id ? task : otherRisk;
+  await saveTask(p, anchor.id, {
+    ...anchorTask,
+    operation_id: crypto.randomUUID(),
+    expected_version: anchor.version,
+    status: "Complete",
+    progress: 100,
+  });
+  await assert.rejects(
+    projectRegister(p, {
+      ...q,
+      view: "AtRisk",
+      limit: 1,
+      cursor: riskPage.next_cursor,
+    }),
+    (e) =>
+      e instanceof AppError &&
+      e.status === 422 &&
+      e.field_errors.some(
+        (f) => f.field === "cursor" && f.message.includes("Refresh"),
+      ),
+  );
   await database().query(
     "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='project.read'",
     [p.workspace_id, p.actor_id],

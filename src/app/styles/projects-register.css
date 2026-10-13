@@ -75,6 +75,7 @@
   align-items: center;
   gap: 8px;
   min-height: 60px;
+  height: 60px;
   padding: 10px 16px;
   border-bottom: 1px solid var(--line);
 }
@@ -606,10 +607,43 @@
   font-size: 12px;
   font-weight: 500;
 }
+.pj-workspace-label {
+  display: none;
+}
 #header-project-count {
   margin-left: auto;
 }
 @media (min-width: 781px) {
+  .app-frame:has(#ppo-projects) .ppo-shell-header .ppo-crumb {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .app-frame:has(#ppo-projects) .ppo-rail .ppo-primary-nav {
+    flex: 0 1 auto;
+  }
+  .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-bottom {
+    margin-top: 2px;
+    padding: 0 8px;
+  }
+  .app-frame[data-rail="expanded"]:has(#ppo-projects) .pj-workspace-label {
+    display: block;
+    align-self: stretch;
+    padding: 4px 20px 10px;
+    color: #c9ced8;
+    font:
+      400 11px/16px Roboto,
+      Verdana,
+      sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.66px;
+  }
+  .app-frame[data-rail="expanded"]:has(#ppo-projects)
+    .ppo-rail
+    .ppo-rail-toggle
+    .ppo-rail-label {
+    font-size: 12px;
+    font-weight: 400;
+  }
   .app-frame[data-rail="expanded"]:has(#ppo-projects) {
     --ppo-rail-width: 240px;
   }
@@ -618,6 +652,7 @@
     gap: 2px;
   }
   .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-item {
+    flex: 0 0 44px;
     height: 44px;
     font-weight: 400;
     min-height: 44px;
@@ -635,6 +670,20 @@
     height: 46px;
   }
   .app-frame:not([data-rail="expanded"]) #header-project-count {
+    display: none;
+  }
+}
+@media (max-width: 780px) {
+  .app-frame:has(#ppo-projects)
+    .ppo-shell-header
+    .ppo-crumbs
+    li[data-crumb="root"] {
+    display: flex;
+  }
+  .app-frame:has(#ppo-projects)
+    .ppo-shell-header
+    .ppo-crumbs
+    li[data-crumb="page"] {
     display: none;
   }
 }
@@ -715,6 +764,7 @@
   }
   #ppo-projects .pj-phone-meta .mw-tag {
     flex: none;
+    padding: 0 8px;
   }
   #ppo-projects .pj-phone-milestone {
     display: flex;

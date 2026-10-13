@@ -344,7 +344,9 @@ function RegisterView({ query }: { query: string }) {
             <span className="pj-observed">
               {data
                 ? `${data.total} projects · updated ${new Intl.DateTimeFormat("en-AU", { hour: "numeric", minute: "2-digit", timeZone: "Australia/Brisbane", timeZoneName: "short" }).format(new Date(data.observed_at))}`
-                : "Loading…"}
+                : resource.error
+                  ? "Unavailable"
+                  : "Loading…"}
             </span>
             <Button
               className="mw-button mw-button-icon"
