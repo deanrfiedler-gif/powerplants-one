@@ -10123,10 +10123,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-11",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance. Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance. Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending. Calendar/actuals: docs/testing/evidence/project-programme/README.md; verification is separate from acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -10399,7 +10399,7 @@
           "title": "Record and compare a schedule baseline",
           "paragraphs": [
             "In a saved project, open Baselines and forecast. Only the current coordinator with edit access can record a baseline for an active project. Each revision retains the complete dated schedule, recording actor and reason.",
-            "Differences are calendar days. Finish-to-start checks use the next Monday–Friday date; holidays and automatic shifts are not included. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
+            "Differences are calendar days. Finish-to-start checks use the next working date in the current Project calendar. Unconfigured Projects use synthetic Monday-Friday with no holidays; forecast dates do not move automatically. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
           ],
           "steps": [
             "Date every task and inspect schedule warnings. Enter a baseline label and reason, acknowledge the review, then record the baseline.",
@@ -10407,6 +10407,18 @@
             "Reopen Baselines and forecast to inspect milestone slippage, changed dependencies and current owners. Select earlier revisions or Older baselines to inspect history.",
             "If a version conflict occurs, refresh, compare the latest dates and acknowledge the review again. If the result is unconfirmed, retry the unchanged baseline before leaving."
           ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "calendar-actuals",
+          "title": "Calendar and actual dates",
+          "paragraphs": [
+            "The programme backend retains reasoned working calendars and actual start/finish statements. Calendar and actual-date editing controls are not yet available in this page. The saved calendar name appears with dependency warnings; weekend shading still means Saturday/Sunday.",
+            "A calendar changes advisory checks, not forecast dates or Service bookings. Actual dates do not imply progress or completion. New baselines retain their exact calendar revision. Backend working-day comparisons identify current and baseline calendars separately; the current baseline dialog continues to show calendar days.",
+            "If another calendar or actual revision is saved, reload before saving the forecast. An unconfirmed command must be recovered with its original operation and payload. Closed Projects retain history and original recovery but reject new revisions."
+          ],
+          "steps": [],
           "rows": [],
           "headers": []
         }
@@ -10430,7 +10442,7 @@
         "docs/decisions/quotation-task-diamond.md",
         "docs/delivery/quotation-task-diamond-handover.md"
       ],
-      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save.",
+      "change_summary": "PJ-03 calendar-aware advisory checks and API-only actual-date evidence; editing surfaces and guide review remain separate.",
       "document_id": "PPO-GUIDE-PJ-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -10440,7 +10452,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/project-calendars-actuals.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -41912,10 +41925,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-11",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Backend verification: docs/testing/evidence/project-overview/README.md. This guide has no new UI walkthrough.",
+      "runtime_evidence": "Backend verification: docs/testing/evidence/project-overview/README.md. This guide has no new UI walkthrough. Calendar/actuals: docs/testing/evidence/project-programme/README.md; verification is separate from acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -42210,7 +42223,7 @@
           "title": "Record and compare a schedule baseline",
           "paragraphs": [
             "In a saved project, open Baselines and forecast. Only the current coordinator with edit access can record a baseline for an active project. Each revision retains the complete dated schedule, recording actor and reason.",
-            "Differences are calendar days. Finish-to-start checks use the next Monday–Friday date; holidays and automatic shifts are not included. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
+            "Differences are calendar days. Finish-to-start checks use the next working date in the current Project calendar. Unconfigured Projects use synthetic Monday-Friday with no holidays; forecast dates do not move automatically. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
           ],
           "steps": [
             "Date every task and inspect schedule warnings. Enter a baseline label and reason, acknowledge the review, then record the baseline.",
@@ -42218,6 +42231,18 @@
             "Reopen Baselines and forecast to inspect milestone slippage, changed dependencies and current owners. Select earlier revisions or Older baselines to inspect history.",
             "If a version conflict occurs, refresh, compare the latest dates and acknowledge the review again. If the result is unconfirmed, retry the unchanged baseline before leaving."
           ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "calendar-actuals",
+          "title": "Calendar and actual dates",
+          "paragraphs": [
+            "The programme backend retains reasoned working calendars and actual start/finish statements. Calendar and actual-date editing controls are not yet available in this page. The saved calendar name appears with dependency warnings; weekend shading still means Saturday/Sunday.",
+            "A calendar changes advisory checks, not forecast dates or Service bookings. Actual dates do not imply progress or completion. New baselines retain their exact calendar revision. Backend working-day comparisons identify current and baseline calendars separately; the current baseline dialog continues to show calendar days.",
+            "If another calendar or actual revision is saved, reload before saving the forecast. An unconfirmed command must be recovered with its original operation and payload. Closed Projects retain history and original recovery but reject new revisions."
+          ],
+          "steps": [],
           "rows": [],
           "headers": []
         }
@@ -42239,7 +42264,7 @@
         "docs/decisions/quotation-task-diamond.md",
         "docs/delivery/quotation-task-diamond-handover.md"
       ],
-      "change_summary": "PJ-01/PJ-02 backend attribution and completeness contract; accepted page implementation and guide review remain separate.",
+      "change_summary": "PJ-03 calendar-aware advisory checks and API-only actual-date evidence; editing surfaces and guide review remain separate.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42251,7 +42276,8 @@
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md",
         "docs/decisions/project-overview-backend.md",
-        "docs/testing/evidence/project-overview/README.md"
+        "docs/testing/evidence/project-overview/README.md",
+        "docs/decisions/project-calendars-actuals.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -62208,10 +62234,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-11",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending.",
+      "runtime_evidence": "Not run for this guide Baseline increment: docs/testing/evidence/project-baselines/README.md; business and paired visual acceptance remain pending. Calendar/actuals: docs/testing/evidence/project-programme/README.md; verification is separate from acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -62443,7 +62469,7 @@
           "title": "Record and compare a schedule baseline",
           "paragraphs": [
             "In a saved project, open Baselines and forecast. Only the current coordinator with edit access can record a baseline for an active project. Each revision retains the complete dated schedule, recording actor and reason.",
-            "Differences are calendar days. Finish-to-start checks use the next Monday–Friday date; holidays and automatic shifts are not included. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
+            "Differences are calendar days. Finish-to-start checks use the next working date in the current Project calendar. Unconfigured Projects use synthetic Monday-Friday with no holidays; forecast dates do not move automatically. Successors to review are a review set, not a predicted delay. Confirmed bookings stay with Service."
           ],
           "steps": [
             "Date every task and inspect schedule warnings. Enter a baseline label and reason, acknowledge the review, then record the baseline.",
@@ -62451,6 +62477,18 @@
             "Reopen Baselines and forecast to inspect milestone slippage, changed dependencies and current owners. Select earlier revisions or Older baselines to inspect history.",
             "If a version conflict occurs, refresh, compare the latest dates and acknowledge the review again. If the result is unconfirmed, retry the unchanged baseline before leaving."
           ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "calendar-actuals",
+          "title": "Calendar and actual dates",
+          "paragraphs": [
+            "The programme backend retains reasoned working calendars and actual start/finish statements. Calendar and actual-date editing controls are not yet available in this page. The saved calendar name appears with dependency warnings; weekend shading still means Saturday/Sunday.",
+            "A calendar changes advisory checks, not forecast dates or Service bookings. Actual dates do not imply progress or completion. New baselines retain their exact calendar revision. Backend working-day comparisons identify current and baseline calendars separately; the current baseline dialog continues to show calendar days.",
+            "If another calendar or actual revision is saved, reload before saving the forecast. An unconfirmed command must be recovered with its original operation and payload. Closed Projects retain history and original recovery but reject new revisions."
+          ],
+          "steps": [],
           "rows": [],
           "headers": []
         }
@@ -62463,7 +62501,7 @@
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "PJ-03 calendar-aware advisory checks and API-only actual-date evidence; editing surfaces and guide review remain separate.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-PROGRAMME",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -62473,7 +62511,8 @@
       "workflow_basis": [
         "src/app/(business)/projects/programme/page.tsx",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/project-calendars-actuals.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

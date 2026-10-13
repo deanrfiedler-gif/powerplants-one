@@ -153,3 +153,12 @@ The [backend contract](../../../decisions/project-overview-backend.md) joins exa
 Desktop and phone consumers must show the selected versus latest baseline, site timezone, unknown forecast when tasks are undated, historical versus current Sales evidence, named receiving owner, restricted coverage and preview continuation. Counts describe all authorised matches for the displayed filters; page tokens are transient. No current flags is not a health score or completion approval. Keep missing/stale/loading/denied and uncertain native-save states accessible through the existing controls.
 
 The [accepted Project record design](../../../decisions/project-record-page-design.md) and its exact icon-free captures remain the reference for the later page. Exact new API-state desktop/phone captures are missing. [Backend evidence](../../../testing/evidence/project-overview/README.md) does not grant visual, device, guide or owner acceptance. Review fingerprints stay unchanged.
+
+
+## PJ-03 working calendar and actual-date backend
+
+The existing Gantt, task editor and baseline dialog use saved Project calendars for advisory dependency checks. Name the current calendar and revision; preserve calendar-day geometry and the explicitly labelled calendar-day comparison. Weekend shading still marks Saturday/Sunday rather than business availability. The `saved-calendar` catalogue state uses a synthetic 23 September closure. New baselines retain their exact calendar revision; actual-date evidence remains separate from task status/progress.
+
+Incoming: scoped programme/calendar/actual revisions. Outgoing: native task saves and immutable baseline receipts; calendar/actual commands are currently API-only. Reuse ProjectsGantt, ProjectTaskPanel, ProjectBaselines and their existing controls. Existing consumer bindings and r10 reference remain. No exact image for calendar editing or actual-date controls exists; these surfaces and paired acceptance remain open. Desktop and phone must retain scroll, keyboard access, calendar labels and advisory warnings without adding a sibling panel. Functional evidence: `docs/testing/evidence/project-programme/README.md`; source presence is not deployment or visual acceptance.
+
+Change history distinguishes calendar, actual-date, task and acceptance events; it must not label every Project version as a task save. Desktop/phone native-host proof covers those labels.

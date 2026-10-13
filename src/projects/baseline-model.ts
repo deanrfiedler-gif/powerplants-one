@@ -22,9 +22,12 @@ export type BaselineSummary = {
   reason: string;
   created_at: string;
   actor_name: string;
-  calendar_key: typeof projectCalendar;
+  calendar_key: typeof projectCalendar | "PPO-PJ-CALENDAR-02";
 };
-export type Baseline = BaselineSummary & { snapshot: BaselineTask[] };
+export type Baseline = BaselineSummary & {
+  snapshot: BaselineTask[];
+  calendar?: import("./calendar-model").WorkingCalendar;
+};
 export type BaselineRead = {
   items: BaselineSummary[];
   selected: Baseline | null;

@@ -647,7 +647,7 @@ for (const paired of [false, true])
     );
     assert.deepEqual(
       now.filter((r) => r.version > 68).map((r) => r.version),
-      [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87],
+      [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88],
     );
     for (const {
       f,

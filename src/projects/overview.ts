@@ -7,6 +7,7 @@ import { deliverySalesSourcesInSnapshot } from "../sales/delivery-binding";
 import { invalid, object, uuid } from "../shared/validation";
 import { projectRow, tasksFor } from "./service";
 import type { Baseline } from "./baseline-model";
+import { programmeFor } from "./programme-reads";
 import { overviewSchedule } from "./overview-model";
 import {
   projectFactProjection,
@@ -171,6 +172,14 @@ export async function readProjectOverview(
       ));
     return {
       project: projectFactProjection(facts),
+      programme: await programmeFor(
+        c,
+        p,
+        id,
+        project.timezone,
+        tasks,
+        baseline,
+      ),
       schedule: {
         ...schedule,
         attention: schedule.attention.map((item) => ({

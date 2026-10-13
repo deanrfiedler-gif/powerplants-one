@@ -1,0 +1,319 @@
+{
+  "scope": "PJ-03 / BC-02; PRJ-02/04/07; AT-09/32",
+  "synthetic": true,
+  "date": "2026-10-13",
+  "base": "1bb0cc26899a1a1a29da53349df77f8f115d9be0",
+  "runtime_source": "15577d5577faa97b6dce237f30ebf52e29fd749c",
+  "final_test_source": "a9dd21eab13376f294c3fbfe940118584c9f5119",
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/466",
+  "dependency_pull_request": 461,
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgres": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "155.0.8059.40",
+    "database": "ppo_synthetic_test"
+  },
+  "test_deadline_ms": 120000,
+  "production_timeouts_changed": false,
+  "main_control": "c3ff5b90d0730f55583b6ee73f9d1af4a449695e",
+  "checks": [
+    {
+      "name": "Projects units",
+      "status": "passed",
+      "cases": 23,
+      "private_log": "units-final.log",
+      "sha256": "6e6e294105b908c30a027668da86d08d46ac943dc8d4ce03e424ce6aef6e3092"
+    },
+    {
+      "name": "Programme database C01-C07",
+      "status": "passed",
+      "cases": 7,
+      "private_log": "database-final.log",
+      "sha256": "bbb99b2b830160ca9e7f16d430349b149bf12f4d543fe8838ffb7312c118afcf"
+    },
+    {
+      "name": "Genuine PJ-09 closeout with programme replay",
+      "status": "passed",
+      "cases": 1,
+      "private_log": "closeout-final.log",
+      "sha256": "910a57c42e83d53f5e8121eb3e47e623fab68993a6c0c0e262477cab2afdb152"
+    },
+    {
+      "name": "Compiled HTTP",
+      "status": "passed",
+      "cases": 2,
+      "private_log": "http.log",
+      "sha256": "27458e8b2f81494281f52897049bebc7f57e5ae236690d293221d042ed574b7a"
+    },
+    {
+      "name": "Compiled desktop/phone plus warm-up",
+      "status": "passed",
+      "cases": 3,
+      "private_log": "browser.log",
+      "sha256": "d221216eae9b928480573cb6af684cc3a5663e34161279b8f3701f0d8f5d393b"
+    },
+    {
+      "name": "Reserved Products 0052 after 0088",
+      "status": "passed",
+      "cases": 1,
+      "private_log": "products-0088.log",
+      "sha256": "63f392011cfa9358e1e3bde9132e4504a419392e91b90027fb53df5f35437cb4"
+    },
+    {
+      "name": "Application-process write",
+      "status": "passed",
+      "cases": null,
+      "private_log": "restart-write.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "PostgreSQL restart",
+      "status": "passed",
+      "cases": null,
+      "private_log": "restart-postgres.log",
+      "sha256": "0fa660d53a70d39dac3516ef8c29b7c761d8ecedaf894adb0e1f766f352192ef"
+    },
+    {
+      "name": "Fresh application-process verify",
+      "status": "passed",
+      "cases": null,
+      "private_log": "restart-verify.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "TypeScript",
+      "status": "passed",
+      "cases": null,
+      "private_log": "typecheck-final.log",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    {
+      "name": "ESLint",
+      "status": "passed",
+      "cases": null,
+      "private_log": "lint.log",
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64"
+    },
+    {
+      "name": "Final changed-file ESLint",
+      "status": "passed",
+      "cases": null,
+      "private_log": "lint-final-delta.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "Production build",
+      "status": "passed",
+      "cases": null,
+      "private_log": "build.log",
+      "sha256": "fb856861fce504a4f3b17b737a51af300db20bb755b13f6e2d6fda7ca1a52480"
+    },
+    {
+      "name": "Design register",
+      "status": "passed",
+      "cases": null,
+      "private_log": "studio.log",
+      "sha256": "6715988d8719559d370ca8bb5efd84a423ced251c8257f9344aba6e743e6016a"
+    },
+    {
+      "name": "Foundation",
+      "status": "passed",
+      "cases": null,
+      "private_log": "foundation.log",
+      "sha256": "2e22f0025458a2ef560617a3029ed7e901a6120a973e4e7d709a85195dbfb309"
+    },
+    {
+      "name": "Naming",
+      "status": "passed",
+      "cases": null,
+      "private_log": "naming.log",
+      "sha256": "23407ad3ae92240cbc54275e52a4e2df0615b86b5c419ffd5796028374699ce4"
+    },
+    {
+      "name": "Contacts Chrome browser",
+      "status": "passed",
+      "cases": 62,
+      "private_log": "contacts-browser.log",
+      "sha256": "9d71bfa5303b590ffbdd4428faf964dcae4eabd7a94f372af74eb8a812e286f1"
+    },
+    {
+      "name": "Original six-case programme attempt",
+      "status": "failed: three deadline failures; three passed",
+      "cases": 6,
+      "private_log": "database.log",
+      "sha256": "8cf0ff9e303ecb3e886dbe5cbf573cd3fddb12e7dfbed0151ebae2285ccb27a1"
+    },
+    {
+      "name": "Focused C05-C07 retry",
+      "status": "failed: C05 deadline, C06 connection acquisition; C07 passed",
+      "cases": 3,
+      "private_log": "database-final-focused.log",
+      "sha256": "3a79bca29c1d733586ca05fdec812191c50a20f9529459bd972471fef01f32f3"
+    },
+    {
+      "name": "First consolidated setup",
+      "status": "failed: before reset hook exceeded unchanged deadline; no bodies completed",
+      "cases": 7,
+      "private_log": "database-consolidated.log",
+      "sha256": "2cd3d399806bfd1bc934d234c7659f3e5164100fe21f6742252d4ea46fb47a35"
+    },
+    {
+      "name": "Incomplete main archive control",
+      "status": "invalid control setup: missing public font asset",
+      "cases": 1,
+      "private_log": "main-reset-control.log",
+      "sha256": "e2d6a6e27086137f4172e61719ce9ee5469ca29d9c1fee1d371fc8a6c9390c08"
+    },
+    {
+      "name": "Complete unmodified main baseline control",
+      "status": "passed",
+      "cases": 1,
+      "private_log": "main-reset-control-complete.log",
+      "sha256": "4a671e11d7b4cb5b5ed96e2cd2dd2229ce4c86e374a1d60b4ecdabdce1a6c1da"
+    },
+    {
+      "name": "Unmodified main read-only connection",
+      "status": "passed",
+      "cases": 1,
+      "private_log": "main-read-control.log",
+      "sha256": "48818b9fecb1a4cd98dacf79a3a3367c11f1b072d217e4fda8c0435c58708892"
+    },
+    {
+      "name": "Original Contacts CI dependency check",
+      "status": "failed: changed Projects contract pin; subsequently reviewed and fixed",
+      "cases": null,
+      "private_log": "contacts-ci-failed.log",
+      "sha256": "fbf97d1f3b741f4af4285ff8e9effe7e4774791b74d7d8a041aa1fc11a166616"
+    },
+    {
+      "name": "Complete Projects CI",
+      "status": "passed",
+      "private_log": "projects-ci.log",
+      "sha256": "bec0c8308b16dc31f5bc00a1406c3e7708304074719dcaaa405ea4649efd46a8"
+    },
+    {
+      "name": "Final naming",
+      "status": "passed",
+      "private_log": "naming-handover.log",
+      "sha256": "23407ad3ae92240cbc54275e52a4e2df0615b86b5c419ffd5796028374699ce4"
+    }
+  ],
+  "contacts_contract": {
+    "deterministic_html_sha256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+    "model_groups_passed": 103,
+    "chrome_groups_passed": 62,
+    "historical_artifacts_changed": false
+  },
+  "restart": {
+    "passed": true,
+    "project_version": 4,
+    "calendar_actuals_and_originals_retained": true,
+    "tasks": 1,
+    "original_receipt_retained": true,
+    "raid_history_and_original_retained": true,
+    "overview_and_portfolio_retained": true,
+    "exact_receiving_and_original_retained": true
+  },
+  "design_register": {
+    "errors": 0,
+    "entries": 358,
+    "components": 43,
+    "runnable": 21,
+    "unreviewed": 330,
+    "stale_reviews": 28
+  },
+  "ci": {
+    "source": "15577d5577faa97b6dce237f30ebf52e29fd749c",
+    "projects_run": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38328357398",
+    "status": "passed",
+    "os": "Ubuntu 24.04",
+    "unit_cases": 775,
+    "database_cases": 38,
+    "http_cases": 6,
+    "layout_cases": 5,
+    "browser_cases_including_warmup": 7,
+    "postgres_and_application_process_restart": "passed",
+    "static_and_build": "passed",
+    "final_head_ci": "separate; later commits change fixture setup, reviewed Contacts pin and evidence only"
+  },
+  "normalised_lf_sha256": {
+    ".github/workflows/projects-gantt.yml": "caf16b09d5004b098887912c9645708895a14d37ce86b469c37689481316fd4e",
+    "db/migrations/0088-project-calendars-actuals.sql": "0e6ebe8ff90e7310dbd8eca7adfa69db5a02195e0c7ff42c1d139d7f67153d13",
+    "scripts/demo-upgrade.ts": "7097f452612e783494ca4e7e4927ea90340e2560a7b9caf2734ed33f5a8289df",
+    "scripts/migration-registry.ts": "21a8a2e58d054b0f6facd8efd3a1ce276623acf79193e6f5f1934a058562f930",
+    "scripts/projects-restart-proof.ts": "e029b1e8e16e2c6ec23ed074ef7490ef584eeb60e4d47eef6a2458e6ea54551c",
+    "src/app/api/v1/projects/[id]/calendar/route.ts": "6892b9c760fe7e6dff275b82ca9680265fb07420176c476fce34c132133a1678",
+    "src/app/api/v1/projects/[id]/tasks/[taskId]/actuals/route.ts": "cf09312af46ee5191ac1c119d3eb41d66dd9016949465312b4234d4583644178",
+    "src/components/project-baselines.tsx": "56f9bc9a20f6d167b77668f1c4640e92fff81f94ae19e9bd368bf90c297be62c",
+    "src/components/project-task-panel.tsx": "d8c024b9b08562b92e4831eb37978e2fbf70b9473d12a53e0f8be30cc976f8a3",
+    "src/components/projects-gantt.tsx": "14a1dd2a4ea2e9860443795b615293233b5cbe36620869bf070f670dc0ba4b37",
+    "src/components/projects-screens.tsx": "46ce01e5334526f1116810ded4384bf15d183418b9d2c00a138f9fd0a4caa651",
+    "src/development/component-examples.tsx": "4182e05c90c90a6c1d5dfa4335bc76b4cc2e43760a39d9671dd43349756244bd",
+    "src/development/component-fixtures.ts": "99f42e13a7280a0a85dae40ffed00371af8ff4ee6de9359332957de42bdd575e",
+    "src/projects/baseline-model.ts": "6314f6fadd2502f62386efe2363ba22ae14276ca0ee32465bf64742b381780e3",
+    "src/projects/baselines.ts": "374ec073a3f0ae584ea2d5e0ca51a6ded09904ac8490cb6e2bc81e5b8473c488",
+    "src/projects/calendar-model.ts": "5b24e17c85fcf4f8cf434bfee77bc30aee25ed6e6912bfd9ad334758fefa36aa",
+    "src/projects/material-resolution.ts": "56b846433ff8cae04fbf8564b6f06e60f9d51cfa74a8a58c68576746a194381b",
+    "src/projects/model.ts": "40c079b93030131bff25d2db59b3faae42168bb1e2c770afd6fea17a1908e796",
+    "src/projects/overview.ts": "33de0ad76ef530a65b4b7905961afdf5b18e3b7e0e88f49593cd1d3ba7257288",
+    "src/projects/programme-reads.ts": "fc8eaf4db1cc2d1d6eb4f3f2be5413f31699a1a62fd0cad19a3e0a0b96f0ce35",
+    "src/projects/programme-validation.ts": "b652fa3201f5f6051d3e87b5ca555c858cb4097a93fc40c095741631bcd8fff6",
+    "src/projects/programme.ts": "cc4a569cfe8019c532b999c3da4976749a20fc78a7c2ff7e710593894ec24aed",
+    "src/projects/service.ts": "2beba618b7eff25d9bb4d47a8f31d322e8af041b50e594341ecd5de01e7e4ca3",
+    "src/shared/http.ts": "1f9cc243c038845ada2b0e7dc018e5c3dcb727ac8ba4cdc15f437d0490db916a",
+    "tests/browser/project-programme.spec.ts": "b8c596438eefdeb33d44a230e7bc7c761e1ffc956aa80c9209b9c2d875d38e3f",
+    "tests/database/access-application.test.ts": "0c6063a0c826a19cb95d0ac62a074f48fac6d8bc45b018b6f98286272777eeb8",
+    "tests/database/access-local-teams.test.ts": "ba16b150a97f84e8903f7ce9c7d2191be08606fa28dee4fba788e7998f31cd6d",
+    "tests/database/access-requests.test.ts": "c2cede5c151771375b784cf2b2e87ea2120dc1290bb079173feb1ca06d494b58",
+    "tests/database/access-review-attestations.test.ts": "8463bfa07d529abc87f31a5ad32100f02421b2368499fd7c774b80ccd344def8",
+    "tests/database/access-withdrawal.test.ts": "d304b1b5249a2f4922005567c87d115cc7391fe771d056cd7fefb80b7379727a",
+    "tests/database/cpq.test.ts": "dd1c26d8ae36e674a899556b474922dddfdde9d1c094a342a95ff8a18d089a1d",
+    "tests/database/estimating-catalogue.test.ts": "4dc40c2b3f6d461fb7a1654a0286d1da3c82878314841991573127c5376c482e",
+    "tests/database/field-customer-response.test.ts": "f088dfd555903d7e6e101fc4cf92fc19cad00fad25576597d96a4570661fd309",
+    "tests/database/field-timer-boundaries.test.ts": "1ac056f4a0cf5552fbeae8532573f653d46932dc9e6fe6b26ced80e7b5c96850",
+    "tests/database/field.test.ts": "4ab4dec5c02ea4b5d5337def67b0eb01209bcab6fc6917444f1c0532eec4c6d3",
+    "tests/database/finance-upgrade.test.ts": "eb688883bd7524a1f7f7efa41703acbf85a0c79b72b3b205e4430e8a1383086a",
+    "tests/database/leads-amendments.test.ts": "6af783e87eb8b1997995f73e7c5bb9d4093c63206fdb1f85d5117d2d837dbf5e",
+    "tests/database/leads-projects-integration.test.ts": "08e7824ca9973ea96cda67472fd41e27b4c399e3c467fdf6ca9f57318abb594b",
+    "tests/database/offline.test.ts": "3201fdd4c2c26eb8960fdec5a0ebbd872146c3872f702cc8d84a2f6985e9b604",
+    "tests/database/outcome-sources.test.ts": "098ffb4c978a95b69999c3eb1f4cd341fb37c0b8cecba6b4572a4fff99de8771",
+    "tests/database/packs.test.ts": "4d903cea5daf922d694a8fd31bb8f32907bd18bcaa1bbd7f2db7760e1ca7793b",
+    "tests/database/planner.test.ts": "0ef22e6d77bc52d9a9ddebe90ec6618ec3d4d790dc9ed19085c34036817bcc78",
+    "tests/database/policy-persistence.test.ts": "ae43d12e68d09db304722bad240dd22c40c3147a7c86c316a929c3334b8f26e2",
+    "tests/database/products-upgrade.test.ts": "f368a2f3b63b1e2b8ef774a1b0b08296934cf57ae7d48bab95e4299df7ca9d22",
+    "tests/database/project-acceptance.test.ts": "acaa92fd135d727d692adad03f89c561e9344822d0181774f684f7fc7d152ba9",
+    "tests/database/project-baselines.test.ts": "0c2709a5b57e6c1f331056fa28a4343748edf665dddb0858d7b97ff86df2155e",
+    "tests/database/project-programme.test.ts": "1873673749451a2fe1b43b181c9d159baee500195ffb9c52e497712914405be0",
+    "tests/database/project-raid.test.ts": "4ca20782b968a4307790e599bfbe7d16b43c4b2a203616e479ce0f10d1da78c3",
+    "tests/database/quotation-allocation-shortfall.test.ts": "efd52617ef5936f1f9d92743813a2772d61bcd15746c2e1d825986666182d2e0",
+    "tests/database/quotation-conversion.test.ts": "2d66070c9e2c03f674db2b43dbdfbfd76d070b2145f0b8434544a3e2205c8202",
+    "tests/database/quotation-disposition.test.ts": "7574eb95f84174ac1acc63275b819d9384b674d0fc1185d12ad171db5075e83a",
+    "tests/database/quotation-material-resolution.test.ts": "8ce1332de4a85a87b5b521b83a47ee3a91a1e1ddb9b3c566ffcc34d4dd8ca628",
+    "tests/database/quotation-receipt-correction.test.ts": "e3a074c77954ab481aeaad2242083aecb48b8c0039756753a9407d001e308e41",
+    "tests/database/quotation-release.test.ts": "b72985949e89eff5f3bbc411777f0483708d11fffa0209462bee111d82efc1db",
+    "tests/database/quotation-reservation-reconciliation.test.ts": "6398706d8d61de622656cfcb4cd6e2627e8fcb62aea759cfcdd30686ba24fcdc",
+    "tests/database/quotation-response.test.ts": "7bc95056e1e7ac100cc34c8c123e3eb3be2147634af4e045e1bef73e9b8271d5",
+    "tests/database/quotation-supply-followup.test.ts": "f05ebde446a07ddabe64ec414eee56beb49250d6ec35c88f8f3921a33fb18476",
+    "tests/database/quotation-task-branch.test.ts": "6f0f017075411d1b8be72fdc3ce13e4d064fe202283d04fcaef4ae56322ca525",
+    "tests/database/quotation-task-chain.test.ts": "57df87973d1122fb85c040524066a023e4a2bdc9123a5f90db464673c73b8b2e",
+    "tests/database/quotation-task-dependency.test.ts": "22f25005c8c52e7614a434a4ca443d7e6dc4619678546125252f0d8854ad4e2f",
+    "tests/database/quotation-task-diamond.test.ts": "4ea6239ac74b8621e80f1e04cbdec6afa8b1d652bacabb285f3b93cadfc35933",
+    "tests/database/quotation-task-merge.test.ts": "68702a6a6dd7fd89310f391320d4771a42e168293ad877dccf327877c487d5c9",
+    "tests/database/reports.test.ts": "865215ba6c79f367f259fe472a8662399d645a4aa37d88bb467d19728dd96d5e",
+    "tests/database/sales-delivery-binding.test.ts": "c45872260fd01423faf3e1cb52d2558ec0403f5ca25ef65fbf99cc4228a84508",
+    "tests/database/sales-estimating-binding.test.ts": "9a7b9f4d78bbf91ea204213e76768d26f06e40cfd2fb1440b6fb3f03641d3bb9",
+    "tests/demo/upgrade.test.ts": "a0a5730451ee897fc7f0de1445855be99dd12efb8dc7b27863b86fe6bf84a93f",
+    "tests/helpers/project-programme.ts": "ca4f0a5390725ae171f507d9620140e51306eaae063b5c4e0a66fc3f61a68432",
+    "tests/http/project-programme.test.ts": "15c6ab8b1d652f287eb374d33c578b09848b6de568cba1a9da85d9decac6c29e",
+    "tests/unit/project-calendars.test.ts": "2e04b38f3fb24b15db5df5ba39fb2b13fcafba42cdfcf70a41c79c17306ca874"
+  },
+  "limits": [
+    "Calendar/actual editing controls remain API-only",
+    "No owner paired-device acceptance",
+    "Broader effort, resource, lag, critical-path and automatic rescheduling remain separate",
+    "No operational integration, merge or deployment"
+  ]
+}

@@ -16,7 +16,7 @@
     "src/shared/reads.ts": "7adc6229ce98701eee689d9206db528367909ed6e6627efc2fa697e1ecfbfe9b",
     "src/crm/directory.ts": "f8431dba528005284ec8f4fb4143882c539a3bdf8408ca0345c6b3badf743576",
     "src/shared/context.ts": "1859ee53bb9a4f0831a5ea1ce1c7bfe93450f01cf1ba1f5605c8c1ec8583d2d8",
-    "src/projects/service.ts": "fd7e064e710f2952d6d073d783cfab3af7f673e089d218b3166f67412a466ae6",
+    "src/projects/service.ts": "91ca489df322cf6a2d1a033098e1b6c44f7efa4a22d5b52a2e905bf929371b8c",
     "src/finance/context.ts": "5cf34bf9c0ded84218b2f9948698e2d59ae070a957b1ab186a80c94b02ddfc73",
     "src/scheduling/planner.ts": "81e64a5dffd05c1424081daa4e1f3657ce7a85ad0865a803aef84c204a07ec6e",
     "src/reports/service.ts": "eef3c73002e24f578e2b6f4ae147ae334c8519e8250ac242a67a8a4e8fdf72d8",

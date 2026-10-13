@@ -260,7 +260,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Existing hosted identities receive no CPQ authority; adapters remain synthetic.
   // 0087 adds empty typed RAID entries and immutable revisions, no seed/user/grant.
   // Existing project.read/edit duties apply; no hosted authority or schedule changes.
-  if (latestMigrationVersion !== 87) throw Error("Review the existing-demo upgrade for this release.");
+  // 0088 adds empty calendar/actual revision tables and baseline companions; existing
+  // rows and grants remain unchanged. Runtime table privileges are granted below.
+  // Populated/repeated local and hosted upgrades remain required verification.
+  if (latestMigrationVersion !== 88) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
