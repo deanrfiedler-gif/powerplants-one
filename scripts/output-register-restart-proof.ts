@@ -4,7 +4,8 @@ import { localConfig } from "../src/platform/config";
 import { closeDatabase, database } from "../src/platform/database";
 import { listOutputs, readOutput } from "../src/outputs/reads";
 import { readOperation } from "../src/shared/receipts";
-import { reportIssued, principal } from "../tests/helpers/reports";
+import { reportIssued } from "../tests/helpers/reports";
+import type { Principal } from "../src/platform/identity";
 import { outputSnapshot } from "../tests/helpers/output-register";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -14,8 +15,7 @@ const stable = <T extends { as_at: string }>(value: T) => ({
   ...value,
   as_at: undefined,
 });
-async function capture(pack: string, report: string) {
-  const p = await principal();
+async function capture(p: Principal, pack: string, report: string) {
   return json({
     register: stable(await listOutputs(p)),
     pack: stable(await readOutput(p, pack, { kind: "JobPack" })),
@@ -39,8 +39,10 @@ try {
         pack_id: q.pack.id,
         report_id: q.report.id,
         operation_id: q.cmd.operation_id,
+        reader: q.reviewer,
+        author: q.p,
         receipt,
-        original: await capture(q.pack.id, q.report.id),
+        original: await capture(q.reviewer, q.pack.id, q.report.id),
       }),
     );
     console.log(
@@ -49,16 +51,11 @@ try {
   } else if (process.argv[2] === "verify") {
     const proof = JSON.parse(await readFile(path + "/original.json", "utf8"));
     assert.deepEqual(
-      await capture(proof.pack_id, proof.report_id),
+      await capture(proof.reader, proof.pack_id, proof.report_id),
       proof.original,
     );
     assert.deepEqual(
-      json(
-        await readOperation(
-          await principal("assigned-technician"),
-          proof.operation_id,
-        ),
-      ),
+      json(await readOperation(proof.author, proof.operation_id)),
       proof.receipt,
     );
     await writeFile(

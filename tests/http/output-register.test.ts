@@ -14,7 +14,11 @@ const origin = localConfig().origin,
   h = httpAcceptance(origin);
 
 test("DK03-HTTP01 compiled consolidated register, exact native bytes and scoped GET-only contract", async () => {
-  const q = await reportIssued(),
+  const q = await reportIssued();
+  // Authentication has its own audit event; establish sessions before the read-only baseline.
+  for (const profile of ["coordinator", "second-company", "systems"])
+    await h.cookie(profile);
+  const cookie = await h.cookie("coordinator"),
     before = await outputSnapshot();
   const path = "document-outputs/" + q.report.id + "?kind=ServiceReport";
   const register = await h.call("coordinator", "document-outputs");
@@ -24,7 +28,16 @@ test("DK03-HTTP01 compiled consolidated register, exact native bytes and scoped 
   assert.equal(one.status, 200);
   assert.equal(one.body.availability, "Available");
   assert.equal(one.body.selected_issue.id, q.report.issues[0].id);
-  assert.equal((await h.call("second-company", path)).status, 404);
+  assert.equal((await h.call("second-company", path)).status, 403);
+  assert.equal(
+    (
+      await h.call(
+        "second-company",
+        "document-outputs/" + q.pack.id + "?kind=JobPack",
+      )
+    ).status,
+    404,
+  );
   assert.equal((await h.call("systems", "document-outputs")).status, 403);
   assert.equal(
     (await h.call("coordinator", path + "&issue_id=" + randomUUID())).status,
@@ -51,12 +64,6 @@ test("DK03-HTTP01 compiled consolidated register, exact native bytes and scoped 
     422,
   );
   assert.deepEqual(await outputSnapshot(), before);
-  const session = await fetch(origin + "/api/v1/local-session", {
-    method: "POST",
-    headers: { origin, "Content-Type": "application/json" },
-    body: JSON.stringify({ profile: "coordinator" }),
-  });
-  const cookie = session.headers.get("set-cookie")!.split(";")[0];
   const file = await fetch(origin + one.body.selected_issue.files.pdf, {
     headers: { cookie },
   });

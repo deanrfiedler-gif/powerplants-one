@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "native_identities_and_exact_hashes_retained": true,
+  "original_receipt_retained": true,
+  "business_rows_unchanged": true,
+  "migration_ledger_unchanged": true
+}
