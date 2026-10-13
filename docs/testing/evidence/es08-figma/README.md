@@ -49,3 +49,7 @@ Named accepted Figma version and icon-free source captures are not recorded. Phy
 ## Integrated source
 
 Main d195e67 (merged backend PR #458) is retained by ancestry. The only merge conflict was the shared status insertion; both contributions were kept. The merged project instructions were shortened by ten characters without removing scope. Main adds the independently reviewed Project RAID migration 0087 and its guarded demo upgrade; ES-08 itself still changes no migration. Final release review must account for that combined main history.
+
+## Final integrated replay
+
+Head `137592b` passed a normal Next build (compilation, TypeScript and route generation) and changed-file lint. The isolated extended-wait replay passed accepted/unaccepted-save reload recovery, creation recovery/read-only/permission withdrawal, and ES08-T52 late-preview ordering. Its Figma layout case caught the browser-native dialog maximum width: a requested 390-pixel phone panel rendered at 356 pixels. The phone dialog rule now explicitly sets `max-width: 100vw`; replay of that correction and final-head CI are recorded separately in the PR handover. No receipt or calculation code changed.

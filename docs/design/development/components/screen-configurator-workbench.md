@@ -21,3 +21,5 @@ Keyboard: all menu and section controls have names and current/pressed state; in
 Fixtures: `scripts/es08-fixture.ts` and `tests/browser/specialist-workbench.spec.ts` exercise Northbank, the five profiles, selection across sheets, invalid geometry, untested options, manual re-review, missing prices, exact run export, pending receipt recovery and read-only/permission withdrawal. New presentation checks exercise menu filters, overlays and phone actions. All are synthetic; no test grants engineering acceptance.
 
 Limits: schematic structural members, loads, procurement fit and supplied fabric suitability remain unapproved. Drawing-only inputs remain browser-local. Private Kit artwork is not committed. Reference presence, functional proof, paired visual inspection, owner acceptance and deployment remain separate in the page register and execution evidence.
+
+Phone dialogs explicitly remove the native browser maximum-width cap so working, actions and inspector surfaces can occupy their intended full viewport width. The browser proof checks 390 pixels and focus restoration.
