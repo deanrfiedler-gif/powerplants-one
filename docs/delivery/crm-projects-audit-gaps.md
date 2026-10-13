@@ -15,7 +15,7 @@ Compared with BP-01, BP-03, BP-06, the live design register, delivery programmes
 | ID | Gap or capability | Classification and existing scope | Proposed order / disposition |
 | --- | --- | --- | --- |
 | GAP-01 | Controlled project baseline, forecast variance, milestone and successor impact | Unfinished agreed scope: PJ-03; PRJ-02/04/07; BP-06 J2 | First increment: this branch, [bounded decision](../decisions/project-schedule-baselines.md). Calendar configuration, lag and critical path remain open. |
-| GAP-02 | RAID, decisions, actions and interface ownership | Unfinished agreed scope: PJ-04; PRJ-03 | Next Projects slice after baseline acceptance; reuse shared Activity and reviews. |
+| GAP-02 | RAID, decisions, actions and interface ownership | Unfinished agreed scope: PJ-04; PRJ-03 | Bounded [PJ-04 backend](../decisions/project-raid-backend.md) adds owned immutable revisions and native Activity links. Page, independent decision review and broader interface graphs remain open. |
 | GAP-03 | Contracts, variations and commercial consequences | Unfinished agreed scope: PJ-05; PRJ-05 | Follow RAID; define estimate/quote/MYOB handovers before build. |
 | GAP-04 | Subcontract and specialist coordination | Unfinished agreed scope: PJ-06; PRJ-04/05 | Follow commercial scope; retain Service confirmation authority. |
 | GAP-05 | Delivery readiness and stakeholder updates | Unfinished agreed scope: PJ-07/08; PRJ-06/07 | Reconcile current readiness designs and build with explicit readiness evidence. |
