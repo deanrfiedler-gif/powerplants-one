@@ -946,6 +946,21 @@
       "application_proof": "tests/browser/maintenance.spec.ts",
       "authority": "Authorised MA-01–MA-07 repository implementation; native adaptations proposed for owner review. No accepted screenshot baseline is changed.",
       "adaptations": "docs/delivery/maintenance-warranty-handover.md"
+    },
+    {
+      "id": "projects-figma-register",
+      "route": "/projects",
+      "scope": "#ppo-projects",
+      "layout": "full-bleed",
+      "scroll_owner": ".pj-results / .ppo-register",
+      "design": "docs/design/projects-register/figma-measurements.json",
+      "sha256": "fb14827aef132996afbdec7cfd1e5da02b952de59b91255dc9e573cc80a01a0a",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/projects-register.spec.ts",
+      "application_proof": "tests/browser/projects-register.spec.ts",
+      "authority": "User-requested Projects Figma implementation, 13 October 2026. Measured source contract; owner review and deployment remain separate.",
+      "adaptations": "docs/decisions/projects-register-native.md"
     }
   ]
 }

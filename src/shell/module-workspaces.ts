@@ -1,6 +1,7 @@
 // The shell allocates the viewport once; full-bleed modules own their toolbar,
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
+  { route: "/projects", scope: "ppo-projects", layout: "full-bleed", navigation: "workspace", baseline: "projects-figma-register" },
   {route:"/maintenance/agreements",moduleId:"MA-01",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma01-native-r01"},
   {route:"/maintenance/agreements/[id]",moduleId:"MA-01",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma01-record-native-r01"},
   {route:"/maintenance/coverage",moduleId:"MA-02",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma02-native-r01"},

@@ -42553,18 +42553,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-13",
+      "source_commit": "c3ff5b90d0730f55583b6ee73f9d1af4a449695e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Backend verification: docs/testing/evidence/project-overview/README.md. This guide has no new UI walkthrough.",
+      "runtime_evidence": "Native register walkthrough: docs/testing/evidence/projects-register/README.md. Separate backend verification: docs/testing/evidence/project-overview/README.md. Owner guide review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Project register to work towards this outcome: Project health has evidence and an accountable response.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A colour indicator alone does not explain delivery health or acceptance."
+            "Find permitted projects, inspect saved schedule facts and open the exact schedule or Acceptance & closeout context. The register performs no bulk business changes.",
+            "Task risk is an explicit saved task status. Milestone overdue is a date comparison in the site time zone; neither is an overall project-health judgement."
           ],
           "steps": [],
           "rows": [],
@@ -42574,9 +42573,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Project owner, milestones, health evidence, completeness and recovery actions.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a signed-in identity with access to the project and its customer/site. Counts and filter choices include only authorised projects. Confirm the environment and customer/site before opening a record."
           ],
           "steps": [],
           "rows": [],
@@ -42585,57 +42582,33 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Select the project and check its reporting basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Start with Active projects, ordered by target date with unknown dates last.",
+            "Choose a project view, Coordinator or Customer. Use the actions menu to search.",
+            "Open a row to inspect facts and history. Choose Open schedule for changes or Acceptance & closeout for the controlled lifecycle workflow."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Project register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The secondary menu contains Active, My projects, Closed, All projects and three Needs attention views. My projects means active projects coordinated by you.",
+            "The desktop table exposes Project, Next milestone, Milestone date, Target date, At risk, Customer, Site, Coordinator, Status and Reference. Sortable headers show their direction; the column menu controls visibility.",
+            "The toolbar shows the number of all matching projects and its observation time. The Projects rail badge counts all authorised active projects independently of filters. Previous/Next pages use transient tokens."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Project owner, milestones, health evidence, completeness and recovery actions.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
-            "The new backend can return the exact accepted Sales context beside current Project facts. Missing task dates keep the full forecast unknown; restricted linked records keep coverage partial. Phase counts and explained attention are coordination facts, not a health score or acceptance."
+            "Next milestone is the earliest incomplete milestone, with undated milestones last. Completed markers do not block later milestones. No remaining milestones differs from Unscheduled.",
+            "At risk counts non-milestone tasks explicitly marked AtRisk. Snapshot task totals and phase summaries also exclude milestone markers. Customer, site, coordinator, target and lifecycle come from the saved project. Sales sources retain their independent permissions."
           ],
           "steps": [],
           "rows": [],
@@ -42645,13 +42618,12 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Select rows with their checkboxes, or Select all projects on this page. Open in sequence inspects them in current order.",
+            "Export list downloads only the displayed selected rows. The actions menu exports the displayed page. Exports never include undisplayed pages or change project records.",
+            "Clear selection or change a filter to discard transient selection. Hide panel preserves selection.",
+            "Use the refresh control for a fresh read. View, filters and sorting survive reload, shared URLs and browser Back."
           ],
-          "steps": [
-            "Select the project and check its reporting basis",
-            "Review overdue milestones and explained health",
-            "Open the underlying issue before assigning recovery work"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -42659,9 +42631,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Project health has evidence and an accountable response.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A colour indicator alone does not explain delivery health or acceptance."
+            "Opening a snapshot preserves the register context. Previous/Next follows the selected set, or displayed page if there is no selection. Close or Escape returns to the register.",
+            "Open schedule hands over the exact project UUID to its existing Gantt and saved commands. Closing and reopening remain controlled by Acceptance & closeout. Phases group tasks without changing lifecycle."
           ],
           "steps": [],
           "rows": [],
@@ -42671,46 +42642,20 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Backend categories are Needs attention, Information needed, No current flags and Closed. No current flags does not mean overall delivery health has been accepted. The accepted Overview page and its controls still need implementation; use existing native Sales handover, schedule, baseline and Activity workflows meanwhile."
+            "Active and Closed are lifecycle states. Closed schedules remain read-only until an authorised reopen through closeout.",
+            "Loading and failures are explicit. A failed refresh cannot export retained rows; access refusal clears protected results. Missing targets read Not set, while empty filtered results explain how to clear filters.",
+            "Snapshot Sales source and history failures are independent and offer retry. No linked handover is distinct from restricted or unavailable Sales data."
           ],
           "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
-          ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare project owner, milestones, health evidence, completeness and recovery actions. Follow the task sequence and check that project health has evidence and an accountable response. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Project register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A colour indicator alone does not explain delivery health or acceptance."
+            "Synthetic example: an incomplete milestone dated yesterday and one AtRisk task place an active project in Overdue milestones and Tasks at risk. Completing that milestone lets the next incomplete marker become visible.",
+            "A project without a target appears under No target date and sorts after known targets. Exporting a selected row leaves its version and schedule history unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -42719,45 +42664,22 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If a page token no longer resolves after changes, refresh the register from its first page. Check active filters before assuming a project is missing.",
+            "After a denied read, use the normal authorised access route. A local UUID is not assumed to exist in the hosted environment.",
+            "If a snapshot cannot load, retry its read or close it and refresh the register. Schedule-save recovery remains in the existing schedule workflow."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Phone view uses compact rows, a view selector, filters and the New project action. Tap opens a snapshot; press and hold selects. Moving the pointer cancels a pending hold. Shift+Space is the keyboard selection alternative.",
+            "The snapshot fills the phone viewport with fixed schedule/closeout actions. Escape closes it. Tab reaches native buttons and checkboxes; arrow keys move between fact tabs.",
+            "The Projects bar exposes Work, Projects, Programme, Acceptance and More where permitted. This register requires current online reads; no offline scheduling workflow is introduced."
           ],
           "steps": [],
           "rows": [],
@@ -42767,8 +42689,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Projects register implementation decision, Figma measurements, page contract and execution record. Existing native schedule, baseline and closeout guides remain authoritative for their own commands.",
+            "The supplied Wrike audit is a bounded reference, not an adopted feature backlog or proof of PPO business rules."
           ],
           "steps": [],
           "rows": [],
@@ -42778,9 +42700,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft prepared 13 October 2026. Execution evidence is separate from owner acceptance, physical-device review and deployment. No review fingerprint is set by this edit.",
+            "The supplied Figma frames are the requested visual source. The older register PNG and Gantt HTML remain retained history; they do not replace the current Figma design."
           ],
           "steps": [],
           "rows": [],
@@ -42794,9 +42715,16 @@
       "source_paths": [
         "src/app/(business)/projects/page.tsx",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md",
+        "docs/testing/evidence/projects-register/README.md"
       ],
-      "change_summary": "PJ-01/PJ-02 backend attribution and completeness contract; accepted page implementation and guide review remain separate.",
+      "change_summary": "Implemented Figma Projects register workflow with separately verified PJ-01/PJ-02 backend context; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42807,6 +42735,12 @@
         "src/app/(business)/projects/page.tsx",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
         "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md",
         "docs/decisions/project-overview-backend.md",
         "docs/testing/evidence/project-overview/README.md"
       ],

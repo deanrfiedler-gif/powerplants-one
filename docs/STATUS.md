@@ -4,6 +4,13 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Projects conflict integration — 13 October 2026
+
+Current repository writer: this user-authorised conflict repair and merge session on `codex/projects-conflicts-oct13`. PR #463 integrates Projects receiving/overview #461 (`1bb0cc2`) and Projects register UI #463 (`0252fcd`) with merged main `ad9f2eb`. Both contribution histories, source-bound evidence, parent IDs and existing review fingerprints are retained. The previous backend/shell batch is merged through #458/#459. The calendar and document-library continuations #466/#467 remain separate dependent contributions.
+
+The shared navigation retains the current department heading for other workspaces and the Projects-specific label for the register. The Projects workflow runs both contributions' database, HTTP, restart and browser proofs. Shared component fixtures, guide sources and page contracts retain the implemented register and separate backend context; the build sequence is regenerated from the combined register. Local results and fresh combined-head CI are recorded in the PR. Functional proof does not grant owner/device review, business acceptance or hosted deployment.
+
+
 
 ## Projects receiving and overview backend — 13 October 2026
 
@@ -22,6 +29,12 @@ The CRM mobile continuation also keeps distinct exact colour checks for the desk
 ## Figma UI application implementation — 13 October 2026
 
 Repository writer: this user-authorised UI implementation session, branch `codex/figma-app-ui`, based on main `7e4ef3b`. Dean requested the supplied Figma designs in the application including shell, icons and styling. The [first increment](decisions/figma-ui-implementation.md) implements Shell v2 and the desktop/phone My Work overview using existing source-backed reads and commands. Backend extensions are authorised where needed, but this increment requires no new technology, migration, seed or capability. The [execution ledger](testing/evidence/figma-ui/README.md) records checks and comparison limits. [PR #459](https://github.com/deanrfiedler-gif/powerplants-one/pull/459) contains the implementation. The final compiled build, 26 focused unit tests, all 20 applicable My Work desktop/phone journeys and all 15 shared shell/department/layout cases pass, alongside lint and register/foundation/naming checks. Initial CI exposed superseded shell/rail presentation checks and long-breadcrumb truncation. The release-preparation continuation integrates main `c3ff5b9`, repairs those cases and records fresh checks separately in the execution ledger. Remaining module interiors and My Work grids/overlays are explicit follow-on work. Existing review fingerprints, issued reference bytes and parent IDs are preserved. Code delivery, visual acceptance and hosted deployment remain separate.
+
+## Projects register implementation — 13 October 2026
+
+This authorised session on `codex/projects-figma-ui`, started from main `c3ff5b9` and reconciled with `d195e67`, implements Dean's supplied Projects Figma page (`209:46`) in the native `/projects` application. The [decision](decisions/projects-register-native.md) records exact source frames, the scoped layout and the treatment of his Wrike audit as reference. The register adds authorised full-match counts, customer/coordinator filters, deterministic paging/sorts, saved milestone/risk facts, page selection/CSV and exact-project snapshots. Existing creation, schedule, Programme, Sales receiving and closeout remain authoritative. No migration, seed, capability, dependency or operational integration is introduced. [Execution evidence](testing/evidence/projects-register/README.md) records actual results and limitations. Source implementation, CI, visual/owner acceptance, merge and hosted deployment are distinct; this status entry does not assert release.
+
+Runtime `7a11509` passes the full compiled build and all four final desktop/phone register cases, including 1024 px and 320 px layouts. The database scenario passes with main's 0087 installed; focused unit/static checks and Contacts contract compatibility also pass. Six native synthetic captures are source-pinned in the execution record. [PR #463](https://github.com/deanrfiedler-gif/powerplants-one/pull/463) carries the implementation. Final-head CI, merge, owner/device acceptance and hosted deployment remain separate.
 
 ## Open PR conflict integration — 13 October 2026
 

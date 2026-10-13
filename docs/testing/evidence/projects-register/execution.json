@@ -1,0 +1,58 @@
+{
+  "source_commit": "7a115097d95bc5b453bb6b4e1ee9bb80cc9c1047",
+  "integrated_main": "d195e679ea16e0cac75104db00d5af79bde0d141",
+  "build_id": "UHmSbq2JorZIyiqazJBuJ",
+  "mode": "Compiled Next.js application; native synthetic records; existing offline/fallback glyphs; no Kit artwork",
+  "captured_at_utc": "2026-10-13T00:47:25.834898+00:00",
+  "browser_cases": {
+    "passed": 4,
+    "failed": 0,
+    "duration_ms": 88588.557
+  },
+  "database": {
+    "passed": 1,
+    "failed": 0,
+    "duration_ms": 239262.236,
+    "installed_main_migrations_through": "0087"
+  },
+  "owner_acceptance": "Pending",
+  "hosted_deployment": "Not performed by this session",
+  "captures": [
+    {
+      "path": "captures/desktop-project-register.png",
+      "sha256": "a07a1e97c0c0711412c7e6f59bdd7460cbf6151d67a26af1d889180b0ae48dde",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "captures/desktop-project-snapshot.png",
+      "sha256": "e631840a8255896a64985faed6cec737bba56847a471cd798222aa77c96a4fbe",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "captures/desktop-project-snapshot-responsive.png",
+      "sha256": "38c0c3ba7857e7252a05a24e382e3c9edf43d651bdfe52abf5b5bd40688adb84",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "path": "captures/phone-project-register.png",
+      "sha256": "a429f40f3c47fe60857e45f89a2c58b0ddc90c328f24f03345f53dda4ce046fc",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "captures/phone-project-snapshot.png",
+      "sha256": "91b1552fe84597890610405663d3d83679610e49cef8a2bfb974093b89aa888a",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "captures/phone-project-snapshot-responsive.png",
+      "sha256": "6bdc9fdf4affbac356d93ecb28b38a64542e5393cfb36b0875758aa3af59bb34",
+      "width": 320,
+      "height": 740
+    }
+  ]
+}

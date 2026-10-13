@@ -172,7 +172,10 @@
         "docs/decisions/access-local-teams.md",
         "src/access/team-creation.tsx",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -323,12 +326,13 @@
         "route:/admin/access/roles",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "route:/projects"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "Legacy scoped button families do not all use Button/ButtonLink.",
+      "limitations": "Legacy scoped button families do not all use Button/ButtonLink. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "buttons-alignment",
@@ -497,6 +501,14 @@
           "action": "Review source-bound current-access captures with browser fixtures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -620,7 +632,10 @@
         "src/app/globals.css",
         "src/components/ui/register-table.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -633,12 +648,13 @@
         "route:/engineering/[id]/materials/mapping",
         "route:/engineering/[id]/materials/releases",
         "route:/estimating/fertigation",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "route:/projects"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
       "keyboard": "Sort buttons, row-title buttons and checkboxes are native, labelled controls with the shared focus ring. A row opens from its title, so inspecting never needs a pointer; the row click is only a larger target.",
-      "limitations": "No sticky header, scroll edge shadows, column resizing or phone row layout yet. The host owns data, sorting, paging and selection, and supplies chip icons from its own icon set.",
+      "limitations": "No sticky header, scroll edge shadows, column resizing or phone row layout yet. The host owns data, sorting, paging and selection, and supplies chip icons from its own icon set. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "register-table-adoption",
@@ -669,6 +685,14 @@
           "expected": "Verify the shared table against the linked design and desktop/mobile rules.",
           "actual": "Visual parity with EN-06 was checked by automated captures; no owner review is recorded.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2148,7 +2172,10 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2157,18 +2184,27 @@
       },
       "specification": "docs/design/development/components/menu.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "route:/projects"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
-      "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
+      "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "menu-alignment",
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2438,7 +2474,10 @@
         "docs/decisions/access-local-teams.md",
         "src/access/team-creation.tsx",
         "docs/decisions/access-team-creation.md",
-        "docs/decisions/access-team-inspection-current.md"
+        "docs/decisions/access-team-inspection-current.md",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2558,12 +2597,13 @@
         "route:/admin/access/roles",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "route:/projects"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue.",
+      "limitations": "Offline copy is illustrative. Real queued/synced/conflict support is page-specific and must not be inferred from the catalogue. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "read-state-alignment",
@@ -2714,6 +2754,14 @@
           "expected": "Exact member handover and fresh/withheld read states remain understandable at desktop and phone widths.",
           "actual": "Existing native card/list and shared controls reused; accepted native image and owner/device review missing.",
           "action": "Review source-bound current-access captures with browser fixtures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3166,6 +3214,11 @@
           "id": "figma-my-work-overview",
           "label": "Figma My Work overview",
           "description": "Real compiled desktop/phone My Work host, outcome ring, row actions menu, saved views, unknown counts and denied identity. Fixtures: tests/browser/my-work.spec.ts; tests/browser/my-work-mobile.spec.ts. Source frames 404:3 and 404:181; no new isolated renderer."
+        },
+        {
+          "id": "projects-register-host",
+          "label": "Projects register",
+          "description": "Native synthetic desktop/phone selection, snapshot sequence, denied read and filters: tests/browser/projects-register.spec.ts."
         }
       ],
       "implementation": [
@@ -3227,7 +3280,10 @@
         "src/activities/components/client/my-work-overview.tsx",
         "src/activities/components/client/my-work-mobile.tsx",
         "src/activities/components/client/my-work-list.tsx",
-        "src/activities/work-guide.ts"
+        "src/activities/work-guide.ts",
+        "src/app/styles/projects-register.css",
+        "src/components/projects-register.tsx",
+        "docs/design/projects-register/figma-measurements.json"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3277,7 +3333,7 @@
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
       "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus.",
-      "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
+      "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
           "id": "shell-host-review",
@@ -3444,6 +3500,14 @@
           "expected": "Paired accepted Shell v2 and My Work overview review on desktop and phone.",
           "actual": "First implementation authorised 13 October; exact sources and execution evidence recorded separately. Release preparation checks flowing search, whole Engineering breadcrumbs, retained legacy menus and Estimating reflow in both rail modes. Other My Work grids/detail overlays and module interiors remain.",
           "action": "Review docs/testing/evidence/figma-ui/README.md and explicit runtime adaptations before recording owner/device acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-projects-figma",
+          "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
+          "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
+          "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

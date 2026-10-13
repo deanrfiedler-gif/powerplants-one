@@ -6818,7 +6818,7 @@
       "title": "Project register",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. PJ-01/PJ-02 receiving attribution and explained overview/portfolio APIs are implemented separately from the accepted page.",
+      "summary": "Native Projects register from Figma 209:46: authorised schedule facts, views, filters, sorting, selection/export and exact-project snapshots. Existing schedule and closeout handovers remain. PJ-01/PJ-02 receiving and overview APIs remain separately documented backend reads.",
       "path": "/projects",
       "source_paths": [
         "src/app/(business)/projects/page.tsx"
@@ -6835,7 +6835,13 @@
         "src/projects/overview.ts",
         "src/projects/overview-model.ts",
         "src/projects/portfolio.ts",
-        "src/sales/delivery-binding.ts"
+        "src/sales/delivery-binding.ts",
+        "src/components/projects-register.tsx",
+        "src/projects/register.ts",
+        "src/projects/register-model.ts",
+        "src/app/styles/projects-register.css",
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/decisions/projects-register-native.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

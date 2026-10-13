@@ -36,6 +36,7 @@ import "./styles/planner-demand.css";
 import "./styles/scheduling-workspaces.css";
 import "../components/ui/controls.css";
 import "../components/ui/register-table.css";
+import "./styles/projects-register.css";
 import "./styles/development.css";
 import "./styles/supply.css";
 import "./styles/work-timer.css";

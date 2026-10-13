@@ -6,9 +6,9 @@ Public repo; private demo.
 
 ## 2. Delivery
 
-Retain BP-01 domains/shared records.
+Keep BP-01 domains/shared records.
 
-Test joined journeys; separate proof/owner acceptance.
+Test journeys; separate acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -26,7 +26,7 @@ BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissi
 
 MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces, ownership and operating rules before integration.
 
-Use synthetic fixtures; decide service-order/appointment/labour ownership. Cutover needs tested acceptance. Assess build/configure/integrate/retain per capability.
+Synthetic fixtures. Decide service-order/appointment/labour ownership and build/configure/integrate/retain per capability; test before cutover.
 
 ## 5. Naming
 
@@ -58,7 +58,7 @@ HTML: html-module-conformance.md.
 
 ## 8. Authority
 
-Complete authorised work; ask only for blockers.
+Complete authorised work; flag blockers.
 
 Preserve unrelated work; use branch/PR. Merge needs authority/checks/review. Update specs/registers.
 
@@ -68,7 +68,7 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Check screens; record environment. Recheck access after storage, before metadata/bytes.
 
-ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CPQ](../decisions/cpq-native-runtime.md); retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
+ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; [CPQ](../decisions/cpq-native-runtime.md); retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike is reference) and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
