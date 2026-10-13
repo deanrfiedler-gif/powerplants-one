@@ -33,6 +33,8 @@ The desktop table adopts 40 px rows and headers, 44 px pinned end columns and th
 
 The source does not draw errors, loading, denied reads, empty results, long content, earlier history, column choices or mobile selection. These use established app patterns and remain explicit implementation adaptations. Snapshot Escape and previous/next preserve register context. Native creation and schedule forms are retained rather than replaced by an unverified Wrike workflow. No operational integration, customer communication, financial authority or broad Wrike feature parity is implied.
 
+The existing global search alignment, company context, guide and development controls remain available. The register names `Projects / Project register` on desktop and `Projects` on phone, without a second hierarchy-menu trigger beside its own menu button. Those retained application controls are an explicit shell adaptation to the supplied drawing.
+
 ## Verification
 
 See the [execution record](../testing/evidence/projects-register/README.md), [page contract](../design/development/pages/route-projects.md) and source-bound tests. Automated functional proof, visual comparison, owner acceptance, CI, merge and deployment are recorded separately. The guide remains Draft; no review fingerprint is promoted merely by editing these files.

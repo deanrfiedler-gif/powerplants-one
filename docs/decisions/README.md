@@ -180,3 +180,5 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
 - [Quotation register backend](quotation-register-backend.md): one current revision per quotation, recorded lifecycle facts and permission-scoped history; accepted page implementation and global counts remain separate.
 
 - [Engineering workload register backend](engineering-workload-backend.md): user-authorised BC-01 scoped EN-01 reads; validation and acceptance separate.
+
+- [Projects register from Figma](projects-register-native.md): native desktop/phone register, saved schedule facts and scoped snapshots; Wrike remains reference and hosted release is separate.
