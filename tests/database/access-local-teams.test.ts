@@ -123,7 +123,7 @@ test(
       ),
       newSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
     assert.deepEqual(newLedger.filter(r=>r.version<=82), ledger);
-    assert.deepEqual(newLedger.filter(r=>r.version>82).map(r=>r.version), [83,84,85, 86, 87, 88, 89, 90, 92, 93, 94]);
+    assert.deepEqual(newLedger.filter(r=>r.version>82).map(r=>r.version), [83,84,85, 86, 87, 88, 89, 90, 91, 92, 93, 94]);
     assert.deepEqual(newSeeds.filter(r=>r.version<=82), seeds);
     assert.deepEqual(newSeeds.filter(r=>r.version>82).map(r=>r.version), [83,84]);
     assert.deepEqual(await localTeams(creator), { items: [], has_more: false });

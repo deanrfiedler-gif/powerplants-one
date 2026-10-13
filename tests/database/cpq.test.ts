@@ -756,7 +756,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
   assert.deepEqual(
     after.filter((r) => r.version > 85).map((r) => r.version),
-    [86, 87, 88, 89, 90, 92, 93, 94],
+    [86, 87, 88, 89, 90, 91, 92, 93, 94],
   );
   await migrate();
   await seed();
@@ -770,7 +770,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
 });
 
-test("0090 preserves populated 0086 CPQ releases, runs, adoption and identity history", async () => {
+test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity history", async () => {
   await database().query(
     await readFile(
       new URL("../../db/migrations/0001-recover.sql", import.meta.url),
@@ -868,7 +868,7 @@ test("0090 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   );
   assert.deepEqual(
     current.filter((r) => r.version > 86).map((r) => r.version),
-    [87, 88, 89, 90, 92, 93, 94],
+    [87, 88, 89, 90, 91, 92, 93, 94],
   );
   await migrate();
   await seed();

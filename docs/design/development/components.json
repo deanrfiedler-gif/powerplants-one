@@ -609,7 +609,7 @@
         {
           "id": "empty",
           "label": "No matches",
-          "description": "Rows exist but none match; the message says how to bring them back."
+          "description": "Rows exist but none match; the message says how to bring them back. Job Pack phone host: job-pack-register-fixture.tsx?empty=1 keeps the title and planner link separate at 390/320 px."
         },
         {
           "id": "loading",
@@ -719,7 +719,7 @@
         {
           "id": "register-table-figma-owner-review",
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
-          "actual": "Actual component fixtures and focused verification include independent packless-visit read states and observation time; owner/device acceptance not recorded.",
+          "actual": "Actual component fixtures and focused verification include independent packless-visit read states and observation time; owner/device acceptance not recorded. Hosted phone inspection found missing standalone empty-state spacing; the scoped correction and fixture are recorded in the execution evidence.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

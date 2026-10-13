@@ -92,6 +92,7 @@ export const migrationFiles = [
   "0088-project-calendars-actuals.sql",
   "0089-cpq-design-contract.sql",
   "0090-document-library.sql",
+  "0091-output-distribution.sql",
   "0092-template-draft-proposals.sql",
   "0093-template-publication.sql",
   "0094-template-use-assignment.sql",

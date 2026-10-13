@@ -717,6 +717,22 @@
     overflow: auto;
     background: var(--surface-white);
   }
+  /* The phone list is outside RegisterTable's styled wrapper. */
+  #ppo-pack-register .jpr-phone-list .ppo-register-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted);
+  }
+  #ppo-pack-register .jpr-phone-list .ppo-register-empty strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  #ppo-pack-register .jpr-phone-list .ppo-register-empty > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
   #ppo-pack-register .jpr-phone-list h2 {
     height: 32px;
     padding: 8px 16px;

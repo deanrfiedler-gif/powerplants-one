@@ -100,4 +100,4 @@ PJ: STATUS contracts; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md).
 
-DK-01/02: document-library-backend.md. DK-06: template-use-assignment-backend.md; R4 is OUT-09 only.
+DK: STATUS. Draft review never publishes; publication never assigns use. R4: scoped OUT-09 only.
