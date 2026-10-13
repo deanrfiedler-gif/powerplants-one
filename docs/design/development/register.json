@@ -1530,7 +1530,7 @@
       "title": "Specialist configuration workbench",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native Screen Systems engine, exact runs, resolved parts, estimate receiving and the seven-view accepted-board workbench exist. ES-08 scope metadata is reconciled against merged PR #441; engineering, owner and visual acceptance remain separate. Other calculators require their own validated scope.",
+      "summary": "Screen Configurator Workbench uses the requested Figma composition across seven native views, view-specific contents, working/inspector panels and phone actions. Exact synthetic runs, receiving authority and pending-operation recovery remain in the existing backend; owner review and deployment are separate.",
       "path": "/estimating/configurations",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1553,7 +1553,11 @@
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-D-Phone-Configure-390-r01.png",
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/es08-figma-implementation.md",
+        "src/components/specialist-figma.css",
+        "src/components/specialist-menu.tsx"
+      ],
       "scope_status": "Native synthetic backend and workbench present; review separate",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8787,16 +8791,21 @@
       "title": "Screen Systems configurations · detail",
       "kind": "route",
       "module": "ES",
-      "summary": "This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.",
+      "summary": "Screen Configurator Workbench uses the requested Figma composition across seven native views, view-specific contents, working/inspector panels and phone actions. Exact synthetic runs, receiving authority and pending-operation recovery remain in the existing backend; owner review and deployment are separate.",
       "path": "/estimating/configurations/[id]",
       "source_paths": [
-        "src/app/(business)/estimating/configurations/[id]/page.tsx"
+        "src/app/(business)/estimating/configurations/[id]/page.tsx",
+        "src/app/(business)/estimating/configurations/[id]/layout.tsx"
       ],
       "guide_key": "guide.page.estimating.configurations.id",
       "design_path": "docs/design/development/pages/route-estimating-configurations-id.md",
       "html_path": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/es08-figma-implementation.md",
+        "src/components/specialist-figma.css",
+        "src/components/specialist-menu.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8815,10 +8824,11 @@
       "title": "Screen Systems configurations · selected view",
       "kind": "route",
       "module": "ES",
-      "summary": "Screen Configurator Workbench: seven views (Configure, Drawings, Parts & working, Pricing, Compare & save, Definition review, Run history) built from the owner-accepted design board on 12 October 2026; source presence does not establish deployment or acceptance.",
+      "summary": "Screen Configurator Workbench uses the requested Figma composition across seven native views, view-specific contents, working/inspector panels and phone actions. Exact synthetic runs, receiving authority and pending-operation recovery remain in the existing backend; owner review and deployment are separate.",
       "path": "/estimating/configurations/[id]/[view]",
       "source_paths": [
-        "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx"
+        "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
+        "src/app/(business)/estimating/configurations/[id]/layout.tsx"
       ],
       "guide_key": "guide.page.estimating.configurations.id.view",
       "design_path": "docs/design/development/pages/route-estimating-configurations-id-view.md",
@@ -8838,7 +8848,10 @@
         "docs/reference/ui/specialist/workbench-native-r01/PPO-ES-08-Native-E-Phone-Drawings-390-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/es08-figma-design.md"
+        "docs/decisions/es08-figma-design.md",
+        "docs/decisions/es08-figma-implementation.md",
+        "src/components/specialist-figma.css",
+        "src/components/specialist-menu.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

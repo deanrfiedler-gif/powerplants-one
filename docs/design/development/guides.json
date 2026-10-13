@@ -6971,11 +6971,11 @@
       "title": "Specialist configuration workbench",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native synthetic workbench; owner guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -6984,9 +6984,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Specialist configuration workbench to work towards this outcome: A reproducible specialist configuration with an exact input/rule basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "ES-08 is the Screen Systems family. Fertigation and other calculators need their own validated scope and must not be relabelled ES-08."
+            "Configure the Screen Systems family with an explicit source, reproducible calculation and exact saved evidence. The seven native views share one proposal and preserve server-side authority.",
+            "The Figma composition is implemented under the 13 October request; this guide remains Draft and does not approve engineering rules, procurement quantities or ERP transactions."
           ],
           "steps": [],
           "rows": [],
@@ -7009,11 +7008,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review required inputs and unresolved assumptions",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a permitted configuration and check its saved Discovery revision, option and definition in the context strip.",
+            "Use the Configure secondary menu for the six sections, or the phone stepper. Inputs retain their source and drawing-only/check-only distinction.",
+            "Inspect live results and readiness. Review all required manual quantities against the current basis before recording a run.",
+            "Use Drawings for linked field selection, Parts for filtered positions and calculation working, Pricing for illustrative and native receiving rates, and Compare & save for exact changes and handover.",
+            "Enter a reason and Save draft. On a phone, Workbench actions contains the reason and Review calculation. Confirm the server result; resolve the original receipt if the outcome is unknown.",
+            "Open Run history to inspect an exact saved run. Its overflow menu exports evidence or starts a successor draft; the earlier run remains immutable."
           ],
           "rows": [],
           "headers": []
@@ -7175,8 +7175,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On phones, expand Readiness to inspect all gates. Scroll the view tabs; use the section arrows and Next section for Configure. Save stays visible and Workbench actions contains the save reason and calculation review.",
+            "Selecting a field on the plan opens its inspector sheet. Working opens a full-screen modal. Escape or Close restores the previous control; wider tables scroll within their own region. No offline save authority is added."
           ],
           "steps": [],
           "rows": [],
@@ -7217,9 +7217,10 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe the requested Figma workbench menu, inspection panels, mobile actions and existing durable recovery; owner guide review remains separate.",
       "document_id": "PPO-GUIDE-ES-08",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -7229,7 +7230,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -57056,11 +57058,11 @@
       "title": "Screen Systems configurations · detail",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native synthetic workbench; owner guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -57069,9 +57071,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Screen Systems configurations · detail to work towards this outcome: A reproducible specialist configuration with an exact input/rule basis.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "ES-08 is the Screen Systems family. Fertigation and other calculators need their own validated scope and must not be relabelled ES-08."
+            "Configure the Screen Systems family with an explicit source, reproducible calculation and exact saved evidence. The seven native views share one proposal and preserve server-side authority.",
+            "The Figma composition is implemented under the 13 October request; this guide remains Draft and does not approve engineering rules, procurement quantities or ERP transactions."
           ],
           "steps": [],
           "rows": [],
@@ -57094,11 +57095,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a permitted configuration and check its saved Discovery revision, option and definition in the context strip.",
+            "Use the Configure secondary menu for the six sections, or the phone stepper. Inputs retain their source and drawing-only/check-only distinction.",
+            "Inspect live results and readiness. Review all required manual quantities against the current basis before recording a run.",
+            "Use Drawings for linked field selection, Parts for filtered positions and calculation working, Pricing for illustrative and native receiving rates, and Compare & save for exact changes and handover.",
+            "Enter a reason and Save draft. On a phone, Workbench actions contains the reason and Review calculation. Confirm the server result; resolve the original receipt if the outcome is unknown.",
+            "Open Run history to inspect an exact saved run. Its overflow menu exports evidence or starts a successor draft; the earlier run remains immutable."
           ],
           "rows": [],
           "headers": []
@@ -57261,8 +57263,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On phones, expand Readiness to inspect all gates. Scroll the view tabs; use the section arrows and Next section for Configure. Save stays visible and Workbench actions contains the save reason and calculation review.",
+            "Selecting a field on the plan opens its inspector sheet. Working opens a full-screen modal. Escape or Close restores the previous control; wider tables scroll within their own region. No offline save authority is added."
           ],
           "steps": [],
           "rows": [],
@@ -57298,9 +57300,10 @@
       "source_paths": [
         "src/app/(business)/estimating/configurations/[id]/page.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe the requested Figma workbench menu, inspection panels, mobile actions and existing durable recovery; owner guide review remains separate.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-CONFIGURATIONS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -57310,7 +57313,8 @@
       "workflow_basis": [
         "src/app/(business)/estimating/configurations/[id]/page.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -57321,11 +57325,11 @@
       "title": "Screen Systems configurations · selected view",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native synthetic workbench; owner guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -57334,10 +57338,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on specialist configuration view within the registered workflow.",
-            "Use Screen Systems configurations · selected view to work towards this outcome: A reproducible specialist configuration with an exact input/rule basis.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "ES-08 is the Screen Systems family. Fertigation and other calculators need their own validated scope and must not be relabelled ES-08."
+            "Configure the Screen Systems family with an explicit source, reproducible calculation and exact saved evidence. The seven native views share one proposal and preserve server-side authority.",
+            "The Figma composition is implemented under the 13 October request; this guide remains Draft and does not approve engineering rules, procurement quantities or ERP transactions."
           ],
           "steps": [],
           "rows": [],
@@ -57360,11 +57362,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Enter the configuration UUID from the target environment.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open a permitted configuration and check its saved Discovery revision, option and definition in the context strip.",
+            "Use the Configure secondary menu for the six sections, or the phone stepper. Inputs retain their source and drawing-only/check-only distinction.",
+            "Inspect live results and readiness. Review all required manual quantities against the current basis before recording a run.",
+            "Use Drawings for linked field selection, Parts for filtered positions and calculation working, Pricing for illustrative and native receiving rates, and Compare & save for exact changes and handover.",
+            "Enter a reason and Save draft. On a phone, Workbench actions contains the reason and Review calculation. Confirm the server result; resolve the original receipt if the outcome is unknown.",
+            "Open Run history to inspect an exact saved run. Its overflow menu exports evidence or starts a successor draft; the earlier run remains immutable."
           ],
           "rows": [],
           "headers": []
@@ -57538,8 +57541,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On phones, expand Readiness to inspect all gates. Scroll the view tabs; use the section arrows and Next section for Configure. Save stays visible and Workbench actions contains the save reason and calculation review.",
+            "Selecting a field on the plan opens its inspector sheet. Working opens a full-screen modal. Escape or Close restores the previous control; wider tables scroll within their own region. No offline save authority is added."
           ],
           "steps": [],
           "rows": [],
@@ -57576,9 +57579,10 @@
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
         "src/components/specialist-workbench.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
-      "change_summary": "Updated for the native Screen Configurator Workbench built from the accepted design board on 12 October 2026: seven views including Drawings, the module header gates, drawing-only inputs and the record-run checklist.",
+      "change_summary": "Describe the requested Figma workbench menu, inspection panels, mobile actions and existing durable recovery; owner guide review remains separate.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-CONFIGURATIONS-ID-VIEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -57589,7 +57593,8 @@
         "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx",
         "src/components/specialist-workbench.tsx",
         "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/es08-figma-implementation.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

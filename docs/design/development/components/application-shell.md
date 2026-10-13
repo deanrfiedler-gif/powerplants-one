@@ -157,9 +157,15 @@ Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-lo
 
 
 
+
 ## Native CPQ workspaces
 
 The Estimating rail adds Configure & price (ES-02) and Rules studio (ES-03), using the existing permission-filtered destinations and glyphs. Their four routes use the full-bleed workspace allocation and SecondaryMenuFrame under `#ppo-cpq`. The shared My Work stylesheet adds that scope to its menu geometry without changing other consumers. CPQ owns its form, tab and footer reset. Existing rail preferences, mobile navigation, unsaved-change protection and Kit/fallback policy remain in effect. The four page specifications and [CPQ host fixtures](../cpq-fixtures.json) record their states; paired owner/device acceptance is pending.
+
+## Screen Configurator consumer
+
+ES-08 Figma implementation binds the configuration and view routes to the existing shell/menu patterns. Historical runs use WorklistMenu; no other consumer behaviour is changed. See the screen-configurator-workbench host and execution evidence for fixture, phone and review limits.
+
 
 ## Fertigation consumer
 

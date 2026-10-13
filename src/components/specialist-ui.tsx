@@ -181,12 +181,16 @@ export function Dialog({
   children,
   wide = false,
   className = "",
+  id,
+  description,
 }: {
   title: string;
   close: () => void;
   children: ReactNode;
   wide?: boolean;
   className?: string;
+  id?: string;
+  description?: ReactNode;
 }) {
   const ref = useRef<HTMLDialogElement>(null),
     heading = useId();
@@ -201,6 +205,7 @@ export function Dialog({
   }, []);
   return (
     <dialog
+      id={id}
       ref={ref}
       className={`es08-dialog ${wide ? "es08-dialog--wide" : ""} ${className}`}
       aria-labelledby={heading}
@@ -210,7 +215,7 @@ export function Dialog({
       }}
     >
       <header className="es08-dialog-head">
-        <h2 id={heading}>{title}</h2>
+        {description ? <div><h2 id={heading}>{title}</h2><div className="es08-dialog-description">{description}</div></div> : <h2 id={heading}>{title}</h2>}
         <button type="button" className="es08-icon-button" onClick={close} aria-label={`Close ${title}`}>
           <Icon name="close" />
         </button>

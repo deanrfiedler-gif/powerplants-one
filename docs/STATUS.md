@@ -4,11 +4,17 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+
 ## CPQ application and expanded design contract — 13 October 2026
 
 Dean requested native CPQ pages matching the supplied Figma and explicitly expanded the backend scope to cover its additional states and information. Branch `codex/cpq-figma-ui`, from merged CPQ main `7e4ef3b`, adds the configuration/rule registers and workbenches, migration 0088 after the merged Project RAID 0087, opt-in schema 3, durable incomplete drafts, immutable rule composition, separate sealing/activation, typed authoring, server previews, explanations, override review, shared outputs and milestone proposals. The [decision](decisions/cpq-figma-ui.md), [API contract](interfaces/cpq-api.md) and [execution handover](delivery/cpq-ui-handover.md) separate actual verification from pending visual/owner acceptance and deployment. The explicit hosted upgrade adds CPQ read/author/calculate for eligible existing Company A testers while retaining expiry and revocations; review/publish remain separate and unassigned. Operational rules and external integrations remain outside this synthetic implementation. All parent IDs and issued references are retained.
 
-Final CPQ source `87daf35` passes 781 units, 138 Estimating database cases, 22 HTTP cases and 95 browser cases, including both CPQ journeys. Hosted preparation, Projects and Products also pass. Fertigation main `4a9d672` is then integrated without changing CPQ runtime/test bytes or migration 0088; both component/register records and consumer guidance are preserved. Fresh combined-source CI and hosted deployment remain pending, with owner/device acceptance separate.
+CPQ source `87daf35` passes 781 units, 138 Estimating database cases, 22 HTTP cases and 95 E1 browser cases, including both CPQ journeys; its full compiled application jobs also pass 441 desktop and 384 phone cases. Hosted preparation, Projects and Products also pass. Fertigation main `4a9d672` and Screen Configurator candidate `d7435fc` are integrated on the CPQ branch without changing CPQ runtime/test bytes or migration 0088; all component/register records and consumer guidance are preserved. Dean authorised Screen PR #462 to merge and deploy first. CPQ holds its main merge/deployment until that release completes. Fresh combined-source CI and hosted deployment remain pending, with owner/device acceptance separate.
+
+## Screen Configurator Workbench Figma implementation — 13 October 2026
+
+Dean requested the live ES-08 workbench to match private Figma page `406:2`. [Implementation decision](decisions/es08-figma-implementation.md) records the seven views, view-specific secondary menu, compact record strips, working/inspector panels, phone footer and unchanged exact synthetic backend. The branch `codex/screen-configurator-figma` preserves all source snapshots and parent IDs, adds no migration or dependency, and updates the existing design register, component hosts and Draft guides. [Execution evidence](testing/evidence/es08-figma/README.md) records checks and local limits. Owner visual acceptance, named-version/source capture evidence and deployment remain separate.
+
 
 ## Final shell and backend integration — 13 October 2026
 
