@@ -75,6 +75,8 @@ The [implementation decision](../../../decisions/job-pack-figma-implementation.m
 
 Job Pack uses each active read's loading/error state and observation time for counts and freshness. An unavailable packless-visit read cannot display zero; its own retry restores the visit count. Visit discovery offers preparation and planner handovers, while pack CSV export and pack selection remain in pack views. `tests/browser/job-pack-integration.spec.ts` exercises a failed read, a held loading response and recovery to one eligible visit on desktop and phone.
 
+Job Pack's standalone phone `RegisterEmpty` is styled in `job-pack-figma.css`: title and recovery action remain separate with a 40/20 px inset and a 44 px planner-link target. The desktop wrapper and other register consumers retain their shared rules. The existing `job-pack-register-fixture.tsx?empty=1` fixture covers this host state; hosted verification found the original missing wrapper-dependent spacing at 390/320 px. Owner/device acceptance is still pending.
+
 ## CPQ consumers
 
 The configuration and rule registers/workbenches reuse this implementation. CPQ-scoped styling and fixture states are documented in [the host contract](cpq-workbench.md); source behaviours and existing gallery fixtures are unchanged. tests/browser/cpq.spec.ts supplies the real synthetic host. Paired visual and owner acceptance remain separate.

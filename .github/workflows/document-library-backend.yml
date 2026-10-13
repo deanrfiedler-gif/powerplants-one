@@ -79,7 +79,7 @@ jobs:
       - name: Managed template drafts and populated upgrade
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-drafts.test.ts tests/database/template-drafts-upgrade.test.ts
       - name: Pending identity events across 0026 and reserved Products after newest history
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90|92) ' tests/database/products-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90|91|92) ' tests/database/products-upgrade.test.ts
       - name: Compiled document library HTTP
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset

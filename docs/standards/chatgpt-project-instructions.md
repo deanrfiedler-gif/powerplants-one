@@ -100,4 +100,4 @@ PJ: STATUS contracts; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md).
 
-DK-01/02: document-library-backend.md. DK-06: document-template-drafts-backend.md; draft review never publishes.
+DK: STATUS; native actions; synthetic only; draft review never publishes.
