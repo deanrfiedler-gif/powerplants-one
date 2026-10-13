@@ -138,7 +138,7 @@ test(`PJ04-06 populated 00${through} upgrade preserves originals through 0093 an
   const before=await snapshot(), ledger=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
   await migrate(); await seed(); assert.deepEqual(await snapshot(),before);
   const after=(await database().query("SELECT * FROM public.ppo_migrations ORDER BY version")).rows;
-  assert.deepEqual(after.filter(r=>r.version<=through),ledger); assert.deepEqual(after.filter(r=>r.version>through).map(r=>r.version),through===86 ? [87, 88, 89, 90, 92, 93] : [88, 89, 90, 92, 93]);
+  assert.deepEqual(after.filter(r=>r.version<=through),ledger); assert.deepEqual(after.filter(r=>r.version>through).map(r=>r.version),through===86 ? [87, 88, 89, 90, 91, 92, 93] : [88, 89, 90, 91, 92, 93]);
   if(existing) assert.deepEqual(await current(p,project.id,existing.id),existingRecord);
   const input={...raidInput(),action_ids:[action.id]}; await saveRaid(p,project.id,input);
   const recorded=await current(p,project.id,input.id), settled=await snapshot();

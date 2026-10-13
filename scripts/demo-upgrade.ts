@@ -272,6 +272,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // deliberately absent: an author cannot approve or activate their own release.
   // 0090 adds empty library tables and three default-denied capabilities. No seed,
   // user, grant or provider integration is added; existing runtime privileges apply.
+  // 0091 adds empty retained distribution attempts/events and native-route guards.
+  // Three additive outbox kinds preserve existing jobs; no seed, grant, user or
+  // identity change. Generic runtime table privileges below cover the new tables.
   // 0092 adds four empty template-proposal/evidence tables with ordinary runtime
   // privileges and three default-denied capabilities. It widens identity/audit
   // constraints using the deferred-identity flush pair. No seed, tester grant,

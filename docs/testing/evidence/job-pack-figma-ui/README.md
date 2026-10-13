@@ -39,3 +39,13 @@ The branch first integrated main `d195e67`, then the accepted shared Shell v2 at
 ## Remaining acceptance
 
 Owner review, physical phones, screen readers, operational acceptance and hosted deployment are separate from code verification. The running Kit supplies licensed icons; local tests use the existing original fallback drawings. No licensed Figma artwork is bundled in the application.
+
+## Hosted release and phone empty-state correction
+
+The combined release PR #463 merged source `de0a1287ec66db09b0fbf045d0e8ee167713907c` into main `a33360460fda80ecaac66870c1611a14ccebd49b`. The merge tree equals tested candidate `f4abc47cd961290bcf1cc152b6c2627f96e8771b`. [Deployment 38368296642](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38368296642) succeeded with web/worker image `sha256:ed5dd22916087ec074bd8f0753c57fca2f0f524f90792bbe13fcb355ce6fc89b`. Source PR #465 is merged. The final combined CI gate passed; two unfinished redundant standalone workflows were retired, not reported as passes.
+
+Signed-in hosted inspection on 13 October verified the new desktop register, its visits view and the first-preparation chooser. The current SYN-A account had no packs or eligible visits; no hosted pack was created or changed and the account profile stayed unchanged. Populated exact-output workflows retain their local/CI proof, not a hosted replay claim.
+
+The 390/320 px hosted inspection exposed the phone empty title and planner link running together: shared RegisterEmpty styling requires the desktop table wrapper, which the phone list does not use. Branch `codex/job-pack-phone-empty` adds only scoped phone CSS: 40/20 px inset, block title with 8 px separation and a 44 px planner-link target. Other consumers and all commands remain unchanged. The page/component working masters and existing empty-state fixture binding are updated together.
+
+All five existing Job Pack presentation tests passed in 16.9 seconds on the correction, covering six viewport widths, register interactions, keyboard/phone navigation, 41 tokens and saved-content printing. Visual inspection of the existing synthetic `job-pack-register-fixture.tsx?empty=1` at 390x844 and 320x700 confirmed 8 px separation, a 44 px action and no horizontal page overflow. Local screenshots are retained outside Git at `.codex/tmp/job-pack-figma-ui/phone-empty-fixed-390.jpg` and `phone-empty-fixed-320.jpg` in the user's profile. Temporary browser viewport overrides were reset. This correction's final CI/deployment receipts are recorded in its PR; these local checks do not claim it is already hosted. Owner/device acceptance remains separate.
