@@ -1,5 +1,7 @@
 # Decision control
 
+[PJ-05 commercial controls](project-commercial-controls.md) records exact accepted quotation/received Sales/reviewed document authority, independent variation decisions and bounded synthetic Finance definitions.
+
 [Projects receiving and overview backend](project-overview-backend.md) records exact native Sales attribution and explained scoped portfolio reads; page and owner acceptance remain separate.
 
 [Projects RAID and owned actions backend](project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.

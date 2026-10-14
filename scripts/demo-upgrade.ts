@@ -303,7 +303,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No backfill, table privilege, seed or grant changes; populated 0098 is preserved.
   // 0100 adds nullable landed binding evidence and exact allocation guards.
   // Original values, identities, seeds and grants are retained; existing table privileges apply.
-  if (latestMigrationVersion !== 100) throw Error("Review the existing-demo upgrade for this release.");
+  // 0101 adds isolated synthetic commercial records and identities. No backfill,
+  // seed or automatic commercial grants. grantRuntimePrivileges includes the new
+  // tables; native source authority and evidence guards remain enforced.
+  if (latestMigrationVersion !== 101) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
