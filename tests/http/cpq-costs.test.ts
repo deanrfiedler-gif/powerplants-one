@@ -42,16 +42,30 @@ test("governed CPQ compiled API retains exact source evidence, recovers original
     ).code,
     "CpqCostSourceChanged",
   );
-  await database().query(
-    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp()-interval '1 second' WHERE user_id=$1 AND capability='estimating.read'",
-    [s.p.actor_id],
-  );
-  for (const path of [
-    `cpq/runs/${s.run.id}`,
-    `cpq/releases/${s.release.release.id}`,
-    `operations/${s.adoption.operation_id}`,
-    `estimating/estimates/${s.estimate.id}`,
-  ])
-    await cpqHttp(s.cookie, path, undefined, 404);
-  await cpqHttp(s.cookie, `cpq/runs/${s.run.id}/adoption`, s.adoption, 404);
+  const grants = (
+    await database().query<{ id: string; valid_to: Date | null }>(
+      "SELECT id,valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='estimating.read'",
+      [s.p.actor_id],
+    )
+  ).rows;
+  try {
+    await database().query(
+      "UPDATE ppo.permission_grants SET valid_to=clock_timestamp()-interval '1 second' WHERE user_id=$1 AND capability='estimating.read'",
+      [s.p.actor_id],
+    );
+    for (const path of [
+      `cpq/runs/${s.run.id}`,
+      `cpq/releases/${s.release.release.id}`,
+      `operations/${s.adoption.operation_id}`,
+      `estimating/estimates/${s.estimate.id}`,
+    ])
+      await cpqHttp(s.cookie, path, undefined, 404);
+    await cpqHttp(s.cookie, `cpq/runs/${s.run.id}/adoption`, s.adoption, 404);
+  } finally {
+    for (const grant of grants)
+      await database().query(
+        "UPDATE ppo.permission_grants SET valid_to=$2 WHERE id=$1",
+        [grant.id, grant.valid_to],
+      );
+  }
 });
