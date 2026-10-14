@@ -43,6 +43,9 @@ export async function pricingSource(
       expected_version: 2,
       revision_id: source.revision.id,
       action: "Reviewed",
+      ...(source.fx_review_hash
+        ? { fx_review_hash: source.fx_review_hash }
+        : {}),
     });
   }
   const detail = await readCostSource(p, input.id);

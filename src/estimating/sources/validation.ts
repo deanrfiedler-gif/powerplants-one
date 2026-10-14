@@ -13,6 +13,7 @@ import {
 } from "../../shared/validation";
 import { amount } from "../validation";
 import { scaled } from "../math";
+import { fxContent, convertedTiers } from "./fx";
 
 export function sourceContent(value: unknown) {
   const r = object(value, [
@@ -30,16 +31,24 @@ export function sourceContent(value: unknown) {
     "evidence_reference",
     "evidence_excerpt",
     "tiers",
+    "fx",
   ]);
   const effective_from = dateOnly(r.effective_from, "effective_from");
   const valid_until =
     r.valid_until === null ? null : dateOnly(r.valid_until, "valid_until");
   if (valid_until && valid_until < effective_from)
     invalid("valid_until", "Validity cannot end before the effective date.");
-  if (!Array.isArray(r.tiers) || !r.tiers.length || r.tiers.length > 20)
+  const fx = r.fx === undefined ? undefined : fxContent(r.fx);
+  const converted = fx ? convertedTiers(fx) : undefined;
+  const tierValues = r.tiers === undefined ? converted : r.tiers;
+  if (
+    !Array.isArray(tierValues) ||
+    !tierValues.length ||
+    tierValues.length > 20
+  )
     invalid("tiers", "Record between one and twenty explicit quantity tiers.");
   let previous = 0n;
-  const tiers = r.tiers.map((value, i) => {
+  const tiers = tierValues.map((value, i) => {
     const tier = object(value, ["minimum_quantity", "unit_cost"]);
     const minimum_quantity = amount(
       tier.minimum_quantity,
@@ -58,7 +67,13 @@ export function sourceContent(value: unknown) {
       unit_cost: amount(tier.unit_cost, `tiers.${i}.unit_cost`),
     };
   });
-  return {
+  if (converted && JSON.stringify(tiers) !== JSON.stringify(converted))
+    invalid(
+      "tiers",
+      "AUD tiers must exactly match the retained foreign prices and conversion policy.",
+    );
+  const content = {
+    ...(fx ? { fx } : {}),
     title: label(r.title, "title", 200),
     supplier_label: label(r.supplier_label, "supplier_label", 200),
     supplier_entity_key: optionalText(
@@ -77,6 +92,12 @@ export function sourceContent(value: unknown) {
     evidence_excerpt: narrative(r.evidence_excerpt, "evidence_excerpt", 6000),
     tiers,
   };
+  if (fx && Buffer.byteLength(JSON.stringify(content), "utf8") > 28 * 1024)
+    invalid(
+      "fx",
+      "Complete FX source evidence must fit the 28 KiB review envelope.",
+    );
+  return content;
 }
 export type SourceContent = ReturnType<typeof sourceContent>;
 
@@ -117,8 +138,18 @@ export function sourceDecision(id: string, value: unknown) {
     "expected_version",
     "revision_id",
     "action",
+    "fx_review_hash",
   ]);
+  if (
+    r.fx_review_hash !== undefined &&
+    (typeof r.fx_review_hash !== "string" ||
+      !/^[a-f0-9]{64}$/.test(r.fx_review_hash))
+  )
+    invalid("fx_review_hash", "Confirm the exact FX review hash.");
   return {
+    ...(r.fx_review_hash === undefined
+      ? {}
+      : { fx_review_hash: r.fx_review_hash as string }),
     ...common(r),
     id: uuid(id, "id"),
     expected_version: version(r.expected_version),

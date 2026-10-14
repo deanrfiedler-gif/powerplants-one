@@ -1,8 +1,9 @@
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
-import { sharedOperation } from "../../platform/operations";
+import { canonical, sharedOperation } from "../../platform/operations";
 import { AppError } from "../../platform/errors";
+import { fxReviewHash, type FxContent } from "./fx";
 import { companyContext } from "../../shared/authority";
 import { expected } from "../service";
 import {
@@ -50,6 +51,7 @@ async function event(
   s: CostSource,
   input: { operation_id: string; reason: string },
   action: SourceEvent["action"],
+  fx?: FxContent,
 ) {
   const id = randomUUID();
   await c.query(
@@ -73,6 +75,15 @@ async function event(
       source_revision_id: s.current_revision_id,
       source_revision: s.revision,
       event_id: id,
+      ...(fx
+        ? {
+            fx_review: {
+              hash: fxReviewHash(fx),
+              canonical: canonical(fx),
+              conversion: fx,
+            },
+          }
+        : {}),
     },
   };
 }
@@ -138,6 +149,15 @@ export async function reviseCostSource(
           "Submitted evidence is frozen. Record its independent review before preparing a correction.",
         );
       const prior = await sourceRevision(c, p, s, s.current_revision_id);
+      if (
+        Boolean(prior.content.fx) !== Boolean(input.content.fx) ||
+        prior.content.fx?.currency !== input.content.fx?.currency
+      )
+        throw new AppError(
+          422,
+          "SourceCurrencyChanged",
+          "A different original currency or domestic/FX profile requires a separate source identity.",
+        );
       for (const key of [
         "supplier_entity_key",
         "supplier_label",
@@ -216,6 +236,26 @@ export async function decideCostSource(
           "IndependentSourceReviewerRequired",
           "The author cannot review their own source evidence.",
         );
+      if (
+        input.action === "Reviewed" &&
+        revision.content.fx &&
+        input.fx_review_hash !== fxReviewHash(revision.content.fx)
+      )
+        throw new AppError(
+          409,
+          "FxReviewRequired",
+          "Review the original foreign prices, rate, validity and rounding policy and confirm their exact FX review hash.",
+        );
+      if (
+        input.fx_review_hash !== undefined &&
+        (!revision.content.fx ||
+          input.fx_review_hash !== fxReviewHash(revision.content.fx))
+      )
+        throw new AppError(
+          409,
+          "FxReviewChanged",
+          "The FX confirmation does not match this exact source revision.",
+        );
       const action = submit
         ? "Submitted"
         : (input.action as "Reviewed" | "Returned" | "Rejected");
@@ -225,7 +265,14 @@ export async function decideCostSource(
           [p.workspace_id, s.id, action, p.actor_id],
         )
       ).rows[0];
-      return event(c, p, updated, input, action);
+      return event(
+        c,
+        p,
+        updated,
+        input,
+        action,
+        action === "Reviewed" ? revision.content.fx : undefined,
+      );
     },
     "CostSource",
     submit ? "CostSourceSubmitted" : "CostSourceReviewed",
