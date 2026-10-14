@@ -7,6 +7,8 @@ versioning: git
 
 # Bounded Excel workbook parser recovery
 
+**Receiving update — 14 October 2026:** [Validated upload and review](excel-import-review-backend.md) now connects this parser to current E2 authority and transient whole-file validation. Its [API](../contracts/excel-import-review.md) adds no durable source, review or estimate save. The original recovery boundary below remains historical.
+
 ## Authority and baseline
 
 Dean asked on 12 October 2026 to review the closed backup PRs and recover useful work into fresh PRs, starting with [#405](https://github.com/deanrfiedler-gif/powerplants-one/pull/405). This contribution recovers the bounded server-side parser from snapshot `1b699b48563e29e9b9b12c7f2c6615575521c599` onto main `4228d470ca4c566a15e7c3397fc053b8f7bef4bc`. The original snapshot and branch remain unchanged. No current open PR contains a competing Excel-import implementation at this checkpoint.

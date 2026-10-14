@@ -86,7 +86,7 @@ jobs:
       - name: Managed template drafts and populated upgrade
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-drafts.test.ts tests/database/template-drafts-upgrade.test.ts tests/database/template-publication.test.ts tests/database/template-publication-upgrade.test.ts
       - name: Pending identity events across 0026 and reserved Products after newest history
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90|91|92|93|94) ' tests/database/products-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90|91|92|93|94|95) ' tests/database/products-upgrade.test.ts
       - name: Controlled template use and populated publication upgrade
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-use.test.ts tests/database/template-use-upgrade.test.ts
       - name: Compiled document library HTTP

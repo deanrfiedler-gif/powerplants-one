@@ -68,7 +68,7 @@ test("R4 populated 0093 upgrade preserves publications, exact ledgers and queued
   );
   assert.deepEqual(
     upgraded.filter((r) => r.version > 93).map((r) => r.version),
-    [94],
+    [94, 95],
   );
   for (const t of ["template_use_policies", "template_use_assignments"])
     assert.deepEqual(await rows(`SELECT * FROM ppo.${t}`), []);

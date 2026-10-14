@@ -11,7 +11,7 @@ source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
 
 ## Delivered outcome
 
-The r01 package defines a controlled Excel-to-PPO estimate workflow and provides a working calculation workbook plus an interactive standalone design preview. The application importer is not implemented. This contribution sits under PPO-010 / issue #10 and preserves the existing E1–E6/P01–P12 sequence.
+The r01 package defines a controlled Excel-to-PPO estimate workflow and provides a working calculation workbook plus an interactive standalone design preview. This historical design handover is now continued by the [validated review](../contracts/excel-import-review.md) and [durable first-save backend](../contracts/excel-import-persistence.md); their execution evidence and remaining boundaries are separate. This contribution sits under PPO-010 / issue #10 and preserves the existing E1–E6/P01–P12 sequence.
 
 | Deliverable | Location and use |
 |---|---|
