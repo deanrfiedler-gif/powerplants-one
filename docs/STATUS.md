@@ -2,7 +2,7 @@
 
 ## Excel reviewed FX conversion — 14 October 2026
 
-Dean authorised the [FX continuation](decisions/excel-import-reviewed-fx.md) after managed pricing PR #487. The [backend contract](contracts/excel-import-reviewed-fx.md) retains original foreign supplier tiers, explicit rate/date/validity/evidence and derived AUD prices in exact independently reviewed source revisions. Excel comparison exposes both prices and deliberately saves an atomic successor; migration 0099 preserves earlier source, workbook and receipt history. [Execution evidence](testing/evidence/excel-reviewed-fx/README.md) separates checks from acceptance. Native controls, non-AUD workbook templates, landed costs, live rates and operational policy remain open.
+Dean authorised the [FX continuation](decisions/excel-import-reviewed-fx.md), delivered in [PR #488](https://github.com/deanrfiedler-gif/powerplants-one/pull/488) after managed pricing PR #487. The [backend contract](contracts/excel-import-reviewed-fx.md) retains original foreign supplier tiers, explicit rate/date/validity/evidence and derived AUD prices in exact independently reviewed source revisions. Excel comparison exposes both prices and deliberately saves an atomic successor; migration 0099 preserves earlier source, workbook and receipt history. [Execution evidence](testing/evidence/excel-reviewed-fx/README.md) separates checks from acceptance. Native controls, non-AUD workbook templates, landed costs, live rates and operational policy remain open.
 
 ## Excel managed cost sources and reviewed pricing — 14 October 2026
 

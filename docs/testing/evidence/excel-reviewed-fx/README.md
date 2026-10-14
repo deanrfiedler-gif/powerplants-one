@@ -1,6 +1,6 @@
 # Excel reviewed FX — execution evidence
 
-Owner: Dean Fiedler. Source: `codex/excel-import-reviewed-fx`, based on managed pricing PR #487 `3c75782`. User-authorised continuation; scope BC-04 / PPO-010 / EST-04/05/07/08 / XI-04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
+Owner: Dean Fiedler. Source: [PR #488](https://github.com/deanrfiedler-gif/powerplants-one/pull/488), implementation `cc00177` on `codex/excel-import-reviewed-fx`, based on managed pricing PR #487 `3c75782`. User-authorised continuation; scope BC-04 / PPO-010 / EST-04/05/07/08 / XI-04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
 
 The [decision](../../../decisions/excel-import-reviewed-fx.md) and [contract](../../../contracts/excel-import-reviewed-fx.md) retain original foreign supplier tiers and a dated rate/evidence snapshot inside independently reviewed native Cost Source revisions. `SYN-EST-FX-01` produces exact unit-first AUD prices; an explicit Excel comparison saves the existing atomic successor. Migration 0099 adds guards to existing tables without rewriting original data or introducing a table, dependency, identity type, capability, seed or grant.
 
