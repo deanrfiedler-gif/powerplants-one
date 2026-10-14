@@ -9,6 +9,8 @@ versioning: git
 
 # Excel estimate import implementation plan
 
+**Implementation update — 14 October 2026:** Step 2 delivers the [validated upload/review backend](../decisions/excel-import-review-backend.md). Step 3 continues it with [durable storage and atomic first save](../decisions/excel-import-persistence-backend.md), including authenticated review, exact originals, native estimate/line evidence and original-operation recovery. [Execution evidence](../testing/evidence/excel-import-persistence/README.md) separates delivery from acceptance. Steps 4–6 and native controls remain open.
+
 ## Position in delivery
 
 This feature belongs to PPO-010 / BP-04 cost-source work, alongside E3. It does not create P13 or renumber E1–E6. A synthetic upload-to-draft slice can reuse E1 and verified E2 without adopting the later operational FX/landed-cost/approval policies. Formal quote issue remains E4; specialist native configuration remains E5; receiving handover remains E6. [Existing delivery sequence](estimating-implementation-plan.md).

@@ -2,38 +2,28 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler · **Catalogue key:** `estimation-journey` · **Review:** Pending
+**Owner:** Dean Fiedler. **Catalogue key:** `estimation-journey`. **Coverage:** Host example. **Review:** Pending.
 
-Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.
+The actual `DiscoveryDetail` host uses the accepted Figma design with the existing revision, alternative and saved-cost services. This is a real session-bound integration example; no isolated catalogue renderer is claimed.
 
-## Source and reference
+## Sources and consumers
 
-Design: [powerplants-one-theme-style-board-r22.html](../../../reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html#estimation-wizard). Reference only; proposed pattern.
-
-The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
+The [page contract](../pages/route-estimating-discovery-id.md), [implementation decision](../../../decisions/es02-wizard-figma-implementation.md) and [immutable Figma captures](../../../reference/ui/estimating/es02-wizard-figma-design-r01/README.md) define the geometry and explicit adaptations. Consumers are the existing ES-02 record route and scope entry; the earlier theme study remains reference history.
 
 ## Desktop
 
-Read the retained reference and resolve intended scope before implementing.
+Desktop uses the shared 240/76 px rail, 380 px summary, five 48 px steps, full-width system grid and fixed save controls. Summary closes on Alternatives/Revisions. Requirements has larger Add cards; Configuration uses six filter tiles plus Infrastructure. Green requires evaluated confirmation.
 
 ## Mobile
 
-No mobile implementation is asserted. Specify responsive transformation before adoption.
+Phone uses the record header, tabs, viewed alternative, step selector, system cards and full-page editor over the same draft. Back returns focus to the source system without discarding. Summary opens a sheet; the 72 px footer retains Save. The global bottom navigation is absent on this route. Table overflow stays local.
 
-## Keyboard and accessibility
+## States, keyboard and fixtures
 
-Keyboard and assistive-technology rules must be defined before adoption.
+Reuse labelled Field/SelectField, shared RecordTabs, native dialogs, validation, original-command recovery and FontAwesomeGlyph mappings. Changes/findings link to their field or evidence panel. Escape closes overlays and phone Back returns focus. Existing ES-02 scoped buttons remain a legacy exception to the shared Button migration.
 
-## States and interaction
+`scripts/es02-fixture.ts` retains r01 and adds explicit r02 synthetic Northbank scope. `tests/browser/estimating-wizard-figma.spec.ts` covers catalogue mapping, category add, family status, save/discard, exact history and phone editing. `estimating-wizard.spec.ts` covers delayed previews, maximum scope, navigation guards, archived scope and saved costs. These host fixtures are the representative state examples.
 
-Reference only; no isolated interactive fixture is claimed.
+## Differences and verification
 
-## Differences and limits
-
-Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.
-
-## Verification and maintenance
-
-Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where relevant; check browser zoom and keyboard operation separately. Compare the same state and viewport with the retained reference. Record exact commit, reviewer, date, fixture state, viewport, result and evidence paths in the component review record. Automated source fingerprints do not grant acceptance.
-
-Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
+Q6 timing fields remain a labelled proposal with no persistence. No new technical rule or equipment suitability follows from a category. Phone Alternatives/Revisions images, real devices, screen-reader review and owner acceptance remain open. See [execution evidence](../../../testing/evidence/es02-figma/README.md). Review fingerprints remain unchanged; automated tests and source presence do not approve the page.

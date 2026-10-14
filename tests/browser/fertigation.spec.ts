@@ -154,15 +154,11 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
   browser,
 }, info) => {
   const discovery = await savedDiscovery(page);
-  const entry = page.getByRole("link", {
+  await page.getByRole("button", { name: "Workspace actions", exact: true }).click();
+  await page.getByRole("menuitem", {
     name: "Priva Fertigation Configurator",
     exact: true,
-  });
-  if (!(await entry.isVisible()))
-    await page
-      .getByRole("button", { name: /^(Show menu|Estimating menu)$/ })
-      .click();
-  await entry.click();
+  }).click();
   await page
     .getByRole("link", { name: "New fertigation scope", exact: true })
     .click();

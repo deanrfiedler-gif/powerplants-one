@@ -48,7 +48,6 @@ test.afterAll(() => {
 test.use({ actionTimeout: 15000 });
 test("ES02 native five steps, exact saved costs, family filters, evidence, dirty navigation and responsive capture", async ({
   page,
-  context,
 }, info) => {
   const fixture = JSON.parse(await readFile("tmp/es02-fixture.json", "utf8"));
   await page.goto(fixture.route);
@@ -64,7 +63,7 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
       exact: true,
     }),
   ).toBeVisible();
-  await compareEs02Design(page, context, info);
+  await compareEs02Design(page, info);
   const summary = page.getByRole("complementary", { name: "Estimate summary" });
   await expect(summary).toContainText("Estimate v04");
   await expect(summary).toContainText("AUD 58,400.00");
@@ -205,7 +204,7 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
 
   await page
     .getByLabel("Viewed alternative", { exact: true })
-    .selectOption({ label: "B — Fresh scope · Alternative · Active" });
+    .selectOption({ label: "B — Fresh scope · Active" });
   await page
     .getByRole("button", { name: "Save revision then continue", exact: true })
     .click();
@@ -213,7 +212,7 @@ test("ES02 native five steps, exact saved costs, family filters, evidence, dirty
     .getByLabel("Discovery change reason", { exact: true })
     .fill("Synthetic ES-02 native save verification");
   for (const checkbox of await page
-    .getByRole("dialog", { name: "Review discovery revision" })
+    .getByRole("dialog", { name: "Save discovery revision" })
     .getByRole("checkbox")
     .all())
     await checkbox.check();
@@ -306,9 +305,13 @@ test("ES02-T65: Back, Forward, shell router, page hierarchy and installed reload
   const leaveViaHierarchy = async () => {
     const hierarchy = page.locator("#page-hierarchy");
     if (!(await hierarchy.isVisible()))
-      await page.getByRole("button", { name: "Page hierarchy", exact: true }).click();
+      await page
+        .getByRole("button", { name: "Page hierarchy", exact: true })
+        .click();
     await expect(hierarchy).toBeVisible();
-    await hierarchy.getByRole("link", { name: "Estimating & quotation", exact: true }).click();
+    await hierarchy
+      .getByRole("link", { name: "Estimating & quotation", exact: true })
+      .click();
   };
   await leaveViaHierarchy();
   await stay();
@@ -508,7 +511,7 @@ test("ES02-T57: archived unselected incomplete scope still reads its exact saved
   await expect(page.getByLabel("System name", { exact: true })).toBeDisabled();
   await expect(
     page.getByRole("button", { name: "Save discovery revision", exact: true }),
-  ).toBeDisabled();
+  ).toHaveCount(0);
   await page.screenshot({
     path: info.outputPath("es02-read-only-summary.png"),
   });

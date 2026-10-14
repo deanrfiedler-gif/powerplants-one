@@ -288,7 +288,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // the deferred-event flush. New render guards are inert without an adopted site
   // policy; the generic grants cover the two tables/view and guard functions.
   // template.assign remains default-denied; this is not hosted use adoption.
-  if (latestMigrationVersion !== 94) throw Error("Review the existing-demo upgrade for this release.");
+  // 0095 adds empty, immutable Excel import evidence and line maps. Existing
+  // Estimate identity, receipts, outbox kind and runtime privileges are reused.
+  // No seed, grant, user or source bytes change; 0093/0094 are integrated.
+  if (latestMigrationVersion !== 95) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

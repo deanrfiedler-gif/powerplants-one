@@ -9,6 +9,8 @@ versioning: git
 
 # Excel estimate import specification
 
+**Receiving update — 14 October 2026:** The [validated upload/review API](excel-import-review.md) implements the transient preview portion with exact native UUID context mapping. Durable source storage, review confirmation, estimate commit, re-import and UI remain subsequent increments. The design baseline below is retained.
+
 ## 1. Outcome and authority
 
 An estimator transfers reviewed results from an Excel workbook into an owned PPO draft estimate, retaining the source, reconciliation and exact selected estimating basis. Dean authorised the recommended design package: workbook assessment, standard workbook r01, field mapping, interactive preview and bounded implementation plan. This contribution delivers those design artifacts. It changes no application route, schema, grant, price policy, customer document or external integration.

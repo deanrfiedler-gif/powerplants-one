@@ -72,3 +72,7 @@ Pending and unknown commands may switch only these explicitly declared mounted v
 ## Fertigation consumer
 
 The existing `route:/estimating/fertigation/[id]` now uses this component within the [Figma workbench implementation](../../../decisions/fertigation-figma-implementation.md). Host fixture/state examples are maintained in [fertigation-workbench.md](fertigation-workbench.md), with FN-T118 exercising the real saved scope. The route-scoped composition does not change the shared control API. Paired owner acceptance remains open.
+
+## ES-02 Figma consumer
+
+The [Estimation Wizard host](estimation-journey.md) now adopts the accepted Figma record layout using this existing control. Its host fixtures cover desktop and phone save/revision continuity; source and review remain separate. The component implementation is unchanged outside the scoped ES-02 consumer.

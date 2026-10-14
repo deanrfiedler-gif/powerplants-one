@@ -5653,18 +5653,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/es02-figma/README.md; bounded synthetic verification, not operational acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Estimation Wizard · discovery, alternatives & revisions to work towards this outcome: A selected, traceable discovery basis with owned review items.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Create a selected, traceable discovery basis with owned review items. The page uses the accepted Figma composition and existing synthetic revision services. Review is completeness checking; ES-04 approval remains separate.",
+            "Requested completion, estimated duration and agreed commitment in Timing are a proposed Q6 presentation only. They are not persisted scheduling fields or a delivery commitment."
           ],
           "steps": [],
           "rows": [],
@@ -5687,11 +5686,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review Requirements, Configuration, Scope & delivery, Pricing and Review",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Confirm the customer, site, viewed alternative and saved discovery revision.",
+            "Work through Requirements, Configuration, Scope & delivery, Pricing and Review; status reflects findings, not visits.",
+            "For a historical catalogue, choose Use six-family catalogue and classify every system explicitly. Apply changes to the working copy, then review and save separately.",
+            "Use Add system to choose the family and category. Shared infrastructure is counted once across its recorded coverage.",
+            "Open the unsaved-change count to return to a changed field, review Save discovery revision or confirm discard.",
+            "Save with a reason and current confirmations. Check the saved revision banner; the saved estimate retains its own cost basis."
           ],
           "rows": [],
           "headers": []
@@ -5703,24 +5703,24 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Estimation Wizard · discovery, alternatives & revisions · Tabs"
+              "Record header",
+              "Title, customer/site, owner, viewed alternative and saved/working-copy state."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
+              "Discovery / Alternatives / Revisions",
+              "One draft across the five Discovery steps; Alternatives and Revisions use the full width."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Equipment families",
+              "Grey empty, amber pending, green only when evaluated as confirmed. Requirements has larger Add cards; Configuration has filter tiles."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
+              "Estimate summary",
+              "Saved amount and exact cost basis stay separate from the viewed discovery. A newer discovery does not automatically recost."
             ],
             [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Phone",
+              "System rows open the full-page editor; Back keeps the draft. Summary and Save remain in the footer."
             ]
           ],
           "headers": [
@@ -36611,7 +36611,8 @@
           "title": "Worked examples",
           "paragraphs": [
             "Synthetic normal case — Northbank Nursery: prepare organisation name, customer relationship, contacts, sites and external references. Follow the task sequence and check that one correctly identified customer context with owned information gaps. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Customer register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Account visibility and credit decisions require separate Finance permissions. Similar names are not proof of duplicate identity."
+            "Synthetic exception — the source basis for Customer register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Account visibility and credit decisions require separate Finance permissions. Similar names are not proof of duplicate identity.",
+            "Figma proposal, 14 October 2026: choose Willowbank or Rothwell in the Customers table (phone: customer card). Confirm the matching name/reference, then use Back to customers to return to the demonstrated list state. Search uses a preset Willowbank query; Due today and desktop Name sorting are bounded examples. This is design-prototype guidance, not a claim that the running release implements the new composition."
           ],
           "steps": [],
           "rows": [],
@@ -36669,7 +36670,9 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "Proposed Customers register and customer-specific workspace captures: docs/reference/ui/customers/customer-360-figma-r03/README.md. The working contract is docs/design/development/pages/route-customers.md; owner acceptance and a named Figma version are pending.",
+            "The final table-style comparison and desktop register are retained in docs/reference/ui/customers/customer-360-figma-r04/README.md. Phone cards and exact profile navigation retain the r03 contract."
           ],
           "steps": [],
           "rows": [],
@@ -36695,9 +36698,13 @@
         "src/app/(business)/customers/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md",
-        "src/components/crm-directory.tsx"
+        "src/components/crm-directory.tsx",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context. Direct-directory source binding added for the PT-27 loading candidate; the task sequence and draft review status are unchanged.",
+      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context. Direct-directory source binding added for the PT-27 loading candidate; the task sequence and draft review status are unchanged. Added a clearly labelled Figma register-to-customer example and design evidence on 14 October 2026; runtime tasks and Draft review status remain unchanged.",
       "document_id": "PPO-GUIDE-PAGE-CUSTOMERS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -38621,18 +38628,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-13",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/es02-figma/README.md; bounded synthetic verification, not operational acceptance.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Discovery workspace to work towards this outcome: A selected, traceable discovery basis with owned review items.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Create a selected, traceable discovery basis with owned review items. The page uses the accepted Figma composition and existing synthetic revision services. Review is completeness checking; ES-04 approval remains separate.",
+            "Requested completion, estimated duration and agreed commitment in Timing are a proposed Q6 presentation only. They are not persisted scheduling fields or a delivery commitment."
           ],
           "steps": [],
           "rows": [],
@@ -38655,11 +38661,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Confirm the customer, site, viewed alternative and saved discovery revision.",
+            "Work through Requirements, Configuration, Scope & delivery, Pricing and Review; status reflects findings, not visits.",
+            "For a historical catalogue, choose Use six-family catalogue and classify every system explicitly. Apply changes to the working copy, then review and save separately.",
+            "Use Add system to choose the family and category. Shared infrastructure is counted once across its recorded coverage.",
+            "Open the unsaved-change count to return to a changed field, review Save discovery revision or confirm discard.",
+            "Save with a reason and current confirmations. Check the saved revision banner; the saved estimate retains its own cost basis."
           ],
           "rows": [],
           "headers": []
@@ -38671,24 +38678,24 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Discovery workspace · Record workspace"
+              "Record header",
+              "Title, customer/site, owner, viewed alternative and saved/working-copy state."
             ],
             [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
+              "Discovery / Alternatives / Revisions",
+              "One draft across the five Discovery steps; Alternatives and Revisions use the full width."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Equipment families",
+              "Grey empty, amber pending, green only when evaluated as confirmed. Requirements has larger Add cards; Configuration has filter tiles."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
+              "Estimate summary",
+              "Saved amount and exact cost basis stay separate from the viewed discovery. A newer discovery does not automatically recost."
             ],
             [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Phone",
+              "System rows open the full-page editor; Back keeps the draft. Summary and Save remain in the footer."
             ]
           ],
           "headers": [
@@ -70878,7 +70885,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
+            "Catalogue filters are in the secondary menu. Search and the bounded result count stay above the rows. Back to catalogue or browser Back restores query, selected-row focus and scroll within the current user/company."
           ],
           "steps": [],
           "rows": [],
@@ -71027,7 +71035,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Catalogue uses full-width phone rows. Filters opens the shared menu; Escape/Close returns focus. Inputs/actions retain 44px phone targets. Technical record evidence remains in reading order.",
             "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
             "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
@@ -71061,9 +71069,9 @@
         }
       ],
       "locale": "en-AU",
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
-      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+      "prepared_at": "2026-10-14",
+      "runtime_evidence": "See docs/testing/evidence/products-discovery/README.md; execution and acceptance are separate.",
+      "change_summary": "Catalogue A: flat register, shared filter menu and scoped return context; review pending."
     },
     {
       "guide_key": "guide.route-products-compatibility",
@@ -71517,7 +71525,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
+            "Catalogue filters are in the secondary menu. Search and the bounded result count stay above the rows. Back to catalogue or browser Back restores query, selected-row focus and scroll within the current user/company."
           ],
           "steps": [],
           "rows": [],
@@ -71666,7 +71675,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Catalogue uses full-width phone rows. Filters opens the shared menu; Escape/Close returns focus. Inputs/actions retain 44px phone targets. Technical record evidence remains in reading order.",
             "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
             "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
@@ -71700,9 +71709,9 @@
         }
       ],
       "locale": "en-AU",
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
-      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+      "prepared_at": "2026-10-14",
+      "runtime_evidence": "See docs/testing/evidence/products-discovery/README.md; execution and acceptance are separate.",
+      "change_summary": "Catalogue A: flat register, shared filter menu and scoped return context; review pending."
     },
     {
       "guide_key": "guide.route-products-pricing",

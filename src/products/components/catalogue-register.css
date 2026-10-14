@@ -1,0 +1,234 @@
+/* PD-01: corrected PPO Figma catalogue, 653:46 / 657:371. Shared shell/menu,
+   register, fields and buttons; only the catalogue opts into this composition. */
+#ppo-products[data-catalogue] .mw-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  background: var(--surface-white);
+  overflow: hidden;
+}
+#ppo-products[data-catalogue] .pd-menu-heading {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--muted);
+  padding: 0 10px 8px;
+}
+#ppo-products[data-catalogue] .pd-catalogue-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 6px 8px;
+}
+#ppo-products[data-catalogue] .pd-catalogue-filters .pd-menu-heading {
+  padding: 0;
+}
+#ppo-products[data-catalogue] .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  min-width: 0;
+}
+#ppo-products[data-catalogue] .field label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-products[data-catalogue] .field :is(input, select) {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-products[data-catalogue] .pd-catalogue-toolbar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-products[data-catalogue] .pd-catalogue-toolbar .field {
+  flex: 0 1 300px;
+}
+#ppo-products[data-catalogue] .pd-catalogue-toolbar label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#ppo-products[data-catalogue] .pd-desktop-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-left: 8px;
+}
+#ppo-products[data-catalogue] .pd-desktop-create {
+  margin-left: auto;
+  white-space: nowrap;
+}
+#ppo-products[data-catalogue] .pd-catalogue-results {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+#ppo-products[data-catalogue] .ppo-register {
+  --ppo-register-header: var(--surface-white);
+  --ppo-register-emphasis: #eff2f6;
+  border-top: 0;
+}
+#ppo-products[data-catalogue] .ppo-register-table {
+  min-width: 860px;
+  table-layout: fixed;
+}
+#ppo-products[data-catalogue] .ppo-register :is(th, td) {
+  height: 40px;
+  padding: 8px 16px;
+  border-right: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-products[data-catalogue] .ppo-register th {
+  font-weight: 500;
+  color: var(--ink);
+}
+#ppo-products[data-catalogue] .ppo-register th:first-child {
+  width: 27%;
+}
+#ppo-products[data-catalogue] .ppo-register td {
+  vertical-align: middle;
+}
+#ppo-products[data-catalogue] .ppo-register a {
+  display: block;
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+#ppo-products[data-catalogue] .ppo-register a:hover span {
+  text-decoration: underline;
+}
+#ppo-products[data-catalogue] [data-product] small {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+#ppo-products[data-catalogue] [data-selected="true"] {
+  background: #eff2f6;
+}
+#ppo-products[data-catalogue] .pd-catalogue-note {
+  padding: 16px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--line);
+}
+#ppo-products[data-catalogue]
+  :is(
+    .pd-phone-count,
+    .pd-phone-filters,
+    .pd-phone-create,
+    .pd-catalogue-phone
+  ) {
+  display: none;
+}
+#ppo-products[data-catalogue] :is(a, button, input, select):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+@media (max-width: 780px) {
+  #ppo-products[data-catalogue]
+    :is(
+      .pd-desktop-count,
+      .pd-desktop-clear,
+      .pd-desktop-create,
+      .pd-catalogue-desktop
+    ) {
+    display: none;
+  }
+  #ppo-products[data-catalogue] :is(.pd-phone-filters, .pd-phone-create) {
+    display: inline-flex;
+  }
+  #ppo-products[data-catalogue] .pd-catalogue-toolbar {
+    padding: 12px;
+    min-height: 68px;
+  }
+  #ppo-products[data-catalogue] .pd-catalogue-toolbar .field {
+    flex: 1;
+  }
+  #ppo-products[data-catalogue] .field :is(input, select) {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  #ppo-products[data-catalogue] .ppo-button {
+    min-height: 44px;
+  }
+  #ppo-products[data-catalogue] .pd-phone-count {
+    display: block;
+    flex: none;
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+    background: var(--paper);
+  }
+  #ppo-products[data-catalogue] .pd-catalogue-phone {
+    display: block;
+  }
+  #ppo-products[data-catalogue] .pd-catalogue-phone li {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    overflow-wrap: anywhere;
+  }
+  #ppo-products[data-catalogue] .pd-catalogue-phone a {
+    display: block;
+    min-height: 44px;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  #ppo-products[data-catalogue] .pd-catalogue-phone p {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+  }
+}
+
+#ppo-products[data-catalogue] .pd-catalogue-read-state:not(:empty) {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-products[data-catalogue] .pd-catalogue-read-state button,
+#ppo-products[data-catalogue] .ppo-register-empty button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  color: var(--ink);
+}
+#ppo-products[data-catalogue] .pd-catalogue-results > .ppo-register-empty {
+  padding: 24px 16px;
+}
+
+#ppo-products[data-catalogue] .ppo-register td:first-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

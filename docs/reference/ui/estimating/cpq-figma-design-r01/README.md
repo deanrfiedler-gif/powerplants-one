@@ -4,7 +4,7 @@ revision: r01
 date: 2026-10-12
 owner: Dean Fiedler
 status: Retained owner-accepted design reference; icon-free; not an application capture or UI baseline
-source_commit: 7e4ef3b8ce28e1976fea621f9de33999c26fbe21
+source_commit: 65141dcb8a3e39f6516f69955e8260ed447d152b
 ---
 
 # CPQ Configure & price and Rules studio Figma design r01 — retained captures
@@ -21,7 +21,7 @@ Each image is one Figma frame or board exported at scale 1:
 
 Before export, every Font Awesome icon was replaced by a plain placeholder square, as [ADR-0053](../../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. The rail icons, status icons, chevrons and button icons therefore appear as squares; the words beside them carry the meaning. The Powerplants logo is the company's own.
 
-Every figure, name, rule, rate, price, margin, limit and release is synthetic: the Northbank Nursery fixture on the design's Read me page, built on the worked examples of the [CCE technical specification](../../../../architecture/cce-technical-specification.md). None is an adopted operating rule, price policy or service target. The images are design compositions, not captures of the application. No page they show is built.
+Every figure, name, rule, rate, price, margin, limit and release is synthetic: the Northbank Nursery fixture on the design's Read me page, built on the worked examples of the [CCE technical specification](../../../../architecture/cce-technical-specification.md). None is an adopted operating rule, price policy or service target. The images are design compositions, not captures of the application.
 
 ## Images
 

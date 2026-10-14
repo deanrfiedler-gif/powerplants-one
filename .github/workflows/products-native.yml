@@ -83,7 +83,13 @@ jobs:
             sleep 1
           done
           node --env-file=.env.local --import tsx --test tests/http/products.test.ts
-          node --env-file=.env.local node_modules/@playwright/test/cli.js test --config tests/products.playwright.config.ts
+          # Each viewport proves the full bounded catalogue against its own seed.
+          # Earlier HTTP/restart and desktop fixtures must not displace a phone
+          # candidate beyond the existing 100-product selector window.
+          for project in products-desktop products-phone; do
+            PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+            node --env-file=.env.local node_modules/@playwright/test/cli.js test --config tests/products.playwright.config.ts --project="$project"
+          done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

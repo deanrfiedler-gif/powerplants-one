@@ -128,7 +128,12 @@ async function acknowledge(page: Page) {
   // Locator.all() does not wait for the asynchronous comparison to render.
   // Read the actual comparison before enumerating its required confirmations.
   await expect(
-    page.getByRole("region", { name: "Discovery comparison", exact: true }).or(page.getByRole("dialog", { name: "Review discovery revision", exact: true })),
+    page.getByRole("region", { name: "Discovery comparison", exact: true }).or(
+      page.getByRole("dialog", {
+        name: "Save discovery revision",
+        exact: true,
+      }),
+    ),
   ).toBeVisible();
   for (const checkbox of await page
     .getByRole("checkbox", { name: /^I confirm Q/ })
@@ -150,7 +155,7 @@ async function compareSave(page: Page, reason: string) {
     })
     .click();
   await expect(
-    page.getByRole("dialog", { name: "Review discovery revision" }),
+    page.getByRole("dialog", { name: "Save discovery revision" }),
   ).toHaveCount(0);
 }
 async function openStep(page: Page, label: string) {
@@ -160,14 +165,28 @@ async function openStep(page: Page, label: string) {
   else await page.getByRole("button", { name: label, exact: true }).click();
 }
 async function expectSummary(page: Page, ...texts: string[]) {
-  const summary = page.getByRole("complementary", { name: "Estimate summary", exact: true });
+  const previousTab = await page
+    .locator('[role="tab"][aria-selected="true"]')
+    .getAttribute("id");
+  await page.getByRole("tab", { name: "Discovery", exact: true }).click();
+  const summary = page.getByRole("complementary", {
+    name: "Estimate summary",
+    exact: true,
+  });
   const sheetNeeded = !(await summary.isVisible());
   if (sheetNeeded)
-    await page.locator(".es02-bottom").getByRole("button", { name: "Summary", exact: true }).click();
+    await page
+      .locator(".es02-bottom")
+      .getByRole("button", { name: "Summary", exact: true })
+      .click();
   await expect(summary).toBeVisible();
   for (const text of texts) await expect(summary).toContainText(text);
   if (sheetNeeded)
-    await page.getByRole("button", { name: "Close estimate summary", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Close estimate summary", exact: true })
+      .click();
+  if (previousTab)
+    await page.locator(`[role="tab"][id="${previousTab}"]`).click();
 }
 async function fillQuestion(
   page: Page,
@@ -405,10 +424,21 @@ test("ES02-T27/T28/T54/T58: stale discovery retains its proposal and reconciles 
   // Its new version invalidates the comparison and closes the review dialog;
   // the original command must remain recoverable from the workspace banner.
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect(page.getByRole("tab", { name: "Revisions 3", exact: true })).toBeVisible();
-  await expect(page.getByRole("dialog", { name: "Review discovery revision", exact: true })).toHaveCount(0);
-  await expect(page.getByRole("status").filter({ hasText: "Save outcome uncertain" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Confirm original save outcome", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("tab", { name: "Revisions 3", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("dialog", { name: "Save discovery revision", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("status").filter({ hasText: "Save outcome uncertain" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: "Confirm original save outcome",
+      exact: true,
+    }),
+  ).toBeVisible();
   await capture(page, info, "successor-uncertain", ".es02-context");
   await page
     .getByRole("button", { name: "Confirm original save outcome", exact: true })
@@ -515,7 +545,7 @@ test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alte
   await page
     .getByLabel("Viewed alternative", { exact: true })
     .selectOption(b.option.id);
-  await expectSummary(page, "Viewed alternative · not selected", "Incomplete");
+  await expectSummary(page, "viewed alternative · not selected", "Incomplete");
   await page
     .getByRole("button", { name: "Select this option", exact: true })
     .click();
@@ -525,7 +555,7 @@ test("ES02-T08/T12/T21/T22: hidden answers reactivate explicitly and copied alte
   await page
     .getByRole("button", { name: "Confirm select", exact: true })
     .click();
-  await expectSummary(page, "Selected alternative");
+  await expectSummary(page, "the selected alternative");
   await page
     .getByLabel("Viewed alternative", { exact: true })
     .selectOption(s.input.option_id);
@@ -575,7 +605,13 @@ test("ES02-T41/T42/T58: draft survives step changes and identity loss clears pro
     page.getByLabel("Q01 Included work", { exact: true }),
   ).toBeFocused();
   await capture(page, info, "phone-320-proposal", ".e2-question");
-  await identity(page, "systems");
+  // The accepted phone record hides the global account header. Change the real
+  // shared session in another tab; its BroadcastChannel must clear this draft
+  // at 320 px without navigating or reloading the protected page.
+  const account = await page.context().newPage();
+  await account.goto("/estimating/discovery");
+  await identity(account, "systems");
+  await account.close();
   await expect(
     page.getByLabel("Q01 Included work", { exact: true }),
   ).toHaveCount(0);
@@ -596,7 +632,9 @@ test("ES02-T70: an empty form becomes an explicit valid incomplete first revisio
   await page
     .getByLabel("Site declaration", { exact: true })
     .selectOption("Unknown");
-  await page.getByLabel("Site declaration reason", { exact: true }).fill("SYN site to be established by discovery owner");
+  await page
+    .getByLabel("Site declaration reason", { exact: true })
+    .fill("SYN site to be established by discovery owner");
   const reasons = page.getByLabel(/follow-up reason$/, { exact: false });
   for (const reason of await reasons.all())
     await reason.fill("SYN owner to gather missing discovery information");

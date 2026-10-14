@@ -37,3 +37,10 @@ No exact historical mobile image is recorded. New application captures belong un
 [1440 px](../../../testing/evidence/supply-chain-native/sc-05-supply-1440.png) · [1024 px](../../../testing/evidence/supply-chain-native/sc-05-supply-1024.png) · [390 px](../../../testing/evidence/supply-chain-native/sc-05-supply-390.png) · [320 px](../../../testing/evidence/supply-chain-native/sc-05-supply-320.png)
 
 Source, hashes, executed checks and proposed departures are recorded in the [evidence index](../../../testing/evidence/supply-chain-native/README.md). These are native application captures; historical references and pending owner review remain separate.
+
+
+## Products discovery proposal — 14 October 2026
+
+The [bounded proposal](../../../decisions/products-discovery-proposal.md) compares the inFlow sample discovery pattern with current PPO source. Private **PPO - Design**, page `653:38`, frames `654:167 / 654:482`. [product-1440](../../../reference/ui/products-discovery/alignment-r01/product-1440.png) · [product-390](../../../reference/ui/products-discovery/alignment-r01/product-390.png). The [capture index](../../../reference/ui/products-discovery/README.md) records source identities and hashes; named version and owner acceptance remain pending.
+
+Following Dean's alignment feedback, this proposes a flat desktop catalogue, full-width phone rows, preserved return context, and an exact read-only handover between Products and stock/demand evidence. Existing scope IDs, source authority, permissions and native commands remain intact. The proposed Products layout follows the accepted Leads register and Lead/Project record references; the running native implementation is unchanged. Products stock is currently Not configured; populated panels are fictional proposed states requiring an exact company/provider/item/unit mapping and a scoped read contract. No new stock balance, reservation or readiness calculation is adopted. The state board covers missing/incomplete/older evidence, loading, empty and unavailable reads. No app, guide workflow, shared component implementation, accepted fingerprint or deployment status changes in this contribution.
