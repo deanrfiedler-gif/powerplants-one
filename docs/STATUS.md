@@ -1,5 +1,18 @@
 # Current prototype status
 
+## Customers register and Customer 360 navigation — 14 October 2026
+
+Dean authorised the register-to-customer design. The private Figma proposal now starts at Customers, with a desktop table and phone cards for the two issued synthetic customers. Preset search, due-today filtering, desktop Name sorting and exact Willowbank/Rothwell workspaces are connected. Forty-eight Back/Change customer/Customers navigation controls return to the originating register state with scroll reset disabled. The [design decision](decisions/customer-360-figma-design.md), r03 icon-free captures, fixture states, guide and working register distinguish Figma inspection from runtime proof. The subsequent table-style direction aligns sixteen table instances with accepted Leads Grid components: white 40 px headers, square edges and column/row dividers, with taller rows where source detail requires them; r04 records the final table captures. Named version and owner acceptance remain pending; issued references, runtime code and deployment are unchanged.
+
+## Customer 360 Figma shell refinement — 14 October 2026
+
+Dean requested alignment with the other PPO pages, including the missing left navigation. The [Customer 360 design](decisions/customer-360-figma-design.md) now uses the shared navy rail, customer-view menu, global header and phone navigation, compared against accepted Leads, Project record and My Work. Ten desktop views/role examples were reflowed to 1440 × 900; Overview commitments and customer context are compacted; phone Overview/Sales orders and a view drawer use the same theme. Existing frame IDs, source records and permission distinctions are retained. New icon-free r02 captures and the reference-only Summary specification/fixtures are in the design master; r01 remains unchanged. Visual/structural checks do not grant owner acceptance. The named Figma version remains pending; no runtime or deployment change is claimed.
+
+## Customer 360 Figma proposal — 13 October 2026
+
+Dean requested the Customer 360 UI in the private PPO - Design Figma file using the issued HTML/report. The new CS-01 proposal has eight editable desktop views, identity and permitted/restricted account examples, two exact order snapshots and phone Overview/Sales orders. The [design record](decisions/customer-360-figma-design.md) records its compact Overview departure, component reuse, source identities and prototype limits. Icon-free Overview captures and the reference-only Summary tile are registered in the working design master. Agent visual inspection and editable-layer checks are separate from owner review, application behaviour and deployment. A named Figma version remains pending before baseline reliance; the accepted Leads page and issued references are preserved.
+
+
 ## Deals draft integration repair - 14 October 2026
 
 Current repository writer for this repair: the user-authorised PR check session on `codex/fix-pr473-oct14`. The latest Deals refinements are integrated with main by ancestry, retaining both status histories and the unchanged design evidence. PR #473 remains draft; design acceptance, runtime adoption and deployment remain separate.

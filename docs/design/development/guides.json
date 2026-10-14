@@ -36611,7 +36611,8 @@
           "title": "Worked examples",
           "paragraphs": [
             "Synthetic normal case — Northbank Nursery: prepare organisation name, customer relationship, contacts, sites and external references. Follow the task sequence and check that one correctly identified customer context with owned information gaps. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Customer register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Account visibility and credit decisions require separate Finance permissions. Similar names are not proof of duplicate identity."
+            "Synthetic exception — the source basis for Customer register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Account visibility and credit decisions require separate Finance permissions. Similar names are not proof of duplicate identity.",
+            "Figma proposal, 14 October 2026: choose Willowbank or Rothwell in the Customers table (phone: customer card). Confirm the matching name/reference, then use Back to customers to return to the demonstrated list state. Search uses a preset Willowbank query; Due today and desktop Name sorting are bounded examples. This is design-prototype guidance, not a claim that the running release implements the new composition."
           ],
           "steps": [],
           "rows": [],
@@ -36669,7 +36670,9 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "Proposed Customers register and customer-specific workspace captures: docs/reference/ui/customers/customer-360-figma-r03/README.md. The working contract is docs/design/development/pages/route-customers.md; owner acceptance and a named Figma version are pending.",
+            "The final table-style comparison and desktop register are retained in docs/reference/ui/customers/customer-360-figma-r04/README.md. Phone cards and exact profile navigation retain the r03 contract."
           ],
           "steps": [],
           "rows": [],
@@ -36695,9 +36698,13 @@
         "src/app/(business)/customers/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md",
-        "src/components/crm-directory.tsx"
+        "src/components/crm-directory.tsx",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context. Direct-directory source binding added for the PT-27 loading candidate; the task sequence and draft review status are unchanged.",
+      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context. Direct-directory source binding added for the PT-27 loading candidate; the task sequence and draft review status are unchanged. Added a clearly labelled Figma register-to-customer example and design evidence on 14 October 2026; runtime tasks and Draft review status remain unchanged.",
       "document_id": "PPO-GUIDE-PAGE-CUSTOMERS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,

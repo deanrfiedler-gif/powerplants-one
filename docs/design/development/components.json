@@ -3398,7 +3398,9 @@
         "docs/design/projects-register/figma-measurements.json",
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
-        "src/app/styles/job-pack-figma.css"
+        "src/app/styles/job-pack-figma.css",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3444,7 +3446,8 @@
         "route:/customers",
         "route:/people",
         "scope:ES-08",
-        "scope:SH-02"
+        "scope:SH-02",
+        "scope:CS-01"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -3640,6 +3643,14 @@
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
           "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "customer-360-figma-shell-alignment",
+          "expected": "Customer 360 uses the shared PPO rail, secondary menu, top bar and phone navigation.",
+          "actual": "14 October Figma proposal matches accepted Leads, Project record and My Work shell patterns; native CS-01 and owner acceptance remain separate.",
+          "action": "Review the r02 Customer 360 captures and pair the native consumer before adopting the proposed customer menu.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -5738,6 +5749,11 @@
           "id": "same-name-receiving",
           "label": "Same-name organisation receiving",
           "description": "P03 in tests/browser/intake.spec.ts checks the exact other permitted organisation link and excludes the current record on desktop/phone. DuplicateCandidates is moved unchanged into its own client module so the receiving page no longer imports unrelated site/facility screens."
+        },
+        {
+          "id": "figma-customer-register",
+          "label": "Figma register and exact customer return",
+          "description": "Reference-only proposed desktop table/phone cards, all/name-descending/preset-search/due-today states, two exact customers and conditional return. docs/design/development/customer-register-fixtures.json; no runtime behaviour is changed. Shared Leads Grid headers and row/column rules align sixteen table instances; r04 retains current desktop evidence."
         }
       ],
       "implementation": [
@@ -5757,7 +5773,10 @@
         "src/app/(business)/customers/page.tsx",
         "src/app/styles/customers.css",
         "src/components/duplicate-candidates.tsx",
-        "src/components/customer-workspace.tsx"
+        "src/components/customer-workspace.tsx",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
@@ -5769,7 +5788,8 @@
         "route:/customers",
         "route:/people",
         "route:/contacts",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-01"
       ],
       "desktop": "Retain the existing register table, columns, real links and scoped content; activation loads the chosen destination.",
       "mobile": "Retain existing readable cards and touch activation at 390/320 CSS px.",
@@ -5789,6 +5809,14 @@
           "expected": "Load the directory without unrelated site/facility screen code while preserving styling, authority and actual next-record navigation.",
           "actual": "The refined controlled block passes 320 loads and 80 record openings, reduces initial script bytes by 6.91% and improves desktop receiving p95 within its block. Cold-load targets remain unmet; phone/order variation and runner contention remain explicit.",
           "action": "Review docs/testing/evidence/pt27-loading/direct-directory-refined/README.md, retained manifests/captures, full assurance and remaining cold-load limits before acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "crm-directory-figma-register-alignment",
+          "expected": "Review the register-to-exact-customer journey in the shared PPO theme, with retained search/filter/sort and scroll context.",
+          "actual": "Editable Figma register, two customer profiles and 48 conditional returns are structurally verified. Search is a fixed demonstration; runtime pairing, wider states and owner acceptance remain open. All sixteen table instances use the shared Figma Grid headers; body heights retain source detail.",
+          "action": "Review r03 captures and customer-register-fixtures.json, then compare native desktop/phone receiving and Back behaviour before adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -6119,6 +6147,62 @@
           "expected": "Full paired visual and physical-device acceptance against a named saved Figma version.",
           "actual": "Retained named-version source images are linked. Journeys pass at 3468ce6; 72dd7c2 captures confirm normal heading tracking and stacked cards but expose the scoped h2 overriding the dialog title size. The corrected cascade passes bounded browser probes; the full compiled journey and owner/device acceptance remain pending.",
           "action": "Verify final typography, including dialog titles overriding the scoped h2 selector, choice-card layout and exact active/current version states in the same four route consumers; retain owner/device acceptance as pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "customer-360-summary",
+      "title": "Customer 360 scoped summary",
+      "category": "Boards & cards",
+      "module": "Customers",
+      "purpose": "Proposed count, evidence scope and owning-register navigation; restricted Finance has no numerical value.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "open-orders",
+          "label": "Open sales orders",
+          "description": "Four mapped-account open orders in the issued synthetic fixture."
+        },
+        {
+          "id": "conversion-unknown",
+          "label": "Unknown conversion",
+          "description": "One accepted quotation; no ERP order is asserted."
+        },
+        {
+          "id": "finance-restricted",
+          "label": "Restricted Finance",
+          "description": "Amounts, counts and balances are withheld."
+        }
+      ],
+      "implementation": [],
+      "dependencies": [
+        "docs/design/development/customer-360-summary-fixtures.json",
+        "docs/design/customer-360/model.js"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+        "anchor": "",
+        "status": "Issued source; 14 October Figma shell refinement remains proposed"
+      },
+      "specification": "docs/design/development/components/customer-360-summary.md",
+      "used_on": [
+        "scope:CS-01"
+      ],
+      "desktop": "Four 228 × 112 px summary cells per row in a 912 px panel inside the shared 1440 × 900 PPO shell; value, label and scoped population retained.",
+      "mobile": "Compact rows at 390 × 844 with shared phone header/bottom tabs and customer-view drawer. Overview and Sales orders link to each other.",
+      "keyboard": "Native implementation must provide labelled keyboard activation and visible focus; Figma does not prove it.",
+      "limitations": "Reference-only Figma component. Named version, exact-filter adoption, server enforcement and owner/device acceptance remain open.",
+      "gaps": [
+        {
+          "id": "customer-360-summary-adoption",
+          "expected": "Named Figma version, owner decision and exact counted-scope drill-through before adoption.",
+          "actual": "Editable compact desktop component and page-local phone rows within the shared PPO shell; prototype opens full registers without applying filters.",
+          "action": "Review proposal; save named version; implement and test scoped navigation and permissions in the owning CS-01 increment.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

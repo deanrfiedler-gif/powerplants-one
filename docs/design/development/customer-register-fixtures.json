@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "owner": "Dean Fiedler",
+  "review": "Proposed; owner acceptance pending",
+  "scope_id": "CS-01",
+  "source": "docs/design/customer-360/model.js",
+  "issued_source": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+  "scenario_date": "2026-09-16",
+  "role": "Service coordinator",
+  "evidence": "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+  "population": {
+    "customers": 2,
+    "sites": 3,
+    "visible_non_finance_follow_ups": 13,
+    "due_today": 1
+  },
+  "customers": [
+    {
+      "id": "SYN-PPO-ORG-000101",
+      "name": "Willowbank Horticulture",
+      "owner": "Priya Raman",
+      "primary_contact": "Jordan Lee",
+      "sites": 2,
+      "next_follow_up": "FU-0004",
+      "next_follow_up_due": "2026-09-16",
+      "desktop_node": "554:3",
+      "phone_node": "559:250"
+    },
+    {
+      "id": "SYN-PPO-ORG-000102",
+      "name": "Rothwell Glasshouse Group",
+      "owner": "Priya Raman",
+      "primary_contact": "Morgan Deng",
+      "sites": 1,
+      "next_follow_up": "FU-0022",
+      "next_follow_up_due": "2026-09-20",
+      "desktop_node": "605:1734",
+      "phone_node": "607:2126"
+    }
+  ],
+  "states": [
+    {
+      "id": "all-ascending",
+      "desktop": "603:1396",
+      "phone": "606:1873",
+      "rows": [
+        "SYN-PPO-ORG-000102",
+        "SYN-PPO-ORG-000101"
+      ]
+    },
+    {
+      "id": "name-descending",
+      "desktop": "604:1481",
+      "phone": null,
+      "rows": [
+        "SYN-PPO-ORG-000101",
+        "SYN-PPO-ORG-000102"
+      ]
+    },
+    {
+      "id": "preset-search-willowbank",
+      "desktop": "604:1671",
+      "phone": "607:1921",
+      "rows": [
+        "SYN-PPO-ORG-000101"
+      ]
+    },
+    {
+      "id": "follow-up-due-today",
+      "desktop": "604:1862",
+      "phone": "607:2024",
+      "rows": [
+        "SYN-PPO-ORG-000101"
+      ]
+    }
+  ],
+  "return_contract": "Row/card stores its originating Figma frame; conditional Back/Change customer returns there with resetScrollPosition false. This is prototype wiring, not runtime persistence.",
+  "missing_states": [
+    "free-text search",
+    "combined arbitrary filters",
+    "filtered empty",
+    "loading",
+    "read failure",
+    "denied",
+    "large population pagination",
+    "320 px phone"
+  ],
+  "status_note": "No customer lifecycle status is supplied by this fixture, so none is invented.",
+  "runtime_change": false,
+  "table_style": {
+    "source_frame": "190:20513",
+    "header_components": [
+      "74:9",
+      "74:11"
+    ],
+    "header_height": 40,
+    "body_font": "Roboto 14/20",
+    "horizontal_cell_inset": 12,
+    "customer_row_height": 64,
+    "single_line_row_height": 40,
+    "max_evidence_row_height": 104,
+    "corner_radius": 0,
+    "borders": "border/line; right and bottom per cell",
+    "surfaces": "surface/white; no zebra alternation",
+    "evidence": "docs/reference/ui/customers/customer-360-figma-r04/README.md",
+    "tables": [
+      {
+        "id": "555:161743",
+        "name": "Sales-order register",
+        "width": 912,
+        "header_ids": [
+          "616:2074",
+          "616:2079",
+          "616:2083",
+          "616:2087",
+          "616:2091",
+          "616:2095"
+        ],
+        "rows": [
+          {
+            "id": "555:161757",
+            "height": 96
+          },
+          {
+            "id": "555:161777",
+            "height": 96
+          },
+          {
+            "id": "555:161797",
+            "height": 80
+          },
+          {
+            "id": "555:161817",
+            "height": 80
+          },
+          {
+            "id": "555:161837",
+            "height": 80
+          },
+          {
+            "id": "555:161857",
+            "height": 80
+          }
+        ]
+      },
+      {
+        "id": "555:161944",
+        "name": "Quotation register",
+        "width": 912,
+        "header_ids": [
+          "616:2099",
+          "616:2103",
+          "616:2107",
+          "616:2111",
+          "616:2115"
+        ],
+        "rows": [
+          {
+            "id": "555:161956",
+            "height": 80
+          },
+          {
+            "id": "555:161972",
+            "height": 80
+          },
+          {
+            "id": "555:161988",
+            "height": 80
+          },
+          {
+            "id": "555:162004",
+            "height": 80
+          },
+          {
+            "id": "555:162020",
+            "height": 80
+          },
+          {
+            "id": "555:162036",
+            "height": 80
+          }
+        ]
+      },
+      {
+        "id": "555:162053",
+        "name": "Opportunity register",
+        "width": 912,
+        "header_ids": [
+          "616:2119",
+          "616:2123",
+          "616:2127",
+          "616:2131"
+        ],
+        "rows": [
+          {
+            "id": "555:162063",
+            "height": 64
+          },
+          {
+            "id": "555:162074",
+            "height": 64
+          },
+          {
+            "id": "555:162085",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "556:284",
+        "name": "Appointments",
+        "width": 912,
+        "header_ids": [
+          "616:2135",
+          "616:2139",
+          "616:2143",
+          "616:2147"
+        ],
+        "rows": [
+          {
+            "id": "556:294",
+            "height": 40
+          },
+          {
+            "id": "556:304",
+            "height": 40
+          },
+          {
+            "id": "556:314",
+            "height": 40
+          }
+        ]
+      },
+      {
+        "id": "556:406",
+        "name": "Deliverables",
+        "width": 880,
+        "header_ids": [
+          "616:2151",
+          "616:2155",
+          "616:2159",
+          "616:2163"
+        ],
+        "rows": [
+          {
+            "id": "556:416",
+            "height": 40
+          },
+          {
+            "id": "556:426",
+            "height": 40
+          },
+          {
+            "id": "556:436",
+            "height": 40
+          }
+        ]
+      },
+      {
+        "id": "556:447",
+        "name": "Variations",
+        "width": 880,
+        "header_ids": [
+          "616:2167",
+          "616:2171",
+          "616:2175",
+          "616:2179"
+        ],
+        "rows": [
+          {
+            "id": "556:457",
+            "height": 64
+          },
+          {
+            "id": "556:467",
+            "height": 40
+          }
+        ]
+      },
+      {
+        "id": "556:495",
+        "name": "Deliverables",
+        "width": 880,
+        "header_ids": [
+          "616:2183",
+          "616:2187",
+          "616:2191",
+          "616:2195"
+        ],
+        "rows": [
+          {
+            "id": "556:505",
+            "height": 40
+          },
+          {
+            "id": "556:515",
+            "height": 40
+          }
+        ]
+      },
+      {
+        "id": "557:4642",
+        "name": "Facilities and areas",
+        "width": 880,
+        "header_ids": [
+          "616:2199",
+          "616:2203",
+          "616:2207",
+          "616:2211"
+        ],
+        "rows": [
+          {
+            "id": "557:4652",
+            "height": 64
+          },
+          {
+            "id": "557:4663",
+            "height": 64
+          },
+          {
+            "id": "557:4674",
+            "height": 64
+          },
+          {
+            "id": "557:4685",
+            "height": 64
+          },
+          {
+            "id": "557:4696",
+            "height": 64
+          },
+          {
+            "id": "557:4707",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "557:4757",
+        "name": "Facilities and areas",
+        "width": 880,
+        "header_ids": [
+          "616:2215",
+          "616:2219",
+          "616:2223",
+          "616:2227"
+        ],
+        "rows": [
+          {
+            "id": "557:4767",
+            "height": 64
+          },
+          {
+            "id": "557:4778",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "557:5029",
+        "name": "Site parties",
+        "width": 912,
+        "header_ids": [
+          "616:2231",
+          "616:2235",
+          "616:2239",
+          "616:2243"
+        ],
+        "rows": [
+          {
+            "id": "557:5039",
+            "height": 40
+          },
+          {
+            "id": "557:5049",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "557:5058",
+        "name": "Contacts",
+        "width": 912,
+        "header_ids": [
+          "616:2247",
+          "616:2251",
+          "616:2255",
+          "616:2259"
+        ],
+        "rows": [
+          {
+            "id": "557:5068",
+            "height": 64
+          },
+          {
+            "id": "557:5079",
+            "height": 80
+          },
+          {
+            "id": "557:5090",
+            "height": 64
+          },
+          {
+            "id": "557:5101",
+            "height": 80
+          }
+        ]
+      },
+      {
+        "id": "558:4858",
+        "name": "Account observations",
+        "width": 912,
+        "header_ids": [
+          "616:2263",
+          "616:2267",
+          "616:2271",
+          "616:2275",
+          "616:2279",
+          "616:2283"
+        ],
+        "rows": [
+          {
+            "id": "558:4872",
+            "height": 104
+          },
+          {
+            "id": "558:4888",
+            "height": 80
+          },
+          {
+            "id": "558:4904",
+            "height": 80
+          },
+          {
+            "id": "558:4920",
+            "height": 104
+          },
+          {
+            "id": "558:4936",
+            "height": 64
+          },
+          {
+            "id": "558:4952",
+            "height": 104
+          }
+        ]
+      },
+      {
+        "id": "603:1863",
+        "name": "Customer register",
+        "width": 912,
+        "header_ids": [
+          "616:2287",
+          "616:2292",
+          "616:2296",
+          "616:2300",
+          "616:2305",
+          "616:2309"
+        ],
+        "rows": [
+          {
+            "id": "603:1888",
+            "height": 64
+          },
+          {
+            "id": "603:1902",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "604:1533",
+        "name": "Customer register",
+        "width": 912,
+        "header_ids": [
+          "616:2319",
+          "616:2324",
+          "616:2328",
+          "616:2332",
+          "616:2336",
+          "616:2340"
+        ],
+        "rows": [
+          {
+            "id": "604:1563",
+            "height": 64
+          },
+          {
+            "id": "604:1550",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "604:1723",
+        "name": "Customer register",
+        "width": 912,
+        "header_ids": [
+          "616:2350",
+          "616:2354",
+          "616:2358",
+          "616:2362",
+          "616:2366",
+          "616:2370"
+        ],
+        "rows": [
+          {
+            "id": "604:1753",
+            "height": 64
+          }
+        ]
+      },
+      {
+        "id": "604:1914",
+        "name": "Customer register",
+        "width": 912,
+        "header_ids": [
+          "616:2377",
+          "616:2381",
+          "616:2385",
+          "616:2389",
+          "616:2393",
+          "616:2397"
+        ],
+        "rows": [
+          {
+            "id": "604:1944",
+            "height": 64
+          }
+        ]
+      }
+    ]
+  }
+}
