@@ -54,3 +54,7 @@ Following Dean's alignment feedback, this proposes a flat desktop catalogue, ful
 ## Catalogue increment A
 
 Catalogue uses SecondaryMenuFrame and RegisterTable with flat desktop rows and a full-width phone list. Filters use the existing modal menu on phone/tablet; Escape/Close restores the opener. Back to catalogue and browser Back restore query, selected-row focus and scroll within the same user/company. Historical revision links retain this return context; direct record links return to the plain catalogue. The record retains its native technical layout; populated supply panels remain proposed. [Implementation evidence](../../../testing/evidence/products-discovery/README.md) separates runtime checks from named-version, owner and device acceptance.
+
+## Catalogue host contract
+
+The `products-discovery-catalogue` integration in [ui-baselines.json](../../../standards/ui-baselines.json) binds the implemented full-bleed route to the retained alignment capture and compiled discovery proof. The original `products-native-products` contract remains historical; detail/publication/pricing/compatibility/import keep their native contracts. This source binding does not record owner or device acceptance.

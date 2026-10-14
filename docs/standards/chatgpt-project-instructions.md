@@ -2,7 +2,7 @@
 
 ## 1. Context
 
-Public repo; private demo.
+Public repo; private synthetic demo.
 
 ## 2. Delivery
 
@@ -14,7 +14,7 @@ Follow P01–P12, STATUS, BP-03 §0, BP-04; PPO-009 CRM differs from P09.
 
 ## 3. Sources
 
-Read AGENTS.md, README, docs/STATUS.md and ADRs.
+Read AGENTS.md, README, STATUS and ADRs.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
@@ -28,7 +28,7 @@ Synthetic fixtures. Decide service-order/appointment/labour ownership and build/
 
 ## 5. Naming
 
-Follow PPO-STD-001/ADR-0005. Product: Powerplants One; code: PPO. Independent of STD-001/SOL008.
+PPO-STD-001/ADR-0005: Powerplants One (PPO), independent of STD-001/SOL008.
 
 Masters use stable names/Git history; review stays separate. Reserve rNN for controlled issues; separate software/API/schema versions. Preserve issued bytes, 78 parent IDs and requirement/decision/interface/test/work-package traceability.
 
@@ -104,4 +104,4 @@ PJ: STATUS; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md); Excel first save; re-import remains open.
 
-DK: STATUS. Draft review never publishes; publication never assigns use. R4: scoped OUT-09 only.
+DK: STATUS. Review, publication and scoped OUT-09 assignment are separate.

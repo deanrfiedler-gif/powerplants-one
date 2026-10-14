@@ -1036,6 +1036,21 @@
       "application_proof": "tests/browser/cpq.spec.ts",
       "authority": "13 October native CPQ implementation requested by Dean, using the confirmed owner-accepted Figma source. Reference hashes identify retained source bytes only; implementation visual and device acceptance remain pending.",
       "adaptations": "docs/delivery/cpq-ui-handover.md"
+    },
+    {
+      "id": "products-discovery-catalogue",
+      "route": "/products",
+      "scope": "#ppo-products",
+      "layout": "full-bleed",
+      "scroll_owner": ".pd-catalogue-results",
+      "design": "docs/reference/ui/products-discovery/alignment-r01/catalogue-1440.png",
+      "sha256": "c504743133ab8efff1edff6c5e1173e5fb6a41f1cd40d6a1aa961c65687a4ccc",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/products-discovery.spec.ts",
+      "application_proof": "tests/browser/products-discovery.spec.ts",
+      "authority": "Dean authorised catalogue increment A on 14 October 2026. The exact retained Figma capture supplies the implemented catalogue layout; named Figma version and owner/device acceptance remain pending. Stock/demand increment B stays proposed.",
+      "adaptations": "docs/decisions/products-discovery-proposal.md"
     }
   ]
 }

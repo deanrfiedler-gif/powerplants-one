@@ -1,5 +1,13 @@
 # Current prototype status
 
+## Remaining PR integration - 14 October 2026
+
+Current repository writer: this user-authorised repair and merge session on `codex/remaining-pr-integration-oct14`. PRs #476/#477 merged after all 58 applicable checks passed (one optional comparison skipped). The remaining integration preserves the exact heads of #473/#474/#475/#478/#479/#480/#481/#482 by ancestry. Shared status, component, guide and source registers retain both contributions and existing review evidence. Draft design handovers remain proposals; the Products implementation is separately authorised by its recorded decision.
+
+Migration 0095 follows the integrated template migrations 0093/0094 without changing their SQL. Exact upgrade lists, reserved Products installation and hosted-demo upgrade assertions include all three while preserving original ledgers. The HTTP runner keeps both Excel and template reset proofs isolated. Products now has its missing full-bleed source/host contract; the conformance assertion remains intact. Local and combined CI results are recorded in the integration PR; owner acceptance and deployment are separate.
+
+The protected-main contexts were re-read: Check documentation foundation; CRM desktop and mobile persistence and interaction proof; CRM header and board visual checks; Desktop and mobile browser suite against the compiled application; E1 manual estimate, draft output and restart proof; Email Calendar persisted journey and server permissions; P01–P11 and CRM I1–I2 local application and PostgreSQL proof. Strict up-to-date checking is off, administrator enforcement is on and no approving review is required. These settings and all test deadlines remain unchanged.
+
 ## Customers register and Customer 360 navigation — 14 October 2026
 
 Dean authorised the register-to-customer design. The private Figma proposal now starts at Customers, with a desktop table and phone cards for the two issued synthetic customers. Preset search, due-today filtering, desktop Name sorting and exact Willowbank/Rothwell workspaces are connected. Forty-eight Back/Change customer/Customers navigation controls return to the originating register state with scroll reset disabled. The [design decision](decisions/customer-360-figma-design.md), r03 icon-free captures, fixture states, guide and working register distinguish Figma inspection from runtime proof. The subsequent table-style direction aligns sixteen table instances with accepted Leads Grid components: white 40 px headers, square edges and column/row dividers, with taller rows where source detail requires them; r04 records the final table captures. Named version and owner acceptance remain pending; issued references, runtime code and deployment are unchanged.
