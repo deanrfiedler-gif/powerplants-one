@@ -23822,7 +23822,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Backend verification: docs/testing/evidence/template-catalogue/README.md. Native page walkthrough and visual acceptance pending.",
+      "runtime_evidence": "R1/R2 backend verification: docs/testing/evidence/template-catalogue/README.md and docs/testing/evidence/template-drafts/README.md. Native controls, walkthrough and visual acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23831,7 +23831,7 @@
             "Use Document and form template management to work towards this outcome: Generated documents can identify their template basis.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
             "A template change must not alter previously issued outputs.",
-            "The first native increment supplies read-only template and usage APIs. The proposed page and authoring, review and publication controls are not implemented by that increment."
+            "R1 supplies exact read-only template and usage APIs. R2 adds scoped structured proposals, immutable revisions and independent review evidence. Native authoring controls, supported publication and use assignment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -23843,7 +23843,8 @@
           "paragraphs": [
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
             "Prepare: Template identity, revision, fields, applicability and approval basis.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority.",
+            "R2 requires explicit scoped template duties and current source permissions. A Reviewed proposal records exact reviewer observations; it does not grant publication or operating authority."
           ],
           "steps": [],
           "rows": [],

@@ -7,6 +7,7 @@ const exclusive = new Set([
   "output-register.test.ts",
   "output-actions.test.ts",
   "template-catalogue.test.ts",
+  "template-drafts.test.ts",
 ]);
 const files = (await readdir(new URL("../tests/http/", import.meta.url)))
   .filter((name) => name.endsWith(".test.ts"))
@@ -37,3 +38,7 @@ for (const name of files.filter((name) => exclusive.has(name))) {
   await run(["scripts/database.ts", "reset"], true);
   await run(["--test", ...process.argv.slice(2), `tests/http/${name}`]);
 }
+
+// Later integration proofs require the seeded permission baseline, not grants
+// installed by an individual template scenario. Restore it before handing over.
+await run(["scripts/database.ts", "reset"], true);

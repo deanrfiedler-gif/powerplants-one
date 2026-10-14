@@ -608,3 +608,6 @@ PPO-DK06-CATALOGUE-API,DK-06 read-only template catalogue API,docs/contracts/tem
 PPO-DK06-CATALOGUE-EVIDENCE,DK-06 template catalogue execution evidence,docs/testing/evidence/template-catalogue/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,a333604,,,git,
 PPO-PD01-DISCOVERY-PROPOSAL,Products discovery and supply evidence proposal,docs/decisions/products-discovery-proposal.md,,"Design proposal; owner acceptance, named Figma version and implementation pending",Dean Fiedler,65141dc,,,git,
 PPO-PD01-DISCOVERY-EVIDENCE,Products discovery proposal evidence,docs/reference/ui/products-discovery/README.md,,Proposed design captures; named version and owner acceptance pending,Dean Fiedler,65141dc,,,git,
+PPO-DK06-DRAFTS-DEC,DK-06 managed template drafts and review evidence,docs/decisions/document-template-drafts-backend.md,,Authorised synthetic implementation; review and acceptance separate,Dean Fiedler,b524ea6,,,git,
+PPO-DK06-DRAFTS-API,DK-06 managed template drafts API,docs/contracts/document-template-drafts.md,,Implementation contract; business acceptance pending,Dean Fiedler,b524ea6,,,git,
+PPO-DK06-DRAFTS-EVIDENCE,DK-06 template drafts execution evidence,docs/testing/evidence/template-drafts/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,b524ea6,,,git,

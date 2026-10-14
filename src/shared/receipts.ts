@@ -1,3 +1,4 @@
+import { receiptAuthority as templateReceiptAuthority } from "../documents/drafts/context";
 import { receiptAuthority as libraryReceiptAuthority } from "../library/context";
 import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
 import { receiptAuthority as cpqReceiptAuthority } from "../cpq/context";
@@ -81,7 +82,13 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "LibraryDocument") {
+  if (r.object_type === "TemplateProposal") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      await templateReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "LibraryDocument") {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await libraryReceiptAuthority(c,p,r.record_id,operation_id);

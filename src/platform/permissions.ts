@@ -5,6 +5,9 @@ import { workingCompanyCondition, workingCompanyFor } from "./working-company";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
+  | "template.read"
+  | "template.propose"
+  | "template.review"
   | "document.read"
   | "document.register"
   | "document.review"

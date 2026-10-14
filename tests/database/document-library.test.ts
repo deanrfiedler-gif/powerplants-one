@@ -601,7 +601,7 @@ test("DK-B08 existing Service Report issue exact PDF is linked without rendering
   );
 });
 for (const through of [88, 89])
-  test(`DK-B09 populated 00${through} upgrade preserves originals through 0091 and reapplication is inert`, async () => {
+  test(`DK-B09 populated 00${through} upgrade preserves originals through 0092 and reapplication is inert`, async () => {
     await database().query(
       await readFile(
         new URL("../../db/migrations/0001-recover.sql", import.meta.url),
@@ -664,7 +664,7 @@ for (const through of [88, 89])
     );
     assert.deepEqual(
       after.filter((x) => x.version > through).map((x) => x.version),
-      through === 88 ? [89, 90, 91] : [90, 91],
+      through === 88 ? [89, 90, 91, 92] : [90, 91, 92],
     );
     assert.equal(
       (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,
