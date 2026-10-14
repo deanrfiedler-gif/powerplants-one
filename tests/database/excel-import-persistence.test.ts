@@ -358,7 +358,23 @@ test("XI03/04 concurrent identical and competing intents serialize; permission l
   );
   assert.deepEqual(await snapshot(), before);
   const other = (await createSession("second-company")).principal;
-  for (const p of [other, (await createSession("observer")).principal]) {
+  const quoteOnly = (await createSession("observer")).principal;
+  await database().query(
+    `INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to)
+     SELECT workspace_id,$2,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to
+     FROM ppo.permission_grants WHERE user_id=$1 AND capability='estimating.quote.read' ON CONFLICT DO NOTHING`,
+    [s.p.actor_id, quoteOnly.actor_id],
+  );
+  assert.equal(
+    (
+      await database().query(
+        "SELECT count(*)::integer AS n FROM ppo.permission_grants WHERE user_id=$1 AND capability='estimating.read'",
+        [quoteOnly.actor_id],
+      )
+    ).rows[0].n,
+    0,
+  );
+  for (const p of [other, quoteOnly]) {
     await assert.rejects(readExcelImport(p, estimate.id, version), denied);
     await assert.rejects(
       readExcelSource(p, estimate.id, version, disk.adapter),
