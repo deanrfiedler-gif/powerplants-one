@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Prepared: 14 October 2026. Status: user-authorised synthetic backend design; implementation follows the completed CPQ handover on isolated codex/pj05-commercial-controls. Independent review, business policy and owner acceptance remain open.
+Owner: Dean Fiedler. Prepared: 14 October 2026. Status: user-authorised synthetic backend design; implementation follows the completed CPQ handover on isolated codex/pj05-commercial-controls. Independent automated review is recorded in the execution evidence; business policy and owner acceptance remain open.
 
 Scope: BC-06 / PJ-05 with BC-07 / FN-06 definitions. Parent scope: PRJ-01/PRJ-05/PRJ-08, FIN-05/FIN-06/FIN-07/FIN-08; FD-08; D-017/D-020; AT-31/AT-38. This extends [BP-06](../blueprints/BP-06-projects-commercial-delivery.md). The [Finance definitions](project-commercial-finance-definitions.md) govern every amount projection. [Decision](../decisions/project-commercial-controls.md) records alternatives and authority.
 

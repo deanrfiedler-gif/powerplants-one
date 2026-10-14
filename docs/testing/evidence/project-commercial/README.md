@@ -10,7 +10,7 @@ The managed `codex/pj05-commercial-controls` worktree starts at main `886c9c482c
 
 A task-owned PostgreSQL instance on loopback port 55447 runs only `ppo_synthetic_test`; the compiled application listens on 3165. Its lock capacity is 1024, matching repository test provisioning. No shared service was reset/restarted. Credentials and the restart checkpoint (including two local synthetic session cookies) remain outside Git. Migration 0101 was designed from the live amended schema through 0100. No seed, grant, dependency or production service is added. The [source manifest](source-manifest.json) records implementation/test bytes and the compiled build ID; it does not imply that every changed historical-assertion suite ran locally.
 
-## Local verification ledger
+## Original implementation verification ledger — 14 October 2026
 
 | Check | Actual result |
 |---|---|
@@ -52,3 +52,24 @@ The first restart verification correctly detected two new login audit events cre
 No unresolved environment failure has been classified as a regression or waived in this ledger. The whole repository unit/database/browser matrix was not run locally; relevant suites and CI coverage are identified explicitly. Unchanged-main comparison is required if a suspected environment failure occurs; none remains in the recorded passing checks.
 
 Native PJ-05/FN-06 pages remain unbuilt and their visual references/reviews remain open. This delivers only the exact accepted-quotation/Sales-receiving/document-based commercial backend and synthetic Finance definitions. Independent-order and multiple-contract bases, owner transfer, reconciliation of a changed original basis, separate notice attachments/links, accounting measures, live integrations and operational/legal decisions remain outside this increment. No customer notice, transaction, merge or deployment was performed.
+
+## Independent review and correction — 15 October 2026
+
+A fresh automated reviewer inspected original PR #493 head `b3de1553306d6ff0ee5a5952f4966a5eaf01e08b` and reported two P2 findings: a closed finding added after a document review could restore commercial eligibility, and a proposed owner could grant themselves creation authority. Both new negative database regressions failed against that original implementation with **Missing expected rejection**. The source correction checks findings against the retained review snapshot in TypeScript and SQL. Creation now requires the Project coordinator or an already recorded basis owner; existing records retain their own owner. The contract states these creation and continuation rules explicitly.
+
+The reviewer rechecked integrated head `5e4d4046080591d3811df007047923f02b7ebed0` and reported no further actionable findings. That pass examined the source and ownership guards, original receipt authority, negative service and SQL regressions, positive basis-owner delegation, compiled HTTP coverage and the merge of main `cfd465f` (CPQ #491). The reviewer made no database/service changes. Its initial focused unit check passed 3/3; integrated runtime proof is recorded separately below. A later test-only correction casts the direct SQL probe's actor parameter to UUID so it reaches the intended ownership guard.
+
+The original source manifest and restart result above remain historical evidence for the 14 October implementation. Follow-up source bytes and results are recorded separately; the original ledger does not imply that all earlier suites were repeated after these corrections. Independent automated review is separate from owner acceptance, merge approval and deployment.
+
+
+The [follow-up source manifest](review-source-manifest.json) binds 76 committed implementation/test files at `2344d93`, integrated main `cfd465f` and compiled build `JZPvsABgqHP8cRUvqQxIe`. The renewed build (including TypeScript), full lint, 11 focused commercial/CPQ units, foundation (all 78 parent IDs), naming (630 records) and development-register checks passed. The register still exposes 334 unreviewed and 28 stale entries. The populated upgrades from 25 and 100 passed with the corrected migration. Final integrated database/API/restart outcomes and exact-head CI are reported in [PR #493](https://github.com/deanrfiedler-gif/powerplants-one/pull/493); no pending check is claimed passed by this commit. The Projects CI workflow retains its own restart result as a downloadable artifact.
+
+Reproduction of the correction regression and integrated suites:
+
+```powershell
+node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/project-commercial.test.ts tests/database/project-commercial-upgrade.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-name-pattern='DK-B01|DK-B02' tests/database/document-library.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-commercial.test.ts
+```
+
+Compiled HTTP and restart verification require their own fresh disposable reset after the database suites, with no concurrent writer. Repeat the documented real stop/start sequence using the corrected build; keep its checkpoint and original synthetic sessions outside Git. No shared service, production data or external transaction is involved.

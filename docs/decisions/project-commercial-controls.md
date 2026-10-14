@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Date: 14 October 2026. Status: authorised implementation decision for the bounded synthetic increment. Independent review, operational policy and owner acceptance remain open.
+Owner: Dean Fiedler. Date: 14 October 2026. Status: authorised implementation decision for the bounded synthetic increment. Independent automated review is recorded in the execution evidence; operational policy and owner acceptance remain open.
 
 Dean requested PJ-05 preparation now and a tested implementation PR after the active CPQ writer hands over. This decision retains the existing parent scope and [commercial contract](../contracts/project-commercial-controls.md), with [supporting Finance definitions](../contracts/project-commercial-finance-definitions.md).
 
