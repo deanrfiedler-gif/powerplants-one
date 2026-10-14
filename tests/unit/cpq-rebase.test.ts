@@ -111,6 +111,18 @@ test("rebase requires every decision and supports explicit replacement, revocati
   );
   assert.equal(remapped.ready, true);
   assert.equal(remapped.input.overrides[0].target, destination);
+  const differentUnit = structuredClone(next);
+  differentUnit.parts[0].unit = "m";
+  assert.equal(
+    evaluateRebase(
+      differentUnit,
+      input,
+      d,
+      [o],
+      [decision(o, "Remap", destination.replace(":each", ":m"))],
+    ).unresolved[0].code,
+    "OverrideRemapIncompatible",
+  );
   assert.equal(
     evaluateRebase(
       d,

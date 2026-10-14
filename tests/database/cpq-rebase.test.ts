@@ -540,3 +540,74 @@ test("explicit removal stays protected until replacement; withdrawal and lost ac
     code("RecordUnavailable"),
   );
 });
+
+test("legacy adoption carries prior removals through an omitted target without losing later review", async () => {
+  const s = await rebaseSetup();
+  const first = rebaseAdoption(await previewAdoption(s.p, s.original.run.id));
+  await adoptRun(s.p, s.original.run.id, first);
+  const omitted = await rebaseSuccessor(s, false);
+  const labourId = s.original.run.result.lines[1].line.id;
+  const decisions = [
+    {
+      line_id: labourId,
+      action: "Remove" as const,
+      reason: "SYN explicit obsolete labour removal",
+    },
+  ];
+  await adoptRun(
+    s.p,
+    omitted.run.id,
+    rebaseAdoption(
+      await previewAdoption(s.p, omitted.run.id, { decisions }),
+      decisions,
+    ),
+  );
+  const intervening = await calculateCosts(
+    s.p,
+    s.g,
+    omitted.run.id,
+    omitted.run.input,
+  );
+  const legacyPreview = await previewAdoption(s.p, intervening.run.id);
+  assert.equal(
+    legacyPreview.resolution!.retained_cpq_lines[0].line_id,
+    labourId,
+  );
+  const legacyCommand = rebaseAdoption(legacyPreview);
+  assert.equal(
+    "resolution" in legacyCommand && legacyCommand.resolution !== undefined,
+    false,
+  );
+  const accepted = await adoptRun(s.p, intervening.run.id, legacyCommand);
+  const audit = (
+    await rows(
+      "SELECT details->'cpq_resolution' resolution FROM ppo.audit_events WHERE operation_id=$1",
+      [legacyCommand.operation_id],
+    )
+  )[0].resolution;
+  assert.equal(audit.retained_cpq_lines[0].line_id, labourId);
+  assert.equal(audit.retained_cpq_lines[0].retained_line, null);
+  const reintroduced = await rebaseSuccessor(s, true);
+  await assert.rejects(
+    previewAdoption(s.p, reintroduced.run.id),
+    code("CpqOwnedLineChanged"),
+  );
+  const review = await previewAdoption(s.p, reintroduced.run.id, {
+    decisions: [],
+  });
+  assert.ok(review.unresolved!.some((line) => line.line_id === labourId));
+  assert.equal(
+    (await readEstimate(s.p, first.estimate_id)).saved.lines.some(
+      (line) => line.id === labourId,
+    ),
+    false,
+  );
+  assert.equal(
+    (await adoptRun(s.p, intervening.run.id, legacyCommand)).replayed,
+    true,
+  );
+  assert.deepEqual(
+    await readOperation(s.p, legacyCommand.operation_id),
+    accepted.receipt,
+  );
+});
