@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "postmaster_before": "2026-10-14 19:20:00.934826+10",
+  "postmaster_after": "2026-10-14 20:03:45.837529+10",
+  "graph_hash": "5f7a2d97e49d5b02e912d290aefea8ba6124a25a10093e53f1f401214bfab830",
+  "run_content_hash": "896696274087fbeb273c8db0977f9ba6ab240a454c6907486a7c10945c8429a3",
+  "result_hash": "c4647663fbb65dbbfeea1e28a21de39d49a74ff3788273ead1e61922f92efe91",
+  "source_count": 2,
+  "bound_lines": 2,
+  "original_receipts": 2,
+  "duplicate_effects": 0,
+  "changed_source_refused": true
+}

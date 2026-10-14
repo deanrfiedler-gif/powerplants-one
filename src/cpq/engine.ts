@@ -1,3 +1,5 @@
+import { sourcePrice } from "../estimating/sources/price";
+import { AppError } from "../platform/errors";
 import { calculate, decimal, halfUp } from "../estimating/math";
 import {
   CceError,
@@ -102,6 +104,29 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
     instance_id: string | null = null,
     target: string | null = null,
   ) => diagnostics.push({ code, message, instance_id, target });
+  if (
+    d.schema_version === 4 &&
+    (input.pricing_date < "0001-01-01" || input.pricing_date > "9998-12-31")
+  )
+    add(
+      "CpqCostPricingDateRange",
+      "Governed pricing dates must be between 0001-01-01 and 9998-12-31, matching the native estimate source-binding contract.",
+    );
+  if (d.schema_version === 4)
+    for (const part of d.parts) {
+      const content = part.cost_source?.content;
+      if (
+        content &&
+        (content.effective_from < "0001-01-01" ||
+          (content.valid_until !== null && content.valid_until < "0001-01-01"))
+      )
+        add(
+          "CpqCostSourceDateRange",
+          "Governed source validity dates must use year 0001 or later, matching native PostgreSQL date storage.",
+          null,
+          part.key,
+        );
+    }
   const symbols = new Set(
     d.facts
       .filter((f) => ["Decimal", "Integer"].includes(f.type))
@@ -544,6 +569,35 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
           );
           continue;
         }
+        let unit_cost = tier.unit_cost;
+        let cost_source: import("./types").CostSelection | undefined;
+        if (d.schema_version === 4 && part.cost_source) {
+          const ref = part.cost_source;
+          try {
+            const selected = sourcePrice(
+              ref.content,
+              resolvedQuantity,
+              part.unit,
+              input.pricing_date,
+            );
+            unit_cost = selected.unit_cost;
+            cost_source = {
+              line_id: lineIdentity(target),
+              source_id: ref.source_id,
+              source_revision_id: ref.revision_id,
+              review_event_id: ref.review_event_id,
+              pricing_date: input.pricing_date,
+              tier_minimum_quantity: selected.minimum_quantity,
+              unit_cost,
+              validity_end: selected.validity_end,
+              validity_warning: selected.validity_warning,
+            };
+          } catch (e) {
+            if (!(e instanceof AppError)) throw e;
+            add(e.code, e.message, instance.id, target);
+            continue;
+          }
+        }
         const unit_sell =
           sellOverride ??
           (design
@@ -555,7 +609,7 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
         }
         if (
           Fraction.fromDecimal(unit_sell).subtract(
-            Fraction.fromDecimal(tier.unit_cost),
+            Fraction.fromDecimal(unit_cost),
           ).numerator < 0n
         ) {
           add(
@@ -572,6 +626,7 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
           basis_hash,
           contributions,
           overrides,
+          ...(cost_source ? { cost_source } : {}),
           line: {
             id: lineIdentity(target),
             description: part.description,
@@ -582,10 +637,14 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
               3,
             ),
             unit: part.unit,
-            unit_cost: tier.unit_cost,
+            unit_cost,
             unit_sell,
-            source: part.source,
-            effective_date: part.effective_from,
+            source: cost_source
+              ? `${part.cost_source!.reference} / r${part.cost_source!.revision} / ${part.cost_source!.content.evidence_reference}`
+              : part.source,
+            effective_date: cost_source
+              ? part.cost_source!.content.source_date
+              : part.effective_from,
           },
         });
       }
@@ -617,7 +676,11 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
     };
   const body = {
     engine:
-      d.schema_version === 3 ? ("PPO-CPQ-3" as const) : ("PPO-CPQ-1" as const),
+      d.schema_version === 4
+        ? ("PPO-CPQ-4" as const)
+        : d.schema_version === 3
+          ? ("PPO-CPQ-3" as const)
+          : ("PPO-CPQ-1" as const),
     ready: diagnostics.length === 0,
     lines,
     diagnostics,

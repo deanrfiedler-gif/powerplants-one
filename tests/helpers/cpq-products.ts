@@ -130,7 +130,7 @@ export async function cpqProductHttpScenario() {
   for (const [actor, caps] of [
     [p, ["cpq.read", "cpq.author", "cpq.calculate", "products.read"]],
     [f.reviewer.p, ["cpq.read", "cpq.review"]],
-    [f.author.p, ["cpq.read", "cpq.publish"]],
+    [f.author.p, ["cpq.read", "cpq.publish", "estimating.read"]],
   ] as const)
     for (const cap of caps)
       await database().query(

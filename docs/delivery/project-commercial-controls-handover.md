@@ -37,3 +37,7 @@ The working design register and guides retain planned-page status and their exis
 - Native commercial page controls, separate attachments/notice links, operational integration and owner acceptance.
 
 The next implementation slice can expose the tested backend through native PJ-05 controls once this PR is reviewed. Merge, deployment, external transactions and customer communications are outside this instruction.
+
+## Independent review follow-up — 15 October 2026
+
+Dean authorised independent review and correction of PR #493. A fresh automated reviewer found two P2 defects in original head `b3de155`: reuse of a Library review after a later finding was closed, and creation authority derived from a proposed owner. Both were reproduced against the original implementation. The correction checks all findings against the retained review snapshot and authorises creation from the coordinator or existing basis ownership. Service and SQL guards agree; historical source evidence and recorded owners remain unchanged. Main `cfd465f`, including merged CPQ #491, is integrated while retaining both modules' exclusive HTTP groups and documentation. Follow-up validation and review results are recorded in the execution evidence. No merge or deployment is authorised.

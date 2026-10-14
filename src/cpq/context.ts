@@ -13,7 +13,9 @@ import type {
   CalculationInput,
   Definition,
   ProductSnapshot,
+  CostSnapshot,
 } from "./types";
+import { costBindings } from "./costs";
 import { productBindings } from "./products";
 import { draftAuthority } from "./drafts";
 
@@ -53,6 +55,7 @@ export type Binding = {
   activation_version: number;
   release_revision_id: string;
   products?: ProductSnapshot[];
+  cost_sources?: CostSnapshot[];
 };
 export type Run = {
   id: string;
@@ -120,6 +123,7 @@ export async function revision(
       "The saved release evidence does not match its hash.",
     );
   await productBindings(c, p, r.company_id, r.definition);
+  await costBindings(c, p, r.company_id, r.definition);
   return r;
 }
 export async function active(c: QueryClient, p: Principal, company: string) {

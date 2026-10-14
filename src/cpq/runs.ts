@@ -20,11 +20,13 @@ import { acceptedEstimateContext, versionContext } from "../estimating/context";
 import { costingInput } from "../estimating/cost-basis-validation";
 import { arithmeticPolicy, type CostLine } from "../estimating/math";
 import { scope, parseLines } from "../estimating/validation";
-import { active, duty, run, type Binding, type Run } from "./context";
+import { active, duty, run, revision, type Binding, type Run } from "./context";
 import { digest } from "./validation";
 import { boundInput, sourceFacts } from "./source-facts";
 import { calculateIsolated } from "./runner";
 import { hash } from "./hash";
+import { costBindings, costLineEvidence } from "./costs";
+import { insertSourceBinding } from "../estimating/sources/bindings";
 import { productBindings, productLineEvidence } from "./products";
 import { saveCalculatedDraft } from "./drafts";
 
@@ -67,7 +69,20 @@ async function basis(
     activation_id: head.id,
     activation_version: head.version,
     release_revision_id: head.revision.id,
-    ...(head.revision.definition.schema_version === 2 ? { products } : {}),
+    ...([2, 4].includes(head.revision.definition.schema_version)
+      ? { products }
+      : {}),
+    ...(head.revision.definition.schema_version === 4
+      ? {
+          cost_sources: await costBindings(
+            c,
+            p,
+            b.g.company_id,
+            head.revision.definition,
+            true,
+          ),
+        }
+      : {}),
   };
   return { ...b, head, saved, binding };
 }
@@ -295,19 +310,31 @@ export async function evaluatePreview(
             }),
           }
         : {}),
+      ...(b.binding.cost_sources
+        ? { cost_provenance: costLineEvidence({ binding: b.binding, result }) }
+        : {}),
       synthetic: true,
     };
   });
 }
 async function receiving(c: QueryClient, p: Principal, id: string) {
-  const saved = await run(c, p, id, true),
-    b = await basis(
-      c,
-      p,
-      saved.estimating_workspace_id,
-      saved.option_id,
-      saved.discovery_revision_id,
-    );
+  const saved = await run(c, p, id, true);
+  const retainedRelease = await revision(c, p, saved.release_revision_id);
+  await productBindings(
+    c,
+    p,
+    saved.company_id,
+    retainedRelease.definition,
+    true,
+  );
+  await costBindings(c, p, saved.company_id, retainedRelease.definition, true);
+  const b = await basis(
+    c,
+    p,
+    saved.estimating_workspace_id,
+    saved.option_id,
+    saved.discovery_revision_id,
+  );
   if (!saved.result.ready)
     throw new AppError(
       409,
@@ -379,6 +406,9 @@ export async function previewAdoption(p: Principal, id: string) {
       ...(r.saved.binding.products
         ? { product_provenance: productLineEvidence(r.saved) }
         : {}),
+      ...(r.saved.binding.cost_sources
+        ? { cost_provenance: costLineEvidence(r.saved) }
+        : {}),
       milestone_proposals: r.saved.result.explanation?.milestones ?? [],
       title: r.b.saved?.title ?? null,
       scope: r.b.saved?.scope ?? null,
@@ -444,7 +474,21 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
         lines: x.lines,
         policy: arithmeticPolicy,
       });
-      const result = await writeDiscoveryCosting(c, p, native);
+      const result = await writeDiscoveryCosting(
+        c,
+        p,
+        native,
+        x.generated.map((l) => l.id),
+      );
+      for (const line of x.saved.result.lines)
+        if (line.cost_source)
+          await insertSourceBinding(
+            c,
+            p,
+            x.saved.company_id,
+            result.current_version_id,
+            line.cost_source,
+          );
       await c.query(
         "INSERT INTO ppo.cpq_adoptions(id,workspace_id,company_id,run_id,estimate_id,estimate_version_id,result_hash,lines,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",
         [
@@ -468,6 +512,9 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
           cpq_release_revision_id: x.saved.release_revision_id,
           ...(x.saved.binding.products
             ? { cpq_product_provenance: productLineEvidence(x.saved) }
+            : {}),
+          ...(x.saved.binding.cost_sources
+            ? { cpq_cost_provenance: costLineEvidence(x.saved) }
             : {}),
           cpq_milestone_proposals: x.saved.result.explanation?.milestones ?? [],
         },

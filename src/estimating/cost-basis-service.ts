@@ -53,7 +53,7 @@ export async function adoptDiscoveryCosting(p:Principal,id:string,value:unknown)
 }
 
 // Internal transaction participant shared by manual costing and native CPQ adoption.
-export async function writeDiscoveryCosting(c:PoolClient,p:Principal,input:ReturnType<typeof costingInput>) {
+export async function writeDiscoveryCosting(c:PoolClient,p:Principal,input:ReturnType<typeof costingInput>,replaceSourceLines:string[] = []) {
     const {g,r,targets,e}=await selectedBasis(c,p,input.id,input.option_id,input.revision_id);
     expected(g.version,input.expected_workspace_version);
     expected(e?.version??0,input.expected_estimate_version);
@@ -68,7 +68,7 @@ export async function writeDiscoveryCosting(c:PoolClient,p:Principal,input:Retur
       updated=(await c.query<Estimate>(`INSERT INTO ppo.estimates(id,workspace_id,company_id,created_by,updated_by,opportunity_id,site_id,owner_id,option_id,estimation_revision_id,current_version_id)
         VALUES($1,$2,$3,$4,$4,$5,$6,$4,$7,$8,$9) RETURNING *`,[input.estimate_id,p.workspace_id,g.company_id,p.actor_id,g.opportunity_id,r.site_id,r.option_id,r.id,next])).rows[0];
     }
-    await insertVersion(c,p,updated,{...input,schema_version:2},next,e?.current_version_id??null);
+    await insertVersion(c,p,updated,{...input,schema_version:2},next,e?.current_version_id??null,replaceSourceLines);
     await c.query(`INSERT INTO ppo.estimate_discovery_bases(workspace_id,company_id,estimate_id,estimate_version_id,revision_id) VALUES($1,$2,$3,$4,$5)`,[p.workspace_id,g.company_id,updated.id,next,r.id]);
     await writeLineage(c,p,next,e?.current_version_id??null);
     return {...updated,audit_details:{saved_version_id:next,predecessor_id:e?.current_version_id??null,estimating_workspace_id:g.id,option_id:r.option_id,revision_id:r.id,

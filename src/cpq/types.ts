@@ -28,6 +28,7 @@ export type Condition =
     };
 export type Part = {
   product?: ProductReference;
+  cost_source?: CostReference;
   scope?: {
     kind: "System" | "Shared" | "Configuration";
     group_fact: string | null;
@@ -54,6 +55,31 @@ export type Part = {
     recorded_at: string;
   };
 };
+export type CostReference = {
+  source_id: string;
+  revision_id: string;
+  content_hash: string;
+  review_event_id: string;
+  source_version: number;
+  reference: string;
+  revision: number;
+  content: import("../estimating/sources/validation").SourceContent;
+};
+export type CostSnapshot = CostReference & {
+  part_key: string;
+  review: {
+    id: string;
+    source_version: number;
+    reason: string;
+    created_by: string;
+    created_at: string;
+  };
+};
+export type CostSelection =
+  import("../estimating/sources/bindings").SourceBinding & {
+    validity_end: string | null;
+    validity_warning: string | null;
+  };
 export type ProductReference = {
   product_id: string;
   revision_id: string;
@@ -144,7 +170,7 @@ export type Fixture = {
   };
 };
 export type Definition = {
-  schema_version: 1 | 2 | 3;
+  schema_version: 1 | 2 | 3 | 4;
   label: string;
   currency: "AUD";
   facts: Fact[];
@@ -256,6 +282,7 @@ export type Contribution = {
   facts: Record<string, string>;
 };
 export type ResultLine = {
+  cost_source?: CostSelection;
   target: string;
   basis_hash: string;
   line: CostLine;
@@ -263,7 +290,7 @@ export type ResultLine = {
   overrides: Override[];
 };
 export type Calculation = {
-  engine: "PPO-CPQ-1" | "PPO-CPQ-3";
+  engine: "PPO-CPQ-1" | "PPO-CPQ-3" | "PPO-CPQ-4";
   ready: boolean;
   lines: ResultLine[];
   diagnostics: Diagnostic[];

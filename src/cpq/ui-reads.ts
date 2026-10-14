@@ -8,12 +8,22 @@ import { definition } from "./validation";
 import { testIsolated } from "./runner";
 import { hash } from "./hash";
 import { tableCoverage } from "./design-runtime";
+import { costBindings } from "./costs";
+import { productBindings } from "./products";
 
 export async function validateDraft(p: Principal, value: unknown) {
   const q = object(value, ["company_id", "definition"]);
   const company = uuid(q.company_id, "company_id");
   await transaction((c) => duty(c, p, company, "cpq.author"));
   const content = definition(q.definition);
+  if (content.schema_version === 4)
+    await transaction(async (c) => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+        p.workspace_id,
+      ]);
+      await costBindings(c, p, company, content, true);
+      await productBindings(c, p, company, content, true);
+    });
   return {
     content_hash: hash(content),
     results: await testIsolated(content),
