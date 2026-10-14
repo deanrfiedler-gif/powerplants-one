@@ -22,6 +22,13 @@ export async function cpqCostHttpScenario() {
       await reviewedCost(actors.p),
       await reviewedCost(actors.p, "hour", "40"),
     ];
+  // The shared HTTP suite can retain an active Product-mapped release. Its
+  // historical active-head projection still requires current catalogue read.
+  for (const actor of [actors.p, actors.reviewer, actors.publisher])
+    await database().query(
+      "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,'products.read','Company',$3) ON CONFLICT DO NOTHING",
+      [CRM.workspace, actor.actor_id, CRM.company],
+    );
   const session = await createSession("coordinator"),
     reviewer = await createSession("products-reviewer"),
     publisher = await createSession("products-publisher");

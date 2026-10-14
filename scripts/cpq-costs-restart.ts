@@ -27,6 +27,9 @@ async function snapshot(s: Scenario) {
     UNION ALL SELECT 'revision',to_jsonb(v) FROM ppo.cpq_revisions v WHERE release_id=$3
     UNION ALL SELECT 'review',to_jsonb(r) FROM ppo.cpq_reviews r WHERE revision_id IN(SELECT id FROM ppo.cpq_revisions WHERE release_id=$3)
     UNION ALL SELECT 'activation',to_jsonb(a) FROM ppo.cpq_activations a WHERE revision_id IN(SELECT id FROM ppo.cpq_revisions WHERE release_id=$3)
+    UNION ALL SELECT 'source',to_jsonb(s) FROM ppo.cost_sources s WHERE id=ANY($5::uuid[])
+    UNION ALL SELECT 'source_revision',to_jsonb(r) FROM ppo.cost_source_revisions r WHERE source_id=ANY($5::uuid[])
+    UNION ALL SELECT 'source_review',to_jsonb(e) FROM ppo.cost_source_events e WHERE source_id=ANY($5::uuid[])
     UNION ALL SELECT 'receipt',to_jsonb(r) FROM ppo.operation_receipts r WHERE operation_id=ANY($4::uuid[])
     UNION ALL SELECT 'audit',to_jsonb(a) FROM ppo.audit_events a WHERE operation_id=ANY($4::uuid[])
     UNION ALL SELECT 'outbox',to_jsonb(j) FROM ppo.outbox_jobs j WHERE operation_id=ANY($4::uuid[])
@@ -36,6 +39,7 @@ async function snapshot(s: Scenario) {
         s.estimate.id,
         s.release.release.id,
         [s.command.operation_id, s.adoption.operation_id],
+        s.refs.map((ref) => ref.source_id),
       ],
     )
   ).rows;

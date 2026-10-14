@@ -2,12 +2,35 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Synthetic backend verification, 14 October 2026. Scope BC-04/ES-02/ES-03; [decision](../../../decisions/cpq-governed-costs.md) and [API](../../../interfaces/cpq-api.md#governed-cost-and-labour-profile--schema-4). Parent PR #490 corrected source `5ce7a1a`; main `bc9e3fb` retains #489 and migration 0100. No migration/grant/dependency or deployment added.
+Owner: Dean Fiedler. Synthetic backend verification, 14 October 2026. Scope BC-04/ES-02/ES-03; [decision](../../../decisions/cpq-governed-costs.md) and [API](../../../interfaces/cpq-api.md#governed-cost-and-labour-profile--schema-4). [PR #491](https://github.com/deanrfiedler-gif/powerplants-one/pull/491) is stacked on [PR #490](https://github.com/deanrfiedler-gif/powerplants-one/pull/490). Main remains `bc9e3fb`, including #489 and migration 0100. Parent follow-up `a55c40c` changes only CI's database execution window; runtime source remains the reviewed Product foundation. No migration, grant, dependency or deployment added.
 
 ## Local execution
 
-Verification is in progress. The first 28 focused CPQ unit cases passed, including four new governed-cost cases. Initial database failures were test harness defects: sorting a UNION expression without a wrapping SELECT and attempting an unchanged source successor. Those fixtures were corrected; repeat results are recorded below when complete. A dependency junction was unsuitable for the application builder, so the worktree uses its own unchanged lockfile installation.
+Environment: Node 24.21.0, npm 11.19.0, PostgreSQL 16, Chrome 155.0.8059.40 and Playwright 1.63.0. Only the task-owned disposable `ppo_synthetic_test` database was used. The compiled runtime is the `c922854` source tree; later changes are test-fixture cleanup, evidence and the inherited CI deadline. [File manifest](source-manifest.json) binds actual runtime and verification bytes and the compiled build ID.
+
+| Check | Actual result |
+|---|---|
+| CPQ, Cost Sources, cost-basis and native estimate units | 41 passed; six governed-source cases include post-override tiers, dates/minima, no fallback, strict identity/content/units, FX refusal, zero source cost and punctuation-safe attribution |
+| Full CPQ/Cost Sources PostgreSQL regression | 33 passed, including the populated historical upgrades, preserved receipts/identity/grants, Product compatibility/access and native source workflows |
+| Additional same-actor cross-company assertion | 1 targeted case passed after strengthening the fixture |
+| Final governed-source PostgreSQL rerun | All six passed against finished runtime and strengthened fixtures |
+| Compiled HTTP | Three passed in separate sequential processes: original CPQ, published Products and governed sources; current authority, stale refusal, original recovery and private/no-store responses |
+| Actual application and PostgreSQL restart | Both [governed costs](restart.json) and [published Products](products-restart.json) passed after stopping/restarting the compiled application and the verified task-owned PostgreSQL instance. Exact source/review rows, run, estimate bindings, audit/outbox and receipts were unchanged; two original operations each recovered without duplicate effects. Changed/withdrawn sources still refused new adoption |
+| Compiled browser regression | Two passed: existing CPQ end-to-end desktop and phone journeys; targeted run skipped the unrelated whole-application warm-up dependency |
+| Application build, type check and targeted lint | Passed |
+| Foundation, naming and design-register assurance | Passed. The design register still reports 334 unreviewed and 28 stale entries; no visual acceptance is inferred |
+| Historical schema hashes | [Schema 1, 2 and 3 definition/input/result hashes](legacy-hashes.json) exactly match unmodified parent `5ce7a1a` |
+
+Initial failures were corrected and retained in private execution logs: test UNION sorting and unchanged-source fixtures; a grant-expiry fixture used the wrong column; the FX test initially asserted the generic message instead of its field diagnostic. A dependency junction was unsuitable for the application builder and was retained outside the checkout; the worktree now has its own unchanged-lockfile installation. One test process overlapped that dependency move and was rerun. Shared HTTP fixtures now grant the existing source/catalogue read duties needed to inspect a previous active release, and restore grants after the revocation assertion. The first restart probe ran before the application was listening; verification passed after the explicit readiness check. These were verification/setup corrections, not relaxed production checks.
+
+Private session checkpoints and raw logs remain outside committed evidence. The safe restart summaries contain hashes and outcome counts only. No external business records were used.
 
 ## CI, independent review and acceptance
 
-CI and independent review of this contribution are pending. Automated checks do not confer operational approval. Source/rate owners, approved commercial policies, schema-3 combined authoring and UI controls remain separate. No merge, deployment, customer communication or external business transaction.
+Independent automated review of runtime head `c922854` [reported no major issues](https://github.com/deanrfiedler-gif/powerplants-one/pull/491#issuecomment-6165779713). This is automated review, not human approval. Final contribution CI and review remain separate live PR gates.
+
+The earlier `5b0300d` [E1 browser job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38546564835/job/115794537648) failed at the governed-source HTTP fixture's read of the preceding active Product release. It reproduced the missing fixture catalogue-read grant corrected in the final follow-up; the sequential compiled HTTP and shared restart scenarios passed locally with that correction. Replacement-head CI must still confirm the integrated result.
+
+Parent #490's `5ce7a1a` E1 database job was cancelled at the explicit 30-minute job limit while executing the retained combined suite. Follow-up `a55c40c` permits 45 minutes for that database lane, retaining every test and the browser lane's original 30-minute limit. It also [passed independent automated review](https://github.com/deanrfiedler-gif/powerplants-one/pull/490#issuecomment-6165826822); replacement-head CI is still required. The runtime worker's five-second budget is unchanged.
+
+Direct synthetic AUD excluding tax only. FX/landed receiving, combined schema-3 authoring, native binding controls, operational source/rate owners and commercial acceptance remain separate. The next backend increment is explicit override rebase/conflict decisions and resolution of manually changed CPQ-owned lines. No merge, deployment, customer communication or external transaction.
