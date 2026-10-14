@@ -1,19 +1,19 @@
 {
-  "source": "working tree",
+  "source": "3ee654b5fc07841fb2271c188ccb70298fdda9e4",
   "observations": [
     {
       "width": 390,
       "count": 22,
       "overflow": false,
       "selected_return": true,
-      "scroll_return": 1659
+      "scroll_return": 1687
     },
     {
       "width": 320,
       "count": 22,
       "overflow": false,
       "selected_return": true,
-      "scroll_return": 1659
+      "scroll_return": 1687
     }
   ],
   "fixture": "synthetic Products discovery",

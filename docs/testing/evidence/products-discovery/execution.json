@@ -1,0 +1,46 @@
+{
+  "source_commit": "3ee654b5fc07841fb2271c188ccb70298fdda9e4",
+  "build_id": "GbJQI60DjxNICmWJV6zd8",
+  "runtime": {
+    "node": "24.21.0",
+    "chrome": "155.0.8059.40",
+    "database": "task-owned PostgreSQL 16 / ppo_synthetic_test"
+  },
+  "source_sha256_lf": {
+    "src/products/catalogue-navigation.ts": "ee2b37701ed17139eecd7e4dea39e2369d7f39956e32dced9f3230612f861fde",
+    "src/products/components/catalogue-register.tsx": "e3fba3fe2b48839e5f2eb50a2e1ac4ffacb9730a0bc738ef395ce9608293183a",
+    "src/products/components/catalogue-register.css": "7eac2174bdd8cc80a33a5e60041250dba726066a15143875cedb1bd78bc009e1",
+    "src/products/components/catalogue-return.ts": "d7f4d08399c772fa1ef70f5519619183e77a3d810d5b1a2dc95e5a3880cd0e13",
+    "src/products/components/catalogue.tsx": "3cc02e8de74a8168d54e00a4b0b3accbd4acbdf6841bab7a0c567e6c42c729bb",
+    "src/app/styles/my-work.css": "9bc3a091ee47ca79a10a1b5866dfb2d80e00b2b2631fa58cc7fa101aa3d6e53d",
+    "src/shell/module-workspaces.ts": "1c9e9fe2635addad7995784d4707bc2f8d21c273d70e6c9a0b04623190c99086",
+    "tests/browser/products-discovery.spec.ts": "4016836a1905d38861535b314db929c48742d693873d478b3f008fde6819cdbb",
+    "tests/browser/products.spec.ts": "9b751191425e3ed334f9f43250207bcac917376645071fe5fdf5a0c3b3e87870"
+  },
+  "captures_sha256": {
+    "catalogue-1024.png": "80690dfff30820525588cb55ffe3b7b6d3238d15ac913f720e2001d4c834dc9c",
+    "catalogue-1440.png": "1599a325e892d2d5ac2bd68b2a951988f9356fa5e02744603ac8980bc7e7d3c6",
+    "catalogue-320.png": "63134820139557490a9e88369b6abc737cf8eafadb53892af3e269cf63e4e3a4",
+    "catalogue-390.png": "f719204c3d5b34a6401dac7c2b3482ba26d94ec0b5de4f874368c720b3ba94d2",
+    "catalogue-return-1024.png": "2c43a8b2ca4b7f1814540e4d8c92dff131ea16a2b7dafd6a2cccb104bf6463e0",
+    "catalogue-return-1440.png": "a66363f0c0797e6034f93da4d543802ee20a1e961d639f6b4a5787796f53f193",
+    "catalogue-return-320.png": "e92ab1a8c65b768df492a0712d07be7198b911c28b839a1a58f5114d7c193fa9",
+    "catalogue-return-390.png": "3091534f5e4dc1a8e8b2668083a886a1c81c7e558ff7a59ade24d9f4f0c4ad12"
+  },
+  "results": {
+    "compiled_browser": "6/6 passed",
+    "focused_units": "14/14 passed; 2 return-state units repeated after correction",
+    "lint": "full pass; changed correction files passed focused lint",
+    "typecheck": "passed; final build typecheck passed",
+    "build": "passed",
+    "studio": "passed; 334 unreviewed / 28 stale retained",
+    "naming": "passed",
+    "foundation": "passed; 78 parent requirements retained"
+  },
+  "limits": [
+    "Named Figma version pending",
+    "Owner, physical-device, screen-reader and browser-zoom acceptance pending",
+    "Supply panels, receiving and reservation behaviour not implemented",
+    "No merge/deployment; PR CI separate"
+  ]
+}
