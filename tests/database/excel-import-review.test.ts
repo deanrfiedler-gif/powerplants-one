@@ -136,7 +136,7 @@ test("XI03 foreign company, working-company scope, non-owner and revoked read/ed
     true,
   );
 });
-test("XI03 changed reference versions, stale revision, unselected option and incomplete scope refuse old previews", async () => {
+test("XI03 changed reference versions, stale revision, unknown option and incomplete scope refuse old previews", async () => {
   const s = await setup();
   await database().query(
     "UPDATE ppo.facilities SET version=version+1 WHERE id=$1",

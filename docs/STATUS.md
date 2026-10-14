@@ -2,6 +2,8 @@
 
 ## Excel import validated upload and review — 14 October 2026
 
+[PR #481](https://github.com/deanrfiedler-gif/powerplants-one/pull/481) integrates current main `e0ef8b6`. All four database cases, the full build and compiled API scenario pass on that integrated source; CI and independent review remain separate.
+
 Dean authorised the first BC-04 native Excel receiving increment. The [decision](decisions/excel-import-review-backend.md) and [API contract](contracts/excel-import-review.md) add current E2 target preparation and bounded workbook preview on `codex/excel-import-review-backend`, based on main `65141dc`. The existing parser feeds exact native context/scope checks, typed line validation, independent decimal reconciliation and original row/formula evidence. Current owner/read/edit/source permissions are checked before and after parsing. A successful preview remains ReviewRequired, without durable review or import authority. [Verification](testing/evidence/excel-import-review/README.md) records actual execution separately. No migration, grant, estimate save or source-store write; controlled persistence, re-import, UI, native Excel compatibility, owner acceptance and deployment remain separate.
 
 ## PR check repairs - 14 October 2026
