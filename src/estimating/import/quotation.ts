@@ -17,7 +17,7 @@ import {
 } from "../service";
 import { quoteTemplate } from "../template";
 import { quoteAmounts, type QuoteChoice } from "../math";
-import { retainedAuthority } from "./retained";
+import { excelVersionAuthority } from "./pricing-context";
 import { readReviewTarget } from "./service";
 import { hashField } from "./commit";
 
@@ -40,7 +40,7 @@ async function authority(
   id: string,
   versionId: string,
 ) {
-  const source = await retainedAuthority(c, p, id, versionId, true);
+  const source = await excelVersionAuthority(c, p, id, versionId, true);
   const e = await estimateContext(
     c,
     p,
@@ -82,7 +82,7 @@ async function review(
       print: boolean;
     }>(
       "SELECT line_id,line_ref,included,print FROM ppo.excel_line_history WHERE workspace_id=$1 AND estimate_version_id=$2 ORDER BY ordinal",
-      [p.workspace_id, v.id],
+      [p.workspace_id, source.estimate_version_id],
     )
   ).rows;
   const proposals = v.lines.map((line) => {
@@ -322,7 +322,7 @@ export async function excelQuoteReceiptAuthority(
 export async function readExcelQuotationEvidence(p: Principal, id: string) {
   return transaction(async (c) => {
     const { q } = await quoteContext(c, p, id);
-    await retainedAuthority(c, p, q.estimate_id, q.estimate_version_id);
+    await excelVersionAuthority(c, p, q.estimate_id, q.estimate_version_id);
     const row = (
       await c.query(
         `SELECT a.actor_id,a.occurred_at,a.reason,a.operation_id,a.details->'excel_quotation' AS evidence

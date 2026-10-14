@@ -1,0 +1,157 @@
+{
+  "status": "passed",
+  "distinct_scenarios": 30,
+  "note": "26 passing scenarios from the regression run plus the corrected refusal case and three historical upgrade scenarios. The corrected case moved session creation before its unchanged mutation snapshot. Local sequential synthetic durations, not performance commitments.",
+  "results": [
+    {
+      "test": "ES03 register follows current revisions and independent decisions without changing originals",
+      "duration_ms": 43492.6492,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register counts all search matches before view filters and preserves expiry boundaries",
+      "duration_ms": 360.694,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register pages beyond 100 with complete counts and stable current-source ordering",
+      "duration_ms": 3948.3968,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register refuses inactive actors and excludes foreign company, site-only and expired grants",
+      "duration_ms": 343.6773,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register rechecks counts, review affordances and lookahead after hydration",
+      "duration_ms": 1438.0766,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 immutable exact revisions, independent review, scope, stale writes and recoverable original receipts",
+      "duration_ms": 1269.6667,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 explicit successor retains original estimate and quote bytes, carries exact reviewed provenance and replays once",
+      "duration_ms": 9088.6089,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 comparison conflicts and a failed version write roll back all source bindings, events and receipts",
+      "duration_ms": 5587.8669,
+      "status": "passed"
+    },
+    {
+      "test": "XI06 exact source, four include/print combinations, atomic duplicate receipt and immutable review",
+      "duration_ms": 110953.0126,
+      "status": "passed"
+    },
+    {
+      "test": "XI06 stale or incomplete reviews and late transaction failure leave no partial quote",
+      "duration_ms": 58177.2499,
+      "status": "passed"
+    },
+    {
+      "test": "XI06 re-import retained and PPO-only lines need explicit choices; originals and accepted replay survive successors",
+      "duration_ms": 65603.7861,
+      "status": "passed"
+    },
+    {
+      "test": "XI03 only current selected Complete basis can continue; changed E2 invalidates review while originals remain recoverable",
+      "duration_ms": 65162.9989,
+      "status": "passed"
+    },
+    {
+      "test": "XI03 quote-safe reader cannot see import review; revocation also prevents accepted recovery",
+      "duration_ms": 35314.0983,
+      "status": "passed"
+    },
+    {
+      "test": "XI08 renderer interruption recovers the original stored bundle and source-bound draft",
+      "duration_ms": 41436.5263,
+      "status": "passed"
+    },
+    {
+      "test": "XI03 successor source stays readable while comparison refuses a revoked historical Site basis",
+      "duration_ms": 34662.5926,
+      "status": "passed"
+    },
+    {
+      "test": "XI03/04/07 final capacity includes kept lines; current version and permissions recheck after source I/O",
+      "duration_ms": 44287.0046,
+      "status": "passed"
+    },
+    {
+      "test": "XI05 whole-estimate comparison exposes PPO edits and provenance; explicit removals, kept manual lines, reorder and resurrection retain IDs and originals",
+      "duration_ms": 47758.448,
+      "status": "passed"
+    },
+    {
+      "test": "XI03/04 identical concurrent revisions recover once; changed intent conflicts; competing operations and stale review never overwrite",
+      "duration_ms": 33330.2956,
+      "status": "passed"
+    },
+    {
+      "test": "XI03/07 wrong identity, blocked upload, missing confirmation, foreign and revoked access refuse without mutation or storage",
+      "duration_ms": 31599.5984,
+      "status": "passed"
+    },
+    {
+      "test": "XI04 storage, readback, native/evidence/audit/receipt/outbox faults and tampered projection roll back the whole successor",
+      "duration_ms": 37867.1744,
+      "status": "passed"
+    },
+    {
+      "test": "XI97 populated workbook, sources and quotation upgrade to managed Excel pricing with exact source, rows, grants and original ledger; reapply is inert",
+      "duration_ms": 30987.626,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing retains originals, independent comparison and exact duplicate receipt; quote excludes private evidence",
+      "duration_ms": 49633.363,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing rejects changed source and estimate; accepted historical replay survives later versions",
+      "duration_ms": 39929.7577,
+      "status": "passed"
+    },
+    {
+      "test": "XI repriced lines expose binding removal on re-import; explicit kept omissions retain exact bindings",
+      "duration_ms": 47596.9733,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing failure rolls back the full successor graph and receipt; revoked recovery is denied",
+      "duration_ms": 42340.0811,
+      "status": "passed"
+    },
+    {
+      "test": "XI 500-line managed pricing and exact quotation retain the native generic refresh bound",
+      "duration_ms": 64308.3666,
+      "status": "passed"
+    },
+    {
+      "test": "E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original",
+      "duration_ms": 66361.5917,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing refuses unreviewed, wrong-unit, invalid-date, wrong-company and duplicate mappings without mutations",
+      "duration_ms": 42997.0056,
+      "status": "passed"
+    },
+    {
+      "test": "PD upgrade from 98 preserves originals and exact new duties; repeat migration/seed is inert",
+      "duration_ms": 22431.845,
+      "status": "passed"
+    },
+    {
+      "test": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+      "duration_ms": 27494.6816,
+      "status": "passed"
+    }
+  ]
+}

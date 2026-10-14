@@ -4,6 +4,7 @@ import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
 import { invalid, object, uuid } from "../../shared/validation";
+import { sourceBindings } from "../sources/bindings";
 import type { EstimateVersion } from "../context";
 import { calculate, decimal, extended, scaled, type CostLine } from "../math";
 import { previewExcelWorkbook, readReviewTarget } from "./service";
@@ -212,6 +213,15 @@ export function buildComparison(
       lines: current.lines,
       totals: calculate(current.lines),
     },
+    ...(current.source_bindings?.length ? {
+      source_binding_changes: current.source_bindings.map(binding => {
+        const next = incoming.find(l => l.line_id === binding.line_id)?.proposed;
+        const before = current.lines.find(l => l.id === binding.line_id)!;
+        const preserved = next && (["quantity", "unit", "unit_cost", "source", "effective_date"] as const)
+          .every(k => next[k] === before[k]);
+        return { binding, action: next ? (preserved ? "Preserved" : "Removed") : "KeepOrRemoveRequired" };
+      }),
+    } : {}),
     previous_import: {
       version_id: prior.estimate_version_id,
       review_hash: prior.review.review_hash,
@@ -286,6 +296,8 @@ export async function compareReviewed(
       [p.workspace_id, current.estimate_id],
     )
   ).rows;
+  const bindings = await sourceBindings(c, p, current.id);
+  if (bindings.length) current.source_bindings = bindings;
   return buildComparison(p.workspace_id, review, current, history, mappings);
 }
 export async function compareExcelWorkbook(

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "source_sha256": "c941d931ffc97783b09e5861665389af6b666aa2f8f32e4896c462b95bb5f7c0",
+  "revised_source_sha256": "4998c29e528c5c9af516f222e478d198996c25010e4d91d9b9fa73ad01f4388a",
+  "postmaster_changed": true,
+  "exact_rows": true,
+  "exact_workbook": true,
+  "exact_managed_pricing": true,
+  "source_bindings": 500,
+  "timings_ms": {
+    "preview": 1730,
+    "save": 7914
+  },
+  "exact_quotation_and_outputs": true,
+  "original_receipt": true,
+  "replay_without_new_rows": true
+}

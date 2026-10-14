@@ -131,7 +131,7 @@ export function sourceDecision(id: string, value: unknown) {
     ] as const),
   };
 }
-export function refreshProposal(value: unknown) {
+export function refreshProposal(value: unknown, maxLines = 100) {
   const r = object(value, [
     "estimate_version_id",
     "pricing_date",
@@ -140,11 +140,11 @@ export function refreshProposal(value: unknown) {
   if (
     !Array.isArray(r.selections) ||
     !r.selections.length ||
-    r.selections.length > 100
+    r.selections.length > maxLines
   )
     invalid(
       "selections",
-      "Select between one and one hundred exact estimate lines.",
+      `Select between one and ${maxLines} exact estimate lines.`,
     );
   const selections = r.selections.map((value) => {
     const row = object(value, [
@@ -169,7 +169,7 @@ export function refreshProposal(value: unknown) {
     selections,
   };
 }
-export function refreshCommand(id: string, value: unknown) {
+export function refreshCommand(id: string, value: unknown, maxLines = 100) {
   const r = object(value, [
     ...commonKeys,
     "expected_version",
@@ -189,7 +189,7 @@ export function refreshCommand(id: string, value: unknown) {
     ...common(r),
     id: uuid(id, "estimate_id"),
     expected_version: version(r.expected_version),
-    proposal: refreshProposal(r.proposal),
+    proposal: refreshProposal(r.proposal, maxLines),
     comparison_hash,
     reviewed: true,
   };

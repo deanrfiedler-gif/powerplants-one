@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Excel managed cost sources and reviewed pricing — 14 October 2026
+
+Dean authorised the [pricing continuation](decisions/excel-import-source-pricing.md) after capacity PR #486. The [backend contract](contracts/excel-import-source-pricing.md) connects exact saved Excel lines to independently reviewed native Cost Source revisions, with workbook/current/proposed comparison and an atomic pricing successor. Original workbooks and versions remain unchanged; re-import exposes binding removal and retained-line inheritance, and verified Draft continuation uses the exact priced version. [Execution evidence](testing/evidence/excel-source-pricing/README.md) records validation separately from CI, review and deployment. Native controls, FX, landed costs and operational source policy remain open.
+
 ## Excel larger-workbook capacity — 14 October 2026
 
 Dean authorised Step 6 in [PR #486](https://github.com/deanrfiedler-gif/powerplants-one/pull/486) on `codex/excel-import-capacity`, continuing PR #485. The [decision](decisions/excel-import-capacity.md) and [contract](contracts/excel-import-capacity.md) add a bounded 500-line / 1 MiB Excel receiving profile, including kept lines and exact Draft quotation choices. Migration 0097 preserves old ledgers/evidence and requires accepted Excel evidence for large native versions. Per-line constraints preserve exact membership while avoiding repeated full-import validation. [Execution evidence](testing/evidence/excel-capacity/README.md) separates measured synthetic proof from CI, owner acceptance and deployment. Native manual/CPQ limits, parser resource limits and issued sources remain unchanged. Richer sources, native import UI and operational acceptance remain open.

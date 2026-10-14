@@ -1,3 +1,4 @@
+import { excelPricingReceiptAuthority, excelPricingCommand } from "../estimating/import/pricing";
 import { excelQuoteReceiptAuthority, excelQuoteCommand } from "../estimating/import/quotation";
 
 import { receiptAuthority as publicationReceiptAuthority } from "../documents/publication/service";
@@ -299,6 +300,13 @@ export async function readOperation(
     )
       throw unavailable();
   } else if (r.object_type === "Estimate") {
+    if (r.command === excelPricingCommand) {
+      return transaction(async c => {
+        await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+        await excelPricingReceiptAuthority(c, p, r.record_id, operation_id);
+        return r.result as OperationReceipt;
+      });
+    }
     if (["ExcelImport:Commit", "ExcelImport:Reimport"].includes(r.command)) {
       return transaction(async c => {
         await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
