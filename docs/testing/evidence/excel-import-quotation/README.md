@@ -1,6 +1,6 @@
 # Excel quotation continuation execution evidence
 
-Owner: Dean Fiedler. Execution date: 14 October 2026. Independent review/business acceptance: open. Synthetic local implementation on `codex/excel-import-quotation-backend`, stacked on revised-workbook PR #484. [Decision](../../../decisions/excel-import-quotation-backend.md), [API/workflow](../../../contracts/excel-import-quotation.md), [plan](../../../delivery/excel-estimate-import-plan.md).
+Owner: Dean Fiedler. Execution date: 14 October 2026. Independent review/business acceptance: open. Synthetic local implementation on `codex/excel-import-quotation-backend`, stacked on revised-workbook PR #484. [PR #485](https://github.com/deanrfiedler-gif/powerplants-one/pull/485), implementation commit `10d0d23`; this handover link is a documentation-only successor. [Decision](../../../decisions/excel-import-quotation-backend.md), [API/workflow](../../../contracts/excel-import-quotation.md), [plan](../../../delivery/excel-estimate-import-plan.md).
 
 ## Scope and provenance
 
