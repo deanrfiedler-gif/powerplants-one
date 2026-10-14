@@ -491,6 +491,11 @@ test("governed dates reject unpersistable runs and accept the native upper date 
   assert.equal(allowed.run.result.ready, true);
   const command = adoption(await previewAdoption(s.p, allowed.run.id));
   await adoptRun(s.p, allowed.run.id, command);
+  assert.equal(
+    (await readEstimate(s.p, command.estimate_id)).saved.source_bindings!
+      .length,
+    2,
+  );
   assert.ok(
     (await readEstimate(s.p, command.estimate_id)).saved.source_bindings!.every(
       (binding) => binding.pricing_date === "9998-12-31",
