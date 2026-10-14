@@ -8,7 +8,7 @@ export const decisionJsonBody = (
   request: Pick<Request, "headers"> & {
     body: ReadableStream<Uint8Array> | null;
   },
-  maxBytes: number,
+  maxBytes = decisionBodyBytes,
 ) =>
   readBoundedJson(request, maxBytes, {
     rejectionDrainBytes: 2 * decisionBodyBytes,

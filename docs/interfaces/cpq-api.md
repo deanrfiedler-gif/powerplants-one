@@ -138,7 +138,7 @@ Governed source validity dates also require year 0001 or later (`CpqCostSourceDa
 
 ## Explicit override rebase and receiving resolution — workflow version 1
 
-The four POST rebase/receiving preview and command routes accept at most 512 KiB of UTF-8 JSON, accommodating 100 override or 200 receiving decisions with 500-character reasons. Rebase `input` independently remains limited to 64 KiB of serialized UTF-8 JSON (`InvalidData`, field `input`). Oversized request bodies return `PayloadTooLarge`; other routes retain their existing limits.
+The four POST rebase/receiving preview and command routes accept at most 512 KiB of UTF-8 JSON, accommodating 100 override or 200 receiving decisions with 500-character reasons. Rebase `input` independently remains limited to 64 KiB of serialized UTF-8 JSON (`InvalidData`, field `input`). Oversized request bodies return `PayloadTooLarge` after bounded discard. A 1 MiB discard ceiling and ten-second deadline protect transport; extreme or stalled uploads may close at those hard limits. Other routes retain their existing limits.
 
 [Decision](../decisions/cpq-rebase-conflicts.md) and [execution evidence](../testing/evidence/cpq-rebase/README.md) cover this bounded BC-04 / ES-02 / ES-03 increment. The envelope version is independent of definition schemas 1–4. No definition schema, migration, grant, dependency or pricing policy is added. Existing evaluation/result hashes and original-operation payloads remain valid. New legacy adoption attempts also refuse unacknowledged obsolete removals; historical accepted estimates and receipts are unchanged.
 
