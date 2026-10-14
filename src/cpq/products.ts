@@ -27,7 +27,13 @@ export async function productBindings(
   definition: Definition,
   current = false,
 ): Promise<ProductSnapshot[]> {
-  if (definition.schema_version !== 2) return [];
+  if (
+    definition.schema_version !== 2 &&
+    !(
+      definition.schema_version === 4 && definition.parts.some((p) => p.product)
+    )
+  )
+    return [];
   await productAuthority(c, p, company);
   const parts = definition.parts.filter((part) => part.product);
   const snapshots: ProductSnapshot[] = [];
