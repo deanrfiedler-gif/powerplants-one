@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "graph_hash": "165917699906261d7d38da2c5efa3a98b429f8cdd7b7705c8c65988b8a4c6429",
+  "report_hash": "3a1d8cc22f4af89117de67dd52d6d66c0ee5d879af476d06b9edce87f1802940",
+  "original_receipts": 3,
+  "duplicate_effects": 0,
+  "postmaster_before": "2026-10-15 07:18:15.245067+10",
+  "postmaster_after": "2026-10-15 07:53:58.77914+10",
+  "build_id": "bib_Z2693MBCGXkLdrmle",
+  "application_pid_before": 19148,
+  "application_pid_after": 9480,
+  "application_mode": "compiled",
+  "scope": "Task-owned synthetic database and loopback application only. Intermediate API cases changed current company activation; accepted historical quality evidence remained recoverable."
+}
