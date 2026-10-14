@@ -1,6 +1,6 @@
 # Excel larger-workbook capacity — execution evidence
 
-Owner: Dean Fiedler. Source: `codex/excel-import-capacity`, based on PR #485 `b2d3949`. User-authorised Step 6 capacity; PPO-010 / BC-04 / XI-03/04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
+Owner: Dean Fiedler. Source: [PR #486](https://github.com/deanrfiedler-gif/powerplants-one/pull/486), implementation `e6177bd` on `codex/excel-import-capacity`, based on PR #485 `b2d3949`. User-authorised Step 6 capacity; PPO-010 / BC-04 / XI-03/04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
 
 ## Selected envelope and measurements
 
