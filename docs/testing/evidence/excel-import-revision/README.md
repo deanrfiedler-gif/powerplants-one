@@ -2,7 +2,7 @@
 
 Date: 14 October 2026. Owner: Dean Fiedler. Local author verification is recorded below; independent review and owner/business acceptance remain open.
 
-Scope: PPO-010 Step 4, XI-03/04/05/07/08. [Decision](../../../decisions/excel-import-revision-backend.md), [contract](../../../contracts/excel-import-revision.md), [plan](../../../delivery/excel-estimate-import-plan.md). Branch `codex/excel-import-revision-backend` continues first-save PR #482. This backend does not deliver native controls, quotation continuation or operational readiness.
+Scope: PPO-010 Step 4, XI-03/04/05/07/08. [Decision](../../../decisions/excel-import-revision-backend.md), [contract](../../../contracts/excel-import-revision.md), [plan](../../../delivery/excel-estimate-import-plan.md). [PR #484](https://github.com/deanrfiedler-gif/powerplants-one/pull/484), branch `codex/excel-import-revision-backend`, continues first-save PR #482. The implementation commit is `55410d3`; the follow-up handover only records the PR link. This backend does not deliver native controls, quotation continuation or operational readiness.
 
 The implementation adds exact-current-version comparisons, historical stable line mapping, explicit omission decisions and one native atomic successor with a retained revised workbook. It preserves earlier source workbooks, versions, receipts and Draft output snapshots. Migration 0096 is additive and seedless; 0093/0094 remain reserved.
 
