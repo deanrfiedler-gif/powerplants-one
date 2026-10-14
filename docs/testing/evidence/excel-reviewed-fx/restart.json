@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "source_sha256": "18b15d99dbe8d9d3845b50391b52674d2c4dc4576937c753f8d382b5fce52113",
+  "revised_source_sha256": "929af882780474628f63809ce703da60867e5afc78b80ea6970eb5e1f7a75d47",
+  "postmaster_changed": true,
+  "exact_rows": true,
+  "exact_workbook": true,
+  "exact_managed_pricing": true,
+  "source_bindings": 500,
+  "exact_fx_evidence": true,
+  "foreign_currency": "USD",
+  "rate": "1.500000",
+  "converted_cost": "505.00",
+  "timings_ms": {
+    "preview": 2023,
+    "save": 7699
+  },
+  "exact_quotation_and_outputs": true,
+  "original_receipt": true,
+  "replay_without_new_rows": true
+}

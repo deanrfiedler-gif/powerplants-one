@@ -100,6 +100,7 @@ export const migrationFiles = [
   "0096-excel-reimport.sql",
   "0097-excel-capacity.sql",
   "0098-excel-source-pricing.sql",
+  "0099-reviewed-source-fx.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -144,7 +145,7 @@ export const seedFiles = [
   [83, "seed-access-teams.sql"],
   [84, "seed-access-review-attestations.sql"],
 ] as const;
-export const latestMigrationVersion = 98;
+export const latestMigrationVersion = 99;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.

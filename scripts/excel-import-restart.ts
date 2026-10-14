@@ -1,3 +1,4 @@
+import { fxEvidence } from "../tests/helpers/source-fx";
 import { pricingSource } from "../tests/helpers/excel-source-pricing";
 import { crmBase } from "../tests/helpers/crm";
 import { launchDocumentBrowser } from "../src/platform/browser";
@@ -52,6 +53,8 @@ async function snapshot(id: string) {
   UNION ALL SELECT 'source_header',to_jsonb(s) FROM ppo.cost_sources s WHERE id IN (SELECT source_id FROM ppo.cost_source_revisions WHERE id IN (SELECT source_revision_id FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id IN (SELECT id FROM ppo.estimate_versions WHERE estimate_id=$1)))
   UNION ALL SELECT 'source_event',to_jsonb(e) FROM ppo.cost_source_events e WHERE revision_id IN (SELECT source_revision_id FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id IN (SELECT id FROM ppo.estimate_versions WHERE estimate_id=$1))
   UNION ALL SELECT 'source_revision',to_jsonb(r) FROM ppo.cost_source_revisions r WHERE id IN (SELECT source_revision_id FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id IN (SELECT id FROM ppo.estimate_versions WHERE estimate_id=$1))
+  UNION ALL SELECT 'source_audit',to_jsonb(a) FROM ppo.audit_events a WHERE a.object_type='CostSource' AND a.object_id IN (SELECT source_id FROM ppo.cost_source_revisions WHERE id IN (SELECT source_revision_id FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id IN (SELECT id FROM ppo.estimate_versions WHERE estimate_id=$1)))
+  UNION ALL SELECT 'source_receipt',to_jsonb(r) FROM ppo.operation_receipts r WHERE r.record_id IN (SELECT source_id FROM ppo.cost_source_revisions WHERE id IN (SELECT source_revision_id FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id IN (SELECT id FROM ppo.estimate_versions WHERE estimate_id=$1)))
   UNION ALL SELECT 'line',to_jsonb(l) FROM ppo.excel_import_lines l WHERE estimate_version_id IN (SELECT estimate_version_id FROM ppo.excel_imports WHERE estimate_id=$1)
   UNION ALL SELECT 'quote',to_jsonb(q) FROM ppo.draft_quote_revisions q WHERE estimate_id=$1
   UNION ALL SELECT 'quote_header',to_jsonb(q) FROM ppo.draft_quotes q WHERE estimate_id=$1
@@ -69,7 +72,8 @@ async function snapshot(id: string) {
 }
 try {
   if (process.argv[2] === "write") {
-    const pricing = process.argv[3] === "pricing";
+    const fx = process.argv[3] === "fx";
+    const pricing = fx || process.argv[3] === "pricing";
     const capacity = pricing || process.argv[3] === "capacity";
     const s = await excelImportSetup(
         undefined,
@@ -106,7 +110,12 @@ try {
     await writeFile(join(directory, "revised.xlsx"), revisedBytes);
     let pricingCheckpoint = null;
     if (pricing) {
-      const source = await pricingSource(s.p, successor.saved.lines[0].unit);
+      const source = await pricingSource(
+        s.p,
+        successor.saved.lines[0].unit,
+        true,
+        fx ? { tiers: undefined, fx: fxEvidence() } : {},
+      );
       const pricingPath = `estimating/estimates/${id}/excel-source-pricing`;
       const proposal = {
         estimate_version_id: successor.saved.id,
@@ -121,7 +130,16 @@ try {
       const pricingStarted = performance.now();
       const review = await json(pricingPath + "/preview", proposal);
       const previewMs = performance.now() - pricingStarted;
-      assert.equal(review.comparison.after.cost, "375.00");
+      assert.equal(review.comparison.after.cost, fx ? "505.00" : "375.00");
+      if (fx) {
+        assert.equal(review.comparison.fx_sources.length, 1);
+        assert.equal(
+          review.comparison.changes.filter(
+            (c: { foreign_price?: unknown }) => c.foreign_price,
+          ).length,
+          500,
+        );
+      }
       const command = {
         ...crmBase(),
         expected_version: successor.version,
@@ -137,6 +155,7 @@ try {
       const evidencePath = `estimating/estimates/${id}/versions/${current.saved.id}/excel-source-pricing`;
       const evidence = await json(evidencePath);
       pricingCheckpoint = {
+        fx,
         path: pricingPath,
         command,
         receipt: priced.receipt,
@@ -350,6 +369,14 @@ try {
             ? {
                 exact_managed_pricing: true,
                 source_bindings: 500,
+                ...(data.pricing.fx
+                  ? {
+                      exact_fx_evidence: true,
+                      foreign_currency: "USD",
+                      rate: "1.500000",
+                      converted_cost: "505.00",
+                    }
+                  : {}),
                 timings_ms: data.pricing.timings_ms,
               }
             : {}),

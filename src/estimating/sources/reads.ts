@@ -1,3 +1,4 @@
+import { fxReviewHash } from "./fx";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
@@ -164,6 +165,9 @@ export async function readCostSource(
     return {
       source,
       revision,
+      ...(revision.content.fx
+        ? { fx_review_hash: fxReviewHash(revision.content.fx) }
+        : {}),
       previous_revision: revision.predecessor_id
         ? await sourceRevision(c, p, source, revision.predecessor_id)
         : null,

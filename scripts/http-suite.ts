@@ -10,6 +10,7 @@ const exclusive = new Set([
   "excel-quotation.test.ts",
   "excel-capacity.test.ts",
   "excel-source-pricing.test.ts",
+  "excel-fx.test.ts",
   "output-register.test.ts",
   "output-actions.test.ts",
   "template-catalogue.test.ts",

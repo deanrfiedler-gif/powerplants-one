@@ -79,3 +79,7 @@ Dean authorised Step 6 larger-workbook capacity on `codex/excel-import-capacity`
 ## BC-04 Excel managed source pricing — 14 October 2026
 
 Dean authorised [exact source mapping and reviewed pricing](../decisions/excel-import-source-pricing.md), continuing PR #486. The [contract](../contracts/excel-import-source-pricing.md) reuses native Cost Source review/tier rules with immutable workbook/current/price comparison, atomic successors, binding disposition on re-import and verified Draft continuation. [Evidence](../testing/evidence/excel-source-pricing/README.md) separates delivery from acceptance. FX, landed costs, native UI and operational source authority remain open.
+
+## BC-04 Excel reviewed FX — 14 October 2026
+
+Dean authorised [reviewed FX conversion](../decisions/excel-import-reviewed-fx.md), continuing PR #487. The [contract](../contracts/excel-import-reviewed-fx.md) retains original supplier currency/prices and rate evidence in independently reviewed native source revisions, with exact unit-first AUD rounding, deliberate comparison and saved successors. [Evidence](../testing/evidence/excel-reviewed-fx/README.md) distinguishes local execution, CI and acceptance. Landed costs, native controls, non-AUD workbook templates and operational policies remain open.

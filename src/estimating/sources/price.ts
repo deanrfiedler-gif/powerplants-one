@@ -2,14 +2,32 @@ import { AppError } from "../../platform/errors";
 import { scaled } from "../math";
 import type { SourceContent } from "./validation";
 
-// No FX, unit conversion, extrapolation below a supplier minimum or inferred
+// No live FX, unit conversion, extrapolation below a supplier minimum or inferred
 // validity. This is an explicit comparison date, not a moving fixture clock.
 export function sourcePrice(
   content: SourceContent,
   quantity: string,
   unit: string,
   pricingDate: string,
+  allowFx = false,
 ) {
+  if (content.fx) {
+    if (!allowFx)
+      throw new AppError(
+        422,
+        "ExcelFxReviewRequired",
+        "Use the Excel pricing comparison to review retained foreign prices and FX evidence.",
+      );
+    if (
+      pricingDate < content.fx.effective_from ||
+      pricingDate > content.fx.valid_until
+    )
+      throw new AppError(
+        422,
+        "FxOutsideValidity",
+        "The pricing date must fall within the recorded FX effective dates.",
+      );
+  }
   if (content.unit !== unit)
     throw new AppError(
       422,

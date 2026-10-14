@@ -51,6 +51,7 @@ async function compare(
     id,
     input,
     EXCEL_CAPACITY.lines,
+    true,
   );
   const { e, v, comparison } = compared;
   // Validate the complete 1 MiB receiver envelope, not just the selected lines.

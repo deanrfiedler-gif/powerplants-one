@@ -30,6 +30,7 @@ import {
   sourceHash,
   type SourceEvent,
 } from "./context";
+import { fxReviewHash, type FxContent } from "./fx";
 import { sourcePrice } from "./price";
 import { refreshProposal, refreshCommand } from "./validation";
 import { insertSourceBinding, type SourceBinding } from "./bindings";
@@ -40,6 +41,7 @@ export async function compareSourceRefresh(
   id: string,
   input: ReturnType<typeof refreshProposal>,
   maxLines = 100,
+  allowFx = false,
 ) {
   const e = await estimateContext(c, p, id, "estimating.edit");
   await guardExistingEstimateMutation(c, p, e);
@@ -86,6 +88,10 @@ export async function compareSourceRefresh(
   const lines = v.lines.map((l) => ({ ...l })),
     bindings: SourceBinding[] = [],
     changes = [];
+  const fxSources = new Map<
+    string,
+    { source_revision_id: string; conversion: FxContent }
+  >();
   for (const choice of input.selections) {
     const line = lines.find((l) => l.id === choice.line_id);
     if (!line)
@@ -115,6 +121,7 @@ export async function compareSourceRefresh(
         line.quantity,
         line.unit,
         input.pricing_date,
+        allowFx,
       ),
       old = { ...line };
     line.unit_cost = price.unit_cost;
@@ -130,7 +137,24 @@ export async function compareSourceRefresh(
       unit_cost: price.unit_cost,
     };
     bindings.push(b);
+    const fx = revision.content.fx;
+    if (fx)
+      fxSources.set(revision.id, {
+        source_revision_id: revision.id,
+        conversion: fx,
+      });
     changes.push({
+      ...(fx
+        ? {
+            foreign_price: {
+              currency: fx.currency,
+              unit_cost: fx.tiers.find(
+                (t) => t.minimum_quantity === price.minimum_quantity,
+              )!.unit_cost,
+              fx_review_hash: fxReviewHash(fx),
+            },
+          }
+        : {}),
       line_id: line.id,
       description: line.description,
       quantity: line.quantity,
@@ -152,6 +176,7 @@ export async function compareSourceRefresh(
     before = calculate(v.lines),
     after = calculate(parsed);
   const snapshot = {
+    ...(fxSources.size ? { fx_sources: [...fxSources.values()] } : {}),
     estimate_id: e.id,
     estimate_version_id: v.id,
     estimate_hash: v.content_hash,

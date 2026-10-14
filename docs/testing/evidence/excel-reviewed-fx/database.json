@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "distinct_scenarios": 25,
+  "note": "21 passing scenarios from the regression run plus the corrected populated 0098 upgrade and three historical upgrade scenarios. The mixed-unit upgrade fixture now selects the exact unit-matching line. Assertions and deadlines retained. Local synthetic durations only.",
+  "results": [
+    {
+      "test": "ES03 register follows current revisions and independent decisions without changing originals",
+      "duration_ms": 40921.2618,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register counts all search matches before view filters and preserves expiry boundaries",
+      "duration_ms": 263.2074,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register pages beyond 100 with complete counts and stable current-source ordering",
+      "duration_ms": 2739.5539,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register refuses inactive actors and excludes foreign company, site-only and expired grants",
+      "duration_ms": 94.1119,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 register rechecks counts, review affordances and lookahead after hydration",
+      "duration_ms": 218.9167,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 immutable exact revisions, independent review, scope, stale writes and recoverable original receipts",
+      "duration_ms": 405.8854,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 explicit successor retains original estimate and quote bytes, carries exact reviewed provenance and replays once",
+      "duration_ms": 2831.901,
+      "status": "passed"
+    },
+    {
+      "test": "ES03 comparison conflicts and a failed version write roll back all source bindings, events and receipts",
+      "duration_ms": 1928.4981,
+      "status": "passed"
+    },
+    {
+      "test": "FX exact source preview, independent review, original foreign evidence and concurrent Excel save preserve receipts and quote safety",
+      "duration_ms": 38463.2726,
+      "status": "passed"
+    },
+    {
+      "test": "FX review refuses missing or changed acknowledgement and verifies its deferred audit evidence",
+      "duration_ms": 24850.0598,
+      "status": "passed"
+    },
+    {
+      "test": "FX dates, foreign scope, legacy refresh and native conversion tampering refuse without accepted mutations",
+      "duration_ms": 37816.5781,
+      "status": "passed"
+    },
+    {
+      "test": "FX rate correction requires a fresh independent review and estimate comparison while accepted historical operations recover",
+      "duration_ms": 48453.6998,
+      "status": "passed"
+    },
+    {
+      "test": "FX binding removal and retained omissions remain explicit across re-import and fresh repricing",
+      "duration_ms": 68521.9882,
+      "status": "passed"
+    },
+    {
+      "test": "FX 500-line conversion deduplicates full evidence and preserves the exact AUD Draft",
+      "duration_ms": 41716.5976,
+      "status": "passed"
+    },
+    {
+      "test": "XI97 populated workbook, sources and quotation upgrade to managed Excel pricing with exact source, rows, grants and original ledger; reapply is inert",
+      "duration_ms": 26751.5217,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing retains originals, independent comparison and exact duplicate receipt; quote excludes private evidence",
+      "duration_ms": 23783.4093,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing refuses unreviewed, wrong-unit, invalid-date, wrong-company and duplicate mappings without mutations",
+      "duration_ms": 23475.8896,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing rejects changed source and estimate; accepted historical replay survives later versions",
+      "duration_ms": 23452.4608,
+      "status": "passed"
+    },
+    {
+      "test": "XI repriced lines expose binding removal on re-import; explicit kept omissions retain exact bindings",
+      "duration_ms": 31202.5597,
+      "status": "passed"
+    },
+    {
+      "test": "XI pricing failure rolls back the full successor graph and receipt; revoked recovery is denied",
+      "duration_ms": 25867.3732,
+      "status": "passed"
+    },
+    {
+      "test": "XI 500-line managed pricing and exact quotation retain the native generic refresh bound",
+      "duration_ms": 48503.4084,
+      "status": "passed"
+    },
+    {
+      "test": "E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original",
+      "duration_ms": 34733.5145,
+      "status": "passed"
+    },
+    {
+      "test": "XI98 populated workbook, managed pricing and quotation upgrade to reviewed FX with exact source, rows, grants and original ledger; reapply is inert",
+      "duration_ms": 24381.4808,
+      "status": "passed"
+    },
+    {
+      "test": "PD upgrade from 99 preserves originals and exact new duties; repeat migration/seed is inert",
+      "duration_ms": 14606.738,
+      "status": "passed"
+    },
+    {
+      "test": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+      "duration_ms": 22939.4113,
+      "status": "passed"
+    }
+  ]
+}

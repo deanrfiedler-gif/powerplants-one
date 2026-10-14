@@ -81,7 +81,7 @@ test("XI96 populated workbook and quotation upgrade to Excel capacity with exact
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [97, 98],
+    [97, 98, 99],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,
