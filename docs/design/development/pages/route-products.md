@@ -10,7 +10,7 @@ Find the exact Family, Model or Variant by UUID, synthetic alias, provider key o
 
 ## Desktop
 
-Design direction after the 14 October alignment review: at 1440 × 900, use the established 240px Sales rail, 64px top bar and 240px secondary menu. Products is selected in the primary rail; catalogue destinations and filters belong in the secondary menu. Place the 60px toolbar and 40px grid rows directly within the workspace, without an enclosing card, outer module padding or oversized page heading. Use shared typography, tokens and controls. The native application still has its earlier card presentation; the corrected [Figma proposal](../../../decisions/products-discovery-proposal.md) is design evidence, not an implementation claim.
+Design direction after the 14 October alignment review: at 1440 × 900, use the established 240px Sales rail, 64px top bar and 240px secondary menu. Products is selected in the primary rail; catalogue destinations and filters belong in the secondary menu. Place the 60px toolbar and 40px grid rows directly within the workspace, without an enclosing card, outer module padding or oversized page heading. Use shared typography, tokens and controls. The authorised catalogue now follows this direction; model/variant rows may grow beyond 40px for readability.
 
 ## Mobile
 
@@ -18,7 +18,7 @@ At 390 × 844, place search below the shared header and show full-width labelled
 
 ## Shared controls and states
 
-Reuse ProductsFrame, ProductContext, TechnicalContent and Comparison; shared Button, Field, SelectField, ValidationFields, ErrorNotice and ReadState; useUnsavedChanges and useRecoverableCommand. Loading, empty, filtered empty, read only, denied/unavailable, validation, stale, saving, unknown, recovered and success remain distinct. No new modal/drawer or drag gesture is introduced. The shell's existing information icon exposes the page-specific draft guide.
+Catalogue reuses SecondaryMenuFrame and RegisterTable; records retain ProductsFrame, ProductContext, TechnicalContent and Comparison; shared Button, Field, SelectField, ValidationFields, ErrorNotice and ReadState; useUnsavedChanges and useRecoverableCommand. Loading, empty, filtered empty, read only, denied/unavailable, validation, stale, saving, unknown, recovered and success remain distinct. Phone/tablet filters use the shared secondary-menu modal; no new modal API or drag gesture is introduced. The shell's existing information icon exposes the page-specific draft guide.
 
 ## Task and handovers
 
@@ -48,4 +48,9 @@ The completion branch preserves the exact selected revision when handing detail 
 
 The [bounded proposal](../../../decisions/products-discovery-proposal.md) compares the inFlow sample discovery pattern with current PPO source. Private **PPO - Design**, page `653:38`, frames `653:46 / 657:371`. [catalogue-1440](../../../reference/ui/products-discovery/alignment-r01/catalogue-1440.png) · [catalogue-390](../../../reference/ui/products-discovery/alignment-r01/catalogue-390.png). The [capture index](../../../reference/ui/products-discovery/README.md) records source identities and hashes; named version and owner acceptance remain pending.
 
-Following Dean's alignment feedback, this proposes a flat desktop catalogue, full-width phone rows, preserved return context, and an exact read-only handover between Products and stock/demand evidence. Existing scope IDs, source authority, permissions and native commands remain intact. The proposed Products layout follows the accepted Leads register and Lead/Project record references; the running native implementation is unchanged. Products stock is currently Not configured; populated panels are fictional proposed states requiring an exact company/provider/item/unit mapping and a scoped read contract. No new stock balance, reservation or readiness calculation is adopted. The state board covers missing/incomplete/older evidence, loading, empty and unavailable reads. No app, guide workflow, shared component implementation, accepted fingerprint or deployment status changes in this contribution.
+Following Dean's alignment feedback, this proposes a flat desktop catalogue, full-width phone rows, preserved return context, and an exact read-only handover between Products and stock/demand evidence. Existing scope IDs, source authority, permissions and native commands remain intact. The proposed Products layout follows the accepted Leads register and Lead/Project record references; the catalogue now implements authorised increment A. Products stock is currently Not configured; populated panels are fictional proposed states requiring an exact company/provider/item/unit mapping and a scoped read contract. No new stock balance, reservation or readiness calculation is adopted. The state board covers missing/incomplete/older evidence, loading, empty and unavailable reads. Catalogue app/guide and consumer bindings change; accepted fingerprints and deployment remain unchanged.
+
+
+## Catalogue increment A
+
+Catalogue uses SecondaryMenuFrame and RegisterTable with flat desktop rows and a full-width phone list. Filters use the existing modal menu on phone/tablet; Escape/Close restores the opener. Back to catalogue and browser Back restore query, selected-row focus and scroll within the same user/company. Historical revision links retain this return context; direct record links return to the plain catalogue. The record retains its native technical layout; populated supply panels remain proposed. [Implementation evidence](../../../testing/evidence/products-discovery/README.md) separates runtime checks from named-version, owner and device acceptance.

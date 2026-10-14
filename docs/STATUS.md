@@ -1,8 +1,9 @@
 # Current prototype status
 
-## Products discovery design proposal — 14 October 2026
+## Products catalogue increment A — 14 October 2026
 
-Dean authorised an inFlow/PPO comparison and desktop/mobile mockups, with REA only if necessary. The [proposal](decisions/products-discovery-proposal.md) recommends catalogue discovery/return-context improvements first, then a separately scoped read-only stock/demand handover once exact source mapping and permissions are proved. After Dean identified a mismatch with PPO's established pages, the six editable Figma screens were corrected against accepted Leads, Project and Job pack references: no enclosing module cards, compact toolbar/grid, established navigation and full-width phone rows. A state board retains the existing evidence rules; [icon-free captures](reference/ui/products-discovery/README.md) and current-source findings are retained. PD-01, SC-05 and parent requirement IDs remain unchanged. REA was not needed or used. Named Figma version is pending because the browser editor reported WebGL unavailable; owner acceptance, app implementation and deployment remain separate. Working page contracts/register record the proposal without refreshing accepted fingerprints.
+Dean authorised proceeding after the Figma alignment correction. The [decision](decisions/products-discovery-proposal.md) records a second read-only inFlow sample journey: name/SKU search plus category, breakdown labels, close and browser Back. REA was unnecessary for this bounded increment and was not run. Native catalogue A adopts flat desktop/phone discovery and scoped query/selection/scroll return with existing search and permissions. Populated supply/demand and receiving/reservations remain separate proposals. [Implementation proof](testing/evidence/products-discovery/README.md) records checks and limits; named version, owner/device acceptance, merge and deployment remain separate. Source snapshots, parent IDs, inventory rules and grants are preserved.
+
 
 ## PR check repairs - 14 October 2026
 

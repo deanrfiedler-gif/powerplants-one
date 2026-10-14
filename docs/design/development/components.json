@@ -599,7 +599,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones."
+          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones. Products host fixture: tests/browser/products-discovery.spec.ts covers filtered, returned, empty, unavailable/recovered and changed-identity states."
         },
         {
           "id": "panel",
@@ -643,7 +643,9 @@
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
         "src/app/styles/job-pack-figma.css",
-        "src/documents/components/client/job-pack-register.tsx"
+        "src/documents/components/client/job-pack-register.tsx",
+        "src/products/components/catalogue-register.tsx",
+        "src/products/components/catalogue-register.css"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -661,7 +663,8 @@
         "scope:SV-05",
         "route:/service/packs",
         "route:/estimating/cpq",
-        "route:/estimating/rules"
+        "route:/estimating/rules",
+        "route:/products"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -721,6 +724,14 @@
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
           "actual": "Actual component fixtures and focused verification include independent packless-visit read states and observation time; owner/device acceptance not recorded. Hosted phone inspection found missing standalone empty-state spacing; the scoped correction and fixture are recorded in the execution evidence.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-products-discovery",
+          "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
+          "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
+          "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3192,7 +3203,7 @@
         {
           "id": "engineering-host",
           "label": "Native Engineering host",
-          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example. Products host fixture: tests/browser/products-discovery.spec.ts covers filtered, returned, empty, unavailable/recovered and changed-identity states."
         },
         {
           "id": "service-phone-identity",
@@ -3326,6 +3337,10 @@
         {
           "path": "src/components/notification-bell.tsx",
           "symbol": "NotificationBell"
+        },
+        {
+          "path": "src/shell/secondary-menu.tsx",
+          "symbol": "SecondaryMenuFrame"
         }
       ],
       "dependencies": [
@@ -3375,7 +3390,9 @@
         "docs/design/projects-register/figma-measurements.json",
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
-        "src/app/styles/job-pack-figma.css"
+        "src/app/styles/job-pack-figma.css",
+        "src/products/components/catalogue-register.tsx",
+        "src/products/components/catalogue-register.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3421,7 +3438,8 @@
         "route:/customers",
         "route:/people",
         "scope:ES-08",
-        "scope:SH-02"
+        "scope:SH-02",
+        "route:/products"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -3617,6 +3635,14 @@
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
           "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-products-discovery",
+          "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
+          "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
+          "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

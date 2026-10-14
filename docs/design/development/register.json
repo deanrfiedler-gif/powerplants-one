@@ -12531,11 +12531,14 @@
         "docs/delivery/products-native-handover.md",
         "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
         "docs/decisions/products-discovery-proposal.md",
-        "docs/reference/ui/products-discovery/README.md"
+        "docs/reference/ui/products-discovery/README.md",
+        "src/products/catalogue-navigation.ts",
+        "src/products/components/catalogue-return.ts",
+        "docs/testing/evidence/products-discovery/README.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Verification in progress; see Products handover",
+      "functional_status": "Verification in progress; see Products discovery evidence",
       "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12551,7 +12554,7 @@
         "scope:EQ-07",
         "scope:EQ-06"
       ],
-      "notes": "14 Oct: Products proposal aligned with accepted Leads/Project/Job pack patterns after owner feedback: flat workspace, compact grid, full-width phone rows and record sections. Current icon-free alignment captures replace initial image pointers; originals retained. Named version, corrected-design acceptance and implementation pending; existing review fingerprints unchanged."
+      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged."
     },
     {
       "key": "route:/products/compatibility",
@@ -12660,11 +12663,18 @@
         "docs/delivery/products-native-handover.md",
         "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
         "docs/decisions/products-discovery-proposal.md",
-        "docs/reference/ui/products-discovery/README.md"
+        "docs/reference/ui/products-discovery/README.md",
+        "src/products/catalogue-navigation.ts",
+        "src/products/components/catalogue-return.ts",
+        "docs/testing/evidence/products-discovery/README.md",
+        "src/products/components/catalogue-register.tsx",
+        "src/products/components/catalogue-register.css",
+        "src/shell/secondary-menu.tsx",
+        "src/components/ui/register-table.tsx"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Verification in progress; see Products handover",
+      "functional_status": "Verification in progress; see Products discovery evidence",
       "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12680,7 +12690,7 @@
         "scope:EQ-07",
         "scope:EQ-06"
       ],
-      "notes": "14 Oct: Products proposal aligned with accepted Leads/Project/Job pack patterns after owner feedback: flat workspace, compact grid, full-width phone rows and record sections. Current icon-free alignment captures replace initial image pointers; originals retained. Named version, corrected-design acceptance and implementation pending; existing review fingerprints unchanged."
+      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged."
     },
     {
       "key": "route:/products/pricing",

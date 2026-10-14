@@ -60,3 +60,7 @@ These bytes are unchanged. They show the initial container/card layout that prom
 | `git diff --check` | Passed. |
 
 These checks provide documentation/design assurance, not business acceptance. Runtime tests are not applicable because no application code or behaviour changed. PR CI is separate from the executed local checks above.
+
+## Subsequent catalogue implementation
+
+The authorised first catalogue increment is tracked in the [decision](../../../decisions/products-discovery-proposal.md) and [runtime evidence](../../../testing/evidence/products-discovery/README.md). These retained Figma images remain design evidence; record/stock/demand drawings are not claims of implemented behaviour. Named version and owner acceptance remain pending.

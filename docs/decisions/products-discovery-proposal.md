@@ -3,14 +3,14 @@ document_id: PPO-PD01-DISCOVERY-PROPOSAL
 title: Products discovery and supply evidence proposal
 date: 2026-10-14
 owner: Dean Fiedler
-status: Design proposal; owner acceptance, named Figma version and implementation pending
+status: Catalogue increment authorised; wider supply proposal and acceptance pending
 source_commit: 65141dc
 versioning: git
 ---
 
 # Products discovery and supply evidence proposal
 
-Dean authorised comparing inFlow with PPO and preparing a prioritised proposal and desktop/mobile mockups. He asked to be told if REA becomes necessary. This contribution delivers that reviewable design package. Dean subsequently requested alignment with the other PPO Figma pages, specifically the general absence of internal module containers; the six mockups have been corrected against the accepted register and record references below. It does not adopt the design as a baseline or implement an application change.
+Dean authorised comparing inFlow with PPO and preparing a prioritised proposal and desktop/mobile mockups. He asked to be told if REA becomes necessary. This contribution delivers that reviewable design package. Dean subsequently requested alignment with the other PPO Figma pages, specifically the general absence of internal module containers; the six mockups have been corrected against the accepted register and record references below. Dean subsequently authorised proceeding with the first catalogue increment. That instruction authorises the bounded implementation below, not visual or business acceptance of the wider supply proposal.
 
 The recommended journey is **find a product → inspect its exact revision → understand stock evidence → open the demand that needs it**. The first delivery should improve the existing catalogue. A following read-only increment can connect the product to Supply Chain once exact identity and permission rules are proved.
 
@@ -19,14 +19,14 @@ The recommended journey is **find a product → inspect its exact revision → u
 | Evidence | What was established | PPO implication |
 |---|---|---|
 | Bounded inFlow account observation, 14 October 2026 | The page explicitly said Products (Sample) and “You're viewing sample data”. The product list showed product/category/SKU/on-hand/retail columns and location, type, category, quantity-range and barcode filter controls. Only the visible controls were inspected; filter semantics were not exhaustively tested. | A compact register makes items easier to compare. PPO must retain its Family/Model/Variant, catalogue revision, publication and lifecycle distinctions. |
-| Observed search and selection | Searching “Circulating” yielded the sample pump, and opening it retained the search and selected item in a narrow list beside the detail. An attempted SKU search produced No results in this session; that is an unresolved observation, not a claim that SKU search is unsupported. | Preserve PPO's existing identity/model/name search and its URL filters. Add a reliable return to the same filtered list and selected record. Do not copy inferred inFlow search rules. |
+| Observed search and selection | Searching “Circulating” yielded the sample pump, and opening it retained the search and selected item in a narrow list beside the detail. The initial SKU attempt showed No results. A second bounded walkthrough confirmed the sample exact SKU returns the pump with its category filter active; close and browser Back both retain the filtered result. The reason for the earlier result is not established. | Preserve PPO's existing identity/model/name search and its URL filters. Add a reliable return to the same filtered list and selected record. Do not copy inferred inFlow search rules. |
 | Observed sample product overview | Product identity, barcode, description, custom fields, location quantity and commercial information were grouped on one record; Overview, Manufacturing, Product vendors, Order history and Movement history tabs were visible. The Order history tab's headings were observed, not a completed order-history journey. | Keep product identity prominent and group technical, supply and history evidence. PPO's commercial permissions and exact revisions still apply. Manufacturing is conditional BP-01 scope, not implied by this sample. |
 | Observed quantity breakdown | The sample modal separately displayed Available, Reserved, On hand, Picked, On order, By manufacture order and In transit. | Adopt explicit labels and drill-down, not an inventory formula. PPO already requires separate stock meanings, location, unit, timestamp and completeness. |
 | Official inFlow documentation | Current-stock reporting, quantity breakdown, mobile workflows, purchase receiving and low-stock reorder features are documented. See the source links below. | Receiving/barcode workflows are useful later candidates. A documented feature is not a verified Powerplants operating rule or an observed account workflow. |
 | PPO source at `65141dc` | `src/products/reads.ts` already searches reference, UUID, provider/entity key, title, manufacturer, model and variant. It supports kind/state/lifecycle filters, a 100-record bound and permission-scoped reads. Product stock is explicitly `NotConfigured`. | Search is an existing capability. Keep the bound visible; do not present displayed count as the full catalogue total. A populated product-stock panel is new work. |
 | PPO source at `65141dc` | `src/products/components/catalogue.tsx` uses cards and retains list filters in the URL; its explicit Back to catalogue link goes to `/products`, without that query. Product detail has exact revision, technical content and retained history. `src/supply/reads.ts` already scopes facts/allocations and keeps readiness evidence distinct. | Refine presentation and return context first. Reuse native Supply Chain authority rather than adding a competing inventory subsystem. |
 
-PPO comparison used the current source and retained native Products/Supply Chain screenshots; a fresh running PPO walkthrough was **not executed**. The dated captures are visual history, not proof of current deployment. The inFlow observation was read-only; no business record was created or changed. No raw account screenshot, private file link or account identifier is included in this repository.
+PPO comparison used the current source and retained native Products/Supply Chain screenshots; a fresh running PPO walkthrough was **not executed during the initial comparison**. Subsequent implementation proof is recorded separately. The dated captures are visual history, not proof of current deployment. The inFlow observation was read-only; no business record was created or changed. No raw account screenshot, private file link or account identifier is included in this repository.
 
 Sources: [inFlow current stock](https://www.inflowinventory.com/support/cloud/current-stock/), [quantity breakdown](https://www.inflowinventory.com/support/cloud/quantity-breakdown/), [mobile guide](https://www.inflowinventory.com/support/cloud/inflow-inventory-mobile-app-full-guide/), [purchase orders and receiving](https://www.inflowinventory.com/support/cloud/how-do-i-create-and-complete-a-purchase-order), [reordering](https://www.inflowinventory.com/support/cloud/is-there-a-way-to-reorder-items-that-are-low-in-stock). PPO authorities: [ADR-0048](ADR-0048-products-native-catalogue.md), [ADR-0049](ADR-0049-native-supply-chain.md), [BP-01 §14](../blueprints/BP-01-master-blueprint.md#14-supply-chain-capability-blueprint) and [BP-08](../blueprints/BP-08-supply-chain.md).
 
@@ -103,8 +103,23 @@ These IDs describe the proposed increment and preserve all parent IDs. They are 
 
 ## REA decision
 
-**REA is not needed for this increment and was not installed or run.** Browser observation, vendor documentation and PPO's source answer the relevant design questions. The unresolved sample SKU-search result does not block PPO: its own search contract is already explicit.
+**REA is not needed for this increment and was not installed or run.** Browser observation, vendor documentation and PPO's source answer the relevant design questions. The follow-up sample walkthrough resolved exact-SKU and return-navigation questions; PPO retains its own search contract.
 
 Use [REA](https://github.com/morluto/rea) only if a specific, necessary browser behaviour remains unexplained after normal observation and documentation—for example, a scan/debounce sequence or a particular partial-receipt transition needed for a later design. First state the unresolved question and why it affects PPO. A bounded passive capture of the relevant origin and one synthetic workflow may then help describe request/event shapes. Keep credentials, raw account responses and private captures outside Git. REA cannot reveal inFlow's server source or turn observed behaviour into an approved PPO operating rule.
 
-The next decision is whether to adopt the first catalogue increment and the direction of the stock/demand view. Save the named Figma version and record Dean's review before treating the drawings as the implementation baseline.
+The first catalogue increment is now authorised. Stock/demand remains proposed. Named version and owner review remain outstanding evidence, not claims implied by implementation.
+
+
+## Authorised catalogue increment A — 14 October 2026
+
+Dean instructed “Proceed based on your recommendations” after the recommendation to verify the sample journey and implement catalogue discovery/return navigation. Increment A reuses the existing React/Next stack, SecondaryMenuFrame, RegisterTable, Field/SelectField and Button. No new technology or dependency is selected. Reproducing inFlow internals is unnecessary because PPO already has search, permissions and evidence rules. Populated stock/demand panels remain increment B, proposed only.
+
+Private PPO - Design nodes `653:46` and `657:371` were read through design context and screenshots. The named version remains pending for the recorded WebGL reason. Work proceeds under Dean's current instruction with exact retained icon-free captures and this explicit limitation; neither the missing version nor owner acceptance is claimed.
+
+The catalogue is full bleed, with desktop filters in the shared secondary menu and phone/tablet filters in its existing modal. Rows retain kind, catalogue revision, publication, lifecycle and model/variant. They can grow beyond the 40px minimum for model/variant readability; phone lifecycle supplements the drawing's shorter subtitle. Exact technical/source revision stays in the record. The shared shell and public fallback icons remain native. Other Products layouts remain native; Back and revision links retain catalogue context.
+
+Existing API filters remain in the URL. One tab-local return entry holds query, selected ID and scroll, scoped to workspace/actor/working company. Invalid or other-scope entries are discarded. No product payload or commercial values are cached. Direct record links return to the plain catalogue. Storage failure falls back to memory for the current document.
+
+Follow-up sample observation: name and exact SKU searches worked with the category filter; detail retained the adjacent list; close and browser Back retained the filtered catalogue. The quantity modal showed separate on-hand, available, reserved, picked, on-order, manufacture-order and in-transit labels. No mutation or inventory formula was tested. No material unanswered inFlow behaviour blocks A; REA was not installed or run. Later receiving/reservation questions may warrant it.
+
+[Implementation evidence](../testing/evidence/products-discovery/README.md) records checks and limits. PD-DISC-01/02/03/08/09 apply to A's catalogue/record boundary. PD-DISC-04–07/10 remain proposed for B. No migration, grant, business transaction, production integration or deployment is included.

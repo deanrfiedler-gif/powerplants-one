@@ -1,0 +1,22 @@
+{
+  "source": "working tree",
+  "observations": [
+    {
+      "width": 390,
+      "count": 22,
+      "overflow": false,
+      "selected_return": true,
+      "scroll_return": 1659
+    },
+    {
+      "width": 320,
+      "count": 22,
+      "overflow": false,
+      "selected_return": true,
+      "scroll_return": 1659
+    }
+  ],
+  "fixture": "synthetic Products discovery",
+  "stock": "NotConfigured",
+  "checks": "explicit return/reload/browser Back, focus/scroll, menu Escape, empty, unavailable recovery, identity reset"
+}
