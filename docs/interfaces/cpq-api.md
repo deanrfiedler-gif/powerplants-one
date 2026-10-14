@@ -134,6 +134,8 @@ To refresh, author/review/activate an explicit successor release, then calculate
 
 Governed schema-4 calculations must use a pricing date in the native binding range 0001-01-01 through 9998-12-31. `CpqCostPricingDateRange` blocks out-of-range results before adoption readiness. This reuses the existing persisted source-binding constraint; it does not change schemas 1–3 or historical result bytes. Source effective/expiry checks still apply independently.
 
+Governed source validity dates also require year 0001 or later (`CpqCostSourceDateRange`), because the native binding guard casts these retained JSON dates to PostgreSQL dates. Year-zero source validity blocks calculation readiness independently of the selected pricing date.
+
 ## Explicit override rebase and receiving resolution — workflow version 1
 
 [Decision](../decisions/cpq-rebase-conflicts.md) and [execution evidence](../testing/evidence/cpq-rebase/README.md) cover this bounded BC-04 / ES-02 / ES-03 increment. The envelope version is independent of definition schemas 1–4. No definition schema, migration, grant, dependency or pricing policy is added. Existing evaluation/result hashes and original-operation payloads remain valid. New legacy adoption attempts also refuse unacknowledged obsolete removals; historical accepted estimates and receipts are unchanged.

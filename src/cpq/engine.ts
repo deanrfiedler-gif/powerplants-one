@@ -116,6 +116,21 @@ export function evaluate(
       "CpqCostPricingDateRange",
       "Governed pricing dates must be between 0001-01-01 and 9998-12-31, matching the native estimate source-binding contract.",
     );
+  if (d.schema_version === 4)
+    for (const part of d.parts) {
+      const content = part.cost_source?.content;
+      if (
+        content &&
+        (content.effective_from < "0001-01-01" ||
+          (content.valid_until !== null && content.valid_until < "0001-01-01"))
+      )
+        add(
+          "CpqCostSourceDateRange",
+          "Governed source validity dates must use year 0001 or later, matching native PostgreSQL date storage.",
+          null,
+          part.key,
+        );
+    }
   const symbols = new Set(
     d.facts
       .filter((f) => ["Decimal", "Integer"].includes(f.type))

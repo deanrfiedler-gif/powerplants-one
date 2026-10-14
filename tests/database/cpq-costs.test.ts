@@ -502,3 +502,37 @@ test("governed dates reject unpersistable runs and accept the native upper date 
     ),
   );
 });
+
+test("a reviewed source with year-zero validity cannot publish a Ready CPQ fixture", async () => {
+  const s = await setup();
+  const source = {
+    ...sourceInput(),
+    content: { ...s.refs[0].content, effective_from: "0000-01-01" },
+  };
+  await createCostSource(s.p, source);
+  const initial = await costRef(s.p, source.id);
+  await decideCostSource(s.p, source.id, {
+    ...crmBase(),
+    expected_version: 1,
+    revision_id: initial.revision_id,
+    action: "Submit",
+  });
+  await decideCostSource(
+    (await createSession("estimating-source-reviewer")).principal,
+    source.id,
+    {
+      ...crmBase(),
+      expected_version: 2,
+      revision_id: initial.revision_id,
+      action: "Reviewed",
+    },
+  );
+  const bad = costDefinition([await costRef(s.p, source.id), s.refs[1]]);
+  const head = await rows("SELECT * FROM ppo.cpq_heads ORDER BY company_id");
+  await assert.rejects(publishCosts(s, bad), code("CpqFixturesFailed"));
+  assert.deepEqual(
+    await rows("SELECT * FROM ppo.cpq_heads ORDER BY company_id"),
+    head,
+  );
+  assert.equal((await readRun(s.p, s.run.id)).content_hash, s.run.content_hash);
+});
