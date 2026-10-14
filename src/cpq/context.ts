@@ -42,6 +42,7 @@ export type Revision = {
   created_by: string;
 };
 export type Binding = {
+  rebase?: import("./rebase-model").RebaseEvidence;
   estimating_workspace_id: string;
   option_id: string;
   revision_id: string;
@@ -141,6 +142,7 @@ export async function run(
   p: Principal,
   id: string,
   edit = false,
+  inspectParent = true,
 ) {
   const r = (
     await c.query<Run>(
@@ -164,7 +166,63 @@ export async function run(
       "CpqEvidenceMismatch",
       "The saved calculation evidence does not match its hash.",
     );
+  if (r.binding.rebase && inspectParent) {
+    const evidence = r.binding.rebase;
+    if (
+      evidence.schema_version !== 1 ||
+      evidence.parent_id !== r.parent_id ||
+      evidence.parent_id === r.id
+    )
+      throw new AppError(
+        409,
+        "CpqEvidenceMismatch",
+        "The retained rebase parent does not match this calculation.",
+      );
+    const parent = await run(c, p, evidence.parent_id, edit, false);
+    if (
+      parent.option_id !== r.option_id ||
+      parent.content_hash !== evidence.parent_content_hash
+    )
+      throw new AppError(
+        409,
+        "CpqEvidenceMismatch",
+        "The exact rebase parent evidence is unavailable.",
+      );
+  }
   return r;
+}
+export function calculationBinding(binding: Binding) {
+  const { rebase: _rebase, ...basis } = binding;
+  void _rebase;
+  return basis;
+}
+export async function adoptionReceiptSources(
+  c: QueryClient,
+  p: Principal,
+  operationId: string,
+  required = false,
+) {
+  const a = (
+    await c.query<{
+      details: {
+        cpq_run_id: string;
+        cpq_resolution?: import("./adoption-resolution").AdoptionResolution;
+      };
+    }>(
+      "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+      [p.workspace_id, p.actor_id, operationId],
+    )
+  ).rows[0];
+  if (!a?.details.cpq_run_id) {
+    if (required) throw unavailable();
+    return;
+  }
+  await run(c, p, a.details.cpq_run_id, true);
+  for (const id of new Set(
+    a.details.cpq_resolution?.retained_cpq_lines.map((l) => l.origin_run_id) ??
+      [],
+  ))
+    await run(c, p, id);
 }
 export async function receiptAuthority(
   c: QueryClient,
@@ -176,15 +234,9 @@ export async function receiptAuthority(
   if (command === "Cpq:Draft") {
     await draftAuthority(c, p, id, true);
   } else if (command === "Cpq:Adopt") {
-    const a = (
-      await c.query<{ details: { cpq_run_id: string } }>(
-        "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
-        [p.workspace_id, p.actor_id, operationId],
-      )
-    ).rows[0];
-    if (!a?.details.cpq_run_id) throw unavailable();
-    await run(c, p, a.details.cpq_run_id, true);
-  } else if (command === "Cpq:Calculate") await run(c, p, id, true);
+    await adoptionReceiptSources(c, p, operationId, true);
+  } else if (command === "Cpq:Calculate" || command === "Cpq:Rebase")
+    await run(c, p, id, true);
   else {
     await release(
       c,

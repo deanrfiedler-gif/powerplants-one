@@ -624,3 +624,5 @@ PPO-CPQ-PRODUCTS-DEC,CPQ exact published Products and estimate provenance,docs/d
 PPO-CPQ-PRODUCTS-EVIDENCE,CPQ published Products execution evidence,docs/testing/evidence/cpq-published-products/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,b100680,,,git,
 PPO-CPQ-COSTS-DEC,CPQ governed product costs and labour rates,docs/decisions/cpq-governed-costs.md,,Implementation authorised; independent review and acceptance separate,Dean Fiedler,5ce7a1a,,,git,
 PPO-CPQ-COSTS-EVIDENCE,CPQ governed costs execution evidence,docs/testing/evidence/cpq-governed-costs/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,5ce7a1a,,,git,
+PPO-CPQ-REBASE-DEC,CPQ explicit rebase and estimate conflict resolution,docs/decisions/cpq-rebase-conflicts.md,,Implementation authorised; independent review and acceptance separate,Dean Fiedler,16c83b0,,,git,
+PPO-CPQ-REBASE-EVIDENCE,CPQ rebase execution evidence,docs/testing/evidence/cpq-rebase/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,16c83b0,,,git,

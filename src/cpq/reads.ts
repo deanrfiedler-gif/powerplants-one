@@ -4,13 +4,21 @@ import { AppError } from "../platform/errors";
 import { hasPermission } from "../platform/permissions";
 import { object, uuid } from "../shared/validation";
 import { workspaceAuthority } from "../estimating/discovery-workspace-context";
-import { active, duty, release, revision, run } from "./context";
+import {
+  active,
+  duty,
+  release,
+  revision,
+  run,
+  calculationBinding,
+} from "./context";
 import { hash } from "./hash";
 import { semanticChanges } from "./semantic-diff";
 import { costLineEvidence } from "./costs";
 import { productLineEvidence } from "./products";
 import { productAuthority } from "../products/context";
 import { estimateContext, versionContext } from "../estimating/context";
+import { verifyAdoption, type Adoption } from "./adoption-evidence";
 
 export async function listReleases(
   p: Principal,
@@ -110,7 +118,7 @@ export const readRun = (p: Principal, id: string) =>
     return {
       ...r,
       evaluation_number: n,
-      binding_hash: hash(r.binding),
+      binding_hash: hash(calculationBinding(r.binding)),
       ...(r.binding.cost_sources
         ? { cost_provenance: costLineEvidence(r) }
         : {}),
@@ -132,12 +140,8 @@ export async function readEstimateProducts(
     await duty(c, p, e.company_id);
     await productAuthority(c, p, e.company_id);
     const adoption = (
-      await c.query<{
-        run_id: string;
-        result_hash: string;
-        lines: import("../estimating/math").CostLine[];
-      }>(
-        "SELECT run_id,result_hash,lines FROM ppo.cpq_adoptions WHERE workspace_id=$1 AND estimate_id=$2 AND estimate_version_id=$3",
+      await c.query<Adoption>(
+        "SELECT * FROM ppo.cpq_adoptions WHERE workspace_id=$1 AND estimate_id=$2 AND estimate_version_id=$3",
         [p.workspace_id, e.id, v.id],
       )
     ).rows[0];
@@ -149,28 +153,31 @@ export async function readEstimateProducts(
         product_provenance: [],
         synthetic: true,
       };
-    const saved = await run(c, p, adoption.run_id);
-    if (
-      adoption.result_hash !== saved.result.result_hash ||
-      hash(adoption.lines) !== hash(saved.result.lines.map((l) => l.line)) ||
-      adoption.lines.some(
-        (line) =>
-          hash(v.lines.find((l) => l.id === line.id) ?? null) !== hash(line),
-      )
-    )
-      throw new AppError(
-        409,
-        "CpqEvidenceMismatch",
-        "The exact estimate adoption does not match its retained calculation.",
-      );
+    const { saved, resolution } = await verifyAdoption(c, p, adoption, v.lines);
+    const retained = [];
+    for (const line of resolution?.retained_cpq_lines ?? []) {
+      const origin = await run(c, p, line.origin_run_id);
+      retained.push({
+        ...line,
+        status: line.retained_line ? "ManualRetained" : "ExplicitlyRemoved",
+        historical_product_provenance: productLineEvidence(origin).filter(
+          (l) => l.line_id === line.line_id,
+        ),
+      });
+    }
     return {
       estimate_id: e.id,
       estimate_version_id: v.id,
-      status: "ExactAdoption" as const,
+      status: resolution
+        ? ("ResolvedAdoption" as const)
+        : ("ExactAdoption" as const),
       run_id: saved.id,
       run_content_hash: saved.content_hash,
       result_hash: saved.result.result_hash,
-      product_provenance: productLineEvidence(saved),
+      product_provenance: productLineEvidence(saved).filter((l) =>
+        adoption.lines.some((a) => a.id === l.line_id),
+      ),
+      ...(resolution ? { resolution, retained_history: retained } : {}),
       synthetic: true,
     };
   });

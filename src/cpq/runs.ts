@@ -18,9 +18,20 @@ import {
 } from "../estimating/cost-basis-service";
 import { acceptedEstimateContext, versionContext } from "../estimating/context";
 import { costingInput } from "../estimating/cost-basis-validation";
-import { arithmeticPolicy, type CostLine } from "../estimating/math";
+import {
+  arithmeticPolicy,
+  calculate as estimateTotals,
+} from "../estimating/math";
 import { scope, parseLines } from "../estimating/validation";
-import { active, duty, run, revision, type Binding, type Run } from "./context";
+import {
+  active,
+  duty,
+  run,
+  revision,
+  calculationBinding,
+  adoptionReceiptSources,
+  type Binding,
+} from "./context";
 import { digest } from "./validation";
 import { boundInput, sourceFacts } from "./source-facts";
 import { calculateIsolated } from "./runner";
@@ -29,8 +40,16 @@ import { costBindings, costLineEvidence } from "./costs";
 import { insertSourceBinding } from "../estimating/sources/bindings";
 import { productBindings, productLineEvidence } from "./products";
 import { saveCalculatedDraft } from "./drafts";
+import { storeRun } from "./run-store";
+import {
+  lineDecisions,
+  reconcileLines,
+  type AdoptionResolution,
+  type LineDecision,
+} from "./adoption-resolution";
+import { verifyAdoption, type Adoption } from "./adoption-evidence";
 
-async function basis(
+export async function basis(
   c: QueryClient,
   p: Principal,
   id: string,
@@ -211,36 +230,13 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
           b.r.input,
         ),
         result = await calculateIsolated(b.head.revision.definition, proposal);
-      const content_hash = hash({
+      const saved = await storeRun(c, p, {
+        ...input,
+        company_id: b.g.company_id,
         binding: b.binding,
-        input: proposal,
+        proposal,
         result,
       });
-      const saved = (
-        await c.query<Run>(
-          `INSERT INTO ppo.cpq_runs(id,workspace_id,company_id,display_number,estimating_workspace_id,option_id,discovery_revision_id,release_revision_id,activation_id,parent_id,binding,input,result,content_hash,state,reason,created_by,updated_by)
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$17) RETURNING *`,
-          [
-            input.id,
-            p.workspace_id,
-            b.g.company_id,
-            null,
-            b.g.id,
-            b.option.id,
-            b.r.id,
-            b.head.revision.id,
-            b.head.id,
-            input.parent_id,
-            b.binding,
-            proposal,
-            result,
-            content_hash,
-            result.ready ? "Ready" : "Blocked",
-            input.reason,
-            p.actor_id,
-          ],
-        )
-      ).rows[0];
       if (input.draft)
         await saveCalculatedDraft(c, p, {
           ...input.draft,
@@ -251,16 +247,7 @@ export async function calculateRun(p: Principal, id: string, value: unknown) {
           run_id: saved.id,
           content: proposal,
         });
-      return {
-        ...saved,
-        audit_details: {
-          content_hash,
-          release_revision_id: b.head.revision.id,
-          discovery_revision_id: b.r.id,
-          parent_id: input.parent_id,
-          result_hash: result.result_hash,
-        },
-      };
+      return saved;
     },
     "CpqRun",
     "CpqChanged",
@@ -317,7 +304,12 @@ export async function evaluatePreview(
     };
   });
 }
-async function receiving(c: QueryClient, p: Principal, id: string) {
+async function receiving(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  decisions: LineDecision[] | null = null,
+) {
   const saved = await run(c, p, id, true);
   const retainedRelease = await revision(c, p, saved.release_revision_id);
   await productBindings(
@@ -341,7 +333,7 @@ async function receiving(c: QueryClient, p: Principal, id: string) {
       "CpqRunBlocked",
       "Resolve this calculation's diagnostics before adopting it.",
     );
-  if (hash(b.binding) !== hash(saved.binding))
+  if (hash(b.binding) !== hash(calculationBinding(saved.binding)))
     throw new AppError(
       409,
       "CpqBasisChanged",
@@ -349,25 +341,39 @@ async function receiving(c: QueryClient, p: Principal, id: string) {
     );
   const previous = b.e
     ? (
-        await c.query<{ lines: CostLine[] }>(
-          "SELECT a.lines FROM ppo.cpq_adoptions a JOIN ppo.estimate_versions v ON (v.workspace_id,v.id)=(a.workspace_id,a.estimate_version_id) WHERE a.workspace_id=$1 AND a.estimate_id=$2 ORDER BY v.version DESC LIMIT 1",
+        await c.query<Adoption>(
+          "SELECT a.* FROM ppo.cpq_adoptions a JOIN ppo.estimate_versions v ON (v.workspace_id,v.id)=(a.workspace_id,a.estimate_version_id) WHERE a.workspace_id=$1 AND a.estimate_id=$2 ORDER BY v.version DESC LIMIT 1",
           [p.workspace_id, b.e.id],
         )
       ).rows[0]
     : null;
-  const owned = previous?.lines ?? [],
-    current = b.saved?.lines ?? [];
-  for (const line of owned) {
-    const present = current.find((l) => l.id === line.id);
-    if (hash(present ?? null) !== hash(line))
-      throw new AppError(
-        409,
-        "CpqOwnedLineChanged",
-        "A previously adopted CPQ line was edited or removed in the estimate. Resolve that change before replacing it.",
-      );
-  }
-  const retained = current.filter((l) => !owned.some((o) => o.id === l.id)),
-    generated = saved.result.lines.map((l) => l.line);
+  const priorEvidence = previous
+    ? await verifyAdoption(
+        c,
+        p,
+        previous,
+        (await versionContext(c, p, b.e!, previous.estimate_version_id)).lines,
+      )
+    : null;
+  const reconciled = reconcileLines(
+    previous
+      ? {
+          ...previous,
+          retained_cpq_lines:
+            priorEvidence?.resolution?.retained_cpq_lines ?? [],
+        }
+      : null,
+    b.saved?.lines ?? [],
+    saved.result.lines.map((l) => l.line),
+    decisions ?? [],
+  );
+  if (decisions === null && reconciled.unresolved.length)
+    throw new AppError(
+      409,
+      reconciled.unresolved[0].code,
+      "Review explicit decisions for changed, removed or obsolete CPQ lines before adoption.",
+    );
+  const { retained, generated } = reconciled;
   if (retained.some((l) => generated.some((g) => g.id === l.id)))
     throw new AppError(
       409,
@@ -382,20 +388,52 @@ async function receiving(c: QueryClient, p: Principal, id: string) {
     );
   // Do not infer an allowance choice for a preserved schema-1 estimate.
   const lines = parseLines([...retained, ...generated], 2);
+  const resolution: AdoptionResolution | null =
+    decisions === null
+      ? null
+      : {
+          schema_version: 1,
+          previous_adoption_id: previous?.id ?? null,
+          estimate_version_id: b.saved?.id ?? null,
+          decisions,
+          retained_cpq_lines: reconciled.retained_cpq_lines,
+          generated_lines_hash: hash(generated),
+          received_lines_hash: hash(lines),
+          conflicts: reconciled.conflicts,
+        };
   const preview_hash = hash({
     run_id: saved.id,
     result_hash: saved.result.result_hash,
     binding: b.binding,
     lines,
+    ...(resolution ? { resolution } : {}),
   });
-  return { saved, b, lines, generated, retained, preview_hash };
+  return {
+    saved,
+    b,
+    lines,
+    generated,
+    retained,
+    preview_hash,
+    resolution,
+    unresolved: reconciled.unresolved,
+    conflicts: reconciled.conflicts,
+  };
 }
-export async function previewAdoption(p: Principal, id: string) {
+export async function previewAdoption(
+  p: Principal,
+  id: string,
+  value?: unknown,
+) {
+  const decisions =
+    value === undefined
+      ? null
+      : lineDecisions(object(value, ["decisions"]).decisions);
   return transaction(async (c) => {
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
-    const r = await receiving(c, p, id);
+    const r = await receiving(c, p, id, decisions);
     return {
       run_id: id,
       result_hash: r.saved.result.result_hash,
@@ -403,11 +441,32 @@ export async function previewAdoption(p: Principal, id: string) {
       binding: r.b.binding,
       retained_lines: r.retained,
       generated_lines: r.generated,
+      ...(r.resolution
+        ? {
+            resolution: r.resolution,
+            unresolved: r.unresolved,
+            ready: r.unresolved.length === 0,
+            received_lines: r.lines,
+            totals: {
+              before: r.b.saved ? estimateTotals(r.b.saved.lines) : null,
+              calculated: r.saved.result.totals,
+              receiving: estimateTotals(r.lines),
+            },
+          }
+        : {}),
       ...(r.saved.binding.products
-        ? { product_provenance: productLineEvidence(r.saved) }
+        ? {
+            product_provenance: productLineEvidence(r.saved).filter((l) =>
+              r.generated.some((g) => g.id === l.line_id),
+            ),
+          }
         : {}),
       ...(r.saved.binding.cost_sources
-        ? { cost_provenance: costLineEvidence(r.saved) }
+        ? {
+            cost_provenance: costLineEvidence(r.saved).filter((l) =>
+              r.generated.some((g) => g.id === l.line_id),
+            ),
+          }
         : {}),
       milestone_proposals: r.saved.result.explanation?.milestones ?? [],
       title: r.b.saved?.title ?? null,
@@ -424,6 +483,7 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
       "estimate_id",
       "title",
       "scope",
+      "resolution",
     ]),
     input = {
       ...common(r),
@@ -433,6 +493,15 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
       estimate_id: uuid(r.estimate_id, "estimate_id"),
       title: label(r.title, "title", 200),
       scope: scope(r.scope),
+      ...(r.resolution === undefined
+        ? {}
+        : {
+            resolution: {
+              decisions: lineDecisions(
+                object(r.resolution, ["decisions"]).decisions,
+              ),
+            },
+          }),
     };
   return sharedOperation(
     p,
@@ -446,9 +515,21 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
         input.estimate_id,
         input.operation_id,
       );
+      await adoptionReceiptSources(c, p, input.operation_id);
     },
     async (c) => {
-      const x = await receiving(c, p, input.id);
+      const x = await receiving(
+        c,
+        p,
+        input.id,
+        input.resolution?.decisions ?? null,
+      );
+      if (x.unresolved.length)
+        throw new AppError(
+          409,
+          "CpqLineDecisionsRequired",
+          "Resolve every changed or obsolete line before adopting.",
+        );
       if (
         x.preview_hash !== input.preview_hash ||
         x.saved.result.result_hash !== input.result_hash
@@ -481,7 +562,7 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
         x.generated.map((l) => l.id),
       );
       for (const line of x.saved.result.lines)
-        if (line.cost_source)
+        if (line.cost_source && x.generated.some((g) => g.id === line.line.id))
           await insertSourceBinding(
             c,
             p,
@@ -511,12 +592,21 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
           cpq_result_hash: x.saved.result.result_hash,
           cpq_release_revision_id: x.saved.release_revision_id,
           ...(x.saved.binding.products
-            ? { cpq_product_provenance: productLineEvidence(x.saved) }
+            ? {
+                cpq_product_provenance: productLineEvidence(x.saved).filter(
+                  (l) => x.generated.some((g) => g.id === l.line_id),
+                ),
+              }
             : {}),
           ...(x.saved.binding.cost_sources
-            ? { cpq_cost_provenance: costLineEvidence(x.saved) }
+            ? {
+                cpq_cost_provenance: costLineEvidence(x.saved).filter((l) =>
+                  x.generated.some((g) => g.id === l.line_id),
+                ),
+              }
             : {}),
           cpq_milestone_proposals: x.saved.result.explanation?.milestones ?? [],
+          ...(x.resolution ? { cpq_resolution: x.resolution } : {}),
         },
       };
     },
