@@ -7135,7 +7135,10 @@
       "design_path": "docs/design/development/pages/route-sales-opportunities.md",
       "html_path": "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
       "image_paths": [
-        "docs/testing/evidence/department-navigation/sales-deals-populated.png"
+        "docs/testing/evidence/department-navigation/sales-deals-populated.png",
+        "docs/testing/evidence/deals-figma/board.png",
+        "docs/testing/evidence/deals-figma/list.png",
+        "docs/testing/evidence/deals-figma/phone.png"
       ],
       "dependencies": [
         "src/components/crm-insights.tsx",
@@ -7153,7 +7156,8 @@
       "related_keys": [
         "scope:CR-04"
       ],
-      "reviewer": null
+      "reviewer": null,
+      "notes": "Figma Deals proposal uses the user-supplied r37, preserving the runtime r38 baseline. The 14 October user-directed polish matches the supplied stage/card screenshot, removes the extra module container and reuses accepted Leads grid components. A further pass aligns 8px gutters and whole-pixel card bounds, makes 1px borders crisp and fixes final-card clipping. Six editable views and evidence are linked from the design contract; owner acceptance and runtime alignment remain pending."
     },
     {
       "key": "route:/schedule",
