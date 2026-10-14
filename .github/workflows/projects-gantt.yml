@@ -14,6 +14,7 @@ on:
       - "scripts/database.ts"
       - "scripts/migration-registry.ts"
       - "scripts/projects-restart-proof.ts"
+      - "scripts/prove-project-commercial-restart.ts"
       - "scripts/build-projects-ui-review.mjs"
       - "tests/**/projects*"
       - "tests/**/project-*"
@@ -77,7 +78,7 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and selectors
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/projects-register.test.ts tests/database/project-baselines.test.ts tests/database/project-programme.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/sales-delivery-binding.test.ts tests/database/desktop-shell.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/projects-gantt.test.ts tests/database/projects-register.test.ts tests/database/project-baselines.test.ts tests/database/project-programme.test.ts tests/database/project-raid.test.ts tests/database/project-overview.test.ts tests/database/sales-delivery-binding.test.ts tests/database/desktop-shell.test.ts tests/database/project-commercial.test.ts tests/database/project-commercial-upgrade.test.ts
       - name: Compiled Projects receiving, overview, RAID and Activity handovers
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -89,6 +90,36 @@ jobs:
             sleep 1
           done
           node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-raid.test.ts tests/http/project-overview.test.ts tests/http/project-programme.test.ts
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/project-commercial.test.ts
+      - name: Commercial exact evidence across real database and application restarts
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/project-commercial-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/prove-project-commercial-restart.ts write /tmp/ppo-commercial-checkpoint.json
+          kill "$server"
+          wait "$server" || true
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/project-commercial-restarted.log 2>&1 &
+          server=$!
+          for attempt in $(seq 1 60); do
+            curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          mkdir -p verification-evidence/project-commercial
+          node --env-file=.env.local --import tsx scripts/prove-project-commercial-restart.ts verify /tmp/ppo-commercial-checkpoint.json > verification-evidence/project-commercial/restart.json
       - name: Original operation across PostgreSQL and application-process restarts
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -115,6 +146,7 @@ jobs:
             verification-evidence/projects-ui-tests
             verification-evidence/projects-browser
             verification-evidence/projects-restart/result.json
+            verification-evidence/project-commercial/restart.json
             !**/trace.zip
           if-no-files-found: ignore
           retention-days: 14

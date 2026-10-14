@@ -2142,7 +2142,9 @@
       "summary": "Implement contract obligations, notices, variations, disputed changes, dates and evidence.",
       "path": "/projects/commercial",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "docs/contracts/project-commercial-controls.md",
+        "docs/contracts/project-commercial-finance-definitions.md"
       ],
       "guide_key": "guide.pj.05",
       "design_path": "docs/design/development/pages/scope-pj-05.md",
@@ -2151,7 +2153,7 @@
       "dependencies": [],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded commercial backend verified locally; native page controls remain unbuilt",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -4272,7 +4274,9 @@
       "summary": "Implement measure definitions, mappings, approvals and reconciliation review.",
       "path": "/finance/definitions",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "docs/contracts/project-commercial-controls.md",
+        "docs/contracts/project-commercial-finance-definitions.md"
       ],
       "guide_key": "guide.fn.06",
       "design_path": "docs/design/development/pages/scope-fn-06.md",
@@ -4281,7 +4285,7 @@
       "dependencies": [],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Bounded commercial backend verified locally; native page controls remain unbuilt",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

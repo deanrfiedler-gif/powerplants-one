@@ -57,6 +57,7 @@ import { acceptedEstimateContext, quoteContext } from "../estimating/context";
 import { discoveryReceiptAuthority } from "../estimating/discovery-workspace-context";
 import { authoriseProjectReceipt } from "../projects/service";
 import { raidReceiptAuthority } from "../projects/raid";
+import { commercialReceiptAuthority } from "../projects/commercial/context";
 import { reportContext, ownReport } from "../reports/context";
 import {
   fieldContext,
@@ -88,7 +89,13 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "TemplateUseAssignment") {
+  if (r.object_type === "ProjectCommercialRecord") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      await commercialReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "TemplateUseAssignment") {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
       const { receiptAuthority } = await import("../documents/use/service");
