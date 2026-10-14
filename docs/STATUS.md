@@ -1,5 +1,11 @@
 # Current prototype status
 
+## Remaining PR merge and Search test readiness - 14 October 2026
+
+Current repository writer: the user-authorised repair/merge session on `codex/fix-pr485-oct14`. PR #483 merged the remaining eight original contributions after 59 checks passed; #476/#477 were already merged. PR #484 then merged after 57 checks passed. Each retained one optional comparison skip and satisfied all seven protected-main contexts. Design/business acceptance and deployment remain separate.
+
+PR #485's compiled desktop run exposed the shared Search keyboard test asserting results while the original read was still pending. The Search implementation is unchanged by that PR. A six-second delayed response reproduced the exact five-second visibility failure locally; waiting for that original successful response and completed body, as the adjacent geometry proof already does, passed the complete journey on desktop and mobile. The delayed first response remains in the test. No read is retried, no assertion or deadline is removed, and application behaviour is unchanged. The compiled build passed; fresh combined CI gates the repaired follow-up.
+
 ## Excel verified quotation continuation — 14 October 2026
 
 Dean authorised Step 5 in [PR #485](https://github.com/deanrfiedler-gif/powerplants-one/pull/485) on `codex/excel-import-quotation-backend`, continuing revised-workbook PR #484. The [decision](decisions/excel-import-quotation-backend.md) and [API/workflow](contracts/excel-import-quotation.md) add exact imported-version quotation review, explicit retained-line choices, include/print reconciliation and separately confirmed customer wording. One native Draft, render job, immutable review evidence and recoverable operation commit atomically. The existing customer-safe template and output recovery are reused without a migration or new grant. Local proof passed: 102 units and 29 database cases initially; after integrating the updated PR #484 parent, 105 units, eight focused database cases, all five compiled HTTP cases, real browser/PDF checks and exact application/PostgreSQL restart recovery passed again. [Execution evidence](testing/evidence/excel-import-quotation/README.md) records validation separately from CI and acceptance. Native import controls, operational workbook readiness, commercial issue/approval and deployment remain open.
