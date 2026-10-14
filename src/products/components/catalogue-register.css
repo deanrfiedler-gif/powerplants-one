@@ -228,4 +228,7 @@
   padding: 24px 16px;
 }
 
-#ppo-products[data-catalogue] .ppo-register td:first-child{white-space:normal;overflow-wrap:anywhere}
+#ppo-products[data-catalogue] .ppo-register td:first-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

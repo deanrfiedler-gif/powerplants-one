@@ -30,7 +30,9 @@ test("PD paired source and native controls retain scoped layout, keyboard disclo
   page,
   context,
 }, info) => {
-  const evidence = process.env.PPO_PRODUCTS_EVIDENCE ?? "docs/testing/evidence/products-native";
+  const evidence =
+    process.env.PPO_PRODUCTS_EVIDENCE ??
+    "docs/testing/evidence/products-native";
   await mkdir(evidence, { recursive: true });
   const f = await productFixture();
   const sourcePage = await context.newPage();
@@ -340,7 +342,9 @@ test("PD all five compiled native pages: exact identities, phone reflow, keyboar
     }),
   });
   await login(page, f.author.token);
-  const evidence = process.env.PPO_PRODUCTS_EVIDENCE ?? "docs/testing/evidence/products-native";
+  const evidence =
+    process.env.PPO_PRODUCTS_EVIDENCE ??
+    "docs/testing/evidence/products-native";
   await mkdir(evidence, { recursive: true });
   const paths = [
     ["catalogue", "/products"],
@@ -360,7 +364,10 @@ test("PD all five compiled native pages: exact identities, phone reflow, keyboar
     });
     for (const [name, path] of paths) {
       await page.goto(path);
-      if (name === "catalogue") await expect(page.getByRole("region", { name: "Products", exact: true })).toBeVisible();
+      if (name === "catalogue")
+        await expect(
+          page.getByRole("region", { name: "Products", exact: true }),
+        ).toBeVisible();
       else await expect(page.locator(".pd-workspace h1")).toBeVisible();
       await expect(page.getByText("Loading permitted records…")).toHaveCount(0);
       await expect(page.locator("#ppo-products")).not.toContainText(
@@ -376,7 +383,8 @@ test("PD all five compiled native pages: exact identities, phone reflow, keyboar
         await expect(page.getByText("Expired", { exact: true })).toHaveCount(1);
       }
       await expect(page.locator('#ppo-products [role="alert"]')).toHaveCount(0);
-      if (name !== "catalogue") await page.locator(".pd-workspace h1").scrollIntoViewIfNeeded();
+      if (name !== "catalogue")
+        await page.locator(".pd-workspace h1").scrollIntoViewIfNeeded();
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth + 1,
@@ -396,7 +404,10 @@ test("PD all five compiled native pages: exact identities, phone reflow, keyboar
   await expect(
     page.getByLabel("Search exact identity, model or name"),
   ).toHaveValue("impossible-filter");
-  await page.locator(".ppo-register-empty").getByRole("button", { name: "Clear filters" }).click();
+  await page
+    .locator(".ppo-register-empty")
+    .getByRole("button", { name: "Clear filters" })
+    .click();
   await expect(page).toHaveURL(/\/products$/);
   await page.goto(`/products/${f.variant.id}`);
   await expect(page.getByText("NotApplicable", { exact: false })).toBeVisible();

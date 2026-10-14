@@ -36,15 +36,18 @@ function save(value: CatalogueReturn | null) {
 export function useCatalogueReturn() {
   const identity = useIdentity(),
     shell = useShell();
-  const scope = `${identity.workspace_id}:${identity.actor_id}:${shell.context?.working_company_id ?? "all"}`;
+  const scope = shell.context
+    ? `${identity.workspace_id}:${identity.actor_id}:${shell.context.working_company_id ?? "all"}`
+    : null;
   const raw = useSyncExternalStore(subscribe, snapshot, () => null);
-  const value = readCatalogueReturn(raw, scope);
+  const value = scope ? readCatalogueReturn(raw, scope) : null;
   useEffect(() => {
-    if (raw && !readCatalogueReturn(raw, scope)) save(null);
+    // An unresolved shell context is not the All companies choice.
+    if (scope && raw && !readCatalogueReturn(raw, scope)) save(null);
   }, [raw, scope]);
   return {
     value,
     remember: (entry: Omit<CatalogueReturn, "scope">) =>
-      save({ ...entry, scope }),
+      scope ? save({ ...entry, scope }) : undefined,
   };
 }

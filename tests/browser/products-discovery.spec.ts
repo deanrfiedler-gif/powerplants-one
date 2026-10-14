@@ -6,6 +6,8 @@ import {
   productContentFixture,
 } from "../helpers/products";
 import { createProduct } from "../../src/products/commands";
+import { chooseWorkingCompany } from "../../src/shell/company";
+import { CRM } from "../helpers/crm";
 import { closeDatabase } from "../../src/platform/database";
 
 test.beforeAll(() => {
@@ -16,6 +18,7 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
   page,
 }, info) => {
   const f = await productFixture();
+  await chooseWorkingCompany(f.author.p, { company_id: CRM.company });
   const marker = `SYN Discovery ${f.variant.id.slice(0, 8)}`;
   for (let i = 0; i < 22; i++)
     await createProduct(
@@ -28,22 +31,23 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
         }),
       }),
     );
-  await page
-    .context()
-    .addCookies([
-      {
-        name: "ppo_local_session",
-        value: f.author.token,
-        url: process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000",
-      },
-    ]);
+  await page.context().addCookies([
+    {
+      name: "ppo_local_session",
+      value: f.author.token,
+      url: process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000",
+    },
+  ]);
   const evidence = "docs/testing/evidence/products-discovery";
   await mkdir(evidence, { recursive: true });
   const observations = [];
   for (const width of info.project.name.includes("desktop")
     ? [1440, 1024]
     : [390, 320]) {
-    await page.setViewportSize({ width, height: width === 1024 ? 768 : width <= 780 ? 844 : 900 });
+    await page.setViewportSize({
+      width,
+      height: width === 1024 ? 768 : width <= 780 ? 844 : 900,
+    });
     await page.goto(
       `/products?q=${encodeURIComponent(marker)}&kind=Variant&state=Draft&lifecycle=Supported`,
     );
@@ -62,17 +66,35 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
     }
     await page.screenshot({ path: `${evidence}/catalogue-${width}.png` });
     if (width === 1440) {
-      await page.getByLabel("Record kind", { exact: true }).selectOption("Model");
-      await expect(page.getByText("No products match these filters", { exact: true })).toBeVisible();
-      await page.getByLabel("Record kind", { exact: true }).selectOption("Variant");
+      await page
+        .getByLabel("Record kind", { exact: true })
+        .selectOption("Model");
+      await expect(
+        page.getByText("No products match these filters", { exact: true }),
+      ).toBeVisible();
+      await page
+        .getByLabel("Record kind", { exact: true })
+        .selectOption("Variant");
       await expect(rows).toHaveCount(22);
-      await page.getByLabel("Publication state", { exact: true }).selectOption("Published");
-      await expect(page.getByText("No products match these filters", { exact: true })).toBeVisible();
-      await page.getByLabel("Publication state", { exact: true }).selectOption("Draft");
+      await page
+        .getByLabel("Publication state", { exact: true })
+        .selectOption("Published");
+      await expect(
+        page.getByText("No products match these filters", { exact: true }),
+      ).toBeVisible();
+      await page
+        .getByLabel("Publication state", { exact: true })
+        .selectOption("Draft");
       await expect(rows).toHaveCount(22);
-      await page.getByLabel("Lifecycle", { exact: true }).selectOption("Retired");
-      await expect(page.getByText("No products match these filters", { exact: true })).toBeVisible();
-      await page.getByLabel("Lifecycle", { exact: true }).selectOption("Supported");
+      await page
+        .getByLabel("Lifecycle", { exact: true })
+        .selectOption("Retired");
+      await expect(
+        page.getByText("No products match these filters", { exact: true }),
+      ).toBeVisible();
+      await page
+        .getByLabel("Lifecycle", { exact: true })
+        .selectOption("Supported");
       await expect(rows).toHaveCount(22);
     }
     const row = rows.nth(18),
@@ -89,7 +111,16 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
         exact: true,
       }),
     ).toBeVisible();
+    // Slow shell context must not be mistaken for All companies and erase return state.
+    await page.route("**/api/v1/shell/context", async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await route.continue();
+    });
     await page.reload();
+    await expect(
+      page.getByRole("link", { name: "Back to catalogue", exact: true }),
+    ).toHaveAttribute("href", /q=SYN/);
+    await page.unroute("**/api/v1/shell/context");
     await page
       .getByRole("link", { name: "Back to catalogue", exact: true })
       .click();
@@ -175,16 +206,27 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
   await page.unroute("**/api/v1/products?*");
   await page.getByRole("button", { name: "Retry loading" }).click();
   await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
-  // A different identity cannot inherit the prior selection or return projection.
+  await chooseWorkingCompany(f.author.p, { company_id: null });
+  await page.reload();
+  await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
+  await expect(page.locator("[data-selected=true]")).toHaveCount(0);
+  const resetLink = page
+    .locator("[data-product] a")
+    .filter({ visible: true })
+    .first();
+  await resetLink.click();
   await page
-    .context()
-    .addCookies([
-      {
-        name: "ppo_local_session",
-        value: f.technical.token,
-        url: process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000",
-      },
-    ]);
+    .getByRole("link", { name: "Back to catalogue", exact: true })
+    .click();
+  await expect(page.locator("[data-selected=true]").first()).toBeAttached();
+  // A different identity cannot inherit the prior selection or return projection.
+  await page.context().addCookies([
+    {
+      name: "ppo_local_session",
+      value: f.technical.token,
+      url: process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000",
+    },
+  ]);
   await page.reload();
   await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
   await expect(page.locator("[data-selected=true]")).toHaveCount(0);
