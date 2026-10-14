@@ -1,0 +1,19 @@
+{
+  "proof": "PJ05 actual application/PostgreSQL restart",
+  "result": "Passed",
+  "synthetic": true,
+  "retained_tables": 17,
+  "graph_hash": "f1045faf35a0c550d57b3c68089491258971cfcc0ebba6dff63de97bec852743",
+  "adjusted_control_value": "350.10",
+  "original_receipts_recovered": 2,
+  "original_sessions_reused": 2,
+  "replayed_effects": 0,
+  "application_processes": {
+    "before": 19980,
+    "after": 15084
+  },
+  "postgresql_processes": {
+    "before": 21660,
+    "after": 27304
+  }
+}
