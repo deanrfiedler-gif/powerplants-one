@@ -94,6 +94,8 @@ export const migrationFiles = [
   "0090-document-library.sql",
   "0091-output-distribution.sql",
   "0092-template-draft-proposals.sql",
+  // 0093 and 0094 remain reserved by DK-06 publication and controlled use.
+  "0095-excel-import.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -138,7 +140,7 @@ export const seedFiles = [
   [83, "seed-access-teams.sql"],
   [84, "seed-access-review-attestations.sql"],
 ] as const;
-export const latestMigrationVersion = 92;
+export const latestMigrationVersion = 95;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.

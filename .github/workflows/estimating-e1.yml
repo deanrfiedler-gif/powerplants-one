@@ -72,7 +72,7 @@ jobs:
           PY
       - name: E1 PostgreSQL proof
         if: matrix.suite == 'database'
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         if: matrix.suite == 'browser'
         run: npm run build
@@ -101,6 +101,8 @@ jobs:
           done
           node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-workload.test.ts tests/http/estimating-sources.test.ts tests/http/estimating-review.test.ts tests/http/quotation-release.test.ts tests/http/estimating-configuration.test.ts tests/http/cpq.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-import-review.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/excel-import-persistence.test.ts
+          node --env-file=.env.local --import tsx scripts/excel-import-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/estimating-review-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-release-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts write
@@ -133,6 +135,7 @@ jobs:
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/estimating-review-restart.ts verify
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-release-restart.ts verify
           PPO_REQUIRE_RESTART=1 PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts verify
+          node --env-file=.env.local --import tsx scripts/excel-import-restart.ts verify
       - name: Compiled E1 desktop, phone, 320px, uncertain response and long output
         if: matrix.suite == 'browser'
         # Reuse the build verified by HTTP/restart checks. The same assertions
@@ -166,6 +169,7 @@ jobs:
             verification-evidence/estimating-es08-browser/
             verification-evidence/fertigation-browser/
             verification-evidence/fertigation-restart/
+            verification-evidence/excel-import-restart/
             verification-evidence/fertigation-build/
             verification-evidence/fertigation-capacity/
             verification-evidence/fertigation-reports/

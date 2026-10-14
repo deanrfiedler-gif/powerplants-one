@@ -5,6 +5,7 @@ import { spawn } from "node:child_process";
 // They must never reset or inspect that database alongside mutating HTTP files.
 const exclusive = new Set([
   "excel-import-review.test.ts",
+  "excel-import-persistence.test.ts",
   "output-register.test.ts",
   "output-actions.test.ts",
   "template-catalogue.test.ts",

@@ -1,3 +1,4 @@
+import type { QueryClient } from "../../platform/permissions";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
@@ -20,43 +21,53 @@ async function currentTarget(
   return transaction(async (c) => {
     // The native Draft-group guard takes a short row lock. It performs no writes.
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
-    const { g, option, r, targets, e } = await selectedBasis(
-      c,
-      p,
-      uuid(id, "workspace_id"),
-      optionId,
-      revisionId,
-    );
-    if (!r.site_id)
-      throw new AppError(
-        409,
-        "ImportSiteRequired",
-        "This workbook pilot requires a selected Site.",
-      );
-    const target: ReviewTarget = {
-      workspace_id: g.id,
-      company_id: g.company_id,
-      actor_id: p.actor_id,
-      opportunity_id: g.opportunity_id,
-      organisation_id: targets.references.organisation.id,
-      site_id: r.site_id,
-      option_id: option.id,
-      revision_id: r.id,
-      expected_workspace_version: g.version,
-      expected_estimate_version: e?.version ?? 0,
-      estimate_id: e?.id ?? null,
-      estimate_version_id: e?.current_version_id ?? null,
-      content_hash: r.content_hash!,
-      context_hash: targets.context_hash,
-      discovery: targets.compiled.input,
-    };
-    const today = (
-      await c.query<{ today: string }>(
-        "SELECT to_char(clock_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD') AS today",
-      )
-    ).rows[0].today;
-    return { target, basis_hash: reviewHash(target), today };
+    return readReviewTarget(c, p, id, optionId, revisionId);
   });
+}
+
+export async function readReviewTarget(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  optionId: string,
+  revisionId: string,
+) {
+  const { g, option, r, targets, e } = await selectedBasis(
+    c,
+    p,
+    uuid(id, "workspace_id"),
+    optionId,
+    revisionId,
+  );
+  if (!r.site_id)
+    throw new AppError(
+      409,
+      "ImportSiteRequired",
+      "This workbook pilot requires a selected Site.",
+    );
+  const target: ReviewTarget = {
+    workspace_id: g.id,
+    company_id: g.company_id,
+    actor_id: p.actor_id,
+    opportunity_id: g.opportunity_id,
+    organisation_id: targets.references.organisation.id,
+    site_id: r.site_id,
+    option_id: option.id,
+    revision_id: r.id,
+    expected_workspace_version: g.version,
+    expected_estimate_version: e?.version ?? 0,
+    estimate_id: e?.id ?? null,
+    estimate_version_id: e?.current_version_id ?? null,
+    content_hash: r.content_hash!,
+    context_hash: targets.context_hash,
+    discovery: targets.compiled.input,
+  };
+  const today = (
+    await c.query<{ today: string }>(
+      "SELECT to_char(clock_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD') AS today",
+    )
+  ).rows[0].today;
+  return { target, basis_hash: reviewHash(target), today };
 }
 
 export async function prepareExcelReview(
@@ -99,7 +110,29 @@ export async function previewExcelWorkbook(
       "ExcelImportBasisChanged",
       "Review the current selected scope and estimate before uploading this workbook.",
     );
-  const file = object(r.file, ["name", "base64"]);
+  const { bytes, name } = decodeExcelFile(r.file);
+  let book;
+  try {
+    book = await readWorkbook(bytes, name);
+  } catch (error) {
+    if (error instanceof WorkbookRejected)
+      throw new AppError(422, "WorkbookRejected", error.message);
+    throw error;
+  }
+  // Parsing is deliberately outside the transaction; fresh authority must hold
+  // before returning any source/context evidence. No permission snapshot is reused.
+  const after = await currentTarget(p, id, input.option_id, input.revision_id);
+  if (after.basis_hash !== before.basis_hash)
+    throw new AppError(
+      409,
+      "ExcelImportBasisChanged",
+      "The selected scope or estimate changed while reading. Prepare and review the current basis.",
+    );
+  return reviewWorkbook(book, after.target, after.today);
+}
+
+export function decodeExcelFile(value: unknown) {
+  const file = object(value, ["name", "base64"]);
   if (
     typeof file.name !== "string" ||
     !file.name ||
@@ -128,22 +161,5 @@ export async function previewExcelWorkbook(
       "file.base64",
       "Use canonical base64 for one workbook within the 5 MiB limit.",
     );
-  let book;
-  try {
-    book = await readWorkbook(bytes, file.name);
-  } catch (error) {
-    if (error instanceof WorkbookRejected)
-      throw new AppError(422, "WorkbookRejected", error.message);
-    throw error;
-  }
-  // Parsing is deliberately outside the transaction; fresh authority must hold
-  // before returning any source/context evidence. No permission snapshot is reused.
-  const after = await currentTarget(p, id, input.option_id, input.revision_id);
-  if (after.basis_hash !== before.basis_hash)
-    throw new AppError(
-      409,
-      "ExcelImportBasisChanged",
-      "The selected scope or estimate changed while reading. Prepare and review the current basis.",
-    );
-  return reviewWorkbook(book, after.target, after.today);
+  return { bytes, name: file.name };
 }

@@ -1,5 +1,7 @@
 # Excel import review API
 
+**Receiving continuation:** [Durable first-save API](excel-import-persistence.md) accepts exact confirmed proposals. These preview endpoints remain transient and never write an estimate.
+
 <!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler. **Scope:** BC-04 / PPO-010; synthetic preview only. [Decision](../decisions/excel-import-review-backend.md).

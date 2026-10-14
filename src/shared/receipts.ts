@@ -1,3 +1,4 @@
+import { excelReceiptAuthority } from "../estimating/import/retained";
 import { receiptAuthority as templateReceiptAuthority } from "../documents/drafts/context";
 import { receiptAuthority as libraryReceiptAuthority } from "../library/context";
 import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
@@ -281,6 +282,13 @@ export async function readOperation(
     )
       throw unavailable();
   } else if (r.object_type === "Estimate") {
+    if (r.command === "ExcelImport:Commit") {
+      return transaction(async c => {
+        await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
+        await excelReceiptAuthority(c,p,r.record_id,operation_id);
+        return r.result as OperationReceipt;
+      });
+    }
     if (r.command?.startsWith("EstimateReview:")) {
       return transaction(async c => {
         await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);

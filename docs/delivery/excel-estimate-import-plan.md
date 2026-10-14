@@ -9,7 +9,7 @@ versioning: git
 
 # Excel estimate import implementation plan
 
-**Implementation update — 14 October 2026:** Step 2 continues the merged parser through the [validated upload/review backend](../decisions/excel-import-review-backend.md). [Evidence](../testing/evidence/excel-import-review/README.md) separates execution and acceptance. This increment returns a transient review document; Steps 3–5 and native controls remain open.
+**Implementation update — 14 October 2026:** Step 2 delivers the [validated upload/review backend](../decisions/excel-import-review-backend.md). Step 3 continues it with [durable storage and atomic first save](../decisions/excel-import-persistence-backend.md), including authenticated review, exact originals, native estimate/line evidence and original-operation recovery. [Execution evidence](../testing/evidence/excel-import-persistence/README.md) separates delivery from acceptance. Steps 4–6 and native controls remain open.
 
 ## Position in delivery
 

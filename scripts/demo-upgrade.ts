@@ -279,7 +279,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // privileges and three default-denied capabilities. It widens identity/audit
   // constraints using the deferred-identity flush pair. No seed, tester grant,
   // runtime template, policy, existing output or source bytes change.
-  if (latestMigrationVersion !== 92) throw Error("Review the existing-demo upgrade for this release.");
+  // 0095 adds empty, immutable Excel import evidence and line maps. Existing
+  // Estimate identity, receipts, outbox kind and runtime privileges are reused.
+  // No seed, grant, user or source bytes change; 0093/0094 remain reserved.
+  if (latestMigrationVersion !== 95) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
