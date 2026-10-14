@@ -445,6 +445,25 @@ test("explicit removal stays protected until replacement; withdrawal and lost ac
   await adoptRun(s.p, s.original.run.id, first);
   const next = await rebaseSuccessor(s),
     line = next.run.result.lines[0].line;
+  const emptyDecisions = next.run.result.lines.map(({ line }) => ({
+    line_id: line.id,
+    action: "Remove" as const,
+    reason: "SYN attempt to remove every received line",
+  }));
+  const beforeEmpty = await graph();
+  await assert.rejects(
+    previewAdoption(s.p, next.run.id, { decisions: emptyDecisions }),
+    code("CpqReceivingLinesRequired"),
+  );
+  await assert.rejects(
+    adoptRun(
+      s.p,
+      next.run.id,
+      rebaseAdoption(await previewAdoption(s.p, next.run.id), emptyDecisions),
+    ),
+    code("CpqReceivingLinesRequired"),
+  );
+  assert.deepEqual(await graph(), beforeEmpty);
   const decisions = [
     {
       line_id: line.id,

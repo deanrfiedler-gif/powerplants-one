@@ -386,6 +386,15 @@ async function receiving(
       "CpqReceivingLineLimit",
       "Generated and retained costs exceed the native estimate's 100-line limit.",
     );
+  if (
+    retained.length + generated.length === 0 &&
+    (decisions !== null || reconciled.retained_cpq_lines.length > 0)
+  )
+    throw new AppError(
+      409,
+      "CpqReceivingLinesRequired",
+      "A resolved CPQ adoption must retain or receive at least one estimate line.",
+    );
   // Do not infer an allowance choice for a preserved schema-1 estimate.
   const lines = parseLines([...retained, ...generated], 2);
   const resolution: AdoptionResolution | null =
