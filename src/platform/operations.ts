@@ -23,6 +23,9 @@ export type OperationResult = {
   publication_event?: {
     family: string; policy_id: string; policy_version: number;
     policy_hash: string; review_id: string; review_hash: string; population_hash: string; impact_count: number;
+  } | {
+    family: "OUT-09"; publication_type: "TemplateDefinition"; template_id: string; template_version: number;
+    definition_hash: string; review_id: string; proposal_revision_id: string; use_assigned: false;
   };
 };
 export async function lockOperation(

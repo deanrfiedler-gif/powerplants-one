@@ -24,8 +24,11 @@ import { documentStore, digest } from "./store";
 import { type PackSnapshot, rendererVersion } from "./render";
 import {
   completionInstructions,
-  supportedTemplateDefinition,
 } from "./p11-template";
+import { supportedTemplateDefinition } from "./publication/definition";
+import { parseDefinition } from "./publication/definition";
+import { selectedTemplate } from "./use/policy";
+import { bindingAuthority } from "./drafts/context";
 import type { PackInput } from "./validation";
 export const fail = (message: string, code = "PackNotReady"): never => {
   throw new AppError(422, code, message);
@@ -243,20 +246,17 @@ export async function snapshot(
       appointmentId,
     ),
     customer = await visible(c, p, "Organisation", w.customer_id);
-  const template = (
-    await c.query(
-      "SELECT t.*,p.version AS policy_version FROM ppo.pack_templates t JOIN ppo.pack_policy p ON (p.workspace_id,p.template_id)=(t.workspace_id,t.id) WHERE t.workspace_id=$1",
-      [p.workspace_id],
-    )
-  ).rows[0];
+  const template = await selectedTemplate(c, p.workspace_id, a);
   if (
     !template ||
     template.renderer_version !== rendererVersion ||
     template.definition !==
-      (await supportedTemplateDefinition("OUT-09", template.version)) ||
+      (await supportedTemplateDefinition("OUT-09", template.version, template.definition)) ||
     template.content_hash !== digest(template.definition)
   )
     fail("The exact supported template is unavailable.", "TemplateUnavailable");
+  if (template.use_assignment_id)
+    await bindingAuthority(c,p,{...a,family:"OUT-09"},parseDefinition(template.definition).body);
   const sources: PackSnapshot["sources"] = [];
   for (const id of input.source_ids) {
     const s = (
@@ -406,6 +406,8 @@ export async function snapshot(
       hash: template.content_hash,
       policy_version: template.policy_version,
       renderer_version: template.renderer_version,
+      ...(template.version >= 3 ? { definition: template.definition } : {}),
+      ...(template.use_assignment_id ? { use_assignment_id: template.use_assignment_id } : {}),
     },
     recipients: members.map((x) => ({
       assignment_id: x.id,

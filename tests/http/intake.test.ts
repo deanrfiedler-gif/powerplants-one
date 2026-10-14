@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { test } from "node:test";
-const origin = "http://127.0.0.1:3000",
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
   company = "20000000-0000-4000-8000-000000000001",
   site = "70000000-0000-4000-8000-000000000001",
   owner = "30000000-0000-4000-8000-000000000001";

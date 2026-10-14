@@ -597,7 +597,7 @@ test("DK03-C07 populated 0090 upgrade retains all originals and adds only empty 
   );
   assert.deepEqual(
     after.filter((r) => r.version > 90).map((r) => r.version),
-    [91, 92],
+    [91, 92, 93, 94],
   );
   assert.equal(
     (await rows("SELECT count(*) n FROM ppo.output_distribution_attempts"))[0]

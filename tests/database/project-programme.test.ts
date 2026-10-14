@@ -374,7 +374,7 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
   assert.equal((await readBaselines(p, project.id)).latest_revision, 0);
 });
 for (const through of [87, 88])
-test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and ledger through 0092; reseeding and reapplying are inert`, async () => {
+test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and ledger through 0093; reseeding and reapplying are inert`, async () => {
   await database().query(
     await readFile(
       new URL("../../db/migrations/0001-recover.sql", import.meta.url),
@@ -428,7 +428,7 @@ test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and le
   );
   assert.deepEqual(
     after.filter((r) => r.version > through).map((r) => r.version),
-    through === 87 ? [88, 89, 90, 91, 92] : [89, 90, 91, 92],
+    through === 87 ? [88, 89, 90, 91, 92, 93, 94] : [89, 90, 91, 92, 93, 94],
   );
   assert.deepEqual(
     {

@@ -1,0 +1,210 @@
+{
+  "scope": "DK-06 R4 synthetic company/site OUT-09 controlled template use",
+  "original_base_commit": "52f5636706f2ad586f4317f743d096f418a34598",
+  "integrated_parent_commit": "cbcfb1faff50f8a2c1648d6af99e281bce6f9fc7",
+  "verified_code_commit": "ea352848f813f8a02d04c63e31409176e58753c6",
+  "source_hash_basis": "SHA-256 of UTF-8 source with CRLF normalised to LF",
+  "source_sha256": {
+    ".github/workflows/document-library-backend.yml": "2213bac13245feb933613ac9e4aaf1e1fed885bf9c656ddab446350b75586c72",
+    "db/migrations/0094-template-use-assignment.sql": "f9338e8601d6f9db3e420b149810a66defdd059326e0ce2f5a6ed4c9e7e697f2",
+    "docs/design/access-review/capabilities.js": "77a4757175f50e6bef54f2b86ac178956d42c3478081f4a5b160bd5cbb2caf23",
+    "docs/design/access-review/model.js": "99035ac2163b7a8538d66212ff3ce308d3bc79b9bc1336fb332701201f47a515",
+    "docs/design/access-review/workspace.js": "58a74cd5ae66c6874993be3859162a10ed8121e21a447bb64a4d59babcc061fa",
+    "scripts/check-access-review-browser.mjs": "e9e5eac514131a49712a6943654f9cf89d185c355cdaec2dfe6e6f9ee7d19efc",
+    "scripts/check-access-review-model.mjs": "0b8b218c46af280287082c5ba26c7f1979774c9c43d88a3f1b7a0de1b02beaad",
+    "scripts/demo-upgrade.ts": "cfa692bd4203de4ada32f3ed6a89fd64dd5b0ee04fbb05264e9adfc10e8a0d80",
+    "scripts/http-suite.ts": "73f86eceacc862c2b793fb26169c420deea561e8df9ec283c3af6b733bab5af2",
+    "scripts/migration-registry.ts": "8b57de31853105af44d019f3a3ec7a1c11157466778d89650f0aadab1f68767b",
+    "scripts/template-use-restart-proof.ts": "2045c21939cffb3966031faddada0720baeedec0d5bc60e62ba02ca8491a3e54",
+    "src/access/capabilities.ts": "4a09384083cd0bdc863320e76199db36795c03a4ea3204b5a703367c4008decf",
+    "src/app/api/v1/document-template-use-assignments/[id]/route.ts": "08fbd2e5d37abba42205991684738c761c2c33f875afe03ef1d458e93281b08f",
+    "src/app/api/v1/document-template-use-assignments/route.ts": "97c22044277b867b95032f1a541c26423790b0c732d391e34e993fc38883cba8",
+    "src/app/api/v1/document-template-use-policies/route.ts": "485c45b878b3811b4527e83d31a7c0439de7e4c04879029e1a77dbad98414e8b",
+    "src/documents/context.ts": "ec1f8d20f7234056eacd50228758e2c10a7eb27d0c0bc34f4a0937f22f616c62",
+    "src/documents/packs.ts": "643b01cda9bf08e32f87a3a7c95d1e9ca65e26020c241f5690e7879b0f8966e3",
+    "src/documents/template-catalogue.ts": "2dd2934c68913a86e8b027699f42263df4ea0a88c1cbdc92d8cf2f752d6ce28a",
+    "src/documents/use/policy.ts": "51be387e47827f0a9365a03cd8a4564fd9645b2530f6b4566bae43d64773588f",
+    "src/documents/use/service.ts": "4586064fcdc8617a5f27f948e429140f49f508c525490f845ce68648e71928ec",
+    "src/documents/worker.ts": "db3f022e39a19f1d2e4e585c8df0d2d0f7e1433f327e2a34721c7455c75e74c7",
+    "src/platform/permissions.ts": "159678741706c165ada4e4e4fc60eed2356dc38da36c664e38b88c5a28ef7ed4",
+    "src/shared/receipts.ts": "da27fa28e964cac0fae821a8ec10c2ce342680de01e8c2600a91e78ced8785a4",
+    "tests/database/access-application.test.ts": "6d5d01f5b03d7c7c6c1067533a6115ddc9c741ace23ad579172caedc2e43c667",
+    "tests/database/access-local-teams.test.ts": "2425714ce7d7990c49e53bff245465a9a84633796cfed46b9afd59fccf0e4fd1",
+    "tests/database/access-requests.test.ts": "c060d7b23a93e9daad873ff880e6053c6180fc0d9ff451bb0dd158fd78924954",
+    "tests/database/access-review-attestations.test.ts": "185c6110480841d043da314ff94f333f36ba46c5edfb2f6c6a031f4266879d83",
+    "tests/database/access-withdrawal.test.ts": "5ba1888464f01fb0c99f9aec0531aa29992df5e5de0f16a5daae31a3a5e297d3",
+    "tests/database/cpq.test.ts": "e3742470c55c05d195d2e3e45b724c1ac43fe99554cf4ed9ff72448d278305ff",
+    "tests/database/document-library.test.ts": "bcdf0e055770d384080fcbd5d2f158db40e4287306b1bbc80b9f2c68bdb14e5a",
+    "tests/database/estimating-catalogue.test.ts": "ae1a8505d1129dd6197f8b4a7d2200ec38ce63f2c29727ee5c7752b4757e4aa1",
+    "tests/database/field-customer-response.test.ts": "800e954fd18e750863ada8f5d8bd08f47464b78a17bd53d9cd401b1a824d7e91",
+    "tests/database/field-timer-boundaries.test.ts": "97289f762a3bfa4922564cf4c5c000d9fd1d0c1bcdb3e6e04b5b15b1481a6a5a",
+    "tests/database/field.test.ts": "d3d67dca7a7cb556d241eee315440cf7b80cd529e8f2b2918f036d9b9ef930c4",
+    "tests/database/finance-upgrade.test.ts": "52b39d39946acb3ab501bb8a5476418c3346d2e64228badbd30485850b6c911c",
+    "tests/database/leads-amendments.test.ts": "5294f5d8b4c9f324c66136480d44ddde46302360ab54235b3554942d93eed319",
+    "tests/database/leads-projects-integration.test.ts": "89fddf85d70b7856aea771d824d757a69c0edb2f06286446d06a80f9279caf33",
+    "tests/database/offline.test.ts": "04690f4faff2bff140f496647f08b8312eb0d9a7e0f661a5ad8014a3a9ef9160",
+    "tests/database/outcome-sources.test.ts": "7377299aac3e37593b2b89476fcd878af1b24bd981784959b5c48570ecd38fda",
+    "tests/database/output-actions.test.ts": "a5a1d56d8b4ab7d1bc15b5b078d8aa1589d9efff11402aa77a6ef530d2bf7d9b",
+    "tests/database/packs.test.ts": "47f603f03ad8bb9b9757e02cb7c8e70e4d9b0b7dd77618244f2186e721202945",
+    "tests/database/planner.test.ts": "d210d8d01f178ee348253c9534868427049869710bf1d7b36df8f77839770465",
+    "tests/database/policy-persistence.test.ts": "b46f62923f3fb0183ade883c7b86ef6c2f84f01690c632753fc9a14dfdc76c82",
+    "tests/database/products-upgrade.test.ts": "cfb43dc5e32413e9e2c780cbb80f89b9f0d19edf731915f9e301522766296cdd",
+    "tests/database/project-baselines.test.ts": "c3af5fe882b0d5722455b4ca234b8435a8e5e87cd5a63962b95ee4db9d0a49b9",
+    "tests/database/project-programme.test.ts": "06c16fcf140ca774df139ec2b8cff317a1e051b4d361f7d54a7ae48f79a25e4c",
+    "tests/database/project-raid.test.ts": "b2c9bf6e0f3c6f5dbee58ce4db06f6aa88ea21bda2aa70f0d0c74d48ab59edb4",
+    "tests/database/quotation-allocation-shortfall.test.ts": "63680f2df17a2ee1565c083a1604ce5778495200757a95fd4e177d04e2f41b49",
+    "tests/database/quotation-conversion.test.ts": "ab2ba3a649e33b3c63961de5ceb10caadfbee272630ed9b1df4de0338866cdd9",
+    "tests/database/quotation-disposition.test.ts": "42abf68e31d826292fc073bb9a5169e26cde4d9f17887586293e965a681c98ed",
+    "tests/database/quotation-material-resolution.test.ts": "0481b41c6f68ecb704b2dea8b628c84c636cbf3876b30b4700988ea1a92d0e94",
+    "tests/database/quotation-receipt-correction.test.ts": "3079a4cd319b47ded9b49dde2dafdd73c29b4c3bd55429c7d277ace26aeda247",
+    "tests/database/quotation-release.test.ts": "c08e9843d87cf06ca2202cbc503a284f1596fb674920cb3737afe8403b92e55b",
+    "tests/database/quotation-reservation-reconciliation.test.ts": "09893275b83cd4d12fac5b82aeeee93b6f65b00dcbe3fb8aa854414f4f07160a",
+    "tests/database/quotation-response.test.ts": "d15d3a0d29eed668dd5ca4e0274c688f54c4be5252fbbd7f4960ae6afa0ff9d3",
+    "tests/database/quotation-supply-followup.test.ts": "53bd2f792ca668904659c434f2530cef3d597334896e1622a4cf96a4216f6f7e",
+    "tests/database/quotation-task-branch.test.ts": "bc0b646ccdd9d6d04fab0a7c8f75c7d2fac0f3d475ecc2836539dc26ff290479",
+    "tests/database/quotation-task-chain.test.ts": "7ecc08e445b9b39cc7711b6e200c0a3735ba158088fb6ec5c53c71c6dbccad48",
+    "tests/database/quotation-task-dependency.test.ts": "abf9e6d59067a850976e7fa5f61cde1e50359c2106896efa481aa87f6ca6a399",
+    "tests/database/quotation-task-diamond.test.ts": "a6a152c0efee7c33484f3109c0b8e3fabd22130f4552f72f18e3417195f99206",
+    "tests/database/quotation-task-merge.test.ts": "31a91921902a25ae3bbd244f18a8db6ab6fa7e132fe5235f1359e4da78e9ecbd",
+    "tests/database/reports.test.ts": "68b3b87b0ee8345e44f75a6293c0d94f9a674927fc8b7f70a486d5671757a70f",
+    "tests/database/sales-delivery-binding.test.ts": "2d94d23bf581ab14dae57372c1936fb9ffad8ae9a40332765330abe7d0d87c50",
+    "tests/database/sales-estimating-binding.test.ts": "81414eb16d04aff33395693e98028c9747558f098855076264e3f7f49f0a24ca",
+    "tests/database/template-drafts-upgrade.test.ts": "24a00edd0b0b7eebfd1d1d9ca639834b495502b40f8b01b5336cc347c43bae31",
+    "tests/database/template-publication-upgrade.test.ts": "8e6ed6ca79e77f377d026a59b0a85906df266100a7d5fa6d05348640af7b46f0",
+    "tests/database/template-use-upgrade.test.ts": "fea5ee4082c742d9f38c36e21e412d937525a86ed5f501db00fffafbbed3686a",
+    "tests/database/template-use.test.ts": "1bfa699987400fbc671e7953074328775aac529d338109edfff4bdd60b7d6b70",
+    "tests/demo/upgrade.test.ts": "895067f2339e1cefd507ebe9bafdeff477ce5ec2a626ac03d6a73e4d2f3e8f2e",
+    "tests/helpers/template-use.ts": "5d5c3a569183ba541aa9968ace0200696fe40409745c1794c5e644ba333df8bf",
+    "tests/http/template-use.test.ts": "04f4aab4a40101fb41a9996f4242f6623ed519b9b03baf3adcbcfbdbf2425712"
+  },
+  "results": {
+    "integrated_database_run": {
+      "tests": 47,
+      "pass": 46,
+      "fail": 1,
+      "cancelled": 0,
+      "detail": "All six R3 scenarios, six R4 scenarios and populated 0093 R4 upgrade passed. One old pack fixture bypassed required R3 publication and failed before durable storage; the corrected native-publication fixture subsequently passed with its original assertions and explicit StaleSource check."
+    },
+    "initial_populated_upgrades": {
+      "pass": 3,
+      "scope": "R2/R3/R4 before parent integration"
+    },
+    "initial_products_upgrades": {
+      "pass": 3,
+      "starting_versions": [
+        25,
+        93,
+        94
+      ],
+      "scope": "Before parent integration"
+    },
+    "initial_demo_upgrades": {
+      "pass": 5,
+      "fail": 1,
+      "failure": "Statement timeout during reset; unchanged conflicting-ledger and late-rollback cases passed together on retry."
+    },
+    "units": {
+      "tests": 798,
+      "pass": 795,
+      "fail": 3,
+      "cancelled": 0,
+      "scope": "Before parent integration; two additional output-register units pass after integration",
+      "limit": "Same Windows filesystem cases reproduced on unmodified main a333604 during R1; affected sources and tests remain unchanged."
+    },
+    "additional_output_units": {
+      "pass": 2
+    },
+    "build": "Passed on integrated runtime; includes TypeScript",
+    "changed_source_eslint": "Passed, including integrated HTTP runner and repaired pack fixture",
+    "access_model": {
+      "pass": 107,
+      "capabilities": 150
+    },
+    "access_browser": {
+      "pass": 40,
+      "browser": "155.0.8059.40",
+      "browser_channel": "chrome",
+      "html_sha256": "a5361b9f6fe7c807bc181a8a14e188dc2224b169257cbe1e0ee63c4b18ca5edf",
+      "scope": "Automated native browser behaviour; not owner or visual acceptance"
+    },
+    "studio": {
+      "status": "Passed",
+      "entries": 362,
+      "components": 46,
+      "source_routes": 208,
+      "unreviewed": 334,
+      "stale": 28
+    },
+    "final_upgrades": {
+      "pass": 4,
+      "fail": 0,
+      "scope": "Corrected pack template-change regression and populated R2/R3/ES07 upgrades on integrated source"
+    },
+    "integrated_products_upgrades": {
+      "pass": 3,
+      "fail": 0,
+      "starting_versions": [
+        25,
+        91,
+        94
+      ]
+    },
+    "integrated_demo_upgrades": {
+      "pass": 2,
+      "fail": 0,
+      "scope": "Windows CRLF original-ledger preservation and atomic late privilege rollback"
+    },
+    "compiled_http": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "cancelled": 0,
+      "scope": "Library, catalogue, draft, copied-base authority, publication and R4 assignment against the integrated compiled application"
+    },
+    "restart": {
+      "document-library": {
+        "passed": true,
+        "exact_original_bytes_retained": true,
+        "review_and_history_retained": true,
+        "original_receipts_retained": true,
+        "migration_ledger_retained": true
+      },
+      "template-drafts": {
+        "result": "Passed",
+        "scope": "DK-06 R2 exact typed evidence and actor-private original receipts after PostgreSQL and application-process restart",
+        "evidence_hash": "112e8d2ee7840cdd7e539f67bc1cca7581033e28b691b09d76d34c05045a5848",
+        "publication_eligible": false
+      },
+      "template-publication": {
+        "result": "Passed",
+        "scope": "R3 immutable publication and actor-private original recovery after PostgreSQL/process restart",
+        "evidence_hash": "e2509d58283bb7e167826e4eed199e0a0fa021128071524d8fc9571c13d75f87",
+        "use_assigned": false
+      },
+      "template-use": {
+        "result": "Passed",
+        "scope": "R4 exact use policy, immutable assignment, server selection and actor-private recovery after PostgreSQL/process restart",
+        "evidence_hash": "78979fcfe1e441de5a1abfb37d67b133dd2d71e54219390a5281b82083e241e8"
+      }
+    },
+    "documentation": {
+      "foundation": "Passed",
+      "prototype": "Passed",
+      "naming": "Passed",
+      "parent_requirements": 78,
+      "links_checked": 9512,
+      "files_checked": 6009,
+      "document_records": 615,
+      "project_instruction_characters": 7984
+    },
+    "typecheck": "Passed after final pack-fixture correction",
+    "restart_invocation": "PostgreSQL reported ready after a real restart. The Windows shell did not advance from that invocation; all four verifiers were run successfully as separate fresh processes. The idle owned wrapper and isolated server were stopped after verification."
+  },
+  "acceptance": {
+    "independent_review": "Pending",
+    "business_acceptance": "Pending",
+    "native_page": "Unbuilt",
+    "deployment": "Not performed"
+  },
+  "verified_date": "2026-10-14"
+}

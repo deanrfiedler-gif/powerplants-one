@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -12,7 +13,7 @@ import {
   draft,
 } from "../helpers/field";
 import { digest } from "../../src/documents/store";
-const origin = "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 async function session(profile: string) {
   const r = await fetch(origin + "/api/v1/local-session", {
     method: "POST",
@@ -187,7 +188,7 @@ test("P07 real HTTP visit executes start, exact photo transfer, typed evidence, 
   );
 });
 test("P07 persisted start, capture, correction, attachment and draft survive PostgreSQL restart through actual HTTP reads", async () => {
-  const proof = JSON.parse(await readFile("/tmp/ppo-p07-restart.json", "utf8")),
+  const proof = JSON.parse(await readFile(join(process.env.PPO_RESTART_PROOF_DIR ?? "/tmp", "ppo-p07-restart.json"), "utf8")),
     p = await session("assigned-technician");
   const r = await call(p, `my-jobs/${proof.appointment_id}`);
   assert.equal(r.status, 200);

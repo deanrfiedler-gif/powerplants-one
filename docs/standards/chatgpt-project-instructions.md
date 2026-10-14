@@ -100,4 +100,4 @@ PJ: STATUS contracts; Service owns bookings.
 
 [Plan](../delivery/backend-completion-plan.md).
 
-DK: STATUS; native actions; synthetic only; draft review never publishes.
+DK: STATUS. Draft review never publishes; publication never assigns use. R4: scoped OUT-09 only.

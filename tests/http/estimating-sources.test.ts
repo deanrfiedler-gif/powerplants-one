@@ -8,7 +8,7 @@ import { sourceInput } from "../helpers/estimating-sources";
 import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
 
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 after(closeDatabase);

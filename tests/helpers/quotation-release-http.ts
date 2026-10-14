@@ -4,7 +4,7 @@ import { crmCreate, crmDiscovery, crmBase } from "./crm";
 import { estimateInput, quoteCommand } from "./estimating";
 import type { readRelease } from "../../src/estimating/release/reads";
 type Detail = Awaited<ReturnType<typeof readRelease>>;
-export const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+export const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 export async function session(profile: string) {
   const r = await fetch(origin + "/api/v1/local-session", {
     method: "POST",

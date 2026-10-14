@@ -8,6 +8,9 @@ const exclusive = new Set([
   "output-actions.test.ts",
   "template-catalogue.test.ts",
   "template-drafts.test.ts",
+  "template-publication.test.ts",
+  "template-publication-base.test.ts",
+  "template-use.test.ts",
 ]);
 const files = (await readdir(new URL("../tests/http/", import.meta.url)))
   .filter((name) => name.endsWith(".test.ts"))

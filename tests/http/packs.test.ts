@@ -1,7 +1,8 @@
+import { join } from "node:path";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { test } from "node:test";
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const base = () => ({
@@ -86,7 +87,7 @@ test("P06 real issued preview/download/manifest/job/receipt traversal uses curre
   const packs = (await call(coordinator, "packs")).body.items;
   assert.ok(packs.length);
   const { readFile } = await import("node:fs/promises");
-  const proof = JSON.parse(await readFile("/tmp/ppo-p06-restart.json", "utf8"));
+  const proof = JSON.parse(await readFile(join(process.env.PPO_RESTART_PROOF_DIR ?? "/tmp", "ppo-p06-restart.json"), "utf8"));
   // Concurrent HTTP journeys create more packs. Inspect the exact retained
   // restart original, independent of which mutable pack is currently newest.
   assert.ok(packs.some((pack: { id: string }) => pack.id === proof.pack_id));

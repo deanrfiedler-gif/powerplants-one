@@ -11,7 +11,7 @@ import {
 import { productCapabilities } from "../../src/products/model";
 import { crmBase, CRM } from "../helpers/crm";
 import { sourceInput } from "../helpers/estimating-sources";
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 after(closeDatabase);
 async function request(cookie: string, path: string, body?: unknown) {
   return fetch(`${origin}/api/v1/${path}`, {

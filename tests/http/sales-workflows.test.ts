@@ -7,7 +7,7 @@ import { decision } from "../helpers/reports";
 import { base, startInput, draft, entry } from "../helpers/field";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { closeDatabase } from "../../src/platform/database";
-const origin = "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 after(closeDatabase);
 async function session(profile: string) {
   const r = await fetch(`${origin}/api/v1/local-session`, {

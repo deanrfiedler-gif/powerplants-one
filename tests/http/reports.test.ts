@@ -4,7 +4,7 @@ import { randomUUID, createHash } from "node:crypto";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { base, startInput, draft, entry, png } from "../helpers/field";
 import { decision, response } from "../helpers/reports";
-const origin = "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 async function session(profile: string) {
   const r = await fetch(origin + "/api/v1/local-session", {
     method: "POST",

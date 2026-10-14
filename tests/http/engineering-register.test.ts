@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { projectInput } from "../helpers/projects";
 import { engineeringInput, engineeringUpdate } from "../helpers/engineering";
 
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 async function session(profile = "coordinator") {
   const r = await fetch(origin + "/api/v1/local-session", {
     method: "POST",
