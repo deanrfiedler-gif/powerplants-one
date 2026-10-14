@@ -1,0 +1,32 @@
+{
+  "build_source_commit": "e0905c9f336e69fda8cb5a481ca62f60fc09a07b",
+  "main_commit": "b858b58ba36909326b57b2b8986b9d3438de0d09",
+  "build_id": "zI4JlXNvoOOU-1yRIWTll",
+  "application_mode": "compiled",
+  "application_pid_before": 33604,
+  "application_pid_after": 28612,
+  "quality": {
+    "passed": true,
+    "graph_hash": "18b75fd1894dd0601bf388aaa0b85ad954bd75b008fde9f73f0088fa4b9a23ce",
+    "report_hash": "7835d84f8f1b431f5ff4806cb6ba9c6da79675655d034cb7069f73a6c0780234",
+    "original_receipts": 3,
+    "duplicate_effects": 0,
+    "postmaster_before": "2026-10-15 07:53:58.77914+10",
+    "postmaster_after": "2026-10-15 09:10:14.962811+10"
+  },
+  "rebase": {
+    "passed": true,
+    "postmaster_before": "2026-10-15 07:53:58.77914+10",
+    "postmaster_after": "2026-10-15 09:10:14.962811+10",
+    "graph_hash": "35b31816287a28c75c3051f0fda6bf35fc93e0347889956a675ea741ce4003d2",
+    "run_content_hash": "558be8345e92c7e2d96c71187c81246a42b14aa64b1999a1ba8d8eb7c8a63e01",
+    "result_hash": "08bf535fe783607822ef58f178e5b427ec3c7939e22f0f90bf9db7d696e0593b",
+    "rebase_decisions": 2,
+    "receiving_decisions": 2,
+    "retained_histories": 2,
+    "original_receipts": 2,
+    "duplicate_effects": 0,
+    "changed_source_refused": true
+  },
+  "startup_observation": "An initial probe preceded listening; after restart the bounded local readiness loop expired before the application announced listening. Recovery assertions ran successfully after that announcement. No startup, worker or CI deadline was modified; no startup performance acceptance is claimed."
+}

@@ -6,6 +6,8 @@
 
 Local proof passed 44 units, 28 serial database scenarios, six compiled HTTP cases and exact application/PostgreSQL restart recovery. Build, lint and documentation assurance passed. Independent automated runtime review is clean; final-head CI/review remain separate gates. No merge or deployment.
 
+Current-main reconciliation incorporates externally merged PJ-05 #493 / `b858b58` and migration 0101 without changing CPQ runtime files. The combined stack passed 44 units, 36 serial database cases, six compiled HTTP cases and both quality/rebase restart proofs with five original receipts. [Integration evidence](testing/evidence/cpq-quality/README.md#current-main-integration--15-october-2026) preserves exact source, earlier results, variable workload timings and the local startup-probe miss separately. Fresh exact-head CI/review remain required; no PR merge or deployment.
+
 ## CPQ rebase CI continuation — 15 October 2026
 
 [PR #492](https://github.com/deanrfiedler-gif/powerplants-one/pull/492) now targets main after #490/#491 merged externally. Its sole substantive CI failure reproduced on unmodified main: the reports restart proof consumed its download deadline compiling development routes. The focused harness correction uses the already-built application without changing assertion limits. All four local phases and three real PostgreSQL restarts passed; [execution evidence](testing/evidence/cpq-rebase/report-restart-ci.json) preserves exact source and outcomes. Fresh CI and automated review remain separate. The next authorised release quality/impact increment is isolated on `codex/cpq-release-quality`; no merge or deployment is performed.
