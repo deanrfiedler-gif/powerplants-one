@@ -238,11 +238,31 @@ export async function cpqProductHttpScenario() {
       assumptions: "Synthetic verification only",
     },
   };
+  // Abort receipt delivery after the server commits. The client must recover
+  // the original operation, never submit a newly invented adoption identity.
+  const controller = new AbortController();
+  const origin =
+    process.env.PPO_TEST_ORIGIN ??
+    `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
+  const lost = await fetch(`${origin}/api/v1/cpq/runs/${run.id}/adoption`, {
+    method: "POST",
+    headers: {
+      Cookie: cookie,
+      Origin: origin,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(adoption),
+    signal: controller.signal,
+  });
+  assert.equal(lost.status, 201);
+  controller.abort();
+  await assert.rejects(
+    lost.json(),
+    (error: unknown) => (error as Error).name === "AbortError",
+  );
   const adoptionReceipt = await cpqHttp(
     cookie,
-    `cpq/runs/${run.id}/adoption`,
-    adoption,
-    201,
+    `operations/${adoption.operation_id}`,
   );
   const estimate = await cpqHttp<Awaited<ReturnType<typeof readEstimate>>>(
     cookie,

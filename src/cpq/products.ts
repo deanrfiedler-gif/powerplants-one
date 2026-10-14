@@ -113,7 +113,10 @@ export async function productBindings(
         );
       const review = (
         await c.query<
-          Omit<ProductSnapshot["relationship_evidence"][number]["review"], "created_at"> & {
+          Omit<
+            ProductSnapshot["relationship_evidence"][number]["review"],
+            "created_at"
+          > & {
             created_at: Date;
           }
         >(

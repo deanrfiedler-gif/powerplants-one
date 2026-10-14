@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "postmaster_before": "2026-10-14 18:27:56.815056+10",
+  "postmaster_after": "2026-10-14 19:00:00.016545+10",
+  "graph_hash": "2c27e48a999f23215a8ac7272267ec417df4d07a4c275f4358b93262feb276ea",
+  "run_content_hash": "a46cf0b9129253835924cd333f7e1cd3a86b81cf97ac2060715fe881327fc0cc",
+  "result_hash": "119526606f008271d5bb6cf4875826751f90f4d1cca618cf7580e40d8cb5728c",
+  "product_count": 2,
+  "relationship_count": 1,
+  "adopted_product_lines": 1,
+  "original_receipts": 2,
+  "duplicate_effects": 0,
+  "withdrawn_source_refused": true,
+  "application_process_changed": true,
+  "compiled_build_id": "lBGGPG5jANdk00VFVhj3y"
+}
