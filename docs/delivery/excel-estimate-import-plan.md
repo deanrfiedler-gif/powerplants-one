@@ -9,6 +9,8 @@ versioning: git
 
 # Excel estimate import implementation plan
 
+**Implementation update — 14 October 2026:** Step 2 continues the merged parser through the [validated upload/review backend](../decisions/excel-import-review-backend.md). [Evidence](../testing/evidence/excel-import-review/README.md) separates execution and acceptance. This increment returns a transient review document; Steps 3–5 and native controls remain open.
+
 ## Position in delivery
 
 This feature belongs to PPO-010 / BP-04 cost-source work, alongside E3. It does not create P13 or renumber E1–E6. A synthetic upload-to-draft slice can reuse E1 and verified E2 without adopting the later operational FX/landed-cost/approval policies. Formal quote issue remains E4; specialist native configuration remains E5; receiving handover remains E6. [Existing delivery sequence](estimating-implementation-plan.md).

@@ -102,6 +102,6 @@ UI: ui-build-sequence.md; figma-ui-implementation.md. AD-01: access-review-attes
 
 PJ: STATUS contracts; Service owns bookings.
 
-[Plan](../delivery/backend-completion-plan.md).
+[Plan](../delivery/backend-completion-plan.md); Excel preview only.
 
-DK: STATUS; native actions; synthetic only.
+DK: STATUS.

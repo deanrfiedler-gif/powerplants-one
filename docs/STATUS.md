@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Excel import validated upload and review — 14 October 2026
+
+Dean authorised the first BC-04 native Excel receiving increment. The [decision](decisions/excel-import-review-backend.md) and [API contract](contracts/excel-import-review.md) add current E2 target preparation and bounded workbook preview on `codex/excel-import-review-backend`, based on main `65141dc`. The existing parser feeds exact native context/scope checks, typed line validation, independent decimal reconciliation and original row/formula evidence. Current owner/read/edit/source permissions are checked before and after parsing. A successful preview remains ReviewRequired, without durable review or import authority. [Verification](testing/evidence/excel-import-review/README.md) records actual execution separately. No migration, grant, estimate save or source-store write; controlled persistence, re-import, UI, native Excel compatibility, owner acceptance and deployment remain separate.
+
 ## Document PR conflict repair — 13 October 2026
 
 Current repository writer: the user-authorised conflict repair and merge session on `codex/document-integration-oct13`. Dean authorised professional completion of the draft as well as the ready contributions. PR #469 now integrates the original heads of Output Register #468, Output Actions #469 and Template Catalogue #471 with main `5eb55f0` by ancestry. Distribution is renumbered to 0091 with unchanged SQL, after the already-published 0089 CPQ and 0090 Document Library migrations. Historical ledgers, exact new versions, reserved Products installation and hosted-upgrade assertions are extended; original migration bytes and grants are retained.
