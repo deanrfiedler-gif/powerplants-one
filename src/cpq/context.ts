@@ -238,13 +238,13 @@ export async function receiptAuthority(
   } else if (command === "Cpq:Calculate" || command === "Cpq:Rebase")
     await run(c, p, id, true);
   else {
-    await release(
+    const root = await release(
       c,
       p,
       id,
-      command === "Cpq:Save"
+      command === "Cpq:Save" || command === "Cpq:AssessQuality"
         ? "cpq.author"
-        : command === "Cpq:Review"
+        : command === "Cpq:Review" || command === "Cpq:ReviewQuality"
           ? "cpq.review"
           : "cpq.publish",
     );
@@ -256,5 +256,6 @@ export async function receiptAuthority(
     ).rows[0];
     if (!evidence?.details.revision_id) throw unavailable();
     await revision(c, p, evidence.details.revision_id);
+    await (await import("./quality")).qualityReceiptAuthority(c, p, root, operationId);
   }
 }

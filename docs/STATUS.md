@@ -1,5 +1,9 @@
 # Current prototype status
 
+## BC-04 CPQ release quality and impact — 15 October 2026
+
+The [quality decision](decisions/cpq-release-quality.md) adds a bounded, explicitly enrolled publication workflow: immutable exact impact reports, candidate/active regression evidence, observed rule/table coverage, semantic differences and every open CPQ-backed estimate in the company. Independent exact approval and current-basis checks gate activation of enrolled roots; old definitions, historical evidence and legacy publication remain compatible. [API](interfaces/cpq-api.md#release-quality-and-exact-impact-review--workflow-version-1) and [execution evidence](testing/evidence/cpq-quality/README.md) distinguish local proof, CI, automated review and operational acceptance. No migration, grant, dependency, new pricing policy or UI. Separate package/table/book ownership, approved fixture families and representative workload targets remain the next release-quality boundaries; this bounded report does not mark the whole P1 row complete.
+
 ## CPQ rebase CI continuation — 15 October 2026
 
 [PR #492](https://github.com/deanrfiedler-gif/powerplants-one/pull/492) now targets main after #490/#491 merged externally. Its sole substantive CI failure reproduced on unmodified main: the reports restart proof consumed its download deadline compiling development routes. The focused harness correction uses the already-built application without changing assertion limits. All four local phases and three real PostgreSQL restarts passed; [execution evidence](testing/evidence/cpq-rebase/report-restart-ci.json) preserves exact source and outcomes. Fresh CI and automated review remain separate. The next authorised release quality/impact increment is isolated on `codex/cpq-release-quality`; no merge or deployment is performed.
