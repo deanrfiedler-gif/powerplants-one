@@ -1,3 +1,4 @@
 import { previewRoute } from "../../../../../../../../cpq/preview-http";
 import { previewRebase } from "../../../../../../../../cpq/rebase";
-export const POST = previewRoute(previewRebase);
+import { decisionBodyBytes } from "../../../../../../../../cpq/http-limits";
+export const POST = previewRoute(previewRebase, decisionBodyBytes);

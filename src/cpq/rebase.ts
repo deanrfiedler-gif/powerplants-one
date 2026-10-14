@@ -18,9 +18,16 @@ import { rebaseDecisions } from "./rebase-model";
 import { rebaseIsolated } from "./runner";
 import { storeRun } from "./run-store";
 import { hash } from "./hash";
+import { rebaseInputBytes } from "./http-limits";
 
 function proposal(value: unknown) {
   const r = object(value, ["revision_id", "input", "decisions"]);
+  const serialized = JSON.stringify(r.input);
+  if (!serialized || Buffer.byteLength(serialized, "utf8") > rebaseInputBytes)
+    invalid(
+      "input",
+      "Supply calculation input within 64 KiB of serialized UTF-8 JSON.",
+    );
   return {
     revision_id: uuid(r.revision_id, "revision_id"),
     input: r.input,

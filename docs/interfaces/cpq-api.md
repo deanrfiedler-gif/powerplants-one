@@ -42,7 +42,7 @@ Schema-1 release roots retain Draft → Reviewed or Rejected → Published. Desi
 
 Authoritative TypeScript DTOs are `src/cpq/types.ts`; strict semantic validation is `src/cpq/validation.ts`. Executable synthetic examples are `tests/helpers/cpq.ts`. Unknown fields are rejected.
 
-- Definition: schema 1, label, currency AUD, fact dictionary, component/price definitions, material/labour rules, constraints, and at least one independent expected-result fixture. A release is limited to 60 KB; HTTP commands to 64 KiB.
+- Definition: schema 1, label, currency AUD, fact dictionary, component/price definitions, material/labour rules, constraints, and at least one independent expected-result fixture. A release is limited to 60 KB; HTTP commands to 64 KiB except the bounded rebase/receiving decision routes below.
 - Facts: stable lowercase key, meaningful label/unit, Decimal/Boolean/Choice type, explicit required flag, allowed choices. Decimal values are strings. Missing values normalize to null; null never means zero or false. Stable instance UUIDs keep generated target identities across recalculation.
 - Conditions: ALL/ANY with items, NOT with item, or EQ/NE/GT/GTE/LT/LTE with a registered fact and typed literal. Conditions are bounded to eight levels and 100 nodes. Boolean and choice values support EQ/NE only.
 - Parts: key, description, category, unit, resolver, explicit source, validity interval and strictly increasing minimum-quantity price tiers. Validity is checked against the explicit pricing date, not a claim of current market freshness. No live ERP lookup is implied.
@@ -137,6 +137,8 @@ Governed schema-4 calculations must use a pricing date in the native binding ran
 Governed source validity dates also require year 0001 or later (`CpqCostSourceDateRange`), because the native binding guard casts these retained JSON dates to PostgreSQL dates. Year-zero source validity blocks calculation readiness independently of the selected pricing date.
 
 ## Explicit override rebase and receiving resolution — workflow version 1
+
+The four POST rebase/receiving preview and command routes accept at most 512 KiB of UTF-8 JSON, accommodating 100 override or 200 receiving decisions with 500-character reasons. Rebase `input` independently remains limited to 64 KiB of serialized UTF-8 JSON (`InvalidData`, field `input`). Oversized request bodies return `PayloadTooLarge`; other routes retain their existing limits.
 
 [Decision](../decisions/cpq-rebase-conflicts.md) and [execution evidence](../testing/evidence/cpq-rebase/README.md) cover this bounded BC-04 / ES-02 / ES-03 increment. The envelope version is independent of definition schemas 1–4. No definition schema, migration, grant, dependency or pricing policy is added. Existing evaluation/result hashes and original-operation payloads remain valid. New legacy adoption attempts also refuse unacknowledged obsolete removals; historical accepted estimates and receipts are unchanged.
 
