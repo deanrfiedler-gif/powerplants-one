@@ -68,10 +68,18 @@ export async function commandCommercial(
         conflict("KindRetained", "The commercial record kind is permanent.");
       const kind = entry?.kind ?? input.kind!,
         owner = prior?.content.owner_id ?? content!.owner_id;
+      // Creating a basis needs the coordinator; dependent records may also be
+      // created by the existing basis owner. Proposed ownership grants no authority.
+      const recordedOwner =
+        prior?.content.owner_id ??
+        (input.basis_id
+          ? (await history(c, p, input.basis_id, undefined, 1))[0]?.content
+              .owner_id
+          : undefined);
       if (
         input.action !== "Decide" &&
         p.actor_id !== project.coordinator_id &&
-        p.actor_id !== owner
+        p.actor_id !== recordedOwner
       )
         throw unavailable();
       if (prior && content!.owner_id !== owner)

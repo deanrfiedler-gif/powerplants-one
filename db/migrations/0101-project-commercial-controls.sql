@@ -114,6 +114,10 @@ BEGIN
  SELECT * INTO previous FROM ppo.project_commercial_events WHERE workspace_id=e.workspace_id AND entry_id=e.id ORDER BY version DESC LIMIT 1;
  IF p.lifecycle<>'Active' OR NEW.version<>coalesce(previous.version,0)+1 OR NOT EXISTS(SELECT 1 FROM ppo.users WHERE workspace_id=NEW.workspace_id AND id=(NEW.content->>'owner_id')::uuid AND active)
  THEN RAISE EXCEPTION 'Active project, owner and sequential event required' USING ERRCODE='23514'; END IF;
+ IF NEW.command<>'Decide' AND NEW.created_by<>p.coordinator_id AND NEW.created_by IS DISTINCT FROM
+  (CASE WHEN previous.version IS NOT NULL THEN previous.content->>'owner_id'
+   ELSE (SELECT content->>'owner_id' FROM ppo.project_commercial_events WHERE workspace_id=e.workspace_id AND entry_id=e.basis_id ORDER BY version DESC LIMIT 1) END)::uuid
+ THEN RAISE EXCEPTION 'Recorded commercial owner or project coordinator required' USING ERRCODE='23514'; END IF;
  IF previous.version IS NULL THEN
   valid:=NEW.command='Create' AND NEW.created_by=e.created_by AND NEW.state=CASE e.kind WHEN 'Basis' THEN 'Draft' WHEN 'Obligation' THEN 'Open' WHEN 'Notice' THEN 'RecordedEvidence' ELSE CASE WHEN NEW.content->'priced_amount'='null'::jsonb THEN 'Requested' ELSE 'Assessed' END END;
  ELSE
@@ -137,7 +141,7 @@ BEGIN
   IF NOT EXISTS(SELECT 1 FROM ppo.draft_quotes q JOIN ppo.draft_quote_revisions r ON (r.workspace_id,r.quote_id)=(q.workspace_id,q.id)
    WHERE r.workspace_id=e.workspace_id AND r.id=source.quote_revision_id AND q.current_revision_id=r.id AND q.version=(source.snapshot->'input'->'quotation'->>'expected_quote_version')::integer)
    OR NOT EXISTS(SELECT 1 FROM ppo.library_documents d WHERE d.workspace_id=e.workspace_id AND d.id=source.document_id AND d.current_revision_id=source.document_revision_id AND d.state='Current' AND d.version=(source.snapshot->'input'->>'document_version')::integer)
-   OR EXISTS(SELECT 1 FROM ppo.library_findings f WHERE f.workspace_id=e.workspace_id AND f.revision_id=source.document_revision_id AND f.state<>'Closed')
+   OR EXISTS(SELECT 1 FROM ppo.library_findings f WHERE f.workspace_id=e.workspace_id AND f.revision_id=source.document_revision_id AND (f.state<>'Closed' OR NOT EXISTS(SELECT 1 FROM ppo.library_reviews r, jsonb_array_elements(r.findings_snapshot) prior WHERE r.workspace_id=e.workspace_id AND r.id=source.document_review_id AND prior->>'id'=f.id::text)))
    OR NOT EXISTS(SELECT 1 FROM ppo.sales_handovers h JOIN ppo.sales_workflow_events v ON (v.workspace_id,v.record_id)=(h.workspace_id,h.id)
     JOIN ppo.opportunities o ON (o.workspace_id,o.id)=(h.workspace_id,h.opportunity_id)
     WHERE h.workspace_id=e.workspace_id AND h.id=source.handover_id AND h.state='Accepted' AND v.id=source.acceptance_event_id AND h.version=v.version AND h.source_hash=v.source_hash AND o.close_outcome='Won')

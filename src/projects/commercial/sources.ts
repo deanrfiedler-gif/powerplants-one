@@ -98,6 +98,7 @@ export async function inspectSource(
       reviewer_id: string;
       content_hash: string;
       document_version: number;
+      findings_snapshot: { id: string }[];
     }>(
       "SELECT * FROM ppo.library_reviews WHERE workspace_id=$1 AND document_id=$2 AND revision_id=$3 AND id=$4",
       [p.workspace_id, d.id, revision.id, source.document_review_id],
@@ -130,8 +131,15 @@ export async function inspectSource(
       d.version !== source.document_version ||
       (
         await c.query(
-          "SELECT 1 FROM ppo.library_findings WHERE workspace_id=$1 AND revision_id=$2 AND state<>'Closed'",
-          [p.workspace_id, revision.id],
+          `SELECT 1 FROM ppo.library_findings f WHERE workspace_id=$1 AND revision_id=$2
+           AND (state<>'Closed' OR NOT EXISTS (
+             SELECT 1 FROM jsonb_array_elements($3::jsonb) prior WHERE prior->>'id'=f.id::text
+           ))`,
+          [
+            p.workspace_id,
+            revision.id,
+            JSON.stringify(review.findings_snapshot),
+          ],
         )
       ).rowCount
     )

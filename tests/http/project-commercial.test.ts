@@ -8,6 +8,10 @@ import {
   commercialAction,
   variation,
 } from "../helpers/project-commercial";
+import { recordFinding } from "../../src/library/commands";
+import { readDocument } from "../../src/library/reads";
+import { grantLibrary } from "../helpers/library";
+import { crmBase } from "../helpers/crm";
 import { httpAcceptance } from "../helpers/acceptance-http";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
@@ -115,5 +119,61 @@ test("PJ05-HTTP02 schema, exact precision, unknown input, source and cross-compa
   assert.equal(
     (await h.call("coordinator", route + "/finance?as_of=2025")).status,
     422,
+  );
+});
+
+test("PJ05-HTTP03 outdated document reviews and proposed owners cannot grant new authority", async () => {
+  const f = await commercialFixture(),
+    route = `projects/${f.project.id}/commercial`;
+  await grantLibrary(f.reviewer, ["project.commercial.prepare"]);
+  assert.equal(
+    (
+      await h.call("estimating-source-reviewer", route, {
+        ...f.create,
+        content: { ...f.create.content, owner_id: f.reviewer.actor_id },
+      })
+    ).status,
+    404,
+  );
+  const finding_id = randomUUID();
+  for (const [index, action] of ["Open", "Respond", "Accept"].entries()) {
+    await recordFinding(
+      action === "Accept" ? f.reviewer : f.owner,
+      f.document.id,
+      {
+        ...crmBase(),
+        revision_id: f.document.revision_id,
+        expected_version: index + 2,
+        finding_id,
+        action,
+        text: "SYN later finding evidence",
+        ...(action === "Open"
+          ? { owner_id: f.owner.actor_id, due_date: "2031-10-01" }
+          : {}),
+      },
+    );
+  }
+  const document = await readDocument(f.owner, f.document.id);
+  assert.equal(document.review_state, "ReviewOutdated");
+  const query = new URLSearchParams({
+    handover_id: f.handover,
+    quote_revision_id: f.release.id,
+    document_id: f.document.id,
+  });
+  assert.equal(
+    (await h.call("coordinator", `${route}/basis-options?${query}`)).status,
+    409,
+  );
+  assert.equal(
+    (
+      await h.call("coordinator", route, {
+        ...f.create,
+        source: {
+          ...f.create.source,
+          document_version: document.document.version,
+        },
+      })
+    ).status,
+    409,
   );
 });

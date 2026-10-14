@@ -19,7 +19,8 @@ import { readOperation } from "../../src/shared/receipts";
 import { readResponse } from "../../src/estimating/response/reads";
 import { recordResponse } from "../../src/estimating/response/service";
 import { response } from "../helpers/quotation-response";
-import { reviseDocument } from "../../src/library/commands";
+import { recordFinding, reviseDocument } from "../../src/library/commands";
+import { readDocument } from "../../src/library/reads";
 import {
   createActivity,
   activityCommand,
@@ -33,7 +34,7 @@ import {
   variation,
 } from "../helpers/project-commercial";
 import { crmBase } from "../helpers/crm";
-import { successor } from "../helpers/library";
+import { grantLibrary, successor } from "../helpers/library";
 import { raidAction } from "../helpers/project-raid";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
@@ -522,5 +523,173 @@ test("PJ05-07 Finance requires the shared Finance disclosure duty", async () => 
   await assert.rejects(
     readCommercialFinance(f.owner, f.project.id),
     code("RecordUnavailable"),
+  );
+});
+
+test("PJ05-REVIEW01 a closed finding added after review cannot renew current document eligibility", async () => {
+  const f = await commercialFixture();
+  const { saved } = await approvedBasis(f);
+  const finding_id = randomUUID();
+  for (const [index, action] of ["Open", "Respond", "Accept"].entries()) {
+    await recordFinding(
+      action === "Accept" ? f.reviewer : f.owner,
+      f.document.id,
+      {
+        ...crmBase(),
+        revision_id: f.document.revision_id,
+        expected_version: index + 2,
+        finding_id,
+        action,
+        text: "SYN later finding evidence",
+        ...(action === "Open"
+          ? { owner_id: f.owner.actor_id, due_date: "2031-10-01" }
+          : {}),
+      },
+    );
+  }
+  const document = await readDocument(f.owner, f.document.id);
+  assert.equal(document.review_state, "ReviewOutdated");
+  assert.equal(document.unresolved_findings, 0);
+  assert.equal(document.eligible_for_current_use, false);
+  const before = await graph();
+  await assert.rejects(
+    readCommercialOptions(f.owner, f.project.id, {
+      handover_id: f.handover,
+      quote_revision_id: f.release.id,
+      document_id: f.document.id,
+    }),
+    code("CommercialSourceChanged"),
+  );
+  await assert.rejects(
+    commandCommercial(f.owner, f.project.id, {
+      ...f.create,
+      ...commercialAction(randomUUID(), 0, "Create"),
+      source: {
+        ...f.create.source,
+        document_version: document.document.version,
+      },
+    }),
+    code("CommercialSourceChanged"),
+  );
+  // Exercise the SQL guard independently of service validation. Fresh version alone is insufficient.
+  await assert.rejects(
+    transaction(async (c) => {
+      const id = randomUUID();
+      await c.query(
+        "INSERT INTO ppo.project_commercial_entries(id,workspace_id,company_id,project_id,kind,created_by) SELECT $2,workspace_id,company_id,project_id,kind,created_by FROM ppo.project_commercial_entries WHERE id=$1",
+        [f.create.id, id],
+      );
+      await c.query(
+        `INSERT INTO ppo.project_commercial_sources SELECT workspace_id,$2,handover_id,acceptance_event_id,quote_revision_id,issue_id,response_event_id,document_id,document_revision_id,document_review_id,amount,jsonb_set(snapshot,'{input,document_version}',to_jsonb($3::integer)) FROM ppo.project_commercial_sources WHERE basis_id=$1`,
+        [f.create.id, id, document.document.version],
+      );
+      await c.query(
+        "INSERT INTO ppo.project_commercial_events SELECT workspace_id,$2,1,command,state,content,note,disputed,action_snapshot,reason,created_by,clock_timestamp(),$3 FROM ppo.project_commercial_events WHERE entry_id=$1 AND version=1",
+        [f.create.id, id, randomUUID()],
+      );
+    }),
+    /Current exact commercial sources required/,
+  );
+  assert.deepEqual(await graph(), before);
+  const finance = await readCommercialFinance(f.owner, f.project.id);
+  assert.equal(finance.status, "Held");
+  assert.equal(finance.original_control_value, "350.00");
+  assert.equal(finance.adjusted_control_value, null);
+  assert.deepEqual(
+    await readOperation(f.owner, f.create.operation_id),
+    saved.receipt,
+  );
+});
+
+test("PJ05-REVIEW02 creation requires recorded ownership, never a client-selected self assignment", async () => {
+  const f = await commercialFixture();
+  await grantLibrary(f.reviewer, ["project.commercial.prepare"]);
+  const before = await graph();
+  await assert.rejects(
+    commandCommercial(f.reviewer, f.project.id, {
+      ...f.create,
+      content: commercialContent(f.reviewer.actor_id),
+    }),
+    code("RecordUnavailable"),
+  );
+  assert.deepEqual(await graph(), before);
+  await approvedBasis(f);
+  const proposed = {
+    ...variation(f, "10", "9"),
+    content: {
+      ...variation(f, "10", "9").content,
+      owner_id: f.reviewer.actor_id,
+    },
+  };
+  const original = await graph();
+  await assert.rejects(
+    transaction(async (c) => {
+      const id = randomUUID();
+      await c.query(
+        "INSERT INTO ppo.project_commercial_entries(id,workspace_id,company_id,project_id,kind,created_by) SELECT $2,workspace_id,company_id,project_id,kind,$3 FROM ppo.project_commercial_entries WHERE id=$1",
+        [f.create.id, id, f.reviewer.actor_id],
+      );
+      await c.query(
+        "INSERT INTO ppo.project_commercial_sources SELECT workspace_id,$2,handover_id,acceptance_event_id,quote_revision_id,issue_id,response_event_id,document_id,document_revision_id,document_review_id,amount,snapshot FROM ppo.project_commercial_sources WHERE basis_id=$1",
+        [f.create.id, id],
+      );
+      await c.query(
+        "INSERT INTO ppo.project_commercial_events SELECT workspace_id,$2,1,command,state,jsonb_set(content,'{owner_id}',to_jsonb($3::text)),note,disputed,action_snapshot,reason,$3,clock_timestamp(),$4 FROM ppo.project_commercial_events WHERE entry_id=$1 AND version=1",
+        [f.create.id, id, f.reviewer.actor_id, randomUUID()],
+      );
+    }),
+    /Recorded commercial owner or project coordinator required/,
+  );
+  await assert.rejects(
+    commandCommercial(f.reviewer, f.project.id, proposed),
+    code("RecordUnavailable"),
+  );
+  assert.deepEqual(await graph(), original);
+  // The coordinator can assign an eligible owner; that recorded owner can then prepare the record.
+  await commandCommercial(f.owner, f.project.id, proposed);
+  await commandCommercial(
+    f.reviewer,
+    f.project.id,
+    commercialAction(proposed.id, 1, "Submit"),
+  );
+  assert.equal(
+    (await readCommercial(f.reviewer, f.project.id, { id: proposed.id }))
+      .current!.state,
+    "Submitted",
+  );
+  // Owning a variation does not grant authority to create another basis-owned record.
+  await assert.rejects(
+    commandCommercial(f.reviewer, f.project.id, {
+      ...proposed,
+      ...commercialAction(randomUUID(), 0, "Create"),
+    }),
+    code("RecordUnavailable"),
+  );
+});
+
+test("PJ05-REVIEW03 an assigned basis owner can create dependent records with current duties", async () => {
+  const f = await commercialFixture();
+  await grantLibrary(f.reviewer, ["project.commercial.prepare"]);
+  f.create.content.owner_id = f.reviewer.actor_id;
+  await approvedBasis(f);
+  const v = variation(f, "12", "11");
+  v.content.owner_id = f.reviewer.actor_id;
+  await commandCommercial(f.reviewer, f.project.id, v);
+  await commandCommercial(
+    f.reviewer,
+    f.project.id,
+    commercialAction(v.id, 1, "Submit"),
+  );
+  assert.equal(
+    (await readCommercial(f.reviewer, f.project.id, { id: v.id })).current!
+      .state,
+    "Submitted",
+  );
+  await assert.rejects(
+    commandCommercial(f.reviewer, f.project.id, {
+      ...commercialAction(v.id, 2, "Decide"),
+      outcome: "Approved",
+    }),
+    code("IndependentReviewRequired"),
   );
 });
