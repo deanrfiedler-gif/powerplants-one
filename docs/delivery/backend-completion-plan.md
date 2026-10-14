@@ -87,3 +87,7 @@ Dean authorised [reviewed FX conversion](../decisions/excel-import-reviewed-fx.m
 ## BC-04 Excel landed costs — 14 October 2026
 
 Dean authorised [reviewed landed-cost allocation](../decisions/excel-import-landed-costs.md), continuing FX PR #488. The [contract](../contracts/excel-import-landed-costs.md) defines explicit AUD freight/duty, cent-conserving allocation and precision refusal, with immutable native binding evidence and exact successors. Native controls, foreign charges, operational allocation/accounting policy and deployment remain separate.
+
+## BC-04 CPQ published Product mapping — 14 October 2026
+
+Dean authorised the [bounded published Products increment](../decisions/cpq-published-products.md): exact native Variant/revision bindings, retained conditional compatibility evidence and atomic estimate provenance, with historical access/recovery distinct from new-use eligibility. [Execution evidence](../testing/evidence/cpq-published-products/README.md) separates verification, CI, independent review and acceptance. Broader fact mapping, cost/labour books, schema-3 combined authoring, native controls and deployment remain separate.

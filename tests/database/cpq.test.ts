@@ -43,7 +43,24 @@ import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { cpqDefinition, cpqInput } from "../helpers/cpq";
 import { arithmeticPolicy } from "../../src/estimating/math";
-import type { Duty } from "../../src/cpq/context";
+import {
+  productFixture,
+  publishProduct,
+  productInput,
+  productContentFixture,
+  relationshipFixture,
+} from "../helpers/products";
+import {
+  createProduct,
+  reviseProduct,
+  decideProduct,
+} from "../../src/products/commands";
+import { readProduct } from "../../src/products/reads";
+import {
+  createRelationship,
+  reviewRelationship,
+} from "../../src/products/relationships";
+import { readEstimateProducts } from "../../src/cpq/reads";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -54,27 +71,36 @@ const rows = async (q: string, v: unknown[] = []) =>
   (await database().query(q, v)).rows;
 const code = (code: string) => (e: unknown) =>
   (e as { code: string }).code === code;
-async function grant(actor: string, caps: Duty[]) {
+async function grant(
+  actor: string,
+  caps: import("../../src/platform/permissions").Capability[],
+) {
   for (const cap of caps)
     await rows(
       "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,$4,'Company',$3)",
       [CRM.workspace, actor, CRM.company, cap],
     );
 }
-async function setup() {
+async function setup(definition = cpqDefinition()) {
   const p = (await createSession("coordinator")).principal,
     reviewer = (await createSession("products-reviewer")).principal,
     publisher = (await createSession("products-publisher")).principal;
   await grant(p.actor_id, ["cpq.read", "cpq.author", "cpq.calculate"]);
   await grant(reviewer.actor_id, ["cpq.read", "cpq.review"]);
   await grant(publisher.actor_id, ["cpq.read", "cpq.publish"]);
+  if (definition.schema_version === 2)
+    for (const actor of [p, reviewer, publisher])
+      await rows(
+        "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,'products.read','Company',$3) ON CONFLICT DO NOTHING",
+        [CRM.workspace, actor.actor_id, CRM.company],
+      );
   const release_id = randomUUID(),
     created = await saveRelease(p, {
       ...crmBase(),
       id: release_id,
       company_id: CRM.company,
       expected_version: 0,
-      definition: cpqDefinition(),
+      definition,
     });
   const view = await readRelease(p, release_id),
     reviewInput = {
@@ -86,8 +112,8 @@ async function setup() {
     };
   return { p, reviewer, publisher, release_id, view, reviewInput };
 }
-async function published() {
-  const s = await setup();
+async function published(definition = cpqDefinition()) {
+  const s = await setup(definition);
   const review = await reviewRelease(s.reviewer, s.release_id, s.reviewInput);
   const activate = {
     ...crmBase(),
@@ -126,8 +152,8 @@ async function discovery(p: Awaited<ReturnType<typeof setup>>["p"]) {
     revision_id: input.revision_id,
   };
 }
-async function calculated() {
-  const s = await published(),
+async function calculated(definition = cpqDefinition()) {
+  const s = await published(definition),
     g = await discovery(s.p),
     preview = await previewCalculation(s.p, g.id, {
       option_id: g.option_id,
@@ -877,4 +903,670 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
     current,
   );
   assert.equal((await readRelease(p, id)).current.content_hash, v.content_hash);
+});
+
+async function mappedProduct() {
+  const f = await productFixture();
+  const product = await publishProduct(f.author.p, f.reviewer.p, f.variant.id);
+  const definition = cpqDefinition();
+  definition.schema_version = 2;
+  definition.parts[0].product = {
+    product_id: product.product.id,
+    revision_id: product.revision.id,
+    content_hash: product.revision.content_hash,
+    relationships: [],
+  };
+  return { f, product, definition };
+}
+async function withdrawProduct(
+  f: Awaited<ReturnType<typeof mappedProduct>>["f"],
+) {
+  const current = await readProduct(f.author.p, f.variant.id);
+  await decideProduct(f.author.p, f.variant.id, {
+    ...crmBase(),
+    expected_version: current.product.version,
+    revision_id: current.product.published_revision_id,
+    action: "Withdrawn",
+  });
+}
+
+test("mapped CPQ preserves exact conditional compatibility and refuses replacement, unresolved, foreign-endpoint and superseded evidence", async () => {
+  const m = await mappedProduct();
+  const second = await publishProduct(
+    m.f.author.p,
+    m.f.reviewer.p,
+    m.f.similar.id,
+  );
+  m.definition.parts.push({
+    ...m.definition.parts[0],
+    key: "companion",
+    product: {
+      product_id: second.product.id,
+      revision_id: second.revision.id,
+      content_hash: second.revision.content_hash,
+      relationships: [],
+    },
+  });
+  const s = await setup();
+  await grant(s.p.actor_id, ["products.read"]);
+  async function relation(
+    type: "Compatibility" | "CandidateReplacement",
+    outcome: "Conditional" | "Unresolved",
+    from = m.product.revision.id,
+  ) {
+    const input = {
+      ...crmBase(),
+      id: randomUUID(),
+      from: { product_id: m.product.product.id, revision_id: from },
+      to: { product_id: second.product.id, revision_id: second.revision.id },
+      predecessor_id: null,
+      content: relationshipFixture({
+        type,
+        criteria: [
+          {
+            criterion: "Synthetic voltage",
+            outcome: outcome === "Conditional" ? "Met" : "Unknown",
+            evidence: "SYN conditional only",
+            owner: "SYN technical owner",
+          },
+        ],
+      }),
+    };
+    await createRelationship(m.f.author.p, input);
+    const row = (
+      await rows("SELECT * FROM ppo.product_relationships WHERE id=$1", [
+        input.id,
+      ])
+    )[0];
+    await reviewRelationship(m.f.reviewer.p, input.id, {
+      ...crmBase(),
+      expected_version: 1,
+      content_hash: row.content_hash,
+      outcome,
+    });
+    const review = (
+      await rows(
+        "SELECT * FROM ppo.product_relationship_reviews WHERE relationship_id=$1",
+        [input.id],
+      )
+    )[0];
+    return {
+      input,
+      ref: {
+        id: input.id,
+        content_hash: row.content_hash,
+        review_id: review.id,
+      },
+    };
+  }
+  for (const [type, outcome] of [
+    ["Compatibility", "Unresolved"],
+    ["CandidateReplacement", "Conditional"],
+  ] as const) {
+    const rel = await relation(type, outcome);
+    m.definition.parts[0].product!.relationships = [rel.ref];
+    await assert.rejects(
+      saveRelease(s.p, {
+        ...crmBase(),
+        id: randomUUID(),
+        company_id: CRM.company,
+        expected_version: 0,
+        definition: m.definition,
+      }),
+      code("CpqProductCompatibilityReviewRequired"),
+    );
+  }
+  const rel = await relation("Compatibility", "Conditional");
+  m.definition.parts[0].product!.relationships = [rel.ref];
+  const withoutEndpoint = structuredClone(m.definition);
+  withoutEndpoint.parts.pop();
+  await assert.rejects(
+    saveRelease(s.p, {
+      ...crmBase(),
+      id: randomUUID(),
+      company_id: CRM.company,
+      expected_version: 0,
+      definition: withoutEndpoint,
+    }),
+    code("CpqProductRelationshipMismatch"),
+  );
+  // Reuse the already provisioned CPQ duties without creating duplicate grants.
+  await rows("DELETE FROM ppo.permission_grants WHERE capability LIKE 'cpq.%'");
+  const saved = await calculated(m.definition);
+  const product = saved.run.binding.products![0];
+  assert.equal(product.compatibility, "ConditionalEvidence");
+  assert.equal(product.supplier_lead_time, "Unknown");
+  assert.deepEqual(product.relationship_evidence[0].content, rel.input.content);
+  const preview = await previewAdoption(saved.p, saved.run.id);
+  assert.deepEqual(preview.product_provenance![0].product, product);
+  await createRelationship(m.f.author.p, {
+    ...rel.input,
+    ...crmBase(),
+    id: randomUUID(),
+    predecessor_id: rel.input.id,
+    content: {
+      ...rel.input.content,
+      evidence: "SYN successor requires reassessment",
+    },
+  });
+  await assert.rejects(
+    adoptRun(saved.p, saved.run.id, adoption(preview)),
+    code("CpqProductRelationshipSuperseded"),
+  );
+  assert.deepEqual(await readRun(saved.p, saved.run.id), saved.run);
+});
+
+test("mapped CPQ adoption rolls back fully, races once, retains exact estimate provenance and excludes it from quotation", async () => {
+  const m = await mappedProduct(),
+    s = await calculated(m.definition);
+  const preview = await previewAdoption(s.p, s.run.id),
+    input = adoption(preview);
+  const snapshot = async () => {
+    const result: Record<string, unknown> = {};
+    for (const table of [
+      "estimates",
+      "estimate_versions",
+      "cpq_adoptions",
+      "audit_events",
+      "outbox_jobs",
+      "operation_receipts",
+      "business_identities",
+    ])
+      result[table] = await rows(`SELECT * FROM ppo.${table} ORDER BY id`);
+    return result;
+  };
+  const before = await snapshot();
+  await rows(
+    "CREATE FUNCTION ppo.cpq_product_fail() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'SYN rollback after native estimate'; END $$",
+  );
+  await rows(
+    "CREATE TRIGGER cpq_product_fail BEFORE INSERT ON ppo.cpq_adoptions FOR EACH ROW EXECUTE FUNCTION ppo.cpq_product_fail()",
+  );
+  await assert.rejects(adoptRun(s.p, s.run.id, input));
+  assert.deepEqual(await snapshot(), before);
+  await rows("DROP TRIGGER cpq_product_fail ON ppo.cpq_adoptions");
+  const [a, b] = await Promise.all([
+    adoptRun(s.p, s.run.id, input),
+    adoptRun(s.p, s.run.id, input),
+  ]);
+  assert.deepEqual(a.receipt, b.receipt);
+  assert.notEqual(a.replayed, b.replayed);
+  await assert.rejects(
+    adoptRun(s.p, s.run.id, { ...input, ...crmBase() }),
+    code("CpqBasisChanged"),
+  );
+  const estimate = await readEstimate(s.p, input.estimate_id);
+  const evidence = await readEstimateProducts(s.p, estimate.id, {
+    version_id: estimate.current_saved.id,
+  });
+  assert.equal(evidence.status, "ExactAdoption");
+  assert.deepEqual(evidence.product_provenance, preview.product_provenance);
+  await prepareQuote(s.p, estimate.id, {
+    ...crmBase(),
+    id: randomUUID(),
+    estimate_version_id: estimate.current_saved.id,
+    expected_version: estimate.version,
+    expected_quote_version: 0,
+    choices: estimate.current_saved.lines.map((l) => ({
+      line_id: l.id,
+      included: true,
+      print: true,
+    })),
+  });
+  const safe = JSON.stringify(
+    (
+      await rows(
+        "SELECT safe_snapshot FROM ppo.draft_quote_revisions WHERE estimate_id=$1",
+        [estimate.id],
+      )
+    )[0],
+  );
+  for (const secret of [
+    m.product.revision.id,
+    m.product.product.id,
+    m.product.revision.content_hash,
+    "publication",
+    "relationship_evidence",
+    "unit_cost",
+    "source_reference",
+  ])
+    assert(!safe.includes(secret));
+  await withdrawProduct(m.f);
+  assert.deepEqual(
+    await readEstimateProducts(s.p, estimate.id, {
+      version_id: estimate.current_saved.id,
+    }),
+    evidence,
+  );
+  assert.deepEqual(await readOperation(s.p, input.operation_id), a.receipt);
+  await assert.rejects(
+    rows("UPDATE ppo.cpq_runs SET binding='{}' WHERE id=$1", [s.run.id]),
+    code("55000"),
+  );
+  await assert.rejects(
+    rows("DELETE FROM ppo.cpq_adoptions WHERE run_id=$1", [s.run.id]),
+    code("55000"),
+  );
+  const ledger = await rows(
+      "SELECT * FROM public.ppo_migrations ORDER BY version",
+    ),
+    seeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),
+    graph = await snapshot();
+  await migrate();
+  await seed();
+  await migrate();
+  await seed();
+  assert.deepEqual(
+    await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
+    ledger,
+  );
+  assert.deepEqual(
+    await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),
+    seeds,
+  );
+  assert.deepEqual(await snapshot(), graph);
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='products.read'",
+    [s.p.actor_id],
+  );
+  await assert.rejects(
+    readEstimateProducts(s.p, estimate.id, {
+      version_id: estimate.current_saved.id,
+    }),
+    code("RecordUnavailable"),
+  );
+});
+
+test("mapped CPQ freezes published variant evidence, tolerates a draft successor and rejects superseded adoption atomically", async () => {
+  const m = await mappedProduct(),
+    s = await calculated(m.definition);
+  const products = s.run.binding.products!;
+  assert.equal(products.length, 1);
+  assert.equal(products[0].part_key, "sensor");
+  assert.deepEqual(products[0].content, m.product.revision.content);
+  assert.equal(products[0].availability, "Unknown");
+  assert.equal(products[0].compatibility, "NotAssessed");
+  const preview = await previewAdoption(s.p, s.run.id);
+  const input = adoption(preview);
+  await reviseProduct(m.f.author.p, m.f.variant.id, {
+    ...crmBase(),
+    expected_version: m.product.product.version,
+    content: productContentFixture({
+      technical_revision: "TECH-B",
+      title: "SYN successor draft",
+    }),
+  });
+  assert.deepEqual(await previewAdoption(s.p, s.run.id), preview);
+  // New publication changes eligibility, never the retained run or reviewed release.
+  await publishProduct(m.f.author.p, m.f.reviewer.p, m.f.variant.id);
+  assert.deepEqual(await readRun(s.p, s.run.id), s.run);
+  await assert.rejects(
+    previewAdoption(s.p, s.run.id),
+    code("CpqProductPublicationChanged"),
+  );
+  await assert.rejects(
+    adoptRun(s.p, s.run.id, input),
+    code("CpqProductPublicationChanged"),
+  );
+  await assert.rejects(
+    calculateRun(s.p, s.g.id, { ...s.command, ...crmBase(), id: randomUUID() }),
+    code("CpqProductPublicationChanged"),
+  );
+  assert.equal(
+    (
+      await rows("SELECT count(*)::int AS n FROM ppo.estimates WHERE id=$1", [
+        input.estimate_id,
+      ])
+    )[0].n,
+    0,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int AS n FROM ppo.operation_receipts WHERE operation_id=$1",
+        [input.operation_id],
+      )
+    )[0].n,
+    0,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int AS n FROM ppo.audit_events WHERE operation_id=$1",
+        [input.operation_id],
+      )
+    )[0].n,
+    0,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int AS n FROM ppo.outbox_jobs WHERE operation_id=$1",
+        [input.operation_id],
+      )
+    )[0].n,
+    0,
+  );
+});
+
+test("mapped CPQ historical reads and completed receipts survive withdrawal but recheck Products access", async () => {
+  const m = await mappedProduct(),
+    s = await calculated(m.definition);
+  const input = adoption(await previewAdoption(s.p, s.run.id));
+  const accepted = await adoptRun(s.p, s.run.id, input);
+  await withdrawProduct(m.f);
+  assert.deepEqual(await readRun(s.p, s.run.id), s.run);
+  assert.equal(
+    (await activateRelease(s.publisher, s.release_id, s.activate)).replayed,
+    true,
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='products.read'",
+    [s.publisher.actor_id],
+  );
+  await assert.rejects(
+    activateRelease(s.publisher, s.release_id, s.activate),
+    code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    readOperation(s.publisher, s.activate.operation_id),
+    code("RecordUnavailable"),
+  );
+  assert.deepEqual(
+    await readOperation(s.p, input.operation_id),
+    accepted.receipt,
+  );
+  assert.equal((await adoptRun(s.p, s.run.id, input)).replayed, true);
+  assert.equal((await calculateRun(s.p, s.g.id, s.command)).replayed, true);
+  await assert.rejects(
+    previewCalculation(s.p, s.g.id, {
+      option_id: s.g.option_id,
+      revision_id: s.g.revision_id,
+    }),
+    code("CpqProductPublicationChanged"),
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='products.read'",
+    [s.p.actor_id],
+  );
+  for (const attempt of [
+    () => readRun(s.p, s.run.id),
+    () => readRelease(s.p, s.release_id),
+    () => readOperation(s.p, input.operation_id),
+    () => adoptRun(s.p, s.run.id, input),
+    () => calculateRun(s.p, s.g.id, s.command),
+    () => readOperation(s.p, s.command.operation_id),
+  ])
+    await assert.rejects(attempt, code("RecordUnavailable"));
+  await grant(s.p.actor_id, ["products.read"]);
+  assert.deepEqual(
+    await readOperation(s.p, input.operation_id),
+    accepted.receipt,
+  );
+  assert.equal(
+    (
+      await rows(
+        "SELECT count(*)::int AS n FROM ppo.cpq_adoptions WHERE run_id=$1",
+        [s.run.id],
+      )
+    )[0].n,
+    1,
+  );
+});
+
+test("mapped CPQ refuses foreign, wrong-kind, wrong-hash, mismatched-unit and unpublished bindings without writes", async () => {
+  const m = await mappedProduct(),
+    s = await setup();
+  await grant(s.p.actor_id, ["products.read"]);
+  const family = await readProduct(m.f.author.p, m.f.family.id);
+  const unpublished = await readProduct(m.f.author.p, m.f.similar.id);
+  const foreign = productInput({ company_id: CRM.companyB });
+  await createProduct(m.f.other.p, foreign);
+  const other = await readProduct(m.f.other.p, foreign.id);
+  // Even an actor with read access to both companies cannot cross-bind them.
+  await rows(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,'products.read','Company',$3),($1,$2,$3,'shared.read','Company',$3)",
+    [CRM.workspace, s.p.actor_id, CRM.companyB],
+  );
+  for (const [product, unit, expected] of [
+    [
+      {
+        product_id: family.product.id,
+        revision_id: family.revision.id,
+        content_hash: family.revision.content_hash,
+      },
+      "each",
+      "CpqProductVariantRequired",
+    ],
+    [
+      {
+        product_id: other.product.id,
+        revision_id: other.revision.id,
+        content_hash: other.revision.content_hash,
+      },
+      "each",
+      "RecordUnavailable",
+    ],
+    [
+      { ...m.definition.parts[0].product!, content_hash: "0".repeat(64) },
+      "each",
+      "CpqProductEvidenceChanged",
+    ],
+    [m.definition.parts[0].product!, "m", "CpqProductUnitMismatch"],
+    [
+      {
+        product_id: unpublished.product.id,
+        revision_id: unpublished.revision.id,
+        content_hash: unpublished.revision.content_hash,
+      },
+      "each",
+      "CpqProductPublicationChanged",
+    ],
+    [
+      { ...m.definition.parts[0].product!, revision_id: family.revision.id },
+      "each",
+      "RecordUnavailable",
+    ],
+  ] as const) {
+    const id = randomUUID(),
+      operation_id = randomUUID();
+    const definition = structuredClone(m.definition);
+    definition.parts[0] = {
+      ...definition.parts[0],
+      product: { relationships: [], ...product },
+      unit,
+    };
+    await assert.rejects(
+      saveRelease(s.p, {
+        ...crmBase(),
+        id,
+        operation_id,
+        company_id: CRM.company,
+        expected_version: 0,
+        definition,
+      }),
+      code(expected),
+    );
+    assert.equal(
+      (
+        await rows(
+          "SELECT count(*)::int AS n FROM ppo.cpq_releases WHERE id=$1",
+          [id],
+        )
+      )[0].n,
+      0,
+    );
+    assert.equal(
+      (
+        await rows(
+          "SELECT count(*)::int AS n FROM ppo.operation_receipts WHERE operation_id=$1",
+          [operation_id],
+        )
+      )[0].n,
+      0,
+    );
+  }
+});
+
+test("mapped CPQ review and activation recheck publication and original receipt access", async () => {
+  const m = await mappedProduct(),
+    s = await setup(m.definition);
+  const review = await reviewRelease(s.reviewer, s.release_id, s.reviewInput);
+  const activation = {
+    ...crmBase(),
+    expected_version: review.receipt.record_version,
+    revision_id: s.view.current.id,
+    content_hash: s.view.current.content_hash,
+    expected_activation_version: 0,
+  };
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='products.read'",
+    [s.reviewer.actor_id],
+  );
+  await assert.rejects(
+    activateRelease(s.publisher, s.release_id, activation),
+    code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    reviewRelease(s.reviewer, s.release_id, s.reviewInput),
+    code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    readOperation(s.reviewer, s.reviewInput.operation_id),
+    code("RecordUnavailable"),
+  );
+  await grant(s.reviewer.actor_id, ["products.read"]);
+  // A separately saved draft cannot be approved after source withdrawal.
+  const draft = {
+    ...crmBase(),
+    id: randomUUID(),
+    company_id: CRM.company,
+    expected_version: 0,
+    definition: m.definition,
+  };
+  await saveRelease(s.p, draft);
+  const view = await readRelease(s.p, draft.id);
+  await withdrawProduct(m.f);
+  assert.equal(
+    (await reviewRelease(s.reviewer, s.release_id, s.reviewInput)).replayed,
+    true,
+  );
+  assert.deepEqual(
+    await readOperation(s.reviewer, s.reviewInput.operation_id),
+    review.receipt,
+  );
+  assert.equal((await saveRelease(s.p, draft)).replayed, true);
+  await assert.rejects(
+    activateRelease(s.publisher, s.release_id, activation),
+    code("CpqProductPublicationChanged"),
+  );
+  await assert.rejects(
+    reviewRelease(s.reviewer, draft.id, {
+      ...crmBase(),
+      expected_version: 1,
+      revision_id: view.current.id,
+      content_hash: view.current.content_hash,
+      outcome: "Approved",
+    }),
+    code("CpqProductPublicationChanged"),
+  );
+  assert.equal(
+    (await rows("SELECT count(*)::int AS n FROM ppo.cpq_activations"))[0].n,
+    0,
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='products.read'",
+    [s.p.actor_id],
+  );
+  await assert.rejects(saveRelease(s.p, draft), code("RecordUnavailable"));
+  await assert.rejects(
+    readOperation(s.p, draft.operation_id),
+    code("RecordUnavailable"),
+  );
+});
+
+test("mapped CPQ recalculation retains manual costs, replaces owned lines and blocks stale estimate snapshots", async () => {
+  const s = await calculated((await mappedProduct()).definition),
+    first = adoption(await previewAdoption(s.p, s.run.id));
+  await adoptRun(s.p, s.run.id, first);
+  let e = await readEstimate(s.p, first.estimate_id);
+  const manual = {
+    ...e.current_saved.lines[0],
+    id: randomUUID(),
+    description: "SYN retained freight",
+    category: "Freight" as const,
+    quantity: "1.000",
+    unit_cost: "2.00",
+    unit_sell: "3.00",
+  };
+  await saveEstimate(s.p, e.id, {
+    ...crmBase(),
+    schema_version: 2,
+    expected_version: e.version,
+    title: e.current_saved.title,
+    scope: e.current_saved.scope,
+    lines: [...e.current_saved.lines, manual],
+    policy: arithmeticPolicy,
+  });
+  await assert.rejects(previewAdoption(s.p, s.run.id), code("CpqBasisChanged"));
+  const preview = await previewCalculation(s.p, s.g.id, {
+      option_id: s.g.option_id,
+      revision_id: s.g.revision_id,
+    }),
+    input = cpqInput();
+  input.instances[0].facts.count = "4";
+  const second = {
+    ...crmBase(),
+    id: randomUUID(),
+    option_id: s.g.option_id,
+    revision_id: s.g.revision_id,
+    binding_hash: preview.binding_hash,
+    parent_id: s.run.id,
+    input,
+  };
+  await calculateRun(s.p, s.g.id, second);
+  const receiving = await previewAdoption(s.p, second.id);
+  assert.deepEqual(receiving.retained_lines, [manual]);
+  await adoptRun(s.p, second.id, adoption(receiving));
+  e = await readEstimate(s.p, first.estimate_id);
+  assert.equal(e.current_saved.lines.length, 3);
+  assert.deepEqual(
+    e.current_saved.lines.find((l) => l.id === manual.id),
+    manual,
+  );
+  const changedLines = e.current_saved.lines.map((l) =>
+    l.id === manual.id
+      ? l
+      : { ...l, description: "SYN manually edited CPQ line" },
+  );
+  await saveEstimate(s.p, e.id, {
+    ...crmBase(),
+    schema_version: 2,
+    expected_version: e.version,
+    title: e.current_saved.title,
+    scope: e.current_saved.scope,
+    lines: changedLines,
+    policy: arithmeticPolicy,
+  });
+  const fresh = await previewCalculation(s.p, s.g.id, {
+    option_id: s.g.option_id,
+    revision_id: s.g.revision_id,
+  });
+  const third = {
+    ...second,
+    ...crmBase(),
+    id: randomUUID(),
+    parent_id: second.id,
+    binding_hash: fresh.binding_hash,
+  };
+  await calculateRun(s.p, s.g.id, third);
+  await assert.rejects(
+    previewAdoption(s.p, third.id),
+    code("CpqOwnedLineChanged"),
+  );
+  assert.equal((await runHistory(s.p, s.g.id)).items.length, 3);
+  assert.equal(
+    (await compareRuns(s.p, s.run.id, { with: second.id })).changes.length,
+    2,
+  );
 });

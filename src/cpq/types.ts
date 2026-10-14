@@ -27,6 +27,7 @@ export type Condition =
       value: string | boolean;
     };
 export type Part = {
+  product?: ProductReference;
   scope?: {
     kind: "System" | "Shared" | "Configuration";
     group_fact: string | null;
@@ -52,6 +53,50 @@ export type Part = {
     currency_per_aud: string;
     recorded_at: string;
   };
+};
+export type ProductReference = {
+  product_id: string;
+  revision_id: string;
+  content_hash: string;
+  relationships: { id: string; content_hash: string; review_id: string }[];
+};
+export type ProductSnapshot = ProductReference & {
+  part_key: string;
+  reference: string;
+  provider: string;
+  entity_key: string;
+  parent_id: string;
+  revision: number;
+  content: import("../products/model").Content;
+  publication: {
+    id: string;
+    details: {
+      purpose: string;
+      audience: string;
+      effective_on: string;
+      supersedes_id: string | null;
+      reason: string;
+    };
+    created_by: string;
+    created_at: string;
+  };
+  availability: "Unknown";
+  supplier_lead_time: "Unknown";
+  compatibility: "NotAssessed" | "ConditionalEvidence";
+  relationship_evidence: {
+    id: string;
+    content_hash: string;
+    from_revision_id: string;
+    to_revision_id: string;
+    content: import("../products/model").RelationshipContent;
+    review: {
+      id: string;
+      outcome: string;
+      reason: string;
+      created_by: string;
+      created_at: string;
+    };
+  }[];
 };
 export type Rule = {
   key: string;
@@ -99,7 +144,7 @@ export type Fixture = {
   };
 };
 export type Definition = {
-  schema_version: 1 | 3;
+  schema_version: 1 | 2 | 3;
   label: string;
   currency: "AUD";
   facts: Fact[];

@@ -25,6 +25,7 @@ import { digest } from "./validation";
 import { boundInput, sourceFacts } from "./source-facts";
 import { calculateIsolated } from "./runner";
 import { hash } from "./hash";
+import { productBindings, productLineEvidence } from "./products";
 import { saveCalculatedDraft } from "./drafts";
 
 async function basis(
@@ -46,6 +47,13 @@ async function basis(
   const saved = b.e
     ? await versionContext(c, p, b.e, b.e.current_version_id)
     : null;
+  const products = await productBindings(
+    c,
+    p,
+    b.g.company_id,
+    head.revision.definition,
+    true,
+  );
   const binding: Binding = {
     estimating_workspace_id: b.g.id,
     option_id: b.option.id,
@@ -59,6 +67,7 @@ async function basis(
     activation_id: head.id,
     activation_version: head.version,
     release_revision_id: head.revision.id,
+    ...(head.revision.definition.schema_version === 2 ? { products } : {}),
   };
   return { ...b, head, saved, binding };
 }
@@ -256,6 +265,9 @@ export async function evaluatePreview(
     "input",
   ]);
   return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+      p.workspace_id,
+    ]);
     const b = await basis(
       c,
       p,
@@ -270,10 +282,19 @@ export async function evaluatePreview(
         "Discovery, estimate or active rules changed. Refresh the basis and compare before saving.",
       );
     const input = boundInput(b.head.revision.definition, q.input, b.r.input);
+    const result = await calculateIsolated(b.head.revision.definition, input);
     return {
       binding_hash: hash(b.binding),
       input,
-      result: await calculateIsolated(b.head.revision.definition, input),
+      result,
+      ...(b.binding.products
+        ? {
+            product_provenance: productLineEvidence({
+              binding: b.binding,
+              result,
+            }),
+          }
+        : {}),
       synthetic: true,
     };
   });
@@ -355,6 +376,9 @@ export async function previewAdoption(p: Principal, id: string) {
       binding: r.b.binding,
       retained_lines: r.retained,
       generated_lines: r.generated,
+      ...(r.saved.binding.products
+        ? { product_provenance: productLineEvidence(r.saved) }
+        : {}),
       milestone_proposals: r.saved.result.explanation?.milestones ?? [],
       title: r.b.saved?.title ?? null,
       scope: r.b.saved?.scope ?? null,
@@ -442,6 +466,9 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
           cpq_run_id: x.saved.id,
           cpq_result_hash: x.saved.result.result_hash,
           cpq_release_revision_id: x.saved.release_revision_id,
+          ...(x.saved.binding.products
+            ? { cpq_product_provenance: productLineEvidence(x.saved) }
+            : {}),
           cpq_milestone_proposals: x.saved.result.explanation?.milestones ?? [],
         },
       };

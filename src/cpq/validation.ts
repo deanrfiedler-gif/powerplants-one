@@ -265,8 +265,12 @@ export function definition(value: unknown): Definition {
       ? ["design"]
       : []),
   ]);
-  if (r.schema_version !== 1 && r.schema_version !== 3)
-    invalid("schema_version", "Use CPQ definition schema 1 or 3.");
+  if (
+    r.schema_version !== 1 &&
+    r.schema_version !== 2 &&
+    r.schema_version !== 3
+  )
+    invalid("schema_version", "Use CPQ definition schema 1, 2 or 3.");
   const design = r.schema_version === 3;
   const facts = distinct(
     bounded(r.facts, "facts", 40, 1).map((v) => {
@@ -324,9 +328,49 @@ export function definition(value: unknown): Definition {
         "effective_from",
         "effective_to",
         "tiers",
+        ...(r.schema_version === 2 ? ["product"] : []),
         ...(design ? ["price_context"] : []),
         ...(design ? ["scope"] : []),
       ]);
+      let product: import("./types").ProductReference | undefined;
+      if ("product" in p) {
+        if (p.category !== "Product")
+          invalid("product", "Only Product parts can bind catalogue variants.");
+        const ref = object(p.product, [
+          "product_id",
+          "revision_id",
+          "content_hash",
+          "relationships",
+        ]);
+        const relationships = bounded(
+          ref.relationships ?? [],
+          "relationships",
+          10,
+        ).map((value) => {
+          const item = object(value, ["id", "content_hash", "review_id"]);
+          return {
+            id: uuid(item.id, "relationship_id"),
+            content_hash: digest(
+              item.content_hash,
+              "relationship_content_hash",
+            ),
+            review_id: uuid(item.review_id, "relationship_review_id"),
+          };
+        });
+        if (
+          new Set(relationships.map((x) => x.id)).size !== relationships.length
+        )
+          invalid(
+            "relationships",
+            "Use each exact relationship once per part.",
+          );
+        product = {
+          product_id: uuid(ref.product_id, "product_id"),
+          revision_id: uuid(ref.revision_id, "product_revision_id"),
+          content_hash: digest(ref.content_hash, "product_content_hash"),
+          relationships,
+        };
+      }
       const from = date(p.effective_from, "effective_from"),
         to = date(p.effective_to, "effective_to");
       if (from > to)
@@ -493,12 +537,18 @@ export function definition(value: unknown): Definition {
         effective_from: from,
         effective_to: to,
         tiers,
+        ...(product ? { product } : {}),
         ...(price_context ? { price_context } : {}),
         ...(scope ? { scope } : {}),
       };
     }),
     "parts",
   );
+  if (r.schema_version === 2 && !parts.some((p) => p.product))
+    invalid(
+      "parts",
+      "Schema 2 requires at least one explicit published Product binding.",
+    );
   const rules = distinct(
     bounded(r.rules, "rules", 100, 1).map((v) => {
       const x = object(v, [
@@ -589,7 +639,7 @@ export function definition(value: unknown): Definition {
     };
   });
   return {
-    schema_version: design ? 3 : 1,
+    schema_version: r.schema_version as 1 | 2 | 3,
     label: label(r.label, "label", 200),
     currency: choice(r.currency, "currency", ["AUD"] as const),
     facts,

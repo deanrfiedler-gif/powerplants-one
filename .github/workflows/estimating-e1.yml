@@ -101,6 +101,7 @@ jobs:
           done
           node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-workload.test.ts tests/http/estimating-sources.test.ts tests/http/estimating-review.test.ts tests/http/quotation-release.test.ts tests/http/estimating-configuration.test.ts tests/http/cpq.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-import-review.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/cpq-products.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-import-persistence.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-reimport.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-quotation.test.ts
@@ -110,6 +111,7 @@ jobs:
           node --env-file=.env.local --import tsx --test tests/http/excel-landed.test.ts
           node --import tsx scripts/excel-capacity-profile.ts candidate
           node --env-file=.env.local --import tsx scripts/excel-import-restart.ts write landed
+          node --env-file=.env.local --import tsx scripts/cpq-products-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/estimating-review-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-release-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts write
@@ -143,6 +145,7 @@ jobs:
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-release-restart.ts verify
           PPO_REQUIRE_RESTART=1 PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts verify
           node --env-file=.env.local --import tsx scripts/excel-import-restart.ts verify
+          node --env-file=.env.local --import tsx scripts/cpq-products-restart.ts verify
       - name: Compiled E1 desktop, phone, 320px, uncertain response and long output
         if: matrix.suite == 'browser'
         # Reuse the build verified by HTTP/restart checks. The same assertions
@@ -177,6 +180,7 @@ jobs:
             verification-evidence/fertigation-browser/
             verification-evidence/fertigation-restart/
             verification-evidence/excel-import-restart/
+            verification-evidence/cpq-products-restart/verified.json
             verification-evidence/excel-quotation/
             verification-evidence/excel-capacity/
             verification-evidence/fertigation-build/

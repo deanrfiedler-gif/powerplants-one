@@ -15,6 +15,88 @@ import { compileFormula, evaluateFormula } from "../../src/cpq/expression";
 import { calculateIsolated, testIsolated } from "../../src/cpq/runner";
 import { hash } from "../../src/cpq/hash";
 
+test("schema 2 binds selected Product parts strictly and remapping requires override rebase", () => {
+  const binding = {
+    product_id: "c0860000-0000-4000-8000-000000000002",
+    revision_id: "c0860000-0000-4000-8000-000000000003",
+    content_hash: "a".repeat(64),
+    relationships: [],
+  };
+  const raw = {
+    ...cpqDefinition(),
+    schema_version: 2,
+    parts: cpqDefinition().parts.map((part, i) =>
+      i === 0 ? { ...part, product: binding } : part,
+    ),
+  };
+  const mapped = definition(raw);
+  assert.deepEqual(mapped.parts[0].product, binding);
+  assert.equal(mapped.parts[1].product, undefined);
+  const before = evaluate(mapped, cpqInput());
+  assert.deepEqual(
+    before.totals,
+    evaluate(definition(cpqDefinition()), cpqInput()).totals,
+  );
+  const changed = structuredClone(mapped);
+  changed.parts[0].product!.revision_id =
+    "c0860000-0000-4000-8000-000000000004";
+  const input = cpqInput();
+  const line = before.lines.find((l) => l.line.category === "Product")!;
+  input.overrides = [
+    {
+      target: line.target,
+      basis_hash: line.basis_hash,
+      kind: "Quantity",
+      value: "3",
+      reason: "SYN exact adjustment",
+    },
+  ];
+  const result = evaluate(changed, input);
+  assert.equal(result.ready, false);
+  assert(result.diagnostics.some((d) => d.code === "OverrideRebaseRequired"));
+  for (const invalid of [
+    { ...raw, schema_version: 1 },
+    { ...raw, schema_version: 3, design: {} },
+    { ...raw, parts: cpqDefinition().parts },
+    { ...raw, parts: raw.parts.map((p) => ({ ...p, product: binding })) },
+    {
+      ...raw,
+      parts: [
+        { ...raw.parts[0], product: { ...binding, product_id: "SYN-label" } },
+        raw.parts[1],
+      ],
+    },
+    {
+      ...raw,
+      parts: [
+        { ...raw.parts[0], product: { ...binding, latest: true } },
+        raw.parts[1],
+      ],
+    },
+    {
+      ...raw,
+      parts: [
+        {
+          ...raw.parts[0],
+          product: {
+            ...binding,
+            relationships: [
+              {
+                id: binding.product_id,
+                review_id: binding.revision_id,
+                content_hash: binding.content_hash,
+                available: true,
+              },
+            ],
+          },
+        },
+        raw.parts[1],
+      ],
+    },
+  ])
+    assert.throws(() => definition(invalid));
+});
+
 test("quantities resolve exactly before rounding and labour keeps material units separate", () => {
   const d = definition(cpqDefinition()),
     i = cpqInput();
