@@ -1,6 +1,6 @@
 # Excel reviewed landed costs — execution evidence
 
-Owner: Dean Fiedler. Source: `codex/excel-import-landed-costs`, based on FX PR #488 `0a2b780`. User-authorised continuation; scope BC-04 / PPO-010 / EST-04/05/07/08 / XI-04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
+Owner: Dean Fiedler. Source: [PR #489](https://github.com/deanrfiedler-gif/powerplants-one/pull/489), implementation `b48e323` on `codex/excel-import-landed-costs`, based on FX PR #488 `0a2b780`. The parent merged as `b100680`; the PR targets main directly. User-authorised continuation; scope BC-04 / PPO-010 / EST-04/05/07/08 / XI-04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
 
 The [decision](../../../decisions/excel-import-landed-costs.md) and [contract](../../../contracts/excel-import-landed-costs.md) define explicit AUD freight/duty, exact cent allocation and reviewed atomic successors. Migration 0100 adds nullable native binding evidence and guards; original fields, source/FX evidence, workbooks, receipts and quotations remain preserved. Historical upgrade comparisons explicitly represent the newly added null column without hiding a non-null value.
 
@@ -10,7 +10,7 @@ The [decision](../../../decisions/excel-import-landed-costs.md) and [contract](.
 
 Populated 0099 with retained FX-priced workbook, independent source review and quotation adds only 0100, preserving original fields/rows/receipts/grants and ledger; reapply/reseed is inert. Earlier populated 0097/0098 upgrades, historical E2 across 0026, reserved Products 0052 after 0100 and Windows CRLF hosted-demo upgrade also pass.
 
-Final compiled build, typecheck, full lint, changed-file lint, naming and studio checks pass. Naming retains 7,994 project-instruction characters. Nine compiled HTTP scenarios pass across native sources, FX, landed pricing, re-import and exact quotation. The new round trip proves read-only comparison, scope denial, exact confirmation, duplicate/transport refusal, atomic save, original retry and retained evidence. Studio retains 362 entries, 47 components and 208 routes, with 334 unreviewed and 28 stale entries. No UI/component change or visual acceptance is claimed.
+Final compiled build, typecheck, full lint, changed-file lint, foundation, naming and studio checks pass. Foundation preserves 22 issued sources and 78 requirements, checking 9,795 local links and 6,164 text files with no errors. Naming retains 7,994 project-instruction characters. Nine compiled HTTP scenarios pass across native sources, FX, landed pricing, re-import and exact quotation. The new round trip proves read-only comparison, scope denial, exact confirmation, duplicate/transport refusal, atomic save, original retry and retained evidence. Studio retains 362 entries, 47 components and 208 routes, with 334 unreviewed and 28 stale entries. No UI/component change or visual acceptance is claimed.
 
 ## Large output and recovery
 
