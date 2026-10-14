@@ -202,7 +202,7 @@ test("receiving preserves manual edits by explicit keep, records removals, and n
   );
   assert.deepEqual(resolved.lines, [changed, manual]);
   assert.equal(resolved.generated.length, 0);
-  assert.equal(resolved.retained_cpq_lines.length, 1);
+  assert.equal(resolved.retained_cpq_lines.length, 2);
   const later = reconcileLines(
     { ...prior, lines: [], retained_cpq_lines: resolved.retained_cpq_lines },
     resolved.lines,
@@ -218,6 +218,51 @@ test("receiving preserves manual edits by explicit keep, records removals, and n
     },
   ]);
   assert.equal(removed.retained_cpq_lines[0].retained_line, null);
+  const omitted = reconcileLines(
+    {
+      ...prior,
+      lines: removed.generated,
+      retained_cpq_lines: removed.retained_cpq_lines,
+    },
+    removed.lines,
+    [lines[1]],
+    [],
+  );
+  assert.deepEqual(omitted.retained_cpq_lines, removed.retained_cpq_lines);
+  const restored = reconcileLines(
+    {
+      ...prior,
+      lines: omitted.generated,
+      retained_cpq_lines: omitted.retained_cpq_lines,
+    },
+    omitted.lines,
+    lines,
+    [],
+  );
+  assert.equal(restored.unresolved[0].code, "CpqOwnedLineChanged");
+  assert.equal(
+    restored.lines.some((line) => line.id === lines[0].id),
+    false,
+  );
+  assert.equal(
+    reconcileLines(
+      {
+        ...prior,
+        lines: removed.generated,
+        retained_cpq_lines: removed.retained_cpq_lines,
+      },
+      removed.lines,
+      [lines[1]],
+      [
+        {
+          line_id: lines[0].id,
+          action: "Replace",
+          reason: "SYN cannot replace an absent generated target",
+        },
+      ],
+    ).unresolved[0].code,
+    "CpqReplacementMissing",
+  );
   assert.equal(
     reconcileLines(null, [manual], [manual], []).unresolved[0].code,
     "CpqLineIdentityConflict",
@@ -230,6 +275,33 @@ test("receiving preserves manual edits by explicit keep, records removals, and n
         reason: "SYN forbidden unrelated edit",
       },
     ]),
+  );
+});
+
+test("retained identity evidence has an explicit bound without silently dropping removals", () => {
+  const lines = evaluate(cpqDefinition(), cpqInput()).lines.map((l) => l.line);
+  const holds = Array.from({ length: 200 }, (_, i) => {
+    const line_id = `c0860000-0000-4000-8000-${String(i).padStart(12, "0")}`;
+    return {
+      line_id,
+      origin_run_id: "c0860000-0000-4000-8000-000000000999",
+      original_line: { ...lines[0], id: line_id },
+      retained_line: null,
+    };
+  });
+  assert.throws(
+    () =>
+      reconcileLines(
+        {
+          run_id: "c0860000-0000-4000-8000-000000000999",
+          lines: [],
+          retained_cpq_lines: holds,
+        },
+        [],
+        lines,
+        [],
+      ),
+    { code: "CpqRetainedHistoryLimit" },
   );
 });
 

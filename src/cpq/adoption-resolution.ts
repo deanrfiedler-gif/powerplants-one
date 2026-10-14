@@ -2,6 +2,9 @@ import type { CostLine } from "../estimating/math";
 import { choice, invalid, label, object, uuid } from "../shared/validation";
 import { bounded } from "./validation";
 import { hash } from "./hash";
+import { AppError } from "../platform/errors";
+
+const trackedLineLimit = 200;
 
 export type LineDecision = {
   line_id: string;
@@ -26,18 +29,20 @@ export type AdoptionResolution = {
   conflicts: ReturnType<typeof reconcileLines>["conflicts"];
 };
 export function lineDecisions(value: unknown): LineDecision[] {
-  const decisions = bounded(value, "decisions", 200).map((entry) => {
-    const r = object(entry, ["line_id", "action", "reason"]);
-    return {
-      line_id: uuid(r.line_id, "line_id"),
-      action: choice(r.action, "action", [
-        "Keep",
-        "Replace",
-        "Remove",
-      ] as const),
-      reason: label(r.reason, "reason", 500),
-    };
-  });
+  const decisions = bounded(value, "decisions", trackedLineLimit).map(
+    (entry) => {
+      const r = object(entry, ["line_id", "action", "reason"]);
+      return {
+        line_id: uuid(r.line_id, "line_id"),
+        action: choice(r.action, "action", [
+          "Keep",
+          "Replace",
+          "Remove",
+        ] as const),
+        reason: label(r.reason, "reason", 500),
+      };
+    },
+  );
   if (new Set(decisions.map((d) => d.line_id)).size !== decisions.length)
     invalid("decisions", "Decide each estimate line exactly once.");
   return decisions.sort((a, b) => a.line_id.localeCompare(b.line_id));
@@ -95,15 +100,19 @@ export function reconcileLines(
     const held = previous!.retained_cpq_lines.some(
       (line) => line.line_id === id,
     );
-    // A previously accepted removal ceases to need a hold once the rules also
-    // omit that target. No line is silently deleted here: it is already absent.
+    const decision = decisions.find((d) => d.line_id === id) ?? null;
+    // An intervening release may omit a target that a later release restores.
+    // Carry the deliberate removal until an explicit replacement receives it.
     if (
       held &&
       prior.retained_line === null &&
       present === null &&
-      proposed === null
-    )
+      proposed === null &&
+      (!decision || decision.action === "Remove")
+    ) {
+      retained_cpq_lines.push(prior);
       continue;
+    }
     const state = !proposed
       ? "Obsolete"
       : held
@@ -114,7 +123,6 @@ export function reconcileLines(
             ? "Changed"
             : "Unchanged";
     const required = state !== "Unchanged";
-    const decision = decisions.find((d) => d.line_id === id) ?? null;
     conflicts.push({
       line_id: id,
       before: prior.retained_line,
@@ -148,7 +156,7 @@ export function reconcileLines(
       }
       retained.push(present);
       retained_cpq_lines.push({ ...prior, retained_line: present });
-    } else if (proposed) {
+    } else {
       retained_cpq_lines.push({ ...prior, retained_line: null });
     }
   }
@@ -163,6 +171,12 @@ export function reconcileLines(
       candidate.findIndex((l) => l.id === a.id) -
       candidate.findIndex((l) => l.id === b.id),
   );
+  if (generated.length + retained_cpq_lines.length > trackedLineLimit)
+    throw new AppError(
+      409,
+      "CpqRetainedHistoryLimit",
+      "Generated and retained CPQ identities exceed this workflow's 200-target limit. Historical removal decisions cannot be discarded automatically.",
+    );
   return {
     retained,
     generated,

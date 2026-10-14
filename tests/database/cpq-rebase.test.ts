@@ -306,6 +306,41 @@ test("explicit receiving keeps manual/native source attribution, acknowledges ob
     previewAdoption(s.p, future.run.id),
     code("CpqOwnedLineChanged"),
   );
+  const keep = [decisions[0]];
+  const intermediate = await previewAdoption(s.p, future.run.id, {
+    decisions: keep,
+  });
+  await adoptRun(s.p, future.run.id, rebaseAdoption(intermediate, keep));
+  const absent = await readEstimate(s.p, old.id);
+  const absentHistory = await readEstimateProducts(s.p, old.id, {
+    version_id: absent.saved.id,
+  });
+  assert.equal(absentHistory.status, "ResolvedAdoption");
+  assert.ok(
+    absentHistory.retained_history!.some(
+      (line) =>
+        line.line_id === old.saved.lines[1].id &&
+        line.status === "ExplicitlyRemoved",
+    ),
+  );
+  const reintroduced = await rebaseSuccessor(s, true);
+  const reviewAgain = await previewAdoption(s.p, reintroduced.run.id, {
+    decisions: keep,
+  });
+  assert.equal(reviewAgain.ready, false);
+  assert.ok(
+    reviewAgain.unresolved!.some(
+      (line) =>
+        line.line_id === old.saved.lines[1].id &&
+        line.code === "CpqOwnedLineChanged",
+    ),
+  );
+  assert.equal(
+    (await readEstimate(s.p, old.id)).saved.lines.some(
+      (line) => line.id === old.saved.lines[1].id,
+    ),
+    false,
+  );
 });
 
 test("resolution and rebase commands roll back atomically, serialize competitors and reject stale receiving", async () => {
