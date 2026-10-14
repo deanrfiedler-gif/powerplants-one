@@ -30,4 +30,11 @@ No native Excel upload/review UI is delivered. The browser proof covers the exis
 
 ## Integrated parent follow-up
 
-PR #484 advanced to `31f3732` while the Step 5 proofs were running, bringing the combined template publication/use and UI history. It is merged by ancestry; both receipt handlers and status histories are retained. The ledger above records execution before this integration. Fresh combined-source build, focused database/HTTP/restart and documentation checks are in progress.
+PR #484 advanced to `31f3732` while the Step 5 proofs were running, bringing the combined template publication/use and UI history. It is merged by ancestry; both receipt handlers and status histories are retained. The ledger above records execution before this integration. Fresh combined-source validation passed on merge `8bea2b0`:
+
+- 105 Excel/estimating/registry units; eight focused database cases (six continuation scenarios, native quotation revision preservation and populated migration-27 E2 upgrade with original outputs).
+- All five compiled HTTP scenarios, including the three viewport checks, passed again. Independent PDF extraction passed for the fresh two-page output, total AUD 64,607.63, SHA-256 `063709955765cfe78c770656301bc4d9b80e695e290c789ff61893a528cabb60`. The local test selects native UUID rows for the four choice combinations, so its chosen amount differs between fresh runs; each exact reviewed total and hidden set is asserted. The earlier output artifacts are retained under `verification-evidence/excel-quotation/pre-integration/`.
+- Actual app/PostgreSQL restart was repeated on this integrated history: both workbooks, exact quotation/review/HTML/PDF, receipts and unchanged replay effects passed again.
+- Build/TypeScript, lint, foundation (9,720 links, 78 parents, 22 issued sources), naming (7,999 instruction characters), studio (362 entries, 47 components, 208 routes, 334 unreviewed, 28 stale) and the quotation-only diff check passed.
+
+PR #485 is mergeable against the updated parent. Its combined CI and independent/owner acceptance remain separate; this final evidence update changes documentation only.
