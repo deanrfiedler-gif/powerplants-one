@@ -1,10 +1,15 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { AppError } from "../../src/platform/errors";
+import { costLineEvidence } from "../../src/cpq/costs";
+import type { Binding } from "../../src/cpq/context";
 import { evaluate } from "../../src/cpq/engine";
 import { definition } from "../../src/cpq/validation";
 import { hash } from "../../src/cpq/hash";
 import { costDefinition } from "../helpers/cpq-costs";
 import { cpqDefinition, cpqInput } from "../helpers/cpq";
+import { fxEvidence } from "../helpers/source-fx";
+import { sourceContent } from "../../src/estimating/sources/validation";
 
 test("governed costs resolve exact product and labour tiers after quantity overrides; sell policy stays authored", () => {
   const d = costDefinition(),
@@ -119,5 +124,60 @@ test("deliberately changed source requires override review; zero source cost rem
   assert.equal(
     evaluate(definition(cpqDefinition()), cpqInput()).totals.cost,
     "70.00",
+  );
+});
+
+test("governed CPQ rejects otherwise-valid reviewed FX evidence instead of bypassing its separate receiving review", () => {
+  const d = costDefinition(),
+    ref = d.parts[0].cost_source!;
+  ref.content = sourceContent({
+    ...ref.content,
+    tiers: undefined,
+    fx: fxEvidence(),
+  });
+  ref.content_hash = hash(ref.content);
+  assert.throws(
+    () => definition(d),
+    (e: unknown) =>
+      e instanceof AppError &&
+      e.field_errors.some(
+        (f) =>
+          f.field === "cost_source" &&
+          f.message.includes("direct AUD source evidence"),
+      ),
+  );
+});
+
+test("source attribution uses the exact part identity when a unit contains another target suffix", () => {
+  const d = costDefinition();
+  d.parts[0].unit = "pack:installation:hour";
+  d.parts[0].cost_source!.content.unit = d.parts[0].unit;
+  d.parts[0].cost_source!.content_hash = hash(d.parts[0].cost_source!.content);
+  const parsed = definition(d),
+    result = evaluate(parsed, cpqInput());
+  const cost_sources = parsed.parts
+    .map((p) => ({
+      ...p.cost_source!,
+      part_key: p.key,
+      review: {
+        id: p.cost_source!.review_event_id,
+        source_version: 3,
+        reason: "SYN reviewed",
+        created_by: p.cost_source!.source_id,
+        created_at: "2026-10-01T00:00:00.000Z",
+      },
+    }))
+    .reverse();
+  const evidence = costLineEvidence({
+    binding: { cost_sources } as Binding,
+    result,
+  });
+  assert.equal(
+    evidence.find((e) => e.target.includes(":sensor:"))!.source.source_id,
+    d.parts[0].cost_source!.source_id,
+  );
+  assert.equal(
+    evidence.find((e) => e.target.includes(":sensor:"))!.source.part_key,
+    "sensor",
   );
 });

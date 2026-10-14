@@ -40,7 +40,6 @@ import {
 } from "../helpers/cpq-costs";
 import { crmBase, CRM } from "../helpers/crm";
 import { manualLines, quoteCommand } from "../helpers/estimating";
-import { cpqInput } from "../helpers/cpq";
 import { productFixture, publishProduct } from "../helpers/products";
 
 if (localConfig().database_name !== "ppo_synthetic_test")

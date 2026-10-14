@@ -84,8 +84,10 @@ export async function costBindings(
 export function costLineEvidence(saved: Pick<Run, "binding" | "result">) {
   return saved.result.lines.flatMap((line) => {
     if (!line.cost_source) return [];
-    const source = saved.binding.cost_sources?.find((s) =>
-      line.target.endsWith(`:${s.part_key}:${s.content.unit}`),
+    const source = saved.binding.cost_sources?.find(
+      (s) =>
+        line.target.split(":")[1] === s.part_key &&
+        line.line.unit === s.content.unit,
     );
     if (!source)
       throw new AppError(
