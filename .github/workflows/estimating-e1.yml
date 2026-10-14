@@ -20,7 +20,9 @@ jobs:
       matrix:
         suite: [database, browser]
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    # The retained database suite exceeded 30 minutes after the Excel/CPQ additions.
+    # Keep every proof; the browser deadline remains unchanged.
+    timeout-minutes: ${{ matrix.suite == 'database' && 45 || 30 }}
     services:
       postgres:
         image: postgres:16.15
