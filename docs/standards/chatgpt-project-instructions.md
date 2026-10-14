@@ -2,7 +2,7 @@
 
 ## 1. Context
 
-Public repo; private synthetic demo.
+Public repo; private demo.
 
 ## 2. Delivery
 
@@ -14,7 +14,7 @@ Follow P01–P12, STATUS, BP-03 §0, BP-04; PPO-009 CRM differs from P09.
 
 ## 3. Sources
 
-Read AGENTS.md, README, STATUS and ADRs.
+Read AGENTS.md, README, docs/STATUS.md and ADRs.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
