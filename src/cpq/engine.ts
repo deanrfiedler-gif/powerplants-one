@@ -108,6 +108,14 @@ export function evaluate(
     instance_id: string | null = null,
     target: string | null = null,
   ) => diagnostics.push({ code, message, instance_id, target });
+  if (
+    d.schema_version === 4 &&
+    (input.pricing_date < "0001-01-01" || input.pricing_date > "9998-12-31")
+  )
+    add(
+      "CpqCostPricingDateRange",
+      "Governed pricing dates must be between 0001-01-01 and 9998-12-31, matching the native estimate source-binding contract.",
+    );
   const symbols = new Set(
     d.facts
       .filter((f) => ["Decimal", "Integer"].includes(f.type))

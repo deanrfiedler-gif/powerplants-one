@@ -6,7 +6,7 @@ Owner: Dean Fiedler. Synthetic backend verification, 14 October 2026. Scope BC-0
 
 ## Local execution
 
-Environment: Node 24.21.0, npm 11.19.0, PostgreSQL 16, Chrome 155.0.8059.40 and Playwright 1.63.0. Only the task-owned disposable `ppo_synthetic_test` database was used. The compiled runtime is the `c922854` source tree; later changes are test-fixture cleanup, evidence and the inherited CI deadline. [File manifest](source-manifest.json) binds actual runtime and verification bytes and the compiled build ID.
+Environment: Node 24.21.0, npm 11.19.0, PostgreSQL 16, Chrome 155.0.8059.40 and Playwright 1.63.0. Only the task-owned disposable `ppo_synthetic_test` database was used. The original compiled proof used the `c922854` source tree. Later fixture, evidence and CI corrections are followed by the pricing-date runtime correction recorded below. [File manifest](source-manifest.json) separates that original build from the final source and verification bytes.
 
 | Check | Actual result |
 |---|---|
@@ -38,3 +38,5 @@ Parent #490's `5ce7a1a` E1 database job was cancelled at the explicit 30-minute 
 Direct synthetic AUD excluding tax only. FX/landed receiving, combined schema-3 authoring, native binding controls, operational source/rate owners and commercial acceptance remain separate. The next backend increment is explicit override rebase/conflict decisions and resolution of manually changed CPQ-owned lines. No merge, deployment, customer communication or external transaction.
 
 Independent review of `16c83b0` identified a stale Product HTTP fixture hash in the verification manifest. It is corrected against committed Git blob bytes, with every listed file rechecked and the HTTP isolation launcher/CI definition included. The byte contract now explicitly uses LF Git blobs, independent of Windows checkout conversion. This evidence correction changes no runtime or test behavior. The replacement-head E1 database, compiled browser/restart aggregate and broader P01–P11 HTTP checks passed; final CI and renewed independent review remain separate.
+
+A subsequent review found that four-digit pricing dates accepted by CPQ could exceed the native binding column range. The follow-up engine diagnostic blocks schema-4 readiness outside 0001-01-01 through 9998-12-31; schemas 1–3 and existing history are unchanged. All seven governed-cost units pass, including accepted bounds and rejected year 0000/9999. The manifest retains the original `c922854` compiled evidence separately and binds the corrected source; it does not label the old build as this new runtime. Database boundary adoption and final compiled CI are pending at this record.

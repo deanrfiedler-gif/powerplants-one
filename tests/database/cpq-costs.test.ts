@@ -459,3 +459,41 @@ test("populated governed history survives repeat migration and seeding without e
   assert.deepEqual(await readRun(s.p, s.run.id), run);
   assert.equal((await adoptRun(s.p, s.run.id, command)).replayed, true);
 });
+
+test("governed dates reject unpersistable runs and accept the native upper date boundary", async () => {
+  const s = await setup();
+  const d = structuredClone(s.d);
+  for (const part of d.parts) {
+    part.effective_from = "0000-01-01";
+    part.effective_to = "9999-12-31";
+  }
+  await publishCosts(s, d);
+  for (const pricing_date of ["0000-01-01", "9999-12-31"]) {
+    const blocked = await calculateCosts(s.p, s.g, s.run.id, {
+      ...s.command.input,
+      pricing_date,
+    });
+    assert.equal(blocked.run.result.ready, false);
+    assert.ok(
+      blocked.run.result.diagnostics.some(
+        (diagnostic) => diagnostic.code === "CpqCostPricingDateRange",
+      ),
+    );
+    await assert.rejects(
+      previewAdoption(s.p, blocked.run.id),
+      code("CpqRunBlocked"),
+    );
+  }
+  const allowed = await calculateCosts(s.p, s.g, s.run.id, {
+    ...s.command.input,
+    pricing_date: "9998-12-31",
+  });
+  assert.equal(allowed.run.result.ready, true);
+  const command = adoption(await previewAdoption(s.p, allowed.run.id));
+  await adoptRun(s.p, allowed.run.id, command);
+  assert.ok(
+    (await readEstimate(s.p, command.estimate_id)).saved.source_bindings!.every(
+      (binding) => binding.pricing_date === "9998-12-31",
+    ),
+  );
+});

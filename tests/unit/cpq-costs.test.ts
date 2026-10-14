@@ -43,6 +43,28 @@ test("governed costs resolve exact product and labour tiers after quantity overr
   );
   assert.equal(evaluate(d, input).result_hash, changed.result_hash);
 });
+
+test("governed pricing dates obey native binding bounds before reporting adoption readiness", () => {
+  const d = costDefinition();
+  for (const part of d.parts) {
+    part.effective_from = "0000-01-01";
+    part.effective_to = "9999-12-31";
+    part.cost_source!.content.effective_from = "0000-01-01";
+    part.cost_source!.content_hash = hash(part.cost_source!.content);
+  }
+  const valid = definition(d);
+  for (const pricing_date of ["0000-01-01", "9999-01-01", "9999-12-31"]) {
+    const result = evaluate(valid, { ...cpqInput(), pricing_date });
+    assert.equal(result.ready, false);
+    assert.ok(
+      result.diagnostics.some(
+        (diagnostic) => diagnostic.code === "CpqCostPricingDateRange",
+      ),
+    );
+  }
+  for (const pricing_date of ["0001-01-01", "9998-12-31"])
+    assert.equal(evaluate(valid, { ...cpqInput(), pricing_date }).ready, true);
+});
 test("governed cost validity and supplier minimum block without an authored-price fallback", () => {
   for (const [change, code] of [
     [
