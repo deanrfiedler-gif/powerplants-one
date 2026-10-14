@@ -66,6 +66,34 @@ test("exact rebase decisions preserve parents, recompute labour, recover origina
   );
   const replay = await rebaseRun(s.p, parent.id, next.command);
   assert.equal(replay.replayed, true);
+  const retry = {
+    ...next.command,
+    id: randomUUID(),
+    operation_id: randomUUID(),
+  };
+  const beforeFailure = await graph();
+  await rows(
+    "CREATE FUNCTION ppo.test_rebase_run_fail() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'SYN forced run rollback'; END $$",
+  );
+  await rows(
+    "CREATE TRIGGER test_rebase_run_fail BEFORE INSERT ON ppo.cpq_runs FOR EACH ROW EXECUTE FUNCTION ppo.test_rebase_run_fail()",
+  );
+  await assert.rejects(
+    rebaseRun(s.p, parent.id, retry),
+    /SYN forced run rollback/,
+  );
+  await rows("DROP TRIGGER test_rebase_run_fail ON ppo.cpq_runs");
+  await rows("DROP FUNCTION ppo.test_rebase_run_fail()");
+  assert.deepEqual(await graph(), beforeFailure);
+  const simultaneous = await Promise.all([
+    rebaseRun(s.p, parent.id, retry),
+    rebaseRun(s.p, parent.id, retry),
+  ]);
+  assert.deepEqual(simultaneous[0].receipt, simultaneous[1].receipt);
+  assert.deepEqual(simultaneous.map((result) => result.replayed).sort(), [
+    false,
+    true,
+  ]);
   await assert.rejects(
     rebaseRun(s.p, parent.id, {
       ...next.command,
@@ -409,6 +437,7 @@ test("explicit removal stays protected until replacement; withdrawal and lost ac
   const evidence = await readEstimateProducts(s.p, first.estimate_id, {
     version_id: removed.saved.id,
   });
+  assert.equal(evidence.status, "ResolvedAdoption");
   assert.equal(evidence.retained_history![0].status, "ExplicitlyRemoved");
   const later = await calculateCosts(s.p, s.g, next.run.id, next.run.input);
   const incomplete = await previewAdoption(s.p, later.run.id, {
