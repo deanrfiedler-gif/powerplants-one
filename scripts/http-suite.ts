@@ -4,6 +4,9 @@ import { spawn } from "node:child_process";
 // These proofs require a fresh database and compare complete business snapshots.
 // They must never reset or inspect that database alongside mutating HTTP files.
 const exclusive = new Set([
+  // CPQ changes the company activation head and temporarily revokes source
+  // access; run it apart from the shared estimate/CPQ authority scenarios.
+  "cpq-costs.test.ts",
   "cpq-products.test.ts",
   "excel-import-review.test.ts",
   "excel-import-persistence.test.ts",
