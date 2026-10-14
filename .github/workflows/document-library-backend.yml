@@ -17,6 +17,13 @@ on:
       - "tests/**/document-library*"
       - "tests/**/template-catalogue*"
       - "tests/**/template-drafts*"
+      - "tests/**/template-publication*"
+      - "tests/**/template-use*"
+      - "src/app/api/v1/document-template-use-assignments/**"
+      - "src/app/api/v1/document-template-use-policies/**"
+      - "scripts/template-use-restart-proof.ts"
+      - "scripts/template-publication-restart-proof.ts"
+      - "src/app/api/v1/document-template-publications/**"
       - "scripts/template-drafts-restart-proof.ts"
       - "tests/helpers/library.ts"
       - "tests/database/products-upgrade.test.ts"
@@ -77,9 +84,11 @@ jobs:
       - name: Exact template catalogue and permission-scoped native usage
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-catalogue.test.ts
       - name: Managed template drafts and populated upgrade
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-drafts.test.ts tests/database/template-drafts-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-drafts.test.ts tests/database/template-drafts-upgrade.test.ts tests/database/template-publication.test.ts tests/database/template-publication-upgrade.test.ts
       - name: Pending identity events across 0026 and reserved Products after newest history
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90|91|92) ' tests/database/products-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='PD upgrade from (25|90|91|92|93|94|95|96) ' tests/database/products-upgrade.test.ts
+      - name: Controlled template use and populated publication upgrade
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/template-use.test.ts tests/database/template-use-upgrade.test.ts
       - name: Compiled document library HTTP
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -93,12 +102,17 @@ jobs:
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/document-library.test.ts
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-catalogue.test.ts
           node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-drafts.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-publication.test.ts tests/http/template-publication-base.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/template-use.test.ts
       - name: Exact originals across PostgreSQL and application-process restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/document-library-restart-proof.ts write
           node --env-file=.env.local --import tsx scripts/template-drafts-restart-proof.ts write
+          node --env-file=.env.local --import tsx scripts/template-publication-restart-proof.ts write
+          node --env-file=.env.local --import tsx scripts/template-use-restart-proof.ts write
           docker restart "$PPO_POSTGRES_CONTAINER"
           for attempt in $(seq 1 30); do
             docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
@@ -106,6 +120,8 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/document-library-restart-proof.ts verify
           node --env-file=.env.local --import tsx scripts/template-drafts-restart-proof.ts verify
+          node --env-file=.env.local --import tsx scripts/template-publication-restart-proof.ts verify
+          node --env-file=.env.local --import tsx scripts/template-use-restart-proof.ts verify
       - name: Retain bounded synthetic restart evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -114,5 +130,7 @@ jobs:
           path: |
             verification-evidence/document-library-restart/result.json
             verification-evidence/template-drafts-restart/result.json
+            verification-evidence/template-publication-restart/result.json
+            verification-evidence/template-use-restart/result.json
           if-no-files-found: ignore
           retention-days: 14

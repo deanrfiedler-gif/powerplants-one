@@ -94,7 +94,8 @@ export const migrationFiles = [
   "0090-document-library.sql",
   "0091-output-distribution.sql",
   "0092-template-draft-proposals.sql",
-  // 0093 and 0094 remain reserved by DK-06 publication and controlled use.
+  "0093-template-publication.sql",
+  "0094-template-use-assignment.sql",
   "0095-excel-import.sql",
   "0096-excel-reimport.sql",
 ] as const;

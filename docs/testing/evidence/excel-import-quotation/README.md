@@ -27,3 +27,7 @@ Local synthetic artifacts are under ignored `verification-evidence/excel-quotati
 ## Limits
 
 No native Excel upload/review UI is delivered. The browser proof covers the existing Draft output at desktop/mobile widths, not the future import journey. At 320px, the unchanged native template wraps some amounts and quantity labels within their cells; this remains a visible presentation limitation and visual acceptance is open. E4 issue, commercial approval, sending, representative operational workbook compatibility, independent/owner acceptance and deployment remain outside this contribution. CI status is reported independently from local execution.
+
+## Integrated parent follow-up
+
+PR #484 advanced to `31f3732` while the Step 5 proofs were running, bringing the combined template publication/use and UI history. It is merged by ancestry; both receipt handlers and status histories are retained. The ledger above records execution before this integration. Fresh combined-source build, focused database/HTTP/restart and documentation checks are in progress.

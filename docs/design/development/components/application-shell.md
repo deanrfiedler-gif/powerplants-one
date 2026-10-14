@@ -192,3 +192,18 @@ The ES-02 and ES-08 consumer proofs share `tests/helpers/shell-header-geometry.t
 `route:/projects` reuses this component with scoped styling from `src/app/styles/projects-register.css`. [Decision](../../../decisions/projects-register-native.md) and [source measurements](../../projects-register/figma-measurements.json) define the requested departures: 40 px desktop rows/header and controls, pinned 44 px end cells, compact 80 px phone rows, a 240 px expanded rail and a five-item Projects phone bar. Generic consumer geometry remains intact. Native fixture/state examples are in `tests/browser/projects-register.spec.ts` (selection, export, exact snapshots, URL restoration and refused reads); this does not introduce a new isolated gallery renderer.
 
 Use the [execution record](../../../testing/evidence/projects-register/README.md) for actual checks and visual limitations. Owner/device review stays pending; no review fingerprint is assigned by this update.
+## Customer 360 Figma consumer refinement — 14 October 2026
+
+The CS-01 proposal now composes the shared 240 px navy rail, 240 px customer-view menu, 64 px top bar and phone header/bottom tabs, following comparison with accepted Leads, Project record and My Work. Its customer menu is a proposed consumer arrangement; this edit does not alter the shared shell implementation or grant visual acceptance. The [Customer 360 design record](../../../decisions/customer-360-figma-design.md) and [r02 captures](../../../reference/ui/customers/customer-360-figma-r02/README.md) retain exact sources, dimensions and prototype limits. The page's summary fixtures record the shell widths and phone presentation. Keep native behaviour and paired owner/device review separate.
+
+The later Customers-register extension binds route:/customers to the same proposed shell. Customers replaces Customer 360 as the primary entry label; the record header adds Back to customers. The [r03 manifest](../../../reference/ui/customers/customer-360-figma-r03/README.md) and [register fixtures](../customer-register-fixtures.json) record desktop/phone entry, two exact profiles and conditional return controls. These are page-consumer changes only; no shared shell main component, runtime token or native navigation policy changes.
+
+
+## ES-02 Figma consumer
+
+The [Estimation Wizard host](estimation-journey.md) now adopts the accepted Figma record layout using this existing control. Its host fixtures cover desktop and phone save/revision continuity; source and review remain separate. The component implementation is unchanged outside the scoped ES-02 consumer.
+
+
+## Products discovery consumer — 14 October 2026
+
+PD-01 reuses the secondary menu and RegisterTable. Shared CSS adds only #ppo-products:where([data-catalogue]), retaining selector specificity for other consumers. Catalogue styles use a white compact header, model/variant rows and a separate full-width phone list. Host fixture/state examples: tests/browser/products-discovery.spec.ts (filtered/empty/unavailable, selected return, scope reset, responsive menu focus). [Decision](../../../decisions/products-discovery-proposal.md) and [evidence](../../../testing/evidence/products-discovery/README.md) retain owner/device acceptance as pending.

@@ -1,4 +1,7 @@
 import { excelQuoteReceiptAuthority, excelQuoteCommand } from "../estimating/import/quotation";
+
+import { receiptAuthority as publicationReceiptAuthority } from "../documents/publication/service";
+
 import { excelReceiptAuthority } from "../estimating/import/retained";
 import { receiptAuthority as templateReceiptAuthority } from "../documents/drafts/context";
 import { receiptAuthority as libraryReceiptAuthority } from "../library/context";
@@ -84,7 +87,20 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "TemplateProposal") {
+  if (r.object_type === "TemplateUseAssignment") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      const { receiptAuthority } = await import("../documents/use/service");
+      await receiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "TemplatePublication") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      await publicationReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "TemplateProposal") {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
       await templateReceiptAuthority(c,p,r.record_id,operation_id);

@@ -4,6 +4,10 @@ Stable entry: `scope:ES-02`. Owner: Dean Fiedler. Status: **Draft for visual rev
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/estimating/discovery`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
+## Current native page — 13 October 2026
+
+The [Figma implementation decision](../../../decisions/es02-wizard-figma-implementation.md) supersedes the historical pending-implementation statements below. Six-family/category authoring, explicit historical classification review and phone editor now use the existing ADR-0054 backend. See the [current record-page contract](route-estimating-discovery-id.md) and [execution evidence](../../../testing/evidence/es02-figma/README.md). Owner visual acceptance and deployment remain separate.
+
 ## Purpose and task
 
 Retain the native five-step wizard delivered by PR #272, including exact revision comparison, structured multi-area scope, source-change handling, immutable alternatives and saved-cost reads. The 24 September reconciliation updates the workload return link and removes obsolete wording that denied the now-native ES-08 specialist integration. No discovery DTO, hash, command, schema or costing guarantee changes.

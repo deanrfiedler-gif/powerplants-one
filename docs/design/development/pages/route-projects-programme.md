@@ -53,3 +53,7 @@ The existing Gantt, task editor and baseline dialog use saved Project calendars 
 Incoming: scoped programme/calendar/actual revisions. Outgoing: native task saves and immutable baseline receipts; calendar/actual commands are currently API-only. Reuse ProjectsGantt, ProjectTaskPanel, ProjectBaselines and their existing controls. Existing consumer bindings and r10 reference remain. No exact image for calendar editing or actual-date controls exists; these surfaces and paired acceptance remain open. Desktop and phone must retain scroll, keyboard access, calendar labels and advisory warnings without adding a sibling panel. Functional evidence: `docs/testing/evidence/project-programme/README.md`; source presence is not deployment or visual acceptance.
 
 Change history distinguishes calendar, actual-date, task and acceptance events; it must not label every Project version as a task save. Desktop/phone native-host proof covers those labels.
+
+## Gantt colours — 14 October 2026
+
+The Gantt on this page takes its colours from the Figma Schedule frame, not from r10: green complete, blue in progress, orange at risk, grey planned, and a purple today marker. See the [decision](../../../decisions/gantt-figma-colours.md) and the [Gantt component record](../components/gantt.md). Geometry and behaviour are unchanged, and the Overdue state is not built.

@@ -1,0 +1,8 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"155.0.8059.40"}
+  ok 1 [products-desktop] › tests\browser\products-discovery.spec.ts:17:1 › PD-DISC catalogue filters, exact return, bounded rows and unavailable recovery (19.0s)
+  ok 2 [products-desktop] › tests\browser\products.spec.ts:141:1 › PD historical pricing handoff retains the selected revision through navigation and reload (2.9s)
+  ok 3 [products-desktop] › tests\browser\products.spec.ts:277:1 › PD all five compiled native pages: exact identities, phone reflow, keyboard, URL state and denied evidence (12.0s)
+  ok 4 [products-phone] › tests\browser\products-discovery.spec.ts:17:1 › PD-DISC catalogue filters, exact return, bounded rows and unavailable recovery (17.0s)
+  ok 5 [products-phone] › tests\browser\products.spec.ts:141:1 › PD historical pricing handoff retains the selected revision through navigation and reload (3.0s)
+  ok 6 [products-phone] › tests\browser\products.spec.ts:277:1 › PD all five compiled native pages: exact identities, phone reflow, keyboard, URL state and denied evidence (9.0s)
+  6 passed (1.2m)

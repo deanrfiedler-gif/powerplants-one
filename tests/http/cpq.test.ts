@@ -14,7 +14,7 @@ import {
 import { discoveryInput } from "../helpers/estimating-discovery";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 after(closeDatabase);
 async function actor(cap: string) {
   const id = randomUUID(),

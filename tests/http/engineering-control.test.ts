@@ -7,7 +7,7 @@ import {
   seedControlContext,
 } from "../helpers/engineering-control";
 import type { SignIn } from "../helpers/engineering-materials";
-const origin = process.env.PPO_HTTP_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_HTTP_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 if (new URL(origin).hostname !== "127.0.0.1")
   throw Error("Synthetic loopback only");
 const cookies = new Map<string, string>();

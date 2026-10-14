@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { crmBase, crmCreate } from "../helpers/crm";
 import { structuredDiscovery } from "../helpers/estimating-configuration";
 import { catalogueDiscovery } from "../helpers/estimating-catalogue";
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 async function session(profile = "coordinator") {
   const response = await fetch(origin + "/api/v1/local-session", {
     method: "POST",

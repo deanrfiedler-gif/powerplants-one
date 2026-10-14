@@ -279,9 +279,18 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // privileges and three default-denied capabilities. It widens identity/audit
   // constraints using the deferred-identity flush pair. No seed, tester grant,
   // runtime template, policy, existing output or source bytes change.
+  // 0093 adds empty immutable publication evidence and denied template.publish.
+  // Existing runtime privileges apply; no seed, tester grant, template or policy
+  // changes occur during upgrade. Publication later requires explicit scope and
+  // pack.check approval; legacy renderer bytes remain unchanged.
+  // 0094 adds empty scoped use-policy heads and immutable assignment intervals.
+  // No old pointer, grant, seed, user or output changes. Identity extension uses
+  // the deferred-event flush. New render guards are inert without an adopted site
+  // policy; the generic grants cover the two tables/view and guard functions.
+  // template.assign remains default-denied; this is not hosted use adoption.
   // 0095 adds empty, immutable Excel import evidence and line maps. Existing
   // Estimate identity, receipts, outbox kind and runtime privileges are reused.
-  // No seed, grant, user or source bytes change; 0093/0094 remain reserved.
+  // No seed, grant, user or source bytes change; 0093/0094 are integrated.
   // 0096 adds empty successor evidence and read views; no existing rows or seeds change.
   if (latestMigrationVersion !== 96) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");

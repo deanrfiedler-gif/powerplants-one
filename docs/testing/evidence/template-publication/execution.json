@@ -1,0 +1,129 @@
+{
+  "scope": "DK-06 R3 synthetic OUT-09 publication",
+  "base_commit": "96896d184cf9ae205bf00071ec1e85d951662e12",
+  "source_hash_basis": "SHA-256 of UTF-8 source with CRLF normalised to LF",
+  "source_sha256": {
+    ".github/workflows/document-library-backend.yml": "44ae0e76cf7f2f081aa1fedafbc10c76822fb62c5e62f83beb761bc6b5516cd1",
+    "db/migrations/0093-template-publication.sql": "7e42a6319550192acb9abe01d877ff88a7a818440e68b9f0f79bbbc402ba78d3",
+    "package.json": "d959c1f27f24843597f5be3c5bdde54e6260e0dbdc67fe13f29f05f79e92a408",
+    "scripts/demo-upgrade.ts": "ed04f79e20e1e5ac17aa5948f9f97aa5b0bffc460cd4510f09bf7216f4477769",
+    "scripts/migration-registry.ts": "0c443f444a08bafe5e441e8a4d1ac4d4650000d36332975ce9629418ee49990a",
+    "scripts/persistence-proof.ts": "e87ae0b0896e963457f9eb23c1e7e8216ffbca080a5024a3248e3b5589a5fb19",
+    "scripts/template-publication-restart-proof.ts": "d51b8c7666deacfc622a29ac5d7fa17d92055555bd469d695f1d1b4a1216faa9",
+    "src/access/capabilities.ts": "72ca90b56dc7865d8a09fa2350f6378864c78b537fcfb228b391d1303617095c",
+    "src/app/api/v1/document-template-drafts/[id]/publication/route.ts": "696587417017da1c0c6a05188ce28c41c6101f76b745d5775d79f82d4f8c3f24",
+    "src/app/api/v1/document-template-publications/[id]/route.ts": "491e75d24ee2d8a49a6ae606754b7f1328264b6874ad6742912d058654c9dd53",
+    "src/documents/context.ts": "a62463d695ea58db86873cb93878ccc9f1c45f08cb27f256484d15ab5908890a",
+    "src/documents/drafts/context.ts": "088b022d71674df43694e73aa7f695234c0b049991617d3a7e62e369f9d4e6d1",
+    "src/documents/http.ts": "f3a9bddd3f66eba5b1eb83b5d1a12aec7b24af474251c767110d33d5471da663",
+    "src/documents/publication/definition.ts": "7cfac86f5c47ebc319c5a98c97b7beb7da7120c0990f3056fe2e6e6539933fa1",
+    "src/documents/publication/render.ts": "50bcbab001ece0f74c951da71d69eb4a2cc8da1ebd042a5b254dc427beacaf9e",
+    "src/documents/publication/service.ts": "d25f8a1693d91f4faded90264ca57092b81f08e8acd50616de782246c2090a4b",
+    "src/documents/template-catalogue.ts": "17f6254e22d95aaa1d75efd2b28a652e3c05ff94591468d4bc89885e8ae62690",
+    "src/documents/worker.ts": "338eb46a25bce89faa16d7e525988b286ca104f93ec964429d1202df1702f2d7",
+    "src/platform/operations.ts": "367b1597ebc1076fb8813da11240b86a7b56c0a9d40d9ede51d150a40379dcd2",
+    "src/platform/permissions.ts": "7f53fa08b8fdf4d959ce4eff80bfe005e467ddcf4c02538196db45fa5b09244d",
+    "src/shared/receipts.ts": "5cced3ccf7e567391953610faa845c46d4e5253699f86275d4cb2b467e30f33a",
+    "tests/database/template-publication-upgrade.test.ts": "8e189b5c0e1288792c7e418f0c1e1b2327463f3155b94fbf6e677dd294a43cc5",
+    "tests/database/template-publication.test.ts": "a78e9f9a50f1126616029047f703d23dedb406a53bff581095b5e7b4a95077c6",
+    "tests/helpers/estimating-cost-basis-http-cases.ts": "222f564e42cf755a78bf523a1664be56397b9c6111263bbda0365c17e64e86ca",
+    "tests/helpers/quotation-release-http.ts": "c2fe7c88f0eba1cb8ff7a56121ce03e835e14e2b032c26358aa71aa31e93ad43",
+    "tests/helpers/template-publication.ts": "41358c3bc80a010f96dc094b665120bd8196ecb9d0243182ad6883f599c1a33c",
+    "tests/http/cpq.test.ts": "ab7c05cd1024af166a2720b564264e8a83e749ea8fdb5956a20907c884c861e7",
+    "tests/http/crm-i2.test.ts": "38d38759f43466fd6b5f915a5f0a7b1f32718c58bfba86d8e87a6cfa176a0a44",
+    "tests/http/crm.test.ts": "a2ee672cd3a186d65354d395971b94ce0b8f26b9008bd0cc683ec45ec12ad146",
+    "tests/http/engineering-control.test.ts": "356c2360812d67ba6b4e36fdbd12b83e4c0d3ec08272c8e655d4211e00f33051",
+    "tests/http/engineering-register.test.ts": "3e158bdc2d816fd7059c07e76e0b349ce19a503909f613550abd28d1953ba815",
+    "tests/http/estimating-configuration.test.ts": "a4ef79d5b6a72093b3f9b6d347ee469b115594b0c57241ddce03dcdf87a87697",
+    "tests/http/estimating-review.test.ts": "1ddf6f7066e39edb9fe206f8377cf22a7b365baedb17096934e0032985950207",
+    "tests/http/estimating-sources.test.ts": "ba22e4b6cc2e5ac3f76ae70063df58140b3e945f2c80adf6ad859f54b16de06f",
+    "tests/http/estimating-workload.test.ts": "f3b95bd94bd2026df7c7ab3eccedd703ee3c134f7bf03ae63c8c4ab71fe6e2a9",
+    "tests/http/estimating-workspaces.test.ts": "42fae0f6c1fc7070a21e23525e811b5473f4230df62d04394456caa050af05e4",
+    "tests/http/estimating.test.ts": "a2a7e493a12dc7ee3fe62c8a095f10f0cbdfbb9dbbb28dc637637b03c77ddbf7",
+    "tests/http/fertigation.test.ts": "d38340ec003845be70b859897398c60c747c1aa4e81310e2cb1dc90711b2bfab",
+    "tests/http/field.test.ts": "24830e874bc5b80ee236bebeea1ab61c8e906d24598b84b2d0b2933b72155153",
+    "tests/http/finance.test.ts": "0b29246d798cdf9be587ef92d705dfec5acece2e63c31bff0d2a90bb88f40b2e",
+    "tests/http/intake.test.ts": "e0465c28c981901406a0a0cc1033ba1159dd1f0a232e4105da967a85bf31248b",
+    "tests/http/lead-record.test.ts": "9b8ff0fd5acfa8ad6543bc0d5ae9ab71ff9b269f54e453972f23de04ce39cc3c",
+    "tests/http/lead-register.test.ts": "36ebcf07994dea537e735f966bb08c1023d03a814602bdade65711e3be53b7fd",
+    "tests/http/offline.test.ts": "678e6d4c24885417abf4398372fb492c5592b89602f56a42e3c6d1b66a019e47",
+    "tests/http/packs.test.ts": "44f05558c60842edb4ac43ac10a83bb15ff5f8755ec5a86dc7b98a7a9d9173c8",
+    "tests/http/planner.test.ts": "5efb6eb276bc667813201b6cf2887050304b4c76c72243b7f8702c3bde0f5de0",
+    "tests/http/products.test.ts": "c95bfb8706fbd6fddb10068993141190f9c65ca5999c3f5d27e35049239adb08",
+    "tests/http/reports.test.ts": "0b0c2e7d47478b29a89aff0252b65397ea4e099f65bb84a31f470b4792d6eecd",
+    "tests/http/sales-workflows.test.ts": "6f1800b3fcee34d19b0fba9eb3a94d86fd1b3122e1413a3b47f2847bad74c990",
+    "tests/http/shared.test.ts": "7a1e563cd42eb7a07712a2827281136835b3bd4872f962cc1b5d0ce9a7725476",
+    "tests/http/specialist.test.ts": "062cde0cf711cd8cc2807bea72afc74146444f22a1665ce2800791da1e9a527e",
+    "tests/http/template-publication-base.test.ts": "f1bf880a6048cc2850f7a5103d358ec5c8df6170245e8399c041ef0fb6f7bd05",
+    "tests/http/template-publication.test.ts": "95bc46f5cab7186d9209e2abc19f45f540654f154ec350274d0b67611ffb088e",
+    "tests/http/work-orders.test.ts": "79680edbccbe8b7581f6272dec42bd5521f49ac10076266a99cacf146f452b01",
+    "tests/unit/template-publication.test.ts": "7c80c06ed8b868cee368ae7f380dc9beefc213d215b06dc272db390026568545"
+  },
+  "results": {
+    "database_scenarios": {
+      "pass": 17
+    },
+    "populated_0092_upgrade": "Passed",
+    "products_upgrades": {
+      "starting_versions": [
+        25,
+        92,
+        93
+      ],
+      "pass": 3
+    },
+    "demo_upgrades": {
+      "pass": 6
+    },
+    "units": {
+      "pass": 795,
+      "fail": 3,
+      "cancelled": 0,
+      "limit": "Unchanged Windows filesystem cases previously reproduced on a333604; source/tests unchanged"
+    },
+    "typecheck": "Passed",
+    "changed_source_eslint": "Passed",
+    "access_model": {
+      "pass": 107,
+      "capabilities": 149
+    },
+    "access_browser": {
+      "completed_groups": 0,
+      "status": "Baseline environment failure",
+      "error": "Page.captureScreenshot: Unable to capture screenshot"
+    },
+    "restart": {
+      "result": "Passed",
+      "scope": "R3 immutable publication and actor-private original recovery after PostgreSQL/process restart",
+      "evidence_hash": "29c55767adb80902b8cf551c23dd53883611b9e71e711b8d9238f29705a9e00d",
+      "use_assigned": false
+    },
+    "build": "Passed",
+    "compiled_http": {
+      "pass": 101,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "basis": "Completed serial broad run before the final copied-base authority guard; focused final-build proof recorded separately"
+    },
+    "final_database_scenarios": {
+      "pass": 11,
+      "fail": 0,
+      "scope": "R2/R3 after final copied-base authority guard"
+    },
+    "final_compiled_http": {
+      "pass": 6,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "scope": "Library, catalogue, drafts, publication and cross-site copied-base current-authority regression against final build"
+    }
+  },
+  "acceptance": {
+    "independent_review": "Pending",
+    "business_acceptance": "Pending",
+    "native_page": "Unbuilt",
+    "deployment": "Not performed"
+  },
+  "verified_date": "2026-10-14"
+}

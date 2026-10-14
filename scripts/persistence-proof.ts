@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import { prepareBookingPolicy } from "../src/scheduling/booking-policy";
 import {
   base,
@@ -124,7 +125,7 @@ try {
     const p06 = await issued();
     const doc = p06.pack.issues[0];
     await writeFile(
-      "/tmp/ppo-p06-restart.json",
+      join(process.env.PPO_RESTART_PROOF_DIR ?? "/tmp", "ppo-p06-restart.json"),
       JSON.stringify({
         pack_id: p06.pack.id,
         issue_id: doc.id,
@@ -174,7 +175,7 @@ try {
     const completion = draft(job);
     await saveCompletionDraft(tech, job.id, completion);
     await writeFile(
-      "/tmp/ppo-p07-restart.json",
+      join(process.env.PPO_RESTART_PROOF_DIR ?? "/tmp", "ppo-p07-restart.json"),
       JSON.stringify({
         appointment_id: job.id,
         authority_hash: job.attendance.authority_hash,
@@ -189,7 +190,7 @@ try {
     );
   } else {
     const proof = JSON.parse(
-        await readFile("/tmp/ppo-p07-restart.json", "utf8"),
+        await readFile(join(process.env.PPO_RESTART_PROOF_DIR ?? "/tmp", "ppo-p07-restart.json"), "utf8"),
       ),
       tech = (await createSession("assigned-technician")).principal;
     const job = (await readFieldJob(tech, proof.appointment_id)).items[0];
@@ -218,7 +219,7 @@ try {
       "P07 PostgreSQL process restart: exact start authority, original/corrected capture lineage, durable verified PNG, completion draft, owned follow-up and original receipt verified",
     );
     const saved = JSON.parse(
-      await readFile("/tmp/ppo-p06-restart.json", "utf8"),
+      await readFile(join(process.env.PPO_RESTART_PROOF_DIR ?? "/tmp", "ppo-p06-restart.json"), "utf8"),
     );
     const p06 = (await readPack(p, saved.pack_id)).items[0];
     assert.equal(p06.current_issue_id, saved.issue_id);

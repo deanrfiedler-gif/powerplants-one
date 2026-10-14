@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   globalSetup: "../scripts/check-browser.ts",
   testDir: "./browser",
-  testMatch: "products.spec.ts",
+  testMatch: ["products.spec.ts", "products-discovery.spec.ts"],
   fullyParallel: false,
   workers: 1,
   timeout: 45000,

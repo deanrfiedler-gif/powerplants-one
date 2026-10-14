@@ -8,12 +8,12 @@ import {
   receivingPolicy,
 } from "../../src/estimating/specialist/fixture-policy";
 import { base } from "../helpers/specialist";
-const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 let cookie = "";
 before(async () => {
   execFileSync(
     process.execPath,
-    ["--env-file=.env.local", "--import", "tsx", "scripts/es08-fixture.ts"],
+    ["--import", "tsx", "scripts/es08-fixture.ts"],
     { stdio: "pipe" },
   );
   const r = await fetch(origin + "/api/v1/local-session", {

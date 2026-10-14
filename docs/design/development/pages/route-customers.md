@@ -6,7 +6,7 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
+Find a permitted canonical customer, confirm its identity and open that exact Customer 360 workspace. Returning to the register should retain the prior search, filter, sort, page and scroll context. The native directory already exists; the 14 October Figma composition remains a proposal for review.
 
 1. Search for an existing organisation before creating another
 2. Confirm contacts and sites belong to the correct organisation
@@ -57,3 +57,21 @@ ProductNavigation retains the original main prefetch policy on desktop and phone
 Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-loading.spec.ts`, `directory-navigation.spec.ts` and `navigation-safety.spec.ts`. The [loading evidence](../../../testing/evidence/pt27-loading/README.md) records source-specific timing and receiving outcomes. Geometry, fonts, labels, icons and accepted reference bytes are unchanged. No new mockup image is needed for this transport-only change; actual captures and existing references remain separate from owner/device/visual acceptance. Existing stale reviews are preserved.
 
 PT-27 refined execution: [source-bound timing and captures](../../../testing/evidence/pt27-loading/direct-directory-refined/README.md) pass all 320 directory loads and 80 actual record openings. Initial script bytes fall 6.91%; cold targets and visual/owner/device review remain open. This evidence changes no accepted reference or review fingerprint.
+
+## Figma register proposal — 14 October 2026
+
+r20 page type: **Register / worklist**; receiving Customer 360: **Record detail / Overview dashboard**. The [r03 manifest](../../../reference/ui/customers/customer-360-figma-r03/README.md) supplies exact nodes, 1440 × 900 desktop and 390 × 844 phone captures and hashes. Issued HTML/report and previous captures remain unchanged.
+
+Desktop: 240 px navy primary rail, 240 px saved-view menu, 64 px global header and 960 px content region. Use 24 px content gutters and the shared PPO Roboto, colours, buttons and tags. Keep Customers and its population visible; four compact cards show bounded Customers, Sites, visible Open follow-ups and Due today. The 912 px table shows Customer/reference, Relationship owner, Primary contact, Sites and Next follow-up. Whole-row activation opens the canonical customer. Counts, search results and follow-up timing remain explicit. No lifecycle status is inferred from this fixture.
+
+Phone: shared 64 px header and bottom bar, 16 px gutters, a 44 px search target with 16 px input text, a Due today control and two 358 px customer cards. Preserve name/reference, owner, primary contact, site count and next follow-up. Each card is a single exact-customer target. The detail keeps a 44 px Back to customers control above the customer identity and its single scrolling body. No 320 px Figma capture is supplied; that adaptation remains unverified.
+
+Reused components: Brand / Logo; Shell / Top bar and Phone header; v2 Rail item, Menu item and Menu heading; phone tab items; Button, Tag, Icon and existing PPO variables/text styles. Table rows and phone cards are page-local compositions, not newly adopted shared components. The crm-directory catalogue host and application-shell binding retain their native implementations.
+
+Prototype fixtures: all customers, desktop Name descending, preset Willowbank search and Follow-up due today. All rows/cards store the originating register frame, then navigate to the selected canonical customer. Back/Change customer and the Customers rail/breadcrumb use a conditional return with scroll reset disabled, including after Willowbank view changes. The source provides two customers; larger populations, arbitrary combined filters, empty/loading/failure/denied states, pagination and keyboard/device behaviour remain future implementation/review work. Search is a fixed Figma example. Existing permission boundaries remain; no finance values are exposed in the register.
+
+Incoming: permitted organisation directory and the exact scenario fixture. Outgoing: canonical Customer 360 and subsequent owned source records. Native follow-up/ERP actions are outside the register flow. Agent visual/structural inspection is recorded in the manifest; paired native comparison, named Figma version and owner acceptance remain pending. The Draft guide labels its prototype example separately from running-release tasks.
+
+## Shared table treatment — 14 October 2026
+
+The [r04 table-alignment manifest](../../../reference/ui/customers/customer-360-figma-r04/README.md) replaces the r03 desktop-register image as the current proposal. Reuse the accepted Leads Grid / Header cell (74:9 / 74:11): white 40 px header, 14/20 Roboto Medium, square edges and thin row/column dividers. Customer rows are 64 px with 12 px horizontal insets; columns are 276 / 164 / 148 / 60 / 220 / 44 px within the 912 px table. Whole-row actions and Name sorting are retained. The phone cards and profile-return contract are unchanged. Hover/selection behaviour remains native review work; this drawing does not invent bulk-selection actions.

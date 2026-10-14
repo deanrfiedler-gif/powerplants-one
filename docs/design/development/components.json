@@ -599,7 +599,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones."
+          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones. Products host fixture: tests/browser/products-discovery.spec.ts covers filtered, returned, empty, unavailable/recovered and changed-identity states."
         },
         {
           "id": "panel",
@@ -643,7 +643,9 @@
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
         "src/app/styles/job-pack-figma.css",
-        "src/documents/components/client/job-pack-register.tsx"
+        "src/documents/components/client/job-pack-register.tsx",
+        "src/products/components/catalogue-register.tsx",
+        "src/products/components/catalogue-register.css"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -661,7 +663,8 @@
         "scope:SV-05",
         "route:/service/packs",
         "route:/estimating/cpq",
-        "route:/estimating/rules"
+        "route:/estimating/rules",
+        "route:/products"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -723,6 +726,14 @@
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-products-discovery",
+          "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
+          "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
+          "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -751,6 +762,11 @@
           "id": "read-only",
           "label": "Read only",
           "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "es02-figma-host",
+          "label": "ES-02 Figma host",
+          "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
         }
       ],
       "implementation": [
@@ -851,13 +867,21 @@
       "desktop": "Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag.",
       "mobile": "Use the actual mobile stage layout; long titles and activity descriptions wrap without obscuring actions.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
-      "limitations": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review.",
+      "limitations": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review. The separate six-view r37 Figma proposal is documented in the specification; it does not replace the runtime r38 reference or change existing fixture/consumer bindings.",
       "gaps": [
         {
           "id": "sales-board-alignment",
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Board styling remains a CRM variant. Compact targets and narrow-screen behaviour need owner/device review.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-board-figma-r37",
+          "expected": "Review the user-requested r37 Figma board, list and phone component references with the owning Deals page.",
+          "actual": "Six editable Figma views were created on 13 October. The 14 October user-directed refinement corrects stage/card geometry, removes the module container and reuses accepted Leads grid components; all five desktop views were visually inspected. A follow-up pass uses 8px gutters/insets, whole-pixel 264px columns and 248px cards, uniform 1px borders and a taller stack to avoid final-card clipping; the four affected board views were recaptured and inspected. See docs/testing/evidence/deals-figma/README.md. No runtime change or owner acceptance.",
+          "action": "Review proposed shell/mobile adaptations and resolve runtime r38 alignment before adopting the design.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2064,6 +2088,11 @@
           "id": "nav-accepted-routing",
           "label": "NAV CI repair host",
           "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery. Fixture: tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts Pending/unknown mounted view switching and refused Home recovery: tests/browser/equipment.spec.ts."
+        },
+        {
+          "id": "es02-figma-host",
+          "label": "ES-02 Figma host",
+          "description": "Native Discovery/Alternatives/Revisions with shared draft and full-width comparison; actual host fixtures in estimating-wizard.spec.ts."
         }
       ],
       "implementation": [
@@ -3192,7 +3221,7 @@
         {
           "id": "engineering-host",
           "label": "Native Engineering host",
-          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example. Products host fixture: tests/browser/products-discovery.spec.ts covers filtered, returned, empty, unavailable/recovered and changed-identity states."
         },
         {
           "id": "service-phone-identity",
@@ -3308,6 +3337,11 @@
           "id": "es08-figma-host",
           "label": "Screen Configurator Workbench",
           "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
+        },
+        {
+          "id": "es02-figma-host",
+          "label": "ES-02 Figma host",
+          "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
         }
       ],
       "implementation": [
@@ -3326,6 +3360,10 @@
         {
           "path": "src/components/notification-bell.tsx",
           "symbol": "NotificationBell"
+        },
+        {
+          "path": "src/shell/secondary-menu.tsx",
+          "symbol": "SecondaryMenuFrame"
         }
       ],
       "dependencies": [
@@ -3375,7 +3413,11 @@
         "docs/design/projects-register/figma-measurements.json",
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
-        "src/app/styles/job-pack-figma.css"
+        "src/app/styles/job-pack-figma.css",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "src/products/components/catalogue-register.tsx",
+        "src/products/components/catalogue-register.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3421,7 +3463,9 @@
         "route:/customers",
         "route:/people",
         "scope:ES-08",
-        "scope:SH-02"
+        "scope:SH-02",
+        "scope:CS-01",
+        "route:/products"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -3619,6 +3663,22 @@
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "customer-360-figma-shell-alignment",
+          "expected": "Customer 360 uses the shared PPO rail, secondary menu, top bar and phone navigation.",
+          "actual": "14 October Figma proposal matches accepted Leads, Project record and My Work shell patterns; native CS-01 and owner acceptance remain separate.",
+          "action": "Review the r02 Customer 360 captures and pair the native consumer before adopting the proposed customer menu.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-products-discovery",
+          "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
+          "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
+          "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -3747,34 +3807,87 @@
       "id": "estimation-journey",
       "title": "Complete estimation wizard",
       "category": "Forms",
-      "module": "Reference library",
-      "purpose": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+      "module": "ES",
+      "purpose": "Native ES-02 Figma record page: five shared-draft steps, six-family/category authoring, explicit historical-catalogue review, field-linked unsaved changes, immutable saves, exact saved-cost summary and phone system editor. Owner/device visual review and deployment remain separate.",
       "owner": "Dean Fiedler",
       "example": null,
-      "coverage": "Reference only",
-      "states": [],
-      "implementation": [],
-      "dependencies": [],
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "saved",
+          "label": "Saved discovery",
+          "description": "Northbank fixture: r03 viewed; saved AUD 58,400 v04 remains based on r02."
+        },
+        {
+          "id": "dirty",
+          "label": "Working copy",
+          "description": "Changed systems, facts, areas and responsibilities link from the unsaved-changes popover; save/discard uses the existing guarded commands."
+        },
+        {
+          "id": "catalogue",
+          "label": "Explicit catalogue review",
+          "description": "r01 keeps historical families; map every system before applying r02. Saved IDs, facts and history survive."
+        },
+        {
+          "id": "family-states",
+          "label": "Family status",
+          "description": "Empty grey, pending neutral/amber, green only after evaluated confirmation; Infrastructure counted once."
+        },
+        {
+          "id": "phone-editor",
+          "label": "Phone system editor",
+          "description": "Same draft as the list, no separate save; Back restores row focus."
+        },
+        {
+          "id": "recovery",
+          "label": "Unknown / stale / denied",
+          "description": "Existing original-operation recovery, stale comparison invalidation and permission removal remain authoritative."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/estimation-wizard.tsx",
+          "symbol": "DiscoveryDetail"
+        },
+        {
+          "path": "src/components/configuration-editor.tsx",
+          "symbol": "SystemsEditor"
+        },
+        {
+          "path": "src/components/estimation-catalogue-ui.tsx",
+          "symbol": "CatalogueUpgrade"
+        }
+      ],
+      "dependencies": [
+        "src/components/estimation-wizard-figma.css",
+        "src/components/estimation-catalogue-ui.tsx",
+        "src/components/estimation-wizard-changes.ts",
+        "docs/decisions/es02-wizard-figma-implementation.md",
+        "src/components/estimation-wizard.css",
+        "scripts/es02-fixture.ts"
+      ],
       "reference": {
-        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
-        "anchor": "estimation-wizard",
-        "status": "Reference only; proposed pattern"
+        "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
+        "anchor": "",
+        "status": "Accepted design source; application owner/device review pending"
       },
       "specification": "docs/design/development/components/estimation-journey.md",
       "used_on": [
-        "system:theme"
+        "system:theme",
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]"
       ],
-      "desktop": "Read the retained reference and resolve intended scope before implementing.",
-      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
-      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
-      "limitations": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+      "desktop": "Accepted Figma: shared 240/76 px rail, 380 px summary, five 48 px steps, six family filters, full-width system grid and immutable save review. Summary closes for Alternatives/Revisions.",
+      "mobile": "Phone record header, equal tabs, viewed alternative, 44 px step controls, scrolling family tiles, system cards and full-page editor, summary sheet and 72 px save footer. No shell bottom tabs.",
+      "keyboard": "Labelled native controls, shared RecordTabs, Escape for overlays; finding/change links focus the field; phone Back returns focus to the originating system.",
+      "limitations": "Host fixture only; actual server/session required. Q6 requested completion, duration and agreed commitment remain explicitly proposed and unsaved. Phone Alternatives/Revisions images are missing. Owner/device/assistive-technology acceptance pending.",
       "gaps": [
         {
           "id": "estimation-journey-implementation",
-          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
-          "actual": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
-          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
-          "priority": "Low",
+          "expected": "Paired accepted Figma review across desktop, tablet and phone, including saved and dirty states.",
+          "actual": "Native host implementation and synthetic fixtures; execution evidence is recorded separately. No isolated renderer or owner acceptance claimed.",
+          "action": "Review matching application captures against all accepted frames; retain Q6, missing phone Alternatives/Revisions images and device/screen-reader checks as open.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
@@ -5662,6 +5775,11 @@
           "id": "same-name-receiving",
           "label": "Same-name organisation receiving",
           "description": "P03 in tests/browser/intake.spec.ts checks the exact other permitted organisation link and excludes the current record on desktop/phone. DuplicateCandidates is moved unchanged into its own client module so the receiving page no longer imports unrelated site/facility screens."
+        },
+        {
+          "id": "figma-customer-register",
+          "label": "Figma register and exact customer return",
+          "description": "Reference-only proposed desktop table/phone cards, all/name-descending/preset-search/due-today states, two exact customers and conditional return. docs/design/development/customer-register-fixtures.json; no runtime behaviour is changed. Shared Leads Grid headers and row/column rules align sixteen table instances; r04 retains current desktop evidence."
         }
       ],
       "implementation": [
@@ -5681,7 +5799,10 @@
         "src/app/(business)/customers/page.tsx",
         "src/app/styles/customers.css",
         "src/components/duplicate-candidates.tsx",
-        "src/components/customer-workspace.tsx"
+        "src/components/customer-workspace.tsx",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
@@ -5693,7 +5814,8 @@
         "route:/customers",
         "route:/people",
         "route:/contacts",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-01"
       ],
       "desktop": "Retain the existing register table, columns, real links and scoped content; activation loads the chosen destination.",
       "mobile": "Retain existing readable cards and touch activation at 390/320 CSS px.",
@@ -5713,6 +5835,14 @@
           "expected": "Load the directory without unrelated site/facility screen code while preserving styling, authority and actual next-record navigation.",
           "actual": "The refined controlled block passes 320 loads and 80 record openings, reduces initial script bytes by 6.91% and improves desktop receiving p95 within its block. Cold-load targets remain unmet; phone/order variation and runner contention remain explicit.",
           "action": "Review docs/testing/evidence/pt27-loading/direct-directory-refined/README.md, retained manifests/captures, full assurance and remaining cold-load limits before acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "crm-directory-figma-register-alignment",
+          "expected": "Review the register-to-exact-customer journey in the shared PPO theme, with retained search/filter/sort and scroll context.",
+          "actual": "Editable Figma register, two customer profiles and 48 conditional returns are structurally verified. Search is a fixed demonstration; runtime pairing, wider states and owner acceptance remain open. All sixteen table instances use the shared Figma Grid headers; body heights retain source detail.",
+          "action": "Review r03 captures and customer-register-fixtures.json, then compare native desktop/phone receiving and Back behaviour before adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -6043,6 +6173,62 @@
           "expected": "Full paired visual and physical-device acceptance against a named saved Figma version.",
           "actual": "Retained named-version source images are linked. Journeys pass at 3468ce6; 72dd7c2 captures confirm normal heading tracking and stacked cards but expose the scoped h2 overriding the dialog title size. The corrected cascade passes bounded browser probes; the full compiled journey and owner/device acceptance remain pending.",
           "action": "Verify final typography, including dialog titles overriding the scoped h2 selector, choice-card layout and exact active/current version states in the same four route consumers; retain owner/device acceptance as pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "customer-360-summary",
+      "title": "Customer 360 scoped summary",
+      "category": "Boards & cards",
+      "module": "Customers",
+      "purpose": "Proposed count, evidence scope and owning-register navigation; restricted Finance has no numerical value.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "open-orders",
+          "label": "Open sales orders",
+          "description": "Four mapped-account open orders in the issued synthetic fixture."
+        },
+        {
+          "id": "conversion-unknown",
+          "label": "Unknown conversion",
+          "description": "One accepted quotation; no ERP order is asserted."
+        },
+        {
+          "id": "finance-restricted",
+          "label": "Restricted Finance",
+          "description": "Amounts, counts and balances are withheld."
+        }
+      ],
+      "implementation": [],
+      "dependencies": [
+        "docs/design/development/customer-360-summary-fixtures.json",
+        "docs/design/customer-360/model.js"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+        "anchor": "",
+        "status": "Issued source; 14 October Figma shell refinement remains proposed"
+      },
+      "specification": "docs/design/development/components/customer-360-summary.md",
+      "used_on": [
+        "scope:CS-01"
+      ],
+      "desktop": "Four 228 × 112 px summary cells per row in a 912 px panel inside the shared 1440 × 900 PPO shell; value, label and scoped population retained.",
+      "mobile": "Compact rows at 390 × 844 with shared phone header/bottom tabs and customer-view drawer. Overview and Sales orders link to each other.",
+      "keyboard": "Native implementation must provide labelled keyboard activation and visible focus; Figma does not prove it.",
+      "limitations": "Reference-only Figma component. Named version, exact-filter adoption, server enforcement and owner/device acceptance remain open.",
+      "gaps": [
+        {
+          "id": "customer-360-summary-adoption",
+          "expected": "Named Figma version, owner decision and exact counted-scope drill-through before adoption.",
+          "actual": "Editable compact desktop component and page-local phone rows within the shared PPO shell; prototype opens full registers without applying filters.",
+          "action": "Review proposal; save named version; implement and test scoped navigation and permissions in the owning CS-01 increment.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

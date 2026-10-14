@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 21 runnable examples, fourteen host entries and nine reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response, ES-07 receiving/conversion and ES-08 cross-section hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 21 runnable examples, seventeen host entries and eight reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response, ES-07 receiving/conversion and ES-08 cross-section hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 
@@ -25,7 +25,7 @@ Runnable requires a code-owned renderer ID, declared states, a real application 
 | Boards and cards | CRM Board; ForecastWorklist | Host permissions, pagination and saved commands remain integration concerns |
 | Gantt | ProjectsGantt, including List, programme, undated and loading cases | Editing/history callbacks are presentation-only; fixed catalogue clock |
 | Scheduling | PlannerBoard, AppointmentCard and the published-impact/resolution host | Readiness, concurrency and confirmation remain server/host checks |
-| Forms | Field, SelectField, LookupField, ValidationFields and ErrorNotice | Full saved estimation wizard remains a reference/integration scenario |
+| Forms | Field, SelectField, LookupField, ValidationFields and ErrorNotice | Full saved estimation wizard is a native ES-02 host example |
 | Navigation | RecordTabs/RecordPanel; WorklistChoice; real host shell | Host navigation depends on current permitted identity |
 | Dialogs/overlays | WorklistPanel modal/drawer; WorklistMenu popover | Other module-specific dialog families still require review |
 | Feedback | ReadState, ErrorNotice and Status | Offline/empty/success copy is explicitly host-level illustration |

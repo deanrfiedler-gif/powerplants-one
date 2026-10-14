@@ -17,7 +17,8 @@ import {
   type ProposalBody,
 } from "./validation";
 
-export type Duty = "template.read" | "template.propose" | "template.review";
+export type Duty =
+  "template.read" | "template.propose" | "template.review" | "template.publish";
 export type Proposal = {
   id: string;
   workspace_id: string;
@@ -118,7 +119,33 @@ export async function revisionContext(
       "EvidenceIntegrity",
       "The retained proposal does not match its fingerprint.",
     );
+  await baseAuthority(c, p, d.family, r.base);
   return r;
+}
+async function baseAuthority(
+  c: QueryClient,
+  p: Principal,
+  family: OutputFamily,
+  base: Base,
+) {
+  if (family !== "OUT-09" || base.version < 3) return;
+  // A copied base contains the published definition, not its author's own base.
+  // Check that definition's scope/current and frozen bindings without traversing
+  // unrelated ancestry or recursively expanding chains of copied proposals.
+  const source = (
+    await c.query(
+      `SELECT d.*,f.body AS frozen_body,r.body AS current_body FROM ppo.template_publications pub
+     JOIN ppo.template_proposals d ON (d.workspace_id,d.id)=(pub.workspace_id,pub.proposal_id)
+     JOIN ppo.template_proposal_revisions f ON (f.workspace_id,f.id)=(pub.workspace_id,pub.revision_id)
+     JOIN ppo.template_proposal_revisions r ON (r.workspace_id,r.id)=(d.workspace_id,d.current_revision_id)
+     WHERE pub.workspace_id=$1 AND pub.template_id=$2`,
+      [p.workspace_id, base.id],
+    )
+  ).rows[0];
+  if (!source) return; // An unknown historical definition retains R1 visibility.
+  await scopeAuthority(c, p, source);
+  await bindingAuthority(c, p, source, source.frozen_body);
+  await bindingAuthority(c, p, source, source.current_body);
 }
 export async function captureBase(
   c: QueryClient,
@@ -139,6 +166,7 @@ export async function captureBase(
     )
   ).rows[0];
   if (!r) throw unavailable();
+  await baseAuthority(c, p, family, r);
   if (r.content_hash !== hash || digest(r.definition) !== hash)
     throw new AppError(
       409,

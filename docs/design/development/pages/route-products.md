@@ -10,15 +10,15 @@ Find the exact Family, Model or Variant by UUID, synthetic alias, provider key o
 
 ## Desktop
 
-At 1440 × 960 and 1024 × 768, retain the shell, labelled Products workspace links and exact identity header. Use the shared padded module surface with semantic navy/green tokens, Roboto/Verdana, white bordered panels and wrapping facts. Registers use readable cards; comparisons place Before and After side by side. Keep the selected revision and evidence before consequential actions. Avoid global overrides or a second shell.
+Design direction after the 14 October alignment review: at 1440 × 900, use the established 240px Sales rail, 64px top bar and 240px secondary menu. Products is selected in the primary rail; catalogue destinations and filters belong in the secondary menu. Place the 60px toolbar and 40px grid rows directly within the workspace, without an enclosing card, outer module padding or oversized page heading. Use shared typography, tokens and controls. The authorised catalogue now follows this direction; model/variant rows may grow beyond 40px for readability.
 
 ## Mobile
 
-At 390 × 844 and 320 px, stack cards, forms and Before/After sections in source order. Fields retain readable 16 px text, touch targets and visible labels. Long UUIDs, provider keys and evidence wrap within the panel. Effective 200% reflow is checked at 720 CSS px from the 1440 desktop basis. No outer-page horizontal scrolling is permitted.
+At 390 × 844, place search below the shared header and show full-width labelled rows separated by rules. Preserve identity, kind, revision and publication, with explicit supply-evidence state. Keep the shared navigation, 44px controls and labelled search. The later implementation must verify 320px and 200% reflow with long values; the current package contains a 320px unlinked record, not a separate 320px catalogue capture. No outer-page horizontal scrolling is permitted.
 
 ## Shared controls and states
 
-Reuse ProductsFrame, ProductContext, TechnicalContent and Comparison; shared Button, Field, SelectField, ValidationFields, ErrorNotice and ReadState; useUnsavedChanges and useRecoverableCommand. Loading, empty, filtered empty, read only, denied/unavailable, validation, stale, saving, unknown, recovered and success remain distinct. No new modal/drawer or drag gesture is introduced. The shell's existing information icon exposes the page-specific draft guide.
+Catalogue reuses SecondaryMenuFrame and RegisterTable; records retain ProductsFrame, ProductContext, TechnicalContent and Comparison; shared Button, Field, SelectField, ValidationFields, ErrorNotice and ReadState; useUnsavedChanges and useRecoverableCommand. Loading, empty, filtered empty, read only, denied/unavailable, validation, stale, saving, unknown, recovered and success remain distinct. Phone/tablet filters use the shared secondary-menu modal; no new modal API or drag gesture is introduced. The shell's existing information icon exposes the page-specific draft guide.
 
 ## Task and handovers
 
@@ -37,8 +37,24 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 - [Native contract](../../../contracts/products-catalogue.md)
 - [Evidence index](../../../testing/evidence/products-native/README.md)
 
-Proposed adaptation: native cards, semantic shared controls and stacked comparison replace standalone-only geometry. PD-03 uses native AUD/excluding-tax CostSource evidence; wider design policy remains Not configured. Source images are retained unchanged. Matching native captures and independent visual observations are recorded in the evidence index when inspected; no fingerprint or owner approval is inferred from an automated pass. Native phone images are runtime evidence, not an invented accepted mobile baseline.
+Earlier native adaptation: cards, semantic shared controls and stacked comparison replaced standalone-only geometry. The 14 October proposal below refines the Products presentation to the accepted flat Figma patterns; earlier source images remain historical evidence. PD-03 uses native AUD/excluding-tax CostSource evidence; wider design policy remains Not configured. Source images are retained unchanged. Matching native captures and independent visual observations are recorded in the evidence index when inspected; no fingerprint or owner approval is inferred from an automated pass. Native phone images are runtime evidence, not an invented accepted mobile baseline.
 
 ## Completion review scope — 7 October 2026
 
 The completion branch preserves the exact selected revision when handing detail to pricing and on reload. Published catalogue basis links to its immutable revision. Internal UUID detail is disclosed on demand while catalogue/technical revision, source basis and lifecycle remain visible. Four named local synthetic identities separate read, author, review and publication. Existing/hosted users gain no Products authority. The [completion evidence](../../../testing/evidence/products-native/README.md) records paired captures and verification; owner baseline, physical-device and screen-reader acceptance remain pending. Catalogue pagination and wider estimating selection are later work.
+
+
+## Products discovery proposal — 14 October 2026
+
+The [bounded proposal](../../../decisions/products-discovery-proposal.md) compares the inFlow sample discovery pattern with current PPO source. Private **PPO - Design**, page `653:38`, frames `653:46 / 657:371`. [catalogue-1440](../../../reference/ui/products-discovery/alignment-r01/catalogue-1440.png) · [catalogue-390](../../../reference/ui/products-discovery/alignment-r01/catalogue-390.png). The [capture index](../../../reference/ui/products-discovery/README.md) records source identities and hashes; named version and owner acceptance remain pending.
+
+Following Dean's alignment feedback, this proposes a flat desktop catalogue, full-width phone rows, preserved return context, and an exact read-only handover between Products and stock/demand evidence. Existing scope IDs, source authority, permissions and native commands remain intact. The proposed Products layout follows the accepted Leads register and Lead/Project record references; the catalogue now implements authorised increment A. Products stock is currently Not configured; populated panels are fictional proposed states requiring an exact company/provider/item/unit mapping and a scoped read contract. No new stock balance, reservation or readiness calculation is adopted. The state board covers missing/incomplete/older evidence, loading, empty and unavailable reads. Catalogue app/guide and consumer bindings change; accepted fingerprints and deployment remain unchanged.
+
+
+## Catalogue increment A
+
+Catalogue uses SecondaryMenuFrame and RegisterTable with flat desktop rows and a full-width phone list. Filters use the existing modal menu on phone/tablet; Escape/Close restores the opener. Back to catalogue and browser Back restore query, selected-row focus and scroll within the same user/company. Historical revision links retain this return context; direct record links return to the plain catalogue. The record retains its native technical layout; populated supply panels remain proposed. [Implementation evidence](../../../testing/evidence/products-discovery/README.md) separates runtime checks from named-version, owner and device acceptance.
+
+## Catalogue host contract
+
+The `products-discovery-catalogue` integration in [ui-baselines.json](../../../standards/ui-baselines.json) binds the implemented full-bleed route to the retained alignment capture and compiled discovery proof. The original `products-native-products` contract remains historical; detail/publication/pricing/compatibility/import keep their native contracts. This source binding does not record owner or device acceptance.

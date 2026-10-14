@@ -275,15 +275,30 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "src/components/customer-workspace.tsx",
-        "src/shared/customer-360.ts"
+        "src/shared/customer-360.ts",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r01/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r02/README.md",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "guide_key": "guide.cs.01",
       "design_path": "docs/design/development/pages/scope-cs-01.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/customer-360-figma-r03/willowbank-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/rothwell-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/register-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/register-phone.png",
+        "docs/reference/ui/customers/customer-360-figma-r02/overview-phone.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/sales-orders-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/quotations-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r04/sites-desktop.png"
+      ],
       "dependencies": [],
       "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
+      "visual_status": "Figma register and exact customer workspaces in shared PPO shell; agent visual/structural inspection recorded; named version and owner acceptance pending",
       "functional_status": "Focused automated proof; see receiving handover",
       "deployment_status": "Local compiled verification; not deployed",
       "review_fingerprint": null,
@@ -1236,7 +1251,7 @@
       "title": "Estimation Wizard · discovery, alternatives & revisions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored. ADR-0054 adds opt-in backend r02 catalogue persistence; the native editor remains r01 and category UI implementation is separate.",
+      "summary": "Native ES-02 Figma record page: five shared-draft steps, six-family/category authoring, explicit historical-catalogue review, field-linked unsaved changes, immutable saves, exact saved-cost summary and phone system editor. Owner/device visual review and deployment remain separate.",
       "path": "/estimating/discovery",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1258,11 +1273,15 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "src/components/estimation-wizard.tsx",
-        "docs/decisions/cpq-figma-ui.md"
+        "docs/decisions/cpq-figma-ui.md",
+        "src/components/estimation-wizard-figma.css",
+        "src/components/estimation-catalogue-ui.tsx",
+        "src/components/estimation-wizard-changes.ts",
+        "docs/decisions/es02-wizard-figma-implementation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Implementation and tests are recorded in docs/testing/evidence/es02-figma/README.md. Existing recovery, immutable revisions and saved-cost boundaries remain; visual and business acceptance are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -4454,7 +4473,7 @@
       "title": "Document and form template management",
       "kind": "scope",
       "module": "DK",
-      "summary": "Exact catalogue/usage reads plus scoped structured draft proposals, immutable revisions and independent review evidence. Runtime publication, use assignment and native controls remain separate.",
+      "summary": "Exact catalogue, managed drafts/review, supported OUT-09 publication and controlled company/site use assignment. Other families and native controls remain separate.",
       "path": "/documents/templates",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -4469,7 +4488,18 @@
         "src/documents/drafts/validation.ts",
         "src/app/api/v1/document-template-drafts/route.ts",
         "docs/decisions/document-template-drafts-backend.md",
-        "docs/contracts/document-template-drafts.md"
+        "docs/contracts/document-template-drafts.md",
+        "src/documents/publication/service.ts",
+        "src/documents/publication/definition.ts",
+        "src/documents/publication/render.ts",
+        "docs/decisions/template-publication-backend.md",
+        "docs/contracts/template-publication.md",
+        "src/documents/use/policy.ts",
+        "src/documents/use/service.ts",
+        "src/app/api/v1/document-template-use-assignments/route.ts",
+        "src/app/api/v1/document-template-use-policies/route.ts",
+        "docs/decisions/template-use-assignment-backend.md",
+        "docs/contracts/template-use-assignment.md"
       ],
       "guide_key": "guide.dk.06",
       "design_path": "docs/design/development/pages/scope-dk-06.md",
@@ -4483,7 +4513,7 @@
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "R1/R2 backend verification is recorded separately in docs/testing/evidence/template-catalogue/README.md and docs/testing/evidence/template-drafts/README.md. Native page and owner acceptance remain open.",
+      "functional_status": "R1–R4 backend verification is recorded in docs/testing/evidence/template-use/README.md and its predecessor ledgers. Native controls, owner acceptance and deployment remain open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5889,12 +5919,18 @@
         "src/app/(business)/customers/[id]/page.tsx",
         "src/components/customer-workspace.tsx",
         "src/shared/customer-360.ts",
-        "src/components/duplicate-candidates.tsx"
+        "src/components/duplicate-candidates.tsx",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "guide_key": "guide.page.customers.id",
       "design_path": "docs/design/development/pages/route-customers-id.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/customer-360-figma-r03/willowbank-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/rothwell-desktop.png"
+      ],
       "dependencies": [],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
@@ -5946,22 +5982,29 @@
       "title": "Customer register",
       "kind": "route",
       "module": "CS",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Find a permitted customer in the register, then open that exact Customer 360 workspace and return to the same list context.",
       "path": "/customers",
       "source_paths": [
         "src/app/(business)/customers/page.tsx",
         "src/components/crm-directory.tsx",
         "src/crm/directory.ts",
         "src/app/layout.tsx",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/reference/ui/customers/customer-360-figma-r03/README.md",
+        "docs/design/development/customer-register-fixtures.json",
+        "docs/decisions/customer-360-figma-design.md",
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
       ],
       "guide_key": "guide.page.customers",
       "design_path": "docs/design/development/pages/route-customers.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/customer-360-figma-r04/register-desktop.png",
+        "docs/reference/ui/customers/customer-360-figma-r03/register-phone.png"
+      ],
       "dependencies": [],
       "scope_status": "refine",
-      "visual_status": "Needs review",
+      "visual_status": "Figma proposal: desktop table, phone cards and exact customer navigation; agent inspection recorded; owner/named-version review pending",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
@@ -5972,7 +6015,7 @@
         "scope:CS-01"
       ],
       "reviewer": null,
-      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md. The PT-27 candidate imports CrmDirectory and the existing customer stylesheet directly. Its initial client graph and actual record handover are compared on one runner; no timing, visual or owner acceptance is inferred from the import change."
+      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md. The PT-27 candidate imports CrmDirectory and the existing customer stylesheet directly. Its initial client graph and actual record handover are compared on one runner; no timing, visual or owner acceptance is inferred from the import change. The 14 October Figma extension demonstrates two synthetic customers, preset search, due-today filtering, desktop name sorting and conditional return-state navigation. It does not change the native directory or establish runtime persistence."
     },
     {
       "key": "route:/documents/[id]",
@@ -6274,7 +6317,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "Native discovery workspace rebuilt on 12 October 2026 to design board r01 (In the app · ES-02 r04): context row, equal-width tabs, five steps with finding-derived status, family cards, flush systems table with a selected-system editor, 380 px summary with linked findings, summary bar and sheet below 1200 px, phone step select, evidence side panel and glyph-and-word change markers. A Figma design on the Shell v2 rail and shared record layout was accepted the same day; the page is to be aligned to it. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored. ADR-0054 adds opt-in backend r02 catalogue persistence; the native editor remains r01 and category UI implementation is separate.",
+      "summary": "Native ES-02 Figma record page: five shared-draft steps, six-family/category authoring, explicit historical-catalogue review, field-linked unsaved changes, immutable saves, exact saved-cost summary and phone system editor. Owner/device visual review and deployment remain separate.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6325,11 +6368,15 @@
         "src/components/estimation-wizard-ui.tsx",
         "src/components/configuration-editor.tsx",
         "src/components/discovery-fields.tsx",
-        "docs/decisions/es02-wizard-figma-design.md"
+        "docs/decisions/es02-wizard-figma-design.md",
+        "src/components/estimation-wizard-figma.css",
+        "src/components/estimation-catalogue-ui.tsx",
+        "src/components/estimation-wizard-changes.ts",
+        "docs/decisions/es02-wizard-figma-implementation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Implementation and tests are recorded in docs/testing/evidence/es02-figma/README.md. Existing recovery, immutable revisions and saved-cost boundaries remain; visual and business acceptance are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7116,7 +7163,10 @@
       "design_path": "docs/design/development/pages/route-sales-opportunities.md",
       "html_path": "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
       "image_paths": [
-        "docs/testing/evidence/department-navigation/sales-deals-populated.png"
+        "docs/testing/evidence/department-navigation/sales-deals-populated.png",
+        "docs/testing/evidence/deals-figma/board.png",
+        "docs/testing/evidence/deals-figma/list.png",
+        "docs/testing/evidence/deals-figma/phone.png"
       ],
       "dependencies": [
         "src/components/crm-insights.tsx",
@@ -7134,7 +7184,8 @@
       "related_keys": [
         "scope:CR-04"
       ],
-      "reviewer": null
+      "reviewer": null,
+      "notes": "Figma Deals proposal uses the user-supplied r37, preserving the runtime r38 baseline. The 14 October user-directed polish matches the supplied stage/card screenshot, removes the extra module container and reuses accepted Leads grid components. A further pass aligns 8px gutters and whole-pixel card bounds, makes 1px borders crisp and fixes final-card clipping. Six editable views and evidence are linked from the design contract; owner acceptance and runtime alignment remain pending."
     },
     {
       "key": "route:/schedule",
@@ -11980,7 +12031,9 @@
         "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
-        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-1440.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-390.png"
       ],
       "dependencies": [
         "src/supply/model.ts",
@@ -11989,7 +12042,9 @@
         "src/supply/components/forms.tsx",
         "src/supply/components/recovery.tsx",
         "src/supply/guide.ts",
-        "src/app/styles/supply.css"
+        "src/app/styles/supply.css",
+        "docs/decisions/products-discovery-proposal.md",
+        "docs/reference/ui/products-discovery/README.md"
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
@@ -12002,7 +12057,8 @@
       "build_rank": null,
       "related_keys": [
         "scope:SC-05"
-      ]
+      ],
+      "notes": "14 Oct: Products proposal aligned with accepted Leads/Project/Job pack patterns after owner feedback: flat workspace, compact grid, full-width phone rows and record sections. Current icon-free alignment captures replace initial image pointers; originals retained. Named version, corrected-design acceptance and implementation pending; existing review fingerprints unchanged."
     },
     {
       "key": "route:/my-jobs/site-readiness",
@@ -12512,18 +12568,28 @@
       "guide_key": "guide.route-products-id",
       "design_path": "docs/design/development/pages/route-products-id.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/products-discovery/alignment-r01/product-1440.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-1024.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-390.png",
+        "docs/reference/ui/products-discovery/alignment-r01/unlinked-320.png"
+      ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
         "src/products/components/shared.tsx",
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/decisions/products-discovery-proposal.md",
+        "docs/reference/ui/products-discovery/README.md",
+        "src/products/catalogue-navigation.ts",
+        "src/products/components/catalogue-return.ts",
+        "docs/testing/evidence/products-discovery/README.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Verification in progress; see Products handover",
+      "functional_status": "Catalogue A: six compiled browser scenarios passed; see Products discovery evidence",
       "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12538,7 +12604,8 @@
         "scope:EN-07",
         "scope:EQ-07",
         "scope:EQ-06"
-      ]
+      ],
+      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged."
     },
     {
       "key": "route:/products/compatibility",
@@ -12635,18 +12702,30 @@
       "guide_key": "guide.route-products",
       "design_path": "docs/design/development/pages/route-products.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/products-discovery/alignment-r01/catalogue-1440.png",
+        "docs/reference/ui/products-discovery/alignment-r01/catalogue-390.png"
+      ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
         "src/products/components/shared.tsx",
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/decisions/products-discovery-proposal.md",
+        "docs/reference/ui/products-discovery/README.md",
+        "src/products/catalogue-navigation.ts",
+        "src/products/components/catalogue-return.ts",
+        "docs/testing/evidence/products-discovery/README.md",
+        "src/products/components/catalogue-register.tsx",
+        "src/products/components/catalogue-register.css",
+        "src/shell/secondary-menu.tsx",
+        "src/components/ui/register-table.tsx"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Verification in progress; see Products handover",
+      "functional_status": "Catalogue A: six compiled browser scenarios passed; see Products discovery evidence",
       "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -12661,7 +12740,8 @@
         "scope:EN-07",
         "scope:EQ-07",
         "scope:EQ-06"
-      ]
+      ],
+      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged."
     },
     {
       "key": "route:/products/pricing",

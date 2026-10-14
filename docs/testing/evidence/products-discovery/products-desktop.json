@@ -1,0 +1,22 @@
+{
+  "source": "3ee654b5fc07841fb2271c188ccb70298fdda9e4",
+  "observations": [
+    {
+      "width": 1440,
+      "count": 22,
+      "overflow": false,
+      "selected_return": true,
+      "scroll_return": 482
+    },
+    {
+      "width": 1024,
+      "count": 22,
+      "overflow": false,
+      "selected_return": true,
+      "scroll_return": 482
+    }
+  ],
+  "fixture": "synthetic Products discovery",
+  "stock": "NotConfigured",
+  "checks": "explicit return/reload/browser Back, focus/scroll, menu Escape, empty, unavailable recovery, identity reset"
+}
