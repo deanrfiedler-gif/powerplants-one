@@ -1,6 +1,6 @@
 # Excel larger-workbook capacity — execution evidence
 
-Owner: Dean Fiedler. Source: [PR #486](https://github.com/deanrfiedler-gif/powerplants-one/pull/486), implementation `e6177bd` on `codex/excel-import-capacity`, based on PR #485 `b2d3949`. User-authorised Step 6 capacity; PPO-010 / BC-04 / XI-03/04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
+Owner: Dean Fiedler. Source: [PR #486](https://github.com/deanrfiedler-gif/powerplants-one/pull/486), implementation `e6177bd` on `codex/excel-import-capacity`, originally based on PR #485 `b2d3949`, with its subsequent `79720ce` Search-test repair integrated by ancestry. User-authorised Step 6 capacity; PPO-010 / BC-04 / XI-03/04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
 
 ## Selected envelope and measurements
 
@@ -20,6 +20,10 @@ The [decision](../../../decisions/excel-import-capacity.md) selects 500 complete
 [Large-output browser checks](capacity-browser.json) pass in Chrome 155.0.8059.40 at 1440, 390 and 320 px, with all 500 descriptions, the exact total and no document-width overflow. The 320 px capture was inspected: the unchanged template wraps the Quantity heading; no template/CSS revision or visual acceptance is claimed. [Independent PDF text/metadata extraction](capacity-pdf.json) confirms all 500 distinct line labels, total 1250.00, 24 pages, no attachments and no tested internal evidence fields. The PDF is 969,956 bytes, SHA-256 `50ffea4bc7faaefbe8a705a7f112923643bad808006c0f67cd1e0521c3b63959`.
 
 Reproduce with `scripts/excel-capacity-profile.ts`, the named unit/database/HTTP suites, and `scripts/excel-import-restart.ts write capacity` / `verify` across real restarts. The workflow now runs the capacity path and retains its evidence. Full workbook/output/viewport artifacts remain in ignored `verification-evidence/excel-import-restart/`; compact results above are committed. [Database timings](database.json) record a separate completed local run, including the 499-line retained projection.
+
+## Parent integration
+
+The updated PR #485 parent adds only its status handover and a Search browser test that waits for the original response. Both status entries and the exact incoming test are preserved. No capacity application code, migration, fixture or executed proof source changed during this integration. Post-integration typecheck, changed-test lint, foundation and whitespace checks pass; the full capacity results above apply to the unchanged implementation. Combined CI remains separate.
 
 ## Corrections and limits
 
