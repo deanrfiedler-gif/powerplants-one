@@ -81,3 +81,7 @@ The [attestation contract](../../../decisions/access-review-attestations.md) int
 ## Document-library catalogue addition — 13 October 2026
 
 DK-01/DK-02 adds `document.read`, `document.register` and `document.review` to the native and generated capability catalogues (145 values). Their plain-English labels are maintained together. There are no seed grants or users and no added hosted tester authority. Existing component/visual review remains unchanged; model and browser assurance are recorded separately in the document-library evidence ledger.
+
+## Template proposal catalogue addition — 13 October 2026
+
+DK-06 R2 adds template.read, template.propose and template.review, bringing the native/generated catalogue to 148 values. No seed grants, hosted tester authority or native controls are added. [R2 evidence](../../../testing/evidence/template-drafts/README.md) records model verification and the local browser-capture limitation reproduced against unchanged main. Existing visual and owner review fingerprints remain unchanged.
