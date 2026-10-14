@@ -11975,8 +11975,8 @@
         "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png",
-        "docs/reference/ui/products-discovery/product-1440.png",
-        "docs/reference/ui/products-discovery/product-390.png"
+        "docs/reference/ui/products-discovery/alignment-r01/product-1440.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-390.png"
       ],
       "dependencies": [
         "src/supply/model.ts",
@@ -12001,7 +12001,7 @@
       "related_keys": [
         "scope:SC-05"
       ],
-      "notes": "14 Oct: Products discovery Figma proposal and icon-free captures added. Proposed read-only stock/demand handover; named version, owner acceptance and implementation pending. Existing review evidence unchanged."
+      "notes": "14 Oct: Products proposal aligned with accepted Leads/Project/Job pack patterns after owner feedback: flat workspace, compact grid, full-width phone rows and record sections. Current icon-free alignment captures replace initial image pointers; originals retained. Named version, corrected-design acceptance and implementation pending; existing review fingerprints unchanged."
     },
     {
       "key": "route:/my-jobs/site-readiness",
@@ -12512,10 +12512,10 @@
       "design_path": "docs/design/development/pages/route-products-id.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
       "image_paths": [
-        "docs/reference/ui/products-discovery/product-1440.png",
-        "docs/reference/ui/products-discovery/product-1024.png",
-        "docs/reference/ui/products-discovery/product-390.png",
-        "docs/reference/ui/products-discovery/unlinked-320.png"
+        "docs/reference/ui/products-discovery/alignment-r01/product-1440.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-1024.png",
+        "docs/reference/ui/products-discovery/alignment-r01/product-390.png",
+        "docs/reference/ui/products-discovery/alignment-r01/unlinked-320.png"
       ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
@@ -12545,7 +12545,7 @@
         "scope:EQ-07",
         "scope:EQ-06"
       ],
-      "notes": "14 Oct: Products discovery Figma proposal and icon-free captures added. Proposed read-only stock/demand handover; named version, owner acceptance and implementation pending. Existing review evidence unchanged."
+      "notes": "14 Oct: Products proposal aligned with accepted Leads/Project/Job pack patterns after owner feedback: flat workspace, compact grid, full-width phone rows and record sections. Current icon-free alignment captures replace initial image pointers; originals retained. Named version, corrected-design acceptance and implementation pending; existing review fingerprints unchanged."
     },
     {
       "key": "route:/products/compatibility",
@@ -12643,8 +12643,8 @@
       "design_path": "docs/design/development/pages/route-products.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
       "image_paths": [
-        "docs/reference/ui/products-discovery/catalogue-1440.png",
-        "docs/reference/ui/products-discovery/catalogue-390.png"
+        "docs/reference/ui/products-discovery/alignment-r01/catalogue-1440.png",
+        "docs/reference/ui/products-discovery/alignment-r01/catalogue-390.png"
       ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
@@ -12674,7 +12674,7 @@
         "scope:EQ-07",
         "scope:EQ-06"
       ],
-      "notes": "14 Oct: Products discovery Figma proposal and icon-free captures added. Proposed read-only stock/demand handover; named version, owner acceptance and implementation pending. Existing review evidence unchanged."
+      "notes": "14 Oct: Products proposal aligned with accepted Leads/Project/Job pack patterns after owner feedback: flat workspace, compact grid, full-width phone rows and record sections. Current icon-free alignment captures replace initial image pointers; originals retained. Named version, corrected-design acceptance and implementation pending; existing review fingerprints unchanged."
     },
     {
       "key": "route:/products/pricing",

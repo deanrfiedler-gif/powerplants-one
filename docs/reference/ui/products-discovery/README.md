@@ -10,9 +10,28 @@ versioning: git
 
 # Products discovery proposal evidence
 
-Private Figma file **PPO - Design**, page **Products · PD-01 · discovery proposal**, node `653:38`. See the [proposal and acceptance criteria](../../../decisions/products-discovery-proposal.md). All values and identities are fictional design fixtures, not operational records. These new captures leave all earlier issued reference bytes unchanged.
+Private Figma file **PPO - Design**, page **Products · PD-01 · discovery proposal**, node `653:38`. See the [proposal, reference comparison and acceptance criteria](../../../decisions/products-discovery-proposal.md). All values and identities are fictional design fixtures, not operational records.
 
-The editable page uses local PPO typography/colour/layout tokens and 127 component instances, including Button, Tag, Grid cells/headers and shell parts. All icon instances on this page use `Icon/placeholder`; private Pro artwork and the private Figma file URL are excluded. Existing library/accepted pages were not edited. Each PNG is a 1× viewport capture exported after inspection and correction of text-height clipping and the tablet header. Content below the phone/tablet viewport is intentionally scrollable; a viewport capture is not evidence of every off-screen interaction.
+## Current alignment captures — 14 October 2026
+
+Dean requested alignment with the other PPO pages, particularly their general absence of internal module containers. The six authoring frames now use the flat register/record structure inspected in accepted Leads, Project and Job pack designs. Desktop views are 1440 × 900; the catalogue uses a 60px toolbar, 40px grid rows and no outer module padding. Phone discovery uses full-width rows. Record content uses a details column, tabs and ruled evidence sections without rounded enclosing cards.
+
+The authoring screens contain 204 component instances and 288 text nodes, reusing PPO typography/colour/layout tokens and shell/control instances. Their private icons remain in Figma. Separate evidence copies replace all 75 icon instances with `Icon/placeholder`; the audit found zero other icon components in those copies. Private Pro artwork and the private file URL are excluded from Git. Each current PNG is a 1× capture of its evidence copy, visually inspected after the replacement. Existing accepted pages and library components were not edited.
+
+| Capture | Authoring node | Evidence-copy node | Pixels | SHA-256 |
+|---|---|---|---|---|
+| [catalogue-1440.png](alignment-r01/catalogue-1440.png) | `653:46` | `666:160431` | 1440 × 900 | `c504743133ab8efff1edff6c5e1173e5fb6a41f1cd40d6a1aa961c65687a4ccc` |
+| [product-1440.png](alignment-r01/product-1440.png) | `654:167` | `666:160672` | 1440 × 900 | `501ce0e4b607b6b0fed41a68ed917ca3afa7e3373bc73c81e427667a681848d7` |
+| [product-1024.png](alignment-r01/product-1024.png) | `654:325` | `666:160921` | 1024 × 768 | `34d6e34d0bba18759da16c2cb44f63daf2ccb3e302f5836d7b64979580a6cf74` |
+| [catalogue-390.png](alignment-r01/catalogue-390.png) | `657:371` | `666:161169` | 390 × 844 | `1b1f774d1ab49378d7bb40b7bd56c822bb9a8e401548eda2b355fa4ce1c92787` |
+| [product-390.png](alignment-r01/product-390.png) | `654:482` | `666:161235` | 390 × 844 | `305fb6b516ced5a79d0e31fa340a8d4814e74b7a58eb230ef53503fbf121236c` |
+| [unlinked-320.png](alignment-r01/unlinked-320.png) | `654:563` | `666:161300` | 320 × 844 | `a219e7c6d59c811a82bbd9c149fe371fbc857316fb7b7f8ba694e12804e206e1` |
+
+The [state board](states.png), node `657:428`, is unchanged; its original hash is retained below. Content below the tablet viewport is intentionally scrollable. A viewport capture is not proof of every off-screen interaction.
+
+## Original proposal captures — retained history
+
+These bytes are unchanged. They show the initial container/card layout that prompted the alignment correction and are superseded for current layout guidance by `alignment-r01/`. The authoring node IDs are stable; their present contents are the corrected design. The state board remains current.
 
 | Capture | Figma node | Pixels | SHA-256 |
 |---|---|---|---|
@@ -26,17 +45,18 @@ The editable page uses local PPO typography/colour/layout tokens and 127 compone
 
 ## Verification and limits
 
-- Visual inspection: six screen layouts and the state/handover board. Catalogue-to-detail and Back reactions are configured; other controls are illustrative. The state board is a requirements annotation, not a set of executed runtime cases.
+- Visual comparison: Leads desktop register `190:20513`; Lead record `226:208`; Project overview `345:5185` and phone `355:2281`; Job packs desktop `280:2678` and phone list `272:2542`; Leads phone list `228:809`. The proposal records which geometry was adopted.
+- Corrected-design inspection: all six authoring layouts and six icon-free exports inspected. The 1024px header's visible right edge is 923px within its 948px workspace, leaving its 18px right padding clear. Six catalogue/Back reactions target the intended retained authoring frames. Other controls are illustrative; no runtime workflow was executed.
 - Source comparison: PPO source at `65141dcb8a3e39f6516f69955e8260ed447d152b`, prior native Products and SC-05 captures, and bounded inFlow sample-account UI observations on 14 October. No fresh running PPO walkthrough, source integration, business write or REA session occurred.
-- Named Figma version: **pending**. Browser editor could not open because WebGL was unavailable; the connector lacks named-version creation. Suggested name: `Products discovery — proposal for review — 14 Oct 2026`. ADR-0053 requires the version before baseline reliance.
-- Owner visual review, accessibility/browser/device acceptance, application implementation and deployment: **not performed by this proposal**. Existing review fingerprints are preserved.
-- Icon audit: all 51 icon instances on the proposal page resolve to `Icon/placeholder`; no other icon component is present. This audit is separate from the visual inspection.
+- Named Figma version: **pending**. Browser editor could not open because WebGL was unavailable; the connector lacks named-version creation. Suggested name: `Products discovery — PPO alignment review — 14 Oct 2026`. ADR-0053 requires the version before baseline reliance.
+- Dean's alignment feedback is incorporated; acceptance of the corrected proposal remains pending. Accessibility/browser/device acceptance, application implementation and deployment are separate. Existing review fingerprints are preserved.
+- The state board is a requirements annotation, not a set of executed runtime cases. Existing stock/demand authority and Unknown semantics are unchanged.
 
 | Executed check | Result |
 |---|---|
-| `npm run studio:check` | Passed; 362 entries, 208 source routes, no integrity errors. Existing 334 unreviewed and 28 stale entries remain visible; this proposal grants no acceptance. |
-| `python scripts/check_naming.py` | Passed; 608 document records, 447 metadata comparisons, no errors. |
-| `python scripts/check_foundation.py` | Passed; all 78 parent requirements retained, 9,495 local links checked, 5,958 text files scanned, no errors. |
+| `npm run studio:check` | Passed; 362 entries, 208 source routes, no integrity errors. Existing 334 unreviewed and 28 stale entries remain visible. |
+| `python scripts/check_naming.py` | Passed; 608 document records, 447 metadata comparisons; maintained project instructions remain within the 8,000-character limit. |
+| `python scripts/check_foundation.py` | Passed; 22 issued sources and all 78 parent requirements retained, no errors. |
 | `git diff --check` | Passed. |
 
-These checks provide documentation/design assurance, not business acceptance. Runtime tests were not applicable because no application code or behaviour changed. PR CI is separate from the executed local checks above.
+These checks provide documentation/design assurance, not business acceptance. Runtime tests are not applicable because no application code or behaviour changed. PR CI is separate from the executed local checks above.

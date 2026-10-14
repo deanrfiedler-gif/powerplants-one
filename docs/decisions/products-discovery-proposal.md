@@ -10,7 +10,7 @@ versioning: git
 
 # Products discovery and supply evidence proposal
 
-Dean authorised comparing inFlow with PPO and preparing a prioritised proposal and desktop/mobile mockups. He asked to be told if REA becomes necessary. This contribution delivers that reviewable design package. It does not adopt the design as a baseline or implement an application change.
+Dean authorised comparing inFlow with PPO and preparing a prioritised proposal and desktop/mobile mockups. He asked to be told if REA becomes necessary. This contribution delivers that reviewable design package. Dean subsequently requested alignment with the other PPO Figma pages, specifically the general absence of internal module containers; the six mockups have been corrected against the accepted register and record references below. It does not adopt the design as a baseline or implement an application change.
 
 The recommended journey is **find a product → inspect its exact revision → understand stock evidence → open the demand that needs it**. The first delivery should improve the existing catalogue. A following read-only increment can connect the product to Supply Chain once exact identity and permission rules are proved.
 
@@ -34,7 +34,7 @@ Sources: [inFlow current stock](https://www.inflowinventory.com/support/cloud/cu
 
 | Priority | Proposed increment | Value and dependency |
 |---|---|---|
-| First — A | Compact desktop product register, readable phone cards, existing labelled filters, exact revision context and preserved Back/selection state. | Faster finding and comparison using existing Products reads. Supply column remains Not configured until increment B exists. No new provider, schema, capability or inventory calculation is required for A. |
+| First — A | Compact desktop product register, readable full-width phone rows, existing labelled filters, exact revision context and preserved Back/selection state. | Faster finding and comparison using existing Products reads. Supply column remains Not configured until increment B exists. No new provider, schema, capability or inventory calculation is required for A. |
 | First — B | Read-only Stock & demand area on product detail, linked to existing stock/material-readiness records. | Reduces cross-workspace searching. Requires a documented exact mapping from product/company/provider/entity to source item/unit, permission-scoped projection and existing source revision/time/completeness. Missing/ambiguous mapping stays Unknown. Implementation may reveal a required mapping persistence decision; no table or endpoint is pre-authorised by this drawing. |
 | Next | Focused receiving and barcode-assisted identification on existing SC-04 receiving workflow, with SC-03 shipment handovers. | Validate actual receiving roles, partial receipts, damage/quarantine, duplicate scans, unit handling and device needs before specifying a write. A scan identifies an item; it cannot itself establish an accepted receipt. |
 | Later | Replenishment review and supplier commitments. | Requires agreed demand, stock and procurement policy plus MYOB authority. No automatic reorder formula or external purchase transaction is adopted. |
@@ -43,33 +43,46 @@ The smallest implementation PR is **A only**. B should follow as a separately re
 
 ## Figma package and conformance
 
-Private file: **PPO - Design**. Page **Products · PD-01 · discovery proposal**, node `653:38`. Editable frames and local-library instances are present. Icons are `Icon/placeholder` throughout this page, so retained captures contain no Pro artwork. No existing Figma library, accepted page or issued source snapshot was changed.
+Private file: **PPO - Design**. Page **Products · PD-01 · discovery proposal**, node `653:38`. The six editable frames use local-library instances and private library icons. Separate evidence copies replace every icon with `Icon/placeholder`; only those copies are exported to this public repository. No existing Figma library, accepted page or issued source snapshot was changed.
 
 | View | Node | Viewport / capture |
 |---|---|---|
-| Catalogue desktop | `653:46` | [1440 × 960](../reference/ui/products-discovery/catalogue-1440.png) |
-| Product evidence desktop | `654:167` | [1440 × 960](../reference/ui/products-discovery/product-1440.png) |
-| Product evidence tablet | `654:325` | [1024 × 768](../reference/ui/products-discovery/product-1024.png) |
-| Catalogue phone | `657:371` | [390 × 844](../reference/ui/products-discovery/catalogue-390.png) |
-| Product evidence phone | `654:482` | [390 × 844](../reference/ui/products-discovery/product-390.png) |
-| Unlinked product phone | `654:563` | [320 × 844](../reference/ui/products-discovery/unlinked-320.png) |
+| Catalogue desktop | `653:46` | [1440 × 900](../reference/ui/products-discovery/alignment-r01/catalogue-1440.png) |
+| Product evidence desktop | `654:167` | [1440 × 900](../reference/ui/products-discovery/alignment-r01/product-1440.png) |
+| Product evidence tablet | `654:325` | [1024 × 768](../reference/ui/products-discovery/alignment-r01/product-1024.png) |
+| Catalogue phone | `657:371` | [390 × 844](../reference/ui/products-discovery/alignment-r01/catalogue-390.png) |
+| Product evidence phone | `654:482` | [390 × 844](../reference/ui/products-discovery/alignment-r01/product-390.png) |
+| Unlinked product phone | `654:563` | [320 × 844](../reference/ui/products-discovery/alignment-r01/unlinked-320.png) |
 | State and handover notes | `657:428` | [State board](../reference/ui/products-discovery/states.png) |
 
-The first catalogue row/Open selected product links to desktop detail; the first phone card links to phone detail; Back links return to the respective mockup. Other controls are illustrative. Scrolling content deliberately continues below the tablet/phone viewport. This is a partial navigation prototype, not a functioning stock application.
+### Alignment with existing PPO pages
 
-**Named version is pending.** Chrome's Figma editor reported that WebGL is unavailable; the connector could create and inspect the design but offers no named-version operation. Under [ADR-0053](ADR-0053-figma-page-design.md), save a named version before relying on this proposal as an implementation baseline. Suggested name: `Products discovery — proposal for review — 14 Oct 2026`. Exact captures and hashes are retained in the [evidence index](../reference/ui/products-discovery/README.md); they do not substitute for owner acceptance or the pending named version.
+Dean's direction is to follow PPO's established page structure and generally avoid internal module containers. The initial drawing used a large heading, module inset and rounded cards; the corrected drawing uses the workspace itself as the surface. The original captures remain unchanged as history, not as the current proposal.
+
+| Inspected private Figma reference | Observed pattern | Applied to Products |
+|---|---|---|
+| Leads accepted register `190:20513`, page `190:20237` | 1440 × 900; 240px primary rail, 64px top bar, 240px secondary menu; no outer module padding; 60px toolbar and compact 40px grid rows. | Catalogue uses the existing Sales context rail with Products selected. Module destinations and filters sit in the secondary menu. Toolbar and grid meet the workspace edges; no enclosing card or oversized page heading. |
+| Lead record `226:208`, page `224:2`; Project overview `345:5185`, page `345:2` | Record heading above a separate details column and tabbed workspace; ruled sections rather than a card around the module. | Product identity and source notice span the workspace. Summary/source details occupy a 340px column at desktop and 290px at tablet. Stock and demand use plain sections and a compact ruled table. Tabs remain visible. |
+| Job packs phone list `272:2542`, page `272:2`; Leads phone list `228:809` | Compact, full-width rows separated by rules; search directly below the shell. | Phone catalogue replaces inset rounded cards with full-width labelled rows. Current shared phone header and tab-bar instances are retained. |
+| Project phone overview `355:2281`, header `355:2282` | Compact record identity and Back/previous/next controls above the content. | Phone record uses that header pattern, tabs, flat quantity rows and a bottom evidence action. The 320px unlinked view preserves Unknown values. |
+
+Colour/type tokens, current shared controls and the global guide/workspace affordances remain in use. The correction changes this proposal's layout; it does not change the accepted reference pages, the shared library or the running application. It is not a blanket ban on task-specific panels where a reviewed page needs one.
+
+The first catalogue row links to desktop detail; the first phone row links to phone detail; Back links return to the respective mockup. Other controls are illustrative. Scrolling content deliberately continues below the tablet/phone viewport. This is a partial navigation prototype, not a functioning stock application.
+
+**Named version is pending.** Chrome's Figma editor reported that WebGL is unavailable; the connector could create and inspect the design but offers no named-version operation. Under [ADR-0053](ADR-0053-figma-page-design.md), save a named version before relying on this proposal as an implementation baseline. Suggested name: `Products discovery — PPO alignment review — 14 Oct 2026`. Exact captures and hashes are retained in the [evidence index](../reference/ui/products-discovery/README.md); they do not substitute for owner acceptance or the pending named version.
 
 | Required declaration | This proposal |
 |---|---|
 | Scope identity | Existing PD-01 catalogue/product technical workspace and SC-05 stock/reservations. Handovers to SC-01 material readiness and SC-09 change impacts where applicable. BP-01 parents SCM-01, SCM-02 and SCM-08 are unchanged. Existing Products/Supply Chain contracts remain authoritative. |
-| r20 page types | Register / worklist, supporting Record detail and read-only evidence. Desktop compact grid; phone stacked labelled cards. |
-| Reuse | Runtime: ProductsFrame, ProductContext, TechnicalContent, shared Button/ButtonLink, Field, SelectField, ReadState/ErrorNotice; existing RegisterTable pattern should be assessed before implementation. Source files remain `src/products/components/*`, `src/components/ui/button.tsx`, `src/components/business-ui.tsx`, `src/supply/components/*` and the shared shell. Figma: PPO text styles/colour/layout variables, Button, Tag, Grid cells/headers, v2 rail items, top bar and phone header. No new shared component is created by this proposal. |
+| r20 page types | Register / worklist, supporting Record detail and read-only evidence. Desktop compact grid; phone full-width labelled rows. |
+| Reuse | Runtime: ProductsFrame, ProductContext, TechnicalContent, shared Button/ButtonLink, Field, SelectField, ReadState/ErrorNotice; existing RegisterTable pattern should be assessed before implementation. Source files remain `src/products/components/*`, `src/components/ui/button.tsx`, `src/components/business-ui.tsx`, `src/supply/components/*` and the shared shell. Figma: PPO text styles/colour/layout variables, Button, Tag, Grid cells/headers, existing expanded/collapsed Sales rail, top bar, phone header/tab bar and Project record header pattern. No new shared component is created by this proposal. |
 | Incoming | Exact permitted product and selected catalogue/technical revision. B additionally needs an explicitly established company/provider/item/unit mapping and permitted source observations. The fictional fixture is not a registered source mapping. |
 | Outgoing | Native stock evidence or owning material-readiness record. Preserve internal ID, company/entity context and exact source revision; do not open a name-matched or cross-company record. Receiving domain owns subsequent actions. |
 | Exceptions | Loading, no matches, unlinked, incomplete/older evidence, unavailable/denied, failed read and changed revision are specified on the state board. Unknown is not zero; no freshness threshold is invented. Existing write/recovery workflows are outside this read-only increment. |
-| Proposed departures | Cards become a compact desktop grid; product detail groups evidence and introduces a stock/demand read area; expanded/collapsed Products rail composes existing shell parts and existing destinations. These are proposals, not accepted navigation or page baselines. Preserve complete technical content/attributes/controlled documents even though only their summary is drawn. |
-| Responsive contract | 1440 desktop; 1024 collapsed rail; 390/320 stacked phone content with 44px buttons and labelled search. Product context/source identity must remain reachable on phone through technical/source evidence, not discarded by implementation. Keyboard, screen-reader, 200% reflow and physical-device proof remain implementation work. |
-| Verification | Six screens and state board visually inspected. Fixed text clipping and tablet header overflow exposed by the first review. Structural inspection records 127 instances and 233 text nodes. No functional app or deployment claim is made. Repository checks are recorded in the evidence index. |
+| Proposed departures | Native catalogue cards become a flat desktop grid and full-width phone rows; product detail introduces a stock/demand read area using the accepted record structure. Products stays in the existing Sales navigation context, with module links outside the primary rail. These are proposals, not accepted navigation or page baselines. Preserve complete technical content/attributes/controlled documents even though only their summary is drawn. |
+| Responsive contract | 1440 × 900 desktop; 1024 × 768 collapsed rail; 390/320 full-width phone content with 44px buttons and labelled search. Product context/source identity must remain reachable on phone through technical/source evidence, not discarded by implementation. Keyboard, screen-reader, 200% reflow and physical-device proof remain implementation work. |
+| Verification | Six corrected screens visually inspected against the accepted references; state-board requirements retained. Tablet header bounds and six catalogue/Back reactions inspected. The authoring screens contain 204 instances and 288 text nodes; all 75 icon instances in the separate capture copies resolve to Icon/placeholder. No functional app or deployment claim is made. Repository checks are recorded in the evidence index. |
 
 ## Acceptance criteria for the later implementation
 
