@@ -1,3 +1,4 @@
+import { excelQuoteReceiptAuthority, excelQuoteCommand } from "../estimating/import/quotation";
 import { excelReceiptAuthority } from "../estimating/import/retained";
 import { receiptAuthority as templateReceiptAuthority } from "../documents/drafts/context";
 import { receiptAuthority as libraryReceiptAuthority } from "../library/context";
@@ -309,6 +310,8 @@ export async function readOperation(
       throw unavailable();
     if (!(await acceptedEstimateContext(client, p, r.record_id, operation_id)))
       throw unavailable();
+  } else if (r.object_type === "DraftQuoteRevision" && r.command === excelQuoteCommand) {
+    await excelQuoteReceiptAuthority(client,p,r.record_id);
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client, p, r.record_id, "estimating.quote.prepare");
     await quoteContext(client, p, r.record_id);

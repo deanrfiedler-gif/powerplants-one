@@ -9,7 +9,7 @@ versioning: git
 
 # Excel estimate import implementation plan
 
-**Implementation update — 14 October 2026:** Step 2 delivers the [validated upload/review backend](../decisions/excel-import-review-backend.md). Step 3 continues it with [durable storage and atomic first save](../decisions/excel-import-persistence-backend.md), including authenticated review, exact originals, native estimate/line evidence and original-operation recovery. [Execution evidence](../testing/evidence/excel-import-persistence/README.md) separates delivery from acceptance. Step 4 adds [revised-workbook comparison and controlled re-import](../decisions/excel-import-revision-backend.md), with [execution evidence](../testing/evidence/excel-import-revision/README.md). Steps 5–6 and native controls remain open.
+**Implementation update — 14 October 2026:** Step 2 delivers the [validated upload/review backend](../decisions/excel-import-review-backend.md). Step 3 continues it with [durable storage and atomic first save](../decisions/excel-import-persistence-backend.md), including authenticated review, exact originals, native estimate/line evidence and original-operation recovery. [Execution evidence](../testing/evidence/excel-import-persistence/README.md) separates delivery from acceptance. Step 4 adds [revised-workbook comparison and controlled re-import](../decisions/excel-import-revision-backend.md), with [execution evidence](../testing/evidence/excel-import-revision/README.md). Step 5 adds [verified quotation continuation](../decisions/excel-import-quotation-backend.md) with [execution evidence](../testing/evidence/excel-import-quotation/README.md). Step 6, native controls and operational acceptance remain open.
 
 ## Position in delivery
 

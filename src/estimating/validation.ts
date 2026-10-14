@@ -50,13 +50,19 @@ export function saveInput(id: string, value: unknown) {
 }
 export function quoteInput(id: string, value: unknown) {
   const r = object(value, [...commonKeys, "id", "estimate_version_id", "expected_version", "expected_quote_version", "choices"]);
-  if (!Array.isArray(r.choices) || !r.choices.length || r.choices.length > 100) invalid("choices", "Choose the presentation of each saved line.");
   if (!Number.isSafeInteger(r.expected_quote_version) || Number(r.expected_quote_version)<0) invalid("expected_quote_version", "Use the current quotation revision, or zero before the first draft.");
+  const choices=parseQuoteChoices(r.choices);
+  return { ...common(r), estimate_id: uuid(id,"estimate_id"), id: uuid(r.id,"id"), estimate_version_id: uuid(r.estimate_version_id,"estimate_version_id"), expected_version: version(r.expected_version), expected_quote_version:Number(r.expected_quote_version), choices };
+}
+
+export function parseQuoteChoices(value:unknown) {
+  const r={choices:value};
+  if (!Array.isArray(r.choices) || !r.choices.length || r.choices.length > 100) invalid("choices", "Choose the presentation of each saved line.");
   const choices: QuoteChoice[] = r.choices.map(value => {
     const c = object(value, ["line_id","included","print"]);
     if (typeof c.included !== "boolean" || typeof c.print !== "boolean") invalid("choices", "Include and print must be explicit choices.");
     return { line_id: uuid(c.line_id,"line_id"), included: c.included, print: c.print };
   });
   if (new Set(choices.map(c=>c.line_id)).size !== choices.length || !choices.some(c=>c.included)) invalid("choices", "Use each line once and include at least one line.");
-  return { ...common(r), estimate_id: uuid(id,"estimate_id"), id: uuid(r.id,"id"), estimate_version_id: uuid(r.estimate_version_id,"estimate_version_id"), expected_version: version(r.expected_version), expected_quote_version:Number(r.expected_quote_version), choices };
+  return choices;
 }

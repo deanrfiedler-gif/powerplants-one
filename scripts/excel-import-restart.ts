@@ -1,4 +1,5 @@
 // Write before, verify after actual compiled application and PostgreSQL restarts.
+import { excelQuoteProposal } from "../tests/helpers/excel-quotation";
 import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -43,6 +44,12 @@ async function snapshot(id: string) {
   UNION ALL SELECT 'import',to_jsonb(i) FROM ppo.excel_imports i WHERE estimate_id=$1
   UNION ALL SELECT 'reimport',to_jsonb(i) FROM ppo.excel_reimports i WHERE estimate_id=$1
   UNION ALL SELECT 'line',to_jsonb(l) FROM ppo.excel_import_lines l WHERE estimate_version_id IN (SELECT estimate_version_id FROM ppo.excel_imports WHERE estimate_id=$1)
+  UNION ALL SELECT 'quote',to_jsonb(q) FROM ppo.draft_quote_revisions q WHERE estimate_id=$1
+  UNION ALL SELECT 'quote_header',to_jsonb(q) FROM ppo.draft_quotes q WHERE estimate_id=$1
+  UNION ALL SELECT 'quote_job',to_jsonb(j) FROM ppo.estimate_quote_jobs j WHERE revision_id IN (SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
+  UNION ALL SELECT 'quote_receipt',to_jsonb(r) FROM ppo.operation_receipts r WHERE record_id IN (SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
+  UNION ALL SELECT 'quote_audit',to_jsonb(a) FROM ppo.audit_events a WHERE object_id IN (SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
+  UNION ALL SELECT 'quote_outbox',to_jsonb(j) FROM ppo.outbox_jobs j WHERE payload->>'record_id' IN (SELECT id::text FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
   UNION ALL SELECT 'receipt',to_jsonb(r) FROM ppo.operation_receipts r WHERE record_id=$1
   UNION ALL SELECT 'audit',to_jsonb(a) FROM ppo.audit_events a WHERE object_id=$1
   UNION ALL SELECT 'outbox',to_jsonb(j) FROM ppo.outbox_jobs j WHERE payload->>'record_id'=$1::text
@@ -79,6 +86,24 @@ try {
     assert.deepEqual(await json(path), evidence);
     assert.deepEqual(await bytes(path), original);
     await writeFile(join(directory, "revised.xlsx"), revisedBytes);
+    const quoteProposal = await excelQuoteProposal({ ...s, e: successor });
+    const quoteCommitPath = `estimating/estimates/${id}/excel-quote`;
+    const quoteAccepted = await json(quoteCommitPath, quoteProposal.command);
+    const quotePath = `estimating/quotes/${quoteProposal.command.id}`;
+    await json(quotePath + "/render", {});
+    const quoteEvidence = await json(quotePath + "/excel-import");
+    const quoteDetail = await json(quotePath);
+    for (const kind of ["html", "pdf"]) {
+      const r = await fetch(
+        origin + "/api/v1/" + quotePath + "/file?kind=" + kind,
+        { headers: { cookie: await h.cookie("coordinator") } },
+      );
+      assert.equal(r.status, 200);
+      await writeFile(
+        join(directory, "exact." + kind),
+        Buffer.from(await r.arrayBuffer()),
+      );
+    }
     await writeFile(
       file,
       JSON.stringify(
@@ -90,6 +115,14 @@ try {
           receipt: accepted.receipt,
           evidence,
           rows: await snapshot(id),
+          quotation: {
+            path: quotePath,
+            commitPath: quoteCommitPath,
+            command: quoteProposal.command,
+            receipt: quoteAccepted.receipt,
+            evidence: quoteEvidence,
+            detail: quoteDetail,
+          },
           sha256: digest(original),
           revision: {
             path: successorPath,
@@ -106,7 +139,7 @@ try {
       ),
     );
     console.log(
-      "XI08 saved original and revised workbooks, successor and both operations before restart.",
+      "XI08 saved original and revised workbooks, successor, quotation, HTML/PDF and operations before restart.",
     );
   } else if (process.argv[2] === "verify") {
     const data = JSON.parse(await readFile(file, "utf8"));
@@ -115,6 +148,33 @@ try {
       data.postmaster,
       "Restart the actual PostgreSQL instance before verification.",
     );
+    assert.deepEqual(await snapshot(data.id), data.rows);
+    assert.deepEqual(
+      await json(data.quotation.path + "/excel-import"),
+      data.quotation.evidence,
+    );
+    assert.deepEqual(await json(data.quotation.path), data.quotation.detail);
+    assert.deepEqual(
+      await json("operations/" + data.quotation.command.operation_id),
+      data.quotation.receipt,
+    );
+    const quoteReplay = await json(
+      data.quotation.commitPath,
+      data.quotation.command,
+    );
+    assert.equal(quoteReplay.replayed, true);
+    assert.deepEqual(quoteReplay.receipt, data.quotation.receipt);
+    for (const kind of ["html", "pdf"]) {
+      const r = await fetch(
+        origin + "/api/v1/" + data.quotation.path + "/file?kind=" + kind,
+        { headers: { cookie: await h.cookie("coordinator") } },
+      );
+      assert.equal(r.status, 200);
+      assert.deepEqual(
+        Buffer.from(await r.arrayBuffer()),
+        await readFile(join(directory, "exact." + kind)),
+      );
+    }
     assert.deepEqual(await snapshot(data.id), data.rows);
     assert.deepEqual(await json(data.revision.path), data.revision.evidence);
     assert.deepEqual(
@@ -156,6 +216,7 @@ try {
           postmaster_changed: true,
           exact_rows: true,
           exact_workbook: true,
+          exact_quotation_and_outputs: true,
           original_receipt: true,
           replay_without_new_rows: true,
         },
@@ -164,7 +225,7 @@ try {
       ),
     );
     console.log(
-      "XI08 both exact workbooks, versions, comparison, decisions and original receipts survived PostgreSQL and app restarts.",
+      "XI08 both exact workbooks, versions, comparison, decisions, quotation, HTML/PDF and original receipts survived PostgreSQL and app restarts.",
     );
   } else throw Error("Choose write or verify.");
 } finally {
