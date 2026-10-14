@@ -634,7 +634,7 @@ test("PJ05-REVIEW02 creation requires recorded ownership, never a client-selecte
         [f.create.id, id],
       );
       await c.query(
-        "INSERT INTO ppo.project_commercial_events SELECT workspace_id,$2,1,command,state,jsonb_set(content,'{owner_id}',to_jsonb($3::text)),note,disputed,action_snapshot,reason,$3,clock_timestamp(),$4 FROM ppo.project_commercial_events WHERE entry_id=$1 AND version=1",
+        "INSERT INTO ppo.project_commercial_events SELECT workspace_id,$2,1,command,state,jsonb_set(content,'{owner_id}',to_jsonb($3::text)),note,disputed,action_snapshot,reason,$3::uuid,clock_timestamp(),$4 FROM ppo.project_commercial_events WHERE entry_id=$1 AND version=1",
         [f.create.id, id, f.reviewer.actor_id, randomUUID()],
       );
     }),
