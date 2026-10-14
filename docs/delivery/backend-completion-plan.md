@@ -83,3 +83,7 @@ Dean authorised [exact source mapping and reviewed pricing](../decisions/excel-i
 ## BC-04 Excel reviewed FX — 14 October 2026
 
 Dean authorised [reviewed FX conversion](../decisions/excel-import-reviewed-fx.md), continuing PR #487. The [contract](../contracts/excel-import-reviewed-fx.md) retains original supplier currency/prices and rate evidence in independently reviewed native source revisions, with exact unit-first AUD rounding, deliberate comparison and saved successors. [Evidence](../testing/evidence/excel-reviewed-fx/README.md) distinguishes local execution, CI and acceptance. Landed costs, native controls, non-AUD workbook templates and operational policies remain open.
+
+## BC-04 Excel landed costs — 14 October 2026
+
+Dean authorised [reviewed landed-cost allocation](../decisions/excel-import-landed-costs.md), continuing FX PR #488. The [contract](../contracts/excel-import-landed-costs.md) defines explicit AUD freight/duty, cent-conserving allocation and precision refusal, with immutable native binding evidence and exact successors. Native controls, foreign charges, operational allocation/accounting policy and deployment remain separate.

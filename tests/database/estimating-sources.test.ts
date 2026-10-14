@@ -318,7 +318,7 @@ test("ES03 explicit successor retains original estimate and quote bytes, carries
   );
   await assert.rejects(
     database().query(
-      `INSERT INTO ppo.estimate_cost_source_bindings SELECT workspace_id,company_id,$1,line_id,source_revision_id,review_event_id,pricing_date,tier_minimum_quantity,unit_cost,created_by,created_at FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id=$2`,
+      `INSERT INTO ppo.estimate_cost_source_bindings(workspace_id,company_id,estimate_version_id,line_id,source_revision_id,review_event_id,pricing_date,tier_minimum_quantity,unit_cost,created_by,created_at) SELECT workspace_id,company_id,$1,line_id,source_revision_id,review_event_id,pricing_date,tier_minimum_quantity,unit_cost,created_by,created_at FROM ppo.estimate_cost_source_bindings WHERE estimate_version_id=$2`,
       [old.saved.id, saved.saved.id],
     ),
     code("55000"),

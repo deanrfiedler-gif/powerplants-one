@@ -86,7 +86,7 @@ test("XI98 populated workbook, managed pricing and quotation upgrade to reviewed
         async (t) =>
           (
             await database().query(
-              `SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),
@@ -107,7 +107,7 @@ test("XI98 populated workbook, managed pricing and quotation upgrade to reviewed
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [99],
+    [99, 100],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,

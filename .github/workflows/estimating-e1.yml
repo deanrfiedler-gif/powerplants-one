@@ -72,7 +72,7 @@ jobs:
           PY
       - name: E1 PostgreSQL proof
         if: matrix.suite == 'database'
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         if: matrix.suite == 'browser'
         run: npm run build
@@ -107,8 +107,9 @@ jobs:
           node --env-file=.env.local --import tsx --test tests/http/excel-capacity.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-source-pricing.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-fx.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/excel-landed.test.ts
           node --import tsx scripts/excel-capacity-profile.ts candidate
-          node --env-file=.env.local --import tsx scripts/excel-import-restart.ts write fx
+          node --env-file=.env.local --import tsx scripts/excel-import-restart.ts write landed
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/estimating-review-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-release-restart.ts write
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts write

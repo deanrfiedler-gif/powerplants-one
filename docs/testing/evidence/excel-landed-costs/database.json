@@ -1,0 +1,143 @@
+{
+  "status": "passed",
+  "database": "ppo_synthetic_test",
+  "count": 34,
+  "cases": [
+    {
+      "name": "ES03 register follows current revisions and independent decisions without changing originals",
+      "duration_ms": 17980.7849
+    },
+    {
+      "name": "ES03 register counts all search matches before view filters and preserves expiry boundaries",
+      "duration_ms": 242.5412
+    },
+    {
+      "name": "ES03 register pages beyond 100 with complete counts and stable current-source ordering",
+      "duration_ms": 2664.0258
+    },
+    {
+      "name": "ES03 register refuses inactive actors and excludes foreign company, site-only and expired grants",
+      "duration_ms": 98.7009
+    },
+    {
+      "name": "ES03 register rechecks counts, review affordances and lookahead after hydration",
+      "duration_ms": 218.0842
+    },
+    {
+      "name": "ES03 immutable exact revisions, independent review, scope, stale writes and recoverable original receipts",
+      "duration_ms": 377.9768
+    },
+    {
+      "name": "ES03 explicit successor retains original estimate and quote bytes, carries exact reviewed provenance and replays once",
+      "duration_ms": 2256.7357
+    },
+    {
+      "name": "ES03 comparison conflicts and a failed version write roll back all source bindings, events and receipts",
+      "duration_ms": 1163.0095
+    },
+    {
+      "name": "XI98 populated workbook, managed pricing and quotation upgrade to reviewed FX with exact source, rows, grants and original ledger; reapply is inert",
+      "duration_ms": 34697.8402
+    },
+    {
+      "name": "FX exact source preview, independent review, original foreign evidence and concurrent Excel save preserve receipts and quote safety",
+      "duration_ms": 38469.4885
+    },
+    {
+      "name": "FX review refuses missing or changed acknowledgement and verifies its deferred audit evidence",
+      "duration_ms": 22682.3458
+    },
+    {
+      "name": "FX dates, foreign scope, legacy refresh and native conversion tampering refuse without accepted mutations",
+      "duration_ms": 28246.2524
+    },
+    {
+      "name": "FX rate correction requires a fresh independent review and estimate comparison while accepted historical operations recover",
+      "duration_ms": 28430.6463
+    },
+    {
+      "name": "FX binding removal and retained omissions remain explicit across re-import and fresh repricing",
+      "duration_ms": 37633.2465
+    },
+    {
+      "name": "FX 500-line conversion deduplicates full evidence and preserves the exact AUD Draft",
+      "duration_ms": 51066.4502
+    },
+    {
+      "name": "XI99 populated FX-priced workbook and quotation upgrade to landed allocation with exact source, rows, grants and original ledger; reapply is inert",
+      "duration_ms": 30486.4077
+    },
+    {
+      "name": "landed FX comparison is read-only; concurrent save retains exact sources, charges, originals and safe quotation",
+      "duration_ms": 26826.3127
+    },
+    {
+      "name": "landed replacement uses fresh base costs, requires all current allocations and can deliberately remove charges",
+      "duration_ms": 37393.2538
+    },
+    {
+      "name": "landed charge tampering and deferred binding faults roll the complete graph back",
+      "duration_ms": 56826.9219
+    },
+    {
+      "name": "landed exact review rejects stale versions, incompatible authority and revoked original recovery",
+      "duration_ms": 40135.9151
+    },
+    {
+      "name": "500 landed FX lines retain one shipment allocation and unchanged quotation sell total",
+      "duration_ms": 40950.737
+    },
+    {
+      "name": "landed Unit, Line duty and weighted Shipment allocations agree with independent database arithmetic",
+      "duration_ms": 36353.2694
+    },
+    {
+      "name": "XI97 populated workbook, sources and quotation upgrade to managed Excel pricing with exact source, rows, grants and original ledger; reapply is inert",
+      "duration_ms": 24622.064
+    },
+    {
+      "name": "XI pricing retains originals, independent comparison and exact duplicate receipt; quote excludes private evidence",
+      "duration_ms": 31747.8769
+    },
+    {
+      "name": "XI pricing refuses unreviewed, wrong-unit, invalid-date, wrong-company and duplicate mappings without mutations",
+      "duration_ms": 37411.8092
+    },
+    {
+      "name": "XI pricing rejects changed source and estimate; accepted historical replay survives later versions",
+      "duration_ms": 42830.669
+    },
+    {
+      "name": "XI repriced lines expose binding removal on re-import; explicit kept omissions retain exact bindings",
+      "duration_ms": 36355.9339
+    },
+    {
+      "name": "XI pricing failure rolls back the full successor graph and receipt; revoked recovery is denied",
+      "duration_ms": 47144.8815
+    },
+    {
+      "name": "XI 500-line managed pricing and exact quotation retain the native generic refresh bound",
+      "duration_ms": 71053.3848
+    },
+    {
+      "name": "E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original",
+      "duration_ms": 44718.8823
+    },
+    {
+      "name": "re-import exposes landed binding removal, retains a kept original allocation and requires fresh reallocation",
+      "duration_ms": 49017.7967
+    },
+    {
+      "name": "a changed landed Product category drops typed allocation while preserving other original bindings",
+      "duration_ms": 30087.475
+    },
+    {
+      "name": "PD upgrade from 100 preserves originals and exact new duties; repeat migration/seed is inert",
+      "duration_ms": 18791.2356
+    },
+    {
+      "name": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+      "duration_ms": 31685.2312
+    }
+  ]
+}

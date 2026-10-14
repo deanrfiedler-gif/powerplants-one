@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Excel reviewed landed-cost allocation — 14 October 2026
+
+Dean authorised the [landed-cost continuation](decisions/excel-import-landed-costs.md) after FX PR #488. The [backend contract](contracts/excel-import-landed-costs.md) adds explicit AUD freight/duty with unit, line or shipment bases, exact cent allocation and deliberate pricing successors. Native bindings retain supplier/FX and allocation evidence; original workbooks and quotes remain unchanged. Migration 0100 preserves prior binding values and ledgers. [Execution evidence](testing/evidence/excel-landed-costs/README.md) records 119 focused units, 34 database/upgrade scenarios, nine compiled HTTP scenarios and a 500-line browser/PDF proof with exact application/PostgreSQL restart recovery. Native controls, independent review, CI, operational customs/accounting policies and deployment remain separate.
+
 ## Excel reviewed FX conversion — 14 October 2026
 
 Dean authorised the [FX continuation](decisions/excel-import-reviewed-fx.md), delivered in [PR #488](https://github.com/deanrfiedler-gif/powerplants-one/pull/488) after managed pricing PR #487. The [backend contract](contracts/excel-import-reviewed-fx.md) retains original foreign supplier tiers, explicit rate/date/validity/evidence and derived AUD prices in exact independently reviewed source revisions. Excel comparison exposes both prices and deliberately saves an atomic successor; migration 0099 preserves earlier source, workbook and receipt history. [Execution evidence](testing/evidence/excel-reviewed-fx/README.md) separates checks from acceptance. Native controls, non-AUD workbook templates, landed costs, live rates and operational policy remain open.

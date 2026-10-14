@@ -3,7 +3,10 @@ import type { QueryClient } from "../../platform/permissions";
 import type { CostLine } from "../math";
 import { sourceContext, sourcesAvailable } from "./context";
 
+import type { LandedBinding } from "./landed";
+
 export type SourceBinding = {
+  landed?: LandedBinding;
   line_id: string;
   source_id: string;
   source_revision_id: string;
@@ -21,12 +24,13 @@ export async function sourceBindings(
   const rows = (
     await c.query<SourceBinding>(
       `SELECT b.line_id,r.source_id,b.source_revision_id,b.review_event_id,
-    to_char(b.pricing_date,'YYYY-MM-DD') AS pricing_date,b.tier_minimum_quantity::text,b.unit_cost::text
+    to_char(b.pricing_date,'YYYY-MM-DD') AS pricing_date,b.tier_minimum_quantity::text,b.unit_cost::text,to_jsonb(b)->'landed' AS landed
     FROM ppo.estimate_cost_source_bindings b JOIN ppo.cost_source_revisions r ON (r.workspace_id,r.id)=(b.workspace_id,b.source_revision_id)
     WHERE b.workspace_id=$1 AND b.estimate_version_id=$2 ORDER BY b.line_id`,
       [p.workspace_id, versionId],
     )
   ).rows;
+  for (const row of rows) if (!row.landed) delete row.landed;
   for (const id of new Set(rows.map((row) => row.source_id)))
     await sourceContext(c, p, id);
   return rows;
@@ -39,8 +43,8 @@ export async function insertSourceBinding(
   b: SourceBinding,
 ) {
   await c.query(
-    `INSERT INTO ppo.estimate_cost_source_bindings(workspace_id,company_id,estimate_version_id,line_id,source_revision_id,review_event_id,pricing_date,tier_minimum_quantity,unit_cost,created_by)
-    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+    `INSERT INTO ppo.estimate_cost_source_bindings(workspace_id,company_id,estimate_version_id,line_id,source_revision_id,review_event_id,pricing_date,tier_minimum_quantity,unit_cost,created_by${b.landed ? ",landed" : ""})
+    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10${b.landed ? ",$11" : ""})`,
     [
       p.workspace_id,
       companyId,
@@ -52,6 +56,7 @@ export async function insertSourceBinding(
       b.tier_minimum_quantity,
       b.unit_cost,
       p.actor_id,
+      ...(b.landed ? [b.landed] : []),
     ],
   );
 }
@@ -82,6 +87,7 @@ export async function inheritSourceBindings(
       !replace.includes(b.line_id) &&
       a &&
       next &&
+      (!b.landed || a.category === next.category) &&
       (
         ["quantity", "unit", "unit_cost", "source", "effective_date"] as const
       ).every((k) => a[k] === next[k])

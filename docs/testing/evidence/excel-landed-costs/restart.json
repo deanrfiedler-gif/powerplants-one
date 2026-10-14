@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "source_sha256": "14f5f9556f6b3aca638befe3aedf5bc85c63f28605db2d3834f8e014714c330e",
+  "revised_source_sha256": "ffd5c18bdd295c249c6077028670154f4fd355c8c70290adccfee14383a6f20a",
+  "postmaster_changed": true,
+  "exact_rows": true,
+  "exact_workbook": true,
+  "exact_managed_pricing": true,
+  "source_bindings": 500,
+  "exact_fx_evidence": true,
+  "foreign_currency": "USD",
+  "rate": "1.500000",
+  "converted_cost": "505.00",
+  "exact_landed_evidence": true,
+  "charges": 2,
+  "allocated_cost": "75.00",
+  "landed_cost": "580.00",
+  "timings_ms": {
+    "preview": 2853,
+    "save": 13802
+  },
+  "exact_quotation_and_outputs": true,
+  "original_receipt": true,
+  "replay_without_new_rows": true
+}
