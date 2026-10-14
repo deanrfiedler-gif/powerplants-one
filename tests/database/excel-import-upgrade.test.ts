@@ -65,7 +65,7 @@ for (const through of [25, 92])
     );
     const expected =
       through === 92
-        ? [93, 94, 95, 96, 97, 98, 99]
+        ? [93, 94, 95, 96, 97, 98, 99, 100]
         : migrationFiles
             .map((f) => Number(f.slice(0, 4)))
             .filter((v) => v > through);

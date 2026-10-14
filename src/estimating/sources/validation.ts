@@ -14,6 +14,7 @@ import {
 import { amount } from "../validation";
 import { scaled } from "../math";
 import { fxContent, convertedTiers } from "./fx";
+import { landedProposal } from "./landed";
 
 export function sourceContent(value: unknown) {
   const r = object(value, [
@@ -162,11 +163,16 @@ export function sourceDecision(id: string, value: unknown) {
     ] as const),
   };
 }
-export function refreshProposal(value: unknown, maxLines = 100) {
+export function refreshProposal(
+  value: unknown,
+  maxLines = 100,
+  allowLanded = false,
+) {
   const r = object(value, [
     "estimate_version_id",
     "pricing_date",
     "selections",
+    ...(allowLanded ? ["landed_costs"] : []),
   ]);
   if (
     !Array.isArray(r.selections) ||
@@ -195,12 +201,20 @@ export function refreshProposal(value: unknown, maxLines = 100) {
     invalid("selections", "Each estimate line may be selected only once.");
   selections.sort((a, b) => a.line_id.localeCompare(b.line_id));
   return {
+    ...(r.landed_costs === undefined
+      ? {}
+      : { landed_costs: landedProposal(r.landed_costs) }),
     estimate_version_id: uuid(r.estimate_version_id, "estimate_version_id"),
     pricing_date: dateOnly(r.pricing_date, "pricing_date"),
     selections,
   };
 }
-export function refreshCommand(id: string, value: unknown, maxLines = 100) {
+export function refreshCommand(
+  id: string,
+  value: unknown,
+  maxLines = 100,
+  allowLanded = false,
+) {
   const r = object(value, [
     ...commonKeys,
     "expected_version",
@@ -220,7 +234,7 @@ export function refreshCommand(id: string, value: unknown, maxLines = 100) {
     ...common(r),
     id: uuid(id, "estimate_id"),
     expected_version: version(r.expected_version),
-    proposal: refreshProposal(r.proposal, maxLines),
+    proposal: refreshProposal(r.proposal, maxLines, allowLanded),
     comparison_hash,
     reviewed: true,
   };

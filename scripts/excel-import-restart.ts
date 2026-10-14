@@ -1,3 +1,5 @@
+import { landedCharges } from "../tests/helpers/landed-costs";
+import { randomUUID } from "node:crypto";
 import { fxEvidence } from "../tests/helpers/source-fx";
 import { pricingSource } from "../tests/helpers/excel-source-pricing";
 import { crmBase } from "../tests/helpers/crm";
@@ -72,7 +74,8 @@ async function snapshot(id: string) {
 }
 try {
   if (process.argv[2] === "write") {
-    const fx = process.argv[3] === "fx";
+    const landed = process.argv[3] === "landed";
+    const fx = landed || process.argv[3] === "fx";
     const pricing = fx || process.argv[3] === "pricing";
     const capacity = pricing || process.argv[3] === "capacity";
     const s = await excelImportSetup(
@@ -117,7 +120,19 @@ try {
         fx ? { tiers: undefined, fx: fxEvidence() } : {},
       );
       const pricingPath = `estimating/estimates/${id}/excel-source-pricing`;
+      const landedEvidence = landedCharges(
+        successor.saved.lines.map((line: { id: string }) => line.id),
+        { amount: "50.00" },
+      );
+      landedEvidence.charges.push({
+        ...landedEvidence.charges[0],
+        id: randomUUID(),
+        kind: "Duty",
+        amount: "25.00",
+        evidence_reference: "SYN-LANDED-DUTY-01",
+      });
       const proposal = {
+        ...(landed ? { landed_costs: landedEvidence } : {}),
         estimate_version_id: successor.saved.id,
         pricing_date: "2026-10-14",
         selections: successor.saved.lines.map((line: { id: string }) => ({
@@ -130,7 +145,15 @@ try {
       const pricingStarted = performance.now();
       const review = await json(pricingPath + "/preview", proposal);
       const previewMs = performance.now() - pricingStarted;
-      assert.equal(review.comparison.after.cost, fx ? "505.00" : "375.00");
+      assert.equal(
+        review.comparison.after.cost,
+        landed ? "580.00" : fx ? "505.00" : "375.00",
+      );
+      if (landed) {
+        assert.equal(review.comparison.landed_costs.total, "75.00");
+        assert.equal(review.comparison.landed_costs.bindings.length, 500);
+        assert.equal(review.comparison.landed_costs.charges.length, 2);
+      }
       if (fx) {
         assert.equal(review.comparison.fx_sources.length, 1);
         assert.equal(
@@ -156,6 +179,7 @@ try {
       const evidence = await json(evidencePath);
       pricingCheckpoint = {
         fx,
+        landed,
         path: pricingPath,
         command,
         receipt: priced.receipt,
@@ -375,6 +399,14 @@ try {
                       foreign_currency: "USD",
                       rate: "1.500000",
                       converted_cost: "505.00",
+                    }
+                  : {}),
+                ...(data.pricing.landed
+                  ? {
+                      exact_landed_evidence: true,
+                      charges: 2,
+                      allocated_cost: "75.00",
+                      landed_cost: "580.00",
                     }
                   : {}),
                 timings_ms: data.pricing.timings_ms,

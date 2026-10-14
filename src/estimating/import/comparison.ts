@@ -217,7 +217,7 @@ export function buildComparison(
       source_binding_changes: current.source_bindings.map(binding => {
         const next = incoming.find(l => l.line_id === binding.line_id)?.proposed;
         const before = current.lines.find(l => l.id === binding.line_id)!;
-        const preserved = next && (["quantity", "unit", "unit_cost", "source", "effective_date"] as const)
+        const preserved = next && (!binding.landed || next.category === before.category) && (["quantity", "unit", "unit_cost", "source", "effective_date"] as const)
           .every(k => next[k] === before[k]);
         return { binding, action: next ? (preserved ? "Preserved" : "Removed") : "KeepOrRemoveRequired" };
       }),

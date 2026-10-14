@@ -301,7 +301,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // no new seed/user/grant or original-row rewrite. Populated 0097 is tested.
   // 0099 adds FX-only conversion/review/binding guards to existing tables.
   // No backfill, table privilege, seed or grant changes; populated 0098 is preserved.
-  if (latestMigrationVersion !== 99) throw Error("Review the existing-demo upgrade for this release.");
+  // 0100 adds nullable landed binding evidence and exact allocation guards.
+  // Original values, identities, seeds and grants are retained; existing table privileges apply.
+  if (latestMigrationVersion !== 100) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

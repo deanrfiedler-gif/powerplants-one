@@ -32,6 +32,7 @@ import {
 } from "./context";
 import { fxReviewHash, type FxContent } from "./fx";
 import { sourcePrice } from "./price";
+import { allocateLanded } from "./landed";
 import { refreshProposal, refreshCommand } from "./validation";
 import { insertSourceBinding, type SourceBinding } from "./bindings";
 
@@ -57,6 +58,18 @@ export async function compareSourceRefresh(
       409,
       "EstimateEvidenceMismatch",
       "Retained estimate content does not match its hash.",
+    );
+  const priorLanded = v.source_bindings?.filter((b) => b.landed) ?? [];
+  if (
+    (!allowFx && priorLanded.length) ||
+    priorLanded.some(
+      (b) => !input.selections.some((s) => s.line_id === b.line_id),
+    )
+  )
+    throw new AppError(
+      409,
+      "LandedComparisonRequired",
+      "Use an Excel comparison selecting every currently landed line to replace or remove the complete retained allocation.",
     );
   let scopeContextHash: string | null = null;
   if (e.discovery_basis) {
@@ -172,10 +185,29 @@ export async function compareSourceRefresh(
       warning: price.validity_warning,
     });
   }
+  const landed = input.landed_costs
+    ? allocateLanded(
+        lines,
+        input.selections.map((s) => s.line_id),
+        input.landed_costs,
+        input.pricing_date,
+      )
+    : undefined;
+  if (landed)
+    for (const entry of landed.bindings) {
+      lines.find((l) => l.id === entry.line_id)!.unit_cost = entry.unit_cost;
+      Object.assign(
+        bindings.find((b) => b.line_id === entry.line_id)!,
+        { unit_cost: entry.unit_cost, landed: entry.landed },
+      );
+      changes.find((c) => c.line_id === entry.line_id)!.new.unit_cost =
+        entry.unit_cost;
+    }
   const parsed = parseLines(lines, v.cost_schema_version ?? 1, maxLines),
     before = calculate(v.lines),
     after = calculate(parsed);
   const snapshot = {
+    ...(landed ? { landed_costs: landed } : {}),
     ...(fxSources.size ? { fx_sources: [...fxSources.values()] } : {}),
     estimate_id: e.id,
     estimate_version_id: v.id,

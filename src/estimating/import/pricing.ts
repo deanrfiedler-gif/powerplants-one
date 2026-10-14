@@ -113,7 +113,7 @@ export async function previewExcelSourcePricing(
   id: string,
   value: unknown,
 ) {
-  const input = refreshProposal(value, EXCEL_CAPACITY.lines);
+  const input = refreshProposal(value, EXCEL_CAPACITY.lines, true);
   return transaction(async (c) => {
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
@@ -142,7 +142,7 @@ export async function applyExcelSourcePricing(
   value: unknown,
 ) {
   // The native command shape is reused; comparison_hash binds the full Excel review.
-  const input = refreshCommand(id, value, EXCEL_CAPACITY.lines);
+  const input = refreshCommand(id, value, EXCEL_CAPACITY.lines, true);
   return sharedOperation(
     p,
     input,

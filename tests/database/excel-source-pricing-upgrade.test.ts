@@ -68,7 +68,7 @@ test("XI97 populated workbook, sources and quotation upgrade to managed Excel pr
         async (t) =>
           (
             await database().query(
-              `SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),
@@ -89,7 +89,7 @@ test("XI97 populated workbook, sources and quotation upgrade to managed Excel pr
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [98, 99],
+    [98, 99, 100],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,
