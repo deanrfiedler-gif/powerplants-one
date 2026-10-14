@@ -428,7 +428,7 @@ test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and le
   );
   assert.deepEqual(
     after.filter((r) => r.version > through).map((r) => r.version),
-    through === 87 ? [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100] : [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100],
+    through === 87 ? [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101] : [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101],
   );
   assert.deepEqual(
     {

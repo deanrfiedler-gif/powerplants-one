@@ -178,3 +178,7 @@ The [13 October contract](../decisions/project-overview-backend.md) reuses deliv
 ## PJ-03 implementation checkpoint - 13 October 2026
 
 Dean authorised the calendar/actual-date backend after PJ-01/PJ-02. The [current contract](../decisions/project-calendars-actuals.md) independently adopts synthetic date-only rules under PRJ-02/04/07 and AT-09/32. Calendar revisions, corrections/withdrawals of actual statements, immutable baseline calendar references and working-day comparisons reuse native Project authority. Earlier baseline rows, issued references and all parent IDs remain unchanged. [Execution evidence](../testing/evidence/project-programme/README.md) is separate from business/visual acceptance, editing controls and deployment.
+
+## PJ-05 commercial controls backend — 14 October 2026
+
+The [commercial contract](../contracts/project-commercial-controls.md) and [decision](../decisions/project-commercial-controls.md) define one exact accepted-quotation/received-Sales/reviewed-document basis, independently approved original value, owned obligations, recorded notices and exact variation decisions. The [Finance definitions](../contracts/project-commercial-finance-definitions.md) preserve approved, pending and disputed amounts separately; current totals hold on source drift. Native controls, operative policy, basis replacement, subcontracts and financial transactions remain separate. All parent IDs remain.

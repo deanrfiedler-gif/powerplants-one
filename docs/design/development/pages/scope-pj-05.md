@@ -39,3 +39,7 @@ No exact image or HTML reference is linked. Keep this gap visible.
 The draft User Guide `guide.pj.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Backend implementation checkpoint — 14 October 2026
+
+The [PJ-05 backend contract](../../../contracts/project-commercial-controls.md) and [synthetic Finance definitions](../../../contracts/project-commercial-finance-definitions.md) now govern the isolated implementation. Exact source/decision/recovery endpoints have passed local database, compiled API and real restart verification; this does not implement or visually accept this planned page. Native controls must expose original, requested, priced, approved and disputed facts separately, keep unknown and changed-source holds visible, and recover the same operation after an uncertain save. No new visual reference is available.
