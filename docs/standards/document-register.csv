@@ -622,3 +622,5 @@ PPO-GANTT-FIGMA-COLOURS-DEC,Projects Gantt colours owner decision,docs/decisions
 PPO-GANTT-FIGMA-COLOURS-EVIDENCE,Gantt Figma colours rendered evidence,docs/testing/evidence/gantt-figma-colours/README.md,,Rendered before and after of the real component; CI browser suites and owner review separate,Dean Fiedler,65141dcb8a3e39f6516f69955e8260ed447d152b,,,git,
 PPO-CPQ-PRODUCTS-DEC,CPQ exact published Products and estimate provenance,docs/decisions/cpq-published-products.md,,Implementation authorised; independent review and acceptance separate,Dean Fiedler,b100680,,,git,
 PPO-CPQ-PRODUCTS-EVIDENCE,CPQ published Products execution evidence,docs/testing/evidence/cpq-published-products/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,b100680,,,git,
+PPO-CPQ-COSTS-DEC,CPQ governed product costs and labour rates,docs/decisions/cpq-governed-costs.md,,Implementation authorised; independent review and acceptance separate,Dean Fiedler,5ce7a1a,,,git,
+PPO-CPQ-COSTS-EVIDENCE,CPQ governed costs execution evidence,docs/testing/evidence/cpq-governed-costs/README.md,,Synthetic verification; acceptance separate,Dean Fiedler,5ce7a1a,,,git,

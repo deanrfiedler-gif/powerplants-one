@@ -5,7 +5,10 @@ import {
   choice,
   uuid,
   instant,
+  version,
 } from "../shared/validation";
+import { sourceContent } from "../estimating/sources/validation";
+import { hash } from "./hash";
 import { amount } from "../estimating/validation";
 import { compileFormula, Fraction } from "./expression";
 import {
@@ -268,9 +271,10 @@ export function definition(value: unknown): Definition {
   if (
     r.schema_version !== 1 &&
     r.schema_version !== 2 &&
-    r.schema_version !== 3
+    r.schema_version !== 3 &&
+    r.schema_version !== 4
   )
-    invalid("schema_version", "Use CPQ definition schema 1, 2 or 3.");
+    invalid("schema_version", "Use CPQ definition schema 1, 2, 3 or 4.");
   const design = r.schema_version === 3;
   const facts = distinct(
     bounded(r.facts, "facts", 40, 1).map((v) => {
@@ -328,7 +332,8 @@ export function definition(value: unknown): Definition {
         "effective_from",
         "effective_to",
         "tiers",
-        ...(r.schema_version === 2 ? ["product"] : []),
+        ...([2, 4].includes(Number(r.schema_version)) ? ["product"] : []),
+        ...(r.schema_version === 4 ? ["cost_source"] : []),
         ...(design ? ["price_context"] : []),
         ...(design ? ["scope"] : []),
       ]);
@@ -369,6 +374,51 @@ export function definition(value: unknown): Definition {
           revision_id: uuid(ref.revision_id, "product_revision_id"),
           content_hash: digest(ref.content_hash, "product_content_hash"),
           relationships,
+        };
+      }
+      let cost_source: import("./types").CostReference | undefined;
+      if ("cost_source" in p) {
+        if (!["Product", "Labour"].includes(String(p.category)))
+          invalid(
+            "cost_source",
+            "Only Product and Labour parts support governed sources in schema 4.",
+          );
+        const ref = object(p.cost_source, [
+          "source_id",
+          "revision_id",
+          "content_hash",
+          "review_event_id",
+          "source_version",
+          "reference",
+          "revision",
+          "content",
+        ]);
+        const content = sourceContent(ref.content);
+        if (content.fx)
+          invalid(
+            "cost_source",
+            "CPQ supports direct AUD source evidence; FX needs the separate Excel review contract.",
+          );
+        if (content.unit !== p.unit)
+          invalid(
+            "cost_source",
+            "The exact source and component units must match.",
+          );
+        const content_hash = digest(ref.content_hash, "cost_content_hash");
+        if (hash(content) !== content_hash)
+          invalid(
+            "cost_source",
+            "Use the normalized exact retained source content and hash.",
+          );
+        cost_source = {
+          source_id: uuid(ref.source_id, "source_id"),
+          revision_id: uuid(ref.revision_id, "source_revision_id"),
+          review_event_id: uuid(ref.review_event_id, "review_event_id"),
+          content_hash,
+          source_version: version(ref.source_version),
+          reference: label(ref.reference, "source_reference", 100),
+          revision: version(ref.revision),
+          content,
         };
       }
       const from = date(p.effective_from, "effective_from"),
@@ -463,6 +513,11 @@ export function definition(value: unknown): Definition {
             "unit_sell",
             "Sell cannot be below cost under the native synthetic policy.",
           );
+        if (cost_source && cost !== "0.00")
+          invalid(
+            "unit_cost",
+            "Bound source tiers require a zero authored cost marker. The reviewed source supplies the cost; there is no fallback.",
+          );
         let source_unit_cost: string | undefined;
         if (price_context) {
           source_unit_cost = label(x.source_unit_cost, "source_unit_cost", 32);
@@ -538,6 +593,7 @@ export function definition(value: unknown): Definition {
         effective_to: to,
         tiers,
         ...(product ? { product } : {}),
+        ...(cost_source ? { cost_source } : {}),
         ...(price_context ? { price_context } : {}),
         ...(scope ? { scope } : {}),
       };
@@ -548,6 +604,11 @@ export function definition(value: unknown): Definition {
     invalid(
       "parts",
       "Schema 2 requires at least one explicit published Product binding.",
+    );
+  if (r.schema_version === 4 && !parts.some((p) => p.cost_source))
+    invalid(
+      "parts",
+      "Schema 4 requires at least one exact governed cost source binding.",
     );
   const rules = distinct(
     bounded(r.rules, "rules", 100, 1).map((v) => {
@@ -639,7 +700,7 @@ export function definition(value: unknown): Definition {
     };
   });
   return {
-    schema_version: r.schema_version as 1 | 2 | 3,
+    schema_version: r.schema_version as 1 | 2 | 3 | 4,
     label: label(r.label, "label", 200),
     currency: choice(r.currency, "currency", ["AUD"] as const),
     facts,

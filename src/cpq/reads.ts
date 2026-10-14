@@ -7,6 +7,7 @@ import { workspaceAuthority } from "../estimating/discovery-workspace-context";
 import { active, duty, release, revision, run } from "./context";
 import { hash } from "./hash";
 import { semanticChanges } from "./semantic-diff";
+import { costLineEvidence } from "./costs";
 import { productLineEvidence } from "./products";
 import { productAuthority } from "../products/context";
 import { estimateContext, versionContext } from "../estimating/context";
@@ -110,6 +111,9 @@ export const readRun = (p: Principal, id: string) =>
       ...r,
       evaluation_number: n,
       binding_hash: hash(r.binding),
+      ...(r.binding.cost_sources
+        ? { cost_provenance: costLineEvidence(r) }
+        : {}),
       ...(r.binding.products
         ? { product_provenance: productLineEvidence(r) }
         : {}),

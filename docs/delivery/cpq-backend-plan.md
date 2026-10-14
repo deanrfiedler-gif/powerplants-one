@@ -47,3 +47,8 @@ Owner decisions needed before P1 acceptance: first operational equipment family;
 ## Published Products backend increment — 14 October 2026
 
 [Decision](../decisions/cpq-published-products.md), [API](../interfaces/cpq-api.md#published-product-profile--schema-2) and [execution evidence](../testing/evidence/cpq-published-products/README.md) cover the bounded schema-2 profile, exact estimate provenance, current-authority/new-use checks and historical recovery. No migration, capability, provider or price policy is added. Existing schema 1 and schema 3 remain compatible; combining design-schema features with bindings, UI controls, operational compatibility acceptance, availability and broader fact mapping remain open. PR #489 was open at initial inspection and then merged independently; the branch retains its main `bc9e3fb` history without adding a CPQ dependency.
+
+
+## BC-04 CPQ governed costs — 14 October 2026
+
+The [governed costs decision](../decisions/cpq-governed-costs.md) implements the bounded cost/labour source increment using existing Cost Sources and native estimate bindings. Schema 4 freezes exact reviewed sources and selected tiers, refuses changed authority/basis on new use, preserves historical recovery and supports explicit successor comparison. [Execution evidence](../testing/evidence/cpq-governed-costs/README.md) keeps software verification separate from CI, independent review and operational acceptance. No new book store, migration, grant, pricing policy or UI. Separate schema-3 integration, operational book ownership, approved rates and broader pricing remain open. The next backend increment is explicit rebase/conflict decisions for overrides and manually changed CPQ-owned lines.

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "postmaster_before": "2026-10-14 19:20:00.934826+10",
+  "postmaster_after": "2026-10-14 20:03:45.837529+10",
+  "graph_hash": "70b34fb54bbb2b32f0d8e9f757ac2dbde3ee80722c07bac4ab00701f2e652931",
+  "run_content_hash": "b263412c11a131ab0802dff01ed8af7e47016efe6b22fa437717c7e59d15387c",
+  "result_hash": "14ac4e10f1c49bac0d080bec458b334bacb645736e860ab42e0db4f0a3964509",
+  "product_count": 2,
+  "relationship_count": 1,
+  "adopted_product_lines": 1,
+  "original_receipts": 2,
+  "duplicate_effects": 0,
+  "withdrawn_source_refused": true
+}

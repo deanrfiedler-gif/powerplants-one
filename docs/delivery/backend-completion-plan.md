@@ -91,3 +91,8 @@ Dean authorised [reviewed landed-cost allocation](../decisions/excel-import-land
 ## BC-04 CPQ published Product mapping — 14 October 2026
 
 Dean authorised the [bounded published Products increment](../decisions/cpq-published-products.md): exact native Variant/revision bindings, retained conditional compatibility evidence and atomic estimate provenance, with historical access/recovery distinct from new-use eligibility. [Execution evidence](../testing/evidence/cpq-published-products/README.md) separates verification, CI, independent review and acceptance. Broader fact mapping, cost/labour books, schema-3 combined authoring, native controls and deployment remain separate.
+
+
+## BC-04 CPQ governed costs — 14 October 2026
+
+The [governed costs decision](../decisions/cpq-governed-costs.md) implements the bounded cost/labour source increment using existing Cost Sources and native estimate bindings. Schema 4 freezes exact reviewed sources and selected tiers, refuses changed authority/basis on new use, preserves historical recovery and supports explicit successor comparison. [Execution evidence](../testing/evidence/cpq-governed-costs/README.md) keeps software verification separate from CI, independent review and operational acceptance. No new book store, migration, grant, pricing policy or UI. Separate schema-3 integration, operational book ownership, approved rates and broader pricing remain open. The next backend increment is explicit rebase/conflict decisions for overrides and manually changed CPQ-owned lines.

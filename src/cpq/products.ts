@@ -27,7 +27,13 @@ export async function productBindings(
   definition: Definition,
   current = false,
 ): Promise<ProductSnapshot[]> {
-  if (definition.schema_version !== 2) return [];
+  if (
+    definition.schema_version !== 2 &&
+    !(
+      definition.schema_version === 4 && definition.parts.some((p) => p.product)
+    )
+  )
+    return [];
   await productAuthority(c, p, company);
   const parts = definition.parts.filter((part) => part.product);
   const snapshots: ProductSnapshot[] = [];
@@ -187,8 +193,10 @@ export async function productBindings(
 // Exact line attribution stays outside the native customer-safe cost line shape.
 export function productLineEvidence(saved: Pick<Run, "binding" | "result">) {
   return saved.result.lines.flatMap((line) => {
-    const product = saved.binding.products?.find((p) =>
-      line.target.endsWith(`:${p.part_key}:${p.content.unit}`),
+    const product = saved.binding.products?.find(
+      (p) =>
+        line.target.split(":")[1] === p.part_key &&
+        line.line.unit === p.content.unit,
     );
     return product
       ? [

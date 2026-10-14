@@ -17,6 +17,7 @@ import { active, duty, release, revision, type Release } from "./context";
 import { definition, digest } from "./validation";
 import { hash } from "./hash";
 import { testIsolated } from "./runner";
+import { costBindings } from "./costs";
 import { productBindings } from "./products";
 import { tableCoverage } from "./design-runtime";
 import { retainVersionDraft } from "./drafts";
@@ -62,6 +63,7 @@ export async function saveRelease(p: Principal, value: unknown) {
     async (c) => {
       await duty(c, p, input.company_id, "cpq.author");
       await productBindings(c, p, input.company_id, input.definition);
+      await costBindings(c, p, input.company_id, input.definition);
       const prior = (
         await c.query<Release>(
           "SELECT * FROM ppo.cpq_releases WHERE workspace_id=$1 AND id=$2",
@@ -80,6 +82,7 @@ export async function saveRelease(p: Principal, value: unknown) {
     async (c, prior) => {
       expected(prior?.version ?? 0, input.expected_version);
       await productBindings(c, p, input.company_id, input.definition, true);
+      await costBindings(c, p, input.company_id, input.definition, true);
       if (input.definition.schema_version === 3) {
         const fixtures = await testIsolated(input.definition);
         const coverage = tableCoverage(input.definition);
@@ -248,8 +251,10 @@ export async function reviewRelease(p: Principal, id: string, value: unknown) {
           "Another authorised person must review this release.",
         );
       const fixtures = await testIsolated(v.definition);
-      if (input.outcome === "Approved")
+      if (input.outcome === "Approved") {
         await productBindings(c, p, root.company_id, v.definition, true);
+        await costBindings(c, p, root.company_id, v.definition, true);
+      }
       if (input.outcome === "Approved" && fixtures.some((f) => !f.passed))
         throw new AppError(
           409,
@@ -376,6 +381,13 @@ export async function activateRelease(
       );
       await productBindings(c, p, root.company_id, v.definition, true);
       await productBindings(
+        c,
+        { ...p, actor_id: review.reviewer_id },
+        root.company_id,
+        v.definition,
+      );
+      await costBindings(c, p, root.company_id, v.definition, true);
+      await costBindings(
         c,
         { ...p, actor_id: review.reviewer_id },
         root.company_id,
