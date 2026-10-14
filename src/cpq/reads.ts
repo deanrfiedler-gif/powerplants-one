@@ -8,6 +8,7 @@ import { active, duty, release, revision, run } from "./context";
 import { hash } from "./hash";
 import { semanticChanges } from "./semantic-diff";
 import { productLineEvidence } from "./products";
+import { productAuthority } from "../products/context";
 import { estimateContext, versionContext } from "../estimating/context";
 
 export async function listReleases(
@@ -119,11 +120,13 @@ export async function readEstimateProducts(
   id: string,
   query: Record<string, string>,
 ) {
-  const q = object(query, ["version_id"]);
+  const q = object(query, ["version_id"]),
+    versionId = uuid(q.version_id, "version_id");
   return transaction(async (c) => {
-    const e = await estimateContext(c, p, id);
-    const v = await versionContext(c, p, e, uuid(q.version_id, "version_id"));
+    const e = await estimateContext(c, p, id, "estimating.read", versionId);
+    const v = await versionContext(c, p, e, versionId);
     await duty(c, p, e.company_id);
+    await productAuthority(c, p, e.company_id);
     const adoption = (
       await c.query<{
         run_id: string;

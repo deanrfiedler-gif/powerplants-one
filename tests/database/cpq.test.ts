@@ -11,6 +11,8 @@ import {
   createDiscoveryWorkspace,
   previewDiscoveryCreate,
   readDiscoveryWorkspace,
+  previewDiscoveryChange,
+  changeDiscoveryWorkspace,
 } from "../../src/estimating/discovery-workspaces";
 import { saveEstimate, prepareQuote } from "../../src/estimating/service";
 import { readEstimate } from "../../src/estimating/reads";
@@ -43,6 +45,11 @@ import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { cpqDefinition, cpqInput } from "../helpers/cpq";
 import { arithmeticPolicy } from "../../src/estimating/math";
+import {
+  previewDiscoveryCosting,
+  adoptDiscoveryCosting,
+} from "../../src/estimating/cost-basis-service";
+import { manualLines } from "../helpers/estimating";
 import {
   productFixture,
   publishProduct,
@@ -125,8 +132,10 @@ async function published(definition = cpqDefinition()) {
   await activateRelease(s.publisher, s.release_id, activate);
   return { ...s, activate };
 }
-async function discovery(p: Awaited<ReturnType<typeof setup>>["p"]) {
-  const opportunity = crmCreate();
+async function discovery(
+  p: Awaited<ReturnType<typeof setup>>["p"],
+  opportunity = crmCreate(),
+) {
   await createOpportunity(p, opportunity);
   const discovery = discoveryInput();
   const preview = await previewDiscoveryCreate(p, {
@@ -1568,5 +1577,131 @@ test("mapped CPQ recalculation retains manual costs, replaces owned lines and bl
   assert.equal(
     (await compareRuns(s.p, s.run.id, { with: second.id })).changes.length,
     2,
+  );
+});
+
+test("provenance access requires Products authority for legacy adoption and no-adoption status", async () => {
+  const s = await calculated(),
+    input = adoption(await previewAdoption(s.p, s.run.id));
+  await adoptRun(s.p, s.run.id, input);
+  const e = await readEstimate(s.p, input.estimate_id),
+    original = e.current_saved.id;
+  await assert.rejects(
+    readEstimateProducts(s.p, e.id, { version_id: original }),
+    code("RecordUnavailable"),
+  );
+  await grant(s.p.actor_id, ["products.read"]);
+  assert.equal(
+    (await readEstimateProducts(s.p, e.id, { version_id: original })).status,
+    "ExactAdoption",
+  );
+  await saveEstimate(s.p, e.id, {
+    ...crmBase(),
+    schema_version: 2,
+    expected_version: e.version,
+    title: e.current_saved.title,
+    scope: e.current_saved.scope,
+    lines: e.current_saved.lines,
+    policy: e.current_saved.policy,
+  });
+  const current = (await readEstimate(s.p, e.id)).current_saved.id;
+  assert.equal(
+    (await readEstimateProducts(s.p, e.id, { version_id: current })).status,
+    "NoCpqAdoption",
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='products.read'",
+    [s.p.actor_id],
+  );
+  for (const version_id of [original, current])
+    await assert.rejects(
+      readEstimateProducts(s.p, e.id, { version_id }),
+      code("RecordUnavailable"),
+    );
+});
+
+test("provenance access authorizes the requested historical discovery site before returning status", async () => {
+  const s = await setup(),
+    estimateId = randomUUID(),
+    site2 = "70000000-0000-4000-8000-000000000002";
+  await rows(
+    "INSERT INTO ppo.site_parties(id,workspace_id,created_by,updated_by,company_id,site_id,organisation_id,role,valid_from) VALUES($1,$2,$3,$3,$4,$5,$6,'BillingParty','2026-01-01')",
+    [randomUUID(), CRM.workspace, s.p.actor_id, CRM.company, site2, CRM.org],
+  );
+  const g = await discovery(s.p, { ...crmCreate(), site_id: site2 });
+  await grant(s.p.actor_id, ["products.read"]);
+  const adopt = async (
+    revisionId: string,
+    workspaceVersion: number,
+    estimateVersion: number,
+  ) => {
+    const basis = await previewDiscoveryCosting(s.p, g.id, {
+      option_id: g.option_id,
+      revision_id: revisionId,
+    });
+    await adoptDiscoveryCosting(s.p, g.id, {
+      ...crmBase(),
+      estimate_id: estimateId,
+      option_id: g.option_id,
+      revision_id: revisionId,
+      expected_workspace_version: workspaceVersion,
+      expected_estimate_version: estimateVersion,
+      context_hash: basis.context_hash,
+      title: "SYN exact site authority",
+      scope: {
+        included: "Synthetic product supply",
+        excluded: "Other work",
+        assumptions: "Synthetic verification only",
+      },
+      lines: manualLines().map((line) => ({ ...line, allowance: false })),
+      policy: arithmeticPolicy,
+    });
+  };
+  await adopt(g.revision_id, 1, 0);
+  const original = (await readEstimate(s.p, estimateId)).current_saved.id;
+  const next = discoveryInput();
+  next.scope = {
+    ...next.scope,
+    site_id: site2,
+    facility_ids: [],
+    equipment_ids: [],
+    systems: [{ tag: "ProductSupply", facility_ids: [] }],
+  };
+  const proposal = {
+    kind: "Save",
+    option_id: g.option_id,
+    expected_version: 1,
+    expected_revision_id: g.revision_id,
+    discovery: next,
+  };
+  const preview = await previewDiscoveryChange(s.p, g.id, proposal),
+    revisionId = randomUUID();
+  await changeDiscoveryWorkspace(s.p, g.id, {
+    ...crmBase(),
+    ...proposal,
+    revision_id: revisionId,
+    context_hash: preview.context_hash,
+    comparison_hash: preview.comparison_hash,
+    confirmed_question_ids: preview.required_confirmation_ids,
+    configuration_confirmations: preview.configuration_confirmations,
+  });
+  await adopt(revisionId, 2, 1);
+  const current = (await readEstimate(s.p, estimateId)).current_saved.id;
+  await rows(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.read'",
+    [s.p.actor_id],
+  );
+  await rows(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from) VALUES($1,$2,$3,'estimating.read','Site',$4,$4,'2026-01-01')",
+    [CRM.workspace, s.p.actor_id, CRM.company, site2],
+  );
+  assert.equal(
+    (await readEstimateProducts(s.p, estimateId, { version_id: current }))
+      .status,
+    "NoCpqAdoption",
+  );
+  await assert.rejects(
+    readEstimateProducts(s.p, estimateId, { version_id: original }),
+    code("RecordUnavailable"),
   );
 });
