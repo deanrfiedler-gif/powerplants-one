@@ -6,6 +6,7 @@ import { spawn } from "node:child_process";
 const exclusive = new Set([
   "excel-import-review.test.ts",
   "excel-import-persistence.test.ts",
+  "excel-reimport.test.ts",
   "output-register.test.ts",
   "output-actions.test.ts",
   "template-catalogue.test.ts",

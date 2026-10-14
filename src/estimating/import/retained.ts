@@ -14,6 +14,11 @@ import {
 } from "../discovery-workspace-context";
 import { estimateContext } from "../context";
 import type { reviewWorkbook } from "./review";
+import type {
+  WorkbookComparison,
+  LineDecision,
+  Projection,
+} from "./comparison";
 
 type RetainedImport = {
   workspace_id: string;
@@ -33,7 +38,7 @@ type RetainedImport = {
   created_at: Date;
   reason: string;
 };
-async function retainedAuthority(
+export async function retainedAuthority(
   c: QueryClient,
   p: Principal,
   id: string,
@@ -42,7 +47,7 @@ async function retainedAuthority(
 ) {
   const row = (
     await c.query<RetainedImport>(
-      "SELECT * FROM ppo.excel_imports WHERE workspace_id=$1 AND estimate_id=$2 AND estimate_version_id=$3",
+      "SELECT * FROM ppo.excel_import_history WHERE workspace_id=$1 AND estimate_id=$2 AND estimate_version_id=$3",
       [p.workspace_id, uuid(id, "estimate_id"), uuid(versionId, "version_id")],
     )
   ).rows[0];
@@ -66,7 +71,7 @@ export async function excelReceiptAuthority(
 ) {
   const row = (
     await c.query(
-      "SELECT estimate_version_id FROM ppo.excel_imports WHERE workspace_id=$1 AND estimate_id=$2 AND operation_id=$3 AND created_by=$4",
+      "SELECT estimate_version_id FROM ppo.excel_import_history WHERE workspace_id=$1 AND estimate_id=$2 AND operation_id=$3 AND created_by=$4",
       [p.workspace_id, id, operationId, p.actor_id],
     )
   ).rows[0];
@@ -82,10 +87,42 @@ export async function readExcelImport(
     const row = await retainedAuthority(c, p, id, versionId);
     const lines = (
       await c.query(
-        "SELECT ordinal,line_ref,line_id,section_ref,source_ref,included,print FROM ppo.excel_import_lines WHERE workspace_id=$1 AND estimate_version_id=$2 ORDER BY ordinal",
+        "SELECT ordinal,line_ref,line_id,section_ref,source_ref,included,print FROM ppo.excel_line_history WHERE workspace_id=$1 AND estimate_version_id=$2 ORDER BY ordinal",
         [p.workspace_id, versionId],
       )
     ).rows;
+    const resolution = (
+      await c.query<{
+        comparison: WorkbookComparison;
+        decisions: LineDecision[];
+        projection: Projection[];
+      }>(
+        "SELECT comparison,decisions,projection FROM ppo.excel_reimports WHERE workspace_id=$1 AND estimate_version_id=$2",
+        [p.workspace_id, versionId],
+      )
+    ).rows[0];
+    if (resolution) {
+      // Comparison evidence includes earlier native costs and workbook values.
+      // Access to the successor alone must not disclose a now-inaccessible basis.
+      const comparison = resolution.comparison;
+      await estimateContext(
+        c,
+        p,
+        id,
+        "estimating.read",
+        comparison.predecessor.version_id,
+      );
+      const versions = new Set(
+        [
+          comparison.previous_import.version_id,
+          ...comparison.lines.map((l) => l.previous_import_version_id),
+          ...comparison.omissions.map((l) => l.previous_import_version_id),
+          ...resolution.projection.map((l) => l.retained_from),
+        ].filter((v): v is string => v !== null),
+      );
+      for (const version of versions)
+        await retainedAuthority(c, p, id, version);
+    }
     return {
       state: "Imported",
       synthetic: true,
@@ -105,6 +142,7 @@ export async function readExcelImport(
       },
       lines,
       source_retained: true,
+      ...(resolution ? { resolution } : {}),
     };
   });
 }

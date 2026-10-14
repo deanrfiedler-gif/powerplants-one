@@ -65,7 +65,7 @@ for (const through of [25, 92])
     );
     const expected =
       through === 92
-        ? [93, 94, 95]
+        ? [93, 94, 95, 96]
         : migrationFiles
             .map((f) => Number(f.slice(0, 4)))
             .filter((v) => v > through);
@@ -73,7 +73,7 @@ for (const through of [25, 92])
       upgraded.filter((r) => r.version > through).map((r) => r.version),
       expected,
     );
-    for (const t of ["excel_imports", "excel_import_lines"])
+    for (const t of ["excel_imports", "excel_import_lines", "excel_reimports"])
       assert.deepEqual(await rows(`SELECT * FROM ppo.${t}`), []);
     assert.deepEqual(
       await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),

@@ -7,6 +7,10 @@ import { localConfig } from "../src/platform/config";
 import { digest } from "../src/documents/store";
 import { httpAcceptance } from "../tests/helpers/acceptance-http";
 import { excelImportSetup } from "../tests/helpers/excel-import";
+import {
+  revisionCommand,
+  changedWorkbook,
+} from "../tests/helpers/excel-reimport";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 const origin = localConfig().origin,
@@ -37,6 +41,7 @@ async function snapshot(id: string) {
   SELECT 'estimate' AS kind,to_jsonb(e) AS value FROM ppo.estimates e WHERE id=$1
   UNION ALL SELECT 'version',to_jsonb(v) FROM ppo.estimate_versions v WHERE estimate_id=$1
   UNION ALL SELECT 'import',to_jsonb(i) FROM ppo.excel_imports i WHERE estimate_id=$1
+  UNION ALL SELECT 'reimport',to_jsonb(i) FROM ppo.excel_reimports i WHERE estimate_id=$1
   UNION ALL SELECT 'line',to_jsonb(l) FROM ppo.excel_import_lines l WHERE estimate_version_id IN (SELECT estimate_version_id FROM ppo.excel_imports WHERE estimate_id=$1)
   UNION ALL SELECT 'receipt',to_jsonb(r) FROM ppo.operation_receipts r WHERE record_id=$1
   UNION ALL SELECT 'audit',to_jsonb(a) FROM ppo.audit_events a WHERE object_id=$1
@@ -59,6 +64,21 @@ try {
     assert.deepEqual(original, Buffer.from(s.upload.file.base64, "base64"));
     await mkdir(directory, { recursive: true });
     await writeFile(join(directory, "original.xlsx"), original);
+    const revision = await revisionCommand(s, changedWorkbook);
+    revision.command.decisions.forEach((d) => (d.action = "Remove"));
+    const revisionPath = commitPath.replace(/commit$/, "reimport");
+    const revised = await json(revisionPath, revision.command);
+    const successor = await json(`estimating/estimates/${id}`);
+    const successorPath = `estimating/estimates/${id}/excel-import/${successor.saved.id}`;
+    const successorEvidence = await json(successorPath),
+      revisedBytes = await bytes(successorPath);
+    assert.deepEqual(
+      revisedBytes,
+      Buffer.from(revision.command.file.base64, "base64"),
+    );
+    assert.deepEqual(await json(path), evidence);
+    assert.deepEqual(await bytes(path), original);
+    await writeFile(join(directory, "revised.xlsx"), revisedBytes);
     await writeFile(
       file,
       JSON.stringify(
@@ -71,6 +91,14 @@ try {
           evidence,
           rows: await snapshot(id),
           sha256: digest(original),
+          revision: {
+            path: successorPath,
+            commitPath: revisionPath,
+            command: revision.command,
+            receipt: revised.receipt,
+            evidence: successorEvidence,
+            sha256: digest(revisedBytes),
+          },
           postmaster: await started(),
         },
         null,
@@ -78,7 +106,7 @@ try {
       ),
     );
     console.log(
-      "XI08 saved exact workbook, native first estimate and operation evidence before restart.",
+      "XI08 saved original and revised workbooks, successor and both operations before restart.",
     );
   } else if (process.argv[2] === "verify") {
     const data = JSON.parse(await readFile(file, "utf8"));
@@ -88,6 +116,22 @@ try {
       "Restart the actual PostgreSQL instance before verification.",
     );
     assert.deepEqual(await snapshot(data.id), data.rows);
+    assert.deepEqual(await json(data.revision.path), data.revision.evidence);
+    assert.deepEqual(
+      await bytes(data.revision.path),
+      await readFile(join(directory, "revised.xlsx")),
+    );
+    assert.equal(digest(await bytes(data.revision.path)), data.revision.sha256);
+    assert.deepEqual(
+      await json("operations/" + data.revision.command.operation_id),
+      data.revision.receipt,
+    );
+    const revisedReplay = await json(
+      data.revision.commitPath,
+      data.revision.command,
+    );
+    assert.equal(revisedReplay.replayed, true);
+    assert.deepEqual(revisedReplay.receipt, data.revision.receipt);
     assert.deepEqual(await json(data.path), data.evidence);
     assert.deepEqual(
       await bytes(data.path),
@@ -108,6 +152,7 @@ try {
         {
           status: "passed",
           source_sha256: data.sha256,
+          revised_source_sha256: data.revision.sha256,
           postmaster_changed: true,
           exact_rows: true,
           exact_workbook: true,
@@ -119,7 +164,7 @@ try {
       ),
     );
     console.log(
-      "XI08 exact workbook, estimate, review, line map and original receipt survived PostgreSQL and app restarts.",
+      "XI08 both exact workbooks, versions, comparison, decisions and original receipts survived PostgreSQL and app restarts.",
     );
   } else throw Error("Choose write or verify.");
 } finally {
