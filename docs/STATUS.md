@@ -1,5 +1,13 @@
 # Current prototype status
 
+## Excel re-import follow-up integration - 14 October 2026
+
+Current repository writer: this repair/merge session on `codex/fix-pr484-oct14`. PR #484 opened during verification of #483 and is reconciled separately, preserving its original `faf2f91` head and the complete #483 source by ancestry. Migration 0096 follows integrated 0093/0094/0095 without changing their SQL. Exact upgrade lists, template-upgrade proofs, reserved Products installation after 0096 and the reviewed hosted-upgrade gate retain original rows and both histories. The #483 verification continues independently; combined #484 checks gate this follow-up. No design acceptance or deployment is implied.
+
+## Excel revised-workbook comparison and re-import — 14 October 2026
+
+Dean authorised Step 4 in [PR #484](https://github.com/deanrfiedler-gif/powerplants-one/pull/484) on `codex/excel-import-revision-backend`, continuing first-save PR #482. The [decision](decisions/excel-import-revision-backend.md) and [contract](contracts/excel-import-revision.md) add exact-current-version comparison, stable historical line identities, explicit Keep/Remove decisions and atomic whole-estimate successors. Revised source bytes, comparison and decisions are retained; earlier workbooks, versions and outputs remain unchanged. Migration 0096 is additive and seedless. Local unit, database, compiled API, build and actual app/PostgreSQL restart proofs passed. [Execution evidence](testing/evidence/excel-import-revision/README.md) separates local verification, CI and acceptance. Quotation continuation, native controls, business approval and deployment remain open.
+
 ## Remaining PR integration - 14 October 2026
 
 Current repository writer: this user-authorised repair and merge session on `codex/remaining-pr-integration-oct14`. PRs #476/#477 merged after all 58 applicable checks passed (one optional comparison skipped). The remaining integration preserves the exact heads of #473/#474/#475/#478/#479/#480/#481/#482 by ancestry. Shared status, component, guide and source registers retain both contributions and existing review evidence. Draft design handovers remain proposals; the Products implementation is separately authorised by its recorded decision.

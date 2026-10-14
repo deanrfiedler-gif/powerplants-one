@@ -10,6 +10,29 @@ type RouteContext = { params: Promise<{ id?: string; versionId?: string }> };
 import { commitExcelWorkbook } from "./commit";
 import { readExcelImport, readExcelSource } from "./retained";
 import { uploadRequestLimit } from "./service";
+import { compareExcelWorkbook } from "./comparison";
+import { reimportExcelWorkbook } from "./reimport";
+export async function excelRevisionRoute(
+  request: NextRequest,
+  context: RouteContext,
+  save: boolean,
+) {
+  try {
+    localRequest(request, true);
+    const p = await identity(request),
+      params = await context.params;
+    const body = await jsonBody(request, uploadRequestLimit + 16384);
+    return reply(
+      await (save ? reimportExcelWorkbook : compareExcelWorkbook)(
+        p,
+        params.id ?? "",
+        body,
+      ),
+    );
+  } catch (error) {
+    return failure(error);
+  }
+}
 export async function excelCommitRoute(
   request: NextRequest,
   context: RouteContext,

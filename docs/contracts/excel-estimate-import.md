@@ -9,7 +9,7 @@ versioning: git
 
 # Excel estimate import specification
 
-**Receiving update — 14 October 2026:** The [validated upload/review API](excel-import-review.md) implements the transient preview portion with exact native UUID context mapping. Durable source storage, review confirmation, estimate commit, re-import and UI remain subsequent increments. The design baseline below is retained.
+**Receiving update — 14 October 2026:** The [validated upload/review API](excel-import-review.md) implements the transient preview portion with exact native UUID context mapping. [Durable first save](excel-import-persistence.md) and [controlled re-import](excel-import-revision.md) extend that backend. Quotation continuation and native UI remain subsequent increments. The design baseline below is retained.
 
 ## 1. Outcome and authority
 

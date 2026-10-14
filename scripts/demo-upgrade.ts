@@ -291,7 +291,8 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0095 adds empty, immutable Excel import evidence and line maps. Existing
   // Estimate identity, receipts, outbox kind and runtime privileges are reused.
   // No seed, grant, user or source bytes change; 0093/0094 are integrated.
-  if (latestMigrationVersion !== 95) throw Error("Review the existing-demo upgrade for this release.");
+  // 0096 adds empty successor evidence and read views; no existing rows or seeds change.
+  if (latestMigrationVersion !== 96) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

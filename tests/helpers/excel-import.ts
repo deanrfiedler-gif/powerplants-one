@@ -1,3 +1,4 @@
+import { crmCreate } from "./crm";
 import { randomUUID } from "node:crypto";
 import { discoveryCostSetup } from "./estimating-cost-basis";
 import { excelDiscovery, excelUpload, nativeWorkbook } from "./excel-review";
@@ -9,8 +10,9 @@ import { excelConfirmations } from "../../src/estimating/import/commit";
 export async function excelImportSetup(
   discovery = excelDiscovery(),
   edit?: (parts: ReturnType<typeof nativeWorkbook>) => void,
+  opportunity = crmCreate(),
 ) {
-  const s = await discoveryCostSetup(discovery);
+  const s = await discoveryCostSetup(discovery, opportunity);
   const context = await prepareExcelReview(s.p, s.input.id, {
     option_id: s.input.option_id,
     revision_id: s.input.revision_id,

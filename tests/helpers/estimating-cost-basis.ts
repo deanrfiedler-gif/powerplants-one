@@ -8,8 +8,8 @@ import { discoveryInput } from "./estimating-discovery";
 import { crmBase, crmCreate } from "./crm";
 import { estimateInput } from "./estimating";
 import type { DiscoveryInput } from "../../src/estimating/discovery";
-export async function discoveryCostSetup(discovery:DiscoveryInput=discoveryInput()) {
-  const p=(await createSession("coordinator")).principal,o=crmCreate();
+export async function discoveryCostSetup(discovery:DiscoveryInput=discoveryInput(), opportunity=crmCreate()) {
+  const p=(await createSession("coordinator")).principal,o=opportunity;
   await createOpportunity(p,o);
   const preview=await previewDiscoveryCreate(p,{opportunity_id:o.id,discovery});
   const input={...crmBase(),id:randomUUID(),option_id:randomUUID(),revision_id:randomUUID(),opportunity_id:o.id,discovery,
