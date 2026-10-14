@@ -630,3 +630,31 @@ test("legacy adoption carries prior removals through an omitted target without l
     accepted.receipt,
   );
 });
+
+test("an empty manually edited estimate still exposes unresolved choices and can receive explicit replacements", async () => {
+  const s = await rebaseSetup();
+  const first = rebaseAdoption(await previewAdoption(s.p, s.original.run.id));
+  await adoptRun(s.p, s.original.run.id, first);
+  await editRebaseEstimate(s.p, first.estimate_id, []);
+  const next = await rebaseSuccessor(s);
+  const incomplete = await previewAdoption(s.p, next.run.id, { decisions: [] });
+  assert.equal(incomplete.ready, false);
+  assert.equal(incomplete.unresolved!.length, 2);
+  assert.deepEqual(incomplete.received_lines, []);
+  await assert.rejects(
+    adoptRun(s.p, next.run.id, rebaseAdoption(incomplete, [])),
+    code("CpqLineDecisionsRequired"),
+  );
+  const decisions = next.run.result.lines.map(({ line }) => ({
+    line_id: line.id,
+    action: "Replace" as const,
+    reason: "SYN explicitly restore manually removed target",
+  }));
+  const complete = await previewAdoption(s.p, next.run.id, { decisions });
+  assert.equal(complete.ready, true);
+  await adoptRun(s.p, next.run.id, rebaseAdoption(complete, decisions));
+  assert.deepEqual(
+    (await readEstimate(s.p, first.estimate_id)).saved.lines,
+    next.run.result.lines.map(({ line }) => line),
+  );
+});

@@ -388,6 +388,7 @@ async function receiving(
     );
   if (
     retained.length + generated.length === 0 &&
+    reconciled.unresolved.length === 0 &&
     (decisions !== null || reconciled.retained_cpq_lines.length > 0)
   )
     throw new AppError(
