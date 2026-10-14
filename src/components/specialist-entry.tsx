@@ -4,9 +4,11 @@ import { useCrmResource } from "./crm-state";
 export function SpecialistEntry({
   workspaceId,
   optionId,
+  role,
 }: {
   workspaceId?: string;
   optionId?: string;
+  role?: "menuitem";
 }) {
   const contract = useCrmResource<{ available: boolean }>(
     "estimating/configurations/availability",
@@ -15,6 +17,7 @@ export function SpecialistEntry({
   if (!contract.data?.available) return null;
   return (
     <Link
+      role={role}
       href={`/estimating/configurations${workspaceId ? `?estimating_workspace_id=${workspaceId}${optionId ? `&option_id=${optionId}` : ""}` : ""}`}
     >
       Specialist configurations

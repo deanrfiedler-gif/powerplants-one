@@ -1,0 +1,887 @@
+/* Accepted ES-02 Figma composition. Shared tokens and FontAwesomeGlyph stay owned
+   by the shell/component library; only this record page adopts these rules. */
+#ppo-estimate-wizard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-layout {
+  width: 100%;
+}
+#ppo-estimate-wizard a.es02-phone-back,
+#ppo-estimate-wizard .es02-system-cards,
+#ppo-estimate-wizard .es02-system-phone-head,
+#ppo-estimate-wizard .es02-system-done {
+  display: none;
+}
+#ppo-estimate-wizard .es02-context {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-height: 94px;
+  padding: 14px 24px 12px;
+  border-bottom: 0;
+}
+#ppo-estimate-wizard .es02-context-identity {
+  flex: 1;
+  gap: 12px;
+  padding-top: 6px;
+}
+@media (min-width: 781px) {
+  #ppo-estimate-wizard .es02-context {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+    align-items: center;
+  }
+  #ppo-estimate-wizard .es02-context-identity {
+    display: contents;
+  }
+  #ppo-estimate-wizard .es02-context-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #ppo-estimate-wizard .es02-context-meta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  #ppo-estimate-wizard .es02-context-controls {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+#ppo-estimate-wizard .es02-context-title {
+  gap: 8px;
+}
+#ppo-estimate-wizard .es02-context h1 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+}
+#ppo-estimate-wizard .es02-context-controls {
+  flex: none;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+#ppo-estimate-wizard .es02-context-controls .es02-button {
+  height: 40px;
+  min-height: 40px;
+}
+#ppo-estimate-wizard .es02-context-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-context-state {
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-owner {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+#ppo-estimate-wizard .es02-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 10px;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+}
+#ppo-estimate-wizard .es02-state-trigger {
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-state-trigger:hover {
+  text-decoration: underline;
+}
+#ppo-estimate-wizard .es02-view-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--line);
+  padding: 0 24px 0 10px;
+  flex: none;
+}
+#ppo-estimate-wizard .record-tablist {
+  flex: none;
+  border: 0;
+}
+#ppo-estimate-wizard .record-tablist button {
+  flex: none;
+  min-height: 44px;
+  padding: 2px 14px 0;
+  font-size: 14px;
+  border-bottom-width: 2px;
+  font-weight: 400;
+}
+#ppo-estimate-wizard .record-tablist button[aria-selected="true"] {
+  font-weight: 500;
+}
+#ppo-estimate-wizard .es02-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  font-weight: 400;
+  color: var(--neutral);
+}
+#ppo-estimate-wizard .es02-viewed-option {
+  min-width: 0;
+  flex: 1;
+  margin-left: auto;
+  padding-bottom: 6px;
+}
+#ppo-estimate-wizard .es02-viewed-option .field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--control-border);
+  border-radius: 6px;
+  padding-left: 12px;
+  margin: 0;
+}
+#ppo-estimate-wizard .es02-viewed-option .field label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-viewed-option .field select {
+  min-width: 0;
+  width: 100%;
+  min-height: 38px;
+  border: 0;
+  padding-left: 0;
+}
+#ppo-estimate-wizard .es02-scroll {
+  padding: 0 24px 24px;
+}
+#ppo-estimate-wizard .es02-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  padding: 16px 0 0;
+  margin-bottom: 20px;
+}
+#ppo-estimate-wizard .es02-step {
+  height: 48px;
+  min-height: 48px;
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  gap: 2px;
+  justify-content: center;
+  background: var(--surface-hover, #f0f2f5);
+}
+#ppo-estimate-wizard .es02-step > span:first-child {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+#ppo-estimate-wizard .es02-step[aria-current="step"] {
+  background: var(--navy);
+  color: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-section {
+  margin-top: 20px;
+}
+#ppo-estimate-wizard .es02-families {
+  margin-top: 0;
+  padding-top: 0;
+}
+#ppo-estimate-wizard .es02-section-head h2 {
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 700;
+}
+#ppo-estimate-wizard
+  .es02-families[data-variant="compact"]
+  .es02-section-head
+  > div:first-child {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+#ppo-estimate-wizard .es02-families .es02-section-head {
+  margin-bottom: 10px;
+}
+#ppo-estimate-wizard .es02-family-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+#ppo-estimate-wizard .es02-family {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-white);
+  min-width: 0;
+  min-height: 56px;
+}
+#ppo-estimate-wizard .es02-family[data-state="empty"] {
+  background: var(--surface, #f6f7f9);
+  border-color: var(--line-soft);
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-family[data-state="confirmed"],
+#ppo-estimate-wizard .es02-families-row[data-state="confirmed"] {
+  background: var(--success-surface);
+  border-color: var(--success-border);
+}
+#ppo-estimate-wizard .es02-family-filter {
+  padding: 8px 10px;
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  border-radius: 5px;
+}
+#ppo-estimate-wizard .es02-family-filter[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px var(--navy);
+  background: transparent;
+}
+#ppo-estimate-wizard .es02-family-filter strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+}
+#ppo-estimate-wizard .es02-family-filter strong .es02-icon {
+  width: 16px;
+  height: 16px;
+}
+#ppo-estimate-wizard .es02-family-filter strong .es02-count {
+  margin-left: auto;
+  font-size: 12px;
+}
+#ppo-estimate-wizard .es02-family-state {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-family-state .es02-icon {
+  width: 12px;
+  height: 12px;
+}
+#ppo-estimate-wizard [data-state="confirmed"] .es02-family-state {
+  color: var(--success);
+}
+#ppo-estimate-wizard .es02-families-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-estimate-wizard .es02-families-row strong,
+#ppo-estimate-wizard .es02-families-row > span {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+#ppo-estimate-wizard .es02-families-row .es02-link {
+  margin-left: auto;
+}
+#ppo-estimate-wizard .es02-families[data-variant="full"] .es02-family-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+#ppo-estimate-wizard .es02-families[data-variant="full"] .es02-family {
+  padding: 8px;
+}
+#ppo-estimate-wizard .es02-families[data-variant="full"] .es02-family-filter {
+  min-height: 110px;
+  gap: 10px;
+}
+#ppo-estimate-wizard
+  .es02-families[data-variant="full"]
+  .es02-family-filter
+  strong {
+  font-size: 16px;
+}
+#ppo-estimate-wizard
+  .es02-families[data-variant="full"]
+  .es02-family-filter
+  small {
+  display: block;
+  min-height: 32px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-estimate-wizard .es02-family-add {
+  margin: 4px 8px 8px auto;
+  min-height: 40px;
+}
+#ppo-estimate-wizard .es02-info-row {
+  gap: 12px;
+  padding: 14px 0;
+  margin: 20px 0;
+  border-top: 1px solid var(--line);
+}
+#ppo-estimate-wizard .es02-toolbar {
+  gap: 8px;
+}
+#ppo-estimate-wizard .es02-table-scroll,
+#ppo-estimate-wizard .es02-table-foot {
+  margin-inline: -24px;
+  padding-inline: 0;
+}
+#ppo-estimate-wizard .es02-table-scroll {
+  width: calc(100% + 48px);
+  max-width: none;
+}
+#ppo-estimate-wizard .es02-table-foot {
+  padding-inline: 24px;
+}
+#ppo-estimate-wizard .es02-systems-table {
+  table-layout: auto;
+  width: 100%;
+  min-width: 770px;
+}
+#ppo-estimate-wizard .es02-systems-table :is(th, td) {
+  padding-inline: 12px;
+}
+#ppo-estimate-wizard .es02-systems-table :is(th, td):first-child {
+  padding-left: 24px;
+}
+#ppo-estimate-wizard .es02-systems-table .es02-secondary {
+  display: none;
+}
+#ppo-estimate-wizard .es02-tiles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#ppo-estimate-wizard .es02-summary {
+  position: relative;
+  padding: 24px;
+  font-size: 14px;
+  gap: 4px;
+}
+#ppo-estimate-wizard .es02-summary h2 {
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 700;
+}
+#ppo-estimate-wizard .es02-summary-viewing {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+#ppo-estimate-wizard .es02-summary .es02-money {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 700;
+}
+#ppo-estimate-wizard .es02-summary .es02-summary-close {
+  display: flex;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 32px;
+  min-height: 32px;
+  border: 0;
+}
+#ppo-estimate-wizard .es02-bottom {
+  padding: 10px 12px 10px 24px;
+  min-height: 64px;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+#ppo-estimate-wizard .es02-bottom-state {
+  font-size: 12px;
+  flex: 1;
+}
+#ppo-estimate-wizard .es02-bottom .es02-button {
+  min-height: 40px;
+  flex: none;
+  white-space: nowrap;
+}
+#ppo-estimate-wizard .es02-unsaved-popover {
+  position: absolute;
+  top: 100%;
+  right: 24px;
+  z-index: 40;
+  width: min(420px, calc(100vw - 32px));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px #242a3729;
+  background: var(--surface-white);
+}
+#ppo-estimate-wizard .es02-popover-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+#ppo-estimate-wizard .es02-popover-head h2 {
+  font-size: 16px;
+}
+#ppo-estimate-wizard .es02-popover-head p,
+#ppo-estimate-wizard .es02-unsaved-popover small {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-estimate-wizard .es02-unsaved-popover ul {
+  max-height: 45vh;
+  overflow: auto;
+}
+#ppo-estimate-wizard .es02-unsaved-popover li > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  width: 100%;
+  border-top: 1px solid var(--line);
+}
+#ppo-estimate-wizard .es02-unsaved-popover li > button > span:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard .es02-unsaved-popover strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-estimate-wizard .es02-popover-foot {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+}
+#ppo-estimate-wizard .es02-legacy-catalogue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 10px 12px;
+  background: var(--neutral-surface);
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+#ppo-estimate-wizard .es02-add-menu {
+  position: relative;
+}
+#ppo-estimate-wizard .es02-add-menu > summary {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--navy);
+  border-radius: 6px;
+  font-size: 14px;
+}
+#ppo-estimate-wizard .es02-add-menu > summary::-webkit-details-marker {
+  display: none;
+}
+#ppo-estimate-wizard .es02-add-menu > summary.es02-button-primary {
+  background: var(--navy);
+  color: var(--surface-white);
+  border-color: var(--navy);
+}
+#ppo-estimate-wizard .es02-add-options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 15;
+  width: min(320px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-white);
+  box-shadow: 0 8px 24px #242a3729;
+}
+#ppo-estimate-wizard .es02-category-list {
+  max-height: 240px;
+  overflow: auto;
+}
+#ppo-estimate-wizard .es02-category-list button {
+  display: block;
+  width: 100%;
+  padding: 10px 8px;
+  min-height: 40px;
+}
+#ppo-estimate-wizard .es02-category-list button:hover {
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard .es02-viewed-option {
+  max-width: 336px;
+}
+#ppo-estimate-wizard .es02-summary-finding {
+  justify-content: flex-start;
+}
+#ppo-estimate-wizard .es02-summary-finding > span:not(.es02-dot) {
+  flex: 1;
+}
+#ppo-estimate-wizard .es02-summary h3 .es02-count {
+  margin-left: 0;
+}
+#ppo-estimate-wizard .es02-summary .es02-strip {
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding: 10px 12px;
+}
+#ppo-estimate-wizard .es02-summary .es02-strip-text {
+  flex: 1;
+}
+#ppo-estimate-wizard .es02-summary-findings + .es02-rows {
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+@media (max-width: 780px) {
+  #ppo-estimate-wizard .es02-viewed-option {
+    max-width: none;
+  }
+}
+@media (min-width: 781px) and (max-width: 1199px) {
+  .app-frame:has(#ppo-estimate-wizard) {
+    --ppo-rail-width: 76px;
+  }
+  .app-frame:has(#ppo-estimate-wizard) .ppo-rail-label,
+  .app-frame:has(#ppo-estimate-wizard) .ppo-rail-department {
+    display: none;
+  }
+}
+@media (max-width: 780px) {
+  .app-frame:has(#ppo-estimate-wizard) .ppo-shell-header,
+  .app-frame:has(#ppo-estimate-wizard) .mobile-navigation,
+  .app-frame:has(#ppo-estimate-wizard) .ppo-bottom-nav,
+  .app-frame:has(#ppo-estimate-wizard) .ppo-mobile-tabs {
+    display: none;
+  }
+  .app-frame:has(#ppo-estimate-wizard) .workspace {
+    height: 100dvh;
+    padding: 0;
+  }
+  #ppo-estimate-wizard .es02-layout {
+    display: flex;
+    height: 100%;
+  }
+  #ppo-estimate-wizard .es02-main {
+    min-height: 0;
+    height: 100%;
+  }
+  #ppo-estimate-wizard .es02-scroll {
+    overflow: auto;
+    padding: 0 16px 24px;
+  }
+  #ppo-estimate-wizard .es02-context {
+    padding: 10px 4px 0;
+    min-height: 64px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  #ppo-estimate-wizard .es02-context-identity {
+    flex: 1;
+    min-width: 0;
+    padding: 2px 0 0;
+    gap: 0;
+  }
+  #ppo-estimate-wizard .es02-context h1 {
+    font-size: 16px;
+    line-height: 21px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #ppo-estimate-wizard .es02-context-title {
+    display: block;
+  }
+  #ppo-estimate-wizard .es02-context-title .es02-tag,
+  #ppo-estimate-wizard .es02-context .es02-owner {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-context-meta {
+    display: block;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  #ppo-estimate-wizard .es02-context-meta > span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #ppo-estimate-wizard .es02-context-state {
+    margin-left: -36px;
+    margin-top: 10px;
+    padding: 10px 0;
+    font-size: 12px;
+  }
+  #ppo-estimate-wizard a.es02-phone-back {
+    display: inline-flex;
+    min-height: 44px;
+    width: 44px;
+    border: 0;
+  }
+  #ppo-estimate-wizard .es02-context-controls .es02-button {
+    min-height: 44px;
+    width: 44px;
+    border: 0;
+  }
+  #ppo-estimate-wizard .es02-view-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    gap: 0;
+  }
+  #ppo-estimate-wizard .record-tablist {
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+  }
+  #ppo-estimate-wizard .record-tablist button {
+    flex: 1;
+    padding: 10px 6px;
+  }
+  #ppo-estimate-wizard .es02-viewed-option {
+    width: auto;
+    margin: 0;
+    padding: 12px 16px 0;
+  }
+  #ppo-estimate-wizard .es02-viewed-option .field {
+    display: block;
+    border: 0;
+    padding: 0;
+  }
+  #ppo-estimate-wizard .es02-viewed-option .field label {
+    display: block;
+    margin-bottom: 6px;
+  }
+  #ppo-estimate-wizard .es02-viewed-option .field select {
+    border: 1px solid var(--control-border);
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+  #ppo-estimate-wizard .es02-view-row {
+    border: 0;
+  }
+  #ppo-estimate-wizard .es02-steps {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-family-grid {
+    display: flex;
+  }
+  #ppo-estimate-wizard .es02-families .es02-section-head {
+    gap: 8px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  #ppo-estimate-wizard
+    .es02-families[data-variant="compact"]
+    .es02-section-head
+    p {
+    display: none;
+  }
+  #ppo-estimate-wizard
+    .es02-families[data-variant="compact"]
+    .es02-section-head
+    h2 {
+    font-size: 14px;
+  }
+  #ppo-estimate-wizard .es02-families-row {
+    gap: 4px 8px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  #ppo-estimate-wizard .es02-families-row > span {
+    flex: 1;
+    min-width: 0;
+  }
+  #ppo-estimate-wizard .es02-families-row > strong {
+    flex: 1 1 70%;
+  }
+  #ppo-estimate-wizard .es02-family-filter {
+    min-width: 112px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #ppo-estimate-wizard .es02-family-add {
+    display: flex;
+  }
+  #ppo-estimate-wizard .es02-info-row {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-system-cards {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  #ppo-estimate-wizard .es02-system-cards > button {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    min-height: 84px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-estimate-wizard .es02-system-cards > button:last-child {
+    border: 0;
+  }
+  #ppo-estimate-wizard .es02-system-cards > button > span {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    line-height: 20px;
+  }
+  #ppo-estimate-wizard .es02-system-cards small {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+  #ppo-estimate-wizard
+    .es02-configuration
+    .es02-table-scroll:has(.es02-systems-table),
+  #ppo-estimate-wizard .es02-configuration .es02-table-foot,
+  #ppo-estimate-wizard .es02-system-editor {
+    display: none;
+  }
+  #ppo-estimate-wizard
+    .es02-configuration[data-mobile-editor="open"]
+    .es02-system-editor {
+    display: block;
+    position: fixed;
+    inset: 0 0 72px;
+    z-index: 35;
+    overflow: auto;
+    background: var(--surface-white);
+    margin: 0;
+    padding: 0 16px 24px;
+  }
+  #ppo-estimate-wizard .es02-system-phone-head {
+    display: flex;
+    position: sticky;
+    top: 0;
+    align-items: center;
+    gap: 8px;
+    min-height: 64px;
+    background: var(--surface-white);
+    margin: 0 -16px 16px;
+    padding: 4px;
+    border-bottom: 1px solid var(--line);
+    z-index: 2;
+  }
+  #ppo-estimate-wizard .es02-system-phone-head small {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+  #ppo-estimate-wizard .es02-system-done {
+    display: inline-flex;
+    margin-top: 16px;
+  }
+  #ppo-estimate-wizard .es02-bottom {
+    position: relative;
+    z-index: 36;
+    padding: 12px 16px;
+    min-height: 72px;
+    flex-wrap: wrap;
+  }
+  #ppo-estimate-wizard .es02-bottom-state {
+    display: none;
+  }
+  #ppo-estimate-wizard .es02-bottom .es02-button {
+    min-height: 44px;
+  }
+  #ppo-estimate-wizard .es02-bottom .es02-button-primary {
+    flex: 1;
+    white-space: normal;
+  }
+  #ppo-estimate-wizard .es02-table-scroll,
+  #ppo-estimate-wizard .es02-table-foot {
+    margin-inline: -16px;
+  }
+  #ppo-estimate-wizard .es02-table-scroll {
+    width: calc(100% + 32px);
+  }
+  #ppo-estimate-wizard .es02-unsaved-popover {
+    position: fixed;
+    top: 80px;
+    right: 16px;
+    z-index: 45;
+  }
+  #ppo-estimate-wizard .es02-popover-foot {
+    flex-wrap: wrap;
+  }
+  #ppo-estimate-wizard .es02-summary-sheet .es02-summary {
+    padding: 24px 16px;
+  }
+  #ppo-estimate-wizard .es02-summary-sheet .es02-summary-close {
+    min-height: 44px;
+    width: 44px;
+  }
+}
+
+/* Preserve the record form's reading order and compact phone Infrastructure strip. */
+#ppo-estimate-wizard .es02-configuration > .es02-section:not(.es02-families) {
+  padding-top: 0;
+}
+#ppo-estimate-wizard .es02-system-editor .es02-grid-2 > .field:first-child {
+  grid-column: 1 / -1;
+}
+@media (max-width: 780px) {
+  #ppo-estimate-wizard .es02-families-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+  }
+  #ppo-estimate-wizard .es02-families-row > strong {
+    grid-column: 1;
+  }
+  #ppo-estimate-wizard .es02-families-row > span {
+    grid-column: 1;
+    align-items: flex-start;
+  }
+  #ppo-estimate-wizard .es02-families-row > button {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+  #ppo-estimate-wizard .es02-system-editor .es02-editor-head > h3 {
+    display: none;
+  }
+}
+@media (max-width: 360px) {
+  #ppo-estimate-wizard .es02-bottom .es02-button {
+    font-size: 12px;
+    padding-inline: 10px;
+    white-space: nowrap;
+  }
+}

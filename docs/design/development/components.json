@@ -751,6 +751,11 @@
           "id": "read-only",
           "label": "Read only",
           "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "es02-figma-host",
+          "label": "ES-02 Figma host",
+          "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
         }
       ],
       "implementation": [
@@ -2064,6 +2069,11 @@
           "id": "nav-accepted-routing",
           "label": "NAV CI repair host",
           "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery. Fixture: tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts Pending/unknown mounted view switching and refused Home recovery: tests/browser/equipment.spec.ts."
+        },
+        {
+          "id": "es02-figma-host",
+          "label": "ES-02 Figma host",
+          "description": "Native Discovery/Alternatives/Revisions with shared draft and full-width comparison; actual host fixtures in estimating-wizard.spec.ts."
         }
       ],
       "implementation": [
@@ -3308,6 +3318,11 @@
           "id": "es08-figma-host",
           "label": "Screen Configurator Workbench",
           "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
+        },
+        {
+          "id": "es02-figma-host",
+          "label": "ES-02 Figma host",
+          "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
         }
       ],
       "implementation": [
@@ -3747,34 +3762,87 @@
       "id": "estimation-journey",
       "title": "Complete estimation wizard",
       "category": "Forms",
-      "module": "Reference library",
-      "purpose": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+      "module": "ES",
+      "purpose": "Native ES-02 Figma record page: five shared-draft steps, six-family/category authoring, explicit historical-catalogue review, field-linked unsaved changes, immutable saves, exact saved-cost summary and phone system editor. Owner/device visual review and deployment remain separate.",
       "owner": "Dean Fiedler",
       "example": null,
-      "coverage": "Reference only",
-      "states": [],
-      "implementation": [],
-      "dependencies": [],
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "saved",
+          "label": "Saved discovery",
+          "description": "Northbank fixture: r03 viewed; saved AUD 58,400 v04 remains based on r02."
+        },
+        {
+          "id": "dirty",
+          "label": "Working copy",
+          "description": "Changed systems, facts, areas and responsibilities link from the unsaved-changes popover; save/discard uses the existing guarded commands."
+        },
+        {
+          "id": "catalogue",
+          "label": "Explicit catalogue review",
+          "description": "r01 keeps historical families; map every system before applying r02. Saved IDs, facts and history survive."
+        },
+        {
+          "id": "family-states",
+          "label": "Family status",
+          "description": "Empty grey, pending neutral/amber, green only after evaluated confirmation; Infrastructure counted once."
+        },
+        {
+          "id": "phone-editor",
+          "label": "Phone system editor",
+          "description": "Same draft as the list, no separate save; Back restores row focus."
+        },
+        {
+          "id": "recovery",
+          "label": "Unknown / stale / denied",
+          "description": "Existing original-operation recovery, stale comparison invalidation and permission removal remain authoritative."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/estimation-wizard.tsx",
+          "symbol": "DiscoveryDetail"
+        },
+        {
+          "path": "src/components/configuration-editor.tsx",
+          "symbol": "SystemsEditor"
+        },
+        {
+          "path": "src/components/estimation-catalogue-ui.tsx",
+          "symbol": "CatalogueUpgrade"
+        }
+      ],
+      "dependencies": [
+        "src/components/estimation-wizard-figma.css",
+        "src/components/estimation-catalogue-ui.tsx",
+        "src/components/estimation-wizard-changes.ts",
+        "docs/decisions/es02-wizard-figma-implementation.md",
+        "src/components/estimation-wizard.css",
+        "scripts/es02-fixture.ts"
+      ],
       "reference": {
-        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
-        "anchor": "estimation-wizard",
-        "status": "Reference only; proposed pattern"
+        "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
+        "anchor": "",
+        "status": "Accepted design source; application owner/device review pending"
       },
       "specification": "docs/design/development/components/estimation-journey.md",
       "used_on": [
-        "system:theme"
+        "system:theme",
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]"
       ],
-      "desktop": "Read the retained reference and resolve intended scope before implementing.",
-      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
-      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
-      "limitations": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
+      "desktop": "Accepted Figma: shared 240/76 px rail, 380 px summary, five 48 px steps, six family filters, full-width system grid and immutable save review. Summary closes for Alternatives/Revisions.",
+      "mobile": "Phone record header, equal tabs, viewed alternative, 44 px step controls, scrolling family tiles, system cards and full-page editor, summary sheet and 72 px save footer. No shell bottom tabs.",
+      "keyboard": "Labelled native controls, shared RecordTabs, Escape for overlays; finding/change links focus the field; phone Back returns focus to the originating system.",
+      "limitations": "Host fixture only; actual server/session required. Q6 requested completion, duration and agreed commitment remain explicitly proposed and unsaved. Phone Alternatives/Revisions images are missing. Owner/device/assistive-technology acceptance pending.",
       "gaps": [
         {
           "id": "estimation-journey-implementation",
-          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
-          "actual": "Area editing and tabs have runnable examples; the full saved multistep workflow remains an application integration scenario.",
-          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
-          "priority": "Low",
+          "expected": "Paired accepted Figma review across desktop, tablet and phone, including saved and dirty states.",
+          "actual": "Native host implementation and synthetic fixtures; execution evidence is recorded separately. No isolated renderer or owner acceptance claimed.",
+          "action": "Review matching application captures against all accepted frames; retain Q6, missing phone Alternatives/Revisions images and device/screen-reader checks as open.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],

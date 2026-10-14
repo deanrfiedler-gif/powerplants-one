@@ -1,5 +1,14 @@
 # Current prototype status
 
+## Estimation Wizard CI repair - 14 October 2026
+
+Current repository writer for this repair: the user-authorised PR check session on `codex/fix-pr475-oct14`. The Fertigation browser journey now opens the accepted Wizard Workspace actions menu on desktop and phone. The E1 restart proof checks the current compact alternative labels and retains an explicit Active-state assertion alongside the unchanged original receipts, revisions and selected-option comparisons. No runtime or visual baseline change; fresh PR checks provide verification.
+
+## Estimation Wizard Figma implementation — 13 October 2026
+
+Dean requested the live ES-02 page from accepted Figma page `383:2`. Branch `codex/estimation-wizard-figma` implements the shared-rail record layout, five steps, six-family/category authoring with explicit historical review, unsaved-change links, exact save review and phone system editor. The [decision](decisions/es02-wizard-figma-implementation.md) records retained backend boundaries and Q6 timing limitations. The [execution evidence](testing/evidence/es02-figma/README.md), working page/component register and Draft guides are maintained together. No migration, dependency or grant is added; owner/device acceptance and deployment remain separate.
+
+
 ## DK-06 controlled template use — 14 October 2026
 
 Dean authorised R4 after R3 PR #476. [PR #477](https://github.com/deanrfiedler-gif/powerplants-one/pull/477) retains the updated parent and both distribution/template migration histories. The [decision](decisions/template-use-assignment-backend.md) and [contract](contracts/template-use-assignment.md) add exact company/site OUT-09 assignment, versioned policy, trusted effective intervals, explicit open-ended succession and original-operation recovery. Native pack preparation/reservation/finalisation select the current exact definition and refuse stale use. Migration 0094 adds empty policy/assignment evidence and default-denied template.assign, preserving existing publication/renderer bytes and workspace pointers. [Verification](testing/evidence/template-use/README.md), independent review, native controls, owner acceptance and deployment remain separate.

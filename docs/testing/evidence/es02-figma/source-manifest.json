@@ -1,0 +1,24 @@
+{
+  "runtime_source_commit": "ce72790bdbf3cd4ef5d9207510bfe49ef3782139",
+  "scope": "ES-02 Figma native UI, local compiled synthetic evidence; pending owner/device acceptance",
+  "test_working_change": "estimating-discovery.spec.ts uses the permitted Discovery register for the real cross-tab identity change. Exact tested bytes are hashed below.",
+  "files": {
+    "src/components/estimation-wizard.tsx": "ff4714d27eab8c7474cb31535749b50a748ffe064909ee1446936046f688a550",
+    "src/components/configuration-editor.tsx": "6dc7ac8e1cf68c844ca3e0eaef1f0a306332b91fa11b59f053c6f5f08a3522c0",
+    "src/components/estimation-wizard-figma.css": "b256db357d93bebf4e3e65429d2b72175a536bdf2548ac2c7f67c754bb6345df",
+    "src/components/estimation-catalogue-ui.tsx": "5ff9034a6e63d48740725c3423a6259f006d2991b6929b1261c50f16a16ae5b6",
+    "src/components/estimation-wizard-changes.ts": "47eed5964c3801dbf785ead896de050e45452d4b67ae6e75e6d943467b0405bd",
+    "src/components/specialist-entry.tsx": "2756d7e8a24eaf713f10af5c44dda4decc7b79db6926c3877b6b12863b5af48a",
+    "scripts/es02-fixture.ts": "1e144ebcc069b858aaa6bdcaa150524a1d6612267d03a82ba8a7251909e3e25c",
+    "tests/helpers/es02-design.ts": "bf3e6b2c01ffc3e555a8a6a56fac0dd7511aada7ff8a1aec20320f643052e745",
+    "tests/browser/estimating-wizard.spec.ts": "0582a2c807635ae396fce28be9f923fa45cff304a446ea3811ccc0b9ab2ff630",
+    "tests/browser/estimating-wizard-figma.spec.ts": "fc9b0feb2b49624830732c0a95b6a28d37a02de55e22f14d11e3ce64350b1271",
+    "tests/browser/estimating-discovery.spec.ts": "e9188d2f0538cff51d6ff2560b042ee16fcaaccbd9bc0d641060148140737a3d"
+  },
+  "hash_normalisation": "UTF-8 text LF; PNGs exact bytes",
+  "captures": {
+    "configuration-desktop.png": "ce1748acd25eb40fb7a46a747d604510f8326ab379f153570aa006e6fe346bba",
+    "configuration-phone.png": "6a32f14ac13f784badde01a103758266f876f2af0a5ea7f5c67ca554a1ff38e1",
+    "system-phone.png": "80b99530d391183fd086a3a9256511b5fff0087c786978d2954c6a7d82e33d2c"
+  }
+}

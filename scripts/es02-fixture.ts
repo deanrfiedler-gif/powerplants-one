@@ -30,8 +30,9 @@ import { CRM, crmBase, crmCreate } from "../tests/helpers/crm";
 import { structuredDiscovery } from "../tests/helpers/estimating-configuration";
 import { emptyConfiguration } from "../src/estimating/configuration-definition";
 import type { DiscoveryInput } from "../src/estimating/discovery";
+import { equipmentCatalogueDefinition } from "../src/estimating/equipment-catalogue";
 
-export async function createNorthbankFixture() {
+export async function createNorthbankFixture(catalogue: "r01" | "r02" = "r01") {
   if (localConfig().database_name !== "ppo_synthetic_test")
     throw Error("Northbank fixture requires ppo_synthetic_test.");
   const previousOwnerName = (
@@ -120,6 +121,22 @@ export async function createNorthbankFixture() {
   };
   await createOpportunity(p, opportunity);
   const discovery = structuredDiscovery(false);
+  if (catalogue === "r02") {
+    discovery.configuration.schema_version = 2;
+    discovery.configuration.definition_id = equipmentCatalogueDefinition;
+    for (const system of discovery.configuration.systems) {
+      if (system.family === "ControlsClimate") {
+        system.family = "Controls";
+        system.category_id = "controls-priva-compass";
+      } else if (system.family === "MonitoringWeather") {
+        system.family = "Controls";
+        system.category_id = "controls-sensors-weather-stations";
+      } else if (system.family === "Fertigation") {
+        system.family = "Water";
+        system.category_id = "water-priva-nutrifit";
+      } else system.category_id = null;
+    }
+  }
   discovery.effort = {
     value: "Full",
     source: "Synthetic estimator effort declaration",
@@ -318,7 +335,7 @@ export async function createNorthbankFixture() {
       external_reference: a.external_equipment_ref,
     })),
     route: `/estimating/discovery/${create.id}?step=Configuration`,
-    schema: "PPO-ES02-CONFIG-r01",
+    schema: discovery.configuration.definition_id,
     commands: { create, r02, r03 },
   };
   return result;
@@ -339,7 +356,9 @@ if (process.argv[1]?.endsWith("es02-fixture.ts")) {
     if (process.argv[2] === "restore-owner") {
       await restoreFixtureOwner();
     } else {
-      const fixture = await createNorthbankFixture();
+      const fixture = await createNorthbankFixture(
+        process.argv.includes("r02") ? "r02" : "r01",
+      );
       await writeFile(
         "tmp/es02-fixture.json",
         JSON.stringify(fixture, null, 2),
