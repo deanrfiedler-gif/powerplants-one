@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
 import type { QueryClient } from "../../platform/permissions";
 import { transaction } from "../../platform/database";
@@ -33,11 +34,12 @@ import { sourcePrice } from "./price";
 import { refreshProposal, refreshCommand } from "./validation";
 import { insertSourceBinding, type SourceBinding } from "./bindings";
 
-async function compare(
+export async function compareSourceRefresh(
   c: QueryClient,
   p: Principal,
   id: string,
   input: ReturnType<typeof refreshProposal>,
+  maxLines = 100,
 ) {
   const e = await estimateContext(c, p, id, "estimating.edit");
   await guardExistingEstimateMutation(c, p, e);
@@ -146,7 +148,7 @@ async function compare(
       warning: price.validity_warning,
     });
   }
-  const parsed = parseLines(lines, v.cost_schema_version ?? 1),
+  const parsed = parseLines(lines, v.cost_schema_version ?? 1, maxLines),
     before = calculate(v.lines),
     after = calculate(parsed);
   const snapshot = {
@@ -197,7 +199,8 @@ export async function previewSourceRefresh(
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
-    return (await compare(c, p, uuid(id, "estimate_id"), input)).comparison;
+    return (await compareSourceRefresh(c, p, uuid(id, "estimate_id"), input))
+      .comparison;
   });
 }
 export async function applySourceRefresh(
@@ -222,7 +225,7 @@ export async function applySourceRefresh(
       return e;
     },
     async (c) => {
-      const { e, v, comparison } = await compare(
+      const { e, v, comparison } = await compareSourceRefresh(
         c,
         p,
         input.id,
@@ -235,51 +238,61 @@ export async function applySourceRefresh(
           "SourceComparisonChanged",
           "The reviewed comparison changed. Compare again before saving.",
         );
-      const next = randomUUID(),
-        updated = (
-          await c.query<Estimate>(
-            "UPDATE ppo.estimates SET version=version+1,current_version_id=$3,updated_by=$4,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",
-            [p.workspace_id, e.id, next, p.actor_id],
-          )
-        ).rows[0];
-      await insertVersion(
-        c,
-        p,
-        updated,
-        {
-          title: v.title,
-          scope: v.scope,
-          policy: policy(v.policy),
-          lines: comparison.lines,
-          schema_version: v.cost_schema_version ?? 1,
-          reason: input.reason,
-        },
-        next,
-        v.id,
-        input.proposal.selections.map((s) => s.line_id),
-      );
-      if (await costBasisAvailable(c))
-        await c.query(
-          `INSERT INTO ppo.estimate_discovery_bases(workspace_id,company_id,estimate_id,estimate_version_id,revision_id)
-      SELECT workspace_id,company_id,estimate_id,$3,revision_id FROM ppo.estimate_discovery_bases WHERE workspace_id=$1 AND estimate_version_id=$2`,
-          [p.workspace_id, v.id, next],
-        );
-      for (const b of comparison.bindings)
-        await insertSourceBinding(c, p, e.company_id, next, b);
-      await writeLineage(c, p, next, v.id);
-      return {
-        ...updated,
-        audit_details: {
-          saved_version_id: next,
-          predecessor_id: v.id,
-          comparison_hash: comparison.comparison_hash,
-          source_bindings: comparison.bindings,
-          reviewed_scope_context_hash: comparison.scope_context_hash,
-          arithmetic_policy: v.policy,
-        },
-      };
+      return writeSourceRefresh(c, p, input, { e, v, comparison });
     },
     "Estimate",
     "EstimateVersionSaved",
   );
+}
+
+// Transaction participant shared by native and exact Excel pricing commands.
+export async function writeSourceRefresh(
+  c: PoolClient,
+  p: Principal,
+  input: { reason: string },
+  { e, v, comparison }: Awaited<ReturnType<typeof compareSourceRefresh>>,
+) {
+  const next = randomUUID(),
+    updated = (
+      await c.query<Estimate>(
+        "UPDATE ppo.estimates SET version=version+1,current_version_id=$3,updated_by=$4,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",
+        [p.workspace_id, e.id, next, p.actor_id],
+      )
+    ).rows[0];
+  await insertVersion(
+    c,
+    p,
+    updated,
+    {
+      title: v.title,
+      scope: v.scope,
+      policy: policy(v.policy),
+      lines: comparison.lines,
+      schema_version: v.cost_schema_version ?? 1,
+      reason: input.reason,
+    },
+    next,
+    v.id,
+    comparison.bindings.map((b) => b.line_id),
+  );
+  if (await costBasisAvailable(c))
+    await c.query(
+      `INSERT INTO ppo.estimate_discovery_bases(workspace_id,company_id,estimate_id,estimate_version_id,revision_id)
+      SELECT workspace_id,company_id,estimate_id,$3,revision_id FROM ppo.estimate_discovery_bases WHERE workspace_id=$1 AND estimate_version_id=$2`,
+      [p.workspace_id, v.id, next],
+    );
+  for (const b of comparison.bindings)
+    await insertSourceBinding(c, p, e.company_id, next, b);
+  await writeLineage(c, p, next, v.id);
+  return {
+    ...updated,
+    audit_details: {
+      saved_version_id: next,
+      predecessor_id: v.id,
+      comparison_hash: comparison.comparison_hash,
+      source_bindings: comparison.bindings,
+      reviewed_scope_context_hash: comparison.scope_context_hash,
+      arithmetic_policy: v.policy,
+    },
+  };
 }

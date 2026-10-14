@@ -44,3 +44,7 @@ Unsaved inputs live in memory. A pending command uses the existing actor-bound s
 Stale source editing preserves entered fields and shows current evidence, with an explicit replace action. Comparison retains its exact previewed proposal; source/estimate changes cause a conflict rather than substitution. Failed or denied reads unmount source evidence and action forms. History links retain exact revision/version query parameters. This workflow has no offline catalogue, customer message, quote approval/issue, live ERP or SharePoint operation.
 
 See [delivery and executed verification](../delivery/estimating-cost-sources-handover.md) and the [architecture decision](../decisions/estimating-cost-sources-native.md).
+
+## Excel pricing continuation
+
+The [managed Excel pricing contract](excel-import-source-pricing.md) reuses these reviewed source revisions, eligibility rules and bindings for up to 500 lines in an exact saved Excel estimate. Its separate preview/command retains workbook/current/proposed evidence and the original workbook pointer. The generic native refresh API above retains its 100-line contract.

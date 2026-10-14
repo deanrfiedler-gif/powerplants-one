@@ -206,7 +206,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   );
   assert.deepEqual(
     next.filter((r) => r.version > 79).map((r) => r.version),
-    [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97],
+    [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98],
   );
   assert.deepEqual(
     nextSeeds.filter((r) => r.version <= 79),

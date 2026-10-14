@@ -2,14 +2,14 @@
 document_id: PPO-010-EXCEL-PLAN
 date: 2026-09-15
 owner: Dean Fiedler - prototype owner
-status: Bounded backend through Step 6 capacity; operational acceptance open
+status: Bounded backend through Step 6 capacity and source pricing; operational acceptance open
 source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
 versioning: git
 ---
 
 # Excel estimate import implementation plan
 
-**Implementation update — 14 October 2026:** Step 2 delivers the [validated upload/review backend](../decisions/excel-import-review-backend.md). Step 3 continues it with [durable storage and atomic first save](../decisions/excel-import-persistence-backend.md), including authenticated review, exact originals, native estimate/line evidence and original-operation recovery. [Execution evidence](../testing/evidence/excel-import-persistence/README.md) separates delivery from acceptance. Step 4 adds [revised-workbook comparison and controlled re-import](../decisions/excel-import-revision-backend.md), with [execution evidence](../testing/evidence/excel-import-revision/README.md). Step 5 adds [verified quotation continuation](../decisions/excel-import-quotation-backend.md) with [execution evidence](../testing/evidence/excel-import-quotation/README.md). Step 6 begins with [larger-workbook capacity](../contracts/excel-import-capacity.md). Richer sources, native controls and operational acceptance remain open.
+**Implementation update — 14 October 2026:** Step 2 delivers the [validated upload/review backend](../decisions/excel-import-review-backend.md). Step 3 continues it with [durable storage and atomic first save](../decisions/excel-import-persistence-backend.md), including authenticated review, exact originals, native estimate/line evidence and original-operation recovery. [Execution evidence](../testing/evidence/excel-import-persistence/README.md) separates delivery from acceptance. Step 4 adds [revised-workbook comparison and controlled re-import](../decisions/excel-import-revision-backend.md), with [execution evidence](../testing/evidence/excel-import-revision/README.md). Step 5 adds [verified quotation continuation](../decisions/excel-import-quotation-backend.md) with [execution evidence](../testing/evidence/excel-import-quotation/README.md). Step 6 begins with [larger-workbook capacity](../contracts/excel-import-capacity.md). Step 6 continues with [managed cost-source mapping and reviewed pricing](../contracts/excel-import-source-pricing.md). FX, landed costs, native controls and operational acceptance remain open.
 
 ## Position in delivery
 

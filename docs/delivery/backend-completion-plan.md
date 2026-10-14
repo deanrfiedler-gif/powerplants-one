@@ -75,3 +75,7 @@ BC-02 continues on `codex/project-calendars-backend` from #461. [Contract](../de
 ## BC-04 Excel capacity — 14 October 2026
 
 Dean authorised Step 6 larger-workbook capacity on `codex/excel-import-capacity`, continuing PR #485. The [decision](../decisions/excel-import-capacity.md), [contract](../contracts/excel-import-capacity.md) and [evidence](../testing/evidence/excel-capacity/README.md) cover 500-line whole-workbook saving, comparison and verified Draft continuation. Richer source policies and native UI remain separate.
+
+## BC-04 Excel managed source pricing — 14 October 2026
+
+Dean authorised [exact source mapping and reviewed pricing](../decisions/excel-import-source-pricing.md), continuing PR #486. The [contract](../contracts/excel-import-source-pricing.md) reuses native Cost Source review/tier rules with immutable workbook/current/price comparison, atomic successors, binding disposition on re-import and verified Draft continuation. [Evidence](../testing/evidence/excel-source-pricing/README.md) separates delivery from acceptance. FX, landed costs, native UI and operational source authority remain open.
