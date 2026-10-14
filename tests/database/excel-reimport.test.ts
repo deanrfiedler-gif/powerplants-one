@@ -1,3 +1,4 @@
+import { capacityWorkbook } from "../helpers/excel-capacity";
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -157,7 +158,7 @@ test("XI03/04/07 final capacity includes kept lines; current version and permiss
     policy: e.saved.policy,
     lines: [...e.saved.lines, ...extras],
   });
-  const r = await revisionCommand(s, changedWorkbook),
+  const r = await revisionCommand(s, p => capacityWorkbook(p, 401)),
     before = await snapshot();
   const noIO: DocumentStoreAdapter = {
     store: async () => {
@@ -172,7 +173,7 @@ test("XI03/04/07 final capacity includes kept lines; current version and permiss
     code("InvalidData"),
   );
   assert.deepEqual(await snapshot(), before);
-  // Removing the omitted original makes exactly 100 resolved lines eligible.
+  // Removing the omitted original makes exactly 500 resolved lines eligible.
   r.command.decisions.find((d) => d.line_id === e.saved.lines[0].id)!.action =
     "Remove";
   const mutateDuringStore: DocumentStoreAdapter = {

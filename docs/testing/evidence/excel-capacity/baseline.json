@@ -1,0 +1,113 @@
+{
+  "node": "v24.21.0",
+  "samples": [
+    {
+      "count": 100,
+      "run": 0,
+      "bytes": 116125,
+      "parse_ms": 50,
+      "review_ms": 13,
+      "receiver_bytes": 30655,
+      "review_bytes": 204632,
+      "valid": true,
+      "issues": [],
+      "rss": 113852416
+    },
+    {
+      "count": 100,
+      "run": 1,
+      "bytes": 116125,
+      "parse_ms": 26,
+      "review_ms": 9,
+      "receiver_bytes": 30655,
+      "review_bytes": 204632,
+      "valid": true,
+      "issues": [],
+      "rss": 132300800
+    },
+    {
+      "count": 100,
+      "run": 2,
+      "bytes": 116125,
+      "parse_ms": 21,
+      "review_ms": 7,
+      "receiver_bytes": 30655,
+      "review_bytes": 204632,
+      "valid": true,
+      "issues": [],
+      "rss": 135458816
+    },
+    {
+      "count": 250,
+      "run": 0,
+      "bytes": 254577,
+      "ms": 65,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 175616000
+    },
+    {
+      "count": 250,
+      "run": 1,
+      "bytes": 254577,
+      "ms": 48,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 174469120
+    },
+    {
+      "count": 250,
+      "run": 2,
+      "bytes": 254577,
+      "ms": 38,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 177860608
+    },
+    {
+      "count": 500,
+      "run": 0,
+      "bytes": 485327,
+      "ms": 90,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 243556352
+    },
+    {
+      "count": 500,
+      "run": 1,
+      "bytes": 485327,
+      "ms": 74,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 250851328
+    },
+    {
+      "count": 500,
+      "run": 2,
+      "bytes": 485327,
+      "ms": 83,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 257953792
+    },
+    {
+      "count": 501,
+      "run": 0,
+      "bytes": 486257,
+      "ms": 73,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 270655488
+    },
+    {
+      "count": 501,
+      "run": 1,
+      "bytes": 486257,
+      "ms": 70,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 269680640
+    },
+    {
+      "count": 501,
+      "run": 2,
+      "bytes": 486257,
+      "ms": 69,
+      "refused": "More than 100 populated export rows: no rows were discarded.",
+      "rss": 270221312
+    }
+  ]
+}

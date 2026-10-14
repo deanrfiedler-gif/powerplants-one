@@ -71,3 +71,7 @@ These package keys are local tracking labels, not new parent requirements. Prior
 ## PJ-03 calendar and actual-date increment - 13 October 2026
 
 BC-02 continues on `codex/project-calendars-backend` from #461. [Contract](../decisions/project-calendars-actuals.md): reasoned date-only calendars, actual statements, exact baseline calendar retention and explicit working-day comparisons. [Evidence](../testing/evidence/project-programme/README.md) separates execution from acceptance. New editing surfaces and broader resource/effort/critical-path scheduling remain open; no booking, stock or financial effect is inferred.
+
+## BC-04 Excel capacity — 14 October 2026
+
+Dean authorised Step 6 larger-workbook capacity on `codex/excel-import-capacity`, continuing PR #485. The [decision](../decisions/excel-import-capacity.md), [contract](../contracts/excel-import-capacity.md) and [evidence](../testing/evidence/excel-capacity/README.md) cover 500-line whole-workbook saving, comparison and verified Draft continuation. Richer source policies and native UI remain separate.

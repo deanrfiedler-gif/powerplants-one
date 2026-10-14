@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import { createHash } from "node:crypto";
 import { canonical } from "../../platform/operations";
 import { arithmeticPolicy, decimal, extended, scaled } from "../math";
@@ -354,8 +355,8 @@ export function reviewWorkbook(
   });
 
   keyed("PPO_Lines", "line_ref");
-  if (!book.tables.PPO_Lines.length || book.tables.PPO_Lines.length > 100)
-    issue("LineCount", "PPO_Lines", "Use one to 100 populated lines.");
+  if (!book.tables.PPO_Lines.length || book.tables.PPO_Lines.length > EXCEL_CAPACITY.lines)
+    issue("LineCount", "PPO_Lines", `Use one to ${EXCEL_CAPACITY.lines} populated lines.`);
   const lines = book.tables.PPO_Lines.map((row) => {
     const line_ref = workbookText(row.cells.line_ref, 200),
       section_ref = text(row, "section_ref"),
@@ -523,7 +524,7 @@ export function reviewWorkbook(
     const row = controls.get(key),
       count = key === "line_count";
     const workbook = row
-      ? number(row, "value", count ? 0 : 2, count ? 100n : 1000000000000000n)
+      ? number(row, "value", count ? 0 : 2, count ? BigInt(EXCEL_CAPACITY.lines) : 1000000000000000n)
       : null;
     const calculated = count
       ? String(totals.line_count)
@@ -563,7 +564,7 @@ export function reviewWorkbook(
       estimate_id: target.estimate_id ?? placeholderId,
       option_id: target.option_id,
       revision_id: target.revision_id,
-      reason: "x".repeat(1000),
+      reason: "測".repeat(1000),
       expected_workspace_version: target.expected_workspace_version,
       expected_estimate_version: target.expected_estimate_version,
       context_hash: target.context_hash,
@@ -572,7 +573,7 @@ export function reviewWorkbook(
       scope: Object.fromEntries(
         ["included", "excluded", "assumptions"].map((key, i) => [
           key,
-          scopeComparison[i].proposed,
+          scopeComparison[i].proposed || "None declared.",
         ]),
       ),
       lines: lines.map((l) => ({
@@ -590,14 +591,15 @@ export function reviewWorkbook(
     }),
     "utf8",
   );
-  if (receiverBytes > 65536)
+  if (receiverBytes > EXCEL_CAPACITY.receiverBytes)
     issue(
       "ReceiverPayloadTooLarge",
       "lines",
-      "The whole proposed estimate exceeds the 64 KiB receiving limit; no partial import is permitted.",
+      "The whole proposed estimate exceeds the 1 MiB Excel receiving limit; no partial import is permitted.",
     );
   const result = {
     mapping_version: mappingVersion,
+    capacity_version: EXCEL_CAPACITY.version,
     parser: book.parser,
     file: book.file,
     formula_count: book.formula_count,

@@ -292,7 +292,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Estimate identity, receipts, outbox kind and runtime privileges are reused.
   // No seed, grant, user or source bytes change; 0093/0094 are integrated.
   // 0096 adds empty successor evidence and read views; no existing rows or seeds change.
-  if (latestMigrationVersion !== 96) throw Error("Review the existing-demo upgrade for this release.");
+  // 0097 widens the Excel-only envelope and replaces repeated full line checks.
+  // It rewrites no originals, grants, seeds or identities. The deferred Excel
+  // evidence guard prevents large unbound native versions. Existing privileges
+  // cover its functions; the populated 0096 upgrade proves preserved rows.
+  if (latestMigrationVersion !== 97) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

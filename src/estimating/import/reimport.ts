@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
@@ -165,7 +166,7 @@ export async function reimportExcelWorkbook(
           ]),
         ),
         lines: projection.map((p) => p.line),
-      });
+      }, EXCEL_CAPACITY);
       return { review, comparison, projection, receiver };
     };
     // Validate the entire resolved native command, including kept lines, before external I/O.

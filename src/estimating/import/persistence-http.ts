@@ -21,7 +21,7 @@ export async function excelRevisionRoute(
     localRequest(request, true);
     const p = await identity(request),
       params = await context.params;
-    const body = await jsonBody(request, uploadRequestLimit + 16384);
+    const body = await jsonBody(request, uploadRequestLimit + 65536);
     return reply(
       await (save ? reimportExcelWorkbook : compareExcelWorkbook)(
         p,

@@ -102,6 +102,6 @@ UI: ui-build-sequence.md; figma-ui-implementation.md. AD-01: access-review-attes
 
 PJ: STATUS; Service owns bookings.
 
-[Plan](../delivery/backend-completion-plan.md); Excel quote backend; native controls open.
+[Plan](../delivery/backend-completion-plan.md); Excel 500-line backend; UI open.
 
 DK: STATUS. Review, publication and scoped OUT-09 assignment are separate.

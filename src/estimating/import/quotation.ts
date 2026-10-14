@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import type { QueryClient } from "../../platform/permissions";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
@@ -216,7 +217,7 @@ export async function reviewExcelQuotation(
   const r = object(value, ["estimate_version_id", "choices"]);
   const versionId = uuid(r.estimate_version_id, "estimate_version_id");
   const choices =
-    r.choices === undefined ? undefined : parseQuoteChoices(r.choices);
+    r.choices === undefined ? undefined : parseQuoteChoices(r.choices, EXCEL_CAPACITY.lines);
   return transaction(async (c) => {
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
@@ -243,7 +244,7 @@ export async function prepareExcelQuotation(
     "review_hash",
     "confirmations",
   ]);
-  const q = quoteInput(id, native);
+  const q = quoteInput(id, native, EXCEL_CAPACITY.lines);
   if (
     !Array.isArray(confirmations) ||
     confirmations.length !== excelQuoteConfirmations.length ||

@@ -350,17 +350,17 @@ for (const [name, mutate] of badWorkbooks)
     );
   });
 
-test("101 populated export lines are refused as one workbook", async () => {
+test("501 populated export lines are refused as one workbook", async () => {
   const parts = workbookParts(),
     row = parts[linesSheet].match(/<row r="6">.*?<\/row>/)![0];
   parts[linesSheet] = parts[linesSheet].replace(
     /<sheetData>.*<\/sheetData>/,
-    `<sheetData>${parts[linesSheet].match(/<row r="5">.*?<\/row>/)![0]}${Array.from({ length: 101 }, (_, i) => row.replaceAll('r="6"', `r="${i + 6}"`).replace(/r="([A-Q])6"/g, `r="$1${i + 6}"`)).join("")}</sheetData>`,
+    `<sheetData>${parts[linesSheet].match(/<row r="5">.*?<\/row>/)![0]}${Array.from({ length: 501 }, (_, i) => row.replaceAll('r="6"', `r="${i + 6}"`).replace(/r="([A-Q])6"/g, `r="$1${i + 6}"`)).join("")}</sheetData>`,
   );
-  parts[linesTable] = parts[linesTable].replace("A5:Q105", "A5:Q106");
+  parts[linesTable] = parts[linesTable].replace("A5:Q105", "A5:Q506");
   await assert.rejects(
     readWorkbook(workbookBytes(parts), "SYN.xlsx"),
-    /100 populated/,
+    /500 populated/,
   );
 });
 

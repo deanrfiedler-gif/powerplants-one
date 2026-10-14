@@ -1,3 +1,5 @@
+import { launchDocumentBrowser } from "../src/platform/browser";
+import { capacityWorkbook } from "../tests/helpers/excel-capacity";
 // Write before, verify after actual compiled application and PostgreSQL restarts.
 import { excelQuoteProposal } from "../tests/helpers/excel-quotation";
 import assert from "node:assert/strict";
@@ -60,18 +62,26 @@ async function snapshot(id: string) {
 }
 try {
   if (process.argv[2] === "write") {
-    const s = await excelImportSetup(),
+    const capacity = process.argv[3] === "capacity";
+    const s = await excelImportSetup(
+        undefined,
+        capacity ? (p) => capacityWorkbook(p, 500) : undefined,
+      ),
       commitPath = `estimating/workspaces/${s.input.id}/excel-import/commit`;
     const accepted = await json(commitPath, s.command),
       id = accepted.receipt.record_id;
     const estimate = await json(`estimating/estimates/${id}`);
+    if (capacity) assert.equal(estimate.saved.lines.length, 500);
     const path = `estimating/estimates/${id}/excel-import/${estimate.saved.id}`;
     const evidence = await json(path),
       original = await bytes(path);
     assert.deepEqual(original, Buffer.from(s.upload.file.base64, "base64"));
     await mkdir(directory, { recursive: true });
     await writeFile(join(directory, "original.xlsx"), original);
-    const revision = await revisionCommand(s, changedWorkbook);
+    const revision = await revisionCommand(
+      s,
+      capacity ? (p) => capacityWorkbook(p, 500, true) : changedWorkbook,
+    );
     revision.command.decisions.forEach((d) => (d.action = "Remove"));
     const revisionPath = commitPath.replace(/commit$/, "reimport");
     const revised = await json(revisionPath, revision.command);
@@ -93,6 +103,11 @@ try {
     await json(quotePath + "/render", {});
     const quoteEvidence = await json(quotePath + "/excel-import");
     const quoteDetail = await json(quotePath);
+    if (capacity) {
+      assert.equal(successor.saved.lines.length, 500);
+      assert.equal(quoteDetail.snapshot.items.length, 500);
+      assert.equal(quoteDetail.snapshot.total, "1250.00");
+    }
     for (const kind of ["html", "pdf"]) {
       const r = await fetch(
         origin + "/api/v1/" + quotePath + "/file?kind=" + kind,
@@ -103,6 +118,55 @@ try {
         join(directory, "exact." + kind),
         Buffer.from(await r.arrayBuffer()),
       );
+    }
+    if (capacity) {
+      const browser = await launchDocumentBrowser();
+      try {
+        const page = await browser.newPage();
+        for (const width of [1440, 390, 320]) {
+          await page.setViewportSize({ width, height: 960 });
+          await page.setContent(
+            await readFile(join(directory, "exact.html"), "utf8"),
+          );
+          const text = await page.locator("body").innerText();
+          assert.equal(
+            new Set(
+              [...text.matchAll(/SYN capacity line (\d+)/g)].map((m) =>
+                Number(m[1]),
+              ),
+            ).size,
+            500,
+          );
+          assert.equal(
+            await page.locator(".total").innerText(),
+            "Draft total AUD 1250.00",
+          );
+          assert.ok(
+            await page.evaluate(
+              () => document.documentElement.scrollWidth <= innerWidth,
+            ),
+          );
+          await page.screenshot({
+            path: join(directory, `capacity-${width}.png`),
+          });
+        }
+        await writeFile(
+          join(directory, "capacity-browser.json"),
+          JSON.stringify(
+            {
+              status: "passed",
+              lines: 500,
+              total: "1250.00",
+              viewports: [1440, 390, 320],
+              browser: browser.version(),
+            },
+            null,
+            2,
+          ),
+        );
+      } finally {
+        await browser.close();
+      }
     }
     await writeFile(
       file,

@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import type { NextRequest } from "next/server";
 import {
   identity,
@@ -28,7 +29,7 @@ export async function excelQuotationRoute(
         ? await readExcelQuotationEvidence(p, id)
         : await (
             action === "Review" ? reviewExcelQuotation : prepareExcelQuotation
-          )(p, id, await jsonBody(request, 65536)),
+          )(p, id, await jsonBody(request, EXCEL_CAPACITY.quoteRequestBytes)),
     );
   } catch (error) {
     return failure(error);

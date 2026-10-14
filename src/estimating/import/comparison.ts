@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import type { QueryClient } from "../../platform/permissions";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
@@ -296,7 +297,7 @@ export async function compareExcelWorkbook(
   return transaction((c) => compareReviewed(c, p, review));
 }
 export function lineDecisions(value: unknown): LineDecision[] {
-  if (!Array.isArray(value) || value.length > 100)
+  if (!Array.isArray(value) || value.length > EXCEL_CAPACITY.lines)
     invalid(
       "decisions",
       "Provide one Keep or Remove decision for each omitted current line.",

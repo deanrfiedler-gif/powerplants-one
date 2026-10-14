@@ -6,11 +6,13 @@ date: 2026-10-14
 
 # Excel import quotation continuation
 
+**Capacity continuation:** [Step 6](excel-import-capacity.md) now permits 500 complete Excel lines, a 1 MiB native costing request and 128 KiB quotation requests. Original receipts and historical evidence retain their recorded contracts. Native manual/CPQ receiving profiles remain separately bounded.
+
 Step 5 of [PPO-010 Excel import](excel-estimate-import.md), following [controlled re-import](excel-import-revision.md). [Decision](../decisions/excel-import-quotation-backend.md); [execution evidence](../testing/evidence/excel-import-quotation/README.md). EST-02–EST-05, EST-07/08 and DOC-01/02 retain their parent scope and open acceptance. XI-03/06/07/08 are the bounded checks. OUT-06 remains a synthetic E1 Draft; commercial issue and E4 approval are separate.
 
 ## API and review workflow
 
-All routes require current authenticated scope; POST requires the same origin. Responses are private/no-store. Commands retain the 64 KiB boundary and at most 100 unique lines. No browser page, native import control, new capability, grant, seed, schema or external adapter is added.
+All routes require current authenticated scope; POST requires the same origin. Responses are private/no-store. Excel quotation requests accept at most 128 KiB and 500 unique lines. No browser page, native import control, new capability, grant, seed, schema or external adapter is added.
 
 | Route | Contract |
 |---|---|

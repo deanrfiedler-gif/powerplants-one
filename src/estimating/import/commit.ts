@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import { createHash, randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
@@ -222,7 +223,7 @@ export async function commitExcelWorkbook(
         source: l.source_text,
         effective_date: l.effective_date,
       })),
-    });
+    }, EXCEL_CAPACITY);
 
     const storageContext = {
       ...p,

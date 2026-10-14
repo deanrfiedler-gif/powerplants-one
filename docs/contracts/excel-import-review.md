@@ -1,5 +1,7 @@
 # Excel import review API
 
+**Capacity continuation:** [Step 6](excel-import-capacity.md) now permits 500 complete Excel lines, a 1 MiB native costing request and 128 KiB quotation requests. Original receipts and historical evidence retain their recorded contracts. Native manual/CPQ receiving profiles remain separately bounded.
+
 **Receiving continuation:** [Durable first-save API](excel-import-persistence.md) accepts exact confirmed proposals. These preview endpoints remain transient and never write an estimate.
 
 <!-- versioning: git; committed history is authoritative -->
