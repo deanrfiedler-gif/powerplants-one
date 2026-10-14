@@ -67,7 +67,11 @@ export async function prepareQuote(p:Principal,id:string,value:unknown) {
     const e=await estimateContext(c,p,input.estimate_id,"estimating.quote.prepare",input.estimate_version_id);
     await estimateContext(c,p,input.estimate_id,"estimating.quote.read",input.estimate_version_id);
     return {e,v:await versionContext(c,p,e,input.estimate_version_id)};
-  },async(c,{e,v})=>{
+  },(c,{e,v})=>writeDraftQuote(c,p,input,e,v),"DraftQuoteRevision","DraftQuotePrepared");
+}
+
+// Internal transaction participant; callers retain native guards and receipt semantics.
+export async function writeDraftQuote(c:PoolClient,p:Principal,input:ReturnType<typeof quoteInput>,e:Estimate,v:EstimateVersion) {
     await guardExistingEstimateMutation(c,p,e);
     expected(e.version,input.expected_version);
     if(versionHash(v)!==v.content_hash) throw new AppError(409,"EstimateEvidenceMismatch","The saved estimate evidence must be reviewed before preparation.");
@@ -77,9 +81,7 @@ export async function prepareQuote(p:Principal,id:string,value:unknown) {
     expected(prior?.version??0,input.expected_quote_version);
     const q=prior?(await c.query("UPDATE ppo.draft_quotes SET version=version+1,current_revision_id=$3,updated_by=$4,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",[p.workspace_id,prior.id,input.id,p.actor_id])).rows[0]:
       (await c.query("INSERT INTO ppo.draft_quotes(id,workspace_id,company_id,estimate_id,created_by,updated_by,current_revision_id) VALUES($1,$2,$3,$4,$5,$5,$6) RETURNING *",[randomUUID(),p.workspace_id,e.company_id,e.id,p.actor_id,input.id])).rows[0];
-    const names=(await c.query("SELECT r.display_name AS customer,s.display_name AS site,pe.display_name AS contact FROM ppo.opportunities o JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) LEFT JOIN ppo.sites s ON s.workspace_id=o.workspace_id AND s.id=$3 LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id) WHERE o.workspace_id=$1 AND o.id=$2",[p.workspace_id,e.opportunity_id,estimateSite(e)])).rows[0];
-    if(e.discovery_basis)names.site=e.discovery_basis.site_name;
-    const snapshot:SafeQuote={synthetic:true,state:"Draft",display_number:q.display_number,revision:q.version,title:v.title,customer:names.customer,site:names.site,contact:names.contact,scope:v.scope,...quoteAmounts(v.lines,input.choices),tax_calculated:false};
+    const snapshot:SafeQuote={display_number:q.display_number,revision:q.version,...await quoteContent(c,p,e,v,input.choices)};
     const template=await quoteTemplate(snapshot);
     const revision=(await c.query(`INSERT INTO ppo.draft_quote_revisions(id,workspace_id,company_id,quote_id,estimate_id,estimate_version_id,version,created_by,updated_by,choices,safe_snapshot,template_version,template_hash,input_html,input_hash,reason,template_definition)
       VALUES($1,$2,$3,$4,$5,$6,$7,$8,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING id,version,state,updated_at`,
@@ -87,5 +89,10 @@ export async function prepareQuote(p:Principal,id:string,value:unknown) {
     const job=randomUUID();
     await c.query("INSERT INTO ppo.estimate_quote_jobs(id,workspace_id,revision_id,actor_id) VALUES($1,$2,$3,$4)",[job,p.workspace_id,input.id,p.actor_id]);
     return {...revision,audit_details:{estimate_id:e.id,estimate_version_id:v.id,quote_id:q.id,render_job_id:job,input_hash:template.input_hash}};
-  },"DraftQuoteRevision","DraftQuotePrepared");
+}
+
+export async function quoteContent(c:PoolClient,p:Principal,e:Estimate,v:EstimateVersion,choices:ReturnType<typeof quoteInput>["choices"]) {
+    const names=(await c.query("SELECT r.display_name AS customer,s.display_name AS site,pe.display_name AS contact FROM ppo.opportunities o JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) LEFT JOIN ppo.sites s ON s.workspace_id=o.workspace_id AND s.id=$3 LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id) WHERE o.workspace_id=$1 AND o.id=$2",[p.workspace_id,e.opportunity_id,estimateSite(e)])).rows[0];
+    if(e.discovery_basis)names.site=e.discovery_basis.site_name;
+    return {synthetic:true as const,state:"Draft" as const,title:v.title,customer:names.customer,site:names.site,contact:names.contact,scope:v.scope,...quoteAmounts(v.lines,choices),tax_calculated:false as const};
 }

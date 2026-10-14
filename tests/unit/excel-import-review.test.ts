@@ -150,7 +150,7 @@ test("XI02 date validity, unknown validity and review fingerprint remain distinc
     reviewWorkbook(book, target, "2026-10-15").review_hash,
   );
 });
-test("XI07 zero/one/100/101 rows and whole-command capacity are explicit; no truncation", async () => {
+test("XI07 zero/one/100/500/501 rows and whole-command capacity are explicit; no truncation", async () => {
   const empty = await review((p) => {
     p[linesSheet] = p[linesSheet].replace(
       /<row r="(?:[6-9]|1[0-7])"[^>]*>[\s\S]*?<\/row>/g,
@@ -189,10 +189,11 @@ test("XI07 zero/one/100/101 rows and whole-command capacity are explicit; no tru
   const hundred = await review((p) => grow(p, 100));
   assert.equal(hundred.lines.length, 100);
   const large = await review((p) => grow(p, 100, true));
-  assert.ok(codes(large).includes("ReceiverPayloadTooLarge"));
+  assert.ok(!codes(large).includes("ReceiverPayloadTooLarge"));
+  assert.equal((await review((p) => grow(p, 500))).lines.length, 500);
   await assert.rejects(
-    review((p) => grow(p, 101)),
-    /100 populated/,
+    review((p) => grow(p, 501)),
+    /500 populated/,
   );
 });
 test("exact numeric conversion accepts exponent/trailing zeros but refuses precision loss, bounds and false dates", () => {

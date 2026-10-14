@@ -182,9 +182,27 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
     page.getByRole("link", { name: "View all results", exact: true }),
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("search-compact.png") });
+  // Exercise a first read that finishes after the unchanged five-second UI
+  // assertion window. The Search heading is available before its data.
+  await page.route("**/api/v1/search?q=SYN", async (route) => {
+    const response = await route.fetch({
+      headers: { ...route.request().headers(), connection: "close" },
+    });
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+    await route.fulfill({ response });
+  }, { times: 1 });
+  const searchRead = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return response.request().method() === "GET" &&
+      url.pathname === "/api/v1/search" && url.searchParams.get("q") === "SYN";
+  });
   await page
     .getByRole("link", { name: "View all results", exact: true })
     .click();
+  const response = await searchRead;
+  expect(response.status()).toBe(200);
+  expect(await response.finished()).toBeNull();
+  expect(Array.isArray((await response.json()).items)).toBe(true);
   await expect(
     page.getByRole("heading", { name: "Search", exact: true }),
   ).toBeVisible();

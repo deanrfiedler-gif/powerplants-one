@@ -1,3 +1,4 @@
+import { EXCEL_CAPACITY } from "./capacity";
 import { crc32 } from "node:zlib";
 import { fromBufferPromise } from "yauzl";
 
@@ -6,7 +7,7 @@ export const WORKBOOK_LIMITS = Object.freeze({
   expanded: 20 * 1024 * 1024,
   entries: 256,
   xmlDepth: 64,
-  lines: 100,
+  lines: EXCEL_CAPACITY.lines,
 });
 
 export class WorkbookRejected extends Error {

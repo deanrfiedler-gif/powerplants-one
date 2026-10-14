@@ -664,7 +664,7 @@ for (const through of [88, 89])
     );
     assert.deepEqual(
       after.filter((x) => x.version > through).map((x) => x.version),
-      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96] : [90, 91, 92, 93, 94, 95, 96],
+      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97] : [90, 91, 92, 93, 94, 95, 96, 97],
     );
     assert.equal(
       (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,

@@ -8,6 +8,8 @@ versioning: git
 
 # Revised workbook comparison and controlled re-import
 
+**Capacity continuation:** [Step 6](excel-import-capacity.md) now permits 500 complete Excel lines, a 1 MiB native costing request and 128 KiB quotation requests. Original receipts and historical evidence retain their recorded contracts. Native manual/CPQ receiving profiles remain separately bounded.
+
 Step 4 of the [Excel plan](../delivery/excel-estimate-import-plan.md), implementing XI-03/04/05/07/08 under PPO-010, EST-02–EST-05, EST-07/08 and DOC-01/02. Read the [decision](../decisions/excel-import-revision-backend.md), [first-save contract](excel-import-persistence.md) and [source specification](excel-estimate-import.md). This is a private synthetic backend; native controls and quotation continuation remain separate.
 
 ## Prepare and compare
@@ -36,7 +38,7 @@ POST `/api/v1/estimating/workspaces/{id}/excel-import/reimport` with the first-s
 
 The original four confirmations remain mandatory: SourceCalculation, Scope, Reconciliation and SourceWarnings. A reason and actor-private operation UUID are required. The command hash includes the source digest, all confirmations, both review hashes and normalised decisions; changed intent cannot reuse the operation ID.
 
-The saved projection contains uploaded lines in workbook order, followed by explicitly kept native lines in their current order. Kept lines are copied exactly. Known old import provenance remains linked through `retained_from`; PPO-only lines have null provenance, with no inferred section, supplier record, include or print choice. The final projection must fit the existing 100-line and 64 KiB native costing limits, including every kept line. No implicit truncation or price adjustment exists.
+The saved projection contains uploaded lines in workbook order, followed by explicitly kept native lines in their current order. Kept lines are copied exactly. Known old import provenance remains linked through `retained_from`; PPO-only lines have null provenance, with no inferred section, supplier record, include or print choice. The final projection must fit the 500-line and 1 MiB Excel costing limits, including every kept line. No implicit truncation or price adjustment exists.
 
 The source adapter stores and reads back exact revised bytes before the final transaction. Inside that transaction the service rechecks authority, selected Active option, Draft group, E2 scope/context, current estimate, comparison and decisions, then invokes the native costing writer. Version, discovery basis, source-binding inheritance, specialist lineage, immutable revision evidence, audit, receipt and EstimateVersionSaved outbox commit together. A fault rolls back the entire successor. Unreferenced staged originals remain subject to the existing retention policy; there is no destructive cleanup here.
 

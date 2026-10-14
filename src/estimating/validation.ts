@@ -8,8 +8,8 @@ export function amount(value: unknown, field: string, quantity = false) {
     invalid(field, quantity ? "Quantity must be greater than zero and at most 100,000." : "Amount must be between 0 and 1,000,000 AUD.");
   return decimal(n, quantity ? 3 : 2);
 }
-export function parseLines(value: unknown, schemaVersion: 1 | 2 = 1): CostLine[] {
-  if (!Array.isArray(value) || value.length > 100) invalid("lines", "Use at most 100 complete manual lines.");
+export function parseLines(value: unknown, schemaVersion: 1 | 2 = 1, maxLines = 100): CostLine[] {
+  if (!Array.isArray(value) || value.length > maxLines) invalid("lines", `Use at most ${maxLines} complete lines.`);
   const lines = value.map((item, i) => {
     const r = object(item, ["id", "description", "category", "quantity", "unit", "unit_cost", "unit_sell", "source", "effective_date", ...(schemaVersion === 2 ? ["allowance"] : [])]), f = (name: string) => `lines.${i}.${name}`;
     if (schemaVersion === 2 && typeof r.allowance !== "boolean") invalid(f("allowance"), "Record an explicit Yes or No allowance choice.");
@@ -48,15 +48,21 @@ export function saveInput(id: string, value: unknown) {
   const envelope = estimateEnvelope(r);
   return { ...envelope, id: uuid(id,"id"), expected_version: version(r.expected_version), title: label(r.title,"title",200), scope: scope(r.scope), lines: parseLines(r.lines, envelope.schema_version), policy: policy(r.policy) };
 }
-export function quoteInput(id: string, value: unknown) {
+export function quoteInput(id: string, value: unknown, maxLines = 100) {
   const r = object(value, [...commonKeys, "id", "estimate_version_id", "expected_version", "expected_quote_version", "choices"]);
-  if (!Array.isArray(r.choices) || !r.choices.length || r.choices.length > 100) invalid("choices", "Choose the presentation of each saved line.");
   if (!Number.isSafeInteger(r.expected_quote_version) || Number(r.expected_quote_version)<0) invalid("expected_quote_version", "Use the current quotation revision, or zero before the first draft.");
+  const choices=parseQuoteChoices(r.choices, maxLines);
+  return { ...common(r), estimate_id: uuid(id,"estimate_id"), id: uuid(r.id,"id"), estimate_version_id: uuid(r.estimate_version_id,"estimate_version_id"), expected_version: version(r.expected_version), expected_quote_version:Number(r.expected_quote_version), choices };
+}
+
+export function parseQuoteChoices(value:unknown, maxLines = 100) {
+  const r={choices:value};
+  if (!Array.isArray(r.choices) || !r.choices.length || r.choices.length > maxLines) invalid("choices", "Choose the presentation of each saved line.");
   const choices: QuoteChoice[] = r.choices.map(value => {
     const c = object(value, ["line_id","included","print"]);
     if (typeof c.included !== "boolean" || typeof c.print !== "boolean") invalid("choices", "Include and print must be explicit choices.");
     return { line_id: uuid(c.line_id,"line_id"), included: c.included, print: c.print };
   });
   if (new Set(choices.map(c=>c.line_id)).size !== choices.length || !choices.some(c=>c.included)) invalid("choices", "Use each line once and include at least one line.");
-  return { ...common(r), estimate_id: uuid(id,"estimate_id"), id: uuid(r.id,"id"), estimate_version_id: uuid(r.estimate_version_id,"estimate_version_id"), expected_version: version(r.expected_version), expected_quote_version:Number(r.expected_quote_version), choices };
+  return choices;
 }

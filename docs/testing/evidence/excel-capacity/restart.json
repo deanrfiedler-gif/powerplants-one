@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "source_sha256": "7d41fc1343b50a0ace77451b68b2a33faf08a8942cb622e4bfaf6f9c35e576be",
+  "revised_source_sha256": "1125251f96dd616ff7302f95dc677acf1e07ad583ef31b33730e8eacc92f8866",
+  "postmaster_changed": true,
+  "exact_rows": true,
+  "exact_workbook": true,
+  "exact_quotation_and_outputs": true,
+  "original_receipt": true,
+  "replay_without_new_rows": true,
+  "original_lines": 500,
+  "revised_lines": 500,
+  "quotation_items": 500
+}

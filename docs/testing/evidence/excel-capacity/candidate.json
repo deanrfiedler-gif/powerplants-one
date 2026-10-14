@@ -1,0 +1,137 @@
+{
+  "node": "v24.21.0",
+  "samples": [
+    {
+      "count": 100,
+      "run": 0,
+      "bytes": 116125,
+      "parse_ms": 47,
+      "review_ms": 14,
+      "receiver_bytes": 32655,
+      "review_bytes": 204674,
+      "valid": true,
+      "issues": [],
+      "rss": 126513152
+    },
+    {
+      "count": 100,
+      "run": 1,
+      "bytes": 116125,
+      "parse_ms": 27,
+      "review_ms": 10,
+      "receiver_bytes": 32655,
+      "review_bytes": 204674,
+      "valid": true,
+      "issues": [],
+      "rss": 135729152
+    },
+    {
+      "count": 100,
+      "run": 2,
+      "bytes": 116125,
+      "parse_ms": 24,
+      "review_ms": 9,
+      "receiver_bytes": 32655,
+      "review_bytes": 204674,
+      "valid": true,
+      "issues": [],
+      "rss": 139407360
+    },
+    {
+      "count": 250,
+      "run": 0,
+      "bytes": 254577,
+      "parse_ms": 48,
+      "review_ms": 18,
+      "receiver_bytes": 76155,
+      "review_bytes": 478426,
+      "valid": true,
+      "issues": [],
+      "rss": 183590912
+    },
+    {
+      "count": 250,
+      "run": 1,
+      "bytes": 254577,
+      "parse_ms": 39,
+      "review_ms": 21,
+      "receiver_bytes": 76155,
+      "review_bytes": 478426,
+      "valid": true,
+      "issues": [],
+      "rss": 191631360
+    },
+    {
+      "count": 250,
+      "run": 2,
+      "bytes": 254577,
+      "parse_ms": 60,
+      "review_ms": 26,
+      "receiver_bytes": 76155,
+      "review_bytes": 478426,
+      "valid": true,
+      "issues": [],
+      "rss": 188530688
+    },
+    {
+      "count": 500,
+      "run": 0,
+      "bytes": 485327,
+      "parse_ms": 114,
+      "review_ms": 47,
+      "receiver_bytes": 148655,
+      "review_bytes": 934685,
+      "valid": true,
+      "issues": [],
+      "rss": 257052672
+    },
+    {
+      "count": 500,
+      "run": 1,
+      "bytes": 485327,
+      "parse_ms": 89,
+      "review_ms": 45,
+      "receiver_bytes": 148655,
+      "review_bytes": 934685,
+      "valid": true,
+      "issues": [],
+      "rss": 267489280
+    },
+    {
+      "count": 500,
+      "run": 2,
+      "bytes": 485327,
+      "parse_ms": 97,
+      "review_ms": 49,
+      "receiver_bytes": 148655,
+      "review_bytes": 934685,
+      "valid": true,
+      "issues": [],
+      "rss": 267771904
+    },
+    {
+      "count": 501,
+      "run": 0,
+      "bytes": 486257,
+      "ms": 111,
+      "refused": "More than 500 populated export rows: no rows were discarded.",
+      "rss": 273235968
+    },
+    {
+      "count": 501,
+      "run": 1,
+      "bytes": 486257,
+      "ms": 96,
+      "refused": "More than 500 populated export rows: no rows were discarded.",
+      "rss": 275648512
+    },
+    {
+      "count": 501,
+      "run": 2,
+      "bytes": 486257,
+      "ms": 101,
+      "refused": "More than 500 populated export rows: no rows were discarded.",
+      "rss": 285777920
+    }
+  ]
+}

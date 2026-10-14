@@ -8,6 +8,8 @@ versioning: git
 
 # Excel Import durable first-save contract
 
+**Capacity continuation:** [Step 6](excel-import-capacity.md) now permits 500 complete Excel lines, a 1 MiB native costing request and 128 KiB quotation requests. Original receipts and historical evidence retain their recorded contracts. Native manual/CPQ receiving profiles remain separately bounded.
+
 [Decision](../decisions/excel-import-persistence-backend.md), [preview API](excel-import-review.md), [parent specification](excel-estimate-import.md), [execution evidence](../testing/evidence/excel-import-persistence/README.md). Scope: PPO-010 / BC-04, XI-01/03/04 and backend XI-08; existing 78 parent IDs remain intact.
 
 ## Commit
@@ -32,7 +34,7 @@ GET /api/v1/estimating/estimates/{id}/excel-import/{versionId}/source verifies a
 
 ## Compatibility and boundaries
 
-The parser, 5 MiB compressed / 20 MiB expanded package limits, 100-line and 64 KiB native receiving limits remain. Existing E1/E2 command DTOs, persisted hashes, source snapshots and quotations are unchanged. No new capabilities, grants, seed entries, business identity kinds or paid services are introduced. Reserved migration slots 0093/0094 are not filled by this increment.
+The parser and its 5 MiB compressed / 20 MiB expanded package safeguards remain; the current Excel receiving envelope is defined in the capacity continuation above. Existing E1/E2 command DTOs, persisted hashes, source snapshots and quotations are unchanged. No new capabilities, grants, seed entries, business identity kinds or paid services are introduced. Reserved migration slots 0093/0094 are not filled by this increment.
 
 Re-import comparison, removals and manual-line choices, customer-safe quote continuation, native page controls, operational Excel/SharePoint readiness and business acceptance remain separate work. This contract supplies no production authorisation.
 

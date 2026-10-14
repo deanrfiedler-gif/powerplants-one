@@ -325,7 +325,7 @@ export async function readWorkbook(
         });
       }
       if (key === "PPO_Lines" && rows.length > WORKBOOK_LIMITS.lines)
-        refuse("More than 100 populated export rows: no rows were discarded.");
+        refuse(`More than ${WORKBOOK_LIMITS.lines} populated export rows: no rows were discarded.`);
       tables[key] = rows;
     }
   }
