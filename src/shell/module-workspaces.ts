@@ -30,7 +30,7 @@ export const moduleWorkspaces = [
   { route: "/my-jobs/inspections", moduleId: "FI-03", scope: "ppo-service-inspections", layout: "padded", navigation: "workspace", baseline: "fi03-inspections-native" },
   { route: "/service/inspections", moduleId: "FI-04", scope: "ppo-service-inspections", layout: "padded", navigation: "workspace", baseline: "fi04-inspections-native" },
   { route: "/my-jobs/[id]", moduleId: "FI-01", scope: "ppo-work-timer", layout: "padded", navigation: "workspace", baseline: "fi01-timer-native" },
-  { route: "/products", moduleId: "PD-01", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-products" },
+  { route: "/products", moduleId: "PD-01", scope: "ppo-products", layout: "full-bleed", navigation: "workspace", baseline: "products-discovery-catalogue" },
   { route: "/products/[id]", moduleId: "PD-01", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-detail" },
   { route: "/products/publication", moduleId: "PD-02", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-publication" },
   { route: "/products/pricing", moduleId: "PD-03", scope: "ppo-products", layout: "padded", navigation: "workspace", baseline: "products-native-pricing" },

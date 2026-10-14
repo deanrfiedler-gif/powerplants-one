@@ -70885,7 +70885,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
+            "Catalogue filters are in the secondary menu. Search and the bounded result count stay above the rows. Back to catalogue or browser Back restores query, selected-row focus and scroll within the current user/company."
           ],
           "steps": [],
           "rows": [],
@@ -71034,7 +71035,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Catalogue uses full-width phone rows. Filters opens the shared menu; Escape/Close returns focus. Inputs/actions retain 44px phone targets. Technical record evidence remains in reading order.",
             "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
             "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
@@ -71068,9 +71069,9 @@
         }
       ],
       "locale": "en-AU",
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
-      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+      "prepared_at": "2026-10-14",
+      "runtime_evidence": "See docs/testing/evidence/products-discovery/README.md; execution and acceptance are separate.",
+      "change_summary": "Catalogue A: flat register, shared filter menu and scoped return context; review pending."
     },
     {
       "guide_key": "guide.route-products-compatibility",
@@ -71524,7 +71525,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
+            "Catalogue filters are in the secondary menu. Search and the bounded result count stay above the rows. Back to catalogue or browser Back restores query, selected-row focus and scroll within the current user/company."
           ],
           "steps": [],
           "rows": [],
@@ -71673,7 +71675,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Catalogue uses full-width phone rows. Filters opens the shared menu; Escape/Close returns focus. Inputs/actions retain 44px phone targets. Technical record evidence remains in reading order.",
             "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
             "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
@@ -71707,9 +71709,9 @@
         }
       ],
       "locale": "en-AU",
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
-      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+      "prepared_at": "2026-10-14",
+      "runtime_evidence": "See docs/testing/evidence/products-discovery/README.md; execution and acceptance are separate.",
+      "change_summary": "Catalogue A: flat register, shared filter menu and scoped return context; review pending."
     },
     {
       "guide_key": "guide.route-products-pricing",
