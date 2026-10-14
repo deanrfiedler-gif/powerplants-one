@@ -8,7 +8,13 @@ import {
   revisionAuthority,
 } from "../estimating/discovery-workspace-context";
 import { hash } from "./hash";
-import type { Calculation, CalculationInput, Definition } from "./types";
+import type {
+  Calculation,
+  CalculationInput,
+  Definition,
+  ProductSnapshot,
+} from "./types";
+import { productBindings } from "./products";
 import { draftAuthority } from "./drafts";
 
 export type Duty =
@@ -46,6 +52,7 @@ export type Binding = {
   activation_id: string;
   activation_version: number;
   release_revision_id: string;
+  products?: ProductSnapshot[];
 };
 export type Run = {
   id: string;
@@ -112,6 +119,7 @@ export async function revision(
       "CpqEvidenceMismatch",
       "The saved release evidence does not match its hash.",
     );
+  await productBindings(c, p, r.company_id, r.definition);
   return r;
 }
 export async function active(c: QueryClient, p: Principal, company: string) {
@@ -173,7 +181,7 @@ export async function receiptAuthority(
     if (!a?.details.cpq_run_id) throw unavailable();
     await run(c, p, a.details.cpq_run_id, true);
   } else if (command === "Cpq:Calculate") await run(c, p, id, true);
-  else
+  else {
     await release(
       c,
       p,
@@ -184,4 +192,13 @@ export async function receiptAuthority(
           ? "cpq.review"
           : "cpq.publish",
     );
+    const evidence = (
+      await c.query<{ details: { revision_id: string } }>(
+        "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+        [p.workspace_id, p.actor_id, operationId],
+      )
+    ).rows[0];
+    if (!evidence?.details.revision_id) throw unavailable();
+    await revision(c, p, evidence.details.revision_id);
+  }
 }

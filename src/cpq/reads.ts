@@ -7,6 +7,9 @@ import { workspaceAuthority } from "../estimating/discovery-workspace-context";
 import { active, duty, release, revision, run } from "./context";
 import { hash } from "./hash";
 import { semanticChanges } from "./semantic-diff";
+import { productLineEvidence } from "./products";
+import { productAuthority } from "../products/context";
+import { estimateContext, versionContext } from "../estimating/context";
 
 export async function listReleases(
   p: Principal,
@@ -103,8 +106,71 @@ export const readRun = (p: Principal, id: string) =>
         [p.workspace_id, r.option_id, r.id],
       )
     ).rows[0].n;
-    return { ...r, evaluation_number: n, binding_hash: hash(r.binding) };
+    return {
+      ...r,
+      evaluation_number: n,
+      binding_hash: hash(r.binding),
+      ...(r.binding.products
+        ? { product_provenance: productLineEvidence(r) }
+        : {}),
+    };
   });
+export async function readEstimateProducts(
+  p: Principal,
+  id: string,
+  query: Record<string, string>,
+) {
+  const q = object(query, ["version_id"]),
+    versionId = uuid(q.version_id, "version_id");
+  return transaction(async (c) => {
+    const e = await estimateContext(c, p, id, "estimating.read", versionId);
+    const v = await versionContext(c, p, e, versionId);
+    await duty(c, p, e.company_id);
+    await productAuthority(c, p, e.company_id);
+    const adoption = (
+      await c.query<{
+        run_id: string;
+        result_hash: string;
+        lines: import("../estimating/math").CostLine[];
+      }>(
+        "SELECT run_id,result_hash,lines FROM ppo.cpq_adoptions WHERE workspace_id=$1 AND estimate_id=$2 AND estimate_version_id=$3",
+        [p.workspace_id, e.id, v.id],
+      )
+    ).rows[0];
+    if (!adoption)
+      return {
+        estimate_id: e.id,
+        estimate_version_id: v.id,
+        status: "NoCpqAdoption" as const,
+        product_provenance: [],
+        synthetic: true,
+      };
+    const saved = await run(c, p, adoption.run_id);
+    if (
+      adoption.result_hash !== saved.result.result_hash ||
+      hash(adoption.lines) !== hash(saved.result.lines.map((l) => l.line)) ||
+      adoption.lines.some(
+        (line) =>
+          hash(v.lines.find((l) => l.id === line.id) ?? null) !== hash(line),
+      )
+    )
+      throw new AppError(
+        409,
+        "CpqEvidenceMismatch",
+        "The exact estimate adoption does not match its retained calculation.",
+      );
+    return {
+      estimate_id: e.id,
+      estimate_version_id: v.id,
+      status: "ExactAdoption" as const,
+      run_id: saved.id,
+      run_content_hash: saved.content_hash,
+      result_hash: saved.result.result_hash,
+      product_provenance: productLineEvidence(saved),
+      synthetic: true,
+    };
+  });
+}
 export async function runHistory(p: Principal, id: string) {
   return transaction(async (c) => {
     const g = await workspaceAuthority(c, p, id);

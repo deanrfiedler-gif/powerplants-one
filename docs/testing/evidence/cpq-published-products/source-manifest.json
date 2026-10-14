@@ -1,0 +1,23 @@
+{
+  "base_main": "bc9e3fb1ac36e578178b6b0008b0c15b2e512738",
+  "implementation_commit": "93c3e14",
+  "working_changes": "Final TypeScript formatting and lost-response HTTP proof are included in these hashes.",
+  "compiled_build_id": "lBGGPG5jANdk00VFVhj3y",
+  "sha256": {
+    ".github/workflows/estimating-e1.yml": "0d449b4b43ddd498069f450449b81968a0e1d64049cbc43e53cbd5c77a96ac02",
+    "scripts/cpq-products-restart.ts": "4d36baf85df151c16bc0308c05bf3274b5540d02f7c762897511fbfe76d1c4bb",
+    "scripts/http-suite.ts": "408c192b0d70041782a47ed9656524f0011fefb539de618e0f9600b8267173af",
+    "src/app/api/v1/estimating/estimates/[id]/cpq-products/route.ts": "85abfa89343c5f9b562b050fa96d069987963af6af522a74904bde8333d10243",
+    "src/cpq/context.ts": "6a68f630e7a4828180b9638617603d246029323a20f2ec3e4edeebf1f090403d",
+    "src/cpq/products.ts": "ac7e407a5282652d0e8941e2f2073403aa1488d37f0c277f45bba5fb1180aee5",
+    "src/cpq/reads.ts": "5be56eb18281647a3d029c69f4ca8367df3e320c3da19e0030243b9b026c5288",
+    "src/cpq/releases.ts": "b2ed09025ed11ec7d51d4a0299e089c3d81eed36166ee8ce2b3a2e3b6f539e6f",
+    "src/cpq/runs.ts": "fc8517570b1f08e657a8d00121a214eb0e2dc6532c962a46916d8f2271288698",
+    "src/cpq/types.ts": "057621de9d66012a248422f47f9ed1cfab00e0a718282e25294bfdd9e383d7ff",
+    "src/cpq/validation.ts": "812831964c7a5e56cc895c08315dd755ddf6aa43bba0f05073dfaffa446fcf93",
+    "tests/database/cpq.test.ts": "119ad92ea1f4698377e47972c9a611d826ff8223864d89c51c85fa45259bd96d",
+    "tests/helpers/cpq-products.ts": "61c4e3a1d87ff7e23592723d59e9642867ccd1a14030ab7dfab2fe9e949c0f72",
+    "tests/http/cpq-products.test.ts": "94d29300a8651a16573d3c456c897344ba0614f93498e8ab93470ecffe66e038",
+    "tests/unit/cpq.test.ts": "3ca53180e49f63359e4799d3b6c2ae0bd6d0a351f27684645921018898a4cfd7"
+  }
+}

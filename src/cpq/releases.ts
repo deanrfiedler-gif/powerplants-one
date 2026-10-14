@@ -17,6 +17,7 @@ import { active, duty, release, revision, type Release } from "./context";
 import { definition, digest } from "./validation";
 import { hash } from "./hash";
 import { testIsolated } from "./runner";
+import { productBindings } from "./products";
 import { tableCoverage } from "./design-runtime";
 import { retainVersionDraft } from "./drafts";
 
@@ -60,6 +61,7 @@ export async function saveRelease(p: Principal, value: unknown) {
     "Cpq:Save",
     async (c) => {
       await duty(c, p, input.company_id, "cpq.author");
+      await productBindings(c, p, input.company_id, input.definition);
       const prior = (
         await c.query<Release>(
           "SELECT * FROM ppo.cpq_releases WHERE workspace_id=$1 AND id=$2",
@@ -77,6 +79,7 @@ export async function saveRelease(p: Principal, value: unknown) {
     },
     async (c, prior) => {
       expected(prior?.version ?? 0, input.expected_version);
+      await productBindings(c, p, input.company_id, input.definition, true);
       if (input.definition.schema_version === 3) {
         const fixtures = await testIsolated(input.definition);
         const coverage = tableCoverage(input.definition);
@@ -215,7 +218,11 @@ export async function reviewRelease(p: Principal, id: string, value: unknown) {
     p,
     input,
     "Cpq:Review",
-    (c) => release(c, p, input.id, "cpq.review"),
+    async (c) => {
+      const root = await release(c, p, input.id, "cpq.review");
+      await revision(c, p, input.revision_id);
+      return root;
+    },
     async (c, root) => {
       expected(root.version, input.expected_version);
       if (
@@ -241,6 +248,8 @@ export async function reviewRelease(p: Principal, id: string, value: unknown) {
           "Another authorised person must review this release.",
         );
       const fixtures = await testIsolated(v.definition);
+      if (input.outcome === "Approved")
+        await productBindings(c, p, root.company_id, v.definition, true);
       if (input.outcome === "Approved" && fixtures.some((f) => !f.passed))
         throw new AppError(
           409,
@@ -317,7 +326,11 @@ export async function activateRelease(
     p,
     input,
     "Cpq:Activate",
-    (c) => release(c, p, input.id, "cpq.publish"),
+    async (c) => {
+      const root = await release(c, p, input.id, "cpq.publish");
+      await revision(c, p, input.revision_id);
+      return root;
+    },
     async (c, root) => {
       expected(root.version, input.expected_version);
       const v = await revision(c, p, input.revision_id),
@@ -360,6 +373,13 @@ export async function activateRelease(
         { ...p, actor_id: review.reviewer_id },
         root.company_id,
         "cpq.review",
+      );
+      await productBindings(c, p, root.company_id, v.definition, true);
+      await productBindings(
+        c,
+        { ...p, actor_id: review.reviewer_id },
+        root.company_id,
+        v.definition,
       );
       const activation_id = randomUUID();
       await c.query(
