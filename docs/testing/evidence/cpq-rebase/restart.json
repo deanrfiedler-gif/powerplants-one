@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "postmaster_before": "2026-10-14 21:21:10.288744+10",
+  "postmaster_after": "2026-10-14 22:20:48.034731+10",
+  "graph_hash": "4d5416677cf193e497b4d6156f04f48e081dc759c459fa4e96079f8458bff6c6",
+  "run_content_hash": "805410328dc142bde6806ff3011054754af319f397f57e3b148fa15fabd6c625",
+  "result_hash": "6f33e165977c5ce1ec7fbf709f8a4124bedf0cccddbaac05c8766acf5ba6d909",
+  "rebase_decisions": 2,
+  "receiving_decisions": 2,
+  "retained_histories": 2,
+  "original_receipts": 2,
+  "duplicate_effects": 0,
+  "changed_source_refused": true
+}
