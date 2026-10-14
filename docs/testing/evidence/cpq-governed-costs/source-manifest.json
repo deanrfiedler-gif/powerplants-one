@@ -29,8 +29,12 @@
     "tests/database/cpq-costs.test.ts": "21d0fc1b148b65eb492852dfa39d0e6d3daac0cef62dc0fd8a3af16d67a2e95e",
     "tests/helpers/cpq-costs-http.ts": "686a07fe963cb46cab972a347e1d8af9034a8716c5cb531891d06c8091f7ae93",
     "tests/helpers/cpq-costs.ts": "e1d317fda9a513f19451dd5951d0276dd0d5ec15832ba946ee2203b9ae5ce730",
-    "tests/helpers/cpq-products.ts": "f052856bfd76091ad0523d862198bf9d10aca2f0dfc24e4077fde409fb5f3a7c",
+    "tests/helpers/cpq-products.ts": "41b1daeba41b5e7bfbc38b08208f334716ffe08bf7180480f64e755c87d238fb",
     "tests/http/cpq-costs.test.ts": "cc3d0ee1d24f713fdc51f61a7619c6249dbe21e837ba67706dd7d921dfc0906a",
-    "tests/unit/cpq-costs.test.ts": "1faa351e5a7e9ce264f923a245fec245ba15af48f156cdbb50925222962e38d6"
-  }
+    "tests/unit/cpq-costs.test.ts": "1faa351e5a7e9ce264f923a245fec245ba15af48f156cdbb50925222962e38d6",
+    "scripts/http-suite.ts": "6504604e499c197f30981c376f74407333929806787551bf8245f028dfb7874b",
+    ".github/workflows/estimating-e1.yml": "77d44d24f9ee2060cf7e40854de6b99d9874bc7d32234a82ba8a878d29227808"
+  },
+  "verification_commit": "16c83b0d464865a5169eca69d0b7d6143883f9b7",
+  "byte_contract": "SHA-256 of committed Git blob bytes (LF), not platform checkout line endings."
 }
