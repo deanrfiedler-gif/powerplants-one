@@ -49,7 +49,7 @@ test("governed pricing dates obey native binding bounds before reporting adoptio
   for (const part of d.parts) {
     part.effective_from = "0000-01-01";
     part.effective_to = "9999-12-31";
-    part.cost_source!.content.effective_from = "0000-01-01";
+    part.cost_source!.content.effective_from = "0001-01-01";
     part.cost_source!.content_hash = hash(part.cost_source!.content);
   }
   const valid = definition(d);
@@ -64,6 +64,24 @@ test("governed pricing dates obey native binding bounds before reporting adoptio
   }
   for (const pricing_date of ["0001-01-01", "9998-12-31"])
     assert.equal(evaluate(valid, { ...cpqInput(), pricing_date }).ready, true);
+});
+
+test("governed source validity cannot contain PostgreSQL's unsupported year zero", () => {
+  for (const valid_until of [null, "0000-12-31"]) {
+    const d = costDefinition();
+    d.parts[0].cost_source!.content.effective_from = "0000-01-01";
+    d.parts[0].cost_source!.content.valid_until = valid_until;
+    d.parts[0].cost_source!.content_hash = hash(
+      d.parts[0].cost_source!.content,
+    );
+    const result = evaluate(definition(d), cpqInput());
+    assert.equal(result.ready, false);
+    assert.ok(
+      result.diagnostics.some(
+        (diagnostic) => diagnostic.code === "CpqCostSourceDateRange",
+      ),
+    );
+  }
 });
 test("governed cost validity and supplier minimum block without an authored-price fallback", () => {
   for (const [change, code] of [
