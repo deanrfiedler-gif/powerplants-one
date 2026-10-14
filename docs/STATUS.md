@@ -2,7 +2,7 @@
 
 ## Excel managed cost sources and reviewed pricing — 14 October 2026
 
-Dean authorised the [pricing continuation](decisions/excel-import-source-pricing.md) after capacity PR #486. The [backend contract](contracts/excel-import-source-pricing.md) connects exact saved Excel lines to independently reviewed native Cost Source revisions, with workbook/current/proposed comparison and an atomic pricing successor. Original workbooks and versions remain unchanged; re-import exposes binding removal and retained-line inheritance, and verified Draft continuation uses the exact priced version. [Execution evidence](testing/evidence/excel-source-pricing/README.md) records validation separately from CI, review and deployment. Native controls, FX, landed costs and operational source policy remain open.
+Dean authorised the [pricing continuation](decisions/excel-import-source-pricing.md), delivered in [PR #487](https://github.com/deanrfiedler-gif/powerplants-one/pull/487) after capacity PR #486. The [backend contract](contracts/excel-import-source-pricing.md) connects exact saved Excel lines to independently reviewed native Cost Source revisions, with workbook/current/proposed comparison and an atomic pricing successor. Original workbooks and versions remain unchanged; re-import exposes binding removal and retained-line inheritance, and verified Draft continuation uses the exact priced version. [Execution evidence](testing/evidence/excel-source-pricing/README.md) records validation separately from CI, review and deployment. Native controls, FX, landed costs and operational source policy remain open.
 
 ## Excel larger-workbook capacity — 14 October 2026
 

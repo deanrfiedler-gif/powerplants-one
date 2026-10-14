@@ -1,6 +1,6 @@
 # Excel managed cost sources and reviewed pricing — execution evidence
 
-Owner: Dean Fiedler. Source: `codex/excel-import-source-pricing`, based on capacity PR #486 `b2aa17b`. User-authorised continuation; scope BC-04 / PPO-010 / EST-02/04/05/07/08 / XI-04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
+Owner: Dean Fiedler. Source: [PR #487](https://github.com/deanrfiedler-gif/powerplants-one/pull/487), implementation `3dc6331` on `codex/excel-import-source-pricing`, based on capacity PR #486 `b2aa17b`. User-authorised continuation; scope BC-04 / PPO-010 / EST-02/04/05/07/08 / XI-04/06/07/08. Code delivery, CI, independent review, owner acceptance and deployment remain separate.
 
 The [decision](../../../decisions/excel-import-source-pricing.md) and [contract](../../../contracts/excel-import-source-pricing.md) define separately reviewed pricing successors. Exact native line/source/revision selections reuse the independently reviewed Cost Source pricing rules, preserve workbook originals and retain immutable native bindings and comparison evidence. Migration 0098 is additive and seedless; no new dependency, capability or grant is introduced.
 
