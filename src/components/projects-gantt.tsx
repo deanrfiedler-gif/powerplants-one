@@ -1498,8 +1498,16 @@ export function ProjectsGantt({
                 At risk
               </span>
               <span>
+                <i className="legend-bar planned" />
+                Planned
+              </span>
+              <span>
                 <i className="milestone-key" />
                 Milestone
+              </span>
+              <span>
+                <i className="today-key" />
+                Today
               </span>
               <span className="legend-note">
                 Manual dates · {schedule.programme?.calendar.key === "PPO-PJ-CALENDAR-02" ? `${schedule.programme.calendar.name} (revision ${schedule.programme.calendar.revision})` : "Mon–Fri reference calendar"}
