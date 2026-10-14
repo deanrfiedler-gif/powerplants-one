@@ -282,7 +282,7 @@ export async function readOperation(
     )
       throw unavailable();
   } else if (r.object_type === "Estimate") {
-    if (r.command === "ExcelImport:Commit") {
+    if (["ExcelImport:Commit", "ExcelImport:Reimport"].includes(r.command)) {
       return transaction(async c => {
         await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
         await excelReceiptAuthority(c,p,r.record_id,operation_id);

@@ -38,12 +38,12 @@ export const excelConfirmations = [
   "Reconciliation",
   "SourceWarnings",
 ] as const;
-function hashField(value: unknown, field: string) {
+export function hashField(value: unknown, field: string) {
   if (typeof value !== "string" || !/^[a-f0-9]{64}$/.test(value))
     invalid(field, "Use the exact reviewed hash.");
   return value;
 }
-function command(id: string, value: unknown) {
+export function excelCommitInput(id: string, value: unknown) {
   const r = object(value, [
     ...commonKeys,
     "option_id",
@@ -94,7 +94,7 @@ export function excelStorageOperation(p: Principal, operationId: string) {
 async function authority(
   c: PoolClient,
   p: Principal,
-  input: ReturnType<typeof command>["input"],
+  input: ReturnType<typeof excelCommitInput>["input"],
 ) {
   const g = await workspaceAuthority(c, p, input.id, true);
   const r = await revisionAuthority(c, p, g, input.revision_id, true);
@@ -120,7 +120,7 @@ export async function commitExcelWorkbook(
   value: unknown,
   store: DocumentStoreAdapter = documentStore(),
 ) {
-  const request = command(id, value);
+  const request = excelCommitInput(id, value);
   // Current authority precedes file decoding, source parsing, storage and receipt disclosure.
   await transaction((c) => authority(c, p, request.input));
   const { name, bytes } = decodeExcelFile(request.file);

@@ -98,6 +98,6 @@ UI: ui-build-sequence.md; figma-ui-implementation.md. AD-01: access-review-attes
 
 PJ: STATUS; Service owns bookings.
 
-[Plan](../delivery/backend-completion-plan.md); Excel first save; re-import remains open.
+[Plan](../delivery/backend-completion-plan.md); Excel re-import backend; quote continuation open.
 
 DK: STATUS; draft review never publishes.
