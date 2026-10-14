@@ -321,6 +321,9 @@ test("atomic assessment rollback and concurrent original commands retain exactly
     ),
   );
   assert.equal(race.filter((x) => x.status === "fulfilled").length, 1);
+  const conflict = race.find((x) => x.status === "rejected");
+  assert.ok(conflict && conflict.status === "rejected");
+  assert.equal(conflict.reason.code, "VersionConflict");
   await assert.rejects(
     assessQuality(s.p, s.view.release.id, {
       ...command,

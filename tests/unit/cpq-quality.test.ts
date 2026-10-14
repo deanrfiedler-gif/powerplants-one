@@ -30,6 +30,7 @@ test("quality reports intentional regression deltas without changing engine resu
     result.simulations[0].result,
     evaluate(candidate, calculationInput(cpqInput(), candidate.facts)),
   );
+  assert.equal(result.baseline_regression[0].result_hash, result.simulations[0].result!.result_hash);
   assert.equal(hash({ baseline, candidate }), original);
   assert.equal(result.coverage.scope, "ObservedFixturesOnly");
   assert.deepEqual(result.coverage.rules[0].contributing_fixtures, [0]);
