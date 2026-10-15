@@ -10,6 +10,7 @@ import {
   readPublication,
 } from "../../src/documents/publication/service";
 import { definition as retainedDefinition } from "../../src/documents/publication/definition";
+import { parseDefinition } from "../../src/documents/publication/contracts";
 import { createPack } from "../../src/documents/packs";
 import { processRenderJob, readBundle } from "../../src/documents/worker";
 import { digest } from "../../src/documents/store";
@@ -88,12 +89,14 @@ test("Migration 0103 refuses a new DK06-OUT09-1 publication and accepts the same
   await reset();
   const f = await reviewedDraft(),
     v = await publicationReadiness(f.publisher, f.input.id);
-  assert.equal(JSON.parse(v.definition).renderer, "DK06-OUT09-2");
-  const old = await retainedDefinition(v.runtime_version, f.input.body, {
-    proposal_id: v.proposal_id,
-    revision_id: v.revision_id,
-    content_hash: v.content_hash,
-  });
+  const current = parseDefinition(v.definition);
+  assert.equal(current.renderer, "DK06-OUT09-2");
+  // The identical reviewed revision built under the retained contract.
+  const old = await retainedDefinition(
+    v.runtime_version,
+    current.body,
+    current.origin,
+  );
   const attempt = async (text: string) => {
     const c = await database().connect();
     try {

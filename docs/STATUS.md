@@ -1,5 +1,11 @@
 # Current prototype status
 
+## DK-06 rendering-only template manifest (G5) — 15 October 2026
+
+The DK-06 Template management design found gap G5: R3 fingerprinted `package-lock.json`, `src/platform/operations.ts`, `src/shared/validation.ts` and `src/platform/browser.ts` into every managed OUT-09 definition, so an unrelated edit to any of them refused Job pack preparation and issue at every site with a managed assignment. A focused database test reproduced it. Dean decided: "G5 is a defect. Proceed with option A: add a new DK06-OUT09-2 contract with a rendering-only manifest and explicit Playwright versions, keep DK06-OUT09-1 definitions retained unchanged, record the decision, implement it with the migration and ledger updates, and open a draft PR."
+
+The [decision](decisions/template-renderer-manifest.md) and updated [contract](contracts/template-publication.md) add renderer contract DK06-OUT09-2 for new publications: its manifest covers the renderer, shared pack HTML, printed section labels and branding, and it records the resolved playwright and playwright-core versions. DK06-OUT09-1 modules stay byte for byte, so retained definitions, assignments and issued bytes are unchanged. Migration 0103 names the current contract and replaces only the insert guard; no table, seed, grant or identity changes. [Evidence](testing/evidence/template-renderer-manifest/README.md) records the local checks and their limits. Review, owner acceptance, merge and deployment remain separate.
+
 ## Backend reconciliation and DK-03 applicability — 15 October 2026
 
 The [current source reconciliation](delivery/backend-reconciliation.md) distinguishes integrated code from older delivery checkpoints across Documents, Projects, Service/Supply, Finance, Reporting and platform controls. The initial base `41c8479` includes CPQ #492/#494 and PJ-05 #493. #498 subsequently merged externally at main `d070a61`; its final head had independent review clean, 59 successful checks and the intentional PT-27 skip. The existing monitor completed and was removed. This contribution reconciles that upstream change without duplicating CPQ implementation.
