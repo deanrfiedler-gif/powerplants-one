@@ -88,7 +88,7 @@ async function audience(
       record.needs_review ||
       issue.assignment_version !== a.assignment_version ||
       issue.schedule_version !== a.schedule_version ||
-      !["Confirmed", "Started"].includes(a.status)
+      !["Confirmed", "InProgress"].includes(a.status)
     )
       conflict(
         "IssueNotApplicable",
