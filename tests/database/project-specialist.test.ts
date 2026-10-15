@@ -243,6 +243,15 @@ test("PJ06-04 optimistic concurrency, altered retries and atomic evidence rollba
     pr = f.project.id,
     id = f.package.id;
   await commandPackage(f.owner, pr, f.package);
+  await assert.rejects(
+    transaction(async (c) => {
+      await c.query(
+        "INSERT INTO ppo.project_specialist_events(workspace_id,package_id,version,command,state,content,source,source_hash,note,reason,created_by,operation_id) SELECT workspace_id,package_id,2,'Revise','Draft',content,source,repeat('0',64),note,reason,created_by,$2 FROM ppo.project_specialist_events WHERE package_id=$1 AND version=1",
+        [id, randomUUID()],
+      );
+    }),
+    /Exact source snapshot hash required/,
+  );
   const contenders = await Promise.allSettled(
     [1, 2].map(() =>
       commandPackage(f.owner, pr, packageAction(id, 1, "Submit")),
