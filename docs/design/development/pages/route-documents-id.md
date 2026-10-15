@@ -40,3 +40,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.documents.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Document library design — 15 October 2026
+
+The accepted [Document library design](../../../decisions/document-library-figma-design.md) keeps this route as the issued job-pack document under its own permissions. The library record is a separate route, `/documents/library/{id}` (Q1), and a library document whose source is an issued job pack links here with "Open issued job pack". No change to this page is decided.
