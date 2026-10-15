@@ -88,7 +88,7 @@ jobs:
       - name: Compile the exact E1 E2 ES-02 application
         if: matrix.suite == 'browser'
         run: npm run build
-      - name: Record the actual compiled checkout and fertigation source hashes
+      - name: Record the actual compiled checkout and fertigation and CPQ package source hashes
         if: matrix.suite == 'browser'
         run: |
           python3 - <<'PY'
@@ -98,6 +98,10 @@ jobs:
           paths=[p for p in files if p and ('fertigation' in p or p in ['src/app/styles/my-work.css','src/components/estimation-wizard.tsx','src/components/discovery-costing.tsx','src/estimating/discovery-workspaces.ts','src/estimating/cost-basis-service.ts','src/shared/receipts.ts','src/shell/navigation.ts','src/shell/module-workspaces.ts','.github/workflows/estimating-e1.yml']) and not p.startswith('docs/testing/evidence/')]
           root=Path('verification-evidence/fertigation-build');root.mkdir(parents=True,exist_ok=True)
           data={'source_head':os.environ['PPO_SOURCE_HEAD'],'executed_checkout':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'executed_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],'build_id':Path('.next/BUILD_ID').read_text().strip(),'sha256':{p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in sorted(paths)}}
+          (root/'source-manifest.json').write_text(json.dumps(data,indent=2)+'\n')
+          paths=[p for p in files if p and (p.startswith(('src/cpq/','src/app/api/v1/cpq/')) or p in ['db/migrations/0102-cpq-packages.sql','scripts/cpq-worker.mjs','scripts/cpq-packages-restart.ts','src/platform/operations.ts','src/shared/receipts.ts','tests/helpers/cpq-packages-http.ts','package-lock.json','.github/workflows/estimating-e1.yml'])]
+          root=Path('verification-evidence/cpq-packages-build');root.mkdir(parents=True,exist_ok=True)
+          data['sha256']={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in sorted(paths)}
           (root/'source-manifest.json').write_text(json.dumps(data,indent=2)+'\n')
           PY
       - name: E1 real direct HTTP proof
@@ -112,10 +116,13 @@ jobs:
             sleep 1
           done
           node --env-file=.env.local --import tsx scripts/cpq-quality-restart.ts write
+          # Enrolled impact assessments are complete and bounded to 25 open
+          # estimates. Prove them before the later suites populate more cases.
+          node --env-file=.env.local --import tsx scripts/cpq-packages-restart.ts write
+          node --env-file=.env.local --import tsx --test tests/http/cpq-packages.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-quality.test.ts
           node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-workload.test.ts tests/http/estimating-sources.test.ts tests/http/estimating-review.test.ts tests/http/quotation-release.test.ts tests/http/estimating-configuration.test.ts tests/http/cpq.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-import-review.test.ts
-          node --env-file=.env.local --import tsx --test tests/http/cpq-packages.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-products.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-costs.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-rebase.test.ts
@@ -128,7 +135,6 @@ jobs:
           node --env-file=.env.local --import tsx --test tests/http/excel-landed.test.ts
           node --import tsx scripts/excel-capacity-profile.ts candidate
           node --env-file=.env.local --import tsx scripts/excel-import-restart.ts write landed
-          node --env-file=.env.local --import tsx scripts/cpq-packages-restart.ts write
           node --env-file=.env.local --import tsx scripts/cpq-products-restart.ts write
           node --env-file=.env.local --import tsx scripts/cpq-costs-restart.ts write
           node --env-file=.env.local --import tsx scripts/cpq-rebase-restart.ts write
@@ -210,6 +216,7 @@ jobs:
             verification-evidence/cpq-quality-restart/verified.json
             verification-evidence/cpq-packages-restart/verified.json
             verification-evidence/cpq-packages-restart/workload.json
+            verification-evidence/cpq-packages-build/source-manifest.json
             verification-evidence/excel-quotation/
             verification-evidence/excel-capacity/
             verification-evidence/fertigation-build/

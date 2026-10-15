@@ -37,6 +37,7 @@ import { crmBase, CRM } from "../helpers/crm";
 import { quoteCommand } from "../helpers/estimating";
 import { cpqDefinition } from "../helpers/cpq";
 import { definition } from "../../src/cpq/validation";
+import { hash } from "../../src/cpq/hash";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
@@ -50,7 +51,16 @@ const code = (code: string) => (e: unknown) =>
   (e as { code: string }).code === code;
 const evidence = () =>
   rows(
-    "SELECT * FROM (SELECT 'event' kind,to_jsonb(e) value FROM ppo.cpq_package_events e UNION ALL SELECT 'receipt',to_jsonb(r) FROM ppo.operation_receipts r) x ORDER BY kind,value::text",
+    `SELECT * FROM (
+      SELECT 'package' kind,to_jsonb(p) value FROM ppo.cpq_packages p
+      UNION ALL SELECT 'package_revision',to_jsonb(r) FROM ppo.cpq_package_revisions r
+      UNION ALL SELECT 'event',to_jsonb(e) FROM ppo.cpq_package_events e
+      UNION ALL SELECT 'release',to_jsonb(r) FROM ppo.cpq_releases r
+      UNION ALL SELECT 'release_revision',to_jsonb(r) FROM ppo.cpq_revisions r
+      UNION ALL SELECT 'audit',to_jsonb(a) FROM ppo.audit_events a
+      UNION ALL SELECT 'receipt',to_jsonb(r) FROM ppo.operation_receipts r
+      UNION ALL SELECT 'outbox',to_jsonb(j) FROM ppo.outbox_jobs j
+    ) x ORDER BY kind,value::text`,
   );
 async function releaseCommand(
   d = cpqDefinition(),
@@ -257,6 +267,34 @@ test("fixture ownership is an acknowledgement; independent actors, exact hashes 
   const recovered = await readPackage(actors.p, command.id);
   assert.equal(recovered.package.version, 2);
   assert.equal(recovered.revisions.length, 1);
+  await assert.rejects(
+    database().query(
+      "UPDATE ppo.cpq_packages SET owner_id=$2,version=version+1 WHERE id=$1",
+      [command.id, actors.reviewer.actor_id],
+    ),
+    /Package identity, owner and sequential versions are retained/,
+  );
+  const competitors = await Promise.allSettled(
+    ["A", "B"].map((label) =>
+      savePackage(actors.p, {
+        ...command,
+        operation_id: randomUUID(),
+        expected_version: 2,
+        content: { ...content, label: `SYN competing successor ${label}` },
+      }),
+    ),
+  );
+  assert.equal(competitors.filter((r) => r.status === "fulfilled").length, 1);
+  assert.equal(
+    competitors.filter(
+      (r) => r.status === "rejected" && r.reason.code === "VersionConflict",
+    ).length,
+    1,
+  );
+  const serial = await readPackage(actors.p, command.id);
+  assert.equal(serial.package.version, 3);
+  assert.equal(serial.revisions.length, 2);
+  assert.equal(serial.events.length, 3);
 });
 test("failed workload evidence is retained; changed, missing and overlapping members refuse without side effects", async () => {
   const actors = await qualityActors(),
@@ -306,6 +344,15 @@ test("failed workload evidence is retained; changed, missing and overlapping mem
   assert.deepEqual(await evidence(), before);
   const saved = await releaseCommand(pkg.content.definition, [pkg.reference]);
   await saveRelease(actors.p, saved);
+  await assert.rejects(
+    database().query(
+      `INSERT INTO ppo.cpq_revisions(id,workspace_id,company_id,release_id,version,predecessor_id,definition,content_hash,reason,created_by,package_manifest)
+     SELECT $1,workspace_id,company_id,release_id,version+1,id,$2,$3,reason,created_by,package_manifest FROM ppo.cpq_revisions WHERE release_id=$4`,
+      [randomUUID(), changed, hash(changed), saved.id],
+    ),
+    /Exact complete package members required/,
+  );
+  assert.equal((await readRelease(actors.p, saved.id)).revisions.length, 1);
   await assert.rejects(
     saveRelease(actors.p, {
       ...saved,
@@ -394,6 +441,19 @@ test("company and actor scope hide package content and prevent wrong-company use
     saveRelease(actors.p, {
       ...(await releaseCommand(pkg.content.definition, [pkg.reference])),
       company_id: randomUUID(),
+    }),
+    code("RecordUnavailable"),
+  );
+  for (const capability of ["shared.read", "cpq.read", "cpq.author"])
+    await database().query(
+      "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,$4,'Company',$3) ON CONFLICT DO NOTHING",
+      [CRM.workspace, actors.p.actor_id, CRM.companyB, capability],
+    );
+  // Authority in both real synthetic companies must not permit a cross-company binding.
+  await assert.rejects(
+    saveRelease(actors.p, {
+      ...(await releaseCommand(pkg.content.definition, [pkg.reference])),
+      company_id: CRM.companyB,
     }),
     code("RecordUnavailable"),
   );

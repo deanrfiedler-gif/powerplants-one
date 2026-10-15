@@ -887,13 +887,16 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   );
   await migrate();
   await seed();
-  for (let i = 0; i < tables.length; i++)
+  assert.deepEqual(await rows("SELECT DISTINCT package_manifest FROM ppo.cpq_revisions"), [{ package_manifest: null }]);
+  for (let i = 0; i < tables.length; i++) {
+    const original = tables[i] === "cpq_revisions" ? "to_jsonb(t)-'package_manifest'" : "to_jsonb(t)";
     assert.deepEqual(
       await rows(
-        `SELECT to_jsonb(t) AS row FROM ppo.${tables[i]} t ORDER BY to_jsonb(t)::text`,
+        `SELECT ${original} AS row FROM ppo.${tables[i]} t ORDER BY (${original})::text`,
       ),
       snapshots[i],
     );
+  }
   const current = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );

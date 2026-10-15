@@ -66,19 +66,24 @@ BEGIN
  IF NEW.version<>coalesce(prior.version,0)+1 OR NEW.version<>root.version OR NEW.revision_id<>root.current_revision_id OR NEW.state<>root.state
  THEN RAISE EXCEPTION 'Exact current package event required' USING ERRCODE='23514'; END IF;
  valid:=CASE NEW.action
-  WHEN 'Save' THEN NEW.state='Draft' AND NEW.actor_id=root.owner_id AND rev.created_by=root.owner_id AND NEW.basis_id IS NULL AND
+  WHEN 'Save' THEN NEW.state='Draft' AND NEW.actor_id=root.owner_id AND rev.created_by=root.owner_id AND NEW.basis_id IS NULL AND NEW.report->>'content_hash'=rev.content_hash AND
     rev.version=coalesce((SELECT version FROM ppo.cpq_package_revisions WHERE workspace_id=NEW.workspace_id AND id=prior.revision_id),0)+1 AND rev.predecessor_id IS NOT DISTINCT FROM prior.revision_id
   WHEN 'Attest' THEN prior.state IN ('Draft','TestFailed') AND NEW.state IN ('Tested','TestFailed') AND NEW.actor_id=rev.fixture_owner_id AND NEW.basis_id IS NULL AND
+    NEW.report->>'content_hash'=rev.content_hash AND NEW.report->>'schema_version'='1' AND NEW.report->>'scope'='SyntheticInWorkerEvaluation' AND jsonb_typeof(NEW.report->'passed')='boolean' AND
     NEW.state=CASE WHEN NEW.report->>'passed'='true' THEN 'Tested' ELSE 'TestFailed' END
-  WHEN 'Review' THEN prior.state='Tested' AND NEW.state IN ('Reviewed','Rejected') AND basis.id=prior.id AND NEW.actor_id NOT IN (root.owner_id,rev.fixture_owner_id)
+  WHEN 'Review' THEN prior.state='Tested' AND NEW.state IN ('Reviewed','Rejected') AND basis.id=prior.id AND NEW.actor_id NOT IN (root.owner_id,rev.fixture_owner_id) AND
+    NEW.report->>'basis_id'=basis.id::text AND NEW.report->>'basis_hash'=basis.report_hash AND NEW.report->>'outcome'=CASE WHEN NEW.state='Reviewed' THEN 'Approved' ELSE 'Rejected' END
   WHEN 'Publish' THEN prior.state='Reviewed' AND NEW.state='Published' AND basis.id=prior.id AND NEW.actor_id NOT IN (root.owner_id,rev.fixture_owner_id,basis.actor_id)
-  WHEN 'Withdraw' THEN prior.state<>'Withdrawn' AND NEW.state='Withdrawn' AND NEW.actor_id=root.owner_id AND NEW.basis_id IS NULL
+  WHEN 'Withdraw' THEN prior.state<>'Withdrawn' AND NEW.state='Withdrawn' AND NEW.actor_id=root.owner_id AND NEW.basis_id IS NULL AND NEW.report->>'content_hash'=rev.content_hash
   ELSE false END;
  IF NEW.action<>'Save' AND NEW.revision_id IS DISTINCT FROM prior.revision_id THEN valid:=false; END IF;
  IF NOT coalesce(valid,false) THEN RAISE EXCEPTION 'Invalid package transition or independent actor' USING ERRCODE='23514'; END IF;
  IF NEW.action='Publish' THEN
   SELECT * INTO STRICT accepted FROM ppo.cpq_package_events WHERE workspace_id=NEW.workspace_id AND id=basis.basis_id;
-  IF accepted.state<>'Tested' OR accepted.revision_id<>rev.id THEN RAISE EXCEPTION 'Exact accepted fixtures required' USING ERRCODE='23514'; END IF;
+  IF accepted.state<>'Tested' OR accepted.revision_id<>rev.id
+   OR NEW.report->>'review_id' IS DISTINCT FROM basis.id::text OR NEW.report->>'review_hash' IS DISTINCT FROM basis.report_hash
+   OR NEW.report->>'attestation_id' IS DISTINCT FROM accepted.id::text OR NEW.report->>'attestation_hash' IS DISTINCT FROM accepted.report_hash
+  THEN RAISE EXCEPTION 'Exact accepted fixtures required' USING ERRCODE='23514'; END IF;
  END IF;
  RETURN NEW;
 END $$;
@@ -112,6 +117,7 @@ CREATE CONSTRAINT TRIGGER cpq_package_revision_evidence AFTER INSERT ON ppo.cpq_
 ALTER TABLE ppo.cpq_revisions ADD COLUMN package_manifest jsonb CHECK(package_manifest IS NULL OR (jsonb_typeof(package_manifest)='array' AND jsonb_array_length(package_manifest) BETWEEN 1 AND 20 AND octet_length(package_manifest::text)<=200000));
 CREATE FUNCTION ppo.check_cpq_package_manifest() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE ref jsonb; root ppo.cpq_packages; rev ppo.cpq_package_revisions; pub ppo.cpq_package_events;
+ selected jsonb; rules jsonb:='[]'; tables jsonb:='[]'; candidate jsonb; collection jsonb; member_kind integer;
 BEGIN
  IF NEW.package_manifest IS NULL THEN
   IF EXISTS(SELECT 1 FROM ppo.cpq_revisions WHERE workspace_id=NEW.workspace_id AND release_id=NEW.release_id AND package_manifest IS NOT NULL)
@@ -125,8 +131,22 @@ BEGIN
   SELECT * INTO STRICT rev FROM ppo.cpq_package_revisions WHERE workspace_id=NEW.workspace_id AND package_id=root.id AND id=(ref->>'revision_id')::uuid;
   SELECT * INTO STRICT pub FROM ppo.cpq_package_events WHERE workspace_id=NEW.workspace_id AND package_id=root.id AND id=(ref->>'publication_id')::uuid;
   IF root.company_id<>NEW.company_id OR root.current_revision_id<>rev.id OR root.state<>'Published' OR pub.revision_id<>rev.id OR pub.action<>'Publish' OR pub.version<>root.version
-   OR rev.content_hash IS DISTINCT FROM ref->>'content_hash' OR root.owner_id::text IS DISTINCT FROM ref->>'owner_id' OR rev.fixture_owner_id::text IS DISTINCT FROM ref->>'fixture_owner_id' OR pub.report_hash IS DISTINCT FROM ref->>'evidence_hash'
+   OR root.kind IS DISTINCT FROM ref->>'kind' OR rev.content_hash IS DISTINCT FROM ref->>'content_hash' OR root.owner_id::text IS DISTINCT FROM ref->>'owner_id' OR rev.fixture_owner_id::text IS DISTINCT FROM ref->>'fixture_owner_id' OR pub.report_hash IS DISTINCT FROM ref->>'evidence_hash'
   THEN RAISE EXCEPTION 'Exact published package manifest required' USING ERRCODE='23514'; END IF;
+  SELECT coalesce(jsonb_agg(m),'[]') INTO selected FROM jsonb_array_elements(
+   CASE root.kind WHEN 'Rules' THEN rev.content->'definition'->'rules' ELSE rev.content->'definition'->'design'->'decision_tables' END
+  ) m WHERE rev.content->'member_keys' ? (m->>'key');
+  IF jsonb_array_length(selected)<>jsonb_array_length(rev.content->'member_keys')
+  THEN RAISE EXCEPTION 'Exact complete package members required' USING ERRCODE='23514'; END IF;
+  IF root.kind='Rules' THEN rules:=rules||selected; ELSE tables:=tables||selected; END IF;
+ END LOOP;
+ FOR member_kind IN 1..2 LOOP
+  IF member_kind=1 THEN collection:=rules; candidate:=NEW.definition->'rules';
+  ELSE collection:=tables; candidate:=coalesce(NEW.definition->'design'->'decision_tables','[]'); END IF;
+  IF jsonb_array_length(collection) IS DISTINCT FROM jsonb_array_length(candidate)
+   OR (SELECT count(DISTINCT m->>'key') FROM jsonb_array_elements(collection) m)<>jsonb_array_length(collection)
+   OR NOT coalesce(collection @> candidate AND candidate @> collection,false)
+  THEN RAISE EXCEPTION 'Exact complete package members required' USING ERRCODE='23514'; END IF;
  END LOOP;
  RETURN NEW;
 END $$;

@@ -201,10 +201,10 @@ The [package decision](../decisions/cpq-rule-packages.md) implements the next BP
 | Endpoint | Behaviour |
 | --- | --- |
 | `GET /api/v1/cpq/packages?company_id=UUID` | Company-authorised package root list, at most 100, ordered by native ID. |
-| `POST /api/v1/cpq/packages` | Save an immutable revision; common operation envelope plus `id`, `company_id`, `kind: Rules|Tables`, `expected_version` (zero for creation), and `content`. The creator becomes the permanent package owner. |
+| `POST /api/v1/cpq/packages` | Save an immutable revision; common operation envelope plus `id`, `company_id`, `kind` (`Rules` or `Tables`), `expected_version` (zero for creation), and `content`. The creator becomes the permanent package owner. |
 | `GET /api/v1/cpq/packages/:id` | Current root, exact current revision, retained revisions and events; current authority over every retained Product/Cost Source is required. Unknown query keys refuse. |
 | `POST /api/v1/cpq/packages/:id/attest` | Recorded fixture owner runs and acknowledges the exact current revision's fixtures and workload targets. Common envelope, `expected_version`, `revision_id`, `content_hash`. Stores `Tested` or `TestFailed` evidence. |
-| `POST /api/v1/cpq/packages/:id/review` | Same exact basis plus attestation `evidence_hash` and `outcome: Approved|Rejected`. Reviewer must differ from both owners. |
+| `POST /api/v1/cpq/packages/:id/review` | Same exact basis plus attestation `evidence_hash` and `outcome` (`Approved` or `Rejected`). Reviewer must differ from both owners. |
 | `POST /api/v1/cpq/packages/:id/publish` | Same exact basis plus approved review `evidence_hash`; publisher differs from both owners and reviewer. |
 | `POST /api/v1/cpq/packages/:id/withdraw` | Owner with current author permission withdraws the exact current revision, preserving all evidence. |
 | `POST /api/v1/cpq/packages/compose` | Read-only assembly preview: `company_id`, normalized rehearsal `definition` and exact `packages`. Returns assembled definition/hash, manifest/hash and exact references for release save. Package members replace the preview template's rules/tables explicitly. No receipt or release is created. |
