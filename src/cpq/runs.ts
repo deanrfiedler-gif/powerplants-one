@@ -1,3 +1,4 @@
+import { releasePackages } from "./package-bindings";
 import { randomUUID } from "node:crypto";
 import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
@@ -75,7 +76,9 @@ export async function basis(
     head.revision.definition,
     true,
   );
+  const packages = await releasePackages(c,p,head.revision,true);
   const binding: Binding = {
+    ...(packages.length ? {packages} : {}),
     estimating_workspace_id: b.g.id,
     option_id: b.option.id,
     revision_id: b.r.id,
@@ -601,6 +604,7 @@ export async function adoptRun(p: Principal, id: string, value: unknown) {
           cpq_run_id: x.saved.id,
           cpq_result_hash: x.saved.result.result_hash,
           cpq_release_revision_id: x.saved.release_revision_id,
+          ...(x.saved.binding.packages ? {cpq_package_provenance:x.saved.binding.packages} : {}),
           ...(x.saved.binding.products
             ? {
                 cpq_product_provenance: productLineEvidence(x.saved).filter(

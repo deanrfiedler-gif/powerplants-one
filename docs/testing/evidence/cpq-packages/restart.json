@@ -1,0 +1,51 @@
+{
+  "scope": "Actual local application and PostgreSQL restart; synthetic data only",
+  "application_before": {
+    "pid": 32652,
+    "source": "76625885e3f9c2ea45fe57cf618449b480882641",
+    "started_at": "2026-10-15T05:38:29.8175067Z",
+    "build_id": "o56tcvBRueLA2WvxbMzXR"
+  },
+  "application_after": {
+    "build_id": "o56tcvBRueLA2WvxbMzXR",
+    "source": "76625885e3f9c2ea45fe57cf618449b480882641",
+    "listening_observed_at": "2026-10-15T05:47:56.1125772Z",
+    "pid": 25860,
+    "started_at": "2026-10-15T05:45:51.7712000Z"
+  },
+  "packages": {
+    "passed": true,
+    "graph_hash": "dbad4c858ed060782cac9546e4b8ee2f2998903a06286eb746fda9649582d136",
+    "package_hash": "90f8fa80d24059cdf8df220a30e6d5b5467b409fb1c3ddd5a268a3be3269d6a8",
+    "manifest_hash": "0bf09b8dc70a379b21aa3ed4cdcff185c344032edda9829cb88ad47d551f37af",
+    "original_receipts": 12,
+    "duplicate_effects": 0,
+    "postmaster_before": "2026-10-15 14:33:00.732086+10",
+    "postmaster_after": "2026-10-15 15:45:02.270069+10"
+  },
+  "existing_quality": {
+    "passed": true,
+    "graph_hash": "addbe78851f4d6c0ccf18751251e354512ceb79df99ce4de0b00004bbb5199e4",
+    "report_hash": "570ef31479b33a5d927396ad8f534914168fe36891bbd158ebced43897677d2d",
+    "original_receipts": 3,
+    "duplicate_effects": 0,
+    "postmaster_before": "2026-10-15 14:33:00.732086+10",
+    "postmaster_after": "2026-10-15 15:45:02.270069+10"
+  },
+  "existing_rebase": {
+    "passed": true,
+    "postmaster_before": "2026-10-15 14:33:00.732086+10",
+    "postmaster_after": "2026-10-15 15:45:02.270069+10",
+    "graph_hash": "4adf4313785ed63bae31f65b66b1f5f13b44c123d1a0e5d26aae817098ddda3e",
+    "run_content_hash": "702c87b573c8b3ffe44e06052a544a07aad37908ea980abc3c5fb73f159c784d",
+    "result_hash": "7b14b438ffe136bc3181376cfd16fcb66b97a9edd44f7a5fccc24145217dc35e",
+    "rebase_decisions": 2,
+    "receiving_decisions": 2,
+    "retained_histories": 2,
+    "original_receipts": 2,
+    "duplicate_effects": 0,
+    "changed_source_refused": true
+  },
+  "startup_performance_acceptance": false,
+  "private_checkpoints_retained_outside_git": true
+}

@@ -306,7 +306,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0101 adds isolated synthetic commercial records and identities. No backfill,
   // seed or automatic commercial grants. grantRuntimePrivileges includes the new
   // tables; native source authority and evidence guards remain enforced.
-  if (latestMigrationVersion !== 101) throw Error("Review the existing-demo upgrade for this release.");
+  // 0102 adds empty package records and a nullable immutable release manifest.
+  // No seed/grant/backfill; existing schema-wide runtime privileges cover the tables.
+  // Deferred identity events are flushed before extending the live type constraints.
+  if (latestMigrationVersion !== 102) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
