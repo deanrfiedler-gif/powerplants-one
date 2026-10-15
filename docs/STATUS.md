@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Node engine range — 15 October 2026
+
+Node.js 24.22.0 was installed on Dean's workstation, and `npm ci` refused it because `package.json` required exactly 24.21.0 under `engine-strict=true`. At Dean's request `engines.node` is now `>=24.21.0 <25`. `.nvmrc`, every CI workflow and the Azure image stay on 24.21.0, npm stays at exactly 11.19.0, and `package-lock.json` is unchanged so DK-06 managed template fingerprints don't move. The [runtime maintenance handover](delivery/runtime-maintenance.md) records the rule. No code, migration, permission or dependency change.
+
 ## Backend reconciliation and DK-03 applicability — 15 October 2026
 
 The [current source reconciliation](delivery/backend-reconciliation.md) distinguishes integrated code from older delivery checkpoints across Documents, Projects, Service/Supply, Finance, Reporting and platform controls. The initial base `41c8479` includes CPQ #492/#494 and PJ-05 #493. #498 subsequently merged externally at main `d070a61`; its final head had independent review clean, 59 successful checks and the intentional PT-27 skip. The existing monitor completed and was removed. This contribution reconciles that upstream change without duplicating CPQ implementation.
