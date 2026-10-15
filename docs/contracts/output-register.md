@@ -20,6 +20,14 @@ Each family scans in descending native update order with ID tie-breaks, retainin
 
 List availability is NotChecked or NotIssued. Pack crew without a permitted issue receive NotProvided, not a claim that no issue exists, and are excluded from the unissued view. The register does not read every bundle. Read the exact detail to verify availability.
 
+## Exact revision and recipient facts — 15 October 2026
+
+The [register-facts decision](../decisions/output-register-facts.md) adds `current_revision_number`, `current_issue.revision_number` and `preparation.revision_number` from their exact retained revision IDs. Internal readers can see the current draft number while an earlier issue remains current. Crew receive only the revision of their accessible issue; a hidden draft's number is null.
+
+`recipient_summary` contains `visibility`, `recipient_count`, `acknowledged_count`, `required_recipient_count` and `required_acknowledged_count`. Job Pack internal readers receive AllRecipients; crew receive OwnRecipient, with every count restricted to their own exact issue recipient. Acknowledgement counts distinct recipients with matching actor and issued hash, not event count. Required counts describe only that same visible denominator. Simulated sends, opens and downloads do not count as acknowledgement. These facts grant no dispatch or sending authority.
+
+Internal unissued outputs use NotIssued; hidden crew issues use NotProvided. Both have null counts. An issued Service Report uses FrozenReportRecipient and the exact issued recipient count; its acknowledgement and required-recipient counts are null. ReportContent responses remain distinct from pack acknowledgements and attendance acceptance. Withdrawal preserves recorded counts; successor issues do not inherit them. Family/window coverage, ordering, totals, query limits and no-store responses are unchanged.
+
 ## Exact detail
 
 `GET /api/v1/document-outputs/:id?kind=JobPack|ServiceReport[&issue_id=UUID]`
@@ -27,6 +35,8 @@ List availability is NotChecked or NotIssued. Pack crew without a permitted issu
 Kind is mandatory. An explicit issue must belong to that native output in the current workspace. Absent issue ID chooses the currently permitted issue; an unissued record returns no selected issue. There is no latest-file alias or substitution.
 
 The response separates native source status/current revision, internal preparation history, immutable issue history, selected revision/template/source/PDF/HTML hashes, preparation and issue times, current-issue/current-revision booleans, and native pack applicability. Reports receive no new generic approval/applicability decision. Template data is frozen issue data, not current template policy.
+
+Issue-history and preparation-history entries include `revision_number` bound to each entry's own revision ID. The shared `output` row describes the current visible record; an explicitly selected older issue retains its separate exact revision and per-recipient history.
 
 Available means the retained bundle passed native byte/hash checks at read time. ExactUnavailable preserves the selected identity and exact metadata; storage failure never creates a replacement. Native file links still enforce current permission and exact presentation/issue binding on retrieval. A metadata read records no Opened or Downloaded event.
 
