@@ -7,3 +7,7 @@ The additive projection binds revision numbers to native exact revisions and cou
 Focused source lint and diff whitespace validation passed. Two full local TypeScript attempts were interrupted under concurrent machine load; neither is counted as a pass. Database, compiled HTTP, full application checks, documentation assurance and independent automated review remain pending CI at this checkpoint. Tests extend the existing native register suites for partial/all acknowledgement, separate crew denominators, no issue, current draft versus earlier issue, successor isolation, historical/withdrawn facts, both output families and zero writes. Existing privacy, missing-byte, revocation and bounded-count tests remain intact.
 
 No persistence or permission changes; no new migration/seed/grant, stored summary, framework or service. The native UI is unimplemented. Operational acceptance, CI, independent review, merge and deployment are separate from local checks. No actual delivery, customer communication or financial authority is claimed.
+
+## Integrated main
+
+PR #498 merged externally at `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26` after this contribution began. The integration preserves both STATUS entries and the upstream CPQ implementation, migration 0102, historical-upgrade assertions and evidence. The register implementation is unchanged; integrated-head CI and independent review remain separate gates.

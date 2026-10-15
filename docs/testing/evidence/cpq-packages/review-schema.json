@@ -1,0 +1,172 @@
+{
+  "member_serializer_hash": "1009693ef547ccddb38ddcf8c123a4187dcb86dc6341b6885722fd9d820c7bd5",
+  "latest_migration": 102,
+  "preserved_prior_guards": 6,
+  "original_identity_types_preserved": true,
+  "permission_contract_unchanged": true,
+  "prior_guard_hash": "ed43e9349bdc7e6737b4c4a1ec3b504295dbe39f96a6f90c0b0320078aefb646",
+  "ledger": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102
+  ],
+  "guards": [
+    {
+      "name": "cpq_package_event_guard",
+      "definition": "CREATE TRIGGER cpq_package_event_guard BEFORE INSERT ON ppo.cpq_package_events FOR EACH ROW EXECUTE FUNCTION ppo.guard_cpq_package_event()",
+      "function_hash": "55a5beb1ea1df97047353b014497c007124caa528f012f57fd40e793ef0f5506"
+    },
+    {
+      "name": "cpq_package_event_retained",
+      "definition": "CREATE TRIGGER cpq_package_event_retained BEFORE DELETE OR UPDATE ON ppo.cpq_package_events FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+      "function_hash": "d577fa6c6d004c56e948a4554a609f0d3a731a4a7282df87df0b753b5636754f"
+    },
+    {
+      "name": "cpq_package_evidence",
+      "definition": "CREATE CONSTRAINT TRIGGER cpq_package_evidence AFTER INSERT OR UPDATE ON ppo.cpq_packages DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_cpq_package_evidence()",
+      "function_hash": "77cbbebf863b7ab85848845dec4545eec9efe9de4efcb8ad82ce7e7a6e696b3a"
+    },
+    {
+      "name": "cpq_package_identity",
+      "definition": "CREATE TRIGGER cpq_package_identity BEFORE INSERT ON ppo.cpq_packages FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('CpqPackage', '')",
+      "function_hash": "856a67bf220b69ebbe972b266e244ef3178c499127dfd1f2db5bca4e29c6b5f5"
+    },
+    {
+      "name": "cpq_package_manifest_guard",
+      "definition": "CREATE TRIGGER cpq_package_manifest_guard BEFORE INSERT ON ppo.cpq_revisions FOR EACH ROW EXECUTE FUNCTION ppo.check_cpq_package_manifest()",
+      "function_hash": "463f0a1cce842001023266c6d64368a2cc28bac52b1c29bdb84a6bbd0445384f"
+    },
+    {
+      "name": "cpq_package_retained",
+      "definition": "CREATE TRIGGER cpq_package_retained BEFORE DELETE ON ppo.cpq_packages FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+      "function_hash": "d577fa6c6d004c56e948a4554a609f0d3a731a4a7282df87df0b753b5636754f"
+    },
+    {
+      "name": "cpq_package_revision_evidence",
+      "definition": "CREATE CONSTRAINT TRIGGER cpq_package_revision_evidence AFTER INSERT ON ppo.cpq_package_revisions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_cpq_package_revision()",
+      "function_hash": "b96ee5cab5193f232b9908c1da454d7c43658943e66c5fddb144978bb4d37456"
+    },
+    {
+      "name": "cpq_package_revision_retained",
+      "definition": "CREATE TRIGGER cpq_package_revision_retained BEFORE DELETE OR UPDATE ON ppo.cpq_package_revisions FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+      "function_hash": "d577fa6c6d004c56e948a4554a609f0d3a731a4a7282df87df0b753b5636754f"
+    },
+    {
+      "name": "cpq_package_root_guard",
+      "definition": "CREATE TRIGGER cpq_package_root_guard BEFORE UPDATE ON ppo.cpq_packages FOR EACH ROW EXECUTE FUNCTION ppo.guard_cpq_package_root()",
+      "function_hash": "0809cb441d712634b1fa1fc562f40de7a48c10f5496d2150df72bd199779efce"
+    }
+  ],
+  "shared_constraints": [
+    {
+      "conname": "ck_audit_object_type",
+      "definition": "CHECK (((object_type = ANY (ARRAY['Ticket'::text, 'Session'::text, 'Organisation'::text, 'Person'::text, 'Site'::text, 'Facility'::text, 'Asset'::text, 'Relationship'::text, 'SiteParty'::text, 'ErpAccountMapping'::text, 'AssetConfiguration'::text, 'AssetLocationEvent'::text, 'HistoryRecord'::text, 'Activity'::text, 'WorkOrder'::text, 'Appointment'::text, 'ScheduleChangeRequest'::text, 'ContactOutcome'::text, 'Pack'::text, 'FieldEntry'::text, 'Attachment'::text, 'CompletionDraft'::text, 'ServiceReport'::text, 'CustomerResponse'::text])) OR (object_type = ANY ('{Opportunity}'::text[])) OR (object_type = ANY ('{FinancialHandoff,FinanceAccount}'::text[])) OR (object_type = ANY ('{Estimate,DraftQuoteRevision}'::text[])) OR (object_type = ANY ('{EmailMessage}'::text[])) OR (object_type = ANY ('{Lead}'::text[])) OR (object_type = ANY ('{Project}'::text[])) OR (object_type = ANY ('{EngineeringPackage}'::text[])) OR (object_type = ANY ('{EstimatingWorkspace}'::text[])) OR (object_type = ANY ('{MaterialSet,MaterialSource,MaterialLine,MaterialSubstitution,MaterialRelease,MaterialHandover,MaterialImpact}'::text[])) OR (object_type = ANY ('{EngineeringChange}'::text[])) OR (object_type = ANY ('{CommissioningPackage}'::text[])) OR (object_type = ANY ('{AcceptanceStage}'::text[])) OR (object_type = ANY ('{SpecialistConfiguration}'::text[])) OR (object_type = 'FertigationScope'::text) OR (object_type = ANY (ARRAY['SiteReadiness'::text, 'SiteSurvey'::text, 'AccountPlan'::text])) OR (object_type = ANY (ARRAY['EquipmentChange'::text, 'EquipmentBackup'::text, 'EquipmentBulletin'::text, 'EquipmentSupport'::text, 'CalibrationEvidence'::text])) OR (object_type = ANY (ARRAY['SalesHandover'::text, 'AftercareRecord'::text])) OR (object_type = ANY ('{CostSource}'::text[])) OR (object_type = ANY ('{SupplyRecord}'::text[])) OR (object_type = ANY ('{ServiceAgreement,EntitlementAssessment,MaintenancePlan,MaintenanceOccurrence,RenewalReview,WarrantyCase,SupplierClaim}'::text[])) OR (object_type = ANY ('{Product,ProductRelationship,ProductImport}'::text[])) OR (object_type = ANY ('{SchedulingPolicyProposal,SchedulingPolicyReview,SchedulingPolicyPublication,SchedulingPolicyResolution}'::text[])) OR (object_type = ANY ('{Incident}'::text[])) OR (object_type = ANY ('{AccessChangeRequest}'::text[])) OR (object_type = 'AccessTeam'::text) OR (object_type = 'AccessReview'::text) OR (object_type = ANY ('{CpqRelease,CpqRun}'::text[])) OR (object_type = 'ProjectRaidEntry'::text) OR (object_type = 'CpqDraft'::text) OR (object_type = ANY ('{LibraryDocument}'::text[])) OR (object_type = ANY ('{TemplateProposal}'::text[])) OR (object_type = ANY ('{TemplatePublication}'::text[])) OR (object_type = ANY ('{TemplateUseAssignment}'::text[])) OR (object_type = 'ProjectCommercialRecord'::text) OR (object_type = 'CpqPackage'::text)))"
+    },
+    {
+      "conname": "ck_grants_capability",
+      "definition": "CHECK (((capability = ANY (ARRAY['service.ticket.read'::text, 'service.ticket.edit'::text, 'shared.read'::text, 'shared.create'::text, 'shared.edit'::text, 'shared.internal.read'::text, 'shared.finance.read'::text, 'shared.history.record'::text, 'activity.read'::text, 'activity.edit'::text, 'service.work_order.read'::text, 'service.work_order.edit'::text, 'service.scope.authorise'::text, 'service.readiness.assess'::text, 'schedule.read'::text, 'schedule.manage'::text, 'schedule.request'::text, 'schedule.contact'::text, 'pack.read'::text, 'pack.prepare'::text, 'pack.check'::text, 'pack.issue'::text, 'pack.acknowledge'::text, 'field.read.own'::text, 'field.start.own'::text, 'field.capture.own'::text, 'field.correct.own'::text, 'field.attachment.own'::text, 'field.completion.own'::text, 'report.read'::text, 'report.review'::text, 'report.issue'::text, 'report.respond'::text])) OR (capability = ANY ('{crm.opportunity.read,crm.opportunity.create,crm.opportunity.edit}'::text[])) OR (capability = ANY ('{finance.read,finance.prepare,finance.review,finance.process,finance.reconcile,finance.issue,finance.account.read}'::text[])) OR (capability = ANY ('{estimating.read,estimating.edit,estimating.quote.read,estimating.quote.prepare}'::text[])) OR (capability = ANY ('{email.read,email.edit}'::text[])) OR (capability = ANY ('{crm.lead.read,crm.lead.create,crm.lead.edit,crm.lead.convert}'::text[])) OR (capability = ANY ('{project.read,project.create,project.edit}'::text[])) OR (capability = ANY ('{engineering.read,engineering.create,engineering.edit}'::text[])) OR (capability = 'crm.opportunity.transfer.own'::text) OR (capability = ANY ('{engineering.material.review,engineering.material.release,engineering.material.receive,engineering.material.source}'::text[])) OR (capability = ANY ('{engineering.change.review,engineering.change.decide,engineering.change.receive,engineering.change.verify,engineering.change.close}'::text[])) OR (capability = ANY ('{engineering.commissioning.capture,engineering.commissioning.review,engineering.commissioning.issue,engineering.commissioning.receive}'::text[])) OR (capability = ANY ('{acceptance.scope,acceptance.submit,acceptance.technical,acceptance.prepare,acceptance.issue,acceptance.response.record,acceptance.response.validate,acceptance.receive,acceptance.commercial,acceptance.close.stage,acceptance.close.project,acceptance.reopen,acceptance.source}'::text[])) OR (capability = ANY ('{engineering.technical.review,engineering.technical.issue,engineering.technical.distribute,engineering.technical.source}'::text[])) OR (capability = ANY ('{estimating.source.review}'::text[])) OR (capability = ANY ('{supply.read,supply.coordinate,supply.inspect,supply.fulfil,supply.return,supply.custody}'::text[])) OR (capability = ANY ('{maintenance.read,maintenance.manage,maintenance.assess,maintenance.agreement.approve,warranty.read,warranty.manage,warranty.assess,warranty.goodwill,warranty.recovery}'::text[])) OR (capability = ANY ('{products.read,products.edit,products.review,products.publish,products.commercial.read,products.sources.bind,products.relationship.edit,products.relationship.review,products.import.stage,products.import.review,products.import.apply}'::text[])) OR (capability = ANY ('{schedule.policy.review,schedule.policy.publish}'::text[])) OR (capability = ANY ('{incident.read,incident.report,incident.review,incident.close,incident.sensitive}'::text[])) OR (capability = ANY ('{estimating.review.completeness,estimating.review.price,estimating.review.technical}'::text[])) OR (capability = ANY ('{estimating.quote.approve,estimating.quote.issue,estimating.quote.distribute}'::text[])) OR (capability = 'admin.access.read'::text) OR (capability = ANY ('{admin.access.propose,admin.access.approve}'::text[])) OR (capability = 'admin.access.apply'::text) OR (capability = 'admin.access.team.create'::text) OR (capability = 'admin.access.review.attest'::text) OR (capability = ANY ('{cpq.read,cpq.author,cpq.review,cpq.publish,cpq.calculate}'::text[])) OR (capability = ANY ('{document.read,document.register,document.review}'::text[])) OR (capability = ANY ('{template.read,template.propose,template.review}'::text[])) OR (capability = ANY ('{template.publish}'::text[])) OR (capability = ANY ('{template.assign}'::text[])) OR (capability = ANY (ARRAY['project.commercial.read'::text, 'project.commercial.prepare'::text, 'project.commercial.review'::text]))))"
+    },
+    {
+      "conname": "ck_identities_type",
+      "definition": "CHECK (((object_type = ANY (ARRAY['Ticket'::text, 'Organisation'::text, 'Person'::text, 'Site'::text, 'Facility'::text, 'Asset'::text, 'Relationship'::text, 'SiteParty'::text, 'ErpAccountMapping'::text, 'AssetConfiguration'::text, 'AssetLocationEvent'::text, 'HistoryRecord'::text, 'Activity'::text, 'WorkOrder'::text, 'Appointment'::text, 'ScheduleChangeRequest'::text, 'ContactOutcome'::text, 'Pack'::text, 'FieldEntry'::text, 'Attachment'::text, 'CompletionDraft'::text, 'ServiceReport'::text, 'CustomerResponse'::text])) OR (object_type = ANY ('{Opportunity,CrmPipelineDefinition,OpportunityEvent}'::text[])) OR (object_type = ANY ('{FinancialHandoff,FinanceAccount}'::text[])) OR (object_type = ANY ('{Estimate,EstimateVersion,DraftQuote,DraftQuoteRevision}'::text[])) OR (object_type = ANY ('{EmailMessage}'::text[])) OR (object_type = ANY ('{Lead,LeadEvent,LeadConversion}'::text[])) OR (object_type = ANY ('{Project,ProjectTask,ProjectScheduleEvent}'::text[])) OR (object_type = ANY ('{EngineeringPackage,EngineeringEvent}'::text[])) OR (object_type = ANY ('{EstimatingWorkspace}'::text[])) OR (object_type = ANY ('{MaterialSet,MaterialSource,MaterialLine,MaterialSubstitution,MaterialRelease,MaterialHandover,MaterialImpact}'::text[])) OR (object_type = ANY ('{EngineeringChange}'::text[])) OR (object_type = ANY ('{CommissioningPackage}'::text[])) OR (object_type = ANY ('{AcceptanceStage}'::text[])) OR (object_type = ANY ('{SpecialistConfiguration}'::text[])) OR (object_type = 'FertigationScope'::text) OR (object_type = ANY (ARRAY['SiteReadiness'::text, 'SiteSurvey'::text, 'AccountPlan'::text])) OR (object_type = ANY (ARRAY['EquipmentChange'::text, 'EquipmentBackup'::text, 'EquipmentBulletin'::text, 'EquipmentSupport'::text, 'CalibrationEvidence'::text])) OR (object_type = ANY (ARRAY['SalesHandover'::text, 'AftercareRecord'::text])) OR (object_type = ANY ('{CostSource}'::text[])) OR (object_type = ANY ('{SupplyRecord}'::text[])) OR (object_type = ANY ('{ServiceAgreement,EntitlementAssessment,MaintenancePlan,MaintenanceOccurrence,RenewalReview,WarrantyCase,SupplierClaim}'::text[])) OR (object_type = ANY ('{Product,ProductRelationship,ProductImport}'::text[])) OR (object_type = 'SchedulingPolicyPublication'::text) OR (object_type = ANY ('{SchedulingPolicyProposal,SchedulingPolicyReview,SchedulingPolicyResolution}'::text[])) OR (object_type = ANY ('{Incident}'::text[])) OR (object_type = ANY ('{CpqRelease,CpqRun}'::text[])) OR (object_type = 'ProjectRaidEntry'::text) OR (object_type = 'CpqDraft'::text) OR (object_type = ANY ('{LibraryDocument}'::text[])) OR (object_type = ANY ('{TemplateProposal}'::text[])) OR (object_type = ANY ('{TemplatePublication}'::text[])) OR (object_type = ANY ('{TemplateUseAssignment}'::text[])) OR (object_type = 'ProjectCommercialRecord'::text) OR (object_type = 'CpqPackage'::text)))"
+    }
+  ]
+}

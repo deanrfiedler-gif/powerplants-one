@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "database_files": 32,
+  "preserved_database_files": 30,
+  "unchanged_shards": true,
+  "unchanged_deadlines": true,
+  "unchanged_required_aggregate": true,
+  "embedded_python_compiles": true,
+  "private_checkpoints_not_uploaded": true,
+  "complete_assessments_run_before_large_shared_population": true
+}

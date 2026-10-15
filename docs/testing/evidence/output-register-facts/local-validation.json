@@ -17,5 +17,11 @@
     "application_checks": "pending CI",
     "documentation": "pending final assurance",
     "independent_review": "pending"
+  },
+  "upstream_reconciliation": {
+    "main": "d070a61ff17e04ffa0f0d37c16052c24a0bb0e26",
+    "reason": "PR498 merged externally; preserve both STATUS entries and all integrated CPQ sources/evidence",
+    "read_source_change": "none",
+    "validation": "Integrated exact-head CI and independent review required"
   }
 }

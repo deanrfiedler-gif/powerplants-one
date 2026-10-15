@@ -8,6 +8,7 @@ const exclusive = new Set([
   // CPQ changes the company activation head and temporarily revokes source
   // access; run it apart from the shared estimate/CPQ authority scenarios.
   "cpq-costs.test.ts",
+  "cpq-packages.test.ts",
   "cpq-rebase.test.ts",
     "cpq-quality.test.ts",
   "cpq-products.test.ts",
