@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Document library design accepted — 15 October 2026
+
+Dean asked for the next page to be designed in Figma; the audit's candidate held, because the DK-01/DK-02 backend had merged (#467) with no register screen and the 17 September standalone design was never accepted. On 15 October he accepted the drawing: "Proceed with your recommendations." The [Document library decision](decisions/document-library-figma-design.md) puts the register at `/documents` and the record at `/documents/library/{id}`, keeps `/documents/{id}` as the issued job-pack page, and files Documents under More › Shared records. It shows content availability, source currentness and review separately, registers and revises in a right-side panel, reviews in a centred dialog and never retargets links. Eighteen icon-free captures are retained under the named version "Document library — accepted", which Dean confirmed saving in Figma version history on 15 October. No application code, route, migration, permission or parent ID changes; the build, a register sort read (Q2) and a controlled type list (Q5) are not decided.
+
 ## BC-04 CPQ release quality and impact — 15 October 2026
 
 The retained Estimating CI database lane at `3b7509f` reached its 45-minute job limit after 209 passing cases, so the aggregate failed. The [capacity evidence](testing/evidence/cpq-quality/README.md#retained-estimating-ci-capacity--15-october-2026) retains that incomplete result and main/parent controls. The documented repair partitions the same 30 files across two isolated native database shards while preserving serial execution, all assertions and existing deadlines. Application/schema sources remain unchanged; configuration proofs are separate from required fresh CI and automated review.

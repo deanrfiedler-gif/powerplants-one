@@ -14,11 +14,15 @@ Extend the current exact issued-pack viewer to a general document/revision/revie
 
 ## Desktop
 
+**Accepted design, 15 October 2026:** the [Document library design decision](../../../decisions/document-library-figma-design.md), captures 03 to 06 and 08 to 14 in [Document library design r01](../../../reference/ui/document-library/document-library-figma-r01/README.md). The record at `/documents/library/{id}` (Q1) uses the shared record layout: header, a current-use strip, a details column and view tabs Overview, Revisions, Findings, Links and History. The existing `/documents/{id}` issued job-pack page stays as it is.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+**Accepted design, 15 October 2026:** captures 16 and 17 in [Document library design r01](../../../reference/ui/document-library/document-library-figma-r01/README.md): a record page with the review tag and current-use line under the header, tabs Overview, Revisions, Findings, Links and History, the current-use checks, review decision, document, context and source sections, and Download and Add revision at the bottom; at 320 px, the exact-content-unavailable state with Recover original text.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma design: [Document library design r01 captures](../../../reference/ui/document-library/document-library-figma-r01/README.md) (icon-free PNGs; not application captures)
 - [PPO-Document-Register-and-Linked-Library-r01.html](../../../reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html)
 
 ## Behaviour, handovers and verification
@@ -47,3 +52,7 @@ The [backend contract](../../../decisions/document-library-backend.md) provides 
 The future page must show availability, currentness and review separately; never display a later revision as an old link's content. Preserve the original save operation for recovery. A finding response awaits independent acceptance; a successor starts unreviewed. Current-use eligibility is bounded library review evidence, not work authorisation. Reuse the shell, global information icon, shared Button/control patterns and exact viewer download protection when page work is authorised.
 
 Backend execution is recorded in [the evidence ledger](../../../testing/evidence/document-library/README.md). The standalone r01 remains the visual reference. No new application screenshots are available from this backend-only work; desktop/mobile page acceptance and deployment are pending. No review fingerprint is granted by this edit.
+
+## Accepted Figma design — 15 October 2026
+
+The header shows the title, review state, record position, the exact revision download and the main action; "…" holds Open a finding, Add a link and Withdraw document. The current-use strip has five checks (current revision, source current, exact content available, reviewed, no unresolved findings) and says "Library evidence, not permission to work". Details: Document (number, type, revision, state, owner, audience, applicability), Context (company, customer, site, fixed at registration) and Source for the viewed revision (kind, author, size, SHA-256, registered, reason). Overview shows the review decision bound to the content hash and, for synthetic text, a read-only extract of the exact bytes; PDF sources download, with Open issued job pack for a job-pack source. Revisions lists each revision with its state and review and opens a historical revision read-only. Findings uses the Document finding card (Figma `752:3094`): Open, Awaiting review and Closed; the owner responds and someone other than the responder, holding review duty, accepts. Links lists declared links with Needs assessment for an earlier revision and Retired history; links are never retargeted. History lists immutable events 25 at a time. Adding a revision happens in a right-side panel that copies the current details; reviewing happens in a centred dialog with Reviewed or Returned, purpose and rationale.

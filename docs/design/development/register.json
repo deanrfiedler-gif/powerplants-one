@@ -4316,10 +4316,18 @@
       "guide_key": "guide.dk.01",
       "design_path": "docs/design/development/pages/scope-dk-01.md",
       "html_path": "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-01-Desktop-Register-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-02-Desktop-Register-Snapshot-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-07-Flow-1a-Register-Panel-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-08-Flow-1b-Registered-Unreviewed-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-15-Phone-Register-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-18-States-r01.png"
+      ],
       "dependencies": [
         "src/platform/permissions.ts",
-        "src/documents/store.ts"
+        "src/documents/store.ts",
+        "docs/decisions/document-library-figma-design.md"
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
@@ -4353,10 +4361,25 @@
       "guide_key": "guide.dk.02",
       "design_path": "docs/design/development/pages/scope-dk-02.md",
       "html_path": "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-03-Desktop-Record-Overview-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-04-Desktop-Record-Revisions-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-05-Desktop-Record-Links-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-06-Desktop-Record-History-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-09-Flow-2a-Add-Revision-Panel-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-10-Flow-2b-r04-Unreviewed-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-11-Flow-3a-Findings-r04-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-12-Flow-3b-Review-Dialog-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-13-Flow-3c-r04-Reviewed-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-14-Tablet-Record-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-16-Phone-Record-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-17-Phone-320-Content-Unavailable-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-18-States-r01.png"
+      ],
       "dependencies": [
         "src/platform/permissions.ts",
-        "src/documents/store.ts"
+        "src/documents/store.ts",
+        "docs/decisions/document-library-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6053,7 +6076,9 @@
       "design_path": "docs/design/development/pages/route-documents-id.md",
       "html_path": "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/document-library-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
