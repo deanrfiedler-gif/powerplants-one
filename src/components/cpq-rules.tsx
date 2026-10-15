@@ -1583,7 +1583,7 @@ function ActionSection({
           <span className="cpq-action-type">
             <ProductIcon name={labour ? "helmet" : "box-open"} />
           </span>
-          <div>
+          <div className="cpq-action-title">
             <strong id={`${id}-title`}>{title}</strong>
             <small>
               {part

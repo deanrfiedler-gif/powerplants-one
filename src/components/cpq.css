@@ -1342,10 +1342,14 @@
   line-height: 17px;
   color: var(--cpq-muted);
 }
+.cpq-menu:not(:popover-open) {
+  display: none;
+}
 .cpq-menu {
   position: fixed;
   inset: auto;
   margin: 0;
+  width: max-content;
   min-width: 220px;
   max-width: calc(100vw - 16px);
   padding: 6px 0;
@@ -1356,6 +1360,7 @@
   color: var(--cpq-ink);
 }
 :is(#ppo-cpq, .cpq-dialog) .cpq-menu button {
+  display: flex;
   justify-content: flex-start;
   width: 100%;
   min-height: 36px;
@@ -1415,7 +1420,7 @@
   border-bottom: 1px solid var(--cpq-line);
   background: var(--cpq-surface);
 }
-.cpq-action-card > header > div {
+.cpq-action-title {
   display: flex;
   flex: 1;
   flex-direction: column;
