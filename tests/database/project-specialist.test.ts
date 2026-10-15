@@ -242,7 +242,26 @@ test("PJ06-04 optimistic concurrency, altered retries and atomic evidence rollba
   const f = await specialistFixture(),
     pr = f.project.id,
     id = f.package.id;
-  await commandPackage(f.owner, pr, f.package);
+  await commandPackage(f.owner, pr, {
+    ...f.package,
+    content: { ...f.package.content, due_date: "2031-10-01", date_needed_reason: null },
+  });
+  for (const [content, expected] of [
+    [{ ...f.package.content, technical_release: "Approved" }, /Closed specialist content required/],
+    [{ ...f.package.content, engineering: { ...f.package.content.engineering, technical_release: "Approved" } }, /Exact source reference fields required/],
+    [{ ...f.package.content, demand: { ...f.package.content.demand, purchase_order: "Approved" } }, /Exact source reference fields required/],
+    [{ ...f.package.content, engineering: { ...f.package.content.engineering, version: "1" } }, /Exact source reference fields required/],
+    [{ ...f.package.content, demand: { id: f.package.content.demand.id } }, /Exact source reference fields required/],
+    [{ ...f.package.content, title: null }, /Typed specialist text required/],
+    [{ ...f.package.content, date_needed_reason: true }, /Bounded unresolved context required/],
+  ] as const) {
+    await assert.rejects(transaction(async (c) => {
+      await c.query(
+        "INSERT INTO ppo.project_specialist_events(workspace_id,package_id,version,command,state,content,source,source_hash,note,reason,created_by,operation_id) SELECT workspace_id,package_id,2,'Revise','Draft',$3,source,source_hash,note,reason,created_by,$2 FROM ppo.project_specialist_events WHERE package_id=$1 AND version=1",
+        [id, randomUUID(), content],
+      );
+    }), expected);
+  }
   await assert.rejects(
     transaction(async (c) => {
       await c.query(

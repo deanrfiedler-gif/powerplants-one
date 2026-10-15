@@ -70,6 +70,17 @@ DECLARE pkg ppo.project_specialist_packages; pr ppo.projects; previous ppo.proje
  commercial ppo.project_commercial_sources; eng ppo.engineering_packages; demand ppo.supply_records; expected jsonb; ids uuid[];
 BEGIN
  PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
+ IF NOT (NEW.content ?& ARRAY['title','scope','exclusions','deliverables','specialist','owner_id','receiver_id','due_date','date_needed_reason','engineering','engineering_needed_reason','demand','demand_needed_reason','action_ids']) OR NEW.content - ARRAY['title','scope','exclusions','deliverables','specialist','owner_id','receiver_id','due_date','date_needed_reason','engineering','engineering_needed_reason','demand','demand_needed_reason','action_ids'] <> '{}'::jsonb THEN RAISE EXCEPTION 'Closed specialist content required' USING ERRCODE='23514'; END IF;
+ FOR key IN SELECT unnest(ARRAY['engineering','demand']) LOOP
+  IF NEW.content->key<>'null'::jsonb AND (jsonb_typeof(NEW.content->key)<>'object' OR NOT ((NEW.content->key) ?& ARRAY['id','version']) OR (NEW.content->key) - ARRAY['id','version'] <> '{}'::jsonb OR jsonb_typeof(NEW.content->key->'id') IS DISTINCT FROM 'string' OR jsonb_typeof(NEW.content->key->'version') IS DISTINCT FROM 'number' OR NEW.content->key->>'version' !~ '^[1-9][0-9]*$' OR (NEW.content->key->>'version')::numeric>2147483647) THEN RAISE EXCEPTION 'Exact source reference fields required' USING ERRCODE='23514'; END IF;
+ END LOOP;
+ FOR key IN SELECT unnest(ARRAY['title','scope','exclusions','deliverables','specialist','owner_id','receiver_id']) LOOP
+  IF jsonb_typeof(NEW.content->key) IS DISTINCT FROM 'string' THEN RAISE EXCEPTION 'Typed specialist text required' USING ERRCODE='23514'; END IF;
+ END LOOP;
+ FOR key IN SELECT unnest(ARRAY['date_needed_reason','engineering_needed_reason','demand_needed_reason']) LOOP
+  IF NEW.content->key<>'null'::jsonb AND (jsonb_typeof(NEW.content->key)<>'string' OR length(btrim(NEW.content->>key)) NOT BETWEEN 1 AND 1000) THEN RAISE EXCEPTION 'Bounded unresolved context required' USING ERRCODE='23514'; END IF;
+ END LOOP;
+ IF NEW.content->'due_date'<>'null'::jsonb AND (jsonb_typeof(NEW.content->'due_date')<>'string' OR NEW.content->>'due_date' !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' OR (NEW.content->>'due_date')::date::text<>NEW.content->>'due_date') THEN RAISE EXCEPTION 'Exact requested date required' USING ERRCODE='23514'; END IF;
  IF NOT (NEW.source ?& ARRAY['commercial','engineering','demand']) OR NEW.source - ARRAY['commercial','engineering','demand'] <> '{}'::jsonb THEN RAISE EXCEPTION 'Closed specialist source snapshot required' USING ERRCODE='23514'; END IF;
  IF NEW.source_hash<>encode(sha256(convert_to(ppo.project_specialist_source_json(NEW.source),'UTF8')),'hex') THEN RAISE EXCEPTION 'Exact source snapshot hash required' USING ERRCODE='23514'; END IF;
  SELECT * INTO STRICT pkg FROM ppo.project_specialist_packages WHERE workspace_id=NEW.workspace_id AND id=NEW.package_id;
