@@ -4,7 +4,7 @@
 
 PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.
 
-[Execution evidence](testing/evidence/cpq-packages/README.md) records validation in progress. Synthetic workload measurements are in-worker evaluation observations; representative operating targets and business acceptance remain open. CI and independent automated review are separate delivery gates. No merge or deployment by this task.
+[Execution evidence](testing/evidence/cpq-packages/README.md) records 50 passing units, 62 distinct passing database cases across retained runs, seven compiled HTTP cases, two browser journeys and actual application/PostgreSQL restart recovery with 12 new original receipts and no duplicate effects. Build, typecheck, lint and documentation assurance passed; initial failures and unchanged-main controls remain recorded. Synthetic workload measurements are in-worker evaluation observations; representative operating targets and business acceptance remain open. CI and independent automated review are separate delivery gates. No merge or deployment by this task.
 
 ## BC-04 CPQ release quality and impact — 15 October 2026
 
