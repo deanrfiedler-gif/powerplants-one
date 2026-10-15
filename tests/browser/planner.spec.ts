@@ -524,7 +524,11 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await request
     .getByLabel("Decision reason")
     .fill("SYN dispatcher accepts after current booking guard review.");
-  await request.getByRole("button", { name: "Accept and check move" }).focus();
+  // Accept stays disabled until the new request's booking-policy read returns. A disabled
+  // button cannot take focus, so Enter pressed before then would send no decision.
+  const accept = request.getByRole("button", { name: "Accept and check move" });
+  await expect(accept).toBeEnabled();
+  await accept.focus();
   await page.keyboard.press("Enter");
   await expect(request.getByText("Accepted", { exact: true })).toBeVisible();
   await capture(page, info, "project-accepted-held");
