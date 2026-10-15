@@ -353,6 +353,32 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await expect(
     page.getByRole("heading", { name: "Support spacing", exact: true }),
   ).toBeVisible();
+  // Frame 486:641 above "Applies when": the context header's "⋯" menu replaces the rule picker,
+  // the four rule states are separate, and the view tabs carry counts as descriptions.
+  await expect(
+    page.getByRole("button", { name: "More rule actions", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Selected rule")).toHaveCount(0);
+  const ruleState = page.getByRole("group", { name: "Rule state", exact: true });
+  await expect(ruleState.getByText("Valid", { exact: true })).toBeVisible();
+  await expect(ruleState).toContainText("Not run on this draft");
+  await expect(
+    page.getByRole("button", { name: "Test bench", exact: true }),
+  ).toHaveAccessibleDescription("1 saved scenario");
+  // The quick test runs the selected scenario on this exact draft, read only, with the rule's
+  // own quantity, its substitution, the saved comparison and each condition's outcome.
+  if (!info.project.name.includes("mobile")) {
+    const quickTest = page.getByRole("region", {
+      name: "Quick test",
+      exact: true,
+    });
+    await expect(quickTest).toContainText("33 each");
+    await expect(quickTest).toContainText("ceil(140 ÷ 10) × 2 + 5 = 33");
+    await expect(quickTest).toContainText(
+      /(Published v1|Saved version 1) gives 33 · no difference for this scenario/,
+    );
+    await expect(quickTest.getByText(/^True · Drive units > 0/)).toBeVisible();
+  }
   // Frame 486:641: the formula reads as tokens in the action card and is edited in its dialog.
   const formulaBox = page.getByRole("group", {
     name: "Quantity formula",
@@ -418,7 +444,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await expect(formulaBox).toHaveAttribute("data-formula", proposedFormula);
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(
-    page.locator(".cpq-footer").getByText(/Draft saved/),
+    page.locator(".cpq-footer").getByText(/· revision \d+ · saved /),
   ).toBeVisible();
   await expect(page).toHaveURL(/draft=/);
   await page.reload();
@@ -435,6 +461,11 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     screenDefinition().rules[0].quantity,
   );
   await page.getByRole("button", { name: "Test bench", exact: true }).click();
+  // Tablet frame 39 and the phone Test tab: below 1100 px the quick test joins the Test bench.
+  if (info.project.name.includes("mobile"))
+    await expect(
+      page.getByRole("region", { name: "Quick test", exact: true }),
+    ).toContainText("33 each");
   await page.getByRole("button", { name: /Run all 1 scenarios/ }).click();
   await expect(page.getByText("Pass", { exact: true }).first()).toBeVisible();
   expect(
@@ -570,6 +601,22 @@ test("rule conditions follow accepted frames 486:641 and 488:1029: typed rows, i
   ).toBeVisible();
   const operator = page.getByLabel("Condition 1 operator", { exact: true });
   await expect(operator).toHaveValue("");
+  // Frame 488:1029: the draft states, the quick test and the draft bar all say it is incomplete.
+  const ruleState = page.getByRole("group", { name: "Rule state", exact: true });
+  await expect(ruleState).toContainText("Unsaved changes");
+  await expect(ruleState).toContainText("Incomplete · 1");
+  if (!mobile)
+    await expect(
+      page.getByRole("region", { name: "Quick test", exact: true }),
+    ).toContainText("No result: condition 1 is incomplete");
+  await expect(
+    page.getByRole("button", { name: "Create version…", exact: true }),
+  ).toHaveAccessibleDescription(
+    "An incomplete draft can be saved. It cannot become a version until it is complete and tested.",
+  );
+  await expect(
+    page.getByRole("button", { name: "Create version…", exact: true }),
+  ).toBeDisabled();
   await expect(
     page.getByRole("heading", {
       name: "This draft is incomplete · 1 item",
@@ -588,6 +635,25 @@ test("rule conditions follow accepted frames 486:641 and 488:1029: typed rows, i
   await expect(
     page.getByRole("heading", { name: /This draft is incomplete/ }),
   ).toHaveCount(0);
+  await expect(ruleState.getByText("Valid", { exact: true })).toBeVisible();
+  // Rules are switched from the header menu; the in-page rule picker is not drawn.
+  await page.getByRole("button", { name: "More rule actions", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Switch rule…", exact: true }).click();
+  const switcher = page.getByRole("dialog", { name: "Switch rule", exact: true });
+  await expect(
+    switcher.getByRole("button", { name: /^Support spacing/ }),
+  ).toHaveAttribute("aria-current", "true");
+  await switcher.getByRole("button", { name: /^Standard motor cable/ }).click();
+  await expect(switcher).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Standard motor cable", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "More rule actions", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Switch rule…", exact: true }).click();
+  await switcher.getByRole("button", { name: /^Support spacing/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Support spacing", exact: true }),
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Add action", exact: true }),
   ).toBeDisabled();
