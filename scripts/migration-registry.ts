@@ -105,6 +105,7 @@ export const migrationFiles = [
   "0101-project-commercial-controls.sql",
   "0102-cpq-packages.sql",
   "0103-project-specialist-packages.sql",
+  "0104-template-renderer-manifest.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],

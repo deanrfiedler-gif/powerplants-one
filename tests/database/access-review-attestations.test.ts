@@ -146,7 +146,7 @@ test(
     );
     assert.deepEqual(
       nextLedger.filter((r) => r.version > 83).map((r) => r.version),
-      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103],
+      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version <= 83),

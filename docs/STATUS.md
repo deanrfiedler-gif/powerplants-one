@@ -1,5 +1,11 @@
 # Current prototype status
 
+## DK-06 rendering-only template manifest (G5) — 15 October 2026
+
+The DK-06 Template management design found gap G5: R3 fingerprinted `package-lock.json`, `src/platform/operations.ts`, `src/shared/validation.ts` and `src/platform/browser.ts` into every managed OUT-09 definition, so an unrelated edit to any of them refused Job pack preparation and issue at every site with a managed assignment. A focused database test reproduced it. Dean decided: "G5 is a defect. Proceed with option A: add a new DK06-OUT09-2 contract with a rendering-only manifest and explicit Playwright versions, keep DK06-OUT09-1 definitions retained unchanged, record the decision, implement it with the migration and ledger updates, and open a draft PR."
+
+The [decision](decisions/template-renderer-manifest.md) and updated [contract](contracts/template-publication.md) add renderer contract DK06-OUT09-2 for new publications: its manifest covers the renderer, shared pack HTML, printed section labels and branding, and it records the resolved playwright and playwright-core versions. DK06-OUT09-1 modules stay byte for byte, so retained definitions, assignments and issued bytes are unchanged. Migration 0103 names the current contract and replaces only the insert guard; no table, seed, grant or identity changes. [Evidence](testing/evidence/template-renderer-manifest/README.md) records the local checks and their limits. Review, owner acceptance, merge and deployment remain separate.
+
 ## PJ-06 internal specialist package receiving — 15 October 2026
 
 The authorised main-based `codex/pj06-specialist-packages` increment implements versioned package briefs, exact PJ-05/Engineering/Supply references, independent named receiving, immutable successors and original-operation recovery. Migration 0103 adds no seed or grant; three duties default to denied. The [decision](decisions/project-specialist-packages.md), [contract](contracts/project-specialist-packages.md) and [execution evidence](testing/evidence/project-specialist/README.md) separate local proof, CI/review, operational acceptance and deployment. #500 retains its existing monitor. This is PJ-06 R1: technical/procurement acceptance, competence/insurance verification, supplier identity integration, work-evidence acceptance and UI remain open.
