@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Planner phone read race — 15 October 2026
+
+Since PR #399 the planner assumed a wide screen until an effect measured it, so on a phone every mount, including the remount after an identity change, read the selected day and then the Monday–Sunday week, and whichever response landed last was shown. The P11 PT-29 SC-07 phone case failed on it intermittently ([run 38099363948](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38099363948/job/114351899991)); #391 made that test select the intended window. The planner now holds its schedule read until the width is known, so each mount reads one window; desktop reads the same single range as before. A new SC-07 planner browser test fails on any read for another window and failed on the previous code on the phone. The P11 assertions are unchanged. No UI, route, migration or parent ID changes.
+
 ## BC-04 owned CPQ packages — 15 October 2026
 
 PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.
