@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Planner phone read race — 15 October 2026
+
+Since PR #399 the planner assumed a wide screen until an effect measured it, so on a phone every mount, including the remount after an identity change, read the selected day and then the Monday–Sunday week, and whichever response landed last was shown. The P11 PT-29 SC-07 phone case failed on it intermittently ([run 38099363948](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38099363948/job/114351899991)); #391 made that test select the intended window. The planner now holds its schedule read until the width is known, so each mount reads one window; desktop reads the same single range as before. A new SC-07 planner browser test fails on any read for another window and failed on the previous code on the phone. The P11 assertions are unchanged. No UI, route, migration or parent ID changes.
+
 ## Next.js security patch and dependency gates — 15 October 2026
 
 The 15 October repository audit found `next@16.3.4` with published advisories: one critical (`next/og` RCE; the app does not import `next/og`) and one high (Image Optimization SSRF; `next/image` is used in two files). It also found that nothing in CI audits or updates dependencies (QA-3). [ADR-0056](decisions/ADR-0056-dependency-update-and-audit-gates.md) moves `next` and `@next/eslint-plugin-next` to 16.3.8 and refreshes `sharp`, `source-map-js` and `brace-expansion` within their existing ranges. It adds weekly grouped Dependabot updates and a `Dependency audit` workflow. That workflow allows no high or critical advisory in the runtime tree, and in the full tree only named exceptions. The one exception is `braces`, which has no fixed release and is reached only through lint tooling.
