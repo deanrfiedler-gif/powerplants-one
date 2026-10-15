@@ -646,3 +646,4 @@ PPO-DK03-REGISTER-FACTS-DEC,DK-03 exact revision and acknowledgement facts,docs/
 
 PPO-DK03-APPLICABILITY-DEC,DK-03 native distribution applicability,docs/decisions/output-distribution-applicability.md,,Authorised backend correction; review and operational acceptance separate,Dean Fiedler,41c8479a0aa4ff8eeebec5efb66712c95ecc8874,,,git,
 PPO-BACKEND-RECONCILIATION,Backend implementation reconciliation,docs/delivery/backend-reconciliation.md,,Current source inspection; not backend completion or business acceptance,Dean Fiedler,41c8479a0aa4ff8eeebec5efb66712c95ecc8874,,,git,
+PPO-ADR-0056,Dependency update and audit gates,docs/decisions/ADR-0056-dependency-update-and-audit-gates.md,,Implemented as audit QA-3 follow-up; owner review pending,Dean Fiedler,d070a61ff17e04ffa0f0d37c16052c24a0bb0e26,,,git,
