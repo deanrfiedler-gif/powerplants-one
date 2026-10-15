@@ -87,7 +87,7 @@ export async function loadInspections(c: QueryClient, p: Principal, hostType: Ho
   const attempts = await q<AttemptRow>(`SELECT t.*,pf.display_name AS performer_name FROM ppo.inspection_attempts t ${user("pf", "performer_id", true)} WHERE t.workspace_id=$1 AND t.host_type=$2 AND t.host_id=ANY($3::uuid[]) ORDER BY t.attempt_number`),
     results = await q<ResultRow>(`SELECT t.* FROM ppo.inspection_results t ${viaAttempt} ORDER BY t.sort_order,t.check_key`),
     evidence = await q<EvidenceRow>(`SELECT t.*,ad.display_name AS added_by_name FROM ppo.inspection_evidence t ${user("ad", "added_by", true)} ${viaAttempt} ORDER BY t.added_at,t.id`),
-    uses = await q<InstrumentUseRow>(`SELECT t.attempt_id,t.instrument_id,t.snapshot FROM ppo.inspection_instrument_uses t ${viaAttempt}`),
+    uses = await q<InstrumentUseRow>(`SELECT t.attempt_id,t.instrument_id,t.snapshot FROM ppo.inspection_instrument_uses t ${viaAttempt} ORDER BY t.attempt_id,t.instrument_id`),
     reviews = await q<ReviewRow>(`SELECT t.*,t.due::text,db.display_name AS decided_by_name,ow.display_name AS owner_name FROM ppo.inspection_reviews t ${user("db", "decided_by", true)} ${user("ow", "owner_id")} ${viaAttempt} ORDER BY t.decided_at,t.id`),
     defects = await q<DefectRow>(`SELECT t.*,t.due::text,ow.display_name AS owner_name,cb.display_name AS correction_by_name,
       (SELECT jsonb_build_object('status',x.status,'owner_name',xu.display_name,'due_at',x.due_at,'outcome',x.outcome) FROM ppo.activities x JOIN ppo.users xu ON (xu.workspace_id,xu.id)=(x.workspace_id,x.owner_id) WHERE (x.workspace_id,x.id)=(t.workspace_id,t.activity_id)) AS activity

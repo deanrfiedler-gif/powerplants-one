@@ -189,7 +189,7 @@ test("change request review presents exact comparison before a reasoned decision
     },
   );
   expect(response.ok(), await response.text()).toBeTruthy();
-  await page.goto("/schedule/changes?appointment_id=" + a.id);
+  await page.goto("/schedule/changes?day=2031-09-22&appointment_id=" + a.id);
   const request = page
     .locator(".change-request")
     .filter({ hasText: requestId });

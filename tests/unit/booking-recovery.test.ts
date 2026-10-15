@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readJournal, writeJournal, type JournalEntry, type StoragePort } from "../../src/shared/lib/command-journal";
 import { acceptsBookingEntry } from "../../src/scheduling/booking-journal";
-import { appointmentHref, plannerContext, plannerHref, safeBookingTarget, safePlannerReturn } from "../../src/scheduling/navigation";
+import { appointmentHref, plannerContext, plannerHref, plannerToday, safeBookingTarget, safePlannerReturn } from "../../src/scheduling/navigation";
 
 const id = (n: number) => `10000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const scope = { actor_id: id(1), workspace_id: id(2) };
@@ -51,12 +51,22 @@ test("accepted journal drops command payload and retains original identity and d
   assert.deepEqual(readJournal(s, "saved", scope, acceptsBookingEntry), e);
   assert.equal(acceptsBookingEntry({ ...e, body: { ...e.body, expected_version: 2 } }), false);
 });
+// PRJ-2: without a valid day the planner opens on today in the selected display timezone,
+// not on a fixed synthetic date.
+test("planner opens on today in the selected display timezone", () => {
+  const at = new Date("2026-10-15T13:30:00Z"); // 23:30 in Brisbane, 00:30 next day in Melbourne (AEDT)
+  assert.equal(plannerContext(new URLSearchParams(""), undefined, at).day, "2026-10-15");
+  assert.equal(plannerContext(new URLSearchParams("timezone=UTC"), undefined, at).day, "2026-10-15");
+  assert.equal(plannerContext(new URLSearchParams("timezone=Australia/Melbourne"), undefined, at).day, "2026-10-16");
+  assert.equal(plannerContext(new URLSearchParams("day=2031-09-22&timezone=UTC"), undefined, at).day, "2031-09-22");
+  assert.equal(plannerToday("Australia/Melbourne", at), "2026-10-16");
+});
 test("planner return validates destination and every supported criterion", () => {
   const valid = `/schedule?day=2026-10-01&view=day&timezone=UTC&site_id=${id(6)}&resource_id=${id(7)}&status=Confirmed`;
   assert.equal(safePlannerReturn(valid), valid);
   for (const bad of ["https://example.org", "//example.org", "/schedule/../login", "/schedule#bad", "\\example.org"]) assert.equal(safePlannerReturn(bad), "/schedule");
-  const c = plannerContext(new URLSearchParams("day=2026-02-31&view=broken&timezone=bogus&site_id=oops&status=Confirmed&status=Proposed"));
-  assert.equal(c.day, "2031-09-22"); assert.equal(c.site, ""); assert.equal(c.status, "");
+  const c = plannerContext(new URLSearchParams("day=2026-02-31&view=broken&timezone=bogus&site_id=oops&status=Confirmed&status=Proposed"), undefined, new Date("2026-10-15T15:00:00Z"));
+  assert.equal(c.day, "2026-10-16"); assert.equal(c.zone, "Australia/Brisbane"); assert.equal(c.site, ""); assert.equal(c.status, "");
   assert.equal(plannerHref(plannerContext(new URLSearchParams(valid.split("?")[1]))), valid);
   assert.equal(safeBookingTarget(`/service/appointments/${id(5)}?returnTo=${encodeURIComponent(valid)}`), appointmentHref(id(5), valid));
   assert.equal(safeBookingTarget(`/service/appointments/${id(5)}/../../auth/logout`), null);

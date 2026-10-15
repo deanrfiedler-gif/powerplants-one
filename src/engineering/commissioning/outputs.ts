@@ -48,7 +48,8 @@ export function releaseManifest(l: Loaded, access: Access, release: Pick<Release
     attempts: l.attempts.filter((a) => a.row.state === "Submitted").map((a) => ({
       id: a.row.id, number: a.row.attempt_number, predecessor_id: a.row.predecessor_id, hash: a.row.submitted_hash, configuration: a.row.configuration_reference, occurred_at: stamp(a.row.occurred_at), timezone: a.row.timezone, received_at: stamp(a.row.received_at), performer_id: a.row.performer_id,
       review: a.review, results: a.results.map((r) => ({ check_key: r.check_key, state: r.entry_state, value: r.raw_value, unit: r.unit, choice: r.choice, evaluation: r.evaluation, reason: r.evaluation_reason })),
-      instruments: a.instruments.map((i) => ({ reference: i.snapshot.reference, calibration: i.snapshot.calibration_reference, valid_from: i.snapshot.valid_from, valid_to: i.snapshot.valid_to, assessment: i.assessment })),
+      // In instrument order, as the attempt hash has them: the read order must never change this manifest's hash.
+      instruments: [...a.instruments].sort((x, y) => (x.instrument_id < y.instrument_id ? -1 : x.instrument_id > y.instrument_id ? 1 : 0)).map((i) => ({ reference: i.snapshot.reference, calibration: i.snapshot.calibration_reference, valid_from: i.snapshot.valid_from, valid_to: i.snapshot.valid_to, assessment: i.assessment })),
       evidence: a.evidence.map((e) => ({ id: e.id, label: e.label, kind: e.kind, hash: e.content_hash, access_class: e.access_class })), reviews: a.reviews.map((v) => ({ decision: v.decision, decided_at: stamp(v.decided_at), decided_by: v.decided_by, reason: v.reason })),
     })),
     defects: l.defects.map((d) => ({ reference: d.reference, check_key: d.check_key, title: d.title, state: d.state, owner_id: d.owner_id, due: d.due, closed_at: stamp(d.closed_at) })),

@@ -65,11 +65,13 @@ export async function supportedPackHtml(
     ),
   ]);
   const style = `@font-face{font-family:'PPO Roboto';src:url(data:font/woff;base64,${font.toString("base64")}) format('woff');font-weight:100 900}body{font-family:'PPO Roboto',Verdana,sans-serif}.template-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.template-fields dt{font-weight:bold}.template-fields dd{margin:0;overflow-wrap:anywhere}.template-brand{background:#242a37;padding:12px;width:88px;height:88px}`;
+  // Replacer functions insert published text literally; a replacement string would expand "$&", "$`" and "$'".
   return packHtml(s, output)
-    .replace("</style>", style + "</style>")
+    .replace("</style>", () => style + "</style>")
     .replace(
       "<h1>Technician job pack</h1>",
-      `<img class="template-brand" src="data:image/png;base64,${logo.toString("base64")}" alt="Powerplants" width="88" height="88"><h1>${e(body.title)}</h1><dl class="template-fields">${fields}</dl>`,
+      () =>
+        `<img class="template-brand" src="data:image/png;base64,${logo.toString("base64")}" alt="Powerplants" width="88" height="88"><h1>${e(body.title)}</h1><dl class="template-fields">${fields}</dl>`,
     )
     .replace(
       "</head>",

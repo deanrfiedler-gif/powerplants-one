@@ -61,11 +61,16 @@ export type Outcome = {
   message?: string;
   retryable?: boolean;
 };
+// Keys sort by English collation, named explicitly rather than taken from the runtime default
+// locale: a browser or server in another locale (Estonian puts "zone" before "type") would
+// otherwise hash identical content differently. English is the order existing hashes were
+// made in; plain code-unit order would change stored hashes for keys that mix case.
+const keyOrder = new Intl.Collator("en").compare;
 export function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
   if (value && typeof value === "object")
     return `{${Object.entries(value)
-      .sort(([a], [b]) => a.localeCompare(b))
+      .sort(([a], [b]) => keyOrder(a, b))
       .map(([k, v]) => `${JSON.stringify(k)}:${canonical(v)}`)
       .join(",")}}`;
   return JSON.stringify(value);

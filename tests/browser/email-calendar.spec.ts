@@ -185,6 +185,21 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
   expect(hostile.status()).toBe(403);
 });
 
+test("EC calendar opens on today's Brisbane date when no day is requested", async ({
+  page,
+}) => {
+  await page.goto("/calendar");
+  await identity(page);
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Australia/Brisbane",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+  await expect(page.getByLabel("Calendar date", { exact: true })).toHaveValue(
+    today,
+  );
+});
 test("EC accepted r02 demo: date navigation, timeline, details and phone sheet", async ({
   page,
 }, info) => {
