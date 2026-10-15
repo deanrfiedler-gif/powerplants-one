@@ -182,6 +182,14 @@ export const productFontAwesome = {
   sort: "arrow-down-wide-short",
   disqualified: "ban",
   converted: "circle-check",
+  grip: "grip-dots-vertical",
+  "arrow-up": "arrow-up",
+  "arrow-down": "arrow-down",
+  keyboard: "keyboard",
+  "box-open": "box-open",
+  function: "function",
+  lock: "lock",
+  helmet: "user-helmet-safety",
   gear: "gear",
 } satisfies Record<ProductPathName, FontAwesomeIcon>;
 

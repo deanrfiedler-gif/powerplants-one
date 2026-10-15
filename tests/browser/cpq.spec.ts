@@ -353,6 +353,16 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await expect(
     page.getByRole("heading", { name: "Support spacing", exact: true }),
   ).toBeVisible();
+  // Frame 486:641: the formula reads as tokens in the action card and is edited in its dialog.
+  const formulaBox = page.getByRole("group", {
+    name: "Quantity formula",
+    exact: true,
+  });
+  await expect(formulaBox).toHaveAttribute(
+    "data-formula",
+    screenDefinition().rules[0].quantity,
+  );
+  await expect(formulaBox).toContainText("Valid · result in each");
   await page.screenshot({ path: info.outputPath("cpq-definition.png") });
   await page.getByRole("button", { name: "Edit formula", exact: true }).click();
   const formulaDialog = page.getByRole("dialog", {
@@ -399,30 +409,31 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
   await formulaDialog
     .getByRole("button", { name: "Apply to draft", exact: true })
     .click();
-  await expect(
-    page.getByLabel("Quantity formula", { exact: true }),
-  ).toHaveValue(proposedFormula);
+  await expect(formulaBox).toHaveAttribute("data-formula", proposedFormula);
   await page.getByRole("button", { name: "Edit formula", exact: true }).click();
   await formulaDialog.getByLabel("Formula", { exact: true }).fill("min(");
   await formulaDialog
     .getByRole("button", { name: "Cancel", exact: true })
     .click();
-  await expect(
-    page.getByLabel("Quantity formula", { exact: true }),
-  ).toHaveValue(proposedFormula);
-  await page.getByLabel("Quantity formula", { exact: false }).fill("ceil(");
+  await expect(formulaBox).toHaveAttribute("data-formula", proposedFormula);
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(
     page.locator(".cpq-footer").getByText(/Draft saved/),
   ).toBeVisible();
   await expect(page).toHaveURL(/draft=/);
   await page.reload();
-  await expect(
-    page.getByLabel("Quantity formula", { exact: false }),
-  ).toHaveValue("ceil(");
-  await page
-    .getByLabel("Quantity formula", { exact: false })
+  await expect(formulaBox).toHaveAttribute("data-formula", proposedFormula);
+  await page.getByRole("button", { name: "Edit formula", exact: true }).click();
+  await formulaDialog
+    .getByLabel("Formula", { exact: true })
     .fill(screenDefinition().rules[0].quantity);
+  await formulaDialog
+    .getByRole("button", { name: "Apply to draft", exact: true })
+    .click();
+  await expect(formulaBox).toHaveAttribute(
+    "data-formula",
+    screenDefinition().rules[0].quantity,
+  );
   await page.getByRole("button", { name: "Test bench", exact: true }).click();
   await page.getByRole("button", { name: /Run all 1 scenarios/ }).click();
   await expect(page.getByText("Pass", { exact: true }).first()).toBeVisible();
@@ -473,11 +484,12 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     page.getByText(/Viewing immutable release version/),
   ).toBeVisible();
   await expect(
-    page.getByLabel("Quantity formula", { exact: true }),
+    page.getByRole("button", { name: "Edit formula", exact: true }),
   ).toBeDisabled();
-  await expect(
-    page.getByLabel("Quantity formula", { exact: true }),
-  ).toHaveValue(screenDefinition().rules[0].quantity);
+  await expect(formulaBox).toHaveAttribute(
+    "data-formula",
+    screenDefinition().rules[0].quantity,
+  );
   await page
     .getByRole("button", { name: "Return to working draft", exact: true })
     .click();
@@ -488,6 +500,104 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     }),
   ).toBeVisible();
   await expect(
-    page.getByLabel("Quantity formula", { exact: true }),
+    page.getByRole("button", { name: "Edit formula", exact: true }),
   ).toBeEnabled();
+});
+test("rule conditions follow accepted frames 486:641 and 488:1029: typed rows, inline actions, keyboard reordering and incomplete states", async ({
+  page,
+  baseURL,
+}, info) => {
+  const mobile = info.project.name.includes("mobile");
+  if (!mobile) await page.setViewportSize({ width: 1440, height: 960 });
+  const origin = new URL(baseURL!).origin;
+  await api(page.request, origin, "local-session", { profile: "coordinator" });
+  const definition = screenDefinition(),
+    releaseId = randomUUID();
+  definition.rules[0].when = {
+    op: "ALL",
+    items: [
+      { op: "GT", fact: "cable_run_distance", value: "0" },
+      { op: "IN", fact: "vent", values: ["Open", "Closed"] },
+      { op: "NOT", item: { op: "EQ", fact: "include_install", value: false } },
+    ],
+  };
+  await api(page.request, origin, "cpq/releases", {
+    ...crmBase(),
+    id: releaseId,
+    company_id: CRM.company,
+    expected_version: 0,
+    definition,
+  });
+  await page.goto(`/estimating/rules/${releaseId}`);
+  await expect(
+    page
+      .getByRole("group", { name: "Applies when", exact: true })
+      .getByRole("button", { name: "When conditions are true", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  const field = page.getByLabel("Condition 1 field", { exact: true });
+  await expect(field).toHaveValue("cable_run_distance");
+  await expect(
+    page.getByLabel("Condition 3 operator", { exact: true }),
+  ).toHaveValue("EQ:false");
+  await expect(
+    page.getByRole("button", { name: "Condition 2 value", exact: true }),
+  ).toContainText("Open, Closed");
+  if (!mobile) {
+    // Move up / Move down / Remove sit on the condition's own line.
+    const row = (await field.boundingBox())!,
+      down = (await page
+        .getByRole("button", { name: "Move condition 1 down", exact: true })
+        .boundingBox())!;
+    expect(
+      Math.abs(row.y + row.height / 2 - (down.y + down.height / 2)),
+    ).toBeLessThan(2);
+  }
+  await field.focus();
+  await page.keyboard.press("Alt+ArrowDown");
+  const second = page.getByLabel("Condition 2 field", { exact: true });
+  await expect(second).toHaveValue("cable_run_distance");
+  await expect(second).toBeFocused();
+  await page
+    .getByRole("button", { name: "Move condition 2 up", exact: true })
+    .click();
+  await expect(field).toHaveValue("cable_run_distance");
+  await field.selectOption("controller");
+  await expect(
+    page.getByText(
+      "Shared controller is text, so “is greater than 0 m” was cleared. Choose a text operator and a value.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const operator = page.getByLabel("Condition 1 operator", { exact: true });
+  await expect(operator).toHaveValue("");
+  await expect(
+    page.getByRole("heading", {
+      name: "This draft is incomplete · 1 item",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", {
+      name: "Applies when › condition 1: choose an operator and a value for Shared controller",
+      exact: true,
+    })
+    .click();
+  await expect(operator).toBeFocused();
+  await operator.selectOption("EQ");
+  await page.getByLabel("Condition 1 value", { exact: true }).fill("CP-01");
+  await expect(
+    page.getByRole("heading", { name: /This draft is incomplete/ }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Add action", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("article", { name: "Material quantity", exact: true }),
+  ).toContainText("Cable brackets, galvanised · each");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({ path: info.outputPath("cpq-conditions.png") });
 });
