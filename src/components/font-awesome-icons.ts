@@ -190,6 +190,11 @@ export const productFontAwesome = {
   function: "function",
   lock: "lock",
   helmet: "user-helmet-safety",
+  "code-branch": "code-branch",
+  "pen-square": "pen-to-square",
+  save: "floppy-disk",
+  play: "play",
+  "circle-xmark": "circle-xmark",
   gear: "gear",
 } satisfies Record<ProductPathName, FontAwesomeIcon>;
 

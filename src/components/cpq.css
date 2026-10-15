@@ -1723,3 +1723,396 @@
     grid-row: 1;
   }
 }
+
+/* Rule editor above "Applies when", the Quick test panel and the draft bar: accepted frames 486:641
+   and 488:1029. CPQ / Context header 475:120225, CPQ / State 466:56, Record / View tab 312:16,
+   CPQ / Control 466:230 and CPQ / Button (unavailable) 471:133. Scoped to the rule editor; the
+   Configure & price header, readiness strip and tabs keep their own geometry. */
+.cpq-header-record {
+  min-height: 94px;
+  padding: 14px 24px 12px;
+  align-items: flex-start;
+}
+.cpq-header-record > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-cpq .cpq-header-record h1 {
+  overflow: hidden;
+  font-weight: 700;
+  line-height: 40px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cpq-header-record .cpq-context {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+.cpq-header-record .cpq-context > span[aria-hidden="true"]:not(.cpq-avatar) {
+  color: var(--cpq-muted);
+}
+.cpq-header-record .cpq-avatar {
+  flex-shrink: 0;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+  font-weight: 500;
+}
+.cpq-context-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cpq-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8a94a3;
+}
+.cpq-dot[data-tone="warning"] {
+  background: #c7891f;
+}
+.cpq-dot[data-tone="bad"] {
+  background: var(--danger);
+}
+.cpq-dot[data-tone="good"] {
+  background: var(--success);
+}
+#ppo-cpq .cpq-menu-trigger.cpq-more-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cpq-ink);
+}
+#ppo-cpq .cpq-menu-trigger.cpq-more-button:hover:not(:disabled) {
+  background: var(--neutral-surface);
+}
+#ppo-cpq
+  :is(.cpq-more-button, .cpq-rule-details-head, .cpq-draft-bar, .cpq-quick-test)
+  .product-icon {
+  width: 16px;
+  height: 16px;
+}
+.cpq-rule-state {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+  min-height: 40px;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--cpq-line);
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--cpq-muted);
+}
+.cpq-rule-state > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.cpq-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+#ppo-cpq .cpq-state .product-icon {
+  width: 14px;
+  height: 14px;
+}
+.cpq-state[data-tone="good"] {
+  color: var(--success);
+}
+.cpq-state[data-tone="warning"] {
+  color: var(--warning);
+}
+.cpq-state[data-tone="bad"] {
+  color: var(--danger);
+}
+.cpq-state[data-tone="link"] {
+  color: var(--link);
+}
+.cpq-state[data-tone="muted"] {
+  color: var(--cpq-muted);
+}
+.cpq-state-pill {
+  flex-shrink: 0;
+  padding: 2px 8px 2px 6px;
+  border-radius: 5px;
+  background: var(--neutral-surface);
+}
+.cpq-tabs-record {
+  gap: 0;
+  padding: 0 0 0 10px;
+}
+.cpq-tabs-record button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 14px 0;
+  border-bottom-width: 2px;
+}
+.cpq-tabs-record button[aria-current] {
+  font-weight: 500;
+}
+.cpq-tab-count {
+  padding: 1px 6px;
+  border-radius: 9px;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+#ppo-cpq :is(.cpq-rule-section-head, .cpq-quick-head) h2 {
+  font-weight: 700;
+}
+.cpq-rule-details-head .ppo-button {
+  flex-shrink: 0;
+}
+.cpq-detail-grid.cpq-rule-details {
+  gap: 12px 16px;
+}
+.cpq-rule-details > div {
+  gap: 2px;
+}
+#ppo-cpq .cpq-rule-details :is(dt, dd) {
+  margin: 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--text-secondary);
+}
+#ppo-cpq .cpq-rule-details dt {
+  color: var(--cpq-muted);
+}
+#ppo-cpq .cpq-rule-details dt + dd {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--cpq-ink);
+}
+.cpq-summary.cpq-quick-test,
+.cpq-quick-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 20px;
+}
+.cpq-quick-inline {
+  display: none;
+  max-width: 560px;
+  border: 1px solid var(--cpq-line);
+  border-radius: 7px;
+}
+#ppo-cpq .cpq-quick-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#ppo-cpq .cpq-quick-head h2 {
+  flex: 1;
+  margin: 0 !important;
+}
+.cpq-quick-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--cpq-surface);
+}
+#ppo-cpq .cpq-quick-inputs h3 {
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cpq-muted);
+}
+#ppo-cpq .cpq-quick-test .cpq-quick-inputs dl {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 19px;
+}
+#ppo-cpq .cpq-quick-inputs dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+#ppo-cpq .cpq-quick-inputs dt {
+  color: var(--text-secondary);
+}
+#ppo-cpq .cpq-quick-inputs dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 500;
+  color: var(--cpq-ink);
+}
+.cpq-quick-result {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--cpq-line);
+  border-radius: 7px;
+}
+#ppo-cpq .cpq-quick-result p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--text-secondary);
+}
+#ppo-cpq .cpq-quick-result .cpq-quick-result-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--cpq-muted);
+}
+.cpq-quick-result-head > span {
+  flex: 1;
+}
+#ppo-cpq .cpq-quick-result-head strong {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 700;
+  color: var(--cpq-ink);
+  white-space: nowrap;
+}
+#ppo-cpq .cpq-quick-result .cpq-quick-compare {
+  color: var(--cpq-muted);
+}
+.cpq-quick-result ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cpq-quick-result .cpq-state {
+  align-items: flex-start;
+  gap: 6px;
+  font-weight: 400;
+}
+#ppo-cpq .cpq-quick-result .cpq-state .product-icon {
+  margin-top: 1.5px;
+}
+#ppo-cpq .cpq-quick-test .ppo-button {
+  width: auto;
+  margin: 0;
+}
+#ppo-cpq .cpq-quick-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--cpq-muted);
+}
+.cpq-rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 60vh;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+:is(#ppo-cpq, .cpq-dialog) .cpq-rule-list button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--cpq-line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cpq-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+:is(#ppo-cpq, .cpq-dialog) .cpq-rule-list button:hover {
+  background: var(--neutral-surface);
+}
+:is(#ppo-cpq, .cpq-dialog) .cpq-rule-list button[aria-current] {
+  padding: 7px 11px;
+  border: 2px solid var(--cpq-blue);
+  background: #e9f1fa;
+}
+.cpq-rule-list strong {
+  font-weight: 500;
+}
+.cpq-draft-bar {
+  min-height: 65px;
+  gap: 8px;
+}
+.cpq-draft-bar > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+#ppo-cpq .cpq-save-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+#ppo-cpq .cpq-draft-bar small {
+  padding-left: 16px;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--cpq-muted);
+}
+/* Tablet frame 39: below 1100 px the quick test leaves the definition and joins the Test bench. */
+@media (max-width: 1100px) {
+  .cpq-summary.cpq-quick-test {
+    display: none;
+  }
+  .cpq-quick-inline {
+    display: flex;
+  }
+}
+@media (max-width: 600px) {
+  #ppo-cpq .cpq-header-record h1 {
+    padding: 7px 0;
+    line-height: 26px;
+    white-space: normal;
+  }
+  .cpq-header-record {
+    flex-wrap: nowrap;
+  }
+  .cpq-rule-state {
+    gap: 6px 16px;
+    padding: 10px 16px;
+  }
+  .cpq-tabs-record {
+    padding: 0 0 0 4px;
+  }
+  .cpq-tabs-record button {
+    padding: 2px 12px 0;
+  }
+  .cpq-quick-inline {
+    max-width: none;
+    padding: 16px;
+  }
+}
