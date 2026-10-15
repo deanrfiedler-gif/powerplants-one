@@ -1,0 +1,91 @@
+{
+  "original_head": "3c8535b570b19b8ddc802c8d91a245a6de058488",
+  "database_failure": {
+    "run": 38703525600,
+    "job": 116317187426,
+    "test": "PD upgrade from 100 preserves originals and exact new duties; repeat migration/seed is inert",
+    "location": "tests/database/products-upgrade.test.ts:41",
+    "sql_file": "db/migrations/0001-recover.sql",
+    "postgres_error": "57014: canceling statement due to statement timeout",
+    "phase": "disposable schema reset before migration/preservation assertions",
+    "passed": 387,
+    "failed": 1,
+    "skipped": 0,
+    "evidence": "Code Review cleanup tail contains timed-out statement; signed-in GitHub job view identifies the test. Original run and artifact retained."
+  },
+  "mobile_failure": {
+    "run": 38703525600,
+    "job": 116317187546,
+    "test": "CR05 issued source review",
+    "location": "tests/browser/sales-workflows.spec.ts:48 and :530",
+    "phase": "page.screenshot during captureSizes, followed by trace recording fixture timeout",
+    "test_timeout_ms": 120000,
+    "reported_duration_ms": 240006,
+    "passed": 394,
+    "failed": 1,
+    "project_skipped": 74
+  },
+  "mobile_comparisons": [
+    {
+      "source": "25a07ad34c90de37c0ca1b6bbd1b26c015ad5703",
+      "run": 38703403322,
+      "job": 116317016793,
+      "result": "CR05 passed (1.7m); full lane 395 passed and 74 project skips",
+      "source_type": "unchanged upstream, subsequently merged as a676fde"
+    },
+    {
+      "source": "3c8535b570b19b8ddc802c8d91a245a6de058488",
+      "run": 38703525551,
+      "job": 116317187665,
+      "result": "CR05 passed (1.7m) in separate compiled full-mobile lane",
+      "source_type": "same exact original PR head"
+    }
+  ],
+  "main_control": {
+    "head": "a676fde58d2ee88878bb2f9489912c97f49636b3",
+    "postgres": "16.15",
+    "database": "ppo_synthetic_test",
+    "test_pattern": "^PD upgrade from (99|100|101|102) ",
+    "result": "4 passed, 0 failed, 0 skipped",
+    "duration_ms": 263082.9864,
+    "case_durations_ms": [
+      64272.1443,
+      47159.3045,
+      49191.455,
+      65984.3883
+    ]
+  },
+  "candidate_control": {
+    "head": "9c22a101202b111c8a381423364b3b7301d2f0b9",
+    "result": "4 passed, 0 failed, 0 skipped",
+    "duration_ms": 357978.0316,
+    "case_durations_ms": [
+      54682.0011,
+      119867.1588,
+      80395.9707,
+      47523.0437
+    ]
+  },
+  "interpretation": "Neither original failure reproduced in these comparisons. No product root cause or baseline failure is asserted. Original failures remain evidence, and a pending/cancelled/superseded run is not a pass.",
+  "limits_unchanged": {
+    "database_statement_ms": 10000,
+    "test_ms": 120000,
+    "mobile_test_ms": 120000,
+    "trace_fixture_ms": 45000
+  },
+  "diagnostic_repair": "Native spec and TAP reporters run together; full TAP is retained in existing redacted artifact. Intentional local assertion failure kept exit 1.",
+  "review": {
+    "head": "9c22a101202b111c8a381423364b3b7301d2f0b9",
+    "result": "independent clean",
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/500#issuecomment-6190956565"
+  },
+  "ci": {
+    "head": "9c22a101202b111c8a381423364b3b7301d2f0b9",
+    "status": "51 queued checks and intentional PT-27 skip at 11:38 UTC; not technically ready"
+  },
+  "local_assurance": {
+    "focused_eslint": "passed at 9c22a10",
+    "foundation": "passed: 22 issued sources, 78 requirements, 10156 links, 6311 files; final evidence changes require later CI",
+    "naming": "passed: 646 records, 342 Git masters; final evidence changes require later CI"
+  }
+}
