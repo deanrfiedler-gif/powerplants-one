@@ -1,5 +1,7 @@
 # Decision control
 
+[DK-03 distribution during a started visit](output-distribution-applicability.md) aligns the existing audience check with native InProgress after a retained failing reproduction; exact outputs, scoped authority and original receipts remain unchanged.
+
 [PJ-05 commercial controls](project-commercial-controls.md) records exact accepted quotation/received Sales/reviewed document authority, independent variation decisions and bounded synthetic Finance definitions.
 
 [Projects receiving and overview backend](project-overview-backend.md) records exact native Sales attribution and explained scoped portfolio reads; page and owner acceptance remain separate.
