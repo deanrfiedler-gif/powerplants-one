@@ -41,6 +41,8 @@ These package keys are local tracking labels, not new parent requirements. Prior
 
 ## Current increment ledger
 
+The [15 October source reconciliation](backend-reconciliation.md) supersedes old open-PR and missing-code checkpoints below for current delivery selection. Main is `41c8479`; CPQ #492/#494 and PJ-05 #493 are integrated. #498 retains its own writer/monitor and pending exact-head CI. The next independent increment corrects the reproduced DK-03 G1 native-state mismatch under the [applicability decision](../decisions/output-distribution-applicability.md); accepted Q4/G3 read facts follow before the next BC-06 domain slice. Historical evidence remains unchanged.
+
 | Increment | State | Evidence / next boundary |
 |---|---|---|
 | BC-00 plan and ES-08 scope reconciliation | Recorded in this contribution | Writer coordination completed; original scope keys and all review fingerprints preserved |

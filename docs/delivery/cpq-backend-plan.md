@@ -40,6 +40,8 @@ All requests are online. Runs are immutable results rather than durable asynchro
 
 ## Release evidence and remaining decisions
 
+Current-source checkpoint, 15 October 2026: main `41c8479` contains published Products #490, governed Cost Sources #491, rebase #492 and release quality #494. The earlier open/stacked wording below is historical. Owned rule/table packages are delivered for review in [PR #498](https://github.com/deanrfiedler-gif/powerplants-one/pull/498) at `e3ec866`, with clean independent automated review and exact-head CI still pending at this checkpoint. Its existing monitor owns completion. Do not duplicate these increments or treat synthetic package workload targets as operational rates, ownership or service objectives. The [whole-application reconciliation](backend-reconciliation.md) selects the next independent backend dependency.
+
 Record actual test results in the PR and STATUS. Backend tests are implementation evidence, not operational approval or UI acceptance. No merge, deployment, production migration or Figma edit is part of this workstream.
 
 Owner decisions needed before P1 acceptance: first operational equipment family; technical fact/constraint owner; approved price and labour sources; margin/discount authority; user roles; realistic maximum instance/line counts; and performance/service targets. Work on typed contracts and synthetic tests can proceed before those decisions; live policies cannot be guessed.
