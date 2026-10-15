@@ -24,6 +24,7 @@ import {
   requestIssue,
   readPack,
   withdrawPack,
+  acknowledgePack,
 } from "../../src/documents/packs";
 import { processRenderJob } from "../../src/documents/worker";
 import { LocalSyntheticDocumentStore } from "../../src/documents/store";
@@ -84,8 +85,30 @@ test("DK03-B01 native pack/report journey, literal scoped paging, distinct recip
     (await listOutputs(p, { site_id: randomUUID() })).total_matching,
     0,
   );
-  for (const row of [...register.items, ...second.items])
+  for (const row of [...register.items, ...second.items]) {
     assert.equal(row.availability, "NotChecked");
+    assert.equal(row.current_revision_number, 1);
+    assert.equal(row.current_issue!.revision_number, 1);
+    assert.equal(row.preparation!.revision_number, 1);
+    assert.deepEqual(
+      row.recipient_summary,
+      row.kind === "JobPack"
+        ? {
+            visibility: "AllRecipients",
+            recipient_count: 2,
+            acknowledged_count: 2,
+            required_recipient_count: 2,
+            required_acknowledged_count: 2,
+          }
+        : {
+            visibility: "FrozenReportRecipient",
+            recipient_count: 1,
+            acknowledged_count: null,
+            required_recipient_count: null,
+            required_acknowledged_count: null,
+          },
+    );
+  }
   const packDetail = await readOutput(p, q.pack.id, detail("JobPack"));
   const reportDetail = await readOutput(
     p,
@@ -128,6 +151,17 @@ test("DK03-B01 native pack/report journey, literal scoped paging, distinct recip
   assert.equal(field.preparation_visibility, "NotProvided");
   assert.deepEqual(field.preparations, []);
   assert.equal(field.selected_issue!.distribution!.recipients.length, 1);
+  assert.deepEqual(field.output.recipient_summary, {
+    visibility: "OwnRecipient",
+    recipient_count: 1,
+    acknowledged_count: 1,
+    required_recipient_count: 1,
+    required_acknowledged_count: 1,
+  });
+  for (const result of [packDetail, reportDetail]) {
+    assert.equal(result.issue_history[0].revision_number, 1);
+    assert.equal(result.preparations[0].revision_number, 1);
+  }
   assert.equal(
     field.selected_issue!.distribution!.recipients[0].user_id,
     q.p.actor_id,
@@ -203,10 +237,27 @@ test("DK03-B03 failed/durable preparation has no issue; native original recovery
   const queuedRead = await readOutput(q.p, q.pack.id, detail("JobPack"));
   assert.equal(queuedRead.selected_issue, null);
   assert.equal(queuedRead.preparations[0].state, "Queued");
+  assert.equal(queuedRead.output.current_revision_number, 1);
+  assert.equal(queuedRead.preparations[0].revision_number, 1);
+  assert.deepEqual(queuedRead.output.recipient_summary, {
+    visibility: "NotIssued",
+    recipient_count: null,
+    acknowledged_count: null,
+    required_recipient_count: null,
+    required_acknowledged_count: null,
+  });
   const crew = await principal("assigned-technician");
   const protectedDraft = await readOutput(crew, q.pack.id, detail("JobPack"));
   assert.equal(protectedDraft.availability, "NotProvided");
   assert.equal(protectedDraft.output.current_revision_id, null);
+  assert.equal(protectedDraft.output.current_revision_number, null);
+  assert.deepEqual(protectedDraft.output.recipient_summary, {
+    visibility: "NotProvided",
+    recipient_count: null,
+    acknowledged_count: null,
+    required_recipient_count: null,
+    required_acknowledged_count: null,
+  });
   assert.deepEqual(protectedDraft.preparations, []);
   assert.equal(
     (await listOutputs(crew, { view: "unissued" })).total_matching,
@@ -246,12 +297,40 @@ test("DK03-B03 failed/durable preparation has no issue; native original recovery
 test("DK03-B04 superseded and withdrawn issues retain exact bytes without inheriting successor applicability", async () => {
   const q = await issued(),
     original = await readOutput(q.p, q.pack.id, detail("JobPack"));
+  const actor = await principal("assigned-technician"),
+    recipient = original.selected_issue!.distribution!.recipients.find(
+      (r) => r.user_id === actor.actor_id,
+    )!;
+  await acknowledgePack(actor, q.issue_id, {
+    ...base(),
+    assignment_id: recipient.assignment_id,
+    assignment_version: recipient.assignment_version,
+    presented_hash: original.selected_issue!.output_hash,
+    captured_at: new Date().toISOString(),
+  });
+  assert.deepEqual((await listOutputs(q.p)).items[0].recipient_summary, {
+    visibility: "AllRecipients",
+    recipient_count: 2,
+    acknowledged_count: 1,
+    required_recipient_count: 2,
+    required_acknowledged_count: 1,
+  });
+  assert.equal(
+    (await listOutputs(await principal("second-technician"))).items[0]
+      .recipient_summary.acknowledged_count,
+    0,
+  );
   await revisePack(q.p, q.pack.id, {
     ...base(),
     expected_version: q.pack.version,
     content: content(),
   });
   let pack = (await readPack(q.p, q.pack.id)).items[0];
+  const successorDraft = (await listOutputs(q.p)).items[0];
+  assert.equal(successorDraft.current_revision_number, 2);
+  assert.equal(successorDraft.current_issue!.revision_number, 1);
+  assert.equal(successorDraft.recipient_summary.acknowledged_count, 1);
+  assert.equal((await listOutputs(actor)).items[0].current_revision_number, 1);
   await checkPack(q.p, pack.id, {
     ...base(),
     expected_version: pack.version,
@@ -271,6 +350,25 @@ test("DK03-B04 superseded and withdrawn issues retain exact bytes without inheri
   assert.equal(old.selected_issue!.pack_applicable, false);
   assert.equal(old.availability, "Available");
   assert.equal(old.issue_history.length, 2);
+  assert.deepEqual(
+    old.issue_history.map((i) => i.revision_number),
+    [2, 1],
+  );
+  assert.equal(old.selected_issue!.revision.revision, 1);
+  assert.equal(
+    old.selected_issue!.distribution!.recipients.flatMap(
+      (r) => r.acknowledgements,
+    ).length,
+    1,
+  );
+  assert.equal(old.output.current_issue!.revision_number, 2);
+  assert.deepEqual(old.output.recipient_summary, {
+    visibility: "AllRecipients",
+    recipient_count: 2,
+    acknowledged_count: 0,
+    required_recipient_count: 2,
+    required_acknowledged_count: 0,
+  });
   assert.ok(old.selected_issue!.events.some((x) => x.kind === "Superseded"));
   const field = await principal("assigned-technician");
   const historical = await readOutput(
@@ -287,6 +385,10 @@ test("DK03-B04 superseded and withdrawn issues retain exact bytes without inheri
   const withdrawn = await readOutput(q.p, pack.id, detail("JobPack"));
   assert.equal(withdrawn.selected_issue!.pack_applicable, false);
   assert.equal(withdrawn.availability, "Available");
+  assert.deepEqual(
+    withdrawn.output.recipient_summary,
+    old.output.recipient_summary,
+  );
   assert.ok(
     withdrawn.selected_issue!.events.some((x) => x.kind === "Withdrawn"),
   );
