@@ -14,7 +14,7 @@ import {
   choice,
 } from "../shared/validation";
 import { sameVersion } from "../scheduling/validation";
-import { issueContext, packContext } from "../documents/context";
+import { issueContext, packAppointmentApplicable, packContext } from "../documents/context";
 import { reportContext, recipient } from "../reports/context";
 import { readBundle } from "../documents/worker";
 import { readReportBundle } from "../reports/worker";
@@ -88,7 +88,7 @@ async function audience(
       record.needs_review ||
       issue.assignment_version !== a.assignment_version ||
       issue.schedule_version !== a.schedule_version ||
-      !["Confirmed", "InProgress"].includes(a.status)
+      !packAppointmentApplicable(a.status)
     )
       conflict(
         "IssueNotApplicable",

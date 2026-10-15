@@ -56,7 +56,8 @@ async function call(page: Page, path: string, body?: unknown) {
 
 test("invited actor: schedule lanes, demand and appointment links load with booking controls", async ({ page, context }, info) => {
   await signInFixture(context, objectId);
-  await page.goto("/schedule");
+  // The planner opens on today; the seeded visits are in the week of 22 September 2031.
+  await page.goto("/schedule?day=2031-09-22");
   await expect(page.getByRole("region", { name: "Week resource planner", exact: true })).toBeVisible();
   await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);

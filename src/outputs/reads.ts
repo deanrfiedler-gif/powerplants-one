@@ -7,7 +7,7 @@ import {
   type QueryClient,
 } from "../platform/permissions";
 import { uuid } from "../shared/validation";
-import { packContext, issueContext } from "../documents/context";
+import { packContext, issueContext, packAppointmentApplicable } from "../documents/context";
 import { reportContext } from "../reports/context";
 import { readBundle, type OutputManifest } from "../documents/worker";
 import { readReportBundle, type ReportManifest } from "../reports/worker";
@@ -559,7 +559,7 @@ export async function readOutput(
                 ? ctx.record.current_issue_id === issue.id &&
                   !ctx.record.needs_review &&
                   ctx.record.status === "Issued" &&
-                  ["Confirmed", "InProgress"].includes(ctx.a.status) &&
+                  packAppointmentApplicable(ctx.a.status) &&
                   issue.assignment_version === ctx.a.assignment_version &&
                   issue.schedule_version === ctx.a.schedule_version
                 : null,

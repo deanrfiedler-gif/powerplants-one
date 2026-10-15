@@ -480,7 +480,7 @@ export function RecordDetail({
                   ),
               ) && (
                 <p className="ec-warning">
-                  Historical issue � upstream changes require reassessment for
+                  Historical issue — upstream changes require reassessment for
                   current use.
                 </p>
               )}
