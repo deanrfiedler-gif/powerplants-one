@@ -81,7 +81,7 @@ jobs:
         if: startsWith(matrix.suite, 'database')
         env:
           PPO_E1_DATABASE_SHARD: ${{ matrix.database_shard }}
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_E1_DATABASE_SHARD" tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/cpq-costs.test.ts tests/database/cpq-rebase.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_E1_DATABASE_SHARD" tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/cpq-costs.test.ts tests/database/cpq-rebase.test.ts tests/database/cpq-packages.test.ts tests/database/cpq-packages-upgrade.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Exact CPQ release quality, impact, authority and recovery database proof
         if: matrix.suite == 'quality'
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/cpq-quality.test.ts
@@ -115,6 +115,7 @@ jobs:
           node --env-file=.env.local --import tsx --test tests/http/cpq-quality.test.ts
           node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-workload.test.ts tests/http/estimating-sources.test.ts tests/http/estimating-review.test.ts tests/http/quotation-release.test.ts tests/http/estimating-configuration.test.ts tests/http/cpq.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-import-review.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/cpq-packages.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-products.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-costs.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-rebase.test.ts
@@ -127,6 +128,7 @@ jobs:
           node --env-file=.env.local --import tsx --test tests/http/excel-landed.test.ts
           node --import tsx scripts/excel-capacity-profile.ts candidate
           node --env-file=.env.local --import tsx scripts/excel-import-restart.ts write landed
+          node --env-file=.env.local --import tsx scripts/cpq-packages-restart.ts write
           node --env-file=.env.local --import tsx scripts/cpq-products-restart.ts write
           node --env-file=.env.local --import tsx scripts/cpq-costs-restart.ts write
           node --env-file=.env.local --import tsx scripts/cpq-rebase-restart.ts write
@@ -167,6 +169,7 @@ jobs:
           node --env-file=.env.local --import tsx scripts/cpq-costs-restart.ts verify
           node --env-file=.env.local --import tsx scripts/cpq-rebase-restart.ts verify
           node --env-file=.env.local --import tsx scripts/cpq-quality-restart.ts verify
+          node --env-file=.env.local --import tsx scripts/cpq-packages-restart.ts verify
       - name: Compiled E1 desktop, phone, 320px, uncertain response and long output
         if: matrix.suite == 'browser'
         # Reuse the build verified by HTTP/restart checks. The same assertions
@@ -205,6 +208,8 @@ jobs:
             verification-evidence/cpq-costs-restart/verified.json
             verification-evidence/cpq-rebase-restart/verified.json
             verification-evidence/cpq-quality-restart/verified.json
+            verification-evidence/cpq-packages-restart/verified.json
+            verification-evidence/cpq-packages-restart/workload.json
             verification-evidence/excel-quotation/
             verification-evidence/excel-capacity/
             verification-evidence/fertigation-build/

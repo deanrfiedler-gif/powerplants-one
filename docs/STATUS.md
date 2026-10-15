@@ -1,5 +1,11 @@
 # Current prototype status
 
+## BC-04 owned CPQ packages — 15 October 2026
+
+PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.
+
+[Execution evidence](testing/evidence/cpq-packages/README.md) records validation in progress. Synthetic workload measurements are in-worker evaluation observations; representative operating targets and business acceptance remain open. CI and independent automated review are separate delivery gates. No merge or deployment by this task.
+
 ## BC-04 CPQ release quality and impact — 15 October 2026
 
 The retained Estimating CI database lane at `3b7509f` reached its 45-minute job limit after 209 passing cases, so the aggregate failed. The [capacity evidence](testing/evidence/cpq-quality/README.md#retained-estimating-ci-capacity--15-october-2026) retains that incomplete result and main/parent controls. The documented repair partitions the same 30 files across two isolated native database shards while preserving serial execution, all assertions and existing deadlines. Application/schema sources remain unchanged; configuration proofs are separate from required fresh CI and automated review.

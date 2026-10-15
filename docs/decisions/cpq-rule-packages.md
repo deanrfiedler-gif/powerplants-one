@@ -1,5 +1,9 @@
 # CPQ owned rule and table packages
 
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Date: 15 October 2026. Scope: BC-04 / ES-02 / ES-03, preserving EST-01–EST-09.
+
 Status: accepted implementation direction for Dean's 15 October 2026 synthetic backend request; operational ownership and service targets remain unaccepted.
 
 ## Context
@@ -12,7 +16,7 @@ Use the existing PostgreSQL database, native UUIDs, shared atomic operations and
 
 A package has one immutable company, kind (`Rules` or `Tables`) and owner (its creating actor). Only that owner, with current `cpq.author`, can revise or withdraw it. Ownership is responsibility, never an access grant. Ownership transfer is a separate future policy. Revisions contain a normalized existing CPQ definition as a rehearsal context, selected member keys, a native fixture-owner user ID and declared synthetic workload targets. Tables use the actual schema 3 decision-table model; this increment does not combine schemas 3 and 4. Member identity is the exact native package revision plus its unique authored member key; labels are not identities. An unchanged member in a later package revision remains distinguishable through its content hash; a separate member registry is unnecessary for this bounded increment.
 
-The fixture owner must explicitly attest the exact revision after running all its fixtures and bounded workload measurements. A separate current `cpq.review` actor reviews that stored evidence. A third current `cpq.publish` actor publishes the exact revision. Authors, fixture owners and reviewers cannot publish their own evidence. Revise, failed attestation, review, publication and withdrawal retain immutable events, audit, receipts and outbox evidence. Current source and actor authority is rechecked at each new-use boundary. Original-operation recovery reauthorises the original retained sources without demanding that they remain currently published.
+The fixture owner must explicitly attest the exact revision after running all its fixtures and bounded workload measurements. A separate current `cpq.review` actor reviews that stored evidence. A separate current `cpq.publish` actor publishes the exact revision. Authors, fixture owners and reviewers cannot publish their own evidence. Revise, failed attestation, review, publication and withdrawal retain immutable events, audit, receipts and outbox evidence. Current source and actor authority is rechecked at each new-use boundary. Original-operation recovery reauthorises the original retained sources without demanding that they remain currently published.
 
 Package workload targets identify a synthetic family and rationale, maximum evaluation milliseconds and maximum serialized result bytes. All fixtures are measured three times inside the existing isolated worker, within its unchanged five-second and memory limits. Store each sample, maximum, input/output sizes, case dimensions, runtime version and scope with the exact target/fixture hash. This is in-worker evaluation time, not API latency or startup performance. A failed target or fixture is retained as failed evidence and cannot be approved. At most six workload fixtures are accepted per package. Small, typical and boundary fixtures must be supplied and explicitly labelled by the owner; no real operating family, percentile SLA or capacity commitment is inferred. Operational targets require later representative business data and acceptance.
 
