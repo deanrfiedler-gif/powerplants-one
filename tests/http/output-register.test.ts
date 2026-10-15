@@ -24,6 +24,27 @@ test("DK03-HTTP01 compiled consolidated register, exact native bytes and scoped 
   const register = await h.call("coordinator", "document-outputs");
   assert.equal(register.status, 200);
   assert.equal(register.body.total_matching, 2);
+  const packRow = register.body.items.find(
+      (r: { kind: string }) => r.kind === "JobPack",
+    ),
+    reportRow = register.body.items.find(
+      (r: { kind: string }) => r.kind === "ServiceReport",
+    );
+  assert.deepEqual(packRow.recipient_summary, {
+    visibility: "AllRecipients",
+    recipient_count: 2,
+    acknowledged_count: 2,
+    required_recipient_count: 2,
+    required_acknowledged_count: 2,
+  });
+  assert.equal(reportRow.recipient_summary.visibility, "FrozenReportRecipient");
+  assert.equal(reportRow.recipient_summary.recipient_count, 1);
+  assert.equal(reportRow.recipient_summary.acknowledged_count, null);
+  for (const row of [packRow, reportRow]) {
+    assert.equal(row.current_revision_number, 1);
+    assert.equal(row.current_issue.revision_number, 1);
+    assert.equal(row.preparation.revision_number, 1);
+  }
   const one = await h.call("coordinator", path);
   assert.equal(one.status, 200);
   assert.equal(one.body.availability, "Available");
