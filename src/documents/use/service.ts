@@ -14,7 +14,7 @@ import {
   invalid,
 } from "../../shared/validation";
 import { publicationContext } from "../publication/service";
-import { supportedTemplateDefinition } from "../publication/definition";
+import { supportedTemplateDefinition } from "../publication/contracts";
 import { hashInput } from "../drafts/validation";
 import { rendererVersion } from "../render";
 import { digest } from "../store";

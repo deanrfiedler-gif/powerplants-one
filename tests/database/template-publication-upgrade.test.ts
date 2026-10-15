@@ -76,7 +76,7 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
   );
   assert.deepEqual(
     afterLedger.filter((r) => r.version > 92).map((r) => r.version),
-    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102],
+    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103],
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.template_publications"), []);
   assert.deepEqual(
