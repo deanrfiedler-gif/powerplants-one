@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Product image references proposed — 15 October 2026
+
+Products Amendment A1 ([PR #501](https://github.com/deanrfiedler-gif/powerplants-one/pull/501)) left storing and reading real product images undecided. A [proposed decision](decisions/product-image-references.md) drafts it for Dean's review: the image reference lives on the immutable product revision and points at an immutable image source holding the exact file version and SHA-256 in the existing `DocumentKey` shape; PPO makes re-encoded, metadata-free renditions as a disposable cache, never serving originals, SharePoint URLs or provider IDs; anyone who may read the product revision may see its image, inside the product's company; a missing or unreadable file shows the placeholder with "Image unavailable" wording and never another image. [ADR-0057](decisions/ADR-0057-product-image-renditions.md) proposes sharp for the renditions. Ten open questions carry recommended answers. Nothing is adopted; no code, migration, seed, permission, dependency, integration or parent ID changes.
+
 ## BC-04 owned CPQ packages — 15 October 2026
 
 PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.
