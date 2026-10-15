@@ -3,13 +3,13 @@ document_id: PPO-PD01-FIGMA-R02
 revision: r02
 date: 2026-10-15
 owner: Dean Fiedler
-status: Retained design reference for Amendment A1 (product image); drawn at the owner's direction, owner visual review and named version pending; icon-free; not an application capture or UI baseline
+status: Retained owner-accepted design reference for Amendment A1 (product image), accepted 15 October 2026; icon-free; not an application capture or UI baseline
 source_commit: d070a61ff17e04ffa0f0d37c16052c24a0bb0e26
 ---
 
 # Products design r02 — Amendment A1 captures
 
-These nine images retain Amendment A1 to the Products (PD-01) design: the product image. On 15 October 2026 Dean asked whether the accepted design had a place for an image of the actual product, as the earlier [r04 preview](../PPO-Products-Preview-r04.html) did. It did not. He then directed the amendment: "Proceed with your recommendations." The decision, display rules and status are in section 8 of [the design decision](../../../../decisions/products-figma-design.md). The accepted design's captures in [Products design r01](../products-figma-r01/README.md) stay unchanged as the accepted history. Retain these bytes unchanged; a later revision receives a new folder.
+These nine images retain Amendment A1 to the Products (PD-01) design: the product image. On 15 October 2026 Dean asked whether the accepted design had a place for an image of the actual product, as the earlier [r04 preview](../PPO-Products-Preview-r04.html) did. It did not. He then directed the amendment ("Proceed with your recommendations") and accepted it as drawn the same day. The decision, display rules and status are in section 8 of [the design decision](../../../../decisions/products-figma-design.md). The accepted design's captures in [Products design r01](../products-figma-r01/README.md) stay unchanged as the accepted history. Retain these bytes unchanged; a later revision receives a new folder.
 
 Each image is one Figma frame exported at scale 1 at its exact frame size; the states board is a Figma section, which exports with a 40 px margin. Every Font Awesome icon was replaced by a plain placeholder square before export, as [ADR-0053](../../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. That includes the camera glyph on the no-image placeholder and the magnifying glass on View full size. The Powerplants logo is the company's own. Names, references, sites, amounts and dates are synthetic fixtures.
 
@@ -34,7 +34,7 @@ The six product pictures (CP-40, CC-8, DP-12, ECP-2, FV-20 and SM-90) are synthe
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | None yet. The accepted design remains "Excel import, Products and Inventory — accepted"; A1 needs its own named version after Dean's review |
+| Named version | "Products — product image amendment A1", saved and confirmed by Dean on 15 October 2026. The design before A1 remains "Excel import, Products and Inventory — accepted" |
 | Amended frames | Page "Products · PD-01 · discovery proposal" `653:38`, edited in place: `689:2518`, `693:3156`, `694:7672`, `696:2784`, `696:163022`, `696:163542`, `696:164256`, `696:164513` and the States section `703:3419` (images in order) |
 | New page components | Product image (record) `829:3490`, Product thumbnail `829:3461`; image sources `822:3453` |
 | Capture copies | Page "Captures (icon-free)", from y = 118,000: `833:207331`, `833:208082`, `833:208895`, `833:209310`, `833:209700`, `833:210112`, `833:210317`, `833:210458`, `833:210568` (images in order) |

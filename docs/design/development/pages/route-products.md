@@ -12,7 +12,7 @@ Find the exact Family, Model or Variant by UUID, synthetic alias, provider key o
 
 **Accepted design, 15 October 2026:** the [Products design decision](../../../decisions/products-figma-design.md), captures 01, 02 and 09 in [Products design r01](../../../reference/ui/products/products-figma-r01/README.md). Where it differs from the direction below, the accepted design governs: stock and demand move to Inventory, and the catalogue keeps one Availability column with no quantities.
 
-**Amendment A1, product image, 15 October 2026 (drawn at Dean's direction; review pending):** section 8 of the [Products design decision](../../../decisions/products-figma-design.md), captures 01, 02 and 09 in [Products design r02](../../../reference/ui/products/products-figma-r02/README.md). A 36 px Thumbnail column (28 px image, no heading) sits between Select and Product; Family narrows to 136 px so the row width is unchanged. The snapshot header shows a 40 px thumbnail beside the name. A product without a linked image shows a neutral placeholder, never an image from a similar product, its family or another revision; the States board adds No image.
+**Amendment A1, product image, accepted 15 October 2026:** section 8 of the [Products design decision](../../../decisions/products-figma-design.md), captures 01, 02 and 09 in [Products design r02](../../../reference/ui/products/products-figma-r02/README.md). A 36 px Thumbnail column (28 px image, no heading) sits between Select and Product; Family narrows to 136 px so the row width is unchanged. The snapshot header shows a 40 px thumbnail beside the name. A product without a linked image shows a neutral placeholder, never an image from a similar product, its family or another revision; the States board adds No image.
 
 Design direction after the 14 October alignment review: at 1440 × 900, use the established 240px Sales rail, 64px top bar and 240px secondary menu. Products is selected in the primary rail; catalogue destinations and filters belong in the secondary menu. Place the 60px toolbar and 40px grid rows directly within the workspace, without an enclosing card, outer module padding or oversized page heading. Use shared typography, tokens and controls. The authorised catalogue now follows this direction; model/variant rows may grow beyond 40px for readability.
 
@@ -40,7 +40,7 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 ## Visual sources, departures and proof
 
 - Accepted Figma design: [Products design r01 captures](../../../reference/ui/products/products-figma-r01/README.md) (icon-free PNGs; not application captures)
-- Amendment A1, product image: [Products design r02 captures](../../../reference/ui/products/products-figma-r02/README.md) (icon-free PNGs; owner review pending; not application captures)
+- Amendment A1, product image: [Products design r02 captures](../../../reference/ui/products/products-figma-r02/README.md) (icon-free PNGs; owner-accepted; not application captures)
 - [PPO-Products-Preview-r04.html](../../../reference/ui/products/PPO-Products-Preview-r04.html)
 
 - [Products workflow map](../../../reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html)

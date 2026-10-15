@@ -2,7 +2,7 @@
 document_id: PPO-PD01-FIGMA-DEC
 date: 2026-10-15
 owner: Dean Fiedler
-status: Owner-accepted design; Amendment A1 (product image) drawn at the owner's direction, owner visual review and named version pending; native restyle, Inventory handover read and UI baseline acceptance separate
+status: Owner-accepted design, including Amendment A1 (product image) accepted on 15 October 2026; native restyle, Inventory handover read and UI baseline acceptance separate
 source_commit: cfd465f20787e321df9e80244b3df7aed307b6b2
 versioning: git
 ---
@@ -13,7 +13,7 @@ On 14 October 2026 Dean asked Claude to redesign the Products (PD-01) page that 
 
 This record supersedes the layout of the discovery proposal and keeps every rule it set. The proposal's retained captures stay unchanged as history.
 
-Section 8 records Amendment A1, the product image, which Dean directed on 15 October 2026 and which awaits his review. Sections 1 to 7 describe the design as accepted.
+Section 8 records Amendment A1, the product image, which Dean directed and accepted on 15 October 2026 (named version "Products — product image amendment A1"). Sections 1 to 7 describe the design as first accepted; where A1 differs, A1 governs.
 
 Scope: the existing destination `products` in the Sales rail, routes `/products` and `/products/[id]`, register entries `route:/products`, `route:/products/[id]` and `scope:PD-01` ("Catalogue and product technical workspace"), within the [Products contract](../contracts/products-catalogue.md) (PD-01 to PD-05) and its retained parents. No parent requirement ID is added or renamed. This is a design decision. It authorises no application code, read model, route change, migration, permission, capability or deployment.
 
@@ -100,7 +100,7 @@ On 15 October 2026 Dean showed the product record in the earlier [r04 preview](.
 |---|---|---|
 | Show an image of the actual product | User decision, 15 October 2026 | Quoted above |
 | Where the image sits and how it behaves (A1.1 to A1.6) | Claude's recommendation, adopted by "Proceed" | The rules below; A1.2 refines one recommendation, as noted |
-| The drawn amendment | Drawn on 15 October 2026; owner visual review pending | [Products design r02](../reference/ui/products/products-figma-r02/README.md) |
+| Accept the drawn amendment | User decision, 15 October 2026 | "I accept Amendment A1 as drawn." Dean then saved the named version and confirmed it: "it's saved". [Products design r02](../reference/ui/products/products-figma-r02/README.md) |
 | Storing and reading real images | Design intent only; not decided for building | A1.6 and the open items below |
 
 | ID | Rule |
@@ -112,7 +112,7 @@ On 15 October 2026 Dean showed the product record in the earlier [r04 preview](.
 | A1.5 | **No image.** A neutral placeholder with a camera glyph; on the record it reads "No image · None linked to this revision". A product never borrows an image from a similar product, its family or another revision, and stock photographs are not used. The design shows it for the two families, CP-60 (draft), DP-25, FV-32 and SM-120, on the 320 px record and on the States board. |
 | A1.6 | **Source of images.** A product image is a business document, and SharePoint owns business documents, so PPO stores a reference to the exact file revision and shows its source and revision rather than becoming an image library. Linking or replacing an image is not drawn here; it belongs with the Documents tab and the authoring form. |
 
-**Design reference.** The frames in section 2 were edited in place and keep their node IDs. New page components: Product image (record) `829:3490` (Image: Linked, None) and Product thumbnail `829:3461` (Image: Linked, None; Size: Small, Large). The six synthetic concept images are held in `822:3453`. The States board gains "State / No image" `833:207299`, and the notes card `703:3489` and page header `688:38` record A1. The named version "Excel import, Products and Inventory — accepted" keeps the design as it was before A1. A1 needs its own named version once Dean has reviewed it; Claude suggests "Products — product image amendment A1".
+**Design reference.** The frames in section 2 were edited in place and keep their node IDs. New page components: Product image (record) `829:3490` (Image: Linked, None) and Product thumbnail `829:3461` (Image: Linked, None; Size: Small, Large). The six synthetic concept images are held in `822:3453`. The States board gains "State / No image" `833:207299`, and the notes card `703:3489` and page header `688:38` record A1. The named version "Excel import, Products and Inventory — accepted" keeps the design as it was before A1. Dean saved A1 as the named version "Products — product image amendment A1" and confirmed the save on 15 October 2026. After that save, Claude changed only the status wording on the page header and notes card from "awaiting review" to "accepted".
 
 **Images.** The six product pictures (CP-40, CC-8, DP-12, ECP-2, FV-20 and SM-90) are synthetic concept images of fictional equipment, generated with Figma's image generation. They show no real manufacturer's product, label or brand. Generating them used six Figma AI image credits.
 
