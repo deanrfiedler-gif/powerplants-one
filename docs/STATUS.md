@@ -11,7 +11,7 @@ The [My jobs decision](decisions/my-jobs-figma-design.md) records the design:
 - Offline is a state of the same pages.
 - Photos are converted to PNG on the phone, the customer signs on a signature pad, and each crew member submits their own part.
 
-Thirty-nine icon-free captures are retained under the named version "My jobs — accepted", which Dean saves in Figma version history.
+Thirty-nine icon-free captures are retained under the named version "My jobs — accepted". Claude saved it in Figma version history at Dean's request ("Please save the named version") at about 00:01 AEST on 16 October 2026, after the captures were made.
 
 No application code, route, migration, permission or parent ID changes. r05 stays the built timer baseline. Building the page and the backend changes it implies are not decided:
 - crew-aware completion;
