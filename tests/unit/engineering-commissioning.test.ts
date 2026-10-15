@@ -9,6 +9,8 @@ import {
   reviewPresentation, sourceConditions, sourcePresentation, workflow, workflowPresentation, workflows, type GateFacts, type ObligationFact, type PackageFacts, type Policy, type Presentation,
 } from "../../src/engineering/commissioning/model";
 import { parseBasisCommand, parseConfigurationCommand, parseHandoverCommand, parseInspectionCommand, parsePackageCommand, parseReleaseCommand } from "../../src/engineering/commissioning/validation";
+import { releaseManifest } from "../../src/engineering/commissioning/outputs";
+import { sha256, type Access, type Loaded } from "../../src/engineering/commissioning/context";
 
 // EN-08's pure rules. Task-local labels EN08-nn (build plan r02); none is a parent acceptance pass.
 const counts = (required: number, over: Partial<Coverage> = {}): Coverage => ({ required, accepted: 0, passed_unreviewed: 0, failed: 0, not_tested: 0, unassessable: 0, reassessment: 0, criteria_missing: 0, ...over });
@@ -331,4 +333,23 @@ test("EN08-02 EN08-08 EN08-10 EN08-28 a date says what it is a date of, a limit 
   refused(() => parseConfigurationCommand({ ...backup, content_hash: "A".repeat(64) }), "content_hash");
   for (const smuggled of ["password", "content_base64", "identity_at"]) refused(() => parseConfigurationCommand({ ...backup, [smuggled]: "x" }), smuggled);
   refused(() => parseConfigurationCommand({ ...head(), action: "backup_verify", record_id: id(), backup_id: id(), expected_version: 1, fact: "everything", evidence: "SYN" }), "fact");
+});
+
+// ENG-1: the release manifest is hashed and compared again at every later decision, so its content may not depend on
+// the order PostgreSQL happened to return an attempt's instruments in.
+test("EN08 release manifest lists an attempt's instruments in one order whatever order they were read in", () => {
+  const uuid = (n: number) => `e9550000-0000-4000-8000-00000000000${n}`;
+  const instrument = (n: number) => ({ instrument_id: uuid(n), assessment: "Valid", snapshot: { reference: `SYN-PG-${n}`, calibration_reference: `SYN-CAL-${n}`, valid_from: "2026-01-01", valid_to: "2032-12-31" } });
+  const loaded = (instruments: ReturnType<typeof instrument>[]) => ({
+    row: { id: uuid(4), reference: "SYN-CX-001", title: "SYN irrigation pump set", system_name: "SYN Irrigation", area: "SYN Zone 1" },
+    scope: { id: uuid(5), scope_number: 1, content_hash: "a".repeat(64), items: [], interfaces: [] },
+    definitions: [], effective: [], approved_basis: null, configuration: null, differences: [], defects: [], redlines: [], obligations: [],
+    attempts: [{ row: { id: uuid(6), state: "Submitted", attempt_number: 1, predecessor_id: null, submitted_hash: "b".repeat(64), configuration_reference: "CFG-001", occurred_at: null, timezone: "Australia/Brisbane", received_at: null, performer_id: uuid(7) }, review: "Accepted", results: [], evidence: [], reviews: [], instruments }],
+  }) as unknown as Loaded;
+  const access = { pkg: { display_number: "SYN-EP-001", context_title: "SYN project", customer_name: "SYN customer" }, site_name: "SYN site", site_timezone: "Australia/Brisbane" } as unknown as Access;
+  const release = { id: uuid(8), reference: "AB-001", revision_number: 1, partial: false, included: [], excluded: [], audience: "Internal" as const, recipients: [], scope_id: uuid(5), basis_id: uuid(9), configuration_id: uuid(0) };
+  const [one, two, three] = [1, 2, 3].map(instrument);
+  const manifests = [[three, one, two], [two, three, one], [one, two, three]].map((order) => releaseManifest(loaded(order), access, release, new Map()));
+  assert.deepEqual(manifests[0].attempts[0].instruments.map((i) => i.reference), ["SYN-PG-1", "SYN-PG-2", "SYN-PG-3"]);
+  assert.equal(new Set(manifests.map((m) => sha256(m))).size, 1);
 });

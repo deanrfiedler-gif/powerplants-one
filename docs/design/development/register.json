@@ -12656,7 +12656,12 @@
         "docs/reference/ui/products/products-figma-r01/PPO-Products-04-Desktop-Record-Revisions-r01.png",
         "docs/reference/ui/products/products-figma-r01/PPO-Products-05-Tablet-Record-r01.png",
         "docs/reference/ui/products/products-figma-r01/PPO-Products-07-Phone-Record-r01.png",
-        "docs/reference/ui/products/products-figma-r01/PPO-Products-08-Phone-320-Not-Linked-r01.png"
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-08-Phone-320-Not-Linked-r01.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-03-Desktop-Record-Technical-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-04-Desktop-Record-Revisions-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-05-Tablet-Record-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-07-Phone-Record-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-08-Phone-320-Not-Linked-No-Image-r02.png"
       ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
@@ -12690,7 +12695,7 @@
         "scope:EQ-07",
         "scope:EQ-06"
       ],
-      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged."
+      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged. 15 Oct: Figma Amendment A1 (product image) accepted by Dean, named version 'Products — product image amendment A1', r02 captures."
     },
     {
       "key": "route:/products/compatibility",
@@ -12793,7 +12798,11 @@
         "docs/reference/ui/products/products-figma-r01/PPO-Products-01-Desktop-Catalogue-r01.png",
         "docs/reference/ui/products/products-figma-r01/PPO-Products-02-Desktop-Catalogue-Snapshot-r01.png",
         "docs/reference/ui/products/products-figma-r01/PPO-Products-06-Phone-Catalogue-r01.png",
-        "docs/reference/ui/products/products-figma-r01/PPO-Products-09-States-r01.png"
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-09-States-r01.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-01-Desktop-Catalogue-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-02-Desktop-Catalogue-Snapshot-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-06-Phone-Catalogue-r02.png",
+        "docs/reference/ui/products/products-figma-r02/PPO-Products-09-States-r02.png"
       ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
@@ -12831,7 +12840,7 @@
         "scope:EQ-07",
         "scope:EQ-06"
       ],
-      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged."
+      "notes": "14 Oct: authorised catalogue A implements flat discovery and scoped return. Record layout/populated supply B remains proposed. Named version and owner acceptance pending; review fingerprints unchanged. 15 Oct: Figma Amendment A1 (product image) accepted by Dean, named version 'Products — product image amendment A1', r02 captures."
     },
     {
       "key": "route:/products/pricing",

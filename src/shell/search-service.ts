@@ -99,7 +99,8 @@ export function searchAdapters(p: Principal): SearchAdapter[] {
       kind: "Deal",
       path: "/sales/opportunities",
       label: "title",
-      list: (q) => listOpportunities(p, q),
+      // Search finds a deal in any pipeline with any outcome, not only the register's default view.
+      list: (q) => listOpportunities(p, { ...q, outcome: "All" }, "All"),
       detail: (id) => readOpportunity(p, id),
     },
     ...(

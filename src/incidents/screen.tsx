@@ -949,7 +949,7 @@ function ReviewControls({
                       key={`${t.scope_item_id}:${t.asset_id}`}
                       value={`${t.scope_item_id}:${t.asset_id}`}
                     >
-                      {t.task_description} � {t.display_name}
+                      {t.task_description} · {t.display_name}
                     </option>
                   ))}
                 </Select>
