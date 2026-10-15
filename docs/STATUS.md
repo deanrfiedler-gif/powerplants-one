@@ -1,5 +1,9 @@
 # Current prototype status
 
+## DK-03 register revision and acknowledgement facts — 15 October 2026
+
+The independent `codex/output-register-facts` increment starts from main `41c8479` and integrates externally merged #498 at `d070a61` and #499 at `a676fde`. It did not stack on either contribution. The [decision](decisions/output-register-facts.md) delivers the accepted Q4/G3 read dependency: exact revision numbers for current records, issues and preparations, plus recipient/acknowledgement counts restricted to native issuer or crew visibility. Older acknowledgements never transfer to successor issues; report responses remain separate and hidden counts stay null. [API](contracts/output-register.md) and [execution evidence](testing/evidence/output-register-facts/README.md) distinguish implementation from local checks, CI and review. No schema, grant, dependency, UI, merge or deployment.
+
 ## Backend reconciliation and DK-03 applicability — 15 October 2026
 
 The [current source reconciliation](delivery/backend-reconciliation.md) distinguishes integrated code from older delivery checkpoints across Documents, Projects, Service/Supply, Finance, Reporting and platform controls. The initial base `41c8479` includes CPQ #492/#494 and PJ-05 #493. #498 subsequently merged externally at main `d070a61`; its final head had independent review clean, 59 successful checks and the intentional PT-27 skip. The existing monitor completed and was removed. This contribution reconciles that upstream change without duplicating CPQ implementation.
