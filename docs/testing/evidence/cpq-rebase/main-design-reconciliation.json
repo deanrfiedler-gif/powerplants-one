@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-15",
+  "scope": "Documentation-only reconciliation of externally merged PR #495; not new runtime or CI proof",
+  "previous_head": "af47a8edd10a0b978b3c59af0a114b057e851506",
+  "imported_main": "3f5aeebbd4ebdbed9fb0f13074633fbeabb827e8",
+  "main_changed_files": 49,
+  "byte_exact_imported_files": 47,
+  "resolved_conflicts": [
+    "docs/STATUS.md",
+    "docs/standards/document-register.csv"
+  ],
+  "conflict_resolution": "Preserve all previous CPQ status sections, new main design status section and both complete unique document-register row sets",
+  "unchanged_git_trees_and_blobs": {
+    "src": "b4af77405d9fd7e2c55888f6714d3c52a3c28b6f",
+    "tests": "799d5004c8e49fbb7a9c933fe9aed257c5a7eca5",
+    "db": "7dab28cd0f65e6c5fc699d31e88acbf00c00b090",
+    "scripts": "d1a41c50f6ed7d1695e8b8927251e4503d6e3ff4",
+    ".github": "55cf1a9525fef12d7d42b85106d8acda09da1ac3",
+    "package.json": "ddee90a9ebdd2c670cd155b65575c3b7b729bc78",
+    "package-lock.json": "bbc39321ff80818918f32f64a5f215bf61e5091e"
+  },
+  "limitations": [
+    "Previous compiled sources, restart evidence and CI remain separately identified",
+    "New exact-head CI and independent automated review are required",
+    "Visual and human operational acceptance are not granted"
+  ]
+}

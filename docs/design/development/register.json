@@ -3624,7 +3624,8 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/inventory-figma-design.md"
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
@@ -3916,7 +3917,8 @@
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/decisions/products-figma-design.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -5774,8 +5776,24 @@
       "guide_key": "guide.excel.import",
       "design_path": "docs/design/development/pages/scope-excel-import.md",
       "html_path": "docs/blueprints/excel-estimate-import.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-01-Desktop-Choose-Workbook-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-02-Desktop-Review-Blocked-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-03-Desktop-Review-Ready-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-04-Desktop-Confirm-and-Save-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-05-Desktop-Saved-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-06-Desktop-Compare-Revised-Workbook-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-07-Desktop-Price-from-Reviewed-Sources-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-08-Desktop-Prepare-Draft-Quotation-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-09-Tablet-Review-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-10-Phone-Review-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-11-Phone-Saved-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-12-Phone-320-Blocked-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-13-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/excel-import-figma-design.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -12037,7 +12055,16 @@
         "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
         "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png",
         "docs/reference/ui/products-discovery/alignment-r01/product-1440.png",
-        "docs/reference/ui/products-discovery/alignment-r01/product-390.png"
+        "docs/reference/ui/products-discovery/alignment-r01/product-390.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-01-Desktop-Register-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-02-Desktop-Register-Snapshot-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-03-Desktop-Item-Quantities-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-04-Desktop-Item-Activity-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-05-Tablet-Item-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-06-Phone-Register-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-07-Phone-Item-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-08-Phone-320-Quantities-Unknown-r01.png",
+        "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-09-States-r01.png"
       ],
       "dependencies": [
         "src/supply/model.ts",
@@ -12048,7 +12075,8 @@
         "src/supply/guide.ts",
         "src/app/styles/supply.css",
         "docs/decisions/products-discovery-proposal.md",
-        "docs/reference/ui/products-discovery/README.md"
+        "docs/reference/ui/products-discovery/README.md",
+        "docs/decisions/inventory-figma-design.md"
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
@@ -12576,7 +12604,12 @@
         "docs/reference/ui/products-discovery/alignment-r01/product-1440.png",
         "docs/reference/ui/products-discovery/alignment-r01/product-1024.png",
         "docs/reference/ui/products-discovery/alignment-r01/product-390.png",
-        "docs/reference/ui/products-discovery/alignment-r01/unlinked-320.png"
+        "docs/reference/ui/products-discovery/alignment-r01/unlinked-320.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-03-Desktop-Record-Technical-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-04-Desktop-Record-Revisions-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-05-Tablet-Record-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-07-Phone-Record-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-08-Phone-320-Not-Linked-r01.png"
       ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
@@ -12589,7 +12622,8 @@
         "docs/reference/ui/products-discovery/README.md",
         "src/products/catalogue-navigation.ts",
         "src/products/components/catalogue-return.ts",
-        "docs/testing/evidence/products-discovery/README.md"
+        "docs/testing/evidence/products-discovery/README.md",
+        "docs/decisions/products-figma-design.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -12708,7 +12742,11 @@
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
       "image_paths": [
         "docs/reference/ui/products-discovery/alignment-r01/catalogue-1440.png",
-        "docs/reference/ui/products-discovery/alignment-r01/catalogue-390.png"
+        "docs/reference/ui/products-discovery/alignment-r01/catalogue-390.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-01-Desktop-Catalogue-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-02-Desktop-Catalogue-Snapshot-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-06-Phone-Catalogue-r01.png",
+        "docs/reference/ui/products/products-figma-r01/PPO-Products-09-States-r01.png"
       ],
       "dependencies": [
         "src/products/components/catalogue.tsx",
@@ -12725,7 +12763,8 @@
         "src/products/components/catalogue-register.tsx",
         "src/products/components/catalogue-register.css",
         "src/shell/secondary-menu.tsx",
-        "src/components/ui/register-table.tsx"
+        "src/components/ui/register-table.tsx",
+        "docs/decisions/products-figma-design.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",

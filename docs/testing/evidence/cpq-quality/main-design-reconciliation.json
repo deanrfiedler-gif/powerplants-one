@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-15",
+  "scope": "Documentation-only import of reconciled parent #492; not new runtime or CI proof",
+  "previous_head": "d81c0bde1b21611e5df52262e1f901859268c67e",
+  "imported_parent": "0fc9149d500671ef819a90285e860b17e7dcc041",
+  "imported_main": "3f5aeebbd4ebdbed9fb0f13074633fbeabb827e8",
+  "byte_exact_main_files": 47,
+  "additional_conflicts": [],
+  "preservation": "Every prior child STATUS section, complete new main design section and both unique document-register row sets retained",
+  "unchanged_git_trees_and_blobs": {
+    "src": "d5f3c95f7aead34ace968180b67baa2b762dc197",
+    "tests": "a503eac0c2f39a9b9c772a006f8d16675a2bc288",
+    "db": "7dab28cd0f65e6c5fc699d31e88acbf00c00b090",
+    "scripts": "319d80fe36ca174172b7613b15ad756d73e5e488",
+    ".github": "d0d7b43e1862f4876d65a3f9ae6f4e765fa03dc9",
+    "package.json": "ddee90a9ebdd2c670cd155b65575c3b7b729bc78",
+    "package-lock.json": "bbc39321ff80818918f32f64a5f215bf61e5091e"
+  },
+  "limitations": [
+    "Compiled application source e0905c9 and build zI4JlXNvoOOU-1yRIWTll remain the earlier runtime proof",
+    "New exact-head CI and independent automated review required",
+    "No runtime checks repeated for documentation-only reconciliation; no new operational acceptance"
+  ]
+}
