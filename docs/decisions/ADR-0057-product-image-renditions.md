@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **State:** Proposed, 15 October 2026. Not accepted. It adds no dependency and authorises no code, migration or deployment. **Raised by:** IR4 of the [product image references proposal](product-image-references.md), which drafts how Products Amendment A1 ([PR #501](https://github.com/deanrfiedler-gif/powerplants-one/pull/501)) would store, read and show product images.
+**Owner:** Dean Fiedler. **State:** Proposed, 15 October 2026. Not accepted. It adds no dependency and authorises no code, migration or deployment. **Raised by:** IR4 of the [product image references proposal](product-image-references.md), which drafts how Products Amendment A1 ([section 8 of the Products design](products-figma-design.md#8-amendment-a1--product-image-15-october-2026)) would store, read and show product images.
 
 **Related:** `scope:PD-01`; parents DOC-01, DOC-06, NFR-03, NFR-04 and NFR-05; [ADR-0048](ADR-0048-products-native-catalogue.md) (native Products catalogue); [ADR-0003](ADR-0003-prototype-architecture.md) (prototype architecture); the [SharePoint information architecture](../architecture/sharepoint-information-architecture.md).
 
