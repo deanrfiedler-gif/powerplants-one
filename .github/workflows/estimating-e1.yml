@@ -19,10 +19,15 @@ jobs:
       fail-fast: false
       matrix:
         suite: [database, browser, quality]
+        include:
+          - suite: database
+            database_shard: 1/2
+          - suite: database-2
+            database_shard: 2/2
     runs-on: ubuntu-24.04
-    # The retained database suite exceeded 30 minutes after the Excel/CPQ additions.
-    # Keep every proof; the browser deadline remains unchanged.
-    timeout-minutes: ${{ matrix.suite == 'database' && 45 || 30 }}
+    # Native shards retain the full file selection and serial execution, each
+    # with its own disposable database. Keep every assertion and existing deadline.
+    timeout-minutes: ${{ startsWith(matrix.suite, 'database') && 45 || 30 }}
     services:
       postgres:
         image: postgres:16.15
@@ -73,8 +78,10 @@ jobs:
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
       - name: E1 PostgreSQL proof
-        if: matrix.suite == 'database'
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/cpq-costs.test.ts tests/database/cpq-rebase.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+        if: startsWith(matrix.suite, 'database')
+        env:
+          PPO_E1_DATABASE_SHARD: ${{ matrix.database_shard }}
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_E1_DATABASE_SHARD" tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/cpq-costs.test.ts tests/database/cpq-rebase.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Exact CPQ release quality, impact, authority and recovery database proof
         if: matrix.suite == 'quality'
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/cpq-quality.test.ts

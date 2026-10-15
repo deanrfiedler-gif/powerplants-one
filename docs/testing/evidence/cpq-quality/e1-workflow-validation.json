@@ -1,0 +1,35 @@
+{
+  "boundary": "Configuration and shell-gate verification only; real shard execution remains a CI gate",
+  "baseline": "3b7509f977df086f6bb8f2d40787e3b6678798e4",
+  "workflow_sha256_lf": "28178580683bf3103bdde4c14c3a05b8711ab15847c988eaaf5327d74dcfd359",
+  "complete_parsed_workflow_comparison": "passed; only matrix shard parameters, database condition/env/argument and equivalent per-lane deadline expression differ",
+  "matrix": [
+    "database",
+    "database-2",
+    "browser",
+    "quality"
+  ],
+  "artifacts": [
+    "Estimating-E1-database-evidence",
+    "Estimating-E1-database-2-evidence",
+    "Estimating-E1-evidence",
+    "Estimating-E1-quality-evidence"
+  ],
+  "job_deadlines_minutes": {
+    "database": 45,
+    "database-2": 45,
+    "browser": 30,
+    "quality": 30
+  },
+  "individual_database_deadline_ms": 120000,
+  "serial_file_execution": true,
+  "static_unit_execution": "once in database",
+  "mandatory_aggregate": {
+    "success": 0,
+    "failure": 1,
+    "cancelled": 1,
+    "skipped": 1,
+    "(empty)": 1
+  },
+  "unchanged": "All selected paths, application/test source, browser/quality commands, PostgreSQL service, action/runtime pins, restart sequences and evidence retention"
+}
