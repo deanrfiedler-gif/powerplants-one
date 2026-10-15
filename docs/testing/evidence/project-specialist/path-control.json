@@ -1,0 +1,6 @@
+{
+  "node": "v24.21.0",
+  "platform": "win32",
+  "tempPathMatchesRealPath": false,
+  "tempPathUsesShortAlias": true
+}

@@ -51,4 +51,4 @@ This register adds derived GAP IDs only; it does not replace any of the 78 paren
 
 ## GAP-04 bounded implementation — 15 October 2026
 
-[PJ-06 R1](../contracts/project-specialist-packages.md) adds internal source-bound package briefs and independent receiving. GAP-04 remains partially open: exact technical/procurement receiving, competence evidence and work-evidence acceptance are not inferred from accepting a brief. Service retains confirmation authority.
+The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) candidate for [PJ-06 R1](../contracts/project-specialist-packages.md) adds internal source-bound package briefs and independent receiving. GAP-04 remains partially open: exact technical/procurement receiving, competence evidence and work-evidence acceptance are not inferred from accepting a brief. Service retains confirmation authority.

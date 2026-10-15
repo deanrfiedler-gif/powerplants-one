@@ -28,6 +28,8 @@ Content: `title` (200), `scope`/`exclusions`/`deliverables` (4000 each), `specia
 
 Creation and each event commit identity, immutable content/source snapshot, SHA-256 snapshot hash, audit, actor-private receipt and synthetic outbox together. Sequential versions and native workspace locking arbitrate concurrent commands. Reusing an operation with changed content fails; identical retries recover the original. `GET /api/v1/operations/:operation_id` checks the original command's current duty and source/Activity authority. No schema, hash, grant, receipt or source row from prior history is rewritten. No seed or default grant is added.
 
+The database also enforces closed content and nested reference fields, typed text/reference versions, bounded unresolved reasons and calendar dates. Source snapshots contain exactly `commercial`, `engineering` and `demand`; the database recomputes the canonical hash before accepting an event. Extra authority fields cannot enter the immutable projection through a direct writer.
+
 ## Required proof and remaining scope
 
 Prove native approved-basis-to-package-to-independent-receiving, return/revise, immutable successor, source drift, company/access revocation, input/refusal, concurrent versions, exact retry/unknown-outcome recovery, transaction rollback and no downstream side effects. Inspect live schema; prove populated upgrades across 0026 and from 0102, original ledgers/grants/receipts preserved, reserved Products 0052 installed after 0103, repeat migration/seed stability, and real PostgreSQL/application restart recovery. Unit, database, compiled HTTP, application, documentation, CI and independent review results must be reported separately.

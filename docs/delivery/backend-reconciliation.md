@@ -42,4 +42,4 @@ This is an implementation ordering, not a completion waiver. Other families and 
 
 ## PJ-06 R1 contribution — 15 October 2026
 
-Verified main remains `a676fde`; #499 and #498 merged externally. #500 remains separately monitored. The next BC-06 increment is [internal package briefs and receiving](../contracts/project-specialist-packages.md), with exact native commercial, Engineering and Supply references. This contribution does not close full PJ-06, PJ-07 source recovery, PJ-08 publication, Service/Supply or Finance/Reporting gaps. See [actual verification](../testing/evidence/project-specialist/README.md).
+Verified main remains `a676fde`; #499 and #498 merged externally. #500 remains separately monitored. The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) implements [internal package briefs and receiving](../contracts/project-specialist-packages.md), with exact native commercial, Engineering and Supply references. This contribution does not close full PJ-06, PJ-07 source recovery, PJ-08 publication, Service/Supply or Finance/Reporting gaps. See [actual verification](../testing/evidence/project-specialist/README.md).

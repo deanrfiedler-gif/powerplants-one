@@ -1,0 +1,20 @@
+{
+  "base": "a676fde58d2ee88878bb2f9489912c97f49636b3",
+  "architecture_commit": "a87d8e4",
+  "implementation": "ad0e173108236cf3c3d2b8f7a3452e7bd33dc622",
+  "branch": "codex/pj06-specialist-packages",
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/518",
+  "node": "24.21.0",
+  "npm": "11.19.0",
+  "postgresql": "16.15",
+  "next": "16.3.4",
+  "synthetic_database": "ppo_synthetic_test",
+  "application_port": 3036,
+  "postgresql_port": 55440,
+  "schema_before": 102,
+  "schema_after": 103,
+  "seeds_added": 0,
+  "grants_added": 0,
+  "package_lock_sha256": "7adb8897f60313c7f0664170d4dfb83df0abda2c4009a3bb11b9ef276839aa18",
+  "migration_sha256": "8f7f0d215efa9037228bbdf1bf1f5f245f91b866598e529e23c9a5ffdf475b10"
+}
