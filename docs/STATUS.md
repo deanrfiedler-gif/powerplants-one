@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Node engine range — 15 October 2026
+
+Node.js 24.22.0 was installed on Dean's workstation, and `npm ci` refused it because `package.json` required exactly 24.21.0 under `engine-strict=true`. At Dean's request `engines.node` is now `>=24.21.0 <25`. `.nvmrc`, every CI workflow and the Azure image stay on 24.21.0, npm stays at exactly 11.19.0, and `package-lock.json` is unchanged so DK-06 managed template fingerprints don't move. The [runtime maintenance handover](delivery/runtime-maintenance.md) records the rule. No code, migration, permission or dependency change.
+
 ## Product image references proposed — 15 October 2026
 
 Products Amendment A1 ([PR #501](https://github.com/deanrfiedler-gif/powerplants-one/pull/501)) left storing and reading real product images undecided. A [proposed decision](decisions/product-image-references.md) drafts it for Dean's review: the image reference lives on the immutable product revision and points at an immutable image source holding the exact file version and SHA-256 in the existing `DocumentKey` shape; PPO makes re-encoded, metadata-free renditions as a disposable cache, never serving originals, SharePoint URLs or provider IDs; anyone who may read the product revision may see its image, inside the product's company; a missing or unreadable file shows the placeholder with "Image unavailable" wording and never another image. [ADR-0057](decisions/ADR-0057-product-image-renditions.md) proposes sharp for the renditions. Ten open questions carry recommended answers. Nothing is adopted; no code, migration, seed, permission, dependency, integration or parent ID changes.
