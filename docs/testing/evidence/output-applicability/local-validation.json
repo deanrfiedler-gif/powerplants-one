@@ -1,0 +1,80 @@
+{
+  "base": "41c8479a0aa4ff8eeebec5efb66712c95ecc8874",
+  "implementation": "e13e6039d7bee4c1b7ff2f4d295b0aff9ac868e6",
+  "build_id": "rJsMQk1h0ZfOhG498RqXJ",
+  "decision": "81d0741",
+  "results": {
+    "reproduction": "expected failure: native InProgress detail applicable but prepare rejects IssueNotApplicable",
+    "build": "passed final implementation including corrected C11/C12",
+    "typecheck": "passed prior fixture version; final build typecheck passed",
+    "lint": "passed",
+    "units": "3 passed",
+    "database": "10 passed; initial C11 invalid fixture corrected afterward; C05/B02/B03 deadlines and B04/B05 connection errors; interrupted, not a suite pass",
+    "main_control": "clean main at base with same pinned dependencies reproduced 120-second beforeEach timeout for C05 and B02; interrupted before more cascading tests",
+    "http": "pending",
+    "restart": "pending",
+    "foundation": "passed before final evidence/registry edits",
+    "naming": "passed before final evidence/registry edits"
+  },
+  "private_logs": {
+    "reproduction.log": {
+      "sha256": "c5e6fbf223630ac10bf7ef1936c1ba530d894b28913b46771c60e52d5de0c409",
+      "bytes": 1823
+    },
+    "database.log": {
+      "sha256": "9ba1c5561cdf2368a06fb38c63d931fb618029e363cc20fd9c2d5098e8a2193b",
+      "bytes": 1841
+    },
+    "main-control.log": {
+      "sha256": "9a9f34c1003090b1d3bf824cfb6795ce791a18c1c1847ddade8b1b96cc20c01e",
+      "bytes": 1439
+    },
+    "main-control-pinned.log": {
+      "sha256": "b33b4ee07b6cdfd09cf66e5711e4949c9b69f2b6d26716018d8d7a99ee06fb93",
+      "bytes": 1044
+    },
+    "unit.log": {
+      "sha256": "ede5b96743a1aa009c9e734647b6804036814c94244347b76268f80b5f82141f",
+      "bytes": 449
+    },
+    "typecheck.log": {
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "bytes": 55
+    },
+    "lint.log": {
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+      "bytes": 46
+    },
+    "build.log": {
+      "sha256": "4fb876989ac34b060d00c3e6d7a9bc7f010ad2c8de7c69dc8eb19a8aaf21bbb5",
+      "bytes": 32742
+    },
+    "foundation.log": {
+      "sha256": "7d7d919134bfa4639d03915471c793cd4b7a1e209c33885c9abf125d061c9543",
+      "bytes": 344
+    },
+    "naming.log": {
+      "sha256": "18401024ab43a434468e24313867d340902123ac13974d2f821ea3f4630d9306",
+      "bytes": 306
+    }
+  },
+  "limitations": [
+    "No deadlines, guards, assertions or database durability settings relaxed.",
+    "Primary main control first attempt could not load missing yauzl; no assertions ran. A separate clean pinned control reproduced setup timeouts.",
+    "No migration, capability, grant, dependency or UI change.",
+    "Hosted CI and independent automated review are separate pending gates."
+  ],
+  "upstream_reconciliation": {
+    "main": "d070a61ff17e04ffa0f0d37c16052c24a0bb0e26",
+    "reason": "PR498 merged externally; preserve both STATUS entries and integrated migration102 upgrade assertions",
+    "runtime_change": "none to the applicability correction",
+    "validation": "Integrated exact-head CI and review required; original local proofs bind prior source only"
+  },
+  "metadata_correction": {
+    "commit": "6c7564a102d657e6cd8f54b2318e109a84f0a65d",
+    "original_head": "4d995ee5cdc6bd1613ee766826b8a34f553eb64a",
+    "failure": "check_naming.py: two new Git masters lack versioning metadata",
+    "local_verification": "passed after required metadata comments",
+    "ci_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38701737385/job/116311311073"
+  }
+}
