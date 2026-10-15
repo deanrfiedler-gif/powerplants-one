@@ -1,5 +1,24 @@
 # Current prototype status
 
+## My jobs design accepted — 15 October 2026
+
+After the code audit, Dean asked for the technician My Jobs list and visit page to be designed in Figma, phone first. He then asked for desktop and tablet versions, a professional polish with tables matching the other pages, and the remaining r05 timer states on every width. On 15 October he accepted it: "I accept the My jobs · FI-01 design with your recommendations, including Q9 and Q10."
+
+The [My jobs decision](decisions/my-jobs-figma-design.md) records the design:
+- The list is ordered in Today, Upcoming and Recently finished.
+- The visit page has Work, Capture, Pack and Finish tabs.
+- The accepted r05 timer rules are kept, with its overnight, forgotten-finish, another-job and multi-day states.
+- Offline is a state of the same pages.
+- Photos are converted to PNG on the phone, the customer signs on a signature pad, and each crew member submits their own part.
+
+Thirty-nine icon-free captures are retained under the named version "My jobs — accepted", which Dean saves in Figma version history.
+
+No application code, route, migration, permission or parent ID changes. r05 stays the built timer baseline. Building the page and the backend changes it implies are not decided:
+- crew-aware completion;
+- the offline fixes from the audit;
+- a job labour allowance source;
+- the 12 h forgotten-timer flag.
+
 ## Backend reconciliation and DK-03 applicability — 15 October 2026
 
 The [current source reconciliation](delivery/backend-reconciliation.md) distinguishes integrated code from older delivery checkpoints across Documents, Projects, Service/Supply, Finance, Reporting and platform controls. The initial base `41c8479` includes CPQ #492/#494 and PJ-05 #493. #498 subsequently merged externally at main `d070a61`; its final head had independent review clean, 59 successful checks and the intentional PT-27 skip. The existing monitor completed and was removed. This contribution reconciles that upstream change without duplicating CPQ implementation.

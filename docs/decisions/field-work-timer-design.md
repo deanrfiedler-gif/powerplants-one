@@ -42,3 +42,7 @@ Deploying the timer is a separate, bounded change. It needs:
 ## Open points
 
 The open points are in §4 of the change record: the notice stripe across the design system, billing treatment of safety and approval waits, the two finish-action labels, the allowance data source, the test script revision, and the three shared-core token divergences.
+
+## Figma design — accepted 15 October 2026
+
+Dean accepted a Figma design for My jobs and the visit page that places r05's timer and its remaining states (Stopped with Undo, left running overnight, setting the finish time, another job timing, the multi-day allowance and the remaining-work estimate) on the accepted register and shared record layouts, phone first: [My jobs design (Figma)](my-jobs-figma-design.md). It supplements this record. r05 and its bytes are unchanged, and r05 stays the built baseline until a build implements the new design. The allowance data source listed under Open points is still open; the new design records it as backend work.
