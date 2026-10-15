@@ -44,6 +44,8 @@ export const calculateIsolated = (
 ) => run<Calculation>({ kind: "calculate", definition, input });
 export const testIsolated = (definition: Definition) =>
   run<ReturnType<typeof testDefinition>>({ kind: "fixtures", definition });
+export const qualityIsolated = (work: import("./quality-model").QualityWork) =>
+  run<ReturnType<typeof import("./quality-model").qualityResults>>({ kind: "quality", work });
 export const rebaseIsolated = (
   definition: Definition,
   input: CalculationInput,

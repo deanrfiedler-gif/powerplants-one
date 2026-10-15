@@ -9,6 +9,7 @@ const exclusive = new Set([
   // access; run it apart from the shared estimate/CPQ authority scenarios.
   "cpq-costs.test.ts",
   "cpq-rebase.test.ts",
+    "cpq-quality.test.ts",
   "cpq-products.test.ts",
   "excel-import-review.test.ts",
   "excel-import-persistence.test.ts",

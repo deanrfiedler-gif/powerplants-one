@@ -1,0 +1,96 @@
+{
+  "boundary": "Native selection probe with synthetic markers, not database execution or CI acceptance",
+  "baseline": "3b7509f977df086f6bb8f2d40787e3b6678798e4",
+  "node": "v24.21.0",
+  "workflow_sha256_lf": "28178580683bf3103bdde4c14c3a05b8711ab15847c988eaaf5327d74dcfd359",
+  "selected_file_count": 30,
+  "positive": [
+    {
+      "shard": "1/2",
+      "exit_code": 0,
+      "files": [
+        "tests/database/cpq-costs.test.ts",
+        "tests/database/cpq.test.ts",
+        "tests/database/estimating-configuration.test.ts",
+        "tests/database/estimating-review.test.ts",
+        "tests/database/estimating-workload.test.ts",
+        "tests/database/estimating.test.ts",
+        "tests/database/excel-capacity.test.ts",
+        "tests/database/excel-fx.test.ts",
+        "tests/database/excel-import-review.test.ts",
+        "tests/database/excel-landed-upgrade.test.ts",
+        "tests/database/excel-quotation.test.ts",
+        "tests/database/excel-reimport.test.ts",
+        "tests/database/excel-source-pricing.test.ts",
+        "tests/database/fertigation-import.test.ts",
+        "tests/database/quotation-release.test.ts"
+      ]
+    },
+    {
+      "shard": "2/2",
+      "exit_code": 0,
+      "files": [
+        "tests/database/cpq-rebase.test.ts",
+        "tests/database/estimating-catalogue.test.ts",
+        "tests/database/estimating-discovery-context.test.ts",
+        "tests/database/estimating-sources.test.ts",
+        "tests/database/estimating-workspaces.test.ts",
+        "tests/database/excel-capacity-upgrade.test.ts",
+        "tests/database/excel-fx-upgrade.test.ts",
+        "tests/database/excel-import-persistence.test.ts",
+        "tests/database/excel-import-upgrade.test.ts",
+        "tests/database/excel-landed.test.ts",
+        "tests/database/excel-reimport-upgrade.test.ts",
+        "tests/database/excel-source-pricing-upgrade.test.ts",
+        "tests/database/fertigation-artifacts.test.ts",
+        "tests/database/fertigation.test.ts",
+        "tests/database/specialist.test.ts"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "shard": "1/2",
+      "exit_code": 1,
+      "files": [
+        "tests/database/cpq-costs.test.ts",
+        "tests/database/cpq.test.ts",
+        "tests/database/estimating-configuration.test.ts",
+        "tests/database/estimating-review.test.ts",
+        "tests/database/estimating-workload.test.ts",
+        "tests/database/estimating.test.ts",
+        "tests/database/excel-capacity.test.ts",
+        "tests/database/excel-fx.test.ts",
+        "tests/database/excel-import-review.test.ts",
+        "tests/database/excel-landed-upgrade.test.ts",
+        "tests/database/excel-quotation.test.ts",
+        "tests/database/excel-reimport.test.ts",
+        "tests/database/excel-source-pricing.test.ts",
+        "tests/database/fertigation-import.test.ts",
+        "tests/database/quotation-release.test.ts"
+      ]
+    },
+    {
+      "shard": "2/2",
+      "exit_code": 0,
+      "files": [
+        "tests/database/cpq-rebase.test.ts",
+        "tests/database/estimating-catalogue.test.ts",
+        "tests/database/estimating-discovery-context.test.ts",
+        "tests/database/estimating-sources.test.ts",
+        "tests/database/estimating-workspaces.test.ts",
+        "tests/database/excel-capacity-upgrade.test.ts",
+        "tests/database/excel-fx-upgrade.test.ts",
+        "tests/database/excel-import-persistence.test.ts",
+        "tests/database/excel-import-upgrade.test.ts",
+        "tests/database/excel-landed.test.ts",
+        "tests/database/excel-reimport-upgrade.test.ts",
+        "tests/database/excel-source-pricing-upgrade.test.ts",
+        "tests/database/fertigation-artifacts.test.ts",
+        "tests/database/fertigation.test.ts",
+        "tests/database/specialist.test.ts"
+      ]
+    }
+  ],
+  "result": "All original files execute exactly once; the deliberately failing marker fails its shard."
+}

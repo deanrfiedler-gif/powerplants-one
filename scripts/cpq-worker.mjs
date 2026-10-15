@@ -6,7 +6,9 @@ const { evaluate, testDefinition } = await import("../src/cpq/engine.ts");
 try {
   parentPort.postMessage({
     value:
-      workerData.kind === "rebase"
+      workerData.kind === "quality"
+        ? (await import("../src/cpq/quality-model.ts")).qualityResults(workerData.work)
+        : workerData.kind === "rebase"
         ? (await import("../src/cpq/rebase-model.ts")).evaluateRebase(
             workerData.definition,
             workerData.input,

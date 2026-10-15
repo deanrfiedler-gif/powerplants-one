@@ -21,6 +21,7 @@ import { costBindings } from "./costs";
 import { productBindings } from "./products";
 import { tableCoverage } from "./design-runtime";
 import { retainVersionDraft } from "./drafts";
+import { publicationQuality, qualityReceiptAuthority } from "./quality";
 
 export async function saveRelease(p: Principal, value: unknown) {
   const r = object(value, [
@@ -334,6 +335,7 @@ export async function activateRelease(
     async (c) => {
       const root = await release(c, p, input.id, "cpq.publish");
       await revision(c, p, input.revision_id);
+      await qualityReceiptAuthority(c, p, root, input.operation_id);
       return root;
     },
     async (c, root) => {
@@ -393,6 +395,7 @@ export async function activateRelease(
         root.company_id,
         v.definition,
       );
+      const quality = await publicationQuality(c, p, root);
       const activation_id = randomUUID();
       await c.query(
         "INSERT INTO ppo.cpq_activations(id,workspace_id,company_id,revision_id,review_id,version,created_by,reason) VALUES($1,$2,$3,$4,$5,$6,$7,$8)",
@@ -423,6 +426,7 @@ export async function activateRelease(
           activation_id,
           revision_id: v.id,
           content_hash: v.content_hash,
+          ...quality,
         },
       };
     },
