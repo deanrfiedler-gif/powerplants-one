@@ -1,5 +1,9 @@
 # Backend completion delivery plan
 
+## PJ-06 next dependency — 16 October 2026
+
+R1 #518 is technically verified but remains unmerged; current main `1552cfb` lacks its model. R2 stacks on exact R1 `708c6da` to carry an accepted brief into the existing native technical/procurement handover and independent Supply receiving. The [contract](../contracts/project-specialist-handover.md) preserves source authority, exact units, original-operation recovery and current/historical distinctions. [Execution evidence](../testing/evidence/project-specialist-handover/README.md) separates implementation, local verification, CI, independent review and operational acceptance. This bounded dependency does not complete BC-06/PJ-06; supplier competence, work evidence, further downstream disposition and UI remain separate. No external integration entry condition is inferred.
+
 ## Integrated source follow-up — 15 October 2026
 
 After the initial inspection, #498 merged externally at main `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26`. Code Review diagnostics verified its final head `e3ec866758a8b88b5bcc26fc9cc7a0a1cddfd20d` with 59 successful checks and only the intentional PT-27 skip; independent review was clean and the existing monitor completed. Both Documents contributions integrate this main, including migration 0102 and its historical-upgrade obligations. Earlier open/monitor checkpoints below are retained history. There was no merge or deployment by the continuing backend task. Operational package owners/rates/workloads remain unapproved.

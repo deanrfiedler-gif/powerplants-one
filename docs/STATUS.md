@@ -1,5 +1,11 @@
 # Current prototype status
 
+## PJ-06 exact technical/procurement receiving — 16 October 2026
+
+Current remote main `1552cfbb8efd6cea17438c2af18ba0effa4fc278` includes externally merged #500 and other independent fixes. PJ-06 R1 #518 remains open at `708c6da71ebd32a93ebfd2bdc84a52d3b198fb35`; its final 63 successful checks, intentional optional PT-27 skip, clean exact-head independent review and resolved threads supersede the older pending checkpoint below. Both prior monitors are paused. No competing PJ-06 writer was found.
+
+The authorised `codex/pj06-technical-handover` increment stacks on that R1 source because main lacks its model. The [decision](decisions/project-specialist-handover.md) and [contract](contracts/project-specialist-handover.md) carry the exact accepted brief into native Engineering-to-Supply receiving, retaining technical release, approved-demand and independent receiving authority. Migration 0104 preserves earlier payloads, hashes and receipts. [Execution evidence](testing/evidence/project-specialist-handover/README.md) records verification in progress; no CI, review, business-acceptance or deployment pass is implied. Supplier competence, work evidence, further downstream disposition and UI remain open.
+
 ## PJ-06 internal specialist package receiving — 15 October 2026
 
 The authorised main-based `codex/pj06-specialist-packages` increment implements versioned package briefs, exact PJ-05/Engineering/Supply references, independent named receiving, immutable successors and original-operation recovery. Migration 0103 adds no seed or grant; three duties default to denied. The [decision](decisions/project-specialist-packages.md), [contract](contracts/project-specialist-packages.md) and [execution evidence](testing/evidence/project-specialist/README.md) separate local proof, CI/review, operational acceptance and deployment. #500 retains its existing monitor. This is PJ-06 R1: technical/procurement acceptance, competence/insurance verification, supplier identity integration, work-evidence acceptance and UI remain open.

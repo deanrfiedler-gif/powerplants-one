@@ -52,3 +52,7 @@ This register adds derived GAP IDs only; it does not replace any of the 78 paren
 ## GAP-04 bounded implementation — 15 October 2026
 
 The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) candidate for [PJ-06 R1](../contracts/project-specialist-packages.md) adds internal source-bound package briefs and independent receiving. GAP-04 remains partially open: exact technical/procurement receiving, competence evidence and work-evidence acceptance are not inferred from accepting a brief. Service retains confirmation authority.
+
+## PJ-06 technical/procurement continuation — 16 October 2026
+
+The [R2 handover contract](../contracts/project-specialist-handover.md) addresses the exact technical/procurement receiving dependency after #518's accepted internal briefs. It stacks on R1 because current main lacks that model. Existing EN-06 receiving carries the exact brief, technical release and independently evidenced approved demand; it does not turn a brief into award, competence, work completion or Service confirmation. Local/CI/review evidence remains separate in the [execution ledger](../testing/evidence/project-specialist-handover/README.md).

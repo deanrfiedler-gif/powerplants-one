@@ -1,6 +1,7 @@
-import { database } from "../../platform/database";
+import { specialistHandoverVisible, specialistHandoverSource, specialistReference, type SpecialistHandoverRow } from "../../projects/specialist/handover";
+import { database, transaction } from "../../platform/database";
 import type { Principal } from "../../platform/identity";
-import { unavailable } from "../../platform/errors";
+import { AppError, unavailable } from "../../platform/errors";
 import type { QueryClient } from "../../platform/permissions";
 import { choice, invalid, object, optionalId, uuid } from "../../shared/validation";
 import { disciplines } from "../model";
@@ -86,6 +87,8 @@ const setParam = (q: Record<string, unknown>) => optionalId(q.set === "" ? undef
 
 const sorts = ["line", "description", "quantity", "drawing", "mapping", "readiness", "owner", "required_by"] as const;
 export async function readRegister(p: Principal, packageId: string, query: unknown) {
+  return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
   const q = object(query, ["set", "view", "q", "discipline", "owner_id", "mapping", "substitution", "readiness", "removed", "sort", "dir", "page", "page_size"]),
     view = choice(q.view ?? "all", "view", ["all", "ready", "attention"] as const),
     text = q.q ?? "",
@@ -100,7 +103,7 @@ export async function readRegister(p: Principal, packageId: string, query: unkno
     removed = choice(q.removed ?? "false", "removed", ["true", "false"] as const) === "true",
     sort = choice(q.sort ?? "line", "sort", sorts),
     dir = choice(q.dir ?? "asc", "dir", ["asc", "desc"] as const);
-  const f = await frame(database(), p, packageId, setParam(q)),
+  const f = await frame(c, p, packageId, setParam(q)),
     scope = removed ? f.lines : f.live,
     needle = (text as string).trim().toLowerCase();
   // Tabs, conditions and search narrow the same permission-scoped set, so a count can never disagree with its rows.
@@ -116,7 +119,7 @@ export async function readRegister(p: Principal, packageId: string, query: unkno
   })[sort];
   rows.sort((a, b) => { const x = key(a), y = key(b); return (x < y ? -1 : x > y ? 1 : a.line_number.localeCompare(b.line_number)) * (dir === "asc" ? 1 : -1); });
   const attention = f.live.map(present).filter((l) => l.readiness.attention);
-  const latest = f.set ? await releaseHeads(database(), p, f.set.id) : null;
+  const latest = f.set ? await releaseHeads(c, p, f.set.id) : null;
   return {
     ...f.shell,
     criteria: { view, q: needle, discipline, owner_id: owner, mapping, substitution, readiness, removed, sort, dir },
@@ -135,12 +138,15 @@ export async function readRegister(p: Principal, packageId: string, query: unkno
     },
     completeness: "Complete" as const,
   };
+  });
 }
 async function releaseHeads(c: QueryClient, p: Principal, setId: string) {
   const release = (await c.query<{ release_number: number; issue_state: string; review_state: string; withdrawn_at: Date | null }>(
     "SELECT release_number,issue_state,review_state,withdrawn_at FROM ppo.material_releases WHERE workspace_id=$1 AND set_id=$2 AND review_state<>'Cancelled' ORDER BY release_number DESC LIMIT 1", [p.workspace_id, setId])).rows[0];
-  const handover = (await c.query<{ state: string; revision: number }>(
-    "SELECT state,revision FROM ppo.material_handovers WHERE workspace_id=$1 AND set_id=$2 ORDER BY created_at DESC LIMIT 1", [p.workspace_id, setId])).rows[0];
+  const candidates = (await c.query<SpecialistHandoverRow & { state: string; revision: number; package_id: string }>(
+    "SELECT h.*,s.package_id FROM ppo.material_handovers h JOIN ppo.material_sets s ON (s.workspace_id,s.id)=(h.workspace_id,h.set_id) WHERE h.workspace_id=$1 AND h.set_id=$2 ORDER BY h.created_at DESC,h.id DESC", [p.workspace_id, setId])).rows;
+  let handover: (typeof candidates)[number] | undefined;
+  for (const row of candidates) if (await specialistHandoverVisible(c, p, row.package_id, row)) { handover = row; break; }
   return {
     technical_release: !release ? "Not issued" : release.withdrawn_at ? `Release ${release.release_number} withdrawn` : release.issue_state === "Issued" ? `Release ${release.release_number} issued` : `Release ${release.release_number} ${label(release.issue_state === "Authorised" ? "Authorised" : release.review_state).toLowerCase()}, not issued`,
     supply_handover: handover ? `${label(handover.state)} (revision ${handover.revision})` : "Not prepared",
@@ -346,9 +352,11 @@ export function exclusions(live: LoadedLine[], picked: { line_id: string; quanti
 }
 
 export async function readHandovers(p: Principal, packageId: string, query: unknown) {
-  const q = object(query, ["set", "handover_id"]), c = database(), f = await frame(c, p, packageId, setParam(q));
+  return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+  const q = object(query, ["set", "handover_id"]), f = await frame(c, p, packageId, setParam(q));
   const releases = f.set ? (await releaseRows(c, p, f.set.id)).map((r) => presentRelease(r, f.lines, f.sources)) : [];
-  const rows = f.set ? (await c.query<{
+  const candidates = f.set ? (await c.query<SpecialistHandoverRow & {
     id: string; version: number; revision: number; predecessor_id: string | null; release_id: string; requested_action: string; demand_basis: string; demand_source_id: string | null;
     receiver_id: string; required_by: string | null; required_by_timezone: string | null; payload: { lines: Manifest["lines"] } & Record<string, unknown>; payload_hash: string; state: HandoverState;
     created_at: Date; sent_at: Date | null; decided_at: Date | null; decision_reasons: { line_id: string | null; reason: string }[]; return_due: string | null; outcome_operation_id: string | null;
@@ -357,13 +365,28 @@ export async function readHandovers(p: Principal, packageId: string, query: unkn
      FROM ppo.material_handovers h JOIN ppo.users rc ON (rc.workspace_id,rc.id)=(h.workspace_id,h.receiver_id) JOIN ppo.users co ON (co.workspace_id,co.id)=(h.workspace_id,h.coordinator_id)
      LEFT JOIN ppo.users de ON (de.workspace_id,de.id)=(h.workspace_id,h.decided_by) LEFT JOIN ppo.users ro ON (ro.workspace_id,ro.id)=(h.workspace_id,h.return_owner_id)
      WHERE h.workspace_id=$1 AND h.set_id=$2 ORDER BY h.created_at DESC,h.id DESC`, [p.workspace_id, f.set.id])).rows : [];
+  const rows: typeof candidates = [];
+  const sourceStatus = new Map<string, string>();
+  for (const row of candidates) {
+    if (!await specialistHandoverVisible(c, p, packageId, row)) continue;
+    rows.push(row);
+    const ref = specialistReference(row);
+    if (ref) {
+      try { await specialistHandoverSource(c, p, packageId, ref, true); sourceStatus.set(row.id, "Current"); }
+      catch (error) {
+        if (error instanceof AppError && ["SpecialistSourceChanged", "ProjectNotActive"].includes(error.code)) sourceStatus.set(row.id, "Changed");
+        else throw error;
+      }
+    }
+  }
   const byId = new Map(rows.map((h) => [h.id, h])), releaseById = new Map(releases.map((r) => [r.id, r]));
   // Recipient details are for the people who prepare, release and receive; a limited viewer sees the state only.
   const detail = f.access.can.edit || f.access.can.release || f.access.can.receive || f.access.can.commercial;
   const items = rows.map((h) => {
     const release = releaseById.get(h.release_id), before = h.predecessor_id ? byId.get(h.predecessor_id) : undefined;
     return {
-      id: h.id, version: h.version, revision: h.revision, predecessor_id: h.predecessor_id, release_id: h.release_id, release_number: release?.release_number ?? null,
+      id: h.id, version: h.version, revision: h.revision, predecessor_id: before?.id ?? null,
+      specialist_source_status: sourceStatus.get(h.id) ?? null, release_id: h.release_id, release_number: release?.release_number ?? null,
       release_current_use: release?.current_use ?? null, release_current_use_reasons: release?.current_use_reasons ?? [], requested_action: h.requested_action,
       demand_basis: h.demand_basis, demand_source: sourceRef(f.sources.find((s) => s.id === h.demand_source_id)), required_by: h.required_by, required_by_timezone: h.required_by_timezone,
       receiver_id: detail ? h.receiver_id : null, receiver_name: detail ? h.receiver_name : "Withheld for this identity", coordinator_name: h.coordinator_name,
@@ -384,18 +407,31 @@ export async function readHandovers(p: Principal, packageId: string, query: unkn
     procurement_context: f.access.pkg.context_kind === "Project" ? null : "This package belongs to an Opportunity. Procurement-ready receiving is demonstrated for an awarded Project only.",
     site_timezone: f.access.site_timezone,
   };
+  });
 }
 
 export async function readHistory(p: Principal, packageId: string, query: unknown) {
-  const q = object(query, ["set", "subject", "subject_id", "limit"]), c = database(), f = await frame(c, p, packageId, setParam(q)),
+  return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+  const q = object(query, ["set", "subject", "subject_id", "limit"]), f = await frame(c, p, packageId, setParam(q)),
     subject = q.subject ? choice(q.subject, "subject", ["MaterialSet", "MaterialSource", "MaterialLine", "MaterialSubstitution", "MaterialRelease", "MaterialHandover", "MaterialImpact"] as const) : null,
     subjectId = optionalId(q.subject_id || undefined, "subject_id"), limit = Number(q.limit ?? 100);
   if (!Number.isInteger(limit) || limit < 1 || limit > 300) invalid("limit", "Show 1 to 300 events.");
-  const events = (await c.query<{ id: string; subject_type: string; subject_id: string; subject_version: number; event_type: string; reason: string; note: string | null; created_at: Date; actor_name: string; operation_id: string; snapshot: Record<string, unknown> }>(
+  const page = async (offset: number) => (await c.query<{ id: string; subject_type: string; subject_id: string; subject_version: number; event_type: string; reason: string; note: string | null; created_at: Date; actor_name: string; operation_id: string; snapshot: Record<string, unknown> }>(
     `SELECT e.id,e.subject_type,e.subject_id,e.subject_version,e.event_type,e.reason,e.note,e.created_at,e.operation_id,e.snapshot,u.display_name AS actor_name
      FROM ppo.material_events e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.created_by)
      WHERE e.workspace_id=$1 AND e.package_id=$2 AND (e.set_id IS NULL OR $3::uuid IS NULL OR e.set_id=$3) AND ($4::text IS NULL OR e.subject_type=$4) AND ($5::uuid IS NULL OR e.subject_id=$5)
-     ORDER BY e.created_at DESC,e.id DESC LIMIT $6`, [p.workspace_id, f.access.pkg.id, f.set?.id ?? null, subject, subjectId, limit + 1])).rows;
+     ORDER BY e.created_at DESC,e.id DESC LIMIT 100 OFFSET $6`, [p.workspace_id, f.access.pkg.id, f.set?.id ?? null, subject, subjectId, offset])).rows;
+  const events: Awaited<ReturnType<typeof page>> = [];
+  for (let offset = 0; events.length <= limit; offset += 100) {
+    const candidates = await page(offset);
+    for (const event of candidates) {
+      if (event.subject_type === "MaterialHandover" && !await specialistHandoverVisible(c, p, packageId, event.snapshot as SpecialistHandoverRow)) continue;
+      events.push(event);
+      if (events.length > limit) break;
+    }
+    if (candidates.length < 100) break;
+  }
   const impacts = f.set ? (await c.query<{ id: string; version: number; source_id: string | null; release_id: string | null; change: string; affected: Record<string, unknown>; owner_id: string; owner_name: string; required_action: string; state: string; resolution: string | null; resolved_by_name: string | null; created_at: Date; resolved_at: Date | null }>(
     `SELECT i.*,ow.display_name AS owner_name,rs.display_name AS resolved_by_name FROM ppo.material_impacts i JOIN ppo.users ow ON (ow.workspace_id,ow.id)=(i.workspace_id,i.owner_id)
      LEFT JOIN ppo.users rs ON (rs.workspace_id,rs.id)=(i.workspace_id,i.resolved_by) WHERE i.workspace_id=$1 AND i.set_id=$2 ORDER BY i.created_at DESC`, [p.workspace_id, f.set.id])).rows : [];
@@ -415,6 +451,7 @@ export async function readHistory(p: Principal, packageId: string, query: unknow
       required_action: i.required_action, state: i.state, resolution: i.resolution, resolved_by_name: i.resolved_by_name, created_at: i.created_at.toISOString(), resolved_at: i.resolved_at?.toISOString() ?? null })),
     sources: f.sources.map((s) => ({ ...sourceRef(s)!, change_reason: s.change_reason, changed_at: s.changed_at })),
   };
+  });
 }
 
 export async function readSources(p: Principal, packageId: string, query: unknown) {

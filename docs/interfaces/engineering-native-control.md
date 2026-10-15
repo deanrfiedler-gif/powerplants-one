@@ -35,3 +35,7 @@ Commands use the existing workspace transaction, optimistic versions, immutable 
 Database-only direct writes are additionally constrained by package/source foreign keys, immutable submitted content, exact review-to-issue checks, lifecycle transitions, immutable distribution evidence and accepted findings. Code rollback should retain this additive schema and all evidence; do not drop tables to revert a UI release.
 
 See [programme handover](../delivery/engineering-native-control-handover.md) for executed tests, limitations, source/base commits and remaining owner review.
+
+## PJ-06 exact source in EN-06 receiving
+
+The [PJ-06 R2 contract](../contracts/project-specialist-handover.md) adds optional `specialist: {id, version}` to native handover preparation. It freezes the exact accepted brief in a version-2 receiving payload; ordinary payloads and operation hashes remain version 1. Native technical release, Approved demand, independent Supply receiving, permissions and original-operation receipts retain authority. Source privacy is checked on lists, history, commands and recovery. This records exact receiving evidence without order, inventory, award or booking effects.
