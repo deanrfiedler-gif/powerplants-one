@@ -7152,7 +7152,21 @@
       "guide_key": "guide.page.sales.opportunities.id",
       "design_path": "docs/design/development/pages/route-sales-opportunities-id.md",
       "html_path": "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-02-Desktop-Scope-Sites-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-03-Desktop-Activities-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-04-Desktop-Estimates-Quotations-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-05-Desktop-Correspondence-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-06-Desktop-Documents-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-07-Desktop-History-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-08-Desktop-Register-Open-Deal-Page-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-09-Desktop-Composer-Activity-Email-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-10-Desktop-Stage-Change-Exit-Bar-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-11-Desktop-Won-Lost-Outcome-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-12-Desktop-States-r01.png",
+        "docs/reference/ui/crm/deal-record-page-design-r01/PPO-Deal-Record-13-Phone-List-Tabs-Forms-Action-Sheet-r01.png"
+      ],
       "dependencies": [
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
@@ -7173,7 +7187,8 @@
         "src/components/sales-followup.tsx",
         "src/sales/followup.ts",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/deal-record-page-design.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
