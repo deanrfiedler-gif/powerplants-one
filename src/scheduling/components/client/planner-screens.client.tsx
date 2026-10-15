@@ -16,6 +16,7 @@ import {
   appointmentHref,
   plannerContext,
   plannerHref,
+  plannerToday,
   safePlannerReturn,
 } from "../../navigation";
 import { useIdentity } from "../../../components/business-session";
@@ -1855,6 +1856,9 @@ export function PlannerScreen() {
             onClick={() => setDay(addDays(day, days.length))}
           >
             →
+          </button>
+          <button className="secondary" onClick={() => setDay(plannerToday(zone))}>
+            Today
           </button>
         </div>
         {/* aria-pressed drives the selected thumb, so the class no longer

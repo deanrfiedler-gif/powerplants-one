@@ -152,7 +152,8 @@ async function fillCrew(page: Page, two = true) {
 test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus", async ({
   page,
 }, info) => {
-  await page.goto("/schedule");
+  // The planner opens on today; the seeded visits are in the week of 22 September 2031.
+  await page.goto("/schedule?day=2031-09-22");
   await identity(page);
   // The visible heading block was removed: the shell banner and the module tab
   // strip already name the page. The h1 stays in the document for heading order
@@ -196,6 +197,16 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
     ),
   ).toBeVisible();
   await capture(page, info, "empty");
+  // Today returns the planner to the current date in the display timezone (Brisbane by default).
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Australia/Brisbane",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+  await page.getByRole("button", { name: "Today", exact: true }).click();
+  await expect(page.getByLabel("Starting date")).toHaveValue(today);
+  await expect(page).toHaveURL(new RegExp(`day=${today}`));
   await page.route("**/api/v1/schedule?*", (route) =>
     route.fulfill({
       status: 503,
