@@ -38,7 +38,8 @@ BEGIN
  SELECT p.* INTO STRICT eng FROM ppo.engineering_packages p JOIN ppo.material_sets ms ON (ms.workspace_id,ms.package_id)=(p.workspace_id,p.id) WHERE ms.workspace_id=NEW.workspace_id AND ms.id=NEW.set_id;
  SELECT * INTO STRICT rel FROM ppo.material_releases WHERE workspace_id=NEW.workspace_id AND id=NEW.release_id;
  expected:=jsonb_build_object('id',s.id,'version',e.version,'source_hash',e.source_hash,'accept_operation_id',e.operation_id,'content',e.content);
- IF e.state<>'Accepted' OR eng.context_kind<>'Project' OR eng.context_id<>s.project_id OR s.company_id<>NEW.company_id
+ IF e.state<>'Accepted' OR eng.project_id IS DISTINCT FROM s.project_id OR eng.opportunity_id IS NOT NULL
+  OR eng.company_id<>NEW.company_id OR s.company_id<>NEW.company_id
   OR e.content->'engineering'->>'id' IS DISTINCT FROM eng.id::text
   OR rel.set_id<>NEW.set_id OR rel.purpose<>'TechnicalReleaseForProcurement'
   OR NEW.requested_action<>'ProcurementReady' OR NEW.demand_basis<>'Approved'

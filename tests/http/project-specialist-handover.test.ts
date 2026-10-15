@@ -70,6 +70,11 @@ test("PJ06-R2 compiled native receiving API, uncertain response recovery, concur
   assert.equal(detail.body.selected.state, "Accepted");
   assert.equal(detail.body.selected.payload.specialist.id, f.package.id);
   assert.equal(detail.body.selected.payload.lines[0].procurement.quantity, "4");
+  const lineRoute = `engineering/${f.engineering.id}/materials/lines?set=${f.set}&line_id=${f.line}`;
+  assert.equal(
+    (await h.call("materials-supply", lineRoute)).body.supply_handover,
+    "Accepted (revision 1)",
+  );
   assert.equal(
     (await h.call("second-company", `${route}?set=${f.set}&handover_id=${id}`))
       .status,
@@ -78,6 +83,10 @@ test("PJ06-R2 compiled native receiving API, uncertain response recovery, concur
   await database().query(
     "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='project.specialist.read'",
     [f.receiver.actor_id],
+  );
+  assert.equal(
+    (await h.call("materials-supply", lineRoute)).body.supply_handover,
+    "Not prepared",
   );
   assert.equal(
     (

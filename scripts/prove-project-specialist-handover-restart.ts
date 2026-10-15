@@ -74,6 +74,7 @@ const postmaster = async () =>
   );
 const stable = (body: Record<string, unknown>) => {
   const { observed_at: _observed, ...rest } = body;
+  void _observed;
   return rest;
 };
 try {

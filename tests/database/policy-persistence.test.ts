@@ -174,7 +174,7 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     )
   ).rows;
   assert.deepEqual(ledger.slice(0, oldLedger.length), oldLedger);
-  assert.equal(ledger.at(-1).version, 103);
+  assert.equal(ledger.at(-1).version, 104);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [

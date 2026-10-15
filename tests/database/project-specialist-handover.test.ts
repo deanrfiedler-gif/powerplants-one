@@ -20,10 +20,12 @@ import {
   readHandovers,
   readHistory,
   readRegister,
+  readLine,
 } from "../../src/engineering/materials/reads";
 import { readOperation } from "../../src/shared/receipts";
 import { coordinateEngineering } from "../../src/engineering/service";
 import { engineeringUpdate } from "../helpers/engineering";
+import { grantLibrary } from "../helpers/library";
 import {
   specialistHandoverFixture,
   handoverAction,
@@ -53,6 +55,127 @@ const snapshot = async (
       rows(`SELECT to_jsonb(x) row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`),
     ),
   );
+
+test("PJ06-R2-07 late receipt failure rolls back all effects; returned successors and competing decisions retain exact lineage", async () => {
+  const f = await specialistHandoverFixture(),
+    engineering = f.engineering.id;
+  const before = await snapshot();
+  await rows(`CREATE FUNCTION ppo.fail_specialist_handover_proof() RETURNS trigger LANGUAGE plpgsql AS $$
+    BEGIN RAISE EXCEPTION 'SYN injected handover receipt failure'; END $$;
+    CREATE TRIGGER fail_specialist_handover_proof BEFORE INSERT ON ppo.operation_receipts
+    FOR EACH ROW EXECUTE FUNCTION ppo.fail_specialist_handover_proof()`);
+  try {
+    await assert.rejects(
+      handoverCommand(f.owner, engineering, f.prepare),
+      /SYN injected handover receipt failure/,
+    );
+    assert.deepEqual(await snapshot(), before);
+  } finally {
+    await rows(
+      "DROP TRIGGER fail_specialist_handover_proof ON ppo.operation_receipts; DROP FUNCTION ppo.fail_specialist_handover_proof()",
+    );
+  }
+  await handoverCommand(f.owner, engineering, f.prepare);
+  await handoverCommand(
+    f.owner,
+    engineering,
+    handoverAction({
+      action: "send",
+      handover_id: f.prepare.id,
+      expected_version: 1,
+    }),
+  );
+  const returned = handoverAction({
+    action: "decide",
+    handover_id: f.prepare.id,
+    expected_version: 2,
+    result: "Returned",
+    reasons: [{ line_id: null, reason: "SYN clarify required date" }],
+    owner_id: f.owner.actor_id,
+    due: "2031-10-01",
+  });
+  const originalReturn = await handoverCommand(
+    f.receiver,
+    engineering,
+    returned,
+  );
+  const original = (
+    await rows("SELECT * FROM ppo.material_handovers WHERE id=$1", [
+      f.prepare.id,
+    ])
+  )[0];
+  const successor = {
+    ...f.prepare,
+    operation_id: randomUUID(),
+    id: randomUUID(),
+    predecessor_id: f.prepare.id,
+    required_by: "2031-10-01",
+  };
+  const omitted: Record<string, unknown> = { ...successor };
+  delete omitted.specialist;
+  await assert.rejects(
+    handoverCommand(f.owner, engineering, omitted),
+    code("SpecialistRequired"),
+  );
+  await handoverCommand(f.owner, engineering, successor);
+  await handoverCommand(
+    f.owner,
+    engineering,
+    handoverAction({
+      action: "send",
+      handover_id: successor.id,
+      expected_version: 1,
+    }),
+  );
+  const decisions = [1, 2].map(() =>
+    handoverAction({
+      action: "decide",
+      handover_id: successor.id,
+      expected_version: 2,
+      result: "Accepted",
+    }),
+  );
+  const outcomes = await Promise.allSettled(
+    decisions.map((d) => handoverCommand(f.receiver, engineering, d)),
+  );
+  assert.equal(outcomes.filter((x) => x.status === "fulfilled").length, 1);
+  const refused = outcomes.find((x) => x.status === "rejected");
+  assert.equal(refused?.status, "rejected");
+  assert.equal(
+    (refused as PromiseRejectedResult).reason.code,
+    "VersionConflict",
+  );
+  assert.deepEqual(
+    (
+      await rows("SELECT * FROM ppo.material_handovers WHERE id=$1", [
+        f.prepare.id,
+      ])
+    )[0],
+    original,
+  );
+  assert.deepEqual(
+    await readOperation(f.receiver, returned.operation_id),
+    originalReturn.receipt,
+  );
+  const selected = (
+    await readHandovers(f.receiver, engineering, {
+      set: f.set,
+      handover_id: successor.id,
+    })
+  ).selected!;
+  assert.equal(selected.revision, 2);
+  assert.equal(selected.predecessor_id, f.prepare.id);
+  assert.equal(selected.state, "Accepted");
+  assert.equal(
+    (
+      await rows(
+        "SELECT 1 FROM ppo.operation_receipts WHERE operation_id=ANY($1::uuid[])",
+        [decisions.map((d) => d.operation_id)],
+      )
+    ).length,
+    1,
+  );
+});
 
 test("PJ06-R2-01 exact accepted brief travels with native release, original units, independent outcome and original receipts", async () => {
   const f = await specialistHandoverFixture(),
@@ -84,6 +207,11 @@ test("PJ06-R2-01 exact accepted brief travels with native release, original unit
   await assert.rejects(
     handoverCommand(f.owner, engineering, decide),
     code("Forbidden"),
+  );
+  await grantLibrary(f.owner, ["engineering.material.receive"]);
+  await assert.rejects(
+    handoverCommand(f.owner, engineering, decide),
+    code("IndependenceRequired"),
   );
   const concurrent = await Promise.all([
     handoverCommand(f.receiver, engineering, decide),
@@ -155,6 +283,11 @@ test("PJ06-R2-02 inaccessible specialist sources withhold native lists, history,
     code("RecordUnavailable"),
   );
   await handoverCommand(f.owner, engineering, f.prepare);
+  assert.equal(
+    (await readLine(f.owner, engineering, { set: f.set, line_id: f.line }))
+      .supply_handover,
+    "Prepared (revision 1)",
+  );
   const before = await snapshot();
   await rows(
     "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='project.specialist.read'",
@@ -188,6 +321,11 @@ test("PJ06-R2-02 inaccessible specialist sources withhold native lists, history,
   );
   assert.equal(
     (await readRegister(f.owner, engineering, { set: f.set })).footer!
+      .supply_handover,
+    "Not prepared",
+  );
+  assert.equal(
+    (await readLine(f.owner, engineering, { set: f.set, line_id: f.line }))
       .supply_handover,
     "Not prepared",
   );
@@ -242,7 +380,7 @@ test("PJ06-R2-03 unaccepted and stale sources block new use; native return and o
   );
 });
 
-test("PJ06-R2-04 accepted native outcome cannot follow withdrawn release; return and successor lineage remain exact", async () => {
+test("PJ06-R2-04 accepted native outcome cannot follow withdrawn release; return and its original receipt remain available", async () => {
   const f = await specialistHandoverFixture(),
     id = f.prepare.id as string,
     engineering = f.engineering.id;

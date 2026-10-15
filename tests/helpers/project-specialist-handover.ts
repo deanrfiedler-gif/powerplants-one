@@ -22,6 +22,7 @@ export const handoverAction = <T extends Record<string, unknown>>(
 
 export async function specialistHandoverFixture(acceptBrief = true) {
   const f = await specialistFixture();
+  f.package.content.scope += '\nSYN café / α interface, exact quoted "scope".';
   const receiver = (await createSession("materials-supply")).principal,
     technical = (await createSession("materials-reviewer")).principal,
     releaser = (await createSession("materials-release")).principal;

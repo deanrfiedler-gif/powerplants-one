@@ -143,14 +143,26 @@ export async function readRegister(p: Principal, packageId: string, query: unkno
 async function releaseHeads(c: QueryClient, p: Principal, setId: string) {
   const release = (await c.query<{ release_number: number; issue_state: string; review_state: string; withdrawn_at: Date | null }>(
     "SELECT release_number,issue_state,review_state,withdrawn_at FROM ppo.material_releases WHERE workspace_id=$1 AND set_id=$2 AND review_state<>'Cancelled' ORDER BY release_number DESC LIMIT 1", [p.workspace_id, setId])).rows[0];
-  const candidates = (await c.query<SpecialistHandoverRow & { state: string; revision: number; package_id: string }>(
-    "SELECT h.*,s.package_id FROM ppo.material_handovers h JOIN ppo.material_sets s ON (s.workspace_id,s.id)=(h.workspace_id,h.set_id) WHERE h.workspace_id=$1 AND h.set_id=$2 ORDER BY h.created_at DESC,h.id DESC", [p.workspace_id, setId])).rows;
-  let handover: (typeof candidates)[number] | undefined;
-  for (const row of candidates) if (await specialistHandoverVisible(c, p, row.package_id, row)) { handover = row; break; }
+  const handover = await visibleHandoverHead(c, p, setId);
   return {
     technical_release: !release ? "Not issued" : release.withdrawn_at ? `Release ${release.release_number} withdrawn` : release.issue_state === "Issued" ? `Release ${release.release_number} issued` : `Release ${release.release_number} ${label(release.issue_state === "Authorised" ? "Authorised" : release.review_state).toLowerCase()}, not issued`,
     supply_handover: handover ? `${label(handover.state)} (revision ${handover.revision})` : "Not prepared",
   };
+}
+
+// A state or revision is source-derived information too. Scan in bounded pages so
+// an inaccessible newest handover neither leaks metadata nor hides an older visible one.
+async function visibleHandoverHead(c: QueryClient, p: Principal, setId: string, lineId: string | null = null) {
+  for (let offset = 0; ; offset += 100) {
+    const rows = (await c.query<SpecialistHandoverRow & { state: string; revision: number; package_id: string }>(
+      `SELECT h.*,s.package_id FROM ppo.material_handovers h
+       JOIN ppo.material_sets s ON (s.workspace_id,s.id)=(h.workspace_id,h.set_id)
+       WHERE h.workspace_id=$1 AND h.set_id=$2 AND ($3::uuid IS NULL OR EXISTS (
+         SELECT 1 FROM ppo.material_release_lines rl WHERE (rl.workspace_id,rl.release_id)=(h.workspace_id,h.release_id) AND rl.line_id=$3))
+       ORDER BY h.created_at DESC,h.id DESC LIMIT 100 OFFSET $4`, [p.workspace_id, setId, lineId, offset])).rows;
+    for (const row of rows) if (await specialistHandoverVisible(c, p, row.package_id, row)) return row;
+    if (rows.length < 100) return undefined;
+  }
 }
 
 // Form choices: people who hold engineering.read where this package lives. The save still checks each named person in full.
@@ -210,7 +222,9 @@ function presentSubstitution(s: Awaited<ReturnType<typeof substitutionRows>>[num
 }
 
 export async function readLine(p: Principal, packageId: string, query: unknown) {
-  const q = object(query, ["line_id", "set"]), c = database(),
+  return transaction(async (c) => {
+  await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+  const q = object(query, ["line_id", "set"]),
     f = await frame(c, p, packageId, setParam(q)),
     line = f.lines.find((l) => l.row.id === uuid(q.line_id, "line_id"));
   if (!line || !f.set) throw unavailable();
@@ -218,9 +232,7 @@ export async function readLine(p: Principal, packageId: string, query: unknown) 
     releases = (await c.query<{ id: string; release_number: number; review_state: string; issue_state: string; quantity: string; withdrawn_at: Date | null }>(
       `SELECT r.id,r.release_number,r.review_state,r.issue_state,rl.quantity::text,r.withdrawn_at FROM ppo.material_release_lines rl JOIN ppo.material_releases r ON (r.workspace_id,r.id)=(rl.workspace_id,rl.release_id)
        WHERE rl.workspace_id=$1 AND rl.line_id=$2 ORDER BY r.release_number DESC`, [p.workspace_id, line.row.id])).rows,
-    handover = (await c.query<{ state: string; revision: number }>(
-      `SELECT h.state,h.revision FROM ppo.material_handovers h JOIN ppo.material_release_lines rl ON (rl.workspace_id,rl.release_id)=(h.workspace_id,h.release_id)
-       WHERE h.workspace_id=$1 AND rl.line_id=$2 ORDER BY h.created_at DESC LIMIT 1`, [p.workspace_id, line.row.id])).rows[0];
+    handover = await visibleHandoverHead(c, p, f.set.id, line.row.id);
   const live = proposals.find((s) => !s.has_successor);
   return {
     ...f.shell, line: present(line), binding: binding(line), locked: line.locked,
@@ -233,6 +245,7 @@ export async function readLine(p: Principal, packageId: string, query: unknown) 
     supply_handover: handover ? `${label(handover.state)} (revision ${handover.revision})` : "Not prepared",
     releases: releases.map((r) => ({ id: r.id, release_number: r.release_number, review_state: r.review_state, issue_state: r.issue_state, quantity: formatQuantity(parseQuantity(r.quantity)!), withdrawn: !!r.withdrawn_at })),
   };
+  });
 }
 
 export async function readMapping(p: Principal, packageId: string, query: unknown) {
