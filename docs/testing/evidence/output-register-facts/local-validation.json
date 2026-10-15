@@ -23,5 +23,6 @@
     "reason": "PR498 merged externally; preserve both STATUS entries and all integrated CPQ sources/evidence",
     "read_source_change": "none",
     "validation": "Integrated exact-head CI and independent review required"
-  }
+  },
+  "checkpoint_note": "Original implementation checkpoint above is retained history; see failure-follow-up.json and README.md for subsequent CI, independent review, upstream integration and controlled local comparisons."
 }
