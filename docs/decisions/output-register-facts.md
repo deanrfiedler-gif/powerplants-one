@@ -1,5 +1,7 @@
 # DK-03 exact revision and acknowledgement register facts
 
+<!-- versioning: git; committed history is authoritative -->
+
 Owner: Dean Fiedler. Date: 15 October 2026. Backend implementation authorised by the continuing programme. Operational and visual acceptance remain separate.
 
 ## Scope and source

@@ -1,5 +1,7 @@
 # Decision control
 
+[DK-03 exact revision and acknowledgement facts](output-register-facts.md) defines the accepted Q4/G3 backend read dependency with exact issue lineage, scoped denominators and explicit report/crew limitations.
+
 [PJ-05 commercial controls](project-commercial-controls.md) records exact accepted quotation/received Sales/reviewed document authority, independent variation decisions and bounded synthetic Finance definitions.
 
 [Projects receiving and overview backend](project-overview-backend.md) records exact native Sales attribution and explained scoped portfolio reads; page and owner acceptance remain separate.

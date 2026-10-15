@@ -41,6 +41,8 @@ These package keys are local tracking labels, not new parent requirements. Prior
 
 ## Current increment ledger
 
+15 October continuation: the accepted DK-03 Q4/G3 read dependency is implemented independently from main `41c8479` on `codex/output-register-facts`. [Decision](../decisions/output-register-facts.md), [contract](../contracts/output-register.md) and [evidence](../testing/evidence/output-register-facts/README.md) bind exact revision numbers and scoped recipient/acknowledgement counts. Native publication, exact bytes and distribution authority are unchanged; page and operational acceptance stay separate. The G1 correction and CPQ #498 remain independent contributions. PJ-05 #493 is already integrated; PJ-06 is the next ordered domain contract, with independent Service/Supply gaps still open.
+
 | Increment | State | Evidence / next boundary |
 |---|---|---|
 | BC-00 plan and ES-08 scope reconciliation | Recorded in this contribution | Writer coordination completed; original scope keys and all review fingerprints preserved |
