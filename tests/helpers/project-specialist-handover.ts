@@ -81,7 +81,7 @@ export async function specialistHandoverFixture(acceptBrief = true) {
     handoverAction({
       action: "create",
       id: set,
-      set_code: "R2",
+      set_code: "SP",
       revision: 1,
       title: "SYN specialist materials",
     }),

@@ -47,7 +47,7 @@ BEGIN
   OR NEW.payload->'lines' IS DISTINCT FROM rel.manifest->'lines' OR NEW.payload->'exclusions' IS DISTINCT FROM rel.manifest->'exclusions'
   OR NEW.payload->'source'->>'release_id' IS DISTINCT FROM rel.id::text
   OR NEW.payload->'source'->>'content_hash' IS DISTINCT FROM rel.content_hash
-  OR NEW.payload_hash<>encode(public.digest(ppo.specialist_handover_json(NEW.payload),'sha256'),'hex')
+  OR NEW.payload_hash<>encode(sha256(convert_to(ppo.specialist_handover_json(NEW.payload),'UTF8')),'hex')
  THEN RAISE EXCEPTION 'Exact accepted specialist and native release payload required' USING ERRCODE='23514'; END IF;
  RETURN NEW;
 END $$;
