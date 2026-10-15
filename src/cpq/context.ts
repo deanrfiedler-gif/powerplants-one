@@ -1,3 +1,4 @@
+import { releasePackages } from "./package-bindings";
 import type { Principal } from "../platform/identity";
 import { hasPermission, type QueryClient } from "../platform/permissions";
 import { companyContext } from "../shared/authority";
@@ -32,6 +33,7 @@ export type Release = {
   updated_at: Date;
 };
 export type Revision = {
+  package_manifest?: import("./package-model").PackageSnapshot[] | null;
   id: string;
   workspace_id: string;
   company_id: string;
@@ -42,6 +44,7 @@ export type Revision = {
   created_by: string;
 };
 export type Binding = {
+  packages?: import("./package-model").PackageSnapshot[];
   rebase?: import("./rebase-model").RebaseEvidence;
   estimating_workspace_id: string;
   option_id: string;
@@ -123,6 +126,7 @@ export async function revision(
       "CpqEvidenceMismatch",
       "The saved release evidence does not match its hash.",
     );
+  await releasePackages(c,p,r);
   await productBindings(c, p, r.company_id, r.definition);
   await costBindings(c, p, r.company_id, r.definition);
   return r;
@@ -154,7 +158,9 @@ export async function run(
   await duty(c, p, r.company_id, edit ? "cpq.calculate" : "cpq.read");
   const g = await workspaceAuthority(c, p, r.estimating_workspace_id, edit);
   await revisionAuthority(c, p, g, r.discovery_revision_id, edit);
-  await revision(c, p, r.release_revision_id);
+  const sourceRelease = await revision(c, p, r.release_revision_id);
+  if(hash(r.binding.packages ?? []) !== hash(sourceRelease.package_manifest ?? []))
+    throw new AppError(409,"CpqEvidenceMismatch","The saved calculation package manifest differs from its release.");
   const { result_hash, ...body } = r.result;
   if (
     hash(body) !== result_hash ||

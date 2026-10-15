@@ -7,12 +7,95 @@ import { reset } from "../../scripts/database";
 import { httpAcceptance } from "../helpers/acceptance-http";
 import { queued, rows, base } from "../helpers/packs";
 import { reviewed } from "../helpers/reports";
+import { started } from "../helpers/field";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 beforeEach(reset);
 after(closeDatabase);
+
+test("DK03-HTTP03 InProgress detail agrees with distribution; a discarded response recovers exactly", async () => {
+  const q = await started(),
+    h = httpAcceptance(localConfig().origin),
+    path = `document-outputs/${q.pack.id}`;
+  assert.equal(q.job.status, "InProgress");
+  const detail = await h.call("coordinator", path + "?kind=JobPack");
+  assert.equal(detail.status, 200);
+  assert.equal(detail.body.selected_issue.pack_applicable, true);
+  const recipient = (
+    await rows(
+      "SELECT id FROM ppo.pack_recipients WHERE issue_id=$1 ORDER BY id",
+      [q.issue_id],
+    )
+  )[0];
+  const prepare = {
+    ...base(),
+    attempt_id: randomUUID(),
+    issue_id: q.issue_id,
+    recipient_id: recipient.id,
+    expected_version: q.pack.version,
+  };
+  const envelope = (action: string, command: unknown) => ({
+    kind: "JobPack",
+    action,
+    command,
+  });
+  const response = await fetch(
+    localConfig().origin + "/api/v1/" + path + "/actions",
+    {
+      method: "POST",
+      headers: {
+        cookie: await h.cookie("coordinator"),
+        origin: localConfig().origin,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(envelope("PrepareDistribution", prepare)),
+    },
+  );
+  assert.equal(response.status, 201);
+  // The committed response body is deliberately discarded before original recovery.
+  await response.body?.cancel();
+  const recovered = await h.call(
+    "coordinator",
+    path + "/operations?kind=JobPack&operation_id=" + prepare.operation_id,
+  );
+  assert.equal(recovered.status, 200);
+  const replay = await h.call(
+    "coordinator",
+    path + "/actions",
+    envelope("PrepareDistribution", prepare),
+  );
+  assert.equal(replay.status, 200);
+  assert.deepEqual(replay.body, recovered.body);
+  const sent = await h.call(
+    "coordinator",
+    path + "/actions",
+    envelope("RecordDistribution", {
+      ...base(),
+      attempt_id: prepare.attempt_id,
+      expected_attempt_version: 1,
+      outcome: "SimulatedSent",
+      evidence:
+        "SYN only; in-progress appointment and exact audience checked again.",
+    }),
+  );
+  assert.equal(sent.status, 201, JSON.stringify(sent.body));
+  const context = await h.call("coordinator", path + "/actions?kind=JobPack");
+  assert.equal(context.body.distribution_attempts.length, 1);
+  assert.equal(context.body.distribution_attempts[0].sent_at, null);
+  assert.equal(context.body.distribution_attempts[0].delivered_at, null);
+  assert.ok(
+    !JSON.stringify(context.body).match(
+      /store_key|render_snapshot|lease_token/,
+    ),
+  );
+  assert.ok(
+    [403, 404].includes(
+      (await h.call("second-company", path + "?kind=JobPack")).status,
+    ),
+  );
+});
 for (const kind of ["JobPack", "ServiceReport"] as const)
   test(`DK03-HTTP02 compiled ${kind} issue, original recovery and recipient reconciliation`, async () => {
     const h = httpAcceptance(localConfig().origin);

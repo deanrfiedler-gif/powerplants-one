@@ -107,7 +107,7 @@ test("XI98 populated workbook, managed pricing and quotation upgrade to reviewed
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [99, 100, 101],
+    [99, 100, 101, 102],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,

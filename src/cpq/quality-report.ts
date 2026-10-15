@@ -1,3 +1,4 @@
+import { releasePackages } from "./package-bindings";
 import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
 import { AppError } from "../platform/errors";
@@ -118,9 +119,11 @@ export async function qualityReport(
        candidate.definition.rules.some((rule) => !rule_members.some((member) =>
          member.rule_key === rule.key && member.content_hash === hash(rule)))))
     throw new AppError(409, "CpqEvidenceMismatch", "The native rule members do not match the exact candidate definition.");
+  const packages = await releasePackages(c,p,candidate,true);
   const { simulations, ...quality } = results;
   const report = {
     schema_version: 1 as const,
+    ...(packages.length ? {packages} : {}),
     release_id: root.id,
     company_id: root.company_id,
     candidate: {
@@ -201,7 +204,8 @@ export async function qualitySources(
   if (
     candidate.release_id !== report.release_id ||
     candidate.content_hash !== report.candidate.content_hash ||
-    candidate.company_id !== report.company_id
+    candidate.company_id !== report.company_id ||
+    hash(candidate.package_manifest ?? []) !== hash(report.packages ?? [])
   )
     throw new AppError(
       409,
