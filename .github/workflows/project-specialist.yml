@@ -64,7 +64,7 @@ jobs:
       - name: Native package, immutable source, privacy, concurrency and populated upgrades
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/project-specialist.test.ts tests/database/project-specialist-upgrade.test.ts
       - name: Reserved Products installation after latest history
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='^PD upgrade from 103 ' tests/database/products-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='^PD upgrade from (103|104) ' tests/database/products-upgrade.test.ts
       - name: Compiled API and actual database/application restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}

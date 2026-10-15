@@ -1,5 +1,24 @@
 # Current prototype status
 
+## My jobs design accepted — 15 October 2026
+
+After the code audit, Dean asked for the technician My Jobs list and visit page to be designed in Figma, phone first. He then asked for desktop and tablet versions, a professional polish with tables matching the other pages, and the remaining r05 timer states on every width. On 15 October he accepted it: "I accept the My jobs · FI-01 design with your recommendations, including Q9 and Q10."
+
+The [My jobs decision](decisions/my-jobs-figma-design.md) records the design:
+- The list is ordered in Today, Upcoming and Recently finished.
+- The visit page has Work, Capture, Pack and Finish tabs.
+- The accepted r05 timer rules are kept, with its overnight, forgotten-finish, another-job and multi-day states.
+- Offline is a state of the same pages.
+- Photos are converted to PNG on the phone, the customer signs on a signature pad, and each crew member submits their own part.
+
+Thirty-nine icon-free captures are retained under the named version "My jobs — accepted". Claude saved it in Figma version history at Dean's request ("Please save the named version") at about 00:01 AEST on 16 October 2026, after the captures were made.
+
+No application code, route, migration, permission or parent ID changes. r05 stays the built timer baseline. Building the page and the backend changes it implies are not decided:
+- crew-aware completion;
+- the offline fixes from the audit;
+- a job labour allowance source;
+- the 12 h forgotten-timer flag.
+
 ## DK-06 rendering-only template manifest (G5) — 15 October 2026
 
 The DK-06 Template management design found gap G5: R3 fingerprinted `package-lock.json`, `src/platform/operations.ts`, `src/shared/validation.ts` and `src/platform/browser.ts` into every managed OUT-09 definition, so an unrelated edit to any of them refused Job pack preparation and issue at every site with a managed assignment. A focused database test reproduced it. Dean decided: "G5 is a defect. Proceed with option A: add a new DK06-OUT09-2 contract with a rendering-only manifest and explicit Playwright versions, keep DK06-OUT09-1 definitions retained unchanged, record the decision, implement it with the migration and ledger updates, and open a draft PR."

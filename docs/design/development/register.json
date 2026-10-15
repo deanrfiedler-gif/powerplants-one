@@ -2839,7 +2839,10 @@
       "html_path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
       "image_paths": [
         "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-1440.png",
-        "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png"
+        "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-04-Phone-Visit-Working-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-17-Phone-Timer-Stopped-Undo-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png"
       ],
       "dependencies": [
         "src/components/work-timer.tsx",
@@ -2852,7 +2855,8 @@
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/decisions/my-jobs-figma-design.md"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -6774,7 +6778,14 @@
       "html_path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
       "image_paths": [
         "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-1440.png",
-        "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png"
+        "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-03-Phone-Visit-Ready-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-04-Phone-Visit-Working-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-05-Phone-Capture-No-Signal-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-09-Phone-Finish-Crew-Working-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-25-Desktop-Visit-Capture-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-33-Tablet-Visit-Work-r01.png"
       ],
       "dependencies": [
         "src/components/work-timer.tsx",
@@ -6789,7 +6800,8 @@
         "src/field/start.ts",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/decisions/my-jobs-figma-design.md"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -6819,7 +6831,12 @@
       "guide_key": "guide.page.my-jobs",
       "design_path": "docs/design/development/pages/route-my-jobs.md",
       "html_path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-01-Phone-List-Timer-Running-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-11-Phone-List-No-Signal-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-23-Desktop-Register-r01.png",
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-32-Tablet-Register-r01.png"
+      ],
       "dependencies": [
         "src/components/work-timer.tsx",
         "src/app/styles/work-timer.css",
@@ -6833,7 +6850,8 @@
         "src/field/start.ts",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/decisions/my-jobs-figma-design.md"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
