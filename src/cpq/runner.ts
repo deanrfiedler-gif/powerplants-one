@@ -44,3 +44,18 @@ export const calculateIsolated = (
 ) => run<Calculation>({ kind: "calculate", definition, input });
 export const testIsolated = (definition: Definition) =>
   run<ReturnType<typeof testDefinition>>({ kind: "fixtures", definition });
+export const rebaseIsolated = (
+  definition: Definition,
+  input: CalculationInput,
+  parentDefinition: Definition,
+  prior: import("./types").Override[],
+  decisions: import("./rebase-model").RebaseDecision[],
+) =>
+  run<ReturnType<typeof import("./rebase-model").evaluateRebase>>({
+    kind: "rebase",
+    definition,
+    input,
+    parentDefinition,
+    prior,
+    decisions,
+  });

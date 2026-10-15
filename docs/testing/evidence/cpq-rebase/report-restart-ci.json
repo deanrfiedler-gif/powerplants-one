@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-15",
+  "scope": "Synthetic P09 CI repair; not operational acceptance",
+  "base_head": "46727c6dc0618ca7768521238fd5e9515aedb4e4",
+  "main_control": "cfd465f20787e321df9e80244b3df7aed307b6b2",
+  "ci_run": 38564435847,
+  "ci_job": 115853663588,
+  "baseline": "Unmodified main reproduced report-restart-proof.ts download notice timeout at 5000ms in development mode",
+  "change": "Use existing compiled build for CI restart proof; unchanged assertion and startup deadlines",
+  "build_id": "0-rC6lWTPZfZMWeZhjhrK",
+  "source_blobs": {
+    "scripts/report-restart-proof.ts": "f15ad87652b90fe76361a335d903e2383131b4b2",
+    ".github/workflows/application.yml": "7d5626371b9668760821ceade7fb767c41825551"
+  },
+  "phases": {
+    "write": {
+      "scenario": "P09 actual application/PostgreSQL/browser process restart write",
+      "executed_checkout": "46727c6dc0618ca7768521238fd5e9515aedb4e4",
+      "executed_tree": "7dc617a2eba742aa4e0986a2caca3ff45be2d396",
+      "application_mode": "compiled",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "byte_count": 97958,
+      "sha256": "bce61427e1b5db9aebdf58ae52b0d428386f6446e833f10a24ac7cdb80743666"
+    },
+    "submit": {
+      "scenario": "P09 actual application/PostgreSQL/browser process restart submit",
+      "executed_checkout": "46727c6dc0618ca7768521238fd5e9515aedb4e4",
+      "executed_tree": "7dc617a2eba742aa4e0986a2caca3ff45be2d396",
+      "application_mode": "compiled",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "byte_count": 98154,
+      "sha256": "8085c1197b17c8300478e7a8a71c04a0555196a9bec4f1d5b8a55428735d3cc4"
+    },
+    "respond": {
+      "scenario": "P09 actual application/PostgreSQL/browser process restart respond",
+      "executed_checkout": "46727c6dc0618ca7768521238fd5e9515aedb4e4",
+      "executed_tree": "7dc617a2eba742aa4e0986a2caca3ff45be2d396",
+      "application_mode": "compiled",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "byte_count": 93112,
+      "sha256": "818eb452021437f69a17f22696ce49537846cf0b7513acea83e3c6c9215cfd65"
+    },
+    "verify": {
+      "scenario": "P09 actual application/PostgreSQL/browser process restart verify",
+      "executed_checkout": "46727c6dc0618ca7768521238fd5e9515aedb4e4",
+      "executed_tree": "7dc617a2eba742aa4e0986a2caca3ff45be2d396",
+      "application_mode": "compiled",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "byte_count": 102793,
+      "sha256": "4cde3d9089da5bb670534a3135bdfd12b9ccb4fbc7a46aa0ed36cb4bb5f95a8e"
+    }
+  },
+  "database_facts": {
+    "submissions": "1",
+    "reviews": "1",
+    "issues": "1",
+    "responses": "1",
+    "follow_ups": "5"
+  },
+  "restarts": {
+    "postgresql": 3,
+    "application_and_browser": 4
+  },
+  "attempts": "Two local compiled startup attempts exceeded the unchanged readiness deadline. Fresh build passed; subsequent write/submit/respond/verify execution passed. A temporary diagnostic preload was removed before successful proof. Startup attempts are not passing proof."
+}

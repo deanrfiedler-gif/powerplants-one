@@ -23,7 +23,10 @@ await mkdir(root, { recursive: true });
 await mkdir(evidence, { recursive: true });
 const server = spawn(
   process.execPath,
-  ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
+  [
+    "--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts",
+    ...(process.env.PPO_PROOF_COMPILED === "1" ? ["--compiled"] : []),
+  ],
   { stdio: ["ignore", "inherit", "inherit"] },
 );
 let context:
@@ -295,6 +298,7 @@ try {
         }).trim(),
         run_id: process.env.GITHUB_RUN_ID,
         run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+        application_mode: process.env.PPO_PROOF_COMPILED === "1" ? "compiled" : "development",
         viewport: page.viewportSize(),
         byte_count: shot.length,
         sha256: createHash("sha256").update(shot).digest("hex"),
