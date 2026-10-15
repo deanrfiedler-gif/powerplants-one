@@ -344,6 +344,26 @@ test("failed workload evidence is retained; changed, missing and overlapping mem
   assert.deepEqual(await evidence(), before);
   const saved = await releaseCommand(pkg.content.definition, [pkg.reference]);
   await saveRelease(actors.p, saved);
+  const manifest = (await readRelease(actors.p, saved.id)).current.package_manifest!;
+  assert.ok(manifest[0].members.length > 1);
+  const retained = await evidence();
+  const absent = structuredClone(manifest);
+  absent[0].members = [];
+  const forged = structuredClone(manifest);
+  forged[0].members[0].content_hash = "0".repeat(64);
+  const reversed = structuredClone(manifest);
+  reversed[0].members.reverse();
+  for (const malformed of [absent, forged, reversed, [{ ...manifest[0], extra: true }]]) {
+    await assert.rejects(
+      database().query(
+        `INSERT INTO ppo.cpq_revisions(id,workspace_id,company_id,release_id,version,predecessor_id,definition,content_hash,reason,created_by,package_manifest)
+         SELECT $1,workspace_id,company_id,release_id,version+1,id,definition,content_hash,reason,created_by,$2 FROM ppo.cpq_revisions WHERE release_id=$3`,
+        [randomUUID(), JSON.stringify(malformed), saved.id],
+      ),
+      /Exact package snapshot and ordered member hashes required/,
+    );
+    assert.deepEqual(await evidence(), retained);
+  }
   await assert.rejects(
     database().query(
       `INSERT INTO ppo.cpq_revisions(id,workspace_id,company_id,release_id,version,predecessor_id,definition,content_hash,reason,created_by,package_manifest)
@@ -526,6 +546,15 @@ test("schema 3 table package and rule package compose exact members while legacy
     d,
     "Tables",
   );
+  // Native closure must use the same ordinal member bytes as the application,
+  // including nested conditions/arrays, escaped strings and Unicode values.
+  for (const member of [...rules.content.definition.rules, ...d.design!.decision_tables]) {
+    const sample = { ...member, description: 'SYN \\"quoted\\" / \\\\ path\n\t café 传感器 🌱\u2028\u001f' };
+    const native = await rows("SELECT encode(sha256(convert_to(ppo.cpq_package_member_json($1::jsonb),'UTF8')),'hex') hash", [JSON.stringify(sample)]);
+    assert.equal(native[0].hash, hash(sample));
+  }
+  for (const unsupported of [{ priority: 0.5 }, { priority: 1001 }, { priority: -1 }, { '非字段': true }])
+    await assert.rejects(database().query("SELECT ppo.cpq_package_member_json($1::jsonb)", [JSON.stringify(unsupported)]), /Unsupported package member/);
   assert.notEqual(rules.view.package.owner_id, tables.view.package.owner_id);
   await assert.rejects(
     saveRelease(

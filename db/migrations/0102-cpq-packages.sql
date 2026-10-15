@@ -115,9 +115,32 @@ CREATE CONSTRAINT TRIGGER cpq_package_revision_evidence AFTER INSERT ON ppo.cpq_
 -- NULL preserves every historical release/run hash. The existing revision
 -- immutable trigger closes this manifest at the same time as the definition.
 ALTER TABLE ppo.cpq_revisions ADD COLUMN package_manifest jsonb CHECK(package_manifest IS NULL OR (jsonb_typeof(package_manifest)='array' AND jsonb_array_length(package_manifest) BETWEEN 1 AND 20 AND octet_length(package_manifest::text)<=200000));
+-- Restricted to normalized rule/table members: ASCII property names and integer
+-- priorities. Quantities/decimals are strings. Refuse other numeric shapes;
+-- this is not a general JavaScript floating-point canonicalization function.
+CREATE FUNCTION ppo.cpq_package_member_json(value jsonb) RETURNS text LANGUAGE plpgsql IMMUTABLE STRICT AS $$
+DECLARE result text; n numeric;
+BEGIN
+ CASE jsonb_typeof(value)
+ WHEN 'object' THEN
+  IF EXISTS(SELECT 1 FROM jsonb_object_keys(value) k WHERE k !~ '^[a-z_]+$')
+  THEN RAISE EXCEPTION 'Unsupported package member property' USING ERRCODE='23514'; END IF;
+  SELECT '{'||coalesce(string_agg(to_jsonb(e.key)::text||':'||ppo.cpq_package_member_json(e.value),',' ORDER BY e.key COLLATE "C"),'')||'}'
+   INTO result FROM jsonb_each(value) e;
+ WHEN 'array' THEN
+  SELECT '['||coalesce(string_agg(ppo.cpq_package_member_json(e.value),',' ORDER BY e.ordinality),'')||']'
+   INTO result FROM jsonb_array_elements(value) WITH ORDINALITY e(value,ordinality);
+ WHEN 'number' THEN
+  n:=(value::text)::numeric;
+  IF n<>trunc(n) OR n<0 OR n>1000 THEN RAISE EXCEPTION 'Unsupported package member number' USING ERRCODE='23514'; END IF;
+  result:=(n::integer)::text;
+ ELSE result:=value::text;
+ END CASE;
+ RETURN result;
+END $$;
 CREATE FUNCTION ppo.check_cpq_package_manifest() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE ref jsonb; root ppo.cpq_packages; rev ppo.cpq_package_revisions; pub ppo.cpq_package_events;
- selected jsonb; rules jsonb:='[]'; tables jsonb:='[]'; candidate jsonb; collection jsonb; member_kind integer;
+ selected jsonb; member_snapshot jsonb; rules jsonb:='[]'; tables jsonb:='[]'; candidate jsonb; collection jsonb; member_kind integer;
 BEGIN
  IF NEW.package_manifest IS NULL THEN
   IF EXISTS(SELECT 1 FROM ppo.cpq_revisions WHERE workspace_id=NEW.workspace_id AND release_id=NEW.release_id AND package_manifest IS NOT NULL)
@@ -138,6 +161,12 @@ BEGIN
   ) m WHERE rev.content->'member_keys' ? (m->>'key');
   IF jsonb_array_length(selected)<>jsonb_array_length(rev.content->'member_keys')
   THEN RAISE EXCEPTION 'Exact complete package members required' USING ERRCODE='23514'; END IF;
+  SELECT jsonb_agg(jsonb_build_object('key',k.value,'content_hash',encode(sha256(convert_to(ppo.cpq_package_member_json(m),'UTF8')),'hex')) ORDER BY k.ordinality)
+   INTO member_snapshot FROM jsonb_array_elements_text(rev.content->'member_keys') WITH ORDINALITY k(value,ordinality)
+   JOIN jsonb_array_elements(selected) m ON m->>'key'=k.value;
+  IF ref IS DISTINCT FROM jsonb_build_object('package_id',root.id,'revision_id',rev.id,'content_hash',rev.content_hash,
+   'publication_id',pub.id,'kind',root.kind,'owner_id',root.owner_id,'fixture_owner_id',rev.fixture_owner_id,'evidence_hash',pub.report_hash,'members',member_snapshot)
+  THEN RAISE EXCEPTION 'Exact package snapshot and ordered member hashes required' USING ERRCODE='23514'; END IF;
   IF root.kind='Rules' THEN rules:=rules||selected; ELSE tables:=tables||selected; END IF;
  END LOOP;
  FOR member_kind IN 1..2 LOOP
