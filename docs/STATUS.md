@@ -1,5 +1,11 @@
 # Current prototype status
 
+## PJ-06 internal specialist package receiving — 15 October 2026
+
+The authorised main-based `codex/pj06-specialist-packages` increment implements versioned package briefs, exact PJ-05/Engineering/Supply references, independent named receiving, immutable successors and original-operation recovery. Migration 0103 adds no seed or grant; three duties default to denied. The [decision](decisions/project-specialist-packages.md), [contract](contracts/project-specialist-packages.md) and [execution evidence](testing/evidence/project-specialist/README.md) separate local proof, CI/review, operational acceptance and deployment. #500 retains its existing monitor. This is PJ-06 R1: technical/procurement acceptance, competence/insurance verification, supplier identity integration, work-evidence acceptance and UI remain open.
+
+[PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) is the unmerged candidate. On implementation `ad0e173`, eight native/upgrade cases, the reserved Products upgrade, compiled HTTP and actual application/PostgreSQL restart passed. The full pinned unit run is 852/855; all three failures reproduce on unchanged main. Build/lint passed and independent automated review completed cleanly after three tested fixes. CI remains pending; no technical-readiness, business-acceptance or deployment claim follows.
+
 ## Node engine range — 15 October 2026
 
 Node.js 24.22.0 was installed on Dean's workstation, and `npm ci` refused it because `package.json` required exactly 24.21.0 under `engine-strict=true`. At Dean's request `engines.node` is now `>=24.21.0 <25`. `.nvmrc`, every CI workflow and the Azure image stay on 24.21.0, npm stays at exactly 11.19.0, and `package-lock.json` is unchanged so DK-06 managed template fingerprints don't move. The [runtime maintenance handover](delivery/runtime-maintenance.md) records the rule. No code, migration, permission or dependency change.
