@@ -2,7 +2,7 @@
 document_id: PPO-PD01-FIGMA-DEC
 date: 2026-10-15
 owner: Dean Fiedler
-status: Owner-accepted design; native restyle, Inventory handover read and UI baseline acceptance separate
+status: Owner-accepted design; Amendment A1 (product image) drawn at the owner's direction, owner visual review and named version pending; native restyle, Inventory handover read and UI baseline acceptance separate
 source_commit: cfd465f20787e321df9e80244b3df7aed307b6b2
 versioning: git
 ---
@@ -12,6 +12,8 @@ versioning: git
 On 14 October 2026 Dean asked Claude to redesign the Products (PD-01) page that a Codex session had drawn in Figma from his inFlow trial account, the [discovery proposal](products-discovery-proposal.md), saying it could look a lot more professional. While Claude was working he added: "I actually think it is more like an inventory page ... I was thinking it might be more professional to have a module for products and a module for inventory. I'll leave it up to you to make the professional decision." Claude checked his inFlow sample account read-only and decided to split the two. Products keeps what an item is. A new [Inventory](inventory-figma-design.md) page in Supply chain keeps where it is and how sure PPO is. On 15 October Dean accepted both designs: "Proceed with your recommendations." The design reference is the named Figma version "Excel import, Products and Inventory — accepted", which also covers the [Excel estimate import](excel-import-figma-design.md) accepted the same day.
 
 This record supersedes the layout of the discovery proposal and keeps every rule it set. The proposal's retained captures stay unchanged as history.
+
+Section 8 records Amendment A1, the product image, which Dean directed on 15 October 2026 and which awaits his review. Sections 1 to 7 describe the design as accepted.
 
 Scope: the existing destination `products` in the Sales rail, routes `/products` and `/products/[id]`, register entries `route:/products`, `route:/products/[id]` and `scope:PD-01` ("Catalogue and product technical workspace"), within the [Products contract](../contracts/products-catalogue.md) (PD-01 to PD-05) and its retained parents. No parent requirement ID is added or renamed. This is a design decision. It authorises no application code, read model, route change, migration, permission, capability or deployment.
 
@@ -89,3 +91,31 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - The nine captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`, scanned for remaining icons and for text whose colour differed from its bound variable or matched its background, exported at scale 1 and inspected. Hashes are in the [captures README](../reference/ui/products/products-figma-r01/README.md).
 - The repository checks listed in the [Excel import decision](excel-import-figma-design.md), section 7, were run on this change.
 - Nothing is built, so there is no application or device evidence and no UI baseline.
+
+## 8. Amendment A1 — product image (15 October 2026)
+
+On 15 October 2026 Dean showed the product record in the earlier [r04 preview](../reference/ui/products/PPO-Products-Preview-r04.html), which has a large image of the product, and asked whether the accepted design included one. It did not. The redesign followed the shared record layout and lost the r04 image panel without recording a departure. Claude recommended adding it, and Dean replied: "Proceed with your recommendations: amend the Products Figma design to add the product image panel (desktop, tablet, phone, optional grid thumbnail, no-image state) and record it as an amendment."
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Show an image of the actual product | User decision, 15 October 2026 | Quoted above |
+| Where the image sits and how it behaves (A1.1 to A1.6) | Claude's recommendation, adopted by "Proceed" | The rules below; A1.2 refines one recommendation, as noted |
+| The drawn amendment | Drawn on 15 October 2026; owner visual review pending | [Products design r02](../reference/ui/products/products-figma-r02/README.md) |
+| Storing and reading real images | Design intent only; not decided for building | A1.6 and the open items below |
+
+| ID | Rule |
+|---|---|
+| A1.1 | **Record, desktop and tablet.** A Product image panel heads the details column, above Identity: 332 × 233 px at 1440 and 249 × 173 px at 1024. The image fills the media area, View full size sits at the bottom right, and a caption names the image source and its revision (in this synthetic design, "Concept image · fictional equipment" and "Image rev A"). The column scrolls, so at 1440 × 900 the Source and inventory link section now starts below the fold. |
+| A1.2 | **Record, phone.** An 80 px image row opens the record body, above the status line, with the source, the revision and "Tap the image to view full size". Claude had recommended a thumbnail beside the product name. In the header, it would cut the name to about 12 characters at 320 px, so the row sits directly below the header instead. |
+| A1.3 | **Catalogue grid.** A Thumbnail column 36 px wide, holding a 28 px image, sits between Select and Product, with no heading and no divider before the product name. Family narrows from 150 px to 136 px and the 22 px filler is removed, so the row width is unchanged. |
+| A1.4 | **Phone list and snapshot.** Each phone catalogue row starts with a 44 px thumbnail. The snapshot header shows a 40 px thumbnail beside the product name. |
+| A1.5 | **No image.** A neutral placeholder with a camera glyph; on the record it reads "No image · None linked to this revision". A product never borrows an image from a similar product, its family or another revision, and stock photographs are not used. The design shows it for the two families, CP-60 (draft), DP-25, FV-32 and SM-120, on the 320 px record and on the States board. |
+| A1.6 | **Source of images.** A product image is a business document, and SharePoint owns business documents, so PPO stores a reference to the exact file revision and shows its source and revision rather than becoming an image library. Linking or replacing an image is not drawn here; it belongs with the Documents tab and the authoring form. |
+
+**Design reference.** The frames in section 2 were edited in place and keep their node IDs. New page components: Product image (record) `829:3490` (Image: Linked, None) and Product thumbnail `829:3461` (Image: Linked, None; Size: Small, Large). The six synthetic concept images are held in `822:3453`. The States board gains "State / No image" `833:207299`, and the notes card `703:3489` and page header `688:38` record A1. The named version "Excel import, Products and Inventory — accepted" keeps the design as it was before A1. A1 needs its own named version once Dean has reviewed it; Claude suggests "Products — product image amendment A1".
+
+**Images.** The six product pictures (CP-40, CC-8, DP-12, ECP-2, FV-20 and SM-90) are synthetic concept images of fictional equipment, generated with Figma's image generation. They show no real manufacturer's product, label or brand. Generating them used six Figma AI image credits.
+
+**Not decided.** Showing real images needs a product-image reference on the product revision (a data-model change and migration), a scoped SharePoint read, thumbnail generation and an access rule. None is decided or authorised by this amendment. It changes no application code, read model, route, migration, permission or capability, and all 78 parent IDs remain. The `route:/products` and `route:/products/[id]` register entries add the r02 captures; their visual status stays "Needs review". The r01 captures stay unchanged.
+
+**Verification.** Claude checked each amended frame with screenshots taken inside Figma; Present mode was not exercised. The nine r02 captures are copies of the amended frames with every Font Awesome icon swapped for `Icon/placeholder`, including the camera glyph and the magnifying glass. A scan found no icon left, and a scan of 851 visible text layers found no text whose stored colour differed from its bound variable or matched its background. They were exported at scale 1 and inspected; hashes are in the [r02 README](../reference/ui/products/products-figma-r02/README.md). The repository checks from section 7 were run on this change.

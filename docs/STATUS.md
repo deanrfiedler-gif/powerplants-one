@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Products design: product image amendment drawn — 15 October 2026
+
+Dean asked whether the accepted Products (PD-01) design had a place for an image of the actual product, as the earlier r04 preview did. It did not: the redesign had dropped the r04 image panel without recording a departure. He directed the amendment ("Proceed with your recommendations"). Amendment A1 in the [Products decision](decisions/products-figma-design.md), section 8, adds an image panel above Identity on the desktop and tablet record, an 80 px image row at the top of the phone record, thumbnails in the catalogue grid, phone list and snapshot, and a No image placeholder that never borrows an image from a similar product. Images are SharePoint documents referenced by exact revision. The six product pictures are synthetic concept images of fictional equipment. [Nine icon-free r02 captures](reference/ui/products/products-figma-r02/README.md) are retained; the r01 captures are unchanged. Dean's review and a named version are pending. No application code, data model, route, migration, permission or parent ID changes; storing and reading real images is not decided.
+
 ## BC-04 owned CPQ packages — 15 October 2026
 
 PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.
