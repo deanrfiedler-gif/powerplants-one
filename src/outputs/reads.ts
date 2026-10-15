@@ -19,6 +19,7 @@ import {
   visibleOutputLimit,
   type OutputKind,
   type OutputRow,
+  type OutputRecipientSummary,
 } from "./model";
 
 // Identifiers are internal constants, never interpolated request text.
@@ -111,7 +112,9 @@ async function projection(
   let issue =
     (
       await c.query(
-        `SELECT id,revision_id,issued_at,output_hash${kind === "JobPack" ? ",assignment_version" : ""} FROM ppo.${s.issues} WHERE workspace_id=$1 AND ${s.parent}=$2 AND id=$3`,
+        `SELECT i.id,i.revision_id,r.revision AS revision_number,i.issued_at,i.output_hash${kind === "JobPack" ? ",i.assignment_version" : ",i.recipient_id"}
+         FROM ppo.${s.issues} i JOIN ppo.${s.revisions} r ON (r.workspace_id,r.${s.parent},r.id)=(i.workspace_id,i.${s.parent},i.revision_id)
+         WHERE i.workspace_id=$1 AND i.${s.parent}=$2 AND i.id=$3`,
         [p.workspace_id, id, r.current_issue_id],
       )
     ).rows[0] ?? null;
@@ -127,11 +130,52 @@ async function projection(
   const job = internal
     ? ((
         await c.query(
-          `SELECT id,revision_id,state,requested_at FROM ppo.${s.jobs} WHERE workspace_id=$1 AND ${s.parent}=$2 ORDER BY requested_at DESC,id LIMIT 1`,
+          `SELECT j.id,j.revision_id,r.revision AS revision_number,j.state,j.requested_at
+           FROM ppo.${s.jobs} j JOIN ppo.${s.revisions} r ON (r.workspace_id,r.${s.parent},r.id)=(j.workspace_id,j.${s.parent},j.revision_id)
+           WHERE j.workspace_id=$1 AND j.${s.parent}=$2 ORDER BY j.requested_at DESC,j.id LIMIT 1`,
           [p.workspace_id, id],
         )
       ).rows[0] ?? null)
     : null;
+  const revisionId =
+    kind === "JobPack" && !internal
+      ? (issue?.revision_id ?? null)
+      : r.current_revision_id;
+  const revision = revisionId
+    ? (
+        await c.query(
+          `SELECT revision FROM ppo.${s.revisions} WHERE workspace_id=$1 AND ${s.parent}=$2 AND id=$3`,
+          [p.workspace_id, id, revisionId],
+        )
+      ).rows[0]
+    : null;
+  const recipientSummary: OutputRecipientSummary = {
+    visibility: kind === "JobPack" && !internal ? "NotProvided" : "NotIssued",
+    recipient_count: null,
+    acknowledged_count: null,
+    required_recipient_count: null,
+    required_acknowledged_count: null,
+  };
+  if (issue && kind === "ServiceReport") {
+    recipientSummary.visibility = "FrozenReportRecipient";
+    recipientSummary.recipient_count = issue.recipient_id ? 1 : null;
+  } else if (issue) {
+    const summary = (
+      await c.query(
+        `SELECT count(*)::integer AS recipient_count,
+       count(*) FILTER (WHERE acknowledged)::integer AS acknowledged_count,
+       count(*) FILTER (WHERE required)::integer AS required_recipient_count,
+       count(*) FILTER (WHERE required AND acknowledged)::integer AS required_acknowledged_count
+       FROM (SELECT r.required,EXISTS(SELECT 1 FROM ppo.pack_acknowledgements a
+         WHERE a.workspace_id=r.workspace_id AND a.recipient_id=r.id AND a.actor_id=r.user_id AND a.presented_hash=$5) AS acknowledged
+         FROM ppo.pack_recipients r WHERE r.workspace_id=$1 AND r.issue_id=$2 AND ($3 OR r.user_id=$4)) visible`,
+        [p.workspace_id, issue.id, internal, p.actor_id, issue.output_hash],
+      )
+    ).rows[0];
+    Object.assign(recipientSummary, summary, {
+      visibility: internal ? "AllRecipients" : "OwnRecipient",
+    });
+  }
   const row: OutputRow = {
     kind,
     id,
@@ -145,18 +189,18 @@ async function projection(
     service_owner_id: w.service_owner_id,
     appointment: { id: a.id, reference: a.display_number },
     work_order: { id: w.id, reference: w.display_number },
-    current_revision_id:
-      kind === "JobPack" && !internal
-        ? (issue?.revision_id ?? null)
-        : r.current_revision_id,
+    current_revision_id: revisionId,
+    current_revision_number: revision?.revision ?? null,
     current_issue: issue
       ? {
           id: issue.id,
           revision_id: issue.revision_id,
+          revision_number: issue.revision_number,
           issued_at: issue.issued_at,
           output_hash: issue.output_hash,
         }
       : null,
+    recipient_summary: recipientSummary,
     needs_review: kind === "JobPack" ? r.needs_review : null,
     preparation: job,
     availability: issue
@@ -432,16 +476,19 @@ export async function readOutput(
     const jobs = ctx.internal
       ? (
           await c.query(
-            `SELECT id,revision_id,state,attempts,error_code,issue_id,requested_at,
-       output_manifest IS NOT NULL AS has_recorded_output,output_manifest->>'prepared_at' AS prepared_at
-       FROM ppo.${s.jobs} WHERE workspace_id=$1 AND ${s.parent}=$2 ORDER BY requested_at DESC,id`,
+            `SELECT j.id,j.revision_id,r.revision AS revision_number,j.state,j.attempts,j.error_code,j.issue_id,j.requested_at,
+       j.output_manifest IS NOT NULL AS has_recorded_output,j.output_manifest->>'prepared_at' AS prepared_at
+       FROM ppo.${s.jobs} j JOIN ppo.${s.revisions} r ON (r.workspace_id,r.${s.parent},r.id)=(j.workspace_id,j.${s.parent},j.revision_id)
+       WHERE j.workspace_id=$1 AND j.${s.parent}=$2 ORDER BY j.requested_at DESC,j.id`,
             [p.workspace_id, id],
           )
         ).rows
       : [];
     const history = (
       await c.query(
-        `SELECT id,revision_id,issued_at,output_hash FROM ppo.${s.issues} WHERE workspace_id=$1 AND ${s.parent}=$2 AND ($3 OR id=$4) ORDER BY issued_at DESC,id`,
+        `SELECT i.id,i.revision_id,r.revision AS revision_number,i.issued_at,i.output_hash
+         FROM ppo.${s.issues} i JOIN ppo.${s.revisions} r ON (r.workspace_id,r.${s.parent},r.id)=(i.workspace_id,i.${s.parent},i.revision_id)
+         WHERE i.workspace_id=$1 AND i.${s.parent}=$2 AND ($3 OR i.id=$4) ORDER BY i.issued_at DESC,i.id`,
         [
           p.workspace_id,
           id,
