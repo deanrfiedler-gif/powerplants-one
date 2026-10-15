@@ -1,0 +1,28 @@
+{
+  "application_before": {
+    "pid": 29352,
+    "started_at": "2026-10-15T06:11:35.6117705Z",
+    "application_source": "76625885e3f9c2ea45fe57cf618449b480882641",
+    "schema_source": "e4c9c8b",
+    "build_id": "o56tcvBRueLA2WvxbMzXR"
+  },
+  "application_after": {
+    "pid": 35728,
+    "started_at": "2026-10-15T06:18:23.7518072Z",
+    "application_source": "76625885e3f9c2ea45fe57cf618449b480882641",
+    "schema_source": "e4c9c8b",
+    "integrated_source": "3b11801",
+    "build_id": "o56tcvBRueLA2WvxbMzXR"
+  },
+  "packages": {
+    "passed": true,
+    "graph_hash": "dc70ac72647bd5eaa3def8fb5d6bd1a00f0cf1369168ba44c23ef12f42db60b5",
+    "package_hash": "f0543e4c9737f4028d12981908b527a8c0bbeb75bc5ae65ad9463955911c5d73",
+    "manifest_hash": "9ae386bc57e9351c89a932ac6f4f0d5824b96ee905fa301be09729b424842acf",
+    "original_receipts": 12,
+    "duplicate_effects": 0,
+    "postmaster_before": "2026-10-15 15:45:02.270069+10",
+    "postmaster_after": "2026-10-15 16:17:40.28538+10"
+  },
+  "startup_performance_acceptance": false
+}

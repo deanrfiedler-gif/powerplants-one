@@ -136,9 +136,10 @@ export async function readQuality(
     }
     const latest = await latestId(c, p, root.id);
     const saved = latest ? await assessment(c, p, root, latest) : null;
+    const report = await qualityReport(c,p,root);
     return {
       expected_version: root.version,
-      enrolled: latest !== null,
+      enrolled: latest !== null || Boolean(report.report.packages?.length),
       latest_assessment: saved
         ? {
             id: saved.id,
@@ -148,7 +149,7 @@ export async function readQuality(
             review: await latestReview(c, p, root, saved.id),
           }
         : null,
-      ...(await qualityReport(c, p, root)),
+      ...report,
     };
   });
 }
@@ -302,7 +303,11 @@ export async function publicationQuality(
   root: Release,
 ) {
   const id = await latestId(c, p, root.id);
-  if (!id) return {}; // Explicit legacy compatibility; enrollment has no disable path.
+  if (!id) {
+    const candidate = await revision(c,p,root.current_revision_id);
+    if(candidate.package_manifest) throw new AppError(409,"CpqQualityReviewRequired","Package-governed releases require an independent exact impact assessment.");
+    return {}; // Explicit legacy compatibility; enrollment has no disable path.
+  }
   const saved = await assessment(c, p, root, id);
   const review = await latestReview(c, p, root, id);
   if (

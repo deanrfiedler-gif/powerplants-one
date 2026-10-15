@@ -1,0 +1,174 @@
+{
+  "content_hash": "90f8fa80d24059cdf8df220a30e6d5b5467b409fb1c3ddd5a268a3be3269d6a8",
+  "evidence_hash": "48e9761091e01d3f94fb0dca7ef8cc2953e920ca98d3ce19217f58e5302cac5b",
+  "report": {
+    "cases": [
+      {
+        "role": "Small",
+        "passed": true,
+        "fixture": "SYN small 1 instances",
+        "samples": [
+          {
+            "lines": 2,
+            "result_hash": "de555d2cea71776ac1435ef4f627ea6548b1075fed4b3d8a872c40cbfa55611a",
+            "result_bytes": 3344,
+            "evaluation_ms": 0.5871000000042841
+          },
+          {
+            "lines": 2,
+            "result_hash": "de555d2cea71776ac1435ef4f627ea6548b1075fed4b3d8a872c40cbfa55611a",
+            "result_bytes": 3344,
+            "evaluation_ms": 0.5525999999954365
+          },
+          {
+            "lines": 2,
+            "result_hash": "de555d2cea71776ac1435ef4f627ea6548b1075fed4b3d8a872c40cbfa55611a",
+            "result_bytes": 3344,
+            "evaluation_ms": 0.4756000000052154
+          }
+        ],
+        "instances": 1,
+        "input_bytes": 171,
+        "maximum_result_bytes": 3344,
+        "maximum_evaluation_ms": 0.5871000000042841
+      },
+      {
+        "role": "Typical",
+        "passed": true,
+        "fixture": "SYN typical 10 instances",
+        "samples": [
+          {
+            "lines": 20,
+            "result_hash": "184ceebb3ea36a5ad41dd3c203dad2884a53ebda3458c49d96443f0eaf176e0f",
+            "result_bytes": 28520,
+            "evaluation_ms": 2.663300000000163
+          },
+          {
+            "lines": 20,
+            "result_hash": "184ceebb3ea36a5ad41dd3c203dad2884a53ebda3458c49d96443f0eaf176e0f",
+            "result_bytes": 28520,
+            "evaluation_ms": 2.4708000000027823
+          },
+          {
+            "lines": 20,
+            "result_hash": "184ceebb3ea36a5ad41dd3c203dad2884a53ebda3458c49d96443f0eaf176e0f",
+            "result_bytes": 28520,
+            "evaluation_ms": 3.4504000000015367
+          }
+        ],
+        "instances": 10,
+        "input_bytes": 1188,
+        "maximum_result_bytes": 28520,
+        "maximum_evaluation_ms": 3.4504000000015367
+      },
+      {
+        "role": "Boundary",
+        "passed": true,
+        "fixture": "SYN boundary 20 instances",
+        "samples": [
+          {
+            "lines": 40,
+            "result_hash": "7405c589068961315c21dfaf77334c97dea683d5ba2d8fe97678b2c5f9052e23",
+            "result_bytes": 56491,
+            "evaluation_ms": 7.9553000000014435
+          },
+          {
+            "lines": 40,
+            "result_hash": "7405c589068961315c21dfaf77334c97dea683d5ba2d8fe97678b2c5f9052e23",
+            "result_bytes": 56491,
+            "evaluation_ms": 3.8911000000007334
+          },
+          {
+            "lines": 40,
+            "result_hash": "7405c589068961315c21dfaf77334c97dea683d5ba2d8fe97678b2c5f9052e23",
+            "result_bytes": 56491,
+            "evaluation_ms": 4.566100000003644
+          }
+        ],
+        "instances": 20,
+        "input_bytes": 2318,
+        "maximum_result_bytes": 56491,
+        "maximum_evaluation_ms": 7.9553000000014435
+      }
+    ],
+    "scope": "SyntheticInWorkerEvaluation",
+    "passed": true,
+    "tables": [],
+    "target": {
+      "cases": [
+        {
+          "role": "Small",
+          "fixture": "SYN small 1 instances"
+        },
+        {
+          "role": "Typical",
+          "fixture": "SYN typical 10 instances"
+        },
+        {
+          "role": "Boundary",
+          "fixture": "SYN boundary 20 instances"
+        }
+      ],
+      "family": "Synthetic sensor assembly 1/10/20",
+      "rationale": "Exercise minimum, typical synthetic and maximum supported instance counts; no operational workload claim.",
+      "result_bytes": 200000,
+      "evaluation_ms": 1000
+    },
+    "runtime": "v24.21.0",
+    "fixtures": [
+      {
+        "name": "SYN small 1 instances",
+        "actual": {
+          "cost": "56.00",
+          "sell": "105.00",
+          "ready": true,
+          "diagnostic_codes": []
+        },
+        "passed": true,
+        "expected": {
+          "cost": "56.00",
+          "sell": "105.00",
+          "ready": true,
+          "diagnostic_codes": []
+        },
+        "result_hash": "de555d2cea71776ac1435ef4f627ea6548b1075fed4b3d8a872c40cbfa55611a"
+      },
+      {
+        "name": "SYN typical 10 instances",
+        "actual": {
+          "cost": "560.00",
+          "sell": "1050.00",
+          "ready": true,
+          "diagnostic_codes": []
+        },
+        "passed": true,
+        "expected": {
+          "cost": "560.00",
+          "sell": "1050.00",
+          "ready": true,
+          "diagnostic_codes": []
+        },
+        "result_hash": "184ceebb3ea36a5ad41dd3c203dad2884a53ebda3458c49d96443f0eaf176e0f"
+      },
+      {
+        "name": "SYN boundary 20 instances",
+        "actual": {
+          "cost": "1120.00",
+          "sell": "2100.00",
+          "ready": true,
+          "diagnostic_codes": []
+        },
+        "passed": true,
+        "expected": {
+          "cost": "1120.00",
+          "sell": "2100.00",
+          "ready": true,
+          "diagnostic_codes": []
+        },
+        "result_hash": "7405c589068961315c21dfaf77334c97dea683d5ba2d8fe97678b2c5f9052e23"
+      }
+    ],
+    "content_hash": "90f8fa80d24059cdf8df220a30e6d5b5467b409fb1c3ddd5a268a3be3269d6a8",
+    "schema_version": 1
+  }
+}

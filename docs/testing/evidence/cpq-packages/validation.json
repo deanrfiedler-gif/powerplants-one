@@ -1,0 +1,79 @@
+{
+  "compiled_source": "76625885e3f9c2ea45fe57cf618449b480882641",
+  "unit_cases_passed": 50,
+  "database": {
+    "initial_broad_run": {
+      "passed": 52,
+      "failed": 1,
+      "reason": "Historical upgrade snapshot included new nullable package_manifest column; original fields remain unchanged"
+    },
+    "unchanged_main_control_passed": 1,
+    "final_packages_and_upgrades_passed": 19,
+    "additional_strengthened_isolation_and_rollback_passed": 3,
+    "distinct_cases_passed_across_runs": 62,
+    "single_62_case_green_run": false
+  },
+  "compiled_http": {
+    "distinct_cases_passed": 7,
+    "initial_cases_passed": 6,
+    "initial_cases_failed": 1,
+    "reason": "Local Node file ordering ran legacy CPQ after a governed active release; bare legacy actor received expected non-disclosing 404 from changed source authority",
+    "unchanged_main_ready_control_reproduced": true,
+    "first_control_before_listener": "ECONNREFUSED; retained separately",
+    "final_quality_then_legacy_sequence_passed": 2,
+    "timeouts_or_access_not_relaxed": true
+  },
+  "browser": {
+    "journeys_passed": 2,
+    "projects": [
+      "desktop-chromium",
+      "mobile-chromium"
+    ],
+    "warmup_passed": true,
+    "routes": 801,
+    "unreachable": 0
+  },
+  "build_typecheck_full_lint": "passed",
+  "documentation": {
+    "foundation_links": 10023,
+    "foundation_files": 6288,
+    "naming": "passed",
+    "studio": "passed",
+    "unreviewed_designs": 334,
+    "stale_designs": 28
+  },
+  "main_control": {
+    "main": "fae5b0e2480500fac8f90f3cce8dd35b2a7b889f",
+    "tree_equivalent_checkout": "10c0a8b040d8947ec202e13579d55033a9257cfd",
+    "tree": "3fa2b6159520247e70fa44163d5533e02f0e7ace",
+    "compiled_source": "e0905c9",
+    "build_id": "zI4JlXNvoOOU-1yRIWTll",
+    "application_source_unchanged_from_main": true
+  },
+  "private_log_sha256": {
+    "package-final-unit.log": "982239c900a5a90e1e70818382b45fad0f9f0e57875e657cefc3e2e8c9c2afcb",
+    "package-final-typecheck.log": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "package-lint-full.log": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+    "package-lint-followup.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "package-final-docs.log": "0a0fe6dfa559819765e1314bbca9894347b22d5f61eb457f499a6c80856651fc",
+    "package-regression.log": "c507ba027992e4293bb603fc34d1330d808c37f26fbd206bf2775337ea2901ea",
+    "package-upgrade-main-control.log": "8822f490ba21e74996ca5fe9dfb3a2856257367f5a981fdb97fd85ced1f22a5d",
+    "package-final-upgrades.log": "46a93dd84af83047286377de2528e0b04e2af134a601aa0a6abb652c68ed3ffd",
+    "package-final-isolation.log": "94006d52d0b15e23c86ef87cda8a5a755935645a6f788a5b89a06c0e70073807",
+    "package-build.log": "a48047f3fa53f6f7191aaf8a1e6d505faa4d482f9533101edeed5f48e0ae2857",
+    "package-http.log": "ab169143c72b4a5fd9cac7078121803286b124b8d35424227a6aeed60e3c54ae",
+    "package-http-main-control.log": "5a523090decd3e7a8135169e0a497cdca9568881df830335c72881033d64a611",
+    "package-http-main-control-ready.log": "f886cd595bc67a8eac6a6866c2be7024613f9454d9cdc443e1612af2d43e7bc0",
+    "package-http-sequenced.log": "3071eab2b6ddd15f40704cdefc6c73c3492fdb76cc09ba1b27461f3384fe4b54",
+    "package-restart.log": "38bc88d190dc22e33bf61f5955dc0468bff80354b5cf79f6b10e507949288d49",
+    "package-browser.log": "61fe92095bb4b27f467f5767f85b0a8f55ac230935aaead7ad837af60230de6a",
+    "package-evidence-foundation.log": "08eebac5ffe925e623173e1cd2d14085d7b08b3556dad38f765ec901f72a8af8",
+    "package-evidence-naming.log": "fc4e9d1aa4bf9021c2ffd6b2ca2454506bc80ed8a3365aa284e27160b551e5af"
+  },
+  "ci_and_independent_review": "Separate PR gates; not claimed by local evidence",
+  "final_evidence_assurance": {
+    "foundation_links": 10029,
+    "foundation_files": 6294,
+    "naming": "passed"
+  }
+}
