@@ -1,5 +1,11 @@
 # Current prototype status
 
+## Backend reconciliation and DK-03 applicability — 15 October 2026
+
+The [current source reconciliation](delivery/backend-reconciliation.md) distinguishes integrated code from older delivery checkpoints across Documents, Projects, Service/Supply, Finance, Reporting and platform controls. The initial base `41c8479` includes CPQ #492/#494 and PJ-05 #493. #498 subsequently merged externally at main `d070a61`; its final head had independent review clean, 59 successful checks and the intentional PT-27 skip. The existing monitor completed and was removed. This contribution reconciles that upstream change without duplicating CPQ implementation.
+
+The isolated `codex/output-applicability` contribution reproduces G1 through native pack issue, acknowledgement and attendance start: detail applicability is true but distribution preparation returns IssueNotApplicable. The [decision](decisions/output-distribution-applicability.md), committed before implementation, corrects the existing audience check to accept native InProgress for preparation and new simulated sending. No schema, grant, dependency or UI changes. Exact-source validation and remaining limitations belong in the [execution evidence](testing/evidence/output-applicability/README.md); CI, independent review, owner acceptance and deployment remain separate.
+
 ## BC-04 owned CPQ packages — 15 October 2026
 
 PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.

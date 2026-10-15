@@ -37,6 +37,8 @@ The audit suggestion to combine Leads and Deals does not override PPO's adopted 
 
 ## Delivery sequence
 
+15 October source reconciliation: main `41c8479` contains the bounded GAP-01 calendar/baseline/actual-date, GAP-02 RAID and GAP-03 PJ-05 commercial implementations, including independent variation and Finance-definition evidence. The sequence below is its historical starting order, not a request to rebuild those services. GAP-04 specialist coordination, GAP-05 later readiness/updates, GAP-06 effort and GAP-07 reporting definitions remain; see the [current backend reconciliation](backend-reconciliation.md). Proposed parity features keep their original classification.
+
 1. Deliver GAP-01 with evidence against AC-PJ-BASELINE-01–04.
 2. Review the baseline workflow with Dean; capture operating calendar and owner decisions.
 3. Take GAP-02 as the next bounded Projects increment; reconcile concurrent Administration work and then prioritise CRM reporting against commercial variations.

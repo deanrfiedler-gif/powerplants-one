@@ -1,5 +1,9 @@
 # Enterprise CPQ backend delivery plan
 
+## Integrated source follow-up — 15 October 2026
+
+After the initial inspection, #498 merged externally at main `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26`. Code Review diagnostics verified its final head `e3ec866758a8b88b5bcc26fc9cc7a0a1cddfd20d` with 59 successful checks and only the intentional PT-27 skip; independent review was clean and the existing monitor completed. Both Documents contributions integrate this main, including migration 0102 and its historical-upgrade obligations. Earlier open/monitor checkpoints below are retained history. There was no merge or deployment by the continuing backend task. Operational package owners/rates/workloads remain unapproved.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Scope: planning and backend implementation; Claude owns Figma/UI. Operational and visual acceptance pending. Related scope: ES-02, ES-03, existing ES-04–ES-07 handovers. ES-08 remains Screen Systems. Sources: [CCE proposal](../architecture/cce-technical-specification.md), [native runtime decision](../decisions/cpq-native-runtime.md), [UI API contract](../interfaces/cpq-api.md).
@@ -39,6 +43,8 @@ All requests are online. Runs are immutable results rather than durable asynchro
 6. Show native receiving preview, retained lines and generated replacements. Require exact confirmation before adopting; then navigate to the returned native estimate and existing review flow.
 
 ## Release evidence and remaining decisions
+
+Current-source checkpoint, 15 October 2026: main `41c8479` contains published Products #490, governed Cost Sources #491, rebase #492 and release quality #494. The earlier open/stacked wording below is historical. Owned rule/table packages are delivered for review in [PR #498](https://github.com/deanrfiedler-gif/powerplants-one/pull/498) at `e3ec866`, with clean independent automated review and exact-head CI still pending at this checkpoint. Its existing monitor owns completion. Do not duplicate these increments or treat synthetic package workload targets as operational rates, ownership or service objectives. The [whole-application reconciliation](backend-reconciliation.md) selects the next independent backend dependency.
 
 Record actual test results in the PR and STATUS. Backend tests are implementation evidence, not operational approval or UI acceptance. No merge, deployment, production migration or Figma edit is part of this workstream.
 
