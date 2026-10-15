@@ -204,7 +204,11 @@ jobs:
         if: ${{ startsWith(matrix.suite, 'database-') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_DATABASE_SHARD: ${{ matrix.database_shard }}
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_DATABASE_SHARD" tests/database/*.test.ts
+        run: |
+          mkdir -p verification-evidence/native-database
+          # Preserve the full transcript independently of the runner log tail.
+          # Multiple native reporters retain Node's original failure exit code.
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_DATABASE_SHARD" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=tap --test-reporter-destination=verification-evidence/native-database/results.tap tests/database/*.test.ts
       - name: Restore deterministic fixtures for HTTP and browser suites
         if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
