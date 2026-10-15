@@ -1,0 +1,99 @@
+---
+document_id: PPO-DK06-TEMPLATES-FIGMA-DEC
+date: 2026-10-15
+owner: Dean Fiedler
+status: Owner-accepted design; native implementation, the read additions (Q2–Q4, G1–G4), the fingerprint fix (Q5, G5) and UI baseline acceptance separate
+source_commit: 41c8479a0aa4ff8eeebec5efb66712c95ecc8874
+versioning: git
+---
+
+# Template management design — owner decision
+
+On 15 October 2026 Dean asked for the next Figma page and expected DK-06. Claude confirmed it. The four DK-06 backend increments had merged: the read-only catalogue ([PR #471](https://github.com/deanrfiedler-gif/powerplants-one/pull/471), [decision](template-catalogue-backend.md)), managed drafts and review ([PR #472](https://github.com/deanrfiedler-gif/powerplants-one/pull/472), [decision](document-template-drafts-backend.md)), supported Job pack publication ([PR #476](https://github.com/deanrfiedler-gif/powerplants-one/pull/476), [decision](template-publication-backend.md)) and controlled use assignment ([PR #477](https://github.com/deanrfiedler-gif/powerplants-one/pull/477), [decision](template-use-assignment-backend.md)). There was no page at `/documents/templates`, and no Figma page, File index row, branch, open pull request or running session covered it. PJ-05, whose backend merged the same day, was not clearly more blocked on design. The 17 September standalone design ([PPO-DK06-DEC](document-form-template-management-design.md)) had never been accepted. Claude drew the page from the accepted Outputs and Document library patterns, using PPO-DK06-DEC for its rules and vocabulary only. Dean accepted it the same day: "Proceed with your recommendations." The design reference is the named Figma version "Template management — accepted".
+
+Scope: `scope:DK-06` "Document and form template management", parents DOC-02, DOC-03 and DOC-06, outputs OUT-09 (Job pack), OUT-10 (Service report) and OUT-14 (Finance evidence), tracing AT-20, AT-36, D-012, D-024 and BC-03. No parent requirement ID is added or renamed. This is a design decision. It authorises no application code, route, read model, migration, permission, capability or deployment.
+
+## 1. Decisions and evidence
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Accept the design and its recommendations | User decision, 15 October 2026 | "Proceed with your recommendations." Every recommendation on the notes card is adopted and each open question takes its recommended answer |
+| R1 Routes and label: the register at `/documents/templates` with `?view=` and `?family=`, the definition record at `/documents/templates/{family}/{id}`, the proposal record at `/documents/templates/proposals/{id}` and Site use at `/documents/templates/use?company=&site=`; app label "Templates" | Claude's recommendation, adopted | The register key's route is `/documents/templates`. Every catalogue read needs the family, and template IDs are separate per family store. Proposals, publications and assignments have their own identities. The scope title stays "Document and form template management" |
+| R2 Templates is the third Documents page under More › Shared records, with a side menu of Definitions, Proposals, "Job pack use" › Site use and "Other document pages" (Document library, Outputs) | Claude's recommendation, adopted | `src/shell/navigation.ts` files `documents` under "Shared records" in More. The accepted [Outputs design](output-issue-figma-design.md) set up the "Other document pages" group. The rail keeps the current department with nothing selected |
+| R3 Family is a required choice with no "All families"; views and columns map one-to-one to the reads, in identity order | Claude's recommendation, adopted | `family` is required by the catalogue and proposal reads; Site use is Job packs only and needs a company and site. No sort, search, menu counts or totals; Load more continues a page; usage is read one kind at a time |
+| R4 Record tabs follow the reads | Claude's recommendation, adopted | Definition record: Definition (exact text and dependency manifest), Usage (by kind) and Publication (managed definitions only). Proposal record: Proposal, Review, History and Publication (readiness, publishers only) |
+| R5 Create and Revise use the right-hand panel; Review, Publish and Assign use short centred dialogs | Claude's recommendation, adopted | Each dialog names what it binds to (proposal version, revision, fingerprint, review, runtime version, definition hash, site policy version, baseline) and the refusal it may meet. One operation ID per intent, kept for recovery |
+| R6 Words: "Eligible as default" for the workspace default and "Selected now" for a site; Reviewed is review evidence, Published a supported definition, Assigned use at one site | Claude's recommendation, adopted | The catalogue's `definition_eligible` covers the workspace default only (`policy_selection_scope` WorkspaceDefaultOnly); site selection comes from the use-policy read. Never "Approved", "Active" or "Live" |
+| Q1 App label | Resolved by "Proceed" | "Templates". "Document and form templates" pushes the account menu out of the 1440 top bar once a record name is in the breadcrumb |
+| Q2 Names in the catalogue read | Resolved by "Proceed" | Add them before the build (G1). Job pack definitions store a name and managed ones carry the reviewed title; Service report and Finance evidence keep "Version N" |
+| Q3 History order | Resolved by "Proceed" | Order revisions and reviews by revision number and time in the read before the build (G4) |
+| Q4 Proposal to publication link | Resolved by "Proceed" | Add `publication_id` and the template version to the proposal read and list (G3) |
+| Q5 Narrow what a managed definition fingerprints | Resolved by "Proceed" | A separate backend fix before any real use (G5). A session to confirm and fix it started on 15 October; it is not part of this decision |
+| Q6 Who sees the page | Resolved by "Proceed" | Definitions for family readers; Proposals and Site use only for holders of `template.read`; the page is hidden from More when neither applies |
+| Q7 Start a change from a definition | Resolved by "Proceed" | Yes: "Propose a change" opens Create with that exact base, and Revise opens prefilled from the current revision |
+| Building the page | Not decided | Section 5 |
+
+## 2. Design reference
+
+| Reference | Identity |
+|---|---|
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Template management — accepted". The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Page | "Template management · DK-06" `793:6155`, under the divider "— Shared records —" `744:2608`, after Outputs. Its header `793:6156` holds the conformance declaration and its notes card `814:5395` lists the scope, story, recommendations, answers, backend gaps, what is not drawn and the inherited shell finding. File index row `817:43` |
+| Accepted frames | Desktop: Definitions register `796:322`, snapshot `797:725`, Definition record v3 Definition `801:1420` and Usage `802:1693`, Proposals register `798:1074`, Proposal record Proposal `803:1944` and History `804:2203`, Site use `804:199519`. Flows: 1a New proposal panel `806:2711`, 1b Draft r1 `806:200052`, 2a Review dialog `808:3336`, 2b Reviewed `809:3606`, 3a Publish dialog `809:4060`, 3b publication evidence `809:4564`, 3c Assign use dialog `809:5005`. Tablet: proposal record `809:11291`. Phone: Definitions list `810:4945`, proposal record `810:5177`, 320 px Site use `810:202090`. States section `793:6216` (40 cards) |
+| Page components | Template grid row `795:125` (Default, Hover, Selected) and header `795:44`, Proposal grid row `795:471` and header `795:392`, Use interval grid row `795:808` and header `795:729`, Template list row (phone) `795:1069` |
+| Cloned and shared parts | Outputs register `771:185612`, snapshot `772:187879`, record `775:1723`, dialogs `779:3225` and `780:5053`, tablet `783:5397`, phones `783:5907` and `784:5924`, state cards and notes card `786:6154`; Document library panel `754:3053`. Rail · Service (proposal), Shell / Top bar, v2 menu items and headings, Grid cells, Checkbox and Row actions cells, Tag, Button, Record / Header, Field, Section heading, Banner, Readiness bar and Check item, View tab `312:16`, Job pack / Form field and the dialog scrim |
+| Retained captures | [Template management design r01](../reference/ui/template-management/template-management-figma-r01/README.md): twenty icon-free PNGs with hashes |
+
+## 3. Conformance declaration
+
+Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
+
+| Field | Declaration |
+|---|---|
+| Scope identity | `scope:DK-06` (primary), parents DOC-02, DOC-03 and DOC-06, outputs OUT-09, OUT-10 and OUT-14. Routes as R1. Capabilities unchanged: `template.read`, `template.propose`, `template.review`, `template.publish` and `template.assign` (default-denied, no seed grant), intersected with `pack.read`, `pack.check`, `report.read`, `finance.read` and `shared.finance.read`; no new grant |
+| Page type (r20) | Register / worklist (Definitions, Proposals); record detail with a Document & evidence workspace in view tabs (definition, proposal); a Planning workspace variant for Site use (effective intervals); a right-hand panel for Create and Revise and short decision dialogs for Review, Publish and Assign use |
+| Reused components | Section 2. New page components: the Template, Proposal and Use interval grid rows with headers, and the phone list row |
+| Source authority | The four backend decisions and their contracts ([catalogue](../contracts/template-catalogue.md), [drafts](../contracts/document-template-drafts.md), [publication](../contracts/template-publication.md), [use assignment](../contracts/template-use-assignment.md)); `src/documents/template-catalogue.ts`, `drafts/*`, `publication/*` and `use/*`; migrations 0092–0094; PPO-DK06-DEC for rules and vocabulary; the register entry `scope:DK-06`. Fixture: synthetic definitions, proposals, publications, assignments, people, company and sites |
+| Incoming handover | Retained definitions through `GET /api/v1/document-templates` (family required; 1–50 per page with a signed cursor), their exact text and their usage by kind; proposals, revisions, reviews and binding metadata through `/api/v1/document-template-drafts`; publisher readiness and publication evidence; the Job pack site policy through `GET /api/v1/document-template-use-policies` (company and site required). Company, site, people and record names come from the existing shared, people, Job pack, report and Finance reads, because these reads return IDs |
+| Outgoing handover | Five commands forwarded unchanged: Create and Revise proposal, Review proposal, Publish (Job packs only) and Assign use (Job packs, one company and site). Job pack preparation and issue (the Job pack page, Outputs) resolve the site's selection themselves. The page never renders, issues, regenerates or downloads an output, never edits a retained definition, never moves the workspace default and never grants a duty |
+| States shown | Definitions register and snapshot; definition record Definition and Usage; Proposals register; proposal record Proposal and History; Site use; the three flows; tablet; phone list and record; Site use at 320 px. The board covers loading, nothing in this view, no matches, bounded result, partial coverage, page token expired, unavailable, denied, record unavailable, earlier revision selected, proposal evidence only, the catalogue facts DefinitionChanged, RendererChanged, UnsupportedVersion, support unknown, integrity mismatch and dependencies not recorded, the holds TemplateUseUnavailable, TemplateBaselineChanged, Unavailable and not adopted, and every refusal the commands return: InvalidData, StaleTemplate, StaleVersion, IndependentReviewRequired, EvidenceIntegrity, source access removed, OperationConflict, an uncertain result, UnsupportedTemplateFamily, ReviewRequired, IndependentPublicationRequired, AlreadyPublished, StalePublication, StaleTemplateBaseline, InvalidEffectiveInterval, InvalidPredecessor and AmbiguousTemplateUse |
+| Departures | Section 4 |
+
+## 4. Display rules and departures
+
+- **Separate records.** Definition, proposal, review, publication and use assignment are separate records with their own identities. Template version, schema version, renderer contract, proposal revision, command version, site policy version and workspace policy version are separate numbers and are labelled as such.
+- **Two meanings of "in use".** The catalogue's eligibility covers the workspace default only and is labelled "Eligible as default". A site's selection comes from the use-policy read, resolved by the database clock, and is labelled "Selected now". The definition record and the snapshot say both, because they can differ: SYN Northbank Block C selects version 3 while the workspace default stays version 2.
+- **Catalogue facts, not permission to render.** Runtime support, integrity and dependency manifest state are shown as read. Dependency paths and hashes are shown, never opened. Usage lists only records the reader can see now, one kind at a time, with no total; file availability is "Not checked".
+- **Proposal evidence only.** Draft, Reviewed and Changes requested describe review evidence; every proposal read is labelled as not a supported version. Fields name existing Job pack, Service report or Finance values; requiredness is proposed only. A new revision returns the proposal to Draft. Contributors cannot review or publish; their actions are hidden and the refusal is still designed for a stale page.
+- **Publication and use stay separate.** Publishing creates an immutable supported Job pack definition and selects it nowhere. Assigning use adds an immutable start-inclusive, end-exclusive interval at one company and site, pins the workspace default as the baseline at first adoption and never edits an earlier interval; a successor names its open-ended predecessor.
+- **Synthetic story.** Synthetic Company A, SYN Northbank Block C. Job pack v1 (seeded, no manifest), v2 (workspace default, policy 2, 9 files) and v3 (managed, 12 files, publication `6e2b7c41 … 41c0`). On 13 October Morgan Lee creates "Block C pre-start job pack" from v2 and Jordan Hale requests changes; Morgan saves r2 with Visit start. On 14 October Jordan reviews r2, publishes it as v3 and assigns it to Block C from 15 October, 06:00, open-ended. Other proposals reuse the accepted Coastal, Riverbend and Northbank Bore Field sites.
+
+| ID | Departure | Reference or today's page |
+|---|---|---|
+| V1 | The accepted register and shared record layout replace PPO-DK06-DEC's six views and local structured editor | PPO-DK06-DEC r01 (standalone HTML) |
+| V2 | Family is a required choice; registers keep the backend's identity order with no sort, search, menu counts or totals | Other accepted registers sort and some show counts |
+| V3 | A proposal is a bounded list of up to 40 fields over existing sources: no sections, conditions, sample preview or form capture | PPO-DK06-DEC modelled sections, three-valued conditions and a fourteen-case preview matrix |
+| V4 | Publication and use assignment are separate commands | PPO-DK06-DEC bound publication and the intended assignment in one operation |
+| V5 | No withdrawal, cancellation, backdating or editing of an assignment; no company-wide or wildcard use | PPO-DK06-DEC modelled assignment withdrawal |
+| V6 | The rail keeps the current department with nothing selected; the Service operations rail is drawn | As in the Document library and Outputs designs |
+
+## 5. Not decided
+
+- **Building the page.** Before or with the build: names in the catalogue read (Q2, G1), history in revision and time order (Q3, G4), the proposal's publication link (Q4, G3), names for people, company and site from the existing reads (G1), and the visibility rule (Q6).
+- **Backend gaps.** G1: the catalogue omits the stored Job pack name, and the reads return IDs for people, company, site and consuming records, with no usage times. G2: proposals, publications and assignments have no display numbers. G3: proposal reads neither link nor flag a publication, and no read lists publications. G4: identity order everywhere, no sort and no totals. G5, a defect candidate: managed definitions fingerprint `package-lock.json`, `src/platform/operations.ts`, `src/shared/validation.ts` and `src/platform/browser.ts`; any change to them makes every managed definition DefinitionChanged, and `src/documents/context.ts` then refuses new Job pack preparation at assigned sites (TemplateUnavailable). A separate fix session started on 15 October; it is not part of this decision. G6: no read lists the sites with policies or assignments across sites, and assignment rows carry the template ID, not its version. G7: family readers without `template.read` do not see managed definitions in the catalogue, even when one is selected at their site.
+- **Not drawn yet:** the Revise panel, the Changes requested path and Reviews list, a successor assignment naming its predecessor, the Service report and Finance evidence registers, Load more and prototype links. Not in the backend, so not designed: sample render or preview, form capture, sections or conditions, withdrawing a definition, cancelling or editing an assignment, company-wide use, other output families and template import or export.
+- **Inherited shell finding.** At 1024 px the shared Shell / Top bar is wider than the frame (its search is fixed at 403 px), so the account menu falls about 66 px outside, as on the accepted Document library and Outputs tablets. The fix belongs to the Shell page.
+
+## 6. Consequences
+
+- No application code, read model, route, migration, permission or capability changes; all 78 parent IDs remain.
+- The `scope:DK-06` register entry links this design and its captures. Its visual status stays "Needs review".
+- PPO-DK06-DEC and its retained r01 HTML, report and evidence stay unchanged as history. Its rules stay authoritative where they agree with the backend contracts; its layout is superseded.
+- A later change receives a new named version and a new capture revision folder.
+
+## 7. Verification
+
+- Claude checked every frame with screenshots taken inside Figma while drawing and fixed what was found: field rows that overflowed the create panel, a breadcrumb that kept "Outputs", a tablet table wider than its column, an assign dialog taller than the frame, and hidden record menus that still listed library actions. An audit of 2,152 visible texts on the page found none whose stored colour differed from its bound variable and none below 3:1 contrast. The only horizontally cut text is the tablet top bar's account menu (the inherited shell finding); the shared rail's group headings overflow their group frames by 1 px, as on the accepted pages. Claude cannot run Present mode through the connector, so no click-through was exercised.
+- The twenty captures are copies of the accepted frames with all 699 Font Awesome icon instances swapped for `Icon/placeholder`. A scan after the swap found none left, and a second scan of 1,973 texts found no stored-colour mismatch and no text matching its background. They were exported at scale 1 with the Figma connector and inspected. The hashes are in the [captures README](../reference/ui/template-management/template-management-figma-r01/README.md).
+- `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs`, `npm run studio:check`, `python3 scripts/build-ui-sequence.py --check` and the steps of the DK-06 design workflow were run on this change; results are in its pull request.
+- Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.

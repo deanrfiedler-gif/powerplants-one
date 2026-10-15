@@ -12,7 +12,7 @@
     "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html": "672f626ddfdfc2c67287c646e97485681872b1bb29ddddedf4072917db71a770",
     "src/documents/p11-template.ts": "a98dfe2e4126e4824518b0c691bd06625673369674648620a82b01a09345d969",
     "src/documents/p11-fixtures.ts": "a2917ffa473e55046156a887f332b4a8531f9d03a99a0e60d8042e3aaa0cc32b",
-    "src/documents/context.ts": "8ea2870a80a703faf4456fce878126fb2fe8492722f910224837b6c01881bca5",
+    "src/documents/context.ts": "ec1f8d20f7234056eacd50228758e2c10a7eb27d0c0bc34f4a0937f22f616c62",
     "src/reports/template.ts": "071c1a537cc7b9a64391432b85624df6360dce781abba28848c393f3946aeb1f",
     "src/reports/worker.ts": "31e5825e4083088d0aa1f37b816cfc49d387d6d9a028402c249de115d484f21a",
     "src/documents/render.ts": "782e936300ed1ad9f71a257c5be952a515ebcf0b604b03a9a9e9005b09ed4e60",

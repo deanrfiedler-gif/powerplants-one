@@ -47,3 +47,9 @@ The issue/distribution contract changed only its living-master metadata. HTML co
 The stale manifest was also present on unchanged main `442a863`. This review refreshes source references only: the fixture, shared styles, issued HTML and historical verification remain unchanged. Current model/browser CI is recorded separately; no owner acceptance, native integration or deployment is inferred.
 
 Local verification passes 35 model groups and 38 native browser groups with no browser errors. Deterministic assembly using the builder's declared inputs and Git LF source bytes reproduces the exact issued HTML; no reference file is rewritten. The current GitHub run remains separate.
+
+## Source-pin review — 15 October 2026
+
+The DK-06 R3 and R4 backends (#476, #477) changed `src/documents/context.ts`: Job pack preparation now resolves the site's selected template through the use policy, checks managed definitions through the publication dispatcher and rechecks bound-source authority. These are native runtime authority changes, not capabilities of this standalone fixture, which keeps its own local selection model. The stale pin was already present on unchanged main `41c8479`; it surfaced when the [Template management design](../../decisions/template-management-figma-design.md) lock-in added captures under `docs/reference/ui/template-management/`. The manifest now pins the reviewed current source; the fixture, shared styles, issued HTML and historical verification remain unchanged.
+
+Local verification on Node 24.21.0 with the Chrome channel: the deterministic rebuild reproduces the issued HTML byte for byte, eslint is clean, and 35 model groups and 38 native browser groups (43 captures) pass with no errors. The current GitHub run remains separate.
