@@ -41,6 +41,11 @@ import {
 import { withWorkingCompany } from "../../src/platform/working-company";
 import { outputSnapshot } from "../helpers/output-register";
 import type { OutputKind } from "../../src/outputs/model";
+import { started, acknowledged, startInput } from "../helpers/field";
+import { readFieldJob } from "../../src/field/reads";
+import { startAttendance } from "../../src/field/start";
+import { readOutput } from "../../src/outputs/reads";
+import { moveAppointment, readAppointment } from "../../src/scheduling/planner";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -78,6 +83,169 @@ const outcome = (
   outcome: value,
   evidence:
     "SYN controlled outcome observation; no provider or customer communication.",
+});
+
+test("DK03-C10 native InProgress applicability permits exact distribution and original recovery", async () => {
+  const q = await started(),
+    issuer = await principal(),
+    recipient = (
+      await rows(
+        "SELECT id FROM ppo.pack_recipients WHERE issue_id=$1 ORDER BY id",
+        [q.issue_id],
+      )
+    )[0];
+  assert.equal(q.job.status, "InProgress");
+  const detail = await readOutput(issuer, q.pack.id, { kind: "JobPack" });
+  assert.equal(detail.selected_issue!.pack_applicable, true);
+  assert.equal(detail.availability, "Available");
+  const retained = await rows("SELECT * FROM ppo.pack_issues WHERE id=$1", [
+      q.issue_id,
+    ]),
+    cmd = prepare(q.issue_id, recipient.id, q.pack.version);
+  const saved = await prepareDistribution(issuer, "JobPack", q.pack.id, cmd);
+  const sent = outcome(cmd.attempt_id, 1, "SimulatedSent");
+  const recorded = await recordDistributionOutcome(
+    issuer,
+    "JobPack",
+    q.pack.id,
+    sent,
+  );
+  const snapshot = await outputSnapshot();
+  assert.deepEqual(
+    await recoverOutputOperation(issuer, q.pack.id, {
+      kind: "JobPack",
+      operation_id: cmd.operation_id,
+    }),
+    saved.receipt,
+  );
+  assert.deepEqual(
+    (await prepareDistribution(issuer, "JobPack", q.pack.id, cmd)).receipt,
+    saved.receipt,
+  );
+  assert.deepEqual(
+    (await recordDistributionOutcome(issuer, "JobPack", q.pack.id, sent))
+      .receipt,
+    recorded.receipt,
+  );
+  assert.deepEqual(await outputSnapshot(), snapshot);
+  assert.deepEqual(
+    await rows("SELECT * FROM ppo.pack_issues WHERE id=$1", [q.issue_id]),
+    retained,
+  );
+  const history = await readDistribution(issuer, "JobPack", q.pack.id);
+  assert.deepEqual(
+    history[0].events.map((e: { state: string }) => e.state),
+    ["Prepared", "SimulatedSent"],
+  );
+  assert.equal(history[0].sent_at, null);
+  assert.equal(history[0].delivered_at, null);
+});
+
+test("DK03-C11 a Confirmed preparation survives native start without changing its exact issue", async () => {
+  const q = await acknowledged(),
+    tech = await principal("assigned-technician"),
+    recipient = (
+      await rows(
+        "SELECT id FROM ppo.pack_recipients WHERE issue_id=$1 ORDER BY id",
+        [q.issue_id],
+      )
+    )[0],
+    cmd = prepare(q.issue_id, recipient.id, q.pack.version);
+  await prepareDistribution(q.p, "JobPack", q.pack.id, cmd);
+  const job = (await readFieldJob(tech, q.pack.appointment_id)).items[0];
+  const sent = outcome(cmd.attempt_id, 1, "SimulatedSent");
+  await startAttendance(tech, job.id, startInput(job));
+  assert.equal(
+    (await readOutput(q.p, q.pack.id, { kind: "JobPack" })).selected_issue!
+      .pack_applicable,
+    true,
+  );
+  await recordDistributionOutcome(q.p, "JobPack", q.pack.id, sent);
+  assert.equal(
+    (await readDistribution(q.p, "JobPack", q.pack.id))[0].state,
+    "SimulatedSent",
+  );
+});
+
+test("DK03-C12 native schedule and crew changes refuse new distribution without changing original attempts", async () => {
+  const q = await issued(),
+    a = (await readAppointment(q.p, q.pack.appointment_id)).items[0],
+    recipient = (
+      await rows(
+        "SELECT id FROM ppo.pack_recipients WHERE issue_id=$1 ORDER BY id",
+        [q.issue_id],
+      )
+    )[0],
+    cmd = prepare(q.issue_id, recipient.id, q.pack.version);
+  await prepareDistribution(q.p, "JobPack", q.pack.id, cmd);
+  await moveAppointment(q.p, a.id, {
+    ...base(),
+    expected_version: a.version,
+    expected_work_order_version: a.work_order_version,
+    expected_assignment_version: a.assignment_version,
+    scope_revision_id: a.scope_revision_id,
+    scope_version: a.scope_version,
+    policy_version_id: a.policy_version_id,
+    scheduling_policy_id: id("a0"),
+    scheduling_policy_version: 1,
+    scheduling_policy_hash:
+      "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+    publication_head_version: 1,
+    selected_policy: {
+      id: id("a0"),
+      version: 1,
+      content_hash:
+        "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+    },
+    start_at: "2031-09-24T03:00:00Z",
+    end_at: "2031-09-24T05:00:00Z",
+    crew: [
+      {
+        resource_id: id("a4", 9),
+        resource_version: 1,
+        calendar_version: 1,
+        crew_role: "Lead",
+        travel_before_minutes: 0,
+        travel_after_minutes: 0,
+        travel_reason: "SYN reviewed zero allowance",
+      },
+    ],
+  });
+  const current = (await readPack(q.p, q.pack.id)).items[0];
+  assert.equal(current.needs_review, true);
+  assert.equal(
+    (await readOutput(q.p, q.pack.id, { kind: "JobPack" })).selected_issue!
+      .pack_applicable,
+    false,
+  );
+  const snapshot = await outputSnapshot(),
+    history = await readDistribution(q.p, "JobPack", q.pack.id);
+  await assert.rejects(
+    recordDistributionOutcome(
+      q.p,
+      "JobPack",
+      q.pack.id,
+      outcome(cmd.attempt_id, 1, "SimulatedSent"),
+    ),
+    code("IssueNotApplicable"),
+  );
+  await assert.rejects(
+    prepareDistribution(
+      q.p,
+      "JobPack",
+      q.pack.id,
+      prepare(q.issue_id, recipient.id, current.version),
+    ),
+    code("IssueNotApplicable"),
+  );
+  assert.deepEqual(await outputSnapshot(), snapshot);
+  assert.deepEqual(await readDistribution(q.p, "JobPack", q.pack.id), history);
+  await recordDistributionOutcome(
+    q.p,
+    "JobPack",
+    q.pack.id,
+    outcome(cmd.attempt_id, 1, "SimulatedNotSent"),
+  );
 });
 
 test("DK03-C01 shared issue delegates exact native operations; pack recovery retains original stored bytes", async () => {

@@ -10,8 +10,11 @@ import {
 } from "../src/outputs/distribution";
 import { recoverOutputOperation } from "../src/outputs/actions";
 import { reportIssued } from "../tests/helpers/reports";
-import { queued, rows, base } from "../tests/helpers/packs";
-import { readPack } from "../src/documents/packs";
+import { queued, rows, base, principal } from "../tests/helpers/packs";
+import { readPack, acknowledgePack } from "../src/documents/packs";
+import { startInput } from "../tests/helpers/field";
+import { readFieldJob } from "../src/field/reads";
+import { startAttendance } from "../src/field/start";
 import { processRenderJob } from "../src/documents/worker";
 import { readOutput } from "../src/outputs/reads";
 import { outputSnapshot } from "../tests/helpers/output-register";
@@ -44,6 +47,31 @@ try {
       pack = await queued(10);
     await processRenderJob(pack.pack.jobs[0].id);
     const current = (await readPack(pack.p, pack.pack.id)).items[0];
+    for (const profile of ["assigned-technician", "second-technician"]) {
+      const actor = await principal(profile),
+        recipient = current.readiness.recipients.find(
+          (r: { user_id: string }) => r.user_id === actor.actor_id,
+        )!;
+      await acknowledgePack(actor, current.current_issue_id, {
+        ...base(),
+        assignment_id: recipient.assignment_id,
+        assignment_version: recipient.assignment_version,
+        presented_hash: current.issues[0].output_hash,
+        captured_at: new Date().toISOString(),
+      });
+    }
+    const tech = await principal("assigned-technician"),
+      job = (await readFieldJob(tech, current.appointment_id)).items[0];
+    await startAttendance(tech, job.id, startInput(job));
+    assert.equal(
+      (await readFieldJob(tech, job.id)).items[0].status,
+      "InProgress",
+    );
+    assert.equal(
+      (await readOutput(pack.p, current.id, { kind: "JobPack" }))
+        .selected_issue!.pack_applicable,
+      true,
+    );
     const specs = [
       {
         p: pack.p,
@@ -178,6 +206,7 @@ try {
       unknown_outcomes_block_replacement: true,
       reconciliation_additive_and_repeat_safe: true,
       real_delivery_claimed: false,
+      native_in_progress_pack_retained: true,
     };
     await writeFile(
       path + "/result.json",
