@@ -252,6 +252,15 @@ test("PJ06-04 optimistic concurrency, altered retries and atomic evidence rollba
     }),
     /Exact source snapshot hash required/,
   );
+  await assert.rejects(
+    transaction(async (c) => {
+      await c.query(
+        "WITH original AS (SELECT *,source || '{\"technical_release\":\"Approved\"}'::jsonb AS invented FROM ppo.project_specialist_events WHERE package_id=$1 AND version=1) INSERT INTO ppo.project_specialist_events(workspace_id,package_id,version,command,state,content,source,source_hash,note,reason,created_by,operation_id) SELECT workspace_id,package_id,2,'Revise','Draft',content,invented,encode(sha256(convert_to(ppo.project_specialist_source_json(invented),'UTF8')),'hex'),note,reason,created_by,$2 FROM original",
+        [id, randomUUID()],
+      );
+    }),
+    /Closed specialist source snapshot required/,
+  );
   const contenders = await Promise.allSettled(
     [1, 2].map(() =>
       commandPackage(f.owner, pr, packageAction(id, 1, "Submit")),

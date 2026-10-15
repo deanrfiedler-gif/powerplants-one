@@ -70,7 +70,8 @@ DECLARE pkg ppo.project_specialist_packages; pr ppo.projects; previous ppo.proje
  commercial ppo.project_commercial_sources; eng ppo.engineering_packages; demand ppo.supply_records; expected jsonb; ids uuid[];
 BEGIN
  PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
-  IF NEW.source_hash<>encode(sha256(convert_to(ppo.project_specialist_source_json(NEW.source),'UTF8')),'hex') THEN RAISE EXCEPTION 'Exact source snapshot hash required' USING ERRCODE='23514'; END IF;
+ IF NOT (NEW.source ?& ARRAY['commercial','engineering','demand']) OR NEW.source - ARRAY['commercial','engineering','demand'] <> '{}'::jsonb THEN RAISE EXCEPTION 'Closed specialist source snapshot required' USING ERRCODE='23514'; END IF;
+ IF NEW.source_hash<>encode(sha256(convert_to(ppo.project_specialist_source_json(NEW.source),'UTF8')),'hex') THEN RAISE EXCEPTION 'Exact source snapshot hash required' USING ERRCODE='23514'; END IF;
  SELECT * INTO STRICT pkg FROM ppo.project_specialist_packages WHERE workspace_id=NEW.workspace_id AND id=NEW.package_id;
  SELECT * INTO STRICT pr FROM ppo.projects WHERE workspace_id=NEW.workspace_id AND id=pkg.project_id;
  SELECT * INTO previous FROM ppo.project_specialist_events WHERE workspace_id=NEW.workspace_id AND package_id=NEW.package_id ORDER BY version DESC LIMIT 1;
