@@ -9,7 +9,6 @@ import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { reset, migrate, seed } from "../../scripts/database";
-import { readFile } from "node:fs/promises";
 import { draftBytes } from "../../src/estimating/worker";
 import { readConversion } from "../../src/estimating/conversion/reads";
 import {
@@ -48,6 +47,7 @@ import {
 } from "../helpers/quotation-material-resolution";
 import { currentFollowup } from "../helpers/quotation-supply-followup";
 import { taskInput } from "../helpers/projects";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -660,9 +660,7 @@ const legacyRows = async (table: string) =>
   });
 for (const topology of ["isolated-task", "two-task", "linear-chain"])
   test(`populated 0069 upgrade preserves ${topology} originals, every old row and output byte`, async () => {
-    await database().query(
-      await readFile("db/migrations/0001-recover.sql", "utf8"),
-    );
+    await recoverSchema();
     await database().query("DROP TABLE public.ppo_migrations");
     await migrate(69);
     await seed(69);

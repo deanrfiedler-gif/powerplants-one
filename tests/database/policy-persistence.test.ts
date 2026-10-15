@@ -38,13 +38,14 @@ import {
   proposer,
   reviewer,
 } from "../helpers/policy-persistence";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 const sql = (name: string) =>
   readFile(new URL(`../../db/${name}`, import.meta.url), "utf8");
 before(async () => {
-  await database().query(await sql("migrations/0001-recover.sql"));
+  await recoverSchema();
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );
@@ -673,7 +674,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
 });
 
 test("fresh installation applies only registered files through 0095, retains reserved gaps and repeats without changes", async () => {
-  await database().query(await sql("migrations/0001-recover.sql"));
+  await recoverSchema();
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );

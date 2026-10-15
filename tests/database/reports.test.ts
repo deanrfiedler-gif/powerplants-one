@@ -46,6 +46,7 @@ import {
 } from "../helpers/reports";
 import { canonical } from "../../src/platform/operations";
 import { digest } from "../../src/documents/store";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use disposable test database");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -84,9 +85,7 @@ async function saveProcedureEvidence(name: string, facts: Record<string, unknown
   }, null, 2));
 }
 test("P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(8);
   await seed(7);

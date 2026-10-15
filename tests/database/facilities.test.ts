@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   transaction,
@@ -44,6 +43,7 @@ import {
   discoveryInput,
   discoveryFacility,
 } from "../helpers/estimating-discovery";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use only ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -799,7 +799,7 @@ test("CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed
     );
   }
   await transaction(async (c) => {
-    await c.query(await readFile("db/migrations/0001-recover.sql", "utf8"));
+    await recoverSchema(c);
     await c.query("DROP TABLE public.ppo_migrations");
   });
   await migrate(25);

@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   closeDatabase,
@@ -29,6 +28,7 @@ import { readOperation } from "../../src/shared/receipts";
 import { projectInput, taskInput } from "../helpers/projects";
 import { calendarInput, actualInput } from "../helpers/project-programme";
 import { CRM, crmBase } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -375,12 +375,7 @@ test("PJ03-C05 missing evidence rolls back Project and revision; forged baseline
 });
 for (const through of [87, 88])
 test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and ledger through 0096; reseeding and reapplying are inert`, async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(through);
   await seed(through);

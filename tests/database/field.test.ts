@@ -3,7 +3,7 @@ import { twoTaskStarted } from "../helpers/field-two-tasks";
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile, unlink, writeFile, mkdir } from "node:fs/promises";
+import { unlink, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -50,6 +50,7 @@ import {
   base,
   rows,
 } from "../helpers/field";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use the disposable test database.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -64,9 +65,7 @@ async function fresh(p: Awaited<ReturnType<typeof principal>>, id: string) {
   return (await readFieldJob(p, id)).items[0];
 }
 test("P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(6);
   await seed(6);

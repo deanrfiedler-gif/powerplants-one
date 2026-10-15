@@ -1,7 +1,6 @@
 import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { beforeEach, after, test } from "node:test";
 import { reset, migrate, seed } from "../../scripts/database";
 import {
@@ -33,6 +32,7 @@ import {
 import { readOperation } from "../../src/shared/receipts";
 import { crmBase, crmDiscovery } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic test database only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -377,12 +377,7 @@ test("LC-13 revoked native access hides link identities and denies original reco
   );
 });
 test("LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(73);
   await seed(73);

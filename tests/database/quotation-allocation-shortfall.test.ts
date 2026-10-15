@@ -4,7 +4,6 @@ import { supplyRecord } from "../../src/supply/context";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   closeDatabase,
@@ -57,6 +56,7 @@ import {
 import { supplyInput, supplyFact } from "../helpers/supply";
 import { draftBytes, retryQuote } from "../../src/estimating/worker";
 import { receivingWorklist } from "../../src/estimating/supply-followup/reads";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -784,9 +784,7 @@ test("ES07 Receipt successor holds received allocation work while preserving acc
 });
 
 test("ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(65);
   await seed(65);

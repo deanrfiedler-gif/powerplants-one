@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -12,13 +11,12 @@ import { assignUse } from "../../src/documents/use/service";
 import { selectedTemplate, serverTime } from "../../src/documents/use/policy";
 import { readOperation } from "../../src/shared/receipts";
 import { processRenderJob, readBundle } from "../../src/documents/worker";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 after(closeDatabase);
 test("R4 populated 0093 upgrade preserves publications, exact ledgers and queued legacy output; future use retains the pinned baseline until activation", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(93);
   await seed(93);

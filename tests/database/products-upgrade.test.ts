@@ -1,7 +1,6 @@
 import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { test, after } from "node:test";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
@@ -25,6 +24,7 @@ import {
   estimateReviewSeedGrants,
   quotationReleaseSeedGrants,
 } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
 after(closeDatabase);
@@ -38,12 +38,7 @@ const shape = (rs: Record<string, unknown>[]) =>
     .sort();
 for (const through of [25, 48, 71, 72, 74, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102])
   test(`PD upgrade from ${through} preserves originals and exact new duties; repeat migration/seed is inert`, async () => {
-    await database().query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema();
     await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
     // Reproduce the actual pre-Products main registry, including its unfilled 0052 gap.
     const mi = migrationFiles.indexOf("0052-products-catalogue.sql"),

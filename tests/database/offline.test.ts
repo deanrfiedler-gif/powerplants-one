@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { reset, migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -42,6 +41,7 @@ import { id as fixtureId, content } from "../helpers/packs";
 import { readBundle } from "../../src/documents/worker";
 import { saveWorkScope, readWorkOrder } from "../../src/service/work-orders";
 import { operation, rehash } from "../helpers/offline";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use disposable synthetic test database.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -56,9 +56,7 @@ async function fresh(p: Awaited<ReturnType<typeof principal>>, id: string) {
   return (await readFieldJob(p, id)).items[0];
 }
 test("P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(7);
   await seed(7);

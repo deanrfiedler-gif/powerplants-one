@@ -1,7 +1,6 @@
 import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { reset, migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -24,6 +23,7 @@ import { reviewed, prepared, issued } from "../helpers/quotation-release";
 import { response } from "../helpers/quotation-response";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { crmBase, crmDiscovery } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -354,12 +354,7 @@ test("LC-15 late publication failure rolls back outcome, handover, source, recei
 });
 
 test("LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(74);
   await seed(74);
