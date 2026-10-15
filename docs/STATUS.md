@@ -1,5 +1,11 @@
 # Current prototype status
 
+## Next.js security patch and dependency gates — 15 October 2026
+
+The 15 October repository audit found `next@16.3.4` with published advisories: one critical (`next/og` RCE; the app does not import `next/og`) and one high (Image Optimization SSRF; `next/image` is used in two files). It also found that nothing in CI audits or updates dependencies (QA-3). [ADR-0056](decisions/ADR-0056-dependency-update-and-audit-gates.md) moves `next` and `@next/eslint-plugin-next` to 16.3.8 and refreshes `sharp`, `source-map-js` and `brace-expansion` within their existing ranges. It adds weekly grouped Dependabot updates and a `Dependency audit` workflow. That workflow allows no high or critical advisory in the runtime tree, and in the full tree only named exceptions. The one exception is `braces`, which has no fixed release and is reached only through lint tooling.
+
+This lockfile change alters the DK-06 managed OUT-09 definition fingerprint (gap G5). Managed templates published before it read `DefinitionChanged`, and Job pack preparation at their assigned sites refuses until they are republished or G5 is fixed. No test or seed depends on the old hash. Repository settings remain the owner's: Dependabot alerts, Dependabot security updates and secret scanning are disabled, and the new check is not yet required. CodeQL is not decided.
+
 ## BC-04 owned CPQ packages — 15 October 2026
 
 PRs #492 and #494 merged externally; this increment starts from main `fae5b0e`. Dean authorised separately versioned rule/table packages, fixture ownership and workload targets using existing Cost Sources. The [decision](decisions/cpq-rule-packages.md) precedes implementation. Native package identities/revisions and explicit fixture-owner attestation lead to independent review/publication. Exact package manifests govern release composition, quality review, calculation and estimate adoption; changed or withdrawn sources refuse new use while original history/receipts remain recoverable. Migration 0102 adds no seed, grant, dependency, service, pricing policy or UI; schemas 1–4 remain compatible.
