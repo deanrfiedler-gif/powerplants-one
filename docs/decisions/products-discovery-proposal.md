@@ -10,6 +10,8 @@ versioning: git
 
 # Products discovery and supply evidence proposal
 
+**Layout superseded, 15 October 2026:** Dean accepted the refined [Products design](products-figma-design.md) and the separate [Inventory design](inventory-figma-design.md). Their layouts supersede the frames described below; this proposal's rules, priorities and acceptance criteria stay authoritative, and its retained captures stay unchanged as history.
+
 Dean authorised comparing inFlow with PPO and preparing a prioritised proposal and desktop/mobile mockups. He asked to be told if REA becomes necessary. This contribution delivers that reviewable design package. Dean subsequently requested alignment with the other PPO Figma pages, specifically the general absence of internal module containers; the six mockups have been corrected against the accepted register and record references below. Dean subsequently authorised proceeding with the first catalogue increment. That instruction authorises the bounded implementation below, not visual or business acceptance of the wider supply proposal.
 
 The recommended journey is **find a product → inspect its exact revision → understand stock evidence → open the demand that needs it**. The first delivery should improve the existing catalogue. A following read-only increment can connect the product to Supply Chain once exact identity and permission rules are proved.

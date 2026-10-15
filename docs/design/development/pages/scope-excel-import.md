@@ -14,15 +14,26 @@ Implement the existing upload → validate/review → save estimate → quotatio
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Accepted design: the [Excel import design decision](../../../decisions/excel-import-figma-design.md) of 15 October 2026, with captures 01 to 09 and 13 in [Excel import design r01](../../../reference/ui/estimating/excel-import-figma-r01/README.md). It reuses the accepted [Estimation Wizard](../../../decisions/es02-wizard-figma-design.md) shell and parts.
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+- **Launch:** "Import Excel estimate" is a secondary action in the Wizard's Review Actions when discovery is Complete and no estimate exists. Re-import, pricing and the Draft quotation start from the imported estimate. No rail item; the breadcrumb is "Estimating & quotation / Estimation wizard / Excel import".
+- **Layout at 1440:** the Estimating rail with Estimation wizard selected, the Wizard context header, four step cards (Workbook, Review, Confirm & save, Saved), a scrolling main column of 772 px content, a 380 px Import summary panel and a sticky action bar with Previous and the primary action.
+- **Review:** a banner, three tiles (Validation, Reconciliation, Scope or Sources), findings by effect (Prevents saving, Confirm before saving, Informational) naming the sheet, table and row, then the line grid with filter chips, section totals and control totals compared to the cent. Unknown totals show Unknown.
+- **Confirm and save:** four confirmation rows (Source calculation, Scope, Reconciliation, Source warnings), a reason, and a list of what will and will not be saved.
+- **Saved:** the receipt, next steps (price from reviewed sources, prepare a Draft quotation, import a revised workbook) and the import evidence.
+- **Compare, pricing and Draft:** the same shell. Comparison counts Added, Changed, Unchanged, Not in workbook and PPO-only lines, requires Keep or Remove for every omitted line and lists reviewed prices that the workbook replaces. Pricing shows source revisions, FX and landed allocation to the cent. The Draft reconciles totals, requires choices for kept lines and previews customer-safe content.
+
+At 1024 × 768 the rail collapses and the summary is hidden behind the Summary button. Record the actual dimensions and any approved adaptation here after paired design/application review.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Accepted design: captures 10 to 12 in [Excel import design r01](../../../reference/ui/estimating/excel-import-figma-r01/README.md).
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+- **Review at 390 × 844:** the compact Wizard header, a status line, the step navigation, totals, reconciliation, findings groups and "Show all lines", with Summary and Continue to confirm at the bottom.
+- **Saved:** the receipt card and the next steps as full-width buttons, with Open estimate at the bottom.
+- **Blocked at 320 px:** the errors and warnings with their row locators, totals with Cost Unknown, and Upload corrected file.
+
+At 320 CSS px and 200% zoom, keep the same task and record context. Inputs use readable 16 px text and touch controls use the shared minimum target. Side-by-side comparison of many lines is a larger-screen task.
 
 ## Shared components and states
 
@@ -32,6 +43,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma design: [Excel import design r01 captures](../../../reference/ui/estimating/excel-import-figma-r01/README.md) (icon-free PNGs; not application captures)
 - [excel-estimate-import.html](../../../blueprints/excel-estimate-import.html)
 
 ## Behaviour, handovers and verification

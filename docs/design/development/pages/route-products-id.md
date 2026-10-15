@@ -10,9 +10,13 @@ Find the exact Family, Model or Variant by UUID, synthetic alias, provider key o
 
 ## Desktop
 
+**Accepted design, 15 October 2026:** the [Products design decision](../../../decisions/products-figma-design.md), captures 03, 04 and 05 in [Products design r01](../../../reference/ui/products/products-figma-r01/README.md). Where it differs from the direction below, the accepted design governs: the record shows a one-line Availability strip that hands over to Inventory, not stock and demand sections.
+
 Design direction after the 14 October alignment review: at 1440 × 900 and 1024 × 768, use the existing expanded/collapsed Sales rail and shared top bar. Place record identity and a full-width source notice directly above a separate summary/source column (340px desktop; 290px tablet) and a tabbed workspace. Use plain ruled stock and demand sections, without a rounded outer module container or cards within cards. Follow the inspected Lead/Project record structure and preserve exact catalogue/technical revision. The running native record is unchanged; the corrected [Figma proposal](../../../decisions/products-discovery-proposal.md) is not implementation evidence.
 
 ## Mobile
+
+**Accepted design, 15 October 2026:** captures 07 and 08 in [Products design r01](../../../reference/ui/products/products-figma-r01/README.md): the compact record header, a status line, Availability rows (source available, reserved, usable Unknown) with the rule note, Product rows, Technical and Revisions tabs, and Documents and Open in Inventory fixed at the bottom. A product not linked to Inventory shows a warning that availability is Unknown and offers Find in Inventory.
 
 At 390 × 844 and 320 × 844, use the existing compact record header with Back/previous/next, identity/status and tabs. Show stock as full-width labelled rows; separate source basis and linked demand with rules. Retain Unknown values, source time, company/item/unit context and a 44px evidence action. Technical details remain reachable from their tab. Long identifiers must wrap; keyboard, browser Back, 200% reflow and physical-device verification remain implementation work. No outer-page horizontal scrolling is permitted.
 
@@ -31,6 +35,7 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 
 ## Visual sources, departures and proof
 
+- Accepted Figma design: [Products design r01 captures](../../../reference/ui/products/products-figma-r01/README.md) (icon-free PNGs; not application captures)
 - [PPO-Products-Preview-r04.html](../../../reference/ui/products/PPO-Products-Preview-r04.html)
 
 - [Products workflow map](../../../reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html)
@@ -54,3 +59,7 @@ Following Dean's alignment feedback, this proposes a flat desktop catalogue, ful
 ## Catalogue increment A
 
 Catalogue uses SecondaryMenuFrame and RegisterTable with flat desktop rows and a full-width phone list. Filters use the existing modal menu on phone/tablet; Escape/Close restores the opener. Back to catalogue and browser Back restore query, selected-row focus and scroll within the same user/company. Historical revision links retain this return context; direct record links return to the plain catalogue. The record retains its native technical layout; populated supply panels remain proposed. [Implementation evidence](../../../testing/evidence/products-discovery/README.md) separates runtime checks from named-version, owner and device acceptance.
+
+## Accepted Figma design — 15 October 2026
+
+Record header: title, publication tag, reference line (reference, kind and family, catalogue and technical revision, company), record position ("2 of 12 in Catalogue"), Open in Inventory and New draft revision. An Availability strip shows the observation time and completeness, source available, source reserved and "Usable: Unknown", with Open in Inventory. A 380 px details column holds Identity, Revision and Source and inventory link. View tabs: Technical, Documents, Revisions, Pricing, Compatibility and Used in. Technical holds a specification table (attribute, value, basis, evidence; an Unresolved attribute names its clarification owner) and controlled documents as metadata only, then a banner that publication does not confirm installation suitability. Revisions lists catalogue revisions with their states and an immutable history. At 1024 × 768 the rail collapses, the secondary action moves off the header and the strip wraps to two rows.
