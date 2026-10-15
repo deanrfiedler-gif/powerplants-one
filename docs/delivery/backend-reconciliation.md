@@ -1,5 +1,7 @@
 # Backend implementation reconciliation
 
+<!-- versioning: git; committed history is authoritative -->
+
 Owner: Dean Fiedler. Inspected 15 October 2026. Source: main `41c8479a0aa4ff8eeebec5efb66712c95ecc8874`; contribution branches and exact-head validation remain separate. This supplements the [ordered plan](backend-completion-plan.md), whose earlier ledger rows describe historical checkpoints. It does not declare backend completion or business acceptance.
 
 ## Current source and contribution ownership

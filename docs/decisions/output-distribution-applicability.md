@@ -1,5 +1,7 @@
 # DK-03 distribution during a started visit
 
+<!-- versioning: git; committed history is authoritative -->
+
 Owner: Dean Fiedler. Date: 15 October 2026. Backend correction authorised by the continuing backend programme; verification and operational acceptance remain separate.
 
 ## Context and decision
