@@ -12,7 +12,7 @@ import {
   evaluateCondition,
   testDefinition,
 } from "../../src/cpq/engine";
-import { screenDefinition } from "../../src/cpq/pilot";
+import { screenDefinition, screenInput } from "../../src/cpq/pilot";
 import { tableCoverage } from "../../src/cpq/design-runtime";
 import { boundInput } from "../../src/cpq/source-facts";
 import { hash } from "../../src/cpq/hash";
@@ -506,4 +506,18 @@ test("decision-table integer ranges omit unreachable fractions and out-of-range 
 
 test("explicit synthetic screen authoring template passes its independent fixture", () => {
   assert(testDefinition(definition(screenDefinition())).every((t) => t.passed));
+});
+
+// CPQ-11: a new configuration prices on today's date, so the template's fictional prices
+// must not lapse while the template is offered (they expired on 2026-12-31 before).
+test("explicit synthetic screen authoring template still prices after 2026", () => {
+  for (const pricing_date of ["2027-01-01", "2031-12-31", "2050-06-30"]) {
+    const d = definition(screenDefinition()),
+      r = evaluate(d, calculationInput({ ...screenInput(), pricing_date }, d.facts, true));
+    assert.deepEqual(
+      r.diagnostics.filter((x) => x.code === "PriceExpired"),
+      [],
+      pricing_date,
+    );
+  }
 });
