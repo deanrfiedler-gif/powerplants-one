@@ -55,7 +55,7 @@ test("R2 populated 0090 upgrade preserves exact output reservations, authority a
   );
   assert.deepEqual(
     afterLedger.filter((r) => r.version > 90).map((r) => r.version),
-    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102],
+    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103],
   );
   for (const table of [
     "template_proposals",

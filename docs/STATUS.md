@@ -1,5 +1,9 @@
 # Current prototype status
 
+## PJ-06 internal specialist package receiving — 15 October 2026
+
+The authorised main-based `codex/pj06-specialist-packages` increment implements versioned package briefs, exact PJ-05/Engineering/Supply references, independent named receiving, immutable successors and original-operation recovery. Migration 0103 adds no seed or grant; three duties default to denied. The [decision](decisions/project-specialist-packages.md), [contract](contracts/project-specialist-packages.md) and [execution evidence](testing/evidence/project-specialist/README.md) separate local proof, CI/review, operational acceptance and deployment. #500 retains its existing monitor. This is PJ-06 R1: technical/procurement acceptance, competence/insurance verification, supplier identity integration, work-evidence acceptance and UI remain open.
+
 ## Backend reconciliation and DK-03 applicability — 15 October 2026
 
 The [current source reconciliation](delivery/backend-reconciliation.md) distinguishes integrated code from older delivery checkpoints across Documents, Projects, Service/Supply, Finance, Reporting and platform controls. The initial base `41c8479` includes CPQ #492/#494 and PJ-05 #493. #498 subsequently merged externally at main `d070a61`; its final head had independent review clean, 59 successful checks and the intentional PT-27 skip. The existing monitor completed and was removed. This contribution reconciles that upstream change without duplicating CPQ implementation.

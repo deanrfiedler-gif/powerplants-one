@@ -80,3 +80,7 @@ The [derived gap register](crm-projects-audit-gaps.md) reconciles the supplied P
 ## PJ-01/PJ-02 backend continuation — 13 October 2026
 
 The [authorised overview contract](../decisions/project-overview-backend.md) reconciles A1 with delivered LC-16 receiving and current baselines. It completes the bounded receiving-attribution and explained portfolio/overview read gap using those native authorities and PJ-04 records. A1 is no longer wholly unimplemented. This does not adopt the old manual health/stage proposal or complete all record-design departures. [Evidence](../testing/evidence/project-overview/README.md) separates backend verification, the dependent PR, UI and owner acceptance.
+
+## A5 / PJ-06 first native increment — 15 October 2026
+
+The [package contract](../contracts/project-specialist-packages.md) and [decision](../decisions/project-specialist-packages.md) implement internal specialist briefs and exact receiving under the continuing backend mandate. A5 is no longer wholly missing once this contribution is integrated. Technical/procurement acceptance, competence verification and work-evidence delivery remain subsequent scope; [evidence](../testing/evidence/project-specialist/README.md) records actual checks separately from acceptance.

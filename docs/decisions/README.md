@@ -1,5 +1,7 @@
 # Decision control
 
+[PJ-06 specialist package coordination](project-specialist-packages.md) records exact commercial/source references, immutable briefs and independent internal receiving. Source-owned approvals and UI remain separate.
+
 [DK-03 distribution during a started visit](output-distribution-applicability.md) aligns the existing audience check with native InProgress after a retained failing reproduction; exact outputs, scoped authority and original receipts remain unchanged.
 
 [PJ-05 commercial controls](project-commercial-controls.md) records exact accepted quotation/received Sales/reviewed document authority, independent variation decisions and bounded synthetic Finance definitions.
