@@ -63,5 +63,18 @@
     "Primary main control first attempt could not load missing yauzl; no assertions ran. A separate clean pinned control reproduced setup timeouts.",
     "No migration, capability, grant, dependency or UI change.",
     "Hosted CI and independent automated review are separate pending gates."
-  ]
+  ],
+  "upstream_reconciliation": {
+    "main": "d070a61ff17e04ffa0f0d37c16052c24a0bb0e26",
+    "reason": "PR498 merged externally; preserve both STATUS entries and integrated migration102 upgrade assertions",
+    "runtime_change": "none to the applicability correction",
+    "validation": "Integrated exact-head CI and review required; original local proofs bind prior source only"
+  },
+  "metadata_correction": {
+    "commit": "6c7564a102d657e6cd8f54b2318e109a84f0a65d",
+    "original_head": "4d995ee5cdc6bd1613ee766826b8a34f553eb64a",
+    "failure": "check_naming.py: two new Git masters lack versioning metadata",
+    "local_verification": "passed after required metadata comments",
+    "ci_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38701737385/job/116311311073"
+  }
 }

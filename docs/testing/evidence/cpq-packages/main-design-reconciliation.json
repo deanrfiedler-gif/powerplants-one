@@ -1,0 +1,18 @@
+{
+  "main": "41c8479a0aa4ff8eeebec5efb66712c95ecc8874",
+  "integrated_head": "3b11801ce83a1eefd3e15506118bd94f3e1dab0d",
+  "prior_source": "e4c9c8bb18b0c6258455a99e020751e9a633a72a",
+  "incoming_files": 56,
+  "all_other_54_files_exactly_match_main": true,
+  "both_complete_status_contributions_preserved": true,
+  "every_original_document_register_row_preserved": true,
+  "non_documentation_sources_unchanged": {
+    "src": "14704a168c89b74ea573c79ecf4289d9240808b1",
+    "db": "b5e7c4b59fa5b533f935e315a80d855bbd0083ee",
+    "scripts": "54ffb38f0f7a8d633885db0cad11b0a710290011",
+    "tests": "4ded7c9dd3478043670cd920b3345918af4b3ac5",
+    ".github": "8a037272152bec607a29273986b6f6f6a99e233a",
+    "package.json": "ddee90a9ebdd2c670cd155b65575c3b7b729bc78",
+    "package-lock.json": "bbc39321ff80818918f32f64a5f215bf61e5091e"
+  }
+}

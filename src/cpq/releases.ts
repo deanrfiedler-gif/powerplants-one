@@ -1,3 +1,5 @@
+import { packageReferences } from "./package-model";
+import { composePackages, releasePackages } from "./package-bindings";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
@@ -31,6 +33,7 @@ export async function saveRelease(p: Principal, value: unknown) {
     "expected_version",
     "definition",
     "draft",
+    "packages",
   ]);
   const sourceDraft =
     r.draft === undefined ? null : object(r.draft, ["id", "expected_version"]);
@@ -48,6 +51,7 @@ export async function saveRelease(p: Principal, value: unknown) {
     company_id: uuid(r.company_id, "company_id"),
     expected_version: Number(r.expected_version),
     definition: definition(r.definition),
+    ...(r.packages === undefined ? {} : {packages: packageReferences(r.packages)}),
     ...(sourceDraft
       ? {
           draft: {
@@ -65,6 +69,7 @@ export async function saveRelease(p: Principal, value: unknown) {
       await duty(c, p, input.company_id, "cpq.author");
       await productBindings(c, p, input.company_id, input.definition);
       await costBindings(c, p, input.company_id, input.definition);
+      if(input.packages) await composePackages(c,p,input.company_id,input.definition,input.packages);
       const prior = (
         await c.query<Release>(
           "SELECT * FROM ppo.cpq_releases WHERE workspace_id=$1 AND id=$2",
@@ -97,6 +102,7 @@ export async function saveRelease(p: Principal, value: unknown) {
             "All fixtures and decision table coverage checks must pass before creating an immutable design version. Save incomplete work as a draft.",
           );
       }
+      const package_manifest = input.packages ? await composePackages(c,p,input.company_id,input.definition,input.packages,true) : null;
       const id = randomUUID(),
         v = prior ? await revision(c, p, prior.current_revision_id) : null;
       const root = prior
@@ -127,7 +133,7 @@ export async function saveRelease(p: Principal, value: unknown) {
             )
           ).rows[0];
       await c.query(
-        "INSERT INTO ppo.cpq_revisions(id,workspace_id,company_id,release_id,version,predecessor_id,definition,content_hash,reason,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+        `INSERT INTO ppo.cpq_revisions(id,workspace_id,company_id,release_id,version,predecessor_id,definition,content_hash,reason,created_by${package_manifest ? ",package_manifest" : ""}) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10${package_manifest ? ",$11" : ""})`,
         [
           id,
           p.workspace_id,
@@ -139,6 +145,7 @@ export async function saveRelease(p: Principal, value: unknown) {
           hash(input.definition),
           input.reason,
           p.actor_id,
+          ...(package_manifest ? [JSON.stringify(package_manifest)] : []),
         ],
       );
       if (input.definition.schema_version === 3)
@@ -253,7 +260,8 @@ export async function reviewRelease(p: Principal, id: string, value: unknown) {
         );
       const fixtures = await testIsolated(v.definition);
       if (input.outcome === "Approved") {
-        await productBindings(c, p, root.company_id, v.definition, true);
+        await releasePackages(c,p,v,true);
+      await productBindings(c, p, root.company_id, v.definition, true);
         await costBindings(c, p, root.company_id, v.definition, true);
       }
       if (input.outcome === "Approved" && fixtures.some((f) => !f.passed))
@@ -381,6 +389,7 @@ export async function activateRelease(
         root.company_id,
         "cpq.review",
       );
+      await releasePackages(c,p,v,true);
       await productBindings(c, p, root.company_id, v.definition, true);
       await productBindings(
         c,
@@ -491,6 +500,7 @@ export async function sealRelease(p: Principal, id: string, value: unknown) {
         root.company_id,
         "cpq.review",
       );
+      await releasePackages(c,p,v,true);
       const sealId = randomUUID();
       await c.query(
         "INSERT INTO ppo.cpq_seals(id,workspace_id,revision_id,review_id,content_hash,created_by,reason) VALUES($1,$2,$3,$4,$5,$6,$7)",

@@ -1,5 +1,9 @@
 # Backend implementation reconciliation
 
+## Integrated source follow-up — 15 October 2026
+
+After the initial inspection, #498 merged externally at main `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26`. Code Review diagnostics verified its final head `e3ec866758a8b88b5bcc26fc9cc7a0a1cddfd20d` with 59 successful checks and only the intentional PT-27 skip; independent review was clean and the existing monitor completed. Both Documents contributions integrate this main, including migration 0102 and its historical-upgrade obligations. Earlier open/monitor checkpoints below are retained history. There was no merge or deployment by the continuing backend task. Operational package owners/rates/workloads remain unapproved.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Inspected 15 October 2026. Source: main `41c8479a0aa4ff8eeebec5efb66712c95ecc8874`; contribution branches and exact-head validation remain separate. This supplements the [ordered plan](backend-completion-plan.md), whose earlier ledger rows describe historical checkpoints. It does not declare backend completion or business acceptance.

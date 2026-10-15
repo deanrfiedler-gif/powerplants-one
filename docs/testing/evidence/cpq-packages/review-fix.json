@@ -1,0 +1,59 @@
+{
+  "reviewed_initial_head": "69e9aff17f183258318e312396bfc119a21f3fc9",
+  "review_comment": "https://github.com/deanrfiedler-gif/powerplants-one/pull/498#discussion_r4279614130",
+  "decision_before_fix": "4ef6088f795db7f4995d56c1031071fec957feec",
+  "fix_source": "e4c9c8bb18b0c6258455a99e020751e9a633a72a",
+  "application_build_source": "76625885e3f9c2ea45fe57cf618449b480882641",
+  "application_build_id": "o56tcvBRueLA2WvxbMzXR",
+  "application_tree": "14704a168c89b74ea573c79ecf4289d9240808b1",
+  "application_scripts_workflows_dependencies_unchanged": true,
+  "initial_negative_control": "failed: missing expected SQL rejection",
+  "focused_fix_cases_passed": 2,
+  "final_package_and_upgrade_cases_passed": 19,
+  "compiled_package_http_cases_passed": 1,
+  "recovery_original_receipts": 12,
+  "duplicate_effects": 0,
+  "typecheck_and_changed_test_lint": "passed",
+  "coverage": [
+    "empty member snapshots",
+    "forged member hashes",
+    "reversed members",
+    "extra snapshot fields",
+    "whole evidence rollback",
+    "nested rule/table arrays",
+    "escaped Unicode strings",
+    "unsupported scalar/property refusal"
+  ],
+  "initial_unmerged_0102_database_preserved": {
+    "private_dump_bytes": 3478080,
+    "sha256": "a9039f3c7d561f09aa73f326b24c21808e52feccf888546ab8b84579a2669abd",
+    "pg_restore_list_entries": 5045
+  },
+  "recheck_selection_note": "One overbroad local selection was interrupted after the populated 0101 case passed, then the intended 19 cases were run in full; the interrupted log is retained and is not counted as a complete pass.",
+  "source_sha256": {
+    "db/migrations/0102-cpq-packages.sql": "c2a8c8a2ed9bface32686711a9fe9bb1da165cd753ad21809071afcec5e39851",
+    "tests/database/cpq-packages.test.ts": "4ff94c833211d03b138e40b17823d22ae4b5b83faaaf9206d14889774fcb3515"
+  },
+  "private_log_sha256": {
+    "package-review-reproduction.log": "70d1a64706854f925f4d6a9ac7ffbd2272ed7f2c80c7e7bf57de4bc8372f4664",
+    "package-review-focused.log": "41be21a435cce9da03023e7ad883ff5ac88306bececc25aa95ca4a8ff670b6ef",
+    "package-review-upgrades-selection-cancelled.log": "59dde2130fe739ffa2f5ac107af133be54907efbafaa5cae4ecce158a4233073",
+    "package-review-upgrades.log": "33744ae02d92c3560a5699c94ca837d2feb196298d56a1716e062b1fce51314f",
+    "package-review-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "package-review-typecheck.log": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "package-review-http.log": "2dcc60953279fb3e91933d83ca45027f945d7966f809d0c4a9b8acaf180ff343",
+    "package-review-restart.log": "60a62384ca8126c161f31460239aea6ac8390307ff3029feb2ded1b70d65c69c",
+    "package-review-foundation.log": "fcbe68891a2462cf44fc94bced980182a12c6fc917d6f6dbf4554cb6d016e610",
+    "package-review-naming.log": "d74a26fbe951bcb8e4dc8b1204ae7450cfdcc6798f55aed120c9e5ee3f77e722",
+    "package-review-studio.log": "ac61ea5a59b03e258044611c57cd19d71cb66fb1678c17911a5e9168bb898b46"
+  },
+  "final_ci_and_independent_review": "Separate exact-head gates; not implied by local correction proof",
+  "integrated_documentation_assurance": {
+    "foundation_links": 10127,
+    "foundation_files": 6303,
+    "naming": "passed",
+    "studio": "passed",
+    "unreviewed_designs": 334,
+    "stale_designs": 28
+  }
+}
