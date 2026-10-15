@@ -10,6 +10,8 @@ versioning: git
 
 # DK-03 — Output, Issue & Distribution Centre
 
+**Layout superseded, 15 October 2026:** Dean accepted the [Output, issue and distribution design](output-issue-figma-design.md), drawn in Figma from the accepted register and record patterns and the merged output register and action backends. Its layout supersedes the six-view workspace described below. This package's rules and vocabulary stay authoritative where they agree with the [register](../contracts/output-register.md) and [action](../contracts/output-actions.md) contracts, and its retained HTML, report and evidence stay unchanged as history.
+
 Dean authorised building the DK-03 module from [PPO-DK03-PLAN r01](../delivery/output-issue-distribution-build-plan.md). This package delivers stages B1–B6 of that plan: the standalone workspace, its detailed companion report, maintainable source, a deterministic builder, model and native browser verification, and this decision and receiving record.
 
 The package retains DK-03 from the r06 page register, the DOC-01–DOC-06 parent identities, the existing OUT-02, OUT-06 and OUT-08–OUT-14 output types, the r20 Document & evidence workspace and the maintained document, issue and distribution contract r07. It creates no new module, domain, requirement or output identity.

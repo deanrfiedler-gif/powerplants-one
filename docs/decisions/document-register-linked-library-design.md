@@ -10,6 +10,8 @@ versioning: git
 
 # DK-01 / DK-02 — Document Register & Linked Library
 
+**Layout superseded, 15 October 2026:** Dean accepted the [Document library design](document-library-figma-design.md), drawn in Figma from the accepted register and record patterns and the merged backend. Its layout supersedes the six-view workspace described below. This package's rules and vocabulary stay authoritative where they agree with the [backend contract](../contracts/document-library.md), and its retained HTML, report and evidence stay unchanged as history.
+
 Dean authorised creating the shared document workspace with a detailed companion Markdown report. The package retains DK-01 and DK-02 from the r06 page register, DOC-01–DOC-06 parent identities, the r20 Document & evidence workspace and the maintained source/issue/distribution contract.
 
 ## Deliverable
