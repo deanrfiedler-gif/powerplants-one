@@ -11,3 +11,13 @@ No persistence or permission changes; no new migration/seed/grant, stored summar
 ## Integrated main
 
 PR #498 merged externally at `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26` after this contribution began. The integration preserves both STATUS entries and the upstream CPQ implementation, migration 0102, historical-upgrade assertions and evidence. The register implementation is unchanged; integrated-head CI and independent review remain separate gates.
+
+## Failure investigation and upstream reconciliation
+
+At exact head `3c8535b570b19b8ddc802c8d91a245a6de058488`, Code Review diagnostics reported 52 successful checks, three failed checks (two lanes and their aggregate), and the intentional PT-27 skip. The dedicated actions, outputs and register jobs passed, as did the separate compiled mobile lane. Independent review was clean at [6187580031](https://github.com/deanrfiedler-gif/powerplants-one/pull/500#issuecomment-6187580031). This is not technical readiness.
+
+[Application run 38703525600](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38703525600) retained the original failures. Database job 116317187426 returned a 120,000-character truncated cleanup tail through Code Review; artifact 11960808463 retained PDF and transport evidence but no test transcript. The failed assertion therefore remains unidentified at this checkpoint. Mobile job 116317187546 passed 394 tests and skipped 74 project-inapplicable cases; CR05 timed out at `captureSizes` while capturing the closed record, followed by a trace-recording fixture timeout. No failed business assertion was reported. Neither failure is labelled a baseline failure without reproduction.
+
+Upstream #499 merged externally at `a676fde58d2ee88878bb2f9489912c97f49636b3`. Its exact source `25a07ad34c90de37c0ca1b6bbd1b26c015ad5703` completed every applicable check successfully, including database-2 and mobile. Its single PT-27 skip remains intentional. That comparison establishes a passing upstream run, not reproduction or root cause of #500 failures. Reconciliation retains both decisions, status entries, register entries and source changes. No PR is merged by this work.
+
+Before changing CI retention: use Node’s existing TAP reporter in addition to its console reporter for every native database shard. Store the transcript in the existing redacted evidence artifact. Keep serial execution, four shards, all tests, assertions and deadlines, and the native nonzero exit unchanged. This addresses the demonstrated missing diagnostic artifact; it does not claim to fix an unidentified runtime defect. No new dependency, service or persistence is justified. A fresh exact-head run and independent review must verify the integrated result.

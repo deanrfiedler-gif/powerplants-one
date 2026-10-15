@@ -25,6 +25,8 @@ Distribution attempt version starts at 1, increasing for each immutable event. P
 
 Prepare and a new simulated send verify current issue/revision/status, current audience and retained byte hashes. Job Packs additionally require applicable schedule/crew and no review flag. Reports require the currently valid frozen customer recipient. Changes refuse the command. Historical non-send/unknown recording and reconciliation do not resend, so they can describe an earlier issue after supersession/withdrawal; current permission is still mandatory. A recorded SimulatedNotSent permits a new attempt, subject to fresh applicability/byte checks. Prepared, OutcomeUnknown and SimulatedSent prevent replacement for the same exact issue/recipient.
 
+Job Pack appointment applicability uses the native `Confirmed` or `InProgress` states. Native attendance start does not itself invalidate an otherwise exact issue or an existing prepared attempt. Both PrepareDistribution and a new SimulatedSent recheck this condition, matching the detail's applicability fact; it never establishes real delivery. [Correction decision](../decisions/output-distribution-applicability.md).
+
 Both families expose `channel:Synthetic`, with real `sent_at` and `delivered_at` null. Existing pack TaskCreated/SimulatedSent/Opened/Downloaded events and acknowledgements remain native history; new ledger evidence neither rewrites nor backfills them. Existing report responses remain exact-presentation records and are not manufactured by distribution. No provider, customer communication, automated retry, new grant or domain approval is introduced.
 
 ## Recovery and verification

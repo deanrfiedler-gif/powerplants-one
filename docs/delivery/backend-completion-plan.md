@@ -1,5 +1,9 @@
 # Backend completion delivery plan
 
+## Integrated source follow-up — 15 October 2026
+
+After the initial inspection, #498 merged externally at main `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26`. Code Review diagnostics verified its final head `e3ec866758a8b88b5bcc26fc9cc7a0a1cddfd20d` with 59 successful checks and only the intentional PT-27 skip; independent review was clean and the existing monitor completed. Both Documents contributions integrate this main, including migration 0102 and its historical-upgrade obligations. Earlier open/monitor checkpoints below are retained history. There was no merge or deployment by the continuing backend task. Operational package owners/rates/workloads remain unapproved.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Date: 12 October 2026. Status: Dean authorised proceeding with the dependency-led plan in the backend-completion chat. Code delivery, independent review, owner acceptance and deployment remain separate.
@@ -41,7 +45,9 @@ These package keys are local tracking labels, not new parent requirements. Prior
 
 ## Current increment ledger
 
-15 October continuation: the accepted DK-03 Q4/G3 read dependency is implemented independently from main `41c8479` on `codex/output-register-facts`. [Decision](../decisions/output-register-facts.md), [contract](../contracts/output-register.md) and [evidence](../testing/evidence/output-register-facts/README.md) bind exact revision numbers and scoped recipient/acknowledgement counts. Native publication, exact bytes and distribution authority are unchanged; page and operational acceptance stay separate. The G1 correction and CPQ #498 remain independent contributions. PJ-05 #493 is already integrated; PJ-06 is the next ordered domain contract, with independent Service/Supply gaps still open.
+15 October continuation: the accepted DK-03 Q4/G3 read dependency is implemented independently from main `41c8479` on `codex/output-register-facts`. [Decision](../decisions/output-register-facts.md), [contract](../contracts/output-register.md) and [evidence](../testing/evidence/output-register-facts/README.md) bind exact revision numbers and scoped recipient/acknowledgement counts. Native publication, exact bytes and distribution authority are unchanged; page and operational acceptance stay separate. G1 #499 and CPQ #498 have since merged externally; both are preserved in the integrated branch. PJ-05 #493 is already integrated; PJ-06 is the next ordered domain contract, with independent Service/Supply gaps still open.
+
+Earlier 15 October checkpoint (subsequent integrations recorded above): the [15 October source reconciliation](backend-reconciliation.md) supersedes old open-PR and missing-code checkpoints below for current delivery selection. Main is `41c8479`; CPQ #492/#494 and PJ-05 #493 are integrated. #498 retains its own writer/monitor and pending exact-head CI. The next independent increment corrects the reproduced DK-03 G1 native-state mismatch under the [applicability decision](../decisions/output-distribution-applicability.md); accepted Q4/G3 read facts follow before the next BC-06 domain slice. Historical evidence remains unchanged.
 
 | Increment | State | Evidence / next boundary |
 |---|---|---|
