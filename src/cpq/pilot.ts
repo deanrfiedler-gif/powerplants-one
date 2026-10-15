@@ -46,8 +46,10 @@ export function screenDefinition(): Definition {
     category,
     resolver,
     source: "SYN Screen systems price book · fictional software fixture",
+    // A new configuration prices on today's date, so these fictional prices must not lapse
+    // while the template is offered. An author sets real validity on the definition they adopt.
     effective_from: "2026-01-01",
-    effective_to: "2026-12-31",
+    effective_to: "2099-12-31",
     tiers: [{ minimum: "0.001", unit_cost: cost, unit_sell: sell }],
   });
   const rule = (

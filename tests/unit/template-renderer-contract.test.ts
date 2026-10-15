@@ -6,8 +6,15 @@ import {
   currentRenderer,
   definition,
   parseDefinition,
+  supportedPackHtml,
   supportedTemplateDefinition,
 } from "../../src/documents/publication/contracts";
+import {
+  escapeHtml,
+  rendererVersion,
+  type PackSnapshot,
+} from "../../src/documents/render";
+import { digest } from "../../src/documents/store";
 import * as retained from "../../src/documents/publication/definition";
 import { supportedTemplateDefinition as legacy } from "../../src/documents/p11-template";
 import {
@@ -138,4 +145,49 @@ test("rendering source, branding and Playwright changes withdraw DK06-OUT09-2 su
         assert.equal(await supported(two), false, name);
       },
     );
+});
+
+// Carries #506 (DOC-5) into DK06-OUT09-2: String.replace reads "$&", "$`", "$'"
+// and "$$" in a replacement string as patterns, so published text must be
+// inserted by a replacer function.
+test("DK06-OUT09-2 inserts published text literally, never as replacement patterns", async () => {
+  const fixture = JSON.parse(
+    await readFile("tests/fixtures/job-pack-read.json", "utf8"),
+  ).items[0];
+  const saved = fixture.revisions.find(
+    (r: { id: string }) => r.id === fixture.current_revision_id,
+  ).snapshot as PackSnapshot;
+  const patterns = "$& $` $' $$ $1",
+    title = `SYN pack ${patterns}`,
+    label = `SYN site ${patterns}`,
+    site = `SYN Banksia ${patterns}`;
+  const text = await definition(
+    "DK06-OUT09-2",
+    3,
+    {
+      ...body,
+      title,
+      fields: [{ key: "site", label, binding: "site.name", required: true }],
+    },
+    origin(),
+  );
+  const html = await supportedPackHtml({
+    ...saved,
+    site: { ...saved.site, name: site },
+    template: {
+      ...saved.template,
+      version: 3,
+      definition: text,
+      hash: digest(text),
+      renderer_version: rendererVersion,
+    },
+  });
+  assert.ok(
+    html.includes('<meta name="ppo-output-template" content="DK06-OUT09-2">'),
+  );
+  assert.equal(html.match(/<h1>/g)?.length, 1);
+  assert.ok(html.includes(`<h1>${escapeHtml(title)}</h1>`));
+  assert.ok(
+    html.includes(`<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(site)}</dd>`),
+  );
 });

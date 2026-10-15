@@ -1,16 +1,17 @@
 {
   "scope": "DK-06 G5 rendering-only DK06-OUT09-2 manifest for synthetic OUT-09 publications",
   "base_commit": "d070a61",
+  "integrated_base_commit": "1552cfbb8efd6cea17438c2af18ba0effa4fc278",
   "reproduction_commit": "0744de4",
   "source_hash_basis": "SHA-256 of UTF-8 source with CRLF normalised to LF",
   "source_sha256": {
     "db/migrations/0103-template-renderer-manifest.sql": "5562174c88ddc3e115d0d22efe701daf43cf779c6a5e9cfdad30c55a05f5b4fe",
     "scripts/demo-upgrade.ts": "3ddd51fb4d497e67bd313f3de63f67204fc05fddc5c5aab47c6bfc22c951a281",
     "scripts/migration-registry.ts": "18e5959f778724ad531a852c83d59e36d322dba0f4971fbc6563112af654607c",
-    "src/documents/context.ts": "fb4e56570ca4f4b6a7c0eaa1cace696e65ab4c3d49891f28126f2753dda5b34d",
-    "src/documents/http.ts": "db428ba1f23aa64ebce806618d77bbef5cfdba65fd37904101265d2454349a8d",
+    "src/documents/context.ts": "b1ae68782bf921864016061c50161ff2b06fa7a0389ef36a2d8fd797f49d6a5f",
+    "src/documents/http.ts": "a70ca92f5cf2cddf7839f97f0f3e160f00e785fc5010b0b87322dd0696ca24e8",
     "src/documents/publication/contracts.ts": "416c43c341ff984c4a1222997736e3f6f849fc583479520e5778bcd2db34408d",
-    "src/documents/publication/dk06-out09-2.ts": "1f22d5cbfb0d8ab62050864b2742f4fc0d7c40f8ccb8e4ef93c5d42cef40127d",
+    "src/documents/publication/dk06-out09-2.ts": "dcab67667d690cde1a4686fd8be578278ae408c1b7fcc95fdc6af11c986024f9",
     "src/documents/publication/service.ts": "d52c572674b425ba22ded19ddacf4045f38d6ba707344effa02510a656892e58",
     "src/documents/template-catalogue.ts": "ee6d1d946431db6171896894ce19d0cb88be77edeebb6ecbc6f3f0ecb0aa4f4a",
     "src/documents/use/service.ts": "e40d696dd7bd9a4eae74828d671038f3ac92e35d8304cd04fbb73696e3a302d7",
@@ -38,7 +39,7 @@
     "tests/database/leads-projects-integration.test.ts": "e8e98f7c121627870a94a35aefbcfd8716a3d03e35f9e821b51f31b448017dfd",
     "tests/database/offline.test.ts": "2d41e62f0788eba65c912191b4a55348bdd14b4cd33289e6c7da2858b63414e4",
     "tests/database/outcome-sources.test.ts": "ba7364f07c86dd4af760c4dbd7f7b319055ad0255632a08cc418ceaefffb7eb7",
-    "tests/database/output-actions.test.ts": "e635244de65f2bc1ab11f5a5588472a256f91d843e018bdcc45f227b634b0939",
+    "tests/database/output-actions.test.ts": "f41321968d71b0a84115e84ff5eb9b66146d61dab3139f991d577a9e82a4a88b",
     "tests/database/packs.test.ts": "d0df0333b60e21d54f9bc48cb74207015d5f03e9e261f65cc75b477c291eeea7",
     "tests/database/planner.test.ts": "b56aa299102c8e088d529d05240e36d933d45495422b91798218ba35d74452bb",
     "tests/database/policy-persistence.test.ts": "6bb908787d5624d7d82434798e30b583e80e38db63ca89be7f45c64f3df9e8d9",
@@ -72,7 +73,7 @@
     "tests/database/template-use-upgrade.test.ts": "520df82abb2b5795b08a194e6e9b6947071e326842384ca99a126e4c7480e174",
     "tests/demo/upgrade.test.ts": "945e156be9212dd6670573b947f683dada667a1f42d3415dd7b0e25fedd2058e",
     "tests/helpers/template-manifest.ts": "09f44b53be9df33b47c44f440d46bb7017143ef7a98f50e58bb782ffe584573a",
-    "tests/unit/template-renderer-contract.test.ts": "45690f0b24fcc3978fad69547ef32ebc09a18f485610f0c64ad751f111ac6585"
+    "tests/unit/template-renderer-contract.test.ts": "17ab73370821ef6bc39c7dd674523db977273f3e1a6eef6ffaa0e06881827a6d"
   },
   "environment": {
     "postgresql": "16.15",
@@ -141,7 +142,22 @@
       "Full HTTP lane",
       "Restart proof",
       "Browser suites"
-    ]
+    ],
+    "integration_2026_10_16": {
+      "base": "1552cfb",
+      "units_template": {
+        "pass": 8,
+        "fail": 0,
+        "detail": "Includes the new DK06-OUT09-2 literal-insertion test (7 h1 elements before porting #506's fix, 1 after) and main's #506/#515 tests."
+      },
+      "database": {
+        "pass": 9,
+        "fail": 0,
+        "detail": "G5 proof, 0103 guard, six R3 cases and the populated 0102 upgrade; the upgrade first hit a pool connection timeout under 100% CPU and passed when run alone."
+      },
+      "typescript": "Pass",
+      "changed_source_eslint": "Pass"
+    }
   },
   "acceptance": "Local synthetic verification only. CI, independent review, owner acceptance and deployment are separate.",
   "verified_date": "2026-10-15"

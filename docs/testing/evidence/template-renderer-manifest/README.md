@@ -23,9 +23,15 @@ Environment: isolated loopback PostgreSQL 16.15 cluster, `ppo_synthetic_test`, C
 | R3 and R4 regression | R3: six cases and the populated 0092 upgrade pass, now exercising DK06-OUT09-2 rendering, escaping and stale-definition refusal. R4: six cases and the populated 0093 upgrade pass. Two R4 cases first failed with pool connection timeouts while the production build saturated the CPU; the file passed 6/6 on re-run. One earlier run was killed by the Node reinstall and re-run. |
 | Full unit suite | 851/858. The three Windows filesystem failures (document-store ×2, recovery) also fail on an unmodified-main control worktree. Four timing cases (azure-demo, cpq-packages workload, foundation ×2) timed out under load; they pass on two consecutive re-runs in both the branch and the main control. |
 | TypeScript, changed-source ESLint, Prettier | Pass. |
-| Production build | Pass. |
+| Production build | Pass (before the 16 October merges below). |
 | Compiled HTTP (DK-06 lane) | 5/5 pass against the compiled build on a task-owned port, each after a fresh reset: catalogue, drafts, copied-base authority, publication, and use assignment with succession and recovery. |
 | Edited ledger suites (spot check) | 8/8 pass: Products upgrade from 25, 101, 102 and the new 103 starting point; Project commercial from 25 and 100; CPQ populated 0101; R2 populated 0090. |
+
+## Integration with main, 16 October
+
+Main moved to `1552cfb` with the 15 October audit fixes. Two of them edit DK06-OUT09-1 manifest files: #506 (`publication/render.ts`, literal insertion of published text) and #515 (`operations.ts`, English canonical key order). They withdraw DK06-OUT09-1 definitions published before them, as G5 describes. The DK06-OUT09-2 renderer was copied before #506, so the same fix was ported and a test added first. On the copied renderer, a title, label and site name carrying `$&`, `` $` ``, `$'` and `$$` produced seven `<h1>` elements; after the fix there is one, with the text verbatim.
+
+After the merge, the eight template units pass, including #506's and #515's own tests. TypeScript and changed-source ESLint pass. On the merged tree the database re-run passes the G5 proof, the 0103 guard and the six R3 cases, which cover rendering, escaping and worker recovery through the dispatcher. The populated 0102 upgrade first hit a 3 s pool connection timeout while its snapshot opened about 18 connections on a machine at 100% CPU; run alone, it passes. Foundation and naming checks pass.
 
 ## Local limits
 

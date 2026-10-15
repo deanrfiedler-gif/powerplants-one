@@ -37,6 +37,8 @@ A change to any manifest source or dependency version still refuses support and 
 
 None of the twelve DK06-OUT09-1 manifest files changes, including `src/documents/publication/definition.ts` and `src/documents/publication/render.ts`. Retained definitions, publications, assignments and issued bytes are unchanged and stay supported until one of those files changes. They then fail closed as R3 designed. To replace one, copy its published definition into a draft, review and publish it (as DK06-OUT09-2), and assign it as a successor. No data is migrated or rewritten.
 
+Main has since edited two DK06-OUT09-1 manifest files on 15 October: PR #506 made the retained renderer insert published text literally, and PR #515 pinned canonical key order to English collation in `operations.ts`. Every DK06-OUT09-1 definition published before those merges is therefore already withdrawn on main, which is a live instance of G5. DK06-OUT09-2 carries #506's literal-insertion fix from the start.
+
 A new dispatcher routes legacy v1/v2, DK06-OUT09-1 and DK06-OUT09-2 definitions to their own support check and renderer. Pack context, the issue worker, the HTML preview, the catalogue, publication reads, publication and use assignment call the dispatcher.
 
 ## Database
