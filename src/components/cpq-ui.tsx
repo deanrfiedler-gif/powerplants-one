@@ -154,37 +154,49 @@ export function CpqNav({
     </button>
   );
 }
+// `record` draws CPQ / Context header 475:120225 as the rule editor uses it (frames 486:641 and
+// 488:1029): a 40 px title row with its "⋯" menu, then 14 px meta with the save state and its dot.
 export function CpqHeader({
   title,
   context,
   status,
   children,
+  record = false,
+  dot,
 }: {
   title: string;
   context: ReactNode;
   status?: string;
   children?: ReactNode;
+  record?: boolean;
+  dot?: CpqTone;
 }) {
   const identity = useIdentity();
   return (
-    <header className="cpq-header">
+    <header className={`cpq-header${record ? " cpq-header-record" : ""}`}>
       <div>
         <h1>{title}</h1>
         <div className="cpq-context">
           {context}
-          <span>·</span>
-          <span className="cpq-avatar">
+          <span aria-hidden="true">·</span>
+          <span className="cpq-avatar" aria-hidden="true">
             {identity.display_name
               .split(" ")
               .map((s) => s[0])
               .slice(0, 2)
               .join("")}
           </span>
-          <span>{identity.display_name}</span>
+          <span>
+            {identity.display_name}
+            {record && " (you)"}
+          </span>
           {status && (
             <>
-              <span>·</span>
-              <span role="status">{status}</span>
+              <span aria-hidden="true">·</span>
+              <span className="cpq-context-status">
+                {dot && <span className="cpq-dot" data-tone={dot} />}
+                <span role="status">{status}</span>
+              </span>
             </>
           )}
         </div>
@@ -193,28 +205,77 @@ export function CpqHeader({
     </header>
   );
 }
+export type CpqTab =
+  | string
+  | { key: string; label: string; count?: number; description?: string };
+// Record / View tab 312:16: an optional neutral count beside the label. The count is drawn for
+// sight only; its description ("4 saved scenarios") is what assistive technology reads.
 export function CpqTabs({
   tabs,
   current,
   onChange,
+  record = false,
 }: {
-  tabs: string[];
+  tabs: CpqTab[];
   current: string;
   onChange: (tab: string) => void;
+  record?: boolean;
+}) {
+  const id = useId();
+  return (
+    <nav
+      className={`cpq-tabs${record ? " cpq-tabs-record" : ""}`}
+      aria-label="Workspace views"
+    >
+      {tabs.map((tab, i) => {
+        const t = typeof tab === "string" ? { key: tab, label: tab } : tab;
+        return (
+          <button
+            key={t.key}
+            type="button"
+            aria-current={current === t.key ? "page" : undefined}
+            aria-describedby={t.description ? `${id}-${i}` : undefined}
+            onClick={() => onChange(t.key)}
+          >
+            {t.label}
+            {t.count !== undefined && (
+              <span className="cpq-tab-count" aria-hidden="true">
+                {t.count}
+              </span>
+            )}
+          </button>
+        );
+      })}
+      {/* Outside the buttons, so a description never joins a tab's name. */}
+      {tabs.map((tab, i) =>
+        typeof tab !== "string" && tab.description ? (
+          <span key={i} id={`${id}-${i}`} className="sr-only">
+            {tab.description}
+          </span>
+        ) : null,
+      )}
+    </nav>
+  );
+}
+export type CpqTone = "neutral" | "good" | "warning" | "bad" | "link" | "muted";
+// CPQ / State 466:56: status as an icon and text, never colour alone. Plain inline; Pill in
+// panel heads. Each independent dimension (save, validation, tests, publication) has its own.
+export function CpqState({
+  icon,
+  tone = "neutral",
+  pill = false,
+  children,
+}: {
+  icon: ProductIconName;
+  tone?: CpqTone;
+  pill?: boolean;
+  children: ReactNode;
 }) {
   return (
-    <nav className="cpq-tabs" aria-label="Workspace views">
-      {tabs.map((tab) => (
-        <button
-          key={tab}
-          type="button"
-          aria-current={current === tab ? "page" : undefined}
-          onClick={() => onChange(tab)}
-        >
-          {tab}
-        </button>
-      ))}
-    </nav>
+    <span className={`cpq-state${pill ? " cpq-state-pill" : ""}`} data-tone={tone}>
+      <ProductIcon name={icon} />
+      {children}
+    </span>
   );
 }
 export function CpqPill({
