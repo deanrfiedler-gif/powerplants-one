@@ -118,6 +118,11 @@ export async function availableSources(
     )
   ).rows;
 }
+// An issued pack applies while its appointment is confirmed or under way: native attendance moves it to
+// InProgress (there is no Started state). The pack read, the DK-03 output read and distribution all use this,
+// as the 0007 database guard does.
+export const packAppointmentApplicable = (status: string) =>
+  status === "Confirmed" || status === "InProgress";
 export async function authority(
   c: QueryClient,
   p: Principal,

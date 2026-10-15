@@ -12,11 +12,15 @@ Find the exact Family, Model or Variant by UUID, synthetic alias, provider key o
 
 **Accepted design, 15 October 2026:** the [Products design decision](../../../decisions/products-figma-design.md), captures 03, 04 and 05 in [Products design r01](../../../reference/ui/products/products-figma-r01/README.md). Where it differs from the direction below, the accepted design governs: the record shows a one-line Availability strip that hands over to Inventory, not stock and demand sections.
 
+**Amendment A1, product image, accepted 15 October 2026:** section 8 of the [Products design decision](../../../decisions/products-figma-design.md), captures 03, 04 and 05 in [Products design r02](../../../reference/ui/products/products-figma-r02/README.md). A Product image panel heads the details column above Identity (332 × 233 px at 1440, 249 × 173 px at 1024): the image, View full size, and a caption naming the image source and revision. With no linked image it shows a neutral "No image · None linked to this revision" placeholder, never an image from a similar product, its family or another revision.
+
 Design direction after the 14 October alignment review: at 1440 × 900 and 1024 × 768, use the existing expanded/collapsed Sales rail and shared top bar. Place record identity and a full-width source notice directly above a separate summary/source column (340px desktop; 290px tablet) and a tabbed workspace. Use plain ruled stock and demand sections, without a rounded outer module container or cards within cards. Follow the inspected Lead/Project record structure and preserve exact catalogue/technical revision. The running native record is unchanged; the corrected [Figma proposal](../../../decisions/products-discovery-proposal.md) is not implementation evidence.
 
 ## Mobile
 
 **Accepted design, 15 October 2026:** captures 07 and 08 in [Products design r01](../../../reference/ui/products/products-figma-r01/README.md): the compact record header, a status line, Availability rows (source available, reserved, usable Unknown) with the rule note, Product rows, Technical and Revisions tabs, and Documents and Open in Inventory fixed at the bottom. A product not linked to Inventory shows a warning that availability is Unknown and offers Find in Inventory.
+
+**Amendment A1, product image:** captures 07 and 08 in [Products design r02](../../../reference/ui/products/products-figma-r02/README.md). An 80 px image row opens the record body, above the status line, with the image source, revision and "Tap the image to view full size"; capture 08 shows the no-image placeholder at 320 px. The row sits below the header, not beside the name, so the name keeps its width at 320 px.
 
 At 390 × 844 and 320 × 844, use the existing compact record header with Back/previous/next, identity/status and tabs. Show stock as full-width labelled rows; separate source basis and linked demand with rules. Retain Unknown values, source time, company/item/unit context and a 44px evidence action. Technical details remain reachable from their tab. Long identifiers must wrap; keyboard, browser Back, 200% reflow and physical-device verification remain implementation work. No outer-page horizontal scrolling is permitted.
 
@@ -36,6 +40,7 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 ## Visual sources, departures and proof
 
 - Accepted Figma design: [Products design r01 captures](../../../reference/ui/products/products-figma-r01/README.md) (icon-free PNGs; not application captures)
+- Amendment A1, product image: [Products design r02 captures](../../../reference/ui/products/products-figma-r02/README.md) (icon-free PNGs; owner-accepted; not application captures)
 - [PPO-Products-Preview-r04.html](../../../reference/ui/products/PPO-Products-Preview-r04.html)
 
 - [Products workflow map](../../../reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html)

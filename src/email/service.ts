@@ -230,7 +230,7 @@ export async function createEmailFollowup(
     "EmailFollowUpCreated",
   );
 }
-// Use the database's clock for the hosted request's default calendar date,
+// Use the database's clock for the calendar's default date, locally and hosted,
 // consistently with grant expiry and the other persisted time-based reads.
 export async function calendarToday(): Promise<string> {
   const result = await database().query<{ day: string }>(
