@@ -18,11 +18,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        suite: [database, browser]
+        suite: [database, browser, quality]
+        include:
+          - suite: database
+            database_shard: 1/2
+          - suite: database-2
+            database_shard: 2/2
     runs-on: ubuntu-24.04
-    # The retained database suite exceeded 30 minutes after the Excel/CPQ additions.
-    # Keep every proof; the browser deadline remains unchanged.
-    timeout-minutes: ${{ matrix.suite == 'database' && 45 || 30 }}
+    # Native shards retain the full file selection and serial execution, each
+    # with its own disposable database. Keep every assertion and existing deadline.
+    timeout-minutes: ${{ startsWith(matrix.suite, 'database') && 45 || 30 }}
     services:
       postgres:
         image: postgres:16.15
@@ -73,8 +78,13 @@ jobs:
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
       - name: E1 PostgreSQL proof
-        if: matrix.suite == 'database'
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/cpq-costs.test.ts tests/database/cpq-rebase.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+        if: startsWith(matrix.suite, 'database')
+        env:
+          PPO_E1_DATABASE_SHARD: ${{ matrix.database_shard }}
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_E1_DATABASE_SHARD" tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/excel-import-review.test.ts tests/database/excel-import-persistence.test.ts tests/database/excel-import-upgrade.test.ts tests/database/excel-reimport.test.ts tests/database/excel-reimport-upgrade.test.ts tests/database/excel-quotation.test.ts tests/database/excel-capacity.test.ts tests/database/excel-capacity-upgrade.test.ts tests/database/excel-source-pricing.test.ts tests/database/excel-source-pricing-upgrade.test.ts tests/database/excel-fx.test.ts tests/database/excel-fx-upgrade.test.ts tests/database/excel-landed.test.ts tests/database/excel-landed-upgrade.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/estimating-catalogue.test.ts tests/database/cpq.test.ts tests/database/cpq-costs.test.ts tests/database/cpq-rebase.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+      - name: Exact CPQ release quality, impact, authority and recovery database proof
+        if: matrix.suite == 'quality'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/cpq-quality.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         if: matrix.suite == 'browser'
         run: npm run build
@@ -101,6 +111,8 @@ jobs:
             curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
+          node --env-file=.env.local --import tsx scripts/cpq-quality-restart.ts write
+          node --env-file=.env.local --import tsx --test tests/http/cpq-quality.test.ts
           node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-workload.test.ts tests/http/estimating-sources.test.ts tests/http/estimating-review.test.ts tests/http/quotation-release.test.ts tests/http/estimating-configuration.test.ts tests/http/cpq.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
           node --env-file=.env.local --import tsx --test tests/http/excel-import-review.test.ts
           node --env-file=.env.local --import tsx --test tests/http/cpq-products.test.ts
@@ -154,6 +166,7 @@ jobs:
           node --env-file=.env.local --import tsx scripts/cpq-products-restart.ts verify
           node --env-file=.env.local --import tsx scripts/cpq-costs-restart.ts verify
           node --env-file=.env.local --import tsx scripts/cpq-rebase-restart.ts verify
+          node --env-file=.env.local --import tsx scripts/cpq-quality-restart.ts verify
       - name: Compiled E1 desktop, phone, 320px, uncertain response and long output
         if: matrix.suite == 'browser'
         # Reuse the build verified by HTTP/restart checks. The same assertions
@@ -180,7 +193,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: ${{ matrix.suite == 'browser' && 'Estimating-E1-evidence' || 'Estimating-E1-database-evidence' }}
+          name: ${{ matrix.suite == 'browser' && 'Estimating-E1-evidence' || format('Estimating-E1-{0}-evidence', matrix.suite) }}
           path: |
             verification-evidence/estimating-e1-*/
             verification-evidence/estimating-es02-browser/
@@ -191,6 +204,7 @@ jobs:
             verification-evidence/cpq-products-restart/verified.json
             verification-evidence/cpq-costs-restart/verified.json
             verification-evidence/cpq-rebase-restart/verified.json
+            verification-evidence/cpq-quality-restart/verified.json
             verification-evidence/excel-quotation/
             verification-evidence/excel-capacity/
             verification-evidence/fertigation-build/

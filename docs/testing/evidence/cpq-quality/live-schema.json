@@ -1,0 +1,38 @@
+[
+  {
+    "tgname": "audit_append_only",
+    "definition": "CREATE TRIGGER audit_append_only BEFORE DELETE OR UPDATE ON ppo.audit_events FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+    "proname": "immutable_evidence",
+    "function": "CREATE OR REPLACE FUNCTION ppo.immutable_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'Accepted evidence is append-only' USING ERRCODE='55000'; END $function$\n"
+  },
+  {
+    "tgname": "receipts_append_only",
+    "definition": "CREATE TRIGGER receipts_append_only BEFORE DELETE OR UPDATE ON ppo.operation_receipts FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+    "proname": "immutable_evidence",
+    "function": "CREATE OR REPLACE FUNCTION ppo.immutable_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'Accepted evidence is append-only' USING ERRCODE='55000'; END $function$\n"
+  },
+  {
+    "tgname": "quote_supply_operation_reservation",
+    "definition": "CREATE CONSTRAINT TRIGGER quote_supply_operation_reservation AFTER INSERT ON ppo.operation_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.quote_supply_operation_reservation()",
+    "proname": "quote_supply_operation_reservation",
+    "function": "CREATE OR REPLACE FUNCTION ppo.quote_supply_operation_reservation()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n IF (EXISTS(SELECT 1 FROM ppo.quote_supply_events e WHERE e.workspace_id=NEW.workspace_id AND e.action='Review' AND e.command->>'operation_id'=NEW.operation_id::text)\n  OR EXISTS(SELECT 1 FROM ppo.quote_supply_receipt_events e WHERE e.workspace_id=NEW.workspace_id AND e.action='ReceiptPropose' AND e.command->>'operation_id'=NEW.operation_id::text)\n  OR EXISTS(SELECT 1 FROM ppo.quote_supply_shortfall_events e WHERE e.workspace_id=NEW.workspace_id AND e.action='ShortfallPropose' AND e.command->>'operation_id'=NEW.operation_id::text))\n AND NOT EXISTS(SELECT 1 FROM ppo.quote_supply_events e WHERE e.workspace_id=NEW.workspace_id AND e.action='Apply' AND e.command->>'operation_id'=NEW.operation_id::text AND e.created_by=NEW.actor_id\n  AND CASE WHEN e.command ? 'record_id' THEN (e.command->>'record_id')::uuid WHEN e.command ? 'changes' THEN (e.command->>'supply_id')::uuid ELSE coalesce((e.command->>'demand_id')::uuid,e.target_id) END=NEW.record_id AND e.native_receipt=NEW.result)\n THEN RAISE EXCEPTION 'Reserved Supply operation requires its exact applied review and native outcome' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$\n"
+  },
+  {
+    "tgname": "material_reserved_receipt",
+    "definition": "CREATE CONSTRAINT TRIGGER material_reserved_receipt AFTER INSERT ON ppo.operation_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.material_reserved_receipt()",
+    "proname": "material_reserved_receipt",
+    "function": "CREATE OR REPLACE FUNCTION ppo.material_reserved_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE prop ppo.quote_material_events;\nBEGIN\n SELECT * INTO prop FROM ppo.quote_material_events WHERE workspace_id=NEW.workspace_id AND action='MaterialPropose'\n AND (project_command->>'operation_id'=NEW.operation_id::text OR merge_successor_command->>'operation_id'=NEW.operation_id::text OR branch_successor_command->>'operation_id'=NEW.operation_id::text OR chain_end_command->>'operation_id'=NEW.operation_id::text OR successor_command->>'operation_id'=NEW.operation_id::text OR diamond_commands->'b'->>'operation_id'=NEW.operation_id::text OR diamond_commands->'c'->>'operation_id'=NEW.operation_id::text OR diamond_commands->'d'->>'operation_id'=NEW.operation_id::text OR impact_command->>'operation_id'=NEW.operation_id::text);\n IF prop.id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM ppo.quote_material_events e WHERE e.workspace_id=NEW.workspace_id AND e.proposal_id=prop.id AND e.action='MaterialApply'\n  AND e.decision='WithdrawForecast' AND e.created_by=NEW.actor_id AND e.native_receipts @> jsonb_build_array(NEW.result))\n THEN RAISE EXCEPTION 'Reserved native original belongs to exact received material application' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$\n"
+  },
+  {
+    "tgname": "cpq_release_identity",
+    "definition": "CREATE TRIGGER cpq_release_identity BEFORE INSERT OR UPDATE ON ppo.cpq_releases FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('CpqRelease', '')",
+    "proname": "register_identity",
+    "function": "CREATE OR REPLACE FUNCTION ppo.register_identity()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE allocated bigint; ref text; prior ppo.business_identities; code text:=TG_ARGV[1];\nBEGIN\n IF TG_OP='UPDATE' THEN\n  IF (NEW.id,NEW.workspace_id,NEW.synthetic,NEW.created_at,NEW.created_by) IS DISTINCT FROM (OLD.id,OLD.workspace_id,OLD.synthetic,OLD.created_at,OLD.created_by)\n   OR (code<>'' AND to_jsonb(NEW)->>'display_number' IS DISTINCT FROM to_jsonb(OLD)->>'display_number') THEN\n   RAISE EXCEPTION 'Identity and creation provenance are permanent' USING ERRCODE='55000'; END IF;\n  RETURN NEW;\n END IF;\n SELECT * INTO prior FROM ppo.business_identities WHERE workspace_id=NEW.workspace_id AND id=NEW.id;\n IF FOUND THEN\n  IF prior.object_type<>TG_ARGV[0] THEN RAISE EXCEPTION 'Identity belongs to another type' USING ERRCODE='23505'; END IF;\n  IF code<>'' THEN\n   IF NEW.display_number IS NOT NULL AND NEW.display_number<>prior.display_number THEN RAISE EXCEPTION 'Reference is permanent' USING ERRCODE='23505'; END IF;\n   NEW.display_number:=prior.display_number;\n  END IF;\n  RETURN NEW; -- Existing typed row uniqueness still rejects ordinary duplicate creation.\n END IF;\n IF code<>'' THEN\n  ref:=NEW.display_number;\n  IF ref IS NULL THEN\n   INSERT INTO ppo.reference_counters VALUES(NEW.workspace_id,code,'SYN-PPO',1)\n   ON CONFLICT(workspace_id,record_type,namespace) DO UPDATE SET last_value=ppo.reference_counters.last_value+1 RETURNING last_value INTO allocated;\n   ref:='SYN-PPO-'||code||'-'||lpad(allocated::text,greatest(6,length(allocated::text)),'0');\n  ELSE\n   IF ref !~ ('^SYN-PPO-'||code||'-[0-9]{6,}$') OR substring(ref from '[0-9]+$')::bigint<1 THEN RAISE EXCEPTION 'Invalid synthetic reference' USING ERRCODE='23514'; END IF;\n   INSERT INTO ppo.reference_counters VALUES(NEW.workspace_id,code,'SYN-PPO',substring(ref from '[0-9]+$')::bigint)\n   ON CONFLICT(workspace_id,record_type,namespace) DO UPDATE SET last_value=greatest(ppo.reference_counters.last_value,excluded.last_value);\n  END IF;\n  NEW.display_number:=ref;\n END IF;\n INSERT INTO ppo.business_identities(workspace_id,id,object_type,display_number) VALUES(NEW.workspace_id,NEW.id,TG_ARGV[0],ref);\n RETURN NEW;\nEND $function$\n"
+  },
+  {
+    "tgname": "cpq_release_retained",
+    "definition": "CREATE TRIGGER cpq_release_retained BEFORE DELETE ON ppo.cpq_releases FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+    "proname": "immutable_evidence",
+    "function": "CREATE OR REPLACE FUNCTION ppo.immutable_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'Accepted evidence is append-only' USING ERRCODE='55000'; END $function$\n"
+  }
+]

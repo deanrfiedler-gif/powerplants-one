@@ -1,0 +1,38 @@
+{
+  "boundary": "CI cancellation and control evidence; no completed database pass is inferred from the cancelled job.",
+  "failed": {
+    "source": "3b7509f977df086f6bb8f2d40787e3b6678798e4",
+    "run": 38653100345,
+    "job": 116156365589,
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38653100345/job/116156365589",
+    "annotation": "The job has exceeded the maximum execution time of 45m0s",
+    "completed_passing_cases": 209,
+    "observed_failed_assertions": 0,
+    "phase_started": "2026-10-14T23:44:41Z",
+    "cancelled": "2026-10-15T00:26:16Z",
+    "last_passed": "2026-10-15T00:26:08.1962474Z ✔ ES08-T66 corrupt lineage cannot be reused; database mutation test rolls back (28131.128262ms)",
+    "result": "cancelled; incomplete; aggregate failed"
+  },
+  "unmodified_main": {
+    "source": "b858b58ba36909326b57b2b8986b9d3438de0d09",
+    "run": 38649807025,
+    "job": 116145516311,
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38649807025/job/116145516311",
+    "passed": 205,
+    "duration_ms": 1742120.874503,
+    "selected_files": 29,
+    "result": "success"
+  },
+  "reviewed_parent": {
+    "source": "af47a8edd10a0b978b3c59af0a114b057e851506",
+    "run": 38650035855,
+    "job": 116146265372,
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38650035855/job/116146265372",
+    "passed": 213,
+    "duration_ms": 1745302.19991,
+    "selected_files": 30,
+    "result": "success"
+  },
+  "interpretation": "Variable runner duration and exhausted serial job capacity; not evidence establishing a CPQ performance regression or a cause of runner variation. The retained command has the same 30 selected files as the successful parent. Quality's nine cases run separately.",
+  "local_scope": "Earlier 44 units, 36 serial database cases, six compiled HTTP cases and application/PostgreSQL restart evidence are retained for integrated application source e0905c9. This repair changes CI distribution and documentation only. New exact-head CI must execute all required lanes."
+}
