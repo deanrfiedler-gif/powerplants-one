@@ -1,0 +1,25 @@
+{
+  "database": "ppo_synthetic_test",
+  "triggers": [
+    {
+      "relname": "audit_events",
+      "tgname": "audit_append_only",
+      "definition": "CREATE TRIGGER audit_append_only BEFORE DELETE OR UPDATE ON ppo.audit_events FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+      "function": "CREATE OR REPLACE FUNCTION ppo.immutable_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'Accepted evidence is append-only' USING ERRCODE='55000'; END $function$\n"
+    },
+    {
+      "relname": "cpq_adoptions",
+      "tgname": "retained",
+      "definition": "CREATE TRIGGER retained BEFORE DELETE OR UPDATE ON ppo.cpq_adoptions FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+      "function": "CREATE OR REPLACE FUNCTION ppo.immutable_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'Accepted evidence is append-only' USING ERRCODE='55000'; END $function$\n"
+    },
+    {
+      "relname": "cpq_runs",
+      "tgname": "retained",
+      "definition": "CREATE TRIGGER retained BEFORE DELETE OR UPDATE ON ppo.cpq_runs FOR EACH ROW EXECUTE FUNCTION ppo.immutable_evidence()",
+      "function": "CREATE OR REPLACE FUNCTION ppo.immutable_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'Accepted evidence is append-only' USING ERRCODE='55000'; END $function$\n"
+    }
+  ],
+  "inspected": "Live amended schema via pg_get_triggerdef and pg_get_functiondef before implementation",
+  "migrations_added": 0
+}

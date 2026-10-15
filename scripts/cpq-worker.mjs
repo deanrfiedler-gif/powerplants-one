@@ -6,9 +6,17 @@ const { evaluate, testDefinition } = await import("../src/cpq/engine.ts");
 try {
   parentPort.postMessage({
     value:
-      workerData.kind === "fixtures"
-        ? testDefinition(workerData.definition)
-        : evaluate(workerData.definition, workerData.input),
+      workerData.kind === "rebase"
+        ? (await import("../src/cpq/rebase-model.ts")).evaluateRebase(
+            workerData.definition,
+            workerData.input,
+            workerData.parentDefinition,
+            workerData.prior,
+            workerData.decisions,
+          )
+        : workerData.kind === "fixtures"
+          ? testDefinition(workerData.definition)
+          : evaluate(workerData.definition, workerData.input),
   });
 } catch {
   parentPort.postMessage({ error: "CalculationFailed" });

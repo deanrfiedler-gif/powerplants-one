@@ -92,7 +92,11 @@ export function evaluateCondition(
 }
 
 // Pure evaluation over already validated, frozen inputs. No external lookups.
-export function evaluate(d: Definition, input: CalculationInput): Calculation {
+export function evaluate(
+  d: Definition,
+  input: CalculationInput,
+  onTarget?: (target: import("./rebase-model").RebaseTarget) => void,
+): Calculation {
   const diagnostics: Diagnostic[] = [],
     lines: ResultLine[] = [],
     seenOverrides = new Set<string>();
@@ -473,6 +477,12 @@ export function evaluate(d: Definition, input: CalculationInput): Calculation {
               );
         const basis_hash = hash({ target, part, contributions }),
           overrides = input.overrides.filter((o) => o.target === target);
+        onTarget?.({
+          target,
+          basis_hash,
+          category: part.category,
+          unit: part.unit,
+        });
         if (detail) {
           detail.selected_rules = (
             part.resolver === "MAX"

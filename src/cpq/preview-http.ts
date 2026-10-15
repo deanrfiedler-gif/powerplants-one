@@ -11,6 +11,8 @@ import type { RouteContext } from "../shared/http";
 // POST is used for bounded private input, but this handler never writes a receipt.
 export function previewRoute(
   work: (p: Principal, id: string, value: unknown) => Promise<unknown>,
+  maxBodyBytes = 65536,
+  readBody: typeof jsonBody = jsonBody,
 ) {
   return async (request: NextRequest, context: RouteContext) => {
     try {
@@ -18,7 +20,7 @@ export function previewRoute(
       const p = await identity(request),
         params = await context.params;
       return reply(
-        await work(p, params?.id ?? "", await jsonBody(request, 65536)),
+        await work(p, params?.id ?? "", await readBody(request, maxBodyBytes)),
       );
     } catch (e) {
       return failure(e);

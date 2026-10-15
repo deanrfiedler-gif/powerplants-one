@@ -186,6 +186,7 @@ jobs:
         if: ${{ matrix.suite == 'reports' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+          PPO_PROOF_COMPILED: "1"
         run: |
           node --env-file=.env.local --import tsx scripts/report-restart-proof.ts write
           for phase in submit respond verify; do
