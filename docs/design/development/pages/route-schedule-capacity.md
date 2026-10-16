@@ -4,6 +4,8 @@ Stable entry: `route:/schedule/capacity`. Owner: Dean Fiedler. Status: **Draft f
 
 ## Native workflow
 
+Desktop and phone filter controls observe the current browser URL synchronously after each change. Sequential criteria preserve previous selections; Unknown effort remains checked after activation even when framework URL rendering is deferred. Reload restores meaningful criteria while analytical exclusions remain disposable. The [integration evidence](../../../testing/evidence/pr-integration/README.md) separates this correction from visual and owner acceptance.
+
 Page type: **Review / comparison**. Canonical destination: `/schedule/capacity`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
 1. Select a 7-, 28- or 90-day horizon, display timezone and permitted site. Review each source domain’s completeness or Unavailable state.

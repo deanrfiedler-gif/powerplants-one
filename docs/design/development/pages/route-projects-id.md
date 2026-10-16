@@ -23,6 +23,7 @@ Accepted design (12 October 2026): the [project record page decision](../../../d
 - **Details column:** Summary (record facts only), Customer and site, Project team (from task owners, external owners marked), Origin, Related work and a one-line Commercial placeholder.
 - **Main column:** view tabs Overview, Schedule, Baselines, Acceptance, Files and History. Overview leads with Needs attention, then milestones against baseline, progress by phase, baseline and acceptance summaries and recent history. Schedule keeps today’s Gantt with the details folded to a 44 px labelled strip; bars are pastel with a darker outline, today is violet and red only means overdue. Record baseline opens a confirmation dialog with label, reason and review acknowledgement.
 - **States:** closed, read-only viewer, schedule not ready for a baseline, editor who is not the coordinator, dependency warning and a newer saved version (capture 09).
+- **Commercial view (PJ-05, accepted 16 October 2026):** a view tab between Baselines and Acceptance, shown to people with `project.commercial.read`. It holds the PJ-05 control values, Needs attention (decisions waiting, overdue obligations, disputes) and the original basis, and links to Variations & obligations. It is separate from the MYOB commercial summary placeholder in the details column. See the [Contract obligations, notices and variations decision](../../../decisions/project-commercial-figma-design.md) and capture 07 in [its captures](../../../reference/ui/projects/project-commercial-design-r01/README.md).
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -51,6 +52,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 - [project-detail-desktop.png](../../../blueprints/projects-visuals/project-detail-desktop.png)
 - [ppo-projects-gantt-content-r10.html](../../../reference/ui/projects/ppo-projects-gantt-content-r10.html)
 - Accepted Figma design: [Project record page design r01 captures](../../../reference/ui/projects/project-record-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The r10 Gantt reference above stays unchanged; the accepted design keeps the Gantt inside the Schedule tab. Images of the task panel, the phone History, Baselines, Acceptance and Files views, and loading and denied states are still missing.
+- Accepted Figma design for the Commercial view: capture 07 in [Contract obligations, notices and variations design r01](../../../reference/ui/projects/project-commercial-design-r01/README.md).
 
 ## Behaviour, handovers and verification
 
