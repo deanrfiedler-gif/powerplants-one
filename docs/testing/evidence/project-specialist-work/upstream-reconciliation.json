@@ -1,0 +1,24 @@
+{
+  "synthetic": true,
+  "original_head": "a5681388e29e14d72ebc25e1dfe08435c4295558",
+  "decision_before_implementation": "52c18293f55f62e6783e7437103f4efd2bd7d2b3",
+  "integrated_main": "3e11502847a895e6c3fcaa11ce87311389046578",
+  "implementation_source": "3c31e64855c2211b4da939e323eaec789e08a9d7",
+  "original_ci": {
+    "success": 41,
+    "failure": 22,
+    "optional_pt27_skipped": 1,
+    "diagnostics": "Code Review with signed-in GitHub supplement for truncated logs",
+    "finding": "Exact migration expectations in other domains stopped at 0104 while original R3 applied 0105. Policy latest-version assertion also lagged.",
+    "original_private_evidence_retained": true
+  },
+  "migrations": {
+    "retained_main_0104_sha256": "5562174c88ddc3e115d0d22efe701daf43cf779c6a5e9cfdad30c55a05f5b4fe",
+    "retained_main_0105_sha256": "8553ba73d5a32ad7a40602d7281e3b0278f8648571cd3b57525054779c77fed0",
+    "r3_0106_sha256": "6533be961913914d4d7744b0d554ec9e6be5f9531d5b60d6b317f085d3bc47c8",
+    "r3_sql_unchanged": true,
+    "new_seed_or_grant": false
+  },
+  "verification": "Pending current-source local proof, CI and independent review; historical evidence is not superseded or relabelled.",
+  "scope": "No merge, deployment, production migration, business transaction or operational acceptance."
+}
