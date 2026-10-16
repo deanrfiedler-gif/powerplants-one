@@ -94,6 +94,7 @@ export type Capability =
   | "project.specialist.read"
   | "project.specialist.prepare"
   | "project.specialist.receive"
+  | "project.specialist.work.review"
   | "project.commercial.read"
   | "project.commercial.prepare"
   | "project.commercial.review"

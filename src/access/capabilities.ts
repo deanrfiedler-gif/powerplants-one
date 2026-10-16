@@ -133,6 +133,7 @@ export const capabilityLabels = {
   "project.specialist.read": "Read specialist package coordination",
   "project.specialist.prepare": "Prepare specialist package briefs",
   "project.specialist.receive": "Receive exact internal package briefs",
+  "project.specialist.work.review": "Review exact specialist work evidence",
   "project.commercial.read": "Read project commercial controls",
   "project.commercial.prepare": "Prepare project commercial controls",
   "project.commercial.review":

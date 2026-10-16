@@ -30,3 +30,7 @@ Existing [working AD-01 HTML](../../access-review/access-review.html), capabilit
 ## Local review API boundary
 
 The [attestation contract](../../../decisions/access-review-attestations.md) introduces `admin.access.review.attest` (137 current capability keys) and immutable local single-grant Keep records. The broad retained `admin.access.review` remains proposed campaign authority; it is not inferred from a lead label. No native attestation form or new page/layout is delivered. Existing roster counts/person links are still read-only. Shared component implementations, fixtures and consumer bindings are unchanged. Native review images are missing; existing historical captures and pending owner review remain separate. API/upgrade evidence: [execution ledger](../../../testing/evidence/access-review-attestations/README.md).
+
+## PJ-06 work review contract
+
+The canonical capability union now has 157 keys, including `project.specialist.work.review` labelled “Review exact specialist work evidence”. This is the minimal existing-client catalogue label required to expose the new backend duty accurately. It is default denied, with no seed grant; brief receiving and Supply receiving do not confer it. No page layout, component or visual acceptance changes. Existing pending design review remains pending. [Contract](../../../contracts/project-specialist-work-evidence.md).
