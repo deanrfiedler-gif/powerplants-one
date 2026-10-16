@@ -4,6 +4,11 @@
 
 **Owner:** Dean Fiedler. **State:** Proposed decision paper, 16 October 2026, for Dean's decision. **D-025 stays Open** until Dean decides. This paper closes nothing. It authorises no sending code, provider account, credential, mailbox, DNS change, migration or customer message. **Companion:** [ADR-0058](ADR-0058-outbound-customer-email.md), Proposed, records the provider choice and its alternatives.
 
+**Direction, 16 October 2026.** Through the UX benchmark's Decision brief, Dean adopted this direction for D-025: "Email and SMS first, drafted from PPO records and sent by a named person; commission the ADR on SMS and email delivery; approve staff task tests and grower interviews". His words: "I am happy to proceed with all six based on your recommendations." See [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01). It changes this paper in two places, and leaves the rest open:
+- **C2 changes.** A named person sends every customer message, so M1 to M3 are drafted from PPO records and sent by a person rather than sent automatically.
+- **Channels.** SMS joins email as a first channel. ADR-0058 covers email; an SMS delivery record is still to be written.
+- **Still open:** C1 and C3 to C8, and Q1 to Q3. D-025 stays Open until Dean decides them. This direction authorises no sending code or customer message.
+
 **Related:**
 - Decisions: D-025; D-020 (identity and privacy), D-024 (branding and templates) and D-026 (migration) where noted.
 - Requirements and outputs: CRM-03, DOC-05, PRJ-07, SCM-07, SCM-08, SVC-05; OUT-11, OUT-17; TR-03; IF-09, IF-15; NFR-11.
