@@ -9,7 +9,7 @@ versioning: git
 
 # PPO module UX benchmark — research record
 
-This folder records the user-experience benchmark of every Powerplants One module, completed on 16 October 2026. It summarises the research and holds two registers generated from the reviewed report: [92 recommendations](recommendations.csv) and [24 amendment items](amendment-items.csv) that would change accepted designs. Every item is a **proposal for Dean's decision**; none is adopted. [Dean's direction](../../../decisions/ux-benchmark-research-direction.md) records what the research was authorised to do and how adopted items will be recorded.
+This folder records the user-experience benchmark of every Powerplants One module, completed on 16 October 2026. It summarises the research and holds two registers generated from the reviewed report: [92 recommendations](recommendations.csv) and [24 amendment items](amendment-items.csv) that would change accepted designs. Every item started as a **proposal for Dean's decision**; he adopted 17 on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)), and the rest remain proposals. [Dean's direction](../../../decisions/ux-benchmark-research-direction.md) records what the research was authorised to do and how adopted items will be recorded.
 
 Owner: Dean Fiedler. Review: Dean decided 17 items on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)); his decisions on the others are pending. Committing this record is not a review of its content.
 
