@@ -17,6 +17,7 @@ import {
   grantRuntimePrivileges,
 } from "../../scripts/demo-database";
 import { upgradeExistingDemo } from "../../scripts/demo-upgrade";
+import { recoverSchema } from "../helpers/recover-schema";
 
 const name = localConfig().database_name;
 if (name !== "ppo_synthetic_test")
@@ -54,7 +55,7 @@ const snapshot = async (names = tables) =>
 // update a Published policy to manufacture this historical upgrade fixture.
 async function baseline(expiry = "2027-01-01T00:00:00Z") {
   const db = database();
-  await db.query(await read("migrations/0001-recover.sql"));
+  await recoverSchema();
   await db.query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );
@@ -92,7 +93,7 @@ after(async () => {
     await database().query(`DROP ROLE ${role}`);
   }
   // Leave the next demo/browser suite on its ordinary current fixture.
-  await database().query(await read("migrations/0001-recover.sql"));
+  await recoverSchema();
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );
