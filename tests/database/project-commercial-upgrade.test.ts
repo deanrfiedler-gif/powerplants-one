@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -10,6 +9,7 @@ import { createEstimate } from "../../src/estimating/service";
 import { readOperation } from "../../src/shared/receipts";
 import { crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 after(closeDatabase);
@@ -17,7 +17,7 @@ const rows = async (sql: string, args: unknown[] = []) =>
   (await database().query(sql, args)).rows;
 for (const through of [25, 100])
   test(`PJ05-10 populated ${through} upgrade retains original identities, financial source and operation ledgers`, async () => {
-    await rows(await readFile("db/migrations/0001-recover.sql", "utf8"));
+    await recoverSchema();
     await rows("DROP TABLE IF EXISTS public.ppo_migrations");
     await migrate(through);
     await seed(through);

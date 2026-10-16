@@ -2,7 +2,6 @@ import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upg
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -40,6 +39,7 @@ import {
   referral,
 } from "../helpers/quotation-supply-followup";
 import { supplyFact, supplyInput } from "../helpers/supply";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -361,9 +361,7 @@ test("ES07 dependency current authority precedes effects, original receipts and 
   }
 });
 test("ES07 dependency populated 0063 upgrade preserves all rows, accepted reviews, receipts, grants, histories and output bytes", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(63);
   await seed(63);

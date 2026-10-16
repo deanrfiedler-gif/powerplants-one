@@ -48,6 +48,7 @@ import { issued } from "../helpers/packs";
 import { reportIssued } from "../helpers/reports";
 import { digest } from "../../src/documents/store";
 import { withWorkingCompany } from "../../src/platform/working-company";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -602,12 +603,7 @@ test("DK-B08 existing Service Report issue exact PDF is linked without rendering
 });
 for (const through of [88, 89])
   test(`DK-B09 populated 00${through} upgrade preserves originals through 0096 and reapplication is inert`, async () => {
-    await database().query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema();
     await database().query("DROP TABLE public.ppo_migrations");
     await migrate(through);
     await seed(through);

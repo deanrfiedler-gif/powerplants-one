@@ -2,7 +2,6 @@ import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upg
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -36,6 +35,7 @@ import { crmBase } from "../helpers/crm";
 import { response } from "../helpers/quotation-response";
 import { readResponse } from "../../src/estimating/response/reads";
 import { recordResponse } from "../../src/estimating/response/service";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -694,12 +694,7 @@ test("ES07 unavailable owner holds pending disposition and native receipt recove
   assert.deepEqual(await readOperation(f.owner, native.operation_id), receipt);
 });
 test("ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(61);
   await seed(61);

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile, mkdtemp, realpath } from "node:fs/promises";
+import { mkdtemp, realpath } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -20,13 +20,12 @@ import { prepareExcelQuotation } from "../../src/estimating/import/quotation";
 import { readEstimate } from "../../src/estimating/reads";
 import { capacityWorkbook } from "../helpers/excel-capacity";
 import { readOperation } from "../../src/shared/receipts";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 after(closeDatabase);
 test("XI96 populated workbook and quotation upgrade to Excel capacity with exact source, rows, grants and original ledger; reapply is inert", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(96);
   await seed(96);

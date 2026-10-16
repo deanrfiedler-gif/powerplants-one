@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase, transaction } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -16,6 +15,7 @@ import { readOperation } from "../../src/shared/receipts";
 import { projectInput, taskInput } from "../helpers/projects";
 import { raidInput, raidAction } from "../helpers/project-raid";
 import { CRM, crmBase } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name!=="ppo_synthetic_test") throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET="dispose-synthetic";
 process.env.PPO_RESET_DATABASE="ppo_synthetic_test";
@@ -124,7 +124,7 @@ test("PJ04-05 scoped kind/state/owner search and signed pages preserve all five 
 });
 for (const through of [86, 87])
 test(`PJ04-06 populated 00${through} upgrade preserves originals through 0096 and repeats without writes`,async()=>{
-  await database().query(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations"); await migrate(through); await seed(through);
   const {p,project}=await setup(), action=raidAction(project.id); await createActivity(p,action); await saveTask(p,project.id,taskInput());
   const tables=["projects","project_tasks","project_dependencies","project_schedule_events","activities","activity_links","business_identities","operation_receipts","audit_events","outbox_jobs","permission_grants","users","seed_receipts"];

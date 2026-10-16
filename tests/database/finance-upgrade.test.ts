@@ -24,18 +24,14 @@ import { reportIssued } from "../helpers/reports";
 import { readReportBundle } from "../../src/reports/worker";
 import { financeOptions, financeSources } from "../../src/finance/reads";
 import { principal } from "../helpers/field";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
 after(closeDatabase);
 test("P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds", async () => {
   // A named disposable database is deliberately reconstructed at the P09 boundary.
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(9);
@@ -119,12 +115,7 @@ test("P10 additive upgrade from real P09 issued originals retains exact rows, by
 
 test("P10 arrival after already-applied E1 0012 retains exact estimating originals, output, receipts and revoked grants", async () => {
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE public.ppo_migrations");
   });
   await migrate(10);

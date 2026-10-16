@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -50,6 +49,7 @@ import {
   issued,
   confirmed,
 } from "../helpers/packs";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use the disposable test database.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -85,9 +85,7 @@ async function ack(
   };
 }
 test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(5);
   await seed(5);

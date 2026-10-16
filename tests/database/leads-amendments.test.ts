@@ -1,7 +1,6 @@
 import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { beforeEach, after, test } from "node:test";
 import { reset, migrate, seed } from "../../scripts/database";
 import {
@@ -27,6 +26,7 @@ import { readActivity, activityCommand } from "../../src/activities/activities";
 import { readOperation } from "../../src/shared/receipts";
 import { leadCreate, leadConvert } from "../helpers/leads";
 import { CRM, crmBase, crmAction } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only ppo_synthetic_test");
@@ -318,12 +318,7 @@ test("LC-12 creation recovery preserves the separate creator and eligible Lead o
 });
 
 test("LC-12 populated previous-version upgrade preserves all Lead originals and permission grants", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(72);
   await seed(72);

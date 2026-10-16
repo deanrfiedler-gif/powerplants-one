@@ -50,6 +50,7 @@ import {
 } from "../helpers/service-inspections";
 import { inspectionCommand } from "../../src/inspections/service-commands";
 import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use only ppo_synthetic_test");
@@ -644,9 +645,7 @@ test("FI07-09 queued attendance acknowledgements revalidate audience and current
 });
 
 test("FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(56);
   await seed(56);

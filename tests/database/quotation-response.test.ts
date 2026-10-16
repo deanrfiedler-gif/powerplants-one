@@ -1,5 +1,4 @@
 import { assertAccessInspectionSnapshot, assertAccessInspectionSeedLedger } from "../helpers/access-inspection-upgrade";
-import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import assert from "node:assert/strict";
@@ -32,6 +31,7 @@ import {
   preparation,
 } from "../helpers/quotation-release";
 import { crmBase, CRM } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -380,12 +380,7 @@ test("ES06 direct insert needs exact issue/hash and deferred atomic evidence", a
   assert.equal((await readResponse(f.owner, f.id)).events.length, 0);
 });
 test("ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(59);
   await seed(59);

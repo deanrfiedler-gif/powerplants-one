@@ -2,7 +2,6 @@ import { assertAccessInspectionSnapshot, assertAccessInspectionSeedLedger } from
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -29,6 +28,7 @@ import {
 import { recordResponse } from "../../src/estimating/response/service";
 import { readResponse } from "../../src/estimating/response/reads";
 import { response } from "../helpers/quotation-response";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -428,12 +428,7 @@ test("ES07 selective target-basis hold and durable guards refuse forged receivin
   );
 });
 test("ES07 populated 0060 upgrade preserves every review release response grant identity receipt history and original output", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(60);
   await seed(60);

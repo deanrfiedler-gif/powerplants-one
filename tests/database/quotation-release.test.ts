@@ -38,6 +38,7 @@ import {
 } from "../helpers/quotation-release";
 import { crmBase, CRM } from "../helpers/crm";
 import { registerQuotationRegisterTests } from "../helpers/quotation-register-cases";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -450,8 +451,7 @@ test("ES05 captured recipient authority is required even after a permitted conta
 });
 
 test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants", async () => {
-  const { readFile } = await import("node:fs/promises"),
-    { createOpportunity } = await import("../../src/crm/opportunities"),
+  const { createOpportunity } = await import("../../src/crm/opportunities"),
     { crmCreate } = await import("../helpers/crm"),
     { estimateInput, quoteCommand } = await import("../helpers/estimating"),
     { reviewed } = await import("../helpers/quotation-release"),
@@ -460,12 +460,7 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
       await import("../helpers/engineering-materials-grants");
   const rows = async (sql: string, params: unknown[] = []) =>
     (await database().query(sql, params)).rows;
-  await rows(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await rows("DROP TABLE public.ppo_migrations");
   await migrate(58);
   await seed(58);

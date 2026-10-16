@@ -4,7 +4,6 @@ import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { canonical } from "../../src/platform/operations";
 import { schedulingPolicySeedGrants } from "../helpers/engineering-materials-grants";
-import { readFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { after, beforeEach, test } from "node:test";
 import { setTimeout } from "node:timers/promises";
@@ -30,6 +29,7 @@ import { saveCompletionDraft } from "../../src/field/completion";
 import { commandTimer, readTimer, activeTimer } from "../../src/field/timer";
 import { submitCompletion } from "../../src/reports/service";
 import { readOperation } from "../../src/shared/receipts";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic test database only");
@@ -194,9 +194,7 @@ test("FI01 zero-second transitions, real Undo expiry and report freeze keep dist
 });
 
 test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(49);
   await seed(49);

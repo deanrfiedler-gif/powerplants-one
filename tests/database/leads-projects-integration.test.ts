@@ -21,6 +21,7 @@ import { shellContext, shellSearch } from "../../src/shell/reads";
 import { readOperation } from "../../src/shared/receipts";
 import { leadCreate, leadConvert } from "../helpers/leads";
 import { projectInput, taskInput } from "../helpers/projects";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
@@ -34,7 +35,7 @@ const read = (file: string) =>
   readFile(new URL(`../../db/${file}`, import.meta.url), "utf8");
 async function atVersion(version: number) {
   await transaction(async (c) => {
-    await c.query(await read("migrations/0001-recover.sql"));
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(version);

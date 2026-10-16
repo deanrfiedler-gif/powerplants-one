@@ -5,7 +5,6 @@ import { randomUUID } from "node:crypto";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
-import { readFile } from "node:fs/promises";
 import { draftBytes, retryQuote } from "../../src/estimating/worker";
 import { createSession } from "../../src/platform/identity";
 import { readOperation } from "../../src/shared/receipts";
@@ -42,6 +41,7 @@ import {
   supplyReview,
   supplyApply,
 } from "../helpers/quotation-supply-followup";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -544,12 +544,7 @@ test("ES07 Supply SQL evidence guards refuse forged commands, assignment, stale 
   assert.equal((await currentFollowup(f)).events.length, 3);
 });
 test("ES07 Supply populated 0062 upgrade preserves all earlier commercial evidence, disposition, allocations, grants, identities and original bytes", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(62);
   await seed(62);

@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   transaction,
@@ -32,6 +31,7 @@ import {
   saveWorkScope,
   proposeVisit,
 } from "../../src/service/work-orders";
+import { recoverSchema } from "../helpers/recover-schema";
 const id = (t: string | number, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const workspace = id(10),
@@ -146,9 +146,7 @@ async function snapshot(n: number) {
   };
 }
 test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(4);
   await seed(4);

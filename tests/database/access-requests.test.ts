@@ -22,6 +22,7 @@ import {
   accessRequestSeedGrants,
   accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants,
 } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -44,12 +45,7 @@ const shape = (values: Record<string, unknown>[]) =>
 
 test("AD01 requests: populated upgrade retains all earlier rows and adds exactly five duties through team creation", async () => {
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(78);

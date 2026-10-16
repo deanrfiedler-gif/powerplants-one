@@ -2,7 +2,6 @@ import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upg
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -27,6 +26,7 @@ import { createWorkOrder } from "../../src/service/work-orders";
 import { readOperation } from "../../src/shared/receipts";
 import { crmBase, crmDiscovery, CRM } from "../helpers/crm";
 import { projectInput, taskInput } from "../helpers/projects";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -343,12 +343,7 @@ test("LC-16 late publication failure rolls back link/audit/receipt and preserves
   await bindDelivery(f.p, f.id, c);
 });
 test("LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(75);
   await seed(75);
