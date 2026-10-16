@@ -141,13 +141,25 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
   await migrate();
   await seed();
   const upgraded = await snapshot(names);
-  for (const name of names.filter(n => !["users", "permission_grants", "inspection_instruments"].includes(n))) {
+  for (const name of names.filter(n => !["users", "permission_grants", "inspection_instruments", "policy_versions", "policy_criteria"].includes(n))) {
     // 0051 adds only a nullable relationship to existing coverage rows; retain every original value.
     const expected = name === "coverage_assessments"
       ? beforeRows[name].map((row: Record<string, unknown>) => ({ ...row, entitlement_assessment_id: null }))
       : beforeRows[name];
     assert.deepEqual(upgraded[name], expected);
   }
+  // Seed 107 publishes readiness policy SYN-PPO-P04 v2 (field readiness gate): v1's eight criteria plus PartsReadiness.
+  const readinessV2 = "94000000-0000-4000-8000-000000000002";
+  assert.deepEqual(upgraded.policy_versions.filter((r: { id: string }) => r.id !== readinessV2), beforeRows.policy_versions);
+  assert.deepEqual(
+    upgraded.policy_versions.filter((r: { id: string }) => r.id === readinessV2).map((r: { key: string; version: number }) => [r.key, r.version]),
+    [["SYN-PPO-P04", 2]],
+  );
+  assert.deepEqual(upgraded.policy_criteria.filter((r: { policy_version_id: string }) => r.policy_version_id !== readinessV2), beforeRows.policy_criteria);
+  assert.deepEqual(
+    upgraded.policy_criteria.filter((r: { policy_version_id: string }) => r.policy_version_id === readinessV2).map((r: { criterion_code: string }) => r.criterion_code).sort(),
+    ["CompetencyPlan", "CrewCompetency", "DispatchControls", "MandatoryIsolation", "PartsReadiness", "ShutdownAuthority", "SiteAccess", "SiteControls", "ToolPreparation"],
+  );
   const instrumentIds=new Set(beforeRows.inspection_instruments.map((r:{id:string})=>r.id));
   assert.deepEqual(upgraded.inspection_instruments.filter((r:{id:string})=>instrumentIds.has(r.id)),beforeRows.inspection_instruments);
   const addedInstruments=upgraded.inspection_instruments.filter((r:{id:string})=>!instrumentIds.has(r.id));

@@ -53,7 +53,8 @@ const code = (code: string) => (e: unknown) =>
 const rows = async (table: string) =>
   (
     await database().query(
-      `SELECT to_jsonb(r) AS row FROM ${table} r ORDER BY to_jsonb(r)::text`,
+      // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+      `SELECT to_jsonb(r) AS row FROM ${table} r${table === "ppo.seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
     )
   ).rows;
 async function setup(discovery = catalogueDiscovery(true)) {
