@@ -27,7 +27,7 @@ Accepted on 16 October 2026 and built in its first increment ([field readiness g
 
 ## Scope limits
 
-The Job Pack Figma build added read projections and display preferences, not a migration or new capability. The field readiness gate adds migration 0106 and seed 106 and still no capability. Existing pack.check permission remains applicable to a preparer's own revision when granted, following Dean's delegated decision on 13 October. Every check still identifies an exact saved revision and reason. Current ERP/document/CAD authority and all parent IDs remain unchanged.
+The Job Pack Figma build added read projections and display preferences, not a migration or new capability. The field readiness gate adds migration 0107 and seed 107 and still no capability. Existing pack.check permission remains applicable to a preparer's own revision when granted, following Dean's delegated decision on 13 October. Every check still identifies an exact saved revision and reason. Current ERP/document/CAD authority and all parent IDs remain unchanged.
 
 ## Authority, states and review
 
