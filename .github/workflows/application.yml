@@ -75,7 +75,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
       - name: Install exact package manager and locked dependencies
@@ -144,7 +144,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original retained browser evidence immediately
         if: ${{ startsWith(matrix.suite, 'browser') && always() && steps.browser_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-retained-${{ matrix.suite }}-evidence
           path: |
@@ -204,7 +204,11 @@ jobs:
         if: ${{ startsWith(matrix.suite, 'database-') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_DATABASE_SHARD: ${{ matrix.database_shard }}
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_DATABASE_SHARD" tests/database/*.test.ts
+        run: |
+          mkdir -p verification-evidence/native-database
+          # Preserve the full transcript independently of the runner log tail.
+          # Multiple native reporters retain Node's original failure exit code.
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_DATABASE_SHARD" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=tap --test-reporter-destination=verification-evidence/native-database/results.tap tests/database/*.test.ts
       - name: Restore deterministic fixtures for HTTP and browser suites
         if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
@@ -258,7 +262,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original HTTP component evidence immediately
         if: ${{ matrix.suite == 'http' && always() && steps.http_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-HTTP-evidence
           path: |
@@ -291,7 +295,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve synthetic visual and failure evidence
         if: ${{ always() && steps.full_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-${{ matrix.suite }}-foundation-evidence
           path: |
@@ -328,7 +332,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
       - name: Install exact package manager and locked dependencies
@@ -383,7 +387,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original selected P11 journey immediately
         if: ${{ always() && steps.journey_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-selected-journey-evidence
           path: |
@@ -409,7 +413,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original retained Finance fixture evidence immediately
         if: ${{ always() && steps.retained_finance_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-retained-Finance-fixture-evidence
           path: |
@@ -430,7 +434,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original focused P11 evidence immediately
         if: ${{ always() && steps.focused_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-focused-quality-evidence
           path: |
@@ -467,7 +471,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
       - name: Install exact package manager and locked dependencies
@@ -531,7 +535,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original HTTP component evidence immediately
         if: ${{ always() && steps.http_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-focused-HTTP-evidence
           path: |
@@ -564,7 +568,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
       - name: Install exact package manager and locked dependencies
@@ -613,7 +617,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original P11 performance samples immediately
         if: ${{ always() && steps.performance_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-performance-evidence
           path: |
@@ -646,7 +650,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
       - name: Install exact package manager and locked dependencies
@@ -692,7 +696,7 @@ jobs:
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original failure replay evidence
         if: ${{ always() && steps.failure_replay_review.outcome == 'success' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: P11-original-failure-replay-evidence
           path: |

@@ -135,3 +135,12 @@ Stage 4 of building the refinement boards ([decision](../../../decisions/ui-buil
 - **Cards:** time, title and site; faint blue confirmed, amber needs attention, hatched proposed; a clock for extended hours. They grow 3 px each side and rise 1 px on press.
 - **Details:** the shared details panel as a bottom sheet above the shell's navigation, with Close, Move or reassign and Open appointment.
 - **Evidence:** [checks and captures](../../../testing/evidence/planner-phone-layout/README.md). No device or owner review yet.
+
+## Opens on today — 15 October 2026
+
+Audit finding PRJ-2, and the 9 October review finding above ("opened on 22 Sept 2031 rather than the current week"). It was a default: `plannerContext` fell back to the fixed synthetic anchor 2031-09-22 from ADR-0030.
+
+- **Default:** without a valid `day` the planner, and every Scheduling workspace that reads the same context, opens on today in the selected display timezone. An explicit `day` in the address is unchanged.
+- **Today button:** after the next-period arrow in the date group, in the existing secondary style. It sets the starting date to today in the display timezone and keeps the view, timezone and filters. On the phone it stays in view with the date row; at 390 px it fits on that row, and narrower screens wrap it under the date.
+- **Seeded data:** the synthetic visits remain in the week of 22 September 2031. Specs that read them now open `/schedule?day=2031-09-22`.
+- **Evidence:** a `booking-recovery` unit case for the default by timezone, and SC-07 in `tests/browser/planner.spec.ts` for the button, run on desktop and mobile against a task-owned server. There is no owner visual review yet, and 320 px was not captured.

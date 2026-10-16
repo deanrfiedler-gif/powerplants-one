@@ -19,6 +19,7 @@ import {
   accessReview,
 } from "../../src/access/reviews";
 import { accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
 after(closeDatabase);
@@ -75,13 +76,7 @@ test(
   { timeout: 300000 },
   async () => {
     await transaction(async (c) => {
-      await c.query("SET LOCAL statement_timeout='120s'");
-      await c.query(
-        await readFile(
-          new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-          "utf8",
-        ),
-      );
+      await recoverSchema(c);
       await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
     });
     await migrate(83);
@@ -146,7 +141,7 @@ test(
     );
     assert.deepEqual(
       nextLedger.filter((r) => r.version > 83).map((r) => r.version),
-      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version <= 83),

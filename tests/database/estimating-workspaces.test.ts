@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   closeDatabase,
@@ -47,6 +46,7 @@ import {
   discoveryInput,
   discoveryFacility,
 } from "../helpers/estimating-discovery";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -657,12 +657,7 @@ test("E2 receipt, audit and outbox failures roll back the entire option graph", 
   );
 });
 test("E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original", async () => {
-  await rows(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await rows("DROP TABLE public.ppo_migrations");
   await migrate(25);
   await seed(25);

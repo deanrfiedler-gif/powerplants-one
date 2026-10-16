@@ -1,0 +1,43 @@
+name: Dependency audit
+# Gates published npm advisories against the locked tree. Advisories are
+# published without any change here, so a weekly run checks unchanged main too.
+# See docs/decisions/ADR-0056-dependency-update-and-audit-gates.md.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 21 * * 0" # Monday 07:17 Brisbane
+  workflow_dispatch:
+# A replacement PR commit supersedes only this workflow on that same PR.
+# Keep push and manual runs separate; never cancel their running verification.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash
+jobs:
+  audit:
+    name: Locked npm advisories
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact package manager
+        run: |
+          npm install --global npm@11.19.0
+          npm --version
+      # npm audit reads package-lock.json; no install or package script runs.
+      - name: Runtime dependencies, no high or critical advisory
+        run: npm audit --omit=dev --audit-level=high
+      - name: Full locked tree, high or critical only with a recorded exception
+        run: node scripts/check-npm-audit.mjs

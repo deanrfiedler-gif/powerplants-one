@@ -15,11 +15,29 @@ This page address exists in the inspected application source. Open it from a run
 
 ## Desktop
 
+Accepted successor design: the [My jobs design decision](../../../decisions/my-jobs-figma-design.md) of 15 October 2026, captures 24–31 (desktop 1440) and 33–39 (tablet 1024) in [My jobs design r01](../../../reference/ui/service/my-jobs-design-r01/README.md).
+
+- **Layout:** the visit uses the shared record layout: Record / Header with the timer's actions, a Readiness bar of visit checks, a details column (Your visit, Crew, Equipment) and Work, Capture, Pack and Finish tabs.
+- **Work tab:** the r05 clock, readouts and visit track, the tasks from the job pack and a flush Time recorded table.
+- **r05 states:** Stopped with Undo, left running overnight, the Set finish time dialog, another job is timing, multi-day with the job labour allowance, and the How much work is left? dialog.
+
+The app still shows the native r05 timer described below.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted successor design: captures 03–10, 13, 15 and 17–22 in [My jobs design r01](../../../reference/ui/service/my-jobs-design-r01/README.md).
+
+- **Visit:** Previous and Next arrows and Work, Capture, Pack and Finish tabs.
+- **Action bar:** More, a secondary and a primary 56 px button.
+- **Sheets:** add a photo (PNG on the phone), add a reading (site time), pause reason, set when you finished, and how much work is left.
+- **Customer response:** after Service review, with a signature pad.
+- **Timer states:** the r05 states.
+
+The measurements and contract below describe the built page.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +50,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma successor design: [My jobs design r01 captures](../../../reference/ui/service/my-jobs-design-r01/README.md) (thirty-nine icon-free PNGs; not application captures) and its [decision](../../../decisions/my-jobs-figma-design.md).
 
 Accepted presentation baseline: [field work timer r05](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html) ([decision](../../../decisions/field-work-timer-design.md), [change record](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05-change-record.md)). It governs the work timer on the job page and the running-timer banner in My Jobs, at 1440, 1024, 820 and 390 px. The native timer is implemented with proposed host adaptations. Paired captures and synthetic checks are recorded in the field programme handover; owner visual and device review remain open.
 

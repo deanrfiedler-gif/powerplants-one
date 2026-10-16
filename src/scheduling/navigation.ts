@@ -1,3 +1,4 @@
+import { localDateTime } from "./time";
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const plannerZones = [
   "Australia/Brisbane",
@@ -40,9 +41,14 @@ export function reviewCriteria(query: URLSearchParams) {
     unknownEffort: one("unknown_effort") === "1",
   };
 }
+// Today's date in a display timezone.
+export const plannerToday = (zone: string, now = new Date()) =>
+  localDateTime(now.toISOString(), zone).slice(0, 10);
+// Without a valid day the planner opens on today in the selected display timezone.
 export function plannerContext(
   query: URLSearchParams,
-  defaultDay = "2031-09-22",
+  defaultDay?: string,
+  now = new Date(),
 ) {
   const one = (key: string) =>
     query.getAll(key).length === 1 ? (query.get(key) ?? "") : "";
@@ -51,12 +57,13 @@ export function plannerContext(
     /^20\d{2}-\d{2}-\d{2}$/.test(day) &&
     !Number.isNaN(Date.parse(`${day}T12:00:00Z`)) &&
     new Date(`${day}T12:00:00Z`).toISOString().slice(0, 10) === day;
+  const zone = plannerZones.includes(one("timezone"))
+    ? one("timezone")
+    : plannerZones[0];
   return {
-    day: validDay ? day : defaultDay,
+    day: validDay ? day : (defaultDay ?? plannerToday(zone, now)),
     mode: one("view") === "day" ? ("day" as const) : ("week" as const),
-    zone: plannerZones.includes(one("timezone"))
-      ? one("timezone")
-      : plannerZones[0],
+    zone,
     site: uuid.test(one("site_id")) ? one("site_id") : "",
     resource: uuid.test(one("resource_id")) ? one("resource_id") : "",
     status: ["Proposed", "Confirmed", "Cancelled"].includes(one("status"))

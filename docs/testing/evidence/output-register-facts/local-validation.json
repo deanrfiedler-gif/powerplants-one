@@ -1,0 +1,28 @@
+{
+  "base": "41c8479a0aa4ff8eeebec5efb66712c95ecc8874",
+  "decision": "89b2f02",
+  "implementation": "88e659c0894dc70863bf4e41d63ec7210f267957",
+  "source_sha256": {
+    "src/outputs/model.ts": "51220e6a6498eb6202d869893cc464ef7af14b52449e02487948ac1a42fc4c6e",
+    "src/outputs/reads.ts": "511915dab45ddc6ede7bbc5161442ccb17f313aca22d0c273e3eafd30ca871fa",
+    "tests/database/output-register.test.ts": "cec56eff3e73c0d26578ea67b3aeec01d7835a41d570959edd083bbbc48ab2ac",
+    "tests/http/output-register.test.ts": "dd9b63cb9b61da6bc63b17185d81247a180bd08bfcbb6177d6348b4318fe0c48"
+  },
+  "results": {
+    "focused_lint": "passed",
+    "diff_check": "passed",
+    "full_typecheck": "two attempts interrupted under local host contention; not passed",
+    "database": "pending CI",
+    "compiled_http": "pending CI",
+    "application_checks": "pending CI",
+    "documentation": "pending final assurance",
+    "independent_review": "pending"
+  },
+  "upstream_reconciliation": {
+    "main": "d070a61ff17e04ffa0f0d37c16052c24a0bb0e26",
+    "reason": "PR498 merged externally; preserve both STATUS entries and all integrated CPQ sources/evidence",
+    "read_source_change": "none",
+    "validation": "Integrated exact-head CI and independent review required"
+  },
+  "checkpoint_note": "Original implementation checkpoint above is retained history; see failure-follow-up.json and README.md for subsequent CI, independent review, upstream integration and controlled local comparisons."
+}

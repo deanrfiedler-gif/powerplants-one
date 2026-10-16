@@ -50,6 +50,7 @@ import {
 } from "../helpers/service-inspections";
 import { inspectionCommand } from "../../src/inspections/service-commands";
 import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use only ppo_synthetic_test");
@@ -644,9 +645,7 @@ test("FI07-09 queued attendance acknowledgements revalidate audience and current
 });
 
 test("FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(56);
   await seed(56);
@@ -748,7 +747,7 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(after.filter((row) => row.version <= 56), ledger);
-  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]);
+  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106]);
   const afterSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   assert.deepEqual(afterSeeds.filter((row) => row.version <= 56), seedLedger);
   assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58, 59, 78, 79, 80, 83, 84]);

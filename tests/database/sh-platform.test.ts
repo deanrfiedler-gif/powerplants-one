@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { hasPermission } from "../../src/platform/permissions";
 import { localConfig } from "../../src/platform/config";
@@ -28,7 +27,10 @@ import { readSavedViews, saveSavedViews } from "../../src/platform/saved-views";
 import { readWorkViews, saveWorkViews } from "../../src/activities/work-views";
 import { defaultCriteria } from "../../src/activities/work-criteria";
 import { reviewInbox, reviewTarget } from "../../src/reviews/service";
-import { CRM, crmBase } from "../helpers/crm";
+import { CRM, crmBase, crmCreate, crmDiscovery } from "../helpers/crm";
+import { createOpportunity } from "../../src/crm/opportunities";
+import { recordOpportunityOutcome } from "../../src/crm/outcomes";
+import { listOpportunities } from "../../src/crm/worklist";
 import { submitted, decision } from "../helpers/reports";
 import { createSite } from "../../src/shared/commands";
 import { createFacilityDetails } from "../../src/shared/facilities/commands";
@@ -43,6 +45,7 @@ import {
 import { directSignIn } from "../helpers/engineering-changes-direct";
 import { readView as readChangeView } from "../../src/engineering/changes/reads";
 import { handoverCommand } from "../../src/engineering/changes/commands";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -373,6 +376,36 @@ test("SH04 source cursors page scoped results and reject changed query bindings"
   });
   assert.ok(facilities.items.every((f) => f.context?.includes(" → ")));
 });
+test("SH04 deal search finds every pipeline and outcome while the register keeps its default view", async () => {
+  const p = await principal(),
+    original = { ...crmCreate(), title: "SYN SH deal search original" },
+    open = { ...crmDiscovery(), title: "SYN SH deal search open" },
+    lost = { ...crmDiscovery(), title: "SYN SH deal search lost" };
+  for (const deal of [original, open, lost]) await createOpportunity(p, deal);
+  await recordOpportunityOutcome(p, lost.id, {
+    ...crmBase(),
+    expected_version: 1,
+    close_outcome: "Lost",
+    lost_reason: "Timing",
+    acceptance_evidence: null,
+  });
+  const found = await applicationSearch(p, {
+    q: "SYN SH deal search",
+    kind: "Deal",
+  });
+  assert.equal(found.sources[0].state, "available");
+  assert.deepEqual(
+    found.items.map((i) => i.id).sort(),
+    [original, open, lost].map((d) => `Deal:${d.id}`).sort(),
+  );
+  // The register's own default is unchanged: the original pipeline, open deals only.
+  assert.deepEqual(
+    (await listOpportunities(p, { q: "SYN SH deal search" })).items.map(
+      (i) => i.id,
+    ),
+    [original.id],
+  );
+});
 test("SH04 identical growing-area names retain site context, stable IDs and current access", async () => {
   const p = await principal(),
     site = randomUUID();
@@ -476,12 +509,7 @@ test("SH06 source perspectives are permission scoped and selection rechecks curr
   );
 });
 test("0043 upgrades retained 0028 personal views and Activities across later migrations without rewriting them", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(28);
   await seed(28);

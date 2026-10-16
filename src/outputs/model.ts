@@ -5,6 +5,19 @@ export const outputKinds = ["JobPack", "ServiceReport"] as const;
 export type OutputKind = (typeof outputKinds)[number];
 export const visibleOutputLimit = 200;
 
+export type OutputRecipientSummary = {
+  visibility:
+    | "AllRecipients"
+    | "OwnRecipient"
+    | "FrozenReportRecipient"
+    | "NotIssued"
+    | "NotProvided";
+  recipient_count: number | null;
+  acknowledged_count: number | null;
+  required_recipient_count: number | null;
+  required_acknowledged_count: number | null;
+};
+
 export function outputQuery(input: unknown) {
   const q = object(input, [
     "kind",
@@ -66,16 +79,20 @@ export type OutputRow = {
   appointment: { id: string; reference: string };
   work_order: { id: string; reference: string };
   current_revision_id: string | null;
+  current_revision_number: number | null;
   current_issue: {
     id: string;
     revision_id: string;
+    revision_number: number;
     issued_at: Date;
     output_hash: string;
   } | null;
+  recipient_summary: OutputRecipientSummary;
   needs_review: boolean | null;
   preparation: {
     id: string;
     revision_id: string;
+    revision_number: number;
     state: string;
     requested_at: Date;
   } | null;

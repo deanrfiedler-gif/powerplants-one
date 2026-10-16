@@ -2,7 +2,6 @@ import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upg
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -51,6 +50,7 @@ import {
 } from "../helpers/quotation-receipt-correction";
 import { supplyFact, supplyInput } from "../helpers/supply";
 import { draftBytes, retryQuote } from "../../src/estimating/worker";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -519,9 +519,7 @@ test("ES07 Receipt late failure preserves facts allocations impacts and receipts
 });
 
 test("ES07 Receipt populated 0064 upgrade preserves prior generations grants histories allocations outputs and original operations", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(64);
   await seed(64);
@@ -582,7 +580,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
   );
   assert.deepEqual(
     after.filter((x) => x.version > 64).map((x) => x.version),
-    [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+    [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
@@ -15,13 +14,12 @@ import {
   reviewCommand,
 } from "../helpers/template-drafts";
 import { readOperation } from "../../src/shared/receipts";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 after(closeDatabase);
 test("R3 populated 0092 upgrade preserves exact output reservations, authority and ledgers; reapplication is inert", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(92);
   await seed(92);
@@ -76,7 +74,7 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
   );
   assert.deepEqual(
     afterLedger.filter((r) => r.version > 92).map((r) => r.version),
-    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.template_publications"), []);
   assert.deepEqual(

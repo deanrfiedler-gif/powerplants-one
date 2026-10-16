@@ -8,7 +8,6 @@ import { conversionReadClient } from "../../src/estimating/conversion/source-aut
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
-import { readFile } from "node:fs/promises";
 import { activityCommand } from "../../src/activities/activities";
 import { readConversion } from "../../src/estimating/conversion/reads";
 import {
@@ -50,6 +49,7 @@ import {
 } from "../helpers/quotation-material-resolution";
 import { currentFollowup } from "../helpers/quotation-supply-followup";
 import { supplyInput, supplyFact } from "../helpers/supply";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -812,9 +812,7 @@ test("ES07 material: another accepted allocation target cannot compete for the s
 });
 
 test("ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(66);
   await seed(66);
@@ -878,7 +876,7 @@ test("ES07 material: populated 0066 upgrade preserves every prior table, grant, 
   );
   assert.deepEqual(
     updated.filter((r) => r.version > 66).map((r) => r.version),
-    [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+    [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
   );
   assert.deepEqual(await draftBytes(f.owner, f.id), bytes);
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);

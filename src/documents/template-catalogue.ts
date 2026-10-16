@@ -14,7 +14,7 @@ import { packContext, issueContext } from "./context";
 import { reportContext } from "../reports/context";
 import { financeContext } from "../finance/context";
 import type { OutputFamily } from "./p11-template";
-import { supportedTemplateDefinition } from "./publication/definition";
+import { supportedTemplateDefinition } from "./publication/contracts";
 import { publicationContext } from "./publication/service";
 import { rendererVersion } from "./render";
 import { digest } from "./store";

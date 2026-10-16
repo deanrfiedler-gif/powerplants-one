@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { test, beforeEach, after } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   closeDatabase,
@@ -41,6 +40,7 @@ import {
   classifySyntheticConfiguration,
 } from "../helpers/estimating-catalogue";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -266,12 +266,7 @@ test("ES02-CAT-06: opt-in catalogue, saved r02 input, independent authority and 
 });
 
 test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit reclassification, costing lineage and copy recovery", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );
@@ -333,7 +328,7 @@ test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit re
       .filter((r) => r.row.version >= 85)
       .map((r) => r.row.version)
       .sort((a, b) => a - b),
-    [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+    [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
   );
   await migrate();
   await seed();

@@ -13,12 +13,12 @@ import {
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 after(closeDatabase);
-test("PJ06-R3 populated 0104 upgrade preserves exact R1/R2 evidence, grants, sources, identities and receipts; repeat adds nothing", async () => {
+test("PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sources, identities and receipts; repeat adds nothing", async () => {
   const c = database();
   await c.query(await readFile("db/migrations/0001-recover.sql", "utf8"));
   await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
-  await migrate(104);
-  await seed(104);
+  await migrate(105);
+  await seed(105);
   const f = await specialistHandoverFixture();
   await handoverCommand(f.owner, f.engineering.id, f.prepare);
   await handoverCommand(
@@ -82,7 +82,7 @@ test("PJ06-R3 populated 0104 upgrade preserves exact R1/R2 evidence, grants, sou
   assert.deepEqual(
     (
       await c.query(
-        "SELECT * FROM public.ppo_migrations WHERE version<=104 ORDER BY version",
+        "SELECT * FROM public.ppo_migrations WHERE version<=105 ORDER BY version",
       )
     ).rows,
     ledger,
@@ -90,10 +90,10 @@ test("PJ06-R3 populated 0104 upgrade preserves exact R1/R2 evidence, grants, sou
   assert.deepEqual(
     (
       await c.query(
-        "SELECT version FROM public.ppo_migrations WHERE version>104 ORDER BY version",
+        "SELECT version FROM public.ppo_migrations WHERE version>105 ORDER BY version",
       )
     ).rows,
-    [{ version: 105 }],
+    [{ version: 106 }],
   );
   assert.equal(
     (await c.query("SELECT count(*)::int n FROM ppo.project_specialist_work"))

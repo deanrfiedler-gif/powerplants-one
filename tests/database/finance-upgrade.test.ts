@@ -24,18 +24,14 @@ import { reportIssued } from "../helpers/reports";
 import { readReportBundle } from "../../src/reports/worker";
 import { financeOptions, financeSources } from "../../src/finance/reads";
 import { principal } from "../helpers/field";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
 after(closeDatabase);
 test("P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds", async () => {
   // A named disposable database is deliberately reconstructed at the P09 boundary.
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(9);
@@ -97,7 +93,7 @@ test("P10 additive upgrade from real P09 issued originals retains exact rows, by
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.map((r) => r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
   );
   assert.deepEqual(await readReportBundle(q.reviewer, issue.manifest), bytes);
   assert.equal(
@@ -119,12 +115,7 @@ test("P10 additive upgrade from real P09 issued originals retains exact rows, by
 
 test("P10 arrival after already-applied E1 0012 retains exact estimating originals, output, receipts and revoked grants", async () => {
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE public.ppo_migrations");
   });
   await migrate(10);
