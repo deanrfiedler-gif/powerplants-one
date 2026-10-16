@@ -61,3 +61,9 @@ Reuse shared Button, Field, SelectField, ErrorNotice, recoverable command journa
 Desktop and phone: wrap reported scope and references; show original Sales revision beside current native state, owner and version. Keep Review, link reason, discard and original-recovery actions visible in normal document flow. A refresh must not silently substitute a reviewed comparison. Denied comparison reads remove its protected content. Unknown Sales site requires an explicit native site choice and does not rewrite the accepted source. New Service intake and work-order creation save independently before link review; existing native scope and authorisation controls remain.
 
 Exact new-state mockup/HTML images are missing. Retained module references above are baseline context. Implementation captures and synthetic checks are recorded in `docs/testing/evidence/won-delivery-continuity/README.md`; they do not grant paired visual, keyboard/200% zoom, physical-device or owner acceptance. Review fingerprints remain unchanged.
+
+## Leave protection (F42) — 16 October 2026
+
+Typing into this form and then following the rail (phone bar), a header link, a header search result or browser Back asks before the entries are discarded. Cancel keeps the page and the typed values; OK leaves. A clean form leaves without asking, and a saved record opens without a prompt. The form registers the shared `useUnsavedChanges` guard through `useCreateDraft` (state `create-leave-guard` in [fields](../components/fields.md)). Fixture: `tests/browser/navigation-safety.spec.ts` (F42) at desktop and phone widths. Source: live-app UX audit finding F42, principle 11. No layout, control or copy change; owner review of the native prompt wording is pending.
+
+Editing an existing request keeps its previous behaviour. A Sales handover creation keeps its recoverable command once that command blocks the form.

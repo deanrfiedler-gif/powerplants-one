@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCrmCommand } from "./crm-state";
 import { useIdentity } from "./business-session";
+import { useCreateDraft } from "./record-ui";
 import {
   EnumField,
   ErrorNotice,
@@ -98,6 +99,8 @@ export function SharedCreateForm({
     : ordinaryCommand;
   const locked = cmd.busy || (!!lead && leadCommand.uncertain);
   const set = (k: string, value: string) => setV((s) => ({ ...s, [k]: value }));
+  // The lead route keeps its own command guard.
+  const saved = useCreateDraft(v, ordinaryCommand.busy, !lead);
   const companies = useResource<Envelope<Option>>("selectors/companies");
   const owners = useResource<Envelope<Option>>(
     v.company
@@ -299,7 +302,10 @@ export function SharedCreateForm({
       return;
     }
     const result = await ordinaryCommand.send(path, fields);
-    if (result) router.push(destination);
+    if (result) {
+      saved();
+      router.push(destination);
+    }
   }
   const titles: Record<string, string> = {
     customer: "Create an organisation",

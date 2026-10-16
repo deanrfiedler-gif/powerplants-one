@@ -1,8 +1,12 @@
 # Backend completion delivery plan
 
-## PJ-06 next dependency — 16 October 2026
+## PJ-06 work-evidence increment — 16 October 2026
 
-R1 #518 is integrated externally in main `b223c5817be7a946b38c48c9838d9d9925298156`. R2 #522 now targets main and reconciles its unmerged migration as 0105 after main's DK-06 0104. It carries an accepted brief into the existing native technical/procurement handover and independent Supply receiving. The [contract](../contracts/project-specialist-handover.md) preserves source authority, exact units, original-operation recovery and current/historical distinctions. [Execution evidence](../testing/evidence/project-specialist-handover/README.md) separates historical proof from the new integration's pending verification. Work-evidence acceptance has its own unmerged child #530 and requires downstream source reconciliation; it is not edited by the #522 follow-up. This bounded dependency does not complete BC-06/PJ-06; supplier competence, further downstream disposition and UI remain separate. No external integration entry condition is inferred.
+R3 [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530) reconciles main `3e11502847a895e6c3fcaa11ce87311389046578`, which now includes R1 #518 and R2 #522. Preserve main's 0104/0105 migration history; R3's unchanged SQL moves to 0106. This branch implements [bounded work-evidence acceptance](../contracts/project-specialist-work-evidence.md). [Execution evidence](../testing/evidence/project-specialist-work/README.md) separates original proof from fresh reconciliation, local checks, CI/review and acceptance. BC-06 remains open for supplier competence, downstream disposition, readiness and UI. No external integration entry condition is satisfied by synthetic evidence.
+
+## PJ-06 integrated source dependency — 16 October 2026
+
+R1's accepted brief and R2's native technical/procurement receiving are integrated externally. The [handover contract](../contracts/project-specialist-handover.md) preserves source authority, exact units, original-operation recovery and current/historical distinctions. R3 requires exact accepted R2 sources and retains the separately governed work-review duty; it does not grant supplier competence, payment, project completion or downstream acceptance. The #530 contribution has exclusive ownership of its reconciliation; the other integration chat leaves it untouched.
 
 ## Integrated source follow-up — 15 October 2026
 

@@ -93,14 +93,14 @@ MA-01–07: maintenance-warranty-{native,handover}.md; migration 0051. Preserve 
 
 PT evidence: field-integrated-acceptance-ledger.md.
 
-ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
+ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
 
 PD-01–05: ADR-0048; 0052; exact revisions, four duties, originals; no hosted grants. A built/B proposed: products-discovery-proposal.md; acceptance/deploy separate.
 
 NAV: navigation-consolidation.md; retain scope/recovery. Board: navigation-architecture-board.md; NAD-08 Reports workspace is design only.
 UI: ui-build-sequence.md; figma-ui-implementation.md. AD-01: access-review-attestations.md; local Keep API; native reviews, campaigns and D-020 open.
 
-PJ: project-{commercial-controls,specialist-packages,specialist-handover}.md; exact sources; native EN-06/Supply authority. Service owns bookings.
+PJ: project-{commercial-controls,specialist-packages,specialist-handover,specialist-work-evidence}.md; exact sources; EN-06/Supply; Service bookings.
 
 [Plan](../delivery/backend-completion-plan.md); Excel: 500 lines, FX/landed; UI open.
 

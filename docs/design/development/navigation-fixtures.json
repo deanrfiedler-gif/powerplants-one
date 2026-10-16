@@ -73,6 +73,16 @@
       "id": "figma-shell-consumer-reflow",
       "fixture": "tests/ui/desktop-shell.spec.ts; tests/browser/engineering-materials.spec.ts; tests/browser/engineering-changes.spec.ts; tests/browser/estimating-workload.spec.ts",
       "description": "Flowing search and full-height More; whole Engineering destination breadcrumbs; retained Engineering menu separated from the opt-in My Work Figma presentation; Estimating panel/drawer follows available width with either rail mode."
+    },
+    {
+      "id": "nav-rail-first-paint",
+      "fixture": "tests/browser/shell-loading.spec.ts",
+      "description": "The rail paints once at the stored width (labelled 240 px or compact 76 px) and cumulative layout shift stays under 0.1 on /work, /customers, /projects, /service/work-orders and /schedule at 1440 × 900."
+    },
+    {
+      "id": "nav-create-leave",
+      "fixture": "tests/browser/navigation-safety.spec.ts",
+      "description": "Dirty create forms ask before rail (phone bar), header search and Back navigation, keep the typed value on Cancel and leave on OK; clean create forms leave without asking."
     }
   ]
 }

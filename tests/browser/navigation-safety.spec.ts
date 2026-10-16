@@ -133,6 +133,68 @@ for (const selection of ["pointer", "keyboard"] as const) {
   });
 }
 
+// F42 / principle 11: typing into a create form and then following the rail (the phone
+// bar), a header search result or browser Back asks before discarding it; a clean form just leaves.
+for (const form of [
+  { path: "/customers/new", label: "Display name" },
+  { path: "/service/tickets/new", label: "Request summary" },
+  { path: "/work/new", label: "What needs doing?" },
+  { path: "/service/work-orders/new", label: "Company context", option: CRM.company },
+  { path: "/sales/opportunities/new", label: "Qualification outcome" },
+]) test(`F42 ${form.path} asks before rail, header or Back discards typed input`, async ({ page, isMobile }) => {
+  await login(page);
+  const prompts: string[] = [];
+  let leave = false;
+  page.on("dialog", dialog => { prompts.push(dialog.type()); void (leave ? dialog.accept() : dialog.dismiss()); });
+  const control = page.getByLabel(form.label, { exact: true });
+  // Back needs an earlier entry; each visit opens the form afresh.
+  const open = async () => {
+    await page.goto("/customers"); await page.goto(form.path);
+    await expect(control).toBeEnabled();
+    await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  };
+  const rail = async () => {
+    const links = page.locator(isMobile ? ".mobile-navigation a[href]" : ".ppo-primary-nav a[href]");
+    const paths = await links.evaluateAll(all => all.map(link => new URL((link as HTMLAnchorElement).href).pathname));
+    return links.nth(paths.findIndex(path => path !== new URL(page.url()).pathname));
+  };
+  // The header's global search is on every page and opens its result through navigateWithReview.
+  const header = async () => {
+    if (isMobile) await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    await page.getByRole("combobox", { name: "Search Powerplants One", exact: true }).fill("opportunity");
+    const option = page.getByRole("option").filter({ has: page.getByText("Deals", { exact: true }) }).first();
+    await expect(option).toBeVisible();
+    if (isMobile) await option.tap(); else await option.click();
+  };
+  const routes: { name: string; go: () => Promise<unknown> }[] = [
+    { name: "rail", go: async () => (await rail()).click() },
+    { name: "header search", go: header },
+    { name: "Back", go: () => page.evaluate(() => history.back()).catch(() => {}) },
+  ];
+  for (const route of routes) {
+    await open();
+    await route.go();
+    await expect(page, `a clean form leaves by ${route.name} without asking`).not.toHaveURL(new RegExp(`${form.path}$`));
+    expect(prompts).toEqual([]);
+  }
+  await open();
+  if (form.option) await control.selectOption(form.option); else await control.fill("SYN F42 typed and not yet saved");
+  const typed = await control.inputValue();
+  for (const [index, route] of routes.entries()) {
+    await route.go();
+    await expect.poll(() => prompts.length, { message: `${route.name} asks before leaving` }).toBe(index + 1);
+    await expect(page).toHaveURL(origin() + form.path);
+    await expect(control).toHaveValue(typed);
+    await page.keyboard.press("Escape");
+  }
+  // Confirming the prompt is a real departure, asked once.
+  leave = true;
+  const target = await rail(), href = new URL((await target.getAttribute("href"))!, origin());
+  await target.click();
+  await expect(page).toHaveURL(new RegExp(`^${origin()}${href.pathname}`));
+  expect(prompts).toHaveLength(routes.length + 1);
+});
+
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
   test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
   await login(page);

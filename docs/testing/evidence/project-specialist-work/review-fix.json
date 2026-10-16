@@ -1,0 +1,34 @@
+{
+  "synthetic": true,
+  "original_source": "def746cdab3e19d22bfb6d58cfa2c8e5d2b6c2e7",
+  "correction_source": "385e7df90870cd1f1044d6766aff4d14cb8308dd",
+  "review": "https://github.com/deanrfiedler-gif/powerplants-one/pull/530#pullrequestreview-5541964566",
+  "findings": [
+    {
+      "comment": 4290008715,
+      "reproductions": ["R3-07: an orphan work record committed without its initial Submit event", "R3-08: a direct Accept committed without receipt, audit or outbox evidence"],
+      "original_result": "Both rejection assertions failed with Missing expected rejection",
+      "correction": "Deferred initial-event and exact operation-evidence constraints; incomplete transactions must roll back every row"
+    },
+    {
+      "comment": 4290008717,
+      "reproductions": ["R3-09: a direct Accept committed after the native handover demand source was withdrawn"],
+      "original_result": "Rejection assertion failed with Missing expected rejection on the original migration",
+      "correction": "Submit and Accept check the current accepted brief and its sources, native release and manifest sources/lines, approved demand and exact current document; historical Return and Withdraw remain available"
+    }
+  ],
+  "original_failure_retention": "Private local TAP logs retained; no environment, session, checkpoint or operational data published",
+  "intermediate_failures": [
+    "The initial closed-context fixture omitted the native Project version and schedule event; corrected using exact native event evidence",
+    "The byte-corruption test assumed an explicit document directory; corrected to use the same private default as the native store when unset",
+    "A migration setup run detected an incorrect native pack table name before amended proof; corrected against the live schema",
+    "A redundant compiler run was intentionally stopped after available host memory fell below 600 MiB; the previously completed full build included successful typechecking",
+    "Two uninstrumented candidate starts missed the existing 30-attempt startup window before HTTP assertions. Unchanged main compiled successfully with native locked dependencies and started in 12.75 seconds. A diagnostic candidate start completed, followed by an unchanged uninstrumented candidate start in 6.17 seconds. Original logs are retained; no root cause or runtime fix is claimed and no timeout was extended",
+    "The unchanged-main control initially could not build through its existing external dependency junction; only that owned link was replaced by a locked native npm install, leaving the shared target and repository source unchanged"
+  ],
+  "preserved_limits": {"statement_timeout_ms": 10000, "test_timeout_ms": 120000, "ci_job_timeout_minutes": 45, "local_startup_attempts": 30, "local_startup_probe_seconds": 1},
+  "independent_recheck": "Clean for 385e7df90870cd1f1044d6766aff4d14cb8308dd at https://github.com/deanrfiedler-gif/powerplants-one/pull/530#issuecomment-6206296548; author replies alone were not treated as acceptance",
+  "corrected_native_result": {"tests": 12, "passed": 12, "failed": 0, "cancelled": 0, "skipped": 0},
+  "thread_resolution": "Both original threads resolved only after clean independent review and passing amended direct-write regressions",
+  "deployment": "Not performed"
+}
