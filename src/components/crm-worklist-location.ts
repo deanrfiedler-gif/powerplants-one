@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState, type SetStateAction } from "react";
-import { useSearchParams } from "next/navigation";
+import { notifyLocationSearchChanged, useCurrentLocationSearch } from "./current-location-search";
 import { initialWorklistFilters, readWorklistLocation, worklistSearch, type WorklistFilters, type WorklistLocation } from "../crm/worklist-location";
 import { businessViewChannel, sessionLockEvent } from "./session-signal";
 
@@ -8,13 +8,15 @@ type Mode = "push" | "replace";
 function writeLocation(state: WorklistLocation, mode: Mode) {
   const search = worklistSearch(state);
   const url = window.location.pathname + (search ? `?${search}` : "") + window.location.hash;
-  if (url !== window.location.pathname + window.location.search + window.location.hash)
+  if (url !== window.location.pathname + window.location.search + window.location.hash) {
     window.history[mode === "push" ? "pushState" : "replaceState"](null, "", url);
+    notifyLocationSearchChanged();
+  }
 }
 const resolve = <T,>(next: SetStateAction<T>, old: T): T => typeof next === "function" ? (next as (v: T) => T)(old) : next;
 
 export function useWorklistLocation() {
-  const params = useSearchParams();
+  const params = useCurrentLocationSearch();
   const state = readWorklistLocation(new URLSearchParams(params.toString()));
   // Signed paging tokens expire and bind the actor and result population. They
   // remain in memory; reload, a shared URL or changed criteria starts at page one.

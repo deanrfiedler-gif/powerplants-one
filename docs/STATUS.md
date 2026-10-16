@@ -1,5 +1,13 @@
 # Current prototype status
 
+## Current PR integration and URL control repair — 16 October 2026
+
+Current integration writer: the user-authorised "Merge current PPO pull requests" chat on `codex/merge-current-prs-oct16`. It combines #524–#529, #533 and #535 from main `cb838c7`, retaining original commit ancestry and both sides of additive documentation conflicts. The separate backend chat owns #530 until verified handback. TypeScript #534 is excluded pending disposition because the current ESLint adapter requires TypeScript below 6.1. [Integration evidence](testing/evidence/pr-integration/README.md) distinguishes original CI failures, local component proof, pending combined CI and disk limits. Documentation proposals remain proposals; existing accepted designs retain their stated scope.
+
+The URL control correction makes Sales search and scheduling review filters observe their native history writes synchronously, preserving typed input and checkbox state while framework URL rendering is deferred. Server authority, signed cursors, history semantics and session clearing remain unchanged. Existing browser proofs and a deferred-render regression gate integration. Source delivery, visual/owner acceptance and deployment remain separate.
+
+Protected main currently requires seven checks with administrator enforcement and no approving-review count: Check documentation foundation; CRM desktop and mobile persistence and interaction proof; CRM header and board visual checks; Desktop and mobile browser suite against the compiled application; E1 manual estimate, draft output and restart proof; Email Calendar persisted journey and server permissions; P01–P11 and CRM I1–I2 local application and PostgreSQL proof. Strict up-to-date enforcement is off. This task does not change those settings.
+
 ## D-025 customer communications decision paper — 16 October 2026
 
 On 16 October Dean named two problems, and both need PPO to email customers, which it deliberately does not do:

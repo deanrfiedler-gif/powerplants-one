@@ -37,6 +37,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Behaviour, handovers and verification
 
+At desktop and phone widths, native URL changes must update controlled search during the input event even if framework rendering is deferred. Every typed character, focus and replace-history behaviour must survive; reload and Back/Forward restore the criteria. The 16 October [integration proof](../../../testing/evidence/pr-integration/README.md) adds an explicitly delayed framework fixture while retaining the native browser journeys. This is a behaviour correction; no visual review fingerprint is adopted.
+
 The draft User Guide `guide.page.sales.opportunities` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.

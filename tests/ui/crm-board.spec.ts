@@ -1,10 +1,28 @@
-import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort } from "../helpers/crm-worklist-ui";
+import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort, searchNeedsDrawer } from "../helpers/crm-worklist-ui";
 import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 const fixture = pathToFileURL(
   resolve("verification-evidence/crm-ui/index.html"),
 ).href;
+
+test("search retains every key while framework URL rendering is deferred", async ({ page }) => {
+  await page.goto(fixture + "?fixture_navigation_delay=1");
+  const search = page.getByLabel("Search deals", { exact: true });
+  if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
+  await expect(search).toBeVisible();
+  const historyLength = await page.evaluate(() => history.length);
+  await search.pressSequentially("Glasshouse climate control upgrade");
+  await expect(search).toHaveValue("Glasshouse climate control upgrade");
+  await expect(search).toBeFocused();
+  await expect(page.locator(".crm-card:visible")).toHaveCount(1);
+  await expect.poll(() => new URL(page.url()).searchParams.get("q")).toBe("Glasshouse climate control upgrade");
+  expect(await page.evaluate(() => history.length)).toBe(historyLength);
+  await page.reload();
+  if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
+  await expect(search).toHaveValue("Glasshouse climate control upgrade");
+  await expect(page.locator(".crm-card:visible")).toHaveCount(1);
+});
 
 test("hosted header, populated board, filtering and independent card targets", async ({
   page,

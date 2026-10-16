@@ -1,5 +1,7 @@
 # Form controls and save states
 
+URL-owned controls in Sales and scheduling review hosts must update within the input event. The shared location-search subscription observes completed native history writes without waiting for deferred framework rendering. The delayed-framework fixture in `tests/ui/crm-board.spec.ts` covers sequential typing, focus, exact URL and reload at desktop/phone widths; existing scheduling capacity proof covers persisted filters and transient exclusions. [Integration evidence](../../../testing/evidence/pr-integration/README.md) records verification separately from paired visual/device acceptance. Field rendering and business validation are unchanged.
+
 PL-04 policy impact reuses Field and SelectField for an explicit effective time, timezone, maximum visit minutes and optional site. Host fixtures cover edited-input invalidation and strict server validation; no shared renderer or catalogue fixture changes. [Host contract](../pages/route-schedule-policy-impact.md); [verification](../../../delivery/scheduling-policy-impact-handover.md). Paired owner/device review remains open.
 
 <!-- versioning: git; committed history is authoritative -->
