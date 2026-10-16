@@ -15,7 +15,7 @@ import { current, proposalContext, revisionContext } from "../drafts/context";
 import { hashInput } from "../drafts/validation";
 import { digest } from "../store";
 import { rendererVersion } from "../render";
-import { definition } from "./definition";
+import { definition, publicationRenderer } from "./contracts";
 
 export function publicationInput(value: unknown) {
   const q = object(value, [
@@ -145,11 +145,16 @@ async function candidate(c: QueryClient, p: Principal, id: string) {
       [p.workspace_id],
     )
   ).rows[0].version;
-  const retained = await definition(next, r.body, {
-    proposal_id: d.id,
-    revision_id: r.id,
-    content_hash: r.content_hash,
-  });
+  const retained = await definition(
+    await publicationRenderer(c),
+    next,
+    r.body,
+    {
+      proposal_id: d.id,
+      revision_id: r.id,
+      content_hash: r.content_hash,
+    },
+  );
   return {
     d,
     r,
@@ -196,7 +201,7 @@ export async function readPublication(
       p.workspace_id,
     ]);
     const pub = await publicationContext(c, p, id);
-    const { supportedTemplateDefinition } = await import("./definition");
+    const { supportedTemplateDefinition } = await import("./contracts");
     let runtime_support = "Unavailable";
     try {
       runtime_support =

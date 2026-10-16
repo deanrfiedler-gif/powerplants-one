@@ -24,8 +24,8 @@ import { readOperation } from "../../src/shared/receipts";
 import {
   supportedPackHtml,
   supportedRenderPack,
-} from "../../src/documents/publication/render";
-import { supportedTemplateDefinition } from "../../src/documents/publication/definition";
+  supportedTemplateDefinition,
+} from "../../src/documents/publication/contracts";
 import { digest } from "../../src/documents/store";
 import { processRenderJob, readBundle } from "../../src/documents/worker";
 import { withWorkingCompany } from "../../src/platform/working-company";

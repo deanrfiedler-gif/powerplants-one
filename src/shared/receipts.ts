@@ -58,6 +58,7 @@ import { acceptedEstimateContext, quoteContext } from "../estimating/context";
 import { discoveryReceiptAuthority } from "../estimating/discovery-workspace-context";
 import { authoriseProjectReceipt } from "../projects/service";
 import { raidReceiptAuthority } from "../projects/raid";
+import { receiptAuthority as specialistPackageReceiptAuthority } from "../projects/specialist/context";
 import { commercialReceiptAuthority } from "../projects/commercial/context";
 import { reportContext, ownReport } from "../reports/context";
 import {
@@ -90,7 +91,13 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "CpqPackage") {
+  if (r.object_type === "ProjectSpecialistPackage") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      await specialistPackageReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "CpqPackage") {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE",[p.workspace_id]);
       await packageReceiptAuthority(c,p,r.record_id,operation_id);
