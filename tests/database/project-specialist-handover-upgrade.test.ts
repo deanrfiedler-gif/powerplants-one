@@ -90,8 +90,8 @@ for (const through of [103, 104])
           async (t) =>
             (
               await c.query(
-                // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
+                // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
               )
             ).rows,
         ),
@@ -120,8 +120,8 @@ for (const through of [103, 104])
         )
       ).rows,
       through === 103
-        ? [{ version: 104 }, { version: 105 }, { version: 106 }]
-        : [{ version: 105 }, { version: 106 }],
+        ? [{ version: 104 }, { version: 105 }, { version: 106 }, { version: 107 }]
+        : [{ version: 105 }, { version: 106 }, { version: 107 }],
     );
     assert.deepEqual(
       (

@@ -83,7 +83,7 @@ export function assertAccessInspectionSeedLedger(
   const added = actual.filter((r) => !versions.has(r.version));
   assert.deepEqual(
     added.map((r) => r.version),
-    [78, 79, 80, 83, 84, 106].filter((v) => !versions.has(v)),
+    [78, 79, 80, 83, 84, 107].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);

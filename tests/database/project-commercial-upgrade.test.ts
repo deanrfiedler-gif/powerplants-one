@@ -40,8 +40,8 @@ for (const through of [25, 100])
     const snapshots = await Promise.all(
       tables.map((t) =>
         rows(
-          // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
+          // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ),
     );
@@ -58,11 +58,11 @@ for (const through of [25, 100])
     );
     assert.deepEqual(
       upgraded.filter((x) => x.version > through).map((x) => x.version),
-      through === 100 ? [101, 102, 103, 104, 105, 106] : Array.from({ length: 81 }, (_, i) => i + 26),
+      through === 100 ? [101, 102, 103, 104, 105, 106, 107] : Array.from({ length: 82 }, (_, i) => i + 26),
     );
     for (const [i, t] of tables.entries()) {
       const actual = await rows(
-        `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
+        `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
       );
       // Earlier 0026 and 0095 legitimately extend estimates; preserve every original field.
       for (const original of snapshots[i]) {
@@ -100,7 +100,7 @@ for (const through of [25, 100])
     const after = await Promise.all(
       tables.map((t) =>
         rows(
-          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
+          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ),
     );
@@ -110,7 +110,7 @@ for (const through of [25, 100])
       await Promise.all(
         tables.map((t) =>
           rows(
-            `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
+            `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
           ),
         ),
       ),

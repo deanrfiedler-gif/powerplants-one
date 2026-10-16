@@ -55,8 +55,8 @@ test("Populated 0102 upgrade retains an assigned DK06-OUT09-1 publication and qu
     Promise.all(
       tables.map((t) =>
         rows(
-          // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>106" : ""} ORDER BY to_jsonb(r)::text`,
+          // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
         ),
       ),
     );
@@ -71,7 +71,7 @@ test("Populated 0102 upgrade retains an assigned DK06-OUT09-1 publication and qu
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
   assert.deepEqual(
     upgraded.slice(ledger.length).map((r) => r.version),
-    [103, 104, 105, 106],
+    [103, 104, 105, 106, 107],
   );
   await migrate();
   await seed();

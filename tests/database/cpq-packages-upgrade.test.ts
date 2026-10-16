@@ -42,8 +42,8 @@ const snapshot = async () => {
       tables.map(async (t) => [
         t,
         await rows(
-          // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
+          // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ]),
     ),
@@ -75,7 +75,7 @@ test("populated 0101 upgrade preserves exact CPQ/cost/adoption histories, origin
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [102, 103, 104, 105, 106],
+    [102, 103, 104, 105, 106, 107],
   );
   assert.deepEqual(
     await rows(
