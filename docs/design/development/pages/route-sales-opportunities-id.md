@@ -15,11 +15,28 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design (16 October 2026): the [deal record page decision](../../../decisions/deal-record-page-design.md), with captures 01–12 in [Deal record page design r01](../../../reference/ui/crm/deal-record-page-design-r01/README.md). It is the fourth record type on the shared record layout. The app still renders `OpportunityDetail` with a page header and eight tabs, and the shell parts wait for their own rollout decision.
+
+- **Layout at 1440 × 900:** the Sales rail with Deals selected; the breadcrumb "Sales / Deals / reference", which returns to the register; no secondary menu. Below the top bar come a one-row header, a stage bar, a readiness bar or a state banner, then a 380 px details column and a main column with view tabs, each scrolling on its own.
+- **Header:** title and outcome tag, the position in the register view with previous/next, Won and Lost in Closing (or "Move to <next stage>" and Lost earlier), and "…" (Edit deal, Edit requirements and scope, Change stage, Transfer deal owner, Copy link). Below: reference, the owner with an avatar, and origin. A read-only viewer sees no actions.
+- **Stage bar:** the five stages with days in each; each stage opens Change stage, which offers only the moves the code allows and asks for a reason. A forward move asks for the stage's exit condition and shows the checks of the stage being left, read only.
+- **Readiness bar:** "Ready to record Won" in Closing (stage, accepted response with holds cleared, customer contact, next activity, order evidence asked when you record Won); "Ready to move to <next stage>" earlier. Advisory only.
+- **Details column:** Summary, Overview (deal age, days inactive, updated, version, pipeline), Customer and site, Contact, Source and Requirement.
+- **Main column:** view tabs Overview, Scope & sites, Activities, Estimates & quotations, Correspondence, Documents and History. Every view carries the composer (Note, Activity, Email, File), Focus with the next activity and quick planning, then the view's own content, then History grouped by day with type filters and counts. Overview adds Linked work (quotation, estimating handover, Won-deal receiving, aftercare). Tables follow the record-page table style.
+- **Outcomes:** Record Won compares the reviewed quotation evidence with the current facts in a table and asks for acceptance or order evidence; Record Lost asks for a structured reason and evidence; Won recorded shows the Info banner, "Prepare receiving handover" and the handover due in Linked work.
+- **States:** no next activity, overdue, rotting (not adopted), due date needed, read only, unavailable, Won, Lost, newer saved version, uncertain save, refresh failed, outcome evidence restricted or changed (capture 12).
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design (16 October 2026): capture 13 in [Deal record page design r01](../../../reference/ui/crm/deal-record-page-design-r01/README.md).
+
+- **At 390 × 844:** tapping a deal in the list opens the record page directly: back, previous/next, the outcome tag and next-activity line, then Details, Activity, Quotes, Emails and Files tabs over scrolling content, with "…", Plan activity and Won fixed at the bottom. Details opens with the stage strip, the readiness card, Summary, Customer and site, Contact and links to Scope & sites, History and the source lead.
+- **Actions:** "…" opens an action sheet (Write an email, Change stage, Record Lost, Edit deal, Edit requirements and scope, Transfer deal owner, Copy link). Plan activity and Write an email open full-screen forms; the five activity types are equal icon-over-label tiles.
+- **Not drawn yet:** the phone Activity, Quotes, Emails and Files tabs, the phone versions of the states, and 320 px.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -34,6 +51,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-Deal-Workspace-r01.html](../../../reference/ui/crm/PPO-Deal-Workspace-r01.html)
+- Accepted Figma design: [Deal record page design r01 captures](../../../reference/ui/crm/deal-record-page-design-r01/README.md) (icon-free PNGs; design compositions, not application captures). The r01 workspace reference above stays unchanged. Images of the tablet layout, the other phone tabs, the edit and transfer dialogs and the loading state are still missing.
 
 ## Behaviour, handovers and verification
 
