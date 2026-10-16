@@ -53,6 +53,9 @@ export default defineConfig([
   globalIgnores([
     ".next/**",
     "tmp/**",
+    // Claude desktop session worktrees and local git worktrees are full nested checkouts.
+    ".claude/**",
+    ".worktrees/**",
     "public/offline/modules/**",
     "node_modules/**",
     "test-results/**",
