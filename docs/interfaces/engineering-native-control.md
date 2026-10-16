@@ -39,3 +39,7 @@ See [programme handover](../delivery/engineering-native-control-handover.md) for
 ## PJ-06 exact source in EN-06 receiving
 
 The [PJ-06 R2 contract](../contracts/project-specialist-handover.md) adds optional `specialist: {id, version}` to native handover preparation. It freezes the exact accepted brief in a version-2 receiving payload; ordinary payloads and operation hashes remain version 1. Native technical release, Approved demand, independent Supply receiving, permissions and original-operation receipts retain authority. Source privacy is checked on lists, history, commands and recovery. This records exact receiving evidence without order, inventory, award or booking effects.
+
+## PJ-06 exact work-evidence receiving
+
+The [R3 contract](../contracts/project-specialist-work-evidence.md) reads an exact accepted specialist-bound EN-06 handover as the work-evidence source. It preserves the original payload, units, receiving operation and technical-release authority. Its separate independent work-review outcome cannot issue a release, alter material quantities, accept another scope or authorise procurement/payment. Source drift changes applicability while prior evidence remains immutable.
