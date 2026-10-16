@@ -1,7 +1,6 @@
 import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { beforeEach, after, test } from "node:test";
 import {
   database,
@@ -20,6 +19,7 @@ import {
 import { recordBaseline, readBaselines } from "../../src/projects/baselines";
 import { readOperation } from "../../src/shared/receipts";
 import { projectInput, taskInput } from "../helpers/projects";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -225,12 +225,7 @@ test("baseline history pages are bounded, independently selectable and retain al
   assert.equal(older.selected?.revision, 1);
 });
 test("populated 0077 upgrade retains every original schedule, receipt, ledger, user and grant", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(77);
   await seed(77);
@@ -277,7 +272,7 @@ test("populated 0077 upgrade retains every original schedule, receipt, ledger, u
   );
   assert.deepEqual(
     after.filter((r) => r.version > 77).map((r) => r.version),
-    [78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+    [78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105],
   );
   assert.equal((await readBaselines(p, project.id)).latest_revision, 0);
   await recordBaseline(p, project.id, input());

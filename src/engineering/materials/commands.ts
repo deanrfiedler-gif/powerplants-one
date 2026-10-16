@@ -1,3 +1,4 @@
+import { specialistHandoverSource, specialistHandoverVisible, specialistReference, type SpecialistHandoverRow } from "../../projects/specialist/handover";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
@@ -71,10 +72,12 @@ async function raiseImpact(c: PoolClient, p: Principal, access: Access, command:
       coalesce((SELECT jsonb_agg(jsonb_build_object('id',r.id,'number',r.release_number,'state',r.issue_state) ORDER BY r.release_number) FROM ppo.material_releases r WHERE (r.workspace_id,r.set_id)=(s.workspace_id,s.id) AND r.review_state<>'Cancelled'
         AND (r.id=$4 OR ($3::uuid IS NOT NULL AND r.manifest->'sources' @> jsonb_build_array(jsonb_build_object('id',$3::text))))),'[]') AS releases,
       coalesce((SELECT jsonb_agg(jsonb_build_object('revision',h.revision,'state',h.state) ORDER BY h.created_at) FROM ppo.material_handovers h JOIN ppo.material_releases r ON (r.workspace_id,r.id)=(h.workspace_id,h.release_id)
-        WHERE (h.workspace_id,h.set_id)=(s.workspace_id,s.id) AND (r.id=$4 OR ($3::uuid IS NOT NULL AND r.manifest->'sources' @> jsonb_build_array(jsonb_build_object('id',$3::text))))),'[]') AS handovers
+        WHERE (h.workspace_id,h.set_id)=(s.workspace_id,s.id) AND NOT (h.payload ? 'specialist') AND (r.id=$4 OR ($3::uuid IS NOT NULL AND r.manifest->'sources' @> jsonb_build_array(jsonb_build_object('id',$3::text))))),'[]') AS handovers
      FROM ppo.material_sets s WHERE s.workspace_id=$1 AND s.package_id=$2`, [p.workspace_id, access.pkg.id, sourceId, releaseId])).rows;
   for (const f of found) {
     if (!f.lines.length && !f.releases.length) continue;
+    // Specialist receiving has narrower source visibility than generic Engineering impacts.
+    // Its exact retained outcome remains in the authorised handover projection.
     const accepted = f.handovers.filter((h) => h.state === "Accepted").length;
     const id = randomUUID(), inserted = await c.query(
       `INSERT INTO ppo.material_impacts(id,workspace_id,company_id,set_id,created_by,updated_by,source_id,release_id,change,affected,owner_id,required_action)
@@ -459,6 +462,13 @@ export async function handoverCommand(p: Principal, packageId: string, value: un
   return sharedOperation<Access>(p, command, `MaterialHandover:${command.action}`, async (c) => {
     const access = await materialsAccess(c, p, packageId);
     requireDuty(access, command.action === "decide" ? "receive" : "edit");
+    // Present authority precedes original receipt replay; current-use checks belong below it.
+    const existing = (await c.query<SpecialistHandoverRow>(`SELECT h.* FROM ppo.material_handovers h
+      JOIN ppo.material_sets s ON (s.workspace_id,s.id)=(h.workspace_id,h.set_id)
+      WHERE h.workspace_id=$1 AND s.package_id=$2 AND h.id=$3`,
+      [p.workspace_id, packageId, command.action === "prepare" ? command.id : command.handover_id])).rows[0];
+    const ref = existing ? specialistReference(existing) : command.action === "prepare" ? command.specialist : null;
+    if (ref) await specialistHandoverSource(c, p, packageId, ref, false, command.action !== "decide");
     return access;
   }, async (c, access): Promise<Saved> => {
     const sources = await loadSources(c, p, access);
@@ -490,13 +500,25 @@ export async function handoverCommand(p: Principal, packageId: string, value: un
       if (stops.length) throw blocked("HandoverBlocked", stops);
       await eligiblePerson(c, p, access, command.receiver_id, "receiver_id", "engineering.material.receive");
       if (!access.policy?.grants.some((g) => g.actor_id === command.receiver_id && g.role === "SupplyReceiver")) throw new AppError(422, "InvalidData", "Check the highlighted details.", [{ field: "receiver_id", message: access.policy ? "The policy does not name this person as a Supply Chain receiver." : "Authority not configured: no policy names a receiver." }]);
-      const open = (await c.query<{ state: string }>("SELECT state FROM ppo.material_handovers WHERE workspace_id=$1 AND release_id=$2 AND state<>'Returned'", [p.workspace_id, r.id])).rows[0];
+      const open = (await c.query<SpecialistHandoverRow & { state: string }>("SELECT * FROM ppo.material_handovers WHERE workspace_id=$1 AND release_id=$2 AND state<>'Returned'", [p.workspace_id, r.id])).rows[0];
+      if (open && !await specialistHandoverVisible(c, p, packageId, open)) throw unavailable();
       if (open) throw refuse("HandoverExists", open.state === "Accepted" ? "This exact release was already received. A changed payload needs a successor release, not a second handover." : "A handover of this release is already in progress.", 409);
       const before = command.predecessor_id ? (await c.query<{ id: string; revision: number; state: string }>("SELECT id,revision,state FROM ppo.material_handovers WHERE workspace_id=$1 AND set_id=$2 AND id=$3", [p.workspace_id, r.set_id, command.predecessor_id])).rows[0] : undefined;
       if (command.predecessor_id && (before?.state !== "Returned" || (await c.query("SELECT 1 FROM ppo.material_handovers WHERE workspace_id=$1 AND predecessor_id=$2", [p.workspace_id, command.predecessor_id])).rowCount))
         throw new AppError(422, "InvalidData", "Check the highlighted details.", [{ field: "predecessor_id", message: "A corrected handover follows a returned one that has no successor yet." }]);
+      const specialist = command.specialist
+        ? await specialistHandoverSource(c, p, packageId, command.specialist, true, true) : undefined;
+      if (specialist) await specialistHandoverSource(c, { ...p, actor_id: command.receiver_id }, packageId, specialist);
+      if (before) {
+        const prior = (await c.query<SpecialistHandoverRow>("SELECT * FROM ppo.material_handovers WHERE workspace_id=$1 AND id=$2", [p.workspace_id, before.id])).rows[0];
+        const priorRef = specialistReference(prior);
+        if (priorRef) {
+          await specialistHandoverSource(c, p, packageId, priorRef);
+          if (!specialist) throw refuse("SpecialistRequired", "A specialist handover successor retains an explicit specialist source.", 409);
+        }
+      }
       const payload = {
-        schema_version: 1, requested_action: command.requested_action,
+        schema_version: specialist ? 2 : 1, ...(specialist ? { specialist } : {}), requested_action: command.requested_action,
         source: { release_id: r.id, release_number: view.release_number, set_revision: view.set_revision, purpose: r.purpose, content_hash: view.content_hash, issue_operation_id: view.issue_operation_id, issued_at: view.issued_at, sources: r.manifest.sources },
         context: { ...r.manifest.package, site_name: access.site_name, engineering_package: access.pkg.display_number },
         lines: r.manifest.lines, exclusions: r.manifest.exclusions,
@@ -504,15 +526,31 @@ export async function handoverCommand(p: Principal, packageId: string, value: un
         timing: { required_by: command.required_by, timezone: command.required_by ? access.site_timezone ?? "Australia/Brisbane" : null },
         receiving: { receiver_id: command.receiver_id, coordinator_id: p.actor_id, schema_version: 1 },
       };
-      await c.query(`INSERT INTO ppo.material_handovers(id,workspace_id,company_id,set_id,release_id,created_by,updated_by,revision,predecessor_id,requested_action,demand_basis,demand_source_id,receiver_id,coordinator_id,required_by,required_by_timezone,payload,payload_hash)
-        VALUES($1,$2,$3,$4,$5,$6,$6,$7,$8,$9,$10,$11,$12,$6,$13,$14,$15,$16)`, [command.id, p.workspace_id, access.pkg.company_id, r.set_id, r.id, p.actor_id, (before?.revision ?? 0) + 1, before?.id ?? null, command.requested_action,
-        command.demand_basis, command.demand_source_id, command.receiver_id, command.required_by, payload.timing.timezone, JSON.stringify(payload), sha256(payload)]);
+      await c.query(`INSERT INTO ppo.material_handovers(id,workspace_id,company_id,set_id,release_id,created_by,updated_by,revision,predecessor_id,requested_action,demand_basis,demand_source_id,receiver_id,coordinator_id,required_by,required_by_timezone,payload,payload_hash${specialist ? ",specialist_package_id,specialist_version" : ""})
+        VALUES($1,$2,$3,$4,$5,$6,$6,$7,$8,$9,$10,$11,$12,$6,$13,$14,$15,$16${specialist ? ",$17,$18" : ""})`, [command.id, p.workspace_id, access.pkg.company_id, r.set_id, r.id, p.actor_id, (before?.revision ?? 0) + 1, before?.id ?? null, command.requested_action,
+        command.demand_basis, command.demand_source_id, command.receiver_id, command.required_by, payload.timing.timezone, JSON.stringify(payload), sha256(payload), ...(specialist ? [specialist.id, specialist.version] : [])]);
       return finish(command.id, r.set_id, "HandoverPrepared");
     }
-    const h = (await c.query<Record<string, unknown> & { id: string; version: number; set_id: string; release_id: string; state: string; receiver_id: string; payload: unknown; payload_hash: string; created_by: string }>(
+    const h = (await c.query<SpecialistHandoverRow & Record<string, unknown> & { id: string; version: number; set_id: string; release_id: string; state: string; receiver_id: string; payload: unknown; payload_hash: string; created_by: string }>(
       "SELECT h.* FROM ppo.material_handovers h JOIN ppo.material_sets s ON (s.workspace_id,s.id)=(h.workspace_id,h.set_id) WHERE h.workspace_id=$1 AND s.package_id=$2 AND h.id=$3 FOR UPDATE OF h", [p.workspace_id, access.pkg.id, command.handover_id])).rows[0];
     if (!h) throw unavailable();
     currentVersion(h.version, command.expected_version);
+    const specialist = specialistReference(h);
+    if (specialist) {
+      await specialistHandoverSource(c, p, packageId, specialist, command.action === "send" || command.result === "Accepted", command.action === "send");
+      if (command.action === "send") {
+        await specialistHandoverSource(c, { ...p, actor_id: h.receiver_id }, packageId, specialist);
+        const { view } = await releaseOf(h.release_id);
+        const demand = sources.find((s) => s.id === h.demand_source_id);
+        if (view.current_use !== "EligibleForPurpose" || demand?.use !== "Current" || demand.permitted_purpose !== "Procurement")
+          throw refuse("HandoverBlocked", "The exact technical release and approved demand must still be current.", 409);
+      }
+      if (command.action === "decide" && command.result === "Accepted") {
+        const demand = sources.find((s) => s.id === h.demand_source_id);
+        if (demand?.use !== "Current" || demand.permitted_purpose !== "Procurement")
+          throw refuse("HandoverBlocked", "The exact approved demand authority is no longer current.", 409);
+      }
+    }
     if (command.action === "send") {
       if (h.state !== "Prepared") throw refuse("AlreadySent", "This payload was already sent to its receiver.", 409);
       await c.query("UPDATE ppo.material_handovers SET version=version+1,updated_at=clock_timestamp(),updated_by=$3,state='AwaitingReceiver',sent_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2", [p.workspace_id, h.id, p.actor_id]);
@@ -561,4 +599,9 @@ export async function materialReceiptAuthority(c: QueryClient, p: Principal, obj
     : objectType === "MaterialSubstitution" && action === "commercial" ? "commercial" : objectType === "MaterialLine" && action === "binding" ? null : "edit";
   if (duty && !access.can[duty]) throw unavailable();
   if (!duty && !access.can.edit && !access.can.source) throw unavailable();
+  if (objectType === "MaterialHandover") {
+    const row = (await c.query<SpecialistHandoverRow>("SELECT * FROM ppo.material_handovers WHERE workspace_id=$1 AND id=$2", [p.workspace_id, recordId])).rows[0];
+    const ref = specialistReference(row);
+    if (ref) await specialistHandoverSource(c, p, owner.package_id, ref, false, action !== "decide");
+  }
 }

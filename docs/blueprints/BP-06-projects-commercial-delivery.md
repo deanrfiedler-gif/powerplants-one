@@ -186,3 +186,5 @@ The [commercial contract](../contracts/project-commercial-controls.md) and [deci
 ## PJ-06 bounded native continuation — 15 October 2026
 
 The [specialist package contract](../contracts/project-specialist-packages.md) extends PRJ-04/05 with exact internally received briefs and original-operation recovery. Existing Engineering/Supply links remain source references and do not confer release, procurement or booking authority. The [decision](../decisions/project-specialist-packages.md) retains the remaining delivery scope.
+
+The subsequent [technical/procurement handover contract](../contracts/project-specialist-handover.md) binds that exact accepted brief into native EN-06 receiving, alongside independently issued technical release and separately evidenced approved demand. Native Supply receiving remains authoritative for its exact payload; no purchase execution, subcontract award, competence verification or Service booking follows. R2 implementation verification remains separate from parent acceptance and deployment.
