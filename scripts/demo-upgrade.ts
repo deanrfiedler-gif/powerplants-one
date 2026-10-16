@@ -311,12 +311,15 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Deferred identity events are flushed before extending the live type constraints.
   // 0103 adds empty immutable specialist coordination records, no seed/grant/backfill.
   // Existing schema-wide grants cover them; source services retain decision authority.
-  // 0104 adds nullable exact specialist-event references to existing native handovers
+  // 0104 adds one immutable SQL function naming the DK06-OUT09-2 renderer contract and
+  // replaces the insert-only publication guard. No table, row, seed, grant or identity
+  // changes; existing publications are untouched and PUBLIC execute covers the function.
+  // 0105 adds nullable exact specialist-event references to existing native handovers
   // and guards only opted-in payloads. No old payload/hash, receipt, grant, seed or
   // identity is rewritten. Existing table/function runtime privileges cover the
-  // addition; populated 0103 and reserved-Products upgrades prove preservation.
+  // addition; populated 0103/0104 and reserved-Products upgrades prove preservation.
   // This admission does not execute an upgrade or grant hosted specialist authority.
-  if (latestMigrationVersion !== 104) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 105) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

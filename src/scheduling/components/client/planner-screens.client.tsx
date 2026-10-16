@@ -16,6 +16,7 @@ import {
   appointmentHref,
   plannerContext,
   plannerHref,
+  plannerToday,
   safePlannerReturn,
 } from "../../navigation";
 import { useIdentity } from "../../../components/business-session";
@@ -1688,9 +1689,12 @@ export function PlannerScreen() {
     [dragNotice, setDragNotice] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null),
     [showFilters, setShowFilters] = useState(false);
-  // The board views need room for their columns; narrow screens keep the lane list until the
-  // phone layout is built.
-  const [wide, setWide] = useState(true),
+  // The board views need room for their columns; narrow screens get the phone layout. The width
+  // is unknown until the effect below measures it, and the phone Day view reads a different
+  // range, so the schedule is not read until then: a phone read one day and then the week on
+  // every mount, and whichever response landed last was shown.
+  const [measuredWide, setWide] = useState<boolean | null>(null),
+    wide = measuredWide ?? true,
     [now, setNow] = useState(() => new Date().toISOString());
   useEffect(() => {
     const media = window.matchMedia("(min-width: 781px)"),
@@ -1720,7 +1724,10 @@ export function PlannerScreen() {
     ...(resourceFilter ? { resource_id: resourceFilter } : {}),
     ...(status ? { status } : {}),
   });
-  const result = useResource<Schedule>("schedule?" + query.toString()),
+  const schedule = useResource<Schedule>(
+      measuredWide === null ? null : "schedule?" + query.toString(),
+    ),
+    result = { ...schedule, loading: schedule.loading || measuredWide === null },
     sites =
       useResource<Envelope<{ id: string; display_name: string }>>(
         "sites?limit=50",
@@ -1855,6 +1862,9 @@ export function PlannerScreen() {
             onClick={() => setDay(addDays(day, days.length))}
           >
             →
+          </button>
+          <button className="secondary" onClick={() => setDay(plannerToday(zone))}>
+            Today
           </button>
         </div>
         {/* aria-pressed drives the selected thumb, so the class no longer

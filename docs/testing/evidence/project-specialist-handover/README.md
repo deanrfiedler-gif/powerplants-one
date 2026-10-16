@@ -1,6 +1,14 @@
 # PJ-06 technical/procurement handover execution evidence
 
-Status: implementation published in draft PR #522; bounded local checks and clean implementation review recorded below. Final-head CI/review, compiled API/restart and additional accepted-successor proof remain pending. Human acceptance and deployment remain separate.
+Status: draft PR #522 is being reconciled with main `b223c5817be7a946b38c48c9838d9d9925298156`, which integrated R1 and the DK-06 renderer migration 0104. R2 is now migration 0105 with identical SQL. Verification of this combined source is separate from the retained checkpoints below; human acceptance and deployment remain separate.
+
+## Upstream reconciliation — 16 October 2026
+
+The [recorded decision](../../../decisions/project-specialist-handover.md#main-reconciliation--16-october-2026) preserves main's 0104 bytes and every contribution's Git ancestry. Exact migration lists, latest-version pins, demo admission review and reserved Products coverage now include 0105. Populated 0103 and integrated 0104 cases retain legacy handovers and both renderer-contract publications, exact original receipts/grants/ledgers and repeat-run stability. Existing 0025 and 0102 upgrades continue to cover the pending 0026 identity events and historical sources. Test assertions and deadlines are unchanged. The separate child #530 is not edited here and needs its own downstream reconciliation.
+
+On the prior exact source `459112db197e8f1b87c2c3e6591284c509a386c6`, [specialist CI](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38832230593/job/116753354662) passed 856 units, standard build, 17 native/upgrade cases including PJ06-R2-08, two reserved Products upgrades and both separately reset compiled HTTP files. Its retained artifact proves actual application/PostgreSQL restart: R2 preserved 30 tables and recovered three original receipts with zero repeated effects; R1 preserved 21 tables and recovered two receipts. [Independent review](https://github.com/deanrfiedler-gif/powerplants-one/pull/522#issuecomment-6205575411) was clean and both actual threads resolved. [The PR checkpoint](https://github.com/deanrfiedler-gif/powerplants-one/pull/522#issuecomment-6206881081) records these results. These proofs close the earlier pending specialist cases for that source only; they do not erase local failures or verify the new main integration. At 03:12 UTC, the old-source overall check snapshot was 42 successful, nine running, nine queued and the intentional optional PT-27 skip.
+
+## Original branch checkpoints
 
 Source: `codex/pj06-technical-handover`, stacked on exact R1 `708c6da71ebd32a93ebfd2bdc84a52d3b198fb35` because current main `1552cfbb8efd6cea17438c2af18ba0effa4fc278` lacks that model. Architecture recorded before implementation in commit `d3681ed`. No merge or deployment.
 

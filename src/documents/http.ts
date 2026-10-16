@@ -13,9 +13,9 @@ import { hasPermission } from "../platform/permissions";
 import { unavailable } from "../platform/errors";
 import { object, uuid } from "../shared/validation";
 import type { RouteContext } from "../shared/http";
-import { issueContext, packContext } from "./context";
+import { issueContext, packAppointmentApplicable, packContext } from "./context";
 import { type PackSnapshot } from "./render";
-import { supportedPackHtml } from "./publication/render";
+import { supportedPackHtml } from "./publication/contracts";
 import { readBundle, retryRenderJob, readRenderJob } from "./worker";
 import { requestIssue } from "./packs";
 const fileHeaders = {
@@ -172,7 +172,7 @@ export async function issueDetails(
         pack.current_issue_id === issue.id &&
         !pack.needs_review &&
         pack.status === "Issued" &&
-        ["Confirmed", "InProgress"].includes(a.status) &&
+        packAppointmentApplicable(a.status) &&
         issue.assignment_version === a.assignment_version &&
         issue.schedule_version === a.schedule_version,
       as_at: new Date().toISOString(),

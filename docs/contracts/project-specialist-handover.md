@@ -14,7 +14,7 @@ Prepare, send and positive receiving require an Active Project and unchanged exa
 
 ## Persistence, projection and recovery
 
-Migration 0104 adds nullable exact specialist ID/version columns and a composite foreign key to the immutable accepted event. A guard binds opted-in payloads to that event, the native Engineering/Project context, exact release lines/exclusions and canonical payload hash, and prevents changing the reference. It does not backfill or rewrite old rows, schemas, hashes, release manifests, source observations, events or receipts. No seed, grant or new identity type is introduced.
+Migration 0105 adds nullable exact specialist ID/version columns and a composite foreign key to the immutable accepted event. A guard binds opted-in payloads to that event, the native Engineering/Project context, exact release lines/exclusions and canonical payload hash, and prevents changing the reference. It does not backfill or rewrite old rows, schemas, hashes, release manifests, source observations, events or receipts. No seed, grant or new identity type is introduced.
 
 The native handover GET retains the exact payload and adds nullable `specialist_source_status` (Current/Changed). Recorded outcome and present applicability are distinct. Linked handovers require source authority before appearing in list, selection, line detail, footer or history; inaccessible predecessor IDs and history counts are withheld. Generic Engineering impact summaries do not copy specialist receiving counts into their broader audience. Exact specialist outcomes and source status remain in the authorised handover projection. This is not an automated specialist recall or impact-disposition workflow.
 

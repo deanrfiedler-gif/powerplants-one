@@ -28,7 +28,10 @@ import { readSavedViews, saveSavedViews } from "../../src/platform/saved-views";
 import { readWorkViews, saveWorkViews } from "../../src/activities/work-views";
 import { defaultCriteria } from "../../src/activities/work-criteria";
 import { reviewInbox, reviewTarget } from "../../src/reviews/service";
-import { CRM, crmBase } from "../helpers/crm";
+import { CRM, crmBase, crmCreate, crmDiscovery } from "../helpers/crm";
+import { createOpportunity } from "../../src/crm/opportunities";
+import { recordOpportunityOutcome } from "../../src/crm/outcomes";
+import { listOpportunities } from "../../src/crm/worklist";
 import { submitted, decision } from "../helpers/reports";
 import { createSite } from "../../src/shared/commands";
 import { createFacilityDetails } from "../../src/shared/facilities/commands";
@@ -372,6 +375,36 @@ test("SH04 source cursors page scoped results and reject changed query bindings"
     kind: "Facility / growing area",
   });
   assert.ok(facilities.items.every((f) => f.context?.includes(" → ")));
+});
+test("SH04 deal search finds every pipeline and outcome while the register keeps its default view", async () => {
+  const p = await principal(),
+    original = { ...crmCreate(), title: "SYN SH deal search original" },
+    open = { ...crmDiscovery(), title: "SYN SH deal search open" },
+    lost = { ...crmDiscovery(), title: "SYN SH deal search lost" };
+  for (const deal of [original, open, lost]) await createOpportunity(p, deal);
+  await recordOpportunityOutcome(p, lost.id, {
+    ...crmBase(),
+    expected_version: 1,
+    close_outcome: "Lost",
+    lost_reason: "Timing",
+    acceptance_evidence: null,
+  });
+  const found = await applicationSearch(p, {
+    q: "SYN SH deal search",
+    kind: "Deal",
+  });
+  assert.equal(found.sources[0].state, "available");
+  assert.deepEqual(
+    found.items.map((i) => i.id).sort(),
+    [original, open, lost].map((d) => `Deal:${d.id}`).sort(),
+  );
+  // The register's own default is unchanged: the original pipeline, open deals only.
+  assert.deepEqual(
+    (await listOpportunities(p, { q: "SYN SH deal search" })).items.map(
+      (i) => i.id,
+    ),
+    [original.id],
+  );
 });
 test("SH04 identical growing-area names retain site context, stable IDs and current access", async () => {
   const p = await principal(),

@@ -6,6 +6,8 @@ import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
 import { handoverCommand } from "../../src/engineering/materials/commands";
 import { readOperation } from "../../src/shared/receipts";
+import { publishTemplate, readPublication } from "../../src/documents/publication/service";
+import { reviewedDraft } from "../helpers/template-publication";
 import {
   specialistHandoverFixture,
   handoverAction,
@@ -13,12 +15,16 @@ import {
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 after(closeDatabase);
-test("PJ06-R2 upgrade from populated 0103 preserves every legacy payload, hash, grant, receipt and ledger exactly; repeat run adds nothing", async () => {
+for (const through of [103, 104]) test(`PJ06-R2 upgrade from populated ${through} preserves every legacy payload, template publication, hash, grant, receipt and ledger exactly; repeat run adds nothing`, async () => {
   const c = database();
   await c.query(await readFile("db/migrations/0001-recover.sql", "utf8"));
   await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
-  await migrate(103);
-  await seed(103);
+  await migrate(through);
+  await seed(through);
+  const publication = await reviewedDraft();
+  const published = await publishTemplate(publication.publisher, publication.input.id, publication.command);
+  const originalPublication = await readPublication(publication.publisher, publication.command.id);
+  assert.equal(JSON.parse(originalPublication.publication.definition).renderer, through === 103 ? "DK06-OUT09-1" : "DK06-OUT09-2");
   const f = await specialistHandoverFixture(),
     legacy: Record<string, unknown> = { ...f.prepare };
   delete legacy.specialist;
@@ -46,6 +52,12 @@ test("PJ06-R2 upgrade from populated 0103 preserves every legacy payload, hash, 
     "project_specialist_packages",
     "project_specialist_events",
     "project_commercial_events",
+    "template_publications",
+    "template_proposals",
+    "template_proposal_revisions",
+    "template_proposal_reviews",
+    "template_proposal_events",
+    "pack_templates",
     "operation_receipts",
     "audit_events",
     "outbox_jobs",
@@ -75,7 +87,7 @@ test("PJ06-R2 upgrade from populated 0103 preserves every legacy payload, hash, 
   assert.deepEqual(
     (
       await c.query(
-        "SELECT * FROM public.ppo_migrations WHERE version<=103 ORDER BY version",
+        "SELECT * FROM public.ppo_migrations WHERE version<=$1 ORDER BY version", [through],
       )
     ).rows,
     ledger,
@@ -83,10 +95,10 @@ test("PJ06-R2 upgrade from populated 0103 preserves every legacy payload, hash, 
   assert.deepEqual(
     (
       await c.query(
-        "SELECT version FROM public.ppo_migrations WHERE version>103 ORDER BY version",
+        "SELECT version FROM public.ppo_migrations WHERE version>$1 ORDER BY version", [through],
       )
     ).rows,
-    [{ version: 104 }],
+    through === 103 ? [{ version: 104 }, { version: 105 }] : [{ version: 105 }],
   );
   assert.deepEqual(
     (
@@ -104,6 +116,8 @@ test("PJ06-R2 upgrade from populated 0103 preserves every legacy payload, hash, 
     await readOperation(f.receiver, decide.operation_id),
     accepted.receipt,
   );
+  assert.deepEqual(await readPublication(publication.publisher, publication.command.id), originalPublication);
+  assert.deepEqual(await readOperation(publication.publisher, publication.command.operation_id), published.receipt);
   const upgraded = (
     await c.query("SELECT * FROM public.ppo_migrations ORDER BY version")
   ).rows;

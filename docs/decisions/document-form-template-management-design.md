@@ -12,6 +12,8 @@ versioning: git
 
 # DK-06 — Document and form template management: design decision and receiving handover
 
+**Layout superseded, 15 October 2026:** Dean accepted the [Template management design](template-management-figma-design.md), drawn in Figma from the accepted register and record patterns and the merged R1–R4 catalogue, draft, publication and use-assignment backends. Its layout supersedes the six-view workspace described below. This package's rules and vocabulary stay authoritative where they agree with the [catalogue](../contracts/template-catalogue.md), [draft](../contracts/document-template-drafts.md), [publication](../contracts/template-publication.md) and [use-assignment](../contracts/template-use-assignment.md) contracts, and its retained HTML, report and evidence stay unchanged as history.
+
 ## Decision
 
 Build DK-06 as a standalone synthetic HTML design that separates **template authoring**, **review**, **publication** and **current eligibility**, and hand the receiving implementation a read-only catalogue increment first.
