@@ -1,5 +1,27 @@
 # Current prototype status
 
+## D-025 customer communications decision paper — 16 October 2026
+
+On 16 October Dean named two problems, and both need PPO to email customers, which it deliberately does not do:
+- customers phone sales reps to ask when their parts will arrive, so he wants a dispatch email with the freight tracking number;
+- project customers phone for updates, so he wants regular update emails from the Projects Department.
+
+The [decision paper](decisions/customer-communications-d025.md) proposes how to close the outbound customer email part of D-025:
+- **Messages:** four messages in two classes, with the drafter, approver and trigger for each. Dispatch, delay and visit notices are automatic and factual. Project updates under OUT-11/PRJ-07/PJ-08 are reviewed before sending.
+- **One service:** a single communications service sends every customer email.
+- **Rules:** recipient, opt-out, timeline, state and failure rules, with sent, delivered and failed kept distinct (DOC-05) and failures visible (TR-03). Internal notes never reach a customer.
+- **Reuse:** the outbox, the DK-03 ledger pattern, DK-06 templates and Activities.
+- **Gaps and order:** the data gaps for each message, and a build order that starts with a synthetic channel and then the dispatch notice.
+
+[ADR-0058](decisions/ADR-0058-outbound-customer-email.md) is **Proposed**: Microsoft Graph `sendMail` from a monitored shared mailbox, behind a provider-neutral channel. A transactional email service is the named alternative.
+
+Dean is asked three questions:
+- where freight is booked and where the consignment note lives;
+- whether Projects uses the Smartsheet Customer Update register today;
+- which mailbox to send from.
+
+This is documentation only: no sending code, provider account, credential, migration or customer message. D-025 remains Open until Dean decides.
+
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
 Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.

@@ -1,5 +1,12 @@
 # Decision control
 
+[Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision. It covers:
+- automatic dispatch, delay and visit notices, and reviewed project updates under OUT-11/PJ-08, each with its drafter, approver and trigger;
+- recipient, opt-out, timeline, state, failure and content rules;
+- the data gaps for each message, the build order, and three questions for Dean.
+
+[ADR-0058](ADR-0058-outbound-customer-email.md) is its **proposed** provider record: Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel. Nothing sends, and D-025 remains Open.
+
 [DK-03 exact revision and acknowledgement facts](output-register-facts.md) defines the accepted Q4/G3 backend read dependency with exact issue lineage, scoped denominators and explicit report/crew limitations.
 
 [PJ-06 specialist package coordination](project-specialist-packages.md) records exact commercial/source references, immutable briefs and independent internal receiving. Source-owned approvals and UI remain separate.
