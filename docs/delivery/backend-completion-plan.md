@@ -1,5 +1,9 @@
 # Backend completion delivery plan
 
+## PJ-06 work-evidence increment — 16 October 2026
+
+R3 uses exact R2 `459112d` because main `1552cfb` lacks the accepted specialist-bound technical/procurement source. The existing #522 monitor retains that contribution; this separate branch implements [bounded work-evidence acceptance](../contracts/project-specialist-work-evidence.md). [Execution evidence](../testing/evidence/project-specialist-work/README.md) separates source reconciliation, local proof, CI/review and acceptance. BC-06 remains open for supplier competence, downstream disposition, readiness and UI. No external integration entry condition is satisfied by synthetic evidence.
+
 ## PJ-06 next dependency — 16 October 2026
 
 R1 #518 is technically verified but remains unmerged; current main `1552cfb` lacks its model. R2 stacks on exact R1 `708c6da` to carry an accepted brief into the existing native technical/procurement handover and independent Supply receiving. The [contract](../contracts/project-specialist-handover.md) preserves source authority, exact units, original-operation recovery and current/historical distinctions. [Execution evidence](../testing/evidence/project-specialist-handover/README.md) separates implementation, local verification, CI, independent review and operational acceptance. This bounded dependency does not complete BC-06/PJ-06; supplier competence, work evidence, further downstream disposition and UI remain separate. No external integration entry condition is inferred.

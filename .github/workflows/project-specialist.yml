@@ -5,6 +5,7 @@ on:
       - "src/projects/specialist/**"
       - "src/engineering/materials/**"
       - "src/app/api/v1/projects/**/specialist-packages/**"
+      - "src/app/api/v1/projects/**/specialist-work-evidence/**"
       - "src/projects/commercial/**"
       - "src/shared/receipts.ts"
       - "src/platform/permissions.ts"
@@ -12,6 +13,7 @@ on:
       - "scripts/migration-registry.ts"
       - "scripts/prove-project-specialist-restart.ts"
       - "scripts/prove-project-specialist-handover-restart.ts"
+      - "scripts/prove-project-specialist-work-restart.ts"
       - "tests/**/project-specialist*"
       - ".github/workflows/project-specialist.yml"
   workflow_dispatch:
@@ -64,9 +66,9 @@ jobs:
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
       - name: Native package, immutable source, privacy, concurrency and populated upgrades
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/project-specialist.test.ts tests/database/project-specialist-upgrade.test.ts tests/database/project-specialist-handover.test.ts tests/database/project-specialist-handover-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/project-specialist.test.ts tests/database/project-specialist-upgrade.test.ts tests/database/project-specialist-handover.test.ts tests/database/project-specialist-handover-upgrade.test.ts tests/database/project-specialist-work.test.ts tests/database/project-specialist-work-upgrade.test.ts
       - name: Reserved Products installation after latest history
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='^PD upgrade from (103|104) ' tests/database/products-upgrade.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='^PD upgrade from (103|104|105) ' tests/database/products-upgrade.test.ts
       - name: Compiled API and actual database/application restart
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -129,6 +131,37 @@ jobs:
           done
           mkdir -p verification-evidence/project-specialist
           node --env-file=.env.local --import tsx scripts/prove-project-specialist-handover-restart.ts verify /tmp/pj06-r2-checkpoint.json > verification-evidence/project-specialist/handover-restart.json
+      - name: Specialist work-evidence compiled API and actual database/application restart
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/pj06-r3-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx --test --test-timeout=120000 tests/http/project-specialist-work.test.ts
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/prove-project-specialist-work-restart.ts write /tmp/pj06-r3-checkpoint.json
+          kill "$server"
+          wait "$server" || true
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/pj06-r3-restarted.log 2>&1 &
+          server=$!
+          for attempt in $(seq 1 60); do
+            curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          mkdir -p verification-evidence/project-specialist
+          node --env-file=.env.local --import tsx scripts/prove-project-specialist-work-restart.ts verify /tmp/pj06-r3-checkpoint.json > verification-evidence/project-specialist/work-restart.json
       - name: Retain bounded synthetic restart evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

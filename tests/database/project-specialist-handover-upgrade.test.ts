@@ -86,7 +86,7 @@ test("PJ06-R2 upgrade from populated 0103 preserves every legacy payload, hash, 
         "SELECT version FROM public.ppo_migrations WHERE version>103 ORDER BY version",
       )
     ).rows,
-    [{ version: 104 }],
+    [{ version: 104 }, { version: 105 }],
   );
   assert.deepEqual(
     (

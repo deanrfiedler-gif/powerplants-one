@@ -1,3 +1,4 @@
+import { receiptAuthority as specialistWorkReceiptAuthority } from "../projects/specialist/work/context";
 import { packageReceiptAuthority } from "../cpq/package-context";
 import { excelPricingReceiptAuthority, excelPricingCommand } from "../estimating/import/pricing";
 import { excelQuoteReceiptAuthority, excelQuoteCommand } from "../estimating/import/quotation";
@@ -91,7 +92,13 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "ProjectSpecialistPackage") {
+  if (r.object_type === "ProjectSpecialistWorkEvidence") {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      await specialistWorkReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "ProjectSpecialistPackage") {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
       await specialistPackageReceiptAuthority(c,p,r.record_id,operation_id);

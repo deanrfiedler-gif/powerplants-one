@@ -1,5 +1,9 @@
 # Current prototype status
 
+## PJ-06 scoped work-evidence acceptance — 16 October 2026
+
+The separate `codex/pj06-work-evidence` contribution starts at #522 source `459112d`, while its existing monitor owns CI/review. Main remains `1552cfb`; #518/#522 are unmerged dependencies. The [decision](decisions/project-specialist-work-evidence.md) and [contract](contracts/project-specialist-work-evidence.md) add immutable evidence submissions, exact native document/handover sources, a default-denied independent review duty, terminal decisions and explicit corrections. [Execution evidence](testing/evidence/project-specialist-work/README.md) records actual verification separately. Full PJ-06, supplier competence, downstream disposition, operational acceptance and UI remain open. No merge or deployment.
+
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
 Current remote main `1552cfbb8efd6cea17438c2af18ba0effa4fc278` includes externally merged #500 and other independent fixes. PJ-06 R1 #518 remains open at `708c6da71ebd32a93ebfd2bdc84a52d3b198fb35`; its final 63 successful checks, intentional optional PT-27 skip, clean exact-head independent review and resolved threads supersede the older pending checkpoint below. Both prior monitors are paused. No competing PJ-06 writer was found.

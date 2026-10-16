@@ -56,3 +56,7 @@ The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/
 ## PJ-06 technical/procurement continuation — 16 October 2026
 
 The [R2 handover contract](../contracts/project-specialist-handover.md) addresses the exact technical/procurement receiving dependency after #518's accepted internal briefs. It stacks on R1 because current main lacks that model. Existing EN-06 receiving carries the exact brief, technical release and independently evidenced approved demand; it does not turn a brief into award, competence, work completion or Service confirmation. Local/CI/review evidence remains separate in the [execution ledger](../testing/evidence/project-specialist-handover/README.md).
+
+## PJ-06 work-evidence continuation — 16 October 2026
+
+[R3](../contracts/project-specialist-work-evidence.md) implements the next exact-source acceptance dependency after R2. GAP-04 still includes supplier identity/competence and further downstream disposition; PJ-07 readiness and operational acceptance are not implied. Each evidence record retains stated scope/limitations and no aggregate completion or payment effect.
