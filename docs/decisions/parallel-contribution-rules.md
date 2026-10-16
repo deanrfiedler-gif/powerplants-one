@@ -38,5 +38,5 @@ Agents are contributors under the same rules. Enforcement by tooling is preferre
 
 - This is a repository working rule. It changes no application behaviour, requirement, migration, grant, workflow file or deployment, and all 78 parent requirement IDs remain unchanged.
 - Earlier "current repository-writing session" entries in `docs/STATUS-log.md` remain as historical records.
-- Branch protection does not yet require branches to be up to date before merging; `docs/STATUS.md` records the configured state. Turning that setting on is a separate repository-settings change for Dean.
+- At Dean's request the same day, branch protection on `main` now requires branches to be up to date before merging, so GitHub enforces the integration rule. `docs/STATUS.md` records the configured state.
 - The same day, secret scanning, push protection, Dependabot alerts and Dependabot security updates were enabled on the repository at Dean's request; that settings change is recorded in `docs/STATUS.md`.

@@ -4,7 +4,7 @@
 
 Dean adopted the [parallel contribution rules](decisions/parallel-contribution-rules.md), which replace CONTRIBUTING.md's one-writer rule. Contributors, human or agent, claim work with an early draft PR, write only in a dedicated worktree cut from current `main`, edit shared files such as this one narrowly, keep each decision in one record, and claim migration numbers in the draft PR. STATUS.md no longer names a single current writer; open draft PRs show who holds which task.
 
-At Dean's request, secret scanning, secret-scanning push protection, Dependabot alerts and Dependabot security updates are now enabled on the repository. A push containing a recognised credential is now refused. Branch protection is unchanged: the seven required checks with administrator enforcement, and strict up-to-date enforcement still off. This is documentation and repository-settings work only; no application, migration or deployment changes.
+At Dean's request, secret scanning, secret-scanning push protection, Dependabot alerts and Dependabot security updates are now enabled on the repository. A push containing a recognised credential is now refused. Also at Dean's request, protected `main` now requires branches to be up to date with `main` before merging (strict enforcement on), which supersedes the "strict up-to-date enforcement is off" note of 16 October below. The seven required checks and administrator enforcement are unchanged. This is documentation and repository-settings work only; no application, migration or deployment changes.
 
 ## Shell first paint and create-form leave review — 16 October 2026
 
