@@ -3,7 +3,6 @@ import { facilitySeedCounters, facilitySeedIdentities } from "./facility-seed-id
 import { supplySeedIdentities } from "./supply-seed-identities";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, transaction } from "../../src/platform/database";
 import { createSession } from "../../src/platform/identity";
 import {
@@ -46,6 +45,7 @@ import {
   crmAction,
   crmQualify,
 } from "./crm";
+import { recoverSchema } from "./recover-schema";
 const receiver = "30000000-0000-4000-8000-000000000015";
 const principal = async (profile = "coordinator") =>
   (await createSession(profile)).principal;
@@ -788,12 +788,7 @@ export function ownerTransferCases() {
   });
   test("HV-19/22: upgrade captures the pre-transfer owner at its exact old version when creation author differs", async () => {
     await transaction(async (c) => {
-      await c.query(
-        await readFile(
-          new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-          "utf8",
-        ),
-      );
+      await recoverSchema(c);
       await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
     });
     await migrate(23);

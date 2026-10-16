@@ -2,7 +2,6 @@ import { registerDiscoveryCostBasisTests } from "../helpers/estimating-cost-basi
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase, transaction } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -16,6 +15,7 @@ import { documentStore, digest } from "../../src/documents/store";
 import { CRM, crmCreate, crmBase } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { assertOnlyEngineeringSeedGrantsAdded } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 if(localConfig().database_name!=="ppo_synthetic_test")throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET="dispose-synthetic";process.env.PPO_RESET_DATABASE="ppo_synthetic_test";
 beforeEach(reset);after(closeDatabase);
@@ -113,7 +113,7 @@ test("E1-DB09 failed rendering retains original revision and recovers same inten
   await assert.rejects(documentStore().store({...s.p,operation_id:j.id},Buffer.from("changed"),digest("changed")),code("StoredOperationConflict"));
 });
 test("E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants",async()=>{
-  await rows(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));await rows("DROP TABLE public.ppo_migrations");
+  await recoverSchema();await rows("DROP TABLE public.ppo_migrations");
   await migrate(10);await seed(10);const p=await principal(),o=crmCreate(),accepted=await createOpportunity(p,o);
   const tables=["opportunities","opportunity_events","activities","activity_links","operation_receipts","outbox_jobs"],before=await Promise.all(tables.map(t=>rows(`SELECT * FROM ppo.${t} ORDER BY 1`)));
   const hashes=await rows("SELECT * FROM public.ppo_migrations ORDER BY version");await migrate();await seed();
@@ -171,7 +171,7 @@ test("DR01-DB02 direct SQL cannot mislabel line format, invent flags, change ari
   assert.deepEqual((await rows("SELECT to_jsonb(v) value FROM ppo.estimate_versions v WHERE id=$1",[s.e.saved.id]))[0].value,base);
 });
 test("DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery",async()=>{
-  await rows(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));await rows("DROP TABLE public.ppo_migrations");
+  await recoverSchema();await rows("DROP TABLE public.ppo_migrations");
   await migrate(24);await seed(24);
   const s=await quoted();await runQuoteJob((await readQuoteJob(s.p,s.command.id)).j.id);
   const bytes=await draftBytes(s.p,s.command.id),tables=["estimates","estimate_versions","draft_quotes","draft_quote_revisions","estimate_quote_jobs","estimate_quote_attempts","audit_events","operation_receipts","outbox_jobs"];

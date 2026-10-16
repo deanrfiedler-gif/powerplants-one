@@ -208,14 +208,16 @@ export function parseReleaseCommand(value: unknown) {
 
 export function parseHandoverCommand(value: unknown) {
   const handoverTarget = ["handover_id", "expected_version"];
-  const { raw, action } = actionOf(value, { prepare: ["id", "release_id", "requested_action", "demand_basis", "demand_source_id", "receiver_id", "required_by", "predecessor_id"], send: handoverTarget, decide: [...handoverTarget, "result", "reasons", "owner_id", "due"] });
+  const { raw, action } = actionOf(value, { prepare: ["id", "release_id", "requested_action", "demand_basis", "demand_source_id", "receiver_id", "required_by", "predecessor_id", "specialist"], send: handoverTarget, decide: [...handoverTarget, "result", "reasons", "owner_id", "due"] });
   if (action === "prepare") {
     const demand_basis = choice(raw.demand_basis, "demand_basis", demandBases),
       demand_source_id = optionalId(raw.demand_source_id, "demand_source_id"),
       requested_action = choice(raw.requested_action, "requested_action", ["ProcurementReady", "ForecastOnly"] as const);
     if ((demand_basis === "Approved") !== !!demand_source_id) invalid("demand_source_id", "Approved demand names its authority evidence; forecast demand names none.");
     if (requested_action === "ProcurementReady" && demand_basis !== "Approved") invalid("demand_basis", "A technical release does not turn forecast into approved demand. Procurement-ready receiving needs separately evidenced approved demand.");
-    return { ...base(raw), action, id: uuid(raw.id, "id"), release_id: uuid(raw.release_id, "release_id"), requested_action, demand_basis, demand_source_id, receiver_id: uuid(raw.receiver_id, "receiver_id"), required_by: optionalDate(raw.required_by, "required_by"), predecessor_id: optionalId(raw.predecessor_id, "predecessor_id") };
+    const specialist = raw.specialist === undefined ? undefined : object(raw.specialist, ["id", "version"]);
+    if (specialist && requested_action !== "ProcurementReady") invalid("specialist", "Specialist handovers require procurement-ready receiving.");
+    return { ...base(raw), ...(specialist ? { specialist: { id: uuid(specialist.id, "specialist.id"), version: version(specialist.version) } } : {}), action, id: uuid(raw.id, "id"), release_id: uuid(raw.release_id, "release_id"), requested_action, demand_basis, demand_source_id, receiver_id: uuid(raw.receiver_id, "receiver_id"), required_by: optionalDate(raw.required_by, "required_by"), predecessor_id: optionalId(raw.predecessor_id, "predecessor_id") };
   }
   const target = { handover_id: uuid(raw.handover_id, "handover_id"), expected_version: version(raw.expected_version) };
   if (action === "send") return { ...base(raw), action, ...target };
