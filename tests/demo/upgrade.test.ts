@@ -17,6 +17,7 @@ import { readOpportunity } from "../../src/crm/reads";
 import { crmCreate } from "../helpers/crm";
 import { readSchedule } from "../../src/scheduling/planner";
 import { readUnassignedDemand } from "../../src/scheduling/demand";
+import { recoverSchema } from "../helpers/recover-schema";
 
 const name = localConfig().database_name;
 if (name !== "ppo_synthetic_test") throw Error("Disposable local test database required.");
@@ -26,7 +27,7 @@ let users: string[];
 
 beforeEach(async () => {
   const db = database();
-  await db.query(await readFile(new URL("../../db/migrations/0001-recover.sql", import.meta.url), "utf8"));
+  await recoverSchema();
   await db.query("DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations");
   await migrate(17); await seed(17); await migrateDemo();
   if (!(await db.query("SELECT 1 FROM pg_roles WHERE rolname=$1", [role])).rowCount)
@@ -180,7 +181,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   const readWindows = async (file: string) => (await readFile(new URL(`../../db/${file}`, import.meta.url), "utf8"))
     .replace(/\r\n/g, "\n").replace(/\n/g, "\r\n");
   const digest = (sql: string) => createHash("sha256").update(sql).digest("hex");
-  await db.query(await readFile(new URL("../../db/migrations/0001-recover.sql", import.meta.url), "utf8"));
+  await recoverSchema();
   await db.query("DROP TABLE public.ppo_migrations,public.ppo_demo_migrations");
   await db.query("CREATE TABLE public.ppo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL,applied_at timestamptz NOT NULL DEFAULT clock_timestamp())");
   for (const file of migrationFiles.filter(file => Number(file.slice(0, 4)) <= 17)) {

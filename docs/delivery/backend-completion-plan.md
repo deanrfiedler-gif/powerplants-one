@@ -2,7 +2,7 @@
 
 ## PJ-06 work-evidence increment — 16 October 2026
 
-R3 [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530) reconciles main `cb838c77937c9827996b114cf3f8c661bcc2d8e2`, which now includes R1 #518 and R2 #522. Preserve main's 0104/0105 migration history; R3's unchanged SQL moves to 0106. This branch implements [bounded work-evidence acceptance](../contracts/project-specialist-work-evidence.md). [Execution evidence](../testing/evidence/project-specialist-work/README.md) separates original proof from fresh reconciliation, local checks, CI/review and acceptance. BC-06 remains open for supplier competence, downstream disposition, readiness and UI. No external integration entry condition is satisfied by synthetic evidence.
+R3 [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530) reconciles main `3e11502847a895e6c3fcaa11ce87311389046578`, which now includes R1 #518 and R2 #522. Preserve main's 0104/0105 migration history; R3's unchanged SQL moves to 0106. This branch implements [bounded work-evidence acceptance](../contracts/project-specialist-work-evidence.md). [Execution evidence](../testing/evidence/project-specialist-work/README.md) separates original proof from fresh reconciliation, local checks, CI/review and acceptance. BC-06 remains open for supplier competence, downstream disposition, readiness and UI. No external integration entry condition is satisfied by synthetic evidence.
 
 ## PJ-06 integrated source dependency — 16 October 2026
 
