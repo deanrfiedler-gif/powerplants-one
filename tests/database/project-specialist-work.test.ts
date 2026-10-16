@@ -3,8 +3,13 @@ import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { join, isAbsolute } from "node:path";
+import { homedir } from "node:os";
 import { reset } from "../../scripts/database";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import {
@@ -17,7 +22,12 @@ import {
   withdrawDocument,
   createDocument,
 } from "../../src/library/commands";
-import { sourceCommand } from "../../src/engineering/materials/commands";
+import {
+  sourceCommand,
+  releaseCommand,
+} from "../../src/engineering/materials/commands";
+import { commandPackage } from "../../src/projects/specialist/commands";
+import { packageAction } from "../helpers/project-specialist";
 import {
   grantLibrary,
   successor,
@@ -142,10 +152,19 @@ test("PJ06-R3-02 source drift blocks acceptance but preserves Return, terminal c
     code("RelationshipConflict"),
   );
   await commandWork(f.reviewer, f.project.id, workAction(correction.id));
-  await rows(
-    "UPDATE ppo.projects SET lifecycle='Closed',version=version+1 WHERE id=$1",
-    [f.project.id],
-  );
+  // Fixture-only closed context, retaining the native version and exact schedule
+  // event required by deferred guards. Work evidence never closes the Project.
+  await transaction(async (c) => {
+    await c.query(
+      "UPDATE ppo.projects SET lifecycle='Closed',version=version+1 WHERE id=$1",
+      [f.project.id],
+    );
+    await c.query(
+      `INSERT INTO ppo.project_schedule_events(id,workspace_id,company_id,project_id,created_by,updated_by,operation_id,project_version,event_type,reason,project_snapshot)
+      SELECT $1,workspace_id,company_id,id,$2,$2,$3,version,'ProjectAcceptanceChanged','SYN closed-context recovery fixture',to_jsonb(p) FROM ppo.projects p WHERE id=$4`,
+      [randomUUID(), f.owner.actor_id, randomUUID(), f.project.id],
+    );
+  });
   assert.deepEqual(
     (await commandWork(f.owner, f.project.id, f.submit)).receipt,
     submitted.receipt,
@@ -267,7 +286,9 @@ test("PJ06-R3-05 withdrawn evidence and withdrawn native demand cannot receive p
 
 test("PJ06-R3-06 missing exact bytes, evidence authorship and forged SQL snapshots are refused atomically", async () => {
   const f = await specialistWorkFixture();
-  const directory = process.env.PPO_DOCUMENT_DIRECTORY!;
+  const directory =
+    process.env.PPO_DOCUMENT_DIRECTORY ??
+    join(homedir(), ".ppo-synthetic-documents");
   assert.ok(directory && isAbsolute(directory));
   const path = join(directory, f.owner.workspace_id, f.document.operation_id);
   const bytes = await readFile(path),
@@ -307,4 +328,133 @@ test("PJ06-R3-06 missing exact bytes, evidence authorship and forged SQL snapsho
     code("23514"),
   );
   assert.deepEqual(await snapshot(), stable);
+});
+
+const cloneWork = (id: string, next = randomUUID()) =>
+  rows(
+    `INSERT INTO ppo.project_specialist_work(id,workspace_id,company_id,project_id,handover_id,document_id,revision_id,reviewer_id,scope,limitations,source,source_hash,created_by)
+  SELECT $2,workspace_id,company_id,project_id,handover_id,document_id,revision_id,reviewer_id,scope,limitations,source,source_hash,created_by FROM ppo.project_specialist_work WHERE id=$1`,
+    [id, next],
+  );
+const directAccept = (f: Awaited<ReturnType<typeof specialistWorkFixture>>) =>
+  rows(
+    `INSERT INTO ppo.project_specialist_work_events(workspace_id,work_id,version,command,state,note,reason,created_by,operation_id)
+  VALUES($1,$2,2,'Accept','Accepted','SYN direct-write probe','SYN direct-write probe',$3,$4)`,
+    [f.owner.workspace_id, f.submit.id, f.reviewer.actor_id, randomUUID()],
+  );
+test("PJ06-R3-07 direct orphan records cannot commit without their original submission", async () => {
+  const f = await specialistWorkFixture();
+  await commandWork(f.owner, f.project.id, f.submit);
+  const before = await snapshot();
+  await assert.rejects(
+    cloneWork(f.submit.id),
+    /Initial work submission required/,
+  );
+  assert.deepEqual(await snapshot(), before);
+});
+test("PJ06-R3-08 direct decisions cannot commit without matching receipt, audit and outbox", async () => {
+  const f = await specialistWorkFixture();
+  await commandWork(f.owner, f.project.id, f.submit);
+  const before = await snapshot();
+  await assert.rejects(
+    directAccept(f),
+    /Exact work audit, receipt and outbox required/,
+  );
+  assert.deepEqual(await snapshot(), before);
+});
+test("PJ06-R3-09 direct positive decisions refuse a withdrawn native demand before operation evidence", async () => {
+  const f = await specialistWorkFixture();
+  await commandWork(f.owner, f.project.id, f.submit);
+  await sourceCommand(
+    f.owner,
+    f.engineering.id,
+    handoverAction({ action: "withdraw", source_id: f.sources.demand }),
+  );
+  const before = await snapshot();
+  await assert.rejects(
+    directAccept(f),
+    /Current approved handover demand required/,
+  );
+  assert.deepEqual(await snapshot(), before);
+  await commandWork(
+    f.reviewer,
+    f.project.id,
+    workAction(f.submit.id, "Return"),
+  );
+});
+test("PJ06-R3-10 direct positive decisions refuse an accepted successor brief and retain historical return", async () => {
+  const f = await specialistWorkFixture();
+  await commandWork(f.owner, f.project.id, f.submit);
+  const next = {
+    ...f.package,
+    id: randomUUID(),
+    operation_id: randomUUID(),
+    predecessor_id: f.package.id,
+  };
+  await commandPackage(f.owner, f.project.id, next);
+  await commandPackage(
+    f.owner,
+    f.project.id,
+    packageAction(next.id, 1, "Submit"),
+  );
+  await commandPackage(
+    f.reviewer,
+    f.project.id,
+    packageAction(next.id, 2, "Accept"),
+  );
+  const before = await snapshot();
+  await assert.rejects(
+    directAccept(f),
+    /Current accepted specialist brief required/,
+  );
+  await assert.rejects(
+    commandWork(f.reviewer, f.project.id, workAction(f.submit.id)),
+    code("WorkEvidenceSourceChanged"),
+  );
+  assert.deepEqual(await snapshot(), before);
+  await commandWork(
+    f.reviewer,
+    f.project.id,
+    workAction(f.submit.id, "Return"),
+  );
+});
+test("PJ06-R3-11 direct positive decisions refuse a withdrawn issued release", async () => {
+  const f = await specialistWorkFixture();
+  await commandWork(f.owner, f.project.id, f.submit);
+  await releaseCommand(
+    f.releaser,
+    f.engineering.id,
+    handoverAction({
+      action: "withdraw",
+      release_id: f.release,
+      expected_version: 5,
+    }),
+  );
+  const before = await snapshot();
+  await assert.rejects(
+    directAccept(f),
+    /Current exact issued release required/,
+  );
+  assert.deepEqual(await snapshot(), before);
+  await commandWork(f.owner, f.project.id, workAction(f.submit.id, "Withdraw"));
+});
+test("PJ06-R3-12 direct positive decisions refuse a changed release drawing", async () => {
+  const f = await specialistWorkFixture();
+  await commandWork(f.owner, f.project.id, f.submit);
+  await sourceCommand(
+    f.owner,
+    f.engineering.id,
+    handoverAction({ action: "withdraw", source_id: f.sources.drawing }),
+  );
+  const before = await snapshot();
+  await assert.rejects(
+    directAccept(f),
+    /Current exact issued release required/,
+  );
+  assert.deepEqual(await snapshot(), before);
+  await commandWork(
+    f.reviewer,
+    f.project.id,
+    workAction(f.submit.id, "Return"),
+  );
 });

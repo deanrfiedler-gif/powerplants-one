@@ -14,4 +14,6 @@ Migration 0105 adds typed references, immutable rows and lifecycle/context guard
 
 ## Verification boundary
 
+Independent review identified missing database evidence binding and weaker positive-source checks than the service. Retain the native deferred-constraint pattern: every submission must have its initial event, and every event must commit with its exact audit, receipt and outbox. Positive events also check the retained brief/commercial/Engineering/demand and release source revisions in PostgreSQL. Return and Withdraw retain historical sources. These checks complement current actor permissions and external byte verification in the service; SQL cannot verify document-store bytes. Regression proofs must exercise direct writes as well as the application path, with complete transaction rollback on refusal.
+
 Prove current and withdrawn/revised sources, exact document bytes, independent decisions, privacy and company isolation, original-operation recovery after source drift, terminal corrections, races, rollback, populated upgrades and actual database/application restart. Record local proof, CI, independent review and human acceptance separately. Native SharePoint/MYOB/CAD authority, supplier identity/competence, downstream disposition and UI remain outside this increment.

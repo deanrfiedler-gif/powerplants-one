@@ -70,6 +70,56 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE TRIGGER specialist_work_guard BEFORE INSERT ON ppo.project_specialist_work FOR EACH ROW EXECUTE FUNCTION ppo.guard_specialist_work();
+-- Current native library issue, in addition to the library's exact current revision.
+-- Storage bytes and actor access remain service checks; PostgreSQL guards native lineage.
+CREATE FUNCTION ppo.specialist_work_document_current(ws uuid, doc uuid, rev uuid) RETURNS boolean LANGUAGE sql STABLE AS $$
+ SELECT EXISTS(SELECT 1 FROM ppo.library_documents d JOIN ppo.library_revisions r ON (r.workspace_id,r.document_id,r.id)=(d.workspace_id,d.id,d.current_revision_id)
+ WHERE d.workspace_id=ws AND d.id=doc AND r.id=rev AND d.state='Current' AND CASE r.source->>'kind'
+ WHEN 'SyntheticText' THEN true
+ WHEN 'JobPackIssue' THEN EXISTS(SELECT 1 FROM ppo.pack_issues i JOIN ppo.packs p ON (p.workspace_id,p.id)=(i.workspace_id,i.pack_id) WHERE i.workspace_id=ws AND i.id=(r.source->>'issue_id')::uuid AND p.current_issue_id=i.id AND p.status='Issued' AND NOT p.needs_review)
+ WHEN 'ReportIssue' THEN EXISTS(SELECT 1 FROM ppo.report_issues i JOIN ppo.service_reports p ON (p.workspace_id,p.id)=(i.workspace_id,i.report_id) WHERE i.workspace_id=ws AND i.id=(r.source->>'issue_id')::uuid AND p.current_issue_id=i.id AND p.status='Issued')
+ ELSE false END)
+$$;
+CREATE FUNCTION ppo.check_specialist_work_sources(w ppo.project_specialist_work) RETURNS void LANGUAGE plpgsql AS $$
+DECLARE h ppo.material_handovers; brief ppo.project_specialist_events; pkg ppo.project_specialist_packages;
+ source ppo.project_commercial_sources; eng ppo.engineering_packages; demand ppo.supply_records; rel ppo.material_releases;
+BEGIN
+ SELECT * INTO STRICT h FROM ppo.material_handovers WHERE workspace_id=w.workspace_id AND id=w.handover_id;
+ SELECT * INTO STRICT pkg FROM ppo.project_specialist_packages WHERE workspace_id=w.workspace_id AND id=h.specialist_package_id;
+ SELECT * INTO STRICT brief FROM ppo.project_specialist_events WHERE workspace_id=w.workspace_id AND package_id=pkg.id AND version=h.specialist_version;
+ IF brief.state<>'Accepted' OR EXISTS(SELECT 1 FROM ppo.project_specialist_packages p JOIN ppo.project_specialist_events e ON (e.workspace_id,e.package_id)=(p.workspace_id,p.id) WHERE p.workspace_id=w.workspace_id AND p.predecessor_id=pkg.id AND e.state='Accepted')
+ THEN RAISE EXCEPTION 'Current accepted specialist brief required' USING ERRCODE='23514'; END IF;
+ IF NOT EXISTS(SELECT 1 FROM ppo.project_commercial_events e WHERE e.workspace_id=w.workspace_id AND e.entry_id=pkg.basis_id AND e.version=pkg.basis_version AND e.state='Approved'
+  AND NOT EXISTS(SELECT 1 FROM ppo.project_commercial_events newer WHERE newer.workspace_id=e.workspace_id AND newer.entry_id=e.entry_id AND newer.version>e.version))
+ THEN RAISE EXCEPTION 'Current approved commercial basis required' USING ERRCODE='23514'; END IF;
+ SELECT * INTO STRICT source FROM ppo.project_commercial_sources WHERE workspace_id=w.workspace_id AND basis_id=pkg.basis_id;
+ IF NOT ppo.specialist_work_document_current(w.workspace_id,source.document_id,source.document_revision_id)
+  OR NOT EXISTS(SELECT 1 FROM ppo.library_documents d WHERE d.workspace_id=w.workspace_id AND d.id=source.document_id AND d.version=(source.snapshot->'input'->>'document_version')::int)
+  OR NOT EXISTS(SELECT 1 FROM ppo.draft_quotes q JOIN ppo.draft_quote_revisions r ON (r.workspace_id,r.quote_id)=(q.workspace_id,q.id) WHERE r.workspace_id=w.workspace_id AND r.id=source.quote_revision_id AND q.current_revision_id=r.id AND q.version=(source.snapshot->'input'->'quotation'->>'expected_quote_version')::int)
+  OR (SELECT max(sequence) FROM ppo.quote_response_events WHERE workspace_id=w.workspace_id AND revision_id=source.quote_revision_id) IS DISTINCT FROM (source.snapshot->'input'->'quotation'->>'expected_response_sequence')::int
+  OR EXISTS(SELECT 1 FROM ppo.library_findings f WHERE f.workspace_id=w.workspace_id AND f.revision_id=source.document_revision_id AND (f.state<>'Closed' OR NOT EXISTS(SELECT 1 FROM ppo.library_reviews r, jsonb_array_elements(r.findings_snapshot) prior WHERE r.workspace_id=w.workspace_id AND r.id=source.document_review_id AND prior->>'id'=f.id::text)))
+  OR NOT EXISTS(SELECT 1 FROM ppo.sales_handovers sh JOIN ppo.sales_workflow_events v ON (v.workspace_id,v.record_id)=(sh.workspace_id,sh.id) JOIN ppo.opportunities o ON (o.workspace_id,o.id)=(sh.workspace_id,sh.opportunity_id) WHERE sh.workspace_id=w.workspace_id AND sh.id=source.handover_id AND sh.state='Accepted' AND v.id=source.acceptance_event_id AND sh.version=v.version AND sh.source_hash=v.source_hash AND o.close_outcome='Won')
+  OR EXISTS(SELECT 1 FROM ppo.quote_response_events v WHERE v.workspace_id=w.workspace_id AND v.id=source.response_event_id AND nullif(v.report->>'conditions','') IS NOT NULL)
+  OR EXISTS(SELECT 1 FROM ppo.quote_response_events v WHERE v.workspace_id=w.workspace_id AND v.revision_id=source.quote_revision_id AND (v.report->>'outcome'='Negotiation' OR (v.report->>'outcome'='Clarification' AND NOT EXISTS(SELECT 1 FROM ppo.quote_response_events x WHERE x.workspace_id=v.workspace_id AND x.response_id=v.id AND x.action IN ('Correct','Confirm')))))
+ THEN RAISE EXCEPTION 'Current exact commercial sources required' USING ERRCODE='23514'; END IF;
+ SELECT * INTO STRICT eng FROM ppo.engineering_packages WHERE workspace_id=w.workspace_id AND id=(brief.content->'engineering'->>'id')::uuid;
+ IF brief.source->'engineering' IS DISTINCT FROM jsonb_build_object('id',eng.id,'version',eng.version,'title',eng.title,'brief',eng.brief,'discipline',eng.discipline)
+ THEN RAISE EXCEPTION 'Current exact Engineering source required' USING ERRCODE='23514'; END IF;
+ IF brief.content->'demand'<>'null'::jsonb THEN
+  SELECT * INTO STRICT demand FROM ppo.supply_records WHERE workspace_id=w.workspace_id AND id=(brief.content->'demand'->>'id')::uuid;
+  IF brief.source->'demand' IS DISTINCT FROM jsonb_build_object('id',demand.id,'version',demand.version,'reference',demand.reference,'item',demand.item,'unit',demand.unit,'quantity',demand.quantity::text)
+  THEN RAISE EXCEPTION 'Current exact Project demand required' USING ERRCODE='23514'; END IF;
+ END IF;
+ SELECT * INTO STRICT rel FROM ppo.material_releases WHERE workspace_id=w.workspace_id AND id=h.release_id;
+ IF rel.issue_state<>'Issued' OR rel.withdrawn_at IS NOT NULL OR rel.superseded_by IS NOT NULL
+  OR EXISTS(SELECT 1 FROM jsonb_array_elements(rel.manifest->'lines') l WHERE NOT EXISTS(SELECT 1 FROM ppo.material_lines current WHERE current.workspace_id=w.workspace_id AND current.set_id=h.set_id AND current.id=(l->>'line_id')::uuid AND current.content_hash=l->>'content_hash'))
+  OR EXISTS(SELECT 1 FROM jsonb_array_elements(rel.manifest->'sources') s WHERE NOT EXISTS(SELECT 1 FROM ppo.material_sources current LEFT JOIN ppo.material_source_changes ch ON (ch.workspace_id,ch.source_id)=(current.workspace_id,current.id) WHERE current.workspace_id=w.workspace_id AND current.package_id=eng.id AND current.id=(s->>'id')::uuid AND current.completeness<>'Unavailable' AND ch.source_id IS NULL))
+ THEN RAISE EXCEPTION 'Current exact issued release required' USING ERRCODE='23514'; END IF;
+ IF NOT EXISTS(SELECT 1 FROM ppo.material_sources s LEFT JOIN ppo.material_source_changes ch ON (ch.workspace_id,ch.source_id)=(s.workspace_id,s.id) WHERE s.workspace_id=w.workspace_id AND s.package_id=eng.id AND s.id=h.demand_source_id AND s.completeness<>'Unavailable' AND s.permitted_purpose='Procurement' AND ch.source_id IS NULL)
+ THEN RAISE EXCEPTION 'Current approved handover demand required' USING ERRCODE='23514'; END IF;
+ IF NOT ppo.specialist_work_document_current(w.workspace_id,w.document_id,w.revision_id)
+ THEN RAISE EXCEPTION 'Current exact evidence revision required' USING ERRCODE='23514'; END IF;
+END $$;
 CREATE FUNCTION ppo.guard_specialist_work_event() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE w ppo.project_specialist_work;pr ppo.projects;previous ppo.project_specialist_work_events;h ppo.material_handovers;brief ppo.project_specialist_events;valid boolean;
 BEGIN
@@ -88,7 +138,28 @@ BEGIN
  IF NEW.command IN ('Accept','Return') THEN
   IF NEW.created_by<>w.reviewer_id THEN RAISE EXCEPTION 'Designated reviewer required' USING ERRCODE='23514'; END IF;
  ELSIF NEW.created_by<>pr.coordinator_id AND NEW.created_by<>(brief.content->>'owner_id')::uuid THEN RAISE EXCEPTION 'Owner or coordinator required' USING ERRCODE='23514'; END IF;
- IF NEW.command IN ('Submit','Accept') AND NOT EXISTS(SELECT 1 FROM ppo.library_documents WHERE workspace_id=w.workspace_id AND id=w.document_id AND state='Current' AND current_revision_id=w.revision_id) THEN RAISE EXCEPTION 'Current exact evidence revision required' USING ERRCODE='23514'; END IF;
+ IF NEW.command IN ('Submit','Accept') THEN PERFORM ppo.check_specialist_work_sources(w); END IF;
  RETURN NEW;
 END $$;
 CREATE TRIGGER specialist_work_event_guard BEFORE INSERT ON ppo.project_specialist_work_events FOR EACH ROW EXECUTE FUNCTION ppo.guard_specialist_work_event();
+CREATE FUNCTION ppo.check_specialist_work_initial() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF NOT EXISTS(SELECT 1 FROM ppo.project_specialist_work_events WHERE workspace_id=NEW.workspace_id AND work_id=NEW.id AND version=1 AND command='Submit' AND created_by=NEW.created_by)
+ THEN RAISE EXCEPTION 'Initial work submission required' USING ERRCODE='23514'; END IF;
+ RETURN NULL;
+END $$;
+CREATE CONSTRAINT TRIGGER specialist_work_initial AFTER INSERT ON ppo.project_specialist_work DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_specialist_work_initial();
+CREATE FUNCTION ppo.check_specialist_work_evidence() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF NOT EXISTS(SELECT 1 FROM ppo.operation_receipts r JOIN ppo.audit_events a ON (a.workspace_id,a.actor_id,a.operation_id)=(r.workspace_id,r.actor_id,r.operation_id)
+  JOIN ppo.outbox_jobs j ON (j.workspace_id,j.actor_id,j.operation_id)=(r.workspace_id,r.actor_id,r.operation_id)
+  JOIN ppo.project_specialist_work w ON (w.workspace_id,w.id)=(NEW.workspace_id,NEW.work_id)
+  WHERE r.workspace_id=NEW.workspace_id AND r.actor_id=NEW.created_by AND r.operation_id=NEW.operation_id AND r.record_id=NEW.work_id
+   AND r.result->>'record_id'=NEW.work_id::text AND (r.result->>'record_version')::integer=NEW.version AND r.result->>'state'=NEW.state
+   AND a.object_type='ProjectSpecialistWorkEvidence' AND a.object_id=NEW.work_id AND a.reason=NEW.reason AND a.outcome='Accepted'
+   AND a.details->>'command'='ProjectSpecialistWork:'||NEW.command AND (a.details->>'record_version')::integer=NEW.version AND a.details->>'source_hash'=w.source_hash
+   AND j.kind='SharedRecordUpdated' AND j.payload->>'object_type'='ProjectSpecialistWorkEvidence' AND j.payload->>'record_id'=NEW.work_id::text AND (j.payload->>'record_version')::integer=NEW.version)
+ THEN RAISE EXCEPTION 'Exact work audit, receipt and outbox required' USING ERRCODE='23514'; END IF;
+ RETURN NULL;
+END $$;
+CREATE CONSTRAINT TRIGGER specialist_work_event_evidence AFTER INSERT ON ppo.project_specialist_work_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.check_specialist_work_evidence();
