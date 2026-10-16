@@ -1,5 +1,13 @@
 # Current prototype status
 
+## Shell first paint and create-form leave review — 16 October 2026
+
+Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
+- **F13 / UXB-75 desktop layout shift:** the server now renders the rail at the width the browser last showed, from a width-only `ppo_shell_rail` cookie, instead of painting it compact and widening it after hydration. The module tab row on Customers, Sites, Facilities and Equipment is held while the shell context loads. The Planner shows Unassigned demand together with its first board. Measured desktop shift on /work, /customers, /projects, /service/work-orders and /schedule at 1440 × 900 falls from 0.20–0.69 with the labelled rail to 0.02–0.09 on the compiled build.
+- **F42 / principle 11 lost input:** `/customers/new`, `/service/tickets/new`, `/work/new` and `/service/work-orders/new` now ask before rail, header or Back navigation discards typed entries, through the shared `useUnsavedChanges` guard. `/finance/handoffs/new` and `/estimating/configurations/new` remain open.
+
+The [shell system record](design/development/systems/shell.md#rail-first-paint-and-context-dependent-rows--16-october-2026) holds the before/after measurements and limits. Browser proof is local on the compiled build against a disposable synthetic database; CI is the authoritative run. No visual, owner or device review is recorded.
+
 ## Current PR integration and URL control repair — 16 October 2026
 
 Current integration writer: the user-authorised "Merge current PPO pull requests" chat on `codex/merge-current-prs-oct16`. It combines #524–#529, #533 and #535 from main `cb838c7`, retaining original commit ancestry and both sides of additive documentation conflicts. The separate backend chat owns #530 until verified handback. TypeScript #534 is excluded pending disposition because the current ESLint adapter requires TypeScript below 6.1. [Integration evidence](testing/evidence/pr-integration/README.md) distinguishes original CI failures, local component proof, pending combined CI and disk limits. Documentation proposals remain proposals; existing accepted designs retain their stated scope.

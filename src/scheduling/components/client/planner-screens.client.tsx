@@ -1740,6 +1740,11 @@ export function PlannerScreen() {
   );
   const data = result.data,
     usable = !!data && !result.error && !result.loading;
+  // F13 / UXB-75: the board is drawn above Unassigned demand. Until the first schedule read
+  // settles, keep demand out of the layout too, so it arrives with the board rather than being
+  // pushed down out of view. Its own read still starts straight away.
+  const [scheduleSettled, setScheduleSettled] = useState(false);
+  if (!scheduleSettled && (data || result.error)) setScheduleSettled(true);
   // The Day timeline and the Week board (the refinement boards) are drawn in the resources'
   // own timezone; another display timezone, or a narrow screen, keeps the lane list.
   const sameZone = !!data && data.resources.every((r) => r.calendar.timezone === zone),
@@ -2122,7 +2127,7 @@ export function PlannerScreen() {
           )}
         </>
       )}
-      <section className="panel proposal-section">
+      <section className="panel proposal-section" hidden={!scheduleSettled}>
         <h2 id="unassigned-demand-heading" tabIndex={-1}>
           Unassigned demand
         </h2>

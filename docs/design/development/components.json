@@ -1366,6 +1366,11 @@
           "id": "deferred-url-host",
           "label": "Deferred URL rendering",
           "description": "tests/ui/crm-board.spec.ts types without delays while the framework URL render lags by 80 ms; exact value, focus, result count, history length and reload remain correct at desktop/phone widths. Native CRM and scheduling capacity suites retain end-to-end coverage."
+        },
+        {
+          "id": "create-leave-guard",
+          "label": "Create-form leave guard",
+          "description": "F42 / principle 11: useCreateDraft compares a create form's values with those it opened with and registers the shared useUnsavedChanges guard while they differ. Saving releases it before the form opens the new record. Hosts: /customers/new (every record kind outside the lead return, which keeps its command guard), /service/tickets/new, /work/new and /service/work-orders/new. Fixture: tests/browser/navigation-safety.spec.ts."
         }
       ],
       "implementation": [
@@ -1376,6 +1381,10 @@
         {
           "path": "src/components/record-ui.tsx",
           "symbol": "LocalDateTimeField"
+        },
+        {
+          "path": "src/components/record-ui.tsx",
+          "symbol": "useCreateDraft"
         }
       ],
       "dependencies": [
@@ -1676,6 +1685,14 @@
           "expected": "Every typed character and filter selection survives deferred framework rendering at desktop and phone widths.",
           "actual": "An isolated delayed-render regression covers Sales; combined native CRM/capacity proof and owner/device acceptance remain separate.",
           "action": "Retain native browser coverage and inspect the real controls without updating visual fingerprints from functional results.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-create-leave-guard",
+          "expected": "Every create form asks before navigation discards typed input.",
+          "actual": "Four forms adopt useCreateDraft here; /sales/opportunities/new and the other create routes already guard through their command hooks. /finance/handoffs/new and /estimating/configurations/new remain unguarded, and editing an existing service request keeps its previous behaviour.",
+          "action": "Adopt the guard on the remaining create forms in a separate change; owner review of the prompt wording.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3357,6 +3374,16 @@
           "id": "es02-figma-host",
           "label": "ES-02 Figma host",
           "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
+        },
+        {
+          "id": "nav-rail-first-paint",
+          "label": "Rail first paint",
+          "description": "F13 / UXB-75: the server renders the rail at the width this browser last showed (cookie ppo_shell_rail; labelled 240 px when none), and ProductHeader holds the module tab row while the shell context loads, so the workspace does not move when the context arrives. The identity's stored choice still wins after load. Fixture: tests/browser/shell-loading.spec.ts samples the rail width every frame from first paint and sums layout shift on five desktop pages at 1440 × 900, labelled and compact."
+        },
+        {
+          "id": "nav-create-leave",
+          "label": "Create-form leave review",
+          "description": "F42 / principle 11: a dirty create form asks before rail (phone bar), header search or Back navigation discards it; a clean form leaves without asking. Fixture: tests/browser/navigation-safety.spec.ts on /customers/new, /service/tickets/new, /work/new, /service/work-orders/new and /sales/opportunities/new."
         }
       ],
       "implementation": [
@@ -3692,6 +3719,14 @@
           "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
           "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
           "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "nav-rail-first-paint-review",
+          "expected": "No desktop page moves when the shell context arrives; the rail paints once at the stored width.",
+          "actual": "Functional browser proof on the compiled app only. A different identity in the same browser can still see one width change after load, because the cookie carries the browser's last width, not each identity's.",
+          "action": "Owner review of first paint at 1440, 1024 and 820 px with labelled and compact rails; decide whether a per-identity server preference is wanted.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

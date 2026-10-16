@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { ApplicationFrame } from "../components/application-frame";
 import { appleTouchIconPath, navy } from "../platform/installation";
 import { developmentRequest } from "../development/access";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { railCookie, railExpandedFrom } from "../shell/rail";
 import { FontAwesomeKit } from "../components/font-awesome";
 import { fontAwesomeKit } from "../platform/font-awesome";
 import "./globals.css";
@@ -83,7 +84,7 @@ export default async function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())}>{children}</ApplicationFrame>
+        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())} railExpanded={railExpandedFrom((await cookies()).get(railCookie)?.value)}>{children}</ApplicationFrame>
       </body>
     </html>
   );

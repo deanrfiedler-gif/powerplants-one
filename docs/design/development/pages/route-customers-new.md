@@ -54,3 +54,9 @@ Desktop: keep captured/current context headings distinct, long record names wrap
 Exact new resolution/transfer/create-return mockup images are missing. Retained Leads reference: `docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html`; shared customer reference: `docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html`. These additive states are proposed adaptations under the existing scope, pending paired visual and owner review. No fingerprint is adopted. See [customer-context decision](../../../decisions/lead-customer-context.md) and [synthetic state examples](../lead-continuity-fixtures.json).
 
 Local functional checks and limited capture inspection are retained in [LC-12 execution evidence](../../../testing/evidence/lead-context-resolution/README.md). Paired source, owner and physical-device review remain pending.
+
+## Leave protection (F42) — 16 October 2026
+
+Typing into this form and then following the rail (phone bar), a header link, a header search result or browser Back asks before the entries are discarded. Cancel keeps the page and the typed values; OK leaves. A clean form leaves without asking, and a saved record opens without a prompt. The form registers the shared `useUnsavedChanges` guard through `useCreateDraft` (state `create-leave-guard` in [fields](../components/fields.md)). Fixture: `tests/browser/navigation-safety.spec.ts` (F42) at desktop and phone widths. Source: live-app UX audit finding F42, principle 11. No layout, control or copy change; owner review of the native prompt wording is pending.
+
+Every record kind on this route is covered. The lead return (`?lead=`) keeps its existing command guard.
