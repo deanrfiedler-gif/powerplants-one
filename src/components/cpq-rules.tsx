@@ -1,12 +1,26 @@
 "use client";
-import { useRef, useState } from "react";
+import { useId, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Definition, Rule } from "../cpq/types";
 import type { readRelease, listReleases, readRevision } from "../cpq/reads";
 import type { readDraft } from "../cpq/drafts";
 import type { validateDraft } from "../cpq/ui-reads";
 import { screenDefinition } from "../cpq/pilot";
-import { CpqFormulaEditor } from "./cpq-formula-editor";
+import {
+  CpqFormulaEditor,
+  FormulaTokens,
+  formulaSymbols,
+  formulaSyntax,
+} from "./cpq-formula-editor";
+import {
+  AppliesMode,
+  ConditionEditor,
+  CpqMenu,
+  CpqMenuItem,
+  conditionIssues,
+} from "./cpq-conditions";
+import { ProductIcon, type ProductIconName } from "./product-icons";
+import { QuickTestPanel, quickInvalid, useQuickTest } from "./cpq-quick-test";
 import { semanticChanges } from "../cpq/semantic-diff";
 import { useCrmResource, useCrmCommand } from "./crm-state";
 import { api, ErrorNotice } from "./business-ui";
@@ -19,16 +33,17 @@ import {
   CpqTabs,
   CpqField,
   CpqPill,
+  CpqState,
   CpqNotice,
   CpqDialog,
   CpqEmpty,
   useCpqCompany,
   money,
   stamp,
+  type CpqTone,
   type Wire,
 } from "./cpq-ui";
 import {
-  ConditionEditor,
   FactEditor,
   PartsEditor,
   DesignEditor,
@@ -248,6 +263,7 @@ function RulesEditor({
     ),
     [tab, setTab] = useState("Definition"),
     [details, setDetails] = useState(false),
+    [switching, setSwitching] = useState(false),
     [formulaEditor, setFormulaEditor] = useState(false),
     [tests, setTests] = useState<{ signature: string; value: Tests } | null>(
       null,
@@ -264,6 +280,7 @@ function RulesEditor({
     > | null>(initialHistorical),
     [hydrating, setHydrating] = useState(false);
   const intent = useRef("draft");
+  const reasonId = useId();
   const command = useCrmCommand(
     (receipt) => {
       if (intent.current === "draft") {
@@ -395,7 +412,222 @@ function RulesEditor({
     root &&
     serverRoot.release.version !== root.release.version &&
     serverRoot.release.version > root.release.version;
-  const quick = activeTests?.results[scenario];
+  const sentence = (s: string) =>
+    s.charAt(0).toLowerCase() + s.slice(1).replace(/\.$/, "");
+  const formulaIssue = rule
+    ? formulaSyntax(rule.quantity, shown, formulaSymbols(shown, rule))
+    : null;
+  // Frame 488:1029 error summary: every incomplete part of this rule, each a route to its control.
+  const incomplete =
+    rule && !historical
+      ? [
+          ...conditionIssues(rule.when, shown.facts).map((i) => ({
+            key: `condition-${i.number}-${i.part}`,
+            text: `Applies when › condition ${i.number}: ${i.text}`,
+            target: i.part
+              ? `[aria-label="Condition ${i.number} ${i.part}"]`
+              : null,
+          })),
+          ...(!rule.part
+            ? [
+                {
+                  key: "part",
+                  text: "Actions › resolution group: choose a resolution group",
+                  target: ".cpq-action-body select",
+                },
+              ]
+            : []),
+          ...(formulaIssue
+            ? [
+                {
+                  key: "formula",
+                  text: `Actions › quantity formula: ${sentence(formulaIssue)}`,
+                  target: ".cpq-formula-head button",
+                },
+              ]
+            : []),
+        ]
+      : [];
+  // Frames 486:641 / 488:1029 above "Applies when": versions, save state and publication are
+  // named from saved data. A rule version is reused when its content returns to an earlier one.
+  const ruleVersions: { version: number; content: Rule }[] =
+      root?.rule_versions.filter((v) => v.rule_key === rule?.key) ?? [],
+    versionOf = (r: Rule | undefined) =>
+      r &&
+      ruleVersions.find((v) => !semanticChanges(v.content, r).length)?.version,
+    nextVersion = Math.max(0, ...ruleVersions.map((v) => v.version)) + 1,
+    sameAs = versionOf(rule),
+    draftName = sameAs ? `Draft (same as v${sameAs})` : `Draft v${nextVersion}`,
+    activeRevision =
+      root?.active && root.active.revision.release_id === root.release.id
+        ? root.active.revision
+        : null,
+    activeRule = activeRevision?.definition.rules.find(
+      (r) => r.key === rule?.key,
+    ),
+    activeVersion = versionOf(activeRule),
+    baselineSource = activeRule
+      ? activeRevision!.definition
+      : (root?.current.definition ?? null),
+    baselineLabel = activeRule
+      ? `Published v${activeVersion ?? "?"}`
+      : root
+        ? `Saved version ${root.current.version}`
+        : null;
+  const baseline = useMemo(
+    () => (baselineSource ? toDesign(baselineSource) : null),
+    [baselineSource],
+  );
+  const savedAt = (v: string | undefined) => {
+      if (!v) return "now";
+      const t = new Date(v);
+      return t.toDateString() === new Date().toDateString()
+        ? t.toLocaleTimeString("en-AU", { hour: "2-digit", minute: "2-digit" })
+        : stamp(v);
+    },
+    savedTime = savedAt(draft?.draft.updated_at);
+  const save: {
+    tone: CpqTone;
+    icon: ProductIconName;
+    strip: string;
+    head: string;
+    bar: string;
+  } = historical
+    ? {
+        tone: "muted",
+        icon: "lock",
+        strip: `Version ${historical.version} · read only`,
+        head: `Release version ${historical.version} · read only`,
+        bar: `Release version ${historical.version} · read only`,
+      }
+    : command.busy
+      ? {
+          tone: "neutral",
+          icon: "clock",
+          strip: "Saving…",
+          head: "Saving…",
+          bar: "Saving…",
+        }
+      : command.uncertain || command.error
+        ? {
+            tone: "bad",
+            icon: "warning",
+            strip: "Not saved",
+            head: command.status,
+            bar: command.status,
+          }
+        : command.hasUnsavedChanges
+          ? {
+              tone: "warning",
+              icon: "pen-square",
+              strip: "Unsaved changes",
+              head: "Unsaved changes",
+              bar: `Unsaved changes · revision ${draftVersion + 1} (local)`,
+            }
+          : draftVersion
+            ? {
+                tone: "neutral",
+                icon: "clock",
+                strip: `Saved ${savedTime}`,
+                head: `${draftName} · saved ${savedTime}`,
+                bar: `${draftName} · revision ${draftVersion} · saved ${savedTime}`,
+              }
+            : root
+              ? {
+                  tone: "neutral",
+                  icon: "clock",
+                  strip: "No draft saved",
+                  head: `Release version ${root.current.version} · no draft saved`,
+                  bar: `Release version ${root.current.version} · no draft saved`,
+                }
+              : {
+                  tone: "warning",
+                  icon: "pen-square",
+                  strip: "Not saved",
+                  head: "Not saved",
+                  bar: "New rule set · not saved",
+                };
+  const showQuick =
+      view === "All rules" &&
+      (tab === "Definition" || tab === "Test bench") &&
+      !historical,
+    quick = useQuickTest({
+      company,
+      definition: d,
+      signature,
+      baseline,
+      ruleKey: rule?.key,
+      scenario,
+      enabled: showQuick && canAuthor && !!rule && !incomplete.length,
+    });
+  const validation: { tone: CpqTone; icon: ProductIconName; text: string } =
+      incomplete.length
+        ? {
+            tone: "warning",
+            icon: "warning",
+            text: `Incomplete · ${incomplete.length}`,
+          }
+        : quickInvalid(quick)
+          ? { tone: "bad", icon: "warning", text: "Refused by the server check" }
+          : { tone: "good", icon: "converted", text: "Valid" },
+    failing = activeTests
+      ? activeTests.results.filter((t) => !t.passed).length +
+        activeTests.coverage.filter((c) => !c.complete || c.issues.length).length
+      : 0,
+    testState: { tone: CpqTone; icon: ProductIconName; text: string } = testing
+      ? { tone: "neutral", icon: "clock", text: "Running…" }
+      : passed
+        ? {
+            tone: "good",
+            icon: "converted",
+            text: `All ${activeTests!.results.length} passing`,
+          }
+        : activeTests
+          ? { tone: "bad", icon: "circle-xmark", text: `${failing} failing` }
+          : { tone: "warning", icon: "warning", text: "Not run on this draft" },
+    published: { tone: CpqTone; text: string } =
+      activeRule && activeRevision
+        ? {
+            tone: "link",
+            text: `v${activeVersion ?? "?"} · active in release version ${activeRevision.version}`,
+          }
+        : activeRevision
+          ? { tone: "muted", text: "Not in the active release" }
+          : { tone: "muted", text: root?.active ? "Not active" : "Not published" },
+    reasonText = historical
+      ? "Return to the working draft to edit or save."
+      : !canAuthor
+        ? "Your role can read rules. Author permission is required to save or create a version."
+        : incomplete.length
+          ? "An incomplete draft can be saved. It cannot become a version until it is complete and tested."
+          : testing
+            ? "Running all scenarios on this exact draft…"
+            : passed
+              ? "All scenarios pass on this exact draft. It can become a version."
+              : activeTests
+                ? "Some scenarios fail on this exact draft. Fix them before creating a version."
+                : "Run the test scenarios on this exact draft before creating a version.",
+    whereUsed =
+      (root?.members.filter((m) => m.rule_key === rule?.key).length ?? 0) +
+      (d.design?.decision_tables.filter((t) =>
+        t.rows.some((r) => r.rules.includes(rule?.key ?? "")),
+      ).length ?? 0),
+    firstGap = /^condition-(\d+)/.exec(incomplete[0]?.key ?? ""),
+    blocked = !incomplete.length
+      ? null
+      : firstGap
+        ? `No result: condition ${firstGap[1]} is incomplete`
+        : incomplete[0].key === "part"
+          ? "No result: choose a resolution group"
+          : "No result: the quantity formula is incomplete",
+    purpose = rule?.phase === "Labour" ? "Labour effort" : "Quantity",
+    detailsNote = `${purpose} rule in the ${shown.label} ruleset. ${
+      activeRule && activeRevision
+        ? `Editing this draft never changes v${activeVersion ?? "?"}, which active release version ${activeRevision.version} uses.`
+        : root
+          ? `Editing this draft never changes saved release version ${root.current.version}.`
+          : "This rule has not been saved as a version yet."
+    }`;
   return (
     <CpqFrame
       name="Rules studio"
@@ -431,60 +663,133 @@ function RulesEditor({
         </>
       }
     >
+      {/* CPQ / Context header: rule key · ruleset · you · save state, and the "⋯" record menu.
+          Switching and adding rules, and the release view, live in that menu (no picker is drawn). */}
       <CpqHeader
+        record
         title={view === "All rules" ? (rule?.description ?? d.label) : view}
         context={
-          <>
+          <span>
             {rule?.key ?? "New rule set"} · {d.label}
-          </>
+          </span>
         }
-        status={
-          historical
-            ? `Historical version ${historical.version}`
-            : command.hasUnsavedChanges
-              ? "Draft · unsaved changes"
-              : command.status
-        }
+        status={save.head}
+        dot={save.tone}
       >
-        <Button
-          variant="quiet"
-          onClick={() =>
-            setView(view === "All rules" ? "Releases" : "All rules")
-          }
+        <CpqMenu
+          label="More rule actions"
+          className="cpq-more-button"
+          trigger={<ProductIcon name="more" />}
         >
-          {view === "All rules" ? "Release" : "Rule editor"}
-        </Button>
+          {view === "All rules" ? (
+            <CpqMenuItem
+              disabled={shown.rules.length < 2}
+              onClick={() => setSwitching(true)}
+            >
+              Switch rule…
+            </CpqMenuItem>
+          ) : (
+            <CpqMenuItem onClick={() => setView("All rules")}>
+              Open rule editor
+            </CpqMenuItem>
+          )}
+          <CpqMenuItem
+            disabled={disabled || d.rules.length >= 100}
+            onClick={() => {
+              const key = `rule_${crypto.randomUUID().slice(0, 8)}`;
+              change({
+                ...d,
+                rules: [
+                  ...d.rules,
+                  {
+                    key,
+                    description: "New rule",
+                    phase: "Materials",
+                    when: { op: "ALL", items: [] },
+                    part:
+                      d.parts.find((p) => p.category !== "Labour")?.key ?? "",
+                    quantity: "",
+                    priority: 1,
+                    parameters: [],
+                  },
+                ],
+              });
+              setRuleKey(key);
+              setView("All rules");
+              setTab("Definition");
+            }}
+          >
+            Add a rule
+          </CpqMenuItem>
+          {view !== "Releases" && (
+            <CpqMenuItem
+              onClick={() => {
+                setView("Releases");
+                setHistorical(null);
+              }}
+            >
+              Release and publication
+            </CpqMenuItem>
+          )}
+        </CpqMenu>
       </CpqHeader>
-      <div className="cpq-readiness">
-        <span>Draft</span>
-        <CpqPill>
-          {draftVersion ? `Saved · draft ${draftVersion}` : "Not saved"}
-        </CpqPill>
-        <span>Validation / tests</span>
-        <CpqPill tone={passed ? "good" : activeTests ? "bad" : "warning"}>
-          {testing
-            ? "Running…"
-            : passed
-              ? "All passing"
-              : activeTests
-                ? "Needs attention"
-                : "Not run on this draft"}
-        </CpqPill>
-        <span>Published</span>
-        <CpqPill>
-          {root?.active
-            ? `Release ${root.active.revision.version}`
-            : "Not active"}
-        </CpqPill>
+      <div className="cpq-rule-state" role="group" aria-label="Rule state">
+        <span>
+          Draft
+          <CpqState icon={save.icon} tone={save.tone}>
+            {save.strip}
+          </CpqState>
+        </span>
+        {!historical && (
+          <>
+            <span>
+              Validation
+              <CpqState icon={validation.icon} tone={validation.tone}>
+                {validation.text}
+              </CpqState>
+            </span>
+            <span>
+              Tests
+              <CpqState icon={testState.icon} tone={testState.tone}>
+                {testState.text}
+              </CpqState>
+            </span>
+          </>
+        )}
+        <span>
+          Published
+          <CpqState icon="code-branch" tone={published.tone}>
+            {published.text}
+          </CpqState>
+        </span>
       </div>
       {view === "All rules" && (
         <CpqTabs
+          record
           tabs={[
-            "Definition",
-            "Test bench",
-            "Changes",
-            "Where used",
-            "History",
+            { key: "Definition", label: "Definition" },
+            {
+              key: "Test bench",
+              label: "Test bench",
+              count: d.fixtures.length,
+              description: `${d.fixtures.length} saved ${d.fixtures.length === 1 ? "scenario" : "scenarios"}`,
+            },
+            {
+              key: "Changes",
+              label: root ? `Changes vs version ${root.current.version}` : "Changes",
+            },
+            {
+              key: "Where used",
+              label: "Where used",
+              count: whereUsed,
+              description: `${whereUsed} ${whereUsed === 1 ? "use" : "uses"} of this rule`,
+            },
+            {
+              key: "History",
+              label: "History",
+              count: ruleVersions.length,
+              description: `${ruleVersions.length} saved ${ruleVersions.length === 1 ? "version" : "versions"} of this rule`,
+            },
           ]}
           current={tab}
           onChange={setTab}
@@ -529,92 +834,63 @@ function RulesEditor({
             )}
             {view === "All rules" && tab === "Definition" && rule && (
               <>
-                <div className="cpq-section-head cpq-rule-head">
-                  <h2>Rule details</h2>
+                <IncompleteSummary items={incomplete} />
+                <div className="cpq-rule-section-head cpq-rule-details-head">
+                  <div>
+                    <h2>Rule details</h2>
+                    <p>{detailsNote}</p>
+                  </div>
                   <Button onClick={() => setDetails(!details)}>
+                    <ProductIcon name={details ? "check" : "pen-square"} />
                     {details ? "Done" : "Edit details"}
                   </Button>
-                  <div className="cpq-actions cpq-rule-picker">
-                    <select
-                      aria-label="Selected rule"
-                      value={rule.key}
-                      onChange={(e) => setRuleKey(e.target.value)}
-                    >
-                      {shown.rules.map((r) => (
-                        <option key={r.key} value={r.key}>
-                          {r.description}
-                        </option>
-                      ))}
-                    </select>
-                    <Button
-                      disabled={disabled || d.rules.length >= 100}
-                      onClick={() => {
-                        const key = `rule_${crypto.randomUUID().slice(0, 8)}`;
-                        change({
-                          ...d,
-                          rules: [
-                            ...d.rules,
-                            {
-                              key,
-                              description: "New rule",
-                              phase: "Materials",
-                              when: { op: "ALL", items: [] },
-                              part:
-                                d.parts.find((p) => p.category !== "Labour")
-                                  ?.key ?? "",
-                              quantity: "",
-                              priority: 1,
-                              parameters: [],
-                            },
-                          ],
-                        });
-                        setRuleKey(key);
-                      }}
-                    >
-                      + Rule
-                    </Button>
-                  </div>
                 </div>
                 {!details && (
-                  <div className="cpq-detail-grid">
+                  <dl className="cpq-detail-grid cpq-rule-details">
                     <div>
-                      <small>Purpose</small>
-                      <strong>Quantity calculation</strong>
+                      <dt>Purpose</dt>
+                      <dd>{purpose} calculation</dd>
                     </div>
                     <div>
-                      <small>Scope</small>
-                      <strong>{shown.label}</strong>
-                      <small>
+                      <dt>Scope</dt>
+                      <dd>{shown.label}</dd>
+                      <dd>
                         {shown.parts.find((p) => p.key === rule.part)?.scope
                           ?.kind ?? "System"}{" "}
                         output
-                      </small>
+                      </dd>
                     </div>
                     <div>
-                      <small>Priority</small>
-                      <strong>{rule.priority}</strong>
-                      <small>Larger wins within priority groups</small>
+                      <dt>Priority</dt>
+                      <dd>{rule.priority}</dd>
+                      <dd>Larger wins within PRIORITY groups</dd>
                     </div>
                     <div>
-                      <small>Resolution group</small>
-                      <strong>
+                      <dt>Resolution group</dt>
+                      <dd>
                         {shown.parts.find((p) => p.key === rule.part)
                           ?.description ?? "Not selected"}
-                      </strong>
-                      <small>
+                      </dd>
+                      <dd>
                         Policy{" "}
-                        {shown.parts.find((p) => p.key === rule.part)?.resolver}
-                      </small>
+                        {shown.parts.find((p) => p.key === rule.part)
+                          ?.resolver ?? "not set"}
+                      </dd>
                     </div>
                     <div>
-                      <small>Release author</small>
-                      <strong>
+                      <dt>Release author</dt>
+                      <dd>
                         {root?.current_author?.display_name ?? "Working draft"}
-                      </strong>
+                      </dd>
+                      <dd>
+                        {root
+                          ? `Saved release version ${root.current.version}`
+                          : "Not saved as a version"}
+                      </dd>
                     </div>
                     <div>
-                      <small>Independent review</small>
-                      <strong>
+                      <dt>Independent review</dt>
+                      <dd>
                         {root?.reviews.some(
                           (r) =>
                             r.revision_id === root.current.id &&
@@ -622,9 +898,10 @@ function RulesEditor({
                         )
                           ? "Approved saved version"
                           : "Not yet approved"}
-                      </strong>
+                      </dd>
+                      <dd>The reviewer must not be the author</dd>
                     </div>
-                  </div>
+                  </dl>
                 )}
                 {details && (
                   <div className="cpq-grid">
@@ -675,132 +952,75 @@ function RulesEditor({
                     </CpqField>
                   </div>
                 )}
-                <section className="cpq-stack-tight">
-                  <div className="cpq-section-head">
-                    <h2>Applies when</h2>
-                    <div className="cpq-actions">
-                      <Button
-                        disabled={disabled}
-                        variant={
-                          rule.when.op !== "ALWAYS" ? "primary" : "secondary"
-                        }
-                        onClick={() => {
-                          if (rule.when.op === "ALWAYS")
-                            editRule({ when: { op: "ALL", items: [] } });
-                        }}
-                      >
-                        When conditions are true
-                      </Button>
-                      <Button
-                        disabled={disabled}
-                        variant={
-                          rule.when.op === "ALWAYS" ? "primary" : "secondary"
-                        }
-                        onClick={() => editRule({ when: { op: "ALWAYS" } })}
-                      >
-                        Always applies
-                      </Button>
+                <section className="cpq-rule-section">
+                  <div className="cpq-rule-section-head">
+                    <div>
+                      <h2>Applies when</h2>
+                      <p>
+                        Fields, operators and values come from the fact
+                        dictionary. An empty group never means “always”.
+                      </p>
                     </div>
+                    <AppliesMode
+                      value={rule.when}
+                      facts={shown.facts}
+                      disabled={disabled}
+                      onChange={(when) => editRule({ when })}
+                    />
                   </div>
-                  <small>
-                    Fields, operators and values come from the fact dictionary.
-                    An empty group never means “always”.
-                  </small>
                   <ConditionEditor
                     value={rule.when}
                     facts={shown.facts}
                     disabled={disabled}
+                    modeChoice={false}
                     onChange={(when) => editRule({ when })}
                   />
-                  <small>
-                    Use Move up / Move down to reorder conditions. Field →
-                    operator → value is the keyboard order.
-                  </small>
+                  {rule.when.op !== "ALWAYS" && (
+                    <p className="cpq-keyboard-note">
+                      <ProductIcon name="keyboard" />
+                      Reorder with Move up / Move down or Alt + ↑ ↓; dragging is
+                      optional. Tab moves field → operator → value.
+                    </p>
+                  )}
                 </section>
-                <section className="cpq-stack-tight">
-                  <h2>Action</h2>
-                  <div className="cpq-grid">
-                    <CpqField label="Action type">
-                      <select
-                        disabled={disabled}
-                        value={rule.phase}
-                        onChange={(e) =>
-                          editRule({
-                            phase: e.target.value as Rule["phase"],
-                            part: "",
-                          })
-                        }
-                      >
-                        <option value="Materials">Add part</option>
-                        <option value="Labour">Add labour</option>
-                      </select>
-                    </CpqField>
-                    <CpqField
-                      label={
-                        rule.phase === "Labour"
-                          ? "Labour item"
-                          : "Part / resolution group"
-                      }
-                    >
-                      <select
-                        disabled={disabled}
-                        value={rule.part}
-                        onChange={(e) => editRule({ part: e.target.value })}
-                      >
-                        <option value="">Choose a target</option>
-                        {shown.parts
-                          .filter(
-                            (p) =>
-                              (p.category === "Labour") ===
-                              (rule.phase === "Labour"),
-                          )
-                          .map((p) => (
-                            <option key={p.key} value={p.key}>
-                              {p.description} · {p.resolver}
-                            </option>
-                          ))}
-                      </select>
-                    </CpqField>
-                  </div>
-                  <div className="cpq-section-head">
-                    <h3>Quantity formula</h3>
-                    <Button
-                      disabled={disabled}
-                      onClick={() => setFormulaEditor(true)}
-                    >
-                      Edit formula
-                    </Button>
-                  </div>
-                  <CpqField
-                    label="Quantity formula"
-                    help="Exact decimals · + − × ÷ · parentheses · ceil, floor, round, min and max. No JavaScript or external calls."
-                  >
-                    <textarea
-                      className="cpq-formula"
-                      disabled={disabled}
-                      rows={3}
-                      value={rule.quantity}
-                      onChange={(e) => editRule({ quantity: e.target.value })}
-                    />
-                  </CpqField>
-                  <small>
-                    Approved facts:{" "}
-                    {shown.facts
-                      .filter((f) => ["Decimal", "Integer"].includes(f.type))
-                      .map((f) => f.key)
-                      .join(", ")}
-                    {rule.phase === "Labour"
-                      ? `. Resolved material quantities: ${shown.parts
-                          .filter((p) => p.category !== "Labour")
-                          .map((p) => "bom_" + p.key)
-                          .join(", ")}`
-                      : ""}
-                  </small>
-                </section>
-                <section className="cpq-stack-tight">
-                  <div className="cpq-section-head">
-                    <h2>Release parameters</h2>
-                    <Button
+                <ActionSection
+                  definition={shown}
+                  rule={rule}
+                  saved={
+                    historical
+                      ? undefined
+                      : root?.current.definition.rules.find(
+                          (r) => r.key === rule.key,
+                        )
+                  }
+                  savedVersion={root?.current.version}
+                  disabled={disabled}
+                  canRemove={d.rules.length > 1}
+                  onEdit={editRule}
+                  onFormula={() => setFormulaEditor(true)}
+                  onChecks={() => setView("Compatibility & capacity")}
+                  onRemove={() => {
+                    change({
+                      ...d,
+                      rules: d.rules.filter((_, i) => i !== ruleIndex),
+                    });
+                    setRuleKey(
+                      d.rules.find((_, i) => i !== ruleIndex)?.key ?? "",
+                    );
+                  }}
+                />
+                <section className="cpq-rule-section">
+                  <div className="cpq-rule-section-head">
+                    <div>
+                      <h2>Release parameters</h2>
+                      <p>
+                        Named values this rule’s formula uses. They are saved
+                        with each version of the release.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="cpq-add"
                       disabled={
                         disabled || (rule.parameters?.length ?? 0) >= 20
                       }
@@ -818,69 +1038,92 @@ function RulesEditor({
                         })
                       }
                     >
-                      + Parameter
-                    </Button>
+                      <ProductIcon name="plus" />
+                      Parameter
+                    </button>
                   </div>
-                  {rule.parameters?.map((p, i) => (
-                    <div className="cpq-grid cpq-card" key={i}>
-                      {(["key", "label", "value", "unit"] as const).map((k) => (
-                        <CpqField key={k} label={k}>
-                          <input
+                  {rule.parameters?.length ? (
+                    <div className="cpq-parameters">
+                      <div className="cpq-parameter-row" aria-hidden="true">
+                        <small>Key</small>
+                        <small>Label</small>
+                        <small>Value</small>
+                        <small>Unit</small>
+                      </div>
+                      {rule.parameters.map((p, i) => (
+                        <div className="cpq-parameter-row" key={i}>
+                          {(["key", "label", "value", "unit"] as const).map(
+                            (k) => (
+                              <label className="cpq-box" key={k}>
+                                <span className="cpq-box-label">
+                                  {k[0].toUpperCase() + k.slice(1)}
+                                </span>
+                                <input
+                                  aria-label={`Parameter ${i + 1} ${k}`}
+                                  disabled={disabled}
+                                  inputMode={k === "value" ? "decimal" : "text"}
+                                  value={p[k]}
+                                  onChange={(e) =>
+                                    editRule({
+                                      parameters: rule.parameters!.map(
+                                        (x, n) =>
+                                          n === i
+                                            ? { ...x, [k]: e.target.value }
+                                            : x,
+                                      ),
+                                    })
+                                  }
+                                />
+                              </label>
+                            ),
+                          )}
+                          <button
+                            type="button"
+                            className="cpq-icon-button"
+                            aria-label={`Remove parameter ${p.key || i + 1}`}
+                            title="Remove parameter"
                             disabled={disabled}
-                            value={p[k]}
-                            onChange={(e) =>
+                            onClick={() =>
                               editRule({
-                                parameters: rule.parameters!.map((x, n) =>
-                                  n === i ? { ...x, [k]: e.target.value } : x,
+                                parameters: rule.parameters!.filter(
+                                  (_, n) => n !== i,
                                 ),
                               })
                             }
-                          />
-                        </CpqField>
+                          >
+                            <ProductIcon name="trash" />
+                          </button>
+                        </div>
                       ))}
-                      <Button
-                        disabled={disabled}
-                        onClick={() =>
-                          editRule({
-                            parameters: rule.parameters!.filter(
-                              (_, n) => n !== i,
-                            ),
-                          })
-                        }
-                      >
-                        Remove parameter
-                      </Button>
                     </div>
-                  ))}
+                  ) : (
+                    <p className="cpq-muted">
+                      No parameters. Add one to name a value the formula uses.
+                    </p>
+                  )}
                 </section>
-                <div className="cpq-actions">
-                  <Button
-                    disabled={disabled || d.rules.length === 1}
-                    variant="quiet"
-                    onClick={() => {
-                      change({
-                        ...d,
-                        rules: d.rules.filter((_, i) => i !== ruleIndex),
-                      });
-                      setRuleKey(
-                        d.rules.find((_, i) => i !== ruleIndex)?.key ?? "",
-                      );
-                    }}
-                  >
-                    Remove rule from draft
-                  </Button>
-                  <Button
-                    variant="quiet"
-                    onClick={() => setView("Compatibility & capacity")}
-                  >
-                    Compatibility / capacity actions
-                  </Button>
-                </div>
               </>
             )}
             {((view === "All rules" && tab === "Test bench") ||
               view === "Test scenarios") && (
               <>
+                {/* Tablet frame 39 and the phone Test tab: below 1100 px the quick test moves
+                    here from beside the definition. */}
+                {view === "All rules" && rule && !historical && (
+                  <QuickTestPanel
+                    inline
+                    definition={d}
+                    rule={rule}
+                    scenario={scenario}
+                    onScenario={setScenario}
+                    run={quick}
+                    enabled={canAuthor}
+                    blocked={blocked}
+                    chip={draftName}
+                    baselineLabel={baselineLabel}
+                    baselineHasRule={!!baseline?.rules.some((r) => r.key === rule.key)}
+                  />
+                )}
                 <div className="cpq-section-head">
                   <div>
                     <h2>Test bench</h2>
@@ -1317,63 +1560,24 @@ function RulesEditor({
             )}
           </div>
         </div>
-        {view === "All rules" && tab === "Definition" && !historical && (
-          <aside className="cpq-summary cpq-quick-test">
-            <h2>Quick test</h2>
-            <CpqField label="Scenario">
-              <select
-                value={scenario}
-                onChange={(e) => setScenario(Number(e.target.value))}
-              >
-                {d.fixtures.map((f, i) => (
-                  <option value={i} key={i}>
-                    {f.name}
-                  </option>
-                ))}
-              </select>
-            </CpqField>
-            <small>
-              Synthetic fixture · {d.fixtures.length} saved scenarios
-            </small>
-            <div className="cpq-card">
-              <small>INPUTS</small>
-              <dl>
-                {Object.entries(
-                  d.fixtures[scenario]?.input.instances[0]?.facts ?? {},
-                ).map(([key, value]) => (
-                  <div key={key}>
-                    <dt>{d.facts.find((f) => f.key === key)?.label ?? key}</dt>
-                    <dd>{value === null ? "Unknown" : String(value)}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-            {quick && (
-              <div className="cpq-card">
-                <h3>Draft result</h3>
-                <p>
-                  Cost {money(quick.actual.cost)} · sell{" "}
-                  {money(quick.actual.sell)}
-                </p>
-                <CpqPill tone={quick.passed ? "good" : "bad"}>
-                  {quick.passed ? "Pass" : "Fail"}
-                </CpqPill>
-                <small>{quick.actual.diagnostic_codes.join(" · ")}</small>
-              </div>
-            )}
-            <Button
-              variant="primary"
-              busy={testing}
-              disabled={busy || !canAuthor}
-              onClick={() => void runTests()}
-            >
-              Run all {d.fixtures.length} scenarios
-            </Button>
-            <small>
-              All scenarios and coverage checks must pass on this exact draft
-              before creating a version.
-            </small>
-          </aside>
+        {view === "All rules" && tab === "Definition" && !historical && rule && (
+          <QuickTestPanel
+            definition={d}
+            rule={rule}
+            scenario={scenario}
+            onScenario={setScenario}
+            run={quick}
+            enabled={canAuthor}
+            blocked={blocked}
+            chip={draftName}
+            baselineLabel={baselineLabel}
+            baselineHasRule={!!baseline?.rules.some((r) => r.key === rule.key)}
+            runAll={{
+              onClick: () => void runTests(),
+              busy: testing,
+              disabled: busy || !canAuthor,
+            }}
+          />
         )}
       </div>
       {formulaEditor && rule && (
@@ -1388,33 +1592,68 @@ function RulesEditor({
           }}
         />
       )}
-      <footer className="cpq-footer">
+      {switching && (
+        <CpqDialog title="Switch rule" onClose={() => setSwitching(false)}>
+          <ul className="cpq-rule-list" aria-label="Rules in this draft">
+            {shown.rules.map((r) => (
+              <li key={r.key}>
+                <button
+                  type="button"
+                  aria-current={r.key === rule?.key ? "true" : undefined}
+                  onClick={() => {
+                    setRuleKey(r.key);
+                    setSwitching(false);
+                  }}
+                >
+                  <strong>{r.description}</strong>
+                  <small>
+                    {r.key} ·{" "}
+                    {r.phase === "Labour" ? "Labour effort" : "Material quantity"}
+                  </small>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </CpqDialog>
+      )}
+      {/* Draft bar: save state with its dot and revision, the reason, Save draft and Create
+          version. Create version stays visibly unavailable, with the reason, until it can run. */}
+      <footer className="cpq-footer cpq-draft-bar">
         <div>
-          <strong role="status">
-            {historical ? "Historical version · read only" : command.status}
-          </strong>
-          <small>
-            {passed
-              ? "All scenarios pass on this exact draft."
-              : "Run all scenarios on the exact draft before creating a version."}
-          </small>
+          <p className="cpq-save-state">
+            <span className="cpq-dot" data-tone={save.tone} />
+            <span role="status">{save.bar}</span>
+          </p>
+          <small id={reasonId}>{reasonText}</small>
         </div>
         <div className="cpq-actions">
           <Button
+            variant={command.hasUnsavedChanges ? "primary" : "secondary"}
             disabled={disabled}
             busy={command.busy}
             onClick={() => void saveDraft()}
           >
+            <ProductIcon name="save" />
             Save draft
           </Button>
-          <Button
-            variant="primary"
-            disabled={disabled || !passed}
-            busy={command.busy}
-            onClick={() => void version()}
-          >
-            Create version…
-          </Button>
+          {passed && !disabled ? (
+            <Button
+              variant="primary"
+              busy={command.busy}
+              onClick={() => void version()}
+            >
+              Create version…
+            </Button>
+          ) : (
+            <Button
+              className="cpq-unavailable"
+              disabled
+              aria-describedby={reasonId}
+            >
+              <ProductIcon name="lock" />
+              Create version…
+            </Button>
+          )}
         </div>
       </footer>
       {lifecycle && root && (
@@ -1476,6 +1715,241 @@ function RulesEditor({
         </CpqDialog>
       )}
     </CpqFrame>
+  );
+}
+function IncompleteSummary({
+  items,
+}: {
+  items: { key: string; text: string; target: string | null }[];
+}) {
+  if (!items.length) return null;
+  return (
+    <section className="cpq-error-summary" aria-labelledby="cpq-incomplete">
+      <h2 id="cpq-incomplete">
+        <ProductIcon name="warning" />
+        This draft is incomplete · {items.length}{" "}
+        {items.length === 1 ? "item" : "items"}
+      </h2>
+      <ul>
+        {items.map((i) => (
+          <li key={i.key}>
+            {i.target ? (
+              <button
+                type="button"
+                className="cpq-summary-link"
+                onClick={() => {
+                  const control = document.querySelector<HTMLElement>(
+                    `#ppo-cpq ${i.target}`,
+                  );
+                  control?.scrollIntoView({ block: "center" });
+                  control?.focus({ preventScroll: true });
+                }}
+              >
+                {i.text}
+              </button>
+            ) : (
+              i.text
+            )}
+          </li>
+        ))}
+      </ul>
+      <p>
+        You can still save the draft. Empty text, “-” or “1.” stay incomplete;
+        they are never read as zero.
+      </p>
+    </section>
+  );
+}
+// Accepted frame 486:641 "Actions": one form per action type (CPQ / Action card header 469:471 and
+// CPQ / Control 466:230). A release rule carries exactly one action, so Add action stays visible
+// as unavailable with its reason. The resolution group is the rule's target part; product and unit
+// belong to that part and are shown read only. Rounding exists only inside the formula.
+function ActionSection({
+  definition,
+  rule,
+  saved,
+  savedVersion,
+  disabled,
+  canRemove,
+  onEdit,
+  onFormula,
+  onChecks,
+  onRemove,
+}: {
+  definition: Definition;
+  rule: Rule;
+  saved?: Rule;
+  savedVersion?: number;
+  disabled: boolean;
+  canRemove: boolean;
+  onEdit: (patch: Partial<Rule>) => void;
+  onFormula: () => void;
+  onChecks: () => void;
+  onRemove: () => void;
+}) {
+  const id = useId(),
+    labour = rule.phase === "Labour",
+    title = labour ? "Labour effort" : "Material quantity",
+    part = definition.parts.find((p) => p.key === rule.part),
+    symbols = formulaSymbols(definition, rule),
+    syntax = formulaSyntax(rule.quantity, definition, symbols),
+    compared =
+      saved && savedVersion
+        ? saved.quantity === rule.quantity
+          ? ` · same as saved version ${savedVersion}`
+          : ` · changed from saved version ${savedVersion}`
+        : "";
+  return (
+    <section className="cpq-rule-section">
+      <div className="cpq-rule-section-head">
+        <div>
+          <h2>Actions</h2>
+          <p id={`${id}-note`}>
+            Each action has its own form. This rule has one{" "}
+            {title.toLowerCase()} (one action per rule).
+          </p>
+        </div>
+        <Button
+          className="cpq-unavailable"
+          disabled
+          title="A release rule holds one action. Add another action as its own rule."
+          aria-describedby={`${id}-note`}
+        >
+          <ProductIcon name="lock" />
+          Add action
+        </Button>
+      </div>
+      <article className="cpq-action-card" aria-labelledby={`${id}-title`}>
+        <header>
+          <span className="cpq-action-type">
+            <ProductIcon name={labour ? "helmet" : "box-open"} />
+          </span>
+          <div className="cpq-action-title">
+            <strong id={`${id}-title`}>{title}</strong>
+            <small>
+              {part
+                ? `${part.description} · ${part.unit}`
+                : "Choose a resolution group"}
+            </small>
+          </div>
+          <CpqMenu
+            label={`${title} actions`}
+            className="cpq-icon-button"
+            trigger={<ProductIcon name="more" />}
+            disabled={disabled}
+          >
+            <CpqMenuItem
+              onClick={() =>
+                onEdit({ phase: labour ? "Materials" : "Labour", part: "" })
+              }
+            >
+              {labour ? "Change to material quantity" : "Change to labour effort"}
+            </CpqMenuItem>
+            <CpqMenuItem onClick={onChecks}>
+              Compatibility and capacity checks
+            </CpqMenuItem>
+            <CpqMenuItem danger disabled={!canRemove} onClick={onRemove}>
+              Remove rule from draft
+            </CpqMenuItem>
+          </CpqMenu>
+        </header>
+        <div className="cpq-action-body">
+          <div className="cpq-grid">
+            <ReadOnlyField
+              label={labour ? "Labour item" : "Product"}
+              value={part?.description ?? "Not chosen"}
+              help={
+                part?.product
+                  ? "Maintained in Products. Edit it there."
+                  : "Defined in Parts & cost sources. Edit it there."
+              }
+            />
+            <ReadOnlyField
+              label={labour ? "Effort unit" : "Installed unit"}
+              value={part?.unit ?? "Not chosen"}
+              help="From the selected part; a group uses one unit"
+            />
+          </div>
+          <div className="cpq-formula-field">
+            <div className="cpq-formula-head">
+              <span id={`${id}-formula`}>Quantity formula</span>
+              <Button disabled={disabled} onClick={onFormula}>
+                <ProductIcon name="function" />
+                Edit formula
+              </Button>
+            </div>
+            <div
+              className="cpq-formula-box"
+              role="group"
+              aria-labelledby={`${id}-formula`}
+              data-formula={rule.quantity}
+            >
+              {rule.quantity.trim() ? (
+                <FormulaTokens formula={rule.quantity} symbols={symbols} />
+              ) : (
+                <span className="cpq-muted">No formula yet</span>
+              )}
+              <p
+                className="cpq-formula-check"
+                data-tone={syntax ? "warning" : "good"}
+              >
+                <ProductIcon name={syntax ? "warning" : "converted"} />
+                {syntax
+                  ? `Incomplete · ${syntax}`
+                  : `Valid · result in ${part?.unit ?? "the part’s unit"}${compared}`}
+              </p>
+            </div>
+          </div>
+          <div className="cpq-grid">
+            <ReadOnlyField
+              label="Rounding"
+              value="As written in the formula"
+              help="Use ceil, floor or round in the formula; there is no separate rounding step"
+            />
+            <CpqField
+              label="Resolution group"
+              help="Every rule in a group uses the same policy and unit"
+            >
+              <select
+                disabled={disabled}
+                value={rule.part}
+                onChange={(e) => onEdit({ part: e.target.value })}
+              >
+                <option value="">Choose a resolution group</option>
+                {definition.parts
+                  .filter((p) => (p.category === "Labour") === labour)
+                  .map((p) => (
+                    <option key={p.key} value={p.key}>
+                      {p.description} · {p.resolver}
+                    </option>
+                  ))}
+              </select>
+            </CpqField>
+          </div>
+        </div>
+      </article>
+    </section>
+  );
+}
+function ReadOnlyField({
+  label,
+  value,
+  help,
+}: {
+  label: string;
+  value: string;
+  help: string;
+}) {
+  const id = useId();
+  return (
+    <label className="cpq-field">
+      <span>{label}</span>
+      <span className="cpq-readonly">
+        <input readOnly value={value} aria-describedby={`${id}-help`} />
+        <ProductIcon name="lock" />
+      </span>
+      <small id={`${id}-help`}>{help}</small>
+    </label>
   );
 }
 function Value({ value }: { value: unknown }) {

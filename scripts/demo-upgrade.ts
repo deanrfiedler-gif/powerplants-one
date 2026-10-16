@@ -309,7 +309,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0102 adds empty package records and a nullable immutable release manifest.
   // No seed/grant/backfill; existing schema-wide runtime privileges cover the tables.
   // Deferred identity events are flushed before extending the live type constraints.
-  if (latestMigrationVersion !== 102) throw Error("Review the existing-demo upgrade for this release.");
+  // 0103 adds empty immutable specialist coordination records, no seed/grant/backfill.
+  // Existing schema-wide grants cover them; source services retain decision authority.
+  // 0104 adds one immutable SQL function naming the DK06-OUT09-2 renderer contract and
+  // replaces the insert-only publication guard. No table, row, seed, grant or identity
+  // changes; existing publications are untouched and PUBLIC execute covers the function.
+  if (latestMigrationVersion !== 104) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

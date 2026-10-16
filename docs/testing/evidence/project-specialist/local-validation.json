@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "implementation": "ad0e173108236cf3c3d2b8f7a3452e7bd33dc622",
+  "base": "a676fde58d2ee88878bb2f9489912c97f49636b3",
+  "synthetic": true,
+  "validation": {
+    "native_and_populated_upgrades": {
+      "result": "Passed",
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "duration_ms": 570104.8389,
+      "test_timeout_ms": 120000
+    },
+    "reserved_products_after_103": {
+      "result": "Passed",
+      "tests": 1,
+      "case_duration_ms": 38253.7649
+    },
+    "compiled_http": {
+      "result": "Passed",
+      "tests": 1,
+      "case_duration_ms": 21496.6943
+    },
+    "restart": {
+      "proof": "PJ06 actual application/PostgreSQL restart",
+      "result": "Passed",
+      "synthetic": true,
+      "retained_tables": 21,
+      "graph_hash": "6b7a851b23419bd8cdb64e2c3ccfaf59a045133ea1395edd8f91841eac00da37",
+      "accepted_package_version": 3,
+      "original_receipts_recovered": 2,
+      "original_sessions_reused": 2,
+      "replayed_effects": 0
+    },
+    "complete_units": {
+      "result": "Failed",
+      "tests": 855,
+      "passed": 852,
+      "failed": 3,
+      "skipped": 0,
+      "duration_ms": 493440.9316,
+      "unchanged_main_control": {
+        "tests": 4,
+        "passed": 1,
+        "failed": 3,
+        "same_three_failures": true,
+        "node": "24.21.0"
+      }
+    },
+    "full_lint": {
+      "result": "Passed",
+      "final_changed_test_file_rechecked": true
+    },
+    "typescript": {
+      "standalone_result": "Passed before final SQL/test refinements",
+      "final_standard_build_result": "Passed"
+    },
+    "standard_build": {
+      "result": "Passed",
+      "bundler": "Turbopack",
+      "static_pages": 77,
+      "api_route": "/api/v1/projects/[id]/specialist-packages"
+    },
+    "foundation": {
+      "status": "passed",
+      "issued_sources": 22,
+      "requirements": 78,
+      "decisions": 29,
+      "planned_acceptance": 38,
+      "backlog_items": 16,
+      "linked_issues": 16,
+      "local_links_checked": 10166,
+      "files_scanned_for_markers": 6329,
+      "errors": [],
+      "scope": "Documentation assurance only; no business acceptance tests executed"
+    },
+    "naming": {
+      "status": "passed",
+      "document_records": 647,
+      "standing_exceptions": 9,
+      "metadata_documents_compared": 486,
+      "git_masters": 343,
+      "project_instruction_characters": 7996,
+      "errors": [],
+      "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+    },
+    "studio": {
+      "entries": 362,
+      "component_entries": 47,
+      "runnable_components": 21,
+      "component_reviews_pending": 47,
+      "journeys": 30,
+      "current_journeys": 24,
+      "source_routes": 208,
+      "errors": [],
+      "unreviewed": 334,
+      "stale": 28,
+      "scope": "Coverage and reference integrity; visual/functional acceptance is separately recorded."
+    },
+    "access_model": {
+      "result": "Passed",
+      "groups": 107,
+      "capability_source_sha256": "58b4ff0d871613d21d3374aead01c2ce46bebd59e912b65e69b6551668fa192f",
+      "html_sha256": "1ef637fea7a6e89e2f543214c9966de980ec49149e9a06ea74c242e6ff7fef29"
+    }
+  },
+  "independent_review": {
+    "source": "ad0e173108236cf3c3d2b8f7a3452e7bd33dc622",
+    "result": "Clean",
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/518#issuecomment-6192704572",
+    "resolved_actionable_threads": 3
+  },
+  "ci": {
+    "result": "Pending",
+    "last_observed_head": "ad0e173108236cf3c3d2b8f7a3452e7bd33dc622",
+    "reported_queued": 20,
+    "provider": "Code Review CI diagnostics",
+    "optional_pt27": "Unchanged; not counted as a pass"
+  },
+  "business_acceptance": "Not performed",
+  "deployment": "Not performed",
+  "merge": "Not performed"
+}
