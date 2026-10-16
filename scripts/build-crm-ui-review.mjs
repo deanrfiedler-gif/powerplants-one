@@ -29,13 +29,23 @@ await build({
           resolveDir: process.cwd(),
           contents:
             args.path === "next/navigation"
-              ? `import { useSyncExternalStore } from "react";
+              ? `import { useEffect, useState, useSyncExternalStore } from "react";
+                 const delay = new URLSearchParams(window.location.search).get("fixture_navigation_delay") === "1" ? 80 : 0;
                  for (const key of ["pushState", "replaceState"]) {
                    const original = window.history[key].bind(window.history);
                    window.history[key] = (...args) => { original(...args); window.dispatchEvent(new Event("fixture-location")); };
                  }
                  const subscribe = listener => { window.addEventListener("popstate", listener); window.addEventListener("fixture-location", listener); return () => { window.removeEventListener("popstate", listener); window.removeEventListener("fixture-location", listener); }; };
-                 export const useSearchParams=()=>new URLSearchParams(useSyncExternalStore(subscribe,()=>window.location.search,()=>""));
+                 export const useSearchParams=()=>{
+                   const current = useSyncExternalStore(subscribe,()=>window.location.search,()=>"");
+                   const [deferred, setDeferred] = useState(current);
+                   useEffect(()=>{
+                     if (!delay) return;
+                     const timer = setTimeout(()=>setDeferred(current), delay);
+                     return ()=>clearTimeout(timer);
+                   },[current]);
+                   return new URLSearchParams(delay ? deferred : current);
+                 };
                  export const usePathname=()=>${JSON.stringify(process.argv[4] ?? "/sales/opportunities")};
                  export const useRouter=()=>({push:href=>window.dispatchEvent(new CustomEvent("fixture-router-push",{detail:href})),refresh:()=>{}});`
               : args.path === "next/link"

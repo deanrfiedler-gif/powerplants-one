@@ -1361,6 +1361,11 @@
           "id": "ad01-team-creation-host",
           "label": "Native local team creation and recovery",
           "description": "tests/browser/access-team-creation.spec.ts: explicit roster, validation, saved history beyond collection page, lost-response/reload original, absent-receipt exact retry for a second team, storage refusal, draft refresh, actor isolation and denied-context clearing. Uses the real host and shared controls; mocked transport/presentation failures are distinguished from actual authority/database proofs."
+        },
+        {
+          "id": "deferred-url-host",
+          "label": "Deferred URL rendering",
+          "description": "tests/ui/crm-board.spec.ts types without delays while the framework URL render lags by 80 ms; exact value, focus, result count, history length and reload remain correct at desktop/phone widths. Native CRM and scheduling capacity suites retain end-to-end coverage."
         }
       ],
       "implementation": [
@@ -1388,7 +1393,8 @@
         "src/components/sales-delivery-creation.tsx",
         "src/components/sales-followup.tsx",
         "src/access/team-creation.tsx",
-        "docs/decisions/access-team-creation.md"
+        "docs/decisions/access-team-creation.md",
+        "src/components/current-location-search.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1513,7 +1519,8 @@
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
         "route:/admin/access/requests/[id]",
-        "route:/admin/access/roles"
+        "route:/admin/access/roles",
+        "route:/sales/opportunities"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1661,6 +1668,14 @@
           "expected": "Explicit local creation and original recovery accessible at desktop/390/320 widths.",
           "actual": "Existing form/control patterns reused; accepted native Figma image and owner/device review remain missing.",
           "action": "Review source-bound form, pending, result and roster captures alongside host tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "url-controls-device-review",
+          "expected": "Every typed character and filter selection survives deferred framework rendering at desktop and phone widths.",
+          "actual": "An isolated delayed-render regression covers Sales; combined native CRM/capacity proof and owner/device acceptance remain separate.",
+          "action": "Retain native browser coverage and inspect the real controls without updating visual fingerprints from functional results.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

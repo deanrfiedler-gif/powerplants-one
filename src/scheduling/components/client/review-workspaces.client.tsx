@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { notifyLocationSearchChanged, useCurrentLocationSearch } from "../../../components/current-location-search";
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 import {
   Field,
@@ -43,7 +43,7 @@ function ReviewSelect(props: ComponentProps<typeof SelectField>) {
   );
 }
 function useReviewWindow(path: string, days = 7) {
-  const search = useSearchParams(),
+  const search = useCurrentLocationSearch(),
     context = plannerContext(new URLSearchParams(search.toString()));
   const horizon = [1, 7, 28, 90].includes(Number(search.get("days")))
     ? Number(search.get("days"))
@@ -51,9 +51,10 @@ function useReviewWindow(path: string, days = 7) {
   const from = utcFromLocal(context.day + "T00:00", context.zone),
     to = utcFromLocal(addDays(context.day, horizon) + "T00:00", context.zone);
   const update = (values: Record<string, string>) => {
-    const q = new URLSearchParams(search.toString());
+    const q = new URLSearchParams(window.location.search);
     Object.entries(values).forEach(([k, v]) => (v ? q.set(k, v) : q.delete(k)));
     window.history.replaceState(null, "", path + "?" + q);
+    notifyLocationSearchChanged();
   };
   const sites =
     useResource<Envelope<{ id: string; display_name: string }>>(

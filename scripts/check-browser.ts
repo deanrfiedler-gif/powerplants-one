@@ -1,4 +1,5 @@
 import { launchDocumentBrowser } from "../src/platform/browser";
+import { createRequire } from "node:module";
 
 export default async function checkBrowser() {
   const browser = await launchDocumentBrowser();
@@ -6,7 +7,7 @@ export default async function checkBrowser() {
     console.log(
       JSON.stringify({
         node: process.version,
-        playwright: "1.63.0",
+        playwright: createRequire(import.meta.url)("playwright/package.json").version,
         channel: "chrome",
         browser: browser.version(),
       }),

@@ -1,10 +1,94 @@
 # Current prototype status
 
+## Current PR integration and URL control repair — 16 October 2026
+
+Current integration writer: the user-authorised "Merge current PPO pull requests" chat on `codex/merge-current-prs-oct16`. It combines #524–#529, #533 and #535 from main `cb838c7`, retaining original commit ancestry and both sides of additive documentation conflicts. The separate backend chat owns #530 until verified handback. TypeScript #534 is excluded pending disposition because the current ESLint adapter requires TypeScript below 6.1. [Integration evidence](testing/evidence/pr-integration/README.md) distinguishes original CI failures, local component proof, pending combined CI and disk limits. Documentation proposals remain proposals; existing accepted designs retain their stated scope.
+
+The URL control correction makes Sales search and scheduling review filters observe their native history writes synchronously, preserving typed input and checkbox state while framework URL rendering is deferred. Server authority, signed cursors, history semantics and session clearing remain unchanged. Existing browser proofs and a deferred-render regression gate integration. Source delivery, visual/owner acceptance and deployment remain separate.
+
+Protected main currently requires seven checks with administrator enforcement and no approving-review count: Check documentation foundation; CRM desktop and mobile persistence and interaction proof; CRM header and board visual checks; Desktop and mobile browser suite against the compiled application; E1 manual estimate, draft output and restart proof; Email Calendar persisted journey and server permissions; P01–P11 and CRM I1–I2 local application and PostgreSQL proof. Strict up-to-date enforcement is off. This task does not change those settings.
+
+## D-025 customer communications decision paper — 16 October 2026
+
+On 16 October Dean named two problems, and both need PPO to email customers, which it deliberately does not do:
+- customers phone sales reps to ask when their parts will arrive, so he wants a dispatch email with the freight tracking number;
+- project customers phone for updates, so he wants regular update emails from the Projects Department.
+
+The [decision paper](decisions/customer-communications-d025.md) proposes how to close the outbound customer email part of D-025:
+- **Messages:** four messages in two classes, with the drafter, approver and trigger for each. Dispatch, delay and visit notices are automatic and factual. Project updates under OUT-11/PRJ-07/PJ-08 are reviewed before sending.
+- **One service:** a single communications service sends every customer email.
+- **Rules:** recipient, opt-out, timeline, state and failure rules, with sent, delivered and failed kept distinct (DOC-05) and failures visible (TR-03). Internal notes never reach a customer.
+- **Reuse:** the outbox, the DK-03 ledger pattern, DK-06 templates and Activities.
+- **Gaps and order:** the data gaps for each message, and a build order that starts with a synthetic channel and then the dispatch notice.
+
+[ADR-0058](decisions/ADR-0058-outbound-customer-email.md) is **Proposed**: Microsoft Graph `sendMail` from a monitored shared mailbox, behind a provider-neutral channel. A transactional email service is the named alternative.
+
+Dean is asked three questions:
+- where freight is booked and where the consignment note lives;
+- whether Projects uses the Smartsheet Customer Update register today;
+- which mailbox to send from.
+
+This is documentation only: no sending code, provider account, credential, migration or customer message. D-025 remains Open until Dean decides.
+
+## Field readiness gate proposed — 16 October 2026
+
+Dean named a Powerplants Australia problem: technicians arrive on site to missing or wrong parts, or to a customer who was never asked to get the site ready. He proposed that technicians accept or decline a job pack with a reason. The [field readiness gate proposal](decisions/field-readiness-gate-proposal.md) answers it with five changes:
+- a Dispatch-stage **Parts** criterion derived from Supply Chain readiness of the demands linked to the appointment, closing departure DP-20;
+- a technician **Return with reason** beside the unchanged acknowledgement, which holds dispatch and gives the preparer and the scheduler owned tasks;
+- an owned preparer task when a checker returns a revision;
+- a typed **customer site-readiness** contact on the appointment, with a derived criterion;
+- a pack issue lead time.
+
+It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR-18, TR-04 to TR-07 and BP-01 §13.2. It lists the migration, seed, permission and test-suite impact of a build, and asks seven questions with recommended answers.
+
+New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
+
+## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
+
+Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API: the credit lands in one Claude Console organisation linked to the plan. It cannot be spent through Azure, Bedrock or Vertex. Proposed [Amendment A1](decisions/ppo-assistant-direction.md#proposed-amendment-a1--claude-api-first-16-october-2026) adds the credit-funded direct Claude API as a provider candidate and recommends it as the first provider for AI1's live synthetic evaluation. The direct OpenAI API and Azure OpenAI stay alternatives behind the same replaceable adapter, and the labelled simulated adapter stays the first implementation. [Specification §8](blueprints/ppo-assistant-specification.md#8-provider-privacy-and-running-cost-proposal) now records, each with a source checked on 16 October:
+
+- the credit rules: one linked organisation, changeable only through support; monthly expiry without rollover; requests stop when credit runs out unless purchased credit or auto-reload exists; a workspace spend limit; direct Claude API only;
+- Anthropic's retention and Commercial Terms: deletion within 30 days, flagged content kept up to two years, no training on customer content, zero data retention only by arrangement;
+- data residency: global or US-only inference, US-only storage, no Australian option;
+- costs at current Claude rates: US$0.022 a task at the Sonnet 5.5 reference, so the US$30 PPO ceiling covers about 900 tasks with contingency.
+
+This is a proposal awaiting Dean's decision; his exact words will be recorded in the decision when given. No code, migration, Console organisation, API key, credit claim or paid service is created. The ChatGPT instructions are unchanged because no decision has been made yet. Open items are the billing owner, data region, retention settings and authority for real data.
+
+## Deal record page design accepted — 16 October 2026
+
+Dean asked for the deal record page in Figma (`/sales/opportunities/[id]`, CR-01) as a proposal, the fourth record type on the shared record layout, with a read-only comparison against his Pipedrive deal record. He answered "Proceed with your recommendations" on 15 October, asked on 16 October for an audit and polish with every table in the style of the other Figma pages, then for a final pixel pass, and accepted the design: "I accept." The [decision](decisions/deal-record-page-design.md) has seven view tabs from the page contract, a stage bar with days per stage, an advisory stage-exit readiness bar from the accepted exit conditions, Won and Lost forms that compare the reviewed quotation evidence with the current facts, a Won recorded state with the handover due, and the record-page table style throughout. It removes the weighted totals, probabilities and forecast categories from the Deals proposal page, which is still not accepted. [Thirteen icon-free captures](reference/ui/crm/deal-record-page-design-r01/README.md) are retained with hashes. Nothing is built. The new reads, deal notes, email sending, file links, the build and the shell rollout are not decided. No parent ID changes.
+
+## Contract obligations, notices and variations design accepted — 16 October 2026
+
+Dean asked for the next UI page to be designed in Figma and expected PJ-05. The evidence held: the commercial-controls backend had merged as #493 with no app route, Figma page, File index row, open pull request, UI branch or session. He then asked for an audit and professional polish against the other accepted Figma pages, and accepted the result: "I accept the PJ-05 Contract obligations, notices and variations design with your recommendations and recommended answers to Q1–Q8. Lock it in under ADR-0053."
+
+The [Contract obligations, notices and variations decision](decisions/project-commercial-figma-design.md) records the design:
+- One project at a time at `/projects/commercial`, the Projects menu item "Variations & obligations", with Variations, Obligations, Notices, Commercial basis and Value breakdown views, and a Commercial view on the project record.
+- Requested, priced and approved amounts stay apart. The control values come from the synthetic PJ05-FD08 read; requested and priced are never added, and unknown is never $0.00.
+- Decisions are made by someone who didn't write or submit the proposal, in a dialog bound to the exact version. Notices are recorded evidence and are never sent.
+
+Twenty-one icon-free captures are retained under the named version "Contract obligations, notices and variations — accepted". Dean confirmed on 16 October 2026, after the captures and the File index row were made, that he saved it in Figma version history ("I have saved the named version … in Figma"); Claude did not inspect the version list. No application code, route, migration, permission or parent ID changes. Building the page and the backend reads it implies are not decided: a cross-project read, names, display numbers, counts and order, the stored reason in reads, notice links, basis pickers and a decision preview (G1–G8).
+
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
 Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.
 
 The authorised [PR #522](https://github.com/deanrfiedler-gif/powerplants-one/pull/522) carries the exact Accepted brief into native Engineering-to-Supply receiving with issued technical release, Approved demand and independent receiving authority. At its prior source `459112d`, dedicated CI passed 856 units, build, 17 native/upgrade cases, two reserved Products upgrades, separately reset compiled APIs and actual application/PostgreSQL restart; independent review was clean and both threads resolved. [Execution evidence](testing/evidence/project-specialist-handover/README.md) retains those results and the original local failures. They do not verify this new integration: populated upgrades, exact preservation, repeat-run stability, CI and independent review must be established again. Supplier competence, downstream disposition, UI and operational acceptance remain open. No merge or deployment is performed here.
+
+## UX benchmark research recorded — 16 October 2026
+
+Dean asked for deep research to make every PPO module as professional and user friendly as possible. He approved the plan, asked for a user-feedback top-up and then directed: "I'm happy for you to proceed however you believe is the most professional approach. Our goal is to ensure the Powerplants One app is as professional as possible, and an exceptionally good world-class gold standard app. So proceed on that basis."
+
+The [research record](design/research/ux-benchmark/README.md) summarises the method: ten research streams, a user-feedback top-up, a horticulture pass, and an independent check of 377 links, 105 claims and every PPO-today statement against main `b223c58` and the Figma file. It also gives the evidence grades and the headline findings:
+- build the connective tissue between modules;
+- users punish lost work, imposed change and silent failures more than missing features;
+- suites trail focused tools on ease of use by about 0.4;
+- field apps must never lose input;
+- for growers, own the service trail around the controller.
+
+Two registers are generated from the reviewed report. The [recommendations](design/research/ux-benchmark/recommendations.csv) hold UXB-01 to UXB-92: 20 at priority 1, 56 at priority 2 and 16 at priority 3. The [amendment items](design/research/ux-benchmark/amendment-items.csv) hold A01 to A24 against accepted designs; A22 and A24 were withdrawn after the check. Every item is Proposed.
+
+The [direction record](decisions/ux-benchmark-research-direction.md) says what Dean's direction authorises: research and proposals. Without his decision on each item it authorises no design, code, migration, customer contact or adoption. Adopted items will be recorded in `docs/decisions/` and linked to scope IDs. No application code, route, migration, permission, design register entry or parent ID changes.
 
 ## Open PR repair and integration — 16 October 2026
 

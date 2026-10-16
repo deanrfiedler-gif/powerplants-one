@@ -31,31 +31,31 @@
     "browser:check": "node --import tsx scripts/check-browser.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.33.0",
-    "fast-xml-parser": "5.11.1",
-    "next": "16.3.8",
+    "@azure/storage-blob": "12.34.0",
+    "fast-xml-parser": "5.11.2",
+    "next": "16.4.0",
     "openid-client": "6.8.8",
-    "pg": "8.23.0",
-    "playwright": "1.63.0",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
+    "pg": "8.23.1",
+    "playwright": "1.64.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "server-only": "0.0.1",
     "yauzl": "3.4.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.3.8",
-    "@playwright/test": "1.63.0",
-    "@types/node": "24.13.3",
+    "@next/eslint-plugin-next": "16.4.0",
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.2",
     "@types/pg": "8.23.1",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.7",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "@types/yauzl": "3.4.0",
-    "eslint": "10.10.0",
+    "eslint": "10.12.0",
     "eslint-plugin-react-hooks": "7.1.1",
-    "prettier": "3.9.6",
-    "tsx": "4.23.13",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.69.0"
+    "typescript-eslint": "8.71.2"
   },
   "allowScripts": {
     "esbuild@0.28.2": true

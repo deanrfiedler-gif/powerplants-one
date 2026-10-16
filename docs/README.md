@@ -1,5 +1,7 @@
 # Documentation index
 
+[PPO module UX benchmark](design/research/ux-benchmark/README.md) — 16 October 2026 research record with 92 [recommendations](design/research/ux-benchmark/recommendations.csv) and 24 [amendment items](design/research/ux-benchmark/amendment-items.csv), all proposals; [Dean's direction](decisions/ux-benchmark-research-direction.md) authorises research and proposals, not adoption or build.
+
 [Projects RAID and owned actions backend](decisions/project-raid-backend.md) records the bounded PJ-04 implementation and supplied Wrike audit provenance; page review, owner acceptance and deployment remain separate.
 
 [Lead record readiness and summary backend](decisions/lead-record-backend.md) — saved-context conversion review and scoped age/activity summary; [execution evidence](testing/evidence/lead-record/README.md).
