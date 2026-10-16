@@ -1,5 +1,27 @@
 # Current prototype status
 
+## D-025 customer communications decision paper — 16 October 2026
+
+On 16 October Dean named two problems, and both need PPO to email customers, which it deliberately does not do:
+- customers phone sales reps to ask when their parts will arrive, so he wants a dispatch email with the freight tracking number;
+- project customers phone for updates, so he wants regular update emails from the Projects Department.
+
+The [decision paper](decisions/customer-communications-d025.md) proposes how to close the outbound customer email part of D-025:
+- **Messages:** four messages in two classes, with the drafter, approver and trigger for each. Dispatch, delay and visit notices are automatic and factual. Project updates under OUT-11/PRJ-07/PJ-08 are reviewed before sending.
+- **One service:** a single communications service sends every customer email.
+- **Rules:** recipient, opt-out, timeline, state and failure rules, with sent, delivered and failed kept distinct (DOC-05) and failures visible (TR-03). Internal notes never reach a customer.
+- **Reuse:** the outbox, the DK-03 ledger pattern, DK-06 templates and Activities.
+- **Gaps and order:** the data gaps for each message, and a build order that starts with a synthetic channel and then the dispatch notice.
+
+[ADR-0058](decisions/ADR-0058-outbound-customer-email.md) is **Proposed**: Microsoft Graph `sendMail` from a monitored shared mailbox, behind a provider-neutral channel. A transactional email service is the named alternative.
+
+Dean is asked three questions:
+- where freight is booked and where the consignment note lives;
+- whether Projects uses the Smartsheet Customer Update register today;
+- which mailbox to send from.
+
+This is documentation only: no sending code, provider account, credential, migration or customer message. D-025 remains Open until Dean decides.
+
 ## Products design: product image amendment accepted — 15 October 2026
 
 Dean asked whether the accepted Products (PD-01) design had a place for an image of the actual product, as the earlier r04 preview did. It did not: the redesign had dropped the r04 image panel without recording a departure. He directed the amendment ("Proceed with your recommendations"). Amendment A1 in the [Products decision](decisions/products-figma-design.md), section 8, adds an image panel above Identity on the desktop and tablet record, an 80 px image row at the top of the phone record, thumbnails in the catalogue grid, phone list and snapshot, and a No image placeholder that never borrows an image from a similar product. Images are SharePoint documents referenced by exact revision. The six product pictures are synthetic concept images of fictional equipment. [Nine icon-free r02 captures](reference/ui/products/products-figma-r02/README.md) are retained; the r01 captures are unchanged. Dean accepted A1 as drawn and saved the named version "Products — product image amendment A1". No application code, data model, route, migration, permission or parent ID changes; storing and reading real images is not decided.

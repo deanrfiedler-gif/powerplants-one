@@ -646,3 +646,5 @@ PPO-DK03-REGISTER-FACTS-DEC,DK-03 exact revision and acknowledgement facts,docs/
 
 PPO-DK03-APPLICABILITY-DEC,DK-03 native distribution applicability,docs/decisions/output-distribution-applicability.md,,Authorised backend correction; review and operational acceptance separate,Dean Fiedler,41c8479a0aa4ff8eeebec5efb66712c95ecc8874,,,git,
 PPO-BACKEND-RECONCILIATION,Backend implementation reconciliation,docs/delivery/backend-reconciliation.md,,Current source inspection; not backend completion or business acceptance,Dean Fiedler,41c8479a0aa4ff8eeebec5efb66712c95ecc8874,,,git,
+PPO-D025-COMMS-DEC,Customer communications decision paper for D-025,docs/decisions/customer-communications-d025.md,,Proposed decision paper; D-025 remains Open until the owner decides,Dean Fiedler,1552cfbb8efd6cea17438c2af18ba0effa4fc278,,,git,
+PPO-ADR-0058,Outbound customer email provider,docs/decisions/ADR-0058-outbound-customer-email.md,,Proposed; not accepted; authorises no provider account or sending code,Dean Fiedler,1552cfbb8efd6cea17438c2af18ba0effa4fc278,,,git,
