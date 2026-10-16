@@ -15,6 +15,7 @@ import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { principal, rows } from "../helpers/maintenance";
 import { maintenanceSeedGrants } from "../helpers/engineering-materials-grants";
 import { snapshot } from "../helpers/policy-commands";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -24,7 +25,7 @@ const read = (file: string) => readFile(new URL(`../../db/${file}`, import.meta.
 // Reconstruct the current-main gap from its original SQL, hashes and seed receipts.
 // Do not pretend that a 0051 ledger row means the schema already exists.
 async function currentMainWithoutMaintenance() {
-  await rows(await read("migrations/0001-recover.sql"));
+  await recoverSchema();
   await rows("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(50);
   await seed(50);

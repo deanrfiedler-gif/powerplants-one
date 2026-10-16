@@ -9,7 +9,6 @@ import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { reset, migrate, seed } from "../../scripts/database";
-import { readFile } from "node:fs/promises";
 import { draftBytes } from "../../src/estimating/worker";
 import { readConversion } from "../../src/estimating/conversion/reads";
 import {
@@ -48,6 +47,7 @@ import {
 } from "../helpers/quotation-material-resolution";
 import { currentFollowup } from "../helpers/quotation-supply-followup";
 import { taskInput } from "../helpers/projects";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -660,9 +660,7 @@ const legacyRows = async (table: string) =>
   });
 for (const topology of ["isolated-task", "two-task", "linear-chain"])
   test(`populated 0069 upgrade preserves ${topology} originals, every old row and output byte`, async () => {
-    await database().query(
-      await readFile("db/migrations/0001-recover.sql", "utf8"),
-    );
+    await recoverSchema();
     await database().query("DROP TABLE public.ppo_migrations");
     await migrate(69);
     await seed(69);
@@ -746,7 +744,7 @@ for (const topology of ["isolated-task", "two-task", "linear-chain"])
     );
     assert.deepEqual(
       now.filter((r) => r.version > 69).map((r) => r.version),
-      [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+      [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105],
     );
     for (const {
       f,

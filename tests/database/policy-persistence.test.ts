@@ -38,13 +38,14 @@ import {
   proposer,
   reviewer,
 } from "../helpers/policy-persistence";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 const sql = (name: string) =>
   readFile(new URL(`../../db/${name}`, import.meta.url), "utf8");
 before(async () => {
-  await database().query(await sql("migrations/0001-recover.sql"));
+  await recoverSchema();
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );
@@ -174,12 +175,12 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     )
   ).rows;
   assert.deepEqual(ledger.slice(0, oldLedger.length), oldLedger);
-  assert.equal(ledger.at(-1).version, 104);
+  assert.equal(ledger.at(-1).version, 105);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
     ],
   );
   const receipts = (
@@ -673,7 +674,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
 });
 
 test("fresh installation applies only registered files through 0095, retains reserved gaps and repeats without changes", async () => {
-  await database().query(await sql("migrations/0001-recover.sql"));
+  await recoverSchema();
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
   );
@@ -687,7 +688,7 @@ test("fresh installation applies only registered files through 0095, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
     ],
   );
   const first = await snapshot(await tables());

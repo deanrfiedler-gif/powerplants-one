@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
       - name: Configure disposable PostgreSQL lock capacity
@@ -375,7 +375,7 @@ jobs:
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-diamond.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-diamond-browser --reporter=list
       - name: Retain synthetic execution evidence
         if: always() && matrix.suite == 'runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-Supply-followup-evidence
           path: |
@@ -385,7 +385,7 @@ jobs:
           retention-days: 14
       - name: Retain synthetic shortfall execution evidence
         if: always() && matrix.suite == 'shortfall-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-allocation-shortfall-evidence
           path: |
@@ -395,7 +395,7 @@ jobs:
           retention-days: 14
       - name: Retain synthetic material execution evidence
         if: always() && matrix.suite == 'material-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-material-resolution-evidence
           path: |
@@ -405,7 +405,7 @@ jobs:
           retention-days: 14
       - name: Retain synthetic dependency execution evidence
         if: always() && matrix.suite == 'dependency-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-task-dependency-evidence
           path: |
@@ -416,7 +416,7 @@ jobs:
 
       - name: Retain synthetic chain execution evidence
         if: always() && matrix.suite == 'chain-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-task-chain-evidence
           path: |
@@ -427,7 +427,7 @@ jobs:
 
       - name: Retain synthetic branch execution evidence
         if: always() && matrix.suite == 'branch-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-task-branch-evidence
           path: |
@@ -438,7 +438,7 @@ jobs:
 
       - name: Retain synthetic merge execution evidence
         if: always() && matrix.suite == 'merge-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-task-merge-evidence
           path: |
@@ -449,7 +449,7 @@ jobs:
 
       - name: Retain synthetic diamond execution evidence
         if: always() && matrix.suite == 'diamond-runtime'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Quotation-task-diamond-evidence
           path: |

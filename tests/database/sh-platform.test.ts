@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { hasPermission } from "../../src/platform/permissions";
 import { localConfig } from "../../src/platform/config";
@@ -46,6 +45,7 @@ import {
 import { directSignIn } from "../helpers/engineering-changes-direct";
 import { readView as readChangeView } from "../../src/engineering/changes/reads";
 import { handoverCommand } from "../../src/engineering/changes/commands";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -509,12 +509,7 @@ test("SH06 source perspectives are permission scoped and selection rechecks curr
   );
 });
 test("0043 upgrades retained 0028 personal views and Activities across later migrations without rewriting them", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(28);
   await seed(28);

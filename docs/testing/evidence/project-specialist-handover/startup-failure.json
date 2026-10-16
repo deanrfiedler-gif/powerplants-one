@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "phase": "Start-PjApplication http after completed reset",
+  "result": "Failed before compiled HTTP assertions",
+  "message": "Application http did not become ready",
+  "location": "prove-local.ps1:19",
+  "attempts": 30,
+  "probe_timeout_seconds": 1,
+  "delay_seconds": 1,
+  "app_stdout_bytes": 0,
+  "app_stderr_bytes": 0,
+  "cause": "Not established",
+  "http_and_restart": "Not reached",
+  "limits": "Unchanged; no repeated attempt or deadline extension"
+}
