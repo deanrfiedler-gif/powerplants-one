@@ -1,5 +1,7 @@
 # Decision control
 
+[UX benchmark research direction](ux-benchmark-research-direction.md) records Dean's 16 October 2026 direction for the module UX benchmark: research and proposals only. None of the 92 recommendations or 24 amendment items is adopted; each needs his decision and its own record.
+
 [DK-03 exact revision and acknowledgement facts](output-register-facts.md) defines the accepted Q4/G3 backend read dependency with exact issue lineage, scoped denominators and explicit report/crew limitations.
 
 [PJ-06 specialist package coordination](project-specialist-packages.md) records exact commercial/source references, immutable briefs and independent internal receiving. Source-owned approvals and UI remain separate.
