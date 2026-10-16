@@ -1,5 +1,18 @@
 # Current prototype status
 
+## Field readiness gate proposed — 16 October 2026
+
+Dean named a Powerplants Australia problem: technicians arrive on site to missing or wrong parts, or to a customer who was never asked to get the site ready. He proposed that technicians accept or decline a job pack with a reason. The [field readiness gate proposal](decisions/field-readiness-gate-proposal.md) answers it with five changes:
+- a Dispatch-stage **Parts** criterion derived from Supply Chain readiness of the demands linked to the appointment, closing departure DP-20;
+- a technician **Return with reason** beside the unchanged acknowledgement, which holds dispatch and gives the preparer and the scheduler owned tasks;
+- an owned preparer task when a checker returns a revision;
+- a typed **customer site-readiness** contact on the appointment, with a derived criterion;
+- a pack issue lead time.
+
+It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR-18, TR-04 to TR-07 and BP-01 §13.2. It lists the migration, seed, permission and test-suite impact of a build, and asks seven questions with recommended answers.
+
+New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
+
 ## Products design: product image amendment accepted — 15 October 2026
 
 Dean asked whether the accepted Products (PD-01) design had a place for an image of the actual product, as the earlier r04 preview did. It did not: the redesign had dropped the r04 image panel without recording a departure. He directed the amendment ("Proceed with your recommendations"). Amendment A1 in the [Products decision](decisions/products-figma-design.md), section 8, adds an image panel above Identity on the desktop and tablet record, an 80 px image row at the top of the phone record, thumbnails in the catalogue grid, phone list and snapshot, and a No image placeholder that never borrows an image from a similar product. Images are SharePoint documents referenced by exact revision. The six product pictures are synthetic concept images of fictional equipment. [Nine icon-free r02 captures](reference/ui/products/products-figma-r02/README.md) are retained; the r01 captures are unchanged. Dean accepted A1 as drawn and saved the named version "Products — product image amendment A1". No application code, data model, route, migration, permission or parent ID changes; storing and reading real images is not decided.
