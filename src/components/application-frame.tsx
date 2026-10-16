@@ -8,10 +8,12 @@ export function ApplicationFrame({
   children,
   hosted,
   development,
+  railExpanded = true,
 }: {
   children: React.ReactNode;
   hosted: boolean;
   development: boolean;
+  railExpanded?: boolean;
 }) {
   const pathname = usePathname();
   // Presentation only. The preview page independently enforces the server gate.
@@ -23,7 +25,7 @@ export function ApplicationFrame({
       </main>
     );
   return (
-    <ShellProvider hosted={hosted} development={development}>
+    <ShellProvider hosted={hosted} development={development} renderedRailExpanded={railExpanded}>
       <FrameContents>{children}</FrameContents>
     </ShellProvider>
   );

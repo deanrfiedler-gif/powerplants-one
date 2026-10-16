@@ -144,3 +144,7 @@ Audit finding PRJ-2, and the 9 October review finding above ("opened on 22 Sept 
 - **Today button:** after the next-period arrow in the date group, in the existing secondary style. It sets the starting date to today in the display timezone and keeps the view, timezone and filters. On the phone it stays in view with the date row; at 390 px it fits on that row, and narrower screens wrap it under the date.
 - **Seeded data:** the synthetic visits remain in the week of 22 September 2031. Specs that read them now open `/schedule?day=2031-09-22`.
 - **Evidence:** a `booking-recovery` unit case for the default by timezone, and SC-07 in `tests/browser/planner.spec.ts` for the button, run on desktop and mobile against a task-owned server. There is no owner visual review yet, and 320 px was not captured.
+
+## First board without layout shift (F13) — 16 October 2026
+
+Unassigned demand stays out of the layout until the first schedule read settles, then appears together with the board. Before, the board arrived above it and pushed it out of view, a shift of about 0.18 at 1440 × 900. The demand read still starts when the page opens; a failed schedule read still shows demand with its own state, and later filter or day changes keep it in place. Fixture: `tests/browser/shell-loading.spec.ts` (F13), with the shell record in [shell](../systems/shell.md). No layout, control or copy change; owner review is pending.

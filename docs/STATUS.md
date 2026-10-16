@@ -1,5 +1,13 @@
 # Current prototype status
 
+## Shell first paint and create-form leave review — 16 October 2026
+
+Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
+- **F13 / UXB-75 desktop layout shift:** the server now renders the rail at the width the browser last showed, from a width-only `ppo_shell_rail` cookie, instead of painting it compact and widening it after hydration. The module tab row on Customers, Sites, Facilities and Equipment is held while the shell context loads. The Planner shows Unassigned demand together with its first board. Measured desktop shift on /work, /customers, /projects, /service/work-orders and /schedule at 1440 × 900 falls from 0.20–0.69 with the labelled rail to 0.02–0.09 on the compiled build.
+- **F42 / principle 11 lost input:** `/customers/new`, `/service/tickets/new`, `/work/new` and `/service/work-orders/new` now ask before rail, header or Back navigation discards typed entries, through the shared `useUnsavedChanges` guard. `/finance/handoffs/new` and `/estimating/configurations/new` remain open.
+
+The [shell system record](design/development/systems/shell.md#rail-first-paint-and-context-dependent-rows--16-october-2026) holds the before/after measurements and limits. Browser proof is local on the compiled build against a disposable synthetic database; CI is the authoritative run. No visual, owner or device review is recorded.
+
 ## PJ-06 scoped work-evidence acceptance — 16 October 2026
 
 [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530), `codex/pj06-work-evidence`, now reconciles main `034e6ff4b79703754f9c476208dbed3dbbafdeb1` after #536 integrated the other eight contributions. R1 #518 and R2 #522 remain integrated. Main's renderer 0104 and handover 0105 migrations are preserved; R3 retains its unchanged SQL at 0106. The [decision](decisions/project-specialist-work-evidence.md) precedes this integration. The [contract](contracts/project-specialist-work-evidence.md) retains immutable submissions, exact document/handover sources, default-denied independent review, terminal decisions and explicit corrections. The backend chat released its writer reservation after the [verified technical handoff](https://github.com/deanrfiedler-gif/powerplants-one/pull/530#issuecomment-6214164037); the user-authorised integration chat owns the final reconciliation and merge.

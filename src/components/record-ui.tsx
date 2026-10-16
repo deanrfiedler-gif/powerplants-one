@@ -111,3 +111,13 @@ export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery
   // Never call this for an uncertain or failed command.
   return () => { guard.current?.(); guard.current = null; };
 }
+
+// F42: a create form asks before leaving once its values differ from those it opened
+// with. Call the returned function only when the server accepts the new record, before
+// navigating to it; the cleared state and the released guard then land together.
+export function useCreateDraft(values: unknown, busy: boolean, enabled = true) {
+  const current = JSON.stringify(values);
+  const [opened] = useState(current), [saved, setSaved] = useState(false);
+  const release = useUnsavedChanges(enabled && !saved && current !== opened, enabled && busy);
+  return () => { setSaved(true); release(); };
+}

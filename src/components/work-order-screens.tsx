@@ -16,6 +16,7 @@ import {
 } from "./sales-delivery-creation";
 import { DeliverySalesSources } from "./sales-delivery-link";
 import { useIdentity } from "./business-session";
+import { useCreateDraft } from "./record-ui";
 import {
   EnumField,
   ErrorNotice,
@@ -339,6 +340,8 @@ function NewWorkOrderForm({ sales }: { sales?: SalesCreation }) {
     [disposition, setDisposition] = useState(""),
     [id] = useState(() => crypto.randomUUID());
   const cmd = useCommand();
+  // A Sales handover keeps its recoverable command once it is blocked.
+  const saved = useCreateDraft({ company, site, customer, owner, tickets, selected, disposition }, cmd.busy, !sales?.blocked);
   const companies = useResource<Envelope<Option>>(
       "selectors/companies?limit=200",
     ),
@@ -395,8 +398,9 @@ function NewWorkOrderForm({ sales }: { sales?: SalesCreation }) {
                   "service/work-orders",
                   fields,
                 );
-            if (result && !sales)
-              router.push(`/service/work-orders/${result.record_id}`);
+            if (!result) return;
+            saved();
+            if (!sales) router.push(`/service/work-orders/${result.record_id}`);
           }}
         >
           <ErrorNotice error={sales?.error ?? cmd.error} />
