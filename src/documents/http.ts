@@ -15,7 +15,7 @@ import { object, uuid } from "../shared/validation";
 import type { RouteContext } from "../shared/http";
 import { issueContext, packAppointmentApplicable, packContext } from "./context";
 import { type PackSnapshot } from "./render";
-import { supportedPackHtml } from "./publication/render";
+import { supportedPackHtml } from "./publication/contracts";
 import { readBundle, retryRenderJob, readRenderJob } from "./worker";
 import { requestIssue } from "./packs";
 const fileHeaders = {

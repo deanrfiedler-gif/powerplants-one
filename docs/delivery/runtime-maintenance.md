@@ -9,6 +9,22 @@
 
 [Issue #160](https://github.com/deanrfiedler-gif/powerplants-one/issues/160) owns the exact publication and check results. [ADR-0022](../decisions/ADR-0022-maintained-browser-runtime.md) records the sources, alternatives and limits. Branch: `maintenance/runtime-browser-september`. No SQL, seed, permission, template or issued-output changes are included.
 
+## Node engine range — 15 October 2026
+
+Node.js 24.22.0 was installed on Dean's workstation on 15 October 2026, and `npm ci` refused it because `package.json` required exactly 24.21.0 under `engine-strict=true`. Dean decided: "Open a small PR that relaxes engines.node in package.json to >=24.21.0 <25, keeps .nvmrc at 24.21.0, and updates the runtime maintenance doc to match."
+
+| Setting | Value | Role |
+|---|---|---|
+| `package.json` `engines.node` | `>=24.21.0 <25` | Local installs accept any Node 24 release from 24.21.0. Node 23, Node 24.20 and earlier, and Node 25 (including pre-releases) are still refused. |
+| `.nvmrc` | `24.21.0` | The maintained version. Every CI workflow reads it through `node-version-file`. |
+| Azure image | `node:24.21.0-bookworm-slim` | Unchanged. |
+| `engines.npm` and `packageManager` | `11.19.0` | Unchanged exact pin. |
+| `.npmrc` | `engine-strict=true` | Unchanged. |
+
+Changing the maintained version (`.nvmrc`, image and CI) remains a reviewed maintenance change, like the one below. Local evidence should state the Node version it ran on, because CI verifies on 24.21.0.
+
+`package-lock.json` still records `24.21.0` in its root `engines` entry. `npm ci` reads the range from `package.json`, so the lockfile was left unchanged: it is one of the files hashed into DK-06 managed template support, and editing it would invalidate published templates. The next dependency change that rewrites the lockfile will record the range there.
+
 ## Selected maintenance
 
 | Component | Before | Selected |

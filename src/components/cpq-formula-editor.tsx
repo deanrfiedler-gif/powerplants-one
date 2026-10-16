@@ -8,6 +8,38 @@ import { Button } from "./ui/button";
 import { CpqDialog, CpqField, CpqNotice, CpqPill, quantity, type Wire } from "./cpq-ui";
 
 type Report = Wire<Awaited<ReturnType<typeof validateDraft>>>;
+type FormulaSymbol = { key: string; label: string; unit: string; source: string; kind: "Fact" | "Parameter" };
+// The facts, parameters and (for labour) resolved material quantities a rule's formula may name.
+export function formulaSymbols(definition: Definition, rule: Rule): FormulaSymbol[] {
+  const part = definition.parts.find((p) => p.key === rule.part);
+  return [
+    ...definition.facts.filter((f) => ["Decimal", "Integer"].includes(f.type))
+      .map((f) => ({ key: f.key, label: f.label, unit: f.unit, source: f.source ?? "Fact dictionary", kind: "Fact" as const })),
+    ...(rule.parameters ?? []).map((p) => ({ ...p, source: "Release parameter", kind: "Parameter" as const })),
+    ...(rule.phase === "Labour" ? definition.parts.filter((p) => p.category !== "Labour" &&
+      p.scope?.kind === part?.scope?.kind && p.scope?.group_fact === part?.scope?.group_fact)
+      .map((p) => ({ key: `bom_${p.key}`, label: p.description, unit: p.unit, source: "Resolved material quantity", kind: "Fact" as const })) : []),
+  ];
+}
+export function formulaSyntax(formula: string, definition: Definition, symbols: FormulaSymbol[]) {
+  if (!formula.trim()) return "Add a quantity formula.";
+  try { compileFormula(formula, new Set(symbols.map((s) => s.key)), definition.schema_version === 3); return null; }
+  catch (e) { return (e as Error).message; }
+}
+const glyphs: Record<string, string> = { "*": "×", "/": "÷", "-": "−" };
+// CPQ / Fact token 466:88: facts in link colour with their unit, parameters on a neutral surface,
+// operators and functions as plain marks, and an unknown name marked missing (never zero).
+export function FormulaTokens({ formula, symbols }: { formula: string; symbols: FormulaSymbol[] }) {
+  const tokens = formula.match(/\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|\S/g) ?? [];
+  const unit = (u: string) => (u && !["each", "count"].includes(u) ? <small>{u}</small> : null);
+  return <span className="cpq-tokens">{tokens.map((t, i) => {
+    const symbol = symbols.find((s) => s.key === t),
+      call = /^[A-Za-z_]/.test(t) && tokens[i + 1] === "(";
+    if (symbol) return <span key={i} className="cpq-token" data-kind={symbol.kind} title={`${symbol.label} · ${symbol.source}`}>{t}{unit(symbol.unit)}</span>;
+    if (/^[A-Za-z_]/.test(t) && !call) return <span key={i} className="cpq-token" data-kind="Missing" title="Not in the fact dictionary or this rule's parameters">{t}</span>;
+    return <span key={i} className="cpq-token" data-kind="Operator">{glyphs[t] ?? t}</span>;
+  })}</span>;
+}
 export function CpqFormulaEditor({ definition, rule, company, onApply, onClose }: {
   definition: Definition; rule: Rule; company: string;
   onApply: (formula: string) => void; onClose: () => void;
@@ -20,14 +52,7 @@ export function CpqFormulaEditor({ definition, rule, company, onApply, onClose }
     [testing, setTesting] = useState(false),
     editor = useRef<HTMLTextAreaElement>(null);
   const part = definition.parts.find((p) => p.key === rule.part);
-  const symbols = [
-    ...definition.facts.filter((f) => ["Decimal", "Integer"].includes(f.type))
-      .map((f) => ({ key: f.key, label: f.label, unit: f.unit, source: f.source ?? "Fact dictionary" })),
-    ...(rule.parameters ?? []).map((p) => ({ ...p, source: "Release parameter" })),
-    ...(rule.phase === "Labour" ? definition.parts.filter((p) => p.category !== "Labour" &&
-      p.scope?.kind === part?.scope?.kind && p.scope?.group_fact === part?.scope?.group_fact)
-      .map((p) => ({ key: `bom_${p.key}`, label: p.description, unit: p.unit, source: "Resolved material quantity" })) : []),
-  ];
+  const symbols = formulaSymbols(definition, rule);
   let syntax: string | null = null;
   try { compileFormula(formula, new Set(symbols.map((s) => s.key)), definition.schema_version === 3); }
   catch (e) { syntax = (e as Error).message; }

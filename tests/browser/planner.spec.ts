@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page, type Request } from "@playwright/test";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 async function identity(page: Page, profile = "coordinator") {
@@ -231,6 +231,45 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
     "permission",
   );
   await capture(page, info, "systems-refusal");
+});
+test("P05 SC-07 each planner mount reads one schedule range, the phone Day view's week from the start", async ({
+  page,
+}, info) => {
+  // The phone Day view reads Monday to Sunday. Until an effect measured the width the page
+  // assumed a wide screen, so every mount on a phone read the single day and then the week, and
+  // whichever response landed last was shown (P11 PT-29 failed on it intermittently).
+  const phone = info.project.name.startsWith("mobile");
+  const range = (from: string, to: string) =>
+    `${new Date(from).toISOString()} to ${new Date(to).toISOString()}`;
+  // 6 November 2031 is a Thursday; the phone's week runs from Monday 3 November, in Brisbane.
+  const expected = phone
+    ? range("2031-11-02T14:00Z", "2031-11-09T14:00Z")
+    : range("2031-11-05T14:00Z", "2031-11-06T14:00Z");
+  const isRead = (request: Request) =>
+    request.method() === "GET" &&
+    new URL(request.url()).pathname === "/api/v1/schedule";
+  const ranges: string[] = [];
+  page.on("request", (request) => {
+    if (!isRead(request)) return;
+    const query = new URL(request.url()).searchParams;
+    ranges.push(range(query.get("from")!, query.get("to")!));
+  });
+  const settled = async (action: () => Promise<unknown>) => {
+    const read = page.waitForResponse((response) => isRead(response.request()));
+    await action();
+    await read;
+    // The first response can be the mount before an identity remount; wait out the remount's.
+    await expect(
+      page.getByText("Loading permitted records…", { exact: true }),
+    ).toHaveCount(0, { timeout: 20000 });
+  };
+  await page.goto(`/schedule?day=2031-11-06&view=day`);
+  // Changing identity remounts the page, as the P11 denial step does.
+  await settled(() => identity(page));
+  await settled(() => page.reload());
+  // Strict Mode repeats a mount's read on the dev server; the compiled application the CI suite
+  // runs sends it once. Either way no read may ask for any other range.
+  expect([...new Set(ranges)]).toEqual([expected]);
 });
 test("P05 SC-08 contact refusal, owned failure, exact agreement, full crew confirmation and cancellation", async ({
   page,
