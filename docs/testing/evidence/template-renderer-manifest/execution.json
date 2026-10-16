@@ -1,0 +1,164 @@
+{
+  "scope": "DK-06 G5 rendering-only DK06-OUT09-2 manifest for synthetic OUT-09 publications",
+  "base_commit": "d070a61",
+  "integrated_base_commit": "1552cfbb8efd6cea17438c2af18ba0effa4fc278",
+  "reproduction_commit": "0744de4",
+  "source_hash_basis": "SHA-256 of UTF-8 source with CRLF normalised to LF",
+  "source_sha256": {
+    "db/migrations/0103-template-renderer-manifest.sql": "5562174c88ddc3e115d0d22efe701daf43cf779c6a5e9cfdad30c55a05f5b4fe",
+    "scripts/demo-upgrade.ts": "3ddd51fb4d497e67bd313f3de63f67204fc05fddc5c5aab47c6bfc22c951a281",
+    "scripts/migration-registry.ts": "18e5959f778724ad531a852c83d59e36d322dba0f4971fbc6563112af654607c",
+    "src/documents/context.ts": "b1ae68782bf921864016061c50161ff2b06fa7a0389ef36a2d8fd797f49d6a5f",
+    "src/documents/http.ts": "a70ca92f5cf2cddf7839f97f0f3e160f00e785fc5010b0b87322dd0696ca24e8",
+    "src/documents/publication/contracts.ts": "416c43c341ff984c4a1222997736e3f6f849fc583479520e5778bcd2db34408d",
+    "src/documents/publication/dk06-out09-2.ts": "dcab67667d690cde1a4686fd8be578278ae408c1b7fcc95fdc6af11c986024f9",
+    "src/documents/publication/service.ts": "d52c572674b425ba22ded19ddacf4045f38d6ba707344effa02510a656892e58",
+    "src/documents/template-catalogue.ts": "ee6d1d946431db6171896894ce19d0cb88be77edeebb6ecbc6f3f0ecb0aa4f4a",
+    "src/documents/use/service.ts": "e40d696dd7bd9a4eae74828d671038f3ac92e35d8304cd04fbb73696e3a302d7",
+    "src/documents/worker.ts": "0997c75fa2bcf04a53df531e33d86bcefa0b9020d67c591698883bf33d4f5568",
+    "tests/database/access-application.test.ts": "3cce00310cba0d22016664bf3458e7df5458b51ec8ae6754cf4d9e11b9b0e0d1",
+    "tests/database/access-local-teams.test.ts": "581a21ece4f11c524cab7b9a5c9a3e7ae3929816031860b0bd698beb3d757086",
+    "tests/database/access-requests.test.ts": "982a7cc1c039f1222158a6ce461595034481787a5d477af47317f0bbf482980f",
+    "tests/database/access-review-attestations.test.ts": "0c1ed2b275dc2e4cc211b6a23b6b17e329839d377c7612ca24fd6c88ecd9daa9",
+    "tests/database/access-withdrawal.test.ts": "d7440c49bc8828679314d59f6803fc8cb5b4efedaa1844e8488ce0fc64fd7805",
+    "tests/database/cpq-packages-upgrade.test.ts": "71b3160a11a9c18e60a90137d47630439c2ce703189e0f3f78ff2108fcd04acb",
+    "tests/database/cpq.test.ts": "62007a4e4090b25b94d9867af9a94d2b2893133430b03cdc3bb9fe64f4eda7e2",
+    "tests/database/document-library.test.ts": "fa2fb26482fa89bb3a3290378b27c2c3f1a26e485f3969c0c3c7943e54100102",
+    "tests/database/estimating-catalogue.test.ts": "340118d5f6ec0dcb264583ce28dfc7825dc1a4cc7f849a7670f162e9d93f5858",
+    "tests/database/excel-capacity-upgrade.test.ts": "6c3f7a957a7ae50ccf3b970cf0425ed230f55dd0b745a703144c72df1078d110",
+    "tests/database/excel-fx-upgrade.test.ts": "6ac3134401d12dc37ad08c4a4dc6370524a49910dde62e0a1aba91d643c8593e",
+    "tests/database/excel-import-upgrade.test.ts": "79987ae1f7970212dd18d31bead7290f586bf8fe1c473919d0e237380fa2edde",
+    "tests/database/excel-landed-upgrade.test.ts": "0fad2052b7e0cbe09d5c3483805e4637b4336d42eeeada180bbe75bfa9ee5112",
+    "tests/database/excel-reimport-upgrade.test.ts": "239f1aaa87735eb7b36db7e7e3f4de9ea6084f8e245674934942cf0d80524263",
+    "tests/database/excel-source-pricing-upgrade.test.ts": "d9ee3c3613dedf546c73d9e817168c5fcfe61ade34164b233273d0b6f118bf4e",
+    "tests/database/field-customer-response.test.ts": "4b35dbb6d6120416d599d86b4f6195421dad33ddf2151915ba4b4da0f67fe940",
+    "tests/database/field-timer-boundaries.test.ts": "ef503e466d6d3532a11a4fbcc58b3ca0ef6b44d1901793eec57840183b8f14a7",
+    "tests/database/field.test.ts": "dbf52565d848a2d5b06440ddc2b5f1d00c2e8b0ca5a6bfe007ca2057644c909a",
+    "tests/database/finance-upgrade.test.ts": "d8cef74230544089e15cee38f16e09781a1eb282a8f821d33b5ee06c97293eff",
+    "tests/database/leads-amendments.test.ts": "b4b85a0f5eec042c289aa74ba4fa705821190f6441c0dadc7d120d402791e56e",
+    "tests/database/leads-projects-integration.test.ts": "e8e98f7c121627870a94a35aefbcfd8716a3d03e35f9e821b51f31b448017dfd",
+    "tests/database/offline.test.ts": "2d41e62f0788eba65c912191b4a55348bdd14b4cd33289e6c7da2858b63414e4",
+    "tests/database/outcome-sources.test.ts": "ba7364f07c86dd4af760c4dbd7f7b319055ad0255632a08cc418ceaefffb7eb7",
+    "tests/database/output-actions.test.ts": "f41321968d71b0a84115e84ff5eb9b66146d61dab3139f991d577a9e82a4a88b",
+    "tests/database/packs.test.ts": "d0df0333b60e21d54f9bc48cb74207015d5f03e9e261f65cc75b477c291eeea7",
+    "tests/database/planner.test.ts": "b56aa299102c8e088d529d05240e36d933d45495422b91798218ba35d74452bb",
+    "tests/database/policy-persistence.test.ts": "6bb908787d5624d7d82434798e30b583e80e38db63ca89be7f45c64f3df9e8d9",
+    "tests/database/products-upgrade.test.ts": "6b47440005a63baf0214795090b6f9535e6d52a1edaf21e95e5717b0136eb428",
+    "tests/database/project-baselines.test.ts": "4bcb3e7272dbe0c1cd4924fb754cc2b9e3a5dd484d4b31ec7a53d280c3439436",
+    "tests/database/project-commercial-upgrade.test.ts": "d7709dd66ca992a391ff427052e1a5c25e9cd5451347f46fe7ceffc93f4dcbf1",
+    "tests/database/project-programme.test.ts": "671c4a0a33d8b32e2b4b442dbc48846d22573a6728cfe55bab89d37f82f4be78",
+    "tests/database/project-raid.test.ts": "b7ee02849bd258e77df77704abc474ebf855806d0966ffa31864b9e7e302d4ac",
+    "tests/database/quotation-allocation-shortfall.test.ts": "36423b38dcbcbc5239a6d6f81b2f6ffc026a1cf3b8e27a80411710d32be87f70",
+    "tests/database/quotation-conversion.test.ts": "4387c358983ef790a2a2f660eacf39eb12451ce0950cd8b2ba54a7dc1cc20fde",
+    "tests/database/quotation-disposition.test.ts": "500389b6cac7440a76e625384c707e93a295215268c0081d51c245c22a09d118",
+    "tests/database/quotation-material-resolution.test.ts": "1ef4114d63c271b82583530b2c7e3b665817a8ed2f5b244863d7a890a6da662a",
+    "tests/database/quotation-receipt-correction.test.ts": "24a1267e4d28e2e939caee05f23a0ac01680a44bde1d8dff9ae02fc87a746d6a",
+    "tests/database/quotation-release.test.ts": "dd63f97c54bce1c0a8ad3e29468482604dadc79310ee34f417d357cb4ce3ace9",
+    "tests/database/quotation-reservation-reconciliation.test.ts": "60e87c9d5f19f2d31604464bf77655a956fab2d7adeb7605e197966dd7633013",
+    "tests/database/quotation-response.test.ts": "84ec0eccd29d42de4ec9ea199cc4adab07fd3cb66c359c34462bc50183b714e5",
+    "tests/database/quotation-supply-followup.test.ts": "3ad34373e8e55fe195f5572ec97880d1e9ab243e2652a964338de143b2c224d2",
+    "tests/database/quotation-task-branch.test.ts": "edb5246d7c0ac01fd05bebe6cf0c8e91985064e3db0886e639a3bcc776de68ba",
+    "tests/database/quotation-task-chain.test.ts": "cc68c35918ad74e2ef2e240eeb2e74be7bc6e720392e284c9d28237155863c80",
+    "tests/database/quotation-task-dependency.test.ts": "52d28e4556e9e608efd1862119a625f8f1164a7a0627b70191316a7ea204e128",
+    "tests/database/quotation-task-diamond.test.ts": "5d3a5ea495438cc9728aade597cc78598a2ec8eccd77744e68867a45e460104c",
+    "tests/database/quotation-task-merge.test.ts": "fca73388a6346e763447265b61d51ecd42a29de4b4ce865e611ea5d1dcb86a33",
+    "tests/database/reports.test.ts": "3a3576fcc1a6a2a164a7dc651d0bae839da5c02f5f01c6c99b41660f07de3f2e",
+    "tests/database/sales-delivery-binding.test.ts": "5622abebc9edf65c2123330bc9ce580a984b8b596beae17118a2bc9218177c20",
+    "tests/database/sales-estimating-binding.test.ts": "b7f4caf86e69813c6bc1900b5096425933a3f40f677f74580da6b3ea4f969704",
+    "tests/database/template-drafts-upgrade.test.ts": "99ad6368f298844c36614f0c93ab69b9c1a33b8060b0ee6472617a23be66d329",
+    "tests/database/template-manifest-drift.test.ts": "2f1598611b86dbedf30149e62275d1ada23e5ba6dd319781531e0468c3452137",
+    "tests/database/template-publication-upgrade.test.ts": "6239fe2ec6fe9ac99245404b89b405685577764eedc0283d2a220bf5a979285d",
+    "tests/database/template-publication.test.ts": "e08e8636e1fc492b47bb3646e811630775188cdb460e86103ec79b2488f43fbb",
+    "tests/database/template-renderer-upgrade.test.ts": "c95c02b93de5e87542a9e8768bdae17ed032d3df56f601d42fee911136c13007",
+    "tests/database/template-use-upgrade.test.ts": "520df82abb2b5795b08a194e6e9b6947071e326842384ca99a126e4c7480e174",
+    "tests/demo/upgrade.test.ts": "945e156be9212dd6670573b947f683dada667a1f42d3415dd7b0e25fedd2058e",
+    "tests/helpers/template-manifest.ts": "09f44b53be9df33b47c44f440d46bb7017143ef7a98f50e58bb782ffe584573a",
+    "tests/unit/template-renderer-contract.test.ts": "17ab73370821ef6bc39c7dd674523db977273f3e1a6eef6ffaa0e06881827a6d"
+  },
+  "environment": {
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "node": "24.21.0 until 19:57 AEST, then 24.22.0 after an external reinstall",
+    "browser_channel": "chrome"
+  },
+  "results": {
+    "reproduction_before_change": {
+      "pass": 1,
+      "commit": "0744de4",
+      "detail": "Each of the four generic-file edits made the managed definition DefinitionChanged and refused createPack with TemplateUnavailable."
+    },
+    "units_focused": {
+      "pass": 4,
+      "fail": 0,
+      "files": [
+        "tests/unit/template-renderer-contract.test.ts",
+        "tests/unit/template-publication.test.ts"
+      ]
+    },
+    "units_full": {
+      "tests": 858,
+      "pass": 851,
+      "fail": 7,
+      "detail": "Three Windows filesystem cases also fail on unmodified main d070a61; four load timeouts (azure-demo, cpq-packages workload, foundation x2) pass on two re-runs in both branch and main control."
+    },
+    "database_template": {
+      "pass": 17,
+      "fail": 0,
+      "detail": "G5 proof, 0103 guard, populated 0102 upgrade, six R3 cases, R3 populated 0092, R4 populated 0093 and six R4 cases. Two R4 cases first hit pool connection timeouts during the build and passed on re-run; one run was killed by the external Node reinstall and re-run."
+    },
+    "database_ledger_spot_check": {
+      "pass": 8,
+      "fail": 0,
+      "cases": [
+        "Products from 25",
+        "Products from 101",
+        "Products from 102",
+        "Products from 103",
+        "Project commercial from 25",
+        "Project commercial from 100",
+        "CPQ populated 0101",
+        "R2 populated 0090"
+      ]
+    },
+    "compiled_http": {
+      "pass": 5,
+      "fail": 0,
+      "files": [
+        "template-catalogue",
+        "template-drafts",
+        "template-publication-base",
+        "template-publication",
+        "template-use"
+      ]
+    },
+    "typescript": "Pass",
+    "changed_source_eslint": "Pass",
+    "prettier_new_files": "Pass",
+    "build": "Pass",
+    "local_aid": "Uncommitted preload queued one pg_timezone_names warm-up per new connection (timeout lifted then reset) because cold backends took 20-30 s under machine load.",
+    "not_run_locally": [
+      "Remaining ledger suites",
+      "Hosted-demo upgrade suite",
+      "Full HTTP lane",
+      "Restart proof",
+      "Browser suites"
+    ],
+    "integration_2026_10_16": {
+      "base": "1552cfb",
+      "units_template": {
+        "pass": 8,
+        "fail": 0,
+        "detail": "Includes the new DK06-OUT09-2 literal-insertion test (7 h1 elements before porting #506's fix, 1 after) and main's #506/#515 tests."
+      },
+      "database": {
+        "pass": 9,
+        "fail": 0,
+        "detail": "G5 proof, 0103 guard, six R3 cases and the populated 0102 upgrade; the upgrade first hit a pool connection timeout under 100% CPU and passed when run alone."
+      },
+      "typescript": "Pass",
+      "changed_source_eslint": "Pass"
+    }
+  },
+  "acceptance": "Local synthetic verification only. CI, independent review, owner acceptance and deployment are separate.",
+  "verified_date": "2026-10-15"
+}

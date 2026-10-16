@@ -25,8 +25,10 @@ import { type PackSnapshot, rendererVersion } from "./render";
 import {
   completionInstructions,
 } from "./p11-template";
-import { supportedTemplateDefinition } from "./publication/definition";
-import { parseDefinition } from "./publication/definition";
+import {
+  parseDefinition,
+  supportedTemplateDefinition,
+} from "./publication/contracts";
 import { selectedTemplate } from "./use/policy";
 import { bindingAuthority } from "./drafts/context";
 import type { PackInput } from "./validation";
