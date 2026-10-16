@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run.
+**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run. The §8 Claude API provider amendment (decision A1) was proposed on 16 October 2026 and awaits Dean's decision.
 
 ## 1. Outcome and authority
 
@@ -125,9 +125,12 @@ Proposed synthetic retention: chat and generated summaries remain in page memory
 | Option | Assessment for PPO | Decision |
 |---|---|---|
 | Deterministic synthetic adapter | Exercises parsing, source cards, review, permissions and recovery without API cost; it does not measure real AI quality | Default first implementation/test adapter, visibly labelled Simulated assistant |
-| Direct OpenAI API | Supports schema-defined tool calling and structured output; a small adapter fits PPO's server boundary | Recommended first live synthetic evaluation candidate, pending account, budget and actual evaluation |
+| Direct Claude API, funded by Max 20x API credits | Supports application-executed tools with strict schemas and JSON structured outputs; a small adapter fits PPO's server boundary. Dean's plan includes US$200 of API credit a month for one linked Console organisation | Proposed first live synthetic evaluation candidate ([decision A1](../decisions/ppo-assistant-direction.md#proposed-amendment-a1--claude-api-first-16-october-2026), awaiting Dean), pending billing owner, ceiling and actual evaluation |
+| Direct OpenAI API | Supports schema-defined tool calling and structured output; a small adapter fits PPO's server boundary | Retained alternative behind the provider adapter; it was the first candidate before A1 and becomes first again if A1 is declined |
 | Azure OpenAI in Microsoft Foundry | Fits a future Azure/Entra operating model; deployment type/region/model availability and billing must be verified | Retain as an alternative; hosting PPO on Azure does not require this provider |
 | Self-hosted model | Adds model-serving, hardware and maintenance work requiring a separate support case | Defer for this bounded pilot |
+
+Anthropic documents generally available structured outputs: JSON schema responses and `strict` tool inputs, on current models including Claude Haiku 5.5, Sonnet 5.5 and Opus 5.5. Claude Sonnet 5.5 is the cost and evaluation reference, with Haiku 5.5 and Opus 5.5 bracketing the evaluation. This is not a final model selection. Pin a model and SDK when implementing a funded live evaluation, and choose on task quality, tool validity, latency and total billable tokens. [Structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs), checked 16 October 2026.
 
 OpenAI documents application-executed tools in its [function-calling guide](https://developers.openai.com/api/docs/guides/function-calling). GPT-5.4 mini is a concrete cost/evaluation reference supporting function calling and structured outputs, not a final model selection or claim to be the latest/best. Pin a supported model snapshot and SDK when implementing a funded live evaluation; compare task quality, tool validity, latency and total billable tokens before choosing. [Model documentation](https://developers.openai.com/api/docs/models/gpt-5.4-mini), checked 8 September 2026.
 
@@ -135,23 +138,60 @@ OpenAI API inputs/outputs are not used for training unless opted in; abuse-monit
 
 Microsoft describes Azure-hosted processing and says these models do not interact with the model provider's services. Data handling depends on feature and deployment configuration. Global processing can cross geographies; a selected Azure resource region alone is insufficient to promise Australian residency. Confirm the exact deployment and available model in the subscription. [Azure data/privacy](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy), [deployment types](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types), checked 8 September 2026.
 
-Before paid synthetic calls: name the billing owner, approve a budget and provider/model, configure a server-held secret outside Git, restrict outbound destinations, and verify no real data enters requests or logs. Before operational data: additionally resolve permitted data classes, retention/processing geography and actual hosted authentication. No consent or paid service is provisioned by this package.
+### Anthropic API data handling and retention
+
+These are Anthropic's published terms, checked 16 October 2026. They are not verified account settings. Anthropic's [commercial data retention policy](https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data) (dated 1 July 2026) deletes API inputs and outputs from its backend within 30 days of receipt or generation. The exceptions are a zero data retention (ZDR) agreement, services with longer retention under the customer's control such as the Files API, Usage Policy enforcement and legal requirements. Flagged inputs and outputs may be kept for up to two years and classification scores for up to seven. The [API and data retention page](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention) says retained data is never used for training without express permission. It says conversation content is not retained by default, except that Covered Models (Claude Fable 5.1 and 5, Claude Mythos 5.1 and 5) require 30-day retention. ZDR is arranged per organisation through Anthropic sales and does not cover Console or playground use. Batch, Files API, code execution, MCP connector and Managed Agents are not ZDR-eligible. PPO plans on the more conservative reading: up to 30 days, and longer for flagged content.
+
+The [Commercial Terms](https://www.anthropic.com/legal/commercial-terms) (effective 17 June 2025) say Anthropic may not train models on Customer Content from Services. The customer retains its inputs and owns its outputs, and the Data Processing Addendum applies. For a customer outside the EEA, Switzerland and the UK the contracting party is Anthropic, PBC under California law. Section D.3 requires users to be told not to rely on factual assertions in outputs without independently checking them, so the summary's coverage label and source chips must keep that notice visible. The API page treats an API-key organisation as a Commercial organisation, but the credit programme's [Supplemental Credit Terms](https://www.anthropic.com/legal/credit-terms) (effective 4 March 2024) do not name the governing agreement. Confirm the terms the linked organisation accepted before any live data.
+
+[Data residency](https://platform.claude.com/docs/en/manage-claude/data-residency) offers two inference settings: `global` (the default, standard price) and `us` (1.1 times every token price). Workspace storage at rest is US-only and fixed when the workspace is created. There is no Australian processing or storage option. Propose foreground Messages API requests only, with no Files API, Batch, Managed Agents, code execution, MCP connector or provider web tools, and no PPO content in the Console playground. Do not equate this with zero retention or Australian residency.
+
+### Subscriber API credit programme
+
+The [API credits for subscribers](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers) page, checked 16 October 2026, sets these constraints:
+
+- **Amount and timing:** Max 20x includes US$200 a month. It arrives each billing cycle after the plan payment, and new subscribers can claim it after seven days on the plan. The subscriber claims it and must also be Owner, Admin or Billing in the Console organisation.
+- **One linked organisation:** Each plan links to one Console organisation, and each organisation takes credit from one plan. The subscriber cannot change the link; only Anthropic support can.
+- **Expiry:** Unused credit expires at the end of each billing cycle and does not roll over. New credit stops when the plan ends, though credit already issued lasts until it expires.
+- **Exhaustion:** With no other balance, API requests stop and return "Your credit balance is too low to access the Anthropic API". Nothing is charged to the Claude plan. If the organisation holds purchased credits or has auto-reload on, requests continue on that paid balance.
+- **Shared balance and limits:** Every key and workspace in the organisation draws on the same balance. Anthropic advises capping a project with its own workspace and a monthly spend limit. The Default Workspace cannot take limits, and credit-funded usage still counts towards the organisation's monthly spend cap.
+- **Coverage:** The credit covers the Claude API, Managed Agents, the Agent SDK and the playground. It does not cover Claude Code, extra usage in the Claude apps, Claude Platform on AWS, Bedrock, Google Cloud or Microsoft Foundry.
+- **Programme terms:** Credits are non-refundable, have no cash value and cannot be transferred or sold. Only the holder of the account they belong to may use them.
+
+Claude is also sold through Microsoft Foundry and Bedrock, but the credit does not apply there and those routes are billed separately. The [workspace](https://platform.claude.com/docs/en/manage-claude/workspaces) spend limit caps monthly spending and cannot exceed the organisation's limits, checked 16 October 2026.
+
+Before paid synthetic calls: name the billing owner, approve a budget and provider/model, configure a server-held secret outside Git, restrict outbound destinations, and verify no real data enters requests or logs. For the credit-funded Claude option, also confirm who holds the plan and the linked organisation. Use a dedicated, non-default PPO workspace whose monthly spend limit is at or below the approved ceiling, a key scoped to that workspace, and no purchased credits or auto-reload. Before operational data: additionally resolve permitted data classes, retention/processing geography and actual hosted authentication. No consent or paid service is provisioned by this package.
 
 ### Illustrative usage model
 
-Reference rates: GPT-5.4 mini input US$0.75 / million tokens and output US$4.50 / million tokens from its model page, checked 8 September 2026. No cache discount assumed. Treat these as a dated estimate requiring billing-tier verification before purchase.
+Reference rates are base input / output prices in US dollars per million tokens, from Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing), checked 16 October 2026:
 
-One completed task is assumed to use **6,000 input and 1,000 total billable output tokens across all its model calls**, including repeated context/tool results and billable reasoning. This is an assumption to measure, not a per-request promise. Formula: tasks × ((6,000 × 0.75 + 1,000 × 4.50) / 1,000,000). Rates/volumes exclude hosting, development/support, storage/logging, voice, embeddings, external tools, taxes, card fees and any regional surcharge.
+- Claude Haiku 5.5: US$0.10 / US$0.50 for prompts up to 100,000 tokens.
+- Claude Sonnet 5.5: US$2 / US$10. This is the planning reference.
+- Claude Opus 5.5: US$4 / US$20.
 
-| Scenario | Monthly task assumption | Text API subtotal USD | With 50% usage contingency USD | Illustrative AUD at assumed A$1.50/US$1 |
-|---|---:|---:|---:|---:|
-| Owner evaluation | 100 | $0.90 | $1.35 | $2.03 |
-| Small synthetic pilot | 5 users × 20 days × 20 tasks = 2,000 | $18.00 | $27.00 | $40.50 |
-| Higher usage sensitivity | 10 users × 20 days × 40 tasks = 8,000 | $72.00 | $108.00 | $162.00 |
+GPT-5.4 mini at US$0.75 / US$4.50 is kept from its 8 September check for comparison and was not rechecked. No cache or Batch discount is assumed. Treat these as dated estimates and recheck them before any funded run. Anthropic notes that Claude 4.7 and later models use a tokenizer producing about 30% more tokens for the same text than earlier Claude models. Token counts are therefore provider-specific, and the assumption below is re-measured for each provider.
 
-AUD conversion is a planning assumption, not a live exchange rate; amounts exclude GST. A 10% regional-processing uplift would multiply the relevant text charges by 1.10 where applicable. Real multi-turn usage may exceed the assumption materially. Model choice is revisited if accuracy or measured usage is unacceptable.
+One completed task is assumed to use **6,000 input and 1,000 total billable output tokens across all its model calls**, including repeated context/tool results and billable reasoning. This is an assumption to measure, not a per-request promise. Formula: tasks × ((6,000 × input rate + 1,000 × output rate) / 1,000,000), which is US$0.022 a task at Sonnet 5.5. Rates/volumes exclude hosting, development/support, storage/logging, voice, embeddings, external tools, taxes, card fees, any regional surcharge and the Claude plan's own subscription.
 
-Propose a **US$30 monthly synthetic API ceiling**, unapproved until explicitly selected for paid use. Enforce it in PPO, not just through provider alerts: transactionally reserve a conservative maximum before each request across concurrent users, settle against provider usage, and retain reservations for unknown billing outcomes. Missing budget/model pricing fails closed. Count retries, reasoning, tool calls and audio separately; changing model or region updates the reservation price before use. A proposed AI1 turn limit is six model calls (including retries), aggregate 48,000 input/8,000 billable output tokens and 60 seconds, whichever occurs first. At the reference rates the token ceiling is US$0.072 before uplift. Stop with useful partial/error state; no automatic expensive-model fallback. Rate-limit per actor and workspace. Budget exhaustion leaves ordinary PPO screens and receipt reconciliation available.
+| Scenario at Claude Sonnet 5.5 rates | Monthly task assumption | Text API subtotal USD | With 50% usage contingency USD | Illustrative AUD at assumed A$1.50/US$1 | Share of US$200 monthly credit, with contingency |
+|---|---:|---:|---:|---:|---:|
+| Owner evaluation | 100 | $2.20 | $3.30 | $4.95 | 2% |
+| Small synthetic pilot | 5 users × 20 days × 20 tasks = 2,000 | $44.00 | $66.00 | $99.00 | 33% |
+| Higher usage sensitivity | 10 users × 20 days × 40 tasks = 8,000 | $176.00 | $264.00 | $396.00 | 132%: exceeds the credit |
+
+| Reference model | USD per task | Owner evaluation, with contingency | Small pilot, with contingency | Higher usage, with contingency | Tasks within US$30 ceiling, with contingency |
+|---|---:|---:|---:|---:|---:|
+| Claude Haiku 5.5 | $0.0011 | $0.17 | $3.30 | $13.20 | about 18,000 |
+| Claude Sonnet 5.5 | $0.022 | $3.30 | $66.00 | $264.00 | about 900 |
+| Claude Opus 5.5 | $0.044 | $6.60 | $132.00 | $528.00 | about 450 |
+| GPT-5.4 mini (8 September rates) | $0.009 | $1.35 | $27.00 | $108.00 | about 2,200 |
+
+The US$200 credit covers every scenario except higher usage on Sonnet 5.5 or Opus 5.5. The US$30 ceiling covers the owner evaluation and the proposed 40-task, three-repeat evaluation set on every reference model. Credit spent elsewhere in the linked organisation reduces what is left for PPO. AUD conversion is a planning assumption, not a live exchange rate; amounts exclude GST. US-only inference multiplies every Claude token price by 1.1, and global routing uses the standard rates. Real multi-turn usage may exceed the assumption materially. Model choice is revisited if accuracy or measured usage is unacceptable.
+
+Propose a **US$30 monthly synthetic API ceiling**, unapproved until explicitly selected for paid use. Enforce it in PPO, not just through provider alerts: transactionally reserve a conservative maximum before each request across concurrent users, settle against provider usage, and retain reservations for unknown billing outcomes. Missing budget/model pricing fails closed. Count retries, reasoning, tool calls and audio separately; changing model or region updates the reservation price before use. A proposed AI1 turn limit is six model calls (including retries), aggregate 48,000 input/8,000 billable output tokens and 60 seconds, whichever occurs first. At the reference rates, before any US-only uplift, that ceiling costs at most US$0.176 on Sonnet 5.5, US$0.0088 on Haiku 5.5, US$0.352 on Opus 5.5 and US$0.072 on GPT-5.4 mini. Stop with useful partial/error state; no automatic expensive-model fallback. Rate-limit per actor and workspace. Budget exhaustion leaves ordinary PPO screens and receipt reconciliation available.
+
+With the credit-funded Claude option, PPO's reservation stays the primary control. The provider-side backstops are the dedicated workspace's spend limit and an organisation with no purchased credits or auto-reload, so exhausted credit stops requests instead of charging a card. PPO treats the provider's credit-exhausted refusal as a budget-exhausted outcome, not a retryable fault (AIA-17).
 
 ## 9. Ordered implementation and dependencies
 
@@ -205,6 +245,6 @@ Compare completion time, clarification count, user edits, abandonment, latency (
 
 Ready for review: bounded scope, field mapping, screens, source/permission rules, command/recovery design, provider alternatives, illustrative costs, implementation sequence and acceptance procedures.
 
-Open before funded live evaluation: billing owner and ceiling, provider/account/region/model, measured quality/latency and retention settings. Open before wider use: real-data authority, hosted authentication, support ownership and domain evidence readiness. These do not block finishing or publishing this specification.
+Open before funded live evaluation: Dean's decision on A1 (credit-funded Claude API first), billing owner and ceiling, provider/account/region/model, measured quality/latency and retention settings. Open before wider use: real-data authority, hosted authentication, support ownership and domain evidence readiness. These do not block finishing or publishing this specification.
 
 Next bounded instruction: implement AI1's simulated local synthetic journey against freshly verified CRM/shared services; preserve the provider-off default, then prepare a concrete live-evaluation configuration for the separate paid-use decision. The first implementation must clearly distinguish a simulated response from a tested real-model result.

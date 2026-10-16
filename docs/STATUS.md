@@ -1,5 +1,16 @@
 # Current prototype status
 
+## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
+
+Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API: the credit lands in one Claude Console organisation linked to the plan. It cannot be spent through Azure, Bedrock or Vertex. Proposed [Amendment A1](decisions/ppo-assistant-direction.md#proposed-amendment-a1--claude-api-first-16-october-2026) adds the credit-funded direct Claude API as a provider candidate and recommends it as the first provider for AI1's live synthetic evaluation. The direct OpenAI API and Azure OpenAI stay alternatives behind the same replaceable adapter, and the labelled simulated adapter stays the first implementation. [Specification §8](blueprints/ppo-assistant-specification.md#8-provider-privacy-and-running-cost-proposal) now records, each with a source checked on 16 October:
+
+- the credit rules: one linked organisation, changeable only through support; monthly expiry without rollover; requests stop when credit runs out unless purchased credit or auto-reload exists; a workspace spend limit; direct Claude API only;
+- Anthropic's retention and Commercial Terms: deletion within 30 days, flagged content kept up to two years, no training on customer content, zero data retention only by arrangement;
+- data residency: global or US-only inference, US-only storage, no Australian option;
+- costs at current Claude rates: US$0.022 a task at the Sonnet 5.5 reference, so the US$30 PPO ceiling covers about 900 tasks with contingency.
+
+This is a proposal awaiting Dean's decision; his exact words will be recorded in the decision when given. No code, migration, Console organisation, API key, credit claim or paid service is created. The ChatGPT instructions are unchanged because no decision has been made yet. Open items are the billing owner, data region, retention settings and authority for real data.
+
 ## Products design: product image amendment accepted — 15 October 2026
 
 Dean asked whether the accepted Products (PD-01) design had a place for an image of the actual product, as the earlier r04 preview did. It did not: the redesign had dropped the r04 image panel without recording a departure. He directed the amendment ("Proceed with your recommendations"). Amendment A1 in the [Products decision](decisions/products-figma-design.md), section 8, adds an image panel above Identity on the desktop and tablet record, an 80 px image row at the top of the phone record, thumbnails in the catalogue grid, phone list and snapshot, and a No image placeholder that never borrows an image from a similar product. Images are SharePoint documents referenced by exact revision. The six product pictures are synthetic concept images of fictional equipment. [Nine icon-free r02 captures](reference/ui/products/products-figma-r02/README.md) are retained; the r01 captures are unchanged. Dean accepted A1 as drawn and saved the named version "Products — product image amendment A1". No application code, data model, route, migration, permission or parent ID changes; storing and reading real images is not decided.
