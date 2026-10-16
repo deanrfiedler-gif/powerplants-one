@@ -2149,8 +2149,23 @@
       "guide_key": "guide.pj.05",
       "design_path": "docs/design/development/pages/scope-pj-05.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-01-Desktop-Variations-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-03-Desktop-Variation-Record-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-05-Desktop-Decision-Dialog-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-06-Desktop-Basis-Record-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-08-Desktop-Obligations-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-11-Desktop-Notices-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-14-Desktop-Value-Breakdown-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-15-Tablet-Variations-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-17-Phone-Variations-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-21-States-r01.png"
+      ],
+      "dependencies": [
+        "src/projects/commercial/reads.ts",
+        "src/projects/commercial/commands.ts",
+        "docs/decisions/project-commercial-figma-design.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Bounded commercial backend verified locally; native page controls remain unbuilt",
@@ -6960,7 +6975,8 @@
         "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-07-Desktop-Record-Baseline-Dialog-r01.png",
         "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-08-Desktop-Register-Open-Project-Page-r01.png",
         "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-09-Desktop-States-r01.png",
-        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-10-Phone-List-Tabs-Action-Sheet-r01.png"
+        "docs/reference/ui/projects/project-record-page-design-r01/PPO-Project-Record-10-Phone-List-Tabs-Action-Sheet-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-07-Desktop-Project-Commercial-View-r01.png"
       ],
       "dependencies": [
         "src/components/quotation-material-resolution.tsx",
@@ -6998,7 +7014,8 @@
         "src/projects/programme-reads.ts",
         "src/projects/calendar-model.ts",
         "docs/decisions/project-calendars-actuals.md",
-        "docs/testing/evidence/project-programme/README.md"
+        "docs/testing/evidence/project-programme/README.md",
+        "docs/decisions/project-commercial-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

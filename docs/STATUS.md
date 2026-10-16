@@ -46,10 +46,21 @@ Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan c
 
 This is a proposal awaiting Dean's decision; his exact words will be recorded in the decision when given. No code, migration, Console organisation, API key, credit claim or paid service is created. The ChatGPT instructions are unchanged because no decision has been made yet. Open items are the billing owner, data region, retention settings and authority for real data.
 
-
 ## Deal record page design accepted — 16 October 2026
 
 Dean asked for the deal record page in Figma (`/sales/opportunities/[id]`, CR-01) as a proposal, the fourth record type on the shared record layout, with a read-only comparison against his Pipedrive deal record. He answered "Proceed with your recommendations" on 15 October, asked on 16 October for an audit and polish with every table in the style of the other Figma pages, then for a final pixel pass, and accepted the design: "I accept." The [decision](decisions/deal-record-page-design.md) has seven view tabs from the page contract, a stage bar with days per stage, an advisory stage-exit readiness bar from the accepted exit conditions, Won and Lost forms that compare the reviewed quotation evidence with the current facts, a Won recorded state with the handover due, and the record-page table style throughout. It removes the weighted totals, probabilities and forecast categories from the Deals proposal page, which is still not accepted. [Thirteen icon-free captures](reference/ui/crm/deal-record-page-design-r01/README.md) are retained with hashes. Nothing is built. The new reads, deal notes, email sending, file links, the build and the shell rollout are not decided. No parent ID changes.
+
+## Contract obligations, notices and variations design accepted — 16 October 2026
+
+Dean asked for the next UI page to be designed in Figma and expected PJ-05. The evidence held: the commercial-controls backend had merged as #493 with no app route, Figma page, File index row, open pull request, UI branch or session. He then asked for an audit and professional polish against the other accepted Figma pages, and accepted the result: "I accept the PJ-05 Contract obligations, notices and variations design with your recommendations and recommended answers to Q1–Q8. Lock it in under ADR-0053."
+
+The [Contract obligations, notices and variations decision](decisions/project-commercial-figma-design.md) records the design:
+- One project at a time at `/projects/commercial`, the Projects menu item "Variations & obligations", with Variations, Obligations, Notices, Commercial basis and Value breakdown views, and a Commercial view on the project record.
+- Requested, priced and approved amounts stay apart. The control values come from the synthetic PJ05-FD08 read; requested and priced are never added, and unknown is never $0.00.
+- Decisions are made by someone who didn't write or submit the proposal, in a dialog bound to the exact version. Notices are recorded evidence and are never sent.
+
+Twenty-one icon-free captures are retained under the named version "Contract obligations, notices and variations — accepted". Dean confirmed on 16 October 2026, after the captures and the File index row were made, that he saved it in Figma version history ("I have saved the named version … in Figma"); Claude did not inspect the version list. No application code, route, migration, permission or parent ID changes. Building the page and the backend reads it implies are not decided: a cross-project read, names, display numbers, counts and order, the stored reason in reads, notice links, basis pickers and a decision preview (G1–G8).
+
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
 Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.

@@ -197,6 +197,7 @@ A fault was found while reading the code. Today's history dialog labels every ev
 - **Rolling out the shell.** As for the registers, the shell parts are decided separately for every page.
 - **The Projects register lock-in.** Its design was accepted on 11 October 2026 and its named version is saved, but its decision record and captures are not yet in the repository.
 - **Later tabs:** PJ-04 RAID, decisions and actions (PRJ-03); PJ-05 contract obligations and variations (PRJ-05); PJ-06 subcontractor packages; PJ-07 readiness and change impact; PJ-08 stakeholder updates (PRJ-07). Each would add a view tab when built.
+  - PJ-05 was designed on 16 October 2026 as a Commercial view between Baselines and Acceptance, with its own register at `/projects/commercial`: [Contract obligations, notices and variations design](project-commercial-figma-design.md). It is separate from the MYOB commercial summary of Q3, which stays hidden until a MYOB read exists.
 - **Not drawn yet:**
   - phone History, Baselines, Acceptance and Files;
   - loading and denied states;

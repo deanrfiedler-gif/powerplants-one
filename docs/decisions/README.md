@@ -229,3 +229,9 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - Crew-aware finish, PNG photos on the phone and a signature pad are adopted.
   - Thirty-nine icon-free captures are retained.
   - r05 stays the built timer baseline. Building the page and the backend changes it implies are not decided.
+
+- [Contract obligations, notices and variations design — owner decision](project-commercial-figma-design.md): the PJ-05 page for the merged commercial-controls backend (#493), drawn in Figma on the accepted register and shared record layouts, polished against the other accepted pages, and accepted on 16 October 2026 ("I accept the PJ-05 Contract obligations, notices and variations design with your recommendations and recommended answers to Q1–Q8") as the named version "Contract obligations, notices and variations — accepted".
+  - One project at a time at `/projects/commercial` (menu label "Variations & obligations"), with Variations, Obligations, Notices, Commercial basis and Value breakdown, and a Commercial view on the project record.
+  - Requested, priced and approved amounts stay apart; requested and priced are never added; unknown is never $0.00.
+  - Decisions are independent and bound to the exact version; notices are evidence only and never sent.
+  - Twenty-one icon-free captures are retained. Building the page and the backend reads it implies (G1–G8) are not decided.
