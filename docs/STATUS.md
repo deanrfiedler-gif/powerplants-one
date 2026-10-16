@@ -1,5 +1,16 @@
 # Current prototype status
 
+## Contract obligations, notices and variations design accepted — 16 October 2026
+
+Dean asked for the next UI page to be designed in Figma and expected PJ-05. The evidence held: the commercial-controls backend had merged as #493 with no app route, Figma page, File index row, open pull request, UI branch or session. He then asked for an audit and professional polish against the other accepted Figma pages, and accepted the result: "I accept the PJ-05 Contract obligations, notices and variations design with your recommendations and recommended answers to Q1–Q8. Lock it in under ADR-0053."
+
+The [Contract obligations, notices and variations decision](decisions/project-commercial-figma-design.md) records the design:
+- One project at a time at `/projects/commercial`, the Projects menu item "Variations & obligations", with Variations, Obligations, Notices, Commercial basis and Value breakdown views, and a Commercial view on the project record.
+- Requested, priced and approved amounts stay apart. The control values come from the synthetic PJ05-FD08 read; requested and priced are never added, and unknown is never $0.00.
+- Decisions are made by someone who didn't write or submit the proposal, in a dialog bound to the exact version. Notices are recorded evidence and are never sent.
+
+Twenty-one icon-free captures are retained under the named version "Contract obligations, notices and variations — accepted", which Dean saves in Figma version history. No application code, route, migration, permission or parent ID changes. Building the page and the backend reads it implies are not decided: a cross-project read, names, display numbers, counts and order, the stored reason in reads, notice links, basis pickers and a decision preview (G1–G8).
+
 ## Products design: product image amendment accepted — 15 October 2026
 
 Dean asked whether the accepted Products (PD-01) design had a place for an image of the actual product, as the earlier r04 preview did. It did not: the redesign had dropped the r04 image panel without recording a departure. He directed the amendment ("Proceed with your recommendations"). Amendment A1 in the [Products decision](decisions/products-figma-design.md), section 8, adds an image panel above Identity on the desktop and tablet record, an 80 px image row at the top of the phone record, thumbnails in the catalogue grid, phone list and snapshot, and a No image placeholder that never borrows an image from a similar product. Images are SharePoint documents referenced by exact revision. The six product pictures are synthetic concept images of fictional equipment. [Nine icon-free r02 captures](reference/ui/products/products-figma-r02/README.md) are retained; the r01 captures are unchanged. Dean accepted A1 as drawn and saved the named version "Products — product image amendment A1". No application code, data model, route, migration, permission or parent ID changes; storing and reading real images is not decided.
