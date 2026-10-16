@@ -187,7 +187,7 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")
   ).rows;
   assert.deepEqual(receipts.filter(r=>r.version<=50), oldReceipts);
-  assert.deepEqual(receipts.filter(r=>r.version>50).map(r=>r.version), [51,52,53,54,55,56,58,59,78,79,80,83,84]);
+  assert.deepEqual(receipts.filter(r=>r.version>50).map(r=>r.version), [51,52,53,54,55,56,58,59,78,79,80,83,84,106]);
   await transaction(async (db) => {
     const chain = await loadPolicyChain(db, workspace);
     assert.equal(chain.members.length, 1);

@@ -639,7 +639,8 @@ for (const through of [88, 89])
       for (const t of tables)
         result.push(
           await rows(
-            `SELECT to_jsonb(t) AS value FROM ppo.${t} t ORDER BY to_jsonb(t)::text`,
+            // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version<>106" : ""} ORDER BY to_jsonb(t)::text`,
           ),
         );
       return result;

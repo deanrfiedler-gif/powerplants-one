@@ -90,7 +90,8 @@ test("XI99 populated FX-priced workbook and quotation upgrade to landed allocati
         async (t) =>
           (
             await database().query(
-              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+              // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>106" : ""} ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),

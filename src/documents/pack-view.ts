@@ -203,6 +203,42 @@ export function inputDiff(
   return changes;
 }
 
+// A technician's reasons for returning an issued pack (field readiness gate P2). Codes are stored;
+// the words are the accepted A1 design's.
+export const returnReasonCodes = [
+  "PartsMissing",
+  "PartsIncorrect",
+  "ScopeUnclear",
+  "SiteNotConfirmed",
+  "SafetyInformationMissing",
+  "Other",
+] as const;
+export type ReturnReasonCode = (typeof returnReasonCodes)[number];
+export const returnReasonLabels: Record<ReturnReasonCode, string> = {
+  PartsMissing: "Parts missing",
+  PartsIncorrect: "Parts incorrect",
+  ScopeUnclear: "Scope unclear",
+  SiteNotConfirmed: "Site not confirmed",
+  SafetyInformationMissing: "Safety or isolation information missing",
+  Other: "Other",
+};
+export const returnReasonHints: Partial<Record<ReturnReasonCode, string>> = {
+  PartsMissing: "A listed part is not available for the visit",
+  PartsIncorrect: "A listed part does not match the equipment",
+};
+// Recipients whose return of the current issue still waits for a revision or an answer (A1-D3).
+export const unansweredReturns = <
+  T extends { return_id?: string | null; return_answered_at?: string | null },
+>(
+  recipients: T[],
+) => recipients.filter((r) => r.return_id && !r.return_answered_at);
+// In a sentence: "returned r03 · parts incorrect, scope unclear".
+export const returnReasonsText = (codes: readonly string[]) =>
+  codes
+    .map((c) => returnReasonLabels[c as ReturnReasonCode] ?? c)
+    .join(", ")
+    .toLowerCase();
+
 // Readiness rows come from the server registry. This only counts and labels them.
 export type CriterionOutcome =
   "Unknown" | "Pass" | "Blocked" | "PermittedException" | "NotApplicable";
@@ -221,6 +257,8 @@ export type PackCriterion = {
   assessed_at: string | null;
   valid_until: string | null;
   evidence_title: string | null;
+  // The derived criterion's own words, such as the Parts summary from Supply Chain (P1).
+  detail?: string | null;
 };
 export const outcomeLabels: Record<CriterionOutcome, string> = {
   Pass: "Pass",
@@ -352,6 +390,8 @@ export function statusPresentation(
     status: string;
     needs_review: boolean;
     current_issue_id: string | null;
+    // Unanswered technician returns of the current issue (A1-D3).
+    returned?: number | null;
   },
   currentJobState?: string | null,
 ): { label: string; tone: PackTone } {
@@ -360,7 +400,9 @@ export function statusPresentation(
   if (pack.status === "Issued")
     return pack.needs_review
       ? { label: "Review required", tone: "warning" }
-      : { label: "Issued", tone: "green" };
+      : pack.returned
+        ? { label: "Returned by technician", tone: "warning" }
+        : { label: "Issued", tone: "green" };
   if (pack.status === "Checked") {
     if (currentJobState === "StaleSource")
       return { label: "Source changed · successor needed", tone: "warning" };
@@ -455,6 +497,7 @@ export type TimelineSource = {
   };
 };
 const eventTitles: Record<string, string> = {
+  Returned: "Returned by technician",
   ReviewRequired: "Review required",
   Superseded: "Issue superseded",
   Withdrawn: "Issue withdrawn",

@@ -49,7 +49,8 @@ test("XI95 populated original workbook upgrades to 0096 with exact source, rows,
         async (t) =>
           (
             await database().query(
-              `SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+              // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+              `SELECT to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>106" : ""} ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),

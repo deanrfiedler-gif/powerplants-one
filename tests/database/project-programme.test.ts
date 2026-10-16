@@ -405,7 +405,8 @@ test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and le
     // Preserve every exact row without concurrent connection acquisition. The
     // test owns this disposable database; commands remain serial.
     for (const t of tables)
-      captured.push(await rows(`SELECT to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`));
+      // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+      captured.push(await rows(`SELECT to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>106" : ""} ORDER BY to_jsonb(r)::text`));
     return captured;
   };
   const before = await snapshot(),

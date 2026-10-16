@@ -2,7 +2,7 @@
 document_id: PPO-SVC-FIELD-READINESS-GATE-PROP
 date: 2026-10-16
 owner: Dean Fiedler
-status: Accepted by Dean on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7; section 9); Figma named version, application build and operational acceptance separate
+status: Accepted by Dean on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7; section 9); first build increment, P1 to P3, in section 10; Figma named version, later increments and operational acceptance separate
 source_commit: 1552cfbb8efd6cea17438c2af18ba0effa4fc278
 versioning: git
 ---
@@ -279,3 +279,42 @@ Dean accepted this proposal as one of the six items in the UX benchmark's Decisi
 - **Adopted with it:** UXB-09 and UXB-10 (the parts-readiness ladder per line, read from SC-01) and amendments A06 and A07.
 - **Still to do before a build:** Dean's named Figma version of the A1 frames on Job pack (958:9304) and My jobs (959:243132), then a lock-in under ADR-0053. Real policy values (Q4) remain Service's under D-015, and the ladder needs SC-05 Q1 and live reservations.
 - **Unchanged:** this record still authorises no application code, migration, seed, permission, route or deployment. The build follows section 5 and `AGENTS.md` in its own pull request.
+
+## 10. Build — first increment (17 October 2026)
+
+The first build implements P1 to P3 in its own pull request (branch `feat/field-readiness-gate`), following section 5 and `AGENTS.md`. The Figma lock-in is recorded as amendment A06 in the [Job pack design](job-pack-figma-design.md) and A07 in the [My jobs design](my-jobs-figma-design.md), with icon-free captures in [field readiness gate r01](../reference/ui/service/field-readiness-gate-r01/README.md). Dean's named Figma version "Field readiness gate — accepted" waits for his explicit yes. Delivery, owner visual review and business acceptance stay separate.
+
+### Built
+
+| Change | What exists now |
+|---|---|
+| P1 Parts criterion | Seed 106 publishes `SYN-PPO-P04` v2: version 1's eight criteria plus `PartsReadiness`, "Parts ready for the stated material scope", at the Dispatch stage, with a permitted exception and a "No parts needed" statement allowed. New scope revisions bind the newest published, effective `SYN-PPO-P04` version; existing scopes and their appointments keep v1. The outcome is derived at every read from the Supply Chain readiness of the demands whose `appointment_id` is the visit, by the mapping in P1, through a service projection that needs no `supply.read` and returns item, quantity, state and dates only. A demand on the work order with no visit keeps Parts Unknown (Q7). `dispatchReadiness` adds the Parts reason before attendance begins; once a visit has started, a supply change never reopens its authority |
+| R1 | Nobody records a pass: the assessment command and the database both refuse it. "No parts needed for this visit" is a recorded Not applicable assessment under `service.readiness.assess`, refused while a demand is linked to the visit or sits on its work order. A permitted exception (Q1) is recorded the same way |
+| R2 | A supply record, allocation or fact that leaves a visit's parts unsatisfied after its dispatch hold cleared raises the hold again and gives the work order's service owner an owned Activity. The booking never moves |
+| Database backstop | `guard_pack_dispatch` refuses clearing a hold before attendance while a linked demand is short of usable allocation, incomplete or unapproved, while a demand sits on the work order without a visit, or while nothing is linked and no statement is current. The service still evaluates the full Supply Chain readiness (source validity, receipts and promises) |
+| P2 technician Return | `POST /api/v1/pack-issues/:id/return` under `pack.acknowledge`: the exact recipient of the current issue, one to six distinct reasons and a required note of up to 1,000 characters, bound to the presented hash and assignment version. One transaction records the immutable return, a `Returned` issue event, the dispatch hold with pack requirement `ReviewRequired`, the preparer's TechnicalFollowUp and, through the extended `pack_owned_follow_up`, the service owner's at-risk task (Q3). The preparer is the returned revision's author, or the service owner if the author can no longer read the pack. Both tasks are due by 09:00 site time on the visit day, or two hours before the start if that is earlier (synthetic Q4). A recipient who acknowledged cannot return, and a recipient with an unanswered return cannot acknowledge, in the service and in the database |
+| Q2 answer | `POST /api/v1/pack-returns/:id/answer` under `pack.prepare` records "No change needed" with a reason the technician sees, completes the preparer's task and sets the pack requirement back to `AwaitingAcknowledgement`. Dispatch stays held until that technician acknowledges the same issue; they may also return it again |
+| P3 checker Return task | A check recorded as Returned gives the returned revision's author (or the service owner) a TechnicalFollowUp, flagged "due date needed" until the issue lead time exists |
+| R6 | Saving a successor revision completes the pack's open return and check tasks, with that revision as the outcome |
+| Pages | The pack page, My jobs and the work-order readiness list, as recorded in amendments A06 and A07 |
+| R9, R10, R11 | `snapshot()`, `PackSnapshot`, OUT-09 and every issued pack's bytes are unchanged. The build is online only. No capability, Activity kind or identity type is added; the outbox gains `PackIssueReturned` and `PackReturnAnswered` |
+
+Migration 0106 adds `pack_returns`, `pack_return_answers`, `pack_return_follow_ups` and `pack_check_follow_ups`. It widens the outbox kind, the pack issue event kind and the two P04 criterion checks at their exact known definitions, and replaces `validate_readiness_policy`, `guard_pack_dispatch` and `pack_owned_follow_up` at their known bodies. It does not alter `ppo.business_identities`.
+
+### Different from section 5
+
+- Policy v2 has nine criteria, not ten: `CustomerSiteReadiness` arrives with P4, as v3. Adding it now would leave every v2 visit Unknown on site readiness.
+- No scheduling policy version is added, because the window and lead time belong to P4 and P5. The return-task deadline (Q4) is computed from the visit's start and site time zone, and labelled synthetic.
+- No synthetic demand is seeded for the hero visit, because the hero visit exists only in Figma, not in the seeds. The database tests build a visit with a linked demand instead.
+- `dispatchReadiness` adds a reason for the Parts criterion only. `DispatchControls` ("Current site and isolation controls") still cannot be cleared by a manual assessment, and the issued pack and every acknowledgement still stand in for it, as before.
+- The photo on a return is not built: a technician's photo today needs a started attendance. It follows with the offline return.
+
+### Next increments
+
+1. **Customer site readiness (P4) and the issue lead time (P5).** The `SiteReadiness` contact purpose with its four checks, `CustomerSiteReadiness` in `SYN-PPO-P04` v3, and the window and lead time in a new scheduling policy version. The window would stop test visits booked years ahead from ever confirming, so this increment needs its own fixture design.
+2. **The parts-readiness ladder (UXB-10)**, read from the SC-01 material-readiness workspace. It needs SC-05 Q1 (the per-item read) and live reservations. Today the reservation policy is "Not configured" and reservations are evidence only, so the ladder's reserved, picked and dispatched steps would have nothing real to read.
+3. **The not-yet-opened marker on the planner** (UXB-09). The pack page shows it now.
+4. **An offline return** under ADR-0013, with the optional photo (R10).
+5. **The My jobs design build**, which brings the A1-D5 list wording and the "Checked for this visit" checks.
+
+Build report departure DP-20 ("No parts criterion exists") is closed for visits on `SYN-PPO-P04` v2. Gap G-07's disposition is amended as Q6 records: a Return event exists, and a "Declined" acknowledgement state still does not.

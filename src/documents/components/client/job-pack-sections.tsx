@@ -9,7 +9,7 @@ import {
   visitWindow,
   type BasisDrift,
 } from "../../pack-view";
-import type { Pack, PackRevision } from "./job-pack-types";
+import type { Pack, PackParts, PackRevision } from "./job-pack-types";
 import { Badge, Icon, Pair, Person } from "./job-pack-ui";
 import { readSection } from "../../section-readers";
 import { SectionParts } from "./job-pack-section-parts";
@@ -275,7 +275,50 @@ function Section({
       <SectionBody section={section} pack={pack} revision={revision} />
       <p className="jp-subheading">{noteHeadings[section]}</p>
       <p className="jp-body-copy">{frozen.notes}</p>
+      {section === "readiness" && pack.readiness.parts && (
+        <LiveParts parts={pack.readiness.parts} />
+      )}
     </section>
+  );
+}
+// A1-D4. Live part readiness beside the issued text. It is read from Supply Chain at every view and is
+// never part of the issued pack, its hash or OUT-09 (R9).
+function LiveParts({ parts }: { parts: PackParts }) {
+  const ready = "Ready for the stated material scope";
+  return (
+    <div
+      className="jp-live-parts"
+      role="note"
+      aria-label="Parts readiness now, from Supply Chain"
+    >
+      <p className="jp-live-heading">
+        Parts readiness now · from Supply Chain, not part of the issued pack
+      </p>
+      {parts.lines.length ? (
+        <ul>
+          {parts.lines.map((l) => (
+            <li key={l.id}>
+              <span>
+                {l.title} · {l.quantity} {l.unit}
+              </span>
+              <small className={l.state === ready ? "ready" : "attention"}>
+                {l.state === ready
+                  ? "ready"
+                  : `${l.state.toLowerCase()}${l.promised_on ? ` · promised ${l.promised_on}` : ""}`}
+              </small>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="jp-body-copy">{parts.summary}.</p>
+      )}
+      {parts.unlinked.length > 0 && (
+        <p className="jp-body-copy">
+          Not linked to this visit:{" "}
+          {parts.unlinked.map((d) => d.title).join("; ")}.
+        </p>
+      )}
+    </div>
   );
 }
 

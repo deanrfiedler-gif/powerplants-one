@@ -184,6 +184,7 @@ test("SC-06 pack read adds registry readiness, actors and an advisory basis for 
       "assessed_by_name",
       "blocking_stage",
       "criterion_code",
+      "detail",
       "evidence_title",
       "exception_allowed",
       "expired",

@@ -35,7 +35,8 @@ test("R2 populated 0090 upgrade preserves exact output reservations, authority a
     Promise.all(
       tables.map((t) =>
         rows(
-          `SELECT to_jsonb(r) AS value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+          // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>106" : ""} ORDER BY to_jsonb(r)::text`,
         ),
       ),
     );

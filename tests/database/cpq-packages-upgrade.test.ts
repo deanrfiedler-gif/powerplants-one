@@ -42,7 +42,8 @@ const snapshot = async () => {
       tables.map(async (t) => [
         t,
         await rows(
-          `SELECT to_jsonb(x) value FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+          // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ]),
     ),

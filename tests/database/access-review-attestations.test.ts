@@ -149,7 +149,7 @@ test(
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version > 83).map((r) => r.version),
-      [84],
+      [84, 106],
     );
     await migrate();
     await seed();

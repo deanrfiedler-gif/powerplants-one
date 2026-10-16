@@ -25,6 +25,10 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+## Field readiness gate (amendment A07)
+
+Accepted on 16 October 2026 ([My jobs design amendment A07](../../../decisions/my-jobs-figma-design.md); [field readiness gate record](../../../decisions/field-readiness-gate-proposal.md), section 10). Frames: My jobs page section A1 `959:243132`; captures 08–10 in [field readiness gate r01](../../../reference/ui/service/field-readiness-gate-r01/README.md). The named Figma version waits for Dean's explicit yes. On the built page, Your attendance shows "You returned job pack rNN · waiting for a revision" with the reasons and time, the preparer's "No change needed" answer, a "Parts:" line and a link that opens the Return sheet on the pack page. The A1-D5 list wording and the "Checked for this visit" checks come with the build of the accepted design.
+
 ## Mobile
 
 Accepted successor design: captures 01–22 in [My jobs design r01](../../../reference/ui/service/my-jobs-design-r01/README.md), drawn phone first at 390 and 320 px.

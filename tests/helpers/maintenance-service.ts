@@ -25,6 +25,7 @@ import { queued } from "./packs";
 import { startInput, entry, draft, photo } from "./field";
 import { decision } from "./reports";
 import { base, CRM, principal, rows } from "./maintenance";
+import { noPartsNeeded } from "./readiness-gate";
 export async function serviceResult(
   p: Principal,
   request_id: string,
@@ -195,6 +196,7 @@ export async function serviceResult(
       valid_until: "2032-01-01T00:00:00Z",
     },
   });
+  await noPartsNeeded(p, wid, appointment);
   a = (await readAppointment(p, appointment)).items[0];
   await recordContact(p, appointment, {
     ...base(),

@@ -86,6 +86,8 @@ type Assessment = {
   valid_until: string | null;
   evidence_title: string | null;
   evidence_text: string | null;
+  // PartsReadiness (SYN-PPO-P04 v2) is derived from Supply Chain at every read.
+  parts?: { outcome: string; summary: string } | null;
 };
 type Scope = {
   id: string;
@@ -1096,6 +1098,7 @@ function ReadinessTable({ rows }: { rows: Assessment[] }) {
             </p>
           </div>
           <Status value={a.outcome} />
+          {a.parts && <p>From Supply Chain: {a.parts.summary}.</p>}
           {a.stale && <p>Scope changed. Review again.</p>}
           {a.expired && <p>Evidence expired. Review again.</p>}
           {a.reason && <p>{a.reason}</p>}
@@ -1223,6 +1226,8 @@ function AssessmentForm({
           value={outcome}
           onChange={setOutcome}
           values={readinessStates
+            // Parts is never recorded as a pass: Supply Chain readiness decides it (field readiness gate R1).
+            .filter((v) => v !== "Pass" || criterion !== "PartsReadiness")
             .filter((v) => v !== "PermittedException" || pc?.exception_allowed)
             .filter((v) => v !== "NotApplicable" || pc?.not_applicable_allowed)}
         />

@@ -38,7 +38,15 @@ import {
   scopeFields,
   type ScopeInput,
 } from "./work-scope-validation";
-export const POLICY_ID = "94000000-0000-4000-8000-000000000001";
+import {
+  PARTS_CRITERION,
+  appointmentParts,
+  type PartsReadiness,
+} from "./parts-readiness";
+// New scope revisions bind the newest published, effective SYN-PPO-P04 version. Version 2 adds the
+// derived Dispatch-stage PartsReadiness criterion (field readiness gate P1); existing revisions and
+// their appointments keep the version they were saved with, and a database before seed 107 keeps v1.
+export const POLICY_KEY = "SYN-PPO-P04";
 export type WorkOrder = {
   id: string;
   workspace_id: string;
@@ -168,7 +176,16 @@ async function scope(
   if (!r) throw unavailable();
   return r;
 }
-async function policy(c: QueryClient, p: Principal, id: string) {
+async function currentPolicy(c: QueryClient, p: Principal) {
+  const r = (
+    await c.query(
+      "SELECT id FROM ppo.policy_versions WHERE workspace_id=$1 AND policy_type='ServiceReadiness' AND key=$2 AND status='Published' AND effective_at<=clock_timestamp() ORDER BY version DESC LIMIT 1",
+      [p.workspace_id, POLICY_KEY],
+    )
+  ).rows[0];
+  return policy(c, p, r?.id ?? null);
+}
+async function policy(c: QueryClient, p: Principal, id: string | null) {
   const r = (
     await c.query(
       "SELECT * FROM ppo.policy_versions WHERE workspace_id=$1 AND id=$2 AND status='Published' AND effective_at<=clock_timestamp()",
@@ -468,14 +485,14 @@ export async function saveWorkScope(
           "The approved scope is read-only. Create a successor revision.",
         );
       if (!r || successor) {
-        await policy(c, p, POLICY_ID);
+        const readinessPolicy = await currentPolicy(c, p);
         r = await insert(c, "scope_revisions", {
           ...meta(p, w),
           work_order_id: w.id,
           revision: r ? r.revision + 1 : 1,
           predecessor_id: r?.id ?? null,
           change_reason: cmd.change_reason,
-          policy_version_id: POLICY_ID,
+          policy_version_id: readinessPolicy.id,
         });
         await c.query(
           "UPDATE ppo.work_orders SET scope_revision_id=$3 WHERE workspace_id=$1 AND id=$2",
@@ -557,7 +574,7 @@ export async function readiness(
       [p.workspace_id, r.policy_version_id, r.id, appointment_id],
     )
   ).rows;
-  return criteria.map((x) => {
+  const rows = criteria.map((x) => {
     const stale = x.scope_version != null && x.scope_version !== r.version;
     const expired = x.valid_until && x.valid_until.getTime() <= Date.now();
     return {
@@ -566,8 +583,33 @@ export async function readiness(
       outcome: stale || expired ? "Unknown" : (x.outcome ?? "Unknown"),
       stale: !!stale,
       expired: !!expired,
+      parts: null as PartsReadiness | null,
     };
   });
+  // PartsReadiness is derived from Supply Chain at every read; a recorded row is only the preparer's
+  // "No parts needed" statement or a permitted exception, never a pass.
+  const parts = appointment_id
+    ? rows.find((x) => x.criterion_code === PARTS_CRITERION)
+    : undefined;
+  if (parts) {
+    const a = (
+      await c.query(
+        "SELECT id,work_order_id FROM ppo.appointments WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, appointment_id],
+      )
+    ).rows[0];
+    parts.parts = await appointmentParts(
+      c,
+      p.workspace_id,
+      a,
+      parts.outcome === "NotApplicable" ||
+        parts.outcome === "PermittedException"
+        ? parts.outcome
+        : null,
+    );
+    parts.outcome = parts.parts.outcome;
+  }
+  return rows;
 }
 export async function blockers(
   c: QueryClient,
@@ -746,20 +788,41 @@ export async function assessWorkReadiness(
           "outcome",
           "Crew competency is derived by booking checks; dispatch needs later issued-pack evidence. Manual assessment cannot clear this control.",
         );
+      const parts = a.criterion_code === PARTS_CRITERION;
+      if (parts && a.outcome === "Pass")
+        invalid(
+          "outcome",
+          "Parts readiness comes from Supply Chain for the demands linked to this visit. Record “No parts needed” or a permitted exception instead.",
+        );
       if (a.outcome === "PermittedException" && !pc.exception_allowed)
         invalid("outcome", "This mandatory control cannot be waived.");
       if (
         a.outcome === "NotApplicable" &&
         (!pc.not_applicable_allowed ||
-          r.items.some(
-            (i: { task_kind: string; shutdown_condition: string | null }) =>
-              i.task_kind === "Intervention" || !!i.shutdown_condition,
-          ))
+          (!parts &&
+            r.items.some(
+              (i: { task_kind: string; shutdown_condition: string | null }) =>
+                i.task_kind === "Intervention" || !!i.shutdown_condition,
+            )))
       )
         invalid(
           "outcome",
           "This control is applicable and cannot be marked not applicable.",
         );
+      // "No parts needed" is a statement about a visit with nothing linked; it never overrides a demand (R1, Q7).
+      if (parts && a.outcome === "NotApplicable" && a.appointment_id) {
+        const current = await appointmentParts(
+          c,
+          p.workspace_id,
+          { id: a.appointment_id, work_order_id: w.id },
+          null,
+        );
+        if (current.lines.length || current.unlinked.length)
+          invalid(
+            "outcome",
+            "Parts demands exist for this visit or its work order. Their Supply Chain readiness decides this criterion.",
+          );
+      }
       if (
         ["Pass", "PermittedException", "NotApplicable"].includes(a.outcome) &&
         !a.evidence

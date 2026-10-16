@@ -90,7 +90,8 @@ for (const through of [103, 104])
           async (t) =>
             (
               await c.query(
-                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+                // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
               )
             ).rows,
         ),

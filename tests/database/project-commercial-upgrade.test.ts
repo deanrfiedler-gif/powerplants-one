@@ -40,7 +40,8 @@ for (const through of [25, 100])
     const snapshots = await Promise.all(
       tables.map((t) =>
         rows(
-          `SELECT to_jsonb(x) row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+          // Seed 106 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ),
     );
@@ -61,7 +62,7 @@ for (const through of [25, 100])
     );
     for (const [i, t] of tables.entries()) {
       const actual = await rows(
-        `SELECT to_jsonb(x) row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+        `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
       );
       // Earlier 0026 and 0095 legitimately extend estimates; preserve every original field.
       for (const original of snapshots[i]) {
@@ -99,7 +100,7 @@ for (const through of [25, 100])
     const after = await Promise.all(
       tables.map((t) =>
         rows(
-          `SELECT to_jsonb(x) row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ),
     );
@@ -109,7 +110,7 @@ for (const through of [25, 100])
       await Promise.all(
         tables.map((t) =>
           rows(
-            `SELECT to_jsonb(x) row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+            `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>106" : ""} ORDER BY to_jsonb(x)::text`,
           ),
         ),
       ),
