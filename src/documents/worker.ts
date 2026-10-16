@@ -11,7 +11,7 @@ import { packContext, snapshot, fail } from "./context";
 import { insert, bumpPack, issueEvent } from "./packs";
 import { documentStore, digest } from "./store";
 import { renderPack, type PackSnapshot } from "./render";
-import { supportedRenderPack } from "./publication/render";
+import { supportedRenderPack } from "./publication/contracts";
 type Bundle = {
   schema_version: 1;
   job_id: string;

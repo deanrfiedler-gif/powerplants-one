@@ -39,3 +39,7 @@ Source/test presence below is repository inspection, not fresh execution of ever
 3. Continue BC-06 with a bounded PJ-06 source/receiving contract, then independent Service findings or Warranty-to-Supply receiving where their source authority is available. Finance/report definitions can be prepared without an operational integration, but operational financial claims remain blocked by the listed source/policy evidence.
 
 This is an implementation ordering, not a completion waiver. Other families and in-scope controls stay open until delivered or tied to a precise external blocker. Historical schemas, parent IDs, source snapshots, reviews and deployment claims are unchanged.
+
+## PJ-06 R1 contribution — 15 October 2026
+
+Verified main remains `a676fde`; #499 and #498 merged externally. #500 remains separately monitored. The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) implements [internal package briefs and receiving](../contracts/project-specialist-packages.md), with exact native commercial, Engineering and Supply references. This contribution does not close full PJ-06, PJ-07 source recovery, PJ-08 publication, Service/Supply or Finance/Reporting gaps. See [actual verification](../testing/evidence/project-specialist/README.md).

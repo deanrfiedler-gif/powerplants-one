@@ -1,0 +1,31 @@
+# Weekly version updates. Minor and patch updates arrive as one grouped PR per
+# ecosystem; each major arrives alone. Exact pins in package.json stay exact.
+# See docs/decisions/ADR-0056-dependency-update-and-audit-gates.md.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Australia/Brisbane
+    open-pull-requests-limit: 3
+    groups:
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Node is pinned to the 24 LTS line (.nvmrc, engines); its types follow it.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Australia/Brisbane
+    open-pull-requests-limit: 2
+    groups:
+      actions-minor-and-patch:
+        update-types: [minor, patch]

@@ -14,11 +14,15 @@ Implement document/form template management, preview, applicability, approval an
 
 ## Desktop
 
+**Accepted design, 15 October 2026:** the [Template management design decision](../../../decisions/template-management-figma-design.md), captures 01–15 in [Template management design r01](../../../reference/ui/template-management/template-management-figma-r01/README.md). The register at `/documents/templates` (label "Templates") follows the accepted register pattern with a required family choice, identity order, no counts, search or column sort, and a small snapshot; the definition record (`/documents/templates/{family}/{id}`) has Definition, Usage and Publication tabs and the proposal record (`/documents/templates/proposals/{id}`) has Proposal, Review, History and Publication tabs on the shared record layout. Create and Revise use the right-hand panel; Review, Publish and Assign use short centred dialogs. Site use (`/documents/templates/use`) shows what a site selects now, the pinned baseline and its intervals. The common-layout guidance below still applies where the decision is silent.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+**Accepted design, 15 October 2026:** captures 17 and 18 in [Template management design r01](../../../reference/ui/template-management/template-management-figma-r01/README.md): flush definition rows with version, template ID, support tag and a workspace-default line under a "Job pack definitions" view picker; the proposal record keeps the proposal facts, current revision, fields, review scope and base with a full-width Revise action. Site use at 320 px is capture 19; the tablet proposal record is capture 16.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma design: [Template management design r01 captures](../../../reference/ui/template-management/template-management-figma-r01/README.md) (icon-free PNGs; not application captures)
 - [PPO-Document-and-Form-Template-Management-r01.html](../../../reference/ui/template-management/PPO-Document-and-Form-Template-Management-r01.html)
 
 ## Behaviour, handovers and verification
@@ -61,3 +66,7 @@ Reuse shared record/context, form validation, status, table/card, Button and dia
 [R4](../../../contracts/template-use-assignment.md) adds explicit OUT-09 company/site policy and immutable effective assignments. The existing Record Workspace page type remains. Future desktop/phone controls must display exact publication and support, pinned baseline, current policy version, start-inclusive/end-exclusive times, overlap/gap holds and explicit predecessor confirmation. Reuse shared record context, date/time inputs, validation, Button, dialog and table/card controls. Keep the original intent available after uncertain writes; distinguish scheduled assignment from current eligibility and retained historical issue.
 
 Incoming handover is an exact R3 publication; outgoing is scoped versioned selection to native pack preparation and issue guards. Other families, native assignment controls and visual acceptance remain open. No new screenshots exist and no review fingerprint changes. [Execution evidence](../../../testing/evidence/template-use/README.md) records backend proof separately.
+
+## Accepted Figma design — 15 October 2026
+
+Desktop at 1440 × 900: the current department's rail with nothing selected (Documents is a More › Shared records page); a side menu of Definitions and Proposals, "Job pack use" › Site use, and "Other document pages" › Document library and Outputs, without counts; a toolbar with the required Family choice and, on Proposals, New proposal; and a 40 px grid. Definitions show Definition (version), Template ID, Runtime support, Integrity, Workspace default, Eligible as default, Dependencies, Renderer and Publication; Proposals show Proposal (title), State, Audience, Site, Company, Version, Current revision ID, Fingerprint and Proposal ID. Footers state the page coverage and identity order and never claim a total. The definition record shows a catalogue-facts strip ("Catalogue facts, not permission to render"), Definition, Policy and Publication sections, the exact definition text and the dependency manifest; Usage is read one kind at a time. The proposal record shows a proposal-facts strip, Proposal, Review scope and Base sections, the current revision and its ordered fields. Site use shows the selection resolved by server time, the pinned baseline and the start-inclusive, end-exclusive intervals. Page components: Template, Proposal and Use interval grid rows with headers and the phone list row (Figma `795:125`, `795:471`, `795:808`, `795:1069`). Before the build: names in the catalogue read (Q2), history order (Q3), the proposal's publication link (Q4), names from the existing reads, the visibility rule (Q6) and the backend gap G5 (managed-definition fingerprint drift).

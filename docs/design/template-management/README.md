@@ -47,3 +47,13 @@ The issue/distribution contract changed only its living-master metadata. HTML co
 The stale manifest was also present on unchanged main `442a863`. This review refreshes source references only: the fixture, shared styles, issued HTML and historical verification remain unchanged. Current model/browser CI is recorded separately; no owner acceptance, native integration or deployment is inferred.
 
 Local verification passes 35 model groups and 38 native browser groups with no browser errors. Deterministic assembly using the builder's declared inputs and Git LF source bytes reproduces the exact issued HTML; no reference file is rewritten. The current GitHub run remains separate.
+
+## Source-pin review — 15 October 2026
+
+The DK-06 R3 and R4 backends (#476, #477) changed `src/documents/context.ts`: Job pack preparation now resolves the site's selected template through the use policy, checks managed definitions through the publication dispatcher and rechecks bound-source authority. These are native runtime authority changes, not capabilities of this standalone fixture, which keeps its own local selection model. The stale pin was already present on unchanged main `41c8479`; it surfaced when the [Template management design](../../decisions/template-management-figma-design.md) lock-in added captures under `docs/reference/ui/template-management/`. The manifest now pins the reviewed current source; the fixture, shared styles, issued HTML and historical verification remain unchanged. A later main change (`225fe88`) added the shared `packAppointmentApplicable` predicate (Confirmed or InProgress) used by the pack, output and distribution reads; it is unrelated to template selection, and the pin was refreshed again on merge.
+
+Local verification on Node 24.21.0 with the Chrome channel: the deterministic rebuild reproduces the issued HTML byte for byte, eslint is clean, and 35 model groups and 38 native browser groups (43 captures) pass with no errors. The current GitHub run remains separate.
+
+## Source-pin review — 16 October 2026
+
+The combined PR integration compares the context source against the accepted design branch: the new renderer dispatcher replaces the two retained-definition imports, and already-merged main adds the shared Confirmed/InProgress appointment-applicability predicate. Neither change modifies this standalone fixture, its source-selection model or its output. The context pin is refreshed after that source review; deterministic assembly and native model/browser verification remain separate checks. Issued reference bytes and visual-review records are preserved.

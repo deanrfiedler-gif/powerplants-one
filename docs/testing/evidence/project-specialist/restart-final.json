@@ -1,0 +1,11 @@
+{
+  "proof": "PJ06 actual application/PostgreSQL restart",
+  "result": "Passed",
+  "synthetic": true,
+  "retained_tables": 21,
+  "graph_hash": "6b7a851b23419bd8cdb64e2c3ccfaf59a045133ea1395edd8f91841eac00da37",
+  "accepted_package_version": 3,
+  "original_receipts_recovered": 2,
+  "original_sessions_reused": 2,
+  "replayed_effects": 0
+}
