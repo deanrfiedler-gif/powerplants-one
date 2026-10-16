@@ -1,0 +1,44 @@
+{
+  "synthetic": true,
+  "main": "b223c5817be7a946b38c48c9838d9d9925298156",
+  "prior_r2": "459112db197e8f1b87c2c3e6591284c509a386c6",
+  "architecture_before_reconciliation": "576cb07",
+  "integration": "c9c510a",
+  "migration": {
+    "integrated_renderer": 104,
+    "unmerged_r2": 105,
+    "r2_sql_sha256": "8553ba73d5a32ad7a40602d7281e3b0278f8648571cd3b57525054779c77fed0",
+    "sql_changed": false
+  },
+  "initial_failure": "Registry latest version remained 104; two upgrade assertions and the demo admission type comparison failed. Corrected to 105 without altering assertions or limits.",
+  "validation": {
+    "populated_upgrades": {
+      "starts": [
+        25,
+        102,
+        103,
+        104
+      ],
+      "pass": 4,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "typecheck": "passed",
+    "foundation": "passed: 78 requirements, 10428 links",
+    "naming": "passed: 7995 instruction characters",
+    "remaining": "Exact-head application/native/Products/compiled/restart, CI and independent review tracked in PR conversation"
+  },
+  "private_log_sha256": {
+    "upstream-r2-upgrades.log": "a01f1715d9c49f8c89f9428569cdc22172a7962cc11225718a5f78275d932d6c",
+    "upstream-typecheck.log": "9006fe10ff2182e466d09f7ab01a4b95338762e6f082c2405e1eb89220c523d6",
+    "upstream-upgrades-corrected.log": "addb5102d77178da8d974670385e737ce21099c6878a187f5490c3fbac829707",
+    "upstream-typecheck-corrected.log": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "upstream-foundation.log": "06469646b3269da4e2742335b951febbab2cda85c836e851dac06c659927c163",
+    "upstream-naming.log": "a2b3330e4cf937f2ac55f42258e14b1b52d9189c4acca5f96a9ed865ae65c813"
+  },
+  "child_pr": 530,
+  "child_edited": false,
+  "merged_pr": false,
+  "deployed": false
+}

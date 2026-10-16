@@ -164,7 +164,7 @@ Departures from the accepted Job pack and My jobs designs, proposed for acceptan
 
 ## 5. What a build would touch
 
-A build follows AGENTS.md. One migration is expected. Its number is the next free one when the build starts: main reached 0104 on 16 October (#521), and open pull requests such as #522 already claim numbers after it.
+A build follows AGENTS.md. One migration is expected. Its number is the next free one when the build starts: main reached 0105 on 16 October, and other open pull requests may claim numbers after it.
 
 ### Migration
 
@@ -210,7 +210,7 @@ If Dean prefers a separate `pack.return` capability, the access-review chain app
 - **Populated-upgrade cases:** the original ledgers in `quotation-release.test.ts`, `quotation-response.test.ts` and `quotation-conversion.test.ts`.
 - **`products-upgrade.test.ts`:** the latest version, the exact added versions, and a new case for installing reserved Products 0052 after the newest history.
 - **`tests/unit/migration-registry.test.ts`.**
-- **The review gate in `scripts/demo-upgrade.ts`.** The `latestMigrationVersion` comparison (104 on main today) guards the hosted-demo upgrade. A build adds a review note for the new migration; it does not just bump the number.
+- **The review gate in `scripts/demo-upgrade.ts`.** The `latestMigrationVersion` comparison (105 on main on 16 October) guards the hosted-demo upgrade. A build adds a review note for the new migration; it does not just bump the number.
 
 ### Behaviour suites
 

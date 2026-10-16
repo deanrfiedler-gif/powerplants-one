@@ -11,7 +11,6 @@ import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { reset, migrate, seed } from "../../scripts/database";
-import { readFile } from "node:fs/promises";
 import { draftBytes } from "../../src/estimating/worker";
 import { readConversion } from "../../src/estimating/conversion/reads";
 import {
@@ -50,6 +49,7 @@ import {
 } from "../helpers/quotation-material-resolution";
 import { currentFollowup } from "../helpers/quotation-supply-followup";
 import { taskInput } from "../helpers/projects";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -1016,9 +1016,7 @@ for (const topology of [
   "branch",
 ])
   test(`populated 0070 upgrade preserves ${topology} originals, every old row and output byte`, async () => {
-    await database().query(
-      await readFile("db/migrations/0001-recover.sql", "utf8"),
-    );
+    await recoverSchema();
     await database().query("DROP TABLE public.ppo_migrations");
     await migrate(70);
     await seed(70);
@@ -1109,7 +1107,7 @@ for (const topology of [
     );
     assert.deepEqual(
       now.filter((r) => r.version > 70).map((r) => r.version),
-      [71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+      [71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105],
     );
     for (const {
       f,

@@ -21,6 +21,7 @@ import {
 } from "../../src/access/service";
 import { capabilityLabels } from "../../src/access/capabilities";
 import { accessInspectionSeedGrants } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -44,12 +45,7 @@ const shape = (values: Record<string, unknown>[]) =>
 
 test("AD01-01 populated 0077 upgrade preserves identities and grants; reseed adds exactly one Systems read duty", async () => {
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(77);

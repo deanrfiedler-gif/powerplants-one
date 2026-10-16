@@ -1,0 +1,341 @@
+{
+  "source": "7e1da43f24705696d45924feea9a2287282f7716",
+  "observed_at": "2026-10-15T23:30:16.927Z",
+  "provider": "Code Review CI diagnostics",
+  "counts": {
+    "queued": 41,
+    "skipped": 1,
+    "success": 3,
+    "failure": 11,
+    "in_progress": 3
+  },
+  "failures": [
+    {
+      "job": {
+        "id": 116722692236,
+        "head_sha": "7e1da43f24705696d45924feea9a2287282f7716",
+        "name": "specialist",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "providerGuidance": "GitHub guidance for this response only: use checkRunId for output and annotations, runId from a GitHub Actions /runs/<id> link to list jobs, or jobId from a /jobs/<id> link for logs. page paginates checks, jobs or annotations. Keep the supplied account and returned headRevision on follow-up reads. Third-party CI exposes only the output reported to GitHub.",
+      "logTruncated": false,
+      "diagnostics": [
+        "2026-10-15T23:22:14.1631045Z ##[group]Clean up resources from previous jobs",
+        "2026-10-15T23:22:22.7310471Z ##[command]/usr/bin/docker create --name 3f46fecba6b74e1b80d1581e2404704d_postgres1615_08d86a --label 160eb5 --network github_network_cc064cd7ff6749408e2138ad584dafcf --network-alias postgres -p 127.0.0.1:5432:5432 --health-cmd \"pg_isready -U ppo_local -d ppo_synthetic_test\" --health-interval 5s --health-timeout 5s --health-retries 10 -e \"POSTGRES_USER=ppo_local\" -e \"POSTGRES_PASSWORD=ppo_disposable_ci_only\" -e \"POSTGRES_DB=ppo_synthetic_test\" -e GITHUB_ACTIONS=true -e CI=true postgres:16.15",
+        "2026-10-15T23:22:52.1041192Z Updating files:  33% (3283/9948)",
+        "2026-10-15T23:22:52.4104164Z Updating files:  44% (4378/9948)",
+        "2026-10-15T23:22:53.2104416Z Updating files:  88% (8755/9948)",
+        "2026-10-15T23:22:53.3010460Z ",
+        "2026-10-15T23:23:24.7104496Z Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease",
+        "2026-10-15T23:24:59.1065184Z ##[error]  76:24  error  '_observed' is assigned a value but never used  @typescript-eslint/no-unused-vars",
+        "2026-10-15T23:24:59.1075215Z ✖ 1 problem (1 error, 0 warnings)"
+      ]
+    },
+    {
+      "job": {
+        "id": 116722693315,
+        "head_sha": "7e1da43f24705696d45924feea9a2287282f7716",
+        "name": "ES-07 completed conversion disposition and recovery",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "providerGuidance": "GitHub guidance for this response only: use checkRunId for output and annotations, runId from a GitHub Actions /runs/<id> link to list jobs, or jobId from a /jobs/<id> link for logs. page paginates checks, jobs or annotations. Keep the supplied account and returned headRevision on follow-up reads. Third-party CI exposes only the output reported to GitHub.",
+      "logTruncated": false,
+      "diagnostics": [
+        "2026-10-15T23:24:28.2331104Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d",
+        "2026-10-15T23:26:00.0913806Z ✔ ES07 disposition review alone stays open; explicit retention resolves only exact exception and preserves conversion (10104.132906ms)",
+        "2026-10-15T23:27:25.6830879Z ✖ ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes (9486.021772ms)",
+        "2026-10-15T23:27:25.7766104Z ℹ suites 0",
+        "2026-10-15T23:27:25.7780738Z ✖ failing tests:",
+        "2026-10-15T23:27:25.7781480Z test at tests/database/quotation-disposition.test.ts:1:20956",
+        "2026-10-15T23:27:25.7783114Z ✖ ES07 populated 0061 upgrade preserves complete commercial/conversion/native evidence, grants, identities and original bytes (9486.021772ms)",
+        "2026-10-15T23:27:25.7784447Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:",
+        "2026-10-15T23:27:25.7788139Z       103,",
+        "2026-10-15T23:27:25.7788424Z   +   104",
+        "2026-10-15T23:27:25.7790629Z       at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/quotation-disposition.test.ts:749:10)",
+        "2026-10-15T23:27:25.7792036Z       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+        "2026-10-15T23:27:25.7796104Z        72,  73,  74, 75, 76, 77, 78, 79,  80,  81,",
+        "2026-10-15T23:27:25.7797626Z       102, 103, 104"
+      ]
+    },
+    {
+      "job": {
+        "id": 116722692803,
+        "head_sha": "7e1da43f24705696d45924feea9a2287282f7716",
+        "name": "ES-07 Supply shortfall-database proof",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "providerGuidance": "GitHub guidance for this response only: use checkRunId for output and annotations, runId from a GitHub Actions /runs/<id> link to list jobs, or jobId from a /jobs/<id> link for logs. page paginates checks, jobs or annotations. Keep the supplied account and returned headRevision on follow-up reads. Third-party CI exposes only the output reported to GitHub.",
+      "logTruncated": false,
+      "diagnostics": [
+        "2026-10-15T23:21:28.2821048Z Region: westus3",
+        "2026-10-15T23:21:28.2828104Z Version: 20261012.334.1",
+        "2026-10-15T23:21:29.2410407Z Docker client API version: '1.48'",
+        "2026-10-15T23:21:30.7690104Z 83d1a2a3917c: Verifying Checksum",
+        "2026-10-15T23:22:30.4104436Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...",
+        "2026-10-15T23:22:33.3010490Z + [[ ! -f /etc/os-release ]]",
+        "2026-10-15T23:22:46.1104211Z Google Chrome 155.0.8059.84 ",
+        "2026-10-15T23:24:13.2061877Z ✔ ES07 allocation receiving is independently owned, site scoped, revocable and never delegated by Supply ownership (18518.210475ms)",
+        "2026-10-15T23:25:42.3816170Z ✖ ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations (15004.610685ms)",
+        "2026-10-15T23:25:42.4579138Z ✖ failing tests:",
+        "2026-10-15T23:25:42.4579995Z test at tests/database/quotation-allocation-shortfall.test.ts:1:25196",
+        "2026-10-15T23:25:42.4581710Z ✖ ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations (15004.610685ms)",
+        "2026-10-15T23:25:42.4583204Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:",
+        "2026-10-15T23:25:42.4586800Z       103,",
+        "2026-10-15T23:25:42.4587082Z   +   104",
+        "2026-10-15T23:25:42.4588830Z       at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/database/quotation-allocation-shortfall.test.ts:823:10)",
+        "2026-10-15T23:25:42.4590842Z       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+        "2026-10-15T23:25:42.4596508Z       96, 97, 98, 99, 100, 101, 102, 103, 104",
+        "2026-10-15T23:25:42.7082104Z  2026-10-15 23:24:40.229 UTC [112] CONTEXT:  PL/pgSQL function ppo.supply_allocation_conservation() line 13 at RAISE"
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "name": "ES-07 completed conversion disposition and recovery",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669489/job/116722693315",
+      "annotations": []
+    },
+    {
+      "name": "outputs",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669452/job/116722693087",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 289,
+          "end_line": 289,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/prove-project-specialist-handover-restart.ts",
+          "start_line": 76,
+          "end_line": 76,
+          "annotation_level": "failure",
+          "message": "'_observed' is assigned a value but never used",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "P11 three original browser failures diagnostic replay",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669404/job/116722693086",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 40,
+          "end_line": 40,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/prove-project-specialist-handover-restart.ts",
+          "start_line": 76,
+          "end_line": 76,
+          "annotation_level": "failure",
+          "message": "'_observed' is assigned a value but never used",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "ES-07 Supply merge-runtime proof",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669350/job/116722693053",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 20,
+          "end_line": 20,
+          "annotation_level": "warning",
+          "message": "No files were found with the provided path: verification-evidence/quotation-task-merge-browser/\nverification-evidence/quotation-task-merge-restart/\n!**/trace.zip. No artifacts will be uploaded.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": ".github",
+          "start_line": 25,
+          "end_line": 25,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/demo-upgrade.ts",
+          "start_line": 314,
+          "end_line": 314,
+          "annotation_level": "failure",
+          "message": "This comparison appears to be unintentional because the types '104' and '103' have no overlap.",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "leads",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669502/job/116722692991",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 18,
+          "end_line": 18,
+          "annotation_level": "warning",
+          "message": "No files were found with the provided path: test-results/\nplaywright-report/. No artifacts will be uploaded.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": ".github",
+          "start_line": 38,
+          "end_line": 38,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/prove-project-specialist-handover-restart.ts",
+          "start_line": 76,
+          "end_line": 76,
+          "annotation_level": "failure",
+          "message": "'_observed' is assigned a value but never used",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "ES-07 Supply shortfall-database proof",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669350/job/116722692803",
+      "annotations": []
+    },
+    {
+      "name": "library",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669437/job/116722692728",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 288,
+          "end_line": 288,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/prove-project-specialist-handover-restart.ts",
+          "start_line": 76,
+          "end_line": 76,
+          "annotation_level": "failure",
+          "message": "'_observed' is assigned a value but never used",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "E1 browser proof",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669427/job/116722692507",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 37,
+          "end_line": 37,
+          "annotation_level": "warning",
+          "message": "No files were found with the provided path: verification-evidence/estimating-e1-*/\nverification-evidence/estimating-es02-browser/\nverification-evidence/estimating-es08-browser/\nverification-evidence/fertigation-browser/\nverification-evidence/fertigation-restart/\nverification-evidence/excel-import-restart/\nverification-evidence/cpq-products-restart/verified.json\nverification-evidence/cpq-costs-restart/verified.json\nverification-evidence/cpq-rebase-restart/verified.json\nverification-evidence/cpq-quality-restart/verified.json\nverification-evidence/cpq-packages-restart/verified.json\nverification-evidence/cpq-packages-restart/workload.json\nverification-evidence/cpq-packages-build/source-manifest.json\nverification-evidence/excel-quotation/\nverification-evidence/excel-capacity/\nverification-evidence/fertigation-build/\nverification-evidence/fertigation-capacity/\nverification-evidence/fertigation-reports/\ntest-results/\n!**/trace.zip. No artifacts will be uploaded.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": ".github",
+          "start_line": 25,
+          "end_line": 25,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/demo-upgrade.ts",
+          "start_line": 314,
+          "end_line": 314,
+          "annotation_level": "failure",
+          "message": "This comparison appears to be unintentional because the types '104' and '103' have no overlap.",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "actions",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669431/job/116722692495",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 289,
+          "end_line": 289,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/prove-project-specialist-handover-restart.ts",
+          "start_line": 76,
+          "end_line": 76,
+          "annotation_level": "failure",
+          "message": "'_observed' is assigned a value but never used",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "name": "specialist",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669391/job/116722692236",
+      "annotations": []
+    },
+    {
+      "name": "Email Calendar persisted journey and server permissions",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38822669277/job/116722691568",
+      "annotations": [
+        {
+          "path": ".github",
+          "start_line": 20,
+          "end_line": 20,
+          "annotation_level": "warning",
+          "message": "No files were found with the provided path: verification-evidence/email-calendar-*/\ntest-results/\n!**/trace.zip. No artifacts will be uploaded.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": ".github",
+          "start_line": 70,
+          "end_line": 70,
+          "annotation_level": "failure",
+          "message": "Process completed with exit code 1.",
+          "title": "",
+          "raw_details": ""
+        },
+        {
+          "path": "scripts/prove-project-specialist-handover-restart.ts",
+          "start_line": 76,
+          "end_line": 76,
+          "annotation_level": "failure",
+          "message": "'_observed' is assigned a value but never used",
+          "title": "",
+          "raw_details": ""
+        }
+      ]
+    }
+  ],
+  "interpretation": "Original attempt failed lint, the reviewed demo admission pin, and global exact migration lists. These are candidate defects, not baseline failures. Local native reset deadlines also failed on unchanged main 1552cfb; their cause remains unproven. No deadline or assertion was weakened."
+}

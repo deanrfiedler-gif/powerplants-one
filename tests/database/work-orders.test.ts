@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -20,6 +19,7 @@ import { readOperation } from "../../src/shared/receipts";
 import { saveDraft } from "../../src/service/tickets";
 import { ownerOptions } from "../../src/shared/context";
 import { scopeFields } from "../../src/service/work-scope-validation";
+import { recoverSchema } from "../helpers/recover-schema";
 const id = (t: number, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const company = id(20),
@@ -126,9 +126,7 @@ async function reviewAll(n: number) {
   }
 }
 test("P04 migration upgrades exact P03 evidence; repeat migration/seed retains deliberate edits and revoked grants", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(3);
   await seed(3);

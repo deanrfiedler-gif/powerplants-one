@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { beforeEach, after, test } from "node:test";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -41,6 +40,7 @@ import {
 import { reportIssued } from "../helpers/reports";
 import { pipelineInsights } from "../../src/crm/insights";
 import { listEmail, linkEmail } from "../../src/email/service";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -706,12 +706,7 @@ test("CR05 source changes, separate training evidence and exact CRM receiving ob
 
 test("migration 0046 preserves previous ledger and immutable Won obligations on upgrade", async () => {
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(44);

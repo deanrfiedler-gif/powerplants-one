@@ -13,6 +13,12 @@ It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR
 
 New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
 
+## PJ-06 exact technical/procurement receiving — 16 October 2026
+
+Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.
+
+The authorised [PR #522](https://github.com/deanrfiedler-gif/powerplants-one/pull/522) carries the exact Accepted brief into native Engineering-to-Supply receiving with issued technical release, Approved demand and independent receiving authority. At its prior source `459112d`, dedicated CI passed 856 units, build, 17 native/upgrade cases, two reserved Products upgrades, separately reset compiled APIs and actual application/PostgreSQL restart; independent review was clean and both threads resolved. [Execution evidence](testing/evidence/project-specialist-handover/README.md) retains those results and the original local failures. They do not verify this new integration: populated upgrades, exact preservation, repeat-run stability, CI and independent review must be established again. Supplier competence, downstream disposition, UI and operational acceptance remain open. No merge or deployment is performed here.
+
 ## Open PR repair and integration — 16 October 2026
 
 Dean authorised fixing and merging all nine open PRs: #502, #503, #507, #510, #511, #512, #513, #518 and #520. The `codex/pr-repairs-oct16` session owns this repository integration write, isolated from main `1552cfb`. Every contribution head is retained by merge ancestry, including the two draft contributions; the Product image decisions remain Proposed. Existing main fixes, all parent IDs, accepted design captures and prior evidence are retained.

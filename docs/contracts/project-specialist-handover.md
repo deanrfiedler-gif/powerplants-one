@@ -1,0 +1,27 @@
+# Project specialist technical/procurement handover contract
+
+Owner: Dean Fiedler. Status: implemented in unmerged [PR #522](https://github.com/deanrfiedler-gif/powerplants-one/pull/522); exact-source validation and independent review checkpoints are recorded in the [execution evidence](../testing/evidence/project-specialist-handover/README.md). Operational acceptance remains separate. Parents PRJ-04/PRJ-05, SCM-03, AT-38. [Architecture decision](../decisions/project-specialist-handover.md). [R1 brief contract](project-specialist-packages.md).
+
+## Native receiving and scope
+
+Use `POST /api/v1/engineering/:id/materials/handover` with the existing schema-1 `prepare` command and optional `specialist: {id, version}`. The reference must name an exact Accepted PJ-06 event whose fixed Engineering reference belongs to this same Project, company and site. Unknown nested properties and non-positive versions are rejected. Omit the property for ordinary EN-06 commands; their parsed content, operation hashes and receiving payloads remain unchanged.
+
+An opted-in handover requires `ProcurementReady`, a current issued `TechnicalReleaseForProcurement` release, exact verified material mappings and unit conversions, and separate current `DemandAuthority` evidence with Approved demand. The R1 commercial basis or Supply Demand reference cannot substitute for those native gates. The server generates the version-2 frozen payload by adding `specialist` containing the exact event ID/version, source hash, original acceptance operation and full accepted content to the native release/line/demand/timing/receiving payload. No client supplies snapshot content, hashes, actor identity or authority. The existing receiving schema remains 1; payload schema 2 identifies the added source envelope.
+
+Preparation and sending require native material editing plus `project.specialist.prepare` and the existing package owner or Project coordinator. Every access also requires `project.specialist.read`, native Project/commercial source access and all exact source permissions. The assigned native Supply receiver must be active, scoped, policy-authorised and able to read the specialist source. Native independent receiving remains separate from R1's internal brief acceptance; R1 receive duty does not confer Supply authority.
+
+Prepare, send and positive receiving require an Active Project and unchanged exact brief sources. An independently accepted successor brief blocks new use of the earlier brief. Send rechecks the native technical release and approved demand; acceptance rechecks both as well as specialist sources. Return remains available after source drift under current historical read and native receiving authority. Existing Returned -> explicit successor handover lineage remains; a specialist successor cannot silently drop its specialist source. Existing terminal Accepted/Returned outcomes are retained.
+
+## Persistence, projection and recovery
+
+Migration 0105 adds nullable exact specialist ID/version columns and a composite foreign key to the immutable accepted event. A guard binds opted-in payloads to that event, the native Engineering/Project context, exact release lines/exclusions and canonical payload hash, and prevents changing the reference. It does not backfill or rewrite old rows, schemas, hashes, release manifests, source observations, events or receipts. No seed, grant or new identity type is introduced.
+
+The native handover GET retains the exact payload and adds nullable `specialist_source_status` (Current/Changed). Recorded outcome and present applicability are distinct. Linked handovers require source authority before appearing in list, selection, line detail, footer or history; inaccessible predecessor IDs and history counts are withheld. Generic Engineering impact summaries do not copy specialist receiving counts into their broader audience. Exact specialist outcomes and source status remain in the authorised handover projection. This is not an automated specialist recall or impact-disposition workflow.
+
+The shared workspace lock, original operation UUID, canonical command hash, audit, outbox and receipt transaction remain native. Repeated commands return the original receipt; changed-content reuse is refused. Concurrent decisions cannot produce two outcomes. Replay and `/api/v1/operations/:operation_id` require current original-command authority and historical source visibility, while allowing source drift or closed Project status. A missing response is recovered through the original operation, never a replacement action. New commands that fail any gate roll back all rows, identities, events, receipts and outbox changes.
+
+## Boundaries and evidence
+
+Acceptance records receipt of the exact combined synthetic payload. It does not create a purchase order, reserve inventory, award work, verify supplier competence, settle rates, confirm availability or book Service. MYOB, SharePoint and native CAD retain their documented authority. No customer projection, UI, external transaction or production integration is added. Further supplier identity/competence, work evidence, reassignment, downstream impact disposition and operational acceptance remain separate requirements.
+
+[Execution evidence](../testing/evidence/project-specialist-handover/README.md) records actual local validation, CI and independent review independently. Neither the whole PJ-06 programme nor the application backend is declared complete.

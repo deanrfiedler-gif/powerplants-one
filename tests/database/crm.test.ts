@@ -3,7 +3,6 @@ import { facilitySeedCounters, facilitySeedIdentities } from "../helpers/facilit
 import { supplySeedIdentities } from "../helpers/supply-seed-identities";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
 import {
   database,
@@ -36,6 +35,7 @@ import { CRM, crmBase, crmAction, crmCreate, crmQualify } from "../helpers/crm";
 import { reportIssued, reviewed, response as reportResponse } from "../helpers/reports";
 import { recordResponse, presentationBytes, readReport } from "../../src/reports/service";
 import { readFieldJob } from "../../src/field/reads";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -572,9 +572,7 @@ test("CA-01/05 real FK, deferred designation, immutable config/context/events an
   );
 });
 test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(9);
   await seed(9);
