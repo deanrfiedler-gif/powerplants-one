@@ -56,6 +56,21 @@ Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 th
 
 The authorised [PR #522](https://github.com/deanrfiedler-gif/powerplants-one/pull/522) carries the exact Accepted brief into native Engineering-to-Supply receiving with issued technical release, Approved demand and independent receiving authority. At its prior source `459112d`, dedicated CI passed 856 units, build, 17 native/upgrade cases, two reserved Products upgrades, separately reset compiled APIs and actual application/PostgreSQL restart; independent review was clean and both threads resolved. [Execution evidence](testing/evidence/project-specialist-handover/README.md) retains those results and the original local failures. They do not verify this new integration: populated upgrades, exact preservation, repeat-run stability, CI and independent review must be established again. Supplier competence, downstream disposition, UI and operational acceptance remain open. No merge or deployment is performed here.
 
+## UX benchmark research recorded — 16 October 2026
+
+Dean asked for deep research to make every PPO module as professional and user friendly as possible. He approved the plan, asked for a user-feedback top-up and then directed: "I'm happy for you to proceed however you believe is the most professional approach. Our goal is to ensure the Powerplants One app is as professional as possible, and an exceptionally good world-class gold standard app. So proceed on that basis."
+
+The [research record](design/research/ux-benchmark/README.md) summarises the method: ten research streams, a user-feedback top-up, a horticulture pass, and an independent check of 377 links, 105 claims and every PPO-today statement against main `b223c58` and the Figma file. It also gives the evidence grades and the headline findings:
+- build the connective tissue between modules;
+- users punish lost work, imposed change and silent failures more than missing features;
+- suites trail focused tools on ease of use by about 0.4;
+- field apps must never lose input;
+- for growers, own the service trail around the controller.
+
+Two registers are generated from the reviewed report. The [recommendations](design/research/ux-benchmark/recommendations.csv) hold UXB-01 to UXB-92: 20 at priority 1, 56 at priority 2 and 16 at priority 3. The [amendment items](design/research/ux-benchmark/amendment-items.csv) hold A01 to A24 against accepted designs; A22 and A24 were withdrawn after the check. Every item is Proposed.
+
+The [direction record](decisions/ux-benchmark-research-direction.md) says what Dean's direction authorises: research and proposals. Without his decision on each item it authorises no design, code, migration, customer contact or adoption. Adopted items will be recorded in `docs/decisions/` and linked to scope IDs. No application code, route, migration, permission, design register entry or parent ID changes.
+
 ## Open PR repair and integration — 16 October 2026
 
 Dean authorised fixing and merging all nine open PRs: #502, #503, #507, #510, #511, #512, #513, #518 and #520. The `codex/pr-repairs-oct16` session owns this repository integration write, isolated from main `1552cfb`. Every contribution head is retained by merge ancestry, including the two draft contributions; the Product image decisions remain Proposed. Existing main fixes, all parent IDs, accepted design captures and prior evidence are retained.
