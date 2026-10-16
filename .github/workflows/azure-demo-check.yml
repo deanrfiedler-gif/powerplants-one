@@ -64,7 +64,7 @@ jobs:
           npx playwright test --config=playwright.demo.config.ts --output verification-evidence/demo-integration --reporter=list
       - name: Retain synthetic integration screenshots
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Private-demo-integration-screenshots
           path: verification-evidence/demo-integration/**/*.png
