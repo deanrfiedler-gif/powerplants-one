@@ -1,7 +1,6 @@
 import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { beforeEach, after, test } from "node:test";
 import { reset, migrate, seed } from "../../scripts/database";
 import {
@@ -27,6 +26,7 @@ import { readActivity, activityCommand } from "../../src/activities/activities";
 import { readOperation } from "../../src/shared/receipts";
 import { leadCreate, leadConvert } from "../helpers/leads";
 import { CRM, crmBase, crmAction } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only ppo_synthetic_test");
@@ -318,12 +318,7 @@ test("LC-12 creation recovery preserves the separate creator and eligible Lead o
 });
 
 test("LC-12 populated previous-version upgrade preserves all Lead originals and permission grants", async () => {
-  await database().query(
-    await readFile(
-      new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(72);
   await seed(72);
@@ -357,7 +352,7 @@ test("LC-12 populated previous-version upgrade preserves all Lead originals and 
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(afterLedger.slice(0, ledger.length), ledger);
-  assert.deepEqual(afterLedger.slice(ledger.length).map(row => row.version), [73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104]);
+  assert.deepEqual(afterLedger.slice(ledger.length).map(row => row.version), [73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]);
   await resolveLeadContext(f.p, f.input.id, resolveInput(2));
   assert.deepEqual(
     (await createLead(f.p, f.input)).receipt,

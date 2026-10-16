@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "source": "abaf10d7418107c503aa6095f6d3ef9ae3d9f3c8",
+  "provider": "Code Review CI diagnostics",
+  "job_id": 116734158590,
+  "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38826209500/job/116734158590",
+  "log_truncated": true,
+  "unit": {
+    "tests": 856,
+    "passed": 856,
+    "failed": 0,
+    "skipped": 0
+  },
+  "build": "Passed including TypeScript and 77 static pages",
+  "native": {
+    "tests": 16,
+    "passed": 15,
+    "failed": 1,
+    "skipped": 0
+  },
+  "failure": {
+    "case": "PJ06-R2-02",
+    "kind": "Test expectation mismatch",
+    "expected": "Forbidden",
+    "actual": "RecordUnavailable",
+    "line": 336,
+    "correction": "Require the exact native companyContext source-authority refusal; preserve every privacy and rollback assertion.",
+    "local_recheck": "privacy-products-upgrade-final.log passed the complete case"
+  },
+  "remaining": "Later HTTP/Products/restart steps were not reached; this job is failed, not passed."
+}

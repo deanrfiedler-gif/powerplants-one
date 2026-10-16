@@ -7,7 +7,6 @@ import { schedulingPolicySeedGrants } from "../helpers/engineering-materials-gra
 import { acceptanceSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { test, after } from "node:test";
-import { readFile } from "node:fs/promises";
 import { migrate, seed } from "../../scripts/database";
 import {
   database,
@@ -33,6 +32,7 @@ import {
   financeIssueBytes,
 } from "../../src/finance/worker";
 import { readOperation } from "../../src/shared/receipts";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -42,12 +42,7 @@ const code = (name: string) => (e: unknown) =>
 for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
   test(`P11 additive upgrade preserves actual current-main/P10 ${state} records, original outputs and revoked receipt grants`, async () => {
     await transaction(async (c) => {
-      await c.query(
-        await readFile(
-          new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-          "utf8",
-        ),
-      );
+      await recoverSchema(c);
       await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
     });
     // Exact unchanged current-main migrations/seeds through 0012; real domain

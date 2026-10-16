@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -13,6 +12,7 @@ import {
   costDefinition,
 } from "../helpers/cpq-costs";
 import { publishedFixture } from "../helpers/cpq-packages";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 after(closeDatabase);
@@ -49,7 +49,7 @@ const snapshot = async () => {
   );
 };
 test("populated 0101 upgrade preserves exact CPQ/cost/adoption histories, original ledgers and receipts; repeat migration/seeding adds nothing", async () => {
-  await rows(await readFile("db/migrations/0001-recover.sql", "utf8"));
+  await recoverSchema();
   await rows("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(101);
   await seed(101);
@@ -74,7 +74,7 @@ test("populated 0101 upgrade preserves exact CPQ/cost/adoption histories, origin
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [102, 103, 104],
+    [102, 103, 104, 105],
   );
   assert.deepEqual(
     await rows(

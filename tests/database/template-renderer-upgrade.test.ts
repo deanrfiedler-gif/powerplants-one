@@ -70,7 +70,7 @@ test("Populated 0102 upgrade retains an assigned DK06-OUT09-1 publication and qu
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
   assert.deepEqual(
     upgraded.slice(ledger.length).map((r) => r.version),
-    [103, 104],
+    [103, 104, 105],
   );
   await migrate();
   await seed();

@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   database,
   transaction,
@@ -41,6 +40,7 @@ import {
 } from "../../src/shared/reads";
 import { addAffiliation, createOrganisation, recordHistory } from "../../src/shared/commands";
 import { readOperation } from "../../src/shared/receipts";
+import { recoverSchema } from "../helpers/recover-schema";
 const id = (type: number, n = 1) =>
   `${type}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const company = id(20),
@@ -115,9 +115,7 @@ const rows = async (q: string, values: unknown[] = []) =>
   (await database().query(q, values)).rows;
 
 test("P03 migration preserves every P02 legacy field, accepted operation hash and original receipt; additive seed does not revive grants", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(2);
   await seed(2);

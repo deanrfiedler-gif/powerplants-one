@@ -15,6 +15,12 @@ Two registers are generated from the reviewed report. The [recommendations](desi
 
 The [direction record](decisions/ux-benchmark-research-direction.md) says what Dean's direction authorises: research and proposals. Without his decision on each item it authorises no design, code, migration, customer contact or adoption. Adopted items will be recorded in `docs/decisions/` and linked to scope IDs. No application code, route, migration, permission, design register entry or parent ID changes.
 
+## PJ-06 exact technical/procurement receiving — 16 October 2026
+
+Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.
+
+The authorised [PR #522](https://github.com/deanrfiedler-gif/powerplants-one/pull/522) carries the exact Accepted brief into native Engineering-to-Supply receiving with issued technical release, Approved demand and independent receiving authority. At its prior source `459112d`, dedicated CI passed 856 units, build, 17 native/upgrade cases, two reserved Products upgrades, separately reset compiled APIs and actual application/PostgreSQL restart; independent review was clean and both threads resolved. [Execution evidence](testing/evidence/project-specialist-handover/README.md) retains those results and the original local failures. They do not verify this new integration: populated upgrades, exact preservation, repeat-run stability, CI and independent review must be established again. Supplier competence, downstream disposition, UI and operational acceptance remain open. No merge or deployment is performed here.
+
 ## Open PR repair and integration — 16 October 2026
 
 Dean authorised fixing and merging all nine open PRs: #502, #503, #507, #510, #511, #512, #513, #518 and #520. The `codex/pr-repairs-oct16` session owns this repository integration write, isolated from main `1552cfb`. Every contribution head is retained by merge ancestry, including the two draft contributions; the Product image decisions remain Proposed. Existing main fixes, all parent IDs, accepted design captures and prior evidence are retained.

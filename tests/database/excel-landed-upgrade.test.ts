@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile, mkdtemp, realpath } from "node:fs/promises";
+import { mkdtemp, realpath } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -27,13 +27,12 @@ import { fxEvidence } from "../helpers/source-fx";
 import { pricingProposal } from "../helpers/excel-source-pricing";
 import { crmBase } from "../helpers/crm";
 import { readOperation } from "../../src/shared/receipts";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 after(closeDatabase);
 test("XI99 populated FX-priced workbook and quotation upgrade to landed allocation with exact source, rows, grants and original ledger; reapply is inert", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(99);
   await seed(99);
@@ -112,7 +111,7 @@ test("XI99 populated FX-priced workbook and quotation upgrade to landed allocati
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [100, 101, 102, 103, 104],
+    [100, 101, 102, 103, 104, 105],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,

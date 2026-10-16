@@ -4,7 +4,6 @@ import { equipmentTimeline } from "../../src/equipment/timeline";
 import { equipmentReviewTasks } from "../../src/equipment/reviews";
 import { equipmentOptions } from "../../src/equipment/options";
 import { before, after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { reset, migrate, seed } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -33,6 +32,7 @@ import {
   reviewBulletin,
 } from "../../src/equipment/evidence";
 import { CRM, crmBase as base } from "../helpers/crm";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use only ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -585,9 +585,7 @@ test("EQ-09 canonical calibration renewal and retrospective withdrawal retain or
   assert.equal(old.withdrawn_reason, "SYN I1 behaviour verification");
 });
 test("EQ migration upgrade across deferred identity backfill, retained originals and repeat seed", async () => {
-  await database().query(
-    await readFile("db/migrations/0001-recover.sql", "utf8"),
-  );
+  await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(25);
   await seed(25);
