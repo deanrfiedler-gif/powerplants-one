@@ -35,6 +35,17 @@ It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR
 
 New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
 
+## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
+
+Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API: the credit lands in one Claude Console organisation linked to the plan. It cannot be spent through Azure, Bedrock or Vertex. Proposed [Amendment A1](decisions/ppo-assistant-direction.md#proposed-amendment-a1--claude-api-first-16-october-2026) adds the credit-funded direct Claude API as a provider candidate and recommends it as the first provider for AI1's live synthetic evaluation. The direct OpenAI API and Azure OpenAI stay alternatives behind the same replaceable adapter, and the labelled simulated adapter stays the first implementation. [Specification §8](blueprints/ppo-assistant-specification.md#8-provider-privacy-and-running-cost-proposal) now records, each with a source checked on 16 October:
+
+- the credit rules: one linked organisation, changeable only through support; monthly expiry without rollover; requests stop when credit runs out unless purchased credit or auto-reload exists; a workspace spend limit; direct Claude API only;
+- Anthropic's retention and Commercial Terms: deletion within 30 days, flagged content kept up to two years, no training on customer content, zero data retention only by arrangement;
+- data residency: global or US-only inference, US-only storage, no Australian option;
+- costs at current Claude rates: US$0.022 a task at the Sonnet 5.5 reference, so the US$30 PPO ceiling covers about 900 tasks with contingency.
+
+This is a proposal awaiting Dean's decision; his exact words will be recorded in the decision when given. No code, migration, Console organisation, API key, credit claim or paid service is created. The ChatGPT instructions are unchanged because no decision has been made yet. Open items are the billing owner, data region, retention settings and authority for real data.
+
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
 Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.

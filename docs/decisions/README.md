@@ -97,7 +97,7 @@ The [controlled opportunity handover proposal](crm-opportunity-handover.md) reco
 
 - [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
 
-The [PPO Assistant direction and architecture decision](ppo-assistant-direction.md) records Dean's 8 September 2026 instruction to prepare the bounded customer CRM assistant specification. It brings AI design forward under D-027; provider-funded evaluation, implementation and operational authority remain separate. No numbered ADR or migration is reserved.
+The [PPO Assistant direction and architecture decision](ppo-assistant-direction.md) records Dean's 8 September 2026 instruction to prepare the bounded customer CRM assistant specification. It brings AI design forward under D-027; provider-funded evaluation, implementation and operational authority remain separate. No numbered ADR or migration is reserved. Its proposed Amendment A1 (16 October 2026) would make the direct Claude API, funded by Dean's Max 20x API credits, the first live synthetic evaluation provider; it awaits Dean's decision.
 
 [Private Prototype Demo scope and hosting assessment](private-prototype-demo.md) records the authorised package definition and proposed hosted evaluation; no spend, account grant or remote deployment is activated.
 
