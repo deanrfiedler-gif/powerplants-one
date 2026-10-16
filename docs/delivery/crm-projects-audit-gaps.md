@@ -59,4 +59,4 @@ The [R2 handover contract](../contracts/project-specialist-handover.md) addresse
 
 ## PJ-06 work-evidence continuation — 16 October 2026
 
-[R3](../contracts/project-specialist-work-evidence.md) implements the next exact-source acceptance dependency after R2. GAP-04 still includes supplier identity/competence and further downstream disposition; PJ-07 readiness and operational acceptance are not implied. Each evidence record retains stated scope/limitations and no aggregate completion or payment effect.
+[R3](../contracts/project-specialist-work-evidence.md), [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530), implements the next exact-source acceptance dependency after R2. GAP-04 still includes supplier identity/competence and further downstream disposition; PJ-07 readiness and operational acceptance are not implied. Each evidence record retains stated scope/limitations and no aggregate completion or payment effect.

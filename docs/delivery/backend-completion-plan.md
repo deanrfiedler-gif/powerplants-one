@@ -2,7 +2,7 @@
 
 ## PJ-06 work-evidence increment — 16 October 2026
 
-R3 uses exact R2 `459112d` because main `1552cfb` lacks the accepted specialist-bound technical/procurement source. The existing #522 monitor retains that contribution; this separate branch implements [bounded work-evidence acceptance](../contracts/project-specialist-work-evidence.md). [Execution evidence](../testing/evidence/project-specialist-work/README.md) separates source reconciliation, local proof, CI/review and acceptance. BC-06 remains open for supplier competence, downstream disposition, readiness and UI. No external integration entry condition is satisfied by synthetic evidence.
+R3 [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530) uses exact R2 `459112d` because main `1552cfb` lacks the accepted specialist-bound technical/procurement source. The existing #522 monitor retains that contribution; this separate branch implements [bounded work-evidence acceptance](../contracts/project-specialist-work-evidence.md). [Execution evidence](../testing/evidence/project-specialist-work/README.md) separates source reconciliation, local proof, CI/review and acceptance. BC-06 remains open for supplier competence, downstream disposition, readiness and UI. No external integration entry condition is satisfied by synthetic evidence.
 
 ## PJ-06 next dependency — 16 October 2026
 

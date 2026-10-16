@@ -2,7 +2,9 @@
 
 ## PJ-06 scoped work-evidence acceptance — 16 October 2026
 
-The separate `codex/pj06-work-evidence` contribution starts at #522 source `459112d`, while its existing monitor owns CI/review. Main remains `1552cfb`; #518/#522 are unmerged dependencies. The [decision](decisions/project-specialist-work-evidence.md) and [contract](contracts/project-specialist-work-evidence.md) add immutable evidence submissions, exact native document/handover sources, a default-denied independent review duty, terminal decisions and explicit corrections. [Execution evidence](testing/evidence/project-specialist-work/README.md) records actual verification separately. Full PJ-06, supplier competence, downstream disposition, operational acceptance and UI remain open. No merge or deployment.
+The separate [PR #530](https://github.com/deanrfiedler-gif/powerplants-one/pull/530), `codex/pj06-work-evidence`, starts at #522 source `459112d`, while its existing monitor owns CI/review. Main remains `1552cfb`; #518/#522 are unmerged dependencies. The [decision](decisions/project-specialist-work-evidence.md) and [contract](contracts/project-specialist-work-evidence.md) add immutable evidence submissions, exact native document/handover sources, a default-denied independent review duty, terminal decisions and explicit corrections. [Execution evidence](testing/evidence/project-specialist-work/README.md) records actual verification separately. Full PJ-06, supplier competence, downstream disposition, operational acceptance and UI remain open. No merge or deployment.
+
+Local R3 proof passed: 12 native cases, four populated upgrades, two reserved Products upgrades, compiled HTTP and actual application/database restart (32 tables, two original receipts, zero repeated effects), build, lint and final typecheck. Full pinned units are 854/857 with the same three Windows path-guard failures reproduced on unchanged main. The two independent-review findings were reproduced and corrected; exact implementation review is clean. Final-source review and CI remain separate live PR gates; pending checks are not passes.
 
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
