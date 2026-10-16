@@ -6,6 +6,7 @@ import { spawn } from "node:child_process";
 const exclusive = new Set([
   "project-commercial.test.ts",
   "project-specialist.test.ts",
+  "project-specialist-handover.test.ts",
   // CPQ changes the company activation head and temporarily revokes source
   // access; run it apart from the shared estimate/CPQ authority scenarios.
   "cpq-costs.test.ts",
