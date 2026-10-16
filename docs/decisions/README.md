@@ -7,6 +7,8 @@
 
 [ADR-0058](ADR-0058-outbound-customer-email.md) is its **proposed** provider record: Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel. Nothing sends, and D-025 remains Open.
 
+[Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** change to stop technicians arriving to missing or wrong parts or an unprepared site: a Supply-fed Parts criterion at dispatch, a technician Return with reason, owned preparer tasks for every return, a customer site-readiness contact and a pack issue lead time. Drawn as new Figma frames beside the accepted Job pack and My jobs pages; not accepted and not built.
+
 [DK-03 exact revision and acknowledgement facts](output-register-facts.md) defines the accepted Q4/G3 backend read dependency with exact issue lineage, scoped denominators and explicit report/crew limitations.
 
 [PJ-06 specialist package coordination](project-specialist-packages.md) records exact commercial/source references, immutable briefs and independent internal receiving. Source-owned approvals and UI remain separate.

@@ -22,6 +22,19 @@ Dean is asked three questions:
 
 This is documentation only: no sending code, provider account, credential, migration or customer message. D-025 remains Open until Dean decides.
 
+## Field readiness gate proposed — 16 October 2026
+
+Dean named a Powerplants Australia problem: technicians arrive on site to missing or wrong parts, or to a customer who was never asked to get the site ready. He proposed that technicians accept or decline a job pack with a reason. The [field readiness gate proposal](decisions/field-readiness-gate-proposal.md) answers it with five changes:
+- a Dispatch-stage **Parts** criterion derived from Supply Chain readiness of the demands linked to the appointment, closing departure DP-20;
+- a technician **Return with reason** beside the unchanged acknowledgement, which holds dispatch and gives the preparer and the scheduler owned tasks;
+- an owned preparer task when a checker returns a revision;
+- a typed **customer site-readiness** contact on the appointment, with a derived criterion;
+- a pack issue lead time.
+
+It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR-18, TR-04 to TR-07 and BP-01 §13.2. It lists the migration, seed, permission and test-suite impact of a build, and asks seven questions with recommended answers.
+
+New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
+
 ## PJ-06 exact technical/procurement receiving — 16 October 2026
 
 Main `b223c5817be7a946b38c48c9838d9d9925298156` externally integrated R1 #518 through #521. PR #522 now targets main. Its unmerged migration is renumbered to 0105 after main's immutable DK-06 renderer migration 0104; the [decision](decisions/project-specialist-handover.md) records the integration and preservation requirements. Existing #500/#518 monitors remain paused. The independent work-evidence contribution #530 remains separate and needs downstream reconciliation after this source changes.
