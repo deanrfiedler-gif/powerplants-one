@@ -182,3 +182,7 @@ Dean authorised the calendar/actual-date backend after PJ-01/PJ-02. The [current
 ## PJ-05 commercial controls backend — 14 October 2026
 
 The [commercial contract](../contracts/project-commercial-controls.md) and [decision](../decisions/project-commercial-controls.md) define one exact accepted-quotation/received-Sales/reviewed-document basis, independently approved original value, owned obligations, recorded notices and exact variation decisions. The [Finance definitions](../contracts/project-commercial-finance-definitions.md) preserve approved, pending and disputed amounts separately; current totals hold on source drift. Native controls, operative policy, basis replacement, subcontracts and financial transactions remain separate. All parent IDs remain.
+
+## PJ-06 bounded native continuation — 15 October 2026
+
+The [specialist package contract](../contracts/project-specialist-packages.md) extends PRJ-04/05 with exact internally received briefs and original-operation recovery. Existing Engineering/Supply links remain source references and do not confer release, procurement or booking authority. The [decision](../decisions/project-specialist-packages.md) retains the remaining delivery scope.

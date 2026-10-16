@@ -352,9 +352,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         .getByText(/^(?:.*\s)?Loading .*…$/);
       await call(page, "local-session", { profile: s.profile });
       // SC-07 phone Day reads the whole Monday–Sunday week for its day chips.
-      // On mount (including an identity remount), the initial wide layout can
-      // also start a single-day read. Select the intended window throughout;
-      // whichever response happens to arrive first is not the screen contract.
+      // The planner no longer starts a single-day read before it measures the
+      // width (planner.spec.ts proves one window per mount). Select the intended
+      // window throughout all the same: the window is the screen contract.
       const selectedRead = (response: Response) => {
         const url = new URL(response.url());
         if (url.pathname !== `/api/v1/${s.api}` || response.request().method() !== "GET") return false;
