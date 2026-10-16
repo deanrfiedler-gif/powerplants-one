@@ -79,7 +79,10 @@ jobs:
             curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test --test-timeout=120000 tests/http/project-specialist.test.ts tests/http/project-specialist-handover.test.ts
+          node --env-file=.env.local --import tsx --test --test-timeout=120000 tests/http/project-specialist.test.ts
+          # Both proofs revoke shared fixture grants; preserve fresh-database isolation.
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx --test --test-timeout=120000 tests/http/project-specialist-handover.test.ts
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/prove-project-specialist-restart.ts write /tmp/pj06-checkpoint.json
           kill "$server"

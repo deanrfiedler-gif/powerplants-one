@@ -1,6 +1,6 @@
 # Project specialist technical/procurement handover contract
 
-Owner: Dean Fiedler. Status: authorised synthetic PJ-06 R2 implementation contract; validation and independent review pending. Parents PRJ-04/PRJ-05, SCM-03, AT-38. [Architecture decision](../decisions/project-specialist-handover.md). [R1 brief contract](project-specialist-packages.md).
+Owner: Dean Fiedler. Status: implemented in unmerged [PR #522](https://github.com/deanrfiedler-gif/powerplants-one/pull/522); exact-source validation and independent review checkpoints are recorded in the [execution evidence](../testing/evidence/project-specialist-handover/README.md). Operational acceptance remains separate. Parents PRJ-04/PRJ-05, SCM-03, AT-38. [Architecture decision](../decisions/project-specialist-handover.md). [R1 brief contract](project-specialist-packages.md).
 
 ## Native receiving and scope
 

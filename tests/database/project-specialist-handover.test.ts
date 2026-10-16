@@ -26,6 +26,8 @@ import { readOperation } from "../../src/shared/receipts";
 import { coordinateEngineering } from "../../src/engineering/service";
 import { engineeringUpdate } from "../helpers/engineering";
 import { grantLibrary } from "../helpers/library";
+import { commandPackage } from "../../src/projects/specialist/commands";
+import { packageAction } from "../helpers/project-specialist";
 import {
   specialistHandoverFixture,
   handoverAction,
@@ -335,7 +337,7 @@ test("PJ06-R2-02 inaccessible specialist sources withhold native lists, history,
   );
   await assert.rejects(
     handoverCommand(f.owner, engineering, f.prepare),
-    code("Forbidden"),
+    code("RecordUnavailable"),
   );
   assert.deepEqual(await snapshot(), before);
 });
@@ -543,5 +545,89 @@ test("PJ06-R2-06 changed brief sources block acceptance while historical payload
       owner_id: f.owner.actor_id,
       due: "2031-10-01",
     }),
+  );
+});
+
+test("PJ06-R2-08 an accepted successor brief blocks earlier receiving without changing the retained payload or original receipt", async () => {
+  const f = await specialistHandoverFixture(),
+    engineering = f.engineering.id;
+  const saved = await handoverCommand(f.owner, engineering, f.prepare);
+  await handoverCommand(
+    f.owner,
+    engineering,
+    handoverAction({
+      action: "send",
+      handover_id: f.prepare.id,
+      expected_version: 1,
+    }),
+  );
+  const query = { set: f.set, handover_id: f.prepare.id };
+  const original = (await readHandovers(f.receiver, engineering, query))
+    .selected!.payload;
+  const successor = {
+    ...f.package,
+    id: randomUUID(),
+    operation_id: randomUUID(),
+    predecessor_id: f.package.id,
+    content: {
+      ...f.package.content,
+      title: "SYN independently accepted successor brief",
+    },
+  };
+  await commandPackage(f.owner, f.project.id, successor);
+  await commandPackage(
+    f.owner,
+    f.project.id,
+    packageAction(successor.id, 1, "Submit"),
+  );
+  await commandPackage(
+    f.reviewer,
+    f.project.id,
+    packageAction(successor.id, 2, "Accept"),
+  );
+  const before = await snapshot();
+  await assert.rejects(
+    handoverCommand(
+      f.receiver,
+      engineering,
+      handoverAction({
+        action: "decide",
+        handover_id: f.prepare.id,
+        expected_version: 2,
+        result: "Accepted",
+      }),
+    ),
+    code("SpecialistSourceChanged"),
+  );
+  const detail = (await readHandovers(f.receiver, engineering, query))
+    .selected!;
+  assert.equal(detail.specialist_source_status, "Changed");
+  assert.deepEqual(detail.payload, original);
+  assert.deepEqual(
+    await readOperation(f.owner, f.prepare.operation_id),
+    saved.receipt,
+  );
+  assert.deepEqual(await snapshot(), before);
+  await handoverCommand(
+    f.receiver,
+    engineering,
+    handoverAction({
+      action: "decide",
+      handover_id: f.prepare.id,
+      expected_version: 2,
+      result: "Returned",
+      reasons: [
+        {
+          line_id: null,
+          reason: "SYN accepted successor brief requires new preparation",
+        },
+      ],
+      owner_id: f.owner.actor_id,
+      due: "2031-10-01",
+    }),
+  );
+  assert.deepEqual(
+    (await readHandovers(f.receiver, engineering, query)).selected!.payload,
+    original,
   );
 });

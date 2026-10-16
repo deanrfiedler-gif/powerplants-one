@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "runtime_implementation": "abaf10d7418107c503aa6095f6d3ef9ae3d9f3c8",
+  "local": {
+    "focused_unit": {
+      "tests": 1,
+      "passed": 1
+    },
+    "native": {
+      "distinct_passed": 7,
+      "scope": "PJ06-R2-01 through PJ06-R2-07 passed across retained controlled runs; original failed/interrupted attempts remain separate.",
+      "accepted_successor": {
+        "result": "Not yet verified",
+        "failures": [
+          {
+            "file": "accepted-successor-final.log",
+            "kind": "PostgreSQL pool connection timeout during concurrent local build"
+          },
+          {
+            "file": "accepted-successor-serial.log",
+            "kind": "120-second beforeEach reset-hook timeout; assertions not reached"
+          }
+        ],
+        "baseline": "Same unchanged reset-hook limit failed on unchanged main 1552cfb; no claim about the first connection timeout's cause."
+      }
+    },
+    "populated_upgrades": {
+      "starting_versions": [
+        25,
+        102,
+        103
+      ],
+      "target": 104,
+      "passed": 3,
+      "preservation": "Original rows, hashes, grants, receipts and migration ledgers; exact additions; repeated migration/seeding inert"
+    },
+    "reserved_products": {
+      "starting_versions": [
+        103,
+        104
+      ],
+      "passed": 2
+    },
+    "full_lint": {
+      "result": "Passed",
+      "revision": "6b646d162e719fe8a22553dcbaa9f1169e50446b"
+    },
+    "standalone_typescript": {
+      "result": "Passed",
+      "revision": "6b646d162e719fe8a22553dcbaa9f1169e50446b"
+    },
+    "foundation": {
+      "result": "Passed",
+      "revision": "abaf10d7418107c503aa6095f6d3ef9ae3d9f3c8",
+      "requirements": 78,
+      "local_links": 10181
+    },
+    "naming": {
+      "result": "Passed",
+      "revision": "abaf10d7418107c503aa6095f6d3ef9ae3d9f3c8",
+      "instruction_characters": 7995
+    },
+    "studio": {
+      "result": "Passed",
+      "entries": 362,
+      "unreviewed": 334,
+      "stale": 28
+    },
+    "build": {
+      "result": "Passed",
+      "typecheck": "Passed",
+      "static_pages": 77,
+      "source": "build-isolated-final.log",
+      "dependencies": "Own npm ci from unchanged lockfile; no build configuration change"
+    },
+    "compiled_http": {
+      "result": "Not reached",
+      "reason": "Compiled app failed private harness readiness limit after reset; no error output. Original 30-attempt/one-second probe limit retained.",
+      "source": "proof-harness-final.log"
+    },
+    "restart": {
+      "result": "Not reached",
+      "reason": "Preceding compiled application readiness failure; dedicated CI restart proofs retained and pending."
+    },
+    "focused_final_lint": {
+      "result": "Passed",
+      "scope": [
+        "tests/database/project-specialist-handover.test.ts",
+        "scripts/http-suite.ts"
+      ],
+      "source": "lint-final-candidate.log"
+    },
+    "final_documentation_assurance": {
+      "result": "In progress at publication checkpoint",
+      "scope": "Foundation and naming checks after evidence/STATUS edits; later results are recorded in the PR conversation without treating earlier passes as final-head CI."
+    }
+  },
+  "ci_checkpoint": {
+    "revision": "abaf10d7418107c503aa6095f6d3ef9ae3d9f3c8",
+    "complete_units": {
+      "tests": 856,
+      "passed": 856,
+      "failed": 0
+    },
+    "standard_build": "Passed",
+    "specialist_native": {
+      "tests": 16,
+      "passed": 15,
+      "failed": 1
+    },
+    "failure": "Exact privacy error expectation; corrected and rechecked locally. See privacy-ci-follow-up.json.",
+    "final_gate": "Pending"
+  },
+  "independent_review": {
+    "revision": "abaf10d7418107c503aa6095f6d3ef9ae3d9f3c8",
+    "result": "Clean",
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/522#issuecomment-6204790122",
+    "resolved_threads": 2,
+    "subsequent_changes": "Require a new exact-head review"
+  },
+  "merge": "Not performed",
+  "deployment": "Not performed",
+  "operational_acceptance": "Not performed"
+}
