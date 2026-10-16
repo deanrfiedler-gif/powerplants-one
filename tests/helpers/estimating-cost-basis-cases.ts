@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { supplySeedIdentities } from "./supply-seed-identities";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { database, transaction } from "../../src/platform/database";
 import { createSession } from "../../src/platform/identity";
 import { migrate, seed } from "../../scripts/database";
@@ -19,6 +18,7 @@ import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { discoveryCostSetup, manualCostCommand, costed, reviseCostDiscovery, selectCostOption } from "../helpers/estimating-cost-basis";
+import { recoverSchema } from "./recover-schema";
 // Registered once by the existing estimating DB entrypoint; it owns the
 // disposable guard, beforeEach(reset) and after(closeDatabase) lifecycle.
 export function registerDiscoveryCostBasisTests() {
@@ -198,7 +198,7 @@ test("E2 adoption rolls back every root, cost, receipt and outbox row when recor
   await adoptDiscoveryCosting(s.p,s.input.id,await manualCostCommand(s));
 });
 test("E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations",async()=>{
-  await rows(await readFile(new URL("../../db/migrations/0001-recover.sql",import.meta.url),"utf8"));await rows("DROP TABLE public.ppo_migrations");await migrate(26);await seed(26);
+  await recoverSchema();await rows("DROP TABLE public.ppo_migrations");await migrate(26);await seed(26);
   const p=(await createSession("coordinator")).principal,o=crmCreate();await createOpportunity(p,o);const input=estimateInput(o.id),accepted=await createEstimate(p,input),e=await readEstimate(p,input.id),commercial=await opportunityCommercial(p,o.id);
   const command=quoteCommand(e.saved);await prepareQuote(p,e.id,command);await runQuoteJob((await readQuoteJob(p,command.id)).j.id);const bytes=await draftBytes(p,command.id),saved=await readEstimate(p,e.id);
   const retained=tables.filter(t=>!t.startsWith("estimate_discovery_"));

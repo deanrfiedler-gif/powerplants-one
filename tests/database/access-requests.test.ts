@@ -22,6 +22,7 @@ import {
   accessRequestSeedGrants,
   accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants,
 } from "../helpers/engineering-materials-grants";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -44,12 +45,7 @@ const shape = (values: Record<string, unknown>[]) =>
 
 test("AD01 requests: populated upgrade retains all earlier rows and adds exactly five duties through team creation", async () => {
   await transaction(async (c) => {
-    await c.query(
-      await readFile(
-        new URL("../../db/migrations/0001-recover.sql", import.meta.url),
-        "utf8",
-      ),
-    );
+    await recoverSchema(c);
     await c.query("DROP TABLE IF EXISTS public.ppo_migrations");
   });
   await migrate(78);
@@ -86,7 +82,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     next.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+    [79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105],
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version <= 78),

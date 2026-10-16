@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
@@ -11,15 +10,14 @@ import { createEstimate } from "../../src/estimating/service";
 import { readOperation } from "../../src/shared/receipts";
 import { crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
+import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 after(closeDatabase);
 const rows = async (sql: string) => (await database().query(sql)).rows;
 for (const through of [25, 92])
   test(`XI04 populated ${through} upgrade preserves native estimates, authority and original ledgers; no Excel seed`, async () => {
-    await database().query(
-      await readFile("db/migrations/0001-recover.sql", "utf8"),
-    );
+    await recoverSchema();
     await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
     await migrate(through);
     await seed(through);
@@ -65,7 +63,7 @@ for (const through of [25, 92])
     );
     const expected =
       through === 92
-        ? [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104]
+        ? [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
         : migrationFiles
             .map((f) => Number(f.slice(0, 4)))
             .filter((v) => v > through);
