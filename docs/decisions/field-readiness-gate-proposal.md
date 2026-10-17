@@ -2,7 +2,7 @@
 document_id: PPO-SVC-FIELD-READINESS-GATE-PROP
 date: 2026-10-16
 owner: Dean Fiedler
-status: Accepted by Dean on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7; section 9); first build increment, P1 to P3, in section 10; Figma named version, later increments and operational acceptance separate
+status: Accepted by Dean on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7; section 9); first build increment, P1 to P3, in section 10; Figma named version saved 17 October 2026 (section 4), later increments and operational acceptance separate
 source_commit: 1552cfbb8efd6cea17438c2af18ba0effa4fc278
 versioning: git
 ---
@@ -141,7 +141,7 @@ No parent requirement ID is added, renamed or renumbered. Parent IDs are rows of
 
 ## 4. Design reference
 
-The Figma amendment is drawn in Dean's working file "PPO - Design". Its link stays out of this public repository (ADR-0050, ADR-0053). It is a proposal: no named version is saved and nothing is accepted. New frames were added beside the accepted ones, and **no accepted frame or component was edited**. The new frames are clones of accepted frames, with instance overrides.
+The Figma amendment is drawn in Dean's working file "PPO - Design". Its link stays out of this public repository (ADR-0050, ADR-0053). Dean accepted the amendment with the gate (section 9) and, on 17 October 2026, supplied the link to the Figma version he saved for it, "Field readiness gate — accepted". The link stays out of this public repository. Claude did not verify the version name or the section labels from that link, and the frames below still carry "(proposal)" in their names until Dean relabels them. New frames were added beside the accepted ones, and **no accepted frame or component was edited**. The new frames are clones of accepted frames, with instance overrides.
 
 | Page | Section | Frames |
 |---|---|---|
