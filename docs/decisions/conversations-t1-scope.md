@@ -50,7 +50,7 @@ Quoted as written, 17 October 2026:
 
 | Slice | Content | Output |
 |---|---|---|
-| T1a | Draw the frames the design lacks (section 6); this scope record; register and STATUS rows | Documentation pull request |
+| T1a | The frames the design lacked (section 6, drawn as proposals); this scope record; register and STATUS rows | Documentation pull request |
 | T1b | Migration and service: threads, participants, immutable messages, mentions, asks, record links; capabilities and the access-review chain; access rules; database tests. No UI | Pull request |
 | T1c | `/conversations` on desktop and phone: sidebar, thread, composer with `@` and `#` pickers, context panel; the top-bar icon and badge on every page and the phone header; design register entry | Pull request |
 | T1d | Thread count and list on deal and project pages; asks into the notification inbox and My Work | Pull request |
@@ -71,19 +71,29 @@ These are proposals for Dean to accept or change. They are not verified operatin
 | T1-8 | **No email in T1.** In-app only; email waits for D-025 and SH-03 delivery rules (N14) |
 | T1-9 | **Synthetic data only.** Fixtures use synthetic people, deals and projects; nothing from a real thread, customer or Teams export is used |
 
-## 6. Design gaps to close in T1a
+## 6. Frames drawn in T1a
 
-The accepted design (Figma file "PPO - Design", page "Conversations", node 1141:49) lacks these frames. They are drawn as proposals on the same page, and Dean accepts them before T1c.
+The accepted design (Figma file "PPO - Design", page "Conversations", node 1141:49) lacked the frames below. On 17 October 2026 Claude drew them as proposals in a new section on the same page, "T1 · people-only threads and missing frames (proposal, 17 Oct 2026)" (node 1244:3422). They reuse the accepted components and edit copies of the accepted frames; no accepted frame or component changed. Dean has not yet accepted them, and no named version covers them.
 
-| Gap | Reason |
-|---|---|
-| Tablet 1024 and phone 320 | Proposal section 14: not drawn |
-| Loading and empty states: no threads, no threads on this record, nothing waiting on you | Not drawn |
-| New thread | The sidebar button has no destination |
-| `@` picker and `#` picker | The composer's two pickers are not drawn |
-| Record page thread list on a deal and a project | Needed by T1d |
-| T1 variants of the thread view and sidebar with no Carl, microphone or approval items | The accepted frames show Carl, which T1 must not |
-| The unreadable-record link without "Request access" | T1-4 |
+| Frame | Node | Shows |
+|---|---|---|
+| Desktop 1440 · Thread view, Sam, people only | 1244:3423 | The accepted thread view without Carl, drafts, branches, sharing, the microphone and the Needs approval and Carl working filters. Participants are people; the context panel has no Carl pins |
+| Desktop 1440 · Empty, no conversations yet | 1244:285681 | The page with no threads, the context panel closed and no badge |
+| Desktop 1440 · Loading | 1244:286085 | Skeleton rows in the sidebar and the thread |
+| Dialog · New thread | 1244:286267 | Record picker, first message with the composer, and the note that a tagged question becomes a tracked ask |
+| State · `@` person picker and `#` record picker | 1244:286385 | People who can open the record, and deals and projects the sender can open |
+| State · Record links for each reader, no sharing | 1244:286460 | A reader who can open the record, and one who sees "A record you can't open" with no action (T1-4) |
+| State · Record page, Conversations section | 1244:286531 | A deal with two conversations, and a project with none |
+| Tablet 1024 · Thread view | 1244:286582 | Rail collapsed, the context panel behind a Context button |
+| Phone 390 · Thread list and Thread | 1244:285233, 1244:285266 | The accepted phone frames without Carl |
+| Phone 320 · Thread list and Thread | 1244:285524, 1244:285578 | The same at 320 px |
+| Notes | 1244:287075 | Scope, removals, departures and what is still not drawn |
+
+**Proposed departures,** for Dean's decision with the frames:
+- At 320 px the phone header drops its side padding to 4 px and its title steps down to 18 px so "Conversations" stays whole, and the page guide moves into the identity menu. The Context button is icon-only.
+- At 1024 px the builder icon moves into the identity menu, as already proposed for phones (D2), and the search drops its shortcut hint, so the top bar fits.
+
+**Still not drawn:** the Context panel as a drawer on tablet and as a sheet at 320 px, the reply-by date picker, the Resolve confirmation, and loading and empty states on phone.
 
 The shared `Shell / Top bar` and `Shell / Phone header` Figma components gain the Conversations action at the T1c lock-in, after Dean confirms the frames, so that every accepted page changes in one reviewed step. The third named version already shows the action on the Conversations frames only.
 
