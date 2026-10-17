@@ -3,13 +3,13 @@ document_id: PPO-CONV-T1-SCOPE
 title: Conversations T1 scope, people-only threads
 date: 2026-10-17
 owner: Dean Fiedler
-status: Scope proposed for Dean's review; shell amendment accepted by Dean; no application code, migration, capability or route authorised by this record
+status: Scope, rules T1-1 to T1-9, answers U1 to U4 and the proposal frames accepted by Dean on 17 October 2026; named Figma version saved; no application code, migration, capability or route authorised by this record
 versioning: git
 ---
 
 # Conversations T1 scope, people-only threads
 
-This record scopes build step T1 of the [AI and internal communications threads decision](ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP, section 9): threads between people, without AI. It splits T1 into four reviewable pull requests, records Dean's acceptance of the top-bar Conversations action, and lists what the Figma design still lacks before the page is built. It authorises no code. Each later slice follows `AGENTS.md` in its own pull request.
+This record scopes build step T1 of the [AI and internal communications threads decision](ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP, section 9): threads between people, without AI. It splits T1 into four reviewable pull requests, records Dean's acceptance of the top-bar Conversations action, the T1 rules, answers and frames, and lists what is still not drawn. It authorises no code. Each later slice follows `AGENTS.md` in its own pull request.
 
 ## 1. Dean's words
 
@@ -18,6 +18,7 @@ Quoted as written, 17 October 2026:
 1. "Yes, start T1 (threads between people, no AI). Check the Figma design status first and design the T1 scope with me before writing any code."
 2. "Yes, accept the top-bar Conversations icon and badge shell amendment as part of T1, per your recommendation. Then continue scoping T1."
 3. "Proceed on that basis." Given after the four-slice plan in section 4 was presented.
+4. "Yes, accept the T1 frames, rules T1-1 to T1-9, the 320 and 1024 departures, and the recommended answers to U1 to U4. Save the named version, then record my words and mark PR #567 ready." Given after the frames in section 6 and the rules and questions in sections 5 and 8 were presented.
 
 ## 2. Decisions and evidence
 
@@ -26,7 +27,9 @@ Quoted as written, 17 October 2026:
 | T1 starts now, with no AI | User decision | Quote 1 |
 | The Conversations action moves to the top bar, left of the information icon, with a badge, and the rail entry is removed | User decision, design accepted earlier the same day, shell amendment accepted in T1 | Quote 2; [Conversations design r01](../reference/ui/my-work/conversations-r01/README.md); proposal section 14, rules D1, D2 and D7 |
 | Four slices, T1a to T1d | Claude's recommendation, adopted | Quote 3 |
-| Everything in sections 3 and 5 | Proposed design, for review | This record |
+| The T1 contents in section 3 and rules T1-1 to T1-9 in section 5 | User decision | Quote 4 |
+| Questions U1 to U4, with the recommended answers in section 8 | User decision, recommended answers adopted | Quote 4 |
+| The twelve frames in section 6 and the 320 and 1024 departures | User decision | Quote 4; named Figma version "Conversations T1 — people-only threads, accepted", saved 17 October 2026 |
 | The shared `Shell / Top bar` and `Shell / Phone header` Figma components are changed | Not yet done | Section 6 |
 
 ## 3. What T1 contains
@@ -57,7 +60,7 @@ Quoted as written, 17 October 2026:
 
 ## 5. Proposed T1 rules
 
-These are proposals for Dean to accept or change. They are not verified operating rules.
+Accepted by Dean as the design rules for T1 (quote 4). They are not verified operating rules, and no code implements them yet.
 
 | ID | Rule |
 |---|---|
@@ -73,7 +76,7 @@ These are proposals for Dean to accept or change. They are not verified operatin
 
 ## 6. Frames drawn in T1a
 
-The accepted design (Figma file "PPO - Design", page "Conversations", node 1141:49) lacked the frames below. On 17 October 2026 Claude drew them as proposals in a new section on the same page, "T1 · people-only threads and missing frames (proposal, 17 Oct 2026)" (node 1244:3422). They reuse the accepted components and edit copies of the accepted frames; no accepted frame or component changed. Dean has not yet accepted them, and no named version covers them.
+The accepted design (Figma file "PPO - Design", page "Conversations", node 1141:49) lacked the frames below. On 17 October 2026 Claude drew them as proposals in a new section on the same page, "T1 · people-only threads and missing frames (proposal, 17 Oct 2026)" (node 1244:3422). They reuse the accepted components and edit copies of the accepted frames; no accepted frame or component changed. Dean accepted them (quote 4). At his request Claude saved the named version **"Conversations T1 — people-only threads, accepted"** in the Figma desktop app on 17 October 2026 and confirmed it as the latest entry in the file's version history. The panel truncates titles, so the full title was checked in the save dialog. Icon-free captures have not been made; they belong to the T1c lock-in.
 
 | Frame | Node | Shows |
 |---|---|---|
@@ -89,7 +92,7 @@ The accepted design (Figma file "PPO - Design", page "Conversations", node 1141:
 | Phone 320 · Thread list and Thread | 1244:285524, 1244:285578 | The same at 320 px |
 | Notes | 1244:287075 | Scope, removals, departures and what is still not drawn |
 
-**Proposed departures,** for Dean's decision with the frames:
+**Departures,** accepted with the frames (quote 4):
 - At 320 px the phone header drops its side padding to 4 px and its title steps down to 18 px so "Conversations" stays whole, and the page guide moves into the identity menu. The Context button is icon-only.
 - At 1024 px the builder icon moves into the identity menu, as already proposed for phones (D2), and the search drops its shortcut hint, so the top bar fits.
 
@@ -111,9 +114,9 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Outgoing handovers | A `#` link opens the record; a context-panel item opens in its owning system |
 | Departures | The top-bar Conversations action, a shell amendment accepted by Dean in quote 2 |
 
-## 8. Open questions for Dean
+## 8. Questions U1 to U4, answered
 
-| ID | Question | Recommended answer |
+| ID | Question | Answer (the recommendation, adopted by quote 4) |
 |---|---|---|
 | U1 | Who may start a thread: any reader with the post capability, or the record owner only | Any reader with the post capability, because the reason for the page is that colleagues ask each other |
 | U2 | May a person retract their own message | No in T1. Messages are immutable and a correction is a new message; retraction needs a retention and audit decision |
@@ -122,4 +125,4 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 ## 9. What this record does not do
 
-It authorises no application code, migration, seed, capability, route or deployment, and no number is reserved for a migration or a capability. It does not accept the sections 5 and 8 proposals, the new frames, or the change to the shared Figma components. It does not decide A1 (the provider), the AD-01 sharing record, the speech provider, the driving policy or Carl's agreement to the name; none of them blocks T1.
+Accepting the rules, answers and frames is a design decision. It authorises no application code, migration, seed, capability, route or deployment, and no number is reserved for a migration or a capability. `conversation.read` and `conversation.post` remain proposed names; T1b maps them to roles through the access-review chain. It does not change the shared `Shell / Top bar` and `Shell / Phone header` Figma components (T1c). It does not decide A1 (the provider), the AD-01 sharing record, the speech provider, the driving policy or Carl's agreement to the name; none of them blocks T1.
