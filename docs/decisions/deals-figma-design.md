@@ -4,7 +4,7 @@
 
 ## Request and source
 
-Dean requested the Deals module UI in the existing PPO Design file using `docs/reference/ui/deals/ppo-deal-pipeline_r37.html`. The supplied node `190:20237` is the accepted Leads page. A dedicated [Deals (proposal) page](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=549-2) preserves that existing work. The choice of r37 follows this specific request; the repository's retained r38 runtime references remain unchanged.
+Dean requested the Deals module UI in the existing PPO Design file using `docs/reference/ui/deals/ppo-deal-pipeline_r37.html`. The supplied node `190:20237` is the accepted Leads page. A dedicated Deals (proposal) page (`549:2`) in the "PPO - Design" Figma file preserves that existing work. The choice of r37 follows this specific request; the repository's retained r38 runtime references remain unchanged.
 
 Source SHA-256: `3b0d7806907bc97e9db37f5ae7d0cedf385abb6d9ec2781b0bedd1e8e7c4ca39`. The issued HTML bytes were not edited. A temporary local copy was used for rendered inspection and a temporary Figma capture; the capture was removed after native composition.
 

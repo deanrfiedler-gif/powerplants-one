@@ -6,7 +6,7 @@ Repository documentation baseline: `5eb55f0`. This contribution changes design r
 
 ## Delivered frames
 
-All frames are on [Deals (proposal)](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=549-2). Screenshots below are direct Figma exports, not screenshots imported as UI layers.
+All frames are on the Deals (proposal) page (`549:2`) in the "PPO - Design" Figma file. Screenshots below are direct Figma exports, not screenshots imported as UI layers.
 
 | View | Node | Viewport | Capture |
 |---|---|---|---|
