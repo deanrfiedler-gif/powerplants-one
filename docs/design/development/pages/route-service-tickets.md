@@ -14,6 +14,14 @@ This route is the SV-01 register. Build plan increment I2 replaced the bounded P
 
 ## Desktop
 
+Accepted design: the [Service requests design decision](../../../decisions/service-requests-figma-design.md) of 17 October 2026, with captures 01–03 (desktop 1440 × 900) and 08 (tablet 1024) in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md).
+
+- **Register:** the Work orders grid, with queues in the side menu (D1): All open and My requests; Triage: New to triage, Urgent, Needs information and Overdue clarifications; After triage: No work order yet and Work order linked. Row checkboxes carry Open in sequence and Export list (D2, replacing 23 September D7).
+- **Columns:** Request, Summary, Stage, Priority, Attention, Next action, Action due, Action owner, Customer, Site, Equipment, Linked work, Request owner, Received and Channel. Urgent and High are Tags; Normal and Low are text; unknowns read “Not confirmed” or “Not recorded” in amber.
+- **Board:** one click away in the toolbar, with three lanes for the built stages (New, Needs information, Triaged).
+- **Snapshot:** a row opens the large snapshot (D3), with Open request and Complete triage.
+- Nothing new is built. Later stages wait for ADR-0043 (D6).
+
 Follow the [SV-01 contract](scope-sv-01.md#desktop). The route-specific points are:
 
 - The `PageHeader` register band is removed. A visually hidden `h1` reads *Service requests*, the breadcrumb carries identity, and the description is published to the page-information panel.
@@ -24,6 +32,8 @@ Follow the [SV-01 contract](scope-sv-01.md#desktop). The route-specific points a
 
 ## Mobile
 
+Accepted design: captures 09, 10 and 13 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md). List rows with the summary, received time, reference, customer and a priority Tag, then the attention line and the stage. Five states: loading, no matches with removable filter chips, could not load, view only and save refused.
+
 Follow the [SV-01 contract](scope-sv-01.md#mobile): List only, queue chips, a full-screen filter sheet (frame 19), a no-matches state (frame 20), a 44 px search field with 16 px text, and the 320 px layout (frame 23).
 
 ## Shared components and states
@@ -31,6 +41,8 @@ Follow the [SV-01 contract](scope-sv-01.md#mobile): List only, queue chips, a fu
 See the [SV-01 contract](scope-sv-01.md#shared-components-and-states). I2 draws frame 6's loading (skeleton rows), no open requests, no matches, could not load and read-only states in the register area. A denied read still uses the shared `ReadState`. The Move dialog reuses the record page's `TriageActions` form, so changed-while-moving refusals come from the existing command and version check.
 
 ## Visual references
+
+Accepted Figma design: [Service requests design r01 captures](../../../reference/ui/service/service-requests-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-requests-figma-design.md). Images of the phone Filters sheet, desktop register states, Board drag and Move, and hover states are still missing.
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
 - [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `01-register-board.png`, `02-register-list-scrolled.png`, `03-register-list-preview.png`, `06-register-states.png` and `11-phone-register.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.

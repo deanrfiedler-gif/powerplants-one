@@ -2343,12 +2343,21 @@
         "docs/reference/ui/service-cases/native-refinement-r02/16-register-list-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/19-phone-filters.png",
         "docs/reference/ui/service-cases/native-refinement-r02/20-phone-no-matches.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-02-Desktop-Request-Snapshot-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-03-Desktop-Board-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-08-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-09-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-10-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-04-Desktop-Log-A-Request-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/ADR-0043-service-request-lifecycle.md",
-        "docs/delivery/service-requests-integration-build-plan.md"
+        "docs/delivery/service-requests-integration-build-plan.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -2391,11 +2400,18 @@
         "docs/reference/ui/service-cases/native-refinement-r02/17-request-overview-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/21-phone-work-visits.png",
         "docs/reference/ui/service-cases/native-refinement-r02/22-phone-evidence.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-05-Desktop-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-06-Desktop-Complete-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-07-Desktop-Record-Linked-Work-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-11-Phone-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-12-Phone-Complete-Triage-Sheet-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7748,11 +7764,18 @@
         "docs/reference/ui/service-cases/native-refinement-r02/17-request-overview-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/21-phone-work-visits.png",
         "docs/reference/ui/service-cases/native-refinement-r02/22-phone-evidence.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-05-Desktop-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-06-Desktop-Complete-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-07-Desktop-Record-Linked-Work-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-11-Phone-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-12-Phone-Complete-Triage-Sheet-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7782,14 +7805,16 @@
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [
         "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/18-phone-log-request.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/18-phone-log-request.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-04-Desktop-Log-A-Request-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7830,11 +7855,19 @@
         "docs/reference/ui/service-cases/native-refinement-r02/16-register-list-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/19-phone-filters.png",
         "docs/reference/ui/service-cases/native-refinement-r02/20-phone-no-matches.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-02-Desktop-Request-Snapshot-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-03-Desktop-Board-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-08-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-09-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-10-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
