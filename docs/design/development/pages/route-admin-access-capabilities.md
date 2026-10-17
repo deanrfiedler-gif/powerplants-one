@@ -34,3 +34,7 @@ The [attestation contract](../../../decisions/access-review-attestations.md) int
 ## PJ-06 work review contract
 
 The canonical capability union now has 157 keys, including `project.specialist.work.review` labelled “Review exact specialist work evidence”. This is the minimal existing-client catalogue label required to expose the new backend duty accurately. It is default denied, with no seed grant; brief receiving and Supply receiving do not confer it. No page layout, component or visual acceptance changes. Existing pending design review remains pending. [Contract](../../../contracts/project-specialist-work-evidence.md).
+
+## D-025 S2 customer message duties
+
+The canonical capability union now has 159 keys, including `customer_message.send` ("Confirm and send prepared customer messages as the named sender") and `customer_message.switch` ("Switch a customer message class on or off") in a new Customer messages family. These are the minimal existing-client catalogue labels required to expose the new backend duties accurately. Both are default denied, with no seed grant. No page layout, component or visual acceptance changes. Existing pending design review remains pending. [Decision](../../../decisions/customer-communications-core-s2.md) and [contract](../../../contracts/customer-communications.md).

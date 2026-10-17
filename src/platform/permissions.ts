@@ -151,6 +151,8 @@ export type Capability =
   | "schedule.policy.publish"
   | "schedule.request"
   | "schedule.contact"
+  | "customer_message.send"
+  | "customer_message.switch"
   | "service.work_order.read"
   | "service.work_order.edit"
   | "service.scope.authorise"

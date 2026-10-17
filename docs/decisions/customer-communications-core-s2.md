@@ -1,0 +1,52 @@
+# Customer communications core — D-025 build stage S2
+
+<!-- versioning: git; committed history is authoritative -->
+
+**Owner:** Dean Fiedler. **State:** Synthetic implementation in a draft pull request, 17 October 2026. Dean told the parent session: "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." Dean must authorise S2 before it merges. His D-025 decision record, [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566), has merged. Code delivery only: no business acceptance, provider, credential, mailbox, DNS change or customer message.
+
+**Implements:** stage S2 of the [D-025 decision paper](customer-communications-d025.md) (C1, C2 as changed on 16 October, C4–C8; rules R1–R9) behind the channel design of [ADR-0058](ADR-0058-outbound-customer-email.md). **Related:** DOC-05, TR-03, OUT-17, CRM-03, NFR-11; AT-25, AT-36. No parent requirement ID changes. **API:** [customer communications contract](../contracts/customer-communications.md).
+
+## What S2 builds
+
+- **One communications service** (`src/communications/`). Supply, Service and Projects will request a message from it. No module calls a channel directly (C1).
+- **The communication record** (`ppo.customer_communications`): one immutable record per message, linked to the customer organisation, the site and the source record. It fixes the class, recipient and address, subject, exact body and content hash, the template publication and version, the source fact version, the bound customer-safe facts and the follow-up owner (R3).
+- **The state ledger** (`ppo.customer_communication_events`): append-only, version-checked events in the R4 states (Prepared, Held, Submitted, Sent, Delivered, Failed, OutcomeUnknown, Withdrawn), plus Queued for the named sender's confirmation (below). An SQL guard refuses any other transition.
+- **Prepare → named sender confirms → Queued.** PPO drafts each message from the source record; nothing sends automatically. A named person with the new `customer_message.send` duty, and the source's own working duty, confirms the exact prepared content. For a Reviewed class (M4) the sender must not be the person who prepared it.
+- **Outbox and worker.** Confirmation records a `CustomerMessageConfirmed` outbox job through the existing command envelope. A worker drains those jobs from `ppo.outbox_jobs` with leases, attempts and retry times, checks the switch, preference and recipient again, and hands the message to the channel.
+- **A provider-neutral channel** (`CustomerMessageChannel`) whose only implementation is the synthetic channel. It keeps a simulated Sent Items record (`ppo.synthetic_mailbox_messages`) so that reconciliation can search it by PPO's message identifier, as ADR-0058 plans for Graph.
+- **Owned follow-ups (R5, TR-03).** Held, Failed and OutcomeUnknown create one open `CustomerContact` Activity for the follow-up owner, or keep the one already open. Each also writes an Activity audit event, so the owner gets an existing Owned work notice.
+- **Timeline and queue reads.** Messages are listed for a customer, a project or an order (supply demand). Anyone who can read the source record can read the message (R3). An outbound queue lists Prepared, Held, Failed and OutcomeUnknown messages.
+- **Notice preference (R2).** A per-contact, per-class, per-company preference, *Allowed* or *Do not notify*, recorded with who, when and why in an append-only ledger. With nothing recorded, being the named recipient is the basis for sending.
+- **Class switches (R9).** One switch per company and class, Off unless recorded otherwise, held in an append-only ledger. S2 allows only Off and Synthetic. A new `customer_message.switch` duty changes it.
+- **Customer email template family** `CUS-EMAIL` under the DK-06 rules (below).
+
+## Choices made in S2
+
+1. **Backend and API only; no new UI.** Timeline rows, the preference control, the send confirmation and the queue are new UI surfaces that need an accepted Figma design under [ADR-0053](ADR-0053-figma-page-design.md). S2 builds none of them and changes no page, shell or shared component, so the design register is unchanged. The reads return a display state ready for those designs.
+2. **States are channel-neutral; the channel is recorded.** The ledger uses the R4 states so that S4 changes only the channel (ADR-0058 Consequences). Every record carries `channel='Synthetic'`, which migration 0108 constrains, and every read returns `simulated: true` with a display state such as "Sent (simulated) — delivery not confirmed". DK-03 instead names its outcomes SimulatedSent and SimulatedNotSent; that ledger is unchanged.
+3. **Queued is an added state.** R4 was written when M1–M3 were to send automatically. C2 as changed on 16 October needs a named person's confirmation between Prepared and Submitted; Queued records it with the sender's identity. This is a proposed departure from the R4 table, for Dean to confirm.
+4. **A changed contact holds the message rather than withdrawing it.** R1 says such a message is withdrawn and prepared again. With no trigger yet to prepare it again, a silent withdrawal could lose it. Confirmation or the worker holds it (RecipientChanged) with an owned follow-up; the owner withdraws it and the source prepares a successor. Proposed departure.
+5. **Preparation refuses while the class is Off.** Messages already prepared or queued when a class is switched off are held with a follow-up when the sender confirms them or before hand-over, so switching off "stops that class at once". A trigger whose class is Off drafts nothing and creates no follow-up, so turning a class off does not flood owners with tasks. Proposed reading of R4 and R9.
+6. **No class trigger is built.** Preparation takes a `MessageSource` from the requesting module: it authorises the caller, names the R1 recipient role and the fact version, and supplies any class-specific facts. The service reads the source record itself for the customer, site, confirmed reference and follow-up owner (R5: the supply coordinator or the project coordinator). S2 ships no source for M1–M4: M1 and M2 arrive in S3, M3 in S5 and M4 in S6. The tests use a synthetic test source. The class and source type are paired in SQL (M1/M2 with a supply demand, M4 with a project); M3 cannot be prepared until S5 adds appointments.
+7. **The template family uses sibling tables.** DK-06's draft tables validate bodies in `src/documents/drafts/validation.ts`, which retained DK06-OUT09-1 definitions fingerprint, so adding a family there would withdraw those definitions. `CUS-EMAIL` keeps DK-06's rules in its own tables: an immutable proposal by one person, an immutable publication by another with an approval note, an exact definition hash, a contiguous version for each company and class, and an SQL allowlist of bindable fields (`ppo.customer_email_bindings`). The publisher also needs the class's working duty: `supply.coordinate` for M1 and M2, `schedule.manage` for M3 and `project.edit` for M4. S2 allows only the shared bindings (`customer.name`, `recipient.name`, `site.name`, `source.reference`); each stage adds its own facts as rows. There is no site-level assignment yet: the latest publication for a company and class is current.
+8. **The renderer adds fixed text.** Every body ends with a plain instruction to stop these emails by replying (R2) and a plain sign-off (R7, provisional until D-024). Subjects must start with the bracketed confirmed reference (R7). A correction says so in its subject and first line, and names the message it corrects. The wording is provisional, for Dean's review.
+9. **Undeliverable marking waits for S4.** R2 marks an address Undeliverable after a hard bounce. The synthetic channel can simulate a bounce, which records Failed with a follow-up, but marking addresses waits for S4's real bounce matching.
+
+## For Dean
+
+Five proposed readings of the paper, built as described above, each reversible before S3:
+- **S2-1 Queued** (choice 3): add Queued between Prepared and Submitted for the named sender's confirmation.
+- **S2-2 Contact changes hold** (choice 4): hold the message with a follow-up instead of withdrawing it silently.
+- **S2-3 Off drafts nothing** (choice 5): a class that is Off prepares nothing; messages already prepared or queued are held.
+- **S2-4 Sibling template tables** (choice 7): CUS-EMAIL keeps DK-06's rules in its own tables, with the latest publication current per company and class.
+- **S2-5 Fixed wording** (choice 8): the stop instruction "To stop these emails, reply to this email and ask us to stop.", the sign-off "Powerplants" and the correction wording.
+
+With no preference recorded, being the named recipient is the basis for sending, as R2 says; that is the paper's rule, not a new one.
+
+## Not in S2
+
+S3 (carrier and tracking fields, the order delivery contact, and the dispatch and delay notices) is **not started**. Also not built: S4's Graph channel, mailbox and app registration; S5's visit confirmations; S6's project update records; SMS; any UI; the hosted demo worker, which still runs quotation jobs only. The local `npm run documents:worker` drains the synthetic queue.
+
+## Migration 0108
+
+One migration adds the tables above, four identity types (`CustomerCommunication`, `CustomerEmailTemplateProposal`, `CustomerEmailTemplate` and `CustomerMessageSwitch`), two capabilities, eight outbox kinds and the binding allowlist. It alters `ppo.business_identities` between `SET CONSTRAINTS ppo.identity_target IMMEDIATE` and `DEFERRED`, as AGENTS.md requires. It adds no seed, grant, user or Activity kind and changes no existing row.

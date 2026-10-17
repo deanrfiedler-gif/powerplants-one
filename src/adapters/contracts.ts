@@ -58,3 +58,35 @@ export interface DistributionAdapter {
     recipient_ref: string,
   ): Promise<{ state: "Prepared"; synthetic: true; delivered: false }>;
 }
+// ADR-0058: the provider-neutral customer email channel. Synthetic is the only implementation;
+// Microsoft Graph (S4) and any successor provider replace the adapter, never the message states.
+export type OutboundCustomerMessage = {
+  workspace_id: string;
+  // PPO's message identifier, carried to the provider so its copy can be found before any retry.
+  communication_id: string;
+  to: { name: string; address: string };
+  subject: string;
+  body: string;
+  content_hash: string;
+};
+export type ChannelSubmission =
+  | { outcome: "Submitted"; provider_message_id: string }
+  | { outcome: "Failed"; error_code: string; detail: string };
+// What the provider shows for one message: its sent copy, any non-delivery report and any
+// positive delivery evidence. Absence of evidence is never delivery.
+export type ChannelObservation =
+  | { found: false }
+  | {
+      found: true;
+      provider_message_id: string;
+      sent: true;
+      failed: { detail: string } | null;
+      delivered: boolean;
+    };
+export class ChannelOutcomeUnknown extends Error {}
+export interface CustomerMessageChannel {
+  readonly name: "Synthetic";
+  // Throws ChannelOutcomeUnknown when the hand-over's result cannot be known.
+  submit(message: OutboundCustomerMessage): Promise<ChannelSubmission>;
+  observe(workspace_id: string, communication_id: string): Promise<ChannelObservation>;
+}

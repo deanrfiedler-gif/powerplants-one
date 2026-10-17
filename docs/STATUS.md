@@ -1,5 +1,15 @@
 # Current prototype status
 
+## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
+
+Stage S2 of Dean's [D-025 decision](decisions/customer-communications-d025.md) is built in draft [PR #569](https://github.com/deanrfiedler-gif/powerplants-one/pull/569), on Dean's instruction "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." That decision record, [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566), has since merged; Dean must still authorise S2 before it merges. The [S2 record](decisions/customer-communications-core-s2.md) and [API contract](contracts/customer-communications.md) describe it:
+- Migration 0108: one communication record per message and an append-only ledger in the R4 states, plus Queued for the named sender's confirmation. Held, Failed and OutcomeUnknown keep one owned `CustomerContact` follow-up open (TR-03).
+- PPO prepares each message from its source record; a named person with the new `customer_message.send` duty confirms the exact content; a worker drains `CustomerMessageConfirmed` outbox jobs through a provider-neutral channel whose only implementation is synthetic, and reconciles unknown outcomes before any retry.
+- Customer, project and order timelines and an outbound queue (API only); per-contact notice preferences (Allowed or Do not notify, with who, when and why); per-class switches, Off by default, changed only with `customer_message.switch`; and the CUS-EMAIL template family under DK-06's rules with an SQL binding allowlist.
+- No UI: timeline rows, the preference control and the send confirmation need accepted Figma designs first (ADR-0053). Five proposed departures from the paper are listed for Dean in the S2 record.
+
+**S3 (carrier and tracking fields, the order delivery contact, and the dispatch and delay notices) is not started.** No provider, credential, mailbox, DNS change or customer message exists. Code delivery only; no business acceptance is recorded.
+
 ## D-025 customer email decided — 17 October 2026
 
 Dean accepted the [D-025 customer communications decision paper](decisions/customer-communications-d025.md): "Proceed with your recommendations for C1 and C3 to C8." C2 stands as he changed it on 16 October, so a named person sends dispatch, delay and visit messages.
