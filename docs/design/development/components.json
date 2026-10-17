@@ -3378,7 +3378,7 @@
         {
           "id": "top-bar-amendment",
           "label": "Shell top bar amendment (R1–R9)",
-          "description": "Short breadcrumb: the page, or its nearest owner / the page; a record by reference; no department or default view. Desktop header grid with the search alone in the centre column and equal side zones. tests/unit/shell-breadcrumb.test.ts covers route rules, an owner without access and a signed-out view; desktop-shell, engineering and Projects browser suites cover crumb text and header geometry."
+          "description": "Short breadcrumb: the page, or its nearest owner / the page; a record by reference; no department or default view. Desktop header grid with the search alone in the centre column and equal side zones. tests/unit/shell-breadcrumb.test.ts covers route rules, an owner without access and a signed-out view; desktop-shell, engineering and Projects browser suites cover crumb text and header geometry. C1: the working company is named by the account button (tooltip, description and a dot when one of several companies is selected)."
         },
         {
           "id": "nav-rail-first-paint",
@@ -3738,7 +3738,7 @@
         {
           "id": "application-shell-top-bar-amendment",
           "expected": "Accepted Shell top bar amendment R1–R9: short breadcrumb and the global search centred in the top bar on every desktop page.",
-          "actual": "Implemented on branch feat/shell-top-bar-amendment; the shared Figma Shell / Top bar and the accepted pages' breadcrumb overrides follow it. CPQ records show the destination without a reference because those pages publish no record identity (D1). Owner/device review of the application not recorded.",
+          "actual": "Implemented on branch feat/shell-top-bar-amendment; the shared Figma Shell / Top bar and the accepted pages' breadcrumb overrides follow it. The working-company chip moved into the account control (C1, Dean 17 October 2026). CPQ records show the destination without a reference because those pages publish no record identity (D1). Owner/device review of the application not recorded.",
           "action": "Compare the running app at 1440, 1200, 1024 and 800 px with captures r01 and the updated accepted frames; record owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

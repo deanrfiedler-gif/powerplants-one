@@ -119,6 +119,10 @@
 .header-account .identity-strip .identity-toggle, .header-account .ppo-account-toggle { display: inline-flex; align-items: center; justify-content: center; border: 0; padding: 0; width: 44px; height: 44px; min-height: 44px; border-radius: 50%; background: transparent; }
 .ppo-shell-header .account-avatar { display: inline-flex; flex-shrink: 0; width: 34px; height: 34px; align-items: center; justify-content: center; border: 1px solid #e5e9ef; background: #edf0f5; color: #445268; border-radius: 50%; font-size: 11px; line-height: 1; font-weight: 500; letter-spacing: .15px; }
 .header-account .identity-toggle:is(:hover,[aria-expanded=true]), .header-account .ppo-account-toggle:is(:hover,[aria-expanded=true]) { background: #f0f2f6; }
+/* NR-18 with R9: the account control names the working company in its tooltip and description; a dot on
+   the avatar marks that one company of several narrows every page. Nothing beside it widens the end zone. */
+.header-account :is(.identity-toggle,.ppo-account-toggle)[data-company=selected] { position: relative; }
+.header-account :is(.identity-toggle,.ppo-account-toggle)[data-company=selected]::after { content: ""; position: absolute; right: 4px; bottom: 4px; width: 10px; height: 10px; border: 2px solid #fff; border-radius: 50%; background: var(--ppo-shell-link, #355b80); }
 .header-account .identity-strip .ppo-account-panel { right: 20px; left: auto; max-width: calc(100vw - 100px); padding: 0; gap: 0; z-index: 85; }
 .ppo-hosted-account-controls[data-open=false], .identity-controls[hidden] { display: none !important; }
 .ppo-account-profile { display: flex; align-items: center; gap: 12px; padding: 5px 8px 18px; }

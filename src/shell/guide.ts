@@ -14,7 +14,7 @@ export const shellGuide = {
     ],
     [
       "Work in one company",
-      "If your access reaches more than one company, open your account and choose a working company. Pages, search and actions then show only that company's records. Your permissions are unchanged; choose All companies to see everything you can access again."
+      "If your access reaches more than one company, open your account and choose a working company. Pages, search and actions then show only that company's records, and the account button shows a dot and names the company in its tooltip. Your permissions are unchanged; choose All companies to see everything you can access again."
     ],
     [
       "Get the right help",

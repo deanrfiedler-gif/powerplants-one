@@ -1165,11 +1165,6 @@
   border: 1px solid var(--control-border);
 }
 @media (min-width: 781px) {
-  .app-frame[data-shell-design="fertigation"]
-    .header-account
-    .ppo-working-company {
-    display: none;
-  }
   #ppo-fertigation .fn-context-facts {
     flex-wrap: nowrap;
   }

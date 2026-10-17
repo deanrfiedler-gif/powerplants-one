@@ -16,13 +16,14 @@ This record locks the design in under [ADR-0053](ADR-0053-figma-page-design.md) 
 
 ## 1. Dean's words
 
-All on 16 October 2026, quoted as written:
+Quotes 1–5 are from 16 October 2026 and quote 6 from 17 October 2026, quoted as written:
 
 1. "Pipedrive only use the active page name in the breadcrumbs section…"
 2. "Yes: draft the shorter breadcrumb as a proposed amendment to the shared Shell / Top bar and the accepted pages, for my decision"
 3. "Proceed however you believe is the most professional" — recorded as adopting the recommended answers to Q1–Q4.
 4. "I also what to ensure that the global search bar is always in the same position at the top of the screen very every page, which should be in the centre horizontally within the main container that it is in" — rule R9 and Q5.
 5. "Yes: save named versions for the Shell top bar amendment and the Quotations amendment A1 so both are accepted."
+6. Asked how R9 should treat the working-company chip beside the account, he asked "What is your professional opinion regarding how R9 should handle it?", and after Claude's recommendation answered "I am happy for you to proceed however you believe is the most professional." — recorded as adopting C1.
 
 ## 2. Decisions and evidence
 
@@ -33,6 +34,7 @@ All on 16 October 2026, quoted as written:
 | R1–R9 and the recommended answers to Q1–Q5 | Claude's recommendations, adopted | Quotes 3 and 4 |
 | Acceptance | User decision | Quote 5; named version "Shell top bar amendment — accepted" |
 | Lock-in and build | Requested of this session by the session that drew the design, and confirmed by Dean when asked about the named version ("Save it for me") | Section 6 |
+| C1 The working company is named by the account control, not by a chip beside it | Claude's recommendation, adopted | Quote 6; section 5 |
 
 ### Rules R1–R9, as adopted
 
@@ -92,7 +94,8 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 - **Breadcrumb.** `src/shell/breadcrumb.ts` builds the full path (the trail) and the visible breadcrumb from route metadata. The visible breadcrumb is the page and, beneath something, its nearest owner as a link (R1–R3); a record by its reference alone (R4); never a register's default view — Projects' "Project register", the Engineering modules' registers, Acceptance's "Staged Acceptance & Closeout" (R5). The trail stays in the Page hierarchy panel and the breadcrumb's tooltip (R6, Q3). The tab title is built as before (R8, NR-17).
 - **Engineering workload.** `/engineering` is named "Engineering workload", its rail and Figma name, instead of the department name "Engineering".
-- **Top bar.** On desktop the header is one grid: a start zone (menu trigger and breadcrumb), the global search alone in the centre column, and an end zone (Quick add, the utilities and the account). The two side columns are equal and the side padding sits inside them, so the search's centre is the top bar's centre (R9). The search keeps `clamp(232px, 28vw, 420px)`, which is 403 px at 1440; the expanded rail narrows it to 220 px up to 1200 px. Only when the end zone's own controls need more than an equal share, on the narrowest desktops, does that column grow.
+- **Top bar.** On desktop the header is one grid: a start zone (menu trigger and breadcrumb), the global search alone in the centre column, and an end zone (Quick add, the utilities and the account). The two side columns are equal and the side padding sits inside them, so the search's centre is the top bar's centre (R9). The search keeps `clamp(232px, 28vw, 420px)`, which is 403 px at 1440; the expanded rail narrows it to 220 px up to 1200 px. Only where the top bar is too narrow for equal columns, on the narrowest desktops or at high zoom, does the end column keep its controls' width and the search narrow (to no less than 140 px) before the breadcrumb loses its last 120 px.
+- **Working company (C1).** The chip that named the working company beside the account on desktops 1200 px and wider widened the end zone by about 190 px and put the search up to 132 px left of centre. The working company is now named in the account button's tooltip and accessible description ("Working company: …"), a dot on the avatar marks that one company of several narrows every page, and the account panel keeps the full choice, as narrower screens already did. Access and filtering are unchanged.
 - **Truncation.** The owner gives way first, then the current page, with an ellipsis (R6). From 781 to 1199 px the current page shows alone with the Page hierarchy button, as before.
 - **Separators.** The "/" separator now carries empty alternative text, so screen readers that read generated content skip it (R8).
 - **Header controls stay mounted.** The search, Quick add and utilities reset themselves when the route changes instead of being remounted, because the account mount must sit in the end zone and must never be replaced.
@@ -108,6 +111,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | [Application shell integration](application-shell-integration.md) | "Quick add sits 12px to the right of the globally centred desktop search field": still 12 px to its right, but the search is centred in the top bar, not the viewport |
 | EN-06, EN-07 and EN-08 header naming (A03–A05 in their build plans) | The header named the module and, while the menu was hidden, the destination. It now names the module, then any destination other than the register, whatever the menu's state |
 | ES-08 workbench | The workbench showed "Screen Configurator Workbench" alone; it now shows "Specialist configurations / Screen Configurator Workbench" (R2, R6), as the table's After column does |
+| NR-18 working company in the header ([navigation architecture board](navigation-architecture-board.md), AU-02) | The company was shown as a chip beside the account from 1200 px. C1 moves it into the account control; what the working company filters is unchanged |
 
 ### Known differences between the app and the After column
 
@@ -123,9 +127,10 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 Made by this session on 16 October 2026, after the named version was saved:
 
-- **Shell / Top bar `35:138`** (page Shell `31:214`) restructured in place to the accepted three zones: Left zone `1064:269163` (Fill, clips; Menu toggle `35:139`, Breadcrumb `35:143`), Global search `35:148` (403 px), Right zone `1064:269164` (Fill; Quick add `35:155`, Spacer `35:159`, Actions `35:160`, Identity `35:177`); padding 16/16; the left spacer `35:147` removed. The owner text `35:144` truncates at 280 px (R6). Node IDs and component properties are unchanged, so every page's overrides were kept; an instance on CPQ Rules studio (`492:2725`) and one on the Work order record (`315:2097`) measured the search centre at 0 px.
+- **Shell / Top bar `35:138`** (then on page Shell `31:214`; since the 17 October consolidation on Components `1:4`, structure unchanged) restructured in place to the accepted three zones: Left zone `1064:269163` (Fill, clips; Menu toggle `35:139`, Breadcrumb `35:143`), Global search `35:148` (403 px), Right zone `1064:269164` (Fill; Quick add `35:155`, Spacer `35:159`, Actions `35:160`, Identity `35:177`); padding 16/16; the left spacer `35:147` removed. The owner text `35:144` truncates at 280 px (R6). Node IDs and component properties are unchanged, so every page's overrides were kept; an instance on CPQ Rules studio (`492:2725`) and one on the Work order record (`315:2097`) measured the search centre at 0 px.
 - **Breadcrumb overrides** on the accepted pages were set by the rules: the department dropped, the owner the nearest list, the default views "All rules" and "Project register" dropped, at most two items. Of 29 pages checked, 27 changed: 232 instances, every result matching the table's After column (Fertigation and CPQ responsive states already complied). Kept as drawn: tablet frames already in the short form, and the Document library tablet's "Documents / SYN-PPO-DOC-000101", where "Documents" stands for the owner.
 - **Kept unchanged:** the 270 top bars on "Captures (icon-free)" `115:2`, the six "before" bars in the R9 section and one on the archived Screens page were detached before the component changed, so the issued captures and the amendment's evidence keep today's look. The proposal pages (Deals `549:2`, Customer 360 `554:2`, ES-08 `406:2`) and the UX benchmark exemplars were not edited; they take the new layout from the component but keep their breadcrumb text until accepted.
+- **Not drawn:** C1 needs no Figma change, because the accepted right zone never had the company chip; the avatar dot is an application state only. The proposed components Shell / Breadcrumb (proposed) `1037:103` and Shell / Top bar (proposed, centred search) `1046:259953` stay on the amendment page as part of the accepted proposal; `35:138` is the library component.
 - **Captures** for this record: copies on "Captures (icon-free)" under the heading `1067:116649` (`1067:116650` … `1067:119519`), 247 icons swapped for `Icon/placeholder` and none left.
 
 ## 7. Verification

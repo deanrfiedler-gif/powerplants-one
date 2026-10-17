@@ -1,7 +1,8 @@
 import { expect, type Page } from "@playwright/test";
 
-// Shell v2 flows search between the current page and the utility controls.
-// Retained source comparisons still own typography, tokens and page geometry.
+// Shell top bar amendment R9: the search sits alone in the header grid's centre column, between equal
+// side zones, so its centre is the top bar's centre. Retained source comparisons still own typography,
+// tokens and page geometry.
 export async function readShellHeaderGeometry(page: Page) {
   return page.evaluate(() => {
     const box = (selector: string) =>
@@ -22,6 +23,7 @@ export async function readShellHeaderGeometry(page: Page) {
       pageFits: document.documentElement.scrollWidth <= innerWidth,
       quickAddGap: add.left - search.right,
       searchWidth: search.width,
+      searchCentreOffset: search.left + search.width / 2 - (header.left + header.width / 2),
     };
   });
 }
@@ -32,5 +34,8 @@ export async function expectFlowingShellHeader(page: Page) {
   expect(geometry.controlsFit && geometry.noOverlap && geometry.pageFits).toBe(true);
   expect(geometry.searchWidth).toBeGreaterThan(0);
   expect(geometry.quickAddGap).toBeCloseTo(12, 0);
+  // Equal side zones hold wherever the end zone's controls fit half the bar: 1280 px and wider.
+  if (geometry.pageFits && (page.viewportSize()?.width ?? 0) >= 1280)
+    expect(Math.abs(geometry.searchCentreOffset), "search centred in the top bar (R9)").toBeLessThanOrEqual(1);
   return geometry;
 }
