@@ -5,7 +5,7 @@ import { messageClasses, type MessageClass } from "./model";
 
 // CUS-EMAIL: the customer email template family. Plain text only (R7, until D-024 decides branding).
 export const family = "CUS-EMAIL";
-// The R6 allowlist S2 can resolve for every class. Migration 0108 holds the same rows in
+// The R6 allowlist S2 can resolve for every class. Migration 0109 holds the same rows in
 // ppo.customer_email_bindings; later stages add class facts there and here together.
 export const sharedBindings = [
   "customer.name",

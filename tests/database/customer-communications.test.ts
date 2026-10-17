@@ -58,7 +58,7 @@ const jobOf = async (id: string) =>
 const copies = async (id: string) =>
   (await rows("SELECT count(*)::int AS n FROM ppo.synthetic_mailbox_messages WHERE communication_id=$1", [id]))[0].n;
 
-test("0108 is empty, default-denied and Off for every class", async () => {
+test("0109 is empty, default-denied and Off for every class", async () => {
   coordinator = await principal("coordinator");
   publisher = await principal("cs-reviewer");
   outsider = await principal("technician");

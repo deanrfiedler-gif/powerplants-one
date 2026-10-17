@@ -53,7 +53,7 @@ export const holdReasons = [
 ] as const;
 export type HoldReason = (typeof holdReasons)[number];
 
-// The same table migration 0108's guard enforces; the application refuses first with a clear code.
+// The same table migration 0109's guard enforces; the application refuses first with a clear code.
 const transitions: Record<State, Partial<Record<Action, readonly State[]>>> = {
   Prepared: { Confirm: ["Queued"], Hold: ["Held"], Withdraw: ["Withdrawn"] },
   Held: { Withdraw: ["Withdrawn"] },
