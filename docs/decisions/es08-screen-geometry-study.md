@@ -9,6 +9,8 @@ source_commit: 0c95c5af776c97374997623bd1070d9de480cf82
 
 # ES-08 Screen Geometry Study architecture proposal
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **preserves** this proposal and makes it a prerequisite (CM9): drawings can become quotation appendices only once they are reproducible from the immutable run. CAD authority is unchanged. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 The [audit](../delivery/es08-geometry-audit.md) establishes a semantic mismatch between r10's longitudinal panel-material study and the current Screen Systems cross-span cloth calculations. Richer drawings do not supersede the recovered quantity definition. This decision proposal stays within ES-08 / EST-06 / E5 and ADR-0034, retaining CRE-13–CRE-17, EA-16/17, AT-04/28, G06 and D-009.
 
 The user authorised complete audit and planning while #277 remains separate. No native implementation, migration or migration-number reservation is authorised in this phase. This stable descriptive decision filename follows existing repository practice and avoids allocating a concurrent sequential ADR number. It records a proposal, not an adopted supplier/engineering definition.

@@ -1,5 +1,7 @@
 # CPQ exact published Products and estimate provenance
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this record (CM4, CM8): the same exact Variant binding is also made at run time, by an estimator's Manual line or a workbench part mapping, never by label or latest revision. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Backend implementation authorised 14 October 2026. Review, operational acceptance and deployment remain separate. Scope: BC-04, ES-02/ES-03, PD-01/PD-04 and existing EST-02–EST-09; all parent IDs and receiving workflows are retained.

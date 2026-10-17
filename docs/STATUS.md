@@ -1,13 +1,15 @@
 # Current prototype status
 
-## Estimating configurator model proposed — 17 October 2026
+## Estimating configurator model adopted — 17 October 2026
 
-Dean set out his intended estimating model and asked for it to be recorded as a proposed decision. The [proposed decision](decisions/estimating-configurator-model.md) has three parts:
+Dean set out his intended estimating model, had it recorded as a proposed decision, then adopted it: "Adopt the recommended answers to Q1-Q9 and the CM1-CM11 proposals. Record my decision in the record and update the affected decisions." The [decision](decisions/estimating-configurator-model.md) has three parts:
 - the Estimation Wizard is the hub and routes each system;
 - CPQ is the single priced line table, where estimators can also enter Product IDs directly;
 - the Screen and Priva Fertigation workbenches, and future potting, controls, sensors and automation workbenches, generate a shared price-free **parts proposal** and supporting documents, which flow into CPQ and, if chosen, the quotation.
 
-The record proposes CM1–CM11, a pilot build order on Screen systems and nine questions for Dean. It also lists the current statements it would supersede, among them ADR-0054's "no category-to-specialist routing", ES-08's direct estimate receiving and pricing, and ADR-0038's "no automatic SKU or estimate line". Nothing is adopted and no code, migration or design changes. How the quotation returns to the Sales representative remains a separate open gap.
+CM1–CM11 and the recommended answers to Q1–Q9 are adopted. Twenty affected records now carry a dated note pointing to the decision, with their original text retained. Among the superseded statements are ADR-0054's "no category-to-specialist routing", ES-08's direct estimate receiving and pricing, and ADR-0038's "no automatic SKU or estimate line". The ChatGPT project instructions point to the decision and drop the superseded DEC-R1.
+
+Adoption sets direction only. The application is unchanged until the build steps B0–B6 are delivered, each as its own reviewed change, starting with B0, the parts-proposal contract. How the quotation returns to the Sales representative remains a separate open gap.
 
 ## Shell first paint and create-form leave review — 16 October 2026
 

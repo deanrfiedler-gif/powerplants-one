@@ -1,5 +1,7 @@
 # ADR-0054 — Versioned Estimating equipment catalogue
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **supersedes** "No category-to-specialist routing is inferred" (CM1): a versioned, company-scoped map from `category_id` advises each system's route, and the estimator confirms it, giving a reason for any override. A category remains classification, not suitability, product selection or price. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Date: 12 October 2026 (Australia/Brisbane). Status: backend implementation authorised; owner and operational acceptance separate. Amends [ADR-0035](ADR-0035-es02-structured-discovery.md). Scope: ES-02, PPO-010, EST-02/03 and the existing EST-01–EST-09 handovers; all parent IDs retained.

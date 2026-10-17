@@ -2,16 +2,27 @@
 document_id: PPO-EST-CONFIGURATOR-MODEL-DEC
 date: 2026-10-17
 owner: Dean Fiedler
-status: Proposed for owner review; records Dean's stated intent, but none of the proposals are adopted, and it authorises no code, migration, seed, permission, integration or deployment
+status: Adopted by Dean on 17 October 2026 (direction, CM1–CM11 and the recommended answers to Q1–Q9); build steps B0–B6 are separate changes; this record itself adds no code, migration, seed, permission, integration or deployment
 source_commit: 271a386b98c0aa612a86a34c03b0ab1da6073b8e
 versioning: git
 ---
 
-# Estimating hub, CPQ and specialist workbench model — proposed decision
+# Estimating hub, CPQ and specialist workbench model — decision
 
 On 17 October 2026 Dean asked how the Estimation Wizard, CPQ, the Screen Configurator Workbench, the Priva Fertigation Configurator Workbench and Estimation Discovery fit between a Deal handover and the quotation. A walk-through of the current source showed that the modules are joined differently from how he intended. Dean then set out his intended model and asked for a professional opinion. He accepted the recommendation to record it, in these words: "Yes, draft a proposed decision record for the hub, CPQ and workbench model, including the shared workbench output contract, and identify which existing decisions it would change."
 
-This record is that draft. It classifies each item as one of three things. A **user direction** is Dean's stated intent. A **proposal** is Claude's recommendation for carrying that intent out, and it is not adopted. An **open question** is a decision still for Dean. Nothing here changes an existing decision until Dean adopts it, and each adopted part still needs its own ADR or contract change before it is built.
+The draft classified each item as a **user direction** (Dean's stated intent), a **proposal** (Claude's recommendation for carrying it out) or an **open question** for Dean.
+
+## Decision — 17 October 2026
+
+Dean reviewed the draft and decided, in these words: "Adopt the recommended answers to Q1-Q9 and the CM1-CM11 proposals. Record my decision in the record and update the affected decisions."
+
+So, as of 17 October 2026:
+- the user direction in section 2, proposals CM1–CM11 in section 5 and the recommended answers to Q1–Q9 in section 8 are **adopted**;
+- the statements listed in section 6 are superseded or amended as stated there, and each of those records now carries a dated note pointing here, with its original text retained;
+- the running application is **unchanged**. Current behaviour (for example, ES-08's Send to estimate, and CPQ's requirement for a Complete discovery) continues until the build step that replaces it is delivered.
+
+Adoption sets direction; it does not build anything. Each build step in CM11 is a separate, reviewable change. B0 writes the parts-proposal contract. Any step that needs a migration, permission, calculation or interface change carries its own ADR or contract update, its tests and its own evidence. No synthetic rule, mapping, price or drawing becomes operational through this decision.
 
 Scope IDs: `scope:ES-02` (Estimation Wizard and discovery), `scope:ES-03` (costing and CPQ), `scope:ES-08` (Screen Configurator Workbench), the ES-02 fertigation scope of [ADR-0038](ADR-0038-priva-fertigation-native.md), and `scope:ES-05` for quotation output only. The parent requirements served are EST-01 to EST-09. No parent ID is added, renamed or closed, and all 78 parent IDs are unchanged.
 
@@ -20,18 +31,18 @@ Scope IDs: `scope:ES-02` (Estimation Wizard and discovery), `scope:ES-03` (costi
 | ID | Item | Classification | In one line |
 |---|---|---|---|
 | — | Wizard as hub, CPQ as priced table, workbenches as automated parts calculators that also produce supporting documents | User direction, 17 October 2026 | Section 2 quotes it in full |
-| CM1 | Wizard routes each system to a branch | Proposal | A versioned category-to-branch map advises the route; the estimator confirms it, with a reason when they override it |
-| CM2 | Direct-to-CPQ path | Proposal | CPQ can be opened straight from an estimating workspace, using a short Express scope instead of a full discovery |
-| CM3 | CPQ is the single priced line table | Proposal | Every line has one origin: Rule, Workbench or Manual. Prices are set only in CPQ |
-| CM4 | Manual Product-ID entry in CPQ | Proposal | The estimator picks an exact Products Variant, and CPQ prices it from that Variant's governed cost source |
-| CM5 | Shared workbench output contract | Proposal | A server-generated **parts proposal**: parts, quantities, findings and documents, with no prices |
-| CM6 | Receiving a proposal into CPQ | Proposal | Reuses CPQ's receiving preview. A re-run replaces only that workbench's unchanged lines, and estimator adjustments survive as reasoned overrides |
-| CM7 | Pricing leaves the workbenches | Proposal | ES-08's Pricing view becomes a Parts view, and its price bridge retires |
-| CM8 | Unmapped parts | Proposal | A part with no published Variant arrives flagged as Unmapped and blocks use in the estimate until it is mapped or made an explicit one-off |
-| CM9 | Supporting documents in the quotation | Proposal | Customer-eligible workbench documents can be chosen as appendices when the quotation is prepared, bound by exact bytes |
-| CM10 | Adding future workbenches | Proposal | A new workbench registers against the contract. CPQ, the Wizard and the quotation need no bespoke change |
-| CM11 | Build order | Proposal | B0 to B6, piloted on Screen systems, then Fertigation |
-| Q1–Q9 | Questions for Dean | Open questions | Section 8, each with a recommended answer |
+| CM1 | Wizard routes each system to a branch | Adopted, 17 October 2026 | A versioned category-to-branch map advises the route; the estimator confirms it, with a reason when they override it |
+| CM2 | Direct-to-CPQ path | Adopted, 17 October 2026 | CPQ can be opened straight from an estimating workspace, using a short Express scope instead of a full discovery |
+| CM3 | CPQ is the single priced line table | Adopted, 17 October 2026 | Every line has one origin: Rule, Workbench or Manual. Prices are set only in CPQ |
+| CM4 | Manual Product-ID entry in CPQ | Adopted, 17 October 2026 | The estimator picks an exact Products Variant, and CPQ prices it from that Variant's governed cost source |
+| CM5 | Shared workbench output contract | Adopted, 17 October 2026 | A server-generated **parts proposal**: parts, quantities, findings and documents, with no prices |
+| CM6 | Receiving a proposal into CPQ | Adopted, 17 October 2026 | Reuses CPQ's receiving preview. A re-run replaces only that workbench's unchanged lines, and estimator adjustments survive as reasoned overrides |
+| CM7 | Pricing leaves the workbenches | Adopted, 17 October 2026 | ES-08's Pricing view becomes a Parts view, and its price bridge retires |
+| CM8 | Unmapped parts | Adopted, 17 October 2026 | A part with no published Variant arrives flagged as Unmapped and blocks use in the estimate until it is mapped or made an explicit one-off |
+| CM9 | Supporting documents in the quotation | Adopted, 17 October 2026 | Customer-eligible workbench documents can be chosen as appendices when the quotation is prepared, bound by exact bytes |
+| CM10 | Adding future workbenches | Adopted, 17 October 2026 | A new workbench registers against the contract. CPQ, the Wizard and the quotation need no bespoke change |
+| CM11 | Build order | Adopted, 17 October 2026 | B0 to B6, piloted on Screen systems, then Fertigation |
+| Q1–Q9 | Questions for Dean | Answered, 17 October 2026 | Section 8: each recommended answer adopted |
 
 ## 2. Dean's intended model (user direction)
 
@@ -90,7 +101,7 @@ Sales brief accepted at Intake
 
 One CPQ configuration per discovery alternative collects every route that alternative uses. The estimate and quotation steps after CPQ are unchanged.
 
-## 5. Proposals
+## 5. Proposals (adopted 17 October 2026)
 
 ### CM1 — The Wizard routes each system to a branch
 
@@ -204,11 +215,11 @@ It needs no change to the Wizard, CPQ, the estimate or the quotation. A workbenc
 
 Each step is a separate, reviewable change. Steps with migrations follow the repository's migration rules in [AGENTS.md](../../AGENTS.md). Steps that touch calculations should also receive the independent second-model review proposed in open PR #543, if that rule is adopted.
 
-## 6. Existing decisions this would change
+## 6. Existing decisions this changes
 
-"Supersede" means the statement would be replaced. "Amend" means it would be kept with a stated change. Line numbers refer to the files at `main` 271a386. Nothing changes until Dean adopts the matching proposal and the record is updated in its own change.
+"Supersede" means the statement is replaced by the adopted proposal. "Amend" means it is kept with the stated change. Line numbers refer to the files at `main` 271a386. Each record below carries a dated note, added on 17 October 2026, that points here; its original text is retained unchanged. Running behaviour changes only when the relevant build step is delivered.
 
-| Record | ID | Current statement | Effect | Proposal |
+| Record | ID | Statement affected | Effect | Adopted change |
 |---|---|---|---|---|
 | [ADR-0054 equipment catalogue](ADR-0054-es02-equipment-catalogue.md) | PPO-ADR-0054 | Line 19: "No category-to-specialist routing is inferred." | Supersede | CM1: a versioned map advises the route, and the estimator confirms it. A category is still not a suitability or price rule |
 | [ADR-0035 structured discovery](ADR-0035-es02-structured-discovery.md) | PPO-ADR-0035 | Lines 65–66: routing absences "do not become blockers"; lines 142–143: outgoing is the discovery revision and a manual estimate basis | Amend | CM1: an unrouted system or missing proposal is a Review finding; outgoing adds the confirmed route per system |
@@ -224,7 +235,7 @@ Each step is a separate, reviewable change. Steps with migrations follow the rep
 | [ES-08 geometry study](es08-screen-geometry-study.md) | PPO-ES08-GEOMETRY-ADR | Line 23: save a versioned canonical drawing model in the immutable run (proposed, not built) | Preserve, and make a prerequisite | CM9 depends on drawings being reproducible from the run; CAD authority is unchanged |
 | [ADR-0038 Priva fertigation](ADR-0038-priva-fertigation-native.md) | PPO-ADR-0038 | Lines 74–76: receipt as manual scoping notes; "no automatic SKU or estimate line is introduced". Lines 62–63: "no automatic price" | Supersede (lines 74–76); Amend (lines 62–63) | CM5, CM6: Fertigation emits a parts proposal into CPQ; prices still come only from CPQ |
 | [Priva fertigation scoping design](priva-fertigation-scoping-design.md) | — | Lines 19–20: the outgoing handover is a technical scope, with no commercial quote | Amend | CM5: the outgoing handover adds a parts proposal |
-| [ADR-0027 discovery cost basis](ADR-0027-estimating-discovery-cost-basis.md) | PPO-ADR-0027 | Line 14: "no pricing formula, automatic line generation". Line 26: costing fields are entered manually | Amend now; Supersede if Q2 is yes | CM3, B6: lines come from CPQ; manual entry moves to CPQ Manual lines |
+| [ADR-0027 discovery cost basis](ADR-0027-estimating-discovery-cost-basis.md) | PPO-ADR-0027 | Line 14: "no pricing formula, automatic line generation". Line 26: costing fields are entered manually | Amend now; Supersede at B6 (Q2) | CM3, B6: lines come from CPQ; manual entry moves to CPQ Manual lines |
 | [ADR-0017 E1](ADR-0017-estimating-e1.md) and [E1 contract](../contracts/estimating-e1.md) | ADR-0017, PPO-010-E1-API | ADR-0017 line 11 and contract line 21: the safe output lists title, recipient, scope and sell extensions only. Contract line 19: a line has no Product or Variant field | Amend | CM9: appendices join the whitelist; CM4: a line can carry its exact Variant binding |
 | [Quotation release](quotation-release-native.md) and [contract](../contracts/quotation-release.md) | — | Contract line 20: the bound source lists the estimate, choices, reviews, versions, policy, terms and template, with no attachments | Amend | CM9: the bound source adds chosen appendices by exact hash |
 | [Derived routing direction](estimating-derived-routing.md) | PPO-010-ROUTE-DEC | Lines 44–48: two decisions, effort class and delivery route | Amend | CM1, CM2: adds the per-system estimating route as a third, separate decision, and uses Express for Direct CPQ |
@@ -242,9 +253,9 @@ The model keeps these unchanged:
 - The [CCE specification](../architecture/cce-technical-specification.md)'s direction that CPQ opens from an existing saved scope or estimate, rather than starting a second enquiry wizard (§3.6).
 - All parent requirement IDs, scope IDs and issued reference bytes.
 
-## 8. Open questions for Dean
+## 8. Questions answered
 
-| ID | Question | Recommendation |
+| ID | Question | Decision (recommendation adopted 17 October 2026) |
 |---|---|---|
 | Q1 | Can CPQ be used without a Complete discovery? | Yes, for an Express workspace (CM2) that still links to the Deal and alternative. Full workspaces keep the Complete precondition |
 | Q2 | Should manual costing fold into CPQ? | Yes, as B6, after CPQ Manual lines exist. Until then both remain, and a line belongs to only one of them |
@@ -258,4 +269,4 @@ The model keeps these unchanged:
 
 ## 9. What this record does not do
 
-It adopts nothing and changes no existing decision text. It adds no code, migration, seed, permission, capability, interface or design. It does not decide who sends the quotation to the customer, or how the quotation returns to the Sales representative; that gap was identified in the same conversation and needs its own record. It does not approve any synthetic rule, mapping, price or drawing for operational use.
+It builds nothing: it adds no code, migration, seed, permission, capability, interface or design, and the dated notes in affected records do not rewrite their original text. It does not decide who sends the quotation to the customer, or how the quotation returns to the Sales representative; that gap was identified in the same conversation and needs its own record. It does not approve any synthetic rule, mapping, price or drawing for operational use.

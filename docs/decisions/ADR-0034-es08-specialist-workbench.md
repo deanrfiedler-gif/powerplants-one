@@ -8,6 +8,8 @@ status: Implemented for synthetic review; owner acceptance pending
 
 # ADR-0034 — Native specialist configuration and exact estimate contributions
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **supersedes** direct specialist adoption into the native estimate and the synthetic AUD pricing pinned by `SYN-ES08-RECEIVE-01` (CM6, CM7): ES-08 sends a price-free parts proposal to CPQ, and CPQ alone prices it. Lineage manifests and generated baselines are kept and re-homed on the CPQ side. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 Dean requested execution of the Specialist Configuration Workbench implementation
 prompt and native build plan r02. Their normative contract bodies are identical.
 This work is ES-08 / EST-06 / E5, tracing CRE-13–CRE-17, EA-16/17, AT-04/28,

@@ -9,6 +9,8 @@ versioning: git
 
 # ES-08 Screen Configurator Workbench design board — owner decision
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** the outgoing handover (CM9): the run's next owner is CPQ, and customer-eligible drawings can become quotation appendices. It **supersedes** DEC-R1's price bridge and reconciliation line (CM7); the rounding is recreated as a CPQ pricing rule only if Dean confirms it is a real commercial rule (Q7). The "Estimating study · not for fabrication" title block is kept. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 On 23 September 2026 Dean asked for the ES-08 input workbench (r02) and the r10 greenhouse blueprint and drawings to be merged into one professional design board. Dean then accepted every recommendation made in the audit that followed, asked for the structure drawings to be accurate, and accepted the resulting board. This record retains that decision, the accepted departures and the two design rulings, and states what each one changes in the existing [geometry proposal](es08-screen-geometry-study.md) and [build plan](../delivery/es08-geometry-build-plan.md).
 
 Scope stays ES-08 / EST-06 / E5, tracing CRE-13–CRE-17, EA-16/17, AT-04/28, G06 and D-009. No parent requirement ID is added or renamed. This is a design decision. It authorises no application code, migration, receiving policy change, deployment, supplier or engineering acceptance.

@@ -68,13 +68,13 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Check screens/environment; recheck access after storage, before metadata/bytes.
 
-ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; CPQ: cpq-rule-packages.md and cpq-release-quality.md; retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike is reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R1/R2. ES-02: ADR-0054, opt-in r02 catalogue; preserve r01; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Keep owner consent, receipts, unmet Demand, holds and fresh disposition.
+ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; CPQ: cpq-{rule-packages,release-quality}.md, estimating-configurator-model.md; retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike: reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R2. ES-02: ADR-0054 r02 catalogue, r01 kept; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Keep owner consent, receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
-Fertigation: handover + fertigation-figma-implementation.md; exact scopes, neutral context, unverified supplier conclusions.
+Fertigation: handover, fertigation-figma-implementation.md; exact scopes, neutral context, unverified supplier claims.
 
 Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL.
 
