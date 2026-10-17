@@ -2,7 +2,7 @@
 document_id: PPO-DES-FIGMA-ALIGN-DEC
 date: 2026-10-17
 owner: Dean Fiedler
-status: User decision; 14 of 16 approved re-skins, the archive move, the File index fixes and the My jobs tidy-up are done in Figma; Quotations and Job pack re-skins wait on their lock-ins; no accepted design decision changed
+status: User decision; 15 of 16 approved re-skins, the archive move, the File index fixes and the My jobs tidy-up are done in Figma; the Quotations re-skin waits on the A1 lock-in; no accepted design decision changed
 versioning: git
 ---
 
@@ -23,7 +23,7 @@ This record keeps Dean's decision, what changed in the file, how it was checked 
 
 ## 2. What changed in the file
 
-**Re-skinned (14 pages).** Each page now opens with a "Page header" cloned from the Template. Its declaration is copied from the page's decision record here, and its lede names that record as the authority. Below it are the Template's five Sections: Desktop 1440, Tablet 1024, Phone 390 and 320, States, and Flows and notes. Existing frames, their "Label /" captions, states boards and notes cards were moved into those Sections. A Section the accepted design never drew holds a one-line "Not drawn" note.
+**Re-skinned (15 pages).** Each page now opens with a "Page header" cloned from the Template. Its declaration is copied from the page's decision record here, and its lede names that record as the authority. Below it are the Template's five Sections: Desktop 1440, Tablet 1024, Phone 390 and 320, States, and Flows and notes. Existing frames, their "Label /" captions, states boards and notes cards were moved into those Sections. A Section the accepted design never drew holds a one-line "Not drawn" note.
 
 | Page | Node | Page header |
 |---|---|---|
@@ -41,14 +41,16 @@ This record keeps Dean's decision, what changed in the file, how it was checked 
 | Project record page (accepted) | `345:2` | `1125:7168` |
 | Work orders (accepted) | `193:18953` | `1122:3410` |
 | Work order record page (accepted) | `312:2` | `1126:5236` |
+| Job pack (accepted) | `272:2` | `1132:11498` (re-skinned later on 17 October, after Dean saved the named version "Field readiness gate — accepted"; declaration from `job-pack-figma-design.md`, with amendment A06 from pull request 541, not yet merged) |
 
-**Stale component labels removed.** The main components drawn on these pages moved to Components `1:4` earlier on 17 October, with their IDs unchanged. The 34 headings and labels that described them were removed and replaced by one note per page in Flows and notes. No record here cites any of them:
+**Stale component labels removed.** The main components drawn on these pages moved to Components `1:4` earlier on 17 October, with their IDs unchanged. The 54 headings and labels that described them were removed and replaced by one note per page in Flows and notes. No record here cites any of them:
 - Work orders: 5.
 - My Work: 1.
 - Project record: 2.
 - Work order record: 5.
 - Fertigation: 12.
 - Wizard: 9.
+- Job pack: 20.
 
 **Archived.** Shell v2 (proposal) `73:4` now holds only its notes header `82:1403`, because its components are on Components. It moved under "— Archive —" and its File index row now reads Archived. Its name and ID are unchanged, so the records that cite it, including [figma-ui-implementation.md](figma-ui-implementation.md), stay correct as history.
 
@@ -59,11 +61,13 @@ This record keeps Dean's decision, what changed in the file, how it was checked 
 
 **My jobs · FI-01 `845:44`.** The leftover copy of the Template's "How to use" card (`845:80`) and an empty "Page components" heading (`857:1480`) were removed.
 
+**Job pack amendment section.** The section "A1 · Field readiness gate (accepted)" `958:9304` was left where it was and not edited. It sits beside the Template Sections as a top-level section, as the amendment sections do on My jobs.
+
 No named version was saved. No page was deleted, no component was edited and no top bar or breadcrumb was changed.
 
 ## 3. Verification
 
-- **Frames unchanged.** For 11 pages, every moved frame was fingerprinted before and after its move. The fingerprint covers type, name, parent-relative transform, size, text, fills, opacity, visibility and prototype reactions of every layer. All 11 pages matched exactly: Intake & workload, Engineering workload, Work orders, Leads, Lead record, My Work, Project record, Work order record, Fertigation, Wizard and Projects.
+- **Frames unchanged.** For 12 pages, every moved frame was fingerprinted before and after its move. The fingerprint covers type, name, parent-relative transform, size, text, fills, opacity, visibility and prototype reactions of every layer. All 12 pages matched exactly: Intake & workload, Engineering workload, Work orders, Leads, Lead record, My Work, Project record, Work order record, Fertigation, Wizard, Projects and Job pack. On Job pack the 24 moved frames matched, and the A1 section's fingerprint and position were also unchanged. Its instance total stayed 4,231, and its five flow starting points were unchanged.
 - **First three pages.** Sales briefs, Cost sources and Reviews & approvals were moved before that method was settled. Their instance totals match the audit (533, 622, 445), their per-frame layer and reaction counts match (Cost sources), and the screenshots are unchanged. Two earlier checks reported false differences:
   - PNG hashes changed with canvas position, because of sub-pixel rasterising.
   - An absolute-position fingerprint showed 0.1 px glyph jitter. Reproducing the move on Intake & workload gave the same jitter, and restoring the frame gave an exact match.
@@ -72,8 +76,7 @@ No named version was saved. No page was deleted, no component was edited and no 
 
 ## 4. Open
 
-- **Quotations (accepted) `123:40`:** re-skin after the A1 amendment's lock-in (session "Lock in and build Quotations in Sales and Estimating"). The A1 Section stays as it is.
-- **Job pack (accepted) `272:2`:** re-skin after Dean saves the named version "Field readiness gate — accepted" ([field-readiness-gate-proposal.md](field-readiness-gate-proposal.md)).
+- **Quotations (accepted) `123:40`:** re-skin after the A1 amendment's lock-in (session "Lock in and build Quotations in Sales and Estimating"). The A1 Section stays as it is. When this was checked later on 17 October, that session had been idle since 16 October with no commit or pull request, so the re-skin was not done.
 - **Proposal pages:** Deals `549:2`, Customer 360 `554:2` and ES-08 `406:2` are re-skinned when each is accepted.
 - **Top bar:** every page still uses Shell / Top bar `35:138` with the old breadcrumbs. The R1–R9 propagation belongs to the top-bar lock-in.
 - **Captures:** the Captures page `115:2` holds 6 instances of a deleted proposed top bar `1067:117505`. This is reported only.
@@ -93,4 +96,4 @@ No named version was saved. No page was deleted, no component was edited and no 
 
 ## Related
 
-[ADR-0053](ADR-0053-figma-page-design.md) (Figma for page design) and [ADR-0055](ADR-0055-figma-file-structure.md) (file structure, Template and File index). The decision records of the 14 pages above stay the authority for their designs.
+[ADR-0053](ADR-0053-figma-page-design.md) (Figma for page design) and [ADR-0055](ADR-0055-figma-file-structure.md) (file structure, Template and File index). The decision records of the 15 pages above stay the authority for their designs.
