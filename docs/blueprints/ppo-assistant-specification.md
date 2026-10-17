@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run. The §8 Claude API provider amendment (decision A1) was proposed on 16 October 2026 and awaits Dean's decision.
+**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run. The §8 Claude API provider amendment (decision A1) was proposed on 16 October 2026 and awaits Dean's decision. The §7 stored record threads amendment (decision A2) was proposed on 17 October 2026 and awaits Dean's decision.
 
 ## 1. Outcome and authority
 
@@ -119,6 +119,8 @@ Before confirmation, revalidate current actor/grants, all relationships, owners 
 On lost response show “The save result is not yet confirmed” and **Check save status**. Reconcile through the existing receipt service; when still uncertain, retry only the original intent using current authority. After acceptance verify the opportunity and Activity links through permitted reads. Application/database/browser restart must not create duplicates or turn an unknown result into success. Users can return to ordinary forms, but must resolve a pending assistant creation before starting an equivalent new creation.
 
 Proposed synthetic retention: chat and generated summaries remain in page memory and clear on sign-out, identity change or tab closure; no localStorage/IndexedDB transcript. Unsubmitted draft payloads expire after 15 minutes and are removed within 24 hours. Retain submitted/unknown command payloads until reconciled; never purge unresolved intent automatically. After acceptance retain safe proposal/receipt metadata until the explicit synthetic reset, removing command copies after seven days. Business audit/receipts follow their existing retention. Prototype retention choices are not company policy. No raw microphone audio in AI1.
+
+**Proposed Amendment A2 (17 October 2026; not accepted).** [Decision A2](../decisions/ppo-assistant-direction.md#proposed-amendment-a2--stored-record-threads-17-october-2026) would make messages posted to a record thread on the proposed Conversations page stored business communications, visible to the thread's participants. Side-panel chat would keep the page-memory rule above until a person chooses "Keep as a thread". The [threads proposal](../decisions/ai-communications-threads-proposal.md) holds the design. The paragraph above stands until Dean decides.
 
 ## 8. Provider, privacy and running-cost proposal
 

@@ -1,6 +1,6 @@
 # PPO Assistant — Direction and architecture decision
 
-**Document:** PPO-AI-DEC · **Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Design direction authorised; implementation architecture proposed; runtime not implemented. Amendment A1 (Claude API as first live provider) proposed 16 October 2026 and awaiting Dean's decision.
+**Document:** PPO-AI-DEC · **Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Design direction authorised; implementation architecture proposed; runtime not implemented. Amendment A1 (Claude API as first live provider) proposed 16 October 2026 and awaiting Dean's decision. Amendment A2 (stored record threads) proposed 17 October 2026 and awaiting Dean's decision.
 
 ## Decision and authority
 
@@ -25,6 +25,7 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 | Separate microservice or agent framework | Deferred: no demonstrated need; thin adapters and existing services suffice for this pilot |
 | Direct OpenAI versus Azure OpenAI | Direct API is the first evaluation candidate; Azure alignment is useful but actual region/model/tenant and cost are unverified. Preserve replaceability. |
 | Direct Claude API funded by Max 20x API credits | Proposed in Amendment A1 as the first live synthetic evaluation candidate, ahead of both OpenAI options; awaiting Dean's decision. |
+| Stored, shared threads on records | Proposed in Amendment A2 for the Conversations page; the "Stateless draft only" disposition above stands for side-panel chat; awaiting Dean's decision. |
 
 ## Proposed Amendment A1 — Claude API first (16 October 2026)
 
@@ -60,6 +61,27 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 **Not authorised by A1.** This amendment does not create or link a Console organisation, claim credits, create an API key, buy a service, use real or operational data, add runtime code or a migration, or pin a model or SDK. A live evaluation still needs a named billing owner, an approved ceiling, a server-held secret outside Git, restricted outbound destinations, and the specification's other pre-call checks.
 
 **Decision required.** Dean can accept, amend or decline A1. The billing owner, data region, retention settings and authority for real data stay open whichever he chooses.
+
+**Dean's decision:** Not yet given. Record his exact words here when he decides.
+
+## Proposed Amendment A2 — stored record threads (17 October 2026)
+
+**Status:** Proposed by Claude on 17 October 2026 at Dean's instruction; not accepted. Revision r01 is unchanged until Dean decides. Acceptance would issue a new revision of this record and update the [document register](../standards/document-register.csv). Where A2 differs from this record or the specification, A2 governs only once accepted.
+
+**Question.** On 17 October 2026 Dean proposed a dedicated AI and internal communications page. On it, a conversation belongs to a record such as a deal, branches into side conversations, and tags colleagues and the AI agent, provisionally named Carl. He instructed that the AI1 no-stored-chat rule be amended as a proposal. The [AI and internal communications threads proposal](ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP) quotes his words and holds the design.
+
+**Proposal.**
+
+1. A message posted to a record thread, by a person or by the agent at a person's request, is a stored business communication on that record, visible to the thread's participants. It is not an answer cache.
+2. Side-panel chat stays in page memory as specification §7 says, until a person chooses "Keep as a thread".
+3. Provider conversation state is still never reused across people. Each agent turn rebuilds its context from records that the current person and the participants can read, and rechecks access before dispatch (specification §6 unchanged).
+4. An unsent agent draft is discarded when the person leaves the thread, or after 24 hours.
+5. In the synthetic prototype, threads are kept until the synthetic reset. Real retention is a company decision under DOC-06.
+6. No raw audio is stored.
+
+**Unchanged by A2.** The model still has no confirmation capability, and there is still no privileged AI identity. Every saved business change still goes through the canonical command with its receipt. The consequences below still apply.
+
+**Not authorised by A2.** This amendment adds no runtime code, migration, route, provider use or real data.
 
 **Dean's decision:** Not yet given. Record his exact words here when he decides.
 

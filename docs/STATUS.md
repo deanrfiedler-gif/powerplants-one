@@ -1,5 +1,18 @@
 # Current prototype status
 
+## AI and internal communications threads proposed — 17 October 2026
+
+Dean proposed a dedicated page in PPO for AI and internal communications, with a sidebar like Claude Code's. A conversation belongs to a record such as a deal, side conversations branch off it, and colleagues and an AI agent are tagged in. He asked that PPO be designed for AI agents eventually doing most of the work. The [threads proposal](decisions/ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP) quotes his words and proposes:
+- **The page:** "Conversations" at `/conversations`, with threads grouped by record, nested branches and tracked questions in My Work. Record links are drawn from each reader's own access, and a context sidebar gathers the record's documents, contacts and related records;
+- **The agent:** named Carl after the founder of Powerplants Australia, subject to Carl's and the current owners' agreement. It is always labelled as AI and never sends to customers. It checks records before asking a person, uses only what every participant can see, and acts for the person who tagged it;
+- **Voice:** a microphone in every composer, and a hands-free driving mode for reps on the road. Carl answers aloud, messages to colleagues are read back before sending, and anything that saves to a record waits until the person has stopped. Powerplants sets a driving policy first;
+- **Read-only sharing:** of one record for a colleague who cannot open it, limited to people with a share right, time-limited, with restricted sections hidden and recorded in the access review. It needs its own AD-01 decision;
+- **Autonomy:** a ladder earned per action type from approval evidence; nothing above drafting is proposed;
+- **Order:** a build that starts with threads between people (T1), plus seven scenarios and fourteen further ideas;
+- **Amendment A2:** [Amendment A2](decisions/ppo-assistant-direction.md#proposed-amendment-a2--stored-record-threads-17-october-2026) to the PPO Assistant's rule that chat is never stored.
+
+Status: proposed, not accepted; Dean's decision on A1 (provider) is also still open. No code, migration, permission, route, Figma frame or parent ID changes. The ChatGPT instructions are unchanged because nothing is decided.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
