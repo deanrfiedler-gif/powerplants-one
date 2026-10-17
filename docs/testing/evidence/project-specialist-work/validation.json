@@ -1,0 +1,27 @@
+{
+  "synthetic": true,
+  "implementation_source": "385e7df90870cd1f1044d6766aff4d14cb8308dd",
+  "base_source": "459112db197e8f1b87c2c3e6591284c509a386c6",
+  "main_control": "1552cfbb8efd6cea17438c2af18ba0effa4fc278",
+  "runtime": {"node": "24.21.0", "npm": "11.19.0", "postgresql": "16.15", "database": "ppo_synthetic_test"},
+  "native": {"tests": 12, "passed": 12, "failed": 0, "skipped": 0},
+  "populated_upgrades": {"starting_versions": [25, 102, 103, 104], "target_version": 105, "passed": 4, "original_rows_and_ledgers": "Exact preservation", "repeat_migration_and_seed": "No additional effects"},
+  "reserved_products_upgrades": {"starting_versions": [104, 105], "passed": 2, "original_rows_and_ledgers": "Exact preservation", "repeat_migration_and_seed": "No additional effects"},
+  "compiled_http": {"tests": 1, "passed": 1, "covers": ["independent exact review", "lost response", "repeat recovery", "privacy", "company isolation"]},
+  "restart": {
+    "result": "Passed",
+    "application_process_changed": true,
+    "postgres_process_changed": true,
+    "tables_preserved": 32,
+    "original_receipts": 2,
+    "repeated_effects": 0,
+    "snapshot_hash": "62cefc7018cb26de9872c5550a684122a9273d4bc8fa6e98035800f49a95c359"
+  },
+  "full_units": {"tests": 857, "passed": 854, "failed": 3, "unchanged_main_reproduction": "The same two P06 document-store path-guard failures and one P12 recovery path-guard failure; relevant control tests 1/4 passed"},
+  "application_build": "Passed including TypeScript; application source bytes unchanged by the later SQL/test review correction",
+  "full_lint": "Passed before review correction; final changed-test lint passed after correction",
+  "final_typecheck": "Passed",
+  "ad01_model": {"result": "Passed", "capabilities": 157},
+  "ad01_browser": {"result": "Passed", "groups": 40, "capabilities": 157, "visual_acceptance": false},
+  "limitations": ["Initial local startup failures retained; later unchanged candidate started within the same window, with no claimed root cause or runtime fix", "CI and final-source review are separate live PR gates", "No human, visual or operational acceptance", "No merge, deployment or external transaction"]
+}

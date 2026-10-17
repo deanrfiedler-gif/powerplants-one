@@ -499,6 +499,9 @@ export function ProductHeader() {
     .filter((item) =>
       canOpen(item, shell.context?.navigation ?? [], shell.hosted),
     );
+  // F13: until the shell context names the permitted tabs, hold their row so the page below
+  // does not move when they arrive. A placeholder anchor (no href) takes the tabs' own height.
+  const reserveTabs = !shell.context && !shell.error && tabIds.length > 0;
   return (
     <>
       <title>{title}</title>
@@ -564,11 +567,13 @@ export function ProductHeader() {
           </div>
         </ShellControls>
       </header>
-      {!!tabs.length && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
+      {(!!tabs.length || reserveTabs) && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
         <nav
           className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}
           aria-label={`${currentModule} navigation`}
+          aria-hidden={reserveTabs || undefined}
         >
+          {reserveTabs && <a className="ppo-tab-placeholder">&nbsp;</a>}
           {tabs.map((item) => (
             <Link
               key={item.id}

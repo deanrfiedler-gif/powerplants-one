@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { acceptanceReturn } from "../shell/context-links";
 import { useState } from "react";
-import { LocalDateTimeField, useUnsavedChanges } from "./record-ui";
+import { LocalDateTimeField, useCreateDraft, useUnsavedChanges } from "./record-ui";
 import type { readActivity } from "../activities/activities";
 import { activityTypeLabels, timing, whenText } from "../activities/work-view";
 import { Tag } from "../activities/components/client/my-work-ui";
@@ -358,6 +358,8 @@ export function ActivityCreate({
     [due, setDue] = useState(""),
     [access, setAccess] = useState(initial.access === "Internal" ? "Internal" : "RestrictedService"),
     [recordId] = useState(() => crypto.randomUUID());
+  // The chosen company, not the working company filled in for the person.
+  const saved = useCreateDraft({ chosenCompany, kind, type, target, summary, owner, needed, due, access }, cmd.busy);
   const companies = useResource<Envelope<Option>>("selectors/companies"),
     path = (
       {
@@ -395,7 +397,10 @@ export function ActivityCreate({
       links: [{ object_type: type, object_id: target }],
       reason: "Create owned synthetic follow-up",
     });
-    if (result) router.push(`/work/${result.record_id}`);
+    if (result) {
+      saved();
+      router.push(`/work/${result.record_id}`);
+    }
   }
   return (
     <div className="mw-page mw-record-page">

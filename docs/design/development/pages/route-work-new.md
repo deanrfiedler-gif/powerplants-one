@@ -72,3 +72,9 @@ Rebuilt on the record page pattern from the accepted canvas proposal ([decision]
 - **Controls and actions:** controls take the My Work treatment. A navy primary "Create activity" and a Cancel that returns to where the person came from.
 - **Date field hint (S6):** reads "Times in Brisbane · AEST (UTC+10)" through the shared `LocalDateTimeField`.
 - **Review state:** the 9 October review is stale until Dean looks at the built page again.
+
+## Leave protection (F42) — 16 October 2026
+
+Typing into this form and then following the rail (phone bar), a header link, a header search result or browser Back asks before the entries are discarded. Cancel keeps the page and the typed values; OK leaves. A clean form leaves without asking, and a saved record opens without a prompt. The form registers the shared `useUnsavedChanges` guard through `useCreateDraft` (state `create-leave-guard` in [fields](../components/fields.md)). Fixture: `tests/browser/navigation-safety.spec.ts` (F42) at desktop and phone widths. Source: live-app UX audit finding F42, principle 11. No layout, control or copy change; owner review of the native prompt wording is pending.
+
+The working company filled in for the person does not count as an entry. Cancel on a dirty form asks too.

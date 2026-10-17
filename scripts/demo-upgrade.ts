@@ -319,7 +319,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // identity is rewritten. Existing table/function runtime privileges cover the
   // addition; populated 0103/0104 and reserved-Products upgrades prove preservation.
   // This admission does not execute an upgrade or grant hosted specialist authority.
-  if (latestMigrationVersion !== 105) throw Error("Review the existing-demo upgrade for this release.");
+  // 0106 adds immutable work-evidence tables and a default-denied review duty.
+  // No data, hashes, grants or seed receipts are rewritten; existing all-table
+  // runtime privilege admission covers these objects without assigning the duty.
+  // Populated 0025/0105 and reserved-Products proofs retain exact earlier rows.
+  if (latestMigrationVersion !== 106) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

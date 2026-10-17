@@ -58,3 +58,7 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** S8. Deal title should come before Qualification outcome. 'Unsaved' and the pipeline line are plain text with no visual status.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Leave protection (F42) — 16 October 2026
+
+This form already asked before rail, header-link, header search and Back navigation discarded its entries, through its CRM command guard. The F42 fixture in `tests/browser/navigation-safety.spec.ts` now covers it at desktop and phone widths, beside the newly guarded create forms. No change to this page.

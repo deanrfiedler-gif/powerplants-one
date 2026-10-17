@@ -8,6 +8,7 @@ import {
   type SalesCreation,
 } from "./sales-delivery-creation";
 import { useIdentity } from "./business-session";
+import { useCreateDraft } from "./record-ui";
 import {
   EnumField,
   ErrorNotice,
@@ -227,6 +228,8 @@ function IntakeForm({
     reason: "",
   });
   const set = (k: string, value: string) => setV((s) => ({ ...s, [k]: value }));
+  // New requests only. A Sales handover keeps its recoverable command once it is blocked.
+  const saved = useCreateDraft(v, cmd.busy, !t && !sales?.blocked);
   const companies = useResource<Envelope<Option>>("selectors/companies"),
     sites = useResource<Envelope<Option>>(
       v.company ? `sites?company_id=${v.company}&limit=200` : null,
@@ -294,7 +297,10 @@ function IntakeForm({
     if (result) {
       setExpected(result.record_version);
       if (t) reload?.();
-      else if (!sales) router.push(`/service/tickets/${result.record_id}`);
+      else {
+        saved();
+        if (!sales) router.push(`/service/tickets/${result.record_id}`);
+      }
     }
   }
   return (
