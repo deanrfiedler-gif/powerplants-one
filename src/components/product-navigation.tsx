@@ -375,7 +375,10 @@ function ProductNavigationView({
           })}
         </nav>}
         {wide && tooltip && <span className="ppo-rail-tooltip" role="tooltip" style={{top: tooltip.top}}>{tooltip.label}</span>}
-        <div className="ppo-rail-bottom">
+        {/* F13: the rail items arrive with the shell context, and More sits directly below them, so
+            it would drop most of the viewport height in that frame and multiply every other shift
+            there. It is held until the context (or its error) is known, then appears in place. */}
+        <div className="ppo-rail-bottom" hidden={!shell.context && !shell.error}>
           {wide && (
             <button
               ref={toggle}

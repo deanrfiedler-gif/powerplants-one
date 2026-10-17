@@ -20,6 +20,9 @@
   background: var(--navy, #242a37);
   color: white;
 }
+.scheduling-navigation .scheduling-navigation-placeholder {
+  visibility: hidden;
+}
 .scheduling-navigation a:focus-visible {
   outline: 3px solid var(--green, #62bb46);
   outline-offset: 2px;

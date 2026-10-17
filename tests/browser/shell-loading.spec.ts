@@ -85,3 +85,51 @@ test("F13 desktop rail keeps its first-paint width and layout shift stays under 
   }
   await writeFile(info.outputPath("rail-first-paint.json"), JSON.stringify(measurements, null, 2));
 });
+
+// F13 follow-up: the Planner can paint before the shell context arrives (the identity read
+// settles first). The Scheduling tabs then appeared above the controls and moved them down 77 px,
+// in the frame where the rail items arrive. The rail's More button, drawn directly below those
+// items, dropped about 700 px in that same frame, so the frame scored 0.144 in a diagnostic run.
+test("F13 Planner controls stay put when the shell context arrives after the page", async ({ page, isMobile }, info) => {
+  test.skip(isMobile, "The F13 budget is measured on the desktop shell.");
+  const origin = new URL(info.project.use.baseURL!).origin;
+  await page.setViewportSize({ width: 1440, height: 900 });
+  // From the first frame: every distinct top edge of the controls and of More, and every shift.
+  await page.addInitScript(() => {
+    const probe = { tops: [] as number[], more: [] as number[], shift: 0 };
+    (window as unknown as { plannerProbe: typeof probe }).plannerProbe = probe;
+    new PerformanceObserver(list => {
+      for (const entry of list.getEntries() as (PerformanceEntry & { value: number; hadRecentInput: boolean })[])
+        if (!entry.hadRecentInput) probe.shift += entry.value;
+    }).observe({ type: "layout-shift", buffered: true });
+    const sample = () => {
+      const box = document.querySelector("section.planner-toolbar")?.getBoundingClientRect();
+      if (box?.height && probe.tops.at(-1) !== Math.round(box.top)) probe.tops.push(Math.round(box.top));
+      const more = document.querySelector("#desktop-more-toggle")?.getBoundingClientRect();
+      if (more?.height && probe.more.at(-1) !== Math.round(more.top)) probe.more.push(Math.round(more.top));
+      requestAnimationFrame(sample);
+    };
+    requestAnimationFrame(sample);
+  });
+  expect((await page.request.post("/api/v1/local-session", { headers: { Origin: origin }, data: { profile: "coordinator" } })).status()).toBe(200);
+  // Hold the shell context until the controls have painted, the order a slower runner can produce.
+  let release!: () => void;
+  const held = new Promise<void>(resolve => (release = resolve));
+  await page.route("**/api/v1/shell/context", async route => {
+    await held;
+    await route.continue();
+  });
+  await page.goto("/schedule");
+  await expect(page.getByRole("region", { name: "Planner controls", exact: true })).toBeVisible();
+  await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
+  release();
+  await expect(page.getByRole("navigation", { name: "Scheduling workspace", exact: true }).getByRole("link", { name: "Planner", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Collapse primary navigation", exact: true })).toBeEnabled();
+  await page.waitForLoadState("networkidle");
+  await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
+  const probe = await page.evaluate(() => (window as unknown as { plannerProbe: { tops: number[]; more: number[]; shift: number } }).plannerProbe);
+  await writeFile(info.outputPath("planner-late-context.json"), JSON.stringify(probe, null, 2));
+  expect.soft(probe.tops, "Planner controls top edge from first paint").toHaveLength(1);
+  expect.soft(probe.more, "rail More top edge from first paint").toHaveLength(1);
+  expect(probe.shift, "cumulative layout shift").toBeLessThan(0.1);
+});

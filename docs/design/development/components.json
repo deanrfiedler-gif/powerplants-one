@@ -3617,7 +3617,7 @@
         {
           "id": "nav-rail-first-paint",
           "label": "Rail first paint",
-          "description": "F13 / UXB-75: the server renders the rail at the width this browser last showed (cookie ppo_shell_rail; labelled 240 px when none), and ProductHeader holds the module tab row while the shell context loads, so the workspace does not move when the context arrives. The identity's stored choice still wins after load. Fixture: tests/browser/shell-loading.spec.ts samples the rail width every frame from first paint and sums layout shift on five desktop pages at 1440 × 900, labelled and compact."
+          "description": "F13 / UXB-75: the server renders the rail at the width this browser last showed (cookie ppo_shell_rail; labelled 240 px when none), and ProductHeader holds the module tab row while the shell context loads, so the workspace does not move when the context arrives. The identity's stored choice still wins after load. While the context loads the rail's More button is held (.ppo-rail-bottom[hidden]) and then appears in place below the arrived items instead of dropping up to 702 px, and the Scheduling workspace tabs keep their row with a hidden placeholder. Fixture: tests/browser/shell-loading.spec.ts samples the rail width every frame from first paint and sums layout shift on five desktop pages at 1440 × 900, labelled and compact; its Planner case holds the shell context until the page has painted."
         },
         {
           "id": "nav-create-leave",
