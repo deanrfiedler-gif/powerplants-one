@@ -114,6 +114,20 @@ test("R6 and R8: the full path stays in the trail, and the tab title keeps the d
   assert.equal(read("/").crumbs.length, 0);
 });
 
+test("R2 and R4 on CPQ records: Configure & price and Rules studio own the reference the page publishes", () => {
+  // Table 1040:62: "Configure & price / SYN-CPQ-000014" and "Rules studio / INST-SUP-001". A configuration
+  // has no reference of its own, so its page publishes its deal's; the rule editor publishes the rule key.
+  const configuration = read("/estimating/cpq/w1", record("SYN-PPO-OPP-000326", "SYN Controls upgrade qualification · Option A"));
+  assert.deepEqual(configuration.crumbs.map((crumb) => [crumb.label, crumb.href]), [["Configure & price", "/estimating/cpq"], ["SYN-PPO-OPP-000326", undefined]]);
+  assert.equal(configuration.title, "SYN-PPO-OPP-000326 · SYN Controls upgrade qualification · Option A · Configure & price · Estimating & quotation — Powerplants One");
+  const rule = read("/estimating/rules/r1?rule=INST-SUP-001", record("INST-SUP-001", "Support spacing"));
+  assert.deepEqual(rule.crumbs.map((crumb) => [crumb.label, crumb.href]), [["Rules studio", "/estimating/rules"], ["INST-SUP-001", undefined]]);
+  assert.equal(rule.title, "INST-SUP-001 · Support spacing · Rules studio · Estimating & quotation — Powerplants One");
+  // Nothing published while loading, after a denial or on a new rule set: the destination alone, never the URL's ID.
+  for (const [path, name] of [["/estimating/cpq/w1", "Configure & price"], ["/estimating/rules/r1?rule=INST-SUP-001", "Rules studio"], ["/estimating/rules/new", "Rules studio"]])
+    assert.deepEqual(labels(path), [name], path);
+});
+
 test("an owner the person cannot open is named without a link, and a signed-out view shows no record", () => {
   const limited = read("/service/work-orders/w1", { ...record("SYN-PPO-WO-000041"), permitted: everything.filter((id) => id !== "orders") });
   assert.deepEqual(limited.crumbs.map((crumb) => [crumb.label, crumb.href]), [["Work orders", undefined], ["SYN-PPO-WO-000041", undefined]]);

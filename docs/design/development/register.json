@@ -13993,7 +13993,10 @@
         "docs/decisions/cpq-figma-ui.md",
         "docs/design/development/cpq-fixtures.json",
         "docs/decisions/cpq-figma-design.md",
-        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
+        "src/shell/record-identity.tsx",
+        "src/estimating/discovery-workspaces.ts",
+        "docs/decisions/shell-top-bar-amendment.md"
       ],
       "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
       "visual_status": "Needs review",
@@ -14097,7 +14100,9 @@
         "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
         "src/components/cpq-formula-editor.tsx",
         "src/components/cpq-quick-test.tsx",
-        "docs/testing/evidence/cpq-rule-editor-upper/README.md"
+        "docs/testing/evidence/cpq-rule-editor-upper/README.md",
+        "src/shell/record-identity.tsx",
+        "docs/decisions/shell-top-bar-amendment.md"
       ],
       "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
       "visual_status": "Needs review",

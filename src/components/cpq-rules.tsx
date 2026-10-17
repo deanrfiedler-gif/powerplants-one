@@ -25,6 +25,7 @@ import { semanticChanges } from "../cpq/semantic-diff";
 import { useCrmResource, useCrmCommand } from "./crm-state";
 import { api, ErrorNotice } from "./business-ui";
 import { Button } from "./ui/button";
+import { usePublishRecordIdentity } from "../shell/record-identity";
 import {
   CpqFrame,
   CpqDraftBoundary,
@@ -324,6 +325,15 @@ function RulesEditor({
   const shown = historical?.definition ?? d,
     rule = shown.rules.find((r) => r.key === ruleKey) ?? shown.rules[0],
     ruleIndex = d.rules.findIndex((r) => r.key === rule?.key);
+  // Shell top bar amendment R2/R4: the breadcrumb names the open rule by its key, but only a key the
+  // loaded, authorised release or revision holds: never one being typed, nor a new rule set's.
+  const savedRule =
+    view === "All rules" && root && rule
+      ? (historical?.definition ?? root.current.definition).rules.find(
+          (r) => r.key === rule.key,
+        )
+      : undefined;
+  usePublishRecordIdentity(savedRule?.key ?? null, savedRule?.description ?? "");
   function change(next: Definition) {
     if (disabled) return;
     setDefinition(next);

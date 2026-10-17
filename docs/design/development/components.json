@@ -3738,7 +3738,7 @@
         {
           "id": "application-shell-top-bar-amendment",
           "expected": "Accepted Shell top bar amendment R1–R9: short breadcrumb and the global search centred in the top bar on every desktop page.",
-          "actual": "Implemented on branch feat/shell-top-bar-amendment; the shared Figma Shell / Top bar and the accepted pages' breadcrumb overrides follow it. The working-company chip moved into the account control (C1, Dean 17 October 2026). CPQ records show the destination without a reference because those pages publish no record identity (D1). Owner/device review of the application not recorded.",
+          "actual": "Implemented on branch feat/shell-top-bar-amendment; the shared Figma Shell / Top bar and the accepted pages' breadcrumb overrides follow it. The working-company chip moved into the account control (C1, Dean 17 October 2026). CPQ records publish their identity on the stacked branch feat/cpq-record-identity: Rules studio / <rule key>, and Configure & price / <deal reference>, because a configuration has no SYN-CPQ reference of its own (D6). Owner/device review of the application not recorded.",
           "action": "Compare the running app at 1440, 1200, 1024 and 800 px with captures r01 and the updated accepted frames; record owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
