@@ -17,6 +17,14 @@ The composition below comes from the [proposed native refinement](../../../decis
 
 ## Desktop
 
+Accepted design: the [Service requests design decision](../../../decisions/service-requests-figma-design.md) of 17 October 2026, with captures 05–07 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md).
+
+- **Layout:** the shared record layout (D4). The header carries a stage Tag and Update details with the stage’s primary action. A “Before triage” readiness bar lists site, equipment, impact and backup, priority reason, next action and any open clarification. The details column holds Summary; Customer, site and equipment; and Linked work.
+- **Tabs:** Triage, Reported issue, Linked work, Updates and History. Updates is r02’s Evidence & updates.
+- **Complete triage:** edits in the Triage tab with a save bar (D5): clarification outcome, reviewed priority, request owner, priority reason, next action and the reason. It authorises no work and books no visit.
+- **Linked work:** each work order in its own state, and a “Who owns what” list.
+- Nothing new is built. Resolution & review waits for ADR-0043 (D6).
+
 Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4, 7–10 and 15; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md) and [r02](../../../reference/ui/service-cases/native-refinement-r02/README.md)). The shell is a separate module and is not drawn.
 
 - **Host (not drawn).** The shell's breadcrumb reads *Service requests / SYN-PPO-TKT-000201* (shell top bar amendment, 16 October 2026). Registered as a `padded` module workspace with `navigation: "workspace"` (D6). The module draws no masthead and no selected-case dropdown: the record is the page.
@@ -78,6 +86,8 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4,
 
 ## Mobile
 
+Accepted design: captures 11–13 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md). Status first, then view tabs, the panel and the triage checks, with Update details and Complete triage pinned. Complete triage is a full-screen sheet with an error summary. The view-only and save-refused states are in image 13.
+
 Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 12). The triage dialog (frame 13) covers the full 390 × 844 viewport.
 
 - **Record page:**
@@ -115,6 +125,8 @@ Hosted by `application-shell`. Uses `tabs`, `fields`, `validation`, `status`, `b
 - **Not drawn:** loading; denied or revoked; read-only for non-managers; a closed record with retained history; a returned resolution; phone Resolution & review; the *Record outcome* and *Cancel request* dialogs.
 
 ## Visual references
+
+Accepted Figma design: [Service requests design r01 captures](../../../reference/ui/service/service-requests-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-requests-figma-design.md). Images of the Reported issue, Updates and History tabs, the Request information and Update details forms, and the tablet record are still missing.
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96…18fa5f` (the Case workspace and Resolution & review views). Retained design reference.
 - [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `04-register-triage.png`, `07-request-overview.png`, `08-request-work-visits.png`, `09-request-evidence.png`, `10-request-resolution.png`, `12-phone-request.png` and `13-phone-triage.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed composition, not an approved mockup. Frame 8 is superseded by r02.
