@@ -157,6 +157,8 @@ export type Capability =
   | "service.readiness.assess"
   | "service.ticket.read"
   | "service.ticket.edit"
+  | "conversation.read"
+  | "conversation.post"
   | "activity.read"
   | "activity.edit"
   | "shared.read"
