@@ -59,8 +59,9 @@ export async function materialBasis(
       [p.workspace_id, r.id],
     )
   ).rows;
+  // Nothing allocated is a known zero (a shortage), not missing evidence.
   let usable = 0n,
-    complete = allocations.length > 0;
+    complete = true;
   const permittedAllocations: Allocation[] = [];
   const sources: {
     id: string;

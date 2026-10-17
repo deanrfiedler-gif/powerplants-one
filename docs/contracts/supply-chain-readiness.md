@@ -36,6 +36,18 @@ Allocations bind exact supply and demand lines in a declared common unit. Concur
 
 Readiness states for review are **Not assessed**, **Evidence needed**, **At risk**, **Blocked** and **Ready for the stated material scope**. A Ready assessment names all included demands, the source completeness/time, sufficient usable allocations and any remaining scope exclusion. Its validity is limited to that exact scope and evidence point. It establishes no technical release, worker competency, site access, customer agreement, confirmed booking or Finance outcome.
 
+The prototype derives the state for one demand from this table, read top to bottom (`readiness()` in `src/supply/model.ts`, corrected for audit finding SUP-1 on 17 October 2026). It is a synthetic prototype rule, not MYOB or corporate policy.
+
+| Demand class | Demand evidence and allocated sources | Usable allocated | Current promise | State |
+|---|---|---|---|---|
+| Forecast | Any | Any | Any | Not assessed |
+| Approved | Incomplete: demand Partial or Unavailable, no required date, or an allocated source hidden, incomplete or over-allocated | Any | Any | Evidence needed |
+| Approved | Complete | At least the demand quantity | Any | Ready for the stated material scope |
+| Approved | Complete | Less than the demand, including nothing allocated | Complete, dated on or before the required date, and for at least the shortage | At risk |
+| Approved | Complete | Less than the demand, including nothing allocated | None, late, Partial, undated or smaller than the shortage | Blocked |
+
+An empty allocation register is a known zero, so an approved demand with nothing allocated is a shortage, not missing evidence. Incoming allocations never count toward usable. The promise basis (Estimated or SupplierConfirmed) does not change the state; whether an estimated date should count as cover is open.
+
 Changing or withdrawing a confirmed promise, usable quantity, allocation or inspection result creates an owned impact review against affected demands. One reasoned command may create one shared Activity per declared impact identity; idempotent recovery returns the same Activity/receipt. The recipient reviews the effect using existing Project/Service controls. Lost or duplicate notifications cannot serve as authority to move a booking.
 
 ## Fictional acceptance examples

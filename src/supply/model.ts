@@ -592,35 +592,51 @@ export function fulfilment(facts: Fact[], required: string) {
     outstanding: quantity(decimal(required) - delivered),
   };
 }
+// Material readiness of one demand (SCM-06, SCM-08; audit SUP-1). Rows are read top to bottom:
+//
+// | Demand class | Demand evidence and allocated sources | Usable allocated | Current promise                     | State           |
+// |--------------|---------------------------------------|------------------|-------------------------------------|-----------------|
+// | Forecast     | any                                   | any              | any                                 | Not assessed    |
+// | Approved     | incomplete                            | any              | any                                 | Evidence needed |
+// | Approved     | complete                              | covers demand    | any                                 | Ready …         |
+// | Approved     | complete                              | short (or none)  | complete, on or before required_on, | At risk         |
+// |              |                                       |                  | and at least the shortage           |                 |
+// | Approved     | complete                              | short (or none)  | none, late, partial or too small    | Blocked         |
+//
+// Demand evidence is complete when the demand is Complete with a required date. `sourcesComplete`
+// means every allocated source is visible and valid; with nothing allocated it is true, because an
+// empty allocation register is a known zero, not missing evidence. Only usable allocations count
+// toward `allocated`; incoming units cannot support Ready. A forecast's shortage is informational
+// and shown only when its evidence is complete.
 export function readiness(
   demand: SupplyRecord,
   allocated: string,
   sourcesComplete: boolean,
   facts: Fact[],
 ) {
-  if (
-    demand.completeness !== "Complete" ||
-    !sourcesComplete ||
-    !demand.data.required_on
-  )
-    return { state: "Evidence needed", shortage: null };
+  const required_on = demand.data.required_on;
+  const complete =
+    demand.completeness === "Complete" && sourcesComplete && !!required_on;
   const shortage = decimal(demand.quantity) - decimal(allocated);
   if (demand.data.demand_class !== "Approved")
     return {
       state: "Not assessed",
-      shortage: quantity(shortage > 0n ? shortage : 0n),
+      shortage: complete ? quantity(shortage > 0n ? shortage : 0n) : null,
     };
+  if (!complete) return { state: "Evidence needed", shortage: null };
+  if (shortage <= 0n)
+    return { state: "Ready for the stated material scope", shortage: "0" };
   const promise = latestFact(facts, "Promise");
-  if (shortage > 0n)
-    return {
-      state:
-        promise?.data.promised_on &&
-        promise.data.promised_on > demand.data.required_on
-          ? "At risk"
-          : "Blocked",
-      shortage: quantity(shortage),
-    };
-  return { state: "Ready for the stated material scope", shortage: "0" };
+  const covered =
+    !!promise &&
+    promise.completeness === "Complete" &&
+    !!promise.data.promised_on &&
+    promise.data.promised_on <= required_on! &&
+    q(promise.data, "quantity") >= shortage;
+  return {
+    state: covered ? "At risk" : "Blocked",
+    shortage: quantity(shortage),
+  };
 }
 export function materialChanges(before: SupplyRecord, after: SupplyRecord) {
   const keys = ["quantity", "unit", "item", "completeness"] as const;
