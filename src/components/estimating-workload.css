@@ -626,26 +626,6 @@
   }
 }
 
-/* Shell: retained from the first native increment. */
-.workspace:has(.est-workload) .ppo-shell-header {
-  container-type: inline-size;
-  container-name: workload-header;
-}
-@container workload-header (max-width: 900px) {
-  .workspace:has(.est-workload) .ppo-header-centre {
-    position: static;
-    transform: none;
-    width: auto;
-    flex: 1 1 140px;
-    min-width: 0;
-  }
-  .workspace:has(.est-workload) .ppo-global-search kbd {
-    display: none;
-  }
-  .workspace:has(.est-workload) .product-heading {
-    max-width: 22%;
-  }
-}
 /* Local identities enable an older shell grid. Match the current compact shell
    row on this register, including 200% reflow, without changing other pages. */
 @media (max-width: 780px) {

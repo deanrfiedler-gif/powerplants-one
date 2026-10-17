@@ -1,5 +1,4 @@
 "use client";
-import { controlModules, controlPath } from "../engineering/control/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -10,7 +9,7 @@ import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
-import { documentTitle, recordTitle } from "../shell/page-title";
+import { breadcrumb, type Crumb } from "../shell/breadcrumb";
 import {
   canOpen,
   departmentHref,
@@ -24,13 +23,6 @@ import {
   menuGroups,
   pageForPath,
   salesPhoneBar,
-  workViewForPath,
-  materialsPath,
-  materialsModuleLabel,
-  changesPath,
-  changesModuleLabel,
-  commissioningPath,
-  commissioningModuleLabel,
   workspaces,
   type ShellDestination,
 } from "../shell/navigation";
@@ -43,8 +35,7 @@ const subscribe = (changed: () => void) => {
   media.addEventListener("change", changed);
   return () => media.removeEventListener("change", changed);
 };
-type HierarchyCrumb = { key: string; label: string; href?: string; kind: "root" | "page" | "view" | "record" };
-function PageHierarchy({ crumbs, location }: { crumbs: HierarchyCrumb[]; location: string }) {
+function PageHierarchy({ crumbs, location }: { crumbs: Crumb[]; location: string }) {
   const panel = useRef<HTMLDivElement>(null), trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   useEffect(() => { panel.current?.hidePopover(); }, [location]);
@@ -471,73 +462,26 @@ export function ProductHeader() {
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const label = path === "/" ? "" : path === "/calendar" ? (query.get("scope") === "sales" ? "Sales Activities" : "Personal Calendar") : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Component catalogue" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
-  // My Work names its subview beside the module. The overview is its index, so
-  // My Work itself is current rather than a redundant, hidden Overview crumb. EN-06 names its module
-  // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
-  const materials = page?.workspace === "engineering" ? materialsPath(path) : undefined;
-  // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
-  const changes = page?.workspace === "engineering" ? changesPath(path) : undefined;
-  // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
-  const commissioning = page?.workspace === "engineering" ? commissioningPath(path) : undefined;
-  const control = materials || changes || commissioning ? undefined : controlPath(path);
-  const acceptance = path.startsWith("/projects/acceptance");
-  const projectsRegister = path === "/projects";
-  const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance || projectsRegister ? { view: undefined } : undefined);
-  const view = page?.id === "work" ? (path === "/work" ? undefined : workViewForPath(path)?.label) : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : projectsRegister ? "Project register" : undefined;
-  const subview = crumb?.view?.label;
-  const workspaceRoot = workspaces.find((w) => w.id === (page?.id === "work" && path === "/work" ? workspaceForLocation(path, new URLSearchParams(query), shell.preview, shell.context?.navigation ?? []) : page?.workspace));
+  // The breadcrumb, Page hierarchy and tab title come from route metadata (src/shell/breadcrumb.ts).
+  // The rail carries the product identity and the department, so neither is repeated beside the page.
+  const { label, trail, crumbs, title, hierarchy } = breadcrumb({
+    path,
+    query: new URLSearchParams(query),
+    record: shell.context ? record : null,
+    signedIn: !!shell.context,
+    permitted: shell.context?.navigation ?? [],
+    hosted: shell.hosted,
+    preference: shell.preview,
+  });
   const currentModule =
     page?.workspace === "estimate"
       ? "Estimating"
       : page?.workspace === "service"
         ? "Service"
         : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Home");
-  // The breadcrumb is built from route metadata, never from URL slugs: the workspace this destination
-  // belongs to, the destination itself, and the view that a workspace's own secondary menu names. The
-  // rail carries the product identity, so "Powerplants One" is no longer repeated beside every page.
-  const rootDestination = workspaceRoot ? destination(workspaceRoot.primary) : undefined;
-  // The overview carries its selected department, including the full Estimating label from Figma.
-  // Service retains its established short breadcrumb name.
-  const rootLabel =
-    page?.workspace === "service" ? "Service" : workspaceRoot?.label;
   const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
-  const crumbs: HierarchyCrumb[] = [];
-  if (label) {
-    if (rootLabel && rootLabel !== label && !crumb)
-      crumbs.push({
-        key: "root",
-        label: rootLabel,
-        href: rootDestination && canOpen(rootDestination, shell.context?.navigation ?? [], shell.hosted) ? rootDestination.href : undefined,
-        kind: "root",
-      });
-    if (page && !crumb && destination(page.id)?.label !== page.label && page.id !== "search") {
-      const parent = destination(page.id);
-      if (parent) crumbs.push({key:"module",label:parent.label,kind:"page",href:canOpen(parent,shell.context?.navigation ?? [],shell.hosted) ? parent.href : undefined});
-    }
-    crumbs.push({ key: "page", label, kind: crumb ? "root" : "page", href: crumb && page && canOpen(page, shell.context?.navigation ?? [], shell.hosted) ? page.href : undefined });
-    // Each bounded module keeps its identity between the domain and the destination its menu names.
-    if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
-    if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
-  }
-  const screenWorkbench = /^\/estimating\/configurations\/[^/]+\/(configure|drawings|parts|pricing|compare|definition|history)$/.test(path);
-  if (screenWorkbench) {
-    const parent = crumbs.find(c => c.key === "page");
-    if (parent) parent.href = "/estimating/configurations";
-    crumbs.push({ key: "workbench", label: "Screen Configurator Workbench", kind: "page" });
-  }
-  if (record && shell.context && !screenWorkbench) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
-  if (fertigation) {
-    crumbs.splice(0, crumbs.length, { key: "page", label: "Scope register", kind: "page", href: shell.context ? "/estimating/fertigation" : undefined });
-    if (record && shell.context) crumbs.push({ key: "record", label: record.reference, kind: "record" });
-  }
-  // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
-  // and updates it in the same commit as the route, before the route announcer reads document.title.
-  const title = documentTitle({
-    record: record && shell.context ? recordTitle(record.reference, record.title) : /\/new$/.test(path) ? "New record" : undefined,
-    page: subview ?? view ?? (label || "Home"),
-    department: rootLabel,
-  });
+  // NR-17: React hoists this <title> into the head and updates it in the same commit as the route,
+  // before the route announcer reads document.title.
   const tabIds =
     page?.workspace === "service"
       ? []
@@ -574,45 +518,51 @@ export function ProductHeader() {
             className="brand-logo"
           />
         </Link>
-        {/* A workspace with a secondary menu mounts its icon-only trigger here. Empty otherwise, and
-            the empty slot reserves no width (desktop-shell.css). */}
-        <div id="header-menu" className="ppo-header-menu-slot" />
-        {crumbs.length ? (
-          <nav className="product-heading" aria-label="Breadcrumb">
-            {crumbs.length > 1 && !projectsRegister && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
-            <ol className="ppo-crumbs" title={crumbs.map((c) => c.label).join(" / ")}>
-              {crumbs.map((crumb, index) => (
-                <li key={crumb.key} data-crumb={crumb.kind}>
-                  {crumb.href ? (
-                    <Link className="ppo-crumb" href={crumb.href}>
-                      {crumb.label}
-                    </Link>
-                  ) : (
-                    <span
-                      className={index === crumbs.length - 1 ? "ppo-crumb ppo-crumb-current" : "ppo-crumb"}
-                      aria-current={index === crumbs.length - 1 ? "page" : undefined}
-                    >
-                      {crumb.label}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </nav>
-        ) : (
-          <div className="product-heading">
-            <span className="ppo-product-name">Powerplants One</span>
-          </div>
-        )}
+        {/* R9: three zones on desktop. This start zone and the end zone are equal in width, so the
+            global search between them sits at the top bar's centre on every page (desktop-shell.css). */}
+        <div className="ppo-header-start">
+          {/* A workspace with a secondary menu mounts its icon-only trigger here. Empty otherwise, and
+              the empty slot reserves no width (desktop-shell.css). */}
+          <div id="header-menu" className="ppo-header-menu-slot" />
+          {crumbs.length ? (
+            <nav className="product-heading" aria-label="Breadcrumb">
+              {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
+              <ol className="ppo-crumbs" title={trail.map((c) => c.label).join(" / ")}>
+                {crumbs.map((crumb, index) => (
+                  <li key={crumb.key} data-crumb={crumb.kind}>
+                    {crumb.href ? (
+                      <Link className="ppo-crumb" href={crumb.href}>
+                        {crumb.label}
+                      </Link>
+                    ) : (
+                      <span
+                        className={index === crumbs.length - 1 ? "ppo-crumb ppo-crumb-current" : "ppo-crumb"}
+                        aria-current={index === crumbs.length - 1 ? "page" : undefined}
+                      >
+                        {crumb.label}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          ) : (
+            <div className="product-heading">
+              <span className="ppo-product-name">Powerplants One</span>
+            </div>
+          )}
+        </div>
+        {/* The controls stay mounted across routes and reset themselves, because the account mount
+            in the end zone must never be replaced (header-content.tsx). */}
         <ShellControls
-          key={path}
           module={currentModule}
           page={label || "Application shell"}
-        />
-        <div className="header-tools">
-          <div id="header-search" />
-          <div id="header-account" className="header-account" />
-        </div>
+        >
+          <div className="header-tools">
+            <div id="header-search" />
+            <div id="header-account" className="header-account" />
+          </div>
+        </ShellControls>
       </header>
       {!!tabs.length && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
         <nav

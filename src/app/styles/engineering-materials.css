@@ -211,9 +211,9 @@
 #ppo-materials .em-timeline>li:last-child{border-color:transparent}
 #ppo-materials .em-timeline p{color:var(--text-secondary);font-size:13px}
 
-/* EN-06's breadcrumb rules became the shell's own in the existing-module refinement: the product name is
-   removed from every module breadcrumb, ancestors give way before the current page, and a docked secondary
-   menu still takes the view crumb because it names that view itself. See desktop-shell.css. */
+/* EN-06's breadcrumb rules became the shell's own in the existing-module refinement, and the shell top bar
+   amendment (16 October 2026) then shortened them: the module, then the destination its menu names unless
+   that is the register. See src/shell/breadcrumb.ts and desktop-shell.css. */
 
 @media (max-width:1100px){
  #ppo-materials .em-context-row{flex-wrap:wrap;gap:6px 0;padding:8px 12px}

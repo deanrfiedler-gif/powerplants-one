@@ -20,21 +20,20 @@
 :root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #ffffff; --ppo-rail-ink: #242a37; --ppo-icon-cutout: #ffffff; }
 .ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
-/* Breadcrumb: [Module] / [Current page]. The rail's logo is the product identity, so the product name is
-   no longer repeated here; the parent is quieter and the current page darker and semibold. Ancestors give
-   way first when room runs out, and every label stays whole in the accessibility tree and the title. */
+/* Breadcrumb (shell top bar amendment, 16 October 2026): the page itself, or [Owner] / [Current page]. The
+   rail shows the product and the department, so neither is repeated here; the owner is quieter and the
+   current page darker and semibold. Every label stays whole in the accessibility tree, and the full path
+   stays in the tooltip and the Page hierarchy panel. */
 .ppo-shell-header .ppo-crumbs { display: flex; align-items: baseline; min-width: 0; margin: 0; padding: 0; list-style: none; }
 .ppo-shell-header .ppo-crumbs li { display: flex; align-items: baseline; min-width: 0; margin: 0; padding: 0; }
-.ppo-shell-header .ppo-crumbs li + li::before { content: "/"; flex: none; margin: 0 7px; color: #9aa4b2; font-weight: 400; }
+/* R8: the separator is decoration. Its empty alternative text keeps it out of screen readers; a browser
+   without that syntax keeps the plain declaration. */
+.ppo-shell-header .ppo-crumbs li + li::before { content: "/"; content: "/" / ""; flex: none; margin: 0 7px; color: #9aa4b2; font-weight: 400; }
 .ppo-shell-header .ppo-crumb { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 16px; font-weight: 400; line-height: 1.3; color: #596779; text-decoration: none; }
 .ppo-shell-header a.ppo-crumb:hover { color: #242a37; text-decoration: underline; text-underline-offset: 3px; }
 .ppo-shell-header .ppo-crumb-current { color: #242a37; font-weight: 600; }
 .ppo-shell-header .ppo-crumbs li:not(:last-child) .ppo-crumb { flex: 0 1 auto; min-width: 4ch; }
 .ppo-shell-header .ppo-crumbs li:last-child { flex: 0 1 auto; min-width: 6ch; }
-/* A docked secondary menu already names the current view and marks it as the current page, so the
-   breadcrumb does not repeat it; collapsed, overlaid or absent, the breadcrumb carries it again. */
-.workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
-.workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li:has(+ li[data-crumb=view]) .ppo-crumb { color: #242a37; font-weight: 600; }
 /* Header menu slot: a workspace with a secondary menu mounts its trigger here. The trigger is icon-only, so
    its width never changes with its state and nothing to its right moves; the name stays for assistive
    technology and as its tooltip. An empty slot reserves no width at all. */
@@ -195,23 +194,27 @@
   .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: none; }
   .ppo-rail .ppo-rail-item[aria-expanded=true] { box-shadow: inset 0 -3px #a8d8ff; }
   .ppo-rail-tooltip { position: fixed; z-index: 110; left: 84px; max-width: min(300px, calc(100vw - 96px)); padding: 6px 10px; color: white; background: var(--ppo-rail-navy); border: 1px solid #8995a8; border-radius: 5px; font: 13px/1.5 PPOShellRoboto, Roboto, Verdana, sans-serif; pointer-events: none; }
-  /* Global search and the quick-add button immediately to its right are one group, and it is that group's
-     combined box which is centred on the whole application viewport, the navy rail included. The header's
-     own left origin excludes the rail, so half the rail width comes off the header's own midpoint. The
-     coordinate is the header's, not the viewport's, which keeps a scrollbar out of the measurement, and
-     nothing page-specific enters it, so menu, More, snapshot and route changes cannot move the centreline. */
-  .ppo-header-centre { position: absolute; left: calc(50% - var(--ppo-rail-width) / 2); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; width: calc(clamp(232px, 28vw, 420px) + 56px); }
+  /* R9 (shell top bar amendment, 16 October 2026): the top bar is three zones. The global search has a fixed
+     width in the centre column and the two side columns are equal, so its centre is the top bar's centre on
+     every page, and nothing a page puts in either side zone can move it. The side padding sits inside the
+     zones, so the columns themselves are equal. Only where the top bar is too narrow for that, on the
+     narrowest desktops or at high zoom, does the end column keep its controls' width and the search narrow
+     before the breadcrumb loses its last 120px. */
+  .app-frame { --ppo-search-width: clamp(232px, 28vw, 420px); }
+  .app-frame .workspace > .topbar.ppo-shell-header { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(140px, var(--ppo-search-width)) minmax(max-content, 1fr); align-items: center; column-gap: 12px; padding: 0; }
+  .ppo-header-start { grid-column: 1; display: flex; align-items: center; min-width: 0; padding-left: 24px; }
+  .ppo-header-centre { grid-column: 2; display: flex; align-items: center; min-width: 0; }
   .ppo-header-centre .ppo-global-search { flex: 1 1 auto; min-width: 0; }
-  .ppo-header-centre .ppo-quick-add { flex: none; }
-  /* #268's rule, kept by the breadcrumb that replaced the heading it was written against: a name is
-     shown whole or not at all, never cut short to make room for another. No crumb shrinks or ellipsises;
-     one that does not fit wraps to a second line that this one-line box hides, and the current page is
-     last so it is the first to go. Ancestors are dropped whole earlier, at 1560px. */
-  .ppo-shell-header .ppo-crumbs { flex-wrap: wrap; max-height: 21px; overflow: hidden; }
-  .ppo-shell-header .ppo-crumbs li, .ppo-shell-header .ppo-crumbs li:last-child { flex: none; min-width: 0; }
-  .ppo-shell-header .ppo-crumbs .ppo-crumb { flex: none; min-width: 0; overflow: visible; text-overflow: clip; }
-  .ppo-shell-header .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px); }
-  .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { max-width: calc(50vw - clamp(110px, 14vw, 210px) - 146px - 52px); }
+  /* Quick add opens the end zone, 12px from the search; the utilities and the account sit at its far end. */
+  .ppo-header-end { grid-column: 3; display: flex; align-items: center; gap: 12px; min-width: 0; padding-right: 20px; }
+  .ppo-header-end .ppo-quick-add { flex: none; }
+  /* R6: the breadcrumb truncates before it reaches the search. The owner gives way first, then the current
+     page; the full path stays in the tooltip and the Page hierarchy panel. */
+  .ppo-header-start .product-heading { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+  .ppo-shell-header .ppo-crumbs { flex-wrap: nowrap; min-width: 0; }
+  .ppo-shell-header .ppo-crumbs li, .ppo-shell-header .ppo-crumbs li:not(:last-child) { flex: 0 1 auto; min-width: 0; }
+  .ppo-shell-header .ppo-crumbs li:last-child { flex: 0 0 auto; min-width: 0; max-width: 100%; }
+  .ppo-shell-header .ppo-crumbs li .ppo-crumb { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .ppo-shell-header .ppo-product-name { flex-shrink: 0; }
   .crm-toolbar .crm-header-search { width: 210px; flex: 0 1 210px; }
   .crm-toolbar .crm-pipeline-label { margin-left: auto; }
@@ -232,7 +235,10 @@
   .ppo-shell-header .product-heading { display: block; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 13px; white-space: nowrap; }
   .ppo-shell-header .ppo-crumb { font-size: 13px; }
   .ppo-shell-header .ppo-crumb-current { color: #242a37; font-weight: 600; }
-  .ppo-header-centre, .ppo-desktop-utility { display: none; }
+  /* The phone header keeps its single row: the zones contribute their controls directly, search opens from
+     its button, and Quick add is reached from More. */
+  .ppo-header-start, .ppo-header-end { display: contents; }
+  .ppo-header-centre, .ppo-desktop-utility, .ppo-shell-header .ppo-quick-add { display: none; }
   .ppo-header-utilities { gap: 0; }
   .ppo-shell-header .header-tools { display: contents; }
   /* Retain the CRM phone page filter supplied through its existing header slot.
@@ -299,13 +305,6 @@
 /* Phone Sales reaches Opportunities from the bottom bar, and Leads from My Work's Quick Actions and More.
    An extra desktop tab row would leave too little room for a focused card after a save. */
 @media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }
-/* Narrower desktops keep the last two inline crumbs. Page hierarchy exposes every authorized ancestor
-   as a usable link at every width; a title alone cannot provide navigation. */
-@media (min-width: 781px) and (max-width: 1560px) {
-  .ppo-shell-header .ppo-crumbs li:nth-last-child(n+3) { display: none; }
-  .ppo-shell-header .ppo-crumbs li:nth-last-child(2)::before { content: none; }
-  .ppo-shell-header .ppo-crumbs li:nth-last-child(2) .ppo-crumb { font-size: 15px; }
-}
 /* Phone header of a workspace with its own menu (mobile r07: My Work). The hamburger takes the brand's place:
    menu, title, search, page guide, account, on one 64px row. The selector carries the header-menu id so it
    outranks the older three-column grid that the local identity strip switches on (shell drift SD-1), and only
@@ -401,7 +400,7 @@
   .app-frame[data-rail=expanded] .ppo-rail-bottom { padding: 12px; }
   .app-frame[data-rail=expanded] .ppo-more-panel { left: calc(var(--ppo-rail-width) + 10px); width: min(400px, calc(100vw - 248px)); }
 }
+/* The expanded rail leaves a narrow desktop's top bar shorter: the search narrows with it and stays centred. */
 @media (min-width: 781px) and (max-width: 1200px) {
-  .app-frame[data-rail=expanded] .ppo-header-centre { position: static; transform: none; width: 220px; margin-left: auto; }
-  .app-frame[data-rail=expanded] .ppo-shell-header .product-heading { max-width: 140px; }
+  .app-frame[data-rail=expanded] { --ppo-search-width: 220px; }
 }
