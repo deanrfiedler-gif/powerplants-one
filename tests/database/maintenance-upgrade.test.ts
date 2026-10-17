@@ -73,14 +73,16 @@ test("late reserved Maintenance migration preserves the current schema, original
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 ORDER BY version"), seeds);
   const everything = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map((g) => g.id));
   // Seed 108 copies Opportunity and Project reads as conversation duties; everything else is this suite's subject.
-  const actual = everything.filter((g) => !String(g.capability).startsWith("conversation."));
+  const actual = everything.filter((g) => ids.has(g.id) || !String(g.capability).startsWith("conversation."));
   assert.deepEqual(actual.filter((g) => ids.has(g.id)), grants);
   const normal = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
   const sorted = (g: Record<string, unknown>[]) => g.map(normal).map((r) => JSON.stringify(r, Object.keys(r).sort())).sort();
   assert.deepEqual(sorted(actual.filter((g) => !ids.has(g.id))), sorted(maintenanceSeedGrants(grants)));
   assert.equal(actual.length - grants.length, 22);
   const shape = (g: Record<string, unknown>[]) => g.map((r) => JSON.stringify(Object.fromEntries(Object.entries(r).filter(([k]) => k !== "id")), Object.keys(r).filter((k) => k !== "id").sort())).sort();
-  assert.deepEqual(shape(everything.filter((g) => String(g.capability).startsWith("conversation."))), shape(conversationSeedGrants([...grants, ...maintenanceSeedGrants(grants)])));
+  // A late reserved 0051 installed after 0108 starts with the conversation duties already present.
+  const conversationAdded = everything.filter((g) => String(g.capability).startsWith("conversation.") && !ids.has(g.id));
+  assert.deepEqual(shape(conversationAdded), shape(grants.some((g) => String(g.capability).startsWith("conversation.")) ? [] : conversationSeedGrants([...grants, ...maintenanceSeedGrants(grants)])));
   const extended = (await rows("SELECT pg_get_functiondef('ppo.identity_has_typed_record()'::regprocedure) AS definition"))[0].definition;
   for (const branch of identity.match(/WHEN '[^']+'[^\n]*/g) ?? []) assert.ok(extended.includes(branch), branch);
   assert.match(extended, /ServiceAgreement/);
