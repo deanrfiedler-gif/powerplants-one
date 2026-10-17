@@ -26,6 +26,18 @@ The URL control correction makes Sales search and scheduling review filters obse
 
 Protected main currently requires seven checks with administrator enforcement and no approving-review count: Check documentation foundation; CRM desktop and mobile persistence and interaction proof; CRM header and board visual checks; Desktop and mobile browser suite against the compiled application; E1 manual estimate, draft output and restart proof; Email Calendar persisted journey and server permissions; P01–P11 and CRM I1–I2 local application and PostgreSQL proof. Strict up-to-date enforcement is off. This task does not change those settings.
 
+## UX benchmark decisions — 16 October 2026
+
+Dean decided the six items in the UX benchmark's Decision brief: "I am happy to proceed with all six based on your recommendations." The [decision record](decisions/ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01) adopts 17 items, and the [recommendations](design/research/ux-benchmark/recommendations.csv) and [amendment items](design/research/ux-benchmark/amendment-items.csv) registers now mark them Adopted:
+- a written stale-deal rule (UXB-03, A16; Dean still sets N for each stage);
+- the My jobs offline state with autosaved drafts (UXB-11, UXB-74, A19);
+- Activities on quotes, work orders, job packs and engineering (UXB-02, A08);
+- the field readiness proposal with the parts-readiness ladder (UXB-09, UXB-10, A06, A07);
+- amendments A02, A09, A18 (the identifier column stays visible), A20 and A23;
+- grower interviews and staff task tests (UXB-92), and D-025's direction: email and SMS, sent by a named person. That changes the D-025 paper's C2; D-025 stays Open for its other choices.
+
+He also confirmed that Powerplants runs MYOB Acumatica. Nothing is built: each adopted item is redrawn and locked in on its owning page, then built in its own pull request under `AGENTS.md`. The private review document shows Adopt for each item, and the exemplars that informed the decisions are on Figma page 986:47. No code, migration, permission, route, design-register entry or parent ID changes here.
+
 ## D-025 customer communications decision paper — 16 October 2026
 
 On 16 October Dean named two problems, and both need PPO to email customers, which it deliberately does not do:
@@ -102,7 +114,7 @@ The [research record](design/research/ux-benchmark/README.md) summarises the met
 - field apps must never lose input;
 - for growers, own the service trail around the controller.
 
-Two registers are generated from the reviewed report. The [recommendations](design/research/ux-benchmark/recommendations.csv) hold UXB-01 to UXB-92: 20 at priority 1, 56 at priority 2 and 16 at priority 3. The [amendment items](design/research/ux-benchmark/amendment-items.csv) hold A01 to A24 against accepted designs; A22 and A24 were withdrawn after the check. Every item is Proposed.
+Two registers are generated from the reviewed report. The [recommendations](design/research/ux-benchmark/recommendations.csv) hold UXB-01 to UXB-92: 20 at priority 1, 56 at priority 2 and 16 at priority 3. The [amendment items](design/research/ux-benchmark/amendment-items.csv) hold A01 to A24 against accepted designs; A22 and A24 were withdrawn after the check. Every item started as Proposed; 17 were adopted on 16 October (above).
 
 The [direction record](decisions/ux-benchmark-research-direction.md) says what Dean's direction authorises: research and proposals. Without his decision on each item it authorises no design, code, migration, customer contact or adoption. Adopted items will be recorded in `docs/decisions/` and linked to scope IDs. No application code, route, migration, permission, design register entry or parent ID changes.
 
