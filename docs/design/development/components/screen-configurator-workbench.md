@@ -8,6 +8,22 @@ This host entry binds `scope:ES-08` and the existing configuration/view routes. 
 
 The host groups the workbench context facts, readiness checks, seven view links, section menu, source-attributed fields, segmented options, expandable result rows, sheet/title blocks, field inspector, working panel and save bar. These components share the same Bench state and synthetic fixtures; the menu does not hold another proposal. The shared cross-section remains registered separately. `WorklistMenu` supplies run actions; existing scoped ES-08 Dialog supplies modal semantics and focus restoration.
 
+## Figma components
+
+**Status:** Proposal only · **Location:** ES-08 · Screen Configurator Workbench 406:2, in the private "PPO - Design" Figma file
+
+- Workbench / Context strip `415:4566`
+- Workbench / Context fact `413:93834`
+- Workbench / Segment `413:93796`
+- Workbench / Field `413:93832`
+- Workbench / Save bar `415:4693`
+- Workbench / Sheet header `417:92945`
+- Workbench / Field inspector `417:92959`
+- Workbench / Working panel `419:2027`
+- Workbench / Section stepper (phone) `417:93096`
+
+Twenty-seven ES-08 parts stay on the proposal page until the design is accepted; the main ones are listed. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 1440 px with the two 240 px navigation columns, 24 px workbench padding and 16 px card gaps. Configure uses a 5:3 split. Readiness uses compact checks with keyboard-accessible detail; tables retain real headings and cells. The 440 px Parts panel overlays the right edge below the application top bar. Pricing and Definition preserve full-width tables. Narrow desktop widths stack columns. Main content scrolls independently of the footer.

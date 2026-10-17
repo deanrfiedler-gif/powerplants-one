@@ -12,6 +12,14 @@ Design: [ppo-deal-pipeline_r38.html](../../../reference/ui/deals/ppo-deal-pipeli
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Proposal only · **Location:** Deals (proposal) 549:2, in the private "PPO - Design" Figma file
+
+- Deals/Card `551:947`
+
+Board card from the r37 reference; stays on the proposal page until the Deals design is accepted. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag.

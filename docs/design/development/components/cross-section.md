@@ -20,6 +20,15 @@ The application implementation and exact consumer bindings are maintained in `..
 - A rule breach withholds the section with its reason rather than drawing an impossible shape: a Venlo span that is not a whole number of roofs, a pitch outside the profile's range, a vent at or above the sawtooth rise, or a screen at or above the structure underside. Quantities are never withheld by a drawing rule (D14).
 - Labels are SVG text with a white halo for dimension chips, so a downloaded sheet is self-contained.
 
+## Figma components
+
+**Status:** Proposal only · **Location:** ES-08 · Screen Configurator Workbench 406:2, in the private "PPO - Design" Figma file
+
+- Drawing / Live section · Gable, 2 of 6 spans `408:83278`
+- Drawing / 02 Cross section · Gable `410:83942`
+
+Imported from the application SVG; stays on the ES-08 proposal page until that design is accepted. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Sheet variant 1,280 × 310 inside the sheet frame with layers (structure, screen, drive, dimensions); card variant 660 × 330; mini variant 400 × 236 on the Configure live card with two spans shown and a break mark.

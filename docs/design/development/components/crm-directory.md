@@ -10,6 +10,12 @@ This host entry binds the real CrmDirectory in /customers, /people and the selec
 
 Keep existing scoped reads, saved filters, sorting, totals and page content. All six directory Link sites use explicit navigation: desktop names, person affiliations, numeric Site/Facility links, New, local directory tabs and phone record cards. Automatic viewport, hover and touch prefetch is disabled for these links. Hrefs, department context and shared leave-intent handling are unchanged. Shared-shell and Contacts view-tab behaviour remain separately owned.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The Customer 360 register is drawn only on the proposal page 554:2. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Support ordinary pointer and sequential Tab/Enter activation. Keep existing columns and scoped table content; numeric links open the same organisation as its name.

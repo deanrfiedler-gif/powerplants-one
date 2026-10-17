@@ -35,6 +35,12 @@ CM1–CM11 and the recommended answers to Q1–Q9 are adopted. Twenty affected r
 
 Adoption sets direction only. The application is unchanged until the build steps B0–B6 are delivered, each as its own reviewed change, starting with B0, the parts-proposal contract. How the quotation returns to the Sales representative remains a separate open gap.
 
+## Figma Components page consolidated and mapped — 17 October 2026
+
+Dean approved making the Figma Components page the single source of PPO design components ("Proceed with the plan and your recommended answers to D1–D6"). 212 main components moved there with their node IDs kept; five early parts were retired to the historical Shell page; CPQ parts stay on their own accepted page and proposal-only parts stay on their proposal pages. Hashes of 90 frames on eight accepted pages matched before and after, so no accepted design changed. The [decision record](decisions/figma-components-page.md) lists D1–D6 and what remains open.
+
+Each component register record now carries a `figma` mapping and each specification a "Figma components" section: 12 Mapped, 7 Partial, 4 Proposal only, 24 None. The register check rejects malformed mappings and any file link. A mapping is not visual alignment, review or acceptance; no review fingerprint was added.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.

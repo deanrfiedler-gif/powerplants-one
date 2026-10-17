@@ -52,6 +52,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Start here (0:1)",
+        "components": [],
+        "note": "Colour variables and text styles live on the Start here page; they are styles, not main components."
+      },
       "review": null
     },
     {
@@ -515,6 +521,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Controls",
+        "components": [
+          {
+            "node": "3:41",
+            "name": "Button"
+          }
+        ],
+        "note": "Primary and Secondary styles with Default and Focus states. Quiet, destructive, busy and link variants are not drawn."
+      },
       "review": null
     },
     {
@@ -584,6 +601,45 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Sales parts",
+        "components": [
+          {
+            "node": "588:6771",
+            "name": "Deals/List header"
+          },
+          {
+            "node": "551:948",
+            "name": "Deals/List row"
+          },
+          {
+            "node": "555:7166",
+            "name": "Deals/Phone list row"
+          },
+          {
+            "node": "74:13",
+            "name": "Grid / Header cell"
+          },
+          {
+            "node": "74:40",
+            "name": "Grid / Cell"
+          },
+          {
+            "node": "74:47",
+            "name": "Grid / Checkbox"
+          },
+          {
+            "node": "74:48",
+            "name": "Grid / Checkbox cell"
+          },
+          {
+            "node": "74:50",
+            "name": "Grid / Row actions cell"
+          }
+        ],
+        "note": "The Deals register is a proposal (Deals page 549:2); its list parts moved to Components because the accepted Deal record uses them. Sorting and column resizing are not drawn."
+      },
       "review": null
     },
     {
@@ -736,6 +792,37 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Grid",
+        "components": [
+          {
+            "node": "74:13",
+            "name": "Grid / Header cell"
+          },
+          {
+            "node": "74:40",
+            "name": "Grid / Cell"
+          },
+          {
+            "node": "74:47",
+            "name": "Grid / Checkbox"
+          },
+          {
+            "node": "74:48",
+            "name": "Grid / Checkbox cell"
+          },
+          {
+            "node": "74:50",
+            "name": "Grid / Row actions cell"
+          },
+          {
+            "node": "408:430",
+            "name": "Grid / Done cell (proposed)"
+          }
+        ],
+        "note": "Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections."
+      },
       "review": null
     },
     {
@@ -804,6 +891,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -886,6 +979,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Proposal only",
+        "location": "Deals (proposal) 549:2",
+        "components": [
+          {
+            "node": "551:947",
+            "name": "Deals/Card"
+          }
+        ],
+        "note": "Board card from the r37 reference; stays on the proposal page until the Deals design is accepted."
+      },
       "review": null
     },
     {
@@ -950,6 +1054,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -1078,6 +1188,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Gantt colours follow the Figma set (gantt-figma-colours.md)."
+      },
       "review": null
     },
     {
@@ -1199,6 +1315,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -1285,6 +1407,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -1697,6 +1825,25 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Job pack and Components › Record",
+        "components": [
+          {
+            "node": "287:3282",
+            "name": "Job pack / Form field"
+          },
+          {
+            "node": "287:3304",
+            "name": "Job pack / Select row"
+          },
+          {
+            "node": "224:12",
+            "name": "Record / Field"
+          }
+        ],
+        "note": "Job pack / Form field (Default, Edited, Error) and Select row are the drawn editable controls; Record / Field is the read-only label and value. Date, lookup and select controls are not drawn as components."
+      },
       "review": null
     },
     {
@@ -1784,6 +1931,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -2089,6 +2242,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Job pack",
+        "components": [
+          {
+            "node": "287:3282",
+            "name": "Job pack / Form field"
+          }
+        ],
+        "note": "Only the field-level Error state is drawn. No error summary component exists."
+      },
       "review": null
     },
     {
@@ -2257,6 +2421,21 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Record",
+        "components": [
+          {
+            "node": "312:16",
+            "name": "Record / View tab"
+          },
+          {
+            "node": "395:3916",
+            "name": "Wizard / View tabs"
+          }
+        ],
+        "note": "Wizard / View tabs (Estimating parts) composes Record / View tab for the ES-02 workspace views."
+      },
       "review": null
     },
     {
@@ -2354,6 +2533,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Intake rules (menu) 130:1212 is page-specific, not a shared menu."
+      },
       "review": null
     },
     {
@@ -2417,6 +2602,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Job pack",
+        "components": [
+          {
+            "node": "302:5359",
+            "name": "Job pack / Decision dialog"
+          }
+        ],
+        "note": "The only drawn dialog is the page-scoped Job pack decision dialog; no shared modal component."
+      },
       "review": null
     },
     {
@@ -2490,6 +2686,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -2911,6 +3113,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Record",
+        "components": [
+          {
+            "node": "251:2310",
+            "name": "Record / Banner"
+          }
+        ],
+        "note": "Record / Banner covers record-level state messages. Loading, empty and error states are not drawn as components."
+      },
       "review": null
     },
     {
@@ -3109,6 +3322,21 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Controls and Components › Record",
+        "components": [
+          {
+            "node": "3:13",
+            "name": "Tag"
+          },
+          {
+            "node": "251:2310",
+            "name": "Record / Banner"
+          }
+        ],
+        "note": "Tag carries status chips (Neutral, Success, Warning, Danger); Record / Banner carries record-level state."
+      },
       "review": null
     },
     {
@@ -3238,6 +3466,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -3731,6 +3965,89 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Shell and navigation",
+        "components": [
+          {
+            "node": "31:215",
+            "name": "Brand / Logo"
+          },
+          {
+            "node": "35:138",
+            "name": "Shell / Top bar"
+          },
+          {
+            "node": "84:197",
+            "name": "v2 / Rail"
+          },
+          {
+            "node": "73:29",
+            "name": "v2 / Rail item"
+          },
+          {
+            "node": "73:63",
+            "name": "v2 / Menu strip"
+          },
+          {
+            "node": "73:48",
+            "name": "v2 / Menu heading"
+          },
+          {
+            "node": "73:46",
+            "name": "v2 / Menu item"
+          },
+          {
+            "node": "73:54",
+            "name": "v2 / Menu edge"
+          },
+          {
+            "node": "79:51",
+            "name": "v2 / More panel"
+          },
+          {
+            "node": "190:20238",
+            "name": "Rail · Sales (proposal)"
+          },
+          {
+            "node": "184:18299",
+            "name": "Rail · Engineering (proposal)"
+          },
+          {
+            "node": "209:515",
+            "name": "Rail · Projects (proposal)"
+          },
+          {
+            "node": "198:3778",
+            "name": "Rail · Service (proposal)"
+          },
+          {
+            "node": "697:163173",
+            "name": "Rail · Supply chain (proposal)"
+          },
+          {
+            "node": "38:282",
+            "name": "Shell / Phone header"
+          },
+          {
+            "node": "38:342",
+            "name": "Shell / Quick add (phone)"
+          },
+          {
+            "node": "107:149",
+            "name": "v2 / Tab bar (phone)"
+          },
+          {
+            "node": "107:148",
+            "name": "v2 / Tab item"
+          },
+          {
+            "node": "38:314",
+            "name": "Shell / Tab"
+          }
+        ],
+        "note": "The proposed top bar with centred search (1046:259953) and breadcrumb (1037:103) stay on the Shell top bar amendment page until its lock-in replaces Shell / Top bar."
+      },
       "review": null
     },
     {
@@ -3768,6 +4085,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -3851,6 +4174,33 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Sales parts",
+        "components": [
+          {
+            "node": "692:2117",
+            "name": "Product grid header"
+          },
+          {
+            "node": "692:2116",
+            "name": "Product grid row"
+          },
+          {
+            "node": "696:163530",
+            "name": "Product list row (phone)"
+          },
+          {
+            "node": "829:3461",
+            "name": "Product thumbnail"
+          },
+          {
+            "node": "829:3490",
+            "name": "Product image (record)"
+          }
+        ],
+        "note": "Register, phone row and product image parts are drawn. Technical attributes, document applicability and revision comparison use the shared Record parts in page frames."
+      },
       "review": null
     },
     {
@@ -3941,6 +4291,45 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Estimating parts",
+        "components": [
+          {
+            "node": "385:168",
+            "name": "Wizard / Context header"
+          },
+          {
+            "node": "385:165",
+            "name": "Wizard / Working-copy bar"
+          },
+          {
+            "node": "395:3916",
+            "name": "Wizard / View tabs"
+          },
+          {
+            "node": "383:33",
+            "name": "Wizard / Step"
+          },
+          {
+            "node": "383:53",
+            "name": "Wizard / Family tile"
+          },
+          {
+            "node": "410:84472",
+            "name": "Wizard / Family card"
+          },
+          {
+            "node": "383:77",
+            "name": "Wizard / Finding link"
+          },
+          {
+            "node": "385:13",
+            "name": "Wizard / Summary panel"
+          }
+        ],
+        "note": "ES-02 wizard parts from the accepted Estimation Wizard page (383:2)."
+      },
       "review": null
     },
     {
@@ -3978,6 +4367,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -4053,6 +4448,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Job pack",
+        "components": [
+          {
+            "node": "302:5359",
+            "name": "Job pack / Decision dialog"
+          }
+        ],
+        "note": "Tone Default and Danger variants."
+      },
       "review": null
     },
     {
@@ -4138,6 +4544,65 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Job pack",
+        "components": [
+          {
+            "node": "275:2578",
+            "name": "Job pack / Section head"
+          },
+          {
+            "node": "275:2657",
+            "name": "Job pack / Stage heading"
+          },
+          {
+            "node": "275:2595",
+            "name": "Job pack / Fact"
+          },
+          {
+            "node": "275:2597",
+            "name": "Job pack / Note"
+          },
+          {
+            "node": "275:2601",
+            "name": "Job pack / Callout"
+          },
+          {
+            "node": "275:2660",
+            "name": "Job pack / Disclosure"
+          },
+          {
+            "node": "275:2655",
+            "name": "Job pack / Criterion row"
+          },
+          {
+            "node": "275:2735",
+            "name": "Job pack / List item"
+          },
+          {
+            "node": "275:2706",
+            "name": "Job pack / Record row"
+          },
+          {
+            "node": "275:2708",
+            "name": "Job pack / Document row"
+          },
+          {
+            "node": "275:2716",
+            "name": "Job pack / History row"
+          },
+          {
+            "node": "287:3282",
+            "name": "Job pack / Form field"
+          },
+          {
+            "node": "287:3304",
+            "name": "Job pack / Select row"
+          }
+        ],
+        "note": "Saved-section parts from the accepted Job pack page (272:2)."
+      },
       "review": null
     },
     {
@@ -4236,6 +4701,29 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Job pack and Components › Record",
+        "components": [
+          {
+            "node": "301:4783",
+            "name": "Job pack / Status strip"
+          },
+          {
+            "node": "275:2698",
+            "name": "Job pack / Crew row"
+          },
+          {
+            "node": "239:1800",
+            "name": "Record / Readiness bar"
+          },
+          {
+            "node": "239:1799",
+            "name": "Record / Check item"
+          }
+        ],
+        "note": "Job pack / Status strip is the collapsed status panel; the open panel is composed in page frames from these parts."
+      },
       "review": null
     },
     {
@@ -4335,6 +4823,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Job pack list row (phone) 275:42685 is the register row, not the entry handover."
+      },
       "review": null
     },
     {
@@ -4449,6 +4943,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Field",
+        "components": [
+          {
+            "node": "848:111",
+            "name": "My jobs / Live timer banner"
+          }
+        ],
+        "note": "Proposed on My jobs · FI-01 (845:44); the banner opens the running visit."
+      },
       "review": null
     },
     {
@@ -4590,6 +5095,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -4692,6 +5203,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -4829,6 +5346,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -4908,6 +5431,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -4993,6 +5522,29 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Estimating parts",
+        "components": [
+          {
+            "node": "75:679",
+            "name": "Review grid header"
+          },
+          {
+            "node": "75:678",
+            "name": "Review grid row"
+          },
+          {
+            "node": "104:1786",
+            "name": "Review list row (phone)"
+          },
+          {
+            "node": "104:1654",
+            "name": "Review snapshot (phone)"
+          }
+        ],
+        "note": "Register parts from Reviews & approvals (56:2). The review and correction form itself has no component."
+      },
       "review": null
     },
     {
@@ -5079,6 +5631,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Quotation register parts (123:482, 123:493) belong to the register, not this workflow."
+      },
       "review": null
     },
     {
@@ -5174,6 +5732,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -5514,6 +6078,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -5611,6 +6181,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -5708,6 +6284,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+      },
       "review": null
     },
     {
@@ -5789,6 +6371,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Visit / Photo tile 848:102 is the technician capture tile, not the submitted-report inspection."
+      },
       "review": null
     },
     {
@@ -5897,6 +6485,12 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "None",
+        "location": "Components",
+        "components": [],
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The Customer 360 register is drawn only on the proposal page 554:2."
+      },
       "review": null
     },
     {
@@ -5968,6 +6562,21 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Proposal only",
+        "location": "ES-08 · Screen Configurator Workbench 406:2",
+        "components": [
+          {
+            "node": "408:83278",
+            "name": "Drawing / Live section · Gable, 2 of 6 spans"
+          },
+          {
+            "node": "410:83942",
+            "name": "Drawing / 02 Cross section · Gable"
+          }
+        ],
+        "note": "Imported from the application SVG; stays on the ES-08 proposal page until that design is accepted."
+      },
       "review": null
     },
     {
@@ -6040,6 +6649,57 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Components › Estimating parts",
+        "components": [
+          {
+            "node": "408:83674",
+            "name": "Fertigation / Context strip"
+          },
+          {
+            "node": "408:83690",
+            "name": "Fertigation / Section menu"
+          },
+          {
+            "node": "408:298",
+            "name": "Fertigation / Section item"
+          },
+          {
+            "node": "408:323",
+            "name": "Fertigation / Section head"
+          },
+          {
+            "node": "408:310",
+            "name": "Fertigation / Metric tile"
+          },
+          {
+            "node": "408:11",
+            "name": "Fertigation / Token"
+          },
+          {
+            "node": "408:30",
+            "name": "Fertigation / Severity badge"
+          },
+          {
+            "node": "408:329",
+            "name": "Fertigation / Next action row"
+          },
+          {
+            "node": "408:83651",
+            "name": "Fertigation / Scope readiness"
+          },
+          {
+            "node": "408:83328",
+            "name": "Fertigation / Headroom row"
+          },
+          {
+            "node": "408:83348",
+            "name": "Fertigation / Concept node"
+          }
+        ],
+        "note": "Parts from the accepted ES-02 Priva Fertigation Workbench page (408:4)."
+      },
       "review": null
     },
     {
@@ -6128,6 +6788,49 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Proposal only",
+        "location": "ES-08 · Screen Configurator Workbench 406:2",
+        "components": [
+          {
+            "node": "415:4566",
+            "name": "Workbench / Context strip"
+          },
+          {
+            "node": "413:93834",
+            "name": "Workbench / Context fact"
+          },
+          {
+            "node": "413:93796",
+            "name": "Workbench / Segment"
+          },
+          {
+            "node": "413:93832",
+            "name": "Workbench / Field"
+          },
+          {
+            "node": "415:4693",
+            "name": "Workbench / Save bar"
+          },
+          {
+            "node": "417:92945",
+            "name": "Workbench / Sheet header"
+          },
+          {
+            "node": "417:92959",
+            "name": "Workbench / Field inspector"
+          },
+          {
+            "node": "419:2027",
+            "name": "Workbench / Working panel"
+          },
+          {
+            "node": "417:93096",
+            "name": "Workbench / Section stepper (phone)"
+          }
+        ],
+        "note": "Twenty-seven ES-08 parts stay on the proposal page until the design is accepted; the main ones are listed."
+      },
       "review": null
     },
     {
@@ -6236,6 +6939,105 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Mapped",
+        "location": "CPQ · 2 Foundations & components 464:3",
+        "components": [
+          {
+            "node": "466:56",
+            "name": "CPQ / State"
+          },
+          {
+            "node": "466:88",
+            "name": "CPQ / Fact token"
+          },
+          {
+            "node": "466:230",
+            "name": "CPQ / Control"
+          },
+          {
+            "node": "466:240",
+            "name": "CPQ / KV row"
+          },
+          {
+            "node": "467:207",
+            "name": "CPQ / Condition row"
+          },
+          {
+            "node": "467:272",
+            "name": "CPQ / Group header"
+          },
+          {
+            "node": "467:314",
+            "name": "CPQ / Option tile"
+          },
+          {
+            "node": "467:351",
+            "name": "CPQ / Outline item"
+          },
+          {
+            "node": "468:97",
+            "name": "CPQ / BOM header"
+          },
+          {
+            "node": "468:293",
+            "name": "CPQ / BOM row"
+          },
+          {
+            "node": "468:301",
+            "name": "CPQ / BOM group row"
+          },
+          {
+            "node": "468:316",
+            "name": "CPQ / Compare header"
+          },
+          {
+            "node": "468:437",
+            "name": "CPQ / Compare row"
+          },
+          {
+            "node": "469:156",
+            "name": "CPQ / Waterfall row"
+          },
+          {
+            "node": "469:234",
+            "name": "CPQ / Test result row"
+          },
+          {
+            "node": "469:334",
+            "name": "CPQ / Change row"
+          },
+          {
+            "node": "469:414",
+            "name": "CPQ / Quantity basis"
+          },
+          {
+            "node": "469:471",
+            "name": "CPQ / Action card header"
+          },
+          {
+            "node": "471:133",
+            "name": "CPQ / Button (unavailable)"
+          },
+          {
+            "node": "471:224",
+            "name": "CPQ / Action bar"
+          },
+          {
+            "node": "471:420",
+            "name": "CPQ / Configuration summary"
+          },
+          {
+            "node": "473:1055",
+            "name": "CPQ / Why this line panel"
+          },
+          {
+            "node": "475:120225",
+            "name": "CPQ / Context header"
+          }
+        ],
+        "note": "The 23 CPQ components stay on their own accepted component page, which the CPQ decision records cite."
+      },
       "review": null
     },
     {
@@ -6292,6 +7094,17 @@
           "owner": "Dean Fiedler"
         }
       ],
+      "figma": {
+        "status": "Proposal only",
+        "location": "Customer 360 (proposal) 554:2",
+        "components": [
+          {
+            "node": "555:161360",
+            "name": "CS-01 / Summary tile (proposal)"
+          }
+        ],
+        "note": "Stays on the proposal page until Customer 360 is accepted."
+      },
       "review": null
     }
   ]

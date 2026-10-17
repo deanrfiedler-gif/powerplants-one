@@ -4,6 +4,12 @@
 
 Owner: Dean Fiedler. Stable ES-07 / `route:/estimating/quotes/[id]/conversion`. Native `QuotationConversion`; r20 Document & evidence workspace with guided decisions. [Retained r01 HTML](../../../reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html) and its companion report remain unchanged. Accepted native desktop/mobile images are unavailable. Execution captures and actual validation are recorded separately in the [evidence ledger](../../../testing/evidence/quotation-conversion/README.md).
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Use the PPO shell and one page scroll owner at 1440/1024 px. Exact issue/output/response/preparation and Not configured policy gaps precede original recovery. Four numbered panels separate receiving, resolution, reviewed plan and execution. Show every included Product quantity/unit and source UUID beside its explicit mapping, then intended company/entity/customer/site. Keep all accepted commercial lines available in a disclosure. Long identities and fingerprints wrap.

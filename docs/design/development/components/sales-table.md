@@ -12,6 +12,21 @@ Design: [ppo-deal-pipeline_r38.html](../../../reference/ui/deals/ppo-deal-pipeli
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Partial · **Location:** Components › Sales parts, in the private "PPO - Design" Figma file
+
+- Deals/List header `588:6771`
+- Deals/List row `551:948`
+- Deals/Phone list row `555:7166`
+- Grid / Header cell `74:13`
+- Grid / Cell `74:40`
+- Grid / Checkbox `74:47`
+- Grid / Checkbox cell `74:48`
+- Grid / Row actions cell `74:50`
+
+The Deals register is a proposal (Deals page 549:2); its list parts moved to Components because the accepted Deal record uses them. Sorting and column resizing are not drawn. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Keep record identity visible and distinguish unknown amounts from zero. Filtering and sorting here are local fixture adapters.

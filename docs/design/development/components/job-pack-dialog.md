@@ -8,6 +8,14 @@ Owner: Dean Fiedler. Catalogue key: `job-pack-dialog`. Review: application verif
 
 `PackDialog` in `src/documents/components/client/job-pack-ui.tsx` serves Job Pack detail and first preparation. It retains the [r03 page reference](../../../reference/ui/job-pack/powerplants-one-job-pack-r03.html). It is a scoped existing exception, separate from the shared WorklistPanel. The catalogue lists it as reference-only because no isolated renderer is bound, while the real application uses it.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Job pack, in the private "PPO - Design" Figma file
+
+- Job pack / Decision dialog `302:5359`
+
+Tone Default and Danger variants. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Retain the r03 heading, subtitle, body and wrapping action row.

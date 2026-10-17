@@ -20,6 +20,19 @@ The application implementation and exact consumer bindings are maintained in `..
 - `RegisterEmpty` (`title` and a message) and `RegisterFooter` (count, selection, `ppo-register-spacer`, paging).
 - `RegisterChip`: `tone` (`neutral`, `attention`, `positive`, `negative`) and an optional `icon` from the host's icon set. Show a check only for a completed positive state and a warning only where someone must act.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Grid, in the private "PPO - Design" Figma file
+
+- Grid / Header cell `74:13`
+- Grid / Cell `74:40`
+- Grid / Checkbox `74:47`
+- Grid / Checkbox cell `74:48`
+- Grid / Row actions cell `74:50`
+- Grid / Done cell (proposed) `408:430`
+
+Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.

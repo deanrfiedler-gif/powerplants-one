@@ -8,6 +8,17 @@ Catalogue key: `estimate-review`. Host example; no isolated fixture. Consumer: `
 
 Submit the exact saved estimate, independently review completeness/source prices/technical facts, return findings and review attributable correction. Preserve review history and applicability separately from commercial approval. r20 page type: Review / comparison with Record detail and evidence forms. Reference: [ES-04 r01](../../../reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html). Exact native desktop/mobile reference images are unavailable.
 
+## Figma components
+
+**Status:** Partial · **Location:** Components › Estimating parts, in the private "PPO - Design" Figma file
+
+- Review grid header `75:679`
+- Review grid row `75:678`
+- Review list row (phone) `104:1786`
+- Review snapshot (phone) `104:1654`
+
+Register parts from Reviews & approvals (56:2). The review and correction form itself has no component. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 At 1440 × 960 and 1024 × 768 retain the PPO shell, one content scroll owner, record title, exact saved-version link, current source panel and review sequence. Three cards show the separate review kinds and original decision provenance. Expand submitted scope/cost evidence without losing entered text. Rationale, correction responses or independent-decision form precede immutable history. Keep unknown outcomes ahead of new commands. Long IDs wrap; no horizontal page overflow.

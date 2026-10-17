@@ -4,6 +4,36 @@
 
 Stable component `cpq-workbench`; ES-02/ES-03. Owner Dean Fiedler; Host example, not an isolated gallery fixture. Design reference: [implementation decision](../../../decisions/cpq-figma-ui.md). Private Figma frames and page-specific geometry are recorded in the four route contracts.
 
+## Figma components
+
+**Status:** Mapped · **Location:** CPQ · 2 Foundations & components 464:3, in the private "PPO - Design" Figma file
+
+- CPQ / State `466:56`
+- CPQ / Fact token `466:88`
+- CPQ / Control `466:230`
+- CPQ / KV row `466:240`
+- CPQ / Condition row `467:207`
+- CPQ / Group header `467:272`
+- CPQ / Option tile `467:314`
+- CPQ / Outline item `467:351`
+- CPQ / BOM header `468:97`
+- CPQ / BOM row `468:293`
+- CPQ / BOM group row `468:301`
+- CPQ / Compare header `468:316`
+- CPQ / Compare row `468:437`
+- CPQ / Waterfall row `469:156`
+- CPQ / Test result row `469:234`
+- CPQ / Change row `469:334`
+- CPQ / Quantity basis `469:414`
+- CPQ / Action card header `469:471`
+- CPQ / Button (unavailable) `471:133`
+- CPQ / Action bar `471:224`
+- CPQ / Configuration summary `471:420`
+- CPQ / Why this line panel `473:1055`
+- CPQ / Context header `475:120225`
+
+The 23 CPQ components stay on their own accepted component page, which the CPQ decision records cite. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Typed conditions follow CPQ / Condition row 467:207 and CPQ / Group header 467:272 ([alignment decision](../../../decisions/cpq-rule-editor-design-alignment.md)). Each group is a 2 px rule with a joined ALL / ANY / NOT control, inline + Condition / + Group and a group menu. Each row has a drag handle, a 220 px field with its type hint, a 160 px type-specific operator, a value with its unit and inline Move up / Move down / Remove. “When conditions are true / Always applies” is one joined control: the rule editor shows it in its section head, and other condition editors carry their own. Changing to a field of the same type keeps the operator. An incompatible type clears operator and value and says what was cleared. Incomplete rows show warning borders and a message, and the rule editor summarises every incomplete item with a route to its control. Move up / Move down and Alt + ↑ / ↓ reorder without dragging; dragging is optional. Whole-number facts reject fractions; unknowns stay blank and optional Not applicable stays explicit. Formulas accept only the bounded interpreter language. Why presents calculated, adjusted and effective values, selected contributions, exact price/FX provenance and reasons. Shared costs have their own group.

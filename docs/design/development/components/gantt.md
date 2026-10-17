@@ -12,6 +12,12 @@ Design: [ppo-projects-gantt-content-r10.html](../../../reference/ui/projects/ppo
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Gantt colours follow the Figma set (gantt-figma-colours.md). The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Use Week/Month/Fit, owner and issue filters, group collapse, display options and list mode. The fixed reference date is 23 September 2026.

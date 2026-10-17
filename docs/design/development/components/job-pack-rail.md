@@ -2,6 +2,17 @@
 
 Owner: Dean Fiedler. SV-05 / SC-06. Accepted Job Pack r03 plus adopted D9/D10; application acceptance separate.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Job pack and Components › Record, in the private "PPO - Design" Figma file
+
+- Job pack / Status strip `301:4783`
+- Job pack / Crew row `275:2698`
+- Record / Readiness bar `239:1800`
+- Record / Check item `239:1799`
+
+Job pack / Status strip is the collapsed status panel; the open panel is composed in page frames from these parts. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Reuse ReadinessCard, CrewCard and OutputCard in the page rail. Server outcomes are grouped in fixed Authorisation, Booking, Dispatch, Completion order, then other stages. Keep all action-required rows outside disclosures. Satisfied groups remain one keyboard activation away. Retain assessment reason, actor, date and valid-until value. The dispatch block remains the server result.

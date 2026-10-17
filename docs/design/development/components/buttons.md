@@ -18,6 +18,14 @@ Design: [powerplants-one-theme-style-board-r22.html](../../../reference/ui/theme
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Controls, in the private "PPO - Design" Figma file
+
+- Button `3:41`
+
+Primary and Secondary styles with Default and Focus states. Quiet, destructive, busy and link variants are not drawn. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Use one primary action per task region and a visible action label.

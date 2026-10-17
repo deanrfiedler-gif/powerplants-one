@@ -10,6 +10,18 @@ Runnable exports `TechnicalContent`, `ProductContext` and `Comparison` in `src/p
 
 Retained references: [theme r22 Products](../../../reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html#products), [Products r04](../../../reference/ui/products/PPO-Products-Preview-r04.html). The native composition uses current shell tokens and shared controls. No issued source is rewritten.
 
+## Figma components
+
+**Status:** Partial · **Location:** Components › Sales parts, in the private "PPO - Design" Figma file
+
+- Product grid header `692:2117`
+- Product grid row `692:2116`
+- Product list row (phone) `696:163530`
+- Product thumbnail `829:3461`
+- Product image (record) `829:3490`
+
+Register, phone row and product image parts are drawn. Technical attributes, document applicability and revision comparison use the shared Record parts in page frames. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Desktop context separates catalogue revision, explicit technical revision and source as-at date. Attributes use labelled cards with units, evidence state and clarification owner; controlled documents expose type, revision and applicability. Comparisons show exact Before/After content.

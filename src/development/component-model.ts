@@ -34,6 +34,12 @@ export const exampleIds = [
   "mobile-form",
 ] as const;
 export type ExampleId = (typeof exampleIds)[number];
+export const figmaMappingStates = [
+  "Mapped",
+  "Partial",
+  "Proposal only",
+  "None",
+] as const;
 export type ComponentRecord = {
   id: string;
   title: string;
@@ -61,6 +67,14 @@ export type ComponentRecord = {
     priority: "High" | "Medium" | "Low";
     owner: string;
   }[];
+  // Main components in the "PPO - Design" Figma file, cited by node ID only;
+  // the file link stays out of the public repository (ADR-0053).
+  figma: {
+    status: (typeof figmaMappingStates)[number];
+    location: string;
+    components: { node: string; name: string }[];
+    note: string;
+  };
   review: {
     fingerprint: string;
     reviewer: string;

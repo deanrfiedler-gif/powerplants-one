@@ -16,6 +16,14 @@ A fresh own report with a submitted revision, or accepted own attendance, immedi
 
 The outgoing Service review handover uses the shared desktop Service operations rail or the phone More menu. It retains the current actor and server-side report permissions.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Field, in the private "PPO - Design" Figma file
+
+- My jobs / Live timer banner `848:111`
+
+Proposed on My jobs · FI-01 (845:44); the banner opens the running visit. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 At 1440/1024/820 px use one document scroll and r05 header/clock/readouts/track/lists. The local proof includes actual 200% browser zoom rather than treating a smaller viewport as zoom.

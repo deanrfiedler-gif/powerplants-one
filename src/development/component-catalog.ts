@@ -7,6 +7,7 @@ import {
   componentCategories,
   componentReviewState,
   exampleIds,
+  figmaMappingStates,
   type ComponentManifest,
   type ComponentLibrary,
 } from "./component-model";
@@ -189,6 +190,19 @@ export async function buildComponentLibrary(
         )
       )
         fail("Alignment differences require owner, observation and action.");
+      const figma = entry.figma;
+      if (
+        !figma ||
+        !figmaMappingStates.includes(figma.status) ||
+        !figma.location ||
+        !figma.note ||
+        (figma.status === "None") !== !figma.components.length ||
+        figma.components.some((c) => !/^\d+:\d+$/.test(c.node) || !c.name) ||
+        /https?:|figma\.com/i.test(JSON.stringify(figma))
+      )
+        fail(
+          "Figma mapping requires a status, location, note and node IDs without file links.",
+        );
       if (
         entry.review &&
         (!entry.review.reviewer ||

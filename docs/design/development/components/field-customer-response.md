@@ -4,6 +4,12 @@ Owner: Dean Fiedler. Host example; visual review pending. Stable component field
 
 Reuse ExactReportPresentation, shared Button, ReadState, ErrorNotice, Stamp and useRecoverableCommand. Exact HTML is rendered with scripts/forms/navigation sandboxed and measured in the same-origin frame without changing its bytes. The frame expands into the shell's single content scroll; long hashes wrap. Response fields use explicit labels and no default acceptance. New response/recovery actions use shared Button variants; legacy review/issue controls remain a scoped exception. No global token changes.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 At 1440/1024 desktop widths, present the original attendance/scope, exact content and separate response subject before saving. On presentation open focus the heading; Return returns to its opener. Failed validation retains input and focuses the error. Pending original operation prevents replacement capture; actual server receipt determines saved state. Guidance preserves unsaved input.
