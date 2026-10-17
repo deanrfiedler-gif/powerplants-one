@@ -19,12 +19,12 @@ import {
   sessionLockEvent,
   sessionReadyEvent,
 } from "./session-signal";
+import { railCookieValue } from "../shell/rail";
 
 const preferenceEvent = "ppo-shell-workspace";
 const visitPreferences = new Map<string, WorkspaceId>();
 const railPreferences = new Map<string, boolean>();
-function railSnapshot(key: string | null) {
-  if (!key) return false;
+function railSnapshot(key: string) {
   if (railPreferences.has(key)) return railPreferences.get(key)!;
   try { const value = JSON.parse(localStorage.getItem(`${key}:rail`) ?? "null"); return value?.schema_version === 1 ? value.expanded === true : true; }
   catch { return true; }
@@ -69,10 +69,12 @@ export function ShellProvider({
   children,
   hosted = false,
   development = false,
+  renderedRailExpanded = true,
 }: {
   children: ReactNode;
   hosted?: boolean;
   development?: boolean;
+  renderedRailExpanded?: boolean;
 }) {
   const [context, setContext] = useState<ShellContext | null>(null),
     [error, setError] = useState(""),
@@ -84,7 +86,16 @@ export function ShellProvider({
     () => snapshot(userKey),
     () => "sales" as const,
   );
-  const railExpanded = useSyncExternalStore(subscribe, () => railSnapshot(userKey), () => false);
+  // Until the shell context names the identity (first load, identity lock), keep the
+  // width already shown: the server rendered it from the cookie written below.
+  const shownRail = useRef(renderedRailExpanded);
+  const railExpanded = useSyncExternalStore(subscribe, () => userKey ? railSnapshot(userKey) : shownRail.current, () => renderedRailExpanded);
+  // The next document the server renders starts at the width this identity now shows.
+  useEffect(() => {
+    if (!userKey) return;
+    shownRail.current = railExpanded;
+    document.cookie = railCookieValue(railExpanded, location.protocol === "https:");
+  }, [userKey, railExpanded]);
   useEffect(() => {
     let live = true,
       request: AbortController | undefined;

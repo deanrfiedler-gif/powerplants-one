@@ -282,7 +282,7 @@ Dean accepted this proposal as one of the six items in the UX benchmark's Decisi
 
 ## 10. Build — first increment (17 October 2026)
 
-The first build implements P1 to P3 in its own pull request (branch `feat/field-readiness-gate`), following section 5 and `AGENTS.md`. The Figma lock-in is recorded as amendment A06 in the [Job pack design](job-pack-figma-design.md) and A07 in the [My jobs design](my-jobs-figma-design.md), with icon-free captures in [field readiness gate r01](../reference/ui/service/field-readiness-gate-r01/README.md). Dean's named Figma version "Field readiness gate — accepted" waits for his explicit yes. Delivery, owner visual review and business acceptance stay separate.
+The first build implements P1 to P3 in its own pull request (branch `feat/field-readiness-gate`), following section 5 and `AGENTS.md`. The Figma lock-in is recorded as amendment A06 in the [Job pack design](job-pack-figma-design.md) and A07 in the [My jobs design](my-jobs-figma-design.md), with icon-free captures in [field readiness gate r01](../reference/ui/service/field-readiness-gate-r01/README.md). Dean saved the named Figma version "Field readiness gate — accepted" and supplied its link on 17 October 2026 (section 4). Delivery, owner visual review and business acceptance stay separate.
 
 ### Built
 

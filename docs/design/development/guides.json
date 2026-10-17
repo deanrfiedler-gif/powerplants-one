@@ -36344,7 +36344,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Typed entries are protected until saved. Following the navigation rail or phone bar, a header link or browser Back asks first; choose Cancel to keep editing. A saved record opens without asking."
+          ],
           "steps": [],
           "rows": [
             [
@@ -46375,7 +46377,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Typed entries are protected until saved. Following the navigation rail or phone bar, a header link or browser Back asks first; choose Cancel to keep editing. A saved record opens without asking."
+          ],
           "steps": [],
           "rows": [
             [
@@ -47232,7 +47236,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Typed entries are protected until saved. Following the navigation rail or phone bar, a header link or browser Back asks first; choose Cancel to keep editing. A saved record opens without asking."
+          ],
           "steps": [],
           "rows": [
             [
@@ -49930,7 +49936,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact.",
+            "Typed entries are protected until saved. Following the navigation rail or phone bar, a header link or browser Back asks first; choose Cancel to keep editing. A saved record opens without asking."
           ],
           "steps": [],
           "rows": [
