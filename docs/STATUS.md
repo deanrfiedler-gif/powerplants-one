@@ -2,7 +2,7 @@
 
 ## Projects register compared with its design — 17 October 2026
 
-The built `/projects` page was captured at 1440 × 900 and 390 × 844 against a disposable synthetic database holding the design's projects, then compared with the five accepted captures under ADR-0053 rule 7. The [comparison record](testing/evidence/projects-register/design-comparison.md) finds the layout, columns, views, toolbar, selection panel, phone rows and tab bar as drawn. It lists 17 differences: seven proposed fixes, five adaptations already recorded and five questions for Dean. The next-milestone, overdue and At risk columns follow the design rules; two questions remain (an At risk milestone, overdue on a closed project). Nothing is fixed yet, no application code changed, and the visual status stays Needs review.
+The built `/projects` page was captured at 1440 × 900 and 390 × 844 against a disposable synthetic database holding the design's projects, then compared with the five accepted captures under ADR-0053 rule 7. The [comparison record](testing/evidence/projects-register/design-comparison.md) finds the layout, columns, views, toolbar, selection panel, phone rows and tab bar as drawn. It lists 18 differences: eight proposed fixes (including 24-hour times under the adopted S6 rule), five adaptations already recorded and five questions for Dean. The next-milestone, overdue and At risk columns follow the design rules; two questions remain (an At risk milestone, overdue on a closed project). Nothing is fixed yet, no application code changed, and the visual status stays Needs review.
 
 ## Projects register design locked in — 17 October 2026
 
