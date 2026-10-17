@@ -773,7 +773,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   await migrate();
   await seed();
   assert.deepEqual(
-    await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
     grants,
   );
   assert.deepEqual(await readDiscoveryWorkspace(p, g.id), before);
@@ -786,7 +786,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
   assert.deepEqual(
     after.filter((r) => r.version > 85).map((r) => r.version),
-    [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+    [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
   );
   await migrate();
   await seed();
@@ -880,9 +880,11 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   assert.deepEqual(await rows("SELECT DISTINCT package_manifest FROM ppo.cpq_revisions"), [{ package_manifest: null }]);
   for (let i = 0; i < tables.length; i++) {
     const original = tables[i] === "cpq_revisions" ? "to_jsonb(t)-'package_manifest'" : "to_jsonb(t)";
+    // Seed 108 adds conversation duties beside the earlier grants; everything else must be unchanged.
+    const scope = tables[i] === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%'" : "";
     assert.deepEqual(
       await rows(
-        `SELECT ${original} AS row FROM ppo.${tables[i]} t ORDER BY (${original})::text`,
+        `SELECT ${original} AS row FROM ppo.${tables[i]} t${scope} ORDER BY (${original})::text`,
       ),
       snapshots[i],
     );
@@ -896,7 +898,7 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   );
   assert.deepEqual(
     current.filter((r) => r.version > 86).map((r) => r.version),
-    [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+    [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
   );
   await migrate();
   await seed();

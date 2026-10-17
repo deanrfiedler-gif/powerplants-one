@@ -329,7 +329,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // bodies. Seed 107 adds readiness policy SYN-PPO-P04 v2 only: no grant, user or identity.
   // Existing scopes and appointments keep v1, so no hosted booking changes its dispatch rules;
   // only scope revisions saved after the upgrade bind v2. Existing runtime privileges apply.
-  if (latestMigrationVersion !== 107) throw Error("Review the existing-demo upgrade for this release.");
+  // 0108 (Conversations T1b) adds empty thread, message, mention, participant and ask tables, three identity
+  // types, two capabilities and one outbox kind, and replaces the notice source CHECKs with a per-source guard.
+  // No original row, hash or receipt is rewritten. Seed 108 copies live crm.opportunity.read/project.read grants
+  // of PPO-LocalSynthetic users only as conversation.read/post, so no hosted tester (PPO-EntraDemo) gains either
+  // capability and exposure there stays a separate decision. Existing runtime privileges cover the new objects.
+  if (latestMigrationVersion !== 108) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

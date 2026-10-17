@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Conversations T1b built, no UI — 17 October 2026
+
+T1b of [PPO-CONV-T1-SCOPE](https://github.com/deanrfiedler-gif/powerplants-one/pull/567) is built on branch `feat/conversations-t1b-threads`: migration 0108 and seed 108 add people-only threads on deals and projects, immutable messages, participants with last-read, person and record mentions, tracked asks with the N7 steps, and a `Mentions` notice source. `conversation.read` and `conversation.post` (proposed names, now 159 capability keys) follow the anchor record's own read capability and go to local synthetic profiles that already read deals or projects; hosted testers receive neither. See the [contract](contracts/conversations-t1b.md), which lists five assumptions awaiting Dean's confirmation. There is no route, page, top-bar icon, Carl or AI: those are T1c and later. Verification is database and unit proof on a disposable synthetic database; business acceptance and production readiness are not claimed.
+
 ## D-025 customer email decided — 17 October 2026
 
 Dean accepted the [D-025 customer communications decision paper](decisions/customer-communications-d025.md): "Proceed with your recommendations for C1 and C3 to C8." C2 stands as he changed it on 16 October, so a named person sends dispatch, delay and visit messages.

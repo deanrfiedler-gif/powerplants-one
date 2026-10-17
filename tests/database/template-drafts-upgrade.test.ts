@@ -35,8 +35,8 @@ test("R2 populated 0090 upgrade preserves exact output reservations, authority a
     Promise.all(
       tables.map((t) =>
         rows(
-          // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
+          // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
+          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
         ),
       ),
     );
@@ -54,7 +54,7 @@ test("R2 populated 0090 upgrade preserves exact output reservations, authority a
   );
   assert.deepEqual(
     afterLedger.filter((r) => r.version > 90).map((r) => r.version),
-    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
   );
   for (const table of [
     "template_proposals",
