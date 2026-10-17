@@ -136,7 +136,8 @@ Made by this session on 16 October 2026, after the named version was saved:
 ## 7. Verification
 
 - Unit: `tests/unit/shell-breadcrumb.test.ts` covers R1–R6 and R8 on the app's routes, including the owner without access and a signed-out view.
-- Browser and component suites that assert breadcrumb text or header geometry were updated to the new rules; the PR description lists what was run locally and what is left to CI.
+- Running app, 17 October 2026 (this branch merged with `main` at `271a386`, local dev server, disposable PostgreSQL, coordinator identity): fourteen pages measured at 1440, 1280, 1024 and 800 px with both rail widths. The search centre is 0 px from the top bar's centre at 1440 and 1280 px with either rail and at 1024 px with the compact rail; at 1024 px with the labelled rail it is 38 px left and at 800 px 74–78 px left, where the end zone's controls need more than half the bar. At each width the offset is the same on every page, nothing overflows, and Quick add sits 12 px from the search. Breadcrumbs matched R1–R5 on every page. With the two-company "systems" identity, choosing SYN-A put the dot on the avatar and "Working company: SYN-A · …" in its tooltip, with the search still at 0 px.
+- `tests/helpers/shell-header-geometry.ts` now asserts the R9 centre at 1280 px and wider, so the ES-02 and ES-08 source comparisons check it at 1920, 1440 and 1280 px with both rails. Browser and component suites that assert breadcrumb text or header geometry were updated to the new rules; the PR description lists what was run locally and what is left to CI.
 - This record implies no owner visual review of the application and no UI baseline. A Figma design never becomes a production claim on its own.
 
 ## 8. Boundaries
