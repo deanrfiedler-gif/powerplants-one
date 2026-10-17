@@ -775,7 +775,7 @@ test("DK03-C07 populated 0090 upgrade retains all originals and adds only empty 
     after,
   );
   assert.deepEqual(
-    await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
     grants,
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);

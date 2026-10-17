@@ -1,4 +1,4 @@
-import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import { productsSeedGrants, maintenanceSeedGrants, estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
@@ -180,7 +180,7 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
   const grantIds = new Set(beforeRows.permission_grants.map((r: { id: string }) => r.id));
   assert.deepEqual(upgraded.permission_grants.filter((r: { id: string }) => grantIds.has(r.id)), beforeRows.permission_grants);
   const shape = (rows: Record<string, unknown>[]) => rows.map(({ id: _id, ...r }) => { void _id; return canonical(r); }).sort();
-  assert.deepEqual(shape(upgraded.permission_grants.filter((r: { id: string }) => !grantIds.has(r.id))), shape([...accessReviewSeedGrants(beforeRows.permission_grants), ...accessTeamSeedGrants(beforeRows.permission_grants), ...accessApplicationSeedGrants(beforeRows.permission_grants), ...accessRequestSeedGrants(beforeRows.permission_grants),...accessInspectionSeedGrants(beforeRows.permission_grants),...maintenanceSeedGrants(beforeRows.permission_grants),...productsSeedGrants(beforeRows.permission_grants),...schedulingPolicySeedGrants(beforeRows.permission_grants),...incidentSeedGrants(beforeRows.permission_grants),...estimateReviewSeedGrants(beforeRows.permission_grants),...quotationReleaseSeedGrants(beforeRows.permission_grants)]));
+  assert.deepEqual(shape(upgraded.permission_grants.filter((r: { id: string }) => !grantIds.has(r.id))), shape(((others) => [...others, ...conversationSeedGrants([...beforeRows.permission_grants, ...others])])([...accessReviewSeedGrants(beforeRows.permission_grants), ...accessTeamSeedGrants(beforeRows.permission_grants), ...accessApplicationSeedGrants(beforeRows.permission_grants), ...accessRequestSeedGrants(beforeRows.permission_grants),...accessInspectionSeedGrants(beforeRows.permission_grants),...maintenanceSeedGrants(beforeRows.permission_grants),...productsSeedGrants(beforeRows.permission_grants),...schedulingPolicySeedGrants(beforeRows.permission_grants),...incidentSeedGrants(beforeRows.permission_grants),...estimateReviewSeedGrants(beforeRows.permission_grants),...quotationReleaseSeedGrants(beforeRows.permission_grants)])));
   const ledger = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -199,7 +199,7 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")
   ).rows;
   assert.deepEqual(receipts.filter(r=>r.version<=50), oldReceipts);
-  assert.deepEqual(receipts.filter(r=>r.version>50).map(r=>r.version), [51,52,53,54,55,56,58,59,78,79,80,83,84,107]);
+  assert.deepEqual(receipts.filter(r=>r.version>50).map(r=>r.version), [51,52,53,54,55,56,58,59,78,79,80,83,84,107, 108]);
   await transaction(async (db) => {
     const chain = await loadPolicyChain(db, workspace);
     assert.equal(chain.members.length, 1);

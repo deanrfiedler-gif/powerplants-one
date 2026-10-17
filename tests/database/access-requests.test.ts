@@ -20,7 +20,7 @@ import {
 } from "../../src/access/requests";
 import {
   accessRequestSeedGrants,
-  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants,
+  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants,
 } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 
@@ -67,7 +67,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   assert.deepEqual(
     shape(afterGrants.filter((g) => !ids.has(g.id))),
     shape([
-      ...accessRequestSeedGrants(grants),
+      ...accessRequestSeedGrants(grants), ...conversationSeedGrants(grants),
       ...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants),
     ]),
   );
@@ -90,7 +90,7 @@ test("AD01 requests: populated upgrade retains all earlier rows and adds exactly
   );
   assert.deepEqual(
     nextSeeds.filter((x) => x.version > 78).map((x) => x.version),
-    [79, 80, 83, 84, 107],
+    [79, 80, 83, 84, 107, 108],
   );
   await migrate();
   await seed();

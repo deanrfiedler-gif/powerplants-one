@@ -74,7 +74,7 @@ for (const through of [25, 92])
     for (const t of ["excel_imports", "excel_import_lines", "excel_reimports"])
       assert.deepEqual(await rows(`SELECT * FROM ppo.${t}`), []);
     assert.deepEqual(
-      await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+      await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
       grants,
     );
     assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);

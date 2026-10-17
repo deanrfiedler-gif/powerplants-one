@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 
 // Seed 29 (EN-06) is the first seed since 0020 to add permission grants, seed 30 (EN-07) is the second and seed 31
 // (EN-08) the third, so an upgrade proof that snapshots ppo.permission_grants from a version where the coordinators
@@ -103,7 +104,9 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
   const maintenance=maintenanceSeedGrants(original);
-  const expected=[...accessReviewSeedGrants(original),...accessTeamSeedGrants(original),...accessApplicationSeedGrants(original),...accessRequestSeedGrants(original),...accessInspectionSeedGrants(original),...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
+  const others=[...accessReviewSeedGrants(original),...accessTeamSeedGrants(original),...accessApplicationSeedGrants(original),...accessRequestSeedGrants(original),...accessInspectionSeedGrants(original),...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
+  // Seed 108 copies every live Opportunity and Project read, including those the earlier seeds above added.
+  const expected=[...others,...conversationSeedGrants([...original,...others],at)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -204,4 +207,24 @@ export function accessTeamSeedGrants(original: Grant[]): Grant[] {
 // Seed 84: one explicit local independent-attestation duty, no user or hosted grant.
 export function accessReviewSeedGrants(original: Grant[]): Grant[] {
   return accessInspectionSeedGrants(original).map(g => ({ ...g, capability: "admin.access.review.attest" }));
+}
+
+// Seed 108 (Conversations T1b): conversation.read and conversation.post copy each live crm.opportunity.read and
+// project.read grant of a local synthetic profile, in the same scope and validity. The id is derived from the source
+// grant and the duty, and where one profile holds both reads in one scope the first source in capability/id order wins,
+// exactly as db/seed-conversations.sql orders them.
+export function conversationGrantId(source: unknown, capability: string) {
+  const h = createHash("md5").update(`ppo-conversations-t1b:${source}:${capability}`).digest("hex");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+export function conversationSeedGrants(original: Grant[], at = new Date()): Grant[] {
+  const time = (v: unknown) => new Date(v as string | Date).getTime();
+  const live = (g: Grant) => time(g.valid_from) <= at.getTime() && (g.valid_to === null || time(g.valid_to) > at.getTime());
+  const key = (g: Grant) => [g.workspace_id, g.user_id, g.capability, g.scope_type, g.scope_id].join(":");
+  const seen = new Set<string>();
+  return original
+    .filter(g => ["crm.opportunity.read", "project.read"].includes(String(g.capability)) && live(g))
+    .sort((a, b) => String(a.capability).localeCompare(String(b.capability), "en") || (String(a.id) < String(b.id) ? -1 : 1))
+    .flatMap(g => ["conversation.read", "conversation.post"].map(capability => ({ ...g, id: conversationGrantId(g.id, capability), capability })))
+    .filter(g => !seen.has(key(g)) && !!seen.add(key(g)));
 }

@@ -90,6 +90,8 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.deepEqual(addedUsers.filter(r=>String(r.row.subject_id).startsWith("quotation-")).map(r=>r.row.subject_id).sort(),["quotation-approver","quotation-issuer"]);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability IN ('estimating.quote.approve','estimating.quote.issue','estimating.quote.distribute') AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON u.workspace_id=g.workspace_id AND u.id=g.user_id WHERE g.capability LIKE 'incident.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
+  // Seed 108 (Conversations T1b) copies reads of local synthetic profiles only: no hosted tester holds either duty.
+  assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability LIKE 'conversation.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.deepEqual(addedUsers.filter(r=>String(r.row.subject_id).startsWith("scheduling-policy-")).map(r=>r.row.subject_id).sort(),["scheduling-policy-publisher","scheduling-policy-reviewer"]);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability LIKE 'schedule.policy.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.ok(addedUsers.some(r=>r.row.id==="e5030045-0000-4000-8000-000000000001"&&r.row.subject_id==="estimating-source-reviewer"));

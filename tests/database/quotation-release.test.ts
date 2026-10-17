@@ -1,4 +1,4 @@
-import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -525,9 +525,9 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
     gs.map(({ id: _, ...g }) => JSON.stringify(g)).sort();
   assert.deepEqual(
     sorted(after.filter((g) => !ids.has(g.id))),
-    sorted([...quotationReleaseSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants)]),
+    sorted(((others) => [...others, ...conversationSeedGrants([...grants, ...others])])([...quotationReleaseSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants)])),
   );
-  assert.equal(after.length - grants.length, 20);
+  assert.equal(after.length - grants.length, 20 + after.filter((g) => String(g.capability).startsWith("conversation.")).length);
   assert.equal(
     (await rows("SELECT id FROM ppo.users")).length - users.length,
     2,
