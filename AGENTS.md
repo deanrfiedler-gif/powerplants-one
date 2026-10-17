@@ -24,7 +24,7 @@ HTML packages must follow [scope/design conformance](docs/standards/html-module-
 
 ## Implementation
 
-Keep changes small enough to review. Inspect existing work before editing. Use branches and pull requests; report validation and any limits accurately. Avoid unrequested frameworks, dependencies, services, deployment infrastructure or bulk issue creation.
+Keep changes small enough to review. Inspect existing work before editing. Use branches and pull requests; report validation and any limits accurately. Follow the [parallel-work rules](CONTRIBUTING.md#working-in-parallel): claim with an early draft PR, write only in a dedicated worktree cut from current `main`, and edit shared files narrowly. Avoid unrequested frameworks, dependencies, services, deployment infrastructure or bulk issue creation.
 
 Use synthetic or specifically approved redacted fixtures. Keep credentials, connection strings, raw production exports and operational documents outside the repository. `.gitignore` is a convenience, not a security boundary. Do not place secrets in examples, issues, logs or test evidence.
 

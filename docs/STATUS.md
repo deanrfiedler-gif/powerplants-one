@@ -8,6 +8,12 @@ The required F13 browser proof failed once in CI at 0.125 on /projects. On first
 
 Dean owns this work and keeps the repository public. A [LICENSE](../LICENSE) now states that all rights are reserved and that the repository is published for viewing only; third-party fonts, dependencies, the Powerplants name and logo, and others' retained references keep their own terms. The [visibility decision](decisions/repository-visibility.md) records the facts checked (free CI and secret scanning while public, Actions volume), the rules that stay strict, and when to go private. The "PPO - Design" Figma file was open to anyone with its link; its access is now limited to invited people. CI is unchanged.
 
+## Parallel contribution rules and repository security — 17 October 2026
+
+Dean adopted the [parallel contribution rules](decisions/parallel-contribution-rules.md), which replace CONTRIBUTING.md's one-writer rule. Contributors, human or agent, claim work with an early draft PR, write only in a dedicated worktree cut from current `main`, edit shared files such as this one narrowly, keep each decision in one record, and claim migration numbers in the draft PR. STATUS.md no longer names a single current writer; open draft PRs show who holds which task. Dean also adopted [AI tool roles and cross-model review](decisions/cross-model-review.md). Claude builds and oversees; ChatGPT is the independent reviewer and research partner. PRs touching migrations, grants, calculations, security or owner decision papers need a second-model review before merge. The ChatGPT project instructions were trimmed to fit the role line within 8,000 characters.
+
+At Dean's request, secret scanning, secret-scanning push protection, Dependabot alerts and Dependabot security updates are now enabled on the repository. A push containing a recognised credential is now refused. Also at Dean's request, protected `main` now requires branches to be up to date with `main` before merging (strict enforcement on), which supersedes the "strict up-to-date enforcement is off" note of 16 October below. The seven required checks and administrator enforcement are unchanged. This is documentation and repository-settings work only; no application, migration or deployment changes.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
