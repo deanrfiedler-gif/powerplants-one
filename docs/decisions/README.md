@@ -237,3 +237,8 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - Requested, priced and approved amounts stay apart; requested and priced are never added; unknown is never $0.00.
   - Decisions are independent and bound to the exact version; notices are evidence only and never sent.
   - Twenty-one icon-free captures are retained. Building the page and the backend reads it implies (G1–G8) are not decided.
+
+- [Appointment detail design — owner decision](appointment-detail-figma-design.md): the SV-04 appointment page (`/service/appointments/[id]`), where the field readiness gate is decided before a crew leaves, drawn in Figma on the shared record layout, polished twice and accepted on 17 October 2026 ("Yes, lock in the polished SV-04 design") as the named version "Appointment detail — shared record layout, accepted".
+  - One scrolling page with a readiness Tag in the header; Dispatch held or Ready to dispatch with its reasons; Parts and customer site readiness derived, never ticked by hand.
+  - Job pack acknowledgements and Returns, customer contact records (never sent), follow-ups and change requests on the same page.
+  - Seven icon-free captures are retained. Building the page is not decided; the gate criteria depend on PR #541.

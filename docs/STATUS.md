@@ -1,5 +1,14 @@
 # Current prototype status
 
+## Appointment detail design accepted — 17 October 2026
+
+Dean accepted the Figma design for the SV-04 appointment page (`/service/appointments/[id]`): "Yes, lock in the polished SV-04 design". It is the page where the [field readiness gate](decisions/field-readiness-gate-proposal.md) is decided before a crew leaves. The [decision](decisions/appointment-detail-figma-design.md) records it as the named Figma version "Appointment detail — shared record layout, accepted", and the [retained captures](reference/ui/service/appointment-detail-design-r01/README.md) are seven icon-free PNGs with hashes.
+- One scrolling page on the Work order record layout, with a readiness Tag beside the state (Dean's answers to Q1–Q3: "Proceed based on your recommendations.").
+- Dispatch held or Ready to dispatch with its reasons; Parts and customer site readiness derived from the records, never ticked by hand; job pack acknowledgements and Returns; customer contact recorded, never sent.
+- Desktop, tablet, phone 390 and 320, six phone states, and the site readiness dialog and sheet; five proposed departures (D1–D5) and one proposed page part.
+
+This is a design decision only. No code, route, migration, permission or capability changes; the built page still shows stacked panels, and the gate criteria depend on draft [PR #541](https://github.com/deanrfiedler-gif/powerplants-one/pull/541). No device, accessibility or operational review is recorded.
+
 ## /projects first-load layout shift — 17 October 2026
 
 The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) remains open. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
