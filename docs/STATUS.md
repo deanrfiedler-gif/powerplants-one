@@ -4,6 +4,10 @@
 
 An audit of the Figma file on 17 October found one accepted page without a decision record: the Projects register `209:46`, which Dean accepted on 11 October ("Proceed with your recommendations") and which was built on 13 October under [projects-register-native.md](decisions/projects-register-native.md). Asked again, Dean answered "Yes, accept as drawn (Recommended)". The [design decision](decisions/projects-register-design.md) records the rules, departures P1–P7 and what is open, and [five icon-free captures](reference/ui/projects/projects-register-design-r01/README.md) are retained with hashes. The named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet"; Dean saved it after the capture commit ("It's saved."), and the File index row now names the record. Still open: comparing the built page and its register read with the captures, phone multi-select (adopted, not drawn), rail-count meaning and the shell rollout. No code, read model, migration, permission or parent ID changes.
 
+## /projects first-load layout shift — 17 October 2026
+
+The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) remains open. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
