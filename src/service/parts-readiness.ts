@@ -90,9 +90,10 @@ async function line(
       [workspace_id, d.id],
     )
   ).rows;
-  // Nothing allocated is a known zero (a shortage), not missing evidence, as in Supply.
+  // Unlike Supply's own register (SUP-1), no allocation here is missing evidence: the field gate
+  // holds dispatch as Unknown until a linked demand has been allocated (tested in readiness-gate).
   let usable = 0n,
-    complete = true;
+    complete = allocations.length > 0;
   for (const a of allocations) {
     const s = (
       await c.query<SupplyRecord>(
