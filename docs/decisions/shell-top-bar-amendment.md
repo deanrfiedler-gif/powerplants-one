@@ -32,7 +32,7 @@ Quotes 1–5 are from 16 October 2026 and quote 6 from 17 October 2026, quoted a
 | A shorter breadcrumb, drafted as an amendment to the shared top bar and the accepted pages | User decision | Quotes 1 and 2 |
 | The global search in the same place on every page, centred in the top bar | User decision | Quote 4 |
 | R1–R9 and the recommended answers to Q1–Q5 | Claude's recommendations, adopted | Quotes 3 and 4 |
-| Acceptance | User decision | Quote 5; named version "Shell top bar amendment — accepted" |
+| Acceptance | User decision | Quote 5; named version "Shell top bar amendment — accepted", which Dean confirmed on 17 October 2026 is in the file's version history |
 | Lock-in and build | Requested of this session by the session that drew the design, and confirmed by Dean when asked about the named version ("Save it for me") | Section 6 |
 | C1 The working company is named by the account control, not by a chip beside it | Claude's recommendation, adopted | Quote 6; section 5 |
 
