@@ -349,8 +349,24 @@ These are Claude's proposals, made at Dean's invitation. They are not Dean's ide
 
 ## 14. Design reference and verification
 
-- **Design.** A mockup was shown in the conversation on 17 October 2026. It was not retained, and no Figma frames or captures exist. If the proposal is accepted, the page is drawn in Figma under ADR-0053, and the design register gains it when a route exists.
-- **Checks.** This proposal's documentation checks are recorded in its pull request.
+- **Design.** A mockup shown in the conversation on 17 October 2026 was not retained. Proposal frames were drawn the same day in the Figma file "PPO - Design" under ADR-0053 and ADR-0055. They are on the page "Conversations" (node 1141:49), in the My Work group, which was started from Template · App page; its header (1141:50) holds the UI conformance declaration. The design is a proposal: Dean has not accepted it, no named version is saved (Dean saves it himself if he accepts the design), and no icon-free captures exist yet. The design register gains the page when a route exists.
+
+| Frame | Node | Shows |
+|---|---|---|
+| Desktop 1440 · Thread view, Sam | 1146:128 | The left sidebar: New thread; the filters Waiting on you, Mentions, Needs approval and Carl working; threads grouped by record, with branches nested and one state dot each. The thread: a person's message; Carl's answer, labelled "Carl · AI assistant" and acting for Alex; "Draft with Carl" with source chips and the "isn't in PPO, confirm" flag; the "Also save ETA 30 Oct to PO-2281" proposal card. The context panel: Record, Files and documents, Contacts, Related records and This thread, each item saying why it is there. Drawn at full length (1440 × 1320) |
+| State · Record links for each reader | 1148:545 | A link the reader can open; "A record you can't open" with Request access; the shared view with its banner |
+| Dialog · Share read-only | 1148:614 | "Sam can't open this deal" for a sender with a share right |
+| Dialog · Ask the owner to share | 1148:653 | The same dialog for a sender without a share right |
+| Phone 390 · Thread list, Thread, Context sheet | 1149:646, 1149:798, 1149:913 | The thread list; the thread full screen with a Context button; the context panel as a sheet |
+| Phone 390 · Driving mode | 1150:1045, 1150:1059 | "Listening" and "Carl is answering", with only the state and End (V1) |
+| Phone 390 · Review when stopped | 1150:1073 | Needs approval after driving: the message sent after a read-back (V4), and a share and a task that waited (V5) |
+| Notes card | 1152:1160 | Reused and proposed components, proposed icons, design questions D1 to D5 with recommendations, and what is not drawn |
+
+- **Sections.** Desktop 1440 (1141:95), Tablet 1024 (1141:99, not drawn), Phone 390 and 320 (1141:103; 320 not drawn), States (1141:110), Flows and notes (1141:114) and Proposed components (1144:49). The File index on Start here lists the page as a proposal (row 1152:1188).
+- **Components.** The frames reuse accepted parts without editing them: Rail · Sales 190:20238, Shell / Top bar 35:138, v2 / Menu heading 73:48, v2 / Menu item 73:46, Button 3:41, Tag 3:13, Record / Section heading 224:13, Record / Filter chip 224:31, Record / Banner 251:2310, Shell / Phone header 38:282 and v2 / Tab bar (phone) 107:149. To show the proposed Conversations entry, the rail's expanded variant was copied and detached as a container; its rail items stay linked. Ten proposed components stay on the page until the design is accepted: Conversations / Avatar 1144:55, Record link 1144:66, Thread row 1144:151, Context item 1144:152, Message 1144:181, Draft card 1145:61, Proposal card 1145:118, Composer 1145:190, Share dialog 1145:277 and Driving state 1145:302. The file has no icons for the microphone, conversations, driving or End, so they show as Icon/placeholder.
+- **Design questions.** The notes card asks five questions, each with a recommendation: D1 where the rail entry sits; D2 the phone entry point; D3 the desktop body below 1280 px; D4 the thread state colours; D5 the surface of Carl's messages.
+- **Not drawn.** Tablet 1024; phone 320; loading, empty, error and "Carl unavailable" states; New thread; the `@` and `#` pickers; branching and branch summaries; N1; a record page's thread list; prototype links.
+- **Checks.** Each frame was checked with screenshots taken inside the Figma write tool after each change. This proposal's documentation checks are recorded in its pull requests.
 - **Nothing else.** No application, database or browser suite was run, because nothing in `src/` or `db/` changed.
 
 ## 15. Decision — 17 October 2026
