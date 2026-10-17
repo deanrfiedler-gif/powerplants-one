@@ -8,6 +8,7 @@ Draft pull request on `feat/field-readiness-gate`, stacked on the UX benchmark d
 - **Checker Return task.** A checker's return tasks the preparer; a successor revision completes return and check tasks.
 
 Migration 0107 carries the full registry ripple in `AGENTS.md`. No capability, Activity kind or identity type is added, and `snapshot()`, `PackSnapshot` and OUT-09 are unchanged. The Figma lock-in is amendment A06 (Job pack) and A07 (My jobs) with [twelve icon-free captures](reference/ui/service/field-readiness-gate-r01/README.md); **Dean saved the named version "Field readiness gate — accepted" and supplied its link on 17 October 2026** (the link is not recorded here; Claude has not verified the version name). Both sections now read "(accepted)"; the six frame caption layer names were renamed afterwards and need a later named version. Customer site readiness, the issue lead time, the parts ladder (needs SC-05 Q1 and live reservations), the planner's not-opened marker and an offline return are the next increments. Delivery, owner visual review and business acceptance stay separate.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
