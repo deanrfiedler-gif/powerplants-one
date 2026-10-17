@@ -20,6 +20,8 @@ Still to do before a build:
 
 No code, migration, permission, route, Figma frame or parent ID changes. The ChatGPT instructions are unchanged: they carry no AI guidance and point to this file.
 
+**Design lock-in, 17 October 2026:** Dean accepted the Conversations design in Figma and its named version is saved ([section 14](decisions/ai-communications-threads-proposal.md#14-design-reference-and-verification)); [fourteen icon-free captures](reference/ui/my-work/conversations-r01/README.md) are retained with hashes, and its eleven components moved to the Figma Components page. No `/conversations` route exists, so the page has no design register entry yet.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
