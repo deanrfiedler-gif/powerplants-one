@@ -97,7 +97,7 @@ for (const through of [25, 48, 71, 72, 74, 76, 77, 78, 79, 80, 81, 82, 83, 84, 8
     else
       assert.deepEqual(
         shape(after.filter((g) => !ids.has(g.id))),
-        shape(((others) => [...others, ...conversationSeedGrants([...grants, ...others])])([
+        shape(((others) => [...others, ...(through < 108 ? conversationSeedGrants([...grants, ...others]) : [])])([
           ...productsSeedGrants(grants),
           ...(through < 84 ? accessReviewSeedGrants(grants) : []),
           ...(through < 83 ? accessTeamSeedGrants(grants) : []),
