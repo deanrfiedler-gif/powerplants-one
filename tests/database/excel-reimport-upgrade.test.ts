@@ -49,8 +49,8 @@ test("XI95 populated original workbook upgrades to 0096 with exact source, rows,
         async (t) =>
           (
             await database().query(
-              // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-              `SELECT to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
+              // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
+              `SELECT to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),
@@ -71,7 +71,7 @@ test("XI95 populated original workbook upgrades to 0096 with exact source, rows,
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+    [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,
