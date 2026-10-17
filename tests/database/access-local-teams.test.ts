@@ -18,7 +18,7 @@ import {
   localTeamContext,
 } from "../../src/access/local-teams";
 import { submitAccessRequest } from "../../src/access/requests";
-import { accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -108,10 +108,10 @@ test(
     );
     assert.deepEqual(
       next.filter((g) => !ids.has(g.id)),
-      [...accessReviewSeedGrants(grants).map(g => ({...g,id:"ad010084-0000-4000-8000-000000000001"})),...accessTeamSeedGrants(grants).map((g) => ({
+      [...conversationSeedGrants(grants), ...accessReviewSeedGrants(grants).map(g => ({...g,id:"ad010084-0000-4000-8000-000000000001"})),...accessTeamSeedGrants(grants).map((g) => ({
         ...g,
         id: "ad010082-0000-4000-8000-000000000001",
-      }))].sort((a,b)=>a.id.localeCompare(b.id)),
+      }))].sort((a,b)=>String(a.id).localeCompare(String(b.id))),
     );
     const newLedger = await rows(
         "SELECT * FROM public.ppo_migrations ORDER BY version",

@@ -19,7 +19,7 @@ import {
   decideAccessRequest,
   applyAccessRequest,
 } from "../../src/access/requests";
-import { accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -185,7 +185,7 @@ test("AD01 application: populated 0079 retains original proposals, decisions, au
   // Migration/seed numbering can move; the original grant identity stays fixed.
   assert.deepEqual(
     current.filter((g) => !ids.has(g.id)),
-    [...accessReviewSeedGrants(grants).map(g => ({ ...g, id: "ad010084-0000-4000-8000-000000000001" })), ...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
+    [...conversationSeedGrants(grants), ...accessReviewSeedGrants(grants).map(g => ({ ...g, id: "ad010084-0000-4000-8000-000000000001" })), ...accessTeamSeedGrants(grants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })), ...accessApplicationSeedGrants(grants).map((g) => ({
       ...g,
       id: "ad010080-0000-4000-8000-000000000001",
     }))].sort((a,b) => String(a.id).localeCompare(String(b.id))),
