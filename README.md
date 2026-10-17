@@ -16,6 +16,10 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 
 The separate [Service photo inspection increment](docs/testing/evidence/report-photo-inspection/README.md) proves exact submitted-photo review on desktop and phone while preserving unfinished decisions, original download permissions and private output boundaries. Customers page performance and actual owner/device acceptance remain open.
 
+## Ownership and licence
+
+Dean Fiedler owns this work. The repository is public for viewing only: all rights are reserved, and no licence to use, copy or modify it is granted ([LICENSE](LICENSE)). Third-party fonts, dependencies, the Powerplants name and logo, and retained references from others keep their own terms. The [visibility decision](docs/decisions/repository-visibility.md) records when the repository should become private.
+
 ## Start here
 
 Current acceptance work: [connected customer journey walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md), [Field Work prerequisite ledger](docs/testing/field-integrated-acceptance-ledger.md), [Field owner walkthrough](docs/delivery/field-integrated-owner-walkthrough.md) and [benefit measurement](docs/testing/field-benefit-measurement.md). Fresh verification, human observations and benefits remain separately recorded.

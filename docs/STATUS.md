@@ -4,6 +4,10 @@
 
 The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) remains open. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
 
+## Repository ownership and visibility — 17 October 2026
+
+Dean owns this work and keeps the repository public. A [LICENSE](../LICENSE) now states that all rights are reserved and that the repository is published for viewing only; third-party fonts, dependencies, the Powerplants name and logo, and others' retained references keep their own terms. The [visibility decision](decisions/repository-visibility.md) records the facts checked (free CI and secret scanning while public, Actions volume), the rules that stay strict, and when to go private. The "PPO - Design" Figma file was open to anyone with its link; its access is now limited to invited people. CI is unchanged.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
