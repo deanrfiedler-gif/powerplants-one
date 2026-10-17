@@ -9,6 +9,21 @@ Dean accepted the Figma design for the PL-01 planner (`/schedule`): "I accept th
 
 This is a design decision only. No code, route, migration, permission or capability changes; the built planner has no tray or band yet. No device, accessibility or operational review is recorded.
 
+## D-025 customer email decided — 17 October 2026
+
+Dean accepted the [D-025 customer communications decision paper](decisions/customer-communications-d025.md): "Proceed with your recommendations for C1 and C3 to C8." C2 stands as he changed it on 16 October, so a named person sends dispatch, delay and visit messages.
+- **D-025 is Partially resolved.** SMS, inbound sync and filing, calendar writes, marketing, the portal and the operational evidence stay open.
+- **[ADR-0058](decisions/ADR-0058-outbound-customer-email.md) is Accepted.** One communications service sends every customer email through Microsoft Graph from one shared mailbox, behind a provider-neutral channel.
+- **Rules adopted:** the paper's rules for recipients, opt-out, logging, states, failures and content.
+- **Nothing is built and nothing sends.** Every message class is off by default and synthetic first. Each build stage, starting with S2 (the communication core on a synthetic channel), needs its own authorisation.
+
+Before that, Dean answered the three questions in the [D-025 customer communications decision paper](decisions/customer-communications-d025.md#9-decisions-for-dean):
+- **Q1, where freight is booked:** "Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only". No single source holds every tracking number, so staff enter the carrier and the tracking number when they record a dispatch as Moved. The dispatch notice stage still needs the list of carriers and the name of the freight booking platform.
+- **Q2, the Smartsheet Customer Update register:** "No". The Projects Department does not use it, so project updates start as a new process rather than replacing a working one.
+- **Q3, the sending mailbox:** "One shared mailbox", as [ADR-0058](decisions/ADR-0058-outbound-customer-email.md) proposed. Its address, the tenant and who can grant consent are still to be confirmed before a live pilot.
+
+The paper, ADR-0058, the decision register, the document register and the decisions index record the decision and the answers. No code, migration, mailbox or app registration changes.
+
 ## Projects register design differences fixed — 17 October 2026
 
 The eight fixes proposed by the [Projects register comparison](testing/evidence/projects-register/design-comparison.md#fixes-made) are made: grid header colour and At risk alignment, the toolbar count size, 24-hour S6 times in the toolbar and History, the opportunity reference in Sales source (a new `opportunity_reference` field on the project and work-order `sales-handovers` read), "finishes" in At risk rows, the History heading and ring markers, and the phone record header. Values come from the Figma frame's text styles and bound variables. The five states were captured again at 1440 × 900 and 390 × 844 on a disposable synthetic database. The five questions and Q-D1/Q-D2 stay with Dean; the visual status stays Needs review and no review fingerprint is copied.
@@ -20,6 +35,10 @@ The built `/projects` page was captured at 1440 × 900 and 390 × 844 against a 
 ## Projects register design locked in — 17 October 2026
 
 An audit of the Figma file on 17 October found one accepted page without a decision record: the Projects register `209:46`, which Dean accepted on 11 October ("Proceed with your recommendations") and which was built on 13 October under [projects-register-native.md](decisions/projects-register-native.md). Asked again, Dean answered "Yes, accept as drawn (Recommended)". The [design decision](decisions/projects-register-design.md) records the rules, departures P1–P7 and what is open, and [five icon-free captures](reference/ui/projects/projects-register-design-r01/README.md) are retained with hashes. The named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet"; Dean saved it after the capture commit ("It's saved."), and the File index row now names the record. Still open: comparing the built page and its register read with the captures, phone multi-select (adopted, not drawn), rail-count meaning and the shell rollout. No code, read model, migration, permission or parent ID changes.
+
+## Unallocated demand: two readiness rules compared — 17 October 2026
+
+[PR #563](https://github.com/deanrfiedler-gif/powerplants-one/pull/563) landed Supply's SUP-1 rule (an approved demand with nothing allocated is a known shortage, Blocked) beside the field readiness gate's (the same demand is Unknown, Evidence needed). Dean decided: "Keep both rules for now." A [proposal](decisions/unallocated-demand-readiness-proposal.md) compares them and recommends the gate follow Supply, with three questions for him. It also corrects the SUP-1 entry below: dispatch is held under either rule, because only Pass, a permitted exception and Not applicable satisfy the criterion; the rules differ in the reason shown (shortage and promised date, or Evidence needed). Neither state reaches a customer today. No code, test or behaviour changes, and the proposal is not decided.
 
 ## /schedule late shell-context layout shift — 17 October 2026
 

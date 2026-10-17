@@ -19,14 +19,16 @@ CM1–CM11 and the answers to Q1–Q9 are adopted. The twenty records it superse
 
 [Supply readiness promise rules](supply-readiness-promise-rules.md) (PPO-SUP-DEC-01) records Dean's 17 October 2026 decision, "Proceed based on your recommendations.": only a SupplierConfirmed promise can turn a shortage into At risk, and a promise whose date has passed leaves it Blocked.
 
+[Unallocated demand readiness proposal](unallocated-demand-readiness-proposal.md) (PPO-SUP-ZERO-ALLOCATION-PROP) is a **proposal** comparing Supply's rule (a demand with nothing allocated is a known shortage, Blocked) with the field readiness gate's (Unknown, Evidence needed). Dispatch is held either way. Dean's 17 October 2026 decision is "Keep both rules for now"; the proposal recommends the gate follow Supply and asks him three questions.
+
 [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01) records Dean's 16 October 2026 decision on the six Decision-brief items: "I am happy to proceed with all six based on your recommendations." It adopts UXB-02, UXB-03, UXB-09, UXB-10, UXB-11, UXB-74 and UXB-92 and amendments A02, A06, A07, A08, A09, A16, A18, A19, A20 and A23, accepts the field readiness proposal, sets D-025's direction (email and SMS, sent by a named person) and confirms MYOB Acumatica as the ERP. Each item still needs its own redraw, lock-in and build.
 
-[Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision; on 16 October Dean set its direction (a named person sends; email and SMS), which changes its C2, and D-025 stays Open for the rest. It covers:
+[Customer communications decision paper for D-025](customer-communications-d025.md), proposed on 16 October 2026, is **accepted**. On 16 October Dean set its direction (a named person sends; email and SMS), which changed its C2. On 17 October he accepted the rest: "Proceed with your recommendations for C1 and C3 to C8." D-025 is Partially resolved, and each build stage still needs its own authorisation. It covers:
 - automatic dispatch, delay and visit notices, and reviewed project updates under OUT-11/PJ-08, each with its drafter, approver and trigger;
 - recipient, opt-out, timeline, state, failure and content rules;
-- the data gaps for each message, the build order, and three questions for Dean.
+- the data gaps for each message, the build order, and three questions for Dean, which he answered on 17 October 2026: freight is booked in several ways, so staff enter tracking numbers; Projects does not use the Smartsheet Customer Update register; and email comes from one shared mailbox.
 
-[ADR-0058](ADR-0058-outbound-customer-email.md) is its **proposed** provider record: Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel. Nothing sends, and D-025 remains Open.
+[ADR-0058](ADR-0058-outbound-customer-email.md) is its **accepted** provider record (17 October 2026): Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel. Nothing sends yet.
 
 [Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** change to stop technicians arriving to missing or wrong parts or an unprepared site: a Supply-fed Parts criterion at dispatch, a technician Return with reason, owned preparer tasks for every return, a customer site-readiness contact and a pack issue lead time. Drawn as new Figma frames beside the accepted Job pack and My jobs pages. Dean accepted it on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7); its named Figma version, lock-in and build are still to come.
 
