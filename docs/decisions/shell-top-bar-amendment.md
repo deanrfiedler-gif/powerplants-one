@@ -101,6 +101,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - **Header controls stay mounted.** The search, Quick add and utilities reset themselves when the route changes instead of being remounted, because the account mount must sit in the end zone and must never be replaced.
 - **Removed:** the viewport-centred search group and its expanded-rail rule (`desktop-shell.css`), the Figma-shell rule that let the search flow with the breadcrumb and the docked-menu view-crumb rules (`figma-shell.css`), the narrow-header overrides in `cost-sources.css` and `estimating-workload.css`, the search and heading overrides in `fertigation-figma.css`, the ES-08 rule that hid the owner (`specialist-figma.css`), #268's wrap rule and the 1560 px "last two crumbs" rule.
 - `src/shell/guide.ts` describes the new breadcrumb and the search's fixed place.
+- **CPQ records.** Configure & price (`src/components/cpq-configure.tsx`) and the rule editor (`src/components/cpq-rules.tsx`) publish their record identity, so they read "Configure & price / <deal reference>" (D6) and "Rules studio / <rule key>", as the After column does. Each publishes only after its authorised reads have loaded and withdraws it on unmount, error or denial; the rule editor publishes only a key that the loaded release or inspected revision holds, never one being typed. The Estimating workspace read (`src/estimating/discovery-workspaces.ts`) now returns the deal's reference beside its title.
 
 ### Earlier records this amends
 
@@ -117,11 +118,12 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 | ID | Difference | Why |
 |---|---|---|
-| D1 | Configure & price and Rules studio records show the destination alone, not "Configure & price / SYN-CPQ-000014" | The CPQ pages publish no record identity; the shell never guesses one from the URL. Publishing it is CPQ work |
 | D2 | Some app labels differ from the Figma names: "Organisations" (Customers), "Intake" (Sales briefs), "Priva Fertigation Configurator" | The labels come from `src/shell/navigation.ts` and are outside this amendment |
 | D3 | Excel import, Inventory, Document library, Outputs, Templates and the PJ-05 records have no app route yet | They follow these rules when built |
 | D4 | From 781 to 1199 px the app shows the current page alone; the tablet frames show the owner too | Existing narrow-desktop rule, kept; Page hierarchy holds the owner |
 | D5 | Breadcrumb labels are 14 px in the app (Shell v2) and 16 px in Figma; the search-to-Quick-add gap is 12 px in the app and 14 px in Figma | Existing differences, unchanged here |
+| D6 | Configure & price shows its deal's reference, "Configure & price / SYN-PPO-OPP-…", not "SYN-CPQ-000014" | "SYN-CPQ-000014" is a design fixture. A configuration has no reference of its own: the [CPQ implementation decision](cpq-figma-ui.md) invents no SYN-CPQ identifier. The page publishes the reference the Estimation wizard register already uses for the same workspace, so every option of that workspace shares it |
+| D7 | The Rules studio's Releases view shows "Rules studio", not "Releases / Screen systems R6" | Releases is a view of the rule editor's page, not its own route; only the open rule publishes an identity (R2, R4) |
 
 ## 6. Figma lock-in pass
 
@@ -136,6 +138,7 @@ Made by this session on 16 October 2026, after the named version was saved:
 ## 7. Verification
 
 - Unit: `tests/unit/shell-breadcrumb.test.ts` covers R1–R6 and R8 on the app's routes, including the owner without access and a signed-out view.
+- CPQ records: `tests/unit/shell-breadcrumb.test.ts` covers both routes with and without a published identity, and `tests/browser/cpq.spec.ts` checks the breadcrumb and tab title on a loaded configuration and rule, and that an unreadable configuration shows the destination alone.
 - Running app, 17 October 2026 (this branch merged with `main` at `271a386`, local dev server, disposable PostgreSQL, coordinator identity): fourteen pages measured at 1440, 1280, 1024 and 800 px with both rail widths. The search centre is 0 px from the top bar's centre at 1440 and 1280 px with either rail and at 1024 px with the compact rail; at 1024 px with the labelled rail it is 38 px left and at 800 px 74–78 px left, where the end zone's controls need more than half the bar. At each width the offset is the same on every page, nothing overflows, and Quick add sits 12 px from the search. Breadcrumbs matched R1–R5 on every page. With the two-company "systems" identity, choosing SYN-A put the dot on the avatar and "Working company: SYN-A · …" in its tooltip, with the search still at 0 px.
 - `tests/helpers/shell-header-geometry.ts` now asserts the R9 centre at 1280 px and wider, so the ES-02 and ES-08 source comparisons check it at 1920, 1440 and 1280 px with both rails. Browser and component suites that assert breadcrumb text or header geometry were updated to the new rules; the PR description lists what was run locally and what is left to CI.
 - This record implies no owner visual review of the application and no UI baseline. A Figma design never becomes a production claim on its own.
