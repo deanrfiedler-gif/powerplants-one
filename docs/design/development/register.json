@@ -7084,7 +7084,12 @@
       "design_path": "docs/design/development/pages/route-projects.md",
       "html_path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
       "image_paths": [
-        "docs/blueprints/projects-visuals/projects-register-desktop.png"
+        "docs/blueprints/projects-visuals/projects-register-desktop.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-01-Desktop-Register-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-04-Phone-Project-List-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-05-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "docs/decisions/project-overview-backend.md",
@@ -7098,7 +7103,8 @@
         "src/projects/register-model.ts",
         "src/app/styles/projects-register.css",
         "docs/design/projects-register/figma-measurements.json",
-        "docs/decisions/projects-register-native.md"
+        "docs/decisions/projects-register-native.md",
+        "docs/decisions/projects-register-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
