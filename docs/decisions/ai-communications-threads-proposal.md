@@ -2,7 +2,7 @@
 document_id: PPO-AI-THREADS-PROP
 date: 2026-10-17
 owner: Dean Fiedler
-status: Proposed for Dean's decision; not accepted. Dean's ideas are quoted in section 1; the design, rules and further ideas are proposals. The agent name Carl awaits Carl's agreement
+status: Accepted by Dean on 17 October 2026 with the recommendations and the recommended answers to Q1 to Q12 (section 15). The agent name Carl stays subject to Carl's agreement. Figma design, record-sharing access decision, build and operational acceptance separate
 source_commit: 271a386b98c0aa612a86a34c03b0ab1da6073b8e
 versioning: git
 ---
@@ -24,7 +24,7 @@ This record quotes his words (section 1). It proposes:
 - Amendment A2 to the PPO Assistant's rule that chat is never stored (section 8);
 - a build order (section 9), scenarios (section 10) and further ideas (section 11).
 
-It is a **proposal**. It authorises no application code, migration, seed, permission, capability, route, provider use or deployment, and it changes no parent requirement ID. Dean accepts or amends it before any build.
+It is a **proposal**. It authorises no application code, migration, seed, permission, capability, route, provider use or deployment, and it changes no parent requirement ID. Dean accepts or amends it before any build. **Dean accepted it on 17 October 2026 (section 15).**
 
 PPO is a synthetic prototype. Every person, record, reference and time in this record is fictional, except Carl, who is named at Dean's request. Nothing here is an operating rule for Powerplants Australia.
 
@@ -241,7 +241,7 @@ This repository is public. The record uses Carl's first name only and records no
 5. In the synthetic prototype, threads are kept until the synthetic reset. Real retention is a company decision under DOC-06 (Q8).
 6. No raw audio is stored (section 4).
 
-A2 is recorded as a proposed amendment in the [direction decision](ppo-assistant-direction.md#proposed-amendment-a2--stored-record-threads-17-october-2026), and specification §7 carries a note pointing to it. Neither rule changes until Dean accepts.
+A2 is recorded in the [direction decision](ppo-assistant-direction.md#amendment-a2--stored-record-threads-17-october-2026), and specification §7 carries a note pointing to it. Dean accepted it on 17 October 2026, which issued r02 of the direction decision (section 15).
 
 ## 9. Build order
 
@@ -353,6 +353,24 @@ These are Claude's proposals, made at Dean's invitation. They are not Dean's ide
 - **Checks.** This proposal's documentation checks are recorded in its pull request.
 - **Nothing else.** No application, database or browser suite was run, because nothing in `src/` or `db/` changed.
 
-## 15. Dean's decision
+## 15. Decision — 17 October 2026
 
-Not yet given. Record his exact words here when he decides.
+Dean replied: "I accept the AI and internal communications threads proposal and Amendment A2 with your recommendations and the recommended answers to Q1 to Q12. Carl's name stays subject to his agreement."
+
+- **Adopted:**
+  - the page, tagging, record links, the context panel, voice and driving mode, and read-only record sharing, as designed in sections 3 to 5;
+  - rules R1 to R9, C1 to C7 and V1 to V8;
+  - recommendations S1 to S5;
+  - the autonomy ladder, with only L0 and L1 in use;
+  - the build order T0 to T8;
+  - the recommended answers to Q1 to Q12 in section 12.
+- **Amendment A2:** accepted and issued as r02 of the [direction decision](ppo-assistant-direction.md) (PPO-AI-DEC).
+- **Further ideas:** Dean accepted the proposal as a whole, so N1 to N14 are adopted as direction at the steps shown in section 11. Each keeps its dependency: N8 on D-002 delegation, N11 on Email & Calendar, and N13 on the deferred document and index decision.
+- **Still to do before a build:**
+  - Carl's own agreement and the current owners' agreement (C2). Until then "Carl" is a working name, and "PPO Assistant" is the fallback (Q10);
+  - Dean's decision on A1 (the provider), before any live Carl answer;
+  - an AD-01 decision on record sharing, before T6;
+  - the AI2 speech provider and a Powerplants driving policy (Q11), before T4;
+  - the Figma design under ADR-0053, then Dean's named version and lock-in;
+  - real retention of threads (Q8), which is the company's decision.
+- **Unchanged:** this record still authorises no application code, migration, seed, permission, capability, route or deployment. Each build step follows `AGENTS.md` in its own pull request.

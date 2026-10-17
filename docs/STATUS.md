@@ -1,17 +1,24 @@
 # Current prototype status
 
-## AI and internal communications threads proposed — 17 October 2026
+## AI and internal communications threads accepted — 17 October 2026
 
-Dean proposed a dedicated page in PPO for AI and internal communications, with a sidebar like Claude Code's. A conversation belongs to a record such as a deal, side conversations branch off it, and colleagues and an AI agent are tagged in. He asked that PPO be designed for AI agents eventually doing most of the work. The [threads proposal](decisions/ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP) quotes his words and proposes:
+Dean proposed a dedicated page in PPO for AI and internal communications, with a sidebar like Claude Code's. A conversation belongs to a record such as a deal, side conversations branch off it, and colleagues and an AI agent are tagged in. He asked that PPO be designed for AI agents eventually doing most of the work. The [threads decision](decisions/ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP) quotes his words. The same day Dean accepted it: "I accept the AI and internal communications threads proposal and Amendment A2 with your recommendations and the recommended answers to Q1 to Q12. Carl's name stays subject to his agreement." It adopts:
 - **The page:** "Conversations" at `/conversations`, with threads grouped by record, nested branches and tracked questions in My Work. Record links are drawn from each reader's own access, and a context sidebar gathers the record's documents, contacts and related records;
 - **The agent:** named Carl after the founder of Powerplants Australia, subject to Carl's and the current owners' agreement. It is always labelled as AI and never sends to customers. It checks records before asking a person, uses only what every participant can see, and acts for the person who tagged it;
 - **Voice:** a microphone in every composer, and a hands-free driving mode for reps on the road. Carl answers aloud, messages to colleagues are read back before sending, and anything that saves to a record waits until the person has stopped. Powerplants sets a driving policy first;
 - **Read-only sharing:** of one record for a colleague who cannot open it, limited to people with a share right, time-limited, with restricted sections hidden and recorded in the access review. It needs its own AD-01 decision;
-- **Autonomy:** a ladder earned per action type from approval evidence; nothing above drafting is proposed;
+- **Autonomy:** a ladder earned per action type from approval evidence; nothing above drafting is in use;
 - **Order:** a build that starts with threads between people (T1), plus seven scenarios and fourteen further ideas;
-- **Amendment A2:** [Amendment A2](decisions/ppo-assistant-direction.md#proposed-amendment-a2--stored-record-threads-17-october-2026) to the PPO Assistant's rule that chat is never stored.
+- **Amendment A2:** [Amendment A2](decisions/ppo-assistant-direction.md#amendment-a2--stored-record-threads-17-october-2026) to the PPO Assistant's rule that chat is never stored, issued as r02 of PPO-AI-DEC. Messages posted to record threads are stored; side-panel chat is not.
 
-Status: proposed, not accepted; Dean's decision on A1 (provider) is also still open. No code, migration, permission, route, Figma frame or parent ID changes. The ChatGPT instructions are unchanged because nothing is decided.
+Still to do before a build:
+- Carl's agreement and the current owners' agreement to the name;
+- Dean's decision on A1 (provider);
+- an AD-01 decision on record sharing;
+- the AI2 speech provider and a Powerplants driving policy;
+- the Figma design with Dean's named version.
+
+No code, migration, permission, route, Figma frame or parent ID changes. The ChatGPT instructions are unchanged: they carry no AI guidance and point to this file.
 
 ## Shell first paint and create-form leave review — 16 October 2026
 

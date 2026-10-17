@@ -1,6 +1,6 @@
 # PPO Assistant — Direction and architecture decision
 
-**Document:** PPO-AI-DEC · **Revision:** r01 · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Design direction authorised; implementation architecture proposed; runtime not implemented. Amendment A1 (Claude API as first live provider) proposed 16 October 2026 and awaiting Dean's decision. Amendment A2 (stored record threads) proposed 17 October 2026 and awaiting Dean's decision.
+**Document:** PPO-AI-DEC · **Revision:** r02 · **Date:** 8 September 2026; r02 17 October 2026 · **Owner:** Dean Fiedler · **State:** Design direction authorised; implementation architecture proposed; runtime not implemented. Amendment A1 (Claude API as first live provider) proposed 16 October 2026 and awaiting Dean's decision. Amendment A2 (stored record threads) accepted by Dean on 17 October 2026, issuing r02.
 
 ## Decision and authority
 
@@ -25,11 +25,11 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 | Separate microservice or agent framework | Deferred: no demonstrated need; thin adapters and existing services suffice for this pilot |
 | Direct OpenAI versus Azure OpenAI | Direct API is the first evaluation candidate; Azure alignment is useful but actual region/model/tenant and cost are unverified. Preserve replaceability. |
 | Direct Claude API funded by Max 20x API credits | Proposed in Amendment A1 as the first live synthetic evaluation candidate, ahead of both OpenAI options; awaiting Dean's decision. |
-| Stored, shared threads on records | Proposed in Amendment A2 for the Conversations page; the "Stateless draft only" disposition above stands for side-panel chat; awaiting Dean's decision. |
+| Stored, shared threads on records | Adopted in Amendment A2 (r02, 17 October 2026) for the Conversations page; the "Stateless draft only" disposition above stands for side-panel chat. |
 
 ## Proposed Amendment A1 — Claude API first (16 October 2026)
 
-**Status:** Proposed by Claude on 16 October 2026; not accepted. Revision r01 is unchanged until Dean decides. Acceptance would issue r02 of this record and update the [document register](../standards/document-register.csv). Where A1 differs from the section above, A1 governs only once accepted.
+**Status:** Proposed by Claude on 16 October 2026; not accepted. The text above is unchanged by A1 until Dean decides. Acceptance would issue the next revision of this record (r02 was issued for Amendment A2) and update the [document register](../standards/document-register.csv). Where A1 differs from the section above, A1 governs only once accepted.
 
 **Question.** On 16 October 2026 Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API. The credit lands in one Claude Console organisation linked to the plan and pays for Claude API requests. It cannot be spent through Azure, Bedrock or Vertex. Specification §8 records the dated programme rules, data handling and costs.
 
@@ -64,9 +64,9 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 
 **Dean's decision:** Not yet given. Record his exact words here when he decides.
 
-## Proposed Amendment A2 — stored record threads (17 October 2026)
+## Amendment A2 — stored record threads (17 October 2026)
 
-**Status:** Proposed by Claude on 17 October 2026 at Dean's instruction; not accepted. Revision r01 is unchanged until Dean decides. Acceptance would issue a new revision of this record and update the [document register](../standards/document-register.csv). Where A2 differs from this record or the specification, A2 governs only once accepted.
+**Status:** Accepted by Dean on 17 October 2026, issuing r02 of this record and updating the [document register](../standards/document-register.csv). Proposed by Claude the same day at Dean's instruction. Where A2 differs from this record or the specification, A2 governs.
 
 **Question.** On 17 October 2026 Dean proposed a dedicated AI and internal communications page. On it, a conversation belongs to a record such as a deal, branches into side conversations, and tags colleagues and the AI agent, provisionally named Carl. He instructed that the AI1 no-stored-chat rule be amended as a proposal. The [AI and internal communications threads proposal](ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP) quotes his words and holds the design.
 
@@ -83,7 +83,7 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 
 **Not authorised by A2.** This amendment adds no runtime code, migration, route, provider use or real data.
 
-**Dean's decision:** Not yet given. Record his exact words here when he decides.
+**Dean's decision (17 October 2026):** "I accept the AI and internal communications threads proposal and Amendment A2 with your recommendations and the recommended answers to Q1 to Q12. Carl's name stays subject to his agreement."
 
 ## Consequences and review triggers
 
