@@ -136,7 +136,8 @@ test("Figma shell keeps inherited r17 utility controls and its explicit header a
   expect(await style(page.locator(".ppo-crumb-current"), ["font-size", "line-height"]))
     .toEqual({ "font-size": "14px", "line-height": "18.2px" });
   expect((await style(page.locator(".ppo-crumb-current"), ["font-weight"]))["font-weight"]).toBe("600");
-  expect((await style(page.locator(".ppo-crumbs li").first().locator(".ppo-crumb"), ["font-weight"]))["font-weight"]).toBe("400");
+  // Shell top bar amendment R1: a top-level page shows its own name only, so Deals has no parent crumb.
+  await expect(page.locator(".ppo-crumbs li")).toHaveText(["Deals"]);
   expect(await style(page.locator(".ppo-global-search input"), ["font-size", "font-weight", "height"])).toEqual(await style(reference.locator("#sh-global-search"), ["font-size", "font-weight", "height"]));
   expect(await style(page.locator(".ppo-global-search"), ["height", "border-radius", "background-color", "padding-left"])).toEqual(await style(reference.locator(".sh-search-anchor .sh-search-field"), ["height", "border-radius", "background-color", "padding-left"]));
   const cases = [

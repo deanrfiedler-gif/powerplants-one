@@ -90,7 +90,8 @@ test("XI99 populated FX-priced workbook and quotation upgrade to landed allocati
         async (t) =>
           (
             await database().query(
-              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+              // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),
@@ -111,7 +112,7 @@ test("XI99 populated FX-priced workbook and quotation upgrade to landed allocati
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [100, 101, 102, 103, 104, 105, 106],
+    [100, 101, 102, 103, 104, 105, 106, 107],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,

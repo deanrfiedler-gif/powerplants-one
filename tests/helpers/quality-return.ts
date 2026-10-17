@@ -112,6 +112,14 @@ export async function prepareReturnVisit(
     visit.locator("details"),
     "ToolPreparation",
   );
+  // SYN-PPO-P04 v2 (field readiness gate R1): the return visit also needs no parts.
+  await readiness(
+    page,
+    source.work_order_id,
+    visit.locator("details"),
+    "PartsReadiness",
+    "NotApplicable",
+  );
   await page.goto(`/service/appointments/${aid}`);
   await contact(page, aid, "Confirmed");
   await page

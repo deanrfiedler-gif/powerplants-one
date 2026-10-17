@@ -323,7 +323,13 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No data, hashes, grants or seed receipts are rewritten; existing all-table
   // runtime privilege admission covers these objects without assigning the duty.
   // Populated 0025/0105 and reserved-Products proofs retain exact earlier rows.
-  if (latestMigrationVersion !== 106) throw Error("Review the existing-demo upgrade for this release.");
+  // 0107 (field readiness gate) adds empty immutable return, answer and follow-up mappings,
+  // widens the outbox kind, pack issue event and two readiness-criterion CHECKs, and replaces
+  // validate_readiness_policy, guard_pack_dispatch and pack_owned_follow_up at their known
+  // bodies. Seed 107 adds readiness policy SYN-PPO-P04 v2 only: no grant, user or identity.
+  // Existing scopes and appointments keep v1, so no hosted booking changes its dispatch rules;
+  // only scope revisions saved after the upgrade bind v2. Existing runtime privileges apply.
+  if (latestMigrationVersion !== 107) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -2458,8 +2458,18 @@
       "guide_key": "guide.sv.04",
       "design_path": "docs/design/development/pages/scope-sv-04.md",
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-01-Desktop-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-02-Desktop-Site-Readiness-Dialog-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-03-Tablet-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-04-Phone-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-05-Phone-320-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-06-Phone-Site-Readiness-Sheet-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-07-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/appointment-detail-figma-design.md"
+      ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
@@ -2504,7 +2514,8 @@
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
-        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-05-Desktop-Returned-By-Technician-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -2857,7 +2868,8 @@
         "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-04-Phone-Visit-Working-r01.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-17-Phone-Timer-Stopped-Undo-r01.png",
-        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png"
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-09-My-Jobs-Phone-Cannot-Start-Returned-r01.png"
       ],
       "dependencies": [
         "src/components/work-timer.tsx",
@@ -6800,7 +6812,8 @@
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-09-Phone-Finish-Crew-Working-r01.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-25-Desktop-Visit-Capture-r01.png",
-        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-33-Tablet-Visit-Work-r01.png"
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-33-Tablet-Visit-Work-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-09-My-Jobs-Phone-Cannot-Start-Returned-r01.png"
       ],
       "dependencies": [
         "src/components/work-timer.tsx",
@@ -7084,7 +7097,12 @@
       "design_path": "docs/design/development/pages/route-projects.md",
       "html_path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
       "image_paths": [
-        "docs/blueprints/projects-visuals/projects-register-desktop.png"
+        "docs/blueprints/projects-visuals/projects-register-desktop.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-01-Desktop-Register-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-02-Desktop-Record-Window-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-04-Phone-Project-List-r01.png",
+        "docs/reference/ui/projects/projects-register-design-r01/PPO-Projects-Register-05-Phone-Record-View-r01.png"
       ],
       "dependencies": [
         "docs/decisions/project-overview-backend.md",
@@ -7098,7 +7116,8 @@
         "src/projects/register-model.ts",
         "src/app/styles/projects-register.css",
         "docs/design/projects-register/figma-measurements.json",
-        "docs/decisions/projects-register-native.md"
+        "docs/decisions/projects-register-native.md",
+        "docs/decisions/projects-register-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7379,14 +7398,23 @@
       "guide_key": "guide.page.service.appointments.id",
       "design_path": "docs/design/development/pages/route-service-appointments-id.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-01-Desktop-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-02-Desktop-Site-Readiness-Dialog-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-03-Tablet-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-04-Phone-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-05-Phone-320-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-06-Phone-Site-Readiness-Sheet-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-07-States-r01.png"
+      ],
       "dependencies": [
         "src/documents/components/client/job-pack-entry.tsx",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/decisions/appointment-detail-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7432,7 +7460,9 @@
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
-        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-05-Desktop-Returned-By-Technician-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-01-Phone-Technician-Acknowledge-Or-Return-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -9817,14 +9847,15 @@
       "title": "Application shell",
       "kind": "system",
       "module": "Shared",
-      "summary": "Permission-aware Home, ordinary Workspace in More, labelled/compact primary rail, global search/help and exact loaded breadcrumb context.",
+      "summary": "Permission-aware Home, ordinary Workspace in More, labelled/compact primary rail, global search centred in the top bar, help and a short loaded breadcrumb (page, or owner / page).",
       "path": null,
       "source_paths": [
         "src/components/product-navigation.tsx",
         "src/development/catalog.ts",
         "src/development/runtime.ts",
         "src/development/page-guide.tsx",
-        "src/app/api/development/catalog/route.ts"
+        "src/app/api/development/catalog/route.ts",
+        "src/shell/breadcrumb.ts"
       ],
       "guide_key": null,
       "design_path": "docs/design/development/systems/shell.md",
@@ -9838,7 +9869,12 @@
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/13-graph-overview.png",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/20-navigation-policies.png",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/21-record-page-pattern.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r02/22-record-relationships.png"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/22-record-relationships.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-01-Rules-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-02-Before-After-Table-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-03-R9-Search-Position-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-04-Desktop-Work-Orders-Register-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-05-Desktop-Work-Order-Record-r01.png"
       ],
       "dependencies": [
         "src/components/shell-controls.tsx",
@@ -9863,7 +9899,9 @@
         "src/app/styles/my-work-figma.css",
         "docs/decisions/figma-ui-implementation.md",
         "docs/testing/evidence/figma-ui/README.md",
-        "src/activities/work-guide.ts"
+        "src/activities/work-guide.ts",
+        "docs/decisions/shell-top-bar-amendment.md",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -9875,7 +9913,7 @@
       "build_rank": null,
       "related_keys": [],
       "reviewer": "Dean Fiedler",
-      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed. Shell top bar amendment accepted 16 Oct 2026 and implemented on a branch (docs/decisions/shell-top-bar-amendment.md); review fingerprint not refreshed."
     },
     {
       "key": "system:theme",
@@ -13985,7 +14023,10 @@
         "docs/decisions/cpq-figma-ui.md",
         "docs/design/development/cpq-fixtures.json",
         "docs/decisions/cpq-figma-design.md",
-        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md"
+        "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
+        "src/shell/record-identity.tsx",
+        "src/estimating/discovery-workspaces.ts",
+        "docs/decisions/shell-top-bar-amendment.md"
       ],
       "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
       "visual_status": "Needs review",
@@ -14089,7 +14130,9 @@
         "docs/reference/ui/estimating/cpq-figma-design-r01/README.md",
         "src/components/cpq-formula-editor.tsx",
         "src/components/cpq-quick-test.tsx",
-        "docs/testing/evidence/cpq-rule-editor-upper/README.md"
+        "docs/testing/evidence/cpq-rule-editor-upper/README.md",
+        "src/shell/record-identity.tsx",
+        "docs/decisions/shell-top-bar-amendment.md"
       ],
       "scope_status": "ES-02/ES-03 native CPQ; owner acceptance pending",
       "visual_status": "Needs review",

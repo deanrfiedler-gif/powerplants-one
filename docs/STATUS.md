@@ -1,8 +1,114 @@
 # Current prototype status
 
+## Projects register design differences fixed — 17 October 2026
+
+The eight fixes proposed by the [Projects register comparison](testing/evidence/projects-register/design-comparison.md#fixes-made) are made: grid header colour and At risk alignment, the toolbar count size, 24-hour S6 times in the toolbar and History, the opportunity reference in Sales source (a new `opportunity_reference` field on the project and work-order `sales-handovers` read), "finishes" in At risk rows, the History heading and ring markers, and the phone record header. Values come from the Figma frame's text styles and bound variables. The five states were captured again at 1440 × 900 and 390 × 844 on a disposable synthetic database. The five questions and Q-D1/Q-D2 stay with Dean; the visual status stays Needs review and no review fingerprint is copied.
+
+## Projects register compared with its design — 17 October 2026
+
+The built `/projects` page was captured at 1440 × 900 and 390 × 844 against a disposable synthetic database holding the design's projects, then compared with the five accepted captures under ADR-0053 rule 7. The [comparison record](testing/evidence/projects-register/design-comparison.md) finds the layout, columns, views, toolbar, selection panel, phone rows and tab bar as drawn. It lists 18 differences: eight proposed fixes (including 24-hour times under the adopted S6 rule), five adaptations already recorded and five questions for Dean. The next-milestone, overdue and At risk columns follow the design rules; two questions remain (an At risk milestone, overdue on a closed project). Nothing is fixed yet, no application code changed, and the visual status stays Needs review.
+
+## Projects register design locked in — 17 October 2026
+
+An audit of the Figma file on 17 October found one accepted page without a decision record: the Projects register `209:46`, which Dean accepted on 11 October ("Proceed with your recommendations") and which was built on 13 October under [projects-register-native.md](decisions/projects-register-native.md). Asked again, Dean answered "Yes, accept as drawn (Recommended)". The [design decision](decisions/projects-register-design.md) records the rules, departures P1–P7 and what is open, and [five icon-free captures](reference/ui/projects/projects-register-design-r01/README.md) are retained with hashes. The named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet"; Dean saved it after the capture commit ("It's saved."), and the File index row now names the record. Still open: comparing the built page and its register read with the captures, phone multi-select (adopted, not drawn), rail-count meaning and the shell rollout. No code, read model, migration, permission or parent ID changes.
+
+## /schedule late shell-context layout shift — 17 October 2026
+
+The required F13 browser proof could fail at random on /schedule (0.144 in a diagnostic run, against the 0.1 budget). When the Planner painted before the shell context arrived, the Scheduling tabs then pushed its controls down 77 px in the same frame as the rail's More button dropped 702 px. The tabs now keep their row while the context loads, and More appears once the context is known. Forcing that order scores 0.146 on main and 0.006 with the change. Normal loads fall to 0.005–0.021 on every F13 page except /projects, which is fixed separately, and the F13 cases passed 25 repeated runs. Details are in the [shell system record](design/development/systems/shell.md#planner-and-more-when-the-shell-context-arrives-late-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+
+## Supply readiness states corrected (audit SUP-1) — 17 October 2026
+
+Material readiness for a demand now follows an explicit state table in the [readiness contract](contracts/supply-chain-readiness.md) (SCM-06, SCM-08). Three faults from the 15 October code audit are fixed: a shortfall with an on-time promise read Blocked and one with a late promise read At risk (now the other way round); an approved demand with nothing allocated read Evidence needed (now a shortage, Blocked or At risk); and forecast demand could not reach Not assessed (it now always does). The field readiness gate in draft [PR #541](https://github.com/deanrfiedler-gif/powerplants-one/pull/541) treats Blocked and At risk alike; its own copy of the allocation rule must take the same fix, after which an unallocated linked demand blocks dispatch instead of reading Unknown. Dean then [decided](decisions/supply-readiness-promise-rules.md) two further rules: only a supplier-confirmed promise counts as cover, and a promise whose date has passed leaves the demand Blocked. Code delivery only; no business acceptance is recorded.
+
+## Appointment detail design accepted — 17 October 2026
+
+Dean accepted the Figma design for the SV-04 appointment page (`/service/appointments/[id]`): "Yes, lock in the polished SV-04 design". It is the page where the [field readiness gate](decisions/field-readiness-gate-proposal.md) is decided before a crew leaves. The [decision](decisions/appointment-detail-figma-design.md) records it as the named Figma version "Appointment detail — shared record layout, accepted", and the [retained captures](reference/ui/service/appointment-detail-design-r01/README.md) are seven icon-free PNGs with hashes.
+- One scrolling page on the Work order record layout, with a readiness Tag beside the state (Dean's answers to Q1–Q3: "Proceed based on your recommendations.").
+- Dispatch held or Ready to dispatch with its reasons; Parts and customer site readiness derived from the records, never ticked by hand; job pack acknowledgements and Returns; customer contact recorded, never sent.
+- Desktop, tablet, phone 390 and 320, six phone states, and the site readiness dialog and sheet; five proposed departures (D1–D5) and one proposed page part.
+
+This is a design decision only. No code, route, migration, permission or capability changes; the built page still shows stacked panels, and the gate criteria depend on draft [PR #541](https://github.com/deanrfiedler-gif/powerplants-one/pull/541). No device, accessibility or operational review is recorded.
+
 ## /projects first-load layout shift — 17 October 2026
 
-The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) remains open. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) is fixed in the entry above. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+
+## Repository ownership and visibility — 17 October 2026
+
+Dean owns this work and keeps the repository public. A [LICENSE](../LICENSE) now states that all rights are reserved and that the repository is published for viewing only; third-party fonts, dependencies, the Powerplants name and logo, and others' retained references keep their own terms. The [visibility decision](decisions/repository-visibility.md) records the facts checked (free CI and secret scanning while public, Actions volume), the rules that stay strict, and when to go private. The "PPO - Design" Figma file was open to anyone with its link; its access is now limited to invited people. CI is unchanged.
+
+## Parallel contribution rules and repository security — 17 October 2026
+
+Dean adopted the [parallel contribution rules](decisions/parallel-contribution-rules.md), which replace CONTRIBUTING.md's one-writer rule. Contributors, human or agent, claim work with an early draft PR, write only in a dedicated worktree cut from current `main`, edit shared files such as this one narrowly, keep each decision in one record, and claim migration numbers in the draft PR. STATUS.md no longer names a single current writer; open draft PRs show who holds which task. Dean also adopted [AI tool roles and cross-model review](decisions/cross-model-review.md). Claude builds and oversees; ChatGPT is the independent reviewer and research partner. PRs touching migrations, grants, calculations, security or owner decision papers need a second-model review before merge. The ChatGPT project instructions were trimmed to fit the role line within 8,000 characters.
+
+At Dean's request, secret scanning, secret-scanning push protection, Dependabot alerts and Dependabot security updates are now enabled on the repository. A push containing a recognised credential is now refused. Also at Dean's request, protected `main` now requires branches to be up to date with `main` before merging (strict enforcement on), which supersedes the "strict up-to-date enforcement is off" note of 16 October below. The seven required checks and administrator enforcement are unchanged. This is documentation and repository-settings work only; no application, migration or deployment changes.
+
+## Workbench parts-proposal contract proposed (B0) — 17 October 2026
+
+Build step B0 of the [estimating configurator model](decisions/estimating-configurator-model.md) is drafted as the [workbench parts proposal contract](contracts/workbench-parts-proposal.md) (PPO-EST-PARTS-PROPOSAL-CONTRACT). It specifies the price-free proposal every workbench hands to CPQ, from CM5, CM6, CM8 and CM9:
+- an envelope, readiness, lines, findings, assumptions and documents, as strict `snake_case` JSON at `schema_version` 1;
+- exact decimal quantities, stable line keys, per-line basis hashes and stated size limits, with refusal codes;
+- receiving into CPQ with Workbench origin and the Keep override / Use new value / Remove decisions, through CPQ's existing receiving resolution;
+- field-by-field mappings from ES-08 and Fertigation.
+
+Fifteen open items stay with their build steps, including which ES-08 positions become lines and which Fertigation records are supplied parts. The contract is a proposal for Dean's review. It adds no code, migration or permission, and ES-08 and Fertigation behave as before until B2 and B4.
+
+## Estimating configurator model adopted — 17 October 2026
+
+Dean set out his intended estimating model, had it recorded as a proposed decision, then adopted it: "Adopt the recommended answers to Q1-Q9 and the CM1-CM11 proposals. Record my decision in the record and update the affected decisions." The [decision](decisions/estimating-configurator-model.md) has three parts:
+- the Estimation Wizard is the hub and routes each system;
+- CPQ is the single priced line table, where estimators can also enter Product IDs directly;
+- the Screen and Priva Fertigation workbenches, and future potting, controls, sensors and automation workbenches, generate a shared price-free **parts proposal** and supporting documents, which flow into CPQ and, if chosen, the quotation.
+
+CM1–CM11 and the recommended answers to Q1–Q9 are adopted. Twenty affected records now carry a dated note pointing to the decision, with their original text retained. Among the superseded statements are ADR-0054's "no category-to-specialist routing", ES-08's direct estimate receiving and pricing, and ADR-0038's "no automatic SKU or estimate line". The ChatGPT project instructions point to the decision and drop the superseded DEC-R1.
+
+Adoption sets direction only. The application is unchanged until the build steps B0–B6 are delivered, each as its own reviewed change, starting with B0, the parts-proposal contract. How the quotation returns to the Sales representative remains a separate open gap.
+
+## Figma Components page consolidated and mapped — 17 October 2026
+
+Dean approved making the Figma Components page the single source of PPO design components ("Proceed with the plan and your recommended answers to D1–D6"). 212 main components moved there with their node IDs kept; five early parts were retired to the historical Shell page; CPQ parts stay on their own accepted page and proposal-only parts stay on their proposal pages. Hashes of 90 frames on eight accepted pages matched before and after, so no accepted design changed. The [decision record](decisions/figma-components-page.md) lists D1–D6 and what remains open.
+
+Each component register record now carries a `figma` mapping and each specification a "Figma components" section: 12 Mapped, 7 Partial, 4 Proposal only, 24 None. The register check rejects malformed mappings and any file link. A mapping is not visual alignment, review or acceptance; no review fingerprint was added.
+
+## Figma pages aligned with the Template — 17 October 2026
+
+Dean approved the page-alignment register: "I approve the register as proposed: the 16 re-skins (Quotations after the A1 lock-in, Job pack after the gate's named version), archive Shell v2 73:4, the File index text fixes and the My jobs tidy-up." The [decision record](decisions/figma-page-template-alignment.md) lists every change. Fifteen accepted pages in "PPO - Design" now open with the Template's page header, with the declaration copied from their decision records. Their frames sit in the Template's five Sections, with names, node IDs and content unchanged: layer fingerprints matched on 12 pages, and instance and flow counts matched on all 15. Shell v2 (proposal) `73:4` moved to the Archive group. Three File index rows were corrected, and 54 stale component labels were replaced by pointer notes. Job pack followed once Dean had saved the gate's named version, with its A1 gate section left as it was. Quotations still waits on the A1 lock-in. Proposal pages are re-skinned at acceptance. The top-bar breadcrumb change belongs to its own lock-in. No named version was saved and no accepted design changed.
+
+## AI and internal communications threads accepted — 17 October 2026
+
+Dean proposed a dedicated page in PPO for AI and internal communications, with a sidebar like Claude Code's. A conversation belongs to a record such as a deal, side conversations branch off it, and colleagues and an AI agent are tagged in. He asked that PPO be designed for AI agents eventually doing most of the work. The [threads decision](decisions/ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP) quotes his words. The same day Dean accepted it: "I accept the AI and internal communications threads proposal and Amendment A2 with your recommendations and the recommended answers to Q1 to Q12. Carl's name stays subject to his agreement." It adopts:
+- **The page:** "Conversations" at `/conversations`, with threads grouped by record, nested branches and tracked questions in My Work. Record links are drawn from each reader's own access, and a context sidebar gathers the record's documents, contacts and related records;
+- **The agent:** named Carl after the founder of Powerplants Australia, subject to Carl's and the current owners' agreement. It is always labelled as AI and never sends to customers. It checks records before asking a person, uses only what every participant can see, and acts for the person who tagged it;
+- **Voice:** a microphone in every composer, and a hands-free driving mode for reps on the road. Carl answers aloud, messages to colleagues are read back before sending, and anything that saves to a record waits until the person has stopped. Powerplants sets a driving policy first;
+- **Read-only sharing:** of one record for a colleague who cannot open it, limited to people with a share right, time-limited, with restricted sections hidden and recorded in the access review. It needs its own AD-01 decision;
+- **Autonomy:** a ladder earned per action type from approval evidence; nothing above drafting is in use;
+- **Order:** a build that starts with threads between people (T1), plus seven scenarios and fourteen further ideas;
+- **Amendment A2:** [Amendment A2](decisions/ppo-assistant-direction.md#amendment-a2--stored-record-threads-17-october-2026) to the PPO Assistant's rule that chat is never stored, issued as r02 of PPO-AI-DEC. Messages posted to record threads are stored; side-panel chat is not.
+
+Still to do before a build:
+- Carl's agreement and the current owners' agreement to the name;
+- Dean's decision on A1 (provider);
+- an AD-01 decision on record sharing;
+- the AI2 speech provider and a Powerplants driving policy;
+- the Figma design with Dean's named version.
+
+No code, migration, permission, route, Figma frame or parent ID changes. The ChatGPT instructions are unchanged: they carry no AI guidance and point to this file.
+
+**Design lock-in, 17 October 2026:** Dean accepted the Conversations design in Figma, then moved its entry point to a top-bar icon with a badge; three named versions are saved ([section 14](decisions/ai-communications-threads-proposal.md#14-design-reference-and-verification)). [Fifteen icon-free captures](reference/ui/my-work/conversations-r01/README.md) are retained with hashes, and its eleven components moved to the Figma Components page. No `/conversations` route exists, so the page has no design register entry yet.
+
+## Shell top bar amendment accepted and built — 16 October 2026
+
+Dean asked for Pipedrive-style breadcrumbs ("Pipedrive only use the active page name in the breadcrumbs section…") and for the global search to stay in one place, centred in the top bar. He adopted the recommended rules R1–R9 and answers Q1–Q5 and had the named version "Shell top bar amendment — accepted" saved. The [decision](decisions/shell-top-bar-amendment.md) records his words, the rules and the Figma lock-in: the shared Shell / Top bar now has equal side zones with the 403 px search centred, and 232 breadcrumb overrides on 27 accepted pages follow the table's After column; the issued captures were detached first and are unchanged. [Six icon-free captures](reference/ui/application-shell/shell-top-bar-amendment-r01/README.md) are retained. In the app, `src/shell/breadcrumb.ts` shows the page or owner / page (never the department or a default view; records by reference) and the desktop header is one grid with the search in the centre column. Built on a branch for review; CI, owner visual review of the application and deployment are separate. On 17 October Dean adopted the recommendation to name the working company in the account control instead of a chip beside it, which had pushed the search up to 132 px left of centre. The CPQ records now publish their identity (a stacked follow-up branch): the rule editor shows the rule key, and Configure & price shows its deal's reference, because a configuration has none of its own and no SYN-CPQ identifier is invented. No parent ID changes.
+
+## Field readiness gate, first build — 17 October 2026
+
+Draft pull request on `feat/field-readiness-gate`, stacked on the UX benchmark decisions (#539). It builds P1 to P3 of the accepted [field readiness gate](decisions/field-readiness-gate-proposal.md) (section 10):
+- **Parts at dispatch.** Readiness policy `SYN-PPO-P04` v2 (seed 107) adds the Dispatch-stage criterion "Parts ready for the stated material scope", derived from the Supply Chain readiness of demands linked to the visit. New scope revisions bind v2; existing visits keep v1. Nobody records a pass; the preparer records "No parts needed for this visit" or a permitted exception. A supply change after dispatch cleared holds it again and tasks the service owner; the booking never moves.
+- **Technician Return.** The exact recipient returns the exact issue with reasons and a note. It holds dispatch, tasks the preparer and the service owner, and waits for a revision or the preparer's "No change needed" answer. Acknowledgement keeps its words; no "Declined" state exists.
+- **Checker Return task.** A checker's return tasks the preparer; a successor revision completes return and check tasks.
+
+Migration 0107 carries the full registry ripple in `AGENTS.md`. No capability, Activity kind or identity type is added, and `snapshot()`, `PackSnapshot` and OUT-09 are unchanged. The Figma lock-in is amendment A06 (Job pack) and A07 (My jobs) with [twelve icon-free captures](reference/ui/service/field-readiness-gate-r01/README.md); **Dean saved the named version "Field readiness gate — accepted" and supplied its link on 17 October 2026** (the link is not recorded here; Claude has not verified the version name). Both sections now read "(accepted)"; the six frame caption layer names were renamed afterwards and need a later named version. Customer site readiness, the issue lead time, the parts ladder (needs SC-05 Q1 and live reservations), the planner's not-opened marker and an offline return are the next increments. Delivery, owner visual review and business acceptance stay separate.
+
 
 ## Shell first paint and create-form leave review — 16 October 2026
 
@@ -71,7 +177,7 @@ Dean named a Powerplants Australia problem: technicians arrive on site to missin
 
 It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR-18, TR-04 to TR-07 and BP-01 §13.2. It lists the migration, seed, permission and test-suite impact of a build, and asks seven questions with recommended answers.
 
-New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
+New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (accepted)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
 
 ## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
 

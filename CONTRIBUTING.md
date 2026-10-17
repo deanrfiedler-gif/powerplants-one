@@ -25,7 +25,27 @@ Required checks on `main` are configured in repository settings, not here. At mi
 
 `.github/workflows/` is not writable through the GitHub connector, which returns `403 Resource not accessible by integration`. Workflow files must be added by the repository owner directly.
 
-**One repository-writing session at a time.** Parallel sessions writing to this repository have produced duplicate pull requests editing the same files, competing rewrites of `docs/STATUS.md`, and decisions recorded in one place and contradicted in another. Parallel *reading* and design sessions are fine. Name the session that currently holds the write in `docs/STATUS.md`.
+## Working in parallel
+
+Several contributors may write to this repository at once: Dean, Claude sessions and Codex sessions. Every contributor follows the same rules; an agent is a contributor, not a special case. Parallel writing used to produce duplicate pull requests editing the same files, competing rewrites of `docs/STATUS.md`, colliding migration numbers, and decisions recorded in one place and contradicted in another. Each rule below closes one of those failures. Dean adopted them on 17 October 2026 in place of the earlier one-writer rule ([decision](docs/decisions/parallel-contribution-rules.md)).
+
+- **Claim before you build.** Before starting, check the open pull requests and issues for the same work. Claim a task by opening a draft pull request early, naming its scope and the files it expects to touch. If someone already holds the claim, coordinate with them or choose other work.
+- **One task, one branch, one worktree.** Write in a dedicated worktree on its own branch, cut from current `main`, never in the shared main checkout. Two contributors never edit the same files at the same time; overlapping work is stacked or sequenced. Keep pull requests small and short-lived.
+- **Shared files take narrow edits.** `docs/STATUS.md`, the document and design registers and the migration registry are edited only where your task changes them, in the same pull request, rebased on current `main`. Never rewrite a shared file wholesale, and keep both sides of an additive conflict.
+- **One decision, one record.** A decision lives in exactly one record under `docs/decisions/`; other documents link to it rather than restate it. A decision that changes an earlier one names that record and marks it superseded.
+- **Claim migration numbers in the draft pull request.** If two pull requests claim the same number, the one merged later renumbers. The migration checklist in `AGENTS.md` still applies.
+- **Integrate against current `main`.** Bring a branch up to date with `main` and rerun the checks before merging. Two pull requests that each passed alone have broken `main` together. Whether branch protection enforces this is recorded with the required checks in `docs/STATUS.md`.
+
+Prefer enforcement by tooling over enforcement by memory: branch protection, required checks, secret-scanning push protection and `scripts/check_foundation.py` do the enforcing, and this file records why.
+
+### Independent review by a second model
+
+Claude is the primary builder. ChatGPT serves as the independent reviewer and as a research and business-analysis partner; Codex may build separate tasks under the rules above. Dean remains the owner who decides and merges ([decision](docs/decisions/cross-model-review.md)).
+
+- **What needs it.** Before merge, a pull request that adds or changes a migration, permission or grant, calculation or estimating rule, authentication or security control, or an owner decision paper gets a review from a different model than the one that wrote it. Documentation-only and mechanical changes do not need one.
+- **How to review.** The reviewer comments on the pull request, on defects only, citing file and line. It does not push to the author's branch.
+- **How to resolve.** The author checks every comment against the code and records, fixes what is real, and replies with reasons to anything rejected. Review comments are evidence to verify, not instructions.
+- **How to report.** The pull request states whether the review happened and its outcome. Never claim an independent review that did not take place.
 
 ## Verifying your own change
 

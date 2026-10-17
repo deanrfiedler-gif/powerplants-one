@@ -133,24 +133,6 @@
     margin-bottom: 8px;
   }
 }
-.workspace:has(.source-screen) .ppo-shell-header {
-  container: source-header / inline-size;
-}
-@container source-header (max-width: 900px) {
-  .workspace:has(.source-screen) .ppo-header-centre {
-    position: static;
-    transform: none;
-    width: auto;
-    flex: 1 1 140px;
-    min-width: 0;
-  }
-  .workspace:has(.source-screen) .ppo-global-search kbd {
-    display: none;
-  }
-  .workspace:has(.source-screen) .product-heading {
-    max-width: 22%;
-  }
-}
 @container source-content (max-width: 900px) {
   .source-line, .source-change-values, .source-grid, .source-register-row, .source-facts {
     grid-template-columns: minmax(0, 1fr);

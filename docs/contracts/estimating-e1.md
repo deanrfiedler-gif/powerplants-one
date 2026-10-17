@@ -1,5 +1,7 @@
 # BP-04 E1 physical and API contract
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](../decisions/estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this contract (CM9, CM4): chosen customer-eligible workbench documents join the safe output as appendices bound by exact hash, and a saved line can carry its exact Variant binding. Contract changes are specified in their build steps. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 **Updated:** 14 September 2026 · Implemented E1 contract with adopted extension specified separately below.

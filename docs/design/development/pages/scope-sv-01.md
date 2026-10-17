@@ -18,7 +18,7 @@ The composition below comes from the [proposed native refinement](../../../decis
 
 Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–6 and 14; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md) and [r02](../../../reference/ui/service-cases/native-refinement-r02/README.md)). The shell is a separate module and is not drawn.
 
-- **Host (not drawn).** The shell supplies the 76 px rail and the 64 px header, with breadcrumb *Service / Service requests*, global search and quick add. Registered as a `full-bleed` module workspace with `navigation: "workspace"`, so the shell hides its Service tab row (D6). The module draws no masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
+- **Host (not drawn).** The shell supplies the 76 px rail and the 64 px header, with breadcrumb *Service requests* (shell top bar amendment, 16 October 2026), global search and quick add. Registered as a `full-bleed` module workspace with `navigation: "workspace"`, so the shell hides its Service tab row (D6). The module draws no masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
 - **Toolbar** (60 px, white, full bleed), shared by Board and List:
   - Board/List segmented control.
   - *Open requests* scope menu: Open, Include closed and Closed only (D5).

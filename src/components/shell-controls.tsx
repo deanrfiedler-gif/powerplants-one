@@ -9,6 +9,7 @@ import {
   useState,
   useSyncExternalStore,
   type KeyboardEvent,
+  type ReactNode,
 } from "react";
 import { useShell } from "./shell-provider";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
@@ -62,9 +63,12 @@ async function read<T>(path: string, signal: AbortSignal): Promise<T> {
 export function ShellControls({
   module,
   page,
+  children,
 }: {
   module: string;
   page: string;
+  // The header's stable mounts, placed after the account fallback in the end zone.
+  children?: ReactNode;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -89,6 +93,28 @@ export function ShellControls({
     searchRequest = useRef<AbortController | null>(null);
   const generation = useRef(0),
     restoringFocus = useRef(false);
+  // A new page starts with every panel closed and the search empty, as a fresh mount once did. The
+  // controls themselves stay mounted, so the header's zones and mounts are never replaced.
+  const [shownPath, setShownPath] = useState(pathname);
+  if (shownPath !== pathname) {
+    setShownPath(pathname);
+    setPosition(undefined);
+    setPanel(null);
+    setQ("");
+    setResults(null);
+    setSearchError("");
+    setSearching(false);
+    setSelected(-1);
+    setRetry(0);
+  }
+  useEffect(() => {
+    generation.current++;
+    opener.current = null;
+    restoringFocus.current = false;
+    // The search field once left with the page; focus does not stay in it on the next one.
+    if (input.current && document.activeElement === input.current) input.current.blur();
+    return () => searchRequest.current?.abort();
+  }, [pathname]);
   useEffect(() => {
     const lock = () => {
       generation.current++;
@@ -151,7 +177,7 @@ export function ShellControls({
     const media = window.matchMedia("(min-width: 781px)");
     const breakpoint = () => {
       setPanel(null);
-      if (document.activeElement?.closest(".ppo-shell-controls")) document.getElementById("main")?.focus();
+      if (document.activeElement?.closest(".ppo-shell-controls [data-shell-header-control]")) document.getElementById("main")?.focus();
     };
     media.addEventListener("change", breakpoint);
     window.addEventListener("resize", resize);
@@ -327,8 +353,11 @@ export function ShellControls({
   );
   return (
     <div className="ppo-shell-controls">
+      {/* R9: the global search alone, at a fixed width in the centre of the top bar. */}
       <div className="ppo-header-centre" data-shell-header-control>
         {wide && searchField}
+      </div>
+      <div className="ppo-header-end">
         <button
           className="ppo-top-action ppo-quick-add"
           aria-label="Quick add"
@@ -336,67 +365,69 @@ export function ShellControls({
           aria-expanded={panel === "quick"}
           aria-controls="shell-utility-panel"
           onClick={(event) => show("quick", event.currentTarget)}
+          data-shell-header-control
         >
           <ProductIcon name="plus" />
         </button>
-      </div>
-      <div className="ppo-header-utilities" data-shell-header-control>
-        {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & Development workspace" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
-        {!wide && (
+        <div className="ppo-header-utilities" data-shell-header-control>
+          {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & Development workspace" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
+          {!wide && (
+            <button
+              id="shell-mobile-search"
+              className="ppo-top-action"
+              aria-label="Open global search"
+              title="Search"
+              aria-expanded={panel === "search"}
+              aria-controls="shell-search-panel"
+              onClick={(event) => show("search", event.currentTarget)}
+            >
+              <ProductIcon name="search" />
+            </button>
+          )}
           <button
-            id="shell-mobile-search"
             className="ppo-top-action"
-            aria-label="Open global search"
-            title="Search"
-            aria-expanded={panel === "search"}
-            aria-controls="shell-search-panel"
-            onClick={(event) => show("search", event.currentTarget)}
+            aria-label="Page guide"
+            title="Page guide: what this page is for and how to use it"
+            aria-expanded={panel === "guide"}
+            aria-controls="shell-utility-panel"
+            onClick={(event) => show("guide", event.currentTarget)}
           >
-            <ProductIcon name="search" />
+            <ProductIcon name="info" />
           </button>
-        )}
-        <button
-          className="ppo-top-action"
-          aria-label="Page guide"
-          title="Page guide: what this page is for and how to use it"
-          aria-expanded={panel === "guide"}
-          aria-controls="shell-utility-panel"
-          onClick={(event) => show("guide", event.currentTarget)}
-        >
-          <ProductIcon name="info" />
-        </button>
-        <button
-          className="ppo-top-action ppo-desktop-utility"
-          aria-label="Quick Help"
-          title="Help: keyboard shortcuts and support"
-          aria-expanded={panel === "help"}
-          aria-controls="shell-utility-panel"
-          onClick={(event) => show("help", event.currentTarget)}
-        >
-          <ProductIcon name="help" />
-        </button>
-        <button
-          className="ppo-top-action ppo-desktop-utility"
-          aria-label="Notifications"
-          title="Notifications"
-          aria-expanded={panel === "notifications"}
-          aria-controls="shell-utility-panel"
-          onClick={(event) => show("notifications", event.currentTarget)}
-        >
-          <ProductIcon name="bell" />
-        </button>
-      </div>
-      <div className="ppo-account-fallback" data-shell-header-control>
-        <button
-          className="ppo-top-action"
-          aria-label="Account"
-          title="Account"
-          aria-expanded={panel === "account"}
-          aria-controls="shell-utility-panel"
-          onClick={(event) => show("account", event.currentTarget)}
-        >
-          <span className="account-avatar" aria-hidden="true">{accountInitials(context?.display_name)}</span>
-        </button>
+          <button
+            className="ppo-top-action ppo-desktop-utility"
+            aria-label="Quick Help"
+            title="Help: keyboard shortcuts and support"
+            aria-expanded={panel === "help"}
+            aria-controls="shell-utility-panel"
+            onClick={(event) => show("help", event.currentTarget)}
+          >
+            <ProductIcon name="help" />
+          </button>
+          <button
+            className="ppo-top-action ppo-desktop-utility"
+            aria-label="Notifications"
+            title="Notifications"
+            aria-expanded={panel === "notifications"}
+            aria-controls="shell-utility-panel"
+            onClick={(event) => show("notifications", event.currentTarget)}
+          >
+            <ProductIcon name="bell" />
+          </button>
+        </div>
+        <div className="ppo-account-fallback" data-shell-header-control>
+          <button
+            className="ppo-top-action"
+            aria-label="Account"
+            title="Account"
+            aria-expanded={panel === "account"}
+            aria-controls="shell-utility-panel"
+            onClick={(event) => show("account", event.currentTarget)}
+          >
+            <span className="account-avatar" aria-hidden="true">{accountInitials(context?.display_name)}</span>
+          </button>
+        </div>
+        {children}
       </div>
       <section
         id="shell-search-panel"

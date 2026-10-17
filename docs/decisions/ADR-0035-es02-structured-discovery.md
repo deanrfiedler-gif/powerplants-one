@@ -8,6 +8,8 @@ status: Implemented and verified in synthetic scope; owner acceptance pending
 
 # ADR-0035 — Structured ES-02 discovery and exact saved reads
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this record (CM1): a system with no confirmed route, or whose workbench proposal has not reached CPQ, becomes a Review finding rather than an informational absence, and the outgoing handover adds the confirmed route for each system. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 Dean requested execution of the supplied ES-02 implementation prompt r03 and
 refinement plan r04. This decision implements that independent scope under
 PPO-010, EST-01–EST-09, E2-D02/D03 and DR-02. The starting checkout is

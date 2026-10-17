@@ -6,6 +6,24 @@ The record host combines the existing fertigation header, presentation kit and c
 
 Use `tests/helpers/fertigation-board-scope.ts` for the deterministic synthetic eight-finding/candidate-failure state. `FN-T118` in `tests/browser/fertigation.spec.ts` remaps every child identity for a new scope, creates an authorised saved host through the real Discovery API and walks all nine views, the row editor, section sheet and history. Existing tests cover editing, stale revision, denied access and ambiguous command recovery. A standalone fixture may not fabricate a business session.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Estimating parts, in the private "PPO - Design" Figma file
+
+- Fertigation / Context strip `408:83674`
+- Fertigation / Section menu `408:83690`
+- Fertigation / Section item `408:298`
+- Fertigation / Section head `408:323`
+- Fertigation / Metric tile `408:310`
+- Fertigation / Token `408:11`
+- Fertigation / Severity badge `408:30`
+- Fertigation / Next action row `408:329`
+- Fertigation / Scope readiness `408:83651`
+- Fertigation / Headroom row `408:83328`
+- Fertigation / Concept node `408:83348`
+
+Parts from the accepted ES-02 Priva Fertigation Workbench page (408:4). The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 At 1440 × 1000, preserve the two 240 px navigation columns, record header/context strip, 24 px body gutters and independently scrolling workspace. Existing saved rail preferences remain effective. Register actions stay at the right edge of bounded tables. Headings sit outside cards; charts use their native calculated values and consistent scales. Timeline end and unused-window captions occupy separate lines so neither obscures the other.

@@ -5,9 +5,18 @@ import { useShell } from "../../../components/shell-provider";
 import { plannerContext } from "../../navigation";
 
 export function SchedulingNavigation() {
-  const { context } = useShell(),
+  const { context, error } = useShell(),
     path = usePathname(),
     search = useSearchParams();
+  // F13: the page can paint before the shell context names its permissions. Hold the tab row
+  // until then (a placeholder anchor with no href takes the tabs' height), so the page below
+  // does not move down when the tabs arrive. Without the Planner permission the row still goes.
+  if (!context && !error)
+    return (
+      <nav className="scheduling-navigation" aria-label="Scheduling workspace" aria-hidden>
+        <a className="scheduling-navigation-placeholder">&nbsp;</a>
+      </nav>
+    );
   if (!context?.navigation.includes("planner")) return null;
   const c = plannerContext(new URLSearchParams(search.toString()));
   const query = new URLSearchParams({

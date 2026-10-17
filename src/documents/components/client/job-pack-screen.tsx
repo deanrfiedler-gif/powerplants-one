@@ -38,6 +38,11 @@ import {
   readableValue,
   statusPresentation,
   packSectionTitles,
+  returnReasonCodes,
+  returnReasonHints,
+  returnReasonLabels,
+  returnReasonsText,
+  unansweredReturns,
 } from "../../pack-view";
 import type {
   Pack,
@@ -201,12 +206,217 @@ function DecisionDialog({
   );
 }
 
+// P2. The exact recipient returns the exact issue with one or more reasons and a note. The captured time
+// and fields of the first attempt are kept, so an uncertain response replays instead of returning twice.
+function ReturnDialog({
+  pack,
+  issue,
+  mine,
+  command,
+  onDone,
+  onClose,
+}: {
+  pack: Pack;
+  issue: PackIssue;
+  mine: PackRecipient;
+  command: Command;
+  onDone: () => void;
+  onClose: () => void;
+}) {
+  const [codes, setCodes] = useState<string[]>([]),
+    [note, setNote] = useState(""),
+    [missing, setMissing] = useState({ codes: false, note: false }),
+    captured = useRef<string | null>(null);
+  const label = revisionLabel(issue.revision);
+  async function confirm() {
+    const text = note.trim(),
+      next = { codes: !codes.length, note: !text };
+    setMissing(next);
+    if (next.codes || next.note) return;
+    captured.current ??= new Date().toISOString();
+    const result = await command.send(`pack-issues/${issue.id}/return`, {
+      reason: "Technician return of the exact synthetic issue",
+      assignment_id: mine.assignment_id,
+      assignment_version: mine.assignment_version,
+      presented_hash: issue.output_hash,
+      captured_at: captured.current,
+      reason_codes: returnReasonCodes.filter((c) => codes.includes(c)),
+      note: text,
+    });
+    if (result) onDone();
+  }
+  return (
+    <PackDialog
+      title={`Return issue ${label} to the preparer?`}
+      subtitle={`${pack.display_number} · ${label}`}
+      onClose={onClose}
+      busy={command.busy}
+      actions={
+        <button
+          type="button"
+          className="jp-primary"
+          data-primary
+          disabled={command.busy}
+          onClick={confirm}
+        >
+          {command.busy ? "Recording return…" : `Return ${label} to the preparer`}
+        </button>
+      }
+    >
+      <p>
+        {label} stays as evidence. The preparer gets a task to revise the pack,
+        the service owner sees the visit at risk, and dispatch waits for a
+        revised issue.
+      </p>
+      <fieldset
+        className="jp-return-reasons"
+        aria-describedby={missing.codes ? "jp-return-reasons-error" : undefined}
+      >
+        <legend>Reasons · choose at least one</legend>
+        {returnReasonCodes.map((code) => (
+          <label key={code} className="jp-check-row">
+            <input
+              type="checkbox"
+              checked={codes.includes(code)}
+              disabled={command.busy}
+              onChange={(e) => {
+                setCodes((c) =>
+                  e.target.checked ? [...c, code] : c.filter((x) => x !== code),
+                );
+                setMissing((m) => ({ ...m, codes: false }));
+              }}
+            />
+            <span>
+              {returnReasonLabels[code]}
+              {returnReasonHints[code] && <small>{returnReasonHints[code]}</small>}
+            </span>
+          </label>
+        ))}
+      </fieldset>
+      {missing.codes && (
+        <span id="jp-return-reasons-error" className="jp-field-error" role="alert">
+          Choose at least one reason.
+        </span>
+      )}
+      <div className="jp-field">
+        <label htmlFor="jp-return-note">Note</label>
+        <textarea
+          id="jp-return-note"
+          rows={4}
+          maxLength={1000}
+          data-autofocus
+          value={note}
+          disabled={command.busy}
+          aria-invalid={missing.note || undefined}
+          aria-describedby={`jp-return-note-count${missing.note ? " jp-return-note-error" : ""}`}
+          onChange={(e) => {
+            setNote(e.target.value);
+            setMissing((m) => ({ ...m, note: false }));
+          }}
+        />
+        <small id="jp-return-note-count" className="jp-counter">
+          Required · {note.length} / 1000
+        </small>
+        {missing.note && (
+          <span id="jp-return-note-error" className="jp-field-error" role="alert">
+            Say what is missing or wrong.
+          </span>
+        )}
+      </div>
+      <ErrorNotice error={command.error} />
+    </PackDialog>
+  );
+}
+// Q2. The preparer answers a return without revising: "No change needed", with a reason the
+// technician sees. Dispatch stays held until that technician acknowledges.
+function AnswerDialog({
+  pack,
+  recipient,
+  command,
+  onDone,
+  onClose,
+}: {
+  pack: Pack;
+  recipient: PackRecipient;
+  command: Command;
+  onDone: () => void;
+  onClose: () => void;
+}) {
+  const [note, setNote] = useState(""),
+    [missing, setMissing] = useState(false);
+  async function confirm() {
+    const text = note.trim();
+    setMissing(!text);
+    if (!text || !recipient.return_id) return;
+    const result = await command.send(
+      `pack-returns/${recipient.return_id}/answer`,
+      { reason: "Preparer answer to a technician return", note: text },
+    );
+    if (result) onDone();
+  }
+  return (
+    <PackDialog
+      title={`Answer ${recipient.display_name}'s return`}
+      subtitle={pack.display_number}
+      onClose={onClose}
+      busy={command.busy}
+      actions={
+        <button
+          type="button"
+          className="jp-primary"
+          data-primary
+          disabled={command.busy}
+          onClick={confirm}
+        >
+          {command.busy ? "Recording answer…" : "Record “No change needed”"}
+        </button>
+      }
+    >
+      <p>
+        {recipient.display_name} returned this issue:{" "}
+        {returnReasonsText(recipient.return_reasons ?? [])}. “
+        {recipient.return_note}”
+      </p>
+      <p>
+        If the issue is right as it stands, record why. {recipient.display_name}{" "}
+        sees your reason and then acknowledges this issue or returns it again.
+        Dispatch stays held until then. To change the pack, prepare a revision
+        instead.
+      </p>
+      <div className="jp-field">
+        <label htmlFor="jp-answer-note">Why no change is needed</label>
+        <textarea
+          id="jp-answer-note"
+          rows={3}
+          maxLength={1000}
+          data-autofocus
+          value={note}
+          disabled={command.busy}
+          aria-invalid={missing || undefined}
+          aria-describedby={missing ? "jp-answer-note-error" : undefined}
+          onChange={(e) => {
+            setNote(e.target.value);
+            setMissing(false);
+          }}
+        />
+        {missing && (
+          <span id="jp-answer-note-error" className="jp-field-error" role="alert">
+            Enter the reason the technician will see.
+          </span>
+        )}
+      </div>
+      <ErrorNotice error={command.error} />
+    </PackDialog>
+  );
+}
+
 // What the page says happens next. Read from the server state; it grants and implies nothing.
 function nextStep(
   pack: Pack,
   issue: PackIssue | undefined,
   jobState: string | undefined,
   mine: PackRecipient | undefined,
+  zone: string,
 ): {
   tone: "" | "info" | "complete";
   icon: IconName;
@@ -246,7 +456,17 @@ function nextStep(
               "This issue is under review",
               "The crew, schedule or scope changed after it was issued. Wait for the successor and acknowledge that.",
             )
-          : mine && !mine.acknowledged_at
+          : mine?.return_id && !mine.return_answered_at
+            ? warning(
+                `Returned · ${mine.returned_at ? formatStamp(mine.returned_at, zone) : revisionLabel(issue.revision)}`,
+                `Recorded against issue ${revisionLabel(issue.revision)} as ${mine.display_name}: ${returnReasonsText(mine.return_reasons ?? [])}. The preparer has a task to revise the pack, and the service owner sees the visit at risk. Dispatch stays held until the whole crew acknowledges a revised issue. Your note: “${mine.return_note ?? ""}”`,
+              )
+            : mine?.return_id && !mine.acknowledged_at
+              ? info(
+                  "The preparer answered your return: no change needed",
+                  `“${mine.return_answer ?? ""}” Acknowledge this issue, or return it again.`,
+                )
+              : mine && !mine.acknowledged_at
             ? warning(
                 "Your acknowledgement is required",
                 "Open the exact issued document, then record your own response in Crew acknowledgement.",
@@ -260,12 +480,18 @@ function nextStep(
       "Issue withdrawn",
       "Prepare, check and issue a successor before dispatch. The original issued bytes are retained.",
     );
+  const returned = unansweredReturns(pack.readiness.recipients);
   if (pack.status === "Issued")
     return pack.needs_review
       ? warning(
           "Review required",
           "The crew, schedule or scope changed after this issue. Prepare a successor revision.",
         )
+      : returned.length
+        ? warning(
+            `${returned.map((r) => r.display_name).join(" and ")} returned issue ${issue ? revisionLabel(issue.revision) : ""}`,
+            `${pack.actions.can_prepare ? "Prepare a revision, or record “No change needed” if the issue is right." : "The preparer revises the pack or answers the return."} The service owner has a task saying the visit is at risk. Dispatch stays held until the whole crew acknowledges.`,
+          )
       : pack.readiness.dispatch_hold
         ? warning(
             `Issued ${issue ? revisionLabel(issue.revision) : ""} · dispatch still held`,
@@ -392,7 +618,9 @@ export function JobPackScreen({ id }: { id: string }) {
   const [phoneTab, setPhoneTab] = useState(
       initialView === "revisions" ? "history" : "pack",
     ),
-    [ackConfirm, setAckConfirm] = useState(false);
+    [ackConfirm, setAckConfirm] = useState(false),
+    [returning, setReturning] = useState(false),
+    [answering, setAnswering] = useState<PackRecipient | null>(null);
   const [view, setView] = useState<View>(initialView),
     [decision, setDecision] = useState<Decision | null>(null),
     // null means "no edits yet": the saved revision is shown as it stands, so a reload never
@@ -527,6 +755,24 @@ export function JobPackScreen({ id }: { id: string }) {
     return !!result;
   }
 
+  // My jobs links here with ?action=return so the technician returns the exact issue they hold (A07).
+  const returnLink = search.get("action") === "return",
+    canReturn =
+      !!p &&
+      !!issue &&
+      !!mine &&
+      p.actions.can_acknowledge &&
+      p.status === "Issued" &&
+      !p.needs_review &&
+      !mine.acknowledged_at &&
+      !(mine.return_id && !mine.return_answered_at);
+  const opened = useRef(false);
+  useEffect(() => {
+    if (returnLink && canReturn && !opened.current) {
+      opened.current = true;
+      setReturning(true);
+    }
+  }, [returnLink, canReturn]);
   const frame = (children: React.ReactNode) => (
     <JobPackWorkspace
       menu={
@@ -568,8 +814,12 @@ export function JobPackScreen({ id }: { id: string }) {
       </>,
     );
 
-  const status = p ? statusPresentation(p, jobState) : null,
-    step = p ? nextStep(p, issue, jobState, mine) : null,
+  const returned = p ? unansweredReturns(p.readiness.recipients) : [],
+    mineReturned = !!mine?.return_id && !mine.return_answered_at;
+  const status = p
+      ? statusPresentation({ ...p, returned: returned.length }, jobState)
+      : null,
+    step = p ? nextStep(p, issue, jobState, mine, zone) : null,
     summary = p?.criteria ? readinessSummary(p.criteria) : null,
     drifted = driftSources(p?.basis_drift ?? []),
     sourceChanged =
@@ -766,6 +1016,7 @@ export function JobPackScreen({ id }: { id: string }) {
                 {step &&
                   (!staff ||
                     ["Returned", "Withdrawn"].includes(p.status) ||
+                    (returned.length > 0 && !p.needs_review) ||
                     (!sourceChanged &&
                       [
                         "Queued",
@@ -779,10 +1030,35 @@ export function JobPackScreen({ id }: { id: string }) {
                       <div>
                         <strong>{step.title}</strong>
                         <span>{step.text}</span>
+                        {staff &&
+                          !p.needs_review &&
+                          p.status === "Issued" &&
+                          returned.map((r) => (
+                            <div className="jp-return-quote" key={r.id}>
+                              <p>
+                                {r.display_name} ·{" "}
+                                {returnReasonsText(r.return_reasons ?? [])}
+                                {r.returned_at
+                                  ? ` · ${formatStamp(r.returned_at, zone)}`
+                                  : ""}
+                              </p>
+                              <blockquote>“{r.return_note}”</blockquote>
+                              {p.actions.can_prepare && (
+                                <button
+                                  type="button"
+                                  className="jp-text-button"
+                                  disabled={busy}
+                                  onClick={() => setAnswering(r)}
+                                >
+                                  No change needed…
+                                </button>
+                              )}
+                            </div>
+                          ))}
                       </div>
                     </div>
                   )}
-                {!decision && !ackConfirm && (
+                {!decision && !ackConfirm && !returning && !answering && (
                   <ErrorNotice error={command.error} />
                 )}
                 {revision ? (
@@ -849,15 +1125,28 @@ export function JobPackScreen({ id }: { id: string }) {
                     issue &&
                     mine &&
                     !mine.acknowledged_at &&
-                    !p.needs_review && (
-                      <button
-                        type="button"
-                        className="jp-primary jp-side-action"
-                        disabled={busy}
-                        onClick={() => setAckConfirm(true)}
-                      >
-                        Acknowledge this exact issue as {identity.display_name}
-                      </button>
+                    !mineReturned &&
+                    !p.needs_review &&
+                    p.status === "Issued" && (
+                      // A1-D1: acknowledge or return the exact issue. The acknowledgement keeps its words.
+                      <div className="jp-crew-actions">
+                        <button
+                          type="button"
+                          className="jp-button jp-side-action"
+                          disabled={busy}
+                          onClick={() => setReturning(true)}
+                        >
+                          <Icon name="undo" /> Return
+                        </button>
+                        <button
+                          type="button"
+                          className="jp-primary jp-side-action"
+                          disabled={busy}
+                          onClick={() => setAckConfirm(true)}
+                        >
+                          Acknowledge this exact issue as {identity.display_name}
+                        </button>
+                      </div>
                     )}
                 </CrewCard>
                 {!staff && (
@@ -1198,6 +1487,31 @@ export function JobPackScreen({ id }: { id: string }) {
               </p>
               <ErrorNotice error={command.error} />
             </PackDialog>
+          )}
+          {returning && issue && mine && (
+            <ReturnDialog
+              pack={p}
+              issue={issue}
+              mine={mine}
+              command={command}
+              onClose={() => setReturning(false)}
+              onDone={() => {
+                setReturning(false);
+                r.reload();
+              }}
+            />
+          )}
+          {answering && (
+            <AnswerDialog
+              pack={p}
+              recipient={answering}
+              command={command}
+              onClose={() => setAnswering(null)}
+              onDone={() => {
+                setAnswering(null);
+                r.reload();
+              }}
+            />
           )}
           {decision && (
             <DecisionDialog

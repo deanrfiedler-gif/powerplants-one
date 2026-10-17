@@ -9,6 +9,7 @@ import {
   revisionLabel,
   readinessSummary,
   statusPresentation,
+  unansweredReturns,
 } from "../../pack-view";
 import { sectionKeys, type PackInput } from "../../validation";
 import type {
@@ -206,13 +207,25 @@ export function JobPackHeader({
   onPrint: () => void;
   onSend: (r: PackRecipient) => void;
 }) {
-  const status = p ? statusPresentation(p, jobState) : null;
+  const returned = p ? unansweredReturns(p.readiness.recipients).length : 0,
+    status = p
+      ? statusPresentation({ ...p, returned }, jobState)
+      : null;
   const primary = !p ? null : sourceChanged &&
     (p.status !== "Issued" || !p.needs_review) &&
     !["Withdrawn", "Returned"].includes(p.status) &&
     p.actions.can_prepare ? (
     <button className="jp-primary" disabled={busy} onClick={onPrepare}>
       Review changed sources
+    </button>
+  ) : p.status === "Issued" &&
+    !p.needs_review &&
+    returned > 0 &&
+    p.actions.can_prepare ? (
+    // A1-D3: a technician returned the issue, so the preparer's next step is the revision.
+    <button className="jp-primary" disabled={busy} onClick={onPrepare}>
+      Prepare revision{" "}
+      {revision ? revisionLabel(revision.revision + 1) : "successor"}
     </button>
   ) : p.status === "Issued" && issue && !p.needs_review ? (
     <Link className="jp-button jp-primary" href={`/documents/${issue.id}`}>
@@ -373,6 +386,8 @@ export function DispatchBar({
         {p.readiness.recipients.length ||
           revision?.snapshot.recipients.length ||
           0}
+        {unansweredReturns(p.readiness.recipients).length > 0 &&
+          `, ${unansweredReturns(p.readiness.recipients).length} returned`}
       </span>
       <span className={summary?.blocked.length ? "jp-attention" : ""}>
         <Icon

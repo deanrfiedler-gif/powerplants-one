@@ -3,6 +3,7 @@ import { OfflineEntry } from "./offline-entry";
 import { RunningTimerBanner, WorkTimer } from "./work-timer";
 import { FieldVisitEntry } from "./field-visit-entry";
 import { visitArrivalGuidance } from "../field/visit-guidance";
+import { returnReasonsText } from "../documents/pack-view";
 import { CompletionSubmission } from "./report-screens";
 import Link from "next/link";
 import Image from "next/image";
@@ -159,7 +160,16 @@ export type Job = Ref & {
       assignment_id: string;
       assignment_version: number;
       acknowledged_at: string | null;
+      // Field readiness gate P2 and Q2: the latest return of this issue and the preparer's answer.
+      return_id?: string | null;
+      returned_at?: string | null;
+      return_reasons?: string[] | null;
+      return_note?: string | null;
+      return_answered_at?: string | null;
+      return_answer?: string | null;
     }[];
+    // P1: live Parts readiness from Supply Chain for this visit, before arrival.
+    parts?: { outcome: string; summary: string } | null;
   };
   attendance: {
     id: string;
@@ -481,10 +491,51 @@ function StartPanel({
               </Link>
             </p>
           )}
+          {recipient?.return_id && !recipient.return_answered_at && (
+            // A1-D5: "You returned job pack r03 · waiting for r04".
+            <div className="field-blockers" role="status">
+              <strong>
+                You returned job pack r
+                {String(job.pack?.revision ?? 0).padStart(2, "0")} · waiting for
+                a revision
+              </strong>
+              <p>
+                {returnReasonsText(recipient.return_reasons ?? []).replace(
+                  /^./,
+                  (x) => x.toUpperCase(),
+                )}
+                {recipient.returned_at && (
+                  <>
+                    {" "}
+                    · <Stamp value={recipient.returned_at} />
+                  </>
+                )}
+                . The preparer has a task to revise the pack. Start work opens
+                after you acknowledge the revised issue.
+              </p>
+            </div>
+          )}
+          {recipient?.return_id &&
+            recipient.return_answered_at &&
+            !recipient.acknowledged_at && (
+              <div className="field-preview" role="status">
+                <strong>The preparer answered your return: no change needed</strong>
+                <p>
+                  “{recipient.return_answer}” Acknowledge this issue, or return
+                  it again.
+                </p>
+              </div>
+            )}
+          {job.readiness.parts && (
+            <p>
+              Parts: {job.readiness.parts.summary}.
+            </p>
+          )}
           {job.status === "Confirmed" &&
             job.arrival_actions.can_acknowledge &&
             recipient &&
-            !recipient.acknowledged_at && (
+            !recipient.acknowledged_at &&
+            !(recipient.return_id && !recipient.return_answered_at) && (
               <button
                 onClick={() =>
                   void s.run(
@@ -504,13 +555,28 @@ function StartPanel({
                 I have read and acknowledge this exact pack
               </button>
             )}
+          {job.status === "Confirmed" &&
+            job.arrival_actions.can_acknowledge &&
+            job.pack?.id &&
+            recipient &&
+            !recipient.acknowledged_at &&
+            !(recipient.return_id && !recipient.return_answered_at) && (
+              // A07: return the pack with a reason on the pack page, which holds the exact issue.
+              <p>
+                <Link href={`/service/packs/${job.pack.id}?action=return`}>
+                  Something missing or wrong? Return this pack with a reason
+                </Link>
+              </p>
+            )}
           <ul>
             {job.readiness.recipients.map((x) => (
               <li key={x.id}>
                 {x.display_name}:{" "}
                 {x.acknowledged_at
                   ? "Acknowledged exact issue"
-                  : "Awaiting personal acknowledgement"}
+                  : x.return_id && !x.return_answered_at
+                    ? `Returned this issue · ${returnReasonsText(x.return_reasons ?? [])}`
+                    : "Awaiting personal acknowledgement"}
               </li>
             ))}
           </ul>

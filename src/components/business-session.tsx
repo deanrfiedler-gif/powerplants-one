@@ -118,7 +118,11 @@ export function BusinessSession({ children, hosted = false }: { children: React.
       }
     });
   }
-  const companySummary = companyLabel ? <span className="ppo-working-company" title="Working company">{companyLabel}</span> : null;
+  // Shell top bar amendment R9 (Dean, 17 October 2026): the working company is named by the account
+  // control, not beside it, so the top bar's side zones stay equal and the search stays centred. A marker
+  // shows when one company of several narrows every page; the account panel keeps the full choice.
+  const companyHint = companyLabel ? `Working company: ${companyLabel}` : undefined;
+  const companyMarker = working && companies.length > 1 ? "selected" : undefined;
   const companyChoiceControl = companies.length > 1 ? (
     <div className="identity-choice">
       <label htmlFor="working-company">Working company</label>
@@ -155,7 +159,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     <>
       <HeaderContent slot="account">
       {hosted ? <section ref={account} className="identity-strip identity-compact identity-hosted" aria-label="Private demo account" onKeyDown={event => { if (event.key === "Escape") { setShowIdentity(false); document.getElementById("hosted-account-toggle")?.focus(); } }}>
-        <div className="hosted-account-summary">{companySummary}<strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
+        <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" title={companyHint ? `Account · ${companyHint}` : "Account"} data-company={companyMarker} aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
         <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
           {accountTitle}<div className="ppo-panel-body">
           <ShellAccountProfile name={p?.display_name} />
@@ -182,11 +186,10 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         onKeyDown={(e) => { if (e.key === "Escape" && showIdentity) { setShowIdentity(false); document.getElementById("identity-toggle")?.focus(); } }}
       >
         <div>
-          {p && companySummary}
           <strong>
             {p?.display_name ?? "Choose a demonstration identity"}
           </strong>
-          {p && <button id="identity-toggle" className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" aria-label="Change identity" onClick={toggleAccount}><span className="ppo-identity-label">Change identity</span><span className="account-avatar ppo-local-avatar" aria-hidden="true">{initials}</span></button>}
+          {p && <button id="identity-toggle" className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" aria-label="Change identity" title={companyHint ? `Change identity · ${companyHint}` : "Change identity"} data-company={companyMarker} onClick={toggleAccount}><span className="ppo-identity-label">Change identity</span><span className="account-avatar ppo-local-avatar" aria-hidden="true">{initials}</span></button>}
         </div>
         <div id="identity-controls" className="identity-controls ppo-account-panel" hidden={!!(p && !showIdentity)} role="dialog" aria-label="Account">
         {accountTitle}<div className="ppo-panel-body">

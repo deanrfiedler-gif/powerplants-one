@@ -4,6 +4,12 @@
 
 Owner: Dean Fiedler. ES-05. r20 page types: Review / comparison and Document & evidence workspace. Native source: `QuotationRelease`. The [retained ES-05 r02 reference](../../../reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html) remains unchanged; exact accepted native reference images are unavailable.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Quotation register parts (123:482, 123:493) belong to the register, not this workflow. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 At 1440 and 1024 CSS px retain the PPO shell and one page scroll owner. Four cards distinguish preparation, approval, issue and distribution. Put non-operative conditions before decisions. Exact source/recipient/template disclosure, safe output preview/download and original recovery remain visible alongside attributable history. Avoid printing internal costs in customer output. Long identities and hashes wrap.

@@ -19,9 +19,13 @@ export function documentTitle({ record, page, department }: TitleParts): string 
   return parts.length ? `${parts.join(" · ")} — ${productTitle}` : productTitle;
 }
 
-// Record headers publish an eyebrow such as "Service / SYN-PPO-WO-000001"; the tab needs only the
-// reference, because the department is named at the end of the title.
-export function recordTitle(reference: string, title: string): string {
+// Record headers publish an eyebrow such as "Service / SYN-PPO-WO-000001"; the tab and the breadcrumb
+// need only the reference, because each names the department elsewhere.
+export function recordReference(reference: string): string {
   const parts = reference.split(" / ");
-  return `${parts[parts.length - 1].trim()} · ${title}`;
+  return parts[parts.length - 1].trim();
+}
+
+export function recordTitle(reference: string, title: string): string {
+  return `${recordReference(reference)} · ${title}`;
 }

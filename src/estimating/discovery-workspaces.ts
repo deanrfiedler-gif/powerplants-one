@@ -685,7 +685,8 @@ export async function readDiscoveryWorkspace(p: Principal, id: string) {
       )
         throw error;
     }
-    const presented = [], counts = await discoveryHistoryCounts(c, p, workspace);
+    const presented = [], counts = await discoveryHistoryCounts(c, p, workspace),
+      opportunity = await visibleOpportunity(c, p, workspace.opportunity_id);
     for (const item of options) {
       const cost = await savedOptionCost(c, p, item.option.id);
       presented.push({ ...item, fertigation_handovers: await receivedFertigation(c,p,workspace.id,item.revision.id), history_count: counts.get(item.option.id) ?? null, evaluation: item.revision.input ? compileDiscovery(item.revision.input) : null, cost: cost.status === "Available" ? { status: cost.status, version: cost.version, amount: cost.sell_total, basis: cost.basis } : { status: cost.status } });
@@ -695,7 +696,10 @@ export async function readDiscoveryWorkspace(p: Principal, id: string) {
       options: presented,
       can_edit,
       context: {
-        title: (await visibleOpportunity(c, p, workspace.opportunity_id)).title,
+        title: opportunity.title,
+        // The workspace has no reference of its own; the Estimation wizard register and Configure & price
+        // name it by its deal's.
+        display_number: opportunity.display_number,
         owner: (await c.query<{display_name: string}>("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [p.workspace_id, workspace.owner_id])).rows[0]?.display_name ?? "Estimating owner",
       },
       manual_costing: { status: "Implemented", action: "Review scope for manual costing" },

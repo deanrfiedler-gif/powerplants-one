@@ -725,18 +725,8 @@
   font-size: 12px;
 }
 @media (min-width: 781px) {
-  .app-frame[data-shell-design="fertigation"][data-rail="expanded"]
-    .ppo-shell-header
-    .product-heading {
-    max-width: none;
-    flex: 0 1 auto;
-  }
   .app-frame[data-shell-design="fertigation"] .ppo-breadcrumb-trigger {
     display: none;
-  }
-  .app-frame[data-shell-design="fertigation"][data-rail="expanded"]
-    .ppo-header-centre {
-    width: min(403px, 30vw);
   }
 }
 @media (max-width: 1100px) {
@@ -1175,26 +1165,6 @@
   border: 1px solid var(--control-border);
 }
 @media (min-width: 781px) {
-  .app-frame[data-shell-design="fertigation"]
-    .header-account
-    .ppo-working-company {
-    display: none;
-  }
-  .app-frame[data-shell-design="fertigation"]
-    .ppo-shell-header
-    .ppo-header-centre {
-    position: static;
-    transform: none;
-    flex: 1 1 280px;
-    width: auto;
-    max-width: 460px;
-    margin-left: auto;
-  }
-  .app-frame[data-shell-design="fertigation"]
-    .ppo-shell-header
-    .ppo-header-utilities {
-    margin-left: 0;
-  }
   #ppo-fertigation .fn-context-facts {
     flex-wrap: nowrap;
   }

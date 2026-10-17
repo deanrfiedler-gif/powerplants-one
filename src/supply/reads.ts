@@ -13,6 +13,9 @@ import { projectRow } from "../projects/service";
 import { visibleWorkOrder } from "../service/work-orders";
 import { visibleAppointment } from "../scheduling/planner";
 import { engineeringRow } from "../engineering/service";
+import { todayInZone } from "../projects/model";
+
+import { sourceValidity } from "./validity";
 import {
   supplyRecord,
   financeAllowed,
@@ -52,6 +55,7 @@ export async function materialBasis(
   p: Principal,
   r: SupplyRecord,
   facts: Fact[],
+  now = new Date(),
 ) {
   const allocations = (
     await c.query<Allocation>(
@@ -59,8 +63,9 @@ export async function materialBasis(
       [p.workspace_id, r.id],
     )
   ).rows;
+  // Nothing allocated is a known zero (a shortage), not missing evidence.
   let usable = 0n,
-    complete = allocations.length > 0;
+    complete = true;
   const permittedAllocations: Allocation[] = [];
   const sources: {
     id: string;
@@ -74,29 +79,17 @@ export async function materialBasis(
     try {
       const s = await supplyRecord(c, p, a.supply_id);
       permittedAllocations.push(a);
-      const incompleteReceipt = (
-        await c.query(
-          "SELECT 1 FROM ppo.supply_current_facts WHERE workspace_id=$1 AND record_id=$2 AND kind='Receipt' AND completeness<>'Complete'",
-          [p.workspace_id, s.id],
-        )
-      ).rowCount;
-      const available = (
-        await c.query(
-          "SELECT ppo.supply_usable($1,$2)::text AS usable,(SELECT COALESCE(sum(quantity),0)::text FROM ppo.supply_allocations WHERE workspace_id=$1 AND supply_id=$2 AND basis='Usable') AS allocated",
-          [p.workspace_id, s.id],
-        )
-      ).rows[0];
-      const valid =
-        available.usable !== null &&
-        decimal(available.usable) >= decimal(available.allocated) &&
-        s.completeness === "Complete" &&
-        !incompleteReceipt;
+      const { usable: available, valid } = await sourceValidity(
+        c,
+        p.workspace_id,
+        s,
+      );
       sources.push({
         id: s.id,
         version: s.version,
         observed_at: s.observed_at,
         completeness: s.completeness,
-        usable: available.usable,
+        usable: available,
         valid,
       });
       if (!valid) complete = false;
@@ -107,7 +100,14 @@ export async function materialBasis(
     }
   }
   return {
-    readiness: readiness(r, quantity(usable), complete, facts),
+    // Promise timing is judged on the demand's own calendar day.
+    readiness: readiness(
+      r,
+      quantity(usable),
+      complete,
+      facts,
+      todayInZone(r.data.timezone ?? "UTC", now),
+    ),
     usable: quantity(usable),
     sources,
     allocations: permittedAllocations,

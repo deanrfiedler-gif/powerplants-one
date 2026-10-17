@@ -6,6 +6,12 @@ Owner: Dean Fiedler. Catalogue key: `scheduling-policy-impacts`. Review: pending
 
 Host components `PolicyHolds` and `PolicyResolution` reuse shared Button, Field, SelectField, ReadState and ErrorNotice, within existing PL-04, appointment and My Work surfaces. Incoming handovers are immutable publication impacts and exact current appointment evidence. Outgoing handovers are the unchanged appointment, controlled resolution receipt and refreshed independent readiness. No issued Step 4 mockup exists; the retained r22 states reference informs the composition. This proposed additional content does not amend an accepted visual baseline.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Desktop shows each impact's reason, responsible owner, source publication and permitted next action together. My Work completion never implies resolution. Appointment details expose a native disclosure for the permitted scheduler, with controlled outcome, optional exact replacement appointment and reason. Evaluate current booking reads the exact version/hash/dependencies. Save rechecks those facts. An uncertain result freezes evidence choices and retries the unchanged original.

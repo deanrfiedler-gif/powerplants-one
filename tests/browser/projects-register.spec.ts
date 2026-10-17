@@ -85,9 +85,8 @@ test("saved register facts, restorable filters, selection, exact snapshots and p
       name: "Breadcrumb",
       exact: true,
     });
-    await expect(
-      heading.getByText("Project register", { exact: true }),
-    ).toBeVisible();
+    // Shell top bar amendment R5: the register is Projects' default view, so the breadcrumb is "Projects".
+    await expect(heading.locator(".ppo-crumb")).toHaveText(["Projects"]);
     const headingBounds = (await heading.boundingBox())!;
     const searchBounds = (await page
       .locator(".ppo-header-centre")

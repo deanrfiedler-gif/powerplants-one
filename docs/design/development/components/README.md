@@ -31,6 +31,10 @@ Runnable requires a code-owned renderer ID, declared states, a real application 
 | Feedback | ReadState, ErrorNotice and Status | Offline/empty/success copy is explicitly host-level illustration |
 | Mobile | Same runtime examples at 390/320 px; long-form fixture | Touch devices, screen readers, zoom and keyboard occlusion require acceptance |
 
+## Figma component mapping
+
+Since 17 October 2026 the Components page of the private "PPO - Design" Figma file holds the main components every accepted design uses ([decision](../../../decisions/figma-components-page.md)). Each record's `figma` field and the "Figma components" section of its specification name where the matching design components are: status, Figma page and section, node IDs and names, and a note. Statuses: **Mapped** (the drawn components cover the pattern), **Partial** (some of it), **Proposal only** (components exist only on a proposal page) and **None** (no main component yet; page frames may still draw the pattern). Cite node IDs and names only; never the file link. The check rejects a missing status, location or note, malformed node IDs, components on a None record, an empty list on any other status and any link. A mapping states where the design component is; it is not visual alignment, review or acceptance.
+
 ## Retained theme-board inventory
 
 The entire r22 board remains a retained source, including proposed future patterns. Its sections are accounted for below; a mapped section is not automatically accepted.
@@ -57,7 +61,7 @@ The entire r22 board remains a retained source, including proposed future patter
 1. Identify the existing application implementation and source reference. Preserve scoped variants where their purpose differs.
 2. Add a stable record to `../components.json`. Runnable entries need a code-owned example ID and renderer in `src/development/component-examples.tsx`; Host examples instead bind actual implementations, owning pages and real host fixtures. Isolated fixtures belong in `component-fixtures.ts`; never use operational exports or guessed permissions.
 3. Provide component-specific states, keyboard rules, desktop/mobile behaviour, explicit limitations and current page-register keys. Do not infer a consumer merely because it is in the same module.
-4. Update the Markdown specification and the owning page guide in the same pull request. Keep filenames stable. Record proposed departures as gaps with expected/actual, action, priority and owner.
+4. Update the `figma` mapping when a design component is added, moved or retired in Figma. Update the Markdown specification and the owning page guide in the same pull request. Keep filenames stable. Record proposed departures as gaps with expected/actual, action, priority and owner.
 5. Run `npm run studio:check`, type/lint/build, component tests and relevant existing application tests. Review a representative owning page when extracting presentation code. Run the browser catalogue checks in the repository's supported browser environment.
 6. Record review only after actual comparison. Supply reviewer, date, evidence file paths, result and current fingerprint. Evidence must include fixture/state, viewport, source commit and actual result. Do not replace the reference with a current screenshot merely to pass a comparison.
 

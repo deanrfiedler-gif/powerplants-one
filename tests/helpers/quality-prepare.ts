@@ -486,6 +486,8 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     }),
   });
   await readiness(page, wo, preparation, "ToolPreparation");
+  // SYN-PPO-P04 v2 (field readiness gate R1): the preparer records that this visual-only visit needs no parts.
+  await readiness(page, wo, preparation, "PartsReadiness", "NotApplicable");
   await page.goto(`/service/appointments/${aid}`);
   await contact(page, aid, "Failed");
   await capture(page, info, "journey-failed-contact-owned");

@@ -12,6 +12,7 @@ import {
   readableValue,
   statusPresentation,
   revisionLabel,
+  returnReasonsText,
   type PackCriterion,
 } from "../../pack-view";
 import type {
@@ -48,15 +49,19 @@ function CriterionRow({ c, zone }: { c: PackCriterion; zone: string }) {
       <div>
         {c.label}
         <span className="jp-outcome">{outcomeLabels[c.outcome]}</span>
-        <small>
-          {c.stale
-            ? `Recorded ${outcomeLabels[c.recorded_outcome]}; the scope changed — assess again`
-            : c.expired
-              ? `Recorded ${outcomeLabels[c.recorded_outcome]}; the evidence has expired`
-              : (c.reason ?? "No assessment recorded")}
-        </small>
+        {c.detail && <small>{c.detail}</small>}
+        {(!c.detail || c.reason || c.stale || c.expired) && (
+          <small>
+            {c.stale
+              ? `Recorded ${outcomeLabels[c.recorded_outcome]}; the scope changed — assess again`
+              : c.expired
+                ? `Recorded ${outcomeLabels[c.recorded_outcome]}; the evidence has expired`
+                : (c.reason ?? "No assessment recorded")}
+          </small>
+        )}
         <small>
           {c.blocking_stage} stage ·{" "}
+          {c.criterion_code === "PartsReadiness" ? "from Supply Chain · " : ""}
           {c.exception_allowed
             ? "exception permitted"
             : "no exception permitted"}
@@ -234,10 +239,23 @@ export function CrewCard({
                         {formatStamp(f.occurred_at, zone)}
                       </small>
                     ))}
+                  {/* A06: the "not opened" marker. Opening is a recorded distribution fact, never an acknowledgement. */}
+                  {issue &&
+                    !r.acknowledged_at &&
+                    !r.return_id &&
+                    !pack.distribution.some(
+                      (f) =>
+                        f.recipient_id === r.id &&
+                        ["Opened", "Downloaded"].includes(f.kind),
+                    ) && <small className="jp-not-opened">Not yet opened</small>}
                   <small>
                     {r.acknowledged_at
                       ? `Acknowledged ${formatStamp(r.acknowledged_at, zone)}`
-                      : "Awaiting explicit response"}
+                      : r.return_id && !r.return_answered_at && r.returned_at
+                        ? `Returned ${formatStamp(r.returned_at, zone)} · ${returnReasonsText(r.return_reasons ?? [])}`
+                        : r.return_id && r.return_answered_at
+                          ? `Return answered ${formatStamp(r.return_answered_at, zone)} · no change needed; awaiting acknowledgement`
+                          : "Awaiting explicit response"}
                   </small>
                 </div>
               </div>

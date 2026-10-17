@@ -14,6 +14,32 @@ Design: [PPO-Application-Shell-r17.html](../../../reference/ui/application-shell
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Shell and navigation, in the private "PPO - Design" Figma file
+
+- Brand / Logo `31:215`
+- Shell / Top bar `35:138`
+- v2 / Rail `84:197`
+- v2 / Rail item `73:29`
+- v2 / Menu strip `73:63`
+- v2 / Menu heading `73:48`
+- v2 / Menu item `73:46`
+- v2 / Menu edge `73:54`
+- v2 / More panel `79:51`
+- Rail · Sales (proposal) `190:20238`
+- Rail · Engineering (proposal) `184:18299`
+- Rail · Projects (proposal) `209:515`
+- Rail · Service (proposal) `198:3778`
+- Rail · Supply chain (proposal) `697:163173`
+- Shell / Phone header `38:282`
+- Shell / Quick add (phone) `38:342`
+- v2 / Tab bar (phone) `107:149`
+- v2 / Tab item `107:148`
+- Shell / Tab `38:314`
+
+The proposed top bar with centred search (1046:259953) and breadcrumb (1037:103) stay on the Shell top bar amendment page until its lock-in replaces Shell / Top bar. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.
@@ -183,7 +209,7 @@ Phone: 390 × 844 and 320 px containment; current page heading, Emails/Leads/Tas
 
 Reuse the real application shell, SecondaryMenuFrame, ProductIcon/Icon, Menu and the existing Activity dialogs; no parallel renderer or new isolated fixture is claimed. The `figma-my-work-overview` host fixture and alignment item are in components.json and navigation-fixtures.json. Exact icon-free source images: `PPO-My-Work-01-Desktop-Overview-r01.png` and `PPO-My-Work-09-Phone-Overview-Actions-Activity-r01.png` in the retained My Work page-design capture set. Public standalone Shell v2 images are not supplied; the private inspected Figma frame and accepted module captures are the available reference. Runtime identity/guidance controls, unavailable counters and conditional weather are explicit adaptations. Other module interiors, My Work grids and detail/outcome overlay compositions still require their own implementation. Existing owner review fingerprints are preserved and stale; this edit grants no review.
 
-The release-preparation pass keeps long workspace breadcrumbs whole: show the current destination, or the module while its menu is docked; Page hierarchy exposes the ancestors. The search flows between the heading and utilities. Engineering retains its explicit shared-menu presentation, while My Work opts into Figma styling. Estimating keeps its 1244 px content-width docking rule; the wider default rail can therefore select the drawer at a viewport that docks with the compact rail. Host checks cover these distinct states without altering command or access assertions.
+The release-preparation pass keeps long workspace breadcrumbs whole: show the current destination, or the module while its menu is docked; Page hierarchy exposes the ancestors. The search flows between the heading and utilities. *(Superseded on 16 October 2026 by the shell top bar amendment below.)* Engineering retains its explicit shared-menu presentation, while My Work opts into Figma styling. Estimating keeps its 1244 px content-width docking rule; the wider default rail can therefore select the drawer at a viewport that docks with the compact rail. Host checks cover these distinct states without altering command or access assertions.
 
 The ES-02 and ES-08 consumer proofs share `tests/helpers/shell-header-geometry.ts` to measure flowing controls and quick-add spacing across their existing widths and menu states. ES-08 retains an offset negative control. ES-02 verifies the full-height More panel against the rail and reaches ancestors through Page hierarchy while preserving its dirty-draft stay/discard checks. These bindings replace superseded shell geometry assertions; reference hashes and owner review state remain separate.
 
@@ -207,3 +233,19 @@ The [Estimation Wizard host](estimation-journey.md) now adopts the accepted Figm
 ## Products discovery consumer — 14 October 2026
 
 PD-01 reuses the secondary menu and RegisterTable. Shared CSS adds only #ppo-products:where([data-catalogue]), retaining selector specificity for other consumers. Catalogue styles use a white compact header, model/variant rows and a separate full-width phone list. Host fixture/state examples: tests/browser/products-discovery.spec.ts (filtered/empty/unavailable, selected return, scope reset, responsive menu focus). [Decision](../../../decisions/products-discovery-proposal.md) and [evidence](../../../testing/evidence/products-discovery/README.md) retain owner/device acceptance as pending.
+
+## Shell top bar amendment — 16 October 2026
+
+Dean accepted the [Shell top bar amendment](../../../decisions/shell-top-bar-amendment.md) (Figma page "Shell top bar amendment", named version "Shell top bar amendment — accepted"; [captures r01](../../../reference/ui/application-shell/shell-top-bar-amendment-r01/README.md)). It supersedes the release-preparation breadcrumb and flowing-search paragraph above.
+
+- **Breadcrumb (R1–R8).** `src/shell/breadcrumb.ts` names the page and, beneath something, its nearest owner as a link; never the department, never more than two items, a record by its reference alone, and never a register's default view. The full path stays in the Page hierarchy panel and the tooltip; the tab title keeps the department (NR-17). The "/" separator is hidden from screen readers.
+- **Desktop requirements.** One header grid: a start zone (menu trigger, breadcrumb), the global search alone in the centre column at `clamp(232px, 28vw, 420px)` (403 px at 1440), and an end zone (Quick add 12 px from the search, utilities, account). The side columns are equal, so the search's centre is the top bar's centre on every page; the breadcrumb truncates, owner first, before it reaches the search. With the expanded rail up to 1200 px the search narrows to 220 px. From 781 to 1199 px the current page shows alone with the Page hierarchy button.
+- **Working company (C1, Dean 17 October 2026).** No chip beside the account: the account button's tooltip and description name the working company, a dot on the avatar marks that one company of several is selected, and the account panel keeps the choice.
+- **CPQ consumers (record identity).** Configure & price and the rule editor publish their identity through `usePublishRecordIdentity` only after their authorised reads, and withdraw it on unmount, error or denial: "Rules studio / <rule key>", and "Configure & price / <deal reference>", since a configuration has no SYN-CPQ reference of its own (decision D6).
+- **Mobile requirements.** Unchanged (R7): the page name only, search from its header button, Quick add from More.
+- **Host fixtures.** `tests/unit/shell-breadcrumb.test.ts` (route-level rules, no access to the owner, signed out, CPQ records); the shared-shell, engineering, Projects and CPQ browser suites for header geometry and crumb text. The `top-bar-amendment` state and the `application-shell-top-bar-amendment` alignment item are in components.json. Owner/device review of the application remains pending; no review fingerprint changes.
+
+
+## More held while the shell context loads (F13) — 17 October 2026
+
+The rail items arrive with the shell context and More sits directly below them, so on first load More dropped up to 702 px in that frame, and any other shift in the same frame was multiplied by that distance. `ProductNavigation` now holds `.ppo-rail-bottom` (`hidden`, with `.ppo-rail-bottom[hidden] { display: none; }` in `desktop-shell.css`) until the context or its error is known; More then appears in its final place. A signed-out or failed context ends loading through its error, so More and its sign-in content stay reachable. Geometry, toggle, panel and accessible names are unchanged. Fixture: "F13 Planner controls stay put when the shell context arrives after the page" in `tests/browser/shell-loading.spec.ts`; measurements in the [shell record](../systems/shell.md#planner-and-more-when-the-shell-context-arrives-late-f13-follow-up--17-october-2026). Owner review is pending.

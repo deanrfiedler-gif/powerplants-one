@@ -16,9 +16,18 @@ The register is a full-bleed worklist with a 240 px secondary menu, grouped grid
 
 Phone coordinators use Pack, Readiness and History; recipients read their applicable issue and confirm exact acknowledgement. Review 390/320 CSS px, long text, keyboard focus and overlay menu return.
 
+## Field readiness gate (amendment A06)
+
+Accepted on 16 October 2026 and built in its first increment ([field readiness gate record](../../../decisions/field-readiness-gate-proposal.md), section 10; [Job pack design amendment A06](../../../decisions/job-pack-figma-design.md)). Frames: Job pack page section A1 `958:9304`; captures 01–07, 11 and 12 in [field readiness gate r01](../../../reference/ui/service/field-readiness-gate-r01/README.md). The named Figma version waits for Dean's explicit yes.
+
+- **Recipient, desktop and phone.** Return sits beside the unchanged "Acknowledge this exact issue as …" button in Crew acknowledgement. The Return sheet asks for one or more of six reasons and a required note of up to 1,000 characters, and names "the preparer". After a return, the recipient's notice reads "Returned · time" with the reasons and note; after a "No change needed" answer it quotes the answer and offers acknowledgement again. My jobs links here with `?action=return`, which opens the sheet once for an eligible recipient.
+- **Staff.** An unanswered return shows the state label "Returned by technician", makes "Prepare revision rNN" the primary action and adds a notice that quotes each return, with "No change needed…" for someone who can prepare. The dispatch bar counts returned crew members.
+- **Readiness.** On `SYN-PPO-P04` v2 the Dispatch group lists "Parts ready for the stated material scope" with its words from Supply Chain. Section 07 carries a live parts panel, labelled as not part of the issued pack and hidden in the workbench print. Crew rows show "Not yet opened" until the recipient opens the issue or responds.
+- **Layout rules kept.** Nine `.jp-section-head h2` in the pack panel, and "criteria satisfied" once on the page.
+
 ## Scope limits
 
-The build adds read projections and display preferences, not a migration or new capability. Existing pack.check permission remains applicable to a preparer's own revision when granted, following Dean's delegated decision on 13 October. Every check still identifies an exact saved revision and reason. Current ERP/document/CAD authority and all parent IDs remain unchanged.
+The Job Pack Figma build added read projections and display preferences, not a migration or new capability. The field readiness gate adds migration 0107 and seed 107 and still no capability. Existing pack.check permission remains applicable to a preparer's own revision when granted, following Dean's delegated decision on 13 October. Every check still identifies an exact saved revision and reason. Current ERP/document/CAD authority and all parent IDs remain unchanged.
 
 ## Authority, states and review
 

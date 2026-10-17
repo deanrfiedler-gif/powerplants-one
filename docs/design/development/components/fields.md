@@ -16,6 +16,16 @@ Design: [powerplants-one-theme-style-board-r22.html](../../../reference/ui/theme
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Partial · **Location:** Components › Job pack and Components › Record, in the private "PPO - Design" Figma file
+
+- Job pack / Form field `287:3282`
+- Job pack / Select row `287:3304`
+- Record / Field `224:12`
+
+Job pack / Form field (Default, Edited, Error) and Select row are the drawn editable controls; Record / Field is the read-only label and value. Date, lookup and select controls are not drawn as components. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.

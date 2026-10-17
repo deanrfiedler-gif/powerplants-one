@@ -115,7 +115,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     parent_id: null,
     input: screenInput(),
   });
-  await call(s.path);
+  const deal: string = (await call(s.path)).context.display_number;
   await call(`${s.path}/cpq`);
   await call(`cpq/runs/${runId}`);
   await call(`cpq/revisions/${release.current.id}`);
@@ -131,6 +131,22 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
       exact: true,
     }),
   ).toBeVisible();
+  // Shell top bar amendment R2/R4 (table 1040:62): the owner, then the reference the loaded configuration
+  // publishes. It has no SYN-CPQ reference of its own, so it is its deal's; the tab title adds the record.
+  await expect(page).toHaveTitle(
+    new RegExp(
+      `^${deal} · SYN Controls upgrade qualification · .+ · Configure & price · Estimating & quotation — Powerplants One$`,
+    ),
+  );
+  if (!info.project.name.includes("mobile")) {
+    const crumbs = page.locator(".ppo-crumbs li .ppo-crumb");
+    await expect(crumbs).toHaveText(["Configure & price", deal]);
+    await expect(crumbs.first()).toHaveAttribute("href", "/estimating/cpq");
+    await expect(page.locator(".ppo-crumb-current")).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  }
   await page
     .locator(".cpq-card")
     .filter({
@@ -349,10 +365,32 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     ),
   ).toBe(true);
   await page.screenshot({ path: info.outputPath("cpq-bom.png") });
+  // A configuration that cannot be read publishes nothing: the destination alone, never the URL's ID.
+  const unknown = randomUUID();
+  await page.goto(`/estimating/cpq/${unknown}?option_id=${s.input.option_id}`);
+  await expect(
+    page.getByRole("link", { name: "Return to estimation wizard", exact: true }),
+  ).toBeVisible();
+  await expect(page).toHaveTitle(
+    "Configure & price · Estimating & quotation — Powerplants One",
+  );
+  if (!info.project.name.includes("mobile"))
+    await expect(page.locator(".ppo-crumbs li .ppo-crumb")).toHaveText([
+      "Configure & price",
+    ]);
   await page.goto(`/estimating/rules/${releaseId}`);
   await expect(
     page.getByRole("heading", { name: "Support spacing", exact: true }),
   ).toBeVisible();
+  // Table 1040:62 "Rules studio / INST-SUP-001": the open rule by the key its saved release holds.
+  await expect(page).toHaveTitle(
+    "support_spacing · Support spacing · Rules studio · Estimating & quotation — Powerplants One",
+  );
+  if (!info.project.name.includes("mobile")) {
+    const crumbs = page.locator(".ppo-crumbs li .ppo-crumb");
+    await expect(crumbs).toHaveText(["Rules studio", "support_spacing"]);
+    await expect(crumbs.first()).toHaveAttribute("href", "/estimating/rules");
+  }
   // Frame 486:641 above "Applies when": the context header's "⋯" menu replaces the rule picker,
   // the four rule states are separate, and the view tabs carry counts as descriptions.
   await expect(

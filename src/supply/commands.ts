@@ -22,6 +22,7 @@ import {
 import { recordCommand, factCommand, allocationCommand } from "./validation";
 import { reductionCommand, reductionHolds } from "./reductions";
 import { factsFor, materialBasis } from "./reads";
+import { demandAppointments, reholdForParts } from "../service/parts-hold";
 import {
   factSpecs,
   currentFacts,
@@ -92,7 +93,7 @@ export async function createSupplyRecordInTransaction(
   void _operation;
   void _schema;
   void _version;
-  return (await insert(c, "supply_records", {
+  const saved = (await insert(c, "supply_records", {
     ...values,
     parent_id: cmd.data.demand_id ?? null,
     workspace_id: p.workspace_id,
@@ -100,6 +101,14 @@ export async function createSupplyRecordInTransaction(
     created_by: p.actor_id,
     updated_by: p.actor_id,
   })) as SupplyRecord;
+  // A new parts demand on a visit whose dispatch was cleared holds it again (field readiness R2).
+  await reholdForParts(
+    c,
+    p,
+    await demandAppointments(c, p.workspace_id, saved),
+    `${saved.reference} added`,
+  );
+  return saved;
 }
 export async function saveRecord(p: Principal, input: unknown, update = false) {
   const cmd = recordCommand(input, update);
@@ -173,6 +182,12 @@ export async function reviseSupplyRecordInTransaction(
         [p.workspace_id, cmd.id, ...entries.map(([, v]) => v)],
       )
     ).rows[0];
+    await reholdForParts(
+      c,
+      p,
+      await demandAppointments(c, p.workspace_id, before, saved),
+      `${saved.reference} changed`,
+    );
   } else saved = await createSupplyRecordInTransaction(c, p, input);
   if (before && materialChanges(before, saved).length)
     await impacts(
@@ -314,6 +329,12 @@ async function impacts(
         observed_at: new Date().toISOString(),
         activity_id: activity.id,
       },
+    );
+    await reholdForParts(
+      c,
+      p,
+      await demandAppointments(c, p.workspace_id, demand),
+      `${r.reference}: ${change}`,
     );
   }
 }

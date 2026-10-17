@@ -1,5 +1,7 @@
 # ADR-0017 — Bounded manual estimating and draft quotations
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** the customer-safe projection and the line shape (CM9, CM4): chosen customer-eligible workbench documents join the output as appendices bound by exact hash, and a line can carry its exact Variant binding. Internal costs stay out of customer output. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 **State:** Adopted and implemented for the authorised synthetic E1 slice; actual verification and publication are recorded in the [handover](../delivery/estimating-e1-handover.md). **Parent:** PPO-010 / issue #46. **Date:** 6 September 2026.
 
 Dean said “Proceed” and “Continue” after the proposed sequence to complete PR #44, implement E1, verify the journey and prepare E2 only. Bring this bounded manual slice forward from the master’s Wave B for the private prototype. Preserve the P01–P12 service order, P10 #45 and I2 #43; no live or broader estimating authority is implied.

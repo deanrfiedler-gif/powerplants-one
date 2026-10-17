@@ -13,7 +13,6 @@ import {
   proposeVisit,
   readWorkOrder,
   listWorkOrders,
-  POLICY_ID,
 } from "../../src/service/work-orders";
 import { readOperation } from "../../src/shared/receipts";
 import { saveDraft } from "../../src/service/tickets";
@@ -230,7 +229,7 @@ test("typed work-order creation allocates permanent references and supports many
       expected_version: 1,
       scope_revision_id: randomUUID(),
       scope_version: 1,
-      policy_version_id: POLICY_ID,
+      policy_version_id: "94000000-0000-4000-8000-000000000002",
     }),
     code("VersionConflict"),
   );

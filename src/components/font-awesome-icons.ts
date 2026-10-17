@@ -272,6 +272,7 @@ export const jobPackFontAwesome = {
   print: "print",
   arrow: "arrow-right",
   refresh: "arrows-rotate",
+  undo: "rotate-left",
 } satisfies Record<JobPackIconName, FontAwesomeIcon>;
 
 // src/engineering/materials/components/client/materials-ui.tsx: Released Materials, reused by Change

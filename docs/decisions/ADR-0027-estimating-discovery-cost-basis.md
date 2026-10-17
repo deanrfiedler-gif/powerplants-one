@@ -9,6 +9,8 @@ source_commit: d574b5526d5ff5cf26e814b94682beb439241d3f
 
 # ADR-0027 — Exact discovery basis for manual estimate versions
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this record now (CM3): priced lines come from CPQ. It **supersedes** manual costing as a separate line-entry place at build step B6 (Q2), when CPQ Manual lines take its place. Until then a line belongs to only one of the two. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 ## Scope and authority
 
 Dean authorised the audit's fourth task: connect adopted E2 scope revisions to manual costing and exact Draft quotations. This implements the receiving obligation left explicit in ADR-0026 under #167/EST-01–EST-09. It introduces no pricing formula, automatic line generation, delivery routing, approval, issue or acceptance policy. Existing manual schema-1/2 commands, arithmetic and stored originals remain supported.

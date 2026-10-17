@@ -8,6 +8,8 @@ versioning: git
 
 # ES-08 Screen Configurator Workbench — native build record
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **supersedes** view 04 · Pricing and A2's "Send to estimate" (CM7, CM6): the view becomes Parts (quantities, identities and mapping, no rates) and the action becomes Send to CPQ. It **amends** the drawing-only inputs (CM9): they must be saved with the run before drawings can become quotation appendices. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 On 12 October 2026 Dean asked for the UI page of the Screen Configurator Workbench to be built from the [design board he accepted on 23 September](es08-design-board.md). This record states what was built, which questions that decision left to implementation and how they were settled, where the application departs from the board and why, and what has actually been checked. It adds no calculation rule, migration, capability, grant, seed or receiving-policy change. ADR-0034's engine, commands, receipts and recovery are unchanged.
 
 Scope stays `scope:ES-08` at `/estimating/configurations/{id}/{view}`, tracing CRE-13–CRE-17, EA-16/17, AT-04/28, G06 and D-009. No parent requirement ID is added or renamed.

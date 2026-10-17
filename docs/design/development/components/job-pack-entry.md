@@ -2,6 +2,12 @@
 
 Owner: Dean Fiedler. Catalogue key: job-pack-entry. Shared by Field Technicians and appointment detail; scope SV-05, receiving PL-02/SV-04. Reuses ReadState, Button and ButtonLink and the existing permission-filtered appointment pack endpoint.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Job pack list row (phone) 275:42685 is the register row, not the entry handover. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Display exact pack reference/status and Open job pack. When the server returns no visible pack and can_prepare, display Prepare job pack with the exact appointment query. Otherwise explain unavailable access without claiming that no pack exists. A refresh hides earlier links immediately; denied/error reads keep them hidden. A 401/403/404 response displays a non-error access-unavailable status and refresh control, without claiming that no pack exists. A transport/server failure still displays the shared error and retry control. The optional panel never grants pack access to an appointment-only reader.

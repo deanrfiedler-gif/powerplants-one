@@ -36,6 +36,18 @@ Allocations bind exact supply and demand lines in a declared common unit. Concur
 
 Readiness states for review are **Not assessed**, **Evidence needed**, **At risk**, **Blocked** and **Ready for the stated material scope**. A Ready assessment names all included demands, the source completeness/time, sufficient usable allocations and any remaining scope exclusion. Its validity is limited to that exact scope and evidence point. It establishes no technical release, worker competency, site access, customer agreement, confirmed booking or Finance outcome.
 
+The prototype derives the state for one demand from this table, read top to bottom (`readiness()` in `src/supply/model.ts`, corrected for audit finding SUP-1 on 17 October 2026). It is a synthetic prototype rule, not MYOB or corporate policy.
+
+| Demand class | Demand evidence and allocated sources | Usable allocated | Current promise | State |
+|---|---|---|---|---|
+| Forecast | Any | Any | Any | Not assessed |
+| Approved | Incomplete: demand Partial or Unavailable, no required date, or an allocated source hidden, incomplete or over-allocated | Any | Any | Evidence needed |
+| Approved | Complete | At least the demand quantity | Any | Ready for the stated material scope |
+| Approved | Complete | Less than the demand, including nothing allocated | Complete, SupplierConfirmed, dated from today to the required date, and for at least the shortage | At risk |
+| Approved | Complete | Less than the demand, including nothing allocated | None, Estimated, overdue (dated before today), late, Partial, undated or smaller than the shortage | Blocked |
+
+An empty allocation register is a known zero, so an approved demand with nothing allocated is a shortage, not missing evidence. Incoming allocations never count toward usable. "Today" is the calendar date in the demand's own timezone, and a promise due today still counts. An Estimated date is not cover, and a promise whose date has passed without the goods is broken: both by [Dean's decision of 17 October 2026](../decisions/supply-readiness-promise-rules.md). An overdue promise does not yet raise a review Activity by itself.
+
 Changing or withdrawing a confirmed promise, usable quantity, allocation or inspection result creates an owned impact review against affected demands. One reasoned command may create one shared Activity per declared impact identity; idempotent recovery returns the same Activity/receipt. The recipient reviews the effect using existing Project/Service controls. Lost or duplicate notifications cannot serve as authority to move a booking.
 
 ## Fictional acceptance examples

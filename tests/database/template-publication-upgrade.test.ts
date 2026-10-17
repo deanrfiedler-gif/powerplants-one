@@ -56,7 +56,8 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
     Promise.all(
       tables.map((t) =>
         rows(
-          `SELECT to_jsonb(r) AS value FROM ppo.${t} r ORDER BY to_jsonb(r)::text`,
+          // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
         ),
       ),
     );
@@ -74,7 +75,7 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
   );
   assert.deepEqual(
     afterLedger.filter((r) => r.version > 92).map((r) => r.version),
-    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
+    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.template_publications"), []);
   assert.deepEqual(

@@ -49,10 +49,12 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   const root = page.locator("#ppo-changes");
   await expect(rows(page)).toHaveCount(8);
 
-  // A05 A03: first use is collapsed with the shared 24px disclosure strip; the header names module and destination while it is hidden.
+  // A05 A03: first use is collapsed with the shared 24px disclosure strip. Shell top bar amendment (16 October
+  // 2026): the breadcrumb names the module alone on its register, the default view (R5); the tooltip keeps the path.
   await expect(root).toHaveAttribute("data-menu", "collapsed");
   await expect(page.locator("#ec-menu")).toBeHidden();
-  await expect(page.getByRole("navigation", { name: "Breadcrumb" }).locator(".ppo-crumb")).toHaveText(["Engineering", "Engineering Change-Impact Review", "Change register"]);
+  await expect(page.getByRole("navigation", { name: "Breadcrumb" }).locator(".ppo-crumb")).toHaveText(["Engineering Change-Impact Review"]);
+  await expect(page.locator(".ppo-crumbs")).toHaveAttribute("title", "Engineering / Engineering Change-Impact Review / Change register");
   await expect(page.locator(".product-heading .ppo-product-name")).toBeHidden();
   expect(Math.round((await page.locator(".em-register").boundingBox())!.x)).toBe(Math.round((await root.boundingBox())!.x) + 24);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Engineering Change-Impact Review: Change register/);
@@ -77,7 +79,7 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   expect(mine).toMatchObject({ width: 240, title: "18px|24px|700", icon: "20px|20px|1.7px", link: "42px|8px 10px|12px|6px|14px|20px" });
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked"); // the person's later choice persists
-  await expect(page.locator(".product-heading [data-crumb=view]")).toBeHidden();
+  await expect(page.getByRole("navigation", { name: "Breadcrumb" }).locator(".ppo-crumb")).toHaveText(["Engineering Change-Impact Review"]);
 
   // A06: header fill, rows and rules meet the menu divider on the left and the pane edge on the right.
   const flush = async () => {

@@ -2,6 +2,26 @@
 
 Owner: Dean Fiedler. Scope: SV-05 / SC-06. Reference: [Job Pack r03](../../../reference/ui/job-pack/powerplants-one-job-pack-r03.html). D6-A is the adopted design decision; application visual acceptance remains open.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Job pack, in the private "PPO - Design" Figma file
+
+- Job pack / Section head `275:2578`
+- Job pack / Stage heading `275:2657`
+- Job pack / Fact `275:2595`
+- Job pack / Note `275:2597`
+- Job pack / Callout `275:2601`
+- Job pack / Disclosure `275:2660`
+- Job pack / Criterion row `275:2655`
+- Job pack / List item `275:2735`
+- Job pack / Record row `275:2706`
+- Job pack / Document row `275:2708`
+- Job pack / History row `275:2716`
+- Job pack / Form field `287:3282`
+- Job pack / Select row `287:3304`
+
+Saved-section parts from the accepted Job pack page (272:2). The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 SectionBody is shared by Job pack and Preparation. SectionParts reuses Pair, information grids, task lists, history rows and notes. It presents only data whose formatter matches the exact saved section. Each successful structured view includes the native Exact text as it will be issued disclosure. Unknown, inaccessible, ambiguous or unsupported data retains the original section text. The existing note remains separate.

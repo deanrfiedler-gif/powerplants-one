@@ -16,6 +16,7 @@ import type { readDiscoveryWorkspace } from "../estimating/discovery-workspaces"
 import type { readDraft, listDrafts } from "../cpq/drafts";
 import { api, ErrorNotice } from "./business-ui";
 import { useCrmCommand, useCrmResource } from "./crm-state";
+import { usePublishRecordIdentity } from "../shell/record-identity";
 import { Button, ButtonLink } from "./ui/button";
 import { ProductIcon } from "./product-icons";
 import {
@@ -213,6 +214,13 @@ function ConfigurationEditor({
   refresh: () => void;
 }) {
   const action = useRef<"save" | "draft" | "adopt">("save");
+  // Shell top bar amendment R2/R4: the editor mounts only after every authorised read, and unmounts on
+  // denial, so the breadcrumb names the configuration only while it is shown. A configuration has no
+  // reference of its own (no SYN-CPQ identifier is invented), so it takes its deal's.
+  usePublishRecordIdentity(
+    workspace.context.display_number,
+    `${workspace.context.title} · ${option.label}`,
+  );
   const [hydrating, setHydrating] = useState(false);
   const [input, setInput] = useState<CalculationInput>(() =>
       draftInput(draft, saved?.input ?? blankInput(initialDefinition, basis!)),

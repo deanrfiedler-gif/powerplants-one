@@ -123,6 +123,12 @@ test("dependency edits invalidate recorded reviews; newline normalisation preser
     entry.implementation[0].symbol = "Gone";
     entry.states = [];
     entry.review.evidence = [];
+    entry.figma = {
+      status: "Mapped",
+      location: "https://www.figma.com/design/example",
+      components: [{ node: "not-a-node", name: "Button" }],
+      note: "",
+    };
     const broken = await buildComponentLibrary(root, catalog, {
       ...manifest,
       entries: [entry, entry],
@@ -134,6 +140,7 @@ test("dependency edits invalidate recorded reviews; newline normalisation preser
       "Application export missing",
       "Runnable coverage requires",
       "Review requires",
+      "Figma mapping requires",
     ])
       assert(
         broken.errors.some((e) => e.includes(message)),

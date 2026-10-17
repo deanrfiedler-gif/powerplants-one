@@ -158,3 +158,30 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
   - They were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/service/my-jobs-design-r01/README.md).
 - **Repository checks.** `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `npm run studio:check` and `python3 scripts/build-ui-sequence.py --check` were run on this change; results are in its pull request.
 - **Not evidenced.** Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+
+## 8. Amendment A07 — accept or Return on the phone (16 October 2026)
+
+On 16 October 2026 Dean accepted the field readiness gate with the other five items of the UX benchmark's Decision brief: "I am happy to proceed with all six based on your recommendations." The [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) record (PPO-UXB-DEC-01, decision 4) holds the decision and the [field readiness gate record](field-readiness-gate-proposal.md) holds its rules. Amendment A07 lets the technician accept or Return the job pack from the phone, with a reason, and shows the returned state in My jobs. Sections 1 to 7 describe the design as first accepted; where A07 differs, A07 governs.
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Accept or Return the pack on the phone, with a reason | User decision, 16 October 2026 | Quoted above; A07 in the [amendment register](../design/research/ux-benchmark/amendment-items.csv) |
+| The list and visit wording of A1-D5 | Claude's proposal, accepted by the same decision | The field readiness gate record, section 4 |
+| Named Figma version | **Waiting for Dean's explicit yes** | "Field readiness gate — accepted" is saved only on that yes; the [captures README](../reference/ui/service/field-readiness-gate-r01/README.md) records the save when it happens |
+
+**Design reference.** Page "My jobs · FI-01" `845:44`, section "A1 · Field readiness gate" `959:243132`: My jobs list on Mon 12 Oct 18:35 with one pack returned `959:243133`; visit "can't start yet, you returned r03" `959:243158`; visit ready to start with parts and site confirmed `959:243243`. Notes card `966:17770`. The Return itself is drawn on the Job pack page (amendment A06 of the [Job pack design](job-pack-figma-design.md)), because the technician returns the exact issue they read. Icon-free captures: [field readiness gate r01](../reference/ui/service/field-readiness-gate-r01/README.md), images 08 to 10.
+
+| ID | Departure from sections 1 to 7 | Accepted design before A07 |
+|---|---|---|
+| A1-D5 | List rows say "You returned job pack r03 · waiting for r04", "Acknowledge or return job pack r01" and "Job pack due by …"; "Checked for this visit" gains the parts and site-readiness checks | "Acknowledge job pack r01" and "Job pack not issued yet"; four checks |
+
+**Built in the first increment.** The built My jobs visit is still the FI-01 page of the r05 timer baseline, not this design (section 6). On it, the build adds:
+- "You returned job pack rNN · waiting for a revision" with the reasons and time, and the start notice that work opens after the revised issue is acknowledged;
+- the preparer's "No change needed" answer, quoted, with acknowledgement available again;
+- a "Parts:" line with the derived Parts words;
+- a link that opens the Return sheet on the pack page for the exact issue;
+- the crew list shows "Returned this issue" for a returning crew member.
+
+**Not built yet.** The list-row wording of A1-D5 and the "Checked for this visit" checks belong to the build of this design. "Job pack due by …" and the site-readiness check need the issue lead time (P5) and customer site readiness (P4), which follow in a later increment. Returning a pack offline is not built: the first build is online (R10), and an offline return follows under ADR-0013.
+
+**Verification.** The A1 frames were checked by screenshot when drawn on 16 October; Present mode was not run. The capture copies are recorded in the captures README. The application build's checks are in its pull request.

@@ -12,6 +12,14 @@ Design: [ppo-deal-pipeline_r38.html](../../../reference/ui/deals/ppo-deal-pipeli
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Proposal only · **Location:** Deals (proposal) 549:2, in the private "PPO - Design" Figma file
+
+- Deals/Card `551:947`
+
+Board card from the r37 reference; stays on the proposal page until the Deals design is accepted. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag.
@@ -48,7 +56,7 @@ Title links open the canonical Deal Workspace with the current local Deals URL a
 
 ## Figma component reference — 13 October 2026
 
-The user-specified r37 design is now an editable [Deals proposal](https://www.figma.com/design/epLfuDjst5hUJeqBi3eJo8/PPO---Design?node-id=549-2), separately from the runtime r38 reference. `Deals/Card` (`551:947`) supplies Default and Rotting variants with text properties; `Deals/List row` (`551:948`) and `Deals/Phone list row` (`555:7166`) carry source fixtures. `Deals/List header` (`588:6771`) and the desktop row now reuse the shared PPO Grid cells from accepted Leads. Fields, checkbox options and 30 source SVG icon components support the composed views. Fills, strokes, spacing and radii reuse PPO tokens or scoped source-specific Deals tokens. Existing shared shell and Button definitions were reused without changing their masters.
+The user-specified r37 design is now an editable Deals proposal (`549:2`) in the "PPO - Design" Figma file, separately from the runtime r38 reference. `Deals/Card` (`551:947`) supplies Default and Rotting variants with text properties; `Deals/List row` (`551:948`) and `Deals/Phone list row` (`555:7166`) carry source fixtures. `Deals/List header` (`588:6771`) and the desktop row now reuse the shared PPO Grid cells from accepted Leads. Fields, checkbox options and 30 source SVG icon components support the composed views. Fills, strokes, spacing and radii reuse PPO tokens or scoped source-specific Deals tokens. Existing shared shell and Button definitions were reused without changing their masters.
 
 The 18 board/list/phone fixtures preserve the source names, stage counts, values, primary contacts where shown and next activities; rot, missing-action, overdue and unknown-value examples remain visible. New Figma components are references for `route:/sales/opportunities`, not new runtime exports or catalogue renderers. Existing consumer bindings and runnable state fixtures remain unchanged.
 
