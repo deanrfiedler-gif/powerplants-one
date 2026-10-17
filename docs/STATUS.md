@@ -1,5 +1,15 @@
 # Current prototype status
 
+## Workbench parts-proposal contract proposed (B0) — 17 October 2026
+
+Build step B0 of the [estimating configurator model](decisions/estimating-configurator-model.md) is drafted as the [workbench parts proposal contract](contracts/workbench-parts-proposal.md) (PPO-EST-PARTS-PROPOSAL-CONTRACT). It specifies the price-free proposal every workbench hands to CPQ, from CM5, CM6, CM8 and CM9:
+- an envelope, readiness, lines, findings, assumptions and documents, as strict `snake_case` JSON at `schema_version` 1;
+- exact decimal quantities, stable line keys, per-line basis hashes and stated size limits, with refusal codes;
+- receiving into CPQ with Workbench origin and the Keep override / Use new value / Remove decisions, through CPQ's existing receiving resolution;
+- field-by-field mappings from ES-08 and Fertigation.
+
+Fifteen open items stay with their build steps, including which ES-08 positions become lines and which Fertigation records are supplied parts. The contract is a proposal for Dean's review. It adds no code, migration or permission, and ES-08 and Fertigation behave as before until B2 and B4.
+
 ## Estimating configurator model adopted — 17 October 2026
 
 Dean set out his intended estimating model, had it recorded as a proposed decision, then adopted it: "Adopt the recommended answers to Q1-Q9 and the CM1-CM11 proposals. Record my decision in the record and update the affected decisions." The [decision](decisions/estimating-configurator-model.md) has three parts:
