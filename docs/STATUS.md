@@ -1,5 +1,14 @@
 # Current prototype status
 
+## Estimating configurator model proposed — 17 October 2026
+
+Dean set out his intended estimating model and asked for it to be recorded as a proposed decision. The [proposed decision](decisions/estimating-configurator-model.md) has three parts:
+- the Estimation Wizard is the hub and routes each system;
+- CPQ is the single priced line table, where estimators can also enter Product IDs directly;
+- the Screen and Priva Fertigation workbenches, and future potting, controls, sensors and automation workbenches, generate a shared price-free **parts proposal** and supporting documents, which flow into CPQ and, if chosen, the quotation.
+
+The record proposes CM1–CM11, a pilot build order on Screen systems and nine questions for Dean. It also lists the current statements it would supersede, among them ADR-0054's "no category-to-specialist routing", ES-08's direct estimate receiving and pricing, and ADR-0038's "no automatic SKU or estimate line". Nothing is adopted and no code, migration or design changes. How the quotation returns to the Sales representative remains a separate open gap.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
