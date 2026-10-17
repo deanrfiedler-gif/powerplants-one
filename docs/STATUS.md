@@ -41,6 +41,10 @@ Dean approved making the Figma Components page the single source of PPO design c
 
 Each component register record now carries a `figma` mapping and each specification a "Figma components" section: 12 Mapped, 7 Partial, 4 Proposal only, 24 None. The register check rejects malformed mappings and any file link. A mapping is not visual alignment, review or acceptance; no review fingerprint was added.
 
+## Figma pages aligned with the Template — 17 October 2026
+
+Dean approved the page-alignment register: "I approve the register as proposed: the 16 re-skins (Quotations after the A1 lock-in, Job pack after the gate's named version), archive Shell v2 73:4, the File index text fixes and the My jobs tidy-up." The [decision record](decisions/figma-page-template-alignment.md) lists every change. Fourteen accepted pages in "PPO - Design" now open with the Template's page header, with the declaration copied from their decision records. Their frames sit in the Template's five Sections, with names, node IDs and content unchanged: layer fingerprints matched on 11 pages, and instance and flow counts matched on all 14. Shell v2 (proposal) `73:4` moved to the Archive group. Three File index rows were corrected, and 34 stale component labels were replaced by pointer notes. Quotations waits on the A1 lock-in and Job pack on the gate's named version. Proposal pages are re-skinned at acceptance. The top-bar breadcrumb change belongs to its own lock-in. No named version was saved and no accepted design changed.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
