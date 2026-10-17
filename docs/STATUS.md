@@ -1,5 +1,15 @@
 # Current prototype status
 
+## Service requests design accepted — 17 October 2026
+
+Dean accepted the Figma design for the SV-01 register and SV-02 request record (`/service/tickets`, `/service/tickets/new`, `/service/tickets/[id]`): "I accept the Service requests SV-01 and SV-02 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-requests-figma-design.md) records it as the named Figma version "Service requests — accepted", and the [retained captures](reference/ui/service/service-requests-design-r01/README.md) are thirteen icon-free PNGs with hashes.
+- The register uses the Work orders grid, with triage queues in the side menu, a Board view and the large snapshot. Row checkboxes reverse the 23 September D7.
+- The request record uses the shared record layout, with a Before triage bar, view tabs and Complete triage edited in the tab.
+- Log a request stays a page. Its duplicate check offers to add the call to a matching open request.
+- Later stages wait for ADR-0043, which stays proposed. A shell follow-up should stop the 1024 px top bar clipping the account button.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
 ## Service planner design accepted — 17 October 2026
 
 Dean accepted the Figma design for the PL-01 planner (`/schedule`): "I accept the PL-01 Service planner design with your recommendations, including D1–D6 and the two open items as recommended". The [decision](decisions/service-planner-figma-design.md) records it as the named Figma version "Service planner — accepted", and the [retained captures](reference/ui/service/service-planner-design-r01/README.md) are twelve icon-free PNGs with hashes.

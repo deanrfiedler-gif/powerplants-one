@@ -266,3 +266,8 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - UXB-12 adopted: one tray for To plan and On hold work, and a Needs attention band with one suggested action per row, including the gate's dispatch holds.
   - E9-style cards: 12 px type, one border, initials in the time line, travel as a tinted extension with a car on long segments, and no reasons. Pastel purple circle avatars; away people in full-height dimmed rows.
   - Twelve icon-free captures are retained. Building the page is not decided; hold reasons and a suggestions read come first.
+
+- [Service requests design — owner decision](service-requests-figma-design.md): the SV-01 register (`/service/tickets`, `/service/tickets/new`) and SV-02 request record (`/service/tickets/[id]`), drawn in Figma on the accepted Work orders layouts. Accepted on 17 October 2026 ("I accept the Service requests SV-01 and SV-02 design with your recommendations, including D1–D6 and Q1–Q2") as the named version "Service requests — accepted".
+  - Grid register with triage queues in the side menu, a Board view and the large snapshot. Row checkboxes reverse the 23 September D7.
+  - The request record has a Before triage bar and view tabs. Complete triage is edited in the tab. Log a request offers to add the call to a matching open request.
+  - Thirteen icon-free captures are retained. Building the page is not decided; later stages wait for ADR-0043.

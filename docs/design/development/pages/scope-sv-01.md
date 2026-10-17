@@ -16,6 +16,16 @@ The composition below comes from the [proposed native refinement](../../../decis
 
 ## Desktop
 
+Accepted design: the [Service requests design decision](../../../decisions/service-requests-figma-design.md) of 17 October 2026, with captures 01–03 (desktop 1440 × 900) and 08 (tablet 1024) in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md).
+
+- **Register:** the Work orders grid, with queues in the side menu (D1): All open and My requests; Triage: New to triage, Urgent, Needs information and Overdue clarifications; After triage: No work order yet and Work order linked. Row checkboxes carry Open in sequence and Export list (D2, replacing 23 September D7).
+- **Columns:** Request, Summary, Stage, Priority, Attention, Next action, Action due, Action owner, Customer, Site, Equipment, Linked work, Request owner, Received and Channel. Urgent and High are Tags; Normal and Low are text; unknowns read “Not confirmed” or “Not recorded” in amber.
+- **Board:** one click away in the toolbar, with three lanes for the built stages (New, Needs information, Triaged).
+- **Snapshot:** a row opens the large snapshot (D3), with Open request and Complete triage.
+- Nothing new is built. Later stages wait for ADR-0043 (D6).
+
+Accepted design: capture 04 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md), from the [Service requests design decision](../../../decisions/service-requests-figma-design.md) of 17 October 2026. A page (Q1) with the form in three groups (Caller and customer, Issue, Location and impact) and a “Check before creating” panel. When an open request matches the customer, site and equipment, it offers “Add as customer statement” (23 September D8). The check is a prompt, not a block; Create request stays available.
+
 Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1–6 and 14; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md) and [r02](../../../reference/ui/service-cases/native-refinement-r02/README.md)). The shell is a separate module and is not drawn.
 
 - **Host (not drawn).** The shell supplies the 76 px rail and the 64 px header, with breadcrumb *Service requests* (shell top bar amendment, 16 October 2026), global search and quick add. Registered as a `full-bleed` module workspace with `navigation: "workspace"`, so the shell hides its Service tab row (D6). The module draws no masthead or title band. A visually hidden `h1` reads *Service requests*; the page description belongs in the page-information panel.
@@ -108,6 +118,8 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
 
 ## Mobile
 
+Accepted design: captures 09, 10 and 13 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md). List rows with the summary, received time, reference, customer and a priority Tag, then the attention line and the stage. Five states: loading, no matches with removable filter chips, could not load, view only and save refused.
+
 Proposed module interior of 390 × 716 at a 390 × 844 window (board frame 11).
 
 - **Host (not drawn):** the shell's 64 px header and 64 px bottom navigation. The Service tab row is hidden for a registered module workspace (D6).
@@ -136,6 +148,8 @@ Hosted by `application-shell`. Uses `sales-board`, `sales-table`, `drawer`, `fie
 - **Not drawn:** denied access (the register lists only permitted records, so there is no per-row denied state); phone versions of the remaining register states, which follow frame 6's content in frame 20's layout.
 
 ## Visual references
+
+Accepted Figma design: [Service requests design r01 captures](../../../reference/ui/service/service-requests-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-requests-figma-design.md). Images of the phone Filters sheet, desktop register states, Board drag and Move, and hover states are still missing.
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html), SHA-256 `23e92f96…18fa5f`. Retained design reference, delivered for review.
 - [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `01-register-board.png`, `02-register-list-scrolled.png`, `03-register-list-preview.png`, `04-register-triage.png`, `05-log-request.png`, `06-register-states.png` and `11-phone-register.png`, each 1364 × 896 except the phone image, which is 390 × 716. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed composition, not an approved mockup.

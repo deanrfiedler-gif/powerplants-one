@@ -14,6 +14,8 @@ This route captures a new service request during a call (SV-01 task 1). Today it
 
 ## Desktop
 
+Accepted design: capture 04 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md), from the [Service requests design decision](../../../decisions/service-requests-figma-design.md) of 17 October 2026. A page (Q1) with the form in three groups (Caller and customer, Issue, Location and impact) and a “Check before creating” panel. When an open request matches the customer, site and equipment, it offers “Add as customer statement” (23 September D8). The check is a prompt, not a block; Create request stays available.
+
 Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frame 5). The shell is a separate module and is not drawn. Detail is in the [SV-01 contract](scope-sv-01.md#desktop).
 
 - **Header:** a back link to *Service requests*, the title *Log a service request*, and a line stating that the Service Manager confirms the response and assignment at triage.
@@ -27,6 +29,8 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frame 5).
 
 ## Mobile
 
+Accepted design: no phone frame of Log a request is drawn; the desktop groups stack in one column.
+
 Proposed module interior of 390 × 716 (board frame 18).
 
 - **Form:** stacks in one column, with 48 px fields and 16 px text. The frame shows it scrolled to *Location and impact*, where the equipment choice finds the match.
@@ -39,6 +43,8 @@ Proposed module interior of 390 × 716 (board frame 18).
 Uses `fields`, `lookup` (customer, site and equipment), `validation`, `status` and `buttons`. Drawn state: one strong match and one earlier request on the same equipment. Not drawn: no matches, several partial matches, and a lookup failure. A failed duplicate check must say so and still allow creation.
 
 ## Visual references
+
+Accepted Figma design: [Service requests design r01 captures](../../../reference/ui/service/service-requests-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-requests-figma-design.md). Images of the phone Filters sheet, desktop register states, Board drag and Move, and hover states are still missing.
 
 - [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `05-log-request.png` (1364 × 896). This is a render of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
 - [Board images r02](../../../reference/ui/service-cases/native-refinement-r02/README.md): `18-phone-log-request.png` (390 × 716), a render of canvas version 8. Proposed.
