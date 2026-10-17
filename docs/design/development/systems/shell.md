@@ -165,6 +165,21 @@ The ES-02 and ES-08 source comparisons verify the adopted flowing header through
   On `main` the test fails on every labelled page (rail width) and on /customers and /schedule compact (shift). CI is the authoritative run.
 - **Reviews:** a functional change to shared shell sources. It changes no accepted visual state, but source fingerprints mark dependent reviews stale under the register rules; no review is recorded here.
 
+## Planner and More when the shell context arrives late (F13 follow-up) — 17 October 2026
+
+- **Problem:** a diagnostic run of the F13 sequence measured /schedule with the labelled rail at 0.144, against 0.018–0.059 normally. One frame held it all: the Planner controls and filters (1160 px wide) moved down 77 px while the rail's More button moved 702 px (y 142 → 844). Both follow the shell context. Business pages render once the identity read (`/api/v1/local-session`) settles; the shell context is a separate read. When the identity read settles first, the Planner paints before the context. When the context then arrives, `SchedulingNavigation`, which rendered nothing until it knew the Planner permission, inserts its 77 px tab row (8 + 44 + 8 px, a 1 px border and a 16 px margin) above the controls. In the same frame the rail items arrive and push More from just below the department label to below the last item. A frame's score multiplies the moved area by the furthest move: the controls' move alone scores under 0.01, but with More's 702 px in the same frame it scored 0.146. `BookingContinuation` renders nothing without a saved booking step and was not involved.
+- **Reproduction:** holding `/api/v1/shell/context` until the Planner controls have painted, or delivering it together with the first schedule read, scored 0.146 (labelled) and 0.147–0.148 (compact) on every run on unmodified main.
+- **Change:**
+  - `SchedulingNavigation` keeps its row while the shell context loads: a hidden placeholder anchor with no href takes the tabs' height and the row is `aria-hidden`, as ProductHeader does for the module tab row. An identity without the Planner permission still loses the row when the context arrives. This applies to every Scheduling workspace page that renders the tabs.
+  - `ProductNavigation` holds More (`.ppo-rail-bottom`) until the context or its error is known, so it appears in its final place instead of moving. A signed-out or failed context ends loading through its error, so More stays reachable then.
+- **Not changed:** rail geometry, the order and content of the rail and More, the tab destinations, permissions and the planner reads.
+- **Proof:** compiled build, disposable synthetic database, 1440 × 900, coordinator.
+  - New case "F13 Planner controls stay put when the shell context arrives after the page" in `tests/browser/shell-loading.spec.ts` holds the shell context until the controls have painted, then releases it. On main it fails every time: controls top 82 → 159 px, More top 142 → 844 px, layout shift 0.146. With this change the controls stay at 159 px, More paints once at 844 px, and the shift is 0.006.
+  - With the context held, or delivered together with the schedule read, /schedule scores 0.005–0.010 (main 0.146–0.148).
+  - The F13 cases passed 25 of 25 repeated runs (50 tests). Removing More's move from every page's context frame lowers normal loads on every page except /projects: /work 0.005–0.021, /customers 0.006–0.018, /service/work-orders 0.006–0.018, /schedule 0.005–0.018 (main over three runs: 0.016–0.059). /projects stays at 0.062–0.086 in this build because its own source is fixed separately (PR #545).
+  - The Planner, Scheduling workspace, department navigation, navigation safety and shell-loading browser specs, and the static desktop-shell UI fixture, pass locally at desktop and phone widths. CI is the authoritative run.
+- **Reviews:** a functional change to shared shell sources; no visual state is accepted or recorded here.
+
 ## Create forms ask before leaving — 16 October 2026
 
 - **Problem (F42, principle 11):** typing into `/customers/new` or `/service/tickets/new` and then following a rail link left with no prompt, although the shared guard (`guardBrowserNavigation`, through `useUnsavedChanges`) protects most edit forms.

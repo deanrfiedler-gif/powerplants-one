@@ -191,6 +191,8 @@
   .ppo-rail .ppo-rail-group { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 4px; padding-top: 8px; border-top: 1px solid #4a5366; }
   .ppo-rail-group-label { display: none; }
   .ppo-rail-bottom { flex: 0 0 auto; }
+  /* F13: More is held while the shell context loads (product-navigation.tsx). */
+  .ppo-rail-bottom[hidden] { display: none; }
   /* The selected item is a plain white tile with a filled navy glyph: no tint and no edge bar (Dean, 10 October 2026). */
   .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: none; }
   .ppo-rail .ppo-rail-item[aria-expanded=true] { box-shadow: inset 0 -3px #a8d8ff; }

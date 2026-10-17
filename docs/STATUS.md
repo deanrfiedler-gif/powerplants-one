@@ -1,5 +1,9 @@
 # Current prototype status
 
+## /schedule late shell-context layout shift — 17 October 2026
+
+The required F13 browser proof could fail at random on /schedule (0.144 in a diagnostic run, against the 0.1 budget). When the Planner painted before the shell context arrived, the Scheduling tabs then pushed its controls down 77 px in the same frame as the rail's More button dropped 702 px. The tabs now keep their row while the context loads, and More appears once the context is known. Forcing that order scores 0.146 on main and 0.006 with the change. Normal loads fall to 0.005–0.021 on every F13 page except /projects, which is fixed separately, and the F13 cases passed 25 repeated runs. Details are in the [shell system record](design/development/systems/shell.md#planner-and-more-when-the-shell-context-arrives-late-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.

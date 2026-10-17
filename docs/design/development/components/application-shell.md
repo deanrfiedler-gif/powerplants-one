@@ -207,3 +207,8 @@ The [Estimation Wizard host](estimation-journey.md) now adopts the accepted Figm
 ## Products discovery consumer — 14 October 2026
 
 PD-01 reuses the secondary menu and RegisterTable. Shared CSS adds only #ppo-products:where([data-catalogue]), retaining selector specificity for other consumers. Catalogue styles use a white compact header, model/variant rows and a separate full-width phone list. Host fixture/state examples: tests/browser/products-discovery.spec.ts (filtered/empty/unavailable, selected return, scope reset, responsive menu focus). [Decision](../../../decisions/products-discovery-proposal.md) and [evidence](../../../testing/evidence/products-discovery/README.md) retain owner/device acceptance as pending.
+
+
+## More held while the shell context loads (F13) — 17 October 2026
+
+The rail items arrive with the shell context and More sits directly below them, so on first load More dropped up to 702 px in that frame, and any other shift in the same frame was multiplied by that distance. `ProductNavigation` now holds `.ppo-rail-bottom` (`hidden`, with `.ppo-rail-bottom[hidden] { display: none; }` in `desktop-shell.css`) until the context or its error is known; More then appears in its final place. A signed-out or failed context ends loading through its error, so More and its sign-in content stay reachable. Geometry, toggle, panel and accessible names are unchanged. Fixture: "F13 Planner controls stay put when the shell context arrives after the page" in `tests/browser/shell-loading.spec.ts`; measurements in the [shell record](../systems/shell.md#planner-and-more-when-the-shell-context-arrives-late-f13-follow-up--17-october-2026). Owner review is pending.
