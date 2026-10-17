@@ -49,7 +49,7 @@ import {
   inspect,
 } from "../helpers/service-inspections";
 import { inspectionCommand } from "../../src/inspections/service-commands";
-import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
+import { estimateReviewSeedGrants, quotationReleaseSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -714,8 +714,10 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
       .filter(([key]) => key !== "id")
       .sort(([a], [b]) => a.localeCompare(b))),
   )).sort();
-  const expectedGrants = [...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...estimateReviewSeedGrants(grants), ...quotationReleaseSeedGrants(grants)];
-  assert.equal(expectedGrants.length, 25);
+  const baseGrants = [...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...estimateReviewSeedGrants(grants), ...quotationReleaseSeedGrants(grants)];
+  assert.equal(baseGrants.length, 25);
+  // Seed 108 copies every live Opportunity and Project read, including those the earlier seeds added.
+  const expectedGrants = [...baseGrants, ...conversationSeedGrants([...grants, ...baseGrants])];
   assert.deepEqual(
     grantContents(upgradedGrants.filter((g) => !originalGrantIds.has(g.id))),
     grantContents(expectedGrants),

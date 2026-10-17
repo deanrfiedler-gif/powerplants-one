@@ -1,5 +1,5 @@
 import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
-import { productsSeedGrants, maintenanceSeedGrants, estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
+import { productsSeedGrants, conversationSeedGrants, maintenanceSeedGrants, estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { canonical } from "../../src/platform/operations";
@@ -262,7 +262,9 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
     const additions = after[i]
       .filter((x) => !ids.has(x.row.id))
       .map((x) => x.row);
-    assert.equal(additions.length, 90);
+    const conversation = additions.filter((g) => String(g.capability).startsWith("conversation."));
+    const earlier = additions.filter((g) => !String(g.capability).startsWith("conversation."));
+    assert.equal(earlier.length, 90);
     const shape = (grants: Record<string, unknown>[]) =>
       grants
         .map(({ id: _id, ...value }) => {
@@ -271,9 +273,11 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
         })
         .sort();
     assert.deepEqual(
-      shape(additions),
+      shape(earlier),
       shape([...accessReviewSeedGrants(before[i].map((x) => x.row)), ...accessTeamSeedGrants(before[i].map((x) => x.row)), ...accessApplicationSeedGrants(before[i].map((x) => x.row)), ...accessRequestSeedGrants(before[i].map((x) => x.row)),...accessInspectionSeedGrants(before[i].map((x) => x.row)),...maintenanceSeedGrants(before[i].map((x) => x.row)),...productsSeedGrants(before[i].map((x) => x.row)),...schedulingPolicySeedGrants(before[i].map((x) => x.row)),...incidentSeedGrants(before[i].map((x) => x.row)),...estimateReviewSeedGrants(before[i].map((x) => x.row)),...quotationReleaseSeedGrants(before[i].map((x) => x.row))]),
     );
+    // Seed 108 copies every live Opportunity and Project read, including those the earlier seeds added.
+    assert.deepEqual(shape(conversation), shape(conversationSeedGrants([...before[i].map((x) => x.row), ...earlier])));
   }
   assert.equal(
     (await database().query("SELECT count(*)::int n FROM ppo.field_timers"))

@@ -773,7 +773,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   await migrate();
   await seed();
   assert.deepEqual(
-    await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
     grants,
   );
   assert.deepEqual(await readDiscoveryWorkspace(p, g.id), before);
