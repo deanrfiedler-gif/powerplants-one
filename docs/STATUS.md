@@ -1,5 +1,15 @@
 # Current prototype status
 
+## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
+
+Stage S2 of Dean's [D-025 decision](decisions/customer-communications-d025.md) is built in draft [PR #569](https://github.com/deanrfiedler-gif/powerplants-one/pull/569), on Dean's instruction "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." It must not merge before [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566), and Dean must authorise S2 before it merges. The [S2 record](decisions/customer-communications-core-s2.md) and [API contract](contracts/customer-communications.md) describe it:
+- Migration 0108: one communication record per message and an append-only ledger in the R4 states, plus Queued for the named sender's confirmation. Held, Failed and OutcomeUnknown keep one owned `CustomerContact` follow-up open (TR-03).
+- PPO prepares each message from its source record; a named person with the new `customer_message.send` duty confirms the exact content; a worker drains `CustomerMessageConfirmed` outbox jobs through a provider-neutral channel whose only implementation is synthetic, and reconciles unknown outcomes before any retry.
+- Customer, project and order timelines and an outbound queue (API only); per-contact notice preferences (Allowed or Do not notify, with who, when and why); per-class switches, Off by default, changed only with `customer_message.switch`; and the CUS-EMAIL template family under DK-06's rules with an SQL binding allowlist.
+- No UI: timeline rows, the preference control and the send confirmation need accepted Figma designs first (ADR-0053). Five proposed departures from the paper are listed for Dean in the S2 record.
+
+**S3 (carrier and tracking fields, the order delivery contact, and the dispatch and delay notices) is not started.** No provider, credential, mailbox, DNS change or customer message exists. Code delivery only; no business acceptance is recorded.
+
 ## Projects register design differences fixed — 17 October 2026
 
 The eight fixes proposed by the [Projects register comparison](testing/evidence/projects-register/design-comparison.md#fixes-made) are made: grid header colour and At risk alignment, the toolbar count size, 24-hour S6 times in the toolbar and History, the opportunity reference in Sales source (a new `opportunity_reference` field on the project and work-order `sales-handovers` read), "finishes" in At risk rows, the History heading and ring markers, and the phone record header. Values come from the Figma frame's text styles and bound variables. The five states were captured again at 1440 × 900 and 390 × 844 on a disposable synthetic database. The five questions and Q-D1/Q-D2 stay with Dean; the visual status stays Needs review and no review fingerprint is copied.

@@ -30,6 +30,8 @@ const exclusive = new Set([
   "template-publication.test.ts",
   "template-publication-base.test.ts",
   "template-use.test.ts",
+  // D-025 S2 resets and grants default-denied customer message duties.
+  "customer-communications.test.ts",
 ]);
 const files = (await readdir(new URL("../tests/http/", import.meta.url)))
   .filter((name) => name.endsWith(".test.ts"))

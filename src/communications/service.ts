@@ -1,7 +1,7 @@
 import type { PoolClient } from "pg";
 import { customerMessageChannel } from "../adapters/synthetic-mailbox";
 import type { ChannelObservation } from "../adapters/contracts";
-import { AppError, unavailable } from "../platform/errors";
+import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
 import { scopedOwner, companyContext } from "../shared/authority";

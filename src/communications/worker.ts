@@ -21,13 +21,17 @@ import {
 // and a person reconciles it against the channel first (R4, R8).
 type Claim = { job_id: string; lease_until: Date; m: Communication; sender: Principal; version: number };
 const kind = "CustomerMessageConfirmed";
+// Commands lock the workspace before any outbox row (reconciliation re-arms a job), so the worker
+// takes the same order: workspace first, then the job.
 async function lockJob(c: PoolClient, id: string) {
-  const job = (
-    await c.query("SELECT * FROM ppo.outbox_jobs WHERE id=$1 AND kind=$2 FOR UPDATE SKIP LOCKED", [id, kind])
+  const found = (
+    await c.query("SELECT workspace_id FROM ppo.outbox_jobs WHERE id=$1 AND kind=$2", [id, kind])
   ).rows[0];
-  if (job)
-    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [job.workspace_id]);
-  return job;
+  if (!found) return undefined;
+  await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [found.workspace_id]);
+  return (
+    await c.query("SELECT * FROM ppo.outbox_jobs WHERE id=$1 FOR UPDATE SKIP LOCKED", [id])
+  ).rows[0];
 }
 const finish = (c: PoolClient, id: string, status: string, code: string | null) =>
   c.query("UPDATE ppo.outbox_jobs SET status=$2,error_code=$3,lease_until=null WHERE id=$1", [id, status, code]);

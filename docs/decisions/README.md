@@ -30,6 +30,8 @@ CM1–CM11 and the answers to Q1–Q9 are adopted. The twenty records it superse
 
 [Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** change to stop technicians arriving to missing or wrong parts or an unprepared site: a Supply-fed Parts criterion at dispatch, a technician Return with reason, owned preparer tasks for every return, a customer site-readiness contact and a pack issue lead time. Drawn as new Figma frames beside the accepted Job pack and My jobs pages. Dean accepted it on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7); its named Figma version, lock-in and build are still to come.
 
+[Customer communications core (D-025 S2)](customer-communications-core-s2.md) records the synthetic S2 build in draft [PR #569](https://github.com/deanrfiedler-gif/powerplants-one/pull/569): the communication record and state ledger, prepare then named-sender confirmation, the outbox worker and synthetic channel, owned follow-ups, notice preferences, class switches Off by default and the CUS-EMAIL template family. API only; five proposed readings await Dean, and S3 is not started.
+
 [UX benchmark research direction](ux-benchmark-research-direction.md) records Dean's 16 October 2026 direction for the module UX benchmark: research and proposals only. Each recommendation or amendment item needs his decision and its own record; the first 17 were adopted on 16 October (PPO-UXB-DEC-01, above).
 
 [DK-03 exact revision and acknowledgement facts](output-register-facts.md) defines the accepted Q4/G3 backend read dependency with exact issue lineage, scoped denominators and explicit report/crew limitations.
