@@ -91,7 +91,7 @@ for (const through of [103, 104])
             (
               await c.query(
                 // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
-                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : ""} ORDER BY to_jsonb(x)::text`,
+                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
               )
             ).rows,
         ),

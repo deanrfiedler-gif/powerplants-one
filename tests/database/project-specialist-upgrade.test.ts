@@ -61,7 +61,7 @@ for (const through of [25, 102])
       tables.map((t) =>
         rows(
           // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
-          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : ""} ORDER BY to_jsonb(x)::text`,
+          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ),
     );
@@ -82,7 +82,7 @@ for (const through of [25, 102])
     );
     for (const [i, t] of tables.entries()) {
       const actual = await rows(
-        `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : ""} ORDER BY to_jsonb(x)::text`,
+        `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
       );
       // Earlier 0026 and 0095 legitimately extend estimates; preserve every original field.
       for (const original of snapshots[i]) {
@@ -119,7 +119,7 @@ for (const through of [25, 102])
     const after = await Promise.all(
       tables.map((t) =>
         rows(
-          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : ""} ORDER BY to_jsonb(x)::text`,
+          `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ),
     );
@@ -129,7 +129,7 @@ for (const through of [25, 102])
       await Promise.all(
         tables.map((t) =>
           rows(
-            `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : ""} ORDER BY to_jsonb(x)::text`,
+            `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
           ),
         ),
       ),
