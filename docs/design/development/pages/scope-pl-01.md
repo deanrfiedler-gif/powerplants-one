@@ -17,9 +17,19 @@ Existing same-tab booking recovery and server commands are preserved. Request de
 
 ## Desktop
 
+Accepted design: the [Service planner design decision](../../../decisions/service-planner-figma-design.md) of 17 October 2026, with captures 01–05 (desktop 1440 × 960) and 06 (tablet 1024) in [design r01](../../../reference/ui/service/service-planner-design-r01/README.md). UXB-12 is adopted for this page.
+
+- **Layout:** the Scheduling views sit in the side menu, collapsed on the planner (D1). A toolbar holds date navigation, Today, Day and Week, Site and People filters and the time zone (D2). A Needs attention band names the cause and one suggested action per row, including the field readiness gate's dispatch holds (D3). A tray with To plan and On hold sits beside the board and collapses to a 44 px strip while details are open and on tablets (D4).
+- **Cards:** title, time and site in 12 px type inside one border; crew initials in the time line, only on shared visits; no reason line. Travel is a muted tint of the visit's colour inside the same border, with a muted car on segments of 30 minutes or more. Attention cards carry an amber warning icon.
+- **People:** pastel purple circle avatars, the role and one total. Away or inactive people sit last in full-height dimmed rows.
+- **Moves:** a drop opens Move this visit?, comparing current and proposed times and warning when a new site readiness confirmation is needed (D5). Desktop frames are 1440 × 960 (D6).
+- Nothing new is built. Hold reasons start as Parts, Customer and Access window. The band is built with the gate's existing reasons before suggestions, which need a backend read.
+
 Day/week resource lanes keep date, display timezone, site and resource filters visible. Unassigned authorised work remains distinct from Proposed visits. At 1440 x 960 and 1024 x 768, review named lanes, calendar evidence and travel reservations before opening the existing booking panel.
 
 ## Mobile
+
+Accepted design: captures 07–12 in [design r01](../../../reference/ui/service/service-planner-design-r01/README.md). Day at 390 and 320 has day chips and person cards with a strip. There is also a Week list, the visit details sheet above the tab bar, and a Needs attention and tray page reached from a tray row. Phone cards keep a 14 px title. Four states are drawn: loading, empty day, no access and last good read after a failure.
 
 At 390 x 844 and 320 CSS px, use Day for a compact list or keyboard/labelled lane navigation for Week. Filters and long resource labels wrap; booking panels retain validation, focus return and same-tab recovery. The shell owns vertical content scrolling; week lanes retain their bounded horizontal comparison. Review native 200% browser zoom separately; CSS-width reflow is not a substitute.
 
@@ -34,6 +44,8 @@ Loading, empty/filtered empty, failed and denied reads remove prior evidence. Wo
 Incoming: permitted authorised work-order demand, current appointment/resource/calendar versions. Outgoing: existing Plan visit, readiness, contact, confirmation, controlled move and cancellation commands; exact resource detail links. Request decisions compare saved and proposed facts.
 
 ## Visual references and verification
+
+Accepted Figma design: [Service planner design r01 captures](../../../reference/ui/service/service-planner-design-r01/README.md) (twelve icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-planner-figma-design.md). Images of the Map view, the other Scheduling views, the phone Filters sheet and hover states are still missing.
 
 [Scheduling & Appointments r01](../../../reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html) is a proposed reference. Current authorised work-order demand and appointment contracts supersede its unassigned-proposal example. Retained source bytes are unchanged.
 

@@ -2,14 +2,14 @@
 document_id: PPO-UXB-RESEARCH
 date: 2026-10-16
 owner: Dean Fiedler
-status: Research evidence and proposals for owner decision; 17 items adopted on 16 October 2026 (PPO-UXB-DEC-01), the rest proposed; owner review not recorded
+status: Research evidence and proposals for owner decision; 17 items adopted on 16 October 2026 (PPO-UXB-DEC-01) and UXB-12 on 17 October 2026 (PPO-PL01-PLANNER-FIGMA-DEC), the rest proposed; owner review not recorded
 source_commit: b223c5817be7a946b38c48c9838d9d9925298156
 versioning: git
 ---
 
 # PPO module UX benchmark — research record
 
-This folder records the user-experience benchmark of every Powerplants One module, completed on 16 October 2026. It summarises the research and holds two registers generated from the reviewed report: [92 recommendations](recommendations.csv) and [24 amendment items](amendment-items.csv) that would change accepted designs. Every item started as a **proposal for Dean's decision**; he adopted 17 on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)), and the rest remain proposals. [Dean's direction](../../../decisions/ux-benchmark-research-direction.md) records what the research was authorised to do and how adopted items will be recorded.
+This folder records the user-experience benchmark of every Powerplants One module, completed on 16 October 2026. It summarises the research and holds two registers generated from the reviewed report: [92 recommendations](recommendations.csv) and [24 amendment items](amendment-items.csv) that would change accepted designs. Every item started as a **proposal for Dean's decision**; he adopted 17 on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)) and UXB-12 on 17 October 2026 for the Service planner ([decision](../../../decisions/service-planner-figma-design.md)), and the rest remain proposals. [Dean's direction](../../../decisions/ux-benchmark-research-direction.md) records what the research was authorised to do and how adopted items will be recorded.
 
 Owner: Dean Fiedler. Review: Dean decided 17 items on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)); his decisions on the others are pending. Committing this record is not a review of its content.
 

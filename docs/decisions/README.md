@@ -261,3 +261,8 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - One scrolling page with a readiness Tag in the header; Dispatch held or Ready to dispatch with its reasons; Parts and customer site readiness derived, never ticked by hand.
   - Job pack acknowledgements and Returns, customer contact records (never sent), follow-ups and change requests on the same page.
   - Seven icon-free captures are retained. Building the page is not decided; the gate criteria depend on PR #541.
+
+- [Service planner design — owner decision](service-planner-figma-design.md): the PL-01 planner (`/schedule`) drawn in Figma from the 10 October planner decisions, the field readiness gate and the E9 exemplar. It was refined with Dean and accepted on 17 October 2026 ("I accept the PL-01 Service planner design with your recommendations, including D1–D6 and the two open items as recommended") as the named version "Service planner — accepted".
+  - UXB-12 adopted: one tray for To plan and On hold work, and a Needs attention band with one suggested action per row, including the gate's dispatch holds.
+  - E9-style cards: 12 px type, one border, initials in the time line, travel as a tinted extension with a car on long segments, and no reasons. Pastel purple circle avatars; away people in full-height dimmed rows.
+  - Twelve icon-free captures are retained. Building the page is not decided; hold reasons and a suggestions read come first.

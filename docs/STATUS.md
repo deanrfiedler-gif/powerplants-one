@@ -1,5 +1,14 @@
 # Current prototype status
 
+## Service planner design accepted — 17 October 2026
+
+Dean accepted the Figma design for the PL-01 planner (`/schedule`): "I accept the PL-01 Service planner design with your recommendations, including D1–D6 and the two open items as recommended". The [decision](decisions/service-planner-figma-design.md) records it as the named Figma version "Service planner — accepted", and the [retained captures](reference/ui/service/service-planner-design-r01/README.md) are twelve icon-free PNGs with hashes.
+- UXB-12 adopted: a tray for To plan and On hold work beside the board, and a Needs attention band naming one suggested action per row, including the field readiness gate's dispatch holds.
+- E9-style cards with travel as a tinted extension of the visit (a car on long segments), pastel purple circle avatars, and away people in full-height dimmed rows. The 10 October rules (no bars, no reasons on cards) are kept.
+- Desktop 1440 × 960 Day, Week, details, Plan visit and Move this visit?; tablet; phone 390 and 320 with four states. Departures D1–D6 are accepted. Hold reasons start as Parts, Customer and Access window, and the band comes before suggestions.
+
+This is a design decision only. No code, route, migration, permission or capability changes; the built planner has no tray or band yet. No device, accessibility or operational review is recorded.
+
 ## D-025 customer email decided — 17 October 2026
 
 Dean accepted the [D-025 customer communications decision paper](decisions/customer-communications-d025.md): "Proceed with your recommendations for C1 and C3 to C8." C2 stands as he changed it on 16 October, so a named person sends dispatch, delay and visit messages.
