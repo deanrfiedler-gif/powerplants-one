@@ -11,6 +11,8 @@ export const capabilityLabels = {
   "document.read": "Read scoped library documents",
   "document.register": "Register document revisions and references",
   "document.review": "Independently review documents and finding responses",
+  "conversation.read": "Read conversation threads on deals and projects",
+  "conversation.post": "Start and post in conversation threads",
   "cpq.read": "Read CPQ releases and commercial calculation evidence",
   "cpq.author": "Author CPQ rule releases",
   "cpq.review": "Independently review exact CPQ releases",

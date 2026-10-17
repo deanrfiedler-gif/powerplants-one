@@ -760,7 +760,7 @@ test("DK03-C07 populated 0090 upgrade retains all originals and adds only empty 
   );
   assert.deepEqual(
     after.filter((r) => r.version > 90).map((r) => r.version),
-    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
   );
   assert.equal(
     (await rows("SELECT count(*) n FROM ppo.output_distribution_attempts"))[0]
@@ -775,7 +775,7 @@ test("DK03-C07 populated 0090 upgrade retains all originals and adds only empty 
     after,
   );
   assert.deepEqual(
-    await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
     grants,
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);

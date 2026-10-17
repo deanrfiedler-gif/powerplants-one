@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import {
   accessInspectionSeedGrants,
   accessRequestSeedGrants,
-  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants,
+  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants,
 } from "./engineering-materials-grants";
 
 type Row = Record<string, unknown>;
@@ -32,6 +32,7 @@ export function assertAccessInspectionSnapshot(
     oldRows,
   );
   const expected = [
+    ...conversationSeedGrants(oldGrants),
     ...accessReviewSeedGrants(oldGrants).map(g => ({ ...g, id: "ad010084-0000-4000-8000-000000000001" })),
     ...accessTeamSeedGrants(oldGrants).map(g => ({ ...g, id: "ad010082-0000-4000-8000-000000000001" })),
     ...accessApplicationSeedGrants(oldGrants).map(g => ({ ...g, id: "ad010080-0000-4000-8000-000000000001" })),
@@ -105,7 +106,7 @@ export function assertAccessInspectionSeedLedger(
   // Snapshots order rows by their JSON text, where 107 sorts before 78; compare the versions as numbers.
   assert.deepEqual(
     added.map((r) => Number(r.version)).sort((a, b) => a - b),
-    [78, 79, 80, 83, 84, 107].filter((v) => !versions.has(v)),
+    [78, 79, 80, 83, 84, 107, 108].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);

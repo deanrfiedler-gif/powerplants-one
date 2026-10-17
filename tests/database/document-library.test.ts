@@ -639,8 +639,8 @@ for (const through of [88, 89])
       for (const t of tables)
         result.push(
           await rows(
-            // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version<>107" : ""} ORDER BY to_jsonb(t)::text`,
+            // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
+            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(t)::text`,
           ),
         );
       return result;
@@ -661,7 +661,7 @@ for (const through of [88, 89])
     );
     assert.deepEqual(
       after.filter((x) => x.version > through).map((x) => x.version),
-      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107] : [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108] : [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
     );
     assert.equal(
       (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,
