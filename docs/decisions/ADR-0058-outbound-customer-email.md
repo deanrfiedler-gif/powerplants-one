@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **State:** Proposed, 16 October 2026. Not accepted. It authorises no app registration, mailbox, credential, DNS change, dependency, migration, sending code or customer message. **Raised by:** the [D-025 customer communications decision paper](customer-communications-d025.md), which holds the message classes, policy rules, data gaps and sequence. D-025 stays Open until Dean decides.
+**Owner:** Dean Fiedler. **State:** Accepted by the owner, 17 October 2026, through C3 of the decision paper: "Proceed with your recommendations for C1 and C3 to C8." Proposed 16 October 2026. Acceptance chooses the provider and the channel design only. It authorises no app registration, mailbox, credential, DNS change, dependency, migration, sending code or customer message; each waits for its own build stage (decision paper C8). **Raised by:** the [D-025 customer communications decision paper](customer-communications-d025.md), which holds the message classes, policy rules, data gaps and sequence. D-025 is now Partially resolved; what stays open is listed in section 2 of the paper.
 
 **Related:**
 - Decisions: D-025; D-020 (identity, privacy and external access); D-022 (hosting and integration platform); D-024 (branding and templates).
@@ -45,7 +45,7 @@ Constraints:
 | E. Manual send: staff paste PPO's prepared text into Outlook | None | None | Staff mailboxes | Staff record the outcome by hand | Native |
 | F. Customer portal only (CP-03) | — | — | Customers must sign in | — | Customers still phone. The portal is a design only |
 
-## Decision (proposed)
+## Decision
 
 1. **One service.** One communications service owns every outbound customer email. Supply, Service and Projects request a message from it and never call a provider. The paper's rules R1–R9 apply to every channel.
 2. **A provider-neutral channel.** The service sends through a provider-neutral channel adapter:
@@ -106,6 +106,6 @@ Constraints:
 - Q2, whether Projects uses the Smartsheet Customer Update register: "No".
 - Q3, which mailbox: "One shared mailbox", which is option A's form. Whether it is Exchange Online, its address, and who can grant consent are still to be confirmed.
 
-The answers do not accept this ADR. It stays Proposed until Dean decides C3 in the decision paper.
+Dean accepted this ADR on 17 October 2026, after answering these questions, by accepting C3 in the decision paper.
 
 Tenant licences, retention (D-020/D-024) and support ownership (D-023) also remain open.

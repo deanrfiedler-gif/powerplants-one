@@ -2,12 +2,12 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **State:** Proposed decision paper, 16 October 2026, for Dean's decision. **D-025 stays Open** until Dean decides. This paper closes nothing. It authorises no sending code, provider account, credential, mailbox, DNS change, migration or customer message. **Companion:** [ADR-0058](ADR-0058-outbound-customer-email.md), Proposed, records the provider choice and its alternatives.
+**Owner:** Dean Fiedler. **State:** Accepted by the owner, 17 October 2026: "Proceed with your recommendations for C1 and C3 to C8." Proposed 16 October 2026. **D-025 is Partially resolved**, not Resolved; section 2 lists what stays open. Acceptance authorises no sending code, provider account, credential, mailbox, DNS change, migration or customer message. Each build stage still needs its own authorisation (C8). **Companion:** [ADR-0058](ADR-0058-outbound-customer-email.md), Accepted, records the provider choice and its alternatives.
 
 **Direction, 16 October 2026.** Through the UX benchmark's Decision brief, Dean adopted this direction for D-025: "Email and SMS first, drafted from PPO records and sent by a named person; commission the ADR on SMS and email delivery; approve staff task tests and grower interviews". His words: "I am happy to proceed with all six based on your recommendations." See [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01). It changes this paper in two places, and leaves the rest open:
 - **C2 changes.** A named person sends every customer message, so M1 to M3 are drafted from PPO records and sent by a person rather than sent automatically.
 - **Channels.** SMS joins email as a first channel. ADR-0058 covers email; an SMS delivery record is still to be written.
-- **Still open:** C1 and C3 to C8. D-025 stays Open until Dean decides them. This direction authorises no sending code or customer message.
+- **The rest:** Dean accepted C1 and C3 to C8 on 17 October (section 9). This direction authorises no sending code or customer message.
 
 **Answers, 17 October 2026.** Dean answered Q1 to Q3 (section 9). In his words:
 - **Q1:** "Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only". Freight is booked all four ways, so no single system holds every tracking number.
@@ -250,7 +250,7 @@ Delivered is not read and is not acknowledged. PPO adds no tracking pixels and m
 
 | Stage | Content | Depends on |
 |---|---|---|
-| S1 Decide | Dean accepts C1–C8, with C2 as changed on 16 October. He answered Q1–Q3 on 17 October. D-025 moves to Partially resolved. ADR-0058 moves to Accepted | This paper |
+| S1 Decide | Done, 17 October. Dean accepted C1 and C3–C8, with C2 as changed on 16 October, and answered Q1–Q3. D-025 is Partially resolved. ADR-0058 is Accepted | This paper |
 | S2 Communication core, synthetic channel | The communication record and state ledger, outbox kinds and worker, timeline display, Held and Failed follow-ups, the notice preference, and a customer email template family in DK-06. One migration, under AGENTS.md's registry rules. No provider | S1 |
 | S3 Dispatch and delay notices | Carrier and tracking fields entered by staff (Q1), the order delivery contact, and the M1 and M2 triggers, proved end to end on the synthetic channel | S2; the carrier list and the freight booking platform's name |
 | S4 Live pilot on Graph | The shared mailbox (Q3) and its scoped app registration. Sends to internal test addresses only. Sent Items and bounce matching. Then M1 for real customers, when Dean switches it on | S3; the mailbox address; the tenant administrator |
@@ -266,13 +266,15 @@ If Dean answers "Proceed with your recommendations", these are adopted and recor
 | ID | Recommendation |
 |---|---|
 | C1 | All PPO customer email goes through one communications service. No module calls a provider directly |
-| C2 | The four messages and their authority are as in section 3: M1–M3 automatic factual, M4 reviewed. The defaults listed there apply until changed |
+| C2 | The four messages and their authority are as in section 3: M1–M3 automatic factual, M4 reviewed. The defaults listed there apply until changed. **Changed on 16 October:** a named person sends M1–M3, drafted from PPO records (see the direction note at the top) |
 | C3 | The provider is Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel ([ADR-0058](ADR-0058-outbound-customer-email.md)) |
 | C4 | Recipients follow R1 |
 | C5 | Consent and opt-out follow R2 |
 | C6 | Logging, states and failures follow R3–R5 and R8 |
 | C7 | Content follows R6 and R7 |
 | C8 | Every class is off by default and synthetic first (R9). The build follows S2–S6, and each stage is still its own increment to authorise |
+
+**Decision, 17 October 2026.** Dean: "Proceed with your recommendations for C1 and C3 to C8." C1 and C3 to C8 are adopted as written above. C2 stands as changed on 16 October. D-025 moves to **Partially resolved** and [ADR-0058](ADR-0058-outbound-customer-email.md) to **Accepted**. The decision starts no build: S2 is the next increment and needs its own authorisation.
 
 Questions that only Dean can answer, all answered on 17 October 2026:
 
