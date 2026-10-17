@@ -101,9 +101,11 @@ Constraints:
   - a deliberately invalid address producing a matched non-delivery report and Failed;
   - a send from an out-of-scope mailbox refused by RBAC.
 
-**Remaining questions** (from the decision paper):
-- Q1: where freight is booked and where the consignment note lives.
-- Q2: whether Projects uses the Smartsheet Customer Update register today.
-- Q3: which mailbox to send from, whether it is Exchange Online, and who can grant consent.
+**Questions from the decision paper**, answered by Dean on 17 October 2026:
+- Q1, where freight is booked: in all four ways listed ("Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only"), so staff enter the tracking number.
+- Q2, whether Projects uses the Smartsheet Customer Update register: "No".
+- Q3, which mailbox: "One shared mailbox", which is option A's form. Whether it is Exchange Online, its address, and who can grant consent are still to be confirmed.
+
+The answers do not accept this ADR. It stays Proposed until Dean decides C3 in the decision paper.
 
 Tenant licences, retention (D-020/D-024) and support ownership (D-023) also remain open.

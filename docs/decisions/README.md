@@ -24,7 +24,7 @@ CM1–CM11 and the answers to Q1–Q9 are adopted. The twenty records it superse
 [Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision; on 16 October Dean set its direction (a named person sends; email and SMS), which changes its C2, and D-025 stays Open for the rest. It covers:
 - automatic dispatch, delay and visit notices, and reviewed project updates under OUT-11/PJ-08, each with its drafter, approver and trigger;
 - recipient, opt-out, timeline, state, failure and content rules;
-- the data gaps for each message, the build order, and three questions for Dean.
+- the data gaps for each message, the build order, and three questions for Dean, which he answered on 17 October 2026: freight is booked in several ways, so staff enter tracking numbers; Projects does not use the Smartsheet Customer Update register; and email comes from one shared mailbox. C1 and C3 to C8 remain for his decision.
 
 [ADR-0058](ADR-0058-outbound-customer-email.md) is its **proposed** provider record: Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel. Nothing sends, and D-025 remains Open.
 

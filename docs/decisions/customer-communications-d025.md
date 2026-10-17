@@ -7,7 +7,14 @@
 **Direction, 16 October 2026.** Through the UX benchmark's Decision brief, Dean adopted this direction for D-025: "Email and SMS first, drafted from PPO records and sent by a named person; commission the ADR on SMS and email delivery; approve staff task tests and grower interviews". His words: "I am happy to proceed with all six based on your recommendations." See [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01). It changes this paper in two places, and leaves the rest open:
 - **C2 changes.** A named person sends every customer message, so M1 to M3 are drafted from PPO records and sent by a person rather than sent automatically.
 - **Channels.** SMS joins email as a first channel. ADR-0058 covers email; an SMS delivery record is still to be written.
-- **Still open:** C1 and C3 to C8, and Q1 to Q3. D-025 stays Open until Dean decides them. This direction authorises no sending code or customer message.
+- **Still open:** C1 and C3 to C8. D-025 stays Open until Dean decides them. This direction authorises no sending code or customer message.
+
+**Answers, 17 October 2026.** Dean answered Q1 to Q3 (section 9). In his words:
+- **Q1:** "Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only". Freight is booked all four ways, so no single system holds every tracking number.
+- **Q2:** "No". The Projects Department does not use the Smartsheet Customer Update register today.
+- **Q3:** "One shared mailbox".
+
+The answers change M1, M4, R7 and the sequence, as noted where each appears. They decide none of C1 or C3 to C8, and they authorise no sending code, mailbox, app registration or customer message.
 
 **Related:**
 - Decisions: D-025; D-020 (identity and privacy), D-024 (branding and templates) and D-026 (migration) where noted.
@@ -160,7 +167,7 @@ Delivered is not read and is not acknowledged. PPO adds no tracking pixels and m
 
 ### R7 Sending identity, replies and form
 
-- **One mailbox.** Messages are sent from one monitored shared mailbox (question Q3), and replies go to that same mailbox. The owning team handles replies in Outlook.
+- **One mailbox.** Messages are sent from one monitored shared mailbox, and replies go to that same mailbox. The owning team handles replies in Outlook. Dean chose one shared mailbox on 17 October (Q3). Its address, whether it is Exchange Online in the company tenant, and who can grant administrator consent are still to be confirmed before the S4 pilot.
 - **Subject line.** Subjects follow the naming assistance pattern `[confirmed reference] Purpose – Short description` ([integration design §15](../blueprints/email-calendar-integration.md#15-subject-and-task-naming-receiving-amendment--r03), PPO-STD-001 §24).
 - **Branding.** Branding and signature stay provisional plain text until D-024 is decided.
 - **Format.** The first stage has no attachments: M1 carries the tracking number and link, not documents. An M4 PDF can follow later as an exact DK-03 output.
@@ -199,7 +206,7 @@ Delivered is not read and is not acknowledged. PPO adds no tracking pixels and m
 | No order contact | Demand records `customer_id` and its origin (Project, WorkOrder or OtherApproved), but no contact | A delivery contact on the demand or order |
 | MYOB shipment semantics unverified | FUL-B01–B04 (shipment identity, quantities, confirmation, idempotency) are open questions. The source shipment stays "a manual observation" ([fulfilment contract](../contracts/order-fulfilment-integration.md)) | Trigger on PPO's own Moved fact, never on a MYOB shipment, until FUL-B01–B04 are verified |
 | Partial dispatch | IF-15: "Partial delivery retains outstanding quantity" | The message states the quantity shipped and the quantity outstanding |
-| Freight booking unknown | Not recorded anywhere in the repository | Question Q1 |
+| Freight booking is mixed (Q1, answered 17 October) | Dean: freight is booked on carriers' own websites and on a freight booking platform, is recorded in MYOB, and is sometimes on paper or email only | Staff enter the carrier and the tracking or consignment number when they record a dispatch as Moved, because no single source holds them. Still needed: the list of carriers and the name of the freight booking platform. Reading the number from that platform or from the MYOB Acumatica shipment is a later, separate increment, after FUL-B01–B04 are verified |
 
 ### M2 Delay notice
 
@@ -227,7 +234,7 @@ Delivered is not read and is not acknowledged. PPO adds no tracking pixels and m
 | No Projects Department role | A project has one `coordinator_id` (migration 0019). Capabilities cover `project.read`, `create`, `edit` and `commercial.*` only | A Projects team, and update prepare and review duties |
 | No update recipients | Projects have no customer stakeholder list | Update recipients per project (R1) |
 | Cadence not adopted | MIG-01's 7/14/30-day tier formula is "an observed source rule". J1 shows the last update date "without adopting an SLA or auto-stale policy" ([source assessment](../blueprints/projects-source-assessment.md), finding 4) | Dean adopts the M4 default, or replaces it |
-| Two Smartsheet registers | MIG-11 has two Customer Update Register assets, and which one is writable is unresolved | Question Q2 |
+| Smartsheet register not in use (Q2, answered 17 October) | Dean: the Projects Department does not use the Smartsheet Customer Update register today. MIG-11 still lists two Customer Update Register assets | M4 starts a new process rather than replacing a working one, so it needs no D-026 transition of a live update practice. Whether either asset's historical rows are migrated stays with MIG-11 and D-026 |
 | Shareable RAID content | RAID (migration 0087) has no customer-shareable marking. Baselines (0081) and calendars and actuals (0088) supply dates | Only typed dates go into an update automatically. Risks are written for the customer in the draft |
 | No page design | PJ-08 has no accepted Figma design ([ADR-0053](ADR-0053-figma-page-design.md)) | A design before the page is built |
 
@@ -243,12 +250,12 @@ Delivered is not read and is not acknowledged. PPO adds no tracking pixels and m
 
 | Stage | Content | Depends on |
 |---|---|---|
-| S1 Decide | Dean accepts C1–C8 and answers Q1–Q3. D-025 moves to Partially resolved. ADR-0058 moves to Accepted | This paper |
+| S1 Decide | Dean accepts C1–C8, with C2 as changed on 16 October. He answered Q1–Q3 on 17 October. D-025 moves to Partially resolved. ADR-0058 moves to Accepted | This paper |
 | S2 Communication core, synthetic channel | The communication record and state ledger, outbox kinds and worker, timeline display, Held and Failed follow-ups, the notice preference, and a customer email template family in DK-06. One migration, under AGENTS.md's registry rules. No provider | S1 |
-| S3 Dispatch and delay notices | Carrier and tracking fields, the order delivery contact, and the M1 and M2 triggers, proved end to end on the synthetic channel | S2, Q1 |
-| S4 Live pilot on Graph | The shared mailbox and its scoped app registration. Sends to internal test addresses only. Sent Items and bounce matching. Then M1 for real customers, when Dean switches it on | S3, Q3, tenant administrator |
+| S3 Dispatch and delay notices | Carrier and tracking fields entered by staff (Q1), the order delivery contact, and the M1 and M2 triggers, proved end to end on the synthetic channel | S2; the carrier list and the freight booking platform's name |
+| S4 Live pilot on Graph | The shared mailbox (Q3) and its scoped app registration. Sends to internal test addresses only. Sent Items and bounce matching. Then M1 for real customers, when Dean switches it on | S3; the mailbox address; the tenant administrator |
 | S5 Visit confirmations | The customer checklist wording, the lead-time policy, and the M3 triggers | S2, the field-readiness work |
-| S6 Project updates | The PJ-08 Figma design, the update record and successors, recipients, customer questions as a waiting-on-customer source, Projects duties and the cadence | S2, Q2. The design can run alongside S3–S5 |
+| S6 Project updates | The PJ-08 Figma design, the update record and successors, recipients, customer questions as a waiting-on-customer source, Projects duties and the cadence | S2. Q2 makes it a new process. The design can run alongside S3–S5 |
 
 M1 comes first because it removes the most calls with the smallest data gap. M4 comes last because it needs new records, roles and a page design.
 
@@ -267,11 +274,14 @@ If Dean answers "Proceed with your recommendations", these are adopted and recor
 | C7 | Content follows R6 and R7 |
 | C8 | Every class is off by default and synthetic first (R9). The build follows S2–S6, and each stage is still its own increment to authorise |
 
-Questions that only Dean can answer:
+Questions that only Dean can answer, all answered on 17 October 2026:
 
 - **Q1. Where is freight booked today, and where does the consignment note and tracking number live?** For example a carrier portal, a MYOB shipment, an email from the carrier, or paper. The answer decides whether staff type the number in or a later read supplies it, and which carriers to list.
+  - **Answer:** "Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only". Staff type the number in (M1). The carrier list and the platform's name are still needed for S3.
 - **Q2. Does the Projects Department use the Smartsheet Customer Update register today?** If so: which of the two MIG-11 assets, how often, and who approves. The answer decides whether M4 replaces a working process, which needs a transition under D-026, or starts a new one.
+  - **Answer:** "No". M4 starts a new process.
 - **Q3. Which mailbox should customer email come from?** One shared mailbox, or one for each team (dispatch, service, projects)? Is it Exchange Online in the company tenant, and who can grant administrator consent? The answer decides the Graph setup and where replies go.
+  - **Answer:** "One shared mailbox", as R7 proposed. The address, the tenant and the person who can grant consent are still to be confirmed before S4.
 
 ## 10. Evidence boundary
 

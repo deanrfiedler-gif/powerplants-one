@@ -1,5 +1,14 @@
 # Current prototype status
 
+## D-025 questions answered — 17 October 2026
+
+Dean answered the three questions in the [D-025 customer communications decision paper](decisions/customer-communications-d025.md#9-decisions-for-dean):
+- **Q1, where freight is booked:** "Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only". No single source holds every tracking number, so staff enter the carrier and the tracking number when they record a dispatch as Moved. The dispatch notice stage still needs the list of carriers and the name of the freight booking platform.
+- **Q2, the Smartsheet Customer Update register:** "No". The Projects Department does not use it, so project updates start as a new process rather than replacing a working one.
+- **Q3, the sending mailbox:** "One shared mailbox", as [ADR-0058](decisions/ADR-0058-outbound-customer-email.md) proposed. Its address, the tenant and who can grant consent are still to be confirmed before a live pilot.
+
+The paper, ADR-0058, the decision register and the decisions index record the answers. D-025 stays Open and ADR-0058 stays Proposed until Dean decides C1 and C3 to C8. Nothing sends, and no code, migration, mailbox or app registration changes.
+
 ## Projects register design differences fixed — 17 October 2026
 
 The eight fixes proposed by the [Projects register comparison](testing/evidence/projects-register/design-comparison.md#fixes-made) are made: grid header colour and At risk alignment, the toolbar count size, 24-hour S6 times in the toolbar and History, the opportunity reference in Sales source (a new `opportunity_reference` field on the project and work-order `sales-handovers` read), "finishes" in At risk rows, the History heading and ring markers, and the phone record header. Values come from the Figma frame's text styles and bound variables. The five states were captured again at 1440 × 900 and 390 × 844 on a disposable synthetic database. The five questions and Q-D1/Q-D2 stay with Dean; the visual status stays Needs review and no review fingerprint is copied.
