@@ -34,3 +34,7 @@ The [attestation contract](../../../decisions/access-review-attestations.md) int
 ## PJ-06 work review contract
 
 The canonical capability union now has 157 keys, including `project.specialist.work.review` labelled “Review exact specialist work evidence”. This is the minimal existing-client catalogue label required to expose the new backend duty accurately. It is default denied, with no seed grant; brief receiving and Supply receiving do not confer it. No page layout, component or visual acceptance changes. Existing pending design review remains pending. [Contract](../../../contracts/project-specialist-work-evidence.md).
+
+## Conversations T1b capabilities
+
+The canonical capability union now has 159 keys, including `conversation.read` ("Read conversation threads on deals and projects") and `conversation.post` ("Start and post in conversation threads"), in a new Conversations family. They are proposed names from PPO-CONV-T1-SCOPE; seed 108 maps them to every local synthetic profile that already holds `crm.opportunity.read` or `project.read`, in the same scope, and hosted testers receive neither. This is the minimal existing-client catalogue label and count change required to expose the backend duty accurately. No page layout, component or visual acceptance changes; the catalogue and workspace counts read 159. See the [contract](../../../contracts/conversations-t1b.md).

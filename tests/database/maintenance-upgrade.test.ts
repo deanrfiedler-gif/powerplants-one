@@ -13,7 +13,7 @@ import { draftBytes, readQuoteJob, runQuoteJob } from "../../src/estimating/work
 import { crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { principal, rows } from "../helpers/maintenance";
-import { maintenanceSeedGrants } from "../helpers/engineering-materials-grants";
+import { maintenanceSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import { snapshot } from "../helpers/policy-commands";
 import { recoverSchema } from "../helpers/recover-schema";
 
@@ -71,12 +71,18 @@ test("late reserved Maintenance migration preserves the current schema, original
   assert.deepEqual(await snapshot(tables), expected);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<>51 ORDER BY version"), ledger);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 ORDER BY version"), seeds);
-  const actual = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map((g) => g.id));
+  const everything = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map((g) => g.id));
+  // Seed 108 copies Opportunity and Project reads as conversation duties; everything else is this suite's subject.
+  const actual = everything.filter((g) => ids.has(g.id) || !String(g.capability).startsWith("conversation."));
   assert.deepEqual(actual.filter((g) => ids.has(g.id)), grants);
   const normal = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
   const sorted = (g: Record<string, unknown>[]) => g.map(normal).map((r) => JSON.stringify(r, Object.keys(r).sort())).sort();
   assert.deepEqual(sorted(actual.filter((g) => !ids.has(g.id))), sorted(maintenanceSeedGrants(grants)));
   assert.equal(actual.length - grants.length, 22);
+  const shape = (g: Record<string, unknown>[]) => g.map((r) => JSON.stringify(Object.fromEntries(Object.entries(r).filter(([k]) => k !== "id")), Object.keys(r).filter((k) => k !== "id").sort())).sort();
+  // A late reserved 0051 installed after 0108 starts with the conversation duties already present.
+  const conversationAdded = everything.filter((g) => String(g.capability).startsWith("conversation.") && !ids.has(g.id));
+  assert.deepEqual(shape(conversationAdded), shape(grants.some((g) => String(g.capability).startsWith("conversation.")) ? [] : conversationSeedGrants([...grants, ...maintenanceSeedGrants(grants)])));
   const extended = (await rows("SELECT pg_get_functiondef('ppo.identity_has_typed_record()'::regprocedure) AS definition"))[0].definition;
   for (const branch of identity.match(/WHEN '[^']+'[^\n]*/g) ?? []) assert.ok(extended.includes(branch), branch);
   assert.match(extended, /ServiceAgreement/);
@@ -86,7 +92,7 @@ test("late reserved Maintenance migration preserves the current schema, original
   await migrate(); await seed();
   assert.deepEqual(await snapshot(tables), afterTables);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"), afterLedger);
-  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), actual);
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), everything);
   await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='maintenance.manage'", [p.actor_id]);
   const revoked = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
   await seed();

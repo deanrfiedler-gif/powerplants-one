@@ -18,7 +18,7 @@ import {
   accessReviews,
   accessReview,
 } from "../../src/access/reviews";
-import { accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -124,10 +124,10 @@ test(
     );
     assert.deepEqual(
       next.filter((g) => !ids.has(g.id)),
-      accessReviewSeedGrants(grants).map((g) => ({
+      [...conversationSeedGrants(grants), ...accessReviewSeedGrants(grants).map((g) => ({
         ...g,
         id: "ad010084-0000-4000-8000-000000000001",
-      })),
+      }))].sort((a, b) => String(a.id).localeCompare(String(b.id))),
     );
     const nextLedger = await rows(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -141,7 +141,7 @@ test(
     );
     assert.deepEqual(
       nextLedger.filter((r) => r.version > 83).map((r) => r.version),
-      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
+      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108],
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version <= 83),
@@ -149,7 +149,7 @@ test(
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version > 83).map((r) => r.version),
-      [84, 107],
+      [84, 107, 108],
     );
     await migrate();
     await seed();
