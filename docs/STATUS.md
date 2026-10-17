@@ -4,6 +4,10 @@
 
 The required F13 browser proof could fail at random on /schedule (0.144 in a diagnostic run, against the 0.1 budget). When the Planner painted before the shell context arrived, the Scheduling tabs then pushed its controls down 77 px in the same frame as the rail's More button dropped 702 px. The tabs now keep their row while the context loads, and More appears once the context is known. Forcing that order scores 0.146 on main and 0.006 with the change. Normal loads fall to 0.005–0.021 on every F13 page except /projects, which is fixed separately, and the F13 cases passed 25 repeated runs. Details are in the [shell system record](design/development/systems/shell.md#planner-and-more-when-the-shell-context-arrives-late-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
 
+## /projects first-load layout shift — 17 October 2026
+
+The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) is fixed in the entry above. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
@@ -25,6 +29,18 @@ The user-authorised "Merge current PPO pull requests" chat merged #524–#529, #
 The URL control correction makes Sales search and scheduling review filters observe their native history writes synchronously, preserving typed input and checkbox state while framework URL rendering is deferred. Server authority, signed cursors, history semantics and session clearing remain unchanged. Existing browser proofs and a deferred-render regression gate integration. Source delivery, visual/owner acceptance and deployment remain separate.
 
 Protected main currently requires seven checks with administrator enforcement and no approving-review count: Check documentation foundation; CRM desktop and mobile persistence and interaction proof; CRM header and board visual checks; Desktop and mobile browser suite against the compiled application; E1 manual estimate, draft output and restart proof; Email Calendar persisted journey and server permissions; P01–P11 and CRM I1–I2 local application and PostgreSQL proof. Strict up-to-date enforcement is off. This task does not change those settings.
+
+## UX benchmark decisions — 16 October 2026
+
+Dean decided the six items in the UX benchmark's Decision brief: "I am happy to proceed with all six based on your recommendations." The [decision record](decisions/ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01) adopts 17 items, and the [recommendations](design/research/ux-benchmark/recommendations.csv) and [amendment items](design/research/ux-benchmark/amendment-items.csv) registers now mark them Adopted:
+- a written stale-deal rule (UXB-03, A16; Dean still sets N for each stage);
+- the My jobs offline state with autosaved drafts (UXB-11, UXB-74, A19);
+- Activities on quotes, work orders, job packs and engineering (UXB-02, A08);
+- the field readiness proposal with the parts-readiness ladder (UXB-09, UXB-10, A06, A07);
+- amendments A02, A09, A18 (the identifier column stays visible), A20 and A23;
+- grower interviews and staff task tests (UXB-92), and D-025's direction: email and SMS, sent by a named person. That changes the D-025 paper's C2; D-025 stays Open for its other choices.
+
+He also confirmed that Powerplants runs MYOB Acumatica. Nothing is built: each adopted item is redrawn and locked in on its owning page, then built in its own pull request under `AGENTS.md`. The private review document shows Adopt for each item, and the exemplars that informed the decisions are on Figma page 986:47. No code, migration, permission, route, design-register entry or parent ID changes here.
 
 ## D-025 customer communications decision paper — 16 October 2026
 
@@ -102,7 +118,7 @@ The [research record](design/research/ux-benchmark/README.md) summarises the met
 - field apps must never lose input;
 - for growers, own the service trail around the controller.
 
-Two registers are generated from the reviewed report. The [recommendations](design/research/ux-benchmark/recommendations.csv) hold UXB-01 to UXB-92: 20 at priority 1, 56 at priority 2 and 16 at priority 3. The [amendment items](design/research/ux-benchmark/amendment-items.csv) hold A01 to A24 against accepted designs; A22 and A24 were withdrawn after the check. Every item is Proposed.
+Two registers are generated from the reviewed report. The [recommendations](design/research/ux-benchmark/recommendations.csv) hold UXB-01 to UXB-92: 20 at priority 1, 56 at priority 2 and 16 at priority 3. The [amendment items](design/research/ux-benchmark/amendment-items.csv) hold A01 to A24 against accepted designs; A22 and A24 were withdrawn after the check. Every item started as Proposed; 17 were adopted on 16 October (above).
 
 The [direction record](decisions/ux-benchmark-research-direction.md) says what Dean's direction authorises: research and proposals. Without his decision on each item it authorises no design, code, migration, customer contact or adoption. Adopted items will be recorded in `docs/decisions/` and linked to scope IDs. No application code, route, migration, permission, design register entry or parent ID changes.
 
