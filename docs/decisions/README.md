@@ -4,16 +4,18 @@
 
 [AI tool roles and independent cross-model review](cross-model-review.md) records Dean's 17 October 2026 decision on tool roles. Claude builds and oversees, ChatGPT reviews independently and supports research, and Codex optionally builds separate tasks. Higher-risk PRs need a review from a second model before merge.
 
-[Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision. It covers:
+[UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01) records Dean's 16 October 2026 decision on the six Decision-brief items: "I am happy to proceed with all six based on your recommendations." It adopts UXB-02, UXB-03, UXB-09, UXB-10, UXB-11, UXB-74 and UXB-92 and amendments A02, A06, A07, A08, A09, A16, A18, A19, A20 and A23, accepts the field readiness proposal, sets D-025's direction (email and SMS, sent by a named person) and confirms MYOB Acumatica as the ERP. Each item still needs its own redraw, lock-in and build.
+
+[Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision; on 16 October Dean set its direction (a named person sends; email and SMS), which changes its C2, and D-025 stays Open for the rest. It covers:
 - automatic dispatch, delay and visit notices, and reviewed project updates under OUT-11/PJ-08, each with its drafter, approver and trigger;
 - recipient, opt-out, timeline, state, failure and content rules;
 - the data gaps for each message, the build order, and three questions for Dean.
 
 [ADR-0058](ADR-0058-outbound-customer-email.md) is its **proposed** provider record: Microsoft Graph from a monitored shared mailbox, behind a provider-neutral channel. Nothing sends, and D-025 remains Open.
 
-[Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** change to stop technicians arriving to missing or wrong parts or an unprepared site: a Supply-fed Parts criterion at dispatch, a technician Return with reason, owned preparer tasks for every return, a customer site-readiness contact and a pack issue lead time. Drawn as new Figma frames beside the accepted Job pack and My jobs pages; not accepted and not built.
+[Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** change to stop technicians arriving to missing or wrong parts or an unprepared site: a Supply-fed Parts criterion at dispatch, a technician Return with reason, owned preparer tasks for every return, a customer site-readiness contact and a pack issue lead time. Drawn as new Figma frames beside the accepted Job pack and My jobs pages. Dean accepted it on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7); its named Figma version, lock-in and build are still to come.
 
-[UX benchmark research direction](ux-benchmark-research-direction.md) records Dean's 16 October 2026 direction for the module UX benchmark: research and proposals only. None of the 92 recommendations or 24 amendment items is adopted; each needs his decision and its own record.
+[UX benchmark research direction](ux-benchmark-research-direction.md) records Dean's 16 October 2026 direction for the module UX benchmark: research and proposals only. Each recommendation or amendment item needs his decision and its own record; the first 17 were adopted on 16 October (PPO-UXB-DEC-01, above).
 
 [DK-03 exact revision and acknowledgement facts](output-register-facts.md) defines the accepted Q4/G3 backend read dependency with exact issue lineage, scoped denominators and explicit report/crew limitations.
 

@@ -2,16 +2,16 @@
 document_id: PPO-UXB-RESEARCH
 date: 2026-10-16
 owner: Dean Fiedler
-status: Research evidence and proposals for owner decision; nothing adopted; owner review not recorded
+status: Research evidence and proposals for owner decision; 17 items adopted on 16 October 2026 (PPO-UXB-DEC-01), the rest proposed; owner review not recorded
 source_commit: b223c5817be7a946b38c48c9838d9d9925298156
 versioning: git
 ---
 
 # PPO module UX benchmark — research record
 
-This folder records the user-experience benchmark of every Powerplants One module, completed on 16 October 2026. It summarises the research and holds two registers generated from the reviewed report: [92 recommendations](recommendations.csv) and [24 amendment items](amendment-items.csv) that would change accepted designs. Every item is a **proposal for Dean's decision**; none is adopted. [Dean's direction](../../../decisions/ux-benchmark-research-direction.md) records what the research was authorised to do and how adopted items will be recorded.
+This folder records the user-experience benchmark of every Powerplants One module, completed on 16 October 2026. It summarises the research and holds two registers generated from the reviewed report: [92 recommendations](recommendations.csv) and [24 amendment items](amendment-items.csv) that would change accepted designs. Every item started as a **proposal for Dean's decision**; he adopted 17 on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)), and the rest remain proposals. [Dean's direction](../../../decisions/ux-benchmark-research-direction.md) records what the research was authorised to do and how adopted items will be recorded.
 
-Owner: Dean Fiedler. Review: Dean's per-item decisions are pending. Committing this record is not a review of its content.
+Owner: Dean Fiedler. Review: Dean decided 17 items on 16 October 2026 ([UX benchmark decisions](../../../decisions/ux-benchmark-decisions-2026-10-16.md)); his decisions on the others are pending. Committing this record is not a review of its content.
 
 No application code, route, migration, permission, design register entry, issued reference or parent requirement ID changes. All 78 parent IDs remain.
 
@@ -200,7 +200,7 @@ The report also offers thirteen **draft cross-module principles** for Dean to ad
 | `dependencies` | Decisions, designs or items it depends on; "amendment" points to the amendment items |
 | `on_main_2026_10_16` | Largely built, Partly built, Designed or Not started, against `b223c58` and the Figma file. The 13 items the check did not assess take their state from the live-app audit at `3e11502` |
 | `on_main_note` | The detail the report gives beside the state: the check's for UXB-85 to UXB-90, and the live-app audit's for the 13 items it settled and for UXB-08 and UXB-11. Elsewhere the recommendation's wording says what exists |
-| `status` | Proposed for every item |
+| `status` | Proposed, or Adopted (with the record in `decision_record`) |
 | `decision_record` | Blank. Filled with the decision record's path when Dean decides the item |
 
 [amendment-items.csv](amendment-items.csv) has one row per amendment item:
@@ -213,7 +213,7 @@ The report also offers thirteen **draft cross-module principles** for Dean to ad
 | `proposal` | What the amendment would change. For A22 and A24 it is the item's original title from the report's change log, because their rows now carry only the withdrawal |
 | `linked_recommendations` | UXB IDs, separated by "; " |
 | `check_note` | The check's outcome where it qualified or withdrew the item |
-| `status` | Proposed, or Withdrawn after check (A22 and A24) |
+| `status` | Proposed, Adopted (with the record in `decision_record`), or Withdrawn after check (A22 and A24) |
 | `decision_record` | Blank. Filled with the decision record's path when Dean decides the item |
 
 ## Provenance
@@ -245,7 +245,7 @@ Dean tracks his per-item decisions in a private review document outside the repo
   - ES-08 and Fertigation explain-and-repair behaviour was not checked;
   - Figma was read through metadata and a few screenshots.
 - The live-app audit could not open 27 record routes, which had no synthetic record. The seed holds little data for projects, deals and estimates, so those registers were not judged at volume. No screen reader or real phone was used.
-- Which MYOB product Powerplants runs was not verified. Evidence about MYOB Acumatica's interface applies only if that is the product in use.
+- Which MYOB product Powerplants runs was not verified during the research. Dean confirmed MYOB Acumatica on 16 October 2026, so the evidence about MYOB Acumatica's interface applies.
 - The reading of Australia's Farm Data Code behind UXB-87 is an interpretation, not legal advice.
 
 ## How to use this record
