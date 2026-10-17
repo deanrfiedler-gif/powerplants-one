@@ -30,7 +30,7 @@ The rail and menu collapsed states and the More slide-out are not captured: they
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Projects register — Pipedrive pattern, accepted" (to be saved by Dean after these captures are committed; see the decision record, section 7) |
+| Named version | "Projects register — Pipedrive pattern, accepted", saved by Dean on 17 October 2026 after these captures were committed (the decision record, section 7) |
 | Accepted frames | Page "Projects (accepted)" `209:46`: desktop `209:47`, desktop with two rows selected `209:238`, phone `209:457` |
 | Capture copies | Page "Captures (icon-free)": `1110:124118`, `1110:124784`, `1110:125489`, `1110:126205`, `1110:126388` (images 01–05 in order) |
 

@@ -2,7 +2,7 @@
 document_id: PPO-PRJ-PROJECTS-REGISTER-DESIGN-DEC
 date: 2026-10-17
 owner: Dean Fiedler
-status: Owner-accepted design (11 October 2026, confirmed 17 October 2026); named version pending; comparison with the built page, phone selection and shell rollout separate
+status: Owner-accepted design (11 October 2026, confirmed 17 October 2026); named version saved 17 October 2026; comparison with the built page, phone selection and shell rollout separate
 source_commit: 271a386b98c0aa612a86a34c03b0ab1da6073b8e
 versioning: git
 ---
@@ -11,7 +11,7 @@ versioning: git
 
 On 11 October 2026 Dean chose the Projects register (`/projects`) as the next page to draw in Figma: "Projects register (Recommended)", over Service requests and Deals. Claude drew it on the pattern Dean had accepted that day for [Leads](leads-design.md) and [Reviews & approvals](estimate-reviews-design.md), with synthetic data and the rules the Projects code records. Dean accepted it the same day: "Proceed with your recommendations". The page was then built in the application on 13 October ([implementation decision](projects-register-native.md)), but it was never locked in: no decision record, no retained captures and no named version.
 
-On 17 October 2026 Claude asked Dean two questions before locking it in. Asked whether the named version existed, he answered "Not saved yet". Asked whether he still accepted the page as drawn, he answered "Yes, accept as drawn (Recommended)".
+On 17 October 2026 Claude asked Dean two questions before locking it in. Asked whether the named version existed, he answered "Not saved yet". Asked whether he still accepted the page as drawn, he answered "Yes, accept as drawn (Recommended)". After the captures were committed he saved the named version himself and said: "It's saved."
 
 This record retains his decisions, the design reference and its icon-free captures, the conformance declaration, the display rules, the departures and what remains open. It is the design record that [projects-register-native.md](projects-register-native.md) lacked; that record still governs the implementation and is not changed.
 
@@ -31,13 +31,13 @@ Scope: the existing Projects destination `projects` (route `/projects`, register
 | Rail badge counts active projects | Claude's recommendation, adopted | As Leads counts its Inbox. What a rail count means across the shell is still open |
 | Acceptance & closeout is the fifth phone tab | Claude's recommendation, adopted | As Reviews & approvals was for Estimating |
 | Phone multi-select by pressing and holding a row, with actions in a bottom bar | Claude's recommendation, adopted as direction | Not drawn |
-| Named version | Pending | Dean: "Not saved yet" (17 October 2026). Section 7 |
+| Named version | User action, 17 October 2026 | Dean saved "Projects register — Pipedrive pattern, accepted" after the capture commit: "It's saved." Section 7 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Projects register — Pipedrive pattern, accepted" once Dean saves it (section 7). The file's link is not recorded in this public repository, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Projects register — Pipedrive pattern, accepted" (section 7). The file's link is not recorded in this public repository, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
 | Accepted frames | Page "Projects (accepted)" `209:46`: desktop `209:47` (record window `209:110`, holding the record `209:118`), desktop with two rows selected `209:238` (toolbar `209:260`, small panel `209:301`), phone `209:457` (record view `209:477`). Its notes card `209:478` lists the scope, rules, handovers, changes, decisions, recommendations, what is still open and what is not drawn |
 | Page components | Rail · Projects (proposal), Project grid row, Project grid header, Project list row (phone) and Project snapshot (phone), drawn on the page as proposal parts. Three icons on the Components page: Solid `diagram-project` for the selected rail item, Light `chart-gantt` and `flag-checkered` |
 | Shared parts | Shell / Top bar, Shell / Phone header, Shell / Quick add (phone), Button, Tag, Brand / Logo; from "Shell v2 (proposal)": Rail item, Menu item, Menu heading, Menu edge, Menu strip, More panel, Grid / Header cell, Cell, Checkbox, Checkbox cell, Row actions cell, Tab item and Tab bar (phone) |
@@ -108,7 +108,7 @@ The Leads and Reviews & approvals departures apply unchanged: the labelled rail,
 
 ## 7. Named version and File index
 
-Dean said on 17 October 2026 that the named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet". It is saved in the file's version history after the capture commit, by Dean or, on his explicit yes, by Claude in the Figma desktop app. Until he confirms it, this record cites the version as pending and the pull request stays a draft. The File index row for `209:46` on the Start here page (row `630:286`) now names this record with the named version pending, under ADR-0055 rule 6, and is updated again when the version is saved.
+Dean said on 17 October 2026 that the named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet". He saved it himself in the file's version history after the capture commit and confirmed: "It's saved." Claude did not save it and has not opened the version history to inspect it. The File index row for `209:46` on the Start here page (row `630:286`) now names this record, under ADR-0055 rule 6.
 
 ## 8. Verification
 
