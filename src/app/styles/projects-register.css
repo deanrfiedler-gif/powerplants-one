@@ -138,6 +138,9 @@
   min-height: 0;
   overflow: hidden;
 }
+#ppo-projects .pj-results[hidden] {
+  display: none;
+}
 #ppo-projects .pj-table-host {
   display: flex;
   flex: 1;

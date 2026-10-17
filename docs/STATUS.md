@@ -4,6 +4,10 @@
 
 Material readiness for a demand now follows an explicit state table in the [readiness contract](contracts/supply-chain-readiness.md) (SCM-06, SCM-08). Three faults from the 15 October code audit are fixed: a shortfall with an on-time promise read Blocked and one with a late promise read At risk (now the other way round); an approved demand with nothing allocated read Evidence needed (now a shortage, Blocked or At risk); and forecast demand could not reach Not assessed (it now always does). The field readiness gate in draft [PR #541](https://github.com/deanrfiedler-gif/powerplants-one/pull/541) treats Blocked and At risk alike; its own copy of the allocation rule must take the same fix, after which an unallocated linked demand blocks dispatch instead of reading Unknown. Dean then [decided](decisions/supply-readiness-promise-rules.md) two further rules: only a supplier-confirmed promise counts as cover, and a promise whose date has passed leaves the demand Blocked. Code delivery only; no business acceptance is recorded.
 
+## /projects first-load layout shift — 17 October 2026
+
+The required F13 browser proof failed once in CI at 0.125 on /projects. On first load the register's results now replace its loading line instead of moving up 20 px when it goes. Measured /projects shift on the compiled build falls from 0.074–0.087 to 0.007–0.029, and the F13 case passed 25 repeated runs. A separate intermittent /schedule source (0.144 in one diagnostic run) remains open. Details are in the [shell system record](design/development/systems/shell.md#projects-first-load-f13-follow-up--17-october-2026). No visual, owner or device review is recorded.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
