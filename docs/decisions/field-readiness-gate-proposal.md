@@ -2,7 +2,7 @@
 document_id: PPO-SVC-FIELD-READINESS-GATE-PROP
 date: 2026-10-16
 owner: Dean Fiedler
-status: Proposed; owner acceptance, Figma acceptance, application build and operational acceptance separate
+status: Accepted by Dean on 16 October 2026 (R1 to R11 and the recommended answers to Q1 to Q7; section 9); Figma named version, application build and operational acceptance separate
 source_commit: 1552cfbb8efd6cea17438c2af18ba0effa4fc278
 versioning: git
 ---
@@ -11,7 +11,7 @@ versioning: git
 
 On 16 October 2026 Dean named a Powerplants Australia problem: field technicians arrive on site to parts that have not arrived or are wrong, or to a customer who was never contacted to get the site and equipment ready. He also proposed that technicians accept or decline a job pack, giving a reason that goes back to the person who prepared it. (The wording here is the handover from the session that assessed his problems; his exact words were not passed on.)
 
-This record proposes four changes that close that gap, plus a pack issue lead time. It frames Dean's "decline" as a **Return with reason**, and makes the existing dispatch gate the main defence. It is a **proposal**. It authorises no application code, migration, seed, permission, capability, route or deployment, and it changes no parent requirement ID. Dean accepts or amends it before any build.
+This record proposes four changes that close that gap, plus a pack issue lead time. It frames Dean's "decline" as a **Return with reason**, and makes the existing dispatch gate the main defence. It is a **proposal**. It authorises no application code, migration, seed, permission, capability, route or deployment, and it changes no parent requirement ID. Dean accepts or amends it before any build. **Dean accepted it on 16 October 2026 (section 9).**
 
 PPO is a synthetic prototype. Every person, site, pack, part and time in this record and in the Figma frames is synthetic. Nothing here is an operating rule for Powerplants Australia until Service adopts real values.
 
@@ -270,3 +270,12 @@ When this is accepted and locked in, `scope-sv-05.md`, `scope-fi-01.md` and `sco
 - **Documentation checks.** The proposal's own checks are recorded in the pull request.
 - **Figma.** The frames were checked by screenshot after each change. Present-mode click-through has not been run.
 - **Nothing else.** No application, database or browser suite was run, because nothing in `src/` or `db/` changed.
+
+## 9. Decision — 16 October 2026
+
+Dean accepted this proposal as one of the six items in the UX benchmark's Decision brief. The brief recommended accepting it, with a Supply-fed parts check at dispatch, a technician Return with a reason that tasks the preparer, and the "not yet opened" marker. Dean replied: "I am happy to proceed with all six based on your recommendations." The [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) record (PPO-UXB-DEC-01) holds the full decision.
+
+- **Adopted:** P1 to P5, recommendations R1 to R11, and the recommended answers to Q1 to Q7 in section 6. The technician's word stays "Return"; no "Declined" state is added (Q6).
+- **Adopted with it:** UXB-09 and UXB-10 (the parts-readiness ladder per line, read from SC-01) and amendments A06 and A07.
+- **Still to do before a build:** Dean's named Figma version of the A1 frames on Job pack (958:9304) and My jobs (959:243132), then a lock-in under ADR-0053. Real policy values (Q4) remain Service's under D-015, and the ladder needs SC-05 Q1 and live reservations.
+- **Unchanged:** this record still authorises no application code, migration, seed, permission, route or deployment. The build follows section 5 and `AGENTS.md` in its own pull request.
