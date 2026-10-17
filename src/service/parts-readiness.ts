@@ -8,6 +8,7 @@ import {
   type Fact,
   type SupplyRecord,
 } from "../supply/model";
+import { todayInZone } from "../projects/model";
 import { sourceValidity } from "../supply/validity";
 
 // The Dispatch-stage PartsReadiness criterion of SYN-PPO-P04 v2 (field readiness gate P1, R1, Q7).
@@ -16,11 +17,7 @@ import { sourceValidity } from "../supply/validity";
 export const PARTS_CRITERION = "PartsReadiness";
 export const PARTS_READY = "Ready for the stated material scope";
 export type PartsOutcome =
-  | "Pass"
-  | "Blocked"
-  | "Unknown"
-  | "NotApplicable"
-  | "PermittedException";
+  "Pass" | "Blocked" | "Unknown" | "NotApplicable" | "PermittedException";
 export type PartsLine = {
   id: string;
   reference: string;
@@ -52,7 +49,8 @@ export function partsOutcome(
 ): PartsOutcome {
   if (statement === "PermittedException") return "PermittedException";
   if (unlinked) return "Unknown";
-  if (!lines.length) return statement === "NotApplicable" ? "NotApplicable" : "Unknown";
+  if (!lines.length)
+    return statement === "NotApplicable" ? "NotApplicable" : "Unknown";
   if (lines.some((l) => short(l.state))) return "Blocked";
   if (lines.some((l) => l.state !== PARTS_READY)) return "Unknown";
   return "Pass";
@@ -92,8 +90,9 @@ async function line(
       [workspace_id, d.id],
     )
   ).rows;
+  // Nothing allocated is a known zero (a shortage), not missing evidence, as in Supply.
   let usable = 0n,
-    complete = allocations.length > 0;
+    complete = true;
   for (const a of allocations) {
     const s = (
       await c.query<SupplyRecord>(
@@ -115,7 +114,13 @@ async function line(
       [workspace_id, d.id],
     )
   ).rows;
-  const state = supplyReadiness(d, quantity(usable), complete, facts);
+  const state = supplyReadiness(
+    d,
+    quantity(usable),
+    complete,
+    facts,
+    todayInZone(d.data.timezone ?? "UTC"),
+  );
   return {
     id: d.id,
     reference: d.reference,
