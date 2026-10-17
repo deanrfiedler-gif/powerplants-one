@@ -162,6 +162,10 @@ function RegisterView({ query }: { query: string }) {
     selectedRows = items.filter((p) => selected.includes(p.id)),
     sequence = selectedRows.length ? selectedRows : items;
   const busy = resource.loading || !!resource.error;
+  // F13 / UXB-75: the loading line sits above the results. Until the first read settles, keep the
+  // results out of the layout too, so they take the line's place rather than moving up into it.
+  const [readSettled, setReadSettled] = useState(false);
+  if (!readSettled && (data || resource.error)) setReadSettled(true);
   const allSelected = items.length > 0 && selectedRows.length === items.length;
   useEffect(() => {
     if (selectAll.current)
@@ -420,7 +424,11 @@ function RegisterView({ query }: { query: string }) {
         retry={resource.reload}
         retained={!!data}
       />
-      <div className="pj-results" aria-busy={resource.loading}>
+      <div
+        className="pj-results"
+        aria-busy={resource.loading}
+        hidden={!readSettled}
+      >
         <div
           className="pj-desktop pj-table-host"
           style={
