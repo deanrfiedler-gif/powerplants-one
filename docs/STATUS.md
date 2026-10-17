@@ -2,13 +2,28 @@
 
 ## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
 
-Stage S2 of Dean's [D-025 decision](decisions/customer-communications-d025.md) is built in draft [PR #569](https://github.com/deanrfiedler-gif/powerplants-one/pull/569), on Dean's instruction "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." It must not merge before [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566), and Dean must authorise S2 before it merges. The [S2 record](decisions/customer-communications-core-s2.md) and [API contract](contracts/customer-communications.md) describe it:
+Stage S2 of Dean's [D-025 decision](decisions/customer-communications-d025.md) is built in draft [PR #569](https://github.com/deanrfiedler-gif/powerplants-one/pull/569), on Dean's instruction "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." That decision record, [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566), has since merged; Dean must still authorise S2 before it merges. The [S2 record](decisions/customer-communications-core-s2.md) and [API contract](contracts/customer-communications.md) describe it:
 - Migration 0108: one communication record per message and an append-only ledger in the R4 states, plus Queued for the named sender's confirmation. Held, Failed and OutcomeUnknown keep one owned `CustomerContact` follow-up open (TR-03).
 - PPO prepares each message from its source record; a named person with the new `customer_message.send` duty confirms the exact content; a worker drains `CustomerMessageConfirmed` outbox jobs through a provider-neutral channel whose only implementation is synthetic, and reconciles unknown outcomes before any retry.
 - Customer, project and order timelines and an outbound queue (API only); per-contact notice preferences (Allowed or Do not notify, with who, when and why); per-class switches, Off by default, changed only with `customer_message.switch`; and the CUS-EMAIL template family under DK-06's rules with an SQL binding allowlist.
 - No UI: timeline rows, the preference control and the send confirmation need accepted Figma designs first (ADR-0053). Five proposed departures from the paper are listed for Dean in the S2 record.
 
 **S3 (carrier and tracking fields, the order delivery contact, and the dispatch and delay notices) is not started.** No provider, credential, mailbox, DNS change or customer message exists. Code delivery only; no business acceptance is recorded.
+
+## D-025 customer email decided — 17 October 2026
+
+Dean accepted the [D-025 customer communications decision paper](decisions/customer-communications-d025.md): "Proceed with your recommendations for C1 and C3 to C8." C2 stands as he changed it on 16 October, so a named person sends dispatch, delay and visit messages.
+- **D-025 is Partially resolved.** SMS, inbound sync and filing, calendar writes, marketing, the portal and the operational evidence stay open.
+- **[ADR-0058](decisions/ADR-0058-outbound-customer-email.md) is Accepted.** One communications service sends every customer email through Microsoft Graph from one shared mailbox, behind a provider-neutral channel.
+- **Rules adopted:** the paper's rules for recipients, opt-out, logging, states, failures and content.
+- **Nothing is built and nothing sends.** Every message class is off by default and synthetic first. Each build stage, starting with S2 (the communication core on a synthetic channel), needs its own authorisation.
+
+Before that, Dean answered the three questions in the [D-025 customer communications decision paper](decisions/customer-communications-d025.md#9-decisions-for-dean):
+- **Q1, where freight is booked:** "Carrier's own website, Freight booking platform, Recorded in MYOB, Paper or email only". No single source holds every tracking number, so staff enter the carrier and the tracking number when they record a dispatch as Moved. The dispatch notice stage still needs the list of carriers and the name of the freight booking platform.
+- **Q2, the Smartsheet Customer Update register:** "No". The Projects Department does not use it, so project updates start as a new process rather than replacing a working one.
+- **Q3, the sending mailbox:** "One shared mailbox", as [ADR-0058](decisions/ADR-0058-outbound-customer-email.md) proposed. Its address, the tenant and who can grant consent are still to be confirmed before a live pilot.
+
+The paper, ADR-0058, the decision register, the document register and the decisions index record the decision and the answers. No code, migration, mailbox or app registration changes.
 
 ## Projects register design differences fixed — 17 October 2026
 

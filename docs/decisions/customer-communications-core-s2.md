@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **State:** Synthetic implementation in a draft pull request, 17 October 2026. Dean told the parent session: "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." Dean must authorise S2 before it merges, and it must not merge before [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566) (his D-025 decision record) does. Code delivery only: no business acceptance, provider, credential, mailbox, DNS change or customer message.
+**Owner:** Dean Fiedler. **State:** Synthetic implementation in a draft pull request, 17 October 2026. Dean told the parent session: "Start S2 now. My D-025 decision stands; base it on main and don't merge it before PR 566." Dean must authorise S2 before it merges. His D-025 decision record, [PR #566](https://github.com/deanrfiedler-gif/powerplants-one/pull/566), has merged. Code delivery only: no business acceptance, provider, credential, mailbox, DNS change or customer message.
 
 **Implements:** stage S2 of the [D-025 decision paper](customer-communications-d025.md) (C1, C2 as changed on 16 October, C4–C8; rules R1–R9) behind the channel design of [ADR-0058](ADR-0058-outbound-customer-email.md). **Related:** DOC-05, TR-03, OUT-17, CRM-03, NFR-11; AT-25, AT-36. No parent requirement ID changes. **API:** [customer communications contract](../contracts/customer-communications.md).
 
