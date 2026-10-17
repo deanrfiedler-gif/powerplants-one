@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Projects register design locked in — 17 October 2026
+
+An audit of the Figma file on 17 October found one accepted page without a decision record: the Projects register `209:46`, which Dean accepted on 11 October ("Proceed with your recommendations") and which was built on 13 October under [projects-register-native.md](decisions/projects-register-native.md). Asked again, Dean answered "Yes, accept as drawn (Recommended)". The [design decision](decisions/projects-register-design.md) records the rules, departures P1–P7 and what is open, and [five icon-free captures](reference/ui/projects/projects-register-design-r01/README.md) are retained with hashes. The named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet"; the record cites it as pending until Dean confirms it, and the File index row now names the record. Still open: comparing the built page and its register read with the captures, phone multi-select (adopted, not drawn), rail-count meaning and the shell rollout. No code, read model, migration, permission or parent ID changes.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
