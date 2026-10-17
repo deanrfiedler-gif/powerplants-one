@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Conversations T1b built, no UI — 17 October 2026
+
+T1b of [PPO-CONV-T1-SCOPE](https://github.com/deanrfiedler-gif/powerplants-one/pull/567) is built on branch `feat/conversations-t1b-threads`: migration 0108 and seed 108 add people-only threads on deals and projects, immutable messages, participants with last-read, person and record mentions, tracked asks with the N7 steps, and a `Mentions` notice source. `conversation.read` and `conversation.post` (proposed names, now 159 capability keys) follow the anchor record's own read capability and go to local synthetic profiles that already read deals or projects; hosted testers receive neither. See the [contract](contracts/conversations-t1b.md), which lists five assumptions awaiting Dean's confirmation. There is no route, page, top-bar icon, Carl or AI: those are T1c and later. Verification is database and unit proof on a disposable synthetic database; business acceptance and production readiness are not claimed.
+
 ## Projects register design differences fixed — 17 October 2026
 
 The eight fixes proposed by the [Projects register comparison](testing/evidence/projects-register/design-comparison.md#fixes-made) are made: grid header colour and At risk alignment, the toolbar count size, 24-hour S6 times in the toolbar and History, the opportunity reference in Sales source (a new `opportunity_reference` field on the project and work-order `sales-handovers` read), "finishes" in At risk rows, the History heading and ring markers, and the phone record header. Values come from the Figma frame's text styles and bound variables. The five states were captured again at 1440 × 900 and 390 × 844 on a disposable synthetic database. The five questions and Q-D1/Q-D2 stay with Dean; the visual status stays Needs review and no review fingerprint is copied.
