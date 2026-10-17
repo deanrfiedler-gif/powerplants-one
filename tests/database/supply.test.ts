@@ -156,18 +156,31 @@ test("Supply company/site reads, strict payloads, immutable identity and operati
     code("InvalidRelationship"),
   );
 });
-test("approved demand with nothing allocated is a shortage, and promise timing decides At risk or Blocked (SUP-1)", async () => {
+test("approved demand with nothing allocated is a shortage, and promise basis and timing decide At risk or Blocked (SUP-1)", async () => {
   const p = await actor();
-  const d = await create(p);
+  // Future fixture dates: promise timing is judged against the real current date.
+  const d = await create(p, "Demand", {
+    data: { ...supplyInput().data, required_on: "2031-12-05" },
+  });
   assert.deepEqual((await workspace(p, d.id)).basis?.readiness, {
     state: "Blocked",
     shortage: "10",
   });
-  // Promised the day before the required date (2026-10-01): covered, but not yet usable.
-  const onTime = await fact(p, d.id, "Promise", {
+  // An estimated date before the required date is not a supplier commitment.
+  const estimated = await fact(p, d.id, "Promise", {
     quantity: "10",
-    promised_on: "2026-09-30",
+    basis: "Estimated",
+    promised_on: "2031-12-01",
   });
+  assert.equal((await workspace(p, d.id)).basis?.readiness.state, "Blocked");
+  // The supplier confirms the same date: covered, but not yet usable.
+  const confirmed = await fact(
+    p,
+    d.id,
+    "Promise",
+    { quantity: "10", basis: "SupplierConfirmed", promised_on: "2031-12-01" },
+    estimated.cmd.id,
+  );
   assert.deepEqual((await workspace(p, d.id)).basis?.readiness, {
     state: "At risk",
     shortage: "10",
@@ -177,10 +190,21 @@ test("approved demand with nothing allocated is a shortage, and promise timing d
     p,
     d.id,
     "Promise",
-    { quantity: "10", promised_on: "2026-10-02" },
-    onTime.cmd.id,
+    { quantity: "10", basis: "SupplierConfirmed", promised_on: "2031-12-08" },
+    confirmed.cmd.id,
   );
   assert.equal((await workspace(p, d.id)).basis?.readiness.state, "Blocked");
+  // A confirmed promise whose date has already passed is broken, so Blocked.
+  const past = await create(p);
+  await fact(p, past.id, "Promise", {
+    quantity: "10",
+    basis: "SupplierConfirmed",
+    promised_on: "2026-09-30",
+  });
+  assert.equal(
+    (await workspace(p, past.id)).basis?.readiness.state,
+    "Blocked",
+  );
   // Forecast demand is not assessed, whether or not anything is allocated.
   const forecast = await create(p, "Demand", {
     data: { ...supplyInput().data, demand_class: "Forecast" },
@@ -196,7 +220,12 @@ test("Project demand, split shipment and quarantined partial receipt keep readin
   await createProject(p, project);
   const dinput = supplyInput();
   const d = await create(p, "Demand", {
-    data: { ...dinput.data, origin_kind: "Project", origin_id: project.id },
+    data: {
+      ...dinput.data,
+      origin_kind: "Project",
+      origin_id: project.id,
+      required_on: "2031-12-05",
+    },
   });
   const sinput = supplyInput("Supply"),
     s = await create(p, "Supply", {
@@ -211,6 +240,7 @@ test("Project demand, split shipment and quarantined partial receipt keep readin
   const promised = await fact(p, d.id, "Promise", {
     quantity: "10",
     basis: "SupplierConfirmed",
+    promised_on: "2031-12-01",
   });
   await allocation(p, d.id, s.id, "6", "Incoming");
   const d2 = await create(p, "Demand", { quantity: "4" });
@@ -225,8 +255,8 @@ test("Project demand, split shipment and quarantined partial receipt keep readin
   });
   await allocation(p, d.id, s.id, "3");
   await allocation(p, d2.id, s.id, "2");
-  // Quarantined and damaged units never count: 3 usable of 10. The on-time promise (2026-09-30)
-  // still covers the 7 short, so At risk; once it slips past 2026-10-01 the demand is Blocked.
+  // Quarantined and damaged units never count: 3 usable of 10. The confirmed promise (2031-12-01)
+  // still covers the 7 short, so At risk; once it slips past 2031-12-05 the demand is Blocked.
   let w = await workspace(p, d.id);
   assert.equal(w.basis?.readiness.state, "At risk");
   assert.equal(w.basis?.usable, "3");
@@ -235,7 +265,7 @@ test("Project demand, split shipment and quarantined partial receipt keep readin
     p,
     d.id,
     "Promise",
-    { quantity: "7", basis: "SupplierConfirmed", promised_on: "2026-10-05" },
+    { quantity: "7", basis: "SupplierConfirmed", promised_on: "2031-12-09" },
     promised.cmd.id,
   );
   w = await workspace(p, d.id);

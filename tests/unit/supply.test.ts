@@ -33,19 +33,27 @@ const promise = (
   completeness: Fact["completeness"] = "Complete",
 ) =>
   ({
-    ...supplyFact("Promise", 2, data),
+    ...supplyFact("Promise", 2, { basis: "SupplierConfirmed", ...data }),
     record_id: "d",
     version: 2,
     activity_id: null,
     completeness,
   }) as Fact;
-test("readiness follows the SUP-1 state table: class, evidence, usable allocation, then promise timing", () => {
-  // The demand needs 10 EA by 2026-10-01.
-  const d = demand(),
+test("readiness follows the SUP-1 state table: class, evidence, usable allocation, then promise basis and timing", () => {
+  // The demand needs 10 EA by 2026-10-01; the demand's local date is 2026-09-20.
+  const today = "2026-09-20",
+    d = demand(),
     forecast = { ...d, data: { ...d.data, demand_class: "Forecast" } },
     onTime = promise({ quantity: "10", promised_on: "2026-09-30" }),
     sameDay = promise({ quantity: "5", promised_on: "2026-10-01" }),
+    dueToday = promise({ quantity: "5", promised_on: today }),
+    overdue = promise({ quantity: "10", promised_on: "2026-09-19" }),
     late = promise({ quantity: "10", promised_on: "2026-10-02" }),
+    estimated = promise({
+      quantity: "10",
+      promised_on: "2026-09-30",
+      basis: "Estimated",
+    }),
     tooSmall = promise({ quantity: "4", promised_on: "2026-09-30" }),
     partial = promise({ quantity: "10", promised_on: "2026-09-30" }, "Partial");
   // [case, demand, usable allocated, sources complete, facts, state, shortage]
@@ -60,18 +68,21 @@ test("readiness follows the SUP-1 state table: class, evidence, usable allocatio
     ["approved, incomplete source", d, "10", false, [onTime], "Evidence needed", null],
     ["approved, covered", d, "10", true, [], "Ready for the stated material scope", "0"],
     ["approved, covered with late promise", d, "10", true, [late], "Ready for the stated material scope", "0"],
-    ["approved, short, on-time promise", d, "5", true, [onTime], "At risk", "5"],
+    ["approved, short, confirmed on-time promise", d, "5", true, [onTime], "At risk", "5"],
     ["approved, short, promise on the required date", d, "5", true, [sameDay], "At risk", "5"],
-    ["approved, nothing allocated, on-time promise", d, "0", true, [onTime], "At risk", "10"],
+    ["approved, short, promise due today", d, "5", true, [dueToday], "At risk", "5"],
+    ["approved, nothing allocated, confirmed on-time promise", d, "0", true, [onTime], "At risk", "10"],
     ["approved, short, no promise", d, "5", true, [], "Blocked", "5"],
     ["approved, nothing allocated, no promise", d, "0", true, [], "Blocked", "10"],
     ["approved, short, late promise", d, "5", true, [late], "Blocked", "5"],
+    ["approved, short, overdue promise", d, "5", true, [overdue], "Blocked", "5"],
+    ["approved, short, estimated on-time promise", d, "5", true, [estimated], "Blocked", "5"],
     ["approved, short, promise smaller than shortage", d, "5", true, [tooSmall], "Blocked", "5"],
     ["approved, short, partial promise evidence", d, "5", true, [partial], "Blocked", "5"],
   ];
   for (const [name, r, allocated, complete, facts, state, shortage] of table)
     assert.deepEqual(
-      readiness(r, allocated, complete, facts),
+      readiness(r, allocated, complete, facts, today),
       { state, shortage },
       name,
     );
@@ -82,7 +93,10 @@ test("readiness follows the SUP-1 state table: class, evidence, usable allocatio
     version: 3,
     predecessor_id: onTime.id,
   };
-  assert.equal(readiness(d, "5", true, [onTime, revised]).state, "Blocked");
+  assert.equal(
+    readiness(d, "5", true, [onTime, revised], today).state,
+    "Blocked",
+  );
   const restored = {
     ...onTime,
     id: "back",
@@ -90,11 +104,16 @@ test("readiness follows the SUP-1 state table: class, evidence, usable allocatio
     predecessor_id: "late",
   };
   assert.equal(
-    readiness(d, "5", true, [onTime, revised, restored]).state,
+    readiness(d, "5", true, [onTime, revised, restored], today).state,
     "At risk",
   );
+  // The same confirmed promise is broken once its date has passed.
+  assert.equal(
+    readiness(d, "5", true, [onTime], "2026-10-01").state,
+    "Blocked",
+  );
 });
-test("material basis treats an empty allocation register as a known shortage, not missing evidence", async () => {
+test("material basis treats an empty allocation register as a known shortage and judges promises on the demand's local day", async () => {
   const queries: string[] = [];
   const c = {
     query: async (sql: string) => {
@@ -105,22 +124,36 @@ test("material basis treats an empty allocation register as a known shortage, no
   const p = { workspace_id: "w" } as Principal,
     d = demand(),
     onTime = promise({ quantity: "10", promised_on: "2026-09-30" });
-  const basis = (r: SupplyRecord, facts: Fact[]) =>
-    materialBasis(c, p, r, facts);
-  assert.deepEqual((await basis(d, [])).readiness, {
+  const basis = (r: SupplyRecord, facts: Fact[], now: string) =>
+    materialBasis(c, p, r, facts, new Date(now));
+  assert.deepEqual((await basis(d, [], "2026-09-20T00:00:00Z")).readiness, {
     state: "Blocked",
     shortage: "10",
   });
-  assert.deepEqual((await basis(d, [onTime])).readiness, {
-    state: "At risk",
-    shortage: "10",
-  });
   assert.deepEqual(
-    (await basis({ ...d, data: { ...d.data, demand_class: "Forecast" } }, []))
-      .readiness,
+    (await basis(d, [onTime], "2026-09-20T00:00:00Z")).readiness,
+    { state: "At risk", shortage: "10" },
+  );
+  // 23:30 on 30 September in Sydney is still the promised day; 00:30 on 1 October is not.
+  assert.equal(
+    (await basis(d, [onTime], "2026-09-30T13:30:00Z")).readiness.state,
+    "At risk",
+  );
+  assert.equal(
+    (await basis(d, [onTime], "2026-09-30T14:30:00Z")).readiness.state,
+    "Blocked",
+  );
+  assert.deepEqual(
+    (
+      await basis(
+        { ...d, data: { ...d.data, demand_class: "Forecast" } },
+        [],
+        "2026-09-20T00:00:00Z",
+      )
+    ).readiness,
     { state: "Not assessed", shortage: "10" },
   );
-  assert.equal((await basis(d, [])).usable, "0");
+  assert.equal((await basis(d, [], "2026-09-20T00:00:00Z")).usable, "0");
   assert.ok(queries.every((s) => s.includes("ppo.supply_allocations")));
 });
 test("receipt inspection partitions damaged, quarantined and usable quantities", () => {
