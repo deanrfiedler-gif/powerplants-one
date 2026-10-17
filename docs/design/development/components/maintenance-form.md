@@ -4,6 +4,12 @@ Owner: Dean Fiedler. Scope: MA-01–MA-07. Review: Pending.
 
 The native component is registered with actual owning pages, retained r01 reference and synthetic state fixtures in components.json. It is reference-only in the catalogue because no isolated renderer is claimed.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Two-column worklist and one-column disclosed decision form; bounded evidence wraps.

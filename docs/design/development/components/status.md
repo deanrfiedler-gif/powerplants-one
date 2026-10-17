@@ -14,6 +14,15 @@ Design: [powerplants-one-theme-style-board-r22.html](../../../reference/ui/theme
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Controls and Components › Record, in the private "PPO - Design" Figma file
+
+- Tag `3:13`
+- Record / Banner `251:2310`
+
+Tag carries status chips (Neutral, Success, Warning, Danger); Record / Banner carries record-level state. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Keep a readable label with each tone; business state and tone are not equivalent.

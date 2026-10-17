@@ -1,5 +1,11 @@
 # Current prototype status
 
+## Figma Components page consolidated and mapped — 17 October 2026
+
+Dean approved making the Figma Components page the single source of PPO design components ("Proceed with the plan and your recommended answers to D1–D6"). 212 main components moved there with their node IDs kept; five early parts were retired to the historical Shell page; CPQ parts stay on their own accepted page and proposal-only parts stay on their proposal pages. Hashes of 90 frames on eight accepted pages matched before and after, so no accepted design changed. The [decision record](decisions/figma-components-page.md) lists D1–D6 and what remains open.
+
+Each component register record now carries a `figma` mapping and each specification a "Figma components" section: 12 Mapped, 7 Partial, 4 Proposal only, 24 None. The register check rejects malformed mappings and any file link. A mapping is not visual alignment, review or acceptance; no review fingerprint was added.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.

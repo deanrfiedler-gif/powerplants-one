@@ -4,6 +4,12 @@
 
 Owner: Dean Fiedler. Stable ES-06 / `route:/estimating/quotes/[id]/response`. Native `QuotationResponse`; r20 Document & evidence workspace with guided staff capture. [Retained ES-06 r01](../../../reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html) and [companion](../../../reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-Report-r01.md) remain unchanged. Accepted native desktop/mobile reference images are unavailable. Unedited execution captures: [desktop](../../../testing/evidence/quotation-response/desktop.png), [320 px](../../../testing/evidence/quotation-response/mobile-320.png); source hashes and review limits remain in the evidence ledger.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 At 1440/1024 px use the existing PPO shell and one page scroll owner. Put exact offer identity and non-operative conditions first; follow with current report/holds, attributable capture, information-only clarification, separate ES-07 readiness and immutable history. Long hashes/UUIDs wrap. Original PDF/HTML and ES-05 links retain the exact revision.

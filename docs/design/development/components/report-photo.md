@@ -8,6 +8,12 @@ ReportPhoto is a Service-review host component. It reuses Button and ErrorNotice
 
 States: closed without a fetch; opening with a spoken status; verified original image; denied or unavailable with retry; byte mismatch without an image; hidden, refreshed or identity-changed with request cancellation and URL disposal. The owning form's decision and reason remain when the photo fails, is hidden or refreshed. Changing report/revision/photo/identity remounts the image child. No new operation receipt or business decision is created.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. Visit / Photo tile 848:102 is the technician capture tile, not the submitted-report inspection. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Desktop and phone retain one page scroll owner. The image preserves its proportions, fits the available width without browser-default inline figure gutters and is bounded to 70vh; caption and controls wrap. Inspect/Hide/Retry are shared secondary buttons with native keyboard activation. The button declares expanded state and controls the inline region, which introduces no modal focus trap. A successful opening keeps focus on the control; an error focuses the shared alert. Keyboard retry returns focus to the still-mounted Hide control as Retry is removed. The host browser test is the runnable fixture; there is no isolated business-session-free catalogue example.

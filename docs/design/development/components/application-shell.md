@@ -14,6 +14,32 @@ Design: [PPO-Application-Shell-r17.html](../../../reference/ui/application-shell
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Mapped · **Location:** Components › Shell and navigation, in the private "PPO - Design" Figma file
+
+- Brand / Logo `31:215`
+- Shell / Top bar `35:138`
+- v2 / Rail `84:197`
+- v2 / Rail item `73:29`
+- v2 / Menu strip `73:63`
+- v2 / Menu heading `73:48`
+- v2 / Menu item `73:46`
+- v2 / Menu edge `73:54`
+- v2 / More panel `79:51`
+- Rail · Sales (proposal) `190:20238`
+- Rail · Engineering (proposal) `184:18299`
+- Rail · Projects (proposal) `209:515`
+- Rail · Service (proposal) `198:3778`
+- Rail · Supply chain (proposal) `697:163173`
+- Shell / Phone header `38:282`
+- Shell / Quick add (phone) `38:342`
+- v2 / Tab bar (phone) `107:149`
+- v2 / Tab item `107:148`
+- Shell / Tab `38:314`
+
+The proposed top bar with centred search (1046:259953) and breadcrumb (1037:103) stay on the Shell top bar amendment page until its lock-in replaces Shell / Top bar. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.

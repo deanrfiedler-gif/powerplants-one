@@ -14,6 +14,12 @@ The host permits a bounded 6,000,000-character journal for evidence originals. Q
 
 Quality r01 is a proposed reference. Accepted native desktop/phone images are missing. See page contracts, decision and verification evidence; delivery grants no owner approval.
 
+## Figma components
+
+**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+
+No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 1440/1024: responsive columns, shared card/line/focus tokens, exact sources and wrapped evidence; one shell content scroll owner.

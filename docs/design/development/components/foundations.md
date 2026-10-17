@@ -12,6 +12,12 @@ Design: [powerplants-one-theme-style-board-r22.html](../../../reference/ui/theme
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** None · **Location:** Start here (0:1), in the private "PPO - Design" Figma file
+
+Colour variables and text styles live on the Start here page; they are styles, not main components. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Use semantic tokens and preserve the meaning of each colour.

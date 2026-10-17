@@ -3,6 +3,14 @@
 Owner: Dean Fiedler. Stable component: `customer-360-summary`. **Reference only; proposed.**
 Consumer: `scope:CS-01`. Figma local component `555:161360`; no runtime implementation or adoption is asserted.
 
+## Figma components
+
+**Status:** Proposal only · **Location:** Customer 360 (proposal) 554:2, in the private "PPO - Design" Figma file
+
+- CS-01 / Summary tile (proposal) `555:161360`
+
+Stays on the proposal page until Customer 360 is accepted. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Four 228 × 112 px cells per row inside a 912 px white summary panel, within the 960 px customer workspace and full 1440 × 900 PPO shell. Two rows show the eight CS-01 summaries. Cell dividers replace the earlier separate-card gaps. The panel uses the shared 7 px card radius; each cell has 12 px padding.

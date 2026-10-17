@@ -16,6 +16,14 @@ Design: [powerplants-one-theme-style-board-r22.html](../../../reference/ui/theme
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
+## Figma components
+
+**Status:** Partial · **Location:** Components › Record, in the private "PPO - Design" Figma file
+
+- Record / Banner `251:2310`
+
+Record / Banner covers record-level state messages. Loading, empty and error states are not drawn as components. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+
 ## Desktop
 
 Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.
