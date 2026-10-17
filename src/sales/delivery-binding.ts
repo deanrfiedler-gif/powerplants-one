@@ -505,6 +505,7 @@ export async function deliverySalesSourcesInSnapshot(
         access: "Available" as const,
         handover_id: row.id,
         opportunity_id: row.opportunity_id,
+        opportunity_reference: o.display_number,
         opportunity_title: o.title,
         acceptance_event_id: event.id,
         revision: event.revision,

@@ -103,8 +103,9 @@
   height: 16px;
 }
 #ppo-projects .pj-observed {
-  color: var(--muted);
-  font-size: 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 20px;
   white-space: nowrap;
 }
 #ppo-projects .pj-toolbar .pj-selected {
@@ -171,6 +172,7 @@
   background: var(--surface-white);
 }
 #ppo-projects .ppo-register-table th {
+  color: var(--ink);
   font-weight: 500;
   position: sticky;
   top: 0;
@@ -245,6 +247,9 @@
 }
 #ppo-projects .ppo-register-table .pj-number {
   text-align: right;
+}
+#ppo-projects .ppo-register-table th.pj-number .ppo-register-sort {
+  justify-content: flex-end;
 }
 #ppo-projects .mw-tag {
   line-height: 16px;
@@ -467,6 +472,9 @@
   color: var(--muted);
   margin-top: 6px;
 }
+#ppo-projects .pj-snapshot .pj-created-short {
+  display: none;
+}
 #ppo-projects .pj-snapshot .pj-record-status {
   display: flex;
   flex-wrap: wrap;
@@ -568,10 +576,27 @@
   overflow-wrap: anywhere;
 }
 #ppo-projects .pj-snapshot .pj-activity summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  list-style: none;
   font-size: 16px;
   font-weight: 700;
+  line-height: 21px;
   cursor: pointer;
   margin-bottom: 20px;
+}
+#ppo-projects .pj-snapshot .pj-activity summary::-webkit-details-marker {
+  display: none;
+}
+#ppo-projects .pj-snapshot .pj-activity summary .pj-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s;
+}
+#ppo-projects .pj-snapshot .pj-activity details:not([open]) summary .pj-icon {
+  transform: rotate(-90deg);
 }
 #ppo-projects .pj-snapshot .pj-history {
   list-style: none;
@@ -585,11 +610,13 @@
 #ppo-projects .pj-snapshot .pj-history li::before {
   content: "";
   position: absolute;
-  left: -4px;
-  top: 7px;
-  width: 7px;
-  height: 7px;
-  background: #b6bfcb;
+  left: -6px;
+  top: 5px;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  background: var(--surface-white, #fff);
+  border: 2px solid var(--hairline, #cbd2dc);
   border-radius: 50%;
 }
 #ppo-projects .pj-snapshot .pj-history small {
@@ -884,7 +911,7 @@
     top: 0;
     left: 50px;
     right: 100px;
-    height: 64px;
+    height: 63px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -898,7 +925,15 @@
   }
   #ppo-projects .pj-snapshot .pj-record header > small {
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 2px;
+  }
+  #ppo-projects .pj-snapshot :is(.pj-created-full, .pj-site-time) {
+    display: none;
+  }
+  #ppo-projects .pj-snapshot .pj-created-short {
+    display: inline;
   }
   #ppo-projects .pj-snapshot .pj-record-status {
     margin-top: 0;

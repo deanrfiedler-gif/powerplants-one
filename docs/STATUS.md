@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Projects register design differences fixed — 17 October 2026
+
+The eight fixes proposed by the [Projects register comparison](testing/evidence/projects-register/design-comparison.md#fixes-made) are made: grid header colour and At risk alignment, the toolbar count size, 24-hour S6 times in the toolbar and History, the opportunity reference in Sales source (a new `opportunity_reference` field on the project and work-order `sales-handovers` read), "finishes" in At risk rows, the History heading and ring markers, and the phone record header. Values come from the Figma frame's text styles and bound variables. The five states were captured again at 1440 × 900 and 390 × 844 on a disposable synthetic database. The five questions and Q-D1/Q-D2 stay with Dean; the visual status stays Needs review and no review fingerprint is copied.
+
 ## Projects register compared with its design — 17 October 2026
 
 The built `/projects` page was captured at 1440 × 900 and 390 × 844 against a disposable synthetic database holding the design's projects, then compared with the five accepted captures under ADR-0053 rule 7. The [comparison record](testing/evidence/projects-register/design-comparison.md) finds the layout, columns, views, toolbar, selection panel, phone rows and tab bar as drawn. It lists 18 differences: eight proposed fixes (including 24-hour times under the adopted S6 rule), five adaptations already recorded and five questions for Dean. The next-milestone, overdue and At risk columns follow the design rules; two questions remain (an At risk milestone, overdue on a closed project). Nothing is fixed yet, no application code changed, and the visual status stays Needs review.

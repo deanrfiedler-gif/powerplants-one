@@ -200,10 +200,17 @@ for (const kind of ["Projects", "Service"] as const)
       await readOperation(f.p, f.create.operation_id),
       f.created.receipt,
     );
+    const source = (await readDeliverySalesSources(f.p, kind, f.target))
+      .items[0];
+    assert.equal(source.content?.included_scope, f.content.included_scope);
+    // The Projects record window shows "reference · title" (design comparison C10).
     assert.equal(
-      (await readDeliverySalesSources(f.p, kind, f.target)).items[0].content
-        ?.included_scope,
-      f.content.included_scope,
+      source.opportunity_reference,
+      (
+        await rows("SELECT display_number FROM ppo.opportunities WHERE id=$1", [
+          f.o.id,
+        ])
+      )[0].display_number,
     );
     await commandHandover(f.p, f.id, {
       ...crmBase(),
