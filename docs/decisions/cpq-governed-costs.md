@@ -1,5 +1,7 @@
 # CPQ governed product costs and labour rates
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this record (CM4): Manual and Workbench lines are priced by cost-source lookup for their exact Variant. A line without a reviewed source shows Price unknown, never zero. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Backend implementation authorised 14 October 2026. Scope: BC-04, ES-02/ES-03 and existing EST receiving contracts. Review, operational acceptance and deployment remain separate.

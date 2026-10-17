@@ -1,5 +1,7 @@
 # Estimation Wizard Figma implementation
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** the reused CPQ and Fertigation links (CM1): each system's confirmed route and status (Not started, In progress, Proposal ready, In CPQ, Stale) replace the static menu links, and ES-08 is reached through its route. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 **Date:** 13 October 2026. **Owner:** Dean Fiedler. **Status:** User-requested native implementation; application visual and business acceptance pending.

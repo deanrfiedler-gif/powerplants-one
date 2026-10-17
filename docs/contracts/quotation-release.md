@@ -1,5 +1,7 @@
 # Synthetic quotation release contract
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](../decisions/estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** the bound source (CM9): it adds the chosen appendices by exact bytes and hash. Contract changes are specified in their build step (B5). The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. ES-05 / PPO-010 / BP-04 EST-03/07/08 / OUT-06. Governed by the [native release decision](../decisions/quotation-release-native.md). Operational commercial terms and owner acceptance remain separate.

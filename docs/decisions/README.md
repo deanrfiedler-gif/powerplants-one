@@ -4,6 +4,13 @@
 
 [AI tool roles and independent cross-model review](cross-model-review.md) records Dean's 17 October 2026 decision on tool roles. Claude builds and oversees, ChatGPT reviews independently and supports research, and Codex optionally builds separate tasks. Higher-risk PRs need a review from a second model before merge.
 
+[Estimating hub, CPQ and specialist workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC) was **adopted** by Dean on 17 October 2026. It records his model, which has three parts:
+- the Estimation Wizard is the hub that routes each system;
+- CPQ is the single priced line table, with manual Product-ID entry;
+- the Screen, Fertigation and future workbenches produce a shared, price-free parts proposal and supporting documents for CPQ and the quotation.
+
+CM1–CM11 and the answers to Q1–Q9 are adopted. The twenty records it supersedes or amends carry dated notes. Build steps B0–B6 are separate changes, and the application is unchanged until they are delivered.
+
 [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01) records Dean's 16 October 2026 decision on the six Decision-brief items: "I am happy to proceed with all six based on your recommendations." It adopts UXB-02, UXB-03, UXB-09, UXB-10, UXB-11, UXB-74 and UXB-92 and amendments A02, A06, A07, A08, A09, A16, A18, A19, A20 and A23, accepts the field readiness proposal, sets D-025's direction (email and SMS, sent by a named person) and confirms MYOB Acumatica as the ERP. Each item still needs its own redraw, lock-in and build.
 
 [Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision; on 16 October Dean set its direction (a named person sends; email and SMS), which changes its C2, and D-025 stays Open for the rest. It covers:

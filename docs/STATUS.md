@@ -14,6 +14,27 @@ Dean adopted the [parallel contribution rules](decisions/parallel-contribution-r
 
 At Dean's request, secret scanning, secret-scanning push protection, Dependabot alerts and Dependabot security updates are now enabled on the repository. A push containing a recognised credential is now refused. Also at Dean's request, protected `main` now requires branches to be up to date with `main` before merging (strict enforcement on), which supersedes the "strict up-to-date enforcement is off" note of 16 October below. The seven required checks and administrator enforcement are unchanged. This is documentation and repository-settings work only; no application, migration or deployment changes.
 
+## Workbench parts-proposal contract proposed (B0) — 17 October 2026
+
+Build step B0 of the [estimating configurator model](decisions/estimating-configurator-model.md) is drafted as the [workbench parts proposal contract](contracts/workbench-parts-proposal.md) (PPO-EST-PARTS-PROPOSAL-CONTRACT). It specifies the price-free proposal every workbench hands to CPQ, from CM5, CM6, CM8 and CM9:
+- an envelope, readiness, lines, findings, assumptions and documents, as strict `snake_case` JSON at `schema_version` 1;
+- exact decimal quantities, stable line keys, per-line basis hashes and stated size limits, with refusal codes;
+- receiving into CPQ with Workbench origin and the Keep override / Use new value / Remove decisions, through CPQ's existing receiving resolution;
+- field-by-field mappings from ES-08 and Fertigation.
+
+Fifteen open items stay with their build steps, including which ES-08 positions become lines and which Fertigation records are supplied parts. The contract is a proposal for Dean's review. It adds no code, migration or permission, and ES-08 and Fertigation behave as before until B2 and B4.
+
+## Estimating configurator model adopted — 17 October 2026
+
+Dean set out his intended estimating model, had it recorded as a proposed decision, then adopted it: "Adopt the recommended answers to Q1-Q9 and the CM1-CM11 proposals. Record my decision in the record and update the affected decisions." The [decision](decisions/estimating-configurator-model.md) has three parts:
+- the Estimation Wizard is the hub and routes each system;
+- CPQ is the single priced line table, where estimators can also enter Product IDs directly;
+- the Screen and Priva Fertigation workbenches, and future potting, controls, sensors and automation workbenches, generate a shared price-free **parts proposal** and supporting documents, which flow into CPQ and, if chosen, the quotation.
+
+CM1–CM11 and the recommended answers to Q1–Q9 are adopted. Twenty affected records now carry a dated note pointing to the decision, with their original text retained. Among the superseded statements are ADR-0054's "no category-to-specialist routing", ES-08's direct estimate receiving and pricing, and ADR-0038's "no automatic SKU or estimate line". The ChatGPT project instructions point to the decision and drop the superseded DEC-R1.
+
+Adoption sets direction only. The application is unchanged until the build steps B0–B6 are delivered, each as its own reviewed change, starting with B0, the parts-proposal contract. How the quotation returns to the Sales representative remains a separate open gap.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.

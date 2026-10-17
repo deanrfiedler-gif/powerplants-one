@@ -1,5 +1,7 @@
 # Synthetic quotation release on the existing aggregate
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** release preparation (CM9): the preparer may choose customer-eligible workbench documents as appendices; approval covers them and issue renders them. Who sends the quotation, and how it returns to the Sales representative, remain separate open questions. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. 3 October 2026. Authorised synthetic implementation; owner acceptance and operational commercial policy remain separate.

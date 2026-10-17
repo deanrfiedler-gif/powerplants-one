@@ -8,6 +8,8 @@ status: Authorised implementation in progress; acceptance remains open
 
 # ADR-0038 — Native ES-02 fertigation scope
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **supersedes** receipt as manual scoping notes and "no automatic SKU or estimate line is introduced" (CM5, CM6): a reviewed fertigation run emits a price-free parts proposal into CPQ. It **amends** "no automatic price": prices still come only from CPQ. Routing needs a Fertigation category and Priva component Variants in Products first (Q8). The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 The user authorised native implementation of the r02 prompt under the existing
 ES-02 Fertigation family and PPO-010. Reuse TypeScript/Next.js, PostgreSQL,
 existing authentication, scoped estimating ownership and operation receipts.

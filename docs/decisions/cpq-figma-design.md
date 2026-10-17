@@ -9,6 +9,8 @@ versioning: git
 
 # CPQ Configure & price and Rules studio Figma design — owner decision
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **supersedes** the incoming handover and D15's "ES-08 Screen Configurator run supplies span and area facts" (CM5, CM6): ES-08 supplies a price-free parts proposal into the CPQ table instead. Screen systems remain the pilot. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 On 12 October 2026 Dean asked for the user interface of a CPQ module to be designed in Figma: "We are building a CPQ module for the Powerplants One app, similar to the likes of https://www.tacton.com/. You task is to build the UI for this module in Figma. Below is what it would include." The text he pasted below it had two parts:
 - a delivery plan in packages CPQ-00 to CPQ-11, with stages and mandatory journeys;
 - a feature list for two workspaces: a rules and configuration studio for authoring, and a CPQ workbench for configuring and pricing.

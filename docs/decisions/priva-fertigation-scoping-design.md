@@ -1,5 +1,7 @@
 # Priva Fertigation Scoping Workbench — standalone module r01
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** the outgoing handover (CM5): it adds a price-free parts proposal for CPQ alongside the technical scope. Customer-eligible reports and diagrams can become quotation appendices (CM9). The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 Status: **Proposed design; native visual review and owner acceptance pending.**
 
 This package implements the requested specialist scoping module for commercial berry farms. It captures the farm, water system, fertigation requirements, existing Priva controls and delivery responsibilities as linked records, then exposes the calculated operating basis and unresolved technical evidence.

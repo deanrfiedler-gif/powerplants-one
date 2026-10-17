@@ -1,5 +1,7 @@
 # Native CPQ API and UI handover
 
+> **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](../decisions/estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this contract (CM2, CM4, CM6): an Express precondition replaces the Complete-discovery requirement for Express workspaces; Manual lines bind an exact Products Variant or are reasoned One-offs, priced from the Variant's governed cost source; and workbench parts proposals arrive through the receiving preview. Interface changes are specified in their build steps. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Status: native backend and CPQ UI implementation contract, expanded by Dean's 13 October instruction. Read with [delivery plan](../delivery/cpq-backend-plan.md), [design decision](../decisions/cpq-figma-ui.md) and [UI handover](../delivery/cpq-ui-handover.md). All paths below start with `/api/v1`. All DTOs are internal commercial data; never expose them in a customer portal. Existing session, working-company selection, origin checks and private/no-store responses apply.
