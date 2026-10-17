@@ -10,7 +10,7 @@ Keep BP-01 scope.
 
 PP-01: governed Service journey and Finance handoff; preserve P01–P12 authority.
 
-Follow P01–P12, STATUS, BP-03 §0, BP-04; PPO-009 CRM differs from P09.
+Follow P01–P12, BP-03 §0, BP-04; PPO-009 CRM differs from P09.
 
 ## 3. Sources
 
@@ -60,7 +60,7 @@ HTML: html-module-conformance.md.
 
 Finish authorised work; flag blockers.
 
-Preserve unrelated work; use branch/PR. Merge needs authority/checks/review. Update specs/registers.
+Role: independent PR reviewer (defects, file/line) and research partner; Claude builds, Dean decides. Preserve unrelated work; one task/owner: draft PR, own worktree. Merge needs authority/checks/review. Update specs/registers.
 
 Repo work grants no paid service, deployment, access, transactions, migration or messaging. Secrets/operational data stay outside Git; use synthetic/redacted fixtures.
 
@@ -76,7 +76,7 @@ CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identit
 
 Fertigation: handover + fertigation-figma-implementation.md; exact scopes, neutral context, unverified supplier conclusions.
 
-Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL.
+Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. PT-28 synthetic pass; PT-30 continuous; human acceptance open. Retain #330, installed SQL.
 
 Sales: lead-to-delivery-continuity.md and sales-followup-continuity.md; outcome, Won and Lead-context decisions apply. Preserve native facts, source access and Activity owners; accept, create, link and plan separately.
 
@@ -93,7 +93,7 @@ MA-01–07: maintenance-warranty-{native,handover}.md; migration 0051. Preserve 
 
 PT evidence: field-integrated-acceptance-ledger.md.
 
-ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
+ES-07: quotation-task-diamond.md; seven decisions.
 
 PD-01–05: ADR-0048; 0052; exact revisions, four duties, originals; no hosted grants. A built/B proposed: products-discovery-proposal.md; acceptance/deploy separate.
 

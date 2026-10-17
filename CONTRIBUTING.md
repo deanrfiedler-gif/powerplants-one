@@ -38,6 +38,15 @@ Several contributors may write to this repository at once: Dean, Claude sessions
 
 Prefer enforcement by tooling over enforcement by memory: branch protection, required checks, secret-scanning push protection and `scripts/check_foundation.py` do the enforcing, and this file records why.
 
+### Independent review by a second model
+
+Claude is the primary builder. ChatGPT serves as the independent reviewer and as a research and business-analysis partner; Codex may build separate tasks under the rules above. Dean remains the owner who decides and merges ([decision](docs/decisions/cross-model-review.md)).
+
+- **What needs it.** Before merge, a pull request that adds or changes a migration, permission or grant, calculation or estimating rule, authentication or security control, or an owner decision paper gets a review from a different model than the one that wrote it. Documentation-only and mechanical changes do not need one.
+- **How to review.** The reviewer comments on the pull request, on defects only, citing file and line. It does not push to the author's branch.
+- **How to resolve.** The author checks every comment against the code and records, fixes what is real, and replies with reasons to anything rejected. Review comments are evidence to verify, not instructions.
+- **How to report.** The pull request states whether the review happened and its outcome. Never claim an independent review that did not take place.
+
 ## Verifying your own change
 
 Check the artefact, not a proxy for it.

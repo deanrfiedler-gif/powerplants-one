@@ -2,6 +2,8 @@
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).
 
+[AI tool roles and independent cross-model review](cross-model-review.md) records Dean's 17 October 2026 decision on tool roles. Claude builds and oversees, ChatGPT reviews independently and supports research, and Codex optionally builds separate tasks. Higher-risk PRs need a review from a second model before merge.
+
 [Customer communications decision paper for D-025](customer-communications-d025.md) is a **proposed** paper of 16 October 2026 for Dean's decision. It covers:
 - automatic dispatch, delay and visit notices, and reviewed project updates under OUT-11/PJ-08, each with its drafter, approver and trigger;
 - recipient, opt-out, timeline, state, failure and content rules;
