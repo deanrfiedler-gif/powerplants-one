@@ -318,3 +318,54 @@ test("failed refresh disables retained rows and forbidden refresh clears them", 
   await expect(page.locator(".pj-table-host tbody tr")).toHaveCount(0);
   await expect(page.locator(".pj-phone-row")).toHaveCount(0);
 });
+
+// F13 / UXB-75: the results are most of the viewport, so moving them when the loading line goes
+// multiplied with any other shift in that frame (0.125 against the 0.1 budget in CI).
+test("first load puts the results in the loading line's place without moving them", async ({
+  page,
+  baseURL,
+}) => {
+  await call(page, baseURL!, "local-session", { profile: "coordinator" });
+  // From the first frame: every distinct top edge of the laid-out results.
+  await page.addInitScript(() => {
+    const tops: number[] = [];
+    (window as unknown as { resultTops: number[] }).resultTops = tops;
+    const sample = () => {
+      const box = document
+        .querySelector("#ppo-projects .pj-results")
+        ?.getBoundingClientRect();
+      if (box?.height && tops.at(-1) !== Math.round(box.top))
+        tops.push(Math.round(box.top));
+      requestAnimationFrame(sample);
+    };
+    requestAnimationFrame(sample);
+  });
+  // Hold the register read so the loading line is painted before the results arrive.
+  let release!: () => void;
+  const held = new Promise<void>((resolve) => (release = resolve));
+  await page.route("**/api/v1/projects/register?**", async (route) => {
+    await held;
+    await route.continue();
+  });
+  await page.goto("/projects");
+  await expect(
+    page.locator("#ppo-projects").getByText("Loading permitted records…"),
+  ).toBeVisible();
+  release();
+  await expect(page.locator(".pj-results")).toHaveAttribute(
+    "aria-busy",
+    "false",
+  );
+  await expect(page.locator(".pj-results")).toBeVisible();
+  await page.evaluate(
+    () =>
+      new Promise((done) =>
+        requestAnimationFrame(() => requestAnimationFrame(done)),
+      ),
+  );
+  expect(
+    await page.evaluate(
+      () => (window as unknown as { resultTops: number[] }).resultTops,
+    ),
+  ).toHaveLength(1);
+});
