@@ -2458,8 +2458,18 @@
       "guide_key": "guide.sv.04",
       "design_path": "docs/design/development/pages/scope-sv-04.md",
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-01-Desktop-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-02-Desktop-Site-Readiness-Dialog-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-03-Tablet-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-04-Phone-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-05-Phone-320-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-06-Phone-Site-Readiness-Sheet-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-07-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/appointment-detail-figma-design.md"
+      ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
@@ -7388,14 +7398,23 @@
       "guide_key": "guide.page.service.appointments.id",
       "design_path": "docs/design/development/pages/route-service-appointments-id.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-01-Desktop-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-02-Desktop-Site-Readiness-Dialog-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-03-Tablet-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-04-Phone-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-05-Phone-320-Dispatch-Held-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-06-Phone-Site-Readiness-Sheet-r01.png",
+        "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-07-States-r01.png"
+      ],
       "dependencies": [
         "src/documents/components/client/job-pack-entry.tsx",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/decisions/appointment-detail-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",

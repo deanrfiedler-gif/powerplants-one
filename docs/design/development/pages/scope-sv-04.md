@@ -14,11 +14,20 @@ Appointment detail and controlled scheduling already exist. Any further design r
 
 ## Desktop
 
+Accepted design: the [Appointment detail design decision](../../../decisions/appointment-detail-figma-design.md) of 17 October 2026, with captures 01–02 (desktop 1440) and 03 (tablet 1024) in [design r01](../../../reference/ui/service/appointment-detail-design-r01/README.md).
+
+- **Layout:** the Work order record's shared record layout with no view tabs. The record header carries a state Tag and a readiness Tag; the readiness bar lists Parts, Job pack acknowledged, Site readiness, Site and isolation controls and Crew competency; the left column holds Summary, Customer and site and Crew.
+- **Main column, one scroll:** Dispatch held (or Ready to dispatch) with its reasons, Dispatch checks derived from the records (field readiness gate P1 and P4), the job pack deadline, Job pack acknowledgements and Returns, Customer contact, Follow-ups, Schedule change requests and a collapsed Integrity details.
+- **Tablet:** the details column moves below the main column, and the top bar shows the page name only.
+- Nothing new is built; the gate criteria depend on PR #541 and a later P4 increment.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 04–07 in [design r01](../../../reference/ui/service/appointment-detail-design-r01/README.md). One column with status, the dispatch panel and checks first, then the visit, job pack, contacts and follow-ups, with Record contact and the primary action pinned at the bottom. Record customer site readiness opens as a full-screen sheet with stacked actions. Six phone states are drawn: ready, site readiness overdue, customer reports not ready, held again by a supply change, proposed and cancelled.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -31,6 +40,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma design: [Appointment detail design r01 captures](../../../reference/ui/service/appointment-detail-design-r01/README.md) (seven icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/appointment-detail-figma-design.md). Images of loading, no access, stale save and uncertain save states, and of the Link a demand, Parts statement and permitted exception dialogs, are still missing.
 
 - [PPO-Scheduling-and-Appointments-Workspace-r01.html](../../../reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html) — its Appointment view is the appointment coordination detail for this scope: interval and time zone, commitment, preparation, dispatch hold, crew, readiness, follow-ups, change requests, contacts and history.
 
