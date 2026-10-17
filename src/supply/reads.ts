@@ -13,6 +13,7 @@ import { projectRow } from "../projects/service";
 import { visibleWorkOrder } from "../service/work-orders";
 import { visibleAppointment } from "../scheduling/planner";
 import { engineeringRow } from "../engineering/service";
+import { todayInZone } from "../projects/model";
 import {
   supplyRecord,
   financeAllowed,
@@ -52,6 +53,7 @@ export async function materialBasis(
   p: Principal,
   r: SupplyRecord,
   facts: Fact[],
+  now = new Date(),
 ) {
   const allocations = (
     await c.query<Allocation>(
@@ -59,8 +61,9 @@ export async function materialBasis(
       [p.workspace_id, r.id],
     )
   ).rows;
+  // Nothing allocated is a known zero (a shortage), not missing evidence.
   let usable = 0n,
-    complete = allocations.length > 0;
+    complete = true;
   const permittedAllocations: Allocation[] = [];
   const sources: {
     id: string;
@@ -107,7 +110,14 @@ export async function materialBasis(
     }
   }
   return {
-    readiness: readiness(r, quantity(usable), complete, facts),
+    // Promise timing is judged on the demand's own calendar day.
+    readiness: readiness(
+      r,
+      quantity(usable),
+      complete,
+      facts,
+      todayInZone(r.data.timezone ?? "UTC", now),
+    ),
     usable: quantity(usable),
     sources,
     allocations: permittedAllocations,
