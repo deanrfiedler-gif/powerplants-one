@@ -328,6 +328,31 @@
   @bottom-left{content:"Workbench copy · Synthetic prototype";font:8pt Verdana,sans-serif;color:#526176}
   @bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt Verdana,sans-serif;color:#526176}
 }
+/* Field readiness gate (A1-D1, A1-D3, A1-D4): Return beside Acknowledge, return notices, live parts. */
+#ppo-job-pack .jp-crew-actions{display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:15px}
+#ppo-job-pack .jp-crew-actions .jp-side-action{width:auto;margin-top:0}
+#ppo-job-pack .jp-crew-actions .jp-side-action:first-of-type{margin-top:0}
+#ppo-job-pack .jp-crew-actions .jp-icon{width:15px;height:15px}
+#ppo-job-pack .jp-return-reasons{border:0;margin:16px 0 0;padding:0;min-width:0}
+#ppo-job-pack .jp-return-reasons legend{font-size:13px;font-weight:500;margin-bottom:6px;padding:0}
+#ppo-job-pack .jp-check-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:13px;font-weight:500;cursor:pointer}
+#ppo-job-pack .jp-check-row:last-of-type{border-bottom:0}
+#ppo-job-pack .jp-check-row input{width:18px;height:18px;margin:1px 0 0;flex:none;accent-color:var(--link)}
+#ppo-job-pack .jp-check-row small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:2px}
+#ppo-job-pack .jp-field .jp-counter{text-align:right}
+#ppo-job-pack .jp-return-quote{margin-top:10px;padding-top:10px;border-top:1px solid var(--warning-border)}
+#ppo-job-pack .jp-return-quote p{margin:0;font-weight:500}
+#ppo-job-pack .jp-return-quote blockquote{margin:4px 0 0;padding:0;font-style:normal}
+#ppo-job-pack .jp-live-parts{margin-top:14px;border:1px solid var(--line-soft);border-left:3px solid var(--info-accent);border-radius:7px;background:var(--info-surface);padding:11px 14px}
+#ppo-job-pack .jp-live-heading{margin:0 0 6px;font-size:12px;font-weight:500;color:var(--info)}
+#ppo-job-pack .jp-live-parts ul{list-style:none;margin:0;padding:0}
+#ppo-job-pack .jp-live-parts li{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13px;border-top:1px solid var(--line-soft)}
+#ppo-job-pack .jp-live-parts li:first-child{border-top:0}
+#ppo-job-pack .jp-live-parts li small{font-size:12px;text-align:right;color:var(--success)}
+#ppo-job-pack .jp-live-parts li small.attention{color:var(--warning)}
+#ppo-job-pack .jp-live-parts .jp-body-copy{margin:0;font-size:13px}
+#ppo-job-pack .jp-crew-row small.jp-not-opened{color:var(--warning)}
+@media(max-width:560px){#ppo-job-pack .jp-crew-actions{grid-template-columns:1fr}#ppo-job-pack .jp-live-parts li{flex-direction:column;gap:2px}#ppo-job-pack .jp-live-parts li small{text-align:left}}
 @media print{
   /* Release every scroll/clipping ancestor, only for this workbench. */
   html:has(#ppo-job-pack),body:has(#ppo-job-pack){height:auto!important;min-height:0!important;overflow:visible!important;background:white!important}
@@ -337,6 +362,7 @@
   #ppo-job-pack{display:block!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:0!important;background:white;font-size:10pt}
   #ppo-job-pack :is(.jp-breadcrumb,.jp-heading-right .jp-button-row,.jp-tabs,.jp-contents,.jp-right-rail,.jp-page-foot,.jp-notice,.jp-form-actions,.jp-dialog,.jp-toast,#jp-panel-prepare,#jp-panel-revisions,.jp-exact,.jp-prior-issue,.jp-unsaved){display:none!important}
   #ppo-job-pack #jp-panel-pack{display:block!important}
+  #ppo-job-pack .jp-live-parts{display:none!important}
   #ppo-job-pack .jp-layout{display:block}
   #ppo-job-pack .jp-heading{display:block;margin:0 0 12px}
   #ppo-job-pack .jp-heading-right{max-width:none;display:block}

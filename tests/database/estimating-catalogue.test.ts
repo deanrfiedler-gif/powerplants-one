@@ -53,7 +53,8 @@ const code = (code: string) => (e: unknown) =>
 const rows = async (table: string) =>
   (
     await database().query(
-      `SELECT to_jsonb(r) AS row FROM ${table} r ORDER BY to_jsonb(r)::text`,
+      // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
+      `SELECT to_jsonb(r) AS row FROM ${table} r${table === "ppo.seed_receipts" ? " WHERE r.version<>107" : ""} ORDER BY to_jsonb(r)::text`,
     )
   ).rows;
 async function setup(discovery = catalogueDiscovery(true)) {
@@ -328,7 +329,7 @@ test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit re
       .filter((r) => r.row.version >= 85)
       .map((r) => r.row.version)
       .sort((a, b) => a - b),
-    [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106],
+    [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107],
   );
   await migrate();
   await seed();

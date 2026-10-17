@@ -45,6 +45,29 @@ export async function prepareFieldAppointment(
       },
     },
   });
+  // A visit on a new scope binds SYN-PPO-P04 v2: record the preparer's "No parts needed" statement
+  // (field readiness gate R1), or dispatch waits on Parts. Seeded visits keep v1 and skip this.
+  a = (await call(`appointments/${aid}`)).items[0];
+  if (a.readiness?.some((x: { criterion_code: string }) => x.criterion_code === "PartsReadiness"))
+    await call(`service/work-orders/${order.id}/readiness`, {
+      ...base(),
+      expected_version: a.work_order_version,
+      assessment: {
+        scope_revision_id: source.scope_revision_id,
+        scope_version: source.scope_version,
+        appointment_id: aid,
+        criterion_code: "PartsReadiness",
+        outcome: "NotApplicable",
+        reason: "SYN no parts needed for this visit: inspection only",
+        source_as_at: "2026-09-05T00:00:00Z",
+        evidence: {
+          title: "SYN no parts needed",
+          content_text: "SYN visual inspection only; no parts are fitted.",
+          source_reference: "SYN-PPO-FIELD-READINESS-GATE",
+          source_version: "1",
+        },
+      },
+    });
   await call(`appointments/${aid}/contacts`, {
     ...base(),
     id: crypto.randomUUID(),

@@ -90,6 +90,16 @@ No code, migration, permission, route, Figma frame or parent ID changes. The Cha
 ## Shell top bar amendment accepted and built — 16 October 2026
 
 Dean asked for Pipedrive-style breadcrumbs ("Pipedrive only use the active page name in the breadcrumbs section…") and for the global search to stay in one place, centred in the top bar. He adopted the recommended rules R1–R9 and answers Q1–Q5 and had the named version "Shell top bar amendment — accepted" saved. The [decision](decisions/shell-top-bar-amendment.md) records his words, the rules and the Figma lock-in: the shared Shell / Top bar now has equal side zones with the 403 px search centred, and 232 breadcrumb overrides on 27 accepted pages follow the table's After column; the issued captures were detached first and are unchanged. [Six icon-free captures](reference/ui/application-shell/shell-top-bar-amendment-r01/README.md) are retained. In the app, `src/shell/breadcrumb.ts` shows the page or owner / page (never the department or a default view; records by reference) and the desktop header is one grid with the search in the centre column. Built on a branch for review; CI, owner visual review of the application and deployment are separate. On 17 October Dean adopted the recommendation to name the working company in the account control instead of a chip beside it, which had pushed the search up to 132 px left of centre. The CPQ records now publish their identity (a stacked follow-up branch): the rule editor shows the rule key, and Configure & price shows its deal's reference, because a configuration has none of its own and no SYN-CPQ identifier is invented. No parent ID changes.
+
+## Field readiness gate, first build — 17 October 2026
+
+Draft pull request on `feat/field-readiness-gate`, stacked on the UX benchmark decisions (#539). It builds P1 to P3 of the accepted [field readiness gate](decisions/field-readiness-gate-proposal.md) (section 10):
+- **Parts at dispatch.** Readiness policy `SYN-PPO-P04` v2 (seed 107) adds the Dispatch-stage criterion "Parts ready for the stated material scope", derived from the Supply Chain readiness of demands linked to the visit. New scope revisions bind v2; existing visits keep v1. Nobody records a pass; the preparer records "No parts needed for this visit" or a permitted exception. A supply change after dispatch cleared holds it again and tasks the service owner; the booking never moves.
+- **Technician Return.** The exact recipient returns the exact issue with reasons and a note. It holds dispatch, tasks the preparer and the service owner, and waits for a revision or the preparer's "No change needed" answer. Acknowledgement keeps its words; no "Declined" state exists.
+- **Checker Return task.** A checker's return tasks the preparer; a successor revision completes return and check tasks.
+
+Migration 0107 carries the full registry ripple in `AGENTS.md`. No capability, Activity kind or identity type is added, and `snapshot()`, `PackSnapshot` and OUT-09 are unchanged. The Figma lock-in is amendment A06 (Job pack) and A07 (My jobs) with [twelve icon-free captures](reference/ui/service/field-readiness-gate-r01/README.md); **Dean saved the named version "Field readiness gate — accepted" and supplied its link on 17 October 2026** (the link is not recorded here; Claude has not verified the version name). Both sections now read "(accepted)"; the six frame caption layer names were renamed afterwards and need a later named version. Customer site readiness, the issue lead time, the parts ladder (needs SC-05 Q1 and live reservations), the planner's not-opened marker and an offline return are the next increments. Delivery, owner visual review and business acceptance stay separate.
+
 ## Shell first paint and create-form leave review — 16 October 2026
 
 Two shell-level findings from the 16 October live-app UX audit are fixed; other audit findings are unchanged and remain Dean's to decide item by item.
@@ -157,7 +167,7 @@ Dean named a Powerplants Australia problem: technicians arrive on site to missin
 
 It traces each change to SVC-03, SVC-04, SVC-05, SCM-06 and SCM-08, BR-11 and BR-18, TR-04 to TR-07 and BP-01 §13.2. It lists the migration, seed, permission and test-suite impact of a build, and asks seven questions with recommended answers.
 
-New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (proposal)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
+New frames, drawn beside the accepted ones in sections "A1 · Field readiness gate (accepted)" on the Job pack and My jobs Figma pages, show the technician Return flow and the new criteria. No accepted frame or component was edited. Status: proposed, not accepted. No application code, migration, seed, permission, route or parent ID changes.
 
 ## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
 

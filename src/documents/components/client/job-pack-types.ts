@@ -56,6 +56,45 @@ export type PackRecipient = {
   assignment_version: number;
   acknowledged_at: string | null;
   presented_hash?: string | null;
+  // The recipient's latest return of this issue and the preparer's answer (field readiness gate P2, Q2).
+  return_id?: string | null;
+  returned_at?: string | null;
+  return_reasons?: string[] | null;
+  return_note?: string | null;
+  return_answered_at?: string | null;
+  return_answer?: string | null;
+};
+export type PackReturn = {
+  id: string;
+  issue_id: string;
+  revision: number;
+  display_name: string;
+  actor_id: string;
+  reason_codes: string[];
+  note: string;
+  returned_at: string;
+  answered_at: string | null;
+  answer: string | null;
+  answered_by_name: string | null;
+};
+// The live Parts criterion (P1): a service projection of Supply Chain readiness, never part of the issue.
+export type PackParts = {
+  outcome: string;
+  summary: string;
+  statement: string | null;
+  lines: {
+    id: string;
+    reference: string;
+    title: string;
+    item: string;
+    quantity: string;
+    unit: string;
+    state: string;
+    shortage: string | null;
+    required_on: string | null;
+    promised_on: string | null;
+  }[];
+  unlinked: { id: string; reference: string; title: string }[];
 };
 export type Pack = {
   section_view?: SectionView | null;
@@ -109,6 +148,7 @@ export type Pack = {
     | null;
   sources: PackSource[];
   history: PackHistory[];
+  returns?: PackReturn[];
   follow_ups: {
     activity_id: string;
     owner_id: string;
@@ -135,6 +175,7 @@ export type Pack = {
     actual_start_implemented: boolean;
     reasons: string[];
     recipients: PackRecipient[];
+    parts?: PackParts | null;
   };
   actions: {
     can_prepare: boolean;

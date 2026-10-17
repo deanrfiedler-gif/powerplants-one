@@ -181,3 +181,40 @@ Unchanged: the r03 reference bytes, the D6 exact-text rule (the "Exact text as i
 - The seven capture boards are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A check after the swap found no Font Awesome instance left in any board. Each image was inspected. The hashes and frame offsets are in the [captures README](../reference/ui/service/job-pack-design-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs` and `npm run studio:check` were run on this change.
 - Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+
+## 8. Amendment A06 — field readiness gate (16 October 2026)
+
+On 16 October 2026 Dean accepted the field readiness gate with the other five items of the UX benchmark's Decision brief: "I am happy to proceed with all six based on your recommendations." The [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) record (PPO-UXB-DEC-01, decision 4) holds the decision; the [field readiness gate record](field-readiness-gate-proposal.md) holds the rules R1 to R11 and the answers to Q1 to Q7. Amendment A06 brings that gate into this design: the technician accepts or returns the exact issue with a reason that tasks the preparer, a Parts criterion joins the Dispatch stage, and a not-yet-opened marker shows on the pack. Sections 1 to 7 describe the design as first accepted; where A06 differs, A06 governs.
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Accept or Return the issue with a reason; Parts at dispatch; the "not opened" marker | User decision, 16 October 2026 | Quoted above; A06 in the [amendment register](../design/research/ux-benchmark/amendment-items.csv) |
+| The technician's word is "Return", not "Decline" | User decision, 16 October 2026 | PPO-UXB-DEC-01 decision 4 |
+| Frames A1, rules and departures A1-D1 to A1-D4 | Claude's proposal, accepted by the same decision | The field readiness gate record, sections 2 and 4 |
+| Named Figma version | **Waiting for Dean's explicit yes** | "Field readiness gate — accepted" is saved only on that yes; the [captures README](../reference/ui/service/field-readiness-gate-r01/README.md) records the save when it happens |
+
+**Design reference.** Page "Job pack (accepted)" `272:2`, section "A1 · Field readiness gate" `958:9304`. Phone technician, issued r03, Acknowledge or Return `958:9305`; Return with reason sheet `958:9426`; r03 returned `958:9559`; coordinator Readiness tab, Draft r04 `958:9680`. Desktop: Issued r03 returned by the technician, with the preparer's task `963:9993`; checker Return dialog that tasks the preparer `963:10213`; Record customer site readiness dialog `963:10299`. Notes card `966:11510`. The ladder of UXB-10 is drawn on exemplar E7, page "UX benchmark exemplars" `986:47`, frames `1008:5137` and `1009:5923`. No accepted frame or component was edited: the A1 frames are clones with instance overrides. Icon-free captures: [field readiness gate r01](../reference/ui/service/field-readiness-gate-r01/README.md), images 01 to 07, 11 and 12.
+
+| ID | Departure from sections 1 to 7 | Accepted design before A06 |
+|---|---|---|
+| A1-D1 | The technician's phone footer holds the document button, Return and "Acknowledge r03" (shortened to fit) | Document button and "Acknowledge this exact issue". The app's "I have read and acknowledge this exact pack" is unchanged |
+| A1-D2 | The Dispatch stage lists the Parts criterion, and later site readiness, beside "Current site and isolation controls" | One Dispatch criterion |
+| A1-D3 | A state label, "Returned by technician", with "Prepare revision r04" as the primary action and a notice carrying the return | No such state |
+| A1-D4 | Parts lines carry live readiness from Supply Chain beside the issued text | Issued text only |
+
+**Built in the first increment.** The build follows the field readiness gate record, section 10:
+- the Return sheet with the six reasons and a required note, beside the unchanged acknowledgement (A1-D1);
+- "Returned by technician" with "Prepare revision rNN" as the primary action, a notice quoting each return and a "No change needed" answer (A1-D3, Q2);
+- the derived Parts criterion in the Dispatch group, with its words from Supply Chain (A1-D2);
+- live parts readiness beside section 07, labelled as not part of the issued pack (A1-D4);
+- "Not yet opened" on each crew row whose recipient has no Opened or Downloaded fact for the current issue and has not responded (the A06 marker). Opening stays a distribution fact, never an acknowledgement.
+
+**Built differently, and why.**
+- The Return sheet names "the preparer", not the preparer's name, because the pack read does not give recipients the name of who prepared a revision.
+- The photo on a return (R3, optional) is not built. A technician's photo today needs a started attendance (`field_attachments`), and the evening-before return has none. It follows with the offline return.
+- Live parts readiness sits as a panel under section 07 rather than as a suffix on each line of a "Bring and collect" card, because the built page keeps the nine issued sections rather than the phone cards of J9.
+- The not-yet-opened marker is on the pack page only. UXB-09 also places it on the planner; that follows with the next increment.
+
+**Not decided.** Q5 of this design (whether the preparer may check their own revision) is unaffected. Customer site readiness (P4), the issue lead time (P5) and the ladder (UXB-10) are accepted but not built; see the field readiness gate record, section 10.
+
+**Verification.** The A1 frames were checked by screenshot when drawn on 16 October; Present mode was not run. The capture copies are recorded in the captures README. The application build's checks are in its pull request.

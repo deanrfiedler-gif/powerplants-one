@@ -24,6 +24,7 @@ import { readFieldJob } from "../../src/field/reads";
 import { startAttendance } from "../../src/field/start";
 import { base, principal, id, content } from "./packs";
 import { startInput } from "./field";
+import { noPartsNeeded } from "./readiness-gate";
 export async function twoTaskStarted() {
   const co = await principal(),
     wid = randomUUID(),
@@ -182,6 +183,7 @@ export async function twoTaskStarted() {
       source_as_at: "2026-09-05T00:00:00Z",
     },
   });
+  await noPartsNeeded(co, wid, aid);
   let a = (await readAppointment(co, aid)).items[0];
   await recordContact(co, aid, {
     ...base(),

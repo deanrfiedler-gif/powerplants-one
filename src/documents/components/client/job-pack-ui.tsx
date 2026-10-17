@@ -46,6 +46,7 @@ const paths = {
   print: <path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7ZM17 11h.01" />,
   arrow: <path d="M4 12h16m-5-5 5 5-5 5" />,
   refresh: <path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4" />,
+  undo: <path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3" />,
 } as const;
 export type IconName = keyof typeof paths;
 export function Icon({ name }: { name: IconName }) {

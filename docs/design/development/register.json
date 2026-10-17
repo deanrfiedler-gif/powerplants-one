@@ -2504,7 +2504,8 @@
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
-        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-05-Desktop-Returned-By-Technician-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
@@ -2857,7 +2858,8 @@
         "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-04-Phone-Visit-Working-r01.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-17-Phone-Timer-Stopped-Undo-r01.png",
-        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png"
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-09-My-Jobs-Phone-Cannot-Start-Returned-r01.png"
       ],
       "dependencies": [
         "src/components/work-timer.tsx",
@@ -6800,7 +6802,8 @@
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-09-Phone-Finish-Crew-Working-r01.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-24-Desktop-Visit-Work-r01.png",
         "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-25-Desktop-Visit-Capture-r01.png",
-        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-33-Tablet-Visit-Work-r01.png"
+        "docs/reference/ui/service/my-jobs-design-r01/PPO-My-Jobs-33-Tablet-Visit-Work-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-09-My-Jobs-Phone-Cannot-Start-Returned-r01.png"
       ],
       "dependencies": [
         "src/components/work-timer.tsx",
@@ -7438,7 +7441,9 @@
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-04-Desktop-Source-Changed-and-Review-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-05-Desktop-Whole-Job-Pack-r01.png",
         "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-06-Phone-Coordinator-and-Technician-r01.png",
-        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png"
+        "docs/reference/ui/service/job-pack-design-r01/PPO-Job-Pack-07-States-Board-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-05-Desktop-Returned-By-Technician-r01.png",
+        "docs/reference/ui/service/field-readiness-gate-r01/PPO-Field-Readiness-01-Phone-Technician-Acknowledge-Or-Return-r01.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",

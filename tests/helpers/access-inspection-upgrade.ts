@@ -8,7 +8,7 @@ import {
 type Row = Record<string, unknown>;
 const grant = (r: Row) => (r.row ?? r.value ?? r.v ?? r) as Row;
 
-/** Preserve the whole snapshot, allowing exactly the named seed 78/79/80/83/84 duties. */
+/** Preserve the whole snapshot, allowing exactly the named seed 78/79/80/83/84 duties and seed 107's readiness policy. */
 export function assertAccessInspectionSnapshot(
   actual: Row[][] | Record<string, Row[]>,
   original: Row[][] | Record<string, Row[]>,
@@ -68,6 +68,27 @@ export function assertAccessInspectionSnapshot(
     if (Array.isArray(preserved)) preserved[seedIndex] = oldSeeds;
     else preserved.seed_receipts = oldSeeds;
   }
+  // Seed 107 publishes readiness policy SYN-PPO-P04 v2 (field readiness gate): exactly one
+  // version row and its nine criteria are added; every earlier policy row stays exact.
+  const readinessV2 = "94000000-0000-4000-8000-000000000002";
+  for (const [table, isV2, count] of [
+    ["policy_versions", (r: Row) => r.id === readinessV2, 1],
+    ["policy_criteria", (r: Row) => r.policy_version_id === readinessV2, 9],
+  ] as const) {
+    const i = names?.indexOf(table) ?? -1;
+    const oldPolicy = Array.isArray(original)
+      ? i >= 0 ? original[i] : undefined
+      : original[table];
+    const newPolicy = Array.isArray(actual)
+      ? i >= 0 ? actual[i] : undefined
+      : actual[table];
+    if (!oldPolicy || !newPolicy || oldPolicy.some((r) => isV2(grant(r))))
+      continue;
+    assert.equal(newPolicy.filter((r) => isV2(grant(r))).length, count);
+    const kept = newPolicy.filter((r) => !isV2(grant(r)));
+    if (Array.isArray(preserved)) preserved[i] = kept;
+    else preserved[table] = kept;
+  }
   assert.deepEqual(preserved, original);
 }
 
@@ -81,9 +102,10 @@ export function assertAccessInspectionSeedLedger(
     original,
   );
   const added = actual.filter((r) => !versions.has(r.version));
+  // Snapshots order rows by their JSON text, where 107 sorts before 78; compare the versions as numbers.
   assert.deepEqual(
-    added.map((r) => r.version),
-    [78, 79, 80, 83, 84].filter((v) => !versions.has(v)),
+    added.map((r) => Number(r.version)).sort((a, b) => a - b),
+    [78, 79, 80, 83, 84, 107].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);

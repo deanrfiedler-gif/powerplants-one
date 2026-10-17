@@ -25,6 +25,8 @@ export type PackRegisterRow = {
   readiness: { satisfied: number; total: number } | null;
   acknowledged: number | null;
   recipients: number | null;
+  // Current-issue returns still waiting for a revision or an answer (field readiness gate P2).
+  returned?: number | null;
   dispatch_hold: boolean;
   can_prepare: boolean;
 };
@@ -70,7 +72,7 @@ export function matchesPackView(
     case "draft":
       return row.status === "Draft";
     case "returned":
-      return row.status === "Returned";
+      return row.status === "Returned" || !!row.returned;
     case "checked":
       return row.status === "Checked";
     case "issued":
