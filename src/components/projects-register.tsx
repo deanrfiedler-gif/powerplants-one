@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { useIdentity } from "./business-session";
-import { ReadState, Stamp, useResource } from "./business-ui";
+import { ReadState, useResource } from "./business-ui";
 import { useShell } from "./shell-provider";
 import { HeaderContent } from "./header-content";
 import { ShellIcon, type ShellIconName } from "./shell-icon";
@@ -40,6 +40,13 @@ import {
   type ProjectView,
 } from "../projects/register-model";
 import type { readDeliverySalesSources } from "../sales/delivery-binding";
+import {
+  DEFAULT_ZONE,
+  formatTime,
+  formatTimestamp,
+  zoneAbbreviation,
+  zoneOffset,
+} from "../shell/date-format";
 
 const views: { id: ProjectView; label: string; icon: string }[] = [
   { id: "Active", label: "Active projects", icon: "diagram-project" },
@@ -98,6 +105,9 @@ function Icon({ name }: { name: string }) {
   );
 }
 const buttonClass = "mw-button";
+// S6 (ui-build-sequence, 9 October 2026): a 24-hour time with its zone, as "10:42 AEST".
+const updatedAt = (iso: string) =>
+  `${formatTime(iso, DEFAULT_ZONE)} ${zoneAbbreviation(iso, DEFAULT_ZONE) ?? zoneOffset(iso, DEFAULT_ZONE)}`;
 const shortDate = (date: string | null, observed: string) =>
   date
     ? formatDate(date, date.slice(0, 4) !== observed.slice(0, 4))
@@ -343,7 +353,7 @@ function RegisterView({ query }: { query: string }) {
             <span className="mw-spacer" />
             <span className="pj-observed">
               {data
-                ? `${data.total} projects · updated ${new Intl.DateTimeFormat("en-AU", { hour: "numeric", minute: "2-digit", timeZone: "Australia/Brisbane", timeZoneName: "short" }).format(new Date(data.observed_at))}`
+                ? `${data.total} projects · updated ${updatedAt(data.observed_at)}`
                 : resource.error
                   ? "Unavailable"
                   : "Loading…"}
@@ -463,6 +473,7 @@ function RegisterView({ query }: { query: string }) {
                       <RegisterSortHeader
                         key={c.key}
                         label={c.title}
+                        className={c.key === "risk" ? "pj-number" : undefined}
                         direction={
                           sort === c.sort
                             ? direction === "asc"
@@ -996,8 +1007,19 @@ function Snapshot({
               {!schedule.error && (
                 <small>
                   {row.display_number} · created{" "}
-                  <StampDate value={row.created_at} timezone={row.timezone} /> ·
-                  site time {row.timezone}
+                  <span className="pj-created-full">
+                    <StampDate value={row.created_at} timezone={row.timezone} />
+                  </span>
+                  <span className="pj-created-short">
+                    {shortDate(
+                      todayInZone(row.timezone, new Date(row.created_at)),
+                      todayInZone(row.timezone),
+                    )}
+                  </span>
+                  <span className="pj-site-time">
+                    {" "}
+                    · site time {row.timezone}
+                  </span>
                 </small>
               )}
             </header>
@@ -1056,7 +1078,7 @@ function Snapshot({
                             "A linked Sales handover is restricted."
                           ) : (
                             <Link href={`/sales/handoffs/won/${s.handover_id}`}>
-                              {s.opportunity_title}
+                              {s.opportunity_reference} · {s.opportunity_title}
                               {s.current ? "" : " · historical"}
                             </Link>
                           )}
@@ -1181,7 +1203,8 @@ function Snapshot({
                       : t.status === "AtRisk"
                         ? "At risk"
                         : t.status}{" "}
-                    · {formatDate(t.finish_date, false)}
+                    · {tab === "risk" && t.finish_date ? "finishes " : ""}
+                    {formatDate(t.finish_date, false)}
                     {t.owner_name ? ` · ${t.owner_name}` : ""}
                   </p>
                 ))}
@@ -1195,7 +1218,10 @@ function Snapshot({
               </div>
             </div>
             <details open>
-              <summary>History</summary>
+              <summary>
+                History
+                <Icon name="chevron-down" />
+              </summary>
               <ReadState
                 loading={currentHistory.loading}
                 error={currentHistory.error}
@@ -1212,8 +1238,8 @@ function Snapshot({
                         · version {event.project_version}
                       </p>
                       <small>
-                        <Stamp value={event.created_at} timezone={p.timezone} />{" "}
-                        · {event.actor_name} · {event.reason}
+                        {formatTimestamp(event.created_at, p.timezone)} ·{" "}
+                        {event.actor_name} · {event.reason}
                       </small>
                     </li>
                   ))}

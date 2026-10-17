@@ -33,4 +33,4 @@ Windows, Node 24.21.0, Chrome, isolated PostgreSQL 16 on a task-specific loopbac
 
 Owner acceptance, physical-device and screen-reader review remain open. The guide remains Draft. Full final-head CI, PR merge and hosted deployment must be verified separately; source delivery and local captures are not evidence of a live release.
 
-The [design comparison](design-comparison.md) of 17 October 2026 compares the built page with the accepted design captures (ADR-0053 rule 7). It lists differences only and changes no code or review status.
+The [design comparison](design-comparison.md) of 17 October 2026 compares the built page with the accepted design captures (ADR-0053 rule 7). It lists differences only and changes no code or review status. Its eight proposed fixes were made on 17 October 2026; the record marks each one and links fresh captures of the same five states.
