@@ -67,8 +67,8 @@ test("PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sou
         async (t) =>
           (
             await c.query(
-              // Seed 107 (SYN-PPO-P04 v2, field readiness gate) is the only later seed; readiness-gate.test.ts proves it.
-              `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version<>107" : ""} ORDER BY to_jsonb(x)::text`,
+              // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
+              `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : ""} ORDER BY to_jsonb(x)::text`,
             )
           ).rows,
       ),
@@ -94,7 +94,7 @@ test("PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sou
         "SELECT version FROM public.ppo_migrations WHERE version>105 ORDER BY version",
       )
     ).rows,
-    [{ version: 106 }, { version: 107 }],
+    [{ version: 106 }, { version: 107 }, { version: 108 }],
   );
   assert.equal(
     (await c.query("SELECT count(*)::int n FROM ppo.project_specialist_work"))

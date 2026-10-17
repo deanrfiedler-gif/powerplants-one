@@ -6,17 +6,18 @@ import { threadAccessSql } from "./access";
 // T1-7: notices are a pull projection from the durable audit log, as projectActivityNotices does for Activities.
 // The audit details carry identifiers only, so a notice records which event, thread and sequence, never message
 // text. The recipient's current access to the thread is checked as the notice is made and again when it is read.
-// The existing `Mentions` category is the producer-less category of the SH-03 inbox design.
+// The existing `Mentions` category is the producer-less category of the SH-03 inbox design. A person is not notified
+// of their own message; a deadline step notifies the asked person or the asker whoever recorded it.
 export async function projectConversationNotices(p: Principal) {
   const c = database();
   await requireCapability(c, p, "conversation.read");
   await c.query(
     `INSERT INTO ppo.notification_events(workspace_id,recipient_id,event_id,source_type,source_id,source_version,event_at,category,reason)
-     SELECT e.workspace_id,$2,e.id,'Conversation',t.id,(e.details->>'sequence')::integer,e.occurred_at,'Mentions',
+     SELECT e.workspace_id,$2::uuid,e.id,'Conversation',t.id,(e.details->>'sequence')::integer,e.occurred_at,'Mentions',
       CASE WHEN e.object_type='ConversationAsk' THEN CASE e.details->>'step' WHEN 'Remind' THEN 'Reminder' ELSE 'AskOverdue' END
        WHEN e.details->'asked' @> to_jsonb($2::text) THEN 'Ask' ELSE 'Mention' END
      FROM ppo.audit_events e JOIN ppo.conversation_threads t ON (t.workspace_id,t.id)=(e.workspace_id,(e.details->>'thread_id')::uuid)
-     WHERE e.workspace_id=$1 AND e.outcome='Accepted' AND e.actor_id<>$2
+     WHERE e.workspace_id=$1 AND e.outcome='Accepted' AND (e.actor_id<>$2::uuid OR e.object_type='ConversationAsk')
       AND ((e.object_type IN ('ConversationThread','ConversationMessage') AND (e.details->'asked' @> to_jsonb($2::text) OR e.details->'mentioned' @> to_jsonb($2::text)))
        OR (e.object_type='ConversationAsk' AND ((e.details->>'step'='Remind' AND e.details->>'asked_id'=$2::text) OR (e.details->>'step'='TellAsker' AND e.details->>'asker_id'=$2::text))))
       AND ${threadAccessSql("t", "conversation.read")}

@@ -98,6 +98,8 @@ BEGIN
  RETURN NEW;
 END $$;
 
+CREATE TRIGGER guard BEFORE INSERT OR UPDATE ON ppo.conversation_participants FOR EACH ROW EXECUTE FUNCTION ppo.guard_conversation_participant();
+
 -- T1-5: plain text. @{n} and #{n} are placeholders for mention n, so a record's title is never stored in a message
 -- and each reader is shown the target from that reader's own access (T1-4).
 CREATE TABLE ppo.conversation_messages (
