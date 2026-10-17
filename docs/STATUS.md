@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Projects register compared with its design — 17 October 2026
+
+The built `/projects` page was captured at 1440 × 900 and 390 × 844 against a disposable synthetic database holding the design's projects, then compared with the five accepted captures under ADR-0053 rule 7. The [comparison record](testing/evidence/projects-register/design-comparison.md) finds the layout, columns, views, toolbar, selection panel, phone rows and tab bar as drawn. It lists 17 differences: seven proposed fixes, five adaptations already recorded and five questions for Dean. The next-milestone, overdue and At risk columns follow the design rules; two questions remain (an At risk milestone, overdue on a closed project). Nothing is fixed yet, no application code changed, and the visual status stays Needs review.
+
 ## Projects register design locked in — 17 October 2026
 
 An audit of the Figma file on 17 October found one accepted page without a decision record: the Projects register `209:46`, which Dean accepted on 11 October ("Proceed with your recommendations") and which was built on 13 October under [projects-register-native.md](decisions/projects-register-native.md). Asked again, Dean answered "Yes, accept as drawn (Recommended)". The [design decision](decisions/projects-register-design.md) records the rules, departures P1–P7 and what is open, and [five icon-free captures](reference/ui/projects/projects-register-design-r01/README.md) are retained with hashes. The named version "Projects register — Pipedrive pattern, accepted" was "Not saved yet"; Dean saved it after the capture commit ("It's saved."), and the File index row now names the record. Still open: comparing the built page and its register read with the captures, phone multi-select (adopted, not drawn), rail-count meaning and the shell rollout. No code, read model, migration, permission or parent ID changes.
