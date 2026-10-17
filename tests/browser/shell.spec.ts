@@ -141,8 +141,8 @@ test("Workspace selection preserves permissions, contextual navigation and page 
   await page.getByRole("button", { name: "More", exact: true }).click();
   await page.getByLabel("Workspace", { exact: true }).selectOption("engineering");
   await expect(page).toHaveURL(/\/engineering$/);
-  // The rail carries the product identity; the breadcrumb names only the module and the current page.
-  await expect(page.locator(".product-heading")).toHaveText("Engineering");
+  // The rail carries the product identity and the department; the breadcrumb names the page (R1).
+  await expect(page.locator(".product-heading .ppo-crumbs")).toHaveText("Engineering workload");
   if (info.project.use.isMobile) {
     const navigation = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
     await expect(navigation.getByRole("link", { name: "Engineering", exact: true })).toBeVisible();

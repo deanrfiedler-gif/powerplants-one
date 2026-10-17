@@ -39,29 +39,15 @@
   .ppo-more-link[aria-current=page] { background: var(--ppo-shell-selected); color: var(--ppo-shell-link); }
   .ppo-more-link[aria-current=page] .product-icon { color: inherit; }
   .ppo-menu-group h3 { margin: 18px 12px 2px; font-size: 11px; line-height: 16px; }
-  /* Flow the search between the breadcrumb and utilities; it cannot collide with an expanded rail. */
-  .app-frame .ppo-shell-header .product-heading { flex: 0 1 320px; max-width: 36%; min-width: 100px; }
-  .app-frame .ppo-header-centre { position: static; transform: none; width: min(459px, 40%); flex: 0 1 459px; margin-inline: auto; }
-  .app-frame .ppo-shell-header .ppo-crumbs { flex-wrap: nowrap; }
-  .app-frame .ppo-shell-header .ppo-crumbs li { flex: 0 1 auto; min-width: 0; }
-  .app-frame .ppo-shell-header .ppo-crumbs .ppo-crumb { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
-  .app-frame .ppo-shell-header .ppo-crumbs li:last-child { flex: 0 0 auto; max-width: 100%; }
-  /* Workspace names can be long. Keep the current destination whole and expose
-     its ancestors through Page hierarchy, including when its menu is docked. */
-  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) { max-height: 42px; }
-  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) li { display: none; }
-  .app-frame .ppo-shell-header .ppo-crumbs li[data-crumb=view],
-  .app-frame .workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li:has(+ [data-crumb=view]) { display: flex; flex: 0 1 auto; }
-  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) li::before { content: none; }
-  .app-frame .ppo-shell-header .ppo-crumbs:has([data-crumb=view]) .ppo-crumb { white-space: normal; overflow-wrap: anywhere; }
-  .app-frame .workspace:has([data-menu=docked]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
+  /* Shell v2 breadcrumb labels. Placement and truncation are the shared top bar's (desktop-shell.css). */
+  .app-frame .ppo-shell-header .ppo-crumbs .ppo-crumb { font-size: 14px; }
   .app-frame:has(.mw-overview-figma) .ppo-breadcrumb-trigger { display: none; }
 }
+/* Narrow desktops keep the current page alone; Page hierarchy holds its owner and the full path. */
 @media (min-width: 781px) and (max-width: 1199px) {
   .app-frame .ppo-shell-header .ppo-crumbs li:not(:last-child) { display: none; }
   .app-frame .ppo-shell-header .ppo-crumbs li:last-child::before { content: none; }
   .app-frame .ppo-shell-header .ppo-breadcrumb-trigger { display: flex; }
-  .app-frame .ppo-header-centre { min-width: 44px; }
 }
 /* Opt-in secondary-menu presentation; retained Engineering baselines remain explicit. */
 #ppo-my-work[data-menu-presentation=figma] .mw-menu { padding: 8px; background: var(--surface); border-right: 1px solid var(--line); }

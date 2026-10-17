@@ -19,7 +19,7 @@ The composition below comes from the [proposed native refinement](../../../decis
 
 Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 4, 7–10 and 15; images in [board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md) and [r02](../../../reference/ui/service-cases/native-refinement-r02/README.md)). The shell is a separate module and is not drawn.
 
-- **Host (not drawn).** The shell's breadcrumb reads *Service / Service requests / SYN-PPO-TKT-000201*. Registered as a `padded` module workspace with `navigation: "workspace"` (D6). The module draws no masthead and no selected-case dropdown: the record is the page.
+- **Host (not drawn).** The shell's breadcrumb reads *Service requests / SYN-PPO-TKT-000201* (shell top bar amendment, 16 October 2026). Registered as a `padded` module workspace with `navigation: "workspace"` (D6). The module draws no masthead and no selected-case dropdown: the record is the page.
 - **Record header** (white, full bleed):
   - A back link to *Service requests*.
   - A 24 px/600 title with stage and priority chips beside it.

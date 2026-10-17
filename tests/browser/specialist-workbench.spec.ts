@@ -586,9 +586,9 @@ test("ES08 Figma contents, findings filter, working focus and phone actions reta
   expect(Math.abs((await page.locator(".es08-views").boundingBox())!.height - 45)).toBeLessThanOrEqual(2);
   expect((await gates(page).boundingBox())!.height).toBeLessThanOrEqual(43);
   await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+  // Shell top bar amendment R2/R6: the owner list, then the workbench; Page hierarchy keeps the full path.
   const visibleCrumbs = page.locator(".ppo-crumbs li:visible");
-  await expect(visibleCrumbs).toHaveCount(1);
-  await expect(visibleCrumbs).toHaveText("Screen Configurator Workbench");
+  await expect(visibleCrumbs).toHaveText(["Specialist configurations", "Screen Configurator Workbench"]);
   const hierarchy = page.getByRole("button", { name: "Page hierarchy", exact: true });
   await hierarchy.click();
   await expect(page.locator("#page-hierarchy").getByRole("link", { name: "Specialist configurations", exact: true })).toBeVisible();

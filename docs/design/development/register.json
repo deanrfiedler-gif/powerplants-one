@@ -9823,14 +9823,15 @@
       "title": "Application shell",
       "kind": "system",
       "module": "Shared",
-      "summary": "Permission-aware Home, ordinary Workspace in More, labelled/compact primary rail, global search/help and exact loaded breadcrumb context.",
+      "summary": "Permission-aware Home, ordinary Workspace in More, labelled/compact primary rail, global search centred in the top bar, help and a short loaded breadcrumb (page, or owner / page).",
       "path": null,
       "source_paths": [
         "src/components/product-navigation.tsx",
         "src/development/catalog.ts",
         "src/development/runtime.ts",
         "src/development/page-guide.tsx",
-        "src/app/api/development/catalog/route.ts"
+        "src/app/api/development/catalog/route.ts",
+        "src/shell/breadcrumb.ts"
       ],
       "guide_key": null,
       "design_path": "docs/design/development/systems/shell.md",
@@ -9844,7 +9845,12 @@
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/13-graph-overview.png",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/20-navigation-policies.png",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/21-record-page-pattern.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r02/22-record-relationships.png"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/22-record-relationships.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-01-Rules-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-02-Before-After-Table-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-03-R9-Search-Position-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-04-Desktop-Work-Orders-Register-r01.png",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/PPO-Shell-Top-Bar-05-Desktop-Work-Order-Record-r01.png"
       ],
       "dependencies": [
         "src/components/shell-controls.tsx",
@@ -9869,7 +9875,9 @@
         "src/app/styles/my-work-figma.css",
         "docs/decisions/figma-ui-implementation.md",
         "docs/testing/evidence/figma-ui/README.md",
-        "src/activities/work-guide.ts"
+        "src/activities/work-guide.ts",
+        "docs/decisions/shell-top-bar-amendment.md",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -9881,7 +9889,7 @@
       "build_rank": null,
       "related_keys": [],
       "reviewer": "Dean Fiedler",
-      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed."
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed. Shell top bar amendment accepted 16 Oct 2026 and implemented on a branch (docs/decisions/shell-top-bar-amendment.md); review fingerprint not refreshed."
     },
     {
       "key": "system:theme",

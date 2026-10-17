@@ -52,15 +52,15 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
 
   // A34: first use is collapsed. The existing-modules refinement replaces the earlier zero-width collapse
   // with the shared 24px strip, so the register begins at the strip's boundary rather than the scope's own
-  // left edge. The header still names module and destination while the menu is hidden, and the product name
-  // is no longer rendered in any module breadcrumb.
+  // left edge. The product name is no longer rendered in any module breadcrumb. Shell top bar amendment
+  // (16 October 2026): the breadcrumb names the module alone on its register, its default view (R5), and the
+  // full path stays in the tooltip.
   await expect(root).toHaveAttribute("data-menu", "collapsed");
   await expect(page.locator("#em-menu")).toBeHidden();
   await expect(page.locator(".ppo-crumbs")).toHaveAttribute("title", "Engineering / Released Materials & Substitutions / Materials register");
-  await expect(page.locator(".ppo-crumbs li[data-crumb=view] .ppo-crumb")).toHaveText("Materials register");
+  await expect(page.locator(".ppo-crumbs li .ppo-crumb")).toHaveText(["Released Materials & Substitutions"]);
   await expect(page.locator(".product-heading .ppo-product-name")).toHaveCount(0);
-  // #268's guarantee, in the breadcrumb that replaced the heading it was written against: no name is cut
-  // short to make room for another. An ancestor is dropped whole at narrower widths; what is shown is whole.
+  // R6: names truncate only when the start zone runs out of room; at this width the module name is whole.
   expect(await page.locator(".ppo-crumbs li:visible .ppo-crumb").evaluateAll((els) => els.every((el) => el.scrollWidth <= el.clientWidth))).toBe(true);
   const strip = page.locator(".mw-menu-strip");
   await expect(strip).toHaveJSProperty("offsetWidth", 24);
@@ -70,8 +70,8 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await expect(root).toHaveAttribute("data-menu", "docked");
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked");
-  // Docked, the menu names the destination and marks it current, so the breadcrumb does not repeat it.
-  await expect(page.locator(".ppo-crumbs li[data-crumb=view]")).toBeHidden();
+  // Docked or not, the register is the module's default view, so the breadcrumb is the module alone.
+  await expect(page.locator(".ppo-crumbs li .ppo-crumb")).toHaveText(["Released Materials & Substitutions"]);
 
   // A33 A36: My Work's menu, six route links in order, no horizontal module tabs.
   const menu = page.locator("#em-menu");

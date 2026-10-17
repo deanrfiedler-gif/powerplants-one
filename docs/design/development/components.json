@@ -3610,6 +3610,11 @@
           "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
         },
         {
+          "id": "top-bar-amendment",
+          "label": "Shell top bar amendment (R1–R9)",
+          "description": "Short breadcrumb: the page, or its nearest owner / the page; a record by reference; no department or default view. Desktop header grid with the search alone in the centre column and equal side zones. tests/unit/shell-breadcrumb.test.ts covers route rules, an owner without access and a signed-out view; desktop-shell, engineering and Projects browser suites cover crumb text and header geometry. C1: the working company is named by the account button (tooltip, description and a dot when one of several companies is selected)."
+        },
+        {
           "id": "nav-rail-first-paint",
           "label": "Rail first paint",
           "description": "F13 / UXB-75: the server renders the rail at the width this browser last showed (cookie ppo_shell_rail; labelled 240 px when none), and ProductHeader holds the module tab row while the shell context loads, so the workspace does not move when the context arrives. The identity's stored choice still wins after load. Fixture: tests/browser/shell-loading.spec.ts samples the rail width every frame from first paint and sums layout shift on five desktop pages at 1440 × 900, labelled and compact."
@@ -3640,6 +3645,10 @@
         {
           "path": "src/shell/secondary-menu.tsx",
           "symbol": "SecondaryMenuFrame"
+        },
+        {
+          "path": "src/shell/breadcrumb.ts",
+          "symbol": "breadcrumb"
         }
       ],
       "dependencies": [
@@ -3693,7 +3702,11 @@
         "docs/design/development/customer-register-fixtures.json",
         "docs/reference/ui/customers/customer-360-figma-r03/README.md",
         "src/products/components/catalogue-register.tsx",
-        "src/products/components/catalogue-register.css"
+        "src/products/components/catalogue-register.css",
+        "src/shell/page-title.ts",
+        "src/shell/guide.ts",
+        "docs/decisions/shell-top-bar-amendment.md",
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3743,9 +3756,9 @@
         "scope:CS-01",
         "route:/products"
       ],
-      "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations.",
+      "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
-      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus.",
+      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus. The breadcrumb's current item is marked aria-current and is never a link; its separators are hidden from screen readers.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
@@ -3953,6 +3966,14 @@
           "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
           "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
           "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-top-bar-amendment",
+          "expected": "Accepted Shell top bar amendment R1–R9: short breadcrumb and the global search centred in the top bar on every desktop page.",
+          "actual": "Implemented on branch feat/shell-top-bar-amendment; the shared Figma Shell / Top bar and the accepted pages' breadcrumb overrides follow it. The working-company chip moved into the account control (C1, Dean 17 October 2026). CPQ records show the destination without a reference because those pages publish no record identity (D1). Owner/device review of the application not recorded.",
+          "action": "Compare the running app at 1440, 1200, 1024 and 800 px with captures r01 and the updated accepted frames; record owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },

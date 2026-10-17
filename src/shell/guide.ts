@@ -10,11 +10,11 @@ export const shellGuide = {
     ],
     [
       "Know where you are",
-      "The labelled breadcrumb names the owning module and view. Loaded records add their permitted exact reference and title; it does not guess identity from a URL."
+      "The breadcrumb names the current page and, when the page sits beneath a list or module, that list as a link back. A loaded record shows its permitted exact reference; its title stays in the record header. The rail shows your department, and Page hierarchy shows the full path. Identity is never guessed from a URL."
     ],
     [
       "Work in one company",
-      "If your access reaches more than one company, open your account and choose a working company. Pages, search and actions then show only that company's records. Your permissions are unchanged; choose All companies to see everything you can access again."
+      "If your access reaches more than one company, open your account and choose a working company. Pages, search and actions then show only that company's records, and the account button shows a dot and names the company in its tooltip. Your permissions are unchanged; choose All companies to see everything you can access again."
     ],
     [
       "Get the right help",
@@ -28,7 +28,7 @@ export const shellGuide = {
     ],
     [
       "Use global search",
-      "Click the search field or press Ctrl/Cmd K. Choose a page, or type at least two characters to search the business records you can access."
+      "Click the search field, which sits in the same place at the centre of the top bar on every page, or press Ctrl/Cmd K. Choose a page, or type at least two characters to search the business records you can access."
     ],
     [
       "Review a workspace",
