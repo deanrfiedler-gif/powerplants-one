@@ -1,5 +1,15 @@
 # Current prototype status
 
+## Field team design accepted — 18 October 2026
+
+Dean accepted the Figma design for the PL-02 register and person page (`/service/technicians`, `/service/technicians/[id]`): "I accept the Field team PL-02 design with your recommendations, including D1–D8 and Q1–Q5". The [decision](decisions/field-team-figma-design.md) records it as the named Figma version "Field team — accepted", and the [retained captures](reference/ui/service/field-team-design-r01/README.md) are ten icon-free PNGs with hashes.
+- The register uses the Work orders grid, with Technicians (default), Visits and Needs preparation in the side menu, the planner's people visuals and the large snapshot.
+- The person page is one scrolling page on the Work order record layout: an Evidence bar, seven-day availability tracks, competence with the built `competenceState` words and a read-only evidence panel, and upcoming visits. Nothing is edited there.
+- The Conversations action sits left of the information icon on every frame, as Dean asked; it stays part of the proposed top-bar shell amendment.
+- Build prerequisites: a published role, a booked-hours read on the planner's rule, a per-person competence summary and a person filter in the Field team URL.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
 ## Service review and reports design accepted — 18 October 2026
 
 Dean accepted the Figma design for the SV-06 register and report record (`/service/reports`, `/service/reports/[id]`): "I accept the Service review and reports SV-06 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-review-figma-design.md) records it as the named Figma version "Service review and reports — accepted", and the [retained captures](reference/ui/service/service-review-design-r01/README.md) are twelve icon-free PNGs with hashes.

@@ -276,3 +276,8 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - Grid register with review queues in the side menu and the large snapshot.
   - The report record has a Before issue bar and five view tabs. Review submission is edited in the Evidence tab. The customer report is issued as exact HTML and nothing is sent; responses are bound to that exact report.
   - Twelve icon-free captures are retained. Building the page is not decided.
+
+- [Field team design — owner decision](field-team-figma-design.md): the PL-02 register (`/service/technicians`) and read-only person page (`/service/technicians/[id]`), drawn in Figma on the accepted Service review register, the Work order record layout and the Service planner people rows. Audited, polished and accepted on 18 October 2026 ("I accept the Field team PL-02 design with your recommendations, including D1–D8 and Q1–Q5") as the named version "Field team — accepted".
+  - Grid register with Technicians, Visits and Needs preparation in the side menu, the planner's people visuals and the large snapshot.
+  - The person page is one scrolling page with seven-day availability, competence evidence in a read-only panel and upcoming visits. Nothing is edited there.
+  - Ten icon-free captures are retained. Building the page is not decided.
