@@ -49,7 +49,7 @@ Image 14 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Not saved yet; it waits for Dean's explicit yes. Proposed title "Site surveys — accepted" |
+| Named version | "Site surveys — accepted", saved 19 October 2026 at Dean's request and confirmed in version history |
 | Accepted frames | Page "Site surveys · CS-08" `1464:2918`, in image order:<br>• `1464:2955`, `1464:3055`, `1468:3554`, `1470:2833`, `1471:2847`, `1472:3102`, `1473:3371`, `1464:3366`;<br>• `1464:3695`;<br>• `1464:3779`, `1464:3821`, `1464:3890`, `1478:3552`;<br>• the phone states: `1464:3958`, `1464:4016`, `1464:4059`, `1464:4095` |
 | Capture copies | Page "Captures (icon-free)", from y = 256,000, images in order: `1484:184592`, `1484:184686`, `1484:184831`, `1484:185042`, `1484:185173`, `1484:185317`, `1484:185462`, `1484:185615`, `1484:185786`, `1484:185863`, `1484:185902`, `1484:185969`, `1484:186036`, `1484:186132` |
 
