@@ -6603,8 +6603,21 @@
       "guide_key": "guide.page.estimating.discovery.id.costing",
       "design_path": "docs/design/development/pages/route-estimating-discovery-id-costing.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-01-Desktop-Cost-Lines-Full-Length-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-02-Desktop-Review-And-Adopt-Dialog-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-03-Desktop-Discovery-Changed-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-04-Desktop-Not-Ready-To-Cost-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-05-Tablet-Cost-Lines-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-06-Phone-Cost-Lines-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-07-Phone-Cost-Lines-Full-Length-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-08-Phone-320-Cost-Lines-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-09-Dialog-States-r01.png",
+        "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-10-Phone-Loading-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/discovery-costing-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
