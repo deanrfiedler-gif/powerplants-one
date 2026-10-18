@@ -21,6 +21,8 @@
 
 [Findings and follow-up design](findings-figma-design.md) (PPO-SV07-FINDINGS-FIGMA-DEC) records Dean's acceptance on 18 October 2026 of the SV-07 Figma design: a worklist of unresolved findings inside Service review, closed only in their own records, with an owned next action, recurrence and a remote diagnosis handover as new features. Building it is not decided.
 
+[Facilities and growing areas design](facilities-figma-design.md) (PPO-CS05-FACILITIES-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-05 design: a grid register with views, a snapshot and a Hierarchy toggle, a record with "Details recorded", measurements and context with their sources, equipment installed versus serving, a side-by-side correction review, and Add facility or area with "Check before creating". No facility numbers are added. Building it is not decided.
+
 [Remote diagnosis and escalation design](escalations-figma-design.md) (PPO-SV08-ESCALATIONS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the SV-08 Figma design, with departures D1–D7 and the recommended answers to Q1–Q4: a case lifecycle beside Findings, a read-only configuration snapshot, an evidence pack without customer details or prices, and a named person who sends it and records it in PPO. Building the page is not decided.
 
 [Discovery register design](discovery-register-figma-design.md) (PPO-ES02-DISCOVERY-REGISTER-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the `/estimating/discovery` register design: one row per workspace with its selected option, readiness and costing views, cost basis in words and a read-only snapshot. Its proposed list-read fields and building it are not decided.
