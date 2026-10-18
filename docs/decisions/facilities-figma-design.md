@@ -22,7 +22,7 @@ Claude drew the page from these sources:
 - the native captures in [cs05-native-r01](../testing/evidence/cs05-native-r01/README.md);
 - copies of three accepted designs: the Sites CS-04 frames, the People CS-02 correction card and the Service requests SV-01 "Log a request" form.
 
-Before deciding, Dean asked for an audit: "Give the pages an audit and polish to ensure they are as professional as possible." He then accepted the design: "I accept the Facilities and growing areas CS-05 design with your recommendations, including D1–D7 and Q1–Q4." That adopts D1–D7 and the recommended answers to Q1–Q4.
+Before deciding, Dean asked for an audit: "Give the pages an audit and polish to ensure they are as professional as possible." He then accepted the design: "I accept the Facilities and growing areas CS-05 design with your recommendations, including D1–D7 and Q1–Q4." That adopts D1–D7 and the recommended answers to Q1–Q4. After the captures were made, Dean asked for the named version: "Yes, save the named Figma version "Facilities and growing areas — accepted"." The design reference is that named version.
 
 Scope:
 - `scope:CS-05` "Facilities and growing areas", with `route:/facilities`, `route:/facilities/new`, `route:/facilities/[id]` and `route:/facilities/[id]/edit`.
@@ -42,14 +42,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Details to complete | Resolved as recommended | The view lists areas with an Unknown structure or use, or no footprint |
 | Q4 Work on an area | Resolved as recommended | Work orders and visits stay linked to the site. The record shows "Site context" until a decision adds links to areas |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | "Facilities and growing areas — accepted" waits for Dean's explicit yes |
+| Named Figma version | User decision, 18 October 2026 | "Yes, save the named Figma version "Facilities and growing areas — accepted"." Saved in the Figma desktop app at about 19:20 by a Claude session on Dean's yes, and seen in version history as Dean Fiedler's "just now" entry after the panel was reopened |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). The named version is pending (section 1) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053), at the named version "Facilities and growing areas — accepted" |
 | Page | "Facilities and growing areas · CS-05" `1415:357158`, under "— Shared records —", after Sites · CS-04 `1375:2901` and before People · CS-02. The page header `1415:357159` holds the conformance declaration. The notes card `1415:358266` is in Flows and notes. File index row "Row / Facilities and growing areas · CS-05" `1423:376950`, after the Sites row |
 | Desktop 1440 | Register, All facilities `1415:357195`; register with the Bay 4 snapshot `1416:363644`; Hierarchy for SYN Glasshouse 4 `1416:365147`; Bay 4 Overview `1415:357445`; Equipment, installed and serving `1416:366300`; Correct details (1440 × 1033) `1416:366753`; Review saved and proposed values (1440 × 1120) `1416:367175`; Add facility or area `1416:367649` |
 | Tablet 1024 | Register with the side menu collapsed `1415:357718` |
@@ -74,7 +74,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | Pending Dean's explicit yes |
+| Named version | "Facilities and growing areas — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -164,6 +164,6 @@ The audit and the acceptance are recorded on the notes card `1415:358266`.
   - none of 2,299 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link or a flow starting point.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/customers/facilities-design-r01/README.md).
-- Before the captures were made, the notes card's Accepted paragraph and the page header's Status and Decision record fields were updated. The frames themselves were not changed.
+- Before the captures were made, the notes card's Accepted paragraph and the page header's Status field were updated. The header's Decision record and Named version fields were then pointed at this lock-in, before the named version was saved. The frames themselves were not changed.
 - The page has no prototype flow. Claude did not play the shared components' hover interactions in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

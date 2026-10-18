@@ -53,7 +53,7 @@ Image 14 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Pending: "Facilities and growing areas — accepted" waits for Dean's explicit yes |
+| Named version | "Facilities and growing areas — accepted", saved 18 October 2026 at Dean's "Yes, save the named Figma version "Facilities and growing areas — accepted"." |
 | Accepted frames | Page "Facilities and growing areas · CS-05" `1415:357158`, in image order:<br>• `1415:357195`, `1416:363644`, `1416:365147`, `1415:357445`, `1416:366300`, `1416:366753`, `1416:367175`, `1416:367649`;<br>• `1415:357718`;<br>• `1415:357952`, `1415:357991`, `1416:369291`, `1416:369765`;<br>• the phone states: `1415:358128`, `1415:358186`, `1415:358229`;<br>• the desktop states: `1418:362899`, `1418:363291`, `1418:363685` |
 | Capture copies | Page "Captures (icon-free)", from y = 240,000, images in order: `1423:172675`, `1423:172844`, `1423:173148`, `1423:173243`, `1423:173369`, `1423:173501`, `1423:173611`, `1423:173755`, `1423:173960`, `1423:174111`, `1423:174148`, `1423:174215`, `1423:174282`, `1423:174350`, `1423:174485`, `1423:174630`, `1423:174775` |
 
