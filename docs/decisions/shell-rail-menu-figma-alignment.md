@@ -46,7 +46,8 @@ Rail membership, order, permissions and destinations; the More panel's Workspace
 
 - Menu contents on some pages: Products keeps its filters in the menu and has no icons (Figma draws Quick views with icons); ES-08 keeps its back link and note.
 - Leads, Work orders and Engineering workload have no secondary menu in the application yet, though their accepted pages draw one. Each needs its views built.
-- The More panel keeps its Workspace choice and its footer, which `v2 / More panel` (`79:51`) does not draw. The drawn panel still shows a search box; Dean's instruction removes it from the application, and the component should be updated to match.
+- The More panel keeps its Workspace choice and its footer, which `v2 / More panel` (`79:51`) does not draw. Whether to draw them or remove them from the application is open with Dean.
+- On 18 October the component's "Find a menu item" search (`Menu search`) was removed in Figma to match the application; its instances inherit the change, and the Leads panels (`190:20688`, `190:20690`) were checked. No named version is saved and the committed captures are unchanged.
 - Rail count badges are drawn on several rails; only Projects has a count in the application.
 
 ## 5. Verification
