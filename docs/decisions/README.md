@@ -9,6 +9,8 @@
 
 [Rails and secondary menus aligned with Figma](shell-rail-menu-figma-alignment.md) (PPO-SHELL-RAIL-MENU-FIGMA-DEC) records Dean's 18 October 2026 instruction to align the application's rails and secondary menus with the Shell v2 components in Figma and to remove the More panel's search, with the Figma values used and what still differs.
 
+[People design](people-figma-design.md) (PPO-CS02-PEOPLE-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-02 contact directory and contact record design: a grid register with People views, a record with "Before you rely on this contact", what relies on the person, M1–M4 notice preferences and a Correct details form with a required reason. Building it is not decided.
+
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a working rule Dean adopted on 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. The branch-protection, merge-queue and workflow changes it lists remain Dean's decision.
 
 [Leads side menu built on the shared secondary menu](leads-side-menu-implementation.md) (PPO-CRM-LEADS-SIDE-MENU-IMPL) records the 18 October 2026 build of the accepted Leads side menu, mapping each drawn view to an existing Leads read and count, with what is still the earlier page.
