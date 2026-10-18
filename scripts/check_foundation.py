@@ -246,12 +246,28 @@ def check_merge_markers():
     return scanned
 
 
+def check_conflict_controls():
+    """STATUS.md and the decisions index must match docs/status/; migration numbers must be unique.
+
+    Both checks live in their own scripts so contributors can run them directly. See
+    docs/decisions/merge-conflict-reduction.md for why they exist.
+    """
+    import build_status
+    import check_migrations
+    for message in build_status.check_status():
+        problem(message)
+    for message in check_migrations.check_tree():
+        problem(message)
+    return len(build_status.load_fragments())
+
+
 def main():
     count = check_sources()
     registers = check_registers()
     links = check_links_and_hygiene()
     scanned = check_merge_markers()
-    report = {'status':'failed' if ERRORS else 'passed', 'issued_sources':count, **registers, 'local_links_checked':links, 'files_scanned_for_markers':scanned, 'errors':ERRORS, 'scope':'Documentation assurance only; no business acceptance tests executed'}
+    fragments = check_conflict_controls()
+    report = {'status':'failed' if ERRORS else 'passed', 'issued_sources':count, **registers, 'local_links_checked':links, 'files_scanned_for_markers':scanned, 'status_fragments':fragments, 'errors':ERRORS, 'scope':'Documentation assurance only; no business acceptance tests executed'}
     print(json.dumps(report, indent=2))
     return 1 if ERRORS else 0
 
