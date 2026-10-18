@@ -1311,7 +1311,9 @@
         "src/components/estimation-wizard-figma.css",
         "src/components/estimation-catalogue-ui.tsx",
         "src/components/estimation-wizard-changes.ts",
-        "docs/decisions/es02-wizard-figma-implementation.md"
+        "docs/decisions/es02-wizard-figma-implementation.md",
+        "docs/decisions/discovery-register-figma-design.md",
+        "docs/decisions/create-discovery-workspace-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6685,12 +6687,25 @@
       "guide_key": "guide.page.estimating.discovery.new",
       "design_path": "docs/design/development/pages/route-estimating-discovery-new.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-01-Desktop-Choose-Opportunity-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-02-Desktop-First-Discovery-From-Sales-Brief-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-03-Desktop-Review-And-Create-Dialog-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-04-Desktop-Needs-Attention-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-05-Desktop-No-Eligible-Opportunities-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-06-Tablet-First-Discovery-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-07-Phone-Choose-Opportunity-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-08-Phone-First-Discovery-Full-Length-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-09-Phone-320-Choose-Opportunity-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-10-Dialog-States-r01.png",
+        "docs/reference/ui/estimating/create-discovery-workspace-figma-design-r01/PPO-Create-Discovery-Workspace-11-Phone-Loading-r01.png"
+      ],
       "dependencies": [
         "src/components/sales-estimating-link.tsx",
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/decisions/create-discovery-workspace-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6718,8 +6733,19 @@
       "guide_key": "guide.page.estimating.discovery",
       "design_path": "docs/design/development/pages/route-estimating-discovery.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-02-Desktop-Northbank-Snapshot-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-03-Desktop-No-Workspaces-Yet-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-04-Desktop-View-Only-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-05-Tablet-Register-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-06-Phone-List-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-07-Phone-320-List-r01.png",
+        "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-08-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/discovery-register-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",

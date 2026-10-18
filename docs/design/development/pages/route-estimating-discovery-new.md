@@ -34,6 +34,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html)
+- [Create discovery workspace design r01](../../../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md) — owner-accepted 18 October 2026: choose an eligible opportunity (or arrive locked from an accepted Sales brief), author the first discovery in the accepted wizard layout, then review and create in a dialog; desktop, tablet, phone 390 and 320, four dialog outcomes and three page states; [decision](../../../decisions/create-discovery-workspace-figma-design.md). Not built
 
 ## Behaviour, handovers and verification
 

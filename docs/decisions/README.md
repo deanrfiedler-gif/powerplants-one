@@ -23,6 +23,10 @@
 
 [Remote diagnosis and escalation design](escalations-figma-design.md) (PPO-SV08-ESCALATIONS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the SV-08 Figma design, with departures D1–D7 and the recommended answers to Q1–Q4: a case lifecycle beside Findings, a read-only configuration snapshot, an evidence pack without customer details or prices, and a named person who sends it and records it in PPO. Building the page is not decided.
 
+[Discovery register design](discovery-register-figma-design.md) (PPO-ES02-DISCOVERY-REGISTER-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the `/estimating/discovery` register design: one row per workspace with its selected option, readiness and costing views, cost basis in words and a read-only snapshot. Its proposed list-read fields and building it are not decided.
+
+[Create discovery workspace design](create-discovery-workspace-figma-design.md) (PPO-ES02-CREATE-WORKSPACE-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the `/estimating/discovery/new` design: choose an eligible opportunity or arrive from an accepted Sales brief, the first discovery in the wizard layout, and a review-and-create dialog with four save outcomes. Building it is not decided.
+
 [Changes and follow-up design](changes-follow-up-figma-design.md) (PPO-PL04-CHANGES-FOLLOW-UP-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-04 Figma design for `/schedule/changes` and `/schedule/policy-impact`, with departures D1–D7 and the recommended answers to Q1–Q4. The named version is saved; building the page is not decided.
 
 [Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-06 Figma design with D1–D7 and the recommended answers to Q1–Q4. P4, the weekday change and the build are separate.
