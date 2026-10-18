@@ -41,3 +41,5 @@ python3 scripts/build_status.py
 ## Checks
 
 `python3 scripts/build_status.py --check` (also run by `scripts/check_foundation.py`) fails when the rendered section is out of step, when the legacy part gains or loses an entry, or when a fragment is malformed. `legacy-index.txt` lists the legacy entries; after a reviewed correction that changes one, run `python3 scripts/build_status.py --accept-legacy`.
+
+Throwaway docs-only probe for PR 584; closes unmerged.
