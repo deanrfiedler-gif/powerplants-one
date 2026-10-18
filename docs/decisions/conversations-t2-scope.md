@@ -116,6 +116,15 @@ Catch me up and the actions under Carl's message (Make a task, Pin as decision, 
 | State · `@` picker with Carl | 1310:308200 | Carl listed first under "AI assistant" with its icon, and a person called Carl Jensen shown with role (C5) |
 | Notes | 1310:310564 | Scope, what stays hidden, the departure and what is not drawn |
 
+**Audit and polish, 18 October 2026, at Dean's request.** Dean asked for an audit and visual polish ("ensure they are accurate and as professional as possible"), noting a white background behind the text of a Carl card. Claude checked every node's fills, fonts and text widths, and screenshotted each frame. Changes:
+- **White patches removed.** The "Carl is answering" notices had white text columns. They now sit on the card's blue throughout, and no Carl card has a fill other than its own blue and the white source chips.
+- **Left-out sources line.** "1 source left out…" is now a quieter 13 px grey line under the answer.
+- **Unavailable notice.** It is neutral, white with a grey border, because Carl produced nothing.
+- **Answering states.** These show three working dots.
+- **Consistency.** Thread-list times match the latest message (10:20 and 10:21). Long record headings in the thread list end with an ellipsis instead of running past the sidebar edge. The simulated tag reads "Simulated answer · no AI used".
+
+All fonts are Roboto, and no text overflows its container.
+
 **Proposed departure:** at 320 px, Carl's name and its "acting for" line stack, and a source chip's title truncates with an ellipsis. The chip still opens the record.
 
 **Not drawn:**
