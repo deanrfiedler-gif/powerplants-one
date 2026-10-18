@@ -2,7 +2,7 @@
 
 ## Conversations T2 scope accepted, Carl answers in threads — 18 October 2026
 
-At Dean's instruction ("Record my decision and plan T2"), the [T2 scope record](decisions/conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) proposes how `@Carl` answers in threads. It has five slices: T2a scope and missing frames, T2b the assistant core with a simulated adapter, T2c the UI, T2d the Claude adapter, and T2e a paid synthetic evaluation of about US$9 within the US$30 ceiling. Dean accepted it the same day: "I accept the Conversations T2 scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9. Record my words, then start T2a (the missing frames in Figma)." T2a's frames are being drawn in Figma as proposals. No application code, dependency, migration, capability, route or paid model request changes.
+At Dean's instruction ("Record my decision and plan T2"), the [T2 scope record](decisions/conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) proposes how `@Carl` answers in threads. It has five slices: T2a scope and missing frames, T2b the assistant core with a simulated adapter, T2c the UI, T2d the Claude adapter, and T2e a paid synthetic evaluation of about US$9 within the US$30 ceiling. Dean accepted it the same day: "I accept the Conversations T2 scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9. Record my words, then start T2a (the missing frames in Figma)." T2a's eight proposal frames are drawn in Figma (section 1310:307862 on the Conversations page) and await Dean's acceptance. No application code, dependency, migration, capability, route or paid model request changes.
 
 ## Conversations T1b built, no UI — 17 October 2026
 

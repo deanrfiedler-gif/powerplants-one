@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2-SCOPE
 title: Conversations T2 scope, Carl answers in threads
 date: 2026-10-18
 owner: Dean Fiedler
-status: Scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9 accepted by Dean on 18 October 2026; T2a frames in progress; no application code, dependency, migration, capability, route or paid model request authorised by this record
+status: Scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9 accepted by Dean on 18 October 2026; T2a proposal frames drawn, not yet accepted; no application code, dependency, migration, capability, route or paid model request authorised by this record
 versioning: git
 ---
 
@@ -26,7 +26,7 @@ Dean chose both replies from answers Claude offered in the session.
 | The T2 contents in section 3 and slices T2a to T2e in section 4 | User decision | Quote 2 |
 | Rules T2-1 to T2-12 in section 5 | User decision. Design rules, not verified operating rules; no code implements them yet | Quote 2 |
 | Questions W1 to W9, with the recommended answers in section 7 | User decision, recommended answers adopted | Quote 2 |
-| The frames in section 6 | Being drawn as proposals (T2a); not yet accepted | Quote 2 asks for them |
+| The frames in section 6 | Drawn as proposals on 18 October 2026 (T2a); not yet accepted | Quote 2 asks for them |
 
 ## 2. Where things stand
 
@@ -102,6 +102,28 @@ The accepted design shows Carl's answer card, its sources, the AI label, Catch m
 | Tablet 1024, Phone 390 and 320 · Thread with Carl's answer | The same answer and states at each size |
 
 Catch me up and the actions under Carl's message (Make a task, Pin as decision, Branch here, Watch) stay hidden in T2, as section 3 says.
+
+**Drawn on 18 October 2026.** At Dean's instruction (quote 2), Claude drew these frames as proposals on the Figma page "Conversations" (node 1141:49) of "PPO - Design". They are in a new section, "T2 · Carl answers in threads (proposal, 18 Oct 2026)" (node 1310:307862). They are built from copies of the accepted T1 frames and use the accepted `Conversations / Message` (Author=Carl), `Avatar`, `Record link`, `Composer` and `Tag` components. No accepted frame or component was edited. The synthetic scenario: Alex asks Sam where the Green Valley controller is, then Sam tags Carl.
+
+| Frame | Node | Shows |
+|---|---|---|
+| Desktop 1440 · Carl answering for Sam | 1310:307863 | Sam's `@Carl` message, then "Carl · AI assistant is answering for Sam", saying only sources everyone in the thread can see are used. The composer hint mentions Carl |
+| Desktop 1440 · Carl's answer, sources and one left out | 1310:307977 | Carl's answer acting for Sam, with chips for Deal OPP-0142 and PO-2281, "1 source left out because not everyone here can see it", and Sam's ask still open |
+| Tablet 1024 · Carl's answer | 1310:308091 | The same answer at 1024 px |
+| Phone 390 · Carl's answer | 1310:308170 | The same answer full screen, with the source chips wrapping |
+| Phone 320 · Carl's answer | 1310:308185 | The same answer at 320 px (see the departure below) |
+| State · Carl's answers and when Carl can't answer | 1310:310346 | Six cases: a simulated answer with its "Simulated · no AI used" tag; nothing in the records; a declined request; stopped at its limit; Carl unavailable because the budget is spent; and a source's access changed, so the answer is discarded and answered again |
+| State · `@` picker with Carl | 1310:308200 | Carl listed first under "AI assistant" with its icon, and a person called Carl Jensen shown with role (C5) |
+| Notes | 1310:310564 | Scope, what stays hidden, the departure and what is not drawn |
+
+**Proposed departure:** at 320 px, Carl's name and its "acting for" line stack, and a source chip's title truncates with an ellipsis. The chip still opens the record.
+
+**Not drawn:**
+- Carl turned off. Carl is simply not listed in the picker.
+- Carl's answers in the record-page list.
+- The loading and empty states with Carl.
+
+Icon-free captures, the File index row and Dean's named version follow his acceptance of these frames.
 
 ## 7. Questions W1 to W9, answered
 
