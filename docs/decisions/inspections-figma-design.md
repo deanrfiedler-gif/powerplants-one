@@ -24,7 +24,7 @@ No accepted frame or main component was edited.
 
 Dean asked twice for an audit and polish before accepting. The notes card records his words as "give the pages an audit and professional polish" and, across the seven new pages, "give all the pages an audit and polish". Claude then asked: "Do you accept Inspections with the recommendations?" Dean replied: "I happy to accept and proceed with your recommendations." The reply is quoted exactly, including the missing word. It covers departures D1–D7 and questions Q1–Q4 as written on the notes card, and each question takes its recommended answer.
 
-The intended named Figma version is "Inspections — accepted". It has **not** been saved. It waits for Dean's explicit yes.
+The named Figma version "Inspections — accepted" was saved on 18 October 2026 at Dean's request.
 
 Scope:
 - `scope:FI-03` with `route:/my-jobs/inspections` (rail item My inspections), and `scope:FI-04` with `route:/service/inspections` (rail item Inspection review).
@@ -45,14 +45,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Evidence formats | Resolved as recommended | Keep the built PNG and plain text only for now. Phone JPEG photos are noted as a later change |
 | Q4 Who reviews | Resolved as recommended | No change. Inspection review needs report read and work order edit access, as built |
 | Accept the design | User decision, 18 October 2026 | Question and reply quoted above |
-| Save the named version "Inspections — accepted" | Not done | Waits for Dean's explicit yes |
+| Save the named version | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). The intended named version "Inspections — accepted" is not saved yet |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Inspections — accepted", saved 18 October 2026 |
 | Page | "Inspections · FI-03 · FI-04" `1339:4184`, in the Service operations group, after My jobs · FI-01 `845:44` and before Incidents and corrective actions · FI-06 `1348:2972`. The page header `1339:4185` holds the conformance declaration. The notes card `1345:2979` is in Flows and notes `1345:2978`. After acceptance on 18 October 2026, the page header was updated to "Accepted by Dean", naming this record; the frame names still end in "(proposal)". File index row "Row / Inspections · FI-03 · FI-04" `1396:355197` on Start here |
 | Desktop 1440 × 900 | Section `1344:4267`: review register, All attempts `1339:4220`; attempt 2 retest on Readings, awaiting review `1339:4442`; attempt 1 with the failed check and the review decision Returned `1339:4542`; accepted, outcome ready to issue `1339:4684`; technician capture, draft `1339:317844` |
 | Tablet 1024 | Section `1344:4273`: review register with the side menu collapsed `1339:4792` |
@@ -78,7 +78,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Inspections — accepted", intended; not saved yet |
+| Named version | "Inspections — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -149,7 +149,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
   - a tablet or 1024 record;
   - denied access, withdrawn applicability and stale conflict states;
   - 200% zoom.
-- **Figma housekeeping still open:** the named version, and frame names that still end in "(proposal)". The File index row and the page header were updated on 18 October 2026.
+- **Figma housekeeping still open:** frame names that still end in "(proposal)". The File index row and the page header were updated on 18 October 2026.
 - **Data in the frames:** the people, sites, equipment, readings, instruments, defects and times are synthetic. They are not operational records.
 
 ## 6. Audit and polish

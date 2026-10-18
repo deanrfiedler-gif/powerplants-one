@@ -18,7 +18,7 @@ Claude drew the page from these sources:
 - the PL-04 proposal frames, which this page copies for its shell and side menu;
 - the accepted [Service planner](service-planner-figma-design.md) (PL-01), for the travel tint and the people and visits of the story.
 
-Before accepting, Dean asked Claude to "give all the pages an audit and polish". Dean was then asked "Do you accept Travel review with the recommendations?" and replied: "I accept the Travel review PL-05 design with your recommendations, including D1–D5 and Q1–Q2." The intended named Figma version is "Travel review — accepted". It is **not saved yet**; it waits for Dean's explicit yes.
+Before accepting, Dean asked Claude to "give all the pages an audit and polish". Dean was then asked "Do you accept Travel review with the recommendations?" and replied: "I accept the Travel review PL-05 design with your recommendations, including D1–D5 and Q1–Q2." The named Figma version "Travel review — accepted" was saved on 18 October 2026 at Dean's request.
 
 Scope:
 - `scope:PL-05` "Visit route and travel review", with `route:/schedule/travel` (side menu item Travel review).
@@ -37,14 +37,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q1 Route estimates | Resolved as recommended | Keep "Unknown" until a route-estimate provider is chosen through its own decision. No map in this design. The page shows planned travel allowances with their basis (reviewed standard allowances in the story) |
 | Q2 Default view | Resolved as recommended | Start on one person, not "All permitted resources": the first person with a conflict, or the signed-in technician. Comparing an order needs one person |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named version "Travel review — accepted" | Not saved | Waits for Dean's explicit yes |
+| Named version "Travel review — accepted" | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The intended named version is "Travel review — accepted"; it is not saved yet. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. Named version "Travel review — accepted", saved 18 October 2026. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Travel review · PL-05" `1371:3488`, under "— Service operations —", after Changes and follow-up · PL-04 `1326:4525` and before Appointment detail `1187:50`. The page header `1371:3489` holds the conformance declaration; the notes card `1374:985` is in Flows and notes. File index row "Row / Travel review · PL-05" `1396:355190` (Accepted, decision record `travel-review-figma-design.md`) |
 | Desktop 1440 × 900 | Casey Ward's route with an availability block overlapping travel `1371:3524`; comparing a different order `1373:1001` |
 | Tablet 1024 | Route with the rail and side menu collapsed `1371:3653` |
@@ -70,7 +70,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D5 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Travel review — accepted", not saved yet |
+| Named version | "Travel review — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 

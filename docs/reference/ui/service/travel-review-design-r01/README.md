@@ -37,7 +37,7 @@ Image 6 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Intended name "Travel review — accepted". Not saved yet; it waits for Dean's explicit yes |
+| Named version | "Travel review — accepted", saved 18 October 2026 |
 | Accepted frames | Page "Travel review · PL-05" `1371:3488`, notes card `1374:985`, in image order:<br>• `1371:3524`, `1373:1001`;<br>• `1371:3653`;<br>• `1371:3722`, `1373:1604`;<br>• the states: `1371:3758`, `1371:3800` |
 | Capture copies | Page "Captures (icon-free)" `115:2`, from y = 212,000: `1396:170721`, `1396:170877`, `1396:171032`, `1396:171170`, `1396:171290`, `1396:171410` (images in order) |
 

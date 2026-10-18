@@ -46,7 +46,7 @@ Image 12 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Intended "Inspections — accepted". Not saved yet; it waits for Dean's explicit yes |
+| Named version | "Inspections — accepted", saved 18 October 2026 |
 | Accepted frames | Page "Inspections · FI-03 · FI-04" `1339:4184`, notes card `1345:2979`, in image order:<br>• `1339:4220`, `1339:4442`, `1339:4542`, `1339:4684`, `1339:317844`;<br>• `1339:4792`;<br>• `1339:317656`, `1339:317680`, `1344:3577`, `1343:3284`, `1339:4851`;<br>• the states: `1344:3746`, `1344:3909`, `1344:4086` |
 | Capture copies | Page "Captures (icon-free)" `115:2`, from y = 196,000: `1396:151594`, `1396:151839`, `1396:151968`, `1396:152102`, `1400:350394`, `1396:152342`, `1400:350751`, `1396:152608`, `1396:152676`, `1396:152744`, `1396:152840`, `1400:350894` (images in order). Copies 05, 07 and 12 were rebuilt after the corrections below |
 

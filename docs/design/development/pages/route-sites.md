@@ -42,7 +42,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Accepted Figma design: [Sites design r01 captures](../../../reference/ui/sites/sites-design-r01/README.md) (eight icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/sites-figma-design.md). The named version "Sites — accepted" is not saved yet. Images of the Readiness to confirm, Biosecurity unknown and Address to review views, desktop register states, and denied and restricted states are still missing.
+Accepted Figma design: [Sites design r01 captures](../../../reference/ui/sites/sites-design-r01/README.md) (eight icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/sites-figma-design.md). The named version "Sites — accepted" is saved. Images of the Readiness to confirm, Biosecurity unknown and Address to review views, desktop register states, and denied and restricted states are still missing.
 
 - [PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html](../../../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html)
 

@@ -20,7 +20,7 @@ Claude drew the page from these sources:
 - the accepted record pattern in [Work order record](work-order-record-page-design.md) (PPO-SVC-WO-RECORD-DESIGN-DEC), [Appointment detail](appointment-detail-figma-design.md) (PPO-SV04-APPOINTMENT-FIGMA-DEC) and [Service review](service-review-figma-design.md) (PPO-SV06-REVIEW-FIGMA-DEC);
 - copies of the [Incidents](incidents-figma-design.md) (FI-06) and [Findings](findings-figma-design.md) (SV-07) proposal frames, drawn and accepted the same day. No accepted frame or main component was edited.
 
-Before accepting, Dean asked Claude to "give all the pages an audit and polish" (section 6). He then accepted the design: "I accept the Sites CS-04 design with your recommendations, including D1–D6 and Q1–Q3. Then lock in all seven accepted pages." The intended design reference is a named Figma version, "Sites — accepted". **It is not saved yet.** It waits for Dean's explicit yes.
+Before accepting, Dean asked Claude to "give all the pages an audit and polish" (section 6). He then accepted the design: "I accept the Sites CS-04 design with your recommendations, including D1–D6 and Q1–Q3. Then lock in all seven accepted pages." The design reference is the named Figma version "Sites — accepted", saved on 18 October 2026 at Dean's request.
 
 Scope:
 - `scope:CS-04`, with `route:/sites` and `route:/sites/[id]`.
@@ -41,14 +41,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Site numbers | Resolved as recommended | Show the `SYN-SITE-…` number on every site so people can quote it. The built page shows a display number only when one exists |
 | Readiness is never confirmed on this page | Rule shown in the accepted design | The overview says why readiness is needed and links to Access & readiness (CS-06, `/sites/[id]/readiness`) |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named version "Sites — accepted" | Not saved | Waits for Dean's explicit yes |
+| Named version "Sites — accepted" | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The intended named version "Sites — accepted" is not saved yet. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. Named version "Sites — accepted", saved 18 October 2026. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Sites · CS-04" `1375:2901`, under "— Shared records —", before People · CS-02 `1395:150275`. The page header `1375:2902` holds the conformance declaration; the notes card `1380:2175` is in Flows and notes. After acceptance on 18 October 2026, the page header was updated to "Accepted by Dean". File index row "Row / Sites · CS-04" `1396:355225` in the Shared records table |
 | Desktop 1440 × 900 | Register, All sites `1375:2937`; site overview, SYN Glasshouse 4 `1375:3183`; Equipment tab, installed and served `1375:3312` |
 | Tablet 1024 | Register with the side menu collapsed `1375:3449` |
@@ -74,7 +74,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D6 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Sites — accepted", intended; not saved yet |
+| Named version | "Sites — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -156,5 +156,5 @@ White cards on the grey record background follow the accepted SV-06 pattern. Cha
 - The eight captures are copies of the accepted frames on the "Captures (icon-free)" page `115:2`, from y = 216,000. Prototype links were removed and each of the 326 Font Awesome icon instances was swapped for `Icon/placeholder` `67:77` at its original size. A scan after the swap found no Font Awesome instance and no visible vector outside a placeholder or the Powerplants logo.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/sites/sites-design-r01/README.md).
 - Claude did not play the prototype in Present mode.
-- The named version "Sites — accepted" is not saved. The File index row and the page header were updated on 18 October 2026.
+- The named version "Sites — accepted" is saved. The File index row and the page header were updated on 18 October 2026.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

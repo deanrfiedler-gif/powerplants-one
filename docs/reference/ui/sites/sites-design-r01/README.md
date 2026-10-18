@@ -42,7 +42,7 @@ Image 08 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Not saved yet. The intended name is "Sites — accepted"; it waits for Dean's explicit yes |
+| Named version | "Sites — accepted", saved 18 October 2026 |
 | Accepted frames | Page "Sites · CS-04" `1375:2901`, notes card `1380:2175`, in image order:<br>• `1375:2937`, `1375:3183`, `1375:3312`;<br>• `1375:3449`;<br>• `1375:328008`, `1375:3678`, `1379:2365`;<br>• the states: `1375:328046`, `1375:328103`, `1375:328145` |
 | Capture copies | Page "Captures (icon-free)" `115:2`, from y = 216,000: `1396:172401`, `1396:172650`, `1396:172779`, `1396:172920`, `1396:173152`, `1396:173190`, `1396:173257`, `1396:173324` (images in order) |
 

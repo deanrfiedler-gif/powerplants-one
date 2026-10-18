@@ -44,7 +44,7 @@ Image 09 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Remote diagnosis and escalation — accepted", intended. Not saved yet; it waits for Dean's explicit yes |
+| Named version | "Remote diagnosis and escalation — accepted", saved 18 October 2026 |
 | Accepted frames | Page "Remote diagnosis and escalation · SV-08" `1365:2901`, in image order:<br>• `1365:2937`, `1365:3183`, `1365:3312`, `1365:3445`;<br>• `1365:3576`;<br>• `1365:325743`, `1365:3805`, `1369:3477`;<br>• the states: `1365:325781`, `1365:325838`, `1365:325880` |
 | Capture copies | Page "Captures (icon-free)" `115:2`, from y = 208,000: `1396:167496`, `1396:167739`, `1396:167868`, `1396:168001`, `1396:168132`, `1396:168352`, `1396:168386`, `1396:168453`, `1396:168520` (images in order) |
 

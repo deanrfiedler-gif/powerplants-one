@@ -2,7 +2,7 @@
 document_id: PPO-FI06-INCIDENTS-FIGMA-DEC
 date: 2026-10-18
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version not yet saved; native implementation and UI baseline acceptance separate
+status: Owner-accepted design; named Figma version saved; native implementation and UI baseline acceptance separate
 source_commit: 3bd12c428ec1db087d35bf2e6e55f8845a78b9db
 versioning: git
 ---
@@ -22,7 +22,7 @@ Claude drew the page from these sources:
 
 Every top bar carries the proposed Conversations action left of the information icon, as Dean asked for every new page on 18 October 2026. Before accepting, Dean asked for a second polish pass and then for "an audit and polish" of all seven new pages. He was then asked "Do you accept Incidents with the recommendations?" and replied: "I accept the Incidents and corrective actions FI-06 design with your recommendations, including D1–D7 and Q1–Q4."
 
-The intended named version is "Incidents and corrective actions — accepted". **It has not been saved.** It waits for Dean's explicit yes. Until then the accepted frames are identified by their node IDs in section 2 and by the retained captures.
+The named Figma version "Incidents and corrective actions — accepted" was saved on 18 October 2026 at Dean's request. The accepted frames are identified by their node IDs in section 2 and by the retained captures.
 
 Scope:
 - `scope:FI-06` "Incident and corrective-action record", with `route:/service/incidents`, `route:/service/incidents/new` and `route:/service/incidents/[id]`.
@@ -44,14 +44,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 Linking inspection defects | Resolved as recommended | A "Linked inspection defect" field in triage, not on the report form, so reporters do not need defect IDs. The built review section already holds the optional linked defect ID |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
 | Contract rule shown in the design | Existing rule, not new | A submitted report holds its exact scope until closure; triage does not release it. This is the rule in [field-incidents.md](field-incidents.md) and the [contract](../contracts/field-incidents.md). The design shows it; it does not change it |
-| Named version "Incidents and corrective actions — accepted" | Not saved; waits for Dean's explicit yes | Notes card: "a named version only on Dean's explicit yes" |
+| Named version "Incidents and corrective actions — accepted" | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). The intended named version "Incidents and corrective actions — accepted" is not saved yet |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Incidents and corrective actions — accepted", saved 18 October 2026 |
 | Page | "Incidents and corrective actions · FI-06" `1348:2972`, under "— Service operations —", after "Inspections · FI-03 · FI-04" `1339:4184`. The page header `1348:2973` holds the conformance declaration; the notes card `1355:2930` is in Flows and notes. File index row "Row / Incidents and corrective actions · FI-06" `1396:355204` on Start here |
 | Desktop 1440 × 900 | Register, All incidents `1348:3008`; record, submitted with the scope held, Factual report tab `1348:3253`; triage form `1348:3382`; actions and evidence, accepting evidence `1348:3516`; accepted, ready to close `1348:4410`; report form, draft `1348:3653` |
 | Tablet 1024 | Register with the side menu collapsed `1348:3756` |
@@ -77,9 +77,9 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Incidents and corrective actions — accepted", not saved yet |
+| Named version | "Incidents and corrective actions — accepted", saved 18 October 2026 |
 
-After acceptance on 18 October 2026, the page header in Figma was updated to "Accepted by Dean", naming this decision record; the named version is still not saved.
+After acceptance on 18 October 2026, the page header in Figma was updated to "Accepted by Dean", naming this decision record; the named version was saved later that day.
 
 ## 4. What the design shows
 
@@ -136,7 +136,7 @@ After acceptance on 18 October 2026, the page header in Figma was updated to "Ac
   - the register columns Actions, Reported, Reporter and Site, and the Triage and Follow-through view counts, need a read that supplies them;
   - the drawn report form has no "Source reference" field, which the built form has. Whether to keep it is decided at build.
 - **The Conversations action** is part of the proposed top-bar shell amendment. Dean accepted the action in [PPO-CONV-T1-SCOPE](conversations-t1-scope.md), but the shared `Shell / Top bar` and `Shell / Phone header` components change only at its T1c lock-in, which is still open.
-- **Named version.** "Incidents and corrective actions — accepted" is not saved. It waits for Dean's explicit yes.
+- **Named version.** "Incidents and corrective actions — accepted" was saved on 18 October 2026.
 - **Not drawn:**
   - the Evidence and History tabs in full;
   - correction after a return or a clarification request;

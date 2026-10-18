@@ -17,7 +17,7 @@ Claude drew the page from these sources:
 - Dean's working rule that field work is hardware and controller settings are the grower's;
 - copies of the Incidents and Findings proposal frames drawn the same day. No accepted frame or main component was edited.
 
-Before accepting, Dean asked for an audit and polish of all the new pages: "give all the pages an audit and polish". He was then asked "Do you accept Escalations with the recommendations?" and replied: "I accept the Remote diagnosis and escalation SV-08 design with your recommendations, including D1–D7 and Q1–Q4." The intended named Figma version is "Remote diagnosis and escalation — accepted". It is **not saved yet**; it waits for Dean's explicit yes.
+Before accepting, Dean asked for an audit and polish of all the new pages: "give all the pages an audit and polish". He was then asked "Do you accept Escalations with the recommendations?" and replied: "I accept the Remote diagnosis and escalation SV-08 design with your recommendations, including D1–D7 and Q1–Q4." The named Figma version "Remote diagnosis and escalation — accepted" was saved on 18 October 2026 at Dean's request.
 
 Scope:
 - `scope:SV-08` "Remote diagnosis and OEM escalation", with the proposed `route:/service/escalations`, reached from Service review.
@@ -42,14 +42,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Manufacturer list | Resolved as recommended | A simple maintained list of manufacturers with their support route (portal or address), taken from equipment records, not free text |
 | Q4 Warranty | Resolved as recommended | Show the equipment's warranty end date on the case, so the coordinator can say whether the request is a warranty claim. Warranty decisions stay with Warranty (aftercare) |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Save the named version | Not done | Waits for Dean's explicit yes |
+| Save the named version | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The intended named version "Remote diagnosis and escalation — accepted" is not saved yet. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. Named version "Remote diagnosis and escalation — accepted", saved 18 October 2026. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Remote diagnosis and escalation · SV-08" `1365:2901`, under "— Service operations —", after Findings and follow-up · SV-07 `1358:3488`. The page header `1365:2902` holds the conformance declaration; the notes card `1370:2098` is in Flows and notes. File index row "Row / Remote diagnosis and escalation · SV-08" `1396:355218` on Start here |
 | Desktop 1440 × 900 | Register, Open cases `1365:2937`; case in Diagnosing, with diagnosis and the draft evidence pack `1365:3183`; Record as sent `1365:3312`; Reply to act on, turning advice into a next action `1365:3445` |
 | Tablet 1024 | Register with the side menu collapsed `1365:3576` |
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026. After acceptance on 18 October 2026, the page header in Figma was updated to "Accepted by Dean"; the notes card records the acceptance |
 | Decision record | This file |
-| Named version | "Remote diagnosis and escalation — accepted", intended; not saved yet |
+| Named version | "Remote diagnosis and escalation — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -157,5 +157,5 @@ The Service review side menu matches the Findings page. White cards on the grey 
 - The notes card records the audit in section 6. This record adds no separate screenshot or script evidence for it.
 - The nine captures are copies of the accepted frames on the "Captures (icon-free)" page `115:2`, from y = 208,000. Prototype links were removed and each of the 354 Font Awesome icon instances was swapped for `Icon/placeholder` (`67:77`) at its original size. A scan after the swap found no Font Awesome instance and no visible vector outside a placeholder or the Powerplants logo.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/service/escalations-design-r01/README.md).
-- The named version is not saved.
+- The named version was saved on 18 October 2026.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

@@ -2,7 +2,7 @@
 document_id: PPO-PL04-CHANGES-FOLLOW-UP-FIGMA-DEC
 date: 2026-10-18
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version not yet saved; native implementation and UI baseline acceptance separate
+status: Owner-accepted design; named Figma version saved; native implementation and UI baseline acceptance separate
 source_commit: 3bd12c428ec1db087d35bf2e6e55f8845a78b9db
 versioning: git
 ---
@@ -21,7 +21,7 @@ Claude drew the page on copies of accepted frames, and edited no accepted frame 
 
 Dean asked for three rounds of audit and polish before accepting. The notes card records his words as "give the pages an audit and professional polish", "give the new pages an audit and polish" and "give all the pages an audit and polish". Claude then asked: "Do you accept PL-04 with the recommendations?" Dean replied: "I accept the Changes and follow-up PL-04 design with your recommendations, including D1–D7 and Q1–Q4."
 
-The intended named Figma version is "Changes and follow-up — accepted". It has **not** been saved. Saving it waits for Dean's explicit yes. Until then the accepted design is the current state of the Figma page, identified by the node IDs below, and the retained captures.
+The named Figma version "Changes and follow-up — accepted" was saved on 18 October 2026 at Dean's request. The accepted design is identified by the node IDs below, and the retained captures.
 
 Scope:
 - `scope:PL-04` "Rescheduling and acknowledgement centre", with `route:/schedule/changes` and `route:/schedule/policy-impact`.
@@ -42,14 +42,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Side-menu counts | Resolved as recommended | Counts follow the selected period and site, so they match the grid |
 | Q4 Next step after an accepted move | Resolved as recommended | "Record customer contact" is the primary action, because the customer has not been told yet |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Save the named version | Not done | Waits for Dean's explicit yes |
+| Save the named version | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. Intended named version "Changes and follow-up — accepted", not yet saved. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. Named version "Changes and follow-up — accepted", saved 18 October 2026. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Changes and follow-up · PL-04" `1326:4525`, after Service planner · PL-01 `1203:5805` and before Travel review · PL-05 `1371:3488`. The page header `1326:4526` holds the conformance declaration; the notes card `1335:3505` is in Flows and notes `1335:3504`. File index row "Row / Changes and follow-up · PL-04" `1396:355183` on Start here |
 | Desktop 1440 × 900 | Needs review `1326:4561`; change request selected, snapshot `1326:4656`; stale technician request, reason missing `1331:3860`; exact appointment from Travel review `1334:315770`; customer follow-up, Follow-up tab `1332:1465`; move accepted, decision saved `1334:315082`; Policy impact `1333:1881` |
 | Tablet 1024 | Needs review with the side menu collapsed `1333:313396` |
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026. After acceptance on 18 October 2026, the Figma page header was updated to "Accepted by Dean", naming this decision record in place of the earlier proposed name `rescheduling-centre-figma-design.md`; the named version is still to be saved |
 | Decision record | This file |
-| Named version | "Changes and follow-up — accepted", intended; not saved |
+| Named version | "Changes and follow-up — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -145,7 +145,7 @@ The design keeps these rules from the PL-04 register and PPO-SCHED-ADR:
   - a named change for a stale request, from the booking history;
   - side-menu counts for the selected period and site (Q3).
 - **The Conversations action** is part of the proposed top-bar shell amendment. `Shell / Top bar` and `Shell / Phone header` change only when that amendment is accepted.
-- **The named version** "Changes and follow-up — accepted" waits for Dean's explicit yes. The File index row was added on 18 October 2026.
+- **The named version** "Changes and follow-up — accepted" was saved on 18 October 2026. The File index row was added on 18 October 2026.
 - **Not drawn:**
   - Cancellations and History / all visits rows;
   - a tablet snapshot;

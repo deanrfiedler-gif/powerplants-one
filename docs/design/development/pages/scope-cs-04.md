@@ -51,6 +51,6 @@ Reference: docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Wor
 
 ## Verification and acceptance
 
-Accepted Figma design: [Sites design r01 captures](../../../reference/ui/sites/sites-design-r01/README.md) (eight icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/sites-figma-design.md). The named version "Sites — accepted" is not saved yet. Images of the other Sites views, the Facilities & areas, Work and visits and History tabs, editing and creating a site, desktop register states, the tablet site workspace, and denied and restricted states are still missing.
+Accepted Figma design: [Sites design r01 captures](../../../reference/ui/sites/sites-design-r01/README.md) (eight icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/sites-figma-design.md). The named version "Sites — accepted" is saved. Images of the other Sites views, the Facilities & areas, Work and visits and History tabs, editing and creating a site, desktop register states, the tablet site workspace, and denied and restricted states are still missing.
 
 The detailed page guide is `guide.cs.04`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.

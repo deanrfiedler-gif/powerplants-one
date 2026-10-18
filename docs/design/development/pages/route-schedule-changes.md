@@ -46,7 +46,7 @@ Incoming: period/site/resource queue or exact PL-05 appointment handover. Outgoi
 
 ## Visual references and verification
 
-Accepted Figma design: [Changes and follow-up design r01 captures](../../../reference/ui/service/changes-follow-up-design-r01/README.md) (twelve icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/changes-follow-up-figma-design.md). The named version "Changes and follow-up — accepted" is not yet saved. Images of the Cancellations and History / all visits rows, a tablet snapshot, the Cancel request menu, and saving, uncertain-outcome and unchanged-retry states are still missing.
+Accepted Figma design: [Changes and follow-up design r01 captures](../../../reference/ui/service/changes-follow-up-design-r01/README.md) (twelve icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/changes-follow-up-figma-design.md). The named version "Changes and follow-up — accepted" is saved. Images of the Cancellations and History / all visits rows, a tablet snapshot, the Cancel request menu, and saving, uncertain-outcome and unchanged-retry states are still missing.
 
 [Scheduling & Appointments r01](../../../reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html) is a proposed reference. Current authorised work-order demand and appointment contracts supersede its unassigned-proposal example. Retained source bytes are unchanged.
 

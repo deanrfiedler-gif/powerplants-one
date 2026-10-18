@@ -21,7 +21,7 @@ Claude drew the page from these sources:
 - the [service inspections](service-inspections.md) (FI-03, FI-04), [field incidents](field-incidents.md) (FI-06) and [field customer response](field-customer-response.md) (FI-07) decisions, and [ADR-0014](ADR-0014-p09-service-reports.md) for reports;
 - the PL-04 rescheduling proposal ([scope-pl-04](../design/development/pages/scope-pl-04.md)), whose frames the page was copied from. No accepted frame or main component was edited. The story continues the PL-04, Inspections and Incidents proposals drawn the same day.
 
-Before accepting, Dean asked Claude to "give all the pages an audit and polish" (section 6). He then accepted it: "I accept the Findings and follow-up SV-07 design with your recommendations, including D1–D8 and Q1–Q4." The intended named Figma version is "Findings and follow-up — accepted". It is **not saved yet**; it waits for Dean's explicit yes.
+Before accepting, Dean asked Claude to "give all the pages an audit and polish" (section 6). He then accepted it: "I accept the Findings and follow-up SV-07 design with your recommendations, including D1–D8 and Q1–Q4." The named Figma version "Findings and follow-up — accepted" was saved on 18 October 2026 at Dean's request.
 
 Scope:
 - `scope:SV-07` "Unresolved findings and follow-up worklist", with the proposed `route:/service/findings`, reached from the Service review workspace.
@@ -44,14 +44,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Recurrence window | Resolved as recommended | 90 days on the same equipment and the same check or category, shown as "2nd in 30 days" where it fits |
 | Q4 Overdue | Resolved as recommended | Overdue when the next action's due time has passed in site time. No automatic escalation and no customer message |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named version "Findings and follow-up — accepted" | Not saved | Waits for Dean's explicit yes |
+| Named version "Findings and follow-up — accepted" | Done | Saved by Claude in the Figma desktop app on 18 October 2026 at Dean's request ("Yes, save the seven named Figma versions now"); confirmed in version history |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). The intended named version "Findings and follow-up — accepted" is not saved yet |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Findings and follow-up — accepted", saved 18 October 2026 |
 | Page | "Findings and follow-up · SV-07" `1358:3488`, under "— Service operations —", after Service review and reports `1265:53` and before Remote diagnosis and escalation · SV-08 `1365:2901`. The page header `1358:3489` holds the conformance declaration; the notes card `1364:3235` is in Flows and notes `1364:3234`. File index row "Row / Findings and follow-up · SV-07" `1396:355211` on Start here |
 | Desktop 1440 × 900 | Register, All open `1358:3524`; remaining work selected, snapshot `1358:3611`; needs an owner, assigning the next action `1361:2933`; recurring fault, recurrence history `1362:2635` |
 | Tablet 1024 | Register with the side menu collapsed `1358:4344` |
@@ -77,7 +77,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Findings and follow-up — accepted", not saved yet |
+| Named version | "Findings and follow-up — accepted", saved 18 October 2026 |
 
 After acceptance on 18 October 2026, the page header in Figma was updated to "Accepted by Dean", naming this decision record.
 

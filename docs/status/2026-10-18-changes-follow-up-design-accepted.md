@@ -9,7 +9,7 @@ Dean accepted the Figma design for Changes and follow-up, scope PL-04: the queue
 - **Policy impact:** a Review / comparison page in the same workspace.
 - The top bar carries the proposed Conversations action; that shell amendment is still a separate, open record.
 
-Not done: the named Figma version "Changes and follow-up — accepted" is not saved and waits for Dean's explicit yes. The File index row and page header were updated, and the copied links to Field team frames were removed; there is no PL-04 prototype flow. Nothing is built; the page design register notes for PL-04 gain "Accepted design" paragraphs. No code, route, migration, permission, capability or parent ID changes.
+The named Figma version "Changes and follow-up — accepted" was saved on 18 October 2026 at Dean's request. The File index row and page header were updated, and the copied links to Field team frames were removed; there is no PL-04 prototype flow. Nothing is built; the page design register notes for PL-04 gain "Accepted design" paragraphs. No code, route, migration, permission, capability or parent ID changes.
 
 <!-- decision-index -->
-[Changes and follow-up design](../decisions/changes-follow-up-figma-design.md) (PPO-PL04-CHANGES-FOLLOW-UP-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-04 Figma design for `/schedule/changes` and `/schedule/policy-impact`, with departures D1–D7 and the recommended answers to Q1–Q4. The named version is not yet saved, and building the page is not decided.
+[Changes and follow-up design](../decisions/changes-follow-up-figma-design.md) (PPO-PL04-CHANGES-FOLLOW-UP-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-04 Figma design for `/schedule/changes` and `/schedule/policy-impact`, with departures D1–D7 and the recommended answers to Q1–Q4. The named version is saved; building the page is not decided.
