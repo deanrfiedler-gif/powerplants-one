@@ -51,7 +51,7 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await expect(rows(page)).toHaveCount(8);
 
   // A34: first use is collapsed. The existing-modules refinement replaces the earlier zero-width collapse
-  // with the shared 24px strip, so the register begins at the strip's boundary rather than the scope's own
+  // with the shared strip (20 px, Figma v2 / Menu strip), so the register begins at the strip's boundary rather than the scope's own
   // left edge. The product name is no longer rendered in any module breadcrumb. Shell top bar amendment
   // (16 October 2026): the breadcrumb names the module alone on its register, its default view (R5), and the
   // full path stays in the tooltip.

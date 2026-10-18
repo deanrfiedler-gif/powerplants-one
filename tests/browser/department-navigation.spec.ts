@@ -105,7 +105,8 @@ test("all seven actual department rails retain canonical order and dimensions", 
     expect(await page.locator(".ppo-rail").count()).toBe(1);
     expect(await nav.locator("svg").first().evaluate(e => e.getBoundingClientRect().width)).toBe(20);
     expect(await page.locator(".ppo-rail").evaluate(e => e.getBoundingClientRect().width)).toBe(240);
-    expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(44);
+    // Figma v2 / Rail item is 44 px; a grouped rail (Rail · Service) uses 40 px items so it fits at 900 px.
+    expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(department === "service" ? 40 : 44);
     const bounds = await nav.getByRole("link").first().boundingBox();
     expect(bounds!.x).toBe(8);
     expect(bounds!.width).toBe(224);
