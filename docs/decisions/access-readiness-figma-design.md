@@ -2,7 +2,7 @@
 document_id: PPO-CS06-ACCESS-READINESS-FIGMA-DEC
 date: 2026-10-18
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version recorded as saved; P4 build, work-window weekdays, native implementation and UI baseline acceptance separate
+status: Owner-accepted design; named Figma version saved; P4 build, work-window weekdays, native implementation and UI baseline acceptance separate
 source_commit: 4296429bb96b70c982d5e87201e83ed8f9e5fb22
 versioning: git
 ---
@@ -19,7 +19,7 @@ Claude drew the page from these sources:
 - the accepted record pattern in [Appointment detail](appointment-detail-figma-design.md) (PPO-SV04-APPOINTMENT-FIGMA-DEC) and Sites (PPO-CS04-SITES-FIGMA-DEC);
 - copies of the People frames and the Findings form card, drawn and accepted the same day. No accepted frame or main component was edited, and no new component was made.
 
-Claude audited the page before presenting it. Dean then asked for a second pass: "Give the Access & readiness CS-06 page another audit and polish before I decide." (section 6). He then accepted the design: "I accept the Access & readiness CS-06 design with your recommendations, including D1–D7 and Q1–Q4." The page header and notes card record that the named version "Access & readiness — accepted" was saved the same day at Dean's "Yes, save the named Figma version". This lock-in did not open the version history to check it.
+Claude audited the page before presenting it. Dean then asked for a second pass: "Give the Access & readiness CS-06 page another audit and polish before I decide." (section 6). He then accepted the design: "I accept the Access & readiness CS-06 design with your recommendations, including D1–D7 and Q1–Q4." Claude saved the named version "Access & readiness — accepted" the same day in the Figma desktop app at Dean's "Yes, save the named Figma version", as the page header and notes card record; the saving session saw the entry in the version history. This lock-in session did not open the history itself.
 
 Scope:
 - `scope:CS-06`, with `route:/sites/[id]/readiness`.
@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 Signal elsewhere | Resolved as recommended | Once P4 is built, the planner (PL-01) and the job pack (SV-05) show "Recheck required" from the latest check as a read-only signal |
 | Acknowledgement grants nothing | Rule shown in the accepted design | Acknowledging a check records who saw its result and why. It grants no work authority, booking, resource reservation, pack issue or dispatch clearance; those stay with Work orders, the planner and Job packs |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named version "Access & readiness — accepted" | Recorded as saved, 18 October 2026 | The page header and notes card quote Dean's "Yes, save the named Figma version". Not checked in the version history by this lock-in |
+| Named version "Access & readiness — accepted" | Saved, 18 October 2026 | Saved by Claude in the Figma desktop app at Dean's "Yes, save the named Figma version", recorded on the page header and notes card |
 | Building the page, P4 and the weekday change | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -74,7 +74,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Access & readiness — accepted", recorded as saved 18 October 2026 |
+| Named version | "Access & readiness — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
