@@ -885,12 +885,12 @@
 #ppo-specialist .es08-action-status { flex: 1 1 100%; }
 
 /* Secondary menu contents. */
-#ppo-specialist .es08-back { display: block; margin: 18px 18px 20px; color: var(--text-secondary); text-decoration: none; }
+#ppo-specialist .es08-back { display: block; margin: 10px 12px 2px; color: var(--text-secondary); text-decoration: none; }
 #ppo-specialist .es08-menu-title { margin: 0 18px 12px; font-size: 13px; font-weight: 500; color: var(--muted); }
-#ppo-specialist .mw-menu nav { display: flex; flex-direction: column; }
-#ppo-specialist .mw-menu nav a { padding: 10px 18px; color: var(--ink); text-decoration: none; border: 0; border-radius: 0; font-size: 14px; }
-#ppo-specialist .mw-menu nav a[aria-current="page"] { background: var(--surface-white); font-weight: 500; }
-#ppo-specialist .mw-menu nav a:not([aria-current="page"]):hover { background: var(--surface-hover); }
+#ppo-specialist .mw-menu nav { display: flex; flex-direction: column; gap: 2px; }
+#ppo-specialist .mw-menu nav a { display: flex; align-items: center; min-height: 40px; padding: 8px 12px; color: var(--ink); text-decoration: none; border: 0; border-radius: 6px; font-size: 14px; line-height: 20px; }
+#ppo-specialist .mw-menu nav a[aria-current="page"] { background: var(--ppo-shell-selected); color: var(--ppo-shell-link); font-weight: 500; }
+#ppo-specialist .mw-menu nav a:not([aria-current="page"]):hover { background: var(--ppo-shell-hover); }
 #ppo-specialist .es08-menu-note { font-size: 12px; color: var(--muted); margin: 24px 18px; }
 
 /* Dialogs: short decisions centred, long reviews as a side panel. */
