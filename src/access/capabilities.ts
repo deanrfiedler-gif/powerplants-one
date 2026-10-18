@@ -145,6 +145,8 @@ export const capabilityLabels = {
   "report.respond": "Record customer responses",
   "report.review": "Review service reports",
   "schedule.contact": "Record customer contact about a visit",
+  "customer_message.send": "Confirm and send prepared customer messages as the named sender",
+  "customer_message.switch": "Switch a customer message class on or off",
   "schedule.manage": "Book and change appointments",
   "schedule.policy.publish": "Publish reviewed workspace scheduling policy",
   "schedule.policy.review": "Review workspace scheduling policy",
