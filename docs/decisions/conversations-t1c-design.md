@@ -3,7 +3,7 @@ document_id: PPO-CONV-T1C-DESIGN
 title: Conversations T1c design
 date: 2026-10-18
 owner: Dean Fiedler
-status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; T1c-1 merged in PR #575; T1c-2 being built, with hosted demo testers given conversation.read and conversation.post (Dean, 18 October 2026; section 10); T1c-3 not started
+status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; T1c-1 merged in PR #575; T1c-2 merged in PR #596, with hosted demo testers given conversation.read and conversation.post (Dean, 18 October 2026; section 10); T1c-3 started by Dean on 19 October 2026 and built in PR #600 (section 11)
 versioning: git
 ---
 
@@ -212,4 +212,43 @@ It does not build the context panel (T1c-3), the record-page lists, notices or M
 
 ## 11. T1c-3: the context panel
 
-Dean started T1c-3 on 19 October 2026, in parallel with T1d: "Yes, start T1c-3 (context panel) and T1d (record-page lists, notifications, My Work, reply-by reminders) as two parallel sessions with their own worktrees and PRs." It builds the third slice in section 3 from the accepted design (proposal section 3, the context panel table and its four rules; S5; T1 scope section 3, without Carl pins). Being built; the detail follows in this section with the pull request.
+Dean started T1c-3 on 19 October 2026, in parallel with T1d: "Yes, start T1c-3 (context panel) and T1d (record-page lists, notifications, My Work, reply-by reminders) as two parallel sessions with their own worktrees and PRs." It builds the third slice in section 3 from the accepted design: proposal section 3 (the context panel table and its four rules), S5, and T1 scope section 3 (the panel without Carl). The choices below are Claude's, made within that design; Dean's review is in the pull request.
+
+### 11.1 The read
+
+`GET /api/v1/conversations/[id]/context` (`readThreadContext`, `src/conversations/context.ts`) assembles the panel for one thread and one viewer:
+- **Access first.** It answers only a reader of the thread (T1-1). Anyone else gets the thread's own "unavailable" answer, the same as for a thread that does not exist.
+- **A view (S5).** It is rebuilt from the records on every read and writes nothing: no row, receipt, audit event or outbox job. There are no pins or exclusions; those are Carl's (T2).
+- **Only existing reads, under the viewer's own access.** Each group calls a read PPO already has for deals and projects, and each item names why it is there. An item the viewer cannot open is left out entirely, title, number and ID included.
+
+| Group | Deal thread | Project thread |
+|---|---|---|
+| Record | Reference and title, stage (or Won or Lost), owner, customer and site, expected close, and "Can open this deal" (`visibleOpportunity`) | Reference and title, state, coordinator, customer and site, target date, and "Can open this project" (`projectRow`) |
+| Files and documents | The deal's quotations at each revision, through `opportunityCommercial`, the read behind the deal page's "Deal documents" (`estimating.read`, then each quotation's own check). Each opens at `/estimating/quotes/{id}`. "Linked on the deal" | Controlled documents linked to the project at their linked revision, through the DK-01 library's `linkedDocuments` (`document.read` and the library's checks). Each opens the exact revision from the library. "Linked on the project" |
+| Contacts | The deal owner, "Deal owner"; and the customer contact on the deal, "On the deal" | The coordinator; the site's primary contact, "On the project's site"; and task owners as the Project overview shows them, "Owns a task on the project" |
+| Related records | Projects and work orders delivered from the deal's handovers, each re-read through `handoverRecord` and then the destination's own check, "Delivered from the deal" | The deals the project was delivered from, through `deliverySalesSourcesInSnapshot`, the read the Project overview uses, "Handed over to the project" |
+| Related records, both | Deals and projects linked with `#` in the thread that the viewer can open (the `recordOpenable` check behind T1-4), "Mentioned by Alex". The thread's own record is the Record card, not a related record. A record found twice keeps one entry with both reasons | |
+| This thread | The participants, "Started by {name}"; and each open question with who owes it and its reply-by date, "Asked by {name}" | |
+
+- **Phone and email.** A customer contact's phone and email are shown only when the viewer may read the person: `shared.read` and the person's visibility, the rule the People page applies. Internal people carry no contact details in PPO. Every role that can open a deal or project today also passes that check for the record's own contacts, so the gate does not yet hide anything in the seeded profiles.
+- **Not shown, because no existing read links them to a deal or project.** These are left for later slices:
+  - Purchase orders: supply demands name a project origin, but no read filters by it.
+  - Service requests: they reach a deal only through a work order's tickets.
+  - Engineering drawings: their reads are per package.
+  - SharePoint files: there is no SharePoint adapter; PPO's documents section says "Not configured".
+
+### 11.2 The panel
+
+- **Desktop, 1280 px and wider.** The panel is docked at 320 px to the right of the thread, as on frame 1244:3423, with "Context", the line "Rebuilt from the records each time it opens, from what you can open." and Close. Closing it puts a Context button beside Resolve, which docks it again. 1280 px is the width where the AI1 side panel docks; the frames draw 1440 and 1024 only.
+- **781 to 1279 px.** The Context button (frame 1244:286582) opens the panel as a modal drawer at the right. The drawer was not drawn (T1 scope section 6).
+- **Phones.** The Context button opens a bottom sheet with a handle, as on frame 1149:913, without Carl. At 360 px and narrower the button is icon-only, as the accepted 320 departure says; its name stays "Context".
+- **Groups.** Each group heading collapses its group. An empty group says so, for example "No related records you can open."
+- **Re-reads.** The panel is read when it opens and re-read on the thread's 30-second, focus and after-command cadence (5.7). If access is withdrawn, the docked panel disappears and an open drawer or sheet closes.
+- **Departures from the frames.**
+  - The bookmark (pin) icons drawn beside items on 1244:3423 are not built: pins are Carl's (T2).
+  - The record and item icons are not drawn in the build.
+  - The drawer at 1024 px and the sheet at 320 px were not drawn.
+
+### 11.3 What T1c-3 does not do
+
+It adds no migration, seed, capability or grant, and stores nothing. It does not build pins, exclusions, sharing, Carl's last-answer note or watches (T2 and later). It does not add purchase-order, service-request or engineering reads. It changes no shell component. It deploys nothing to the hosted demo.

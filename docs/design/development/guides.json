@@ -76558,8 +76558,8 @@
       "related_entry_keys": [
         "scope:AI-01"
       ],
-      "change_summary": "Written for Conversations T1c-1 (people-only threads); guide review remains separate.",
-      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; guide acceptance remains pending.",
+      "change_summary": "Written for Conversations T1c-1 (people-only threads); the context panel added for T1c-3; guide review remains separate.",
+      "runtime_evidence": "T1c-1 and T1c-3 tests in tests/unit, tests/database, tests/http and tests/browser; guide acceptance remains pending.",
       "source_paths": [
         "docs/decisions/conversations-t1c-design.md",
         "docs/decisions/conversations-t1-scope.md"
@@ -76605,7 +76605,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The header shows the title, the people in the thread, its state, the record link and who started it. Messages show tags as names. A tracked question appears under the message that asked it."
+            "The header shows the title, the people in the thread, its state, the record link and who started it. Messages show tags as names. A tracked question appears under the message that asked it. The Context panel beside the thread shows the record, its files and documents, its contacts, related records and this thread's people and open questions. Each item says why it is there, such as \"Linked on the deal\" or \"Mentioned by Alex\"."
           ],
           "steps": [],
           "headers": [],
@@ -76615,7 +76615,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Ask switches appear for each person you tag. A switched-on ask needs a short question; reply-by is optional and cannot be added after sending."
+            "Ask switches appear for each person you tag. A switched-on ask needs a short question; reply-by is optional and cannot be added after sending. The Context panel is rebuilt from the records each time it opens, from what you can open: anything you cannot open is not listed at all. A customer contact's phone and email show only if you may read that person. Nothing in the panel is saved, pinned or shared."
           ],
           "steps": [],
           "headers": [],
@@ -76667,7 +76667,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "If a send fails, the message stays with Retry. If you lose access, the thread is cleared and the page says it is not available."
+            "If a send fails, the message stays with Retry. If you lose access, the thread is cleared and the page says it is not available. If the Context panel cannot be refreshed, it keeps what was last loaded and offers Retry."
           ],
           "steps": [],
           "headers": [],
@@ -76677,7 +76677,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "At 780 px and narrower the list and the thread are separate screens: the list first, then the thread full screen with Back to conversations. The pickers work from the keyboard (arrow keys, Enter, Escape), Ask is a switch, and Ctrl+Enter sends. Conversations needs a connection; nothing is kept offline."
+            "At 780 px and narrower the list and the thread are separate screens: the list first, then the thread full screen with Back to conversations. The pickers work from the keyboard (arrow keys, Enter, Escape), Ask is a switch, and Ctrl+Enter sends. The Context panel sits beside the thread on wide screens; below 1280 px choose Context to open it as a drawer, or on a phone as a sheet, and press Escape or Close to return. Each group heading collapses its group. Conversations needs a connection; nothing is kept offline."
           ],
           "steps": [],
           "headers": [],
@@ -76687,7 +76687,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "The design and rules are in the Conversations T1c design (PPO-CONV-T1C-DESIGN) and the T1 scope (PPO-CONV-T1-SCOPE, rules T1-1 to T1-9)."
+            "The design and rules are in the Conversations T1c design (PPO-CONV-T1C-DESIGN; section 11 for the Context panel) and the T1 scope (PPO-CONV-T1-SCOPE, rules T1-1 to T1-9)."
           ],
           "steps": [],
           "headers": [],
