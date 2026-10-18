@@ -16,8 +16,35 @@ defaults:
   run:
     shell: bash
 jobs:
+  scope:
+    name: Change scope
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      docs_only: ${{ steps.scope.outputs.docs_only }}
+    steps:
+      # Pull requests only. Skipping the suites below is safe only for a
+      # documentation-only change (scripts/ci_scope.py); any other event, or a fault
+      # in this job, runs every suite.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          filter: blob:none
+          sparse-checkout: |
+            scripts
+            src
+            tests
+            db
+            public
+          persist-credentials: false
+      - id: scope
+        run: python3 scripts/ci_scope.py
+
   crm-layout:
     name: CRM header and board visual checks
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -44,6 +71,8 @@ jobs:
           retention-days: 14
   crm-refinements:
     name: CRM desktop and mobile persistence and interaction proof
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     # Full retained suites include two ten-minute-bounded P11 journeys and
     # actual database/application/browser restarts. Keep individual deadlines.

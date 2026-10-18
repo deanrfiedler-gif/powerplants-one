@@ -16,10 +16,35 @@ defaults:
   run:
     shell: bash
 jobs:
+  scope:
+    name: Change scope
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      docs_only: ${{ steps.scope.outputs.docs_only }}
+    steps:
+      # Pull requests only. Skipping the suites below is safe only for a
+      # documentation-only change (scripts/ci_scope.py); any other event, or a fault
+      # in this job, runs every suite.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          filter: blob:none
+          sparse-checkout: |
+            scripts
+            src
+            tests
+            db
+            public
+          persist-credentials: false
+      - id: scope
+        run: python3 scripts/ci_scope.py
+
   p01:
     name: P01–P11 and CRM I1–I2 local application and PostgreSQL proof
-    needs: p01_suites
-    if: always()
+    needs: [scope, p01_suites]
+    if: ${{ always() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -30,6 +55,8 @@ jobs:
 
   p01_suites:
     name: P01–P11 ${{ matrix.suite }} proof
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     # Each lane owns its disposable database; all original phases remain serial
     # within their lane. HTTP/restart proofs start at their original clean-reset
@@ -307,6 +334,8 @@ jobs:
 
   p11_quality:
     name: P11 focused integrated quality and access proof
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     # All retained tests and uploads finished at 30 minutes on c01dc5e,
     # but cleanup crossed the job limit by two seconds. Keep test deadlines
@@ -449,6 +478,8 @@ jobs:
 
   p11_http:
     name: P11 focused original HTTP and output isolation proof
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     services:
@@ -546,6 +577,8 @@ jobs:
 
   p11_performance:
     name: P11 declared load and raw core-read performance proof
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     services:
@@ -628,6 +661,8 @@ jobs:
 
   p11_browser_diagnostics:
     name: P11 three original browser failures diagnostic replay
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     services:
