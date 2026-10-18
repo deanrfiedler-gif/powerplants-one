@@ -492,8 +492,19 @@
       "guide_key": "guide.cs.06",
       "design_path": "docs/design/development/pages/scope-cs-06.md",
       "html_path": "docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-02-Desktop-Requirements-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-03-Desktop-Evidence-Review-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-04-Desktop-Acknowledge-With-Blocker-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-05-Tablet-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-06-Phone-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-07-Phone-320-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-08-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-readiness-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -10462,8 +10473,19 @@
       "guide_key": "guide.route-sites-id-readiness",
       "design_path": "docs/design/development/pages/route-sites-id-readiness.md",
       "html_path": "docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-02-Desktop-Requirements-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-03-Desktop-Evidence-Review-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-04-Desktop-Acknowledge-With-Blocker-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-05-Tablet-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-06-Phone-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-07-Phone-320-Overview-r01.png",
+        "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-08-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/access-readiness-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",

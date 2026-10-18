@@ -318,3 +318,7 @@ Migration 0107 adds `pack_returns`, `pack_return_answers`, `pack_return_follow_u
 5. **The My jobs design build**, which brings the A1-D5 list wording and the "Checked for this visit" checks.
 
 Build report departure DP-20 ("No parts criterion exists") is closed for visits on `SYN-PPO-P04` v2. Gap G-07's disposition is amended as Q6 records: a Return event exists, and a "Declined" acknowledgement state still does not.
+
+## Note, 18 October 2026: P4 on Access & readiness
+
+The accepted [Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC, CS-06) shows the P4 customer site-readiness confirmation beside the preparation check. Dean's acceptance adopted two answers that bear on P4: Q1, the confirmation is recorded from that page and from the appointment as one record on the appointment's schedule version; and Q4, the planner and the job pack show "Recheck required" from the latest check as a read-only signal once P4 is built. P4 itself, as specified above, is not built and is unchanged.
