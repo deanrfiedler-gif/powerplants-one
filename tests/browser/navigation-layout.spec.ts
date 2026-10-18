@@ -20,7 +20,7 @@ test("N19/N31 labelled destinations and shell controls retain all established br
     }
     await page.getByRole("button",{name:"More",exact:true}).click();
     await expect(page.getByLabel("Workspace",{exact:true})).toBeVisible();
-    const bounds=await page.getByRole("searchbox",{name:"Find a menu item",exact:true}).boundingBox();
+    const bounds=await page.getByLabel("Workspace",{exact:true}).boundingBox();
     expect(bounds!.x).toBeGreaterThanOrEqual(0);expect(bounds!.x+bounds!.width).toBeLessThanOrEqual(width);
     await page.screenshot({path:test.info().outputPath(`nav-${width}.png`)});
     await page.keyboard.press("Escape");await expect(page.getByRole("button",{name:"More",exact:true})).toBeFocused();

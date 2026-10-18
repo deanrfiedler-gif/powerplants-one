@@ -62,10 +62,11 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await expect(page.locator(".product-heading .ppo-product-name")).toHaveCount(0);
   // R6: names truncate only when the start zone runs out of room; at this width the module name is whole.
   expect(await page.locator(".ppo-crumbs li:visible .ppo-crumb").evaluateAll((els) => els.every((el) => el.scrollWidth <= el.clientWidth))).toBe(true);
+  // The accepted Shell v2 menu strip (Figma v2 / Menu strip) is 20 px wide.
   const strip = page.locator(".mw-menu-strip");
-  await expect(strip).toHaveJSProperty("offsetWidth", 24);
+  await expect(strip).toHaveJSProperty("offsetWidth", 20);
   const collapsedLeft = (await page.locator(".em-register").boundingBox())!.x;
-  expect(Math.round(collapsedLeft)).toBe(Math.round((await strip.boundingBox())!.x + 24));
+  expect(Math.round(collapsedLeft)).toBe(Math.round((await strip.boundingBox())!.x + 20));
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
   await page.reload();

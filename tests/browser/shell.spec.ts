@@ -53,7 +53,6 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close account", exact: true }).click();
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Foundation");
   await page.getByRole("link", { name: "Foundation checks", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Foundation checks" }),
@@ -166,7 +165,6 @@ test("Workspace selection preserves permissions, contextual navigation and page 
   await page.keyboard.press("Escape");
   const navButton = page.getByRole("button", { name: "More", exact: true });
   await navButton.click();
-  await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Organisations");
   await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Organisations", exact: true }).click();
   await expect(page).toHaveURL(/\/customers\?department=supply$/);
   await expect(page.locator(".product-heading")).toHaveText("Organisations");

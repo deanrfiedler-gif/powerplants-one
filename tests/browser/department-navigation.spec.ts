@@ -129,7 +129,9 @@ test("Sales active drawings, real landing pages and More keyboard state", async 
   await capture(page, "active-keyboard-focus");
   await page.getByRole("button", { name: "More", exact: true }).focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeFocused();
+  // More has no search of its own (Dean, 18 October 2026): opening it moves focus to its first control.
+  await expect(page.locator("#desktop-more-panel").getByLabel("Workspace", { exact: true })).toBeFocused();
+  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
   await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Activities");
   await capture(page, "more-open");
   await page.keyboard.press("Escape");
@@ -254,6 +256,7 @@ test("restricted and empty access omit links; server guards still refuse account
   await page.route("**/api/v1/shell/context", route => route.fulfill({ json: { display_name: "Synthetic empty access fixture", actions: [], navigation: [], can_preview: true, preference_scope: "fixture:empty" } }));
   await page.reload(); await expect(page.locator(".ppo-primary-nav a")).toHaveCount(0);
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeVisible();
+  await expect(page.locator("#desktop-more-panel").getByRole("button", { name: "Help", exact: true })).toBeVisible();
+  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
   await capture(page, "explicit-empty-access-fixture");
 });

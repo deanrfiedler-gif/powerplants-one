@@ -3623,6 +3623,11 @@
           "id": "nav-create-leave",
           "label": "Create-form leave review",
           "description": "F42 / principle 11: a dirty create form asks before rail (phone bar), header search or Back navigation discards it; a clean form leaves without asking. Fixture: tests/browser/navigation-safety.spec.ts on /customers/new, /service/tickets/new, /work/new, /service/work-orders/new and /sales/opportunities/new."
+        },
+        {
+          "id": "rail-menu-figma",
+          "label": "Rail and secondary menu to Figma (18 October 2026)",
+          "description": "Shell v2 components (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge; Rail · Service and Rail · Sales). Rail: plain 40 px toggle in both widths; collapsed 46 px logo, 22 px glyphs, first item 2 px under the toggle; a grouped rail uses 40 px items with 24 px ruled caps headings (collapsed: a centred 24 px rule); one department heading on every rail, Projects included; the labelled Sales rail shows \"Estimating handovers\" (Dean, 11 October 2026). SecondaryMenuFrame defaults to the Figma menu: #f6f7f9 panel with 8 px padding, 40 px items with 16 px icons, #e3e8ee selected row in #355b80, plain counts, caps headings, no drawn title, 20 px strip with a 4 × 36 handle and a 3 px blue edge on hover. Acceptance leaves its retained baseline; ES-08 contents align their selected row. More has no search of its own (Dean, 18 October 2026); opening it focuses its first control. Fixtures: tests/ui/desktop-shell.spec.ts, tests/browser/department-navigation.spec.ts, navigation-layout.spec.ts, shell.spec.ts, engineering-changes.spec.ts, engineering-materials.spec.ts and tests/unit/department-navigation.test.ts."
         }
       ],
       "implementation": [
@@ -3982,6 +3987,14 @@
           "expected": "No desktop page moves when the shell context arrives; the rail paints once at the stored width.",
           "actual": "Functional browser proof on the compiled app only. A different identity in the same browser can still see one width change after load, because the cookie carries the browser's last width, not each identity's.",
           "action": "Owner review of first paint at 1440, 1024 and 820 px with labelled and compact rails; decide whether a per-identity server preference is wanted.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-rail-menu-figma",
+          "expected": "Rails and secondary menus match the Shell v2 components on the Figma Components page (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge, Rail · Service), and More has no search box.",
+          "actual": "Rail geometry, grouped rails, department heading, Sales rail label, the shared menu presentation, strip and edge measured equal to the Figma values on the running app at 1440 × 900 (labelled and collapsed). Job Pack and the Projects register keep their own accepted page menus; Fertigation and CPQ keep their own section menus. Menu contents still differ on some pages: Products keeps filters and has no icons, ES-08 keeps its back link and note, and Leads, Work orders and Engineering workload have no secondary menu yet. The More panel keeps its Workspace choice and footer, which v2 / More panel does not draw. Owner/device review not recorded.",
+          "action": "Owner review at 1440, 1024 and 390 px; decide whether the More panel keeps its Workspace choice and footer; build the drawn menu contents page by page.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

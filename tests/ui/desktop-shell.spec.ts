@@ -28,9 +28,9 @@ test("department shell fits laptop, desktop and compact viewports with flowing s
         noOverlap: controls.every((rect, index) => index === 0 || controls[index - 1].right <= rect.left), zoom: getComputedStyle(document.documentElement).zoom };
     });
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
-    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
+    expect(geometry.logoWidth).toBe(46); expect(geometry.logoY).toBe(32); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(25));
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(22));
     expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal", "Contacts", "Products"]);
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
@@ -44,15 +44,12 @@ test("department shell fits laptop, desktop and compact viewports with flowing s
       return { before, after: { head: header.getBoundingClientRect().bottom, foot: footer.getBoundingClientRect().top }, bodyTop: body.getBoundingClientRect().top, bodyBottom: body.getBoundingClientRect().bottom, scrolled: body.scrollTop > 0 };
     });
     expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.foot); expect(frames.scrolled).toBe(true);
-    await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Sales");
-    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveText(["Sales", "Pulse", "Leads", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal"]);
-    await page.screenshot({ path: info.outputPath(`more-filter-${width}x${height}.png`) });
+    // More lists every permitted page without a search of its own; the top bar's search finds pages.
+    await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
+    await page.screenshot({ path: info.outputPath(`more-${width}x${height}.png`) });
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeHidden();
-    await page.getByRole("button", { name: "More", exact: true }).click();
-    await page.getByRole("searchbox", { name: "Find a menu item" }).fill("");
-    await page.keyboard.press("Escape");
   }
 });
 test("global search is independent of page filtering, keyboard selection and quick-add routes", async ({ page }) => {

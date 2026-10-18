@@ -60,12 +60,14 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Engineering Change-Impact Review: Change register/);
   await expect(page.locator(".module-navigation")).toHaveCount(0);
 
-  // A04 A57: the retained shared menu. My Work now opts into its Figma presentation; EN-07 keeps this baseline.
+  // A04 A57: the shared menu now takes the accepted Shell v2 menu from Figma (18 October 2026), as My Work does.
+  // The module title stays in the markup for its accessible context but is not drawn; the breadcrumb names the module.
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
   const menu = page.locator("#ec-menu");
   await expect(menu.locator(".mw-menu-title strong")).toHaveText("Engineering changes");
   await expect(menu.locator(".mw-menu-title span")).toHaveText("Engineering workspace");
+  await expect(menu.locator(".mw-menu-title")).toBeHidden();
   // A58: badges are counts of this whole permitted package, derived from its records.
   await expect(menu.locator("nav a")).toHaveText([/^Change register$/, /^Impact assessment$/, /^Review & decisions\s*2$/, /^Actions & handovers\s*3$/, /^Retest & verification$/, /^Changes & history$/]);
   await expect(menu.locator("nav a[aria-current=page]")).toHaveText("Change register");
@@ -76,7 +78,8 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
       current: [k.backgroundColor, k.fontWeight].join("|"), marker: [marker.width, marker.backgroundColor, marker.left].join("|"), title: [t.fontSize, t.lineHeight, t.fontWeight].join("|"), icon: [i.width, i.height, i.strokeWidth].join("|") };
   }, scope);
   const mine = await measure("#ppo-changes");
-  expect(mine).toMatchObject({ width: 240, title: "18px|24px|700", icon: "20px|20px|1.7px", link: "42px|8px 10px|12px|6px|14px|20px" });
+  expect(mine).toMatchObject({ width: 240, padding: "8px", background: rgb("#f6f7f9"), current: `${rgb("#e3e8ee")}|500`, link: "40px|8px 12px|10px|6px|14px|20px" });
+  expect(mine.icon).toMatch(/^16px\|16px\|/);
   await page.reload();
   await expect(root).toHaveAttribute("data-menu", "docked"); // the person's later choice persists
   await expect(page.getByRole("navigation", { name: "Breadcrumb" }).locator(".ppo-crumb")).toHaveText(["Engineering Change-Impact Review"]);
@@ -166,7 +169,7 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   await expect(page.getByRole("region", { name: "Selected changes" })).toHaveCount(0);
   await page.locator(".ec-view select").selectOption("open");
 
-  // A57: My Work uses the same frame with its explicit Figma presentation. EN-07 retains its measured baseline above.
+  // A57: My Work uses the same frame and the same Figma presentation as EN-07 above.
   await page.goto("/work");
   if (await page.locator("#ppo-my-work[data-menu=collapsed]").count()) await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(page.locator("#ppo-my-work .mw-menu nav a[aria-current=page]")).toBeVisible();
