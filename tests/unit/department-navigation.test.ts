@@ -28,6 +28,12 @@ test("seven full ordered compositions retain withheld positions and My Work plac
   for (const [workspace, labels] of Object.entries(expected)) assert.equal(departmentRails[workspace as keyof typeof departmentRails].map(id => destination(id).label).join("|"), labels);
   assert.equal(new Set(destinations.map(d => d.id)).size, destinations.length);
 });
+
+test("a shortened rail label is contained in the full label that names the link", () => {
+  // Dean, 11 October 2026 (decisions/leads-design.md): the labelled Sales rail shows "Estimating handovers".
+  assert.equal(destination("sales-estimating").railLabel, "Estimating handovers");
+  for (const d of destinations.filter(d => d.railLabel)) assert.ok(d.label.includes(d.railLabel!), d.id);
+});
 test("permission and readiness filters retain relative order and never manufacture links", () => {
   const permitted = navigationForCapabilities(new Set(["activity.read", "crm.opportunity.read", "shared.read", "email.read"]), true);
   assert.deepEqual(railDestinations("sales", permitted, true).map(d => d.id), ["pulse", "deals", "calendar", "tasks", "mail", "sales-estimating", "sales-won", "contacts"]);
