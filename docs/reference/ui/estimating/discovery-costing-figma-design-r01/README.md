@@ -47,7 +47,7 @@ Image 09 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Pending: "Discovery costing — accepted" waits for Dean's explicit yes |
+| Named version | "Discovery costing — accepted", saved 18 October 2026 at Dean's "Yes, save the named Figma version "Discovery costing — accepted"." |
 | Accepted frames | Page "Discovery costing · ES-02" `1431:809`, in image order:<br>• `1431:846`, `1432:375662`, `1432:376321`, `1432:377502`;<br>• `1431:1610`;<br>• `1433:2403`, `1431:1921`, `1433:2492`;<br>• the dialog states `1433:376501`, `1431:2114`, `1431:2129`, `1431:2143`;<br>• `1431:2157` |
 | Capture copies | Page "Captures (icon-free)", from y = 244,000, images in order: `1436:182004`, `1436:182200`, `1436:182464`, `1436:182662`, `1436:182748`, `1436:182930`, `1436:183019`, `1436:183108`, `1436:183197`, `1436:183308` |
 
