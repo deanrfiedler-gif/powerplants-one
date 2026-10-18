@@ -11,6 +11,8 @@
 
 [People design](people-figma-design.md) (PPO-CS02-PEOPLE-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-02 contact directory and contact record design: a grid register with People views, a record with "Before you rely on this contact", what relies on the person, M1–M4 notice preferences and a Correct details form with a required reason. Building it is not decided.
 
+[Organisations and Customer 360 design](organisations-figma-design.md) (PPO-CS01-ORGANISATIONS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-01 design: a grid register with organisation views, a Customer 360 record with a "Sources for this customer" bar and open work by source (never totalled, and an unavailable source never shown as zero), a Sales tab with type chips and a Status filter, and Create organisation with "Check before creating". Building it is not decided.
+
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a working rule Dean adopted on 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. The branch-protection, merge-queue and workflow changes it lists remain Dean's decision.
 
 [Leads side menu built on the shared secondary menu](leads-side-menu-implementation.md) (PPO-CRM-LEADS-SIDE-MENU-IMPL) records the 18 October 2026 build of the accepted Leads side menu, mapping each drawn view to an existing Leads read and count, with what is still the earlier page.

@@ -294,9 +294,21 @@
         "docs/reference/ui/customers/customer-360-figma-r02/overview-phone.png",
         "docs/reference/ui/customers/customer-360-figma-r04/sales-orders-desktop.png",
         "docs/reference/ui/customers/customer-360-figma-r04/quotations-desktop.png",
-        "docs/reference/ui/customers/customer-360-figma-r04/sites-desktop.png"
+        "docs/reference/ui/customers/customer-360-figma-r04/sites-desktop.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-03-Desktop-Sales-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-04-Desktop-Sales-Filtered-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-05-Desktop-Create-Organisation-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-06-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-07-Phone-List-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-08-Phone-Customer-360-Overview-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-09-Phone-320-Customer-360-Overview-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-10-Phone-States-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/organisations-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Figma register and exact customer workspaces in shared PPO shell; agent visual/structural inspection recorded; named version and owner acceptance pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -6233,9 +6245,17 @@
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
       "image_paths": [
         "docs/reference/ui/customers/customer-360-figma-r03/willowbank-desktop.png",
-        "docs/reference/ui/customers/customer-360-figma-r03/rothwell-desktop.png"
+        "docs/reference/ui/customers/customer-360-figma-r03/rothwell-desktop.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-03-Desktop-Sales-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-04-Desktop-Sales-Filtered-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-08-Phone-Customer-360-Overview-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-09-Phone-320-Customer-360-Overview-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-10-Phone-States-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/organisations-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -6262,11 +6282,14 @@
       "guide_key": "guide.page.customers.new",
       "design_path": "docs/design/development/pages/route-customers-new.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-05-Desktop-Create-Organisation-r01.png"
+      ],
       "dependencies": [
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "docs/decisions/organisations-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6304,9 +6327,15 @@
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
       "image_paths": [
         "docs/reference/ui/customers/customer-360-figma-r04/register-desktop.png",
-        "docs/reference/ui/customers/customer-360-figma-r03/register-phone.png"
+        "docs/reference/ui/customers/customer-360-figma-r03/register-phone.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-06-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-07-Phone-List-r01.png",
+        "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-10-Phone-States-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/organisations-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Figma proposal: desktop table, phone cards and exact customer navigation; agent inspection recorded; owner/named-version review pending",
       "functional_status": "Not recorded here",

@@ -30,6 +30,12 @@ Dean accepted the Figma design for the CS-02 contact directory and contact recor
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The named Figma version "People — accepted" was saved at Dean's "Yes, save the named Figma version "People — accepted"." Not done: the page is not built, and the built directory and contact workspace are unchanged. No application code, route, migration, permission or parent ID changes.
 
+## Organisations CS-01 design accepted — 18 October 2026
+
+Dean accepted the Figma design for CS-01, the customer register and Customer 360 (`/customers`, labelled Organisations, `/customers/[id]` and `/customers/new`), with the recommended answers: "I accept the Organisations CS-01 design with your recommendations, including D1–D7 and Q1–Q4." The [design decision](decisions/organisations-figma-design.md) (PPO-CS01-ORGANISATIONS-FIGMA-DEC) records departures D1–D7, answers Q1–Q4 and the Sales tab filter Dean asked for during the audit. Ten icon-free captures with hashes are retained in [organisations-design-r01](reference/ui/customers/organisations-design-r01/README.md). The design register pages for the three routes and `scope:CS-01` cite the frames and captures. In Figma the File index has an Organisations row before Sites, and the capture copies sit on the Captures page from y = 250,000. The earlier Customer 360 proposal (page `554:2`) is kept unchanged as history.
+
+Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. Not done: the named Figma version "Organisations — accepted" waits for Dean's explicit yes, the page is not built, and the native CS-01 pages are unchanged. Open item: the accepted Sites register does not list SYN Northbank Farm. No application code, route, migration, permission or parent ID changes.
+
 ## Merged-tree check and documentation-only CI scope — 18 October 2026
 
 Following Dean's "Proceed on that basis" on 18 October 2026, CI gains a merged-tree check and a documentation-only scope for the heavy suites ([record, section 4](decisions/merge-conflict-reduction.md), PPO-MERGE-CONFLICT-DEC). Workflow files and `scripts/ci_scope.py` only: no application code, migration, permission or parent ID changes, and branch protection is untouched.
