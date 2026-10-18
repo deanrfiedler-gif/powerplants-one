@@ -12,11 +12,15 @@ r20 page type: **Record detail; Overview / dashboard**. Overview, Deals & quotat
 
 ## Desktop
 
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026 covers the register (`/customers`, labelled Organisations), Customer 360 (`/customers/[id]`) and the create form (`/customers/new`), with ten icon-free captures in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with organisation views, a "Sources for this customer" bar, open work by source that is never totalled, seven tabs, a Sales tab with type chips and a Status filter, and Create organisation with "Check before creating". It supersedes the 14 October Figma proposal below as the design reference; that proposal (page `554:2`) is kept unchanged as history. Nothing new is built; the native pages below remain the built pages.
+
 Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
 ## Mobile
+
+Accepted design: captures 07–10 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md): the organisations list, Customer 360 at 390 and 320, and four phone states, including a source that could not be read.
 
 Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
@@ -29,6 +33,8 @@ Incoming: exact canonical customer/Site/Person and permitted source records. Out
 Reference: docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html
 
 ## Verification and acceptance
+
+Accepted Figma design: [Organisations design r01 captures](../../../reference/ui/customers/organisations-design-r01/README.md) (ten icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/organisations-figma-design.md). The Service, Projects, Sites, Accounts and Activity tabs at full size, duplicate review, Correct details, the Accounts tab for a Finance user, desktop register states and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
 
 The detailed page guide is `guide.cs.01`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
 

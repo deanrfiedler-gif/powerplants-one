@@ -12,11 +12,22 @@ r20 page type: **Record detail**. Details and Facilities & areas, with links to 
 
 ## Desktop
 
+Accepted design: the [Sites design decision](../../../decisions/sites-figma-design.md) of 18 October 2026, with captures 02–03 in [design r01](../../../reference/ui/sites/sites-design-r01/README.md).
+
+- **Layout:** the accepted record layout (D3): a header with the site number, customer, location, primary contact, site time zone, record position, Access & readiness and Start service request (Q1); a "Before the next visit" bar (address, access, biosecurity, contact, readiness for the next visit, delivery basis); site facts, access and biosecurity and the next visit on the left; Overview, Facilities & areas, Equipment, Work and visits and History tabs.
+- **Readiness:** when the next visit needs readiness confirmed, the overview says why and links to Access & readiness (CS-06, `/sites/[id]/readiness`). Readiness is never confirmed on this page (D4).
+- **Open work:** permitted appointments, work orders, follow-ups and surveys at the site.
+- **Maps:** an address handoff to external maps only, with the warning to confirm the arrival point; no embedded map (Q2).
+- **Equipment:** a table grouped by facility with "Installed in" and "Serves" as separate columns and identity status in words (D5).
+- Nothing new is built.
+
 Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
 ## Mobile
+
+Accepted design: captures 06–07 in [design r01](../../../reference/ui/sites/sites-design-r01/README.md). Readiness comes first, then access and biosecurity "before you go": address with Maps, gate code, footbath and the primary contact with Call (D6). The footer at 390 px holds "…", Readiness and Service request; at 320 px it keeps Service request and moves Readiness into "…".
 
 Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
@@ -29,5 +40,7 @@ Incoming: exact canonical customer/Site/Person and permitted source records. Out
 Reference: docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html
 
 ## Verification and acceptance
+
+Accepted Figma design: [Sites design r01 captures](../../../reference/ui/sites/sites-design-r01/README.md) (eight icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/sites-figma-design.md). The named version "Sites — accepted" is saved. Images of the Facilities & areas, Work and visits and History tabs, editing and creating a site, the tablet site workspace, and denied and restricted states are still missing.
 
 The detailed page guide is `guide.page.sites.id`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.

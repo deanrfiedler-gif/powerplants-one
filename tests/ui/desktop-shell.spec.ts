@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { expectFlowingShellHeader } from "../helpers/shell-header-geometry";
 const fixture = pathToFileURL(resolve("verification-evidence/crm-ui/index.html")).href;
 test.beforeEach(async ({ page }, info) => {
   test.skip(info.project.name !== "desktop", "Desktop integration; existing CRM phone tests retain mobile coverage.");
@@ -56,6 +57,22 @@ test("department shell fits laptop, desktop and compact viewports with flowing s
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeHidden();
   }
 });
+test("Conversations and builder keep search centred with either rail state", async ({ page }, info) => {
+  await page.goto(fixture + "?mode=local&conversations=1&development=1");
+  await expect(page.getByRole("link", { name: "Conversations, 3 unread", exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  for (const width of [1920, 1440, 1366, 1280, 1201, 1200, 1199, 1024, 960]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const rail of ["collapsed", "expanded"]) {
+      // The component fixture owns the frame; production layout supplies this state.
+      await page.locator(".app-frame").evaluate((frame, state) => frame.setAttribute("data-rail", state), rail);
+      await test.step(`${width}px, ${rail} rail`, async () => { await expectFlowingShellHeader(page); });
+      await expect(page.locator(".ppo-header-utilities .ppo-studio-link")).toBeVisible({ visible: width >= 1200 });
+      if (width === 1280) await page.screenshot({ path: info.outputPath(`conversations-builder-${rail}-1280.png`) });
+    }
+  }
+});
+
 test("global search is independent of page filtering, keyboard selection and quick-add routes", async ({ page }) => {
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
   await page.keyboard.press("Control+k"); await expect(search).toBeFocused();

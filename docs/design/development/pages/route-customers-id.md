@@ -12,6 +12,8 @@ r20 page type: **Record detail; Overview / dashboard**. Overview, Deals & quotat
 
 ## Desktop
 
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 02–04 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2745`, `1445:381060`, `1449:381169`). The record uses the accepted record layout with a "Sources for this customer" bar (D3), open work by source and owned follow-ups (D4), seven tabs (D5) and a Sales tab with type chips and a Status filter (D6). Create follow-up is the primary action (Q1). Nothing new is built; the native Customer workspace remains the built page.
+
 Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
@@ -19,6 +21,8 @@ The native proposal receives the business views rather than the standalone drawe
 The maintained [record-tabs catalogue](../components/tabs.md) includes a Customer 360 state with the eight native labels. It exercises the actual shared keyboard and panel controls; source queries and URL restoration remain owning-page behaviour.
 
 ## Mobile
+
+Accepted design: captures 08–10 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md): Customer 360 at 390 and 320, and the state where Service could not be read.
 
 Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
@@ -31,6 +35,8 @@ Incoming: exact canonical customer/Site/Person and permitted source records. Out
 Reference: docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html
 
 ## Verification and acceptance
+
+Accepted Figma design: [Organisations design r01 captures](../../../reference/ui/customers/organisations-design-r01/README.md) and its [decision](../../../decisions/organisations-figma-design.md). The Service, Projects, Sites, Accounts and Activity tabs at full size and the Accounts tab for a Finance user are not drawn.
 
 PT-27 moves the existing DuplicateCandidates panel to `src/components/duplicate-candidates.tsx` so CustomerWorkspace no longer imports unrelated context screens. Its query, self-exclusion, exact links, loading/retry and no-auto-merge explanation remain unchanged. CS-01 remains Record detail; Overview / dashboard, with the same incoming directory and outgoing identity handovers. The [directory/receiving host contract](../components/crm-directory.md) binds P03's same-name fixture and the controlled ten-user receiving timings. Desktop/phone captures and functional checks remain distinct from owner/device approval; no new accepted image is available.
 

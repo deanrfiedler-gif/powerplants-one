@@ -1,0 +1,11 @@
+---
+title: Remote diagnosis and escalation SV-08 design accepted
+date: 2026-10-18
+---
+
+Dean accepted the Figma design for SV-08 Remote diagnosis and OEM escalation at the proposed route `/service/escalations`: "I accept the Remote diagnosis and escalation SV-08 design with your recommendations, including D1–D7 and Q1–Q4." The [decision](../decisions/escalations-figma-design.md) (PPO-SV08-ESCALATIONS-FIGMA-DEC) records it, and the [retained captures](../reference/ui/service/escalations-design-r01/README.md) (PPO-SV08-ESCALATIONS-FIGMA-R01) are nine icon-free PNGs with hashes. Escalations sits beside Findings in the Service review workspace. A coordinator records the diagnostics tried, captures controller settings read-only because they are the grower's, and reviews an evidence pack that always leaves out customer contact details and prices. PPO sends nothing: a named person sends the pack from their own mailbox or the manufacturer's portal and records it (D-025). The reply becomes an owned finding and next action in My Work. Q1–Q4 take the recommended answers: coordinators and senior technicians open cases, the reply-expected date drives a chase reminder, manufacturers come from a maintained list, and the case shows the warranty end date.
+
+The named Figma version "Remote diagnosis and escalation — accepted" was saved on 18 October 2026 at Dean's request. The File index row and page header were updated after acceptance. The Conversations action in the top bar belongs to a separate shell amendment that is still open. No route, read model or service exists for SV-08, and building it is not decided. The captures are design compositions, not application captures. No code, route, migration, permission, capability or parent ID changes.
+
+<!-- decision-index -->
+[Remote diagnosis and escalation design](../decisions/escalations-figma-design.md) (PPO-SV08-ESCALATIONS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the SV-08 Figma design, with departures D1–D7 and the recommended answers to Q1–Q4: a case lifecycle beside Findings, a read-only configuration snapshot, an evidence pack without customer details or prices, and a named person who sends it and records it in PPO. Building the page is not decided.

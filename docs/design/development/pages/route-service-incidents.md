@@ -10,9 +10,19 @@ Capture an exact factual event separately from an inspection defect, corrective 
 
 ## Desktop
 
+Accepted design: the [Incidents and corrective actions design decision](../../../decisions/incidents-figma-design.md) of 18 October 2026, with captures 01 (desktop 1440 × 900) and 07 (tablet 1024) in [design r01](../../../reference/ui/quality-site-assurance/incidents-design-r01/README.md).
+
+- **Register:** a grid, one row per incident (D1). Columns: Incident, Summary, Classification, State, Hold, Priority, Actions, Reported, Reporter and Site. The toolbar keeps Reporter, Site, and the count with its read time.
+- **Views:** All incidents; Triage (Awaiting triage, In review, Clarification or returned, On hold); Follow-through (Holding work, Actions open, Ready to close, Closed), in the side menu (D1).
+- **Holds:** a submitted report holds its exact scope until closure, so every open incident shows "Scope held". Triage does not release it.
+- **Shell:** the proposed Conversations action sits left of the information icon; the shared shell change is still open.
+- Nothing new is built.
+
 At 1440 and 1024 px use the existing padded shell, PageHeader, wrapped cards and paired fields; #main owns the only content scroll. Show exact affected scope, current source state, authority, original reporter and attributable history. Evidence hashes wrap; file links open exact verified bytes. Show words for held/unknown/current/historical status. Use existing 8 px card radius rather than r20's 7 px: declared inherited token adaptation, pending owner review.
 
 ## Mobile
+
+Accepted design: no phone register is drawn; the tablet register at 1024 is capture 07 in [design r01](../../../reference/ui/quality-site-assurance/incidents-design-r01/README.md), with the side menu collapsed.
 
 At 390 and 320 px stack fields and decisions, preserve 16 px labels/input and 44 px targets. Long source IDs and hashes wrap. No horizontal page overflow or nested scrolling. Keep correction/recovery, evidence audience and closure exclusions available. Verify keyboard completion, guide Escape/focus return and actual browser zoom 200%; emulator evidence does not grant device acceptance.
 
@@ -21,6 +31,8 @@ At 390 and 320 px stack fields and decisions, preserve 16 px labels/input and 44
 Reuse Button, Field, ErrorNotice, ReadState, native fieldset/select/details and identity-scoped recoverable commands. Draft, unsaved, saving, conflict, failed, uncertain, denied, empty, returned, overdue and historical-output states are separate. Correctable input retains its original expected version; compare current history and explicitly adopt the current version. A pending request retains original operation ID/payload across same-tab reload. A recovered create leads to the saved incident before explicitly starting another report. Refresh denial clears protected data; connection failure labels last-known context and disables new commands. No incident operation is queued offline.
 
 ## Proposed reference and adaptations
+
+Accepted Figma design: [Incidents and corrective actions design r01 captures](../../../reference/ui/quality-site-assurance/incidents-design-r01/README.md) (twelve icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/incidents-figma-design.md). Images of a phone register, register states and hover states are still missing.
 
 [Quality r01 HTML](../../../reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html), Incidents & corrective actions and Review & release, plus its companion report, remains proposed reference material. Exact source/token comparison is in tests/browser/field-incidents.spec.ts. In-flow history/evidence replaces the reference's combined right panel; register, capture and review are actual separate routes. Accepted native desktop/phone mockup images are **missing**. Implementation captures are verification evidence, not baseline adoption. Issued sources are unchanged.
 

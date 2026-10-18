@@ -14,11 +14,15 @@ Find a permitted canonical customer, confirm its identity and open that exact Cu
 
 ## Desktop
 
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 01 and 06 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2652`, tablet `1443:3145`). The register is a grid (D1): name, status, relationship owner, sites, open deals, open service and next follow-up, then sector, areas and reference. The side menu lists People and Sites, then All organisations, Prospects, Possible duplicates, Without a current site and Inactive (D2). Nothing new is built; the native directory remains the built page.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 07 and 10 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md): the organisations list and the loading, no-matches and could-not-load states.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -35,6 +39,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 - [PPO-Customer-360-Workspace-r01.html](../../../reference/ui/customers/PPO-Customer-360-Workspace-r01.html)
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Organisations design r01 captures](../../../reference/ui/customers/organisations-design-r01/README.md) and its [decision](../../../decisions/organisations-figma-design.md). Desktop register states and hover are not drawn.
 
 The draft User Guide `guide.page.customers` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

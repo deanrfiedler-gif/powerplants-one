@@ -46,7 +46,9 @@ A stored receipt is disclosed only to a person who can still read the thread.
 
 PostgreSQL enforces: messages and mentions are append-only; the next sequence; a participant author holding the post capability; a token in a body has exactly one mention and the reverse; a message needs its accepted audit event and receipt at commit; one main thread per record; a thread keeps its anchor's company; only a state change updates a thread, with the version advanced; last-read cannot move back or pass the latest message; an ask is made by the author of the tagging message, closes once and records each N7 step once.
 
-## Assumptions to confirm (not decided by the accepted scope)
+## Assumptions confirmed
+
+The accepted scope did not decide these five points, so T1b built them as assumptions. On 18 October 2026 Claude recommended confirming them as written, and Dean replied: "Ok. We will proceed on that basis." They are now confirmed rules for T1c and later; a change to any of them is a new decision.
 
 1. **A reply closes all of the person's earlier open asks in that thread.** The scope says an ask closes "when the person replies in the thread". A reply cannot name which ask it answers, so it closes every earlier open ask of that person in the thread. A per-ask reply would need composer support at T1c.
 2. **N7 timing.** The reminder falls due on the reply-by date (Brisbane date); the asker is told only on a later day and only after the reminder. Nothing schedules these steps in T1b: `recordAskDeadline` records one when due and the notice projection turns it into a notice for the asked person or the asker. A job or a person opening the thread would call it at T1d or later.

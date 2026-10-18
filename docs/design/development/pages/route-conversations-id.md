@@ -27,7 +27,7 @@ At 780 px and narrower the thread is full screen with "Back to conversations"; a
 
 - Accepted frames: Figma file "PPO - Design", page Conversations, section 1244:3422, named version "Conversations T1 — people-only threads, accepted": desktop thread 1244:3423, record links 1244:286460, pickers 1244:286385, tablet 1244:286582, phone thread 1244:285266 and 1244:285578 (320).
 - Departures recorded in [T1c design section 7](../../../decisions/conversations-t1c-design.md#7-changes-to-the-accepted-design). The phone "Back to conversations" link follows the accepted phone frames' Back; the role line under author names is not shown.
-- No icon-free captures of the T1 frames yet: they are made at the T1c-2 lock-in.
+- No icon-free captures of the T1 frames yet: they belong to the T1c-2 lock-in, which waits for Dean's go-ahead in Figma. The top bar's Conversations action is current on a thread, and opening a thread with an unread message lowers its badge (T1c-2).
 
 ## Behaviour, handovers and verification
 

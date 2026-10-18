@@ -10,9 +10,19 @@ Read the immutable published policy, enter an explicit future effective local ti
 
 ## Desktop
 
+Accepted design: the [Changes and follow-up design decision](../../../decisions/changes-follow-up-figma-design.md) of 18 October 2026, with capture 07 in [design r01](../../../reference/ui/service/changes-follow-up-design-r01/README.md).
+
+- **Layout:** a Review / comparison page in the Changes and follow-up workspace, with Policy impact selected under "Reviews" in the side menu (D7).
+- **Published rule:** maximum visit, effective since, sites and policy version, beside a Temporary comparison form with proposed effective time, proposed maximum visit in minutes and site restriction, then Compare with bookings.
+- **Bookings requiring review:** a table of Visit, Work, Booked, Length and Effect if published, with the effect in words and the count, period start and read time above it. Each visit opens its booking in the queue.
+- The comparison changes no rule and no booking; publishing stays a separate, controlled step.
+- Nothing new is built. The saved proposal, review and publication workspace on this route is not drawn.
+
 Use the existing shell, SchedulingNavigation, semantic scheduling styles, PageHeader, Field, SelectField, Button, ReadState, ErrorNotice and Stamp. Published context precedes the form, result summary and responsive review cards. Keep one shell scroll owner at 1440 × 900 and 1024 × 900. Provenance is in a disclosure with wrapping hashes; it must not force horizontal page scroll.
 
 ## Mobile
+
+Accepted design: none at phone width. Policy impact on a phone is not drawn in [design r01](../../../reference/ui/service/changes-follow-up-design-r01/README.md); the requirements below stand.
 
 Stack form fields and review cards at 390 and 320 CSS px. Preserve full labels, site/timezone context and exact booking links. Native local date/time controls keep their labels; ambiguous clock-change times are refused explicitly. Enter submits comparison, Tab traverses controls and native focus remains visible. Phone emulation is not physical-device or native 200% zoom acceptance.
 
@@ -23,6 +33,8 @@ Input changes, refresh and identity changes clear prior analysis. Loading, unava
 Incoming: PL scheduling date/site context and current read permissions. Outgoing: exact appointment at `/schedule/changes`, with date/timezone and appointment identity. The proposed rule is not handed to a booking command or persisted in the page address. Current controlled booking authority remains separate.
 
 ## Evidence and boundaries
+
+Accepted Figma design: capture 07 of the [Changes and follow-up design r01 captures](../../../reference/ui/service/changes-follow-up-design-r01/README.md) (icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/changes-follow-up-figma-design.md). It is the first accepted image for the temporary comparison; it is not an accepted policy-editor mockup. Images of Policy impact on a phone and of the saved proposal, review and publication workspace are still missing.
 
 [Architecture and limits](../../../decisions/scheduling-policy-impact-review.md). [Executed checks and remaining obligations](../../../delivery/scheduling-policy-impact-handover.md). Runtime captures, where recorded there, are implementation evidence rather than mockups. Owner paired review, physical-device, assistive-technology and broader programme acceptance remain open. No fingerprint is adopted.
 

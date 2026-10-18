@@ -403,3 +403,67 @@ test.describe("T1c-1 final review fixes", () => {
     await expect(message).toHaveValue("PO #4432");
   });
 });
+
+// T1c-2 (PPO-CONV-T1C-DESIGN 10): the shared top bar's Conversations action and badge (D1, D2, D7) and the 320 px header.
+test.describe("T1c-2 top-bar Conversations action", () => {
+  const badgeCount = async (page: Page) => (await api<{ unread_threads: number }>(page, "conversations/badge")).body.unread_threads;
+
+  test("T1c-2 the action sits left of the Page guide, counts unread threads and is current on /conversations", async ({ page, isMobile }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asked);
+    const unread = await badgeCount(page);
+    expect(unread).toBeGreaterThan(0);
+    await page.goto("/work");
+    const banner = page.getByRole("banner");
+    const action = banner.getByRole("link", { name: /^Conversations/ });
+    await expect(action).toHaveAccessibleName(`Conversations, ${unread} unread`);
+    await expect(action.locator(".ppo-top-badge")).toHaveText(unread > 9 ? "9+" : String(unread));
+    await expect(action).not.toHaveAttribute("aria-current", "page");
+    // D1: immediately left of the information (Page guide) icon, on desktop and in the phone header.
+    expect(await action.evaluate((link) => link.nextElementSibling?.getAttribute("aria-label"))).toBe("Page guide");
+    await action.click();
+    await expect(page).toHaveURL(/\/conversations$/);
+    await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAttribute("aria-current", "page");
+    // Opening the thread marks it read; the badge re-reads on the Conversations change event.
+    await page.goto(`/conversations/${thread}`);
+    await expect(page.getByText("SYN when does the controller arrive?")).toBeVisible();
+    await expect.poll(() => badgeCount(page)).toBe(unread - 1);
+    await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAccessibleName(unread - 1 ? `Conversations, ${unread - 1} unread` : "Conversations");
+    await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAttribute("aria-current", "page");
+    if (isMobile) expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  });
+
+  test("T1c-2 nothing new shows no badge, and a profile without conversations has no action", async ({ page }) => {
+    await signIn(page, bystander);
+    await page.goto("/work");
+    const action = page.getByRole("banner").getByRole("link", { name: /^Conversations/ });
+    await expect(action).toHaveAccessibleName("Conversations");
+    await expect(action.locator(".ppo-top-badge")).toHaveCount(0);
+    await signIn(page, "systems");
+    await page.goto("/");
+    await expect(page.getByRole("banner").getByRole("button", { name: "Account" }).or(page.getByRole("banner").getByRole("button", { name: /Change identity/ })).first()).toBeVisible();
+    await expect(page.getByRole("banner").getByRole("link", { name: /^Conversations/ })).toHaveCount(0);
+  });
+
+  test("T1c-2 at 320 px the header keeps the page name whole and the Page guide moves into the identity menu", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "Phone header departure");
+    await signIn(page, asked);
+    await page.setViewportSize({ width: 320, height: 844 });
+    await page.goto("/conversations");
+    const banner = page.getByRole("banner");
+    await expect(banner.getByRole("link", { name: /^Conversations/ })).toBeVisible();
+    await expect(banner.getByRole("button", { name: "Page guide", exact: true })).toBeHidden();
+    const header = await page.locator(".ppo-shell-header").evaluate((node) => {
+      const title = node.querySelector<HTMLElement>(".ppo-crumb-current, .ppo-product-name")!;
+      const style = getComputedStyle(node);
+      return { left: style.paddingLeft, right: style.paddingRight, size: getComputedStyle(title).fontSize, text: title.textContent, whole: title.scrollWidth <= title.clientWidth };
+    });
+    expect(header).toEqual({ left: "4px", right: "4px", size: "18px", text: "Conversations", whole: true });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+    await banner.getByRole("button", { name: /Change identity/ }).click();
+    await page.getByRole("button", { name: "Open page guide" }).click();
+    await expect(page.getByRole("dialog", { name: "Page guide", exact: true })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(banner.getByRole("button", { name: /Change identity/ })).toBeFocused();
+  });
+});

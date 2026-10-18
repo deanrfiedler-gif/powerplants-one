@@ -15,6 +15,7 @@ import { useShell } from "./shell-provider";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
 import { canOpen, destination, departmentHref, menuGroups, workspaceForLocation, workspaces } from "../shell/navigation";
 import { ShellPageGuide } from "./shell-page-guide";
+import { ShellConversations } from "./shell-conversations";
 import { DevelopmentPageGuide } from "../development/page-guide";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { businessViewChannel, sessionLockEvent } from "./session-signal";
@@ -183,8 +184,10 @@ export function ShellControls({
     window.addEventListener("resize", resize);
     const utility = (event: Event) => {
       const value = (event as CustomEvent).detail;
-      if (!["quick", "help", "notifications"].includes(value)) return;
+      if (!["quick", "help", "notifications", "guide"].includes(value)) return;
+      // The Page guide is opened from the identity menu at 320 px (PPO-CONV-T1C-DESIGN 10.2); focus returns there.
       opener.current =
+        (value === "guide" ? document.querySelector<HTMLElement>(".header-account .ppo-account-toggle, #identity-toggle") : null) ??
         document.getElementById("navigation-toggle") ??
         document.getElementById("desktop-more-toggle");
       if (opener.current) setPosition(panelPosition(value, opener.current));
@@ -384,8 +387,10 @@ export function ShellControls({
               <ProductIcon name="search" />
             </button>
           )}
+          {/* D1 and D2: Conversations sits left of the Page guide, on every page and in the phone header. */}
+          <ShellConversations />
           <button
-            className="ppo-top-action"
+            className="ppo-top-action ppo-guide-action"
             aria-label="Page guide"
             title="Page guide: what this page is for and how to use it"
             aria-expanded={panel === "guide"}
