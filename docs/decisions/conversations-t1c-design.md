@@ -209,3 +209,7 @@ Quote 9 settles what seed 108 left to T1c. An invited tester (issuer `PPO-EntraD
 ### 10.4 What T1c-2 does not do
 
 It does not build the context panel (T1c-3), the record-page lists, notices or My Work (T1d), or change any rail. The Figma lock-in (the shared `Shell / Top bar` and `Shell / Phone header` components and the icon-free captures of the T1 frames) waits for Dean's explicit go-ahead in the Figma file.
+
+## 11. T1c-3: the context panel
+
+Dean started T1c-3 on 19 October 2026, in parallel with T1d: "Yes, start T1c-3 (context panel) and T1d (record-page lists, notifications, My Work, reply-by reminders) as two parallel sessions with their own worktrees and PRs." It builds the third slice in section 3 from the accepted design (proposal section 3, the context panel table and its four rules; S5; T1 scope section 3, without Carl pins). Being built; the detail follows in this section with the pull request.
