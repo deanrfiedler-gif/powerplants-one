@@ -1,5 +1,5 @@
 ---
-title: "PPO Assistant: Claude API accepted as first live provider"
+title: PPO Assistant: Claude API accepted as first live provider
 date: 2026-10-18
 ---
 
