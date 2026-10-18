@@ -5,6 +5,8 @@
 
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a **proposed** working rule of 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. It lists the branch-protection, merge-queue and workflow changes that remain Dean's decision.
 
+[Discovery costing design](discovery-costing-figma-design.md) (PPO-ES02-DISCOVERY-COSTING-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the ES-02 costing design: the wizard's Pricing step for one saved Complete revision, the changes since the estimate's revision, cost lines prefilled from the current cost version with markers, equal-height totals, and a review-and-adopt dialog that saves a new cost version. Building it is not decided.
+
 <!-- fragments:end -->
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).
