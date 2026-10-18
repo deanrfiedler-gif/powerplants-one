@@ -3,7 +3,7 @@ document_id: PPO-CONV-T1C-DESIGN
 title: Conversations T1c design
 date: 2026-10-18
 owner: Dean Fiedler
-status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; T1c-1 built in PR #575 (draft; CI and review separate); T1c-2 and T1c-3 not started
+status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; T1c-1 merged in PR #575; T1c-2 being built, with hosted demo testers given conversation.read and conversation.post (Dean, 18 October 2026; section 10); T1c-3 not started
 versioning: git
 ---
 
@@ -25,6 +25,8 @@ Quoted as written, 18 October 2026:
 6. "Section 2 looks right. Go on to section 3."
 7. "Section 3 and the title rule look right. Write the T1c-1 design to docs/decisions/conversations-t1c-design.md for my review."
 8. "I've reviewed docs/decisions/conversations-t1c-design.md and approve it. Write the T1c-1 implementation plan."
+9. "Yes: give the hosted demo testers conversation.read and conversation.post as part of T1c-2, so I can use Conversations in the hosted demo. Tell the T1c-2 session."
+10. "Yes, tell the T1c-2 session to start now that #575 is merged, including the hosted demo tester grants."
 
 ## 2. Decisions and evidence
 
@@ -39,6 +41,9 @@ Quoted as written, 18 October 2026:
 | Screens and states (section 5.3 and 5.6) | Claude's recommendation, adopted | Quote 6 |
 | Data flow, errors and testing (sections 5.7, 5.8 and 6) | Claude's recommendation, adopted | Quote 7 |
 | This written record | User decision, accepted after review | Quote 8 |
+| Hosted demo testers hold `conversation.read` and `conversation.post`, mirroring rule T1-1 (section 10.3) | User decision | Quotes 9 and 10 |
+| T1c-2 starts once T1c-1 is merged | User decision | Quote 10 |
+| How T1c-2 applies D1, D2, D7 and the 320 and 1024 departures (sections 10.1 and 10.2) | Claude's implementation choices within the accepted design; Dean's review is in the pull request | Section 10 |
 
 ## 3. The three slices
 
@@ -175,3 +180,31 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 ## 9. What this record does not do
 
 It authorises T1c-1 only, built from its implementation plan. It does not change the shared shell, add the top-bar action or badge, build the context panel, add record-page lists, notifications, My Work or reminders, or decide how the reply-by reminder is scheduled. It does not decide A1 (the provider), the AD-01 sharing record, the speech provider, the driving policy or Carl's agreement to the name; none of them blocks T1c.
+
+## 10. T1c-2: the top-bar action, the badge and hosted testers
+
+T1c-2 builds the second slice in section 3 from the accepted design (proposal section 14, D1, D2 and D7; T1 scope section 6). Quote 10 started it after T1c-1 merged. Quote 9 adds the hosted demo grants.
+
+### 10.1 The action and the badge
+
+- **Placement (D1, D2).** A Conversations action sits in the shared top bar, left of the Page guide (information) icon, on every page; on phones it sits in the phone header in the same place. It opens `/conversations` and is marked current (`aria-current="page"`) there and on a thread. It is a link, so it opens in a new tab like any other.
+- **Who sees it.** The shell context names whether the viewer holds `conversation.read` in any scope. A viewer without it sees no action, because the page would have nothing to show them. Every role that reads deals or projects holds it (U3), so in practice the action is on every business page.
+- **Badge (D7).** `GET /api/v1/conversations/badge` wraps `conversationBadge` (`src/conversations/reads.ts`): the threads the viewer takes part in whose newest message is beyond their read position, drawn under the T1-1 access rule. The badge shows the count, "9+" above nine, and nothing at zero; the action's name says "Conversations, 3 unread" for screen readers. It is not counted on the bell. It is re-read when the window regains focus and on the `ppo-conversations-changed` event that every Conversations command raises, and cleared on an identity change. A failed read shows no badge rather than an error: the action itself still works.
+- **Asks and mentions.** In T1 an ask or a mention always arrives as a message in a thread the person takes part in, so counting unread threads covers D7's mention, ask and reply. Cards waiting for approval join at T7.
+
+### 10.2 Header departures
+
+- **320 px** (phone headers at 360 px and narrower): side padding 4 px, the page title 18 px, and the Page guide moves out of the header into the identity (account) menu, where it opens the same guide.
+- **1024 px** (desktop top bars from 781 px to 1199 px, the band where the breadcrumb already shows the current page alone): the builder-only "Design and build workspace" icon moves into the identity menu, and the search shows no `Ctrl K` hint, which it already hid up to 1320 px. On phones the builder icon moves into the identity menu too (D2).
+
+### 10.3 Hosted demo testers
+
+Quote 9 settles what seed 108 left to T1c. An invited tester (issuer `PPO-EntraDemo`, role "Booking tester") already holds `crm.opportunity.read` and `project.read` for Company A, ending at the invitation's expiry. They now hold `conversation.read` and `conversation.post` in exactly that scope and validity (T1-1).
+- **New invitations:** both duties join the bounded tester grant set in `scripts/demo-database.ts`.
+- **Existing testers:** the hosted upgrade (`scripts/demo-upgrade.ts`) copies each live `crm.opportunity.read` or `project.read` grant of an enabled, unexpired tester as the two duties, as seed 108 does for local profiles, and adds nothing where the duty is already held in that scope, so a later revocation survives a retry. A verify-only run refuses while a copy is missing.
+- **Pack reviewer** (`PPO-EntraDemoRole`) holds neither read capability, so it gains neither duty.
+- Hosted threads hold only what testers type in the synthetic demo. This is a repository change: deploying it to the hosted demo stays Dean's operation.
+
+### 10.4 What T1c-2 does not do
+
+It does not build the context panel (T1c-3), the record-page lists, notices or My Work (T1d), or change any rail. The Figma lock-in (the shared `Shell / Top bar` and `Shell / Phone header` components and the icon-free captures of the T1 frames) waits for Dean's explicit go-ahead in the Figma file.
