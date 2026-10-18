@@ -249,7 +249,7 @@ export function AcceptanceWorkspace({ recordId }: { recordId?: string }) {
     />
   );
   return (
-    <SecondaryMenuFrame presentation="baseline"
+    <SecondaryMenuFrame
       id="ppo-acceptance"
       name="Acceptance & closeout"
       menuId="acceptance-menu"

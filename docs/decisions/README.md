@@ -7,6 +7,8 @@
 
 [Sites design](sites-figma-design.md) (PPO-CS04-SITES-FIGMA-DEC) records Dean's acceptance on 18 October 2026 of the Figma design for the CS-04 site register and site workspace, with departures D1–D6 and the recommended answers to Q1–Q3. Readiness is never confirmed on the site page. The named version "Sites — accepted" is saved; building the page is not decided.
 
+[Rails and secondary menus aligned with Figma](shell-rail-menu-figma-alignment.md) (PPO-SHELL-RAIL-MENU-FIGMA-DEC) records Dean's 18 October 2026 instruction to align the application's rails and secondary menus with the Shell v2 components in Figma and to remove the More panel's search, with the Figma values used and what still differs.
+
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a working rule Dean adopted on 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. The branch-protection, merge-queue and workflow changes it lists remain Dean's decision.
 
 [Inspections design — owner decision](inspections-figma-design.md) (PPO-FI03-FI04-INSPECTIONS-FIGMA-DEC) records Dean's acceptance on 18 October 2026 of the Figma design for FI-03 capture and FI-04 review, defects and retests, with D1–D7 and the recommended answers to Q1–Q4. It authorises no build; the named version waits for his yes.
