@@ -5,6 +5,8 @@
 
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a **proposed** working rule of 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. It lists the branch-protection, merge-queue and workflow changes that remain Dean's decision.
 
+[Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-06 Figma design with D1–D7 and the recommended answers to Q1–Q4. P4, the weekday change and the build are separate.
+
 <!-- fragments:end -->
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).

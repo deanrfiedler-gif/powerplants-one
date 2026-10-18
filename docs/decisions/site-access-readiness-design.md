@@ -33,3 +33,7 @@ Use `python3 scripts/build-site-access-design.py` to reproduce the HTML. Focused
 Publication limitation: automatic approval review blocked the push to the personal repository, treating its destination as inferred. No remote branch or PR was created. Local model/DOM and documentation checks pass; native browser and visual review remain pending.
 
 Next bounded step: obtain explicit repository destination approval, publish the prepared review branch/PR, run the prepared native verification and review the rendered workspace, then specify one server-backed site-instruction → appointment → controlled pack journey with source-change, authorisation and concurrency tests.
+
+## Note, 18 October 2026: accepted Figma design
+
+Dean accepted a Figma design for this page on 18 October 2026, recorded in [Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC) with D1–D7 and the recommended answers to Q1–Q4. This record stays the owning standalone design and its rules are unchanged; the new record sets the page layout for a native build. Q3 there adds weekdays to work windows before windows are used for real sites.
