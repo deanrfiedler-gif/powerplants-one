@@ -7,6 +7,8 @@
 
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a **proposed** working rule of 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. It lists the branch-protection, merge-queue and workflow changes that remain Dean's decision.
 
+[Conversations T1c design](conversations-t1c-design.md) (PPO-CONV-T1C-DESIGN) section 10 records how T1c-2 builds the top-bar action, badge and header departures, and Dean's decision to give hosted demo testers `conversation.read` and `conversation.post` under rule T1-1.
+
 <!-- fragments:end -->
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).
