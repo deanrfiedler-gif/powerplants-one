@@ -60,16 +60,16 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 
 **Not authorised by A1.** This amendment does not create or link a Console organisation, claim credits, create an API key, buy a service, use real or operational data, add runtime code or a migration, or pin a model or SDK. A live evaluation still needs a named billing owner, an approved ceiling, a server-held secret outside Git, restricted outbound destinations, and the specification's other pre-call checks.
 
-**Decision required.** Dean can accept, amend or decline A1. The billing owner, data region, retention settings and authority for real data stay open whichever he chooses.
+**Decision required (the question before acceptance, answered below).** Dean can accept, amend or decline A1. The billing owner, data region, retention settings and authority for real data stay open whichever he chooses.
 
 **Dean's decision (18 October 2026):** "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2." Dean chose this reply from answers Claude offered in the session. It adopts proposal items 1 to 4 as written.
 
-**Provider set-up done at Dean's direction, 18 October 2026.** This set-up is a fact about the account on that date, not something A1 authorised. Dean linked the Max 20x credit to a Claude Console organisation under his work login; it shows US$200 of promotional credit. The organisation holds no purchased credit and no payment method, so auto-reload cannot run. At Dean's request Claude created a dedicated, non-default workspace, "Powerplants One", with a US$30 monthly spend limit. Its data at rest is stored in the United States, and inference is global by default. Dean created an API key scoped to that workspace. It is held only in his git-ignored local `.env.local`, under the PPO-prefixed name `PPO_ANTHROPIC_API_KEY`. A free model-list request with it returned HTTP 200, and no model request has been made. The key, organisation and workspace identifiers are kept out of this public repository.
+**Provider-side controls, 18 October 2026.** At Dean's direction, the provider-side backstops A1 relies on were set up the same day: no purchased credit or auto-reload, a dedicated workspace with a US$30 monthly spend limit, and a key held outside Git. This is not something A1 authorised, and PPO's own reservation remains the primary control. Account details and set-up evidence are kept privately outside this public repository; no model request has been made.
 
 **Still open after acceptance:**
 - **Pre-call checks.** Specification §8 still requires these before any paid call: the PPO-enforced reservation for the ceiling, restricted outbound destinations, and proof that no real data enters requests or logs.
 - **Billing owner.** Dean holds the plan, so he funds the synthetic evaluation. Who pays for any operational use is not decided.
-- **Data region and retention.** These are as configured above, and they are acceptable only for synthetic data. There is no Australian option and no zero-data-retention arrangement.
+- **Data region and retention.** The current arrangement is acceptable only for synthetic data. There is no Australian option and no zero-data-retention arrangement.
 - **Real data.** Using operational or customer data is not authorised.
 - **Model and SDK.** No model or SDK is pinned. The build that first calls the API pins them.
 

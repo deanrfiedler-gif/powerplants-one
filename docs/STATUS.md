@@ -4,7 +4,7 @@
 
 Dean accepted [Amendment A1](decisions/ppo-assistant-direction.md#amendment-a1--claude-api-first-16-october-2026), issuing r03 of PPO-AI-DEC: "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2."
 - **Provider:** the credit-funded direct Claude API is the first live synthetic evaluation provider. The direct OpenAI API and Azure OpenAI stay alternatives behind the same adapter, and the labelled simulated adapter is still built first.
-- **Account set-up, done the same day at Dean's direction:** the Max 20x credit is linked to a Console organisation that holds no purchased credit or payment method. A dedicated "Powerplants One" workspace has a US$30 monthly spend limit. Dean created a key scoped to that workspace and holds it only in his git-ignored local `.env.local`. A free model-list request with it succeeded, and no model request has been made.
+- **Provider-side controls:** set up the same day at Dean's direction (no purchased credit or auto-reload, a US$30 workspace spend limit, a key held outside Git). Account details stay outside this public repository, and no model request has been made.
 - **Still open:** the specification's pre-call checks, the model and SDK pin, the billing owner for any operational use, and any use of real data.
 
 No application code, dependency, migration or route changes. Carl's answers in Conversations are build step T2, and live answers follow the pre-call checks.
