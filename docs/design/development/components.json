@@ -3992,9 +3992,9 @@
         },
         {
           "id": "application-shell-rail-menu-figma",
-          "expected": "Rails and secondary menus match the Shell v2 components on the Figma Components page (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge, Rail · Service), and More has no search box.",
-          "actual": "Rail geometry, grouped rails, department heading, Sales rail label, the shared menu presentation, strip and edge measured equal to the Figma values on the running app at 1440 × 900 (labelled and collapsed). Job Pack and the Projects register keep their own accepted page menus; Fertigation and CPQ keep their own section menus. Menu contents still differ on some pages: Products keeps filters and has no icons, ES-08 keeps its back link and note, and Leads, Work orders and Engineering workload have no secondary menu yet. The More panel keeps its Workspace choice and footer, which v2 / More panel does not draw. Owner/device review not recorded.",
-          "action": "Owner review at 1440, 1024 and 390 px; decide whether the More panel keeps its Workspace choice and footer; build the drawn menu contents page by page.",
+          "expected": "Rails and secondary menus match the Shell v2 components on the Figma Components page (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge, Rail · Service), and More has no search box, Workspace dropdown or footer.",
+          "actual": "Rail geometry, grouped rails, department heading, Sales rail label, the shared menu presentation, strip and edge measured equal to the Figma values on the running app at 1440 × 900 (labelled and collapsed). Job Pack and the Projects register keep their own accepted page menus; Fertigation and CPQ keep their own section menus. Menu contents still differ on some pages: Products keeps filters and has no icons, ES-08 keeps its back link and note, and Leads, Work orders and Engineering workload have no secondary menu yet. More's Workspace dropdown and footer are removed (Dean, 18 October 2026); its Workspaces links choose the department. Owner/device review not recorded.",
+          "action": "Owner review at 1440, 1024 and 390 px; build the drawn menu contents page by page.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -11,6 +11,7 @@ import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
 import { breadcrumb, type Crumb } from "../shell/breadcrumb";
 import {
+  availableWorkspaces,
   canOpen,
   departmentHref,
   railDestinations,
@@ -27,7 +28,6 @@ import {
   type ShellDestination,
 } from "../shell/navigation";
 import { localDay } from "../activities/work-view";
-import { WorkspacePicker } from "./shell-workspace-selector";
 import { useRecordIdentity } from "../shell/record-identity";
 
 const subscribe = (changed: () => void) => {
@@ -124,8 +124,8 @@ function ProductNavigationView({
     if (!wide && more) dialog.current?.showModal();
     else dialog.current?.close();
     // More has no search of its own (the top bar's global search finds pages), so opening it moves
-    // focus to its first control: the workspace choice, or else its first link.
-    if (more) body.current?.querySelector<HTMLElement>("select, a[href], button")?.focus();
+    // focus to its first control, normally the first department under Workspaces.
+    if (more) body.current?.querySelector<HTMLElement>("a[href], button")?.focus();
   }, [more, wide]);
   useEffect(() => {
     const outside = (event: Event) => {
@@ -155,15 +155,19 @@ function ProductNavigationView({
       document.removeEventListener("keydown", key);
     };
   }, [more, wide]);
+  // Workspaces is the only department choice in More (Dean, 18 October 2026: the separate Workspace
+  // dropdown is not drawn in Figma). It offers every department the identity can reach, each opening
+  // its landing, so a department whose main page is withheld is still offered.
   const groups = menuGroups("", workspaceId)
     .map((g) => ({
       ...g,
-      items: g.items.filter(allowed),
+      items: g.title === "Workspaces"
+        ? availableWorkspaces(permitted, shell.hosted).map((w) => workspaceLanding(w.id, permitted, shell.hosted)!)
+        : g.items.filter(allowed),
     }))
     .filter((g) => g.items.length);
-  const count = groups.reduce((sum, group) => sum + group.items.length, 0) + 1;
   const link = (item: ShellDestination, mobile = false, workspaceEntry = false) => {
-    const root = workspaceEntry ? workspaces.find((w) => w.primary === item.id) : undefined;
+    const root = workspaceEntry ? workspaces.find((w) => w.id === item.workspace) : undefined;
     const label = mobile
       ? item.id === "tickets"
         ? "Service"
@@ -238,7 +242,6 @@ function ProductNavigationView({
         </button>
       </header>
       <div className="ppo-more-body" ref={body}>
-        <WorkspacePicker />
         {shell.error && (
           <p className="ppo-menu-notice" role="status">
             {shell.error} <button onClick={shell.reload}>Try again</button>
@@ -291,12 +294,6 @@ function ProductNavigationView({
           </div>
         )}
       </div>
-      <footer>
-        <span>
-          Powerplants One
-        </span>
-        <span>{count} destinations</span>
-      </footer>
     </>
   );
   return (

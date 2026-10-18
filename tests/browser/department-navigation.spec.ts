@@ -129,8 +129,10 @@ test("Sales active drawings, real landing pages and More keyboard state", async 
   await capture(page, "active-keyboard-focus");
   await page.getByRole("button", { name: "More", exact: true }).focus();
   await page.keyboard.press("Enter");
-  // More has no search of its own (Dean, 18 October 2026): opening it moves focus to its first control.
-  await expect(page.locator("#desktop-more-panel").getByLabel("Workspace", { exact: true })).toBeFocused();
+  // More has no search or Workspace dropdown of its own (Dean, 18 October 2026): opening it moves
+  // focus to its first control, the first department under Workspaces.
+  await expect(page.locator("#desktop-more-panel").getByRole("link", { name: "Sales", exact: true })).toBeFocused();
+  await expect(page.locator("#desktop-more-panel select")).toHaveCount(0);
   await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
   await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Activities");
   await capture(page, "more-open");
@@ -156,7 +158,7 @@ test("Engineering and Service retain shared Contacts view through records, reloa
   await page.goto("/contacts?department=engineering");
   await expect(page).toHaveURL(/view=organisations/);
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByLabel("Workspace", { exact: true }).selectOption("service");
+  await page.locator("#desktop-more-panel").getByRole("link", { name: "Service operations", exact: true }).click();
   await expect(page).toHaveURL(/\/service\/tickets$/);
   await expect(page.getByRole("navigation", { name: "Service operations shortcuts" })).toBeVisible();
 });

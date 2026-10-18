@@ -86,7 +86,7 @@
 .ppo-more-link[aria-current=page] { background: #e8ecf1; color: #242a37; font-weight: 500; }
 .ppo-more-link[aria-current=page] .product-icon { color: #242a37; }
 .ppo-help-link { background: transparent; width: 100%; text-align: left; }
-.ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
 .ppo-preview-label::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #8b98a9; margin-right: 6px; vertical-align: middle; }
 .ppo-menu-notice { margin: 8px 12px; font-size: 12px; }
 .ppo-panel-hint { padding: 3px 8px 5px; margin: 0 0 12px; color: #778292; font-size: 11px; line-height: 1.55; }
@@ -387,9 +387,6 @@
 
 /* NAV-04: primary rail preference; secondary-menu docking stays at 1200 px. */
 .ppo-rail-label { display: none; }
-.ppo-workspace-picker { padding: 12px; display: grid; gap: 6px; }
-.ppo-workspace-picker select { min-height: 44px; width: 100%; min-width: 0; font: inherit; }
-.ppo-workspace-picker label { font-weight: 700; }
 @media (min-width: 781px) {
   .app-frame[data-rail=expanded] { --ppo-rail-width: 232px; }
   .ppo-rail .ppo-rail-toggle { flex: 0 0 44px; margin: 4px 0; }

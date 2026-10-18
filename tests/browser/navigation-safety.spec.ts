@@ -39,9 +39,10 @@ test("N04/N05/N10 Home and Workspace follow the current synthetic identity", asy
   expect(context.navigation).not.toContain("finance");
   await expect(page).not.toHaveURL(origin()+"/");
   await page.getByRole("button", { name:"More", exact:true }).click();
-  const picker = page.getByLabel("Workspace", {exact:true});
-  await expect(picker).toBeVisible();
-  expect(await picker.locator("option").allTextContents()).not.toContain("Finance");
+  // Workspaces in More offers only the departments this identity can reach (no separate dropdown since 18 October 2026).
+  const departments = page.locator(".ppo-more-panel:visible .ppo-menu-group").filter({ has: page.getByRole("heading", { name:"Workspaces", exact:true }) });
+  await expect(departments.getByRole("link").first()).toBeVisible();
+  expect(await departments.getByRole("link").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).not.toContain("Finance");
   await page.screenshot({path:test.info().outputPath("restricted-workspace.png")});
   // Existing unassigned Technician has no grants; no transport mock or new grant.
   await login(page,"technician");
@@ -53,7 +54,7 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   const preference=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key.startsWith("ppo.shell"))));
   let reviews=0;page.on("dialog",dialog=>{reviews++;void dialog.dismiss();});
   await page.getByRole("button",{name:"More",exact:true}).click();
-  await page.getByLabel("Workspace",{exact:true}).selectOption("engineering");
+  await page.locator(".ppo-more-panel:visible .ppo-menu-group").filter({has:page.getByRole("heading",{name:"Workspaces",exact:true})}).getByRole("link",{name:"Engineering",exact:true}).click();
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
   expect(await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key.startsWith("ppo.shell"))))).toEqual(preference);
   await page.keyboard.press("Escape");
@@ -196,7 +197,7 @@ for (const form of [
 });
 
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
-  test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
+  test.skip(isMobile,"Primary rail is a desktop control; mobile uses More and its Workspaces links.");
   await login(page);
   // The overview is an eight-row due-ordered window, not a complete register.
   // Place this owned synthetic fixture before its current earliest item.
@@ -231,7 +232,7 @@ test("N18/N19 primary rail expands, persists and retains endpoints in a short wi
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await page.setViewportSize({width:1280,height:400});
   await page.getByRole("button",{name:"More",exact:true}).click();
-  await expect(page.getByLabel("Workspace",{exact:true})).toBeVisible();
+  await expect(page.locator("#desktop-more-panel").getByRole("link",{name:"Sales",exact:true})).toBeVisible();
   await expect(page.getByText("Loading your work…",{exact:true})).not.toBeVisible();
   await page.screenshot({path:test.info().outputPath("expanded-short-more.png")});
   await page.keyboard.press("Escape");

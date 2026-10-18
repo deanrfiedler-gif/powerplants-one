@@ -37,18 +37,19 @@ The rails and menus are the Shell v2 components on the Components page of the pr
 - **Sales rail label.** The labelled rail shows "Estimating handovers" (`railLabel` in `src/shell/navigation.ts`). The accessible name, the tooltip, the page title and More keep "Sales-to-Estimating handovers", which contains the visible words.
 - **Secondary menus.** `SecondaryMenuFrame` now defaults to the Figma menu, with selectors that carry the same weight as the shared rules in `my-work.css`. My Work, the four Engineering control modules, Acceptance & closeout, Facilities, Products and the ES-08 lists take it. The module title block is no longer drawn (the breadcrumb names the module; the menu keeps its accessible name). Acceptance's retained baseline presentation is removed. ES-08's own menu rows take the drawn selected row.
 - **More.** The "Find a menu item" search box is removed from the More panel and the phone menu, with its filtering. The top bar's global search still finds pages by name. Opening More moves focus to its first control.
+- **More Workspace dropdown and footer.** Asked whether to draw them in Figma or remove them from the application, Dean chose: "Remove the More panel's Workspace dropdown and the "N destinations" footer from the app, so it matches the Figma v2 / More panel." Both are removed from the desktop panel and the phone menu. Workspaces in More is now the department choice: it offers every department the identity can reach (as the dropdown did, including one whose main page is withheld), and each link opens that department's landing and becomes the remembered department. The shell guide says so.
 
 ## 3. Not changed
 
-Rail membership, order, permissions and destinations; the More panel's Workspace choice, groups, Help and footer; Job Pack and the Projects register, which keep their own accepted page menus; Fertigation and CPQ section menus; phone navigation; no migration, seed, capability or parent ID.
+Rail membership, order, permissions and destinations; the More panel's groups and Help; Job Pack and the Projects register, which keep their own accepted page menus; Fertigation and CPQ section menus; the phone navigation bar; no migration, seed, capability or parent ID.
 
 ## 4. Still different from Figma
 
 - Menu contents on some pages: Products keeps its filters in the menu and has no icons (Figma draws Quick views with icons); ES-08 keeps its back link and note.
 - Leads, Work orders and Engineering workload have no secondary menu in the application yet, though their accepted pages draw one. Each needs its views built.
-- The More panel keeps its Workspace choice and its footer, which `v2 / More panel` (`79:51`) does not draw. Whether to draw them or remove them from the application is open with Dean.
 - On 18 October the component's "Find a menu item" search (`Menu search`) was removed in Figma to match the application; its instances inherit the change, and the Leads panels (`190:20688`, `190:20690`) were checked. No named version is saved and the committed captures are unchanged.
 - Rail count badges are drawn on several rails; only Projects has a count in the application.
+- The More panel still has a close button, Help, installation actions and the Shared records and Administration & support groups, which `v2 / More panel` does not draw; its department group is titled "Department pages" where Figma draws "More in" and the department name (for example "More in Estimating").
 
 ## 5. Verification
 
