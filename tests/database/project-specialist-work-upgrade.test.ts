@@ -94,7 +94,7 @@ test("PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sou
         "SELECT version FROM public.ppo_migrations WHERE version>105 ORDER BY version",
       )
     ).rows,
-    [{ version: 106 }, { version: 107 }, { version: 108 }],
+    [{ version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }],
   );
   assert.equal(
     (await c.query("SELECT count(*)::int n FROM ppo.project_specialist_work"))
