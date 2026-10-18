@@ -329,8 +329,20 @@
       "guide_key": "guide.cs.02",
       "design_path": "docs/design/development/pages/scope-cs-02.md",
       "html_path": "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/customers/people-design-r01/PPO-People-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-02-Desktop-Person-Overview-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-03-Desktop-Person-Relationships-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-04-Desktop-Correct-Details-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-05-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-06-Phone-List-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-07-Phone-Person-Overview-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-08-Phone-320-Person-Overview-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/people-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -6912,8 +6924,17 @@
       "guide_key": "guide.page.people.id",
       "design_path": "docs/design/development/pages/route-people-id.md",
       "html_path": "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/customers/people-design-r01/PPO-People-02-Desktop-Person-Overview-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-03-Desktop-Person-Relationships-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-04-Desktop-Correct-Details-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-07-Phone-Person-Overview-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-08-Phone-320-Person-Overview-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/people-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -6946,8 +6967,15 @@
       "guide_key": "guide.page.people",
       "design_path": "docs/design/development/pages/route-people.md",
       "html_path": "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/customers/people-design-r01/PPO-People-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-05-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-06-Phone-List-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/people-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -8460,8 +8488,15 @@
       "guide_key": "guide.page.contacts",
       "design_path": "docs/design/development/pages/route-contacts.md",
       "html_path": "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/customers/people-design-r01/PPO-People-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-05-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-06-Phone-List-r01.png",
+        "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/people-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
