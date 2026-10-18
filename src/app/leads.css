@@ -1494,7 +1494,8 @@
 
 /* The accepted side menu (leads-design.md L1/L2, Figma 190:20519) on the shared SecondaryMenuFrame. The
    frame (#ppo-leads) draws the Shell v2 menu from my-work.css and figma-shell.css; Leads adds only its
-   list reset, the 2 px rhythm between groups and the counts note. On desktop the frame's content column
+   list and link resets, a quiet overlay Close, the 2 px rhythm between groups and the counts note,
+   because it does not take My Work's element reset. On desktop the frame's content column
    hosts the workspace, whose table stays the one vertical scroll owner. */
 #ppo-leads .mw-menu ul {
   margin: 0;
