@@ -394,7 +394,7 @@ Dean replied: "I accept the AI and internal communications threads proposal and 
 - **Further ideas:** Dean accepted the proposal as a whole, so N1 to N14 are adopted as direction at the steps shown in section 11. Each keeps its dependency: N8 on D-002 delegation, N11 on Email & Calendar, and N13 on the deferred document and index decision.
 - **Still to do before a build:**
   - Carl's own agreement and the current owners' agreement (C2). Until then "Carl" is a working name, and "PPO Assistant" is the fallback (Q10);
-  - Dean's decision on A1 (the provider), before any live Carl answer;
+  - Dean's decision on A1 (the provider), before any live Carl answer. Accepted on 18 October 2026, issuing r03 of the [direction decision](ppo-assistant-direction.md#amendment-a1--claude-api-first-16-october-2026); the specification's pre-call checks still come first;
   - an AD-01 decision on record sharing, before T6;
   - the AI2 speech provider and a Powerplants driving policy (Q11), before T4;
   - the Figma design under ADR-0053, then Dean's named version and lock-in;
