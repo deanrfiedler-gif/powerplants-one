@@ -45,6 +45,7 @@ This is a design decision. It authorises none of the following:
 | Q4 Next | Resolved as recommended | Draw Create discovery workspace (`/estimating/discovery/new`) next, then Discovery costing (`/estimating/discovery/[id]/costing`). Both are registered routes with no Figma design |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
 | Named Figma version | User decision, 18 October 2026 | "Yes, save the named version "Discovery register — Pipedrive pattern, accepted" in the Figma desktop app." Saved in the Figma desktop app by a Claude session on Dean's yes and seen in version history at about 18:24 AEST as Dean Fiedler's entry. Afterwards only the page header's Status and Named version fields were updated; no frame changed |
+| Opportunity number format | User decision, 18 October 2026, after acceptance | "Yes, correct the Discovery register frames to SYN-PPO-OPP- numbers and refresh the captures." The frames were corrected and the captures remade (section 6) |
 | Proposed list-read fields | Build work, not confirmed data | Section 5 |
 | Building the page | Not decided | Section 5 |
 
@@ -60,7 +61,7 @@ This is a design decision. It authorises none of the following:
 | States | Phone 390: loading `1400:355914`; no matching workspaces `1400:356040`; could not load `1400:356154`. Desktop 1440: no workspaces yet `1402:3944`; view only, no create permission `1402:4539` |
 | Page parts | Section "Parts (proposal)" `1400:345375`: Discovery grid header `1400:345376` and Discovery grid row `1400:345440` (row set). They stay on the page, as the Sites and People parts do |
 | Flow | "Discovery register — desktop (proposal)", starting at `1400:345640`: the Northbank row opens the snapshot and Close returns |
-| Story | Synthetic, as at Tue 13 Oct 2026 09:00, signed in as Dean Fiedler. Eight workspaces. Northbank (OPP-000326) matches the accepted wizard: alternatives A Base scope (selected), B Reduced scope and C Staged delivery; A r03 saved 20 Sep 2026, Incomplete with two systems to confirm; estimate v04 AUD 58,400.00 costed on r02. Titles, customers and estimate versions follow Intake & workload's saved estimates. The frames show opportunity numbers as OPP-000326; the app's synthetic display numbers, and the accepted Sales briefs page, use SYN-PPO-OPP-000326 (section 5) |
+| Story | Synthetic, as at Tue 13 Oct 2026 09:00, signed in as Dean Fiedler. Eight workspaces. Northbank (SYN-PPO-OPP-000326) matches the accepted wizard: alternatives A Base scope (selected), B Reduced scope and C Staged delivery; A r03 saved 20 Sep 2026, Incomplete with two systems to confirm; estimate v04 AUD 58,400.00 costed on r02. Northbank's number is SYN-PPO-OPP-000326, the app's synthetic display number format (section 6). Titles, customers and estimate versions follow Intake & workload's saved estimates |
 | Retained captures | [Discovery register design r01](../reference/ui/estimating/discovery-register-figma-design-r01/README.md): eight icon-free PNGs with hashes |
 
 ## 3. Conformance declaration
@@ -91,7 +92,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
 
 ### Phone
 
-- **List:** labelled rows with the title and changed date; the number, customer and selected option; and a readiness and cost-basis line with an icon. At 320 the second line carries the number and customer only (D7).
+- **List:** labelled rows with the title and changed date; the number, customer and selected option letter; and a readiness and cost-basis line with an icon. At 320 the second line carries the number and customer only, and a long customer name ends in an ellipsis (D7).
 - **States:** loading; no matching workspaces, which names the filters that produce it (Incomplete, Estimator: Jordan Kim, 0 of 2); could not load, with no list or counts and a Retry loading action.
 
 ### Desktop states
@@ -129,7 +130,6 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
   - 200% zoom;
   - the snapshot's Revisions tab at full size, desktop loading and error states, and hover states.
 - **The Conversations action** is part of the proposed top-bar shell amendment.
-- **Opportunity number format.** The accepted frames show `OPP-000326`, but `display_number` in the app and its tests, and the accepted Sales briefs page, use `SYN-PPO-OPP-…`. Whether to correct the frames is Dean's decision; the frames are unchanged. A build follows `display_number`.
 - **Data in the frames:** the workspaces, opportunities, customers, estimates and people are synthetic. They are not operational records.
 
 ## 6. Audit and polish
@@ -147,14 +147,26 @@ At Dean's request Claude checked every frame for fonts (Roboto only), text left 
 
 The audit is recorded on the notes card `1402:350109`.
 
+### Correction after acceptance
+
+Another Claude session, drawing Create discovery workspace, found that the frames showed opportunity numbers as `OPP-000326`, while `display_number` in the app and its tests, and the accepted Sales briefs page, use `SYN-PPO-OPP-…`. Dean decided: "Yes, correct the Discovery register frames to SYN-PPO-OPP- numbers and refresh the captures." Claude then:
+- replaced all 53 numbers on the page (grid cells, phone rows, the snapshot subtitle and the notes card's story) and renamed the 48 grid rows;
+- widened the Opportunity column from 110 to 170 px in the Discovery grid header, all three row variants and the five grids (1649 to 1709 px), so the number is not cut off;
+- made each phone 390 second line the number, customer and selected option letter, dropping the option name or option count, which no longer fitted;
+- let the snapshot subtitle wrap to a second line, keeping "Dean Fiedler" together;
+- remade the eight captures from the corrected frames.
+
+At 320 the second lines keep the number and customer, and "SYN Greenhouse Demonstration" ends in an ellipsis, as Q3 accepts for the 320 title. The notes card records the correction. The named version predates the correction (section 7).
+
 ## 7. Verification
 
 - Claude checked the frames with screenshots taken inside Figma during the drawing and the audit.
-- The eight captures are copies of the accepted frames on the "Captures (icon-free)" page, from y = 228,000. Prototype links were removed from 112 layers, and each of the 344 Font Awesome icon instances was swapped for `Icon/placeholder`. Three scans followed:
+- The eight captures are copies of the corrected frames on the "Captures (icon-free)" page, from y = 228,000. Prototype links were removed from 112 layers, and each of the 344 Font Awesome icon instances was swapped for `Icon/placeholder`. Three scans followed:
   - no Font Awesome instance was left; the only visible vectors outside a placeholder or the logo are the four timeline dots in the snapshot's recent activity;
   - none of 697 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link or a flow starting point.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/estimating/discovery-register-figma-design-r01/README.md).
-- After the named version was saved, the page header's Decision record field and the notes card's Accepted paragraph were updated to point at this lock-in. The frames themselves were not changed.
+- After the named version was saved, the page header's Decision record field and the notes card's Accepted paragraph were updated to point at this lock-in.
+- The frames were then changed by the number correction in section 6, so the named version "Discovery register — Pipedrive pattern, accepted" shows the earlier `OPP-` numbers. The captures show the corrected frames. A later named version for the corrected frames is saved only on Dean's yes.
 - The page has one prototype flow. Claude did not play it in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
