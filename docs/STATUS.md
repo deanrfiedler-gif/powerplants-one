@@ -22,6 +22,16 @@ After 21 or more open pull requests repeatedly conflicted on `docs/STATUS.md`, t
 
 Open for Dean, not changed here: turning off "Require branches to be up to date" in favour of a merge queue or a merged-tree check, rendering the fragments after merge by workflow, and an open-pull-request check in CI. Branch protection and workflow files are untouched. Not verified: behaviour with two real concurrent pull requests, or GitHub's "Update branch" button on the rendered files. No application code, migration, permission or parent ID changes.
 
+## Design-register scope map and research folder in the documentation-only CI scope — 18 October 2026
+
+Open decision 6 of the [merge-conflict record](decisions/merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) called for a map of what the application and tests read under `docs/design`, `docs/reference` and the evidence before the documentation-only CI scope is widened. The map is now in section 4 of that record, and the scope grows by one folder. Only `scripts/ci_scope.py` and that record change; no workflow file, application code, migration, permission, parent ID or branch protection setting does.
+- **Map result.** The application builds the development catalogue from `docs/design/development` on every request, ten browser specs open the page guide and two assert its route-to-guide keys, a unit test builds the live catalogue, and `npm run check` runs `studio:check`. Register entries also read, hash and serve the files in `docs/reference/ui`. So design-register pull requests, reference pages and most evidence stay on the full suites.
+- **One design folder nothing reads.** `docs/design/research/` (Markdown, CSV and text) now counts as documentation. The classifier also searches the sources and tests for the folder name, and `--self-test` fails if any names it, so a future reader removes the folder from the scope in the same pull request.
+- **A delete or rename is never documentation only.** The register names 167 prose files; a missing one is a `studio:check` error that a documentation-only pull request would have skipped inside the required P01–P11 and CRM jobs. This closes a gap in the first change.
+- **Replay.** Over the 48 pull requests #536 to #583, with the same file lists for both classifiers, the first-change classifier scopes 13 and the extended one 15 (the two added are #537 and #539, research and prose only). Over #544 to #583 both scope 12. Ten of the 48 are held only by register, reference or evidence paths and still run everything.
+- **Checked:** the classifier passes its 62 self-test cases, including a negative run in which a test file naming the research folder made the self-test fail; the documentation checks pass on this branch.
+- **Not verified:** a real documentation-only pull request through branch protection; consumer names were checked on the current tree and two merge commits, not on every replayed pull request's merge tree. Not built: scoping register-only pull requests, which needs a content-aware check on `register.json` and `pages/*.md` or a smaller required job for the register and the page-guide specs.
+
 <!-- fragments:end -->
 
 ## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
