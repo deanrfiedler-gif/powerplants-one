@@ -90,6 +90,7 @@ window.fetch = async (input) => {
     data = { current: "tester", available: ["tester", "pack-reviewer"] };
   else if (url.pathname.endsWith("/shell/context")) data = {
     preference_scope: `${CRM.workspace}:${CRM.owner}`,
+    conversations: new URLSearchParams(location.search).get("conversations") === "1",
     navigation: destinations.filter(item => item.href).map(item => item.id),
       can_preview: true,
       display_name: "SYN Demo tester with a long display name",
@@ -99,6 +100,7 @@ window.fetch = async (input) => {
       { id: "contact", label: "Contact", module: "Contacts", href: "/customers/new?kind=person" },
     ],
   };
+  else if (url.pathname.endsWith("/conversations/badge")) data = { unread_threads: 3 };
   else if (url.pathname.endsWith("/shell/search")) data = {
     items: records.filter(record => record.title.toLowerCase().includes((url.searchParams.get("q") ?? "").toLowerCase())).map(record => ({ id: record.id, kind: "Opportunity", label: record.title, reference: record.display_number, href: `/sales/opportunities/${record.id}` })),
     has_more: false, limit_per_type: 5,
@@ -172,7 +174,7 @@ window.fetch = async (input) => {
   });
 };
 createRoot(document.getElementById("root")!).render(
-  <ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"}><div className="app-frame">
+  <ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"} development={new URLSearchParams(location.search).get("development") === "1"}><div className="app-frame">
     <ProductNavigation />
     <div className="workspace">
       <ProductHeader />

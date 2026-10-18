@@ -425,6 +425,11 @@
   .app-frame[data-rail=expanded] .ppo-more-panel { left: calc(var(--ppo-rail-width) + 10px); width: min(400px, calc(100vw - 248px)); }
 }
 /* The expanded rail leaves a narrow desktop's top bar shorter: the search narrows with it and stays centred. */
+/* With the builder and Conversations visible, reserve 368px for each side zone plus
+   two 12px grid gaps. Cap the search against the remaining header width (R9). */
+@media (min-width: 1201px) {
+  .app-frame:has(.ppo-studio-link):has(.ppo-conversations-action) { --ppo-search-width: min(clamp(232px, 28vw, 420px), calc(100vw - var(--ppo-rail-width) - 760px)); }
+}
 @media (min-width: 781px) and (max-width: 1200px) {
   .app-frame[data-rail=expanded] { --ppo-search-width: 220px; }
 }
