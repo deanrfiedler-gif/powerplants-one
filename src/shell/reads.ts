@@ -19,6 +19,7 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
   const { companies, working_company_id } = await workingCompanies(p);
   return { display_name: p.display_name, companies, working_company_id, preference_scope: `${p.workspace_id}:${p.actor_id}`, actions: actionsForCapabilities(capabilities),
     navigation: navigationForCapabilities(capabilities, process.env.PPO_ENV === "azure-demo"),
+    conversations: capabilities.has("conversation.read"),
     // This is a presentation preference for authenticated synthetic/demo users,
     // never an impersonation or permission switch. No production mode is enabled.
     can_preview: ["local-synthetic", "azure-demo"].includes(process.env.PPO_ENV ?? "") };

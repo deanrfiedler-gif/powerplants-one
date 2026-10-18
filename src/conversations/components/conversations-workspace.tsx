@@ -7,9 +7,9 @@ import { usePlatformResource } from "../../components/platform-resource";
 import type { ThreadSummary } from "../reads";
 import { NewThreadDialog } from "./new-thread-dialog";
 import { ThreadSidebar } from "./thread-sidebar";
+import { conversationsChanged } from "../events";
 
-export const conversationsChanged = "ppo-conversations-changed";
-export const announceConversationsChanged = () => window.dispatchEvent(new Event(conversationsChanged));
+export { conversationsChanged, announceConversationsChanged } from "../events";
 
 type ThreadList = { items: ThreadSummary[]; count: number };
 type Workspace = { items: ThreadSummary[] | undefined; loading: boolean; error: unknown; reload: () => void };

@@ -142,3 +142,29 @@ test("T1c-1 the records picker finds one record by its ID, within the sender's a
   const hidden = await call(outsider.cookie, `conversations/records?record_type=Opportunity&record_id=${deal.id}`);
   assert.ok(hidden.status === 403 || (hidden.body.items as unknown[]).length === 0);
 });
+
+// T1c-2 (PPO-CONV-T1C-DESIGN 10.1): the top-bar badge counts threads the viewer takes part in with an unread message.
+test("T1c-2 the badge counts unread threads the viewer takes part in", async () => {
+  assert.equal((await call(null, "conversations/badge")).status, 401);
+  const { coordinator, reader, record } = await fixture();
+  const badge = async (cookie: string) => {
+    const r = await call(cookie, "conversations/badge");
+    assert.equal(r.status, 200);
+    return r.body.unread_threads as number;
+  };
+  const before = await badge(reader.cookie), mine = await badge(coordinator.cookie);
+  // Tagging the reader makes them a participant with nothing read. T1b counts the author's own message too, until the
+  // thread page they land on marks it read (tests/database/conversations.test.ts).
+  const body = start(record, [{ ordinal: 1, kind: "Person", person_id: reader.actor_id }], "@{1} SYN badge?");
+  const thread = (await call(coordinator.cookie, "conversations", body)).body.record_id as string;
+  assert.equal(await badge(reader.cookie), before + 1);
+  assert.equal(await badge(coordinator.cookie), mine + 1);
+  const read = { ...base("Mark conversation read"), through_sequence: 1 };
+  assert.equal((await call(reader.cookie, `conversations/${thread}/read`, read)).status, 200);
+  assert.equal(await badge(reader.cookie), before);
+  assert.equal((await call(coordinator.cookie, `conversations/${thread}/read`, { ...read, operation_id: randomUUID() })).status, 200);
+  assert.equal(await badge(coordinator.cookie), mine);
+  // A profile without conversation.read has no badge to read.
+  const systems = await login("systems");
+  assert.equal((await call(systems.cookie, "conversations/badge")).status, 403);
+});

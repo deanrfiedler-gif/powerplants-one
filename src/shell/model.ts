@@ -27,6 +27,8 @@ export type ShellContext = {
   display_name: string; preference_scope?: string; actions: QuickAction[]; navigation: string[]; can_preview: boolean;
   // NR-18: the companies this person can work in, and the one chosen; null means all of them.
   companies?: { id: string; name: string }[]; working_company_id?: string | null;
+  // PPO-CONV-T1C-DESIGN 10.1: whether the viewer holds conversation.read anywhere, so the top bar shows Conversations.
+  conversations?: boolean;
 };
 export type SearchItem = { id: string; label: string; reference: string; kind: string; href: string; context?: string };
 export type SearchResults = { items: SearchItem[]; has_more: boolean; limit_per_type: number; state?: string; sources?: { kind: string; state: string }[] };

@@ -98,6 +98,7 @@ export const shellFontAwesome = {
   plus: "plus",
   help: "circle-question",
   bell: "bell",
+  conversations: "comments",
   close: "xmark",
   more: "ellipsis",
   sales: "briefcase",

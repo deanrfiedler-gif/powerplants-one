@@ -10,6 +10,8 @@ const shapes = {
   "plus": <><path d="M12 5v14M5 12h14"/></>,
   "help": <><circle cx="12" cy="12" r="9"/><path d="M9.5 8a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 3M12 17h.01"/></>,
   "bell": <><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></>,
+  // Top-bar Conversations action (PPO-CONV-T1C-DESIGN 10.1): two speech bubbles.
+  "conversations": <><path d="M15 9.5a5.5 4.5 0 0 0-11 0c0 1.4.7 2.6 1.8 3.4L5 16l3.2-1.6c.6.1 1.2.2 1.8.2 3 0 5-2.3 5-5.1Z"/><path d="M17.6 8.7c1.4.8 2.4 2.2 2.4 3.8 0 1.3-.6 2.4-1.6 3.2l.6 2.8-2.9-1.5c-.5.1-1 .2-1.6.2-1.6 0-3-.6-4-1.6"/></>,
   "close": <><path d="m6 6 12 12M18 6 6 18"/></>,
   "more": <><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></>,
   "sales": <><rect x="3" y="6" width="18" height="15" rx="2"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M3 11l9 5 9-5M9 14h6"/></>,
