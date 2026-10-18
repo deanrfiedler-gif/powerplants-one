@@ -2742,13 +2742,24 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-02-Desktop-Person-Snapshot-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-03-Desktop-Person-Record-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-04-Desktop-Competence-Evidence-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-06-Phone-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-07-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-08-Phone-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-09-Phone-320-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-10-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/decisions/field-team-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7749,14 +7760,21 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-02-Desktop-Person-Snapshot-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-06-Phone-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-07-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-10-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
-        "src/documents/components/client/job-pack-entry.tsx"
+        "src/documents/components/client/job-pack-entry.tsx",
+        "docs/decisions/field-team-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -10523,13 +10541,19 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-03-Desktop-Person-Record-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-04-Desktop-Competence-Evidence-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-08-Phone-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-09-Phone-320-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-10-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/decisions/field-team-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
