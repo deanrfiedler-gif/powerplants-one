@@ -52,11 +52,11 @@ export function ThreadSidebar({
       <div className="cv-filters">
         <button type="button" aria-pressed={filter === "WaitingOnYou"} onClick={() => toggle("WaitingOnYou")}>
           <span>Waiting on you</span>
-          <span className="cv-count">{counts.waiting}</span>
+          <span className="cv-count">{items ? counts.waiting : ""}</span>
         </button>
         <button type="button" aria-pressed={filter === "Mentions"} onClick={() => toggle("Mentions")}>
           <span>Mentions</span>
-          <span className="cv-count">{counts.mentions}</span>
+          <span className="cv-count">{items ? counts.mentions : ""}</span>
         </button>
       </div>
       {loading && (
