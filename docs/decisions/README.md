@@ -7,6 +7,8 @@
 
 [Discovery register design](discovery-register-figma-design.md) (PPO-ES02-DISCOVERY-REGISTER-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the `/estimating/discovery` register design: one row per workspace with its selected option, readiness and costing views, cost basis in words and a read-only snapshot. Its proposed list-read fields and building it are not decided.
 
+[Create discovery workspace design](create-discovery-workspace-figma-design.md) (PPO-ES02-CREATE-WORKSPACE-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the `/estimating/discovery/new` design: choose an eligible opportunity or arrive from an accepted Sales brief, the first discovery in the wizard layout, and a review-and-create dialog with four save outcomes. Building it is not decided.
+
 <!-- fragments:end -->
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).
