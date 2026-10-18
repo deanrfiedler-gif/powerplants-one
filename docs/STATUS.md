@@ -22,6 +22,10 @@ After 21 or more open pull requests repeatedly conflicted on `docs/STATUS.md`, t
 
 Open for Dean, not changed here: turning off "Require branches to be up to date" in favour of a merge queue or a merged-tree check, rendering the fragments after merge by workflow, and an open-pull-request check in CI. Branch protection and workflow files are untouched. Not verified: behaviour with two real concurrent pull requests, or GitHub's "Update branch" button on the rendered files. No application code, migration, permission or parent ID changes.
 
+## Leads side menu built — 18 October 2026
+
+The Leads page now draws the side menu Dean accepted on 11 October ([Leads design](decisions/leads-design.md) L1/L2, Figma `190:20519`) on the shared secondary menu: Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted, each with its icon and a full-match count. Every view is an existing list read and every count a key of the existing counts read; no rule, migration or capability is added. The icon tabs are gone and Status leaves the Filters menu. The [implementation record](decisions/leads-side-menu-implementation.md) maps each row to its read. Built on a branch stacked on the rail and menu alignment; the toolbar, columns, record window and rail badge are unchanged, and owner visual review of the application is pending. Work orders and Engineering workload follow separately.
+
 <!-- fragments:end -->
 
 ## Conversations T2 scope accepted, Carl answers in threads — 18 October 2026
