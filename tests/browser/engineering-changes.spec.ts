@@ -49,14 +49,15 @@ test("EN07-A03 A04 A05 A06 A08 A10 A53 A57 A58 A59: the register keeps the audit
   const root = page.locator("#ppo-changes");
   await expect(rows(page)).toHaveCount(8);
 
-  // A05 A03: first use is collapsed with the shared 24px disclosure strip. Shell top bar amendment (16 October
+  // A05 A03: first use is collapsed with the shared 20px disclosure strip (Figma v2 / Menu strip). Shell top bar amendment (16 October
   // 2026): the breadcrumb names the module alone on its register, the default view (R5); the tooltip keeps the path.
   await expect(root).toHaveAttribute("data-menu", "collapsed");
   await expect(page.locator("#ec-menu")).toBeHidden();
   await expect(page.getByRole("navigation", { name: "Breadcrumb" }).locator(".ppo-crumb")).toHaveText(["Engineering Change-Impact Review"]);
   await expect(page.locator(".ppo-crumbs")).toHaveAttribute("title", "Engineering / Engineering Change-Impact Review / Change register");
   await expect(page.locator(".product-heading .ppo-product-name")).toBeHidden();
-  expect(Math.round((await page.locator(".em-register").boundingBox())!.x)).toBe(Math.round((await root.boundingBox())!.x) + 24);
+  // The collapsed menu leaves the 20 px Figma strip (v2 / Menu strip) before the register.
+  expect(Math.round((await page.locator(".em-register").boundingBox())!.x)).toBe(Math.round((await root.boundingBox())!.x) + 20);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Engineering Change-Impact Review: Change register/);
   await expect(page.locator(".module-navigation")).toHaveCount(0);
 
