@@ -109,6 +109,16 @@ Dean accepted the Figma design for Findings and follow-up (SV-07) at the propose
 
 The named Figma version "Findings and follow-up — accepted" was saved on 18 October 2026 at Dean's request. No route, read model or service exists, and building the page is not decided. Aligning the accepted SV-06 side menu with the shared Service review menu is open. No code, migration, permission, capability or parent ID changes.
 
+## Field team design accepted — 18 October 2026
+
+Dean accepted the Figma design for the PL-02 register and person page (`/service/technicians`, `/service/technicians/[id]`): "I accept the Field team PL-02 design with your recommendations, including D1–D8 and Q1–Q5". The [decision](decisions/field-team-figma-design.md) records it as the named Figma version "Field team — accepted", and the [retained captures](reference/ui/service/field-team-design-r01/README.md) are ten icon-free PNGs with hashes.
+- The register uses the Work orders grid, with Technicians (default), Visits and Needs preparation in the side menu, the planner's people visuals and the large snapshot.
+- The person page is one scrolling page on the Work order record layout: an Evidence bar, seven-day availability tracks, competence with the built `competenceState` words and a read-only evidence panel, and upcoming visits. Nothing is edited there.
+- The Conversations action sits left of the information icon on every frame, as Dean asked; it stays part of the proposed top-bar shell amendment.
+- Build prerequisites: a published role, a booked-hours read on the planner's rule, a per-person competence summary and a person filter in the Field team URL.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
 ## Facilities CS-05 design accepted — 18 October 2026
 
 Dean accepted the Figma design for CS-05 Facilities and growing areas (`/facilities`, `/facilities/new`, `/facilities/[id]`, `/facilities/[id]/edit`) with the recommended answers: "I accept the Facilities and growing areas CS-05 design with your recommendations, including D1–D7 and Q1–Q4." The [design decision](decisions/facilities-figma-design.md) (PPO-CS05-FACILITIES-FIGMA-DEC) records departures D1–D7 and answers Q1–Q4. Seventeen icon-free captures with hashes are retained in [facilities-design-r01](reference/ui/customers/facilities-design-r01/README.md). The design register pages for the four routes and `scope:CS-05` cite the frames and captures. In Figma the File index has a Facilities row after Sites, and the capture copies sit on the Captures page from y = 240,000.
@@ -203,44 +213,6 @@ Dean accepted the Figma design for the PL-01 planner (`/schedule`): "I accept th
 This is a design decision only. No code, route, migration, permission or capability changes; the built planner has no tray or band yet. No device, accessibility or operational review is recorded.
 
 <!-- fragments:end -->
-
-## Field team design accepted — 18 October 2026
-
-Dean accepted the Figma design for the PL-02 register and person page (`/service/technicians`, `/service/technicians/[id]`): "I accept the Field team PL-02 design with your recommendations, including D1–D8 and Q1–Q5". The [decision](decisions/field-team-figma-design.md) records it as the named Figma version "Field team — accepted", and the [retained captures](reference/ui/service/field-team-design-r01/README.md) are ten icon-free PNGs with hashes.
-- The register uses the Work orders grid, with Technicians (default), Visits and Needs preparation in the side menu, the planner's people visuals and the large snapshot.
-- The person page is one scrolling page on the Work order record layout: an Evidence bar, seven-day availability tracks, competence with the built `competenceState` words and a read-only evidence panel, and upcoming visits. Nothing is edited there.
-- The Conversations action sits left of the information icon on every frame, as Dean asked; it stays part of the proposed top-bar shell amendment.
-- Build prerequisites: a published role, a booked-hours read on the planner's rule, a per-person competence summary and a person filter in the Field team URL.
-
-This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
-
-## Service review and reports design accepted — 18 October 2026
-
-Dean accepted the Figma design for the SV-06 register and report record (`/service/reports`, `/service/reports/[id]`): "I accept the Service review and reports SV-06 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-review-figma-design.md) records it as the named Figma version "Service review and reports — accepted", and the [retained captures](reference/ui/service/service-review-design-r01/README.md) are twelve icon-free PNGs with hashes.
-- The register uses the Work orders grid, with review queues in the side menu and the large snapshot. It keeps the built recent window of 200 reports.
-- The report record uses the shared record layout, with a Before issue bar and five view tabs. Review submission is edited in the Evidence tab using the built fields: Approved or Returned for each entry, Review decision, Authority disposition and internal remarks.
-- The customer report is issued as exact HTML and nothing is sent. Customer responses are bound to that exact report, and owned remaining work and a proposed (not booked) return visit follow from it.
-
-This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
-
-## Service requests design accepted — 17 October 2026
-
-Dean accepted the Figma design for the SV-01 register and SV-02 request record (`/service/tickets`, `/service/tickets/new`, `/service/tickets/[id]`): "I accept the Service requests SV-01 and SV-02 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-requests-figma-design.md) records it as the named Figma version "Service requests — accepted", and the [retained captures](reference/ui/service/service-requests-design-r01/README.md) are thirteen icon-free PNGs with hashes.
-- The register uses the Work orders grid, with triage queues in the side menu, a Board view and the large snapshot. Row checkboxes reverse the 23 September D7.
-- The request record uses the shared record layout, with a Before triage bar, view tabs and Complete triage edited in the tab.
-- Log a request stays a page. Its duplicate check offers to add the call to a matching open request.
-- Later stages wait for ADR-0043, which stays proposed. A shell follow-up should stop the 1024 px top bar clipping the account button.
-
-This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
-
-## Service planner design accepted — 17 October 2026
-
-Dean accepted the Figma design for the PL-01 planner (`/schedule`): "I accept the PL-01 Service planner design with your recommendations, including D1–D6 and the two open items as recommended". The [decision](decisions/service-planner-figma-design.md) records it as the named Figma version "Service planner — accepted", and the [retained captures](reference/ui/service/service-planner-design-r01/README.md) are twelve icon-free PNGs with hashes.
-- UXB-12 adopted: a tray for To plan and On hold work beside the board, and a Needs attention band naming one suggested action per row, including the field readiness gate's dispatch holds.
-- E9-style cards with travel as a tinted extension of the visit (a car on long segments), pastel purple circle avatars, and away people in full-height dimmed rows. The 10 October rules (no bars, no reasons on cards) are kept.
-- Desktop 1440 × 960 Day, Week, details, Plan visit and Move this visit?; tablet; phone 390 and 320 with four states. Departures D1–D6 are accepted. Hold reasons start as Parts, Customer and Access window, and the band comes before suggestions.
-
-This is a design decision only. No code, route, migration, permission or capability changes; the built planner has no tray or band yet. No device, accessibility or operational review is recorded.
 
 ## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
 
