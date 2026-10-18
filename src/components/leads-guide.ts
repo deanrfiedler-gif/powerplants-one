@@ -22,8 +22,8 @@ export const leadsGuide = {
     "A lead is an enquiry that has not yet become a deal. This page lists the leads you are permitted to see, in the order you choose, so you can triage new enquiries and keep the follow-up honest. Leads you cannot access are never shown.",
   features: [
     [
-      "Four working views",
-      "Inbox holds the leads still in play. Archived holds ones set aside, Disqualified holds ones ruled out, and Converted holds ones that became deals. Switch views with the four icons at the top left.",
+      "Views in the side menu",
+      "Inbox holds the leads still in play and My leads the ones you own. Status narrows the Inbox to New, Contacting or Nurturing, and Follow-up to leads that are Overdue or need a next action. Archived holds ones set aside, Disqualified ones ruled out, and Converted ones that became deals. Each view shows how many leads it holds under your current search, owner and source.",
     ],
     [
       "The next activity column",
@@ -49,7 +49,7 @@ export const leadsGuide = {
     ],
     [
       "Narrow the list",
-      "Everyone switches between all leads and your own. Filters holds a search box plus status and source, and shows a count when any are active. Clear filters resets them.",
+      "Everyone switches between all leads and your own. Filters holds a search box and the source, and shows a count when any are active. Clear filters resets them and keeps the view you are in.",
     ],
     [
       "Choose your columns",
@@ -89,7 +89,7 @@ export const leadsGuide = {
     ],
   ],
   mobile:
-    "On a phone the table is replaced by a card list. The top bar carries the view selector with search, sort and filter buttons beside it, and the + button at the bottom right adds a lead.",
+    "On a phone the table is replaced by a card list. The menu button in the header opens the same views as the side menu, and the view selector in the toolbar offers them too, with search, sort and filter buttons beside it. The + button at the bottom right adds a lead.",
   shortcuts: [
     ["Tab", "Move through the toolbar, the table and each row menu."],
     ["← →", "Resize the focused column by 10 pixels; hold Shift for 50."],

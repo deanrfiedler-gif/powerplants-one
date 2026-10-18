@@ -3623,6 +3623,16 @@
           "id": "nav-create-leave",
           "label": "Create-form leave review",
           "description": "F42 / principle 11: a dirty create form asks before rail (phone bar), header search or Back navigation discards it; a clean form leaves without asking. Fixture: tests/browser/navigation-safety.spec.ts on /customers/new, /service/tickets/new, /work/new, /service/work-orders/new and /sales/opportunities/new."
+        },
+        {
+          "id": "rail-menu-figma",
+          "label": "Rail and secondary menu to Figma (18 October 2026)",
+          "description": "Shell v2 components (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge; Rail · Service and Rail · Sales). Rail: plain 40 px toggle in both widths; collapsed 46 px logo, 22 px glyphs, first item 2 px under the toggle; a grouped rail uses 40 px items with 24 px ruled caps headings (collapsed: a centred 24 px rule); one department heading on every rail, Projects included; the labelled Sales rail shows \"Estimating handovers\" (Dean, 11 October 2026). SecondaryMenuFrame defaults to the Figma menu: #f6f7f9 panel with 8 px padding, 40 px items with 16 px icons, #e3e8ee selected row in #355b80, plain counts, caps headings, no drawn title, 20 px strip with a 4 × 36 handle and a 3 px blue edge on hover. Acceptance leaves its retained baseline; ES-08 contents align their selected row. More has no search of its own (Dean, 18 October 2026); opening it focuses its first control. Fixtures: tests/ui/desktop-shell.spec.ts, tests/browser/department-navigation.spec.ts, navigation-layout.spec.ts, shell.spec.ts, engineering-changes.spec.ts, engineering-materials.spec.ts and tests/unit/department-navigation.test.ts."
+        },
+        {
+          "id": "leads-side-menu",
+          "label": "Leads side menu (18 October 2026)",
+          "description": "The accepted Leads side menu (Figma 190:20519; leads-design.md L1/L2) on SecondaryMenuFrame, scope #ppo-leads, Figma presentation. Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted; each row has its icon and a neutral full-match count from GET /api/v1/crm/leads/counts under the toolbar's search, owner and source. Each view is an existing list read (view, status or follow_up); follow-up counts show \"+\" when some next activities cannot be read. Docked from 1200 px with the 20 px strip, an overlay from 781 to 1199 px, and an overlay with 44 px rows from the phone header; the phone's view picker offers the same views. Fixtures: tests/unit/leads-menu.test.ts and \"the accepted side menu opens each existing lead read with its full-match count\" in tests/browser/leads.spec.ts."
         }
       ],
       "implementation": [
@@ -3754,7 +3764,8 @@
         "scope:ES-08",
         "scope:SH-02",
         "scope:CS-01",
-        "route:/products"
+        "route:/products",
+        "route:/sales/leads"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -3982,6 +3993,14 @@
           "expected": "No desktop page moves when the shell context arrives; the rail paints once at the stored width.",
           "actual": "Functional browser proof on the compiled app only. A different identity in the same browser can still see one width change after load, because the cookie carries the browser's last width, not each identity's.",
           "action": "Owner review of first paint at 1440, 1024 and 820 px with labelled and compact rails; decide whether a per-identity server preference is wanted.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-rail-menu-figma",
+          "expected": "Rails and secondary menus match the Shell v2 components on the Figma Components page (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge, Rail · Service), and More has no search box, Workspace dropdown or footer.",
+          "actual": "Rail geometry, grouped rails, department heading, Sales rail label, the shared menu presentation, strip and edge measured equal to the Figma values on the running app at 1440 × 900 (labelled and collapsed). Job Pack and the Projects register keep their own accepted page menus; Fertigation and CPQ keep their own section menus. Menu contents still differ on some pages: Products keeps filters and has no icons, ES-08 keeps its back link and note, and Work orders and Engineering workload have no secondary menu yet. Leads draws its accepted menu since 18 October 2026 (state leads-side-menu). More's Workspace dropdown and footer are removed (Dean, 18 October 2026); its Workspaces links choose the department. Owner/device review not recorded.",
+          "action": "Owner review at 1440, 1024 and 390 px; build the drawn menu contents page by page.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
