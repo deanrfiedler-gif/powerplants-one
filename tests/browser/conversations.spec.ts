@@ -185,3 +185,111 @@ test.describe("T1c-1 thread view", () => {
     await expect(page.getByRole("heading", { name: title, level: 1 })).toBeVisible();
   });
 });
+
+test.describe("T1c-1 composer and New thread", () => {
+  async function askedName(page: Page) {
+    const id = await signIn(page, asked);
+    return { id, name: ((await (await page.request.get("/api/v1/local-session")).json()) as { display_name: string }).display_name };
+  }
+
+  test("T1c-1 New thread with an ask", async ({ page }) => {
+    const person = await askedName(page);
+    await signIn(page, asker);
+    const deal = crmCreate();
+    expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
+    const number = (await api<{ items: { display_number: string }[] }>(page, `crm/opportunities/${deal.id}`)).body.items[0].display_number;
+    await page.goto("/conversations?new=1");
+    const dialog = page.getByRole("dialog", { name: "New thread" });
+    await dialog.getByRole("combobox", { name: "About" }).fill(number);
+    await dialog.getByRole("option", { name: new RegExp(number) }).click();
+    const message = dialog.getByRole("textbox", { name: "Message" });
+    await message.fill("Where is the controller? ");
+    await dialog.getByRole("button", { name: "Tag a person" }).click();
+    await dialog.getByRole("option", { name: person.name }).click();
+    await expect(message).toHaveValue(`Where is the controller? @${person.name} `);
+    const askSwitch = dialog.getByRole("switch", { name: `Ask ${person.name}` });
+    await expect(askSwitch).toHaveAttribute("aria-checked", "false");
+    await askSwitch.click();
+    await dialog.getByRole("textbox", { name: `Question for ${person.name}` }).fill("SYN delivery date");
+    await dialog.getByLabel(`Reply by for ${person.name}`).fill("2026-10-30");
+    await expect(dialog.getByText("Title: Where is the controller?")).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Edit" })).toBeVisible();
+    await expect(dialog.getByText("Switch on Ask for anyone you're asking a question; you can add a reply-by date.")).toBeVisible();
+    await dialog.getByRole("button", { name: "Start thread" }).click();
+    await expect(page).toHaveURL(/\/conversations\/[0-9a-f-]{36}$/);
+    await expect(page.getByText(`Waiting on ${person.name} · SYN delivery date`)).toBeVisible();
+  });
+
+  test("T1c-1 the @ picker lists only people who can read the record", async ({ page }) => {
+    const { thread, dealId } = await askedThread(page);
+    await signIn(page, asker);
+    const people = (await api<{ items: { display_name: string }[] }>(page, `conversations/people?anchor_type=Opportunity&anchor_id=${dealId}`)).body.items;
+    await page.goto(`/conversations/${thread}`);
+    await page.getByRole("button", { name: "Tag a person" }).click();
+    const options = page.getByRole("listbox", { name: "People" }).getByRole("option");
+    await expect(options).toHaveCount(people.length);
+    await expect(options).toHaveText(people.map((p) => p.display_name));
+  });
+
+  test("T1c-1 pickers and the Ask switch are accessible", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    const message = page.getByRole("textbox", { name: "Message" });
+    await message.fill("Hello ");
+    await message.press("@");
+    const find = page.getByRole("combobox", { name: "Find a person" });
+    await expect(find).toBeFocused();
+    await expect(page.getByRole("listbox", { name: "People" }).getByRole("option").first()).toBeVisible();
+    await find.press("ArrowDown");
+    await find.press("Enter");
+    await expect(message).toHaveValue(/^Hello @.+ $/);
+    await expect(page.getByRole("switch").first()).toHaveAttribute("aria-checked", "false");
+  });
+
+  test("T1c-1 the draft survives a re-read", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    const message = page.getByRole("textbox", { name: "Message" });
+    await message.fill("Draft in progress ");
+    await page.getByRole("button", { name: "Tag a person" }).click();
+    await page.getByRole("listbox", { name: "People" }).getByRole("option").first().click();
+    const typed = await message.inputValue();
+    const reread = page.waitForResponse((r) => r.url().endsWith(`/api/v1/conversations/${thread}`) && r.request().method() === "GET");
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+    await reread;
+    await expect(message).toHaveValue(typed);
+    await expect(page.getByRole("switch").first()).toBeVisible();
+  });
+
+  test("T1c-1 a failed send keeps the message", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    await page.route(`**/api/v1/conversations/${thread}/messages`, (route) => route.abort());
+    const message = page.getByRole("textbox", { name: "Message" });
+    await message.fill("SYN kept after a failure");
+    await page.getByRole("button", { name: "Send" }).click();
+    await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
+    await expect(message).toHaveValue("SYN kept after a failure");
+    await page.unroute(`**/api/v1/conversations/${thread}/messages`);
+    await page.getByRole("button", { name: "Retry" }).click();
+    await expect(page.getByRole("log").getByText("SYN kept after a failure")).toHaveCount(1);
+    await expect(message).toHaveValue("");
+  });
+
+  test("T1c-1 a picker failure still lets you send", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.route("**/api/v1/conversations/people**", (route) => route.abort());
+    await page.goto(`/conversations/${thread}`);
+    await page.getByRole("button", { name: "Tag a person" }).click();
+    await expect(page.getByText("People could not be loaded.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await page.getByRole("textbox", { name: "Message" }).fill("SYN sent without tags");
+    await page.getByRole("button", { name: "Send" }).click();
+    await expect(page.getByRole("log").getByText("SYN sent without tags")).toBeVisible();
+  });
+});

@@ -1,5 +1,5 @@
 // The thread (PPO-CONV-T1C-DESIGN 5.3, 5.6 to 5.8): header, messages with their asks, and the footer.
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { api, ErrorNotice, RecordLink } from "../../components/business-ui";
 import { useIdentity } from "../../components/business-session";
@@ -38,7 +38,10 @@ export function ThreadView({ id, footer }: { id: string; footer?: (thread: Threa
   useVisibleRefresh(read.reload);
   const identity = useIdentity();
   const viewer = identity.actor_id;
-  const thread = read.data;
+  // A re-read briefly has no data; keep showing the last thread so the page and any draft stay in place (5.7).
+  const [kept, setKept] = useState<Thread>();
+  if (read.data && read.data !== kept) setKept(read.data);
+  const thread = read.error ? undefined : (read.data ?? kept);
   const accepts = useCallback((entry: { path: string }) => entry.path.startsWith("conversations/"), []);
   const command = useRecoverableCommand({ key: `ppo:conversations:${id}:state`, scope: identity, accepts, transport: api });
   const acceptedOperation = command.accepted?.receipt.operation_id;
