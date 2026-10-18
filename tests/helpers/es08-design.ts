@@ -96,7 +96,8 @@ export async function compareEs08Design(
           name: "Expand Specialist configuration menu",
           exact: true,
         });
-        expect((await strip.boundingBox())!.width).toBe(24);
+        // Figma v2 / Menu strip (18 October 2026).
+        expect((await strip.boundingBox())!.width).toBe(20);
         await strip.hover();
         await expect(page.locator("#ppo-specialist")).toHaveAttribute(
           "data-menu",

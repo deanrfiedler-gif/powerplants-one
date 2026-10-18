@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs\\design\\development\\register.json",
-  "register_sha256": "349fd14db87fd232cd1d182048340c76e74fe033c485120ae9a502e772fdfc89",
+  "register_sha256": "160a1a203ebcd934e2a1825f15687b5539b33b9354278ff0dad807cb481b6bce",
   "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -20,12 +20,12 @@
   "build": "01"
  },
  "totals": {
-  "entries": 362,
-  "placed": 359,
+  "entries": 364,
+  "placed": 361,
   "excluded": 3,
   "build": 43,
   "refine": 106,
-  "review": 204,
+  "review": 206,
   "decide": 6,
   "owner_reviewed": 28
  },
@@ -4028,11 +4028,11 @@
    "counts": {
     "build": 7,
     "refine": 0,
-    "review": 0,
+    "review": 2,
     "decide": 0
    },
    "scopes": 7,
-   "routes": 0,
+   "routes": 2,
    "systems": 0,
    "entries": [
     {
@@ -4056,6 +4056,28 @@
      "state": "build",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/conversations",
+     "title": "Conversations",
+     "kind": "route",
+     "module": "AI",
+     "path": "/conversations",
+     "rank": 135,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with AI-01"
+    },
+    {
+     "key": "route:/conversations/[id]",
+     "title": "Conversation thread",
+     "kind": "route",
+     "module": "AI",
+     "path": "/conversations/[id]",
+     "rank": 135,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with AI-01"
     },
     {
      "key": "scope:AI-02",

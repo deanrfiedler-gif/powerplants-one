@@ -637,9 +637,6 @@
   font-size: 12px;
   font-weight: 500;
 }
-.pj-workspace-label {
-  display: none;
-}
 #header-project-count {
   margin-left: auto;
 }
@@ -664,18 +661,6 @@
     background: transparent;
     box-shadow: none;
   }
-  .app-frame[data-rail="expanded"]:has(#ppo-projects) .pj-workspace-label {
-    display: block;
-    align-self: stretch;
-    padding: 4px 20px 10px;
-    color: #c9ced8;
-    font:
-      400 11px/16px Roboto,
-      Verdana,
-      sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.66px;
-  }
   .app-frame[data-rail="expanded"]:has(#ppo-projects)
     .ppo-rail
     .ppo-rail-toggle
@@ -690,7 +675,7 @@
     padding: 0 8px;
     gap: 2px;
   }
-  .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-item {
+  .app-frame:has(#ppo-projects) .ppo-rail .ppo-rail-item:where(:not(.ppo-rail-toggle)) {
     flex: 0 0 44px;
     height: 44px;
     font-weight: 400;
