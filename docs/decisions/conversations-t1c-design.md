@@ -3,7 +3,7 @@ document_id: PPO-CONV-T1C-DESIGN
 title: Conversations T1c design
 date: 2026-10-18
 owner: Dean Fiedler
-status: T1c split and the T1c-1 design agreed with Dean section by section on 18 October 2026; this written record awaits his review; no application code written
+status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; implementation plan written; no application code written
 versioning: git
 ---
 
@@ -11,7 +11,7 @@ versioning: git
 
 This record designs build step T1c of the [Conversations T1 scope](conversations-t1-scope.md) (PPO-CONV-T1-SCOPE): the `/conversations` page for people-only threads. It splits T1c into three pull requests and sets out the design of the first, T1c-1. T1b ([PR #568](https://github.com/deanrfiedler-gif/powerplants-one/pull/568), migration 0108 and seed 108) supplies the service in `src/conversations/`; it has no HTTP routes and no read for the context panel.
 
-It authorises no code by itself. T1c-1 is built from an implementation plan after Dean reviews this record. Each slice follows `AGENTS.md` in its own pull request.
+Dean accepted this record on 18 October 2026 (quote 8). T1c-1 is built from its [implementation plan](../superpowers/plans/2026-10-18-conversations-t1c-1.md). Each slice follows `AGENTS.md` in its own pull request.
 
 ## 1. Dean's words
 
@@ -24,6 +24,7 @@ Quoted as written, 18 October 2026:
 5. "Approach 1 and section 1 look right. Go on to section 2."
 6. "Section 2 looks right. Go on to section 3."
 7. "Section 3 and the title rule look right. Write the T1c-1 design to docs/decisions/conversations-t1c-design.md for my review."
+8. "I've reviewed docs/decisions/conversations-t1c-design.md and approve it. Write the T1c-1 implementation plan."
 
 ## 2. Decisions and evidence
 
@@ -37,7 +38,7 @@ Quoted as written, 18 October 2026:
 | Approach 1 and the routes and files (sections 4 and 5.1 to 5.2) | Claude's recommendation, adopted | Quote 5 |
 | Screens and states (section 5.3 and 5.6) | Claude's recommendation, adopted | Quote 6 |
 | Data flow, errors and testing (sections 5.7, 5.8 and 6) | Claude's recommendation, adopted | Quote 7 |
-| This written record | Awaiting Dean's review | Quote 7 |
+| This written record | User decision, accepted after review | Quote 8 |
 
 ## 3. The three slices
 
@@ -173,4 +174,4 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 ## 9. What this record does not do
 
-It authorises no code until Dean has reviewed it and an implementation plan exists. It does not change the shared shell, add the top-bar action or badge, build the context panel, add record-page lists, notifications, My Work or reminders, or decide how the reply-by reminder is scheduled. It does not decide A1 (the provider), the AD-01 sharing record, the speech provider, the driving policy or Carl's agreement to the name; none of them blocks T1c.
+It authorises T1c-1 only, built from its implementation plan. It does not change the shared shell, add the top-bar action or badge, build the context panel, add record-page lists, notifications, My Work or reminders, or decide how the reply-by reminder is scheduled. It does not decide A1 (the provider), the AD-01 sharing record, the speech provider, the driving policy or Carl's agreement to the name; none of them blocks T1c.
