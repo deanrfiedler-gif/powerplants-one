@@ -80,6 +80,12 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   const initials = accountInitials(p?.display_name);
   const closeAccount = () => { setShowIdentity(false); document.getElementById(hosted ? "hosted-account-toggle" : "identity-toggle")?.focus(); };
   const accountTitle = <div className="ppo-panel-titlebar"><h2>Account</h2><button className="ppo-top-action ppo-account-close" aria-label="Close account" onClick={closeAccount}><ShellIcon name="close" /></button></div>;
+  // PPO-CONV-T1C-DESIGN 10.2: the controls the narrow top bars give up. The Page guide moves here at 320 px, and the
+  // builder's design workspace below 1200 px and on phones (D2); the stylesheet shows each only where the bar hides it.
+  const accountShortcuts = <div className="ppo-account-shortcuts">
+    <button type="button" className="ppo-guide-link ppo-account-guide" onClick={() => window.dispatchEvent(new CustomEvent("ppo-shell-utility", { detail: "guide" }))}><ShellIcon name="info" /><span>Open page guide</span><ShellIcon name="chevron-right" /></button>
+    {shell.development && <button type="button" className="ppo-guide-link ppo-account-builder" onClick={() => { setShowIdentity(false); navigateWithReview(() => router.push("/development/page-register")); }}><ShellIcon name="engineering" /><span>Design and build workspace</span><ShellIcon name="chevron-right" /></button>}
+  </div>;
   const accountFooter = <footer className="ppo-panel-footer"><span className="ppo-preview-label">{shell.development ? "Powerplants One · r17" : "Powerplants One"}</span></footer>;
   async function select() {
     if (hosted) return;
@@ -163,6 +169,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
           {accountTitle}<div className="ppo-panel-body">
           <ShellAccountProfile name={p?.display_name} />
+          {accountShortcuts}
           {p && companyChoiceControl}
           {p && hostedRoles && <div className="identity-choice">
             <label htmlFor="hosted-role">Demo role</label>
@@ -194,6 +201,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <div id="identity-controls" className="identity-controls ppo-account-panel" hidden={!!(p && !showIdentity)} role="dialog" aria-label="Account">
         {accountTitle}<div className="ppo-panel-body">
         <ShellAccountProfile name={p?.display_name} />
+        {accountShortcuts}
         {p && companyChoiceControl}
         <p className="identity-explanation">Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.</p>
         <div className="identity-choice">

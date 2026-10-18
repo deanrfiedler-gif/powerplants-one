@@ -20,7 +20,10 @@ export const demoCapabilities = ["shared.read", "shared.internal.read", "activit
   "crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert", "estimating.read", "estimating.edit",
   "cpq.read", "cpq.author", "cpq.calculate",
   "estimating.quote.read", "estimating.quote.prepare", "email.read", "email.edit", "email.connect",
-  "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit"] as const;
+  "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
+  // Dean, 18 October 2026 (PPO-CONV-T1C-DESIGN 10.3): testers read deals and projects in this same Company A scope and
+  // validity, so under rule T1-1 they read and post in those records' conversations.
+  "conversation.read", "conversation.post"] as const;
 
 export function testerInput(value: unknown, now = Date.now()) {
   if (!Array.isArray(value) || value.length > 5) throw Error("Provide zero to five invited tester entries.");

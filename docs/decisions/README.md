@@ -35,6 +35,8 @@
 
 [Conversations T2 scope](conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) records how `@Carl` answers in threads: five slices T2a–T2e, rules T2-1 to T2-12 and the answers to W1–W9, accepted by Dean on 18 October 2026.
 
+[Conversations T1c design](conversations-t1c-design.md) (PPO-CONV-T1C-DESIGN) section 10 records how T1c-2 builds the top-bar action, badge and header departures, and Dean's decision to give hosted demo testers `conversation.read` and `conversation.post` under rule T1-1.
+
 [Changes and follow-up design](changes-follow-up-figma-design.md) (PPO-PL04-CHANGES-FOLLOW-UP-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-04 Figma design for `/schedule/changes` and `/schedule/policy-impact`, with departures D1–D7 and the recommended answers to Q1–Q4. The named version is saved; building the page is not decided.
 
 [Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-06 Figma design with D1–D7 and the recommended answers to Q1–Q4. P4, the weekday change and the build are separate.

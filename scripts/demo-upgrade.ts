@@ -334,6 +334,8 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No original row, hash or receipt is rewritten. Seed 108 copies live crm.opportunity.read/project.read grants
   // of PPO-LocalSynthetic users only as conversation.read/post, so no hosted tester (PPO-EntraDemo) gains either
   // capability and exposure there stays a separate decision. Existing runtime privileges cover the new objects.
+  // That decision (Dean, 18 October 2026; PPO-CONV-T1C-DESIGN 10.3) is the tester-conversations stage below: it adds no
+  // migration, seed or user, and copies an enabled invited tester's live deal/project read grants as the two duties.
   // 0109 (D-025 S2 customer communication core) adds empty immutable communication, ledger,
   // follow-up, preference, switch, template and synthetic-mailbox tables, the binding allowlist
   // rows, four identity types, eight outbox kinds and two default-denied duties. No seed, grant,
@@ -439,6 +441,31 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_id,valid_from,valid_to)
       VALUES($1,$2,$3,$4,$3,clock_timestamp(),$5) ON CONFLICT DO NOTHING`,
     [demoWorkspace, row.user_id, demoCompany, row.cap, row.expires_at]);
+    console.log("Demo upgrade stage: tester-conversations");
+    // Rule T1-1 for invited testers, as seed 108 does for local profiles: each live crm.opportunity.read or project.read
+    // grant becomes conversation.read and conversation.post in exactly its scope and validity. A duty already held in that
+    // scope, live or revoked, is left alone, so a later revocation survives a retry. Pack reviewers hold neither read.
+    const conversations = await db.query(`
+      SELECT DISTINCT ON (g.user_id,duty,g.scope_type,g.scope_id)
+        md5('ppo-conversations-t1c2:'||g.id::text||':'||duty)::uuid AS id,g.user_id,g.company_id,duty,g.scope_type,g.scope_id,g.site_id,g.valid_from,g.valid_to
+      FROM ppo.demo_testers t
+      JOIN ppo.users u ON (u.workspace_id,u.id)=(t.workspace_id,t.user_id)
+      JOIN ppo.permission_grants g ON (g.workspace_id,g.user_id)=(t.workspace_id,t.user_id)
+        AND g.capability IN ('crm.opportunity.read','project.read')
+      CROSS JOIN unnest(ARRAY['conversation.read','conversation.post']) AS duty
+      WHERE t.workspace_id=$1 AND t.tenant_id=$2 AND t.enabled AND u.active
+        AND u.issuer='PPO-EntraDemo' AND u.subject_id=t.tenant_id::text||'/'||t.object_id::text
+        AND t.expires_at>clock_timestamp() AND g.valid_from<=clock_timestamp()
+        AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())
+        AND NOT EXISTS(SELECT 1 FROM ppo.permission_grants old WHERE old.workspace_id=g.workspace_id AND old.user_id=g.user_id
+          AND old.capability=duty AND old.scope_type=g.scope_type AND old.scope_id=g.scope_id)
+      ORDER BY g.user_id,duty,g.scope_type,g.scope_id,g.capability,g.id`,
+    [demoWorkspace, tenant]);
+    if (!apply && conversations.rowCount) throw Error("Existing testers need the explicit upgrade-and-deploy operation.");
+    for (const row of conversations.rows) await db.query(`
+      INSERT INTO ppo.permission_grants(id,workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) ON CONFLICT DO NOTHING`,
+    [row.id, demoWorkspace, row.user_id, row.company_id, row.duty, row.scope_type, row.scope_id, row.site_id, row.valid_from, row.valid_to]);
     console.log("Demo upgrade stage: tester-role-profiles");
     const missingReviewers = await db.query(`
       SELECT t.object_id,t.expires_at

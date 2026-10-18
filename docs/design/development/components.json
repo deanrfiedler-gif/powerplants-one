@@ -3633,6 +3633,11 @@
           "id": "leads-side-menu",
           "label": "Leads side menu (18 October 2026)",
           "description": "The accepted Leads side menu (Figma 190:20519; leads-design.md L1/L2) on SecondaryMenuFrame, scope #ppo-leads, Figma presentation. Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted; each row has its icon and a neutral full-match count from GET /api/v1/crm/leads/counts under the toolbar's search, owner and source. Each view is an existing list read (view, status or follow_up); follow-up counts show \"+\" when some next activities cannot be read. Docked from 1200 px with the 20 px strip, an overlay from 781 to 1199 px, and an overlay with 44 px rows from the phone header; the phone's view picker offers the same views. Fixtures: tests/unit/leads-menu.test.ts and \"the accepted side menu opens each existing lead read with its full-match count\" in tests/browser/leads.spec.ts."
+        },
+        {
+          "id": "conversations-top-bar",
+          "label": "Conversations action, badge and narrow headers (T1c-2)",
+          "description": "D1, D2, D7 (PPO-CONV-T1C-DESIGN 10): a Conversations link left of the Page guide on every page and in the phone header, for viewers who hold conversation.read; current on /conversations; a badge of unread threads (\"9+\" above nine, none at zero) from GET /api/v1/conversations/badge, re-read on focus and after any Conversations command. At 360 px and narrower the phone header keeps 4 px sides and an 18 px title and the Page guide moves into the identity menu; from 781 to 1199 px and on phones the builder's design workspace moves into the identity menu. Fixtures: tests/unit/conversations-badge.test.ts, tests/http/conversations.test.ts (badge), tests/browser/conversations.spec.ts (action and badge, 320 px header)."
         }
       ],
       "implementation": [
@@ -3659,6 +3664,10 @@
         {
           "path": "src/shell/breadcrumb.ts",
           "symbol": "breadcrumb"
+        },
+        {
+          "path": "src/components/shell-conversations.tsx",
+          "symbol": "ShellConversations"
         }
       ],
       "dependencies": [
@@ -3716,7 +3725,10 @@
         "src/shell/page-title.ts",
         "src/shell/guide.ts",
         "docs/decisions/shell-top-bar-amendment.md",
-        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md"
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md",
+        "src/conversations/events.ts",
+        "src/conversations/badge.ts",
+        "src/app/api/v1/conversations/badge/route.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4001,6 +4013,14 @@
           "expected": "Rails and secondary menus match the Shell v2 components on the Figma Components page (v2 / Rail, Rail item, Menu item, Menu heading, Menu strip, Menu edge, Rail · Service), and More has no search box, Workspace dropdown or footer.",
           "actual": "Rail geometry, grouped rails, department heading, Sales rail label, the shared menu presentation, strip and edge measured equal to the Figma values on the running app at 1440 × 900 (labelled and collapsed). Job Pack and the Projects register keep their own accepted page menus; Fertigation and CPQ keep their own section menus. Menu contents still differ on some pages: Products keeps filters and has no icons, ES-08 keeps its back link and note, and Work orders and Engineering workload have no secondary menu yet. Leads draws its accepted menu since 18 October 2026 (state leads-side-menu). More's Workspace dropdown and footer are removed (Dean, 18 October 2026); its Workspaces links choose the department. Owner/device review not recorded.",
           "action": "Owner review at 1440, 1024 and 390 px; build the drawn menu contents page by page.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-conversations-action",
+          "expected": "Accepted T1 frames and the top-bar action state (Figma 1177:2196): the Conversations action left of the information icon with a badge on every page and in the phone header, and the 320 and 1024 px departures.",
+          "actual": "Built on branch feat/conversations-t1c-2 and measured on the running app at 1440, 1024, 390 and 320 px. The local drawing stands in for the Font Awesome comments glyph wherever the Kit does not load. The action is shown only to viewers with conversation.read, a proposed refinement of \"available to every user\" for Dean's review. The shared Figma Shell / Top bar and Shell / Phone header components are not yet changed and the icon-free T1 captures are not made: both wait for Dean's go-ahead. Owner/device review not recorded.",
+          "action": "Dean's go-ahead for the Figma lock-in; owner review at 1440, 1024, 390 and 320 px.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

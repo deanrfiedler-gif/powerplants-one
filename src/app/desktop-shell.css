@@ -45,6 +45,19 @@
 .ppo-header-menu-slot .ppo-menu-toggle:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
 .ppo-header-menu-slot .ppo-menu-toggle :is(svg, i.ppo-fa) { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .ppo-header-utilities { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+/* Conversations (PPO-CONV-T1C-DESIGN 10.1, D1, D2, D7): left of the Page guide, selected on /conversations as other shell
+   destinations are, with a count of threads that have something new: "9+" above nine, none at zero. */
+.ppo-top-action.ppo-conversations-action { position: relative; text-decoration: none; }
+.ppo-top-action.ppo-conversations-action[aria-current=page] { background: #e8ebf0; color: #242a37; }
+.ppo-top-badge { position: absolute; top: 3px; right: 1px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--danger, #993b2a); color: white; box-shadow: 0 0 0 2px white; font: 500 11px/18px PPOShellRoboto, Roboto, Verdana, sans-serif; text-align: center; pointer-events: none; }
+/* The narrow bars give controls to the identity menu (10.2): each shortcut there shows only where its bar hides it. */
+.ppo-account-shortcuts { display: none; flex-direction: column; gap: 8px; margin: 0 0 12px; }
+.ppo-account-shortcuts .ppo-account-guide, .ppo-account-shortcuts .ppo-account-builder { display: none; }
+@media (max-width: 1199px) {
+  .ppo-header-utilities .ppo-studio-link { display: none; }
+  .ppo-account-shortcuts:has(.ppo-account-builder) { display: flex; }
+  .ppo-account-shortcuts .ppo-account-builder { display: flex; }
+}
 .ppo-shell-header .header-tools { display: flex; margin: 0; padding: 0; gap: 0; border: 0; flex-shrink: 0; }
 .ppo-shell-header #header-search { display: none; }
 .ppo-shell-header .header-account { display: flex; align-items: center; min-height: 44px; }
@@ -340,6 +353,16 @@
    leave room for them; weight and colour match. */
 @media (max-width: 780px) {
   .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-crumb-current, .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-product-name { font-size: 17px; line-height: 24px; font-weight: 500; color: #242a37; }
+}
+/* 320 px departure (PPO-CONV-T1C-DESIGN 10.2; T1 scope section 6), so the page name stays whole beside Conversations: the
+   phone header keeps 4 px at each side, every page title is 18 px, and the Page guide moves into the identity menu. */
+@media (max-width: 360px) {
+  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header, .workspace:has(.identity-strip) .topbar.ppo-shell-header,
+  .workspace .topbar.ppo-shell-header:has(#header-menu:not(:empty)) { padding-left: 4px; padding-right: 4px; }
+  .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-crumb-current, .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-product-name,
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb-current { font-size: 18px; }
+  .ppo-header-utilities .ppo-guide-action { display: none; }
+  .ppo-account-shortcuts, .ppo-account-shortcuts .ppo-account-guide { display: flex; }
 }
 
 /* Installation entries and the manual instruction panel. Quiet secondary actions in the
