@@ -1,3 +1,4 @@
+STATUS	## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
 STATUS	## Conversations T1b built, no UI — 17 October 2026
 STATUS	## D-025 customer email decided — 17 October 2026
 STATUS	## Projects register design differences fixed — 17 October 2026
@@ -187,6 +188,7 @@ DECISIONS	[UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UX
 DECISIONS	[Customer communications decision paper for D-025](customer-communications-d025.
 DECISIONS	[ADR-0058](ADR-0058-outbound-customer-email.md) is its **accepted** provider rec
 DECISIONS	[Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** chang
+DECISIONS	[Customer communications core (D-025 S2)](customer-communications-core-s2.md) re
 DECISIONS	[UX benchmark research direction](ux-benchmark-research-direction.md) records De
 DECISIONS	[DK-03 exact revision and acknowledgement facts](output-register-facts.md) defin
 DECISIONS	[PJ-06 specialist package coordination](project-specialist-packages.md) records 
