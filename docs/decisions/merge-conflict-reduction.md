@@ -2,12 +2,16 @@
 document_id: PPO-MERGE-CONFLICT-DEC
 date: 2026-10-18
 owner: Dean Fiedler
-status: Proposed repository working rule; the scripts and checks apply from merge, and Dean's decision on the open items below is still needed; changes no application behaviour
+status: Owner-adopted repository working rule (18 October 2026) for the three controls; Dean's decision on the open items below is still needed; changes no application behaviour
 source_commit: c089e132de43a046c5b2938851ed59f0de770259
 versioning: git
 ---
 
 # Reducing merge conflicts between parallel pull requests
+
+## Decision
+
+On 18 October 2026 Claude recommended landing this record early, ahead of the other open pull requests, because `docs/STATUS.md` is where most merge conflicts happen. Dean replied: "Ok. We will proceed on that basis." The three controls below (fragments, number reservation and the working agreements) are adopted as written. The [open decisions](#open-decisions-for-dean) are not decided by that reply and stay with Dean.
 
 ## Context
 
@@ -15,7 +19,7 @@ On 17 and 18 October 2026 more than twenty pull requests were open at once. They
 
 Dean asked for the most professional approach. This record is the repository part: conventions and tooling that remove the avoidable conflicts. The [parallel contribution rules](parallel-contribution-rules.md) already set claim-first, one task per branch and narrow edits to shared files; they did not stop the collisions, because "narrow edits to a shared file" still means every pull request edits the same lines at the top of the same file.
 
-## What is proposed
+## What is adopted
 
 ### 1. Status and decision-index fragments
 
@@ -48,10 +52,10 @@ One owner per branch (only that session or person pushes to it); no stacking bey
 | Option | Verdict |
 |---|---|
 | Keep hand-edited shared files and rely on discipline | Rejected: this is the rule that failed on 17 and 18 October. |
-| Fragments with a rendered index committed to `main` (this record) | Proposed: no workflow or settings change needed, and `STATUS.md` still reads on GitHub. Rendered files can still conflict, mechanically. |
+| Fragments with a rendered index committed to `main` (this record) | Adopted: no workflow or settings change needed, and `STATUS.md` still reads on GitHub. Rendered files can still conflict, mechanically. |
 | Fragments rendered after merge by a workflow that commits to `main` | Better still: the rendered files then never conflict. It needs a new workflow file and write access, which the GitHub connector cannot add; listed as an open decision. |
 | Reservation in one shared CSV | Rejected: appending to one file is the conflict being removed. |
-| Number reservation by one file per number | Proposed. |
+| Number reservation by one file per number | Adopted. |
 
 ## Open decisions for Dean
 

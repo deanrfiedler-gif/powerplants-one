@@ -2343,12 +2343,21 @@
         "docs/reference/ui/service-cases/native-refinement-r02/16-register-list-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/19-phone-filters.png",
         "docs/reference/ui/service-cases/native-refinement-r02/20-phone-no-matches.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-02-Desktop-Request-Snapshot-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-03-Desktop-Board-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-08-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-09-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-10-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-04-Desktop-Log-A-Request-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/ADR-0043-service-request-lifecycle.md",
-        "docs/delivery/service-requests-integration-build-plan.md"
+        "docs/delivery/service-requests-integration-build-plan.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -2391,11 +2400,18 @@
         "docs/reference/ui/service-cases/native-refinement-r02/17-request-overview-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/21-phone-work-visits.png",
         "docs/reference/ui/service-cases/native-refinement-r02/22-phone-evidence.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-05-Desktop-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-06-Desktop-Complete-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-07-Desktop-Record-Linked-Work-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-11-Phone-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-12-Phone-Complete-Triage-Sheet-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -2564,8 +2580,23 @@
       "guide_key": "guide.sv.06",
       "design_path": "docs/design/development/pages/scope-sv-06.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-02-Desktop-Report-Snapshot-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-03-Desktop-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-04-Desktop-Review-Submission-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-05-Desktop-Customer-Report-Ready-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-06-Desktop-Customer-Response-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-07-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-08-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-09-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-10-Phone-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-11-Phone-Customer-Response-Sheet-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/service-review-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -2659,7 +2690,19 @@
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/planner-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-01-Desktop-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-02-Desktop-Visit-Selected-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-03-Desktop-Week-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-04-Desktop-Plan-Visit-From-Tray-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-05-Desktop-Move-This-Visit-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-06-Tablet-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-07-Phone-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-08-Phone-320-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-09-Phone-Week-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-10-Phone-Visit-Sheet-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-11-Phone-Needs-Attention-And-Tray-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-12-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
@@ -2667,7 +2710,8 @@
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "docs/decisions/service-planner-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -2698,13 +2742,24 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-02-Desktop-Person-Snapshot-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-03-Desktop-Person-Record-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-04-Desktop-Competence-Evidence-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-06-Phone-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-07-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-08-Phone-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-09-Phone-320-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-10-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/decisions/field-team-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7362,7 +7417,19 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/planner-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-01-Desktop-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-02-Desktop-Visit-Selected-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-03-Desktop-Week-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-04-Desktop-Plan-Visit-From-Tray-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-05-Desktop-Move-This-Visit-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-06-Tablet-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-07-Phone-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-08-Phone-320-Day-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-09-Phone-Week-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-10-Phone-Visit-Sheet-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-11-Phone-Needs-Attention-And-Tray-r01.png",
+        "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-12-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
@@ -7370,7 +7437,8 @@
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "docs/decisions/service-planner-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -7586,7 +7654,15 @@
       "guide_key": "guide.page.service.reports.id",
       "design_path": "docs/design/development/pages/route-service-reports-id.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-03-Desktop-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-04-Desktop-Review-Submission-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-05-Desktop-Customer-Report-Ready-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-06-Desktop-Customer-Response-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-10-Phone-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-11-Phone-Customer-Response-Sheet-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+      ],
       "dependencies": [
         "src/components/report-screens.tsx",
         "src/reports/service.ts",
@@ -7600,7 +7676,8 @@
         "docs/decisions/navigation-consolidation.md",
         "src/components/report-photo.tsx",
         "src/reports/photos.ts",
-        "docs/decisions/report-photo-inspection.md"
+        "docs/decisions/report-photo-inspection.md",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7632,7 +7709,14 @@
       "guide_key": "guide.page.service.reports",
       "design_path": "docs/design/development/pages/route-service-reports.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-02-Desktop-Report-Snapshot-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-07-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-08-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-09-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+      ],
       "dependencies": [
         "src/components/report-screens.tsx",
         "src/reports/service.ts",
@@ -7641,7 +7725,8 @@
         "src/shared/ui/use-recoverable-command.ts",
         "src/offline/app.ts",
         "docs/decisions/field-customer-response.md",
-        "docs/testing/evidence/field-customer-response/README.md"
+        "docs/testing/evidence/field-customer-response/README.md",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7675,14 +7760,21 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-02-Desktop-Person-Snapshot-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-06-Phone-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-07-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-10-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
-        "src/documents/components/client/job-pack-entry.tsx"
+        "src/documents/components/client/job-pack-entry.tsx",
+        "docs/decisions/field-team-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7722,11 +7814,18 @@
         "docs/reference/ui/service-cases/native-refinement-r02/17-request-overview-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/21-phone-work-visits.png",
         "docs/reference/ui/service-cases/native-refinement-r02/22-phone-evidence.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/24-narrow-request-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-05-Desktop-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-06-Desktop-Complete-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-07-Desktop-Record-Linked-Work-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-11-Phone-Record-Triage-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-12-Phone-Complete-Triage-Sheet-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7756,14 +7855,16 @@
       "html_path": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
       "image_paths": [
         "docs/reference/ui/service-cases/native-refinement-r01/05-log-request.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/18-phone-log-request.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/18-phone-log-request.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-04-Desktop-Log-A-Request-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7804,11 +7905,19 @@
         "docs/reference/ui/service-cases/native-refinement-r02/16-register-list-1024.png",
         "docs/reference/ui/service-cases/native-refinement-r02/19-phone-filters.png",
         "docs/reference/ui/service-cases/native-refinement-r02/20-phone-no-matches.png",
-        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png"
+        "docs/reference/ui/service-cases/native-refinement-r02/23-narrow-register-320.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-02-Desktop-Request-Snapshot-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-03-Desktop-Board-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-08-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-09-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-10-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/decisions/service-requests-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -10432,13 +10541,19 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-03-Desktop-Person-Record-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-04-Desktop-Competence-Evidence-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-08-Phone-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-09-Phone-320-Person-r01.png",
+        "docs/reference/ui/service/field-team-design-r01/PPO-Field-Team-10-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/decisions/field-team-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",

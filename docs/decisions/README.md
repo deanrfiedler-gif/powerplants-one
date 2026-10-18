@@ -5,7 +5,7 @@
 
 [Rails and secondary menus aligned with Figma](shell-rail-menu-figma-alignment.md) (PPO-SHELL-RAIL-MENU-FIGMA-DEC) records Dean's 18 October 2026 instruction to align the application's rails and secondary menus with the Shell v2 components in Figma and to remove the More panel's search, with the Figma values used and what still differs.
 
-[Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a **proposed** working rule of 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. It lists the branch-protection, merge-queue and workflow changes that remain Dean's decision.
+[Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a working rule Dean adopted on 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. The branch-protection, merge-queue and workflow changes it lists remain Dean's decision.
 
 [Leads side menu built on the shared secondary menu](leads-side-menu-implementation.md) (PPO-CRM-LEADS-SIDE-MENU-IMPL) records the 18 October 2026 build of the accepted Leads side menu, mapping each drawn view to an existing Leads read and count, with what is still the earlier page.
 
@@ -274,3 +274,23 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - One scrolling page with a readiness Tag in the header; Dispatch held or Ready to dispatch with its reasons; Parts and customer site readiness derived, never ticked by hand.
   - Job pack acknowledgements and Returns, customer contact records (never sent), follow-ups and change requests on the same page.
   - Seven icon-free captures are retained. Building the page is not decided; the gate criteria depend on PR #541.
+
+- [Service planner design — owner decision](service-planner-figma-design.md): the PL-01 planner (`/schedule`) drawn in Figma from the 10 October planner decisions, the field readiness gate and the E9 exemplar. It was refined with Dean and accepted on 17 October 2026 ("I accept the PL-01 Service planner design with your recommendations, including D1–D6 and the two open items as recommended") as the named version "Service planner — accepted".
+  - UXB-12 adopted: one tray for To plan and On hold work, and a Needs attention band with one suggested action per row, including the gate's dispatch holds.
+  - E9-style cards: 12 px type, one border, initials in the time line, travel as a tinted extension with a car on long segments, and no reasons. Pastel purple circle avatars; away people in full-height dimmed rows.
+  - Twelve icon-free captures are retained. Building the page is not decided; hold reasons and a suggestions read come first.
+
+- [Service requests design — owner decision](service-requests-figma-design.md): the SV-01 register (`/service/tickets`, `/service/tickets/new`) and SV-02 request record (`/service/tickets/[id]`), drawn in Figma on the accepted Work orders layouts. Accepted on 17 October 2026 ("I accept the Service requests SV-01 and SV-02 design with your recommendations, including D1–D6 and Q1–Q2") as the named version "Service requests — accepted".
+  - Grid register with triage queues in the side menu, a Board view and the large snapshot. Row checkboxes reverse the 23 September D7.
+  - The request record has a Before triage bar and view tabs. Complete triage is edited in the tab. Log a request offers to add the call to a matching open request.
+  - Thirteen icon-free captures are retained. Building the page is not decided; later stages wait for ADR-0043.
+
+- [Service review and reports design — owner decision](service-review-figma-design.md): the SV-06 register (`/service/reports`) and report record (`/service/reports/[id]`), with SV-07 remaining work and the FI-07 customer response on the report, drawn in Figma on the accepted Work orders layouts. Audited, polished and accepted on 18 October 2026 ("I accept the Service review and reports SV-06 design with your recommendations, including D1–D6 and Q1–Q2") as the named version "Service review and reports — accepted".
+  - Grid register with review queues in the side menu and the large snapshot.
+  - The report record has a Before issue bar and five view tabs. Review submission is edited in the Evidence tab. The customer report is issued as exact HTML and nothing is sent; responses are bound to that exact report.
+  - Twelve icon-free captures are retained. Building the page is not decided.
+
+- [Field team design — owner decision](field-team-figma-design.md): the PL-02 register (`/service/technicians`) and read-only person page (`/service/technicians/[id]`), drawn in Figma on the accepted Service review register, the Work order record layout and the Service planner people rows. Audited, polished and accepted on 18 October 2026 ("I accept the Field team PL-02 design with your recommendations, including D1–D8 and Q1–Q5") as the named version "Field team — accepted".
+  - Grid register with Technicians, Visits and Needs preparation in the side menu, the planner's people visuals and the large snapshot.
+  - The person page is one scrolling page with seven-day availability, competence evidence in a read-only panel and upcoming visits. Nothing is edited there.
+  - Ten icon-free captures are retained. Building the page is not decided.

@@ -7,20 +7,62 @@
 
 Dean asked for the left rails and secondary menus to match the Figma designs and for the search box in the secondary menu to be removed. The [decision](decisions/shell-rail-menu-figma-alignment.md) records the Figma components and values. The rail toggle is a plain row again; the collapsed rail, the grouped Service rail and the department heading now match the drawn rails; the labelled Sales rail reads "Estimating handovers" (Dean, 11 October). `SecondaryMenuFrame` defaults to the Figma menu, so My Work, Engineering, Acceptance, Facilities, Products and the ES-08 lists share it; Job Pack and the Projects register keep their accepted menus. The More panel has no search box, Workspace dropdown or footer (Dean chose removal of the last two the same day); its Workspaces links choose the department. Still different: some menu contents (Products filters, ES-08 back link), pages whose drawn menu is not built (Leads, Work orders, Engineering workload), and rail count badges. Built on a branch for review; CI, owner visual review and deployment are separate. No migration, permission, route or parent ID changes.
 
-## Merge conflict reduction proposed — 18 October 2026
+## Merge conflict reduction adopted — 18 October 2026
 
-After 21 or more open pull requests repeatedly conflicted on `docs/STATUS.md`, the decisions index, the document register and generated files, and #568 and #569 both claimed migration 0108, a [proposed working rule](decisions/merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) adds three controls. Dean's decision on the open items below is still needed.
+After 21 or more open pull requests repeatedly conflicted on `docs/STATUS.md`, the decisions index, the document register and generated files, and #568 and #569 both claimed migration 0108, a [working rule](decisions/merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) adds three controls. Dean adopted them on 18 October 2026: "Ok. We will proceed on that basis." Entries written before the convention landed stay in the frozen legacy part below.
 - **Fragments.** This entry is the first: a change adds `docs/status/YYYY-MM-DD-slug.md` and `python3 scripts/build_status.py` renders `docs/STATUS.md` and the decisions index from it, newest first, above the unchanged earlier text. The foundation check fails if the rendered part is edited by hand or the earlier part gains an entry. The rendered files can still conflict, but the fix is mechanical (see the [fragment guide](status/README.md)).
 - **Migration numbers.** `scripts/check_migrations.py` fails on duplicate, unregistered or out-of-order migration and seed versions and on a reservation for a number already used. A pull request claims its number with `--reserve` in `db/reservations/`; `--open-prs` compares against other open pull requests.
 - **Working agreements** in [CONTRIBUTING.md](../CONTRIBUTING.md#working-in-parallel): one owner per branch, no stacking beyond one level, re-merge `origin/main` right before each push.
 
-Open for Dean, not changed here: turning off "Require branches to be up to date" in favour of a merge queue or a merged-tree check, rendering the fragments after merge by workflow, and an open-pull-request check in CI. Branch protection and workflow files are untouched. Not verified: behaviour with two real concurrent pull requests, or GitHub's "Update branch" button on the rendered files. No application code, migration, permission or parent ID changes.
+Still open for Dean, not decided by that reply: turning off "Require branches to be up to date" in favour of a merge queue or a merged-tree check, rendering the fragments after merge by workflow, and an open-pull-request check in CI. Branch protection and workflow files are untouched. Not verified: behaviour with two real concurrent pull requests, or GitHub's "Update branch" button on the rendered files. No application code, migration, permission or parent ID changes.
 
 ## Leads side menu built — 18 October 2026
 
 The Leads page now draws the side menu Dean accepted on 11 October ([Leads design](decisions/leads-design.md) L1/L2, Figma `190:20519`) on the shared secondary menu: Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted, each with its icon and a full-match count. Every view is an existing list read and every count a key of the existing counts read; no rule, migration or capability is added. The icon tabs are gone and Status leaves the Filters menu. The [implementation record](decisions/leads-side-menu-implementation.md) maps each row to its read. Built on a branch stacked on the rail and menu alignment; the toolbar, columns, record window and rail badge are unchanged, and owner visual review of the application is pending. Work orders and Engineering workload follow separately.
 
+## Conversations T1b assumptions confirmed — 18 October 2026
+
+Dean confirmed the five assumptions T1b was built on, as written in the [T1b contract](contracts/conversations-t1b.md#assumptions-confirmed): "Ok. We will proceed on that basis." A reply closes all of that person's earlier open asks in the thread; the reply-by reminder falls due on the Brisbane reply-by date and the asker is told only on a later day; a resolved thread takes no posts until it is reopened; only the person asked can mark No answer needed; and the existing notice table is widened for the Conversation source. This replaces "five assumptions awaiting Dean's confirmation" in the T1b entry below. No code changes; T1c builds on these rules.
+
 <!-- fragments:end -->
+
+## Field team design accepted — 18 October 2026
+
+Dean accepted the Figma design for the PL-02 register and person page (`/service/technicians`, `/service/technicians/[id]`): "I accept the Field team PL-02 design with your recommendations, including D1–D8 and Q1–Q5". The [decision](decisions/field-team-figma-design.md) records it as the named Figma version "Field team — accepted", and the [retained captures](reference/ui/service/field-team-design-r01/README.md) are ten icon-free PNGs with hashes.
+- The register uses the Work orders grid, with Technicians (default), Visits and Needs preparation in the side menu, the planner's people visuals and the large snapshot.
+- The person page is one scrolling page on the Work order record layout: an Evidence bar, seven-day availability tracks, competence with the built `competenceState` words and a read-only evidence panel, and upcoming visits. Nothing is edited there.
+- The Conversations action sits left of the information icon on every frame, as Dean asked; it stays part of the proposed top-bar shell amendment.
+- Build prerequisites: a published role, a booked-hours read on the planner's rule, a per-person competence summary and a person filter in the Field team URL.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
+## Service review and reports design accepted — 18 October 2026
+
+Dean accepted the Figma design for the SV-06 register and report record (`/service/reports`, `/service/reports/[id]`): "I accept the Service review and reports SV-06 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-review-figma-design.md) records it as the named Figma version "Service review and reports — accepted", and the [retained captures](reference/ui/service/service-review-design-r01/README.md) are twelve icon-free PNGs with hashes.
+- The register uses the Work orders grid, with review queues in the side menu and the large snapshot. It keeps the built recent window of 200 reports.
+- The report record uses the shared record layout, with a Before issue bar and five view tabs. Review submission is edited in the Evidence tab using the built fields: Approved or Returned for each entry, Review decision, Authority disposition and internal remarks.
+- The customer report is issued as exact HTML and nothing is sent. Customer responses are bound to that exact report, and owned remaining work and a proposed (not booked) return visit follow from it.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
+## Service requests design accepted — 17 October 2026
+
+Dean accepted the Figma design for the SV-01 register and SV-02 request record (`/service/tickets`, `/service/tickets/new`, `/service/tickets/[id]`): "I accept the Service requests SV-01 and SV-02 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-requests-figma-design.md) records it as the named Figma version "Service requests — accepted", and the [retained captures](reference/ui/service/service-requests-design-r01/README.md) are thirteen icon-free PNGs with hashes.
+- The register uses the Work orders grid, with triage queues in the side menu, a Board view and the large snapshot. Row checkboxes reverse the 23 September D7.
+- The request record uses the shared record layout, with a Before triage bar, view tabs and Complete triage edited in the tab.
+- Log a request stays a page. Its duplicate check offers to add the call to a matching open request.
+- Later stages wait for ADR-0043, which stays proposed. A shell follow-up should stop the 1024 px top bar clipping the account button.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
+## Service planner design accepted — 17 October 2026
+
+Dean accepted the Figma design for the PL-01 planner (`/schedule`): "I accept the PL-01 Service planner design with your recommendations, including D1–D6 and the two open items as recommended". The [decision](decisions/service-planner-figma-design.md) records it as the named Figma version "Service planner — accepted", and the [retained captures](reference/ui/service/service-planner-design-r01/README.md) are twelve icon-free PNGs with hashes.
+- UXB-12 adopted: a tray for To plan and On hold work beside the board, and a Needs attention band naming one suggested action per row, including the field readiness gate's dispatch holds.
+- E9-style cards with travel as a tinted extension of the visit (a car on long segments), pastel purple circle avatars, and away people in full-height dimmed rows. The 10 October rules (no bars, no reasons on cards) are kept.
+- Desktop 1440 × 960 Day, Week, details, Plan visit and Move this visit?; tablet; phone 390 and 320 with four states. Departures D1–D6 are accepted. Hold reasons start as Parts, Customer and Access window, and the band comes before suggestions.
+
+This is a design decision only. No code, route, migration, permission or capability changes; the built planner has no tray or band yet. No device, accessibility or operational review is recorded.
 
 ## Conversations T2 scope accepted, Carl answers in threads — 18 October 2026
 

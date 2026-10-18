@@ -15,11 +15,22 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design: the [Service review design decision](../../../decisions/service-review-figma-design.md) of 18 October 2026, with captures 03–06 in [design r01](../../../reference/ui/service/service-review-design-r01/README.md).
+
+- **Layout:** the shared record layout (D4). The header carries a state Tag, Open work order and the state's primary action. A "Before issue" readiness bar lists entries approved, outcome declared, remaining work owned, site contact, customer report and customer response. The details column holds Summary; Customer, site and equipment; and Work order and request.
+- **Tabs:** Evidence, Work outcome, Customer report, Customer response and History.
+- **Review submission:** edits in the Evidence tab with a save bar (D5). Each entry is Approved or Returned with its review reason; the Review decision, Authority disposition and internal remarks follow. Nobody changes the technician's facts.
+- **Customer report:** the prepared HTML with its SHA-256, the recipient chosen at review, and a preview of exactly what the customer sees. Issuing fixes those bytes; nothing is sent.
+- **Customer response:** bound to the exact issued report, with the owned remaining action, the proposed (not booked) return visit, Finance readiness and the next customer update.
+- Nothing new is built.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 10–12 in [design r01](../../../reference/ui/service/service-review-design-r01/README.md). Status first, then view tabs, the submission panel and the entries, with Open work order and Review submission pinned. Record customer response is a full-screen sheet. The view-only and response-refused states are in image 12.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +43,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma design: [Service review design r01 captures](../../../reference/ui/service/service-review-design-r01/README.md) (twelve icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-review-figma-design.md). Images of the Work outcome and History tabs, the report after issue, a correction cycle, the photo inspection view, the Finance handoff and the tablet record are still missing.
 
 - [PPO-Service-Review-and-Reports-Workspace-r02.html](../../../reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html)
 
