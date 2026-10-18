@@ -1,32 +1,10 @@
 "use client";
-import { useId, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { availableWorkspaces, workspaceLanding, workspaceForLocation, departmentHref, workspaces, type WorkspaceId } from "../shell/navigation";
+import { useId } from "react";
+import { workspaces, type WorkspaceId } from "../shell/navigation";
 import { useShell } from "./shell-provider";
-import { navigateWithReview } from "./navigation-intent";
 
-export function WorkspacePicker() {
-  const shell = useShell(), router = useRouter(), path = usePathname(), query = useSearchParams();
-  const id = useId(), [notice, setNotice] = useState("");
-  const permitted = shell.context?.navigation ?? [];
-  const choices = availableWorkspaces(permitted, shell.hosted);
-  if (!shell.context || !choices.length) return null;
-  const selected = workspaceForLocation(path, new URLSearchParams(query), shell.preview, permitted);
-  return <section className="ppo-workspace-picker" aria-label="Workspace choice">
-    <label htmlFor={id}>Workspace</label>
-    <select id={id} value={choices.some(w => w.id === selected) ? selected : choices[0].id} onChange={event => {
-      const next = event.target.value as WorkspaceId, landing = workspaceLanding(next, permitted, shell.hosted);
-      if (!landing) return;
-      navigateWithReview(() => {
-        const saved = shell.selectWorkspace(next);
-        setNotice(saved ? "" : "Workspace remembered for this visit; browser storage is unavailable.");
-        router.push(departmentHref(landing.href!, next));
-      });
-    }}>{choices.map(w => <option key={w.id} value={w.id}>{w.label}</option>)}</select>
-    {notice && <p role="status">{notice}</p>}
-  </section>;
-}
-
+// Operational department choice is the Workspaces group in More (product-navigation.tsx); the
+// separate Workspace dropdown was removed on 18 October 2026 because Figma does not draw it.
 // Presentation-only preview is distinct from operational workspace selection.
 export function ShellWorkspaceSelector() {
   const shell = useShell(), id = useId();
