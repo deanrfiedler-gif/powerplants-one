@@ -1,6 +1,6 @@
 # PPO Assistant — Direction and architecture decision
 
-**Document:** PPO-AI-DEC · **Revision:** r02 · **Date:** 8 September 2026; r02 17 October 2026 · **Owner:** Dean Fiedler · **State:** Design direction authorised; implementation architecture proposed; runtime not implemented. Amendment A1 (Claude API as first live provider) proposed 16 October 2026 and awaiting Dean's decision. Amendment A2 (stored record threads) accepted by Dean on 17 October 2026, issuing r02.
+**Document:** PPO-AI-DEC · **Revision:** r03 · **Date:** 8 September 2026; r02 17 October 2026; r03 18 October 2026 · **Owner:** Dean Fiedler · **State:** Design direction authorised; implementation architecture proposed; runtime not implemented. Amendment A2 (stored record threads) accepted by Dean on 17 October 2026, issuing r02. Amendment A1 (Claude API as first live provider) accepted by Dean on 18 October 2026, issuing r03.
 
 ## Decision and authority
 
@@ -14,7 +14,7 @@ Keep ADR-0003/ADR-0015's modular monolith and PostgreSQL business boundary. Add 
 
 Use a durable actor-bound proposal/intent to bridge review and uncertain-save recovery; it retains the original command/operation identity without becoming another customer/activity store. Existing CRM mutation, audit, receipt and outbox remain atomic. Proposal metadata may lag and must reconcile from those receipts. Extract read-only authority validation only with regression proof; allocate additive schema at implementation against current main.
 
-Choose a deterministic, clearly labelled provider adapter for the first local workflow proof. Recommend evaluating the direct OpenAI API first for live synthetic use, with Azure OpenAI in Microsoft Foundry retained as an alternative. The specification records dated primary sources and costs. No exact SDK/model pin or provider purchase is made by this decision. Proposed [Amendment A1](#proposed-amendment-a1--claude-api-first-16-october-2026) would make the direct Claude API the first live candidate instead; this paragraph stands until Dean decides.
+Choose a deterministic, clearly labelled provider adapter for the first local workflow proof. Recommend evaluating the direct OpenAI API first for live synthetic use, with Azure OpenAI in Microsoft Foundry retained as an alternative. The specification records dated primary sources and costs. No exact SDK/model pin or provider purchase is made by this decision. [Amendment A1](#amendment-a1--claude-api-first-16-october-2026), accepted on 18 October 2026, makes the direct Claude API the first live candidate instead; where this paragraph differs, A1 governs.
 
 | Alternative | Reason for disposition |
 |---|---|
@@ -24,12 +24,12 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 | Hosted file/vector index in AI1 | Deferred: bounded relational records answer the selected questions; document ingestion, revision/deletion and index permissions need a later case |
 | Separate microservice or agent framework | Deferred: no demonstrated need; thin adapters and existing services suffice for this pilot |
 | Direct OpenAI versus Azure OpenAI | Direct API is the first evaluation candidate; Azure alignment is useful but actual region/model/tenant and cost are unverified. Preserve replaceability. |
-| Direct Claude API funded by Max 20x API credits | Proposed in Amendment A1 as the first live synthetic evaluation candidate, ahead of both OpenAI options; awaiting Dean's decision. |
+| Direct Claude API funded by Max 20x API credits | Adopted in Amendment A1 (r03, 18 October 2026) as the first live synthetic evaluation provider, ahead of both OpenAI options. |
 | Stored, shared threads on records | Adopted in Amendment A2 (r02, 17 October 2026) for the Conversations page; the "Stateless draft only" disposition above stands for side-panel chat. |
 
-## Proposed Amendment A1 — Claude API first (16 October 2026)
+## Amendment A1 — Claude API first (16 October 2026)
 
-**Status:** Proposed by Claude on 16 October 2026; not accepted. The text above is unchanged by A1 until Dean decides. Acceptance would issue the next revision of this record (r02 was issued for Amendment A2) and update the [document register](../standards/document-register.csv). Where A1 differs from the section above, A1 governs only once accepted.
+**Status:** Proposed by Claude on 16 October 2026. Accepted by Dean on 18 October 2026, issuing r03 of this record and updating the [document register](../standards/document-register.csv). The original wording above is kept; where A1 differs from it, A1 governs.
 
 **Question.** On 16 October 2026 Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API. The credit lands in one Claude Console organisation linked to the plan and pays for Claude API requests. It cannot be spent through Azure, Bedrock or Vertex. Specification §8 records the dated programme rules, data handling and costs.
 
@@ -52,8 +52,8 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 
 | Option under A1 | Disposition |
 |---|---|
-| Direct Claude API, credit-funded | Proposed first live synthetic evaluation provider |
-| Direct OpenAI API | Retained alternative; becomes first again if A1 is declined; needs its own account and budget |
+| Direct Claude API, credit-funded | First live synthetic evaluation provider (accepted 18 October 2026) |
+| Direct OpenAI API | Retained alternative; needs its own account and budget |
 | Azure OpenAI in Microsoft Foundry | Retained alternative for an Azure/Entra operating model; region, model and cost remain unverified |
 | Claude in Microsoft Foundry, Bedrock or Vertex | Not proposed now: the credit does not apply and billing is separate; a possible later Azure-aligned Claude route |
 | Buy API credits or enable auto-reload | Not proposed: turns credit exhaustion into continued spend; needs a separate paid-use decision |
@@ -62,7 +62,16 @@ Choose a deterministic, clearly labelled provider adapter for the first local wo
 
 **Decision required.** Dean can accept, amend or decline A1. The billing owner, data region, retention settings and authority for real data stay open whichever he chooses.
 
-**Dean's decision:** Not yet given. Record his exact words here when he decides.
+**Dean's decision (18 October 2026):** "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2." Dean chose this reply from answers Claude offered in the session. It adopts proposal items 1 to 4 as written.
+
+**Provider set-up done at Dean's direction, 18 October 2026.** This set-up is a fact about the account on that date, not something A1 authorised. Dean linked the Max 20x credit to a Claude Console organisation under his work login; it shows US$200 of promotional credit. The organisation holds no purchased credit and no payment method, so auto-reload cannot run. At Dean's request Claude created a dedicated, non-default workspace, "Powerplants One", with a US$30 monthly spend limit. Its data at rest is stored in the United States, and inference is global by default. Dean created an API key scoped to that workspace. It is held only in his git-ignored local `.env.local`, under the PPO-prefixed name `PPO_ANTHROPIC_API_KEY`. A free model-list request with it returned HTTP 200, and no model request has been made. The key, organisation and workspace identifiers are kept out of this public repository.
+
+**Still open after acceptance:**
+- **Pre-call checks.** Specification §8 still requires these before any paid call: the PPO-enforced reservation for the ceiling, restricted outbound destinations, and proof that no real data enters requests or logs.
+- **Billing owner.** Dean holds the plan, so he funds the synthetic evaluation. Who pays for any operational use is not decided.
+- **Data region and retention.** These are as configured above, and they are acceptable only for synthetic data. There is no Australian option and no zero-data-retention arrangement.
+- **Real data.** Using operational or customer data is not authorised.
+- **Model and SDK.** No model or SDK is pinned. The build that first calls the API pins them.
 
 ## Amendment A2 — stored record threads (17 October 2026)
 

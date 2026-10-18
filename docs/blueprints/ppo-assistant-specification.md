@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run. The §8 Claude API provider amendment (decision A1) was proposed on 16 October 2026 and awaits Dean's decision. The §7 stored record threads amendment (decision A2) was accepted by Dean on 17 October 2026.
+**Document:** PPO-AI-SPEC · **Date:** 8 September 2026 · **Owner:** Dean Fiedler · **State:** Proposed implementation specification; design preparation authorised; application and AI acceptance not run. The §8 Claude API provider amendment (decision A1) was proposed on 16 October 2026 and accepted by Dean on 18 October 2026. The §7 stored record threads amendment (decision A2) was accepted by Dean on 17 October 2026.
 
 ## 1. Outcome and authority
 
@@ -127,8 +127,8 @@ Proposed synthetic retention: chat and generated summaries remain in page memory
 | Option | Assessment for PPO | Decision |
 |---|---|---|
 | Deterministic synthetic adapter | Exercises parsing, source cards, review, permissions and recovery without API cost; it does not measure real AI quality | Default first implementation/test adapter, visibly labelled Simulated assistant |
-| Direct Claude API, funded by Max 20x API credits | Supports application-executed tools with strict schemas and JSON structured outputs; a small adapter fits PPO's server boundary. Dean's plan includes US$200 of API credit a month for one linked Console organisation | Proposed first live synthetic evaluation candidate ([decision A1](../decisions/ppo-assistant-direction.md#proposed-amendment-a1--claude-api-first-16-october-2026), awaiting Dean), pending billing owner, ceiling and actual evaluation |
-| Direct OpenAI API | Supports schema-defined tool calling and structured output; a small adapter fits PPO's server boundary | Retained alternative behind the provider adapter; it was the first candidate before A1 and becomes first again if A1 is declined |
+| Direct Claude API, funded by Max 20x API credits | Supports application-executed tools with strict schemas and JSON structured outputs; a small adapter fits PPO's server boundary. Dean's plan includes US$200 of API credit a month for one linked Console organisation | First live synthetic evaluation provider ([decision A1](../decisions/ppo-assistant-direction.md#amendment-a1--claude-api-first-16-october-2026), accepted 18 October 2026), with the US$30 ceiling; pending the pre-call checks and actual evaluation |
+| Direct OpenAI API | Supports schema-defined tool calling and structured output; a small adapter fits PPO's server boundary | Retained alternative behind the provider adapter; it was the first candidate before A1 was accepted |
 | Azure OpenAI in Microsoft Foundry | Fits a future Azure/Entra operating model; deployment type/region/model availability and billing must be verified | Retain as an alternative; hosting PPO on Azure does not require this provider |
 | Self-hosted model | Adds model-serving, hardware and maintenance work requiring a separate support case | Defer for this bounded pilot |
 
@@ -247,6 +247,6 @@ Compare completion time, clarification count, user edits, abandonment, latency (
 
 Ready for review: bounded scope, field mapping, screens, source/permission rules, command/recovery design, provider alternatives, illustrative costs, implementation sequence and acceptance procedures.
 
-Open before funded live evaluation: Dean's decision on A1 (credit-funded Claude API first), billing owner and ceiling, provider/account/region/model, measured quality/latency and retention settings. Open before wider use: real-data authority, hosted authentication, support ownership and domain evidence readiness. These do not block finishing or publishing this specification.
+Open before funded live evaluation: the §8 pre-call checks, the model and SDK pin, and measured quality/latency. A1 (credit-funded Claude API first, US$30 ceiling) was accepted on 18 October 2026; the decision record lists the account set-up and what stays open. Open before wider use: real-data authority, hosted authentication, support ownership and domain evidence readiness. These do not block finishing or publishing this specification.
 
 Next bounded instruction: implement AI1's simulated local synthetic journey against freshly verified CRM/shared services; preserve the provider-off default, then prepare a concrete live-evaluation configuration for the separate paid-use decision. The first implementation must clearly distinguish a simulated response from a tested real-model result.

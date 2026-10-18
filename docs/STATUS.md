@@ -1,5 +1,14 @@
 # Current prototype status
 
+## PPO Assistant: Claude API accepted as first live provider — 18 October 2026
+
+Dean accepted [Amendment A1](decisions/ppo-assistant-direction.md#amendment-a1--claude-api-first-16-october-2026), issuing r03 of PPO-AI-DEC: "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2."
+- **Provider:** the credit-funded direct Claude API is the first live synthetic evaluation provider. The direct OpenAI API and Azure OpenAI stay alternatives behind the same adapter, and the labelled simulated adapter is still built first.
+- **Account set-up, done the same day at Dean's direction:** the Max 20x credit is linked to a Console organisation that holds no purchased credit or payment method. A dedicated "Powerplants One" workspace has a US$30 monthly spend limit. Dean created a key scoped to that workspace and holds it only in his git-ignored local `.env.local`. A free model-list request with it succeeded, and no model request has been made.
+- **Still open:** the specification's pre-call checks, the model and SDK pin, the billing owner for any operational use, and any use of real data.
+
+No application code, dependency, migration or route changes. Carl's answers in Conversations are build step T2, and live answers follow the pre-call checks.
+
 ## Conversations T1b built, no UI — 17 October 2026
 
 T1b of [PPO-CONV-T1-SCOPE](https://github.com/deanrfiedler-gif/powerplants-one/pull/567) is built on branch `feat/conversations-t1b-threads`: migration 0108 and seed 108 add people-only threads on deals and projects, immutable messages, participants with last-read, person and record mentions, tracked asks with the N7 steps, and a `Mentions` notice source. `conversation.read` and `conversation.post` (proposed names, now 159 capability keys) follow the anchor record's own read capability and go to local synthetic profiles that already read deals or projects; hosted testers receive neither. See the [contract](contracts/conversations-t1b.md), which lists five assumptions awaiting Dean's confirmation. There is no route, page, top-bar icon, Carl or AI: those are T1c and later. Verification is database and unit proof on a disposable synthetic database; business acceptance and production readiness are not claimed.
@@ -204,7 +213,7 @@ New frames, drawn beside the accepted ones in sections "A1 · Field readiness ga
 
 ## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
 
-Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API: the credit lands in one Claude Console organisation linked to the plan. It cannot be spent through Azure, Bedrock or Vertex. Proposed [Amendment A1](decisions/ppo-assistant-direction.md#proposed-amendment-a1--claude-api-first-16-october-2026) adds the credit-funded direct Claude API as a provider candidate and recommends it as the first provider for AI1's live synthetic evaluation. The direct OpenAI API and Azure OpenAI stay alternatives behind the same replaceable adapter, and the labelled simulated adapter stays the first implementation. [Specification §8](blueprints/ppo-assistant-specification.md#8-provider-privacy-and-running-cost-proposal) now records, each with a source checked on 16 October:
+Dean asked whether the US$200 of monthly API credit in his Claude Max 20x plan could fund the PPO AI module. It can for the direct Claude API: the credit lands in one Claude Console organisation linked to the plan. It cannot be spent through Azure, Bedrock or Vertex. Proposed [Amendment A1](decisions/ppo-assistant-direction.md#amendment-a1--claude-api-first-16-october-2026) adds the credit-funded direct Claude API as a provider candidate and recommends it as the first provider for AI1's live synthetic evaluation. The direct OpenAI API and Azure OpenAI stay alternatives behind the same replaceable adapter, and the labelled simulated adapter stays the first implementation. [Specification §8](blueprints/ppo-assistant-specification.md#8-provider-privacy-and-running-cost-proposal) now records, each with a source checked on 16 October:
 
 - the credit rules: one linked organisation, changeable only through support; monthly expiry without rollover; requests stop when credit runs out unless purchased credit or auto-reload exists; a workspace spend limit; direct Claude API only;
 - Anthropic's retention and Commercial Terms: deletion within 30 days, flagged content kept up to two years, no training on customer content, zero data retention only by arrangement;
