@@ -1,5 +1,14 @@
 # Current prototype status
 
+## Service review and reports design accepted — 18 October 2026
+
+Dean accepted the Figma design for the SV-06 register and report record (`/service/reports`, `/service/reports/[id]`): "I accept the Service review and reports SV-06 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-review-figma-design.md) records it as the named Figma version "Service review and reports — accepted", and the [retained captures](reference/ui/service/service-review-design-r01/README.md) are twelve icon-free PNGs with hashes.
+- The register uses the Work orders grid, with review queues in the side menu and the large snapshot. It keeps the built recent window of 200 reports.
+- The report record uses the shared record layout, with a Before issue bar and five view tabs. Review submission is edited in the Evidence tab using the built fields: Approved or Returned for each entry, Review decision, Authority disposition and internal remarks.
+- The customer report is issued as exact HTML and nothing is sent. Customer responses are bound to that exact report, and owned remaining work and a proposed (not booked) return visit follow from it.
+
+This is a design decision only. No code, route, migration, permission or capability changes. No device, accessibility or operational review is recorded.
+
 ## Service requests design accepted — 17 October 2026
 
 Dean accepted the Figma design for the SV-01 register and SV-02 request record (`/service/tickets`, `/service/tickets/new`, `/service/tickets/[id]`): "I accept the Service requests SV-01 and SV-02 design with your recommendations, including D1–D6 and Q1–Q2". The [decision](decisions/service-requests-figma-design.md) records it as the named Figma version "Service requests — accepted", and the [retained captures](reference/ui/service/service-requests-design-r01/README.md) are thirteen icon-free PNGs with hashes.

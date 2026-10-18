@@ -2580,8 +2580,23 @@
       "guide_key": "guide.sv.06",
       "design_path": "docs/design/development/pages/scope-sv-06.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-02-Desktop-Report-Snapshot-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-03-Desktop-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-04-Desktop-Review-Submission-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-05-Desktop-Customer-Report-Ready-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-06-Desktop-Customer-Response-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-07-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-08-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-09-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-10-Phone-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-11-Phone-Customer-Response-Sheet-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/service-review-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7628,7 +7643,15 @@
       "guide_key": "guide.page.service.reports.id",
       "design_path": "docs/design/development/pages/route-service-reports-id.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-03-Desktop-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-04-Desktop-Review-Submission-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-05-Desktop-Customer-Report-Ready-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-06-Desktop-Customer-Response-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-10-Phone-Report-Evidence-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-11-Phone-Customer-Response-Sheet-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+      ],
       "dependencies": [
         "src/components/report-screens.tsx",
         "src/reports/service.ts",
@@ -7642,7 +7665,8 @@
         "docs/decisions/navigation-consolidation.md",
         "src/components/report-photo.tsx",
         "src/reports/photos.ts",
-        "docs/decisions/report-photo-inspection.md"
+        "docs/decisions/report-photo-inspection.md",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7674,7 +7698,14 @@
       "guide_key": "guide.page.service.reports",
       "design_path": "docs/design/development/pages/route-service-reports.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-02-Desktop-Report-Snapshot-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-07-Tablet-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-08-Phone-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-09-Phone-320-Register-r01.png",
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+      ],
       "dependencies": [
         "src/components/report-screens.tsx",
         "src/reports/service.ts",
@@ -7683,7 +7714,8 @@
         "src/shared/ui/use-recoverable-command.ts",
         "src/offline/app.ts",
         "docs/decisions/field-customer-response.md",
-        "docs/testing/evidence/field-customer-response/README.md"
+        "docs/testing/evidence/field-customer-response/README.md",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

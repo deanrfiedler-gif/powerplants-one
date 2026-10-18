@@ -271,3 +271,8 @@ The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
   - Grid register with triage queues in the side menu, a Board view and the large snapshot. Row checkboxes reverse the 23 September D7.
   - The request record has a Before triage bar and view tabs. Complete triage is edited in the tab. Log a request offers to add the call to a matching open request.
   - Thirteen icon-free captures are retained. Building the page is not decided; later stages wait for ADR-0043.
+
+- [Service review and reports design — owner decision](service-review-figma-design.md): the SV-06 register (`/service/reports`) and report record (`/service/reports/[id]`), with SV-07 remaining work and the FI-07 customer response on the report, drawn in Figma on the accepted Work orders layouts. Audited, polished and accepted on 18 October 2026 ("I accept the Service review and reports SV-06 design with your recommendations, including D1–D6 and Q1–Q2") as the named version "Service review and reports — accepted".
+  - Grid register with review queues in the side menu and the large snapshot.
+  - The report record has a Before issue bar and five view tabs. Review submission is edited in the Evidence tab. The customer report is issued as exact HTML and nothing is sent; responses are bound to that exact report.
+  - Twelve icon-free captures are retained. Building the page is not decided.
