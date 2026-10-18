@@ -15,11 +15,15 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with capture 05 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1445:381483`). The form follows the accepted Facilities create form (D7): Organisation, Owner and source, and Notes, with a "Check before creating" column that lists similar names in permitted companies and offers "Use this record". The check is a prompt, never a block, and nothing is merged automatically. Nothing new is built; the shared create form remains the built page.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Not drawn in the accepted design: Create organisation at tablet and phone ([design r01](../../../reference/ui/customers/organisations-design-r01/README.md)).
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -36,6 +40,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 - [PPO-Customer-360-Workspace-r01.html](../../../reference/ui/customers/PPO-Customer-360-Workspace-r01.html)
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Organisations design r01 captures](../../../reference/ui/customers/organisations-design-r01/README.md) and its [decision](../../../decisions/organisations-figma-design.md). The create form at tablet and phone is not drawn.
 
 The draft User Guide `guide.page.customers.new` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
