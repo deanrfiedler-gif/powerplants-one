@@ -128,6 +128,10 @@ Dean accepted the Figma design for starting a discovery workspace (`/estimating/
 
 Checked: no Font Awesome instance is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The named Figma version "Create discovery workspace — accepted" was saved at Dean's "Yes, save the named version "Create discovery workspace — accepted" in the Figma desktop app." Not done: the page is not built, and the built long create form is unchanged. Attaching an accepted brief when its opportunity is chosen (Q1) and creating from any step once the minimum is met (Q2) are build work, not confirmed behaviour. No application code, route, migration, permission or parent ID changes.
 
+## Conversations T2 scope added to the decisions index — 18 October 2026
+
+The [T2 scope record](decisions/conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) landed in main through the combined PR #583 with its register row and a STATUS entry, but without its line in the decisions index, because the PR that carried that line (#580) was closed once its content had landed. This adds the index line only. The record, its rules and Dean's acceptance are unchanged; no code, migration or route changes. Checked with `check_foundation.py`, `check_naming.py`, `check_prototype.py` and `build_status.py --check`; documentation assurance only.
+
 ## Conversations T1b assumptions confirmed — 18 October 2026
 
 Dean confirmed the five assumptions T1b was built on, as written in the [T1b contract](contracts/conversations-t1b.md#assumptions-confirmed): "Ok. We will proceed on that basis." A reply closes all of that person's earlier open asks in the thread; the reply-by reminder falls due on the Brisbane reply-by date and the asker is told only on a later day; a resolved thread takes no posts until it is reopened; only the person asked can mark No answer needed; and the existing notice table is widened for the Conversation source. This replaces "five assumptions awaiting Dean's confirmation" in the T1b entry below. No code changes; T1c builds on these rules.

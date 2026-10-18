@@ -33,6 +33,8 @@
 
 [Create discovery workspace design](create-discovery-workspace-figma-design.md) (PPO-ES02-CREATE-WORKSPACE-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the `/estimating/discovery/new` design: choose an eligible opportunity or arrive from an accepted Sales brief, the first discovery in the wizard layout, and a review-and-create dialog with four save outcomes. Building it is not decided.
 
+[Conversations T2 scope](conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) records how `@Carl` answers in threads: five slices T2a–T2e, rules T2-1 to T2-12 and the answers to W1–W9, accepted by Dean on 18 October 2026.
+
 [Changes and follow-up design](changes-follow-up-figma-design.md) (PPO-PL04-CHANGES-FOLLOW-UP-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-04 Figma design for `/schedule/changes` and `/schedule/policy-impact`, with departures D1–D7 and the recommended answers to Q1–Q4. The named version is saved; building the page is not decided.
 
 [Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the CS-06 Figma design with D1–D7 and the recommended answers to Q1–Q4. P4, the weekday change and the build are separate.
