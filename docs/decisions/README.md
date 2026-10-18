@@ -9,6 +9,8 @@
 
 [Leads side menu built on the shared secondary menu](leads-side-menu-implementation.md) (PPO-CRM-LEADS-SIDE-MENU-IMPL) records the 18 October 2026 build of the accepted Leads side menu, mapping each drawn view to an existing Leads read and count, with what is still the earlier page.
 
+[Conversations T2 scope](conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) records how `@Carl` answers in threads: five slices T2a–T2e, rules T2-1 to T2-12 and the answers to W1–W9, accepted by Dean on 18 October 2026.
+
 <!-- fragments:end -->
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).

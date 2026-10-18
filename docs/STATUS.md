@@ -20,6 +20,10 @@ Open for Dean, not changed here: turning off "Require branches to be up to date"
 
 The Leads page now draws the side menu Dean accepted on 11 October ([Leads design](decisions/leads-design.md) L1/L2, Figma `190:20519`) on the shared secondary menu: Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted, each with its icon and a full-match count. Every view is an existing list read and every count a key of the existing counts read; no rule, migration or capability is added. The icon tabs are gone and Status leaves the Filters menu. The [implementation record](decisions/leads-side-menu-implementation.md) maps each row to its read. Built on a branch stacked on the rail and menu alignment; the toolbar, columns, record window and rail badge are unchanged, and owner visual review of the application is pending. Work orders and Engineering workload follow separately.
 
+## Conversations T2 scope added to the decisions index — 18 October 2026
+
+The [T2 scope record](decisions/conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) landed in main through the combined PR #583 with its register row and a STATUS entry, but without its line in the decisions index, because the PR that carried that line (#580) was closed once its content had landed. This adds the index line only. The record, its rules and Dean's acceptance are unchanged; no code, migration or route changes. Checked with `check_foundation.py`, `check_naming.py`, `check_prototype.py` and `build_status.py --check`; documentation assurance only.
+
 <!-- fragments:end -->
 
 ## Conversations T2 scope accepted, Carl answers in threads — 18 October 2026
