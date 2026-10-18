@@ -11,6 +11,7 @@ import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
 import { breadcrumb, type Crumb } from "../shell/breadcrumb";
 import {
+  availableWorkspaces,
   canOpen,
   departmentHref,
   railDestinations,
@@ -27,7 +28,6 @@ import {
   type ShellDestination,
 } from "../shell/navigation";
 import { localDay } from "../activities/work-view";
-import { WorkspacePicker } from "./shell-workspace-selector";
 import { useRecordIdentity } from "../shell/record-identity";
 
 const subscribe = (changed: () => void) => {
@@ -110,10 +110,9 @@ function ProductNavigationView({
   useEffect(() => {
     if (shell.context && workspaceId !== shell.preview) shell.selectWorkspace(workspaceId);
   }, [workspaceId, shell]);
-  const [more, setMore] = useState(false),
-    [query, setQuery] = useState("");
+  const [more, setMore] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null),
-    search = useRef<HTMLInputElement>(null),
+    body = useRef<HTMLDivElement>(null),
     toggle = useRef<HTMLButtonElement>(null);
   const allowed = (item: ShellDestination) =>
     canOpen(item, permitted, shell.hosted);
@@ -124,7 +123,9 @@ function ProductNavigationView({
   useEffect(() => {
     if (!wide && more) dialog.current?.showModal();
     else dialog.current?.close();
-    if (more) search.current?.focus();
+    // More has no search of its own (the top bar's global search finds pages), so opening it moves
+    // focus to its first control, normally the first department under Workspaces.
+    if (more) body.current?.querySelector<HTMLElement>("a[href], button")?.focus();
   }, [more, wide]);
   useEffect(() => {
     const outside = (event: Event) => {
@@ -154,16 +155,19 @@ function ProductNavigationView({
       document.removeEventListener("keydown", key);
     };
   }, [more, wide]);
-  const groups = menuGroups(query, workspaceId)
+  // Workspaces is the only department choice in More (Dean, 18 October 2026: the separate Workspace
+  // dropdown is not drawn in Figma). It offers every department the identity can reach, each opening
+  // its landing, so a department whose main page is withheld is still offered.
+  const groups = menuGroups("", workspaceId)
     .map((g) => ({
       ...g,
-      items: g.items.filter(allowed),
+      items: g.title === "Workspaces"
+        ? availableWorkspaces(permitted, shell.hosted).map((w) => workspaceLanding(w.id, permitted, shell.hosted)!)
+        : g.items.filter(allowed),
     }))
     .filter((g) => g.items.length);
-  const showHelp = !query.trim() || "help quick help administration support".includes(query.trim().toLowerCase());
-  const count = groups.reduce((sum, group) => sum + group.items.length, 0) + Number(showHelp);
   const link = (item: ShellDestination, mobile = false, workspaceEntry = false) => {
-    const root = workspaceEntry ? workspaces.find((w) => w.primary === item.id) : undefined;
+    const root = workspaceEntry ? workspaces.find((w) => w.id === item.workspace) : undefined;
     const label = mobile
       ? item.id === "tickets"
         ? "Service"
@@ -237,48 +241,21 @@ function ProductNavigationView({
           <ProductIcon name="close" />
         </button>
       </header>
-      <div className="ppo-more-body">
-        <WorkspacePicker />
-        <label className="ppo-menu-search">
-          <ProductIcon name="search" />
-          <input
-            ref={search}
-            type="search"
-            aria-label="Find a menu item"
-            placeholder="Find a menu item"
-            maxLength={100}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-        </label>
+      <div className="ppo-more-body" ref={body}>
         {shell.error && (
           <p className="ppo-menu-notice" role="status">
             {shell.error} <button onClick={shell.reload}>Try again</button>
           </p>
         )}
         <nav aria-label={wide ? "More navigation" : "All modules"}>
-          {groups.length ? (
-            groups.map((group) => (
-              <section className="ppo-menu-group" key={group.title}>
-                <h3>{group.title}</h3>
-                {group.items.map((item) => link(item, false, group.title === "Workspaces"))}
-              </section>
-            ))
-          ) : showHelp ? null : (
-            <p className="ppo-panel-status">
-              No matching pages.{" "}
-              <button
-                onClick={() => {
-                  setQuery("");
-                  search.current?.focus();
-                }}
-              >
-                Clear search
-              </button>
-            </p>
-          )}
+          {groups.map((group) => (
+            <section className="ppo-menu-group" key={group.title}>
+              <h3>{group.title}</h3>
+              {group.items.map((item) => link(item, false, group.title === "Workspaces"))}
+            </section>
+          ))}
         </nav>
-        {showHelp && <button
+        <button
           className="ppo-more-link ppo-help-link"
           onClick={() => {
             dialog.current?.close();
@@ -290,15 +267,13 @@ function ProductNavigationView({
         >
           <ProductIcon name="help" />
           <span>Help</span>
-        </button>}
-        {!query.trim() && (
-          <InstallationActions
-            onNavigate={() => {
-              dialog.current?.close();
-              close();
-            }}
-          />
-        )}
+        </button>
+        <InstallationActions
+          onNavigate={() => {
+            dialog.current?.close();
+            close();
+          }}
+        />
         {!wide && (
           <div className="ppo-mobile-tools">
             {(["quick", "notifications"] as const).map((kind) => (
@@ -319,12 +294,6 @@ function ProductNavigationView({
           </div>
         )}
       </div>
-      <footer>
-        <span>
-          Powerplants One
-        </span>
-        <span>{count} destinations</span>
-      </footer>
     </>
   );
   return (
@@ -353,7 +322,7 @@ function ProductNavigationView({
         {wide && <button className="ppo-rail-item ppo-rail-toggle" disabled={!shell.context?.preference_scope} aria-label={shell.railExpanded ? "Collapse primary navigation" : "Expand primary navigation"} aria-expanded={shell.railExpanded} aria-controls="primary-navigation" onClick={() => shell.setRailExpanded(!shell.railExpanded)}>
           <ProductIcon name={shell.railExpanded ? "collapse" : "expand"} /><span className="ppo-rail-label">Collapse navigation</span>
         </button>}
-        {wide && (workspace.id === "projects" ? <span className="pj-workspace-label" aria-hidden="true">Projects</span> : <div className="ppo-rail-department" aria-hidden="true">{workspace.label}</div>)}
+        {wide && <div className="ppo-rail-department" aria-hidden="true">{workspace.label}</div>}
         {wide && <nav id="primary-navigation" className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
           const focused = document.activeElement;
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
@@ -365,7 +334,7 @@ function ProductNavigationView({
               onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
               onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
               <ProductIcon name={item.icon} active={activeId === item.id} />
-              <span className="ppo-rail-label">{item.label}</span>
+              <span className="ppo-rail-label">{item.railLabel ?? item.label}</span>
               {item.id === "projects" && <span id="header-project-count" />}
             </Link>);
             // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.

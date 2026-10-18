@@ -9,13 +9,13 @@ This is an editable working specification. Existing accepted page baselines take
 This page address exists in the inspected application source. Open it from a running app using an identity with the required access.
 
 1. Use + Lead to capture the enquiry and its source
-2. Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately
+2. Open a view from the side menu (Inbox, My leads, a status, Overdue, Next action needed, Archived, Disqualified or Converted); use Everyone and Filters to narrow it
 3. Open the lead title or row menu to review, schedule follow-up or perform an available transition
 4. Convert a qualified enquiry to its linked deal and retain the original lead history
 
 ## Desktop
 
-Accepted design (11 October 2026): the [Leads design decision](../../../decisions/leads-design.md), with captures 01–03 in [Leads design r01](../../../reference/ui/crm/leads-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid with a labelled Sales rail. The app still shows the icon tabs and the earlier list, and the shell parts wait for their own rollout decision.
+Accepted design (11 October 2026): the [Leads design decision](../../../decisions/leads-design.md), with captures 01–03 in [Leads design r01](../../../reference/ui/crm/leads-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid with a labelled Sales rail. Since 18 October 2026 the app draws the secondary menu (L1/L2) in place of the icon tabs; the toolbar (L3), the default columns (L4) and the record window (L6) are still the earlier list and Lead modal. See [Side menu built](#side-menu-built--18-october-2026).
 
 - **Layout at 1440 × 900:** the labelled 240 px Sales rail with Leads selected (white tile, Solid crosshairs icon, count) and the rail label "Estimating handovers"; the breadcrumb "Leads" (shell top bar amendment, 16 October 2026) as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
 - **Secondary menu:** Inbox and My leads; a Status group (New, Contacting, Nurturing); a Follow-up group (Overdue, Next action needed, from the next-action states); Other views (Archived, Disqualified, Converted). Every view shows a neutral count, which needs a count read. It collapses to a 20 px strip from its right border or the top-bar toggle.
@@ -107,3 +107,14 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 ## Counts and follow-up backend — 12 October 2026
 
 The [Leads read contract](../../../decisions/lead-register-backend.md) supplies the count and follow-up API prerequisites for the accepted register. Counts apply the caller's current scope and filters across all matches; unavailable next-activity evidence is explicit. The list adds MyLeads and Overdue/NextActionNeeded filtering while preserving row DTOs. [Backend evidence](../../../testing/evidence/lead-register/README.md) is separate from visual proof. The running page has not been wired to these reads; accepted menu/toolbar/badge presentation and a fresh visual review remain pending. No review fingerprint is promoted.
+
+## Side menu built — 18 October 2026
+
+Dean asked on 18 October 2026 for the rails and secondary menus to match the Figma designs; this builds the Leads side menu that the accepted page draws (Figma `190:20519`, decision L1/L2). [Implementation record](../../../decisions/leads-side-menu-implementation.md).
+
+- **Composition.** The page mounts the shared `SecondaryMenuFrame` (scope `#ppo-leads`) in its Figma presentation. Rows: Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted. Each row has the drawn icon and a neutral count. The icon tabs and the hidden View select are removed, and Status leaves the Filters menu because statuses are now views.
+- **Reads, not rules.** Each view is an existing read of `GET /api/v1/crm/leads` (`view`, `status` or `follow_up`), and each count is the same-named key of `GET /api/v1/crm/leads/counts` under the toolbar's search, owner and source. Overdue and Next action needed are the [backend's](../../../decisions/lead-register-backend.md) follow-up predicates. When some leads' next activities cannot be read, both follow-up counts show "+" and say how many leads are not counted. No rule, read, migration or capability is added.
+- **Desktop requirements.** At 1440 × 900 the menu is 240 px, docked from 1200 px, with rows at y = 8, 50, 92 (heading), 128 … 494, the same as the Figma frame. Collapsing from its right border leaves the 20 px strip, and the choice is kept per person in this browser (`ppo:<workspace>:<actor>:leads:presentation:v1`). From 781 to 1199 px the same menu opens as an overlay from the header's Show menu button. The table stays the one vertical scroll owner and nothing scrolls sideways at 960 or 1024 px.
+- **Mobile requirements.** The header's Leads menu button opens the same menu as an overlay with 44 px rows, and the existing view picker in the Leads toolbar now offers the same ten views, grouped. Choosing a view closes the overlay. List rows, the floating + and the tab bar are unchanged.
+- **Still the earlier page.** Toolbar (L3), default column order (L4), the grid's wording colours (L5), record window (L6), selection panel (L7), phone list rows (L8) and the rail badge. Loading, empty and failed states of the menu itself are not drawn in Figma: counts appear only once read, and a failed count read leaves the views working with a note.
+- **Fixtures.** `tests/unit/leads-menu.test.ts` (view order, mapping to backend reads, address round trip, counts query, partial follow-up counts); "the accepted side menu opens each existing lead read with its full-match count" in `tests/browser/leads.spec.ts` (desktop counts, geometry, views, collapse memory, 1024 px overlay; phone picker and overlay). Owner visual review of the application is pending; the 9 October review stays stale.

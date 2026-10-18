@@ -90,7 +90,7 @@ export function SecondaryMenuFrame({
   menu,
   message,
   children,
-  presentation = "shared",
+  presentation = "figma",
 }: {
   state: SecondaryMenuState;
   id: string;
@@ -101,7 +101,8 @@ export function SecondaryMenuFrame({
   menu: ReactNode;
   message: string;
   children: ReactNode;
-  // Keep existing module baselines explicit; new/shared consumers use the refined menu.
+  // Every menu takes the accepted Shell v2 menu from Figma (v2 / Menu item, heading, strip and edge;
+  // figma-shell.css). "shared" and "baseline" remain only as explicit opt-outs to the earlier menus.
   presentation?: "shared" | "baseline" | "figma";
 }) {
   const { docked, phone, open, toggle, closeOverlay, overlay } = state;
