@@ -5,10 +5,10 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs\design\development\register.json` (SHA-256 `ed684773547e41c1…`).
+- Register: `docs\design\development\register.json` (SHA-256 `f1156a315b309da4…`).
 - Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
-- 362 entries: 359 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
-- 204 built and awaiting owner review; 106 to refine; 43 to build; 6 awaiting a scope decision.
+- 364 entries: 361 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
+- 206 built and awaiting owner review; 106 to refine; 43 to build; 6 awaiting a scope decision.
 - Review track starts at phase 00; build track starts at phase 01.
 
 | Phase | Title | After phases | Scopes | Routes | Review | Refine | Build | Decide |
@@ -22,7 +22,7 @@ Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register
 | 06 | Finance, maintenance and customer lifecycle | 01, 02, 03, 04, 05 | 19 | 25 | 32 | 7 | 5 | 0 |
 | 07 | Connected communications and knowledge | 00, 01 | 6 | 3 | 0 | 5 | 4 | 0 |
 | 08 | Reporting and customer access | 01, 02, 03, 04, 05, 06, 07 | 12 | 0 | 0 | 0 | 12 | 0 |
-| 09 | Evidence-based assistance | 01, 07 | 7 | 0 | 0 | 0 | 7 | 0 |
+| 09 | Evidence-based assistance | 01, 07 | 7 | 2 | 2 | 0 | 7 | 0 |
 | 10 | Cutover and full-app adoption | 01, 07, 08 | 4 | 0 | 0 | 1 | 3 | 0 |
 | 11 | Conditional future options | 01, 02, 04, 05, 07, 08 | 6 | 0 | 0 | 0 | 0 | 6 |
 
@@ -459,6 +459,8 @@ Build answer evidence and permissions before assistant proposals, drafting, voic
 |---:|---|---|---|---|
 | 134 | `scope:AI-03` | Source and answer evidence inspection | To build | Issued r02 rank |
 | 135 | `scope:AI-01` | Assistant workspace and docked/mobile conversation | To build | Issued r02 rank |
+| 135 | `route:/conversations` | Conversations | Built; owner review pending | Added after r05; placed with AI-01 |
+| 135 | `route:/conversations/[id]` | Conversation thread | Built; owner review pending | Added after r05; placed with AI-01 |
 | 136 | `scope:AI-02` | AI proposal review and saved outcomes | To build | Issued r02 rank |
 | 137 | `scope:AI-04` | Domain assistance and drafting flows | To build | Issued r02 rank |
 | 138 | `scope:AI-05` | Voice capture and transcript review | To build | Issued r02 rank |

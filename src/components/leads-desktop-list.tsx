@@ -271,6 +271,8 @@ export function LeadsDesktopList({
   href,
   preferenceKey,
   view,
+  label,
+  empty,
   more,
   onNext,
   onFirst,
@@ -285,7 +287,10 @@ export function LeadsDesktopList({
   selected?: string;
   href: (id: string) => string;
   preferenceKey: string;
+  // The lifecycle read (row menus), the side-menu view's name and its empty-state heading.
   view: string;
+  label: string;
+  empty: string;
   more: boolean;
   onNext: () => void;
   onFirst: () => void;
@@ -818,9 +823,7 @@ export function LeadsDesktopList({
           <div className="lead-empty">
             <ProductIcon name="sales" />
             <h2>
-              {filtered
-                ? "No leads match your filters"
-                : `No ${view === "Active" ? "active" : view.toLowerCase()} leads`}
+              {filtered ? "No leads match your filters" : empty}
             </h2>
             <p>
               {filtered
@@ -836,7 +839,7 @@ export function LeadsDesktopList({
       <footer className="lead-list-footer">
         <span>
           {items.length} {items.length === 1 ? "lead" : "leads"} on this page ·{" "}
-          {view === "Active" ? "Inbox" : view}
+          {label}
         </span>
         <div>
           <button

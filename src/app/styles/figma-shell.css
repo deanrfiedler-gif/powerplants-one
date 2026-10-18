@@ -7,11 +7,19 @@
   --ppo-shell-link: #355b80;
   --ppo-rail-text: #e0e1e3;
   --ppo-rail-muted: #acaeb3;
+  /* Shell v2 components on the Figma Components page 1:4 (v2 / Rail, Rail item, Menu item, Menu heading,
+     Menu strip, Menu edge). */
+  --ppo-rail-rule: #474c57;
+  --ppo-shell-hover: #f0f2f5;
+  --ppo-shell-icon: #596779;
+  --ppo-shell-muted: #667181;
+  --ppo-shell-handle: #cbd2dc;
+  --ppo-shell-accent: #365d8b;
 }
 .ppo-rail-department { display: none; }
 @media (min-width: 781px) {
   .app-frame[data-rail=expanded] { --ppo-rail-width: 240px; }
-  .ppo-rail .ppo-primary-nav { flex: 0 1 auto; gap: 2px; padding-top: 4px; padding-bottom: 0; }
+  .ppo-rail .ppo-primary-nav { flex: 0 1 auto; gap: 2px; padding-top: 0; padding-bottom: 0; }
   .ppo-primary-nav .ppo-rail-item { flex-basis: 44px; height: 44px; }
   .ppo-rail-bottom { margin-top: 2px; padding: 0 0 12px; }
   .ppo-rail .ppo-rail-bottom .ppo-rail-item { height: 44px; }
@@ -27,6 +35,23 @@
   .app-frame[data-rail=expanded] .ppo-rail-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 14px/20px PPOShellRoboto, Roboto, sans-serif; }
   .app-frame[data-rail=expanded] [aria-current=page] .ppo-rail-label { font-weight: 500; }
   .app-frame[data-rail=expanded] .ppo-rail-toggle .ppo-rail-label { font-size: 12px; line-height: 16px; }
+  /* v2 / Rail "Rail toggle": a plain 40 px row under the logo in both widths. Its aria-expanded describes the
+     rail, so it never takes the fill and underline that mark More's open panel. */
+  .ppo-rail .ppo-rail-toggle, .ppo-rail .ppo-rail-toggle[aria-expanded=true] { flex: 0 0 40px; height: 40px; min-height: 40px; margin: 2px 0; background: transparent; box-shadow: none; }
+  .ppo-rail .ppo-rail-toggle:hover:not(:disabled) { background: var(--ppo-rail-hover); color: #fff; }
+  .ppo-rail .ppo-rail-toggle .product-icon { width: 20px; height: 20px; flex: 0 0 20px; }
+  .ppo-rail .ppo-rail-item:not([aria-current=page]):hover { color: #fff; }
+  /* v2 / Rail "Rail=Collapsed": 46 px logo, 22 px glyphs, and the first item 2 px under the toggle. */
+  .ppo-rail .brand .brand-logo { width: 46px; height: 46px; }
+  .app-frame:not([data-rail=expanded]) .ppo-rail .ppo-rail-item:not(.ppo-rail-toggle) .product-icon { width: 22px; height: 22px; }
+  /* Rail · Service: a grouped rail uses 40 px items so every destination and More fit at 900 px. Labelled, each
+     group opens with a 24 px caps heading under a rule; collapsed, with a 24 px rule centred in 10 px. */
+  .ppo-rail:has(.ppo-rail-group) .ppo-primary-nav .ppo-rail-item { flex-basis: 40px; height: 40px; min-height: 40px; }
+  .ppo-rail:has(.ppo-rail-group) .ppo-rail-bottom .ppo-rail-item { height: 40px; min-height: 40px; }
+  .ppo-rail .ppo-rail-group { gap: 2px; margin: 0; padding: 0; border: 0; }
+  .ppo-rail .ppo-rail-group::before { content: ""; flex: 0 0 1px; width: 24px; margin: 4px 0 5px; background: var(--ppo-rail-rule); }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-group::before { content: none; }
+  .app-frame[data-rail=expanded] .ppo-rail-group-label { box-sizing: border-box; height: 24px; padding: 7px 0 0 12px; border-top: 1px solid var(--ppo-rail-rule); overflow: hidden; color: var(--ppo-rail-muted); font: 500 11px/16px PPOShellRoboto, Roboto, sans-serif; letter-spacing: .66px; text-transform: uppercase; white-space: nowrap; text-overflow: ellipsis; }
   .app-frame .ppo-more-panel, .app-frame[data-rail=expanded] .ppo-more-panel, .app-frame:has([data-menu]) .ppo-more-panel {
     left: var(--ppo-rail-width); top: 0; bottom: 0; width: 240px; max-height: 100dvh; border-radius: 0; border: 0; border-right: 1px solid var(--ppo-shell-line); background: var(--ppo-shell-surface); box-shadow: 6px 0 18px #24293829;
   }
@@ -49,16 +74,31 @@
   .app-frame .ppo-shell-header .ppo-crumbs li:last-child::before { content: none; }
   .app-frame .ppo-shell-header .ppo-breadcrumb-trigger { display: flex; }
 }
-/* Opt-in secondary-menu presentation; retained Engineering baselines remain explicit. */
-#ppo-my-work[data-menu-presentation=figma] .mw-menu { padding: 8px; background: var(--surface); border-right: 1px solid var(--line); }
-#ppo-my-work[data-menu-presentation=figma] .mw-menu li a { min-height: 40px; padding: 8px 12px; gap: 10px; }
-#ppo-my-work[data-menu-presentation=figma] .mw-menu li a[aria-current=page] { background: var(--ppo-shell-selected); color: var(--link); }
-#ppo-my-work[data-menu-presentation=figma] .mw-menu li a :is(.mw-icon,.product-icon) { width: 16px; height: 16px; flex: 0 0 16px; color: inherit; }
-#ppo-my-work[data-menu-presentation=figma] .mw-menu-pinned { margin-top: 2px; padding-top: 0; border: 0; }
-#ppo-my-work[data-menu-presentation=figma] .mw-menu-pinned h2 { margin: 0; padding: 18px 12px 2px; font-size: 11px; font-weight: 500; line-height: 16px; }
-#ppo-my-work[data-menu-presentation=figma] .mw-menu-pinned p { padding: 8px 12px; }
-#ppo-my-work[data-menu-presentation=figma] button.mw-menu-strip { width: 20px; min-width: 20px; }
-#ppo-my-work[data-menu-presentation=figma] .mw-badge { background: transparent; color: var(--muted); font-size: 12px; font-weight: 400; padding: 0; min-width: 0; }
+/* Shell v2 secondary menu (v2 / Menu item, Menu heading, Menu strip and Menu edge), the default presentation of
+   SecondaryMenuFrame. The selectors carry the same weight as the shared menu rules in my-work.css, so they replace
+   those defaults while a module's own accepted menu styling (Fertigation, ES-08, CPQ) still applies on top. The
+   Job pack and the Projects register keep their own accepted page compositions and are not listed. */
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu { padding: 8px; background: var(--ppo-shell-surface); border-right: 1px solid var(--ppo-shell-line); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu-title { display: none; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu :is(h2,h3) { margin: 0; padding: 18px 12px 0; color: var(--ppo-shell-muted); font: 500 11px/16px PPOShellRoboto, Roboto, sans-serif; letter-spacing: .66px; text-transform: uppercase; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a { min-height: 40px; padding: 8px 12px; gap: 10px; border-radius: 6px; color: var(--ppo-rail-ink); font-size: 14px; font-weight: 400; line-height: 20px; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a:hover { background: var(--ppo-shell-hover); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a[aria-current=page] { background: var(--ppo-shell-selected); color: var(--ppo-shell-link); font-weight: 500; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a :is(.mw-icon,.product-icon,svg,i.ppo-fa) { width: 16px; height: 16px; flex: 0 0 16px; color: var(--ppo-shell-icon); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a[aria-current=page] :is(.mw-icon,.product-icon,svg,i.ppo-fa) { color: inherit; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu .mw-badge { min-width: 0; height: auto; padding: 0; border-radius: 0; background: transparent; color: var(--ppo-shell-muted); font-size: 12px; font-weight: 400; line-height: 16px; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a[aria-current=page] .mw-badge { background: transparent; color: inherit; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu-pinned { margin-top: 2px; padding-top: 0; border: 0; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu-pinned p { padding: 8px 12px; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-strip { width: 20px; min-width: 20px; background: var(--ppo-shell-surface); border-right: 1px solid var(--ppo-shell-line); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-strip .mw-menu-grip { width: 4px; height: 36px; border-radius: 2px; background: var(--ppo-shell-handle); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-strip:hover:not(:disabled), :is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-strip:focus-visible { background: var(--ppo-shell-hover); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-strip:is(:hover,:focus-visible) .mw-menu-grip { background: var(--ppo-shell-accent); }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-edge::after { width: 3px; }
+:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) button.mw-menu-edge:is(:hover,:focus-visible)::after { background: var(--ppo-shell-accent); }
+@media (max-width: 780px) {
+  :is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-specialist,#ppo-fertigation,#ppo-products,#ppo-cpq,#ppo-leads):where([data-menu-presentation=figma]) .mw-menu li a { min-height: 44px; }
+}
 @media (max-width: 780px) {
   .app-frame .mobile-navigation { min-height: 64px; height: calc(64px + env(safe-area-inset-bottom)); padding: 0 0 env(safe-area-inset-bottom); background: var(--ppo-rail-navy); }
   .app-frame .mobile-navigation :is(a,button) { min-height: 64px; border-radius: 0; color: var(--ppo-rail-text); position: relative; justify-content: center; }

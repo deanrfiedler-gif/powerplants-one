@@ -406,3 +406,83 @@ test("approved desktop columns resize independently and retain widths with quiet
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).not.toBeVisible();
 });
+
+test("the accepted side menu opens each existing lead read with its full-match count", async ({
+  page,
+}, info) => {
+  await call(page, "local-session", { profile: "coordinator" });
+  // A unique search scopes both the list and the counts read, so the counts are exact here.
+  const tag = `SYN Menu ${crmBase().operation_id.slice(0, 8)}`;
+  const waiting = { ...leadCreate(), title: `${tag} needs an action` };
+  const overdue = { ...leadCreate(), title: `${tag} overdue follow-up` };
+  await call(page, "crm/leads", waiting);
+  await call(page, "crm/leads", overdue);
+  await call(page, `crm/leads/${overdue.id}/next-action`, {
+    ...crmBase(),
+    expected_version: 1,
+    activity_id: null,
+    new_action: { ...crmAction(), due_at: new Date(Date.now() - 2 * 86400000).toISOString(), due_needed: false },
+  });
+  await page.goto(`/sales/leads?q=${encodeURIComponent(tag)}`);
+  const rows = page.locator(info.project.use.isMobile ? ".lead-mobile-row" : ".lead-table tbody tr");
+  await expect(rows).toHaveCount(2);
+  if (info.project.use.isMobile) {
+    // The phone keeps the view picker that stands in for the menu, with the same ten views.
+    const picker = page.locator(".lead-mobile-view select");
+    await expect(picker.locator("option")).toHaveCount(10);
+    await picker.selectOption("overdue");
+    await expect(page).toHaveURL(/follow_up=Overdue/);
+    await expect(page).toHaveURL(/q=SYN/);
+    await expect(rows).toHaveCount(1);
+    await expect(rows.first()).toContainText(overdue.title);
+    await page.getByRole("button", { name: "Leads menu", exact: true }).click();
+    const overlay = page.getByRole("dialog", { name: "Leads menu", exact: true });
+    await expect(overlay.getByRole("link", { name: /^Overdue/ })).toHaveAttribute("aria-current", "page");
+    await overlay.getByRole("link", { name: /^Next action needed/ }).click();
+    await expect(overlay).not.toBeVisible();
+    await expect(page).toHaveURL(/follow_up=NextActionNeeded/);
+    await expect(rows).toHaveCount(1);
+    await expect(rows.first()).toContainText(waiting.title);
+    await page.screenshot({ path: info.outputPath("leads-menu-phone.png") });
+    return;
+  }
+  const menu = page.getByRole("complementary", { name: "Leads menu", exact: true });
+  const view = (name: string) => menu.getByRole("link", { name: new RegExp(`^${name}`) });
+  await expect(menu.getByRole("heading")).toHaveText(["Status", "Follow-up", "Other views"]);
+  await expect(menu.getByRole("link")).toHaveCount(10);
+  await expect(view("Inbox")).toHaveAttribute("aria-current", "page");
+  for (const [name, count] of [["Inbox", "2"], ["My leads", "2"], ["New", "2"], ["Contacting", "0"], ["Overdue", "1"], ["Next action needed", "1"], ["Archived", "0"], ["Converted", "0"]])
+    await expect(view(name).locator(".mw-badge")).toHaveText(count);
+  // The drawn geometry: a 240 px menu, 8 px padding and 40 px rows 2 px apart.
+  expect(Math.round((await menu.boundingBox())!.width)).toBe(240);
+  const top = (await menu.boundingBox())!.y;
+  expect(Math.round((await view("Inbox").boundingBox())!.y - top)).toBe(8);
+  expect(Math.round((await view("My leads").boundingBox())!.y - top)).toBe(50);
+  await page.screenshot({ path: info.outputPath("leads-menu-desktop.png") });
+  await view("Overdue").click();
+  await expect(page).toHaveURL(/follow_up=Overdue/);
+  await expect(page).toHaveURL(/q=SYN/);
+  await expect(view("Overdue")).toHaveAttribute("aria-current", "page");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText(overdue.title);
+  await view("Next action needed").click();
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText(waiting.title);
+  await view("Archived").click();
+  await expect(page).toHaveURL(/view=Archived/);
+  await expect(page.getByRole("heading", { name: "No leads match your filters" })).toBeVisible();
+  // The menu's own right border collapses it; the strip brings it back, and the choice is remembered.
+  await page.getByRole("button", { name: "Collapse Leads menu", exact: true }).click();
+  await expect(menu).toBeHidden();
+  await page.reload();
+  await page.getByRole("button", { name: "Expand Leads menu", exact: true }).click();
+  await expect(menu).toBeVisible();
+  // Below the docked width the same menu is an overlay from the header trigger.
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.getByRole("button", { name: "Show menu", exact: true }).click();
+  const overlay = page.getByRole("dialog", { name: "Leads menu", exact: true });
+  await expect(overlay.getByRole("link", { name: /^Archived/ })).toHaveAttribute("aria-current", "page");
+  await page.keyboard.press("Escape");
+  await expect(overlay).not.toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});

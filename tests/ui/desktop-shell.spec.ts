@@ -28,31 +28,32 @@ test("department shell fits laptop, desktop and compact viewports with flowing s
         noOverlap: controls.every((rect, index) => index === 0 || controls[index - 1].right <= rect.left), zoom: getComputedStyle(document.documentElement).zoom };
     });
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
-    expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
+    expect(geometry.logoWidth).toBe(46); expect(geometry.logoY).toBe(32); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(25));
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(22));
     expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal", "Contacts", "Products"]);
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
     await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link", { name: "Sales", exact: true })).toHaveAttribute("aria-current", "page");
+    // Figma's v2 / More panel draws no footer (Dean, 18 October 2026): the list runs to the panel's bottom edge.
     const frames = await page.locator("#desktop-more-panel").evaluate(panel => {
-      const body = panel.querySelector<HTMLElement>(".ppo-more-body")!, header = panel.querySelector("header")!, footer = panel.querySelector("footer")!;
-      const before = { head: header.getBoundingClientRect().bottom, foot: footer.getBoundingClientRect().top };
+      const body = panel.querySelector<HTMLElement>(".ppo-more-body")!, header = panel.querySelector("header")!;
+      const inner = () => panel.getBoundingClientRect().top + panel.clientTop + panel.clientHeight;
+      const before = { head: header.getBoundingClientRect().bottom, bottom: inner() };
       body.scrollTop = body.scrollHeight;
-      return { before, after: { head: header.getBoundingClientRect().bottom, foot: footer.getBoundingClientRect().top }, bodyTop: body.getBoundingClientRect().top, bodyBottom: body.getBoundingClientRect().bottom, scrolled: body.scrollTop > 0 };
+      return { before, after: { head: header.getBoundingClientRect().bottom, bottom: inner() }, bodyTop: body.getBoundingClientRect().top, bodyBottom: body.getBoundingClientRect().bottom, scrolled: body.scrollTop > 0, footers: panel.querySelectorAll("footer").length };
     });
-    expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.foot); expect(frames.scrolled).toBe(true);
-    await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Sales");
-    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveText(["Sales", "Pulse", "Leads", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal"]);
-    await page.screenshot({ path: info.outputPath(`more-filter-${width}x${height}.png`) });
+    expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.bottom); expect(frames.scrolled).toBe(true); expect(frames.footers).toBe(0);
+    // More lists every permitted page without a search or a Workspace dropdown of its own: the top bar's
+    // search finds pages, and Workspaces is the department choice.
+    await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
+    await expect(page.locator("#desktop-more-panel select")).toHaveCount(0);
+    await page.screenshot({ path: info.outputPath(`more-${width}x${height}.png`) });
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
     await expect(page.getByRole("navigation", { name: "More navigation" })).toBeHidden();
-    await page.getByRole("button", { name: "More", exact: true }).click();
-    await page.getByRole("searchbox", { name: "Find a menu item" }).fill("");
-    await page.keyboard.press("Escape");
   }
 });
 test("global search is independent of page filtering, keyboard selection and quick-add routes", async ({ page }) => {
@@ -102,19 +103,16 @@ test("page guide is contextual and Supply selection requests its native readines
   await expect(guide.getByText("The detailed Deals guide is being prepared.", { exact: false })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
-  // This component harness records router requests; the compiled browser suite
+  // This component harness renders links without following them; the compiled browser suite
   // separately follows this URL and proves the Supply rail and reload behaviour.
-  await page.evaluate(() => window.addEventListener("fixture-router-push", event => {
-    document.documentElement.dataset.requestedRoute = (event as CustomEvent<string>).detail;
-  }));
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByLabel("Workspace", { exact: true }).selectOption("supply");
-  await expect(page.locator("html")).toHaveAttribute("data-requested-route", "/supply/material-readiness");
+  const departments = page.getByRole("navigation", { name: "More navigation" });
+  await expect(departments.getByRole("link", { name: "Supply chain", exact: true })).toHaveAttribute("href", "/supply/material-readiness");
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
   await page.reload();
   await page.getByRole("button", { name: "More", exact: true }).click();
   // The harness remains on its owned Sales route, which overrides a remembered department.
-  await expect(page.getByLabel("Workspace", { exact: true })).toHaveValue("sales");
+  await expect(departments.getByRole("link", { name: "Sales", exact: true })).toHaveAttribute("aria-current", "page");
 });
 
 test("Figma shell keeps inherited r17 utility controls and its explicit header and More geometry", async ({ page, context }, info) => {
@@ -222,7 +220,7 @@ test("Figma shell keeps inherited r17 utility controls and its explicit header a
       // Shell v2 geometry is checked above; the navigation decision replaces planned links
       // with ready, permitted destinations, including native Supply Chain.
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
-      // Native Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Footer count includes Help;
+      // Native Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Help and
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
       await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(29);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
@@ -230,7 +228,8 @@ test("Figma shell keeps inherited r17 utility controls and its explicit header a
         await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
       await expect(actualPanel.getByRole("link", { name: "Users and access", exact: true })).toHaveAttribute("href", "/admin/access?department=sales");
-      await expect(actualPanel.locator("footer")).toContainText("30 destinations");
+      // Figma's v2 / More panel draws no "N destinations" footer (Dean, 18 October 2026).
+      await expect(actualPanel.locator("footer")).toHaveCount(0);
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
       await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }
