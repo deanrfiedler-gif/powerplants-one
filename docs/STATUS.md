@@ -12,6 +12,12 @@ After 21 or more open pull requests repeatedly conflicted on `docs/STATUS.md`, t
 
 Open for Dean, not changed here: turning off "Require branches to be up to date" in favour of a merge queue or a merged-tree check, rendering the fragments after merge by workflow, and an open-pull-request check in CI. Branch protection and workflow files are untouched. Not verified: behaviour with two real concurrent pull requests, or GitHub's "Update branch" button on the rendered files. No application code, migration, permission or parent ID changes.
 
+## Discovery register ES-02 design accepted — 18 October 2026
+
+Dean accepted the Figma design for the Discovery register, the page the rail's Estimation wizard opens (`/estimating/discovery`, ES-02), with the recommended answers: "I accept the Discovery register ES-02 design with your recommendations, including D1–D7 and Q1–Q4." The [design decision](decisions/discovery-register-figma-design.md) (PPO-ES02-DISCOVERY-REGISTER-FIGMA-DEC) records departures D1–D7 and answers Q1–Q4, and eight icon-free captures with hashes are retained in [discovery-register-figma-design-r01](reference/ui/estimating/discovery-register-figma-design-r01/README.md). The design register entry `route:/estimating/discovery` and its page notes cite the frames and captures. In Figma the File index has a Discovery register row before Estimation Wizard, and the capture copies sit on the Captures page from y = 228,000.
+
+Checked: no Font Awesome instance is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The page header records the named version "Discovery register — Pipedrive pattern, accepted" as saved on Dean's yes. Not done: the page is not built, and the built "Scope and options" list is unchanged. Customer, estimator, last changed and a cost-basis summary are proposed list-read fields, not confirmed data. No application code, route, migration, permission or parent ID changes.
+
 <!-- fragments:end -->
 
 ## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
