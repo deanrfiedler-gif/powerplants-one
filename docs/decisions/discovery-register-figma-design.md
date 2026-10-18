@@ -60,7 +60,7 @@ This is a design decision. It authorises none of the following:
 | States | Phone 390: loading `1400:355914`; no matching workspaces `1400:356040`; could not load `1400:356154`. Desktop 1440: no workspaces yet `1402:3944`; view only, no create permission `1402:4539` |
 | Page parts | Section "Parts (proposal)" `1400:345375`: Discovery grid header `1400:345376` and Discovery grid row `1400:345440` (row set). They stay on the page, as the Sites and People parts do |
 | Flow | "Discovery register — desktop (proposal)", starting at `1400:345640`: the Northbank row opens the snapshot and Close returns |
-| Story | Synthetic, as at Tue 13 Oct 2026 09:00, signed in as Dean Fiedler. Eight workspaces. Northbank (OPP-000326) matches the accepted wizard: alternatives A Base scope (selected), B Reduced scope and C Staged delivery; A r03 saved 20 Sep 2026, Incomplete with two systems to confirm; estimate v04 AUD 58,400.00 costed on r02. Titles, customers and estimate versions follow Intake & workload's saved estimates; opportunity numbers use the app's OPP- format |
+| Story | Synthetic, as at Tue 13 Oct 2026 09:00, signed in as Dean Fiedler. Eight workspaces. Northbank (OPP-000326) matches the accepted wizard: alternatives A Base scope (selected), B Reduced scope and C Staged delivery; A r03 saved 20 Sep 2026, Incomplete with two systems to confirm; estimate v04 AUD 58,400.00 costed on r02. Titles, customers and estimate versions follow Intake & workload's saved estimates. The frames show opportunity numbers as OPP-000326; the app's synthetic display numbers, and the accepted Sales briefs page, use SYN-PPO-OPP-000326 (section 5) |
 | Retained captures | [Discovery register design r01](../reference/ui/estimating/discovery-register-figma-design-r01/README.md): eight icon-free PNGs with hashes |
 
 ## 3. Conformance declaration
@@ -129,6 +129,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
   - 200% zoom;
   - the snapshot's Revisions tab at full size, desktop loading and error states, and hover states.
 - **The Conversations action** is part of the proposed top-bar shell amendment.
+- **Opportunity number format.** The accepted frames show `OPP-000326`, but `display_number` in the app and its tests, and the accepted Sales briefs page, use `SYN-PPO-OPP-…`. Whether to correct the frames is Dean's decision; the frames are unchanged. A build follows `display_number`.
 - **Data in the frames:** the workspaces, opportunities, customers, estimates and people are synthetic. They are not operational records.
 
 ## 6. Audit and polish
