@@ -1,0 +1,79 @@
+name: Merged-tree check
+# Checks the pull request as it would land on main now, not as it stood when it
+# was last pushed. The other workflows test GitHub's merge ref, which is cut when
+# the pull request changes and is not recut when main moves, so two pull requests
+# that each passed can still break main together. This job merges the pull request
+# head into the current origin/main itself; "Re-run all jobs" after main moves
+# fetches main again and so re-evaluates it. It runs the cheap checks that have
+# caught real breakage between merged pull requests: the foundation, prototype,
+# naming, migration-number and status-fragment checks, then a type check.
+# Make "Check merged tree against main" a required check in place of "Require
+# branches to be up to date"; see docs/decisions/merge-conflict-reduction.md.
+on:
+  pull_request:
+# A replacement PR commit supersedes only this workflow on that same PR.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  merged-tree:
+    name: Check merged tree against main
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out the pull request head with full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Merge current origin/main into the pull request head
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git rev-parse --verify --quiet refs/remotes/origin/main > /dev/null \
+            || { echo "::error::origin/main was not fetched"; exit 1; }
+          main_sha=$(git rev-parse refs/remotes/origin/main)
+          git config user.name "merged-tree check"
+          git config user.email "merged-tree-check@users.noreply.github.com"
+          if ! git merge --no-edit --no-ff refs/remotes/origin/main; then
+            echo "::error::This pull request conflicts with the current main. Merge main into the branch and resolve the conflicts."
+            git diff --name-only --diff-filter=U
+            exit 1
+          fi
+          echo "Checked pull request head \`$PR_HEAD\` merged with main \`$main_sha\`." >> "$GITHUB_STEP_SUMMARY"
+          echo "Checked $PR_HEAD merged with main $main_sha"
+      - name: Classify the change
+        id: scope
+        run: python3 scripts/ci_scope.py --base refs/remotes/origin/main --head HEAD
+      - name: Self-test the scope classifier
+        run: python3 scripts/ci_scope.py --self-test
+      - name: Validate references and registers
+        run: python3 scripts/check_foundation.py
+      - name: Validate prototype contracts and traceability
+        run: python3 scripts/check_prototype.py
+      - name: Validate naming adoption and project instructions
+        run: python3 scripts/check_naming.py
+      - name: Validate migration and seed numbering
+        run: python3 scripts/check_migrations.py
+      - name: Check the rendered status and decision index
+        run: python3 scripts/build_status.py --check
+      # A documentation-only change cannot alter the type check, so it skips the install.
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: steps.scope.outputs.docs_only != 'true'
+        with:
+          node-version-file: .nvmrc
+      - name: Install locked dependencies
+        if: steps.scope.outputs.docs_only != 'true'
+        run: npm ci --ignore-scripts
+      - name: Type check the merged tree
+        if: steps.scope.outputs.docs_only != 'true'
+        run: npm run typecheck

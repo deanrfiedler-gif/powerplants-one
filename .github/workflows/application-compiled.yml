@@ -26,10 +26,35 @@ defaults:
   run:
     shell: bash
 jobs:
+  scope:
+    name: Change scope
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      docs_only: ${{ steps.scope.outputs.docs_only }}
+    steps:
+      # Pull requests only. Skipping the suites below is safe only for a
+      # documentation-only change (scripts/ci_scope.py); any other event, or a fault
+      # in this job, runs every suite.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          filter: blob:none
+          sparse-checkout: |
+            scripts
+            src
+            tests
+            db
+            public
+          persist-credentials: false
+      - id: scope
+        run: python3 scripts/ci_scope.py
+
   compiled:
     name: Desktop and mobile browser suite against the compiled application
-    needs: compiled_suites
-    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' && inputs.proof != 'customer-network' && inputs.proof != 'customer-packet' }}
+    needs: [scope, compiled_suites]
+    if: ${{ always() && needs.scope.outputs.docs_only != 'true' && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' && inputs.proof != 'customer-network' && inputs.proof != 'customer-packet' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -40,7 +65,8 @@ jobs:
 
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
-    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' && inputs.proof != 'customer-network' && inputs.proof != 'customer-packet'
+    needs: scope
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' && inputs.proof != 'customer-cpu' && inputs.proof != 'customer-core' && inputs.proof != 'customer-assets' && inputs.proof != 'customer-asset-release' && inputs.proof != 'customer-network' && inputs.proof != 'customer-packet' }}
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
