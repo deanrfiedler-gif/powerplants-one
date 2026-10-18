@@ -8,10 +8,21 @@ import { useIdentity } from "./business-session";
 import { ErrorNotice, type Envelope, type Option } from "./business-ui";
 import { LookupField } from "./record-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
-import { ProductIcon, type ProductIconName } from "./product-icons";
+import { ProductIcon } from "./product-icons";
 import { FontAwesomeGlyph } from "./font-awesome";
 import { leadsFontAwesome } from "./font-awesome-icons";
 import { WorklistChoice, WorklistMenu } from "./crm-worklist-tools";
+import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
+import { useScopePreferences } from "./scope-preferences";
+import {
+  currentLeadView,
+  leadCountQuery,
+  leadMenuViews,
+  leadViewCount,
+  leadViewQuery,
+  type LeadCounts,
+  type LeadMenuView,
+} from "./leads-menu";
 import type { listLeads, readLead } from "../crm/leads/reads";
 import type { leadTransferOptions } from "../crm/leads/amendments";
 type Lead = Awaited<ReturnType<typeof readLead>>;
@@ -28,12 +39,6 @@ type Mode =
   | "reopen";
 type AmendmentMode = "resolve" | "transfer";
 const sourceOptions = ["Phone", "Email", "Meeting", "Referral", "Other"];
-const leadViews: { id: string; label: string; icon: ProductIconName }[] = [
-  { id: "Active", label: "Inbox", icon: "inbox" },
-  { id: "Archived", label: "Archived", icon: "archive" },
-  { id: "Disqualified", label: "Disqualified", icon: "disqualified" },
-  { id: "Converted", label: "Converted", icon: "converted" },
-];
 const actionLabels = {
   Needed: "Next action needed",
   DueNeeded: "Due date needed",
@@ -51,7 +56,17 @@ const qs = (r: Record<string, string>) =>
   new URLSearchParams(
     Object.fromEntries(Object.entries(r).filter(([, v]) => v)),
   ).toString();
-export type LeadsIconName = "back" | "sort" | "search";
+// Leads' own glyphs: the toolbar's back, sort and search, and the three side-menu icons that the
+// shared product set does not draw (Nurturing, Overdue and Next action needed in Figma 190:20519).
+const leadPaths = {
+  back: "M20 12H4 M11 5l-7 7 7 7",
+  sort: "M3 5h10 M3 11h7 M3 17h4 M17 4v16 M12 15l5 5 5-5",
+  search: "M20 20l-5-5 M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14",
+  seedling: "M12 21v-9 M12 12C12 8 9 5 4 5c0 4 3 7 8 7Z M12 10c0-3 2.5-6 8-6 0 4-3 6-8 6Z",
+  calendar: "M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z M4 10h16 M8 3v4 M16 3v4",
+  "calendar-alert": "M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z M4 10h16 M8 3v4 M16 3v4 M12 13v3 M12 18.2h.01",
+};
+export type LeadsIconName = keyof typeof leadPaths;
 function Icon({ name }: { name: LeadsIconName }) {
   const local = (
     <svg
@@ -64,18 +79,13 @@ function Icon({ name }: { name: LeadsIconName }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path
-        d={
-          name === "back"
-            ? "M20 12H4 M11 5l-7 7 7 7"
-            : name === "sort"
-              ? "M3 5h10 M3 11h7 M3 17h4 M17 4v16 M12 15l5 5 5-5"
-              : "M20 20l-5-5 M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14"
-        }
-      />
+      <path d={leadPaths[name]} />
     </svg>
   );
   return <FontAwesomeGlyph icon={leadsFontAwesome[name]} className="product-icon" fallback={local} />;
+}
+function ViewIcon({ view }: { view: LeadMenuView }) {
+  return "product" in view.icon ? <ProductIcon name={view.icon.product} /> : <Icon name={view.icon.lead} />;
 }
 function Picker({
   label,
@@ -1444,21 +1454,34 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   }, [params]);
   const query = qs(
     Object.fromEntries(
-      ["view", "q", "owner_id", "status", "source", "sort", "cursor"].flatMap(
+      ["view", "q", "owner_id", "status", "source", "follow_up", "sort", "cursor"].flatMap(
         (k) => (params.get(k) ? [[k, params.get(k)!]] : []),
       ),
     ),
   );
   const list = useCrmResource<List>(`crm/leads?${query}`, true),
-    detail = useCrmResource<Lead>(leadId ? `crm/leads/${leadId}` : null, true);
+    detail = useCrmResource<Lead>(leadId ? `crm/leads/${leadId}` : null, true),
+    // Every view's count under the toolbar's filters, read beside the list and refreshed with it.
+    counts = useCrmResource<LeadCounts>(`crm/leads/counts?${leadCountQuery(params)}`, true);
+  // The side menu's open or collapsed choice is presentation only, kept per person in this browser.
+  const presentation = useScopePreferences(`${identity.workspace_id}:${identity.actor_id}:leads`),
+    menuState = useSecondaryMenu(presentation.value.menu, (open) =>
+      presentation.save({ ...presentation.value, menu: open }),
+    );
+  const current = currentLeadView(params);
+  const viewHref = (v: LeadMenuView) => {
+    const next = leadViewQuery(v, query);
+    return `/sales/leads${next ? `?${next}` : ""}`;
+  };
   const change = (key: string, value: string) => {
     const next = new URLSearchParams(query);
     if (value) next.set(key, value);
     else next.delete(key);
     next.delete("cursor");
-    if (key === "view") next.delete("status");
     router.replace(`/sales/leads?${next}`);
   };
+  const chooseView = (id: string) =>
+    router.replace(viewHref(leadMenuViews.find((v) => v.id === id) ?? leadMenuViews[0]));
   useEffect(() => {
     if (search === (params.get("q") ?? "")) return;
     const timer = setTimeout(() => {
@@ -1490,6 +1513,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     );
     list.reload();
     detail.reload();
+    counts.reload();
     if (leadId && (params.get("resolve") === "1" || params.get("plan") === "1"))
       router.replace(`/sales/leads/${leadId}`);
     if (!leadId) router.push(`/sales/leads/${id}${query ? `?${query}` : ""}`);
@@ -1515,14 +1539,15 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   }, [leadId, list.data, params]);
   const openLead = (id: string) =>
     `/sales/leads/${id}${query ? `?${query}` : ""}`;
-  const items = list.data?.items ?? [],
-    view = params.get("view") ?? "Active";
-  const hasFilters = ["q", "owner_id", "status", "source"].some(
+  const items = list.data?.items ?? [];
+  // Status and follow-up are side-menu views now (leads-design.md L2); the toolbar filters are
+  // search, owner and source, and clearing them keeps the view that is open.
+  const hasFilters = ["q", "owner_id", "source"].some(
     (k) => !!params.get(k),
   );
   const clearFilters = () =>
     router.replace(
-      `/sales/leads?${qs({ view, sort: params.get("sort") ?? "Newest" })}`,
+      `/sales/leads?${qs({ ...current.params, sort: params.get("sort") ?? "Newest" })}`,
     );
   const firstPage = () => {
     const next = new URLSearchParams(query);
@@ -1547,19 +1572,6 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         </select>
       </label>
       <label>
-        Status
-        <select
-          disabled={view !== "Active"}
-          value={params.get("status") ?? ""}
-          onChange={(e) => change("status", e.target.value)}
-        >
-          <option value="">All statuses</option>
-          {["New", "Contacting", "Nurturing"].map((v) => (
-            <option key={v}>{v}</option>
-          ))}
-        </select>
-      </label>
-      <label>
         Source
         <select
           value={params.get("source") ?? ""}
@@ -1578,7 +1590,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   );
   /* Desktop consolidates the same filters into themed menus; the selects above
      stay for the phone filter panel. */
-  const narrowed = ["q", "status", "source"].filter(
+  const narrowed = ["q", "source"].filter(
     (k) => !!params.get(k),
   ).length;
   const desktopFilters = (
@@ -1615,19 +1627,6 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
           />
         </label>
         <label className="lead-filter-field">
-          <span>Status</span>
-          <select
-            disabled={view !== "Active"}
-            value={params.get("status") ?? ""}
-            onChange={(e) => change("status", e.target.value)}
-          >
-            <option value="">All statuses</option>
-            {["New", "Contacting", "Nurturing"].map((v) => (
-              <option key={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label className="lead-filter-field">
           <span>Source</span>
           <select
             value={params.get("source") ?? ""}
@@ -1659,7 +1658,50 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       />
     </div>
   );
-  return (
+  // The accepted side menu (Figma 190:20519): Inbox and My leads, then three captioned groups, each
+  // row with its icon and a neutral count. Rows are links, so a view can be opened in a new tab.
+  const menuRow = (v: LeadMenuView) => {
+    const n = leadViewCount(v, counts.data);
+    return (
+      <li key={v.id}>
+        <Link
+          href={viewHref(v)}
+          aria-current={current.id === v.id ? "page" : undefined}
+          onClick={() => menuState.closeOverlay(false)}
+        >
+          <ViewIcon view={v} />
+          <span>{v.label}</span>
+          {n && (
+            <span className="mw-badge" aria-label={n.label} title={n.label}>
+              {n.text}
+            </span>
+          )}
+        </Link>
+      </li>
+    );
+  };
+  const menu = (
+    <nav aria-label="Lead views">
+      <ul>{leadMenuViews.filter((v) => !v.group).map(menuRow)}</ul>
+      {(["Status", "Follow-up", "Other views"] as const).map((group) => {
+        const heading = `lead-menu-${group.toLowerCase().replace(" ", "-")}`;
+        return (
+          <div key={group} className="lead-menu-group">
+            <h2 id={heading}>{group}</h2>
+            <ul aria-labelledby={heading}>
+              {leadMenuViews.filter((v) => v.group === group).map(menuRow)}
+            </ul>
+          </div>
+        );
+      })}
+      {counts.error != null && (
+        <p className="lead-menu-counts" role="status">
+          Counts are unavailable. The views still open.
+        </p>
+      )}
+    </nav>
+  );
+  const workspace = (
     <section className="leads-workspace" aria-label="Leads workspace">
       <header className="lead-mobile-header">
         <Link href="/sales/opportunities" aria-label="Back to deals">
@@ -1675,13 +1717,27 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         >
           <Icon name="sort" />
         </button>
+        {/* The phone's view picker stands in for the side menu (capture 04) and offers the same views. */}
         <label className="lead-mobile-view">
           <span className="sr-only">Lead view</span>
-          <select value={view} onChange={(e) => change("view", e.target.value)}>
-            {["Active", "Archived", "Disqualified", "Converted"].map((v) => (
-              <option key={v} value={v}>
-                {v === "Active" ? "Inbox" : v}
-              </option>
+          <select value={current.id} onChange={(e) => chooseView(e.target.value)}>
+            {leadMenuViews
+              .filter((v) => !v.group)
+              .map((v) => (
+                <option key={v.id} value={v.id}>
+                  {v.label}
+                </option>
+              ))}
+            {(["Status", "Follow-up", "Other views"] as const).map((group) => (
+              <optgroup key={group} label={group}>
+                {leadMenuViews
+                  .filter((v) => v.group === group)
+                  .map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.label}
+                    </option>
+                  ))}
+              </optgroup>
             ))}
           </select>
         </label>
@@ -1704,19 +1760,6 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         </button>
       </header>
       <div className="lead-toolbar-row">
-        <nav className="lead-lifecycle-tabs" aria-label="Lead lifecycle">
-          {leadViews.map((v) => (
-            <button
-              key={v.id}
-              aria-current={view === v.id ? "page" : undefined}
-              aria-label={v.label}
-              title={v.label}
-              onClick={() => change("view", v.id)}
-            >
-              <ProductIcon name={v.icon} />
-            </button>
-          ))}
-        </nav>
         <div className="lead-heading">
           <h1 className="sr-only">Leads</h1>
           {list.data?.can_create && (
@@ -1764,21 +1807,6 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             </label>
           </div>
           <div className={`lead-toolbar ${filters ? "open" : ""}`}>
-            <label className="lead-desktop-view">
-              View
-              <select
-                value={view}
-                onChange={(e) => {
-                  change("view", e.target.value);
-                }}
-              >
-                {["Active", "Archived", "Disqualified", "Converted"].map(
-                  (v) => (
-                    <option key={v}>{v}</option>
-                  ),
-                )}
-              </select>
-            </label>
             {filterControls}
           </div>
           <div className={`lead-sort ${sortOpen ? "open" : ""}`}>
@@ -1836,7 +1864,9 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             selected={leadId}
             href={openLead}
             preferenceKey={`${identity.workspace_id}:${identity.actor_id}`}
-            view={view}
+            view={current.lifecycle}
+            label={current.label}
+            empty={current.empty}
             queryKey={query}
             filtered={hasFilters}
             onAction={(id, next) => {
@@ -1850,16 +1880,16 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             emptyLabel={
               hasFilters
                 ? "Clear filters"
-                : view === "Active" && list.data.can_create
+                : current.id === "inbox" && list.data.can_create
                   ? "+ Lead"
                   : "Back to Inbox"
             }
             onEmpty={() =>
               hasFilters
                 ? clearFilters()
-                : view === "Active" && list.data!.can_create
+                : current.id === "inbox" && list.data!.can_create
                   ? setMode("add")
-                  : change("view", "Active")
+                  : chooseView("inbox")
             }
           />
           <div className="lead-mobile-results">
@@ -1868,7 +1898,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
                 {items.length}
                 {list.data.next_cursor ? "+" : ""} leads
               </strong>
-              <span>{view === "Active" ? "Active enquiries" : view}</span>
+              <span>{current.id === "inbox" ? "Active enquiries" : current.label}</span>
             </div>
             {items.length === 0 ? (
               <div className="lead-empty">
@@ -1976,5 +2006,19 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         </Modal>
       )}
     </section>
+  );
+  return (
+    <SecondaryMenuFrame
+      state={menuState}
+      id="ppo-leads"
+      name="Leads"
+      menuId="lead-menu"
+      contentId="lead-content"
+      attributes={{ "data-view": current.id }}
+      menu={menu}
+      message=""
+    >
+      {workspace}
+    </SecondaryMenuFrame>
   );
 }
