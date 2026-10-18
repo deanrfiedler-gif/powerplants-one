@@ -42926,7 +42926,7 @@
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
             "Use + Lead to capture the enquiry and its source",
-            "Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately",
+            "Open a view from the side menu (Inbox, My leads, a status, Overdue, Next action needed, Archived, Disqualified or Converted); use Everyone and Filters to narrow it",
             "Open the lead title or row menu to review, schedule follow-up or perform an available transition",
             "Convert a qualified enquiry to its linked deal and retain the original lead history",
             "On an active owned Lead, use Resolve customer context. Search permitted customer, site and contact records. Save the selection with a reason; later corrections retain previous selections.",
@@ -43210,7 +43210,7 @@
           ],
           "steps": [
             "Use + Lead to capture the enquiry and its source",
-            "Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately",
+            "Open a view from the side menu (Inbox, My leads, a status, Overdue, Next action needed, Archived, Disqualified or Converted); use Everyone and Filters to narrow it",
             "Open the lead title or row menu to review, schedule follow-up or perform an available transition",
             "Convert a qualified enquiry to its linked deal and retain the original lead history",
             "On an active owned Lead, use Resolve customer context. Search permitted customer, site and contact records. Save the selection with a reason; later corrections retain previous selections.",
@@ -76538,6 +76538,326 @@
           "title": "Review",
           "paragraphs": [
             "Draft guide. Dean Fiedler owns acceptance. No operational approval or visual acceptance is recorded by this implementation edit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-conversations-id",
+      "entry_key": "route:/conversations/[id]",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
+      "source_commit": "fe2fd00",
+      "related_entry_keys": [
+        "scope:AI-01"
+      ],
+      "change_summary": "Written for Conversations T1c-1 (people-only threads); guide review remains separate.",
+      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; guide acceptance remains pending.",
+      "source_paths": [
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t1-scope.md"
+      ],
+      "workflow_basis": [
+        "docs/decisions/conversations-t1c-design.md"
+      ],
+      "title": "Conversation thread",
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Read and answer one conversation about a deal or project, and close the questions you were asked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "You need read access to the conversation's record. Record links in messages are shown from your own access: one you cannot open reads \"A record you can't open\"."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Read the messages and any question waiting on you.",
+            "Reply in the composer; your reply closes the questions you were asked in this thread.",
+            "If a question needs no answer, choose No answer needed."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The header shows the title, the people in the thread, its state, the record link and who started it. Messages show tags as names. A tracked question appears under the message that asked it."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Ask switches appear for each person you tag. A switched-on ask needs a short question; reply-by is optional and cannot be added after sending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Type @ to tag a person or # to link a deal or project.",
+            "Switch on Ask to track a question, then Send (or Ctrl+Enter).",
+            "When the conversation is finished, choose Resolve. Reopen it to reply again."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Messages are kept as written and cannot be edited or deleted. Resolve is available to the person who started the thread and its participants."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "A resolved thread shows \"Reopen this conversation to reply\". If someone else changed the thread first, the page re-reads it and says so. A conversation you cannot open says only \"This conversation isn't available to you\"."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked example",
+          "paragraphs": [
+            "Sam opens the thread, reads \"Waiting on you · delivery date · reply by 30 Oct\", replies \"30 October\", and the card changes to \"Answered by Sam\"."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "If a send fails, the message stays with Retry. If you lose access, the thread is cleared and the page says it is not available."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "At 780 px and narrower the list and the thread are separate screens: the list first, then the thread full screen with Back to conversations. The pickers work from the keyboard (arrow keys, Enter, Escape), Ask is a switch, and Ctrl+Enter sends. Conversations needs a connection; nothing is kept offline."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The design and rules are in the Conversations T1c design (PPO-CONV-T1C-DESIGN) and the T1 scope (PPO-CONV-T1-SCOPE, rules T1-1 to T1-9)."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "This guide is a draft for the private synthetic prototype. It has not been reviewed; record questions for Dean Fiedler."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-conversations",
+      "entry_key": "route:/conversations",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented bounded synthetic workflow; draft guidance",
+      "source_commit": "fe2fd00",
+      "related_entry_keys": [
+        "scope:AI-01"
+      ],
+      "change_summary": "Written for Conversations T1c-1 (people-only threads); guide review remains separate.",
+      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; guide acceptance remains pending.",
+      "source_paths": [
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t1-scope.md"
+      ],
+      "workflow_basis": [
+        "docs/decisions/conversations-t1c-design.md"
+      ],
+      "title": "Conversations",
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Ask colleagues about a deal or project and keep the question with the record. Every conversation belongs to one deal or project, and a question you tag someone with is tracked until they reply."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "You need read access to the deal or project. You can tag only people who can already open that record; there is no sharing in this version. There is no AI assistant here yet."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Open /conversations. Until the top-bar icon arrives, the page is reached by its address.",
+            "Choose New thread, pick the deal or project under About, and write your first message.",
+            "Tag a person with @. To track a question, switch on Ask for them and write a short question; a reply-by date is optional. Choose Start thread."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The sidebar lists the conversations you take part in, grouped by record, newest first. Waiting on you and Mentions filter the list; Search narrows it by title or record number. On a wide screen the most urgent thread opens beside the list."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "About: the one deal or project the conversation is about. Message: plain text with @ tags and # record links. The title is taken from your first sentence, without record links, and can be edited before you start."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Use Waiting on you to see questions you owe an answer to.",
+            "Open a thread to reply; replying closes the questions you were asked in it.",
+            "Use Mentions to find threads where you were tagged."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Starting a thread opens it. The people you asked see it under Waiting on you. Record links open the deal or project."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "A thread is Waiting on you, Open or Resolved. If a send fails, your message stays with Retry and is sent once. Nothing is cached when you sign out."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked example",
+          "paragraphs": [
+            "Alex starts a thread on a deal: \"Where is the controller?\", tags Sam and asks \"delivery date\" by 30 October. Sam sees it under Waiting on you, replies, and the question closes."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "If the list cannot load, choose Retry. A conversation you cannot open is not listed. If a picker cannot load, you can still send without tags."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "At 780 px and narrower the list and the thread are separate screens: the list first, then the thread full screen with Back to conversations. The pickers work from the keyboard (arrow keys, Enter, Escape), Ask is a switch, and Ctrl+Enter sends. Conversations needs a connection; nothing is kept offline."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "The design and rules are in the Conversations T1c design (PPO-CONV-T1C-DESIGN) and the T1 scope (PPO-CONV-T1-SCOPE, rules T1-1 to T1-9)."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "This guide is a draft for the private synthetic prototype. It has not been reviewed; record questions for Dean Fiedler."
           ],
           "steps": [],
           "headers": [],

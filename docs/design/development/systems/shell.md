@@ -204,3 +204,12 @@ Dean accepted the [Shell top bar amendment](../../../decisions/shell-top-bar-ame
 - **Mobile requirements.** Unchanged (R7): the page name only, search from its header button, Quick add from More.
 - **Host fixtures.** `tests/unit/shell-breadcrumb.test.ts` (route-level rules, no access to the owner, signed out); the shared-shell, engineering and Projects browser suites for header geometry and crumb text. The `top-bar-amendment` state and the `application-shell-top-bar-amendment` alignment item are in components.json. Owner/device review of the application remains pending; no review fingerprint changes.
 
+
+## Rails and secondary menus aligned with Figma — 18 October 2026
+
+Dean: "Fix the left navigation rails and secondary menus in the Powerplants One application so they align with the ones that we have designed in Figma. Also, remove the search box that is showing in the secondary menu." The [decision](../../../decisions/shell-rail-menu-figma-alignment.md) records the Figma values and what still differs.
+
+- **Rail.** Plain 40 px toggle (its `aria-expanded` no longer draws More's open state); collapsed 46 px logo, 22 px glyphs and first item at y = 108; grouped rails at 40 px with the drawn 24 px headings and rules; one department heading on every rail; "Estimating handovers" as the labelled Sales rail's visible words. Rail geometry for ungrouped rails, order, permissions and the first-paint rules are unchanged.
+- **Secondary menu.** The Figma presentation is the default of `SecondaryMenuFrame`. Job Pack and the Projects register keep their own accepted compositions; Fertigation and CPQ keep their section menus.
+- **More.** The "Find a menu item" search is removed from the desktop panel and the phone menu. So are the Workspace dropdown and the "N destinations" footer, which `v2 / More panel` does not draw (Dean chose removal, 18 October); Workspaces in More is the department choice.
+- **Proof.** Measured on the running app at 1440 × 900, labelled and collapsed, against the Figma components. Browser and unit fixtures are listed in the [application shell master](../components/application-shell.md#rails-and-secondary-menus-aligned-with-figma--18-october-2026). Owner review is pending.
