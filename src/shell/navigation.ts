@@ -50,6 +50,9 @@ export type ShellDestination = {
   icon: ProductIconName;
   tabLabel?: string;
   menuLabel?: string;
+  // The visible words in the labelled rail when the full label is cut short there. The accessible
+  // name and the collapsed rail's tooltip keep the full label, which contains these words.
+  railLabel?: string;
   href?: string;
   workspace?: WorkspaceId;
   synonyms?: readonly string[];
@@ -62,7 +65,7 @@ export type ShellDestination = {
 export const destinations: ShellDestination[] = [
   {id:"cpq",label:"Configure & price",icon:"nav-products",readiness:"ready",workspace:"estimate",href:"/estimating/cpq",requiresAll:["cpq.read","estimating.read"]},
   {id:"rules-studio",label:"Rules studio",icon:"nav-documents",readiness:"ready",workspace:"estimate",href:"/estimating/rules",requires:["cpq.read"]},
-  {id:"sales-estimating",label:"Sales-to-Estimating handovers",icon:"nav-inbox",readiness:"ready",workspace:"sales",href:"/sales/handoffs/estimating",requires:["crm.opportunity.read"]},
+  {id:"sales-estimating",label:"Sales-to-Estimating handovers",railLabel:"Estimating handovers",icon:"nav-inbox",readiness:"ready",workspace:"sales",href:"/sales/handoffs/estimating",requires:["crm.opportunity.read"]},
   {id:"sales-won",label:"Won-deal receiving",icon:"nav-approval",readiness:"ready",workspace:"sales",href:"/sales/handoffs/won",requires:["crm.opportunity.read"]},
   {id:"sales-aftercare",label:"Aftercare & renewal",icon:"nav-activities",readiness:"ready",workspace:"sales",href:"/sales/aftercare",requiresAll:["shared.internal.read","report.read"]},
   {id:"access",label:"Users and access",icon:"settings",readiness:"ready",href:"/admin/access",requires:["admin.access.read"]},
@@ -266,6 +269,8 @@ export function pageForPath(path: string) {
   const supply=supplyPages.find(p=>path===`/supply/${p.slug}`); if(supply)return {...destination(supply.rail),label:supply.title};
   if (/^\/estimating\/estimates\/[0-9a-f-]{36}\/sources$/.test(path)) return {...destination("pricing"), label: "Compare source costs"};
   if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
+  // PPO-CONV-T1C-DESIGN: Conversations belongs to no department and has no rail entry; T1c-2 adds its top-bar action.
+  if (matchesPath(path, "/conversations")) return { ...destination("work"), id: "conversations", label: "Conversations", href: "/conversations" };
   if (materialsPath(path) || changesPath(path) || commissioningPath(path) || controlPath(path)) return destination("engineering");
   // Specific routes precede their parent; a future page must not inherit a wrong guide.
   const item = destinations

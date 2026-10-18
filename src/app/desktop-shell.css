@@ -50,13 +50,13 @@
 .ppo-shell-header .header-account { display: flex; align-items: center; min-height: 44px; }
 .ppo-account-fallback { display: flex; }
 .ppo-shell-header:has(#header-account:not(:empty)) .ppo-account-fallback { display: none; }
-.ppo-global-search, .ppo-menu-search { display: flex; align-items: center; gap: 10px; min-width: 0; margin: 0; height: 40px; padding: 0 13px; border: 1px solid #d8dee6; border-radius: 22px; background: #f8f9fb; font-weight: 400; color: #667181; }
-.ppo-global-search .product-icon, .ppo-menu-search .product-icon { width: 18px; height: 18px; flex-shrink: 0; color: #667181; }
-.ppo-global-search input, .ppo-menu-search input { flex: 1; min-width: 0; width: 100%; min-height: 36px; height: 36px; margin: 0; border: 0; padding: 0; border-radius: 0; background: transparent; box-shadow: none; outline: none; font-size: 13px; font-weight: 400; color: #242a37; }
-.ppo-global-search input:focus-visible, .ppo-menu-search input:focus-visible { outline: none; box-shadow: none; }
-.ppo-global-search:hover, .ppo-menu-search:hover { background: #fff; border-color: #a9b4c1; }
-.ppo-global-search:focus-within, .ppo-menu-search:focus-within { background: #fff; border-color: #397eb6; outline: 2px solid #397eb633; outline-offset: 2px; }
-.ppo-global-search input::placeholder, .ppo-menu-search input::placeholder { color: #667181; opacity: 1; }
+.ppo-global-search { display: flex; align-items: center; gap: 10px; min-width: 0; margin: 0; height: 40px; padding: 0 13px; border: 1px solid #d8dee6; border-radius: 22px; background: #f8f9fb; font-weight: 400; color: #667181; }
+.ppo-global-search .product-icon { width: 18px; height: 18px; flex-shrink: 0; color: #667181; }
+.ppo-global-search input { flex: 1; min-width: 0; width: 100%; min-height: 36px; height: 36px; margin: 0; border: 0; padding: 0; border-radius: 0; background: transparent; box-shadow: none; outline: none; font-size: 13px; font-weight: 400; color: #242a37; }
+.ppo-global-search input:focus-visible { outline: none; box-shadow: none; }
+.ppo-global-search:hover { background: #fff; border-color: #a9b4c1; }
+.ppo-global-search:focus-within { background: #fff; border-color: #397eb6; outline: 2px solid #397eb633; outline-offset: 2px; }
+.ppo-global-search input::placeholder { color: #667181; opacity: 1; }
 .ppo-global-search kbd { padding: 2px 4px; border: 1px solid #dde3ea; background: #fff; border-radius: 4px; color: var(--text-secondary, #596779); white-space: nowrap; font: 10px/1.4 PPOShellRoboto, Roboto, Verdana, sans-serif; }
 .ppo-more-panel, .ppo-header-panel, .header-account .identity-strip .ppo-account-panel { position: fixed; z-index: 80; display: flex; flex-direction: column; flex-wrap: nowrap; overflow: hidden; border: 1px solid #dce1e8; border-radius: 14px; background: white; color: #242a37; box-shadow: 0 8px 32px #242a3720, 0 2px 5px #242a370a; font-size: 14px; overflow-wrap: anywhere; }
 .ppo-more-panel { top: 12px; bottom: 12px; left: 86px; width: 344px; max-width: calc(100vw - 100px); }
@@ -74,8 +74,6 @@
 :is(.ppo-more-panel > header,.ppo-panel-titlebar) .ppo-top-action { width: 36px; height: 36px; min-height: 36px; padding: 0; border-radius: 7px; }
 :is(.ppo-more-panel > header,.ppo-panel-titlebar) .ppo-top-action .product-icon { width: 18px; height: 18px; }
 .ppo-more-body, .ppo-panel-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #bac3ce transparent; padding: 0 12px 12px; scroll-padding-top: 16px; }
-.ppo-menu-search { margin: 3px 8px 12px; border-radius: 8px; height: 38px; padding: 0 13px; background: #f8f9fb; }
-.ppo-menu-search input { font-size: 12px; height: 34px; min-height: 34px; }
 .ppo-menu-group { margin: 4px 0 12px; padding: 0; border: 0; }
 .ppo-menu-group h3 { margin: 14px 10px 6px; padding: 0; font-size: 10px; line-height: 1.4; letter-spacing: .7px; text-transform: uppercase; font-weight: 500; color: #7a8492; }
 .ppo-more-link { display: flex; align-items: center; gap: 12px; padding: 9px 11px; min-height: 40px; border: 0; border-radius: 7px; font-size: 13px; line-height: 1.4; font-weight: 400; color: #374152; text-decoration: none; }
@@ -88,7 +86,7 @@
 .ppo-more-link[aria-current=page] { background: #e8ecf1; color: #242a37; font-weight: 500; }
 .ppo-more-link[aria-current=page] .product-icon { color: #242a37; }
 .ppo-help-link { background: transparent; width: 100%; text-align: left; }
-.ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
 .ppo-preview-label::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #8b98a9; margin-right: 6px; vertical-align: middle; }
 .ppo-menu-notice { margin: 8px 12px; font-size: 12px; }
 .ppo-panel-hint { padding: 3px 8px 5px; margin: 0 0 12px; color: #778292; font-size: 11px; line-height: 1.55; }
@@ -254,7 +252,7 @@
   .ppo-shell-header #header-search .crm-header-search { width: 100%; margin: 0; }
   .ppo-header-panel { top: 72px; max-height: calc(100dvh - 150px - env(safe-area-inset-bottom)); }
   .ppo-mobile-search-field { padding: 16px 18px 0; }
-  .ppo-global-search input, .ppo-menu-search input, .ppo-development select { font-size: 16px; }
+  .ppo-global-search input, .ppo-development select { font-size: 16px; }
   .ppo-global-search kbd { display: none; }
   .header-account .identity-strip .identity-controls, .ppo-hosted-account-controls { max-width: calc(100vw - 24px); max-height: calc(100dvh - 154px - env(safe-area-inset-bottom)); }
   .mobile-navigation { grid-template-columns: repeat(4, minmax(0,1fr)); }
@@ -275,8 +273,8 @@
  .header-account .identity-strip .ppo-account-panel { top: 76px; right: 12px; left: 12px; width: auto; max-width: none; max-height: calc(100dvh - 150px - env(safe-area-inset-bottom)); }
  :is(.ppo-more-panel > header,.ppo-panel-titlebar) .ppo-top-action { width: 44px; height: 44px; min-height: 44px; }
  .ppo-more-link, .ppo-quick-option { min-height: 44px; }
- .ppo-menu-search, .ppo-global-search { height: 44px; }
- .ppo-menu-search input, .ppo-global-search input { height: 40px; min-height: 40px; }
+ .ppo-global-search { height: 44px; }
+ .ppo-global-search input { height: 40px; min-height: 40px; }
  .ppo-header-panel.ppo-guide-panel { max-height: calc(100dvh - 150px - env(safe-area-inset-bottom)); }
  .ppo-page-guide { padding: 16px 8px 10px; }
  .ppo-guide-intro h3 { font-size: 20px; }
@@ -389,9 +387,6 @@
 
 /* NAV-04: primary rail preference; secondary-menu docking stays at 1200 px. */
 .ppo-rail-label { display: none; }
-.ppo-workspace-picker { padding: 12px; display: grid; gap: 6px; }
-.ppo-workspace-picker select { min-height: 44px; width: 100%; min-width: 0; font: inherit; }
-.ppo-workspace-picker label { font-weight: 700; }
 @media (min-width: 781px) {
   .app-frame[data-rail=expanded] { --ppo-rail-width: 232px; }
   .ppo-rail .ppo-rail-toggle { flex: 0 0 44px; margin: 4px 0; }

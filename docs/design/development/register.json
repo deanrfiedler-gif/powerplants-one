@@ -14252,6 +14252,94 @@
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules/[id]"
       ]
+    },
+    {
+      "key": "route:/conversations/[id]",
+      "title": "Conversation thread",
+      "kind": "route",
+      "module": "AI",
+      "summary": "One people-only thread (Conversations T1c-1): header with record link and Resolve or Reopen, messages with @ tags and # record links drawn from each reader's access, tracked ask cards, and the composer with ask rows.",
+      "path": "/conversations/[id]",
+      "source_paths": [
+        "src/app/(business)/conversations/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-conversations-id",
+      "design_path": "docs/design/development/pages/route-conversations-id.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/conversations/components/conversations-workspace.tsx",
+        "src/conversations/components/thread-sidebar.tsx",
+        "src/conversations/components/conversations.css",
+        "src/conversations/sidebar-model.ts",
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t1-scope.md",
+        "src/conversations/components/thread-view.tsx",
+        "src/conversations/components/message.tsx",
+        "src/conversations/components/ask-card.tsx",
+        "src/conversations/components/composer.tsx",
+        "src/conversations/components/mention-picker.tsx",
+        "src/conversations/components/ask-rows.tsx",
+        "src/conversations/ask-model.ts",
+        "src/conversations/composer-mode.ts",
+        "src/conversations/composition.ts"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "T1c-1 unit, HTTP-route and desktop/phone browser tests (tests/unit/conversations-*.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); acceptance remains separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:AI-01",
+        "route:/conversations"
+      ]
+    },
+    {
+      "key": "route:/conversations",
+      "title": "Conversations",
+      "kind": "route",
+      "module": "AI",
+      "summary": "People-only threads on deals and projects (Conversations T1c-1): the thread sidebar with Waiting on you and Mentions, the empty and loading states, and New thread. No Carl, AI, voice, branches or sharing; the top-bar entry is T1c-2 and the context panel T1c-3.",
+      "path": "/conversations",
+      "source_paths": [
+        "src/app/(business)/conversations/page.tsx"
+      ],
+      "guide_key": "guide.route-conversations",
+      "design_path": "docs/design/development/pages/route-conversations.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/conversations/components/conversations-workspace.tsx",
+        "src/conversations/components/thread-sidebar.tsx",
+        "src/conversations/components/conversations.css",
+        "src/conversations/sidebar-model.ts",
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t1-scope.md",
+        "src/conversations/components/conversations-home.tsx",
+        "src/conversations/components/new-thread-dialog.tsx",
+        "src/conversations/components/composer.tsx",
+        "src/conversations/components/mention-picker.tsx",
+        "src/conversations/components/ask-rows.tsx",
+        "src/conversations/composition.ts",
+        "src/conversations/title.ts"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "T1c-1 unit, HTTP-route and desktop/phone browser tests (tests/unit/conversations-*.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); acceptance remains separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:AI-01",
+        "route:/conversations/[id]"
+      ]
     }
   ]
 }
