@@ -43,7 +43,7 @@ Image 08 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Access & readiness — accepted", saved by Claude in the Figma desktop app on 18 October 2026 at Dean's "Yes, save the named Figma version" (recorded on the page header and notes card) |
+| Named version | "Access & readiness — accepted", saved by Claude in the Figma desktop app at 5:57 pm on 18 October 2026, after Dean said "Yes, save the named Figma version "Access & readiness — accepted"." |
 | Accepted frames | Page "Access & readiness · CS-06" `1400:346423`, notes card `1400:347414`, in image order:<br>• `1400:346553`, `1400:351900`, `1400:353096`, `1400:353479`;<br>• `1400:354078`;<br>• `1400:347071`, `1400:355748`;<br>• the states: `1400:356261`, `1400:356329` |
 | Capture copies | Page "Captures (icon-free)" `115:2`, from y = 224,000: `1405:352660`, `1405:352795`, `1405:352947`, `1405:353073`, `1405:353225`, `1405:353360`, `1405:353427`, `1405:353494` (images in order) |
 

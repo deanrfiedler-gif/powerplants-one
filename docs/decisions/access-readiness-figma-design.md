@@ -19,7 +19,7 @@ Claude drew the page from these sources:
 - the accepted record pattern in [Appointment detail](appointment-detail-figma-design.md) (PPO-SV04-APPOINTMENT-FIGMA-DEC) and Sites (PPO-CS04-SITES-FIGMA-DEC);
 - copies of the People frames and the Findings form card, drawn and accepted the same day. No accepted frame or main component was edited, and no new component was made.
 
-Claude audited the page before presenting it. Dean then asked for a second pass: "Give the Access & readiness CS-06 page another audit and polish before I decide." (section 6). He then accepted the design: "I accept the Access & readiness CS-06 design with your recommendations, including D1–D7 and Q1–Q4." Claude saved the named version "Access & readiness — accepted" the same day in the Figma desktop app at Dean's "Yes, save the named Figma version", as the page header and notes card record; the saving session saw the entry in the version history. This lock-in session did not open the history itself.
+Claude audited the page before presenting it. Dean then asked for a second pass: "Give the Access & readiness CS-06 page another audit and polish before I decide." (section 6). He then accepted the design: "I accept the Access & readiness CS-06 design with your recommendations, including D1–D7 and Q1–Q4." Dean then said: "Yes, save the named Figma version "Access & readiness — accepted"." Claude saved the named version "Access & readiness — accepted" in the Figma desktop app at 5:57 pm on 18 October 2026, through the version history (+), and checked that it showed as "just now" by Dean Fiedler. This lock-in session did not open the history itself.
 
 Scope:
 - `scope:CS-06`, with `route:/sites/[id]/readiness`.
@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 Signal elsewhere | Resolved as recommended | Once P4 is built, the planner (PL-01) and the job pack (SV-05) show "Recheck required" from the latest check as a read-only signal |
 | Acknowledgement grants nothing | Rule shown in the accepted design | Acknowledging a check records who saw its result and why. It grants no work authority, booking, resource reservation, pack issue or dispatch clearance; those stay with Work orders, the planner and Job packs |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named version "Access & readiness — accepted" | Saved, 18 October 2026 | Saved by Claude in the Figma desktop app at Dean's "Yes, save the named Figma version", recorded on the page header and notes card |
+| Named version "Access & readiness — accepted" | Saved, 18 October 2026, 5:57 pm | Dean: "Yes, save the named Figma version "Access & readiness — accepted"." Saved by Claude in the Figma desktop app through the version history and checked there ("just now", Dean Fiedler) |
 | Building the page, P4 and the weekday change | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Reference | Identity |
 |---|---|
 | Accepted design | Figma file "PPO - Design", private to Dean's Figma team, named version "Access & readiness — accepted". The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
-| Page | "Access & readiness · CS-06" `1400:346423`, under "— Shared records —", after People · CS-02 `1395:150275`. The page header `1400:346424` holds the conformance declaration; the notes card `1400:347414` ("Notes · CS-06 accepted 18 Oct 2026") is in Flows and notes `1400:347413`. File index row "Row / Access & readiness · CS-06" `1408:63` in the Shared records table, after People. The page header still reads "lock-in to do" and "Decision record: None yet"; it was left unchanged so the page matches the named version |
+| Page | "Access & readiness · CS-06" `1400:346423`, under "— Shared records —", after People · CS-02 `1395:150275`. The page header `1400:346424` holds the conformance declaration; the notes card `1400:347414` ("Notes · CS-06 accepted 18 Oct 2026") is in Flows and notes `1400:347413`. File index row "Row / Access & readiness · CS-06" `1408:63` in the Shared records table, after People. After the named version was saved, its "Named version" field and the notes card's Accepted paragraph were updated to say it is saved, and this lock-in updated the header's Status and Decision record fields and the notes card to cite this record and draft PR #589. These are text-only changes made after the named version |
 | Desktop 1440, full length | Overview for Thu 15 Oct `1400:346553`; Requirements `1400:351900`; Evidence, independent review `1400:353096`; Visit preparation, acknowledge with a blocker `1400:353479` |
 | Tablet 1024 | Overview with the rail collapsed (`Rail=Collapsed` 198:3796) `1400:354078` |
 | Phone 390 and 320 | Overview for Thu 15 Oct at 390 `1400:347071` and at 320 `1400:355748` |
@@ -154,4 +154,5 @@ Every desktop and tablet top bar also carries the proposed Conversations action 
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/site-access/access-readiness-design-r01/README.md).
 - A File index row "Row / Access & readiness · CS-06" `1408:63` was added after People in the Shared records table on Start here (frame `630:2`).
 - Claude did not play the prototype in Present mode and did not open the version history.
+- After the captures were made, Claude updated the page header (`1400:346452`, `1400:346455`) and the notes card paragraph `1402:350799` to cite this record and draft PR #589. The capture copies predate that text and do not include the page header or notes card.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
