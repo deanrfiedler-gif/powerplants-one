@@ -1,0 +1,242 @@
+STATUS	## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
+STATUS	## Conversations T1b built, no UI — 17 October 2026
+STATUS	## D-025 customer email decided — 17 October 2026
+STATUS	## Projects register design differences fixed — 17 October 2026
+STATUS	## Projects register compared with its design — 17 October 2026
+STATUS	## Projects register design locked in — 17 October 2026
+STATUS	## Unallocated demand: two readiness rules compared — 17 October 2026
+STATUS	## /schedule late shell-context layout shift — 17 October 2026
+STATUS	## Supply readiness states corrected (audit SUP-1) — 17 October 2026
+STATUS	## Appointment detail design accepted — 17 October 2026
+STATUS	## /projects first-load layout shift — 17 October 2026
+STATUS	## Repository ownership and visibility — 17 October 2026
+STATUS	## Parallel contribution rules and repository security — 17 October 2026
+STATUS	## Workbench parts-proposal contract proposed (B0) — 17 October 2026
+STATUS	## Estimating configurator model adopted — 17 October 2026
+STATUS	## Figma Components page consolidated and mapped — 17 October 2026
+STATUS	## Figma pages aligned with the Template — 17 October 2026
+STATUS	## AI and internal communications threads accepted — 17 October 2026
+STATUS	## Shell top bar amendment accepted and built — 16 October 2026
+STATUS	## Field readiness gate, first build — 17 October 2026
+STATUS	## Shell first paint and create-form leave review — 16 October 2026
+STATUS	## PJ-06 scoped work-evidence acceptance — 16 October 2026
+STATUS	## Current PR integration and URL control repair — 16 October 2026
+STATUS	## UX benchmark decisions — 16 October 2026
+STATUS	## D-025 customer communications decision paper — 16 October 2026
+STATUS	## Field readiness gate proposed — 16 October 2026
+STATUS	## PPO Assistant: Claude API proposed as first live provider — 16 October 2026
+STATUS	## Deal record page design accepted — 16 October 2026
+STATUS	## Contract obligations, notices and variations design accepted — 16 October 2026
+STATUS	## PJ-06 exact technical/procurement receiving — 16 October 2026
+STATUS	## UX benchmark research recorded — 16 October 2026
+STATUS	## Open PR repair and integration — 16 October 2026
+STATUS	## My jobs design accepted — 15 October 2026
+STATUS	## DK-06 rendering-only template manifest (G5) — 15 October 2026
+STATUS	## PJ-06 internal specialist package receiving — 15 October 2026
+STATUS	## Node engine range — 15 October 2026
+STATUS	## Product image references proposed — 15 October 2026
+STATUS	## CPQ rule editor aligned above “Applies when”, Quick test and draft bar — 15 October 2026
+STATUS	## CPQ rule editor aligned below “Applies when” — 15 October 2026
+STATUS	## Planner phone read race — 15 October 2026
+STATUS	## Next.js security patch and dependency gates — 15 October 2026
+STATUS	## Template management design accepted — 15 October 2026
+STATUS	## Products design: product image amendment accepted — 15 October 2026
+STATUS	## DK-03 register revision and acknowledgement facts — 15 October 2026
+STATUS	## Backend reconciliation and DK-03 applicability — 15 October 2026
+STATUS	## BC-04 owned CPQ packages — 15 October 2026
+STATUS	## Output, issue and distribution design accepted — 15 October 2026
+STATUS	## Document library design accepted — 15 October 2026
+STATUS	## BC-04 CPQ release quality and impact — 15 October 2026
+STATUS	## CPQ rebase CI continuation — 15 October 2026
+STATUS	## CPQ explicit rebase and estimate conflict resolution — 14 October 2026
+STATUS	## Excel estimate import, Products and Inventory designs accepted — 15 October 2026
+STATUS	## PJ-05 independent review — 15 October 2026
+STATUS	## PJ-05 commercial controls implementation — 14 October 2026
+STATUS	## CPQ governed cost and labour sources — 14 October 2026
+STATUS	## CPQ published Product mapping — 14 October 2026
+STATUS	## Excel reviewed landed-cost allocation — 14 October 2026
+STATUS	## Excel reviewed FX conversion — 14 October 2026
+STATUS	## Excel managed cost sources and reviewed pricing — 14 October 2026
+STATUS	## Excel larger-workbook capacity — 14 October 2026
+STATUS	## Remaining PR merge and Search test readiness - 14 October 2026
+STATUS	## Excel verified quotation continuation — 14 October 2026
+STATUS	## Excel re-import follow-up integration - 14 October 2026
+STATUS	## Excel revised-workbook comparison and re-import — 14 October 2026
+STATUS	## Remaining PR integration - 14 October 2026
+STATUS	## Customers register and Customer 360 navigation — 14 October 2026
+STATUS	## Customer 360 Figma shell refinement — 14 October 2026
+STATUS	## Customer 360 Figma proposal — 13 October 2026
+STATUS	## Deals draft integration repair - 14 October 2026
+STATUS	## Deals Figma visual refinement — 14 October 2026
+STATUS	## Deals Figma design — 13 October 2026
+STATUS	## Estimation Wizard CI repair - 14 October 2026
+STATUS	## Estimation Wizard Figma implementation — 13 October 2026
+STATUS	## DK-06 controlled template use — 14 October 2026
+STATUS	## Excel import durable first save — 14 October 2026
+STATUS	## Excel import validated upload and review — 14 October 2026
+STATUS	## Products catalogue increment A — 14 October 2026
+STATUS	## PR check repairs - 14 October 2026
+STATUS	## DK-06 supported template publication — 14 October 2026
+STATUS	## DK-06 managed template drafts — 13 October 2026
+STATUS	## Figma file structure — 14 October 2026
+STATUS	## Projects Gantt colours moved to the Figma set — 14 October 2026
+STATUS	## Document PR conflict repair — 13 October 2026
+STATUS	## DK-06 template catalogue backend — 13 October 2026
+STATUS	## Job Pack Figma application — 13 October 2026
+STATUS	## Controlled output actions backend — 13 October 2026
+STATUS	## Output, issue and distribution register backend — 13 October 2026
+STATUS	## Combined conflict integration — 13 October 2026
+STATUS	## Document Register and Revision/Review backend — 13 October 2026
+STATUS	## Project calendars and actual dates backend - 13 October 2026
+STATUS	## Projects receiving and overview backend — 13 October 2026
+STATUS	## Screen Configurator Workbench Figma implementation — 13 October 2026
+STATUS	## CPQ application and expanded design contract — 13 October 2026
+STATUS	## Final shell and backend integration — 13 October 2026
+STATUS	## Figma UI application implementation — 13 October 2026
+STATUS	## Projects register implementation — 13 October 2026
+STATUS	## Open PR conflict integration — 13 October 2026
+STATUS	## Work orders backend — 12 October 2026
+STATUS	## Cost sources register backend — 12 October 2026
+STATUS	## CPQ Configure & price and Rules studio Figma design accepted — 12 October 2026
+STATUS	## Engineering workload backend — 13 October 2026
+STATUS	## Projects RAID and owned actions backend — 13 October 2026
+STATUS	## Leads PR integration — 12 October 2026
+STATUS	## Lead record readiness and summary backend — 12 October 2026
+STATUS	## Leads counts and follow-up backend — 12 October 2026
+STATUS	## Native CPQ backend — 13 October 2026
+STATUS	## Backend PR integration — 12 October 2026
+STATUS	## Backend completion — 12 October 2026
+STATUS	## ES-02 backend equipment catalogue — 12 October 2026
+STATUS	## Design PR follow-up — 12 October 2026
+STATUS	## Open PR integration — 12 October 2026
+STATUS	## Project record page design accepted — 12 October 2026
+STATUS	## Work order record page design accepted — 12 October 2026
+STATUS	## Estimating PR integration repair — 12 October 2026
+STATUS	## ES-02 Estimation Wizard Figma design accepted — 12 October 2026
+STATUS	## ES-02 Estimation Wizard page built to the design board — 12 October 2026
+STATUS	## AD-01 PR upgrade repair — 12 October 2026
+STATUS	## AD-01 local review attestation foundation — 12 October 2026
+STATUS	## My Work page design accepted — 12 October 2026
+STATUS	## Excel parser backup recovery — 12 October 2026
+STATUS	## Priva Fertigation Workbench Figma implementation — 13 October 2026
+STATUS	## Priva fertigation workbench Figma design accepted — 12 October 2026
+STATUS	## Priva fertigation workbench built to the design board — 12 October 2026
+STATUS	## ES-08 Figma design proposal — 12 October 2026
+STATUS	## ES-08 Screen Configurator Workbench — 12 October 2026
+STATUS	## PR repair and integration — 12 October 2026
+STATUS	## CCE documentation publication — 12 October 2026
+STATUS	## Remaining PR integration — 12 October 2026
+STATUS	## Job pack design accepted — 12 October 2026
+STATUS	## GitHub Actions queue repair — 11 October 2026
+STATUS	## Cost sources design accepted — 11 October 2026
+STATUS	## Sales briefs design accepted — 11 October 2026
+STATUS	## Work orders design accepted — 11 October 2026
+STATUS	## Intake & workload design accepted — 11 October 2026
+STATUS	## Engineering workload design accepted — 11 October 2026
+STATUS	## Lead record page design accepted — 11 October 2026
+STATUS	## Leads design accepted — 11 October 2026
+STATUS	## Quotations design accepted — 11 October 2026
+STATUS	## Reviews & approvals design accepted — 11 October 2026
+STATUS	## Page design tooling revisited — 11 October 2026
+STATUS	## Current PR completion — 11 October 2026
+STATUS	## AD-01 saved-team access inspection — 12 October 2026
+STATUS	## AD-01 native local team creation — 12 October 2026
+STATUS	## AD-01 durable local team records — 11 October 2026
+STATUS	## AD-01 proposed team inspection — 11 October 2026
+STATUS	## AD-01 requester withdrawal — 11 October 2026
+STATUS	## AD-01 controlled local application — 11 October 2026
+STATUS	## AD-01 access requests and independent decisions — 11 October 2026
+STATUS	## AD-01 proposed-role comparison — 11 October 2026
+STATUS	## AD-01 capability catalogue continuation — 11 October 2026
+STATUS	## AD-01 native access inspection — 11 October 2026
+STATUS	## Closed backup recovery review — 12 October 2026
+STATUS	## Earlier open PR integration — 11 October 2026
+STATUS	## PT-27 loading performance — 10 October 2026
+STATUS	## Page design tooling — 10 October 2026
+STATUS	## PT-30 integration rehearsal — 10 October 2026
+STATUS	## PT-29 screen states — 10 October 2026
+STATUS	## Controlled output generation and recovery — 10 October 2026
+STATUS	## Shared register table — 10 October 2026
+STATUS	## Icon style decision — 10 October 2026
+STATUS	## Same-name customer mapping and backend integration — 10 October 2026
+STATUS	## Parallel backend access and recovery — 9 October 2026
+STATUS	## UI build and review sequence — 9 October 2026
+STATUS	## Navigation architecture proposal — 9 October 2026
+STATUS	## Current bounded step — Customers first load
+STATUS	## Merged quality increments — #370–#373
+STATUS	## Merged recovery verification — 8 October 2026
+STATUS	## Merged navigation and correction
+STATUS	## Integrated journey checkpoint
+STATUS	## Observed source and deployment
+STATUS	## Delivered programmes and remaining boundaries
+STATUS	## Required checks and open obligations
+STATUS	## Boundaries and history
+STATUS	## Document identity and recovery — 10 October 2026
+STATUS	## Service and Finance download access — 10 October 2026
+STATUS	## Current PR repair and integration — 11 October 2026
+STATUS	## Earlier PR check repairs — 11 October 2026
+DECISIONS	[Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 
+DECISIONS	[AI tool roles and independent cross-model review](cross-model-review.md) record
+DECISIONS	[Estimating hub, CPQ and specialist workbench model](estimating-configurator-mod
+DECISIONS	CM1–CM11 and the answers to Q1–Q9 are adopted. The twenty records it supersedes 
+DECISIONS	[Figma pages aligned with the Template](figma-page-template-alignment.md) (PPO-D
+DECISIONS	[Figma pages aligned with the Template](figma-page-template-alignment.md) (PPO-D
+DECISIONS	[AI and internal communications threads](ai-communications-threads-proposal.md) 
+DECISIONS	[Supply readiness promise rules](supply-readiness-promise-rules.md) (PPO-SUP-DEC
+DECISIONS	[Unallocated demand readiness proposal](unallocated-demand-readiness-proposal.md
+DECISIONS	[UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01) 
+DECISIONS	[Customer communications decision paper for D-025](customer-communications-d025.
+DECISIONS	[ADR-0058](ADR-0058-outbound-customer-email.md) is its **accepted** provider rec
+DECISIONS	[Field readiness gate](field-readiness-gate-proposal.md) is a **proposed** chang
+DECISIONS	[Customer communications core (D-025 S2)](customer-communications-core-s2.md) re
+DECISIONS	[UX benchmark research direction](ux-benchmark-research-direction.md) records De
+DECISIONS	[DK-03 exact revision and acknowledgement facts](output-register-facts.md) defin
+DECISIONS	[PJ-06 specialist package coordination](project-specialist-packages.md) records 
+DECISIONS	[DK-03 distribution during a started visit](output-distribution-applicability.md
+DECISIONS	[PJ-05 commercial controls](project-commercial-controls.md) records exact accept
+DECISIONS	[Projects receiving and overview backend](project-overview-backend.md) records e
+DECISIONS	[Projects RAID and owned actions backend](project-raid-backend.md) records the b
+DECISIONS	[Leads counts and follow-up reads](lead-register-backend.md) records the authori
+DECISIONS	[ADR-0054 — Versioned Estimating equipment catalogue](ADR-0054-es02-equipment-ca
+DECISIONS	[CCE architecture proposal and documentation publication](cce-architecture-propo
+DECISIONS	[Project schedule baselines and forecast comparison](project-schedule-baselines.
+DECISIONS	[UI build and review sequence](ui-build-sequence.md) is the order for creating a
+DECISIONS	[ADR-0047 — Native Engineering control](ADR-0047-engineering-native-control.md) 
+DECISIONS	[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) ra
+DECISIONS	[Service requests native refinement](service-requests-native-refinement.md) is a
+DECISIONS	[Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed*
+DECISIONS	[Field work timer design](field-work-timer-design.md) records Dean's acceptance 
+DECISIONS	[Department navigation icons](department-navigation-icons.md) implements seven o
+DECISIONS	[ES-08 Screen Geometry Study architecture proposal](es08-screen-geometry-study.m
+DECISIONS	[ES-08 design board owner decision](es08-design-board.md) records Dean's 23 Sept
+DECISIONS	[ES-02 Estimation Wizard page build](es02-wizard-ui-build.md) records Dean's 12 
+DECISIONS	[ES-08 Figma design proposal](es08-figma-design.md) brings the built Screen Conf
+DECISIONS	[ES-02 Estimation Wizard design board](es02-design-board.md) records the user's 
+DECISIONS	[ES-01 Estimating intake and workload design board](es01-design-board.md) record
+DECISIONS	[decision-register.csv](decision-register.csv) retains the 29 original questions
+DECISIONS	The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
+DECISIONS	[PP-01 decisions and evidence](../prototype/decisions-and-evidence.md) explains 
+DECISIONS	[ADR-0009](ADR-0009-p04-work-scope-readiness.md) records exact scope/readiness a
+DECISIONS	[ADR-0011](ADR-0011-p06-controlled-job-packs.md) records P06 durable controlled 
+DECISIONS	[BP-03](../blueprints/BP-03-crm.md) records PPO-009's proposed CRM choices, shar
+DECISIONS	[ADR-0014](ADR-0014-p09-service-reports.md) records exact P09 submissions, servi
+DECISIONS	[ADR-0015](ADR-0015-crm-i1-owned-opportunities.md) records the separately author
+DECISIONS	[BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the autho
+DECISIONS	[ADR-0016](ADR-0016-p10-finance-handoff.md) records P10 exact Finance source/all
+DECISIONS	[Projects discovery and first-increment boundary](bp06-projects-discovery.md) re
+DECISIONS	[Customer portal direction](customer-portal-direction.md) records Dean's authori
+DECISIONS	[ADR-0018](ADR-0018-p11-travel-and-integrated-quality.md) records the approved P
+DECISIONS	The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
+DECISIONS	[Private Prototype Demo scope and hosting assessment](private-prototype-demo.md)
+DECISIONS	[Azure demo connection preparation](azure-demo-connection.md) records the dedica
+DECISIONS	[Azure private demo runtime](azure-private-demo.md) — individual sign-in, cloud 
+DECISIONS	[Derived routing direction](estimating-derived-routing.md) records Dean’s 12 Sep
+DECISIONS	[Bounded Excel parser recovery](excel-estimate-import-native.md) recovers the cl
+DECISIONS	[Excel estimate import design](excel-estimate-import-design.md) records the auth
+DECISIONS	[Product quality adoption](product-quality-adoption.md) records Dean’s 14 Septem
+DECISIONS	[Package decision](naming-communications-sharepoint.md) records Dean's authorisa
+DECISIONS	[Output, Issue & Distribution Centre design and receiving handover](output-issue
+DECISIONS	The [27 September consolidation decision](repository-consolidation.md) authorise
+DECISIONS	The [scheduling policy impact decision](scheduling-policy-impact-review.md) defi
+DECISIONS	The [controlled scheduling-policy publication plan](scheduling-policy-publicatio
+DECISIONS	[Local access review attestations](access-review-attestations.md) records the bo
