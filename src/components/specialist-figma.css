@@ -111,13 +111,13 @@
 #ppo-specialist .es08-action-status { display: flex; align-items: center; gap: 5px; font-size: 10px; }
 #ppo-specialist .es08-action-status .es08-icon { width: 12px; height: 12px; }
 #ppo-specialist .es08-actions > .ppo-button { min-height: 40px; margin-top: 23px; }
-#ppo-specialist .es08-contents { padding: 20px 12px; }
-#ppo-specialist .es08-contents h2 { padding: 0 12px 8px; color: var(--text-secondary); text-transform: uppercase; font-size: 10px; line-height: 15px; letter-spacing: .8px; font-weight: 700; }
+#ppo-specialist .es08-contents { padding: 0; }
+#ppo-specialist .es08-contents h2 { margin: 0; padding: 18px 12px 0; color: var(--ppo-shell-muted); text-transform: uppercase; font-size: 11px; line-height: 16px; letter-spacing: .66px; font-weight: 500; }
 #ppo-specialist .mw-menu .es08-contents nav { gap: 2px; }
 #ppo-specialist .mw-menu .es08-contents nav > :is(a,button) { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 8px 12px; font-size: 14px; line-height: 20px; color: var(--ink); border-radius: 6px; text-align: left; }
 #ppo-specialist .es08-contents nav > :is(a,button) > span:not([class^="es08-tone"]) { flex: 1; }
-#ppo-specialist .mw-menu .es08-contents nav > :is(a,button):hover { background: var(--surface-hover); }
-#ppo-specialist .mw-menu .es08-contents nav > :is([aria-current],[aria-pressed="true"]) { background: var(--surface-white); font-weight: 500; box-shadow: 0 1px 3px #242a370c; }
+#ppo-specialist .mw-menu .es08-contents nav > :is(a,button):hover { background: var(--ppo-shell-hover); }
+#ppo-specialist .mw-menu .es08-contents nav > :is([aria-current],[aria-pressed="true"]) { background: var(--ppo-shell-selected); color: var(--ppo-shell-link); font-weight: 500; box-shadow: none; }
 #ppo-specialist .es08-contents small { min-width: 20px; padding: 0 5px; border-radius: 10px; background: var(--neutral-surface); color: var(--neutral); font-size: 10px; text-align: center; }
 #ppo-specialist .es08-contents-note { font-size: 12px; line-height: 18px; color: var(--text-secondary); padding: 18px 12px 22px; }
 #ppo-specialist :is(.es08-phone-back,.es08-phone-version,.es08-readiness-summary,.es08-phone-more,.es08-phone-summary,.es08-mobile-filter,.es08-inspector-trigger) { display: none; }
