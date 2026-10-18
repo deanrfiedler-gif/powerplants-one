@@ -20,6 +20,10 @@ Still open for Dean, not decided by that reply: turning off "Require branches to
 
 Dean confirmed the five assumptions T1b was built on, as written in the [T1b contract](contracts/conversations-t1b.md#assumptions-confirmed): "Ok. We will proceed on that basis." A reply closes all of that person's earlier open asks in the thread; the reply-by reminder falls due on the Brisbane reply-by date and the asker is told only on a later day; a resolved thread takes no posts until it is reopened; only the person asked can mark No answer needed; and the existing notice table is widened for the Conversation source. This replaces "five assumptions awaiting Dean's confirmation" in the T1b entry below. No code changes; T1c builds on these rules.
 
+## Leads side menu built — 18 October 2026
+
+The Leads page now draws the side menu Dean accepted on 11 October ([Leads design](decisions/leads-design.md) L1/L2, Figma `190:20519`) on the shared secondary menu: Inbox and My leads; Status: New, Contacting, Nurturing; Follow-up: Overdue, Next action needed; Other views: Archived, Disqualified, Converted, each with its icon and a full-match count. Every view is an existing list read and every count a key of the existing counts read; no rule, migration or capability is added. The icon tabs are gone and Status leaves the Filters menu. The [implementation record](decisions/leads-side-menu-implementation.md) maps each row to its read. Built on a branch stacked on the rail and menu alignment; the toolbar, columns, record window and rail badge are unchanged, and owner visual review of the application is pending. Work orders and Engineering workload follow separately.
+
 <!-- fragments:end -->
 
 ## Field team design accepted — 18 October 2026

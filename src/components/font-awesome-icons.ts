@@ -392,11 +392,15 @@ export const fertigationFontAwesome = {
   external: "arrow-up-right-from-square",
 } satisfies Record<FertigationIconName, FontAwesomeIcon>;
 
-// src/components/leads-workspace.tsx: Leads' own back, sort and search glyphs.
+// src/components/leads-workspace.tsx: Leads' own back, sort and search glyphs, and the side-menu
+// icons the product set lacks (Figma Leads side menu 190:20519).
 export const leadsFontAwesome = {
   back: "arrow-left",
   sort: "arrow-down-wide-short",
   search: "magnifying-glass",
+  seedling: "seedling",
+  calendar: "calendar",
+  "calendar-alert": "calendar-exclamation",
 } satisfies Record<LeadsIconName, FontAwesomeIcon>;
 
 // src/components/projects-gantt.tsx: the Programme Gantt toolbar and rows.

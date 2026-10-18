@@ -10,7 +10,7 @@ This page address exists in the inspected application source. Open it from a run
 
 1. Confirm the record reference and customer/site context in this record workspace.
 2. Use + Lead to capture the enquiry and its source
-3. Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately
+3. Open a view from the side menu (Inbox, My leads, a status, Overdue, Next action needed, Archived, Disqualified or Converted); use Everyone and Filters to narrow it
 4. Open the lead title or row menu to review, schedule follow-up or perform an available transition
 5. Convert a qualified enquiry to its linked deal and retain the original lead history
 
