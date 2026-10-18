@@ -12,6 +12,12 @@ After 21 or more open pull requests repeatedly conflicted on `docs/STATUS.md`, t
 
 Open for Dean, not changed here: turning off "Require branches to be up to date" in favour of a merge queue or a merged-tree check, rendering the fragments after merge by workflow, and an open-pull-request check in CI. Branch protection and workflow files are untouched. Not verified: behaviour with two real concurrent pull requests, or GitHub's "Update branch" button on the rendered files. No application code, migration, permission or parent ID changes.
 
+## Facilities CS-05 design accepted — 18 October 2026
+
+Dean accepted the Figma design for CS-05 Facilities and growing areas (`/facilities`, `/facilities/new`, `/facilities/[id]`, `/facilities/[id]/edit`) with the recommended answers: "I accept the Facilities and growing areas CS-05 design with your recommendations, including D1–D7 and Q1–Q4." The [design decision](decisions/facilities-figma-design.md) (PPO-CS05-FACILITIES-FIGMA-DEC) records departures D1–D7 and answers Q1–Q4. Seventeen icon-free captures with hashes are retained in [facilities-design-r01](reference/ui/customers/facilities-design-r01/README.md). The design register pages for the four routes and `scope:CS-05` cite the frames and captures. In Figma the File index has a Facilities row after Sites, and the capture copies sit on the Captures page from y = 240,000.
+
+Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. Not done: the named Figma version "Facilities and growing areas — accepted" waits for Dean's explicit yes; the page is not built, and the native CS-05 pages are unchanged. No application code, route, migration, permission or parent ID changes.
+
 <!-- fragments:end -->
 
 ## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026

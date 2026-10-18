@@ -12,11 +12,19 @@ r20 page type: **Register / worklist**. Search, Site, structure type, use and so
 
 ## Desktop
 
+Accepted design: the [Facilities design decision](../../../decisions/facilities-figma-design.md) of 18 October 2026, with captures 01–03 (desktop 1440 × 900) and 09 (tablet 1024) in [design r01](../../../reference/ui/customers/facilities-design-r01/README.md). Figma page "Facilities and growing areas · CS-05" `1415:357158`: register `1415:357195`, snapshot `1416:363644`, Hierarchy `1416:365147`, tablet `1415:357718`.
+
+- **Register:** a grid, one row per facility or area (D1): Facility / area, Site, Within, Structure, Use, Crop / crop group, Footprint (m²), Basis, Installed equipment and Last changed. The toolbar has "+ Facility / area", Site, Structure and Use filters, the count with its read time, a List and Hierarchy toggle, Refresh and "…".
+- **Views:** All facilities (default), Growing areas, Non-growing and Details to complete, after Organisations, People and Sites (D2). Selecting a row opens a read-only snapshot over the grid instead of the Inspect dock (D3).
+- Nothing new is built; the native register below remains the built page.
+
 Use the current native PPO shell. The shell owns header, search, global navigation and viewport height; the Customer locations secondary menu lists Facilities & growing areas. Inside `#ppo-facilities`, the `.facility-host` is the one scroller. Reuse PageHeader, RecordTabs/RecordPanel, LookupField, Field/Select, validation, the session boundary and the original-operation hook; no standalone demo shell is copied.
 
 The register uses a right-hand, read-only inspection dock on wide screens and opens full records on smaller screens; changing the filter or collapsing the view removes the dock, and the dock routes to the full edit page. Revision uses inline comparison inside the form, with exact before/after values and acknowledgements; it adds no second shell or full-height frame. Let long names and unknown values wrap. Browser proof checked 1920, 1440 and 1280 px and 200% zoom at short height for whole-page overflow; the agent's visual review covered the register and dock, detail, clearing and pin review, related equipment and service ending.
 
 ## Mobile
+
+Accepted design: captures 10 and 14 in [design r01](../../../reference/ui/customers/facilities-design-r01/README.md) (`1415:357952` and the states `1415:358128`, `1415:358186`, `1415:358229`). List rows with the area, structure and parent, footprint and one status line. States: loading, no matching areas (areas hidden by site access are not counted) and could not load, with no list or counts.
 
 Evidence is Chrome emulation at 390 and 320 CSS px, not a physical phone. Register filters stack in one column. The register table scrolls horizontally inside its own region, so Inspect actions stay reachable without whole-page overflow. The Customer locations menu opens as a dialog; Escape closes it and returns focus. Keyboard labels, tabs, Escape/focus return, validation and deliberate dirty discard were executed; a screen reader was not. No information or required decision is hidden to make a screenshot fit.
 
@@ -43,5 +51,7 @@ Reference: docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Wor
 Captures are synthetic observations of candidate `5f6e683` (22 September 2026). The implementing agent visually inspected the views listed in the handover; none is an owner-accepted baseline. The full set, with hashes, is in the [capture manifest](../../../testing/evidence/cs05-native-r01/capture-manifest.json).
 
 ## Verification and acceptance
+
+Accepted Figma design: [Facilities design r01 captures](../../../reference/ui/customers/facilities-design-r01/README.md) (seventeen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/facilities-figma-design.md). Hover states and 200% zoom are not drawn.
 
 [ADR-0037](../../../decisions/ADR-0037-cs05-facilities-native.md) records the decision. The [CS-05 handover](../../../delivery/facilities-growing-areas-handover.md) and [candidate evidence](../../../testing/evidence/cs05-native-r01/README.md) record executed behaviour, captures, source hashes and limits; the [80-case matrix](../../../testing/evidence/cs05-native-r01/acceptance-matrix.md) marks partial cases. The page guide `guide.page.facilities` is still the imported draft and has not been rewritten for the native workflow. Owner visual and business acceptance, screen-reader and physical-device checks, external map handoff and the browser search timing budget remain outstanding. Hosted deployment is not verified here.
