@@ -2,6 +2,7 @@ import { runReportJobs } from "../src/reports/worker";
 import { runFinanceJobs } from "../src/finance/worker";
 import { runPendingQuoteJobs } from "../src/estimating/worker";
 import { runPendingRenderJobs } from "../src/documents/worker";
+import { runCustomerMessageJobs } from "../src/communications";
 import { closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 localConfig();
@@ -10,8 +11,10 @@ try {
   const reports = await runReportJobs();
   const finance = await runFinanceJobs();
   await runPendingQuoteJobs();
+  // D-025 S2: confirmed customer messages go to the synthetic channel only.
+  const messages = await runCustomerMessageJobs();
   console.log(
-    `Examined ${count} pack, ${reports} report and ${finance} Finance render intents. No external messages sent.`,
+    `Examined ${count} pack, ${reports} report and ${finance} Finance render intents and ${messages.examined} confirmed customer messages (synthetic channel). No external messages sent.`,
   );
 } catch {
   console.error(
