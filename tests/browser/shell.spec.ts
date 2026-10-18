@@ -53,7 +53,6 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close account", exact: true }).click();
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Foundation");
   await page.getByRole("link", { name: "Foundation checks", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Foundation checks" }),
@@ -138,8 +137,10 @@ test("Workspace selection preserves permissions, contextual navigation and page 
   const response = await page.request.post("/api/v1/local-session", { headers: { Origin: new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin }, data: { profile: "coordinator" } });
   expect(response.ok()).toBe(true);
   await page.goto("/sales/opportunities");
+  // Workspaces in More is the department choice; the separate Workspace dropdown was removed (Dean, 18 October 2026).
+  const departments = page.locator(".ppo-more-panel:visible .ppo-menu-group").filter({ has: page.getByRole("heading", { name: "Workspaces", exact: true }) });
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByLabel("Workspace", { exact: true }).selectOption("engineering");
+  await departments.getByRole("link", { name: "Engineering", exact: true }).click();
   await expect(page).toHaveURL(/\/engineering$/);
   // The rail carries the product identity and the department; the breadcrumb names the page (R1).
   await expect(page.locator(".product-heading .ppo-crumbs")).toHaveText("Engineering workload");
@@ -158,15 +159,14 @@ test("Workspace selection preserves permissions, contextual navigation and page 
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByLabel("Workspace", { exact: true }).selectOption("supply");
+  await departments.getByRole("link", { name: "Supply chain", exact: true }).click();
   await expect(page).toHaveURL(/\/supply\/material-readiness$/);
   await page.reload();
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await expect(page.getByLabel("Workspace", { exact: true })).toHaveValue("supply");
+  await expect(departments.getByRole("link", { name: "Supply chain", exact: true })).toHaveAttribute("aria-current", "page");
   await page.keyboard.press("Escape");
   const navButton = page.getByRole("button", { name: "More", exact: true });
   await navButton.click();
-  await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Organisations");
   await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Organisations", exact: true }).click();
   await expect(page).toHaveURL(/\/customers\?department=supply$/);
   await expect(page.locator(".product-heading")).toHaveText("Organisations");

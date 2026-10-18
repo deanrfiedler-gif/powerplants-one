@@ -1,4 +1,5 @@
 STATUS	## PPO Assistant: Claude API accepted as first live provider — 18 October 2026
+STATUS	## Conversations T2 scope accepted, Carl answers in threads — 18 October 2026
 STATUS	## Customer communication core built on a synthetic channel (D-025 S2) — 17 October 2026
 STATUS	## Conversations T1b built, no UI — 17 October 2026
 STATUS	## D-025 customer email decided — 17 October 2026

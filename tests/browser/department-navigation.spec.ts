@@ -105,7 +105,8 @@ test("all seven actual department rails retain canonical order and dimensions", 
     expect(await page.locator(".ppo-rail").count()).toBe(1);
     expect(await nav.locator("svg").first().evaluate(e => e.getBoundingClientRect().width)).toBe(20);
     expect(await page.locator(".ppo-rail").evaluate(e => e.getBoundingClientRect().width)).toBe(240);
-    expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(44);
+    // Figma v2 / Rail item is 44 px; a grouped rail (Rail · Service) uses 40 px items so it fits at 900 px.
+    expect(await nav.getByRole("link").first().evaluate(e => e.getBoundingClientRect().height)).toBe(department === "service" ? 40 : 44);
     const bounds = await nav.getByRole("link").first().boundingBox();
     expect(bounds!.x).toBe(8);
     expect(bounds!.width).toBe(224);
@@ -129,7 +130,11 @@ test("Sales active drawings, real landing pages and More keyboard state", async 
   await capture(page, "active-keyboard-focus");
   await page.getByRole("button", { name: "More", exact: true }).focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeFocused();
+  // More has no search or Workspace dropdown of its own (Dean, 18 October 2026): opening it moves
+  // focus to its first control, the first department under Workspaces.
+  await expect(page.locator("#desktop-more-panel").getByRole("link", { name: "Sales", exact: true })).toBeFocused();
+  await expect(page.locator("#desktop-more-panel select")).toHaveCount(0);
+  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
   await expect(page.locator(".ppo-primary-nav [aria-current=page]")).toHaveAttribute("aria-label", "Activities");
   await capture(page, "more-open");
   await page.keyboard.press("Escape");
@@ -154,7 +159,7 @@ test("Engineering and Service retain shared Contacts view through records, reloa
   await page.goto("/contacts?department=engineering");
   await expect(page).toHaveURL(/view=organisations/);
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await page.getByLabel("Workspace", { exact: true }).selectOption("service");
+  await page.locator("#desktop-more-panel").getByRole("link", { name: "Service operations", exact: true }).click();
   await expect(page).toHaveURL(/\/service\/tickets$/);
   await expect(page.getByRole("navigation", { name: "Service operations shortcuts" })).toBeVisible();
 });
@@ -254,6 +259,7 @@ test("restricted and empty access omit links; server guards still refuse account
   await page.route("**/api/v1/shell/context", route => route.fulfill({ json: { display_name: "Synthetic empty access fixture", actions: [], navigation: [], can_preview: true, preference_scope: "fixture:empty" } }));
   await page.reload(); await expect(page.locator(".ppo-primary-nav a")).toHaveCount(0);
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toBeVisible();
+  await expect(page.locator("#desktop-more-panel").getByRole("button", { name: "Help", exact: true })).toBeVisible();
+  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
   await capture(page, "explicit-empty-access-fixture");
 });

@@ -19,8 +19,10 @@ test("N19/N31 labelled destinations and shell controls retain all established br
       expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     }
     await page.getByRole("button",{name:"More",exact:true}).click();
-    await expect(page.getByLabel("Workspace",{exact:true})).toBeVisible();
-    const bounds=await page.getByRole("searchbox",{name:"Find a menu item",exact:true}).boundingBox();
+    // Workspaces in More is the department choice (the separate Workspace dropdown was removed on 18 October 2026).
+    const department=page.locator(".ppo-more-panel:visible").getByRole("link",{name:"Sales",exact:true});
+    await expect(department).toBeVisible();
+    const bounds=await department.boundingBox();
     expect(bounds!.x).toBeGreaterThanOrEqual(0);expect(bounds!.x+bounds!.width).toBeLessThanOrEqual(width);
     await page.screenshot({path:test.info().outputPath(`nav-${width}.png`)});
     await page.keyboard.press("Escape");await expect(page.getByRole("button",{name:"More",exact:true})).toBeFocused();
