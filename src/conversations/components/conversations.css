@@ -1,0 +1,175 @@
+/* Conversations T1c-1 (PPO-CONV-T1C-DESIGN 5.3, 5.6; accepted T1 frames). Shared tokens only. */
+.cv-workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: calc(100vh - 64px);
+  margin: -24px;
+}
+.cv-sidebar {
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  padding: 12px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  overflow-y: auto;
+}
+.cv-new-thread {
+  width: 100%;
+}
+.cv-search {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  padding: 0 12px;
+  background: var(--surface);
+}
+.cv-menu-heading {
+  margin: 12px 4px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cv-filters {
+  display: grid;
+}
+.cv-filters button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.cv-filters button:hover,
+.cv-row:hover {
+  background: var(--surface-hover);
+}
+.cv-filters button[aria-pressed="true"],
+.cv-row[aria-current="page"] {
+  background: var(--surface-3);
+}
+.cv-count {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cv-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cv-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 12px;
+  border-radius: var(--radius-control);
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.cv-row-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.cv-row-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cv-row[data-unread="true"] .cv-row-title {
+  font-weight: 600;
+}
+.cv-row-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cv-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 7px;
+  border-radius: 50%;
+}
+.cv-dot[data-tone="waiting"] {
+  background: var(--warning);
+}
+.cv-dot[data-tone="resolved"] {
+  background: var(--success);
+}
+.cv-row-meta [data-tone="waiting"] {
+  color: var(--warning);
+}
+.cv-row-meta [data-tone="resolved"] {
+  color: var(--success);
+}
+.cv-note {
+  margin: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.cv-skeleton {
+  display: grid;
+  gap: 14px;
+  padding: 12px 4px;
+}
+.cv-skeleton span {
+  display: block;
+  height: 12px;
+  width: 80%;
+  border-radius: 4px;
+  background: var(--surface-3);
+}
+.cv-main {
+  min-width: 0;
+  background: var(--surface);
+}
+.cv-empty {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  min-height: 60vh;
+  padding: 48px;
+  text-align: center;
+}
+.cv-empty h1 {
+  font-size: 20px;
+  margin: 0;
+}
+.cv-empty p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--text-secondary);
+}
+@media (max-width: 780px) {
+  .cv-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    margin: -16px;
+  }
+  .cv-sidebar {
+    border-right: 0;
+    background: var(--surface);
+  }
+  .cv-workspace[data-thread-open="true"] .cv-sidebar,
+  .cv-workspace[data-thread-open="false"][data-has-threads="true"] .cv-main {
+    display: none;
+  }
+}

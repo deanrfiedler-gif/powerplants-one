@@ -266,6 +266,8 @@ export function pageForPath(path: string) {
   const supply=supplyPages.find(p=>path===`/supply/${p.slug}`); if(supply)return {...destination(supply.rail),label:supply.title};
   if (/^\/estimating\/estimates\/[0-9a-f-]{36}\/sources$/.test(path)) return {...destination("pricing"), label: "Compare source costs"};
   if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
+  // PPO-CONV-T1C-DESIGN: Conversations belongs to no department and has no rail entry; T1c-2 adds its top-bar action.
+  if (matchesPath(path, "/conversations")) return { ...destination("work"), id: "conversations", label: "Conversations", href: "/conversations" };
   if (materialsPath(path) || changesPath(path) || commissioningPath(path) || controlPath(path)) return destination("engineering");
   // Specific routes precede their parent; a future page must not inherit a wrong guide.
   const item = destinations

@@ -21,7 +21,7 @@ const anchorSql = `LEFT JOIN LATERAL (
   UNION ALL SELECT pj.display_number,pj.title FROM ppo.projects pj WHERE t.anchor_type='Project' AND pj.workspace_id=t.workspace_id AND pj.id=t.anchor_id
  ) a ON true`;
 
-type ThreadSummary = {
+export type ThreadSummary = {
   id: string;
   title: string;
   anchor: { type: AnchorType; id: string; display_number: string; title: string };
