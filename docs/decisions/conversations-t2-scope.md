@@ -67,7 +67,7 @@ Checked against `main` at `c089e13` on 18 October 2026.
 | T2d | The Claude adapter: an ADR for the official SDK and the model pin; the key read only on the server from `PPO_ANTHROPIC_API_KEY`; outbound requests limited to the Anthropic API host; structured output for claims that cite source IDs; refusal and credit-exhausted handling; usage settled into the ledger. Off by default and local only | Pull request with an ADR |
 | T2e | Live synthetic evaluation: a thread evaluation set and a paid run within the US$30 ceiling, after Dean approves its cost. Simulated and real-model results are recorded separately | Evaluation record |
 
-T2b can start once this record is accepted, in parallel with T1c and T1d, because it touches only `src/assistant/`, the conversations service and a new migration. T2c needs T1c merged. T2d needs T2b. T2e needs T2c and T2d.
+T2b's dependencies are met once this record is accepted: it can run in parallel with T1c and T1d, because it touches only `src/assistant/`, the conversations service and a new migration. Dependency readiness is not build authorisation. Quote 3 asks Claude to plan T2b, and building it needs Dean's own go-ahead. T2c needs T1c merged. T2d needs T2b. T2e needs T2c and T2d.
 
 ## 5. T2 rules
 
@@ -87,6 +87,11 @@ Proposed by Claude and accepted by Dean as the design rules for T2 (quote 2). Th
 | T2-10 | **Provider boundary.** Calls are made on the server only. The key never reaches the browser, logs or the repository. Foreground Messages API requests only: no Files API, Batch, Managed Agents, provider web tools, MCP connector or code execution. Provider conversation state is never reused. Raw prompts and answers are not logged; token counts and outcomes are |
 | T2-11 | **Off by default.** A feature flag keeps Carl off. The live provider runs only locally, on synthetic data |
 | T2-12 | **Answer only.** L0 in T2. Carl never does what R5 forbids, and it has no tool that writes a business record |
+
+**Accepted rules that also govern Carl's answers after they are posted.** T2-3 covers dispatch and posting. These already-accepted rules cover what happens afterwards:
+- **Adding a participant (R8).** When someone is added to a thread whose earlier Carl messages cite sources the new person cannot read, the person adding them is warned before the add completes. R8 offers a fresh branch instead. Branches arrive in T5, so in T2 Claude reads the alternative as a new thread on the same record (U1). That reading is to be confirmed in T2c.
+- **Reading later (T1-1, T1-4).** Source chips are drawn for each reader from that reader's own access, so a source the reader cannot open shows as "A record you can't open", with no title. Someone who loses access to the anchor record loses the whole thread.
+- **Open for T2b and T2c, not decided here.** What a reader sees of an answer's text after they lose access to one of its cited sources other than the anchor record (an answer is immutable under T2-9). T2b proposes this with its tests before T2c builds the answer card.
 
 ## 6. Frames to draw in T2a
 
@@ -133,6 +138,8 @@ All fonts are Roboto, and no text overflows its container.
 - Carl's answers in the record-page list.
 - The loading and empty states with Carl.
 
+**Known difference from W3.** The accepted answer frames (1310:307977 and the tablet and phone frames built from it) show a chip for PO-2281, a purchase order. Under W3, Carl reads only the thread's own deal or project and the records AI1 §6 links to it (the opportunity, its organisation, linked opportunities and CRM Activities). A purchase order is not among them, so W3 governs and T2 builds no purchase-order source. Before the T2c lock-in captures, the chip is to be redrawn as an allowed source, such as a CRM Activity. That change touches the accepted named version, so it needs Dean's yes. Found by the Codex review of 18 October 2026.
+
 **Accepted, 18 October 2026.** Dean accepted the frames and the 320 px departure (quote 3). At his request, Claude saved the named version **"Conversations T2 — Carl answers, accepted"** in the Figma desktop app the same day. The full title was checked in the save dialog, and the version is the newest entry in the file's version history. Two follow-ups wait for the T2c lock-in: the icon-free captures, and the File index row with the section's "(proposal)" label. Both come after the named version, so neither changes it.
 
 ## 7. Questions W1 to W9, answered
@@ -151,7 +158,7 @@ All fonts are Roboto, and no text overflows its container.
 
 ## 8. Cost
 
-Building T2a to T2d makes no paid model request: the simulated adapter covers the tests, and the T2d proof can use a mocked transport. One manual live check per adapter change costs well under a cent.
+Building T2a to T2d makes no paid model request: the simulated adapter covers the tests, and the T2d proof can use a mocked transport. One manual live check per adapter change is one Carl turn. At specification §8's assumption (6,000 input and 1,000 output tokens, Sonnet 5.5 at US$2 and US$10 per million) it costs about US$0.022. The T2-7 turn limit caps it at US$0.176 on Sonnet 5.5 and US$0.352 on Opus 5.5, before any US-only uplift. Each check reserves against the US$30 ceiling like any other turn.
 
 T2e at specification §8's assumption (6,000 input and 1,000 output tokens a task): 30 tasks × 3 repeats on Sonnet 5.5 is about US$1.98; adding Haiku 5.5 and Opus 5.5 makes about US$6.04, and about US$9 with the 50% contingency. That fits inside the US$30 ceiling. Dean approves each paid run before it starts. Rates were checked on 16 October 2026 and are rechecked before the run.
 
