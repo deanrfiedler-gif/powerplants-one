@@ -57,6 +57,16 @@ after(async () => {
   await closeDatabase();
 });
 
+// T1c-2 (PPO-CONV-T1C-DESIGN 10.3): exactly users[0] holds conversation.read and conversation.post, copied from their
+// crm.opportunity.read grant, and no other hosted identity holds either.
+async function expectTesterConversationGrants() {
+  const hosted = (await database().query(`SELECT g.user_id,g.capability,g.company_id,g.scope_type,g.scope_id,g.site_id,g.valid_from,g.valid_to
+    FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
+    WHERE g.capability LIKE 'conversation.%' AND u.issuer<>'PPO-LocalSynthetic' ORDER BY g.capability`)).rows;
+  const source = (await database().query("SELECT company_id,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'", [users[0]])).rows[0];
+  assert.deepEqual(hosted, ["conversation.post", "conversation.read"].map(capability => ({ user_id: users[0], capability, ...source })));
+}
+
 const rows = async (table: string) => (await database().query(`SELECT row_to_json(t) AS row FROM ${table} t ORDER BY row_to_json(t)::text`)).rows;
 const ledger = () => rows("public.ppo_migrations");
 
@@ -90,8 +100,10 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.deepEqual(addedUsers.filter(r=>String(r.row.subject_id).startsWith("quotation-")).map(r=>r.row.subject_id).sort(),["quotation-approver","quotation-issuer"]);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability IN ('estimating.quote.approve','estimating.quote.issue','estimating.quote.distribute') AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON u.workspace_id=g.workspace_id AND u.id=g.user_id WHERE g.capability LIKE 'incident.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
-  // Seed 108 (Conversations T1b) copies reads of local synthetic profiles only: no hosted tester holds either duty.
-  assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability LIKE 'conversation.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
+  // Seed 108 (Conversations T1b) copies reads of local synthetic profiles only. The tester-conversations stage (T1c-2,
+  // Dean 18 October 2026) gives the one enabled, active, unexpired invited tester both duties in exactly the scope and
+  // validity of their crm.opportunity.read grant (T1-1); disabled, expired and inactive testers and the pack reviewer get none.
+  await expectTesterConversationGrants();
   assert.deepEqual(addedUsers.filter(r=>String(r.row.subject_id).startsWith("scheduling-policy-")).map(r=>r.row.subject_id).sort(),["scheduling-policy-publisher","scheduling-policy-reviewer"]);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability LIKE 'schedule.policy.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.ok(addedUsers.some(r=>r.row.id==="e5030045-0000-4000-8000-000000000001"&&r.row.subject_id==="estimating-source-reviewer"));
@@ -134,7 +146,7 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   assert.ok(schedule.resources.length > 0);
   await readUnassignedDemand(actor);
   // An explicit later revocation must survive both verify and upgrade retries.
-  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('project.edit','schedule.read','schedule.manage','service.readiness.assess','cpq.author','cpq.calculate','cpq.read')", [users[0]]);
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('project.edit','schedule.read','schedule.manage','service.readiness.assess','cpq.author','cpq.calculate','cpq.read','conversation.post')", [users[0]]);
   const retained = await rows("ppo.permission_grants"), migrated = await ledger(), receipts = await rows("ppo.seed_receipts");
   await upgradeExistingDemo(name, tenant, false);
   await upgradeExistingDemo(name, tenant, true);
@@ -176,6 +188,26 @@ test("an already-current demo adds only bounded CPQ authoring duties and preserv
   await upgradeExistingDemo(name, tenant, true);
   assert.deepEqual(await rows("ppo.permission_grants"), retained);
   assert.deepEqual(await ledger(), migrated);
+});
+
+test("an already-current demo adds conversation duties only from live deal or project reads", async () => {
+  await upgradeExistingDemo(name, tenant, true);
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=ANY($1::uuid[]) AND capability LIKE 'conversation.%'", [users]);
+  const before = await rows("ppo.permission_grants"), migrated = await ledger(), receipts = await rows("ppo.seed_receipts");
+  await assert.rejects(upgradeExistingDemo(name, tenant, false), /explicit upgrade-and-deploy/);
+  assert.deepEqual(await rows("ppo.permission_grants"), before);
+  await upgradeExistingDemo(name, tenant, true);
+  await expectTesterConversationGrants();
+  await upgradeExistingDemo(name, tenant, false);
+  // A tester whose deal and project reads have lapsed gains nothing; a revoked duty is not restored.
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability LIKE 'conversation.%'", [users[0]]);
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability IN ('crm.opportunity.read','project.read')", [users[0]]);
+  const lapsed = await rows("ppo.permission_grants");
+  await upgradeExistingDemo(name, tenant, false);
+  await upgradeExistingDemo(name, tenant, true);
+  assert.deepEqual(await rows("ppo.permission_grants"), lapsed);
+  assert.deepEqual(await ledger(), migrated);
+  assert.deepEqual(await rows("ppo.seed_receipts"), receipts);
 });
 
 test("a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums", async () => {
