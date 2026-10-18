@@ -3,19 +3,30 @@ document_id: PPO-CONV-T2-SCOPE
 title: Conversations T2 scope, Carl answers in threads
 date: 2026-10-18
 owner: Dean Fiedler
-status: Proposed by Claude on 18 October 2026 at Dean's instruction; not accepted; no application code, dependency, migration, capability, route or paid model request authorised by this record
+status: Scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9 accepted by Dean on 18 October 2026; T2a frames in progress; no application code, dependency, migration, capability, route or paid model request authorised by this record
 versioning: git
 ---
 
 # Conversations T2 scope, Carl answers in threads
 
-This record plans build step T2 of the [AI and internal communications threads decision](ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP, section 9): `@Carl` answers in threads. It is a proposal for Dean's review. It splits T2 into reviewable pull requests, proposes rules T2-1 to T2-12, lists the frames the accepted design lacks, and asks questions W1 to W9, each with a recommendation. It authorises no code. Each later slice follows `AGENTS.md` in its own pull request.
+This record scopes build step T2 of the [AI and internal communications threads decision](ai-communications-threads-proposal.md) (PPO-AI-THREADS-PROP, section 9): `@Carl` answers in threads. It splits T2 into reviewable pull requests, sets rules T2-1 to T2-12, lists the frames the accepted design lacks, and answers questions W1 to W9. Dean accepted the scope, the rules and the recommended answers on 18 October 2026 (section 1). It authorises no code. Each later slice follows `AGENTS.md` in its own pull request.
 
 ## 1. Dean's words
 
-Quoted as written, 18 October 2026: "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2."
+Quoted as written, 18 October 2026:
 
-The acceptance is recorded as Amendment A1 in [PPO-AI-DEC r03](ppo-assistant-direction.md). This record is the plan.
+1. "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2." The acceptance is recorded as Amendment A1 in [PPO-AI-DEC r03](ppo-assistant-direction.md).
+2. "I accept the Conversations T2 scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9. Record my words, then start T2a (the missing frames in Figma)." Given after this record was presented in draft.
+
+Dean chose both replies from answers Claude offered in the session.
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Plan T2 | User instruction | Quote 1 |
+| The T2 contents in section 3 and slices T2a to T2e in section 4 | User decision | Quote 2 |
+| Rules T2-1 to T2-12 in section 5 | User decision. Design rules, not verified operating rules; no code implements them yet | Quote 2 |
+| Questions W1 to W9, with the recommended answers in section 7 | User decision, recommended answers adopted | Quote 2 |
+| The frames in section 6 | Being drawn as proposals (T2a); not yet accepted | Quote 2 asks for them |
 
 ## 2. Where things stand
 
@@ -57,9 +68,9 @@ Checked against `main` at `c089e13` on 18 October 2026.
 
 T2b can start once this record is accepted, in parallel with T1c and T1d, because it touches only `src/assistant/`, the conversations service and a new migration. T2c needs T1c merged. T2d needs T2b. T2e needs T2c and T2d.
 
-## 5. Proposed T2 rules
+## 5. T2 rules
 
-Proposed by Claude for Dean's decision. They are not verified operating rules, and no code implements them.
+Proposed by Claude and accepted by Dean as the design rules for T2 (quote 2). They are not verified operating rules, and no code implements them yet.
 
 | ID | Rule |
 |---|---|
@@ -78,7 +89,7 @@ Proposed by Claude for Dean's decision. They are not verified operating rules, a
 
 ## 6. Frames to draw in T2a
 
-The accepted design shows Carl's answer card, its sources, the AI label, Catch me up and the R9 composer state (frame 1159:1775). It lacks these states, which T2a would draw as proposals on the Conversations page, beside the accepted frames and without editing them:
+The accepted design shows Carl's answer card, its sources, the AI label, Catch me up and the R9 composer state (frame 1159:1775). It lacks these states, which T2a draws as proposals on the Conversations page, beside the accepted frames and without editing them:
 
 | Frame | Shows |
 |---|---|
@@ -92,9 +103,9 @@ The accepted design shows Carl's answer card, its sources, the AI label, Catch m
 
 Catch me up and the actions under Carl's message (Make a task, Pin as decision, Branch here, Watch) stay hidden in T2, as section 3 says.
 
-## 7. Questions W1 to W9
+## 7. Questions W1 to W9, answered
 
-| ID | Question | Recommended answer |
+| ID | Question | Answer (the recommendation, adopted by quote 2) |
 |---|---|---|
 | W1 | What is the agent called in T2, while Carl's agreement (C2) is outstanding? | "Carl", as a working name inside the synthetic prototype, which C2 allows. The name is one setting, so "PPO Assistant" (C7) can replace it everywhere |
 | W2 | Who may tag Carl? | Holders of a new capability (proposed name `conversation.agent.ask`), granted to the local synthetic profiles that hold `conversation.post`. Hosted testers get none in T2 |
@@ -128,4 +139,4 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 ## 10. What this record does not do
 
-It proposes; it decides nothing until Dean accepts it. It authorises no application code, dependency, migration, seed, capability, route, deployment or paid model request, and reserves no migration or capability number. It does not settle Carl's agreement (C2), the billing owner for operational use, real data, the hosted demo's credential, or the AD-01 sharing, speech and driving decisions; none of them blocks T2 as proposed.
+Accepting the scope, rules and answers is a design decision. It authorises no application code, dependency, migration, seed, capability, route, deployment or paid model request, and reserves no migration or capability number. It does not settle Carl's agreement (C2), the billing owner for operational use, real data, the hosted demo's credential, or the AD-01 sharing, speech and driving decisions; none of them blocks T2 as proposed.
