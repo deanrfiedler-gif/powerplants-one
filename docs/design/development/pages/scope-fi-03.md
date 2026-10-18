@@ -14,9 +14,20 @@ Incoming: Equipment/configuration, Service appointment and authorised scope, per
 
 ## Desktop
 
+Accepted design: the [Inspections design decision](../../../decisions/inspections-figma-design.md) of 18 October 2026, with capture 05 (desktop 1440 × 900) in [design r01](../../../reference/ui/quality-site-assurance/inspections-design-r01/README.md).
+
+- **Capture:** the record layout with a "Before you submit" bar (attendance, job pack acknowledged, checks recorded, instrument named for each reading, last save), a Your visit and Equipment column, and Checks, Evidence, Findings and Source tabs. Save draft and Submit inspection sit in the header.
+- **Checks:** the result shows as soon as a value is entered, marked "not saved yet"; the server's result at submission governs (Q1). Choice checks are segmented options (D5).
+- **Online only:** an "Inspections save online only" notice states the last save; there is no offline inspection queue (D5).
+- **Evidence:** PNG and plain text only, as built (Q3).
+- **Shell:** the proposed Conversations action sits left of the information icon; the shell amendment is still open.
+- Nothing new is built.
+
 At 1440 × 1000 and 1024 × 768 keep record context and save state readable. Fields use responsive columns; hashes and sources wrap without horizontal page overflow. Procedure preview, attempts, evidence, defects and outputs use shared cards. Required criteria remain visible outside source details.
 
 ## Mobile
+
+Accepted design: captures 07–10 and 12 in [design r01](../../../reference/ui/quality-site-assurance/inspections-design-r01/README.md). My inspections lists the technician's own work in To do, Submitted and Finished, with an "Online only" marker. The capture is one scroll (D5): the online-only notice, Before you test (equipment and configuration, procedure, job pack and attendance), checks, evidence and findings, with a Save draft and Submit dock. Submit opens a summary sheet that names the failing check and the defect it will raise. At 320 px the four seal-condition choices wrap two by two and instrument and findings fields wrap (D7). Three states: not connected with the last save, uncertain submit with Recover the original, and can't record yet because the user is not attending.
 
 At 390 × 844 and 320 × 844 stack fields with 16 px input text and 44 px controls. Evidence attribution, classification and hashes wrap. Verify actual 200% browser zoom, Tab/Shift+Tab, Enter, validation and global-guide focus return. The shell content region owns scrolling. Physical-device and screen-reader acceptance remain separate.
 
@@ -25,6 +36,8 @@ At 390 × 844 and 320 × 844 stack fields with 16 px input text and 44 px contro
 Saved server drafts, unsaved browser entries, saving, stale conflict, uncertain original, denied access, held preparation and withdrawn applicability are distinct. Refusal/conflict retains active-page input. Recovery retains unchanged ID/payload before transport in same-tab storage. Closing the tab removes that recovery copy. No offline inspection queue exists; reconnect is online recovery.
 
 ## References and adaptations
+
+Accepted Figma design: [Inspections design r01 captures](../../../reference/ui/quality-site-assurance/inspections-design-r01/README.md) (images 05, 07–10 and 12 for FI-03; twelve icon-free PNGs in all; design compositions, not application captures) and its [decision](../../../decisions/inspections-figma-design.md). The sentence below that no accepted FI-03/FI-04 image exists predates this acceptance on 18 October 2026. Images of the Evidence tab, a clarification reply, denied access, withdrawn applicability and stale conflict states, and 200% zoom are still missing. The named Figma version "Inspections — accepted" is saved.
 
 Exact retained reference: [PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html](../../../reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html). Page types use retained theme r20. Quality r01 remains a proposed broad Quality/incident workspace; these consumers adapt it to bounded Service duties. No accepted FI-03/FI-04 desktop or phone image exists. Implementation captures are evidence, not owner approval.
 

@@ -17,9 +17,22 @@ No map, provider, inferred distance/speed, traffic or optimiser is configured. P
 
 ## Desktop
 
+Accepted design: the [Travel review design decision](../../../decisions/travel-review-figma-design.md) of 18 October 2026, with captures 01–02 (desktop 1440 × 900) and 03 (tablet 1024) in [design r01](../../../reference/ui/service/travel-review-design-r01/README.md).
+
+- **Route:** one person's day as stops, travel legs and visits in time order, from leaving the depot to returning (D1). Each leg shows its minutes, from and to, and its basis in the planner's travel tint; each visit card keeps its times, appointment and work order, site, crew, customer window, Earlier, Later and Review booking change.
+- **Route estimate:** "Unknown" with no provider set up, and no map (Q1). Planned travel allowances, the route estimate and actual field travel stay separate.
+- **Day summary:** visits, planned travel, gaps, issues, route estimate, busy intervals and availability blocks in one panel, with Compare another order and Reset comparison (D2).
+- **Comparing an order:** each card shows its original and compared position, gaps are not recalculated, a reversal of booked times says a controlled move is needed, and Reset comparison is enabled only while comparing (D3).
+- **Conflicts:** an availability block or calendar closure is named in words on the leg or visit it overlaps (D4).
+- **Default:** one person, the first with a conflict or the signed-in technician, not All permitted resources (Q2).
+- **Shell:** the proposed Conversations action sits left of the information icon.
+- Nothing new is built.
+
 Show one local day, permitted site and resource filters, followed by separately ordered resource visits. Cards retain customer/site, site-time interval, supplied customer window, before/after allowances, reasons and buffered gaps/overlaps. Compare a manual order only after selecting one resource.
 
 ## Mobile
+
+Accepted design: captures 04–06 in [design r01](../../../reference/ui/service/travel-review-design-r01/README.md). The same route as one scroll with the day summary below it; Earlier and Later on one row and Review booking change on the next. At 320 px the title is "Travel" and each visit's top row wraps (D5). Two states: no assigned visits, with Open the planner; could not load, with no route shown and Retry loading.
 
 At 390 x 844 and 320 CSS px, use a vertical visit sequence with wrapping context and labelled Earlier/Later controls. The exact Review booking change link stays reachable; route estimate and actual field Travel remain visibly distinct from planned buffers. Review native 200% browser zoom separately; CSS-width reflow is not a substitute.
 
@@ -34,6 +47,8 @@ Loading, empty/filtered empty, failed and denied reads remove prior evidence. Wo
 Incoming: current permitted scheduling assignments and anonymous busy/block intervals. Outgoing: exact appointment/resource/day/timezone handover to PL-04. Sequence changes are browser-only comparisons; appointment times and reservations never change until the existing controlled workflow saves them.
 
 ## Visual references and verification
+
+Accepted Figma design: [Travel review design r01 captures](../../../reference/ui/service/travel-review-design-r01/README.md) (six icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/travel-review-figma-design.md). Images of all permitted resources at once, an overlap between reservations, the site filter note, denied access, the loading state, desktop and tablet states and 200% zoom are still missing.
 
 No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
 
