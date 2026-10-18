@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2-SCOPE
 title: Conversations T2 scope, Carl answers in threads
 date: 2026-10-18
 owner: Dean Fiedler
-status: Scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9 accepted by Dean on 18 October 2026; T2a proposal frames drawn, not yet accepted; no application code, dependency, migration, capability, route or paid model request authorised by this record
+status: Scope, rules T2-1 to T2-12, the recommended answers to W1 to W9 and the T2a frames accepted by Dean on 18 October 2026; named Figma version saved; no application code, dependency, migration, capability, route or paid model request authorised by this record
 versioning: git
 ---
 
@@ -17,8 +17,9 @@ Quoted as written, 18 October 2026:
 
 1. "I accept Amendment A1 (Claude API first, credit-funded, US$30 monthly ceiling enforced in PPO, no purchased credits or auto-reload). Record my decision and plan T2." The acceptance is recorded as Amendment A1 in [PPO-AI-DEC r03](ppo-assistant-direction.md).
 2. "I accept the Conversations T2 scope, rules T2-1 to T2-12 and the recommended answers to W1 to W9. Record my words, then start T2a (the missing frames in Figma)." Given after this record was presented in draft.
+3. "Yes, accept the T2a frames and the 320 px departure. Save the named version "Conversations T2 — Carl answers, accepted", record my words, then plan T2b." Given after the audited and polished frames in section 6 were presented.
 
-Dean chose both replies from answers Claude offered in the session.
+Dean chose each reply from answers Claude offered in the session.
 
 | Item | Classification | Evidence |
 |---|---|---|
@@ -26,7 +27,7 @@ Dean chose both replies from answers Claude offered in the session.
 | The T2 contents in section 3 and slices T2a to T2e in section 4 | User decision | Quote 2 |
 | Rules T2-1 to T2-12 in section 5 | User decision. Design rules, not verified operating rules; no code implements them yet | Quote 2 |
 | Questions W1 to W9, with the recommended answers in section 7 | User decision, recommended answers adopted | Quote 2 |
-| The frames in section 6 | Drawn as proposals on 18 October 2026 (T2a); not yet accepted | Quote 2 asks for them |
+| The frames in section 6 and the 320 px departure | User decision. Named Figma version "Conversations T2 — Carl answers, accepted", saved 18 October 2026 | Quote 3 |
 
 ## 2. Where things stand
 
@@ -132,7 +133,7 @@ All fonts are Roboto, and no text overflows its container.
 - Carl's answers in the record-page list.
 - The loading and empty states with Carl.
 
-Icon-free captures, the File index row and Dean's named version follow his acceptance of these frames.
+**Accepted, 18 October 2026.** Dean accepted the frames and the 320 px departure (quote 3). At his request, Claude saved the named version **"Conversations T2 — Carl answers, accepted"** in the Figma desktop app the same day. The full title was checked in the save dialog, and the version is the newest entry in the file's version history. Two follow-ups wait for the T2c lock-in: the icon-free captures, and the File index row with the section's "(proposal)" label. Both come after the named version, so neither changes it.
 
 ## 7. Questions W1 to W9, answered
 
