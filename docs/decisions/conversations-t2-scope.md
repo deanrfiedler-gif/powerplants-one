@@ -39,7 +39,7 @@ Checked against `main` at `c089e13` on 18 October 2026.
 | T1c page | In draft: design [#574](https://github.com/deanrfiedler-gif/powerplants-one/pull/574), build [#575](https://github.com/deanrfiedler-gif/powerplants-one/pull/575) | Carl's UI (T2c) waits for `/conversations` to merge |
 | T1d record pages, inbox, My Work | Not started | Independent of T2 |
 | AI1 runtime | `src/assistant/` does not exist. No read tool, evidence envelope, provider adapter or budget ledger exists | T2 builds the first of them. The proposal is "reuse the AI1 read tools", but there are none to reuse yet |
-| Provider | A1 accepted 18 October 2026. Console workspace with a US$30 limit; Dean's key is in his local `.env.local` only | The live adapter can be built and proven locally. Specification §8's pre-call checks are still unmet |
+| Provider | A1 accepted 18 October 2026. The provider-side controls A1 relies on are set up; account details stay outside this public repository | The live adapter can be built and proven locally. Specification §8's pre-call checks are still unmet |
 | Design | Accepted frames show Carl's answer, its sources, the AI label and the R9 composer state ([section 14](ai-communications-threads-proposal.md#14-design-reference-and-verification)) | Missing states are listed in section 6 |
 | Carl's agreement (C2) | Not recorded | "Carl" stays a working name inside the synthetic prototype (question W1) |
 
