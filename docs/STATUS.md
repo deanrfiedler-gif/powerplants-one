@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Conversations T2 planned, Carl answers in threads — 18 October 2026
+
+At Dean's instruction ("Record my decision and plan T2"), the [T2 scope record](decisions/conversations-t2-scope.md) (PPO-CONV-T2-SCOPE) proposes how `@Carl` answers in threads. It has five slices: T2a scope and missing frames, T2b the assistant core with a simulated adapter, T2c the UI, T2d the Claude adapter, and T2e a paid synthetic evaluation of about US$9 within the US$30 ceiling. It also proposes rules T2-1 to T2-12 and questions W1 to W9, each with a recommendation. Nothing is accepted. No application code, dependency, migration, capability, route or paid model request changes.
+
 ## Conversations T1b built, no UI — 17 October 2026
 
 T1b of [PPO-CONV-T1-SCOPE](https://github.com/deanrfiedler-gif/powerplants-one/pull/567) is built on branch `feat/conversations-t1b-threads`: migration 0108 and seed 108 add people-only threads on deals and projects, immutable messages, participants with last-read, person and record mentions, tracked asks with the N7 steps, and a `Mentions` notice source. `conversation.read` and `conversation.post` (proposed names, now 159 capability keys) follow the anchor record's own read capability and go to local synthetic profiles that already read deals or projects; hosted testers receive neither. See the [contract](contracts/conversations-t1b.md), which lists five assumptions awaiting Dean's confirmation. There is no route, page, top-bar icon, Carl or AI: those are T1c and later. Verification is database and unit proof on a disposable synthetic database; business acceptance and production readiness are not claimed.
