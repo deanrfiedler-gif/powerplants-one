@@ -7,6 +7,8 @@
 
 [Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) is a **proposed** working rule of 18 October 2026: changes add a `docs/status/` fragment instead of editing `docs/STATUS.md` and this index, migration and seed numbers are reserved one file per number and checked for duplicates, and branches have one owner, one level of stacking and a re-merge before each push. It lists the branch-protection, merge-queue and workflow changes that remain Dean's decision.
 
+[Leads side menu built on the shared secondary menu](leads-side-menu-implementation.md) (PPO-CRM-LEADS-SIDE-MENU-IMPL) records the 18 October 2026 build of the accepted Leads side menu, mapping each drawn view to an existing Leads read and count, with what is still the earlier page.
+
 <!-- fragments:end -->
 
 [Parallel contribution rules](parallel-contribution-rules.md) records Dean's 17 October 2026 adoption of parallel work under isolation and ownership rules, replacing the one-writer rule in CONTRIBUTING.md. The rules themselves are maintained in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel).
