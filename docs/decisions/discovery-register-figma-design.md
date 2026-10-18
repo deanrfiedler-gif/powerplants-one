@@ -18,7 +18,7 @@ Claude drew the page from these sources:
 - the accepted [Intake & workload](intake-workload-design.md) page, whose saved estimates the story follows;
 - copies of the accepted Sites CS-04 register, the Field team PL-02 large snapshot, the Intake & workload window note and the accepted wizard's rail. No accepted frame or main component was edited.
 
-Before deciding, Dean asked: "Give the Discovery register an audit and polish before I decide." He then accepted it: "I accept the Discovery register ES-02 design with your recommendations, including D1–D7 and Q1–Q4." That adopts D1–D7 as drawn and the recommended answers to Q1–Q4.
+Before deciding, Dean asked: "Give the Discovery register an audit and polish before I decide." He then accepted it: "I accept the Discovery register ES-02 design with your recommendations, including D1–D7 and Q1–Q4." That adopts D1–D7 as drawn and the recommended answers to Q1–Q4. Dean then asked for the named version: "Yes, save the named version "Discovery register — Pipedrive pattern, accepted" in the Figma desktop app." The design reference is that named version.
 
 Scope:
 - `route:/estimating/discovery` "Discovery register", under `scope:ES-02` "Estimation Wizard · discovery, alternatives & revisions".
@@ -44,7 +44,7 @@ This is a design decision. It authorises none of the following:
 | Q3 Phone title | Resolved as recommended | At 320 the page keeps the rail label "Estimation wizard" with an ellipsis; the selected tab names the page. There is no phone-only title |
 | Q4 Next | Resolved as recommended | Draw Create discovery workspace (`/estimating/discovery/new`) next, then Discovery costing (`/estimating/discovery/[id]/costing`). Both are registered routes with no Figma design |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named Figma version | Recorded in Figma as saved, 18 October 2026 | The page header's Named version field reads "Discovery register — Pipedrive pattern, accepted · saved 18 Oct 2026 on Dean's yes". Dean's words for that yes are not quoted in this record |
+| Named Figma version | User decision, 18 October 2026 | "Yes, save the named version "Discovery register — Pipedrive pattern, accepted" in the Figma desktop app." Saved in the Figma desktop app by a Claude session on Dean's yes and seen in version history at about 18:24 AEST as Dean Fiedler's entry. Afterwards only the page header's Status and Named version fields were updated; no frame changed |
 | Proposed list-read fields | Build work, not confirmed data | Section 5 |
 | Building the page | Not decided | Section 5 |
 
@@ -78,7 +78,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
 | Proposed departures | The list read gains customer, estimator, last changed and cost-basis state (today it returns number, title and options only); the heading "Scope and options" becomes the rail label; D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Discovery register — Pipedrive pattern, accepted", recorded in Figma as saved 18 October 2026 |
+| Named version | "Discovery register — Pipedrive pattern, accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -154,5 +154,6 @@ The audit is recorded on the notes card `1402:350109`.
   - none of 697 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link or a flow starting point.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/estimating/discovery-register-figma-design-r01/README.md).
+- After the named version was saved, the page header's Decision record field and the notes card's Accepted paragraph were updated to point at this lock-in. The frames themselves were not changed.
 - The page has one prototype flow. Claude did not play it in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

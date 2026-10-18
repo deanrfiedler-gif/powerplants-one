@@ -40,7 +40,7 @@ Image 08 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Discovery register — Pipedrive pattern, accepted", recorded on the page header as saved 18 October 2026 on Dean's yes |
+| Named version | "Discovery register — Pipedrive pattern, accepted", saved 18 October 2026 at Dean's "Yes, save the named version "Discovery register — Pipedrive pattern, accepted" in the Figma desktop app." |
 | Accepted frames | Page "Discovery register · ES-02" `1400:345306`, in image order:<br>• `1400:345640`, `1400:352346`, `1402:3944`, `1402:4539`;<br>• `1400:355129`;<br>• `1400:354630`, `1400:354952`;<br>• the phone states: `1400:355914`, `1400:356040`, `1400:356154` |
 | Capture copies | Page "Captures (icon-free)" `115:2`, from y = 228,000: `1414:171749`, `1414:171846`, `1414:172061`, `1414:172133`, `1414:172225`, `1414:172304`, `1414:172343`, `1414:172382` (images in order) |
 
