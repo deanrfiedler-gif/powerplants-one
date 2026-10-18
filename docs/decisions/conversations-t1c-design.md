@@ -3,7 +3,7 @@ document_id: PPO-CONV-T1C-DESIGN
 title: Conversations T1c design
 date: 2026-10-18
 owner: Dean Fiedler
-status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; implementation plan written; no application code written
+status: T1c split and the T1c-1 design accepted by Dean on 18 October 2026; T1c-1 built in PR #575 (draft; CI and review separate); T1c-2 and T1c-3 not started
 versioning: git
 ---
 
