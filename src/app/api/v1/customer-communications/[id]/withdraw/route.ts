@@ -1,0 +1,3 @@
+import { withdrawCustomerMessage } from "../../../../../../communications";
+import { commandRoute } from "../../../../../../shared/http";
+export const POST = commandRoute((p, id, b) => withdrawCustomerMessage(p, id, b));
