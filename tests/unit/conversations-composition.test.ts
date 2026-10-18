@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  applyEdit,
   emptyDraft,
   insertMention,
-  reconcile,
   segments,
   toMessageInput,
   visibleToken,
@@ -97,7 +97,7 @@ test("the same person tagged twice keeps one ask row", () => {
 
 test("deleting a tag's text removes the mention and its ask", () => {
   const d = typed([sam, "and ", priya, "hello"]);
-  const edited = reconcile({ ...d, text: d.text.replace(visibleToken(sam), "") });
+  const edited = applyEdit(d, d.text.replace(visibleToken(sam), "")).draft;
   assert.equal(edited.mentions.some((m) => m.key === sam.key), false);
   assert.equal(edited.asks.some((a) => a.person_id === (sam as { person_id: string }).person_id), false);
   assert.equal(edited.mentions.some((m) => m.key === priya.key), true);
@@ -150,4 +150,64 @@ test("deriveTitle caps at 80 characters on a word boundary", () => {
 test("deriveTitle falls back when nothing is left", () => {
   const d = typed([deal]);
   assert.equal(deriveTitle(d, "OPP-0142"), "Conversation on OPP-0142");
+});
+
+const samSmith: DraftMention = { key: "p3", kind: "Person", person_id: "00000000-0000-4000-8000-0000000000a3", display_name: "Sam Smith" };
+
+test("trimming a record tag removes the whole tag, so its label is never sent", () => {
+  const d = typed(["Where is ", deal, "at?"]);
+  const trimmed = d.text.replace(" · Green Valley Nursery", "");
+  const { draft } = applyEdit(d, trimmed);
+  assert.equal(draft.mentions.length, 0);
+  assert.equal(draft.text.includes("OPP-0142"), false);
+  const r = toMessageInput(draft);
+  assert.ok(r.ok);
+  assert.equal(r.body.includes("OPP-0142"), false);
+  assert.equal(deriveTitle(draft, "OPP-0142").includes("OPP-0142"), false);
+});
+
+test("one backspace into a person tag removes the whole tag and its ask", () => {
+  const d = typed([samSmith, "hello"]);
+  const asked = { ...d, asks: d.asks.map((a) => ({ ...a, on: true, question: "date" })) };
+  const end = visibleToken(samSmith).length;
+  const { draft, caret } = applyEdit(asked, asked.text.slice(0, end - 1) + asked.text.slice(end));
+  assert.equal(draft.text, " hello");
+  assert.equal(caret, 0);
+  assert.equal(draft.mentions.length, 0);
+  assert.equal(draft.asks.length, 0);
+});
+
+test("a name that is a prefix of another name keeps each tag in place", () => {
+  const d = typed([samSmith, sam, "hi"]);
+  const r = toMessageInput(d);
+  assert.ok(r.ok);
+  assert.equal(r.body, "@{1} @{2} hi");
+  assert.deepEqual(
+    r.mentions.map((m) => (m.kind === "Person" ? m.person_id : "")),
+    [(samSmith as { person_id: string }).person_id, (sam as { person_id: string }).person_id],
+  );
+  const start = d.text.indexOf("@Sam ", visibleToken(samSmith).length);
+  const removed = applyEdit(d, d.text.slice(0, start) + d.text.slice(start + "@Sam ".length)).draft;
+  const after = toMessageInput(removed);
+  assert.ok(after.ok);
+  assert.equal(after.body, "@{1} hi");
+  assert.equal(removed.asks.some((a) => a.person_id === (sam as { person_id: string }).person_id), false);
+});
+
+test("typing before a tag moves the tag with its text", () => {
+  const d = typed([sam, "hello"]);
+  const { draft } = applyEdit(d, "Hi " + d.text);
+  const r = toMessageInput(draft);
+  assert.ok(r.ok);
+  assert.equal(r.body, "Hi @{1} hello");
+});
+
+test("insertMention can replace the typed trigger character", () => {
+  const d = { ...emptyDraft(), text: "Hello @" };
+  const { draft, caret } = insertMention(d, sam, 7, 1);
+  assert.equal(draft.text, "Hello @Sam ");
+  assert.equal(caret, 11);
+  const r = toMessageInput(draft);
+  assert.ok(r.ok);
+  assert.equal(r.body, "Hello @{1} ");
 });

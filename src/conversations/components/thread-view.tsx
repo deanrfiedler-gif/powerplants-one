@@ -38,10 +38,14 @@ export function ThreadView({ id, footer }: { id: string; footer?: (thread: Threa
   useVisibleRefresh(read.reload);
   const identity = useIdentity();
   const viewer = identity.actor_id;
-  // A re-read briefly has no data; keep showing the last thread so the page and any draft stay in place (5.7).
+  // A re-read briefly has no data; keep showing the last thread so the page and any draft stay in place (5.7). Once
+  // access is withdrawn (403 or 404) the kept thread is dropped, so a later re-read cannot draw it again (5.8).
+  const gone = !!read.error && unavailable(read.error);
   const [kept, setKept] = useState<Thread>();
   if (read.data && read.data !== kept) setKept(read.data);
-  const thread = read.error ? undefined : (read.data ?? kept);
+  if (gone && kept) setKept(undefined);
+  const thread = gone ? undefined : (read.data ?? kept);
+  const staleError = !gone && !!read.error;
   const accepts = useCallback((entry: { path: string }) => entry.path.startsWith("conversations/"), []);
   const command = useRecoverableCommand({ key: `ppo:conversations:${id}:state`, scope: identity, accepts, transport: api });
   const acceptedOperation = command.accepted?.receipt.operation_id;
@@ -76,13 +80,13 @@ export function ThreadView({ id, footer }: { id: string; footer?: (thread: Threa
     });
   }, [id, me, newest]);
 
-  if (read.error && unavailable(read.error))
+  if (gone)
     return (
       <div className="cv-unavailable">
         <p>This conversation isn&apos;t available to you</p>
       </div>
     );
-  if (read.error)
+  if (read.error && !thread)
     return (
       <div className="cv-unavailable">
         <ErrorNotice error={read.error} />
@@ -151,8 +155,22 @@ export function ThreadView({ id, footer }: { id: string; footer?: (thread: Threa
         </p>
         {canChangeState && (
           <div className="cv-actions">
-            <Button busy={command.busy} onClick={() => changeState(thread.state === "Open" ? "resolve" : "reopen")}>
+            <Button busy={command.busy} disabled={!!command.pending} onClick={() => changeState(thread.state === "Open" ? "resolve" : "reopen")}>
               {thread.state === "Open" ? "Resolve" : "Reopen"}
+            </Button>
+          </div>
+        )}
+        {staleError && (
+          <div className="cv-banner" role="status">
+            <p>This conversation could not be refreshed. Showing what was last loaded.</p>
+            <Button onClick={read.reload}>Retry</Button>
+          </div>
+        )}
+        {command.pending && (
+          <div className="cv-banner" role="status">
+            <p>{command.pending.label} has not been confirmed.</p>
+            <Button busy={command.busy} onClick={() => void command.retry()}>
+              Retry
             </Button>
           </div>
         )}
@@ -166,7 +184,7 @@ export function ThreadView({ id, footer }: { id: string; footer?: (thread: Threa
             {thread.asks
               .filter((a) => a.message_id === m.id)
               .map((a) => (
-                <AskCard key={a.id} ask={a} viewerId={viewer} busy={command.busy} onDecline={decline} />
+                <AskCard key={a.id} ask={a} viewerId={viewer} busy={command.busy} disabled={!!command.pending} onDecline={decline} />
               ))}
           </div>
         ))}

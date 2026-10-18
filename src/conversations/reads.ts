@@ -3,7 +3,7 @@ import type { Principal } from "../platform/identity";
 import { requireCapability } from "../platform/permissions";
 import { opportunityVisibility } from "../crm/context";
 import { projectVisibility } from "../projects/visibility";
-import { uuid } from "../shared/validation";
+import { choice, uuid } from "../shared/validation";
 import { anchorInput, listInput } from "./validation";
 import {
   personCanReadThread,
@@ -12,7 +12,7 @@ import {
   threadAccessSql,
   visibleThread,
 } from "./access";
-import type { AnchorType } from "./model";
+import { anchorTypes, type AnchorType } from "./model";
 
 const iso = (value: Date | null) => (value ? value.toISOString() : null);
 // The anchor's own number and title. Reaching the thread already means the reader can open the record.
@@ -242,19 +242,27 @@ export async function mentionablePeople(p: Principal, value: unknown) {
   });
 }
 
-// The `#` picker: deals and projects the sender can open, matched on number or title.
+// The `#` picker: deals and projects the sender can open, matched on number or title. With record_type and record_id it
+// returns that one record if the sender can open it (New thread's ?record= prefill, PPO-CONV-T1C-DESIGN 5.5).
 export async function linkableRecords(p: Principal, value: unknown = {}) {
-  const text = typeof (value as { q?: unknown })?.q === "string" ? ((value as { q: string }).q.trim().slice(0, 100)) : "";
+  const v = (value ?? {}) as { q?: unknown; record_type?: unknown; record_id?: unknown };
+  const text = typeof v.q === "string" ? v.q.trim().slice(0, 100) : "";
+  const exact =
+    v.record_type === undefined && v.record_id === undefined
+      ? null
+      : { type: choice(v.record_type, "record_type", anchorTypes), id: uuid(v.record_id, "record_id") };
   return transaction(async (c) => {
     await requireCapability(c, p, "conversation.post");
     const rows = (
       await c.query(
         `(SELECT 'Opportunity' AS record_type,o.id,o.display_number,o.title FROM ppo.opportunities o WHERE o.workspace_id=$1 AND ${opportunityVisibility("o")}
-           AND ($3='' OR position(lower($3) in lower(o.title))>0 OR position(lower($3) in lower(o.display_number))>0) ORDER BY o.display_number LIMIT 20)
+           AND ($3='' OR position(lower($3) in lower(o.title))>0 OR position(lower($3) in lower(o.display_number))>0)
+           AND ($4::text IS NULL OR ($4='Opportunity' AND o.id=$5::uuid)) ORDER BY o.display_number LIMIT 20)
          UNION ALL
          (SELECT 'Project',pj.id,pj.display_number,pj.title FROM ppo.projects pj WHERE pj.workspace_id=$1 AND ${projectVisibility("pj")}
-           AND ($3='' OR position(lower($3) in lower(pj.title))>0 OR position(lower($3) in lower(pj.display_number))>0) ORDER BY pj.display_number LIMIT 20)`,
-        [p.workspace_id, p.actor_id, text],
+           AND ($3='' OR position(lower($3) in lower(pj.title))>0 OR position(lower($3) in lower(pj.display_number))>0)
+           AND ($4::text IS NULL OR ($4='Project' AND pj.id=$5::uuid)) ORDER BY pj.display_number LIMIT 20)`,
+        [p.workspace_id, p.actor_id, text, exact?.type ?? null, exact?.id ?? null],
       )
     ).rows;
     return { items: rows };

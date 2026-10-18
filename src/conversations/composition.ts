@@ -6,8 +6,11 @@ import { maxAsks, maxMentions, type AnchorType, type AskInput, type MentionInput
 export type DraftMention =
   | { key: string; kind: "Person"; person_id: string; display_name: string }
   | { key: string; kind: "Record"; record_type: AnchorType; record_id: string; label: string };
+// A tag is a picked mention and where its visible text starts. Tags are atomic: an edit that touches one removes all of
+// it, so a record label or a name never survives as plain text that looks like a tag (T1-4, T1-5).
+export type Tag = DraftMention & { at: number };
 export type DraftAsk = { person_id: string; on: boolean; question: string; reply_by: string | null };
-export type Draft = { text: string; mentions: DraftMention[]; asks: DraftAsk[] };
+export type Draft = { text: string; mentions: Tag[]; asks: DraftAsk[] };
 
 export type DrawnMention =
   | { ordinal: number; kind: "Person"; person_id: string; display_name: string }
@@ -34,74 +37,107 @@ export const emptyDraft = (): Draft => ({ text: "", mentions: [], asks: [] });
 
 export const visibleToken = (m: DraftMention) =>
   m.kind === "Person" ? `@${m.display_name}` : `#${m.label}`;
-
-export function insertMention(d: Draft, m: DraftMention, caret: number) {
-  const at = Math.max(0, Math.min(caret, d.text.length));
-  const insert = `${visibleToken(m)} `;
-  const asks =
-    m.kind === "Person" && !d.asks.some((a) => a.person_id === m.person_id)
-      ? [...d.asks, { person_id: m.person_id, on: false, question: "", reply_by: null }]
-      : d.asks;
-  return {
-    draft: { text: d.text.slice(0, at) + insert + d.text.slice(at), mentions: [...d.mentions, m], asks },
-    caret: at + insert.length,
-  };
-}
-
-const occurrences = (text: string, token: string) => {
-  let count = 0;
-  for (let i = text.indexOf(token); i >= 0; i = text.indexOf(token, i + token.length)) count++;
-  return count;
+const tagEnd = (t: Tag) => t.at + visibleToken(t).length;
+const byPosition = (a: Tag, b: Tag) => a.at - b.at;
+const withAsks = (text: string, mentions: Tag[], asks: DraftAsk[]): Draft => {
+  const people = new Set(mentions.flatMap((m) => (m.kind === "Person" ? [m.person_id] : [])));
+  return { text, mentions, asks: asks.filter((a) => people.has(a.person_id)) };
 };
 
-// A tag lasts while its visible text does. Where several tags share one token, as many survive as the text still
-// holds copies, the earliest picked first.
-export function reconcile(d: Draft): Draft {
-  const used = new Map<string, number>();
-  const mentions = d.mentions.filter((m) => {
-    const token = visibleToken(m);
-    const n = (used.get(token) ?? 0) + 1;
-    used.set(token, n);
-    return n <= occurrences(d.text, token);
-  });
-  const people = new Set(mentions.flatMap((m) => (m.kind === "Person" ? [m.person_id] : [])));
-  return { text: d.text, mentions, asks: d.asks.filter((a) => people.has(a.person_id)) };
+// The composer reports each change as the whole new text. The change is the span between the longest common prefix and
+// suffix; a tag that span touches is removed entirely, and the caret lands where the edit ended.
+export function applyEdit(d: Draft, next: string): { draft: Draft; caret: number } {
+  const prev = d.text;
+  const shortest = Math.min(prev.length, next.length);
+  let p = 0;
+  while (p < shortest && prev[p] === next[p]) p++;
+  let s = 0;
+  while (s < shortest - p && prev[prev.length - 1 - s] === next[next.length - 1 - s]) s++;
+  const removedEnd = prev.length - s;
+  const insertedEnd = next.length - s;
+  const delta = insertedEnd - removedEnd;
+  const touched = (t: Tag) => {
+    const e = tagEnd(t);
+    return (p < e && removedEnd > t.at && removedEnd > p) || (t.at < p && p < e);
+  };
+  const cuts: [number, number][] = [];
+  const kept: Tag[] = [];
+  for (const t of d.mentions) {
+    const e = tagEnd(t);
+    if (!touched(t)) {
+      kept.push(t);
+      continue;
+    }
+    if (t.at < p) cuts.push([t.at, Math.min(p, e)]);
+    if (e > removedEnd) cuts.push([Math.max(removedEnd, t.at) + delta, e + delta]);
+  }
+  cuts.sort((x, y) => y[0] - x[0]);
+  let text = next;
+  for (const [from, to] of cuts) text = text.slice(0, from) + text.slice(to);
+  const cutBefore = (position: number) =>
+    cuts.reduce((sum, [from, to]) => sum + (to <= position ? to - from : 0), 0);
+  const mentions = kept
+    .map((t) => (tagEnd(t) <= p ? t : { ...t, at: t.at + delta - cutBefore(t.at + delta) }))
+    .sort(byPosition);
+  return { draft: withAsks(text, mentions, d.asks), caret: insertedEnd - cutBefore(insertedEnd) };
+}
+
+// Inserts a tag and one space at the caret. `replace` first removes that many characters before the caret: the `@` or
+// `#` the person typed to open the picker. A caret inside a tag moves to the end of that tag.
+export function insertMention(d: Draft, m: DraftMention, caret: number, replace = 0) {
+  let base = d;
+  let at = Math.max(0, Math.min(caret, d.text.length));
+  if (replace > 0) {
+    const from = Math.max(0, at - replace);
+    const edited = applyEdit(d, d.text.slice(0, from) + d.text.slice(at));
+    base = edited.draft;
+    at = edited.caret;
+  }
+  const inside = base.mentions.find((t) => t.at < at && at < tagEnd(t));
+  const pos = inside ? tagEnd(inside) : at;
+  const insert = `${visibleToken(m)} `;
+  const mentions = [
+    ...base.mentions.map((t) => (t.at >= pos ? { ...t, at: t.at + insert.length } : t)),
+    { ...m, at: pos },
+  ].sort(byPosition);
+  const asks =
+    m.kind === "Person" && !base.asks.some((a) => a.person_id === m.person_id)
+      ? [...base.asks, { person_id: m.person_id, on: false, question: "", reply_by: null }]
+      : base.asks;
+  return { draft: { text: base.text.slice(0, pos) + insert + base.text.slice(pos), mentions, asks }, caret: pos + insert.length };
 }
 
 const reserved = /[@#]\{\d+\}/;
 
 export function toMessageInput(d: Draft): MessageInput {
-  const typedToken = reserved.exec(d.text);
-  if (typedToken)
-    return { ok: false, field: "body", message: `Remove ${typedToken[0]}: that pattern is reserved for tags.` };
-  const current = reconcile(d);
-  if (current.mentions.length > maxMentions)
-    return { ok: false, field: "body", message: `Tag at most ${maxMentions} people and records in one message.` };
-  // Place every tag on the first copy of its token not already taken, then number them in the order they appear.
-  const taken = new Set<number>();
-  const placed = current.mentions.map((m) => {
-    const token = visibleToken(m);
-    let at = current.text.indexOf(token);
-    while (at >= 0 && taken.has(at)) at = current.text.indexOf(token, at + token.length);
-    taken.add(at);
-    return { m, at, length: token.length };
-  });
-  placed.sort((a, b) => a.at - b.at);
-  let body = "";
+  const tags = [...d.mentions].sort(byPosition);
   let from = 0;
+  for (const t of tags) {
+    if (d.text.slice(t.at, tagEnd(t)) !== visibleToken(t))
+      return { ok: false, field: "body", message: "A tag no longer matches its text. Remove it and tag again." };
+    const typed = reserved.exec(d.text.slice(from, t.at));
+    if (typed) return { ok: false, field: "body", message: `Remove ${typed[0]}: that pattern is reserved for tags.` };
+    from = tagEnd(t);
+  }
+  const typedTail = reserved.exec(d.text.slice(from));
+  if (typedTail) return { ok: false, field: "body", message: `Remove ${typedTail[0]}: that pattern is reserved for tags.` };
+  if (tags.length > maxMentions)
+    return { ok: false, field: "body", message: `Tag at most ${maxMentions} people and records in one message.` };
+  let body = "";
+  let cursor = 0;
   const mentions: MentionInput[] = [];
   const firstOrdinal = new Map<string, number>();
-  placed.forEach(({ m, at, length }, index) => {
+  tags.forEach((t, index) => {
     const ordinal = index + 1;
-    body += current.text.slice(from, at) + (m.kind === "Person" ? `@{${ordinal}}` : `#{${ordinal}}`);
-    from = at + length;
-    if (m.kind === "Person") {
-      mentions.push({ ordinal, kind: "Person", person_id: m.person_id });
-      if (!firstOrdinal.has(m.person_id)) firstOrdinal.set(m.person_id, ordinal);
-    } else mentions.push({ ordinal, kind: "Record", record_type: m.record_type, record_id: m.record_id });
+    body += d.text.slice(cursor, t.at) + (t.kind === "Person" ? `@{${ordinal}}` : `#{${ordinal}}`);
+    cursor = tagEnd(t);
+    if (t.kind === "Person") {
+      mentions.push({ ordinal, kind: "Person", person_id: t.person_id });
+      if (!firstOrdinal.has(t.person_id)) firstOrdinal.set(t.person_id, ordinal);
+    } else mentions.push({ ordinal, kind: "Record", record_type: t.record_type, record_id: t.record_id });
   });
-  body += current.text.slice(from);
-  const on = current.asks.filter((a) => a.on);
+  body += d.text.slice(cursor);
+  const on = d.asks.filter((a) => a.on && firstOrdinal.has(a.person_id));
   if (on.length > maxAsks) return { ok: false, field: "asks", message: `Ask at most ${maxAsks} people in one message.` };
   const asks: AskInput[] = [];
   for (const a of on) {

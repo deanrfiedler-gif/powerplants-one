@@ -21,7 +21,7 @@ At 780 px and narrower `/conversations` is the list alone; New thread is full sc
 
 ## Shared components and states
 
-Shared shell, `Button`, `ErrorNotice`, `usePlatformResource` and `useRecoverableCommand`; styles use shared tokens only (`src/conversations/components/conversations.css`). States: loading skeleton, empty page, list read error with Retry, no matches. The list re-reads every 30 seconds while visible, on focus and after any command, and keeps the last list during a re-read.
+Shared shell, `Button`, `ErrorNotice`, `usePlatformResource` and `useRecoverableCommand`; styles use shared tokens (`src/conversations/components/conversations.css`), except three literal colours with no token yet: the dialog backdrop, the picker shadow and the field-error fallback. They are an exception for review, not a new palette. States: loading skeleton, empty page, list read error with Retry, no matches. The list re-reads every 30 seconds while visible, on focus and after any command, and keeps the last list during a re-read.
 
 ## Visual references
 
@@ -31,4 +31,4 @@ Shared shell, `Button`, `ErrorNotice`, `usePlatformResource` and `useRecoverable
 
 ## Behaviour, handovers and verification
 
-A row opens `/conversations/[id]`. New thread accepts `?new=1&record={type}:{id}` for T1d's record pages. Tests: `tests/unit/conversations-sidebar.test.ts`, `tests/unit/conversations-composition.test.ts`, `tests/browser/conversations.spec.ts` (desktop and phone). No review fingerprint or owner acceptance is claimed; the article `guide.route-conversations` remains Draft.
+A row opens `/conversations/[id]`. New thread accepts `?new=1&record={type}:{id}` for T1d's record pages; the record is looked up by its ID among the records the sender can link. A start that was not confirmed is shown, with Retry, the next time the dialog opens, and a start confirmed after a reload opens its thread. Tests: `tests/unit/conversations-sidebar.test.ts`, `tests/unit/conversations-composition.test.ts`, `tests/browser/conversations.spec.ts` (desktop and phone). No review fingerprint or owner acceptance is claimed; the article `guide.route-conversations` remains Draft.

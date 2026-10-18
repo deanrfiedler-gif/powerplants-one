@@ -6,11 +6,13 @@ export function AskCard({
   ask,
   viewerId,
   busy,
+  disabled = false,
   onDecline,
 }: {
   ask: ThreadAsk;
   viewerId: string;
   busy: boolean;
+  disabled?: boolean;
   onDecline: (ask: ThreadAsk) => void;
 }) {
   const text = askText(ask, viewerId);
@@ -21,7 +23,7 @@ export function AskCard({
         <p className="cv-ask-detail">{text.detail}</p>
       </div>
       {text.canDecline && (
-        <Button variant="quiet" busy={busy} onClick={() => onDecline(ask)}>
+        <Button variant="quiet" busy={busy} disabled={disabled} onClick={() => onDecline(ask)}>
           No answer needed
         </Button>
       )}

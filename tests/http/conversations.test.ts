@@ -130,3 +130,15 @@ test("T1c-1 no answer needed is the asked person's", async () => {
   assert.equal((await call(coordinator.cookie, `conversations/asks/${ask.id}/no-answer-needed`, close)).status, 403);
   assert.equal((await call(reader.cookie, `conversations/asks/${ask.id}/no-answer-needed`, { ...close, operation_id: randomUUID() })).status, 200);
 });
+
+test("T1c-1 the records picker finds one record by its ID, within the sender's access", async () => {
+  const coordinator = await login("coordinator");
+  const outsider = await login("other-workspace");
+  const deal = crmCreate();
+  assert.equal((await call(coordinator.cookie, "crm/opportunities", deal)).status, 201);
+  const exact = await call(coordinator.cookie, `conversations/records?record_type=Opportunity&record_id=${deal.id}`);
+  assert.equal(exact.status, 200);
+  assert.deepEqual((exact.body.items as { id: string }[]).map((r) => r.id), [deal.id]);
+  const hidden = await call(outsider.cookie, `conversations/records?record_type=Opportunity&record_id=${deal.id}`);
+  assert.ok(hidden.status === 403 || (hidden.body.items as unknown[]).length === 0);
+});

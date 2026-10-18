@@ -606,3 +606,17 @@
     border-radius: 0;
   }
 }
+.cv-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-control);
+  background: var(--info-surface);
+}
+.cv-banner p {
+  margin: 0;
+}

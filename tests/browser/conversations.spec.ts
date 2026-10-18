@@ -153,6 +153,20 @@ test.describe("T1c-1 thread view", () => {
     await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(page.getByText("This conversation isn't available to you")).toBeVisible();
     await expect(page.getByText(/when does the controller arrive/)).toHaveCount(0);
+    // The next re-read must not bring the withdrawn thread back while it loads (final review I3).
+    await page.unroute(`**/api/v1/conversations/${thread}`);
+    let release: () => void = () => {};
+    const held = new Promise<void>((resolve) => (release = resolve));
+    await page.route(`**/api/v1/conversations/${thread}`, async (route) => {
+      await held;
+      await route.fulfill({ status: 404, json: { code: "RecordUnavailable", message: "This record is unavailable." } });
+    });
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+    await expect(page.getByText(/when does the controller arrive/)).toHaveCount(0);
+    await page.waitForTimeout(1500);
+    await expect(page.getByText(/when does the controller arrive/)).toHaveCount(0);
+    release();
+    await expect(page.getByText("This conversation isn't available to you")).toBeVisible();
   });
 
   test("T1c-1 sidebar marks the open thread and the desktop opens one", async ({ page, isMobile }) => {
@@ -291,5 +305,101 @@ test.describe("T1c-1 composer and New thread", () => {
     await page.getByRole("textbox", { name: "Message" }).fill("SYN sent without tags");
     await page.getByRole("button", { name: "Send" }).click();
     await expect(page.getByRole("log").getByText("SYN sent without tags")).toBeVisible();
+  });
+});
+
+test.describe("T1c-1 final review fixes", () => {
+  test("T1c-1 a failed re-read keeps the thread and the draft", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    const message = page.getByRole("textbox", { name: "Message" });
+    await message.fill("Draft kept through a failed read");
+    await page.route(`**/api/v1/conversations/${thread}`, (route) =>
+      route.fulfill({ status: 503, json: { code: "DependencyUnavailable", message: "Try again." } }),
+    );
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+    await expect(page.getByText("This conversation could not be refreshed.")).toBeVisible();
+    await expect(page.getByRole("log").getByText(/when does the controller arrive/)).toBeVisible();
+    await expect(message).toHaveValue("Draft kept through a failed read");
+  });
+
+  test("T1c-1 the draft survives a resolve elsewhere and a refused post re-reads", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    const message = page.getByRole("textbox", { name: "Message" });
+    await message.fill("Draft kept through a resolve");
+    // Until the refused post goes out, the page's own re-reads see the thread as it was, so the race with the
+    // 30-second refresh cannot hide the composer first.
+    const stale = await (await page.request.get(`/api/v1/conversations/${thread}`)).json();
+    let posted = false;
+    await page.route(`**/api/v1/conversations/${thread}`, (route) => (posted ? route.fallback() : route.fulfill({ json: stale })));
+    await page.route(`**/api/v1/conversations/${thread}/messages`, (route) => {
+      posted = true;
+      return route.fallback();
+    });
+    const version = (await api<{ version: number }>(page, `conversations/${thread}`)).body.version;
+    expect((await api(page, `conversations/${thread}/resolve`, { ...base("Resolve conversation"), expected_version: version })).status).toBe(200);
+    await page.getByRole("button", { name: "Send" }).click();
+    await expect(page.getByText("Reopen this conversation to reply")).toBeVisible();
+    await page.getByRole("button", { name: "Reopen" }).click();
+    await expect(page.getByRole("textbox", { name: "Message" })).toHaveValue("Draft kept through a resolve");
+  });
+
+  test("T1c-1 a pending resolve can be retried", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    await page.route(`**/api/v1/conversations/${thread}/resolve`, (route) => route.abort());
+    await page.getByRole("button", { name: "Resolve" }).click();
+    await expect(page.getByText("Resolve conversation has not been confirmed.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Resolve" })).toBeDisabled();
+    await page.unroute(`**/api/v1/conversations/${thread}/resolve`);
+    await page.getByRole("button", { name: "Retry" }).click();
+    await expect(page.getByText("Reopen this conversation to reply")).toBeVisible();
+  });
+
+  test("T1c-1 a pending New thread is shown when the dialog opens again", async ({ page }) => {
+    await signIn(page, asker);
+    const deal = crmCreate();
+    expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
+    await page.goto(`/conversations?new=1&record=Opportunity:${deal.id}`);
+    const dialog = page.getByRole("dialog", { name: "New thread" });
+    await expect(dialog.locator(".cv-about-chosen")).toBeVisible();
+    await dialog.getByRole("textbox", { name: "Message" }).fill("SYN pending start");
+    await page.route("**/api/v1/conversations", (route) => (route.request().method() === "POST" ? route.abort() : route.fallback()));
+    await dialog.getByRole("button", { name: "Start thread" }).click();
+    await expect(dialog.getByRole("button", { name: "Retry" })).toBeVisible();
+    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await page.goto("/conversations?new=1");
+    await expect(page.getByRole("dialog", { name: "New thread" }).getByText("“SYN pending start” has not been confirmed.")).toBeVisible();
+    await page.unroute("**/api/v1/conversations");
+    await page.getByRole("dialog", { name: "New thread" }).getByRole("button", { name: "Retry" }).click();
+    await expect(page).toHaveURL(/\/conversations\/[0-9a-f-]{36}$/);
+  });
+
+  test("T1c-1 New thread pre-fills a newly created record", async ({ page }) => {
+    await signIn(page, asker);
+    const deal = crmCreate();
+    expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
+    const number = (await api<{ items: { display_number: string }[] }>(page, `crm/opportunities/${deal.id}`)).body.items[0].display_number;
+    await page.goto(`/conversations?new=1&record=Opportunity:${deal.id}`);
+    await expect(page.getByRole("dialog", { name: "New thread" }).locator(".cv-about-chosen")).toContainText(number);
+  });
+
+  test("T1c-1 a typed # stays when the picker is dismissed", async ({ page }) => {
+    const { thread } = await askedThread(page);
+    await signIn(page, asker);
+    await page.goto(`/conversations/${thread}`);
+    const message = page.getByRole("textbox", { name: "Message" });
+    await message.fill("PO ");
+    await message.press("End");
+    await message.press("#");
+    await expect(page.getByRole("combobox", { name: "Find a record" })).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(message).toBeFocused();
+    await message.pressSequentially("4432");
+    await expect(message).toHaveValue("PO #4432");
   });
 });

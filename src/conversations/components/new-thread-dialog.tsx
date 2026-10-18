@@ -1,6 +1,6 @@
 // New thread (PPO-CONV-T1C-DESIGN 5.5): About, the message with its ask rows, and a title derived from the message that
 // the person can edit before starting. Opened at /conversations?new=1, optionally with record={type}:{id} for T1d.
-import { useCallback, useId, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, ErrorNotice } from "../../components/business-ui";
 import { useIdentity } from "../../components/business-session";
@@ -87,7 +87,10 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
   const titleId = useId();
   const preset = parseRecord(initialRecord);
   // A record named in the address is looked up among the records the sender can link before it is shown (T1-4).
-  const lookup = usePlatformResource<{ items: LinkableRecord[] }>(preset ? "conversations/records" : null, false);
+  const lookup = usePlatformResource<{ items: LinkableRecord[] }>(
+    preset ? `conversations/records?record_type=${preset.type}&record_id=${preset.id}` : null,
+    false,
+  );
   const found = lookup.data?.items.find((r) => preset && r.id === preset.id && r.record_type === preset.type);
   const [picked, setPicked] = useState<Chosen | null | undefined>(undefined);
   const chosen = picked !== undefined ? picked : found ? { type: found.record_type, id: found.id, display_number: found.display_number, title: found.title } : null;
@@ -97,6 +100,20 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
   const accepts = useCallback((entry: { path: string }) => entry.path === "conversations", []);
   const command = useRecoverableCommand({ key: "ppo:conversations:new", scope: identity, accepts, transport: api, acceptsReceipt: serverAllocated });
   const title = customTitle ?? (chosen ? deriveTitle(draft, chosen.display_number) : "");
+  // A confirmed start opens its thread, including one confirmed after a reload; the stored confirmation is then cleared
+  // so the next New thread starts empty (5.5, final review I6).
+  const accepted = command.accepted;
+  useEffect(() => {
+    if (!accepted) return;
+    try {
+      sessionStorage.removeItem("ppo:conversations:new:accepted");
+    } catch {
+      // Storage failure must not prevent opening the confirmed thread.
+    }
+    announceConversationsChanged();
+    router.push(`/conversations/${accepted.receipt.record_id}`);
+  }, [accepted, router]);
+  const pendingTitle = command.pending ? String(command.pending.body.title ?? "") : "";
   const close = () => router.replace("/conversations");
   const start = async () => {
     if (!chosen) return setLocalError("Choose the deal or project this conversation is about.");
@@ -105,7 +122,7 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
     if (!draft.text.trim()) return setLocalError("Write the first message.");
     if (!title.trim()) return setLocalError("Give the conversation a title.");
     setLocalError("");
-    const receipt = await command.send(
+    await command.send(
       "conversations",
       {
         reason: "Start a conversation",
@@ -120,9 +137,6 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
       "Conversation",
       chosen.id,
     );
-    if (!receipt) return;
-    announceConversationsChanged();
-    router.push(`/conversations/${receipt.record_id}`);
   };
   return (
     <div className="cv-dialog-backdrop">
@@ -175,11 +189,16 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
             {localError}
           </p>
         )}
+        {command.pending && (
+          <p className="cv-banner" role="status">
+            “{pendingTitle}” has not been confirmed. Retry to confirm it before starting another conversation.
+          </p>
+        )}
         {!!command.error && <ErrorNotice error={command.error} focusOnError={false} />}
         <footer className="cv-dialog-actions">
           <Button onClick={close}>Cancel</Button>
-          {command.pending && command.error ? (
-            <Button variant="primary" busy={command.busy} onClick={() => void command.retry().then((r) => r && router.push(`/conversations/${r.record_id}`))}>
+          {command.pending ? (
+            <Button variant="primary" busy={command.busy} onClick={() => void command.retry()}>
               Retry
             </Button>
           ) : (
