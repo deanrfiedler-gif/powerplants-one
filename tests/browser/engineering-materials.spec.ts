@@ -51,7 +51,7 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await expect(rows(page)).toHaveCount(8);
 
   // A34: first use is collapsed. The existing-modules refinement replaces the earlier zero-width collapse
-  // with the shared 24px strip, so the register begins at the strip's boundary rather than the scope's own
+  // with the shared strip (20 px, Figma v2 / Menu strip), so the register begins at the strip's boundary rather than the scope's own
   // left edge. The product name is no longer rendered in any module breadcrumb. Shell top bar amendment
   // (16 October 2026): the breadcrumb names the module alone on its register, its default view (R5), and the
   // full path stays in the tooltip.
@@ -62,10 +62,11 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   await expect(page.locator(".product-heading .ppo-product-name")).toHaveCount(0);
   // R6: names truncate only when the start zone runs out of room; at this width the module name is whole.
   expect(await page.locator(".ppo-crumbs li:visible .ppo-crumb").evaluateAll((els) => els.every((el) => el.scrollWidth <= el.clientWidth))).toBe(true);
+  // The accepted Shell v2 menu strip (Figma v2 / Menu strip) is 20 px wide.
   const strip = page.locator(".mw-menu-strip");
-  await expect(strip).toHaveJSProperty("offsetWidth", 24);
+  await expect(strip).toHaveJSProperty("offsetWidth", 20);
   const collapsedLeft = (await page.locator(".em-register").boundingBox())!.x;
-  expect(Math.round(collapsedLeft)).toBe(Math.round((await strip.boundingBox())!.x + 24));
+  expect(Math.round(collapsedLeft)).toBe(Math.round((await strip.boundingBox())!.x + 20));
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
   await page.reload();
