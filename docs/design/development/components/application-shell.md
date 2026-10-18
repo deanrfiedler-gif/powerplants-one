@@ -262,6 +262,15 @@ Dean asked for the rails and secondary menus to match the Figma designs and for 
 - **Mobile requirements.** Unchanged, except that the phone More menu has no search box, Workspace dropdown or footer; its Workspaces links choose the department. Menu rows keep at least 44 px.
 - **Fixtures.** `tests/ui/desktop-shell.spec.ts` (collapsed logo and glyph sizes, More without search, dropdown or footer), `tests/browser/department-navigation.spec.ts`, `navigation-layout.spec.ts`, `shell.spec.ts`, `engineering-changes.spec.ts` (menu values), `engineering-materials.spec.ts` (strip) and `tests/unit/department-navigation.test.ts` (rail label). State `rail-menu-figma` and alignment item `application-shell-rail-menu-figma` are in components.json. Owner/device review is pending; no review fingerprint changes.
 
+## Leads side menu on SecondaryMenuFrame — 18 October 2026
+
+The accepted Leads page draws a 240 px secondary menu (Figma `190:20519`, [Leads design](../../../decisions/leads-design.md) L1/L2) that the app had never built. `LeadsWorkspace` now mounts `SecondaryMenuFrame` with the scope id `#ppo-leads`, in the default Figma presentation; the [implementation record](../../../decisions/leads-side-menu-implementation.md) maps each view to its existing read.
+
+- **Shared files.** `#ppo-leads` joins every shared selector list in `my-work.css` and `figma-shell.css` that already names `#ppo-cpq`: the frame, menu rows, headings, counts, overlay, strip and edge. Like CPQ it does not join My Work's element reset or form rules, so the Leads toolbar, table and modals keep their own styling. `leads.css` adds only the list reset, the link underline reset, the 2 px gap between groups, a quiet overlay Close and the desktop content column.
+- **Desktop requirements.** Rows at the Figma positions (y = 8, 50, 92 heading, 128 … 494) at 1440 × 900; docked from 1200 px; strip 20 px; the remembered open or collapsed choice is per person in this browser.
+- **Mobile requirements.** The header's "Leads menu" button opens the menu as an overlay with 44 px rows. The Leads toolbar's view picker offers the same ten views.
+- **Fixtures.** State `leads-side-menu` in components.json; `tests/unit/leads-menu.test.ts`; the side-menu case in `tests/browser/leads.spec.ts`. Work orders (`193:18953`) and Engineering workload (`184:1047`) still have no menu. Owner/device review is pending; no review fingerprint changes.
+
 
 ## Conversations action and narrow headers (T1c-2) — 18 October 2026
 

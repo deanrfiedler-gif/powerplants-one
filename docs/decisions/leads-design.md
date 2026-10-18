@@ -146,3 +146,7 @@ Dean confirmed in the PR completion session that the named Figma version "Leads 
 ## Backend implementation continuation — 12 October 2026
 
 Dean subsequently authorised the counts and follow-up backend work and opening a PR. The [read contract](lead-register-backend.md) implements L1/L2's API prerequisites with full authorised-match counts, MyLeads and explicit active follow-up filters. The existing list DTO is retained. [Execution evidence](../testing/evidence/lead-register/README.md) separates validation from acceptance. Page/shell implementation, default badge selection and any future terminal-count period presentation remain open. This does not change the accepted design, issued captures or visual review fingerprints.
+
+## Side-menu implementation — 18 October 2026
+
+Following Dean's 18 October instruction to align the app's rails and secondary menus with Figma, the side menu (L1, L2) is built on the shared secondary menu, with each view mapped to an existing read and count ([implementation record](leads-side-menu-implementation.md)). The toolbar, default columns, record window, selection panel, phone list rows and rail badge remain separate work. This does not change the accepted design, its captures or any review fingerprint.

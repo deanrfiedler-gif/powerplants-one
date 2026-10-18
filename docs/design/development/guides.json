@@ -42926,7 +42926,7 @@
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
             "Use + Lead to capture the enquiry and its source",
-            "Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately",
+            "Open a view from the side menu (Inbox, My leads, a status, Overdue, Next action needed, Archived, Disqualified or Converted); use Everyone and Filters to narrow it",
             "Open the lead title or row menu to review, schedule follow-up or perform an available transition",
             "Convert a qualified enquiry to its linked deal and retain the original lead history",
             "On an active owned Lead, use Resolve customer context. Search permitted customer, site and contact records. Save the selection with a reason; later corrections retain previous selections.",
@@ -43210,7 +43210,7 @@
           ],
           "steps": [
             "Use + Lead to capture the enquiry and its source",
-            "Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately",
+            "Open a view from the side menu (Inbox, My leads, a status, Overdue, Next action needed, Archived, Disqualified or Converted); use Everyone and Filters to narrow it",
             "Open the lead title or row menu to review, schedule follow-up or perform an available transition",
             "Convert a qualified enquiry to its linked deal and retain the original lead history",
             "On an active owned Lead, use Resolve customer context. Search permitted customer, site and contact records. Save the selection with a reason; later corrections retain previous selections.",

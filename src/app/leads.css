@@ -562,9 +562,6 @@
     background: white;
     margin: 0;
   }
-  .lead-toolbar .lead-desktop-view {
-    display: none;
-  }
   .lead-search input,
   .lead-toolbar select,
   .lead-sort select {
@@ -694,8 +691,7 @@
 }
 
 /* Approved desktop Leads interior. The application shell owns navigation and the top bar. */
-.lead-desktop-results,
-.lead-lifecycle-tabs {
+.lead-desktop-results {
   display: none;
 }
 @media (min-width: 781px) {
@@ -778,40 +774,6 @@
     width: 13px;
     height: 13px;
     stroke-width: 3.2;
-  }
-  .lead-lifecycle-tabs {
-    display: flex;
-    gap: 3px;
-    padding: 3px;
-    border: 1px solid #e1e5eb;
-    border-radius: 10px;
-    background: #f6f7f9;
-  }
-  .lead-lifecycle-tabs button {
-    display: grid;
-    place-items: center;
-    width: 38px;
-    background: transparent;
-    color: #667181;
-    border: 0;
-    border-radius: 7px;
-    min-height: 32px;
-    padding: 0;
-    font-size: 14px;
-    font-weight: 400;
-  }
-  .lead-lifecycle-tabs button .product-icon {
-    width: 18px;
-    height: 18px;
-  }
-  .lead-lifecycle-tabs button[aria-current="page"] {
-    color: #242a37;
-    background: #fff;
-    box-shadow: 0 1px 2px #242a3708;
-  }
-  .lead-lifecycle-tabs button:hover:not([aria-current="page"]) {
-    background: #e9ecf1;
-    color: #242a37;
   }
   .lead-result-count {
     font-size: 13px;
@@ -1026,9 +988,6 @@
   }
   .lead-list-controls .lead-sort select {
     border-color: transparent;
-  }
-  .lead-list-controls .lead-desktop-view {
-    display: none;
   }
   .lead-toolbar button {
     border-color: transparent;
@@ -1532,3 +1491,49 @@
 }
 
 .lead-dialog-body input,.lead-dialog-body select,.lead-dialog-body textarea { font-weight:400; }
+
+/* The accepted side menu (leads-design.md L1/L2, Figma 190:20519) on the shared SecondaryMenuFrame. The
+   frame (#ppo-leads) draws the Shell v2 menu from my-work.css and figma-shell.css; Leads adds only its
+   list and link resets, a quiet overlay Close, the 2 px rhythm between groups and the counts note,
+   because it does not take My Work's element reset. On desktop the frame's content column
+   hosts the workspace, whose table stays the one vertical scroll owner. */
+#ppo-leads .mw-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#ppo-leads .mw-menu a {
+  text-decoration: none;
+}
+/* The overlay's Close is a quiet icon button, as on Facilities; the global button fill does not apply. */
+#ppo-leads button.mw-menu-close {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #596779;
+}
+#ppo-leads button.mw-menu-close:hover {
+  background: #f0f2f5;
+  color: #242a37;
+}
+#ppo-leads .lead-menu-group,
+#ppo-leads .lead-menu-group ul {
+  margin-top: 2px;
+}
+#ppo-leads .lead-menu-counts {
+  margin: 12px 0 0;
+  padding: 0 12px;
+  color: #667181;
+  font-size: 12px;
+  line-height: 16px;
+}
+@media (min-width: 781px) {
+  #ppo-leads .mw-content {
+    display: flex;
+    flex-direction: column;
+  }
+  #ppo-leads .mw-content > .leads-workspace {
+    flex: 1;
+  }
+}
