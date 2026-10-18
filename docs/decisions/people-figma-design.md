@@ -18,7 +18,7 @@ Claude drew the page from these sources:
 - [D-025 customer communications](customer-communications-d025.md): Powerplants One sends nothing itself, and the named person sends;
 - copies of the Sites CS-04 proposal frames (accepted the same day and locked in separately) and the Findings and follow-up SV-07 form card.
 
-Before deciding, Dean asked for an audit: "Give the People CS-02 page an audit and polish before I decide." He then accepted it: "I accept your recommendations for People CS-02." That adopts the recommended answers to D1–D6 and Q1–Q3. A named Figma version, "People — accepted", is proposed and waits for Dean's explicit yes.
+Before deciding, Dean asked for an audit: "Give the People CS-02 page an audit and polish before I decide." He then accepted it: "I accept your recommendations for People CS-02." That adopts the recommended answers to D1–D6 and Q1–Q3. After the captures were made, Dean asked for the named version: "Yes, save the named Figma version "People — accepted"." The design reference is that named version.
 
 Scope:
 - `scope:CS-02` "Contact directory and contact detail", with `route:/people`, `route:/people/[id]` and `route:/contacts`.
@@ -37,14 +37,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q2 Role text | Resolved as recommended | The role stays recorded free text, marked "(recorded)". No role list and no purchasing authority until a decision adds one |
 | Q3 Inactivating a site contact | Resolved as recommended | Allowed, with a warning that report approval at those sites needs a new active primary contact. It is not blocked |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named Figma version | Not decided | Waits for Dean's explicit yes |
+| Named Figma version | User decision, 18 October 2026 | "Yes, save the named Figma version "People — accepted"." Saved in the Figma desktop app at about 18:00 by a Claude session on Dean's yes, and seen in version history as Dean Fiedler's "just now" entry |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). The named version "People — accepted" is proposed, not saved |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053), at the named version "People — accepted" |
 | Page | "People · CS-02" `1395:150275`, under "— Shared records —", after Sites · CS-04 `1375:2901` and before Access & readiness · CS-06. The page header `1395:150276` holds the conformance declaration; the notes card `1395:151383` is in Flows and notes. File index row "Row / People · CS-02" `1406:62`, after the Sites row |
 | Desktop 1440 × 900 | Register, Active people `1395:150312`; Priya Shah Overview, full length (1440 × 1234) `1395:150562`; Relationships `1396:175528`; Correct details with the reliance warning `1396:354723` |
 | Tablet 1024 | Register with the side menu collapsed `1395:150835` |
@@ -69,7 +69,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D6 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "People — accepted" proposed; not saved |
+| Named version | "People — accepted", saved 18 October 2026 |
 
 ## 4. What the design shows
 
@@ -142,6 +142,6 @@ The audit is recorded on the notes card `1395:151383`.
   - none of 768 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link or a flow starting point.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/customers/people-design-r01/README.md).
-- The page header's Status and Decision record fields now point at this lock-in. The frames themselves were not changed.
+- Before the named version was saved, the page header's Status, Decision record and Named version fields and the notes card's Accepted paragraph were updated to point at this lock-in. The frames themselves were not changed.
 - The page has no prototype flow. The source frames carry four navigation links and the shared components' hover interactions; Claude did not play them in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

@@ -44,7 +44,7 @@ Image 09 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | Not yet saved. "People — accepted" is proposed and waits for Dean's explicit yes |
+| Named version | "People — accepted", saved 18 October 2026 at Dean's "Yes, save the named Figma version "People — accepted"." |
 | Accepted frames | Page "People · CS-02" `1395:150275`, in image order:<br>• `1395:150312`, `1395:150562`, `1396:175528`, `1396:354723`;<br>• `1395:150835`;<br>• `1395:151069`, `1395:151108`, `1396:355861`;<br>• the states: `1395:151245`, `1395:151303`, `1395:151346`, `1396:355987` |
 | Capture copies | Page "Captures (icon-free)", from y = 220,000: `1404:183980`, `1404:184072`, `1404:184206`, `1404:184342`, `1404:184468`, `1404:184544`, `1404:184583`, `1404:184650`, `1404:184717` (images in order) |
 
