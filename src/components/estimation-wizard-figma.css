@@ -579,6 +579,8 @@
 }
 @media (max-width: 780px) {
   .app-frame:has(#ppo-estimate-wizard) .ppo-shell-header,
+  /* The compact phone header (figma-shell.css) is drawn by an id-level rule; the full-screen wizard hides it as before. */
+  .app-frame:has(#ppo-estimate-wizard) .workspace > #shell-header.topbar.ppo-shell-header,
   .app-frame:has(#ppo-estimate-wizard) .mobile-navigation,
   .app-frame:has(#ppo-estimate-wizard) .ppo-bottom-nav,
   .app-frame:has(#ppo-estimate-wizard) .ppo-mobile-tabs {

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { createDemand, openDemand, openDemandPanel, fillProposal, pl01Call, pl01Identity, fixtureId } from "../helpers/pl01";
+import { openAccountPanel } from "../helpers/phone-menu";
 
 // The device must not share the site's zone, or entry in device time would pass unnoticed.
 test.use({ timezoneId: "America/Los_Angeles" });
@@ -134,7 +135,7 @@ test("PL01 corrupted or unavailable storage refuses sending and another identity
   await openDemandPanel(page, w.id);
   await expect(page.getByRole("button", { name: "Save proposal", exact: true })).toBeDisabled();
   await page.getByRole("button", { name: "Close plan visit" }).click();
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption("observer");
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
   await expect(page.getByRole("region", { name: "Local demonstration identity" })).toHaveAttribute("aria-busy", "false");

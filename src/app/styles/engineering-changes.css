@@ -146,7 +146,7 @@
 #ppo-changes .ec-inline>.mw-field{flex:1 1 180px}
 
 @media (max-width:780px){
- #ppo-changes .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
+ #ppo-changes .em-inspector{position:fixed;z-index:40;inset:56px 0 0 0;width:auto;border-left:0}
  #ppo-changes .ec-detail{padding:12px 14px 20px}
  #ppo-changes .ec-inspector-foot .mw-button{min-height:48px}
  #ppo-changes :is(input,select,textarea){font-size:16px}

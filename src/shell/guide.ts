@@ -54,14 +54,14 @@ export const shellGuide = {
     ],
     [
       "Confirm your context",
-      "Read the page name in the header. Mobile navigation follows the selected workspace."
+      "Read the page name in the header; on a phone it names the current view. Mobile navigation follows the selected workspace."
     ],
     [
       "Work with guidance",
       "Open the information icon for that page’s guide, then return to the same page. Business work takes place in the connected module."
     ]
   ],
-  "mobile": "On a phone, open More and choose a department under Workspaces. The Sales bar offers up to four destinations and More; other workspaces offer up to three destinations and More, filtered by current access. Your working company is in the account panel. Information, search and your account remain in the header. Quick add, Quick Help and Notifications are also available from More.",
+  "mobile": "On a phone, the header is one row. Open the menu at its left (or More in the bottom bar) for search, your account and working company, departments under Workspaces, Notifications, the page guide, Quick add and Help; a dot on the menu means unread notifications. The title names the current page or view: where it shows a chevron, open it to choose a view. Conversations stays in the row, and a page may add one action and Filter. On a record, the row shows back and the record reference, with More for its actions. The Sales bar offers up to four destinations and More; other workspaces offer up to three destinations and More, filtered by current access.",
   "recovery": "If search finds no pages, clear it and try a shorter name. If browser storage is unavailable, the selected workspace applies to this visit. Choosing a department under Workspaces opens an eligible department page. A cancelled leave review keeps your current page and preference. Changing the working company also reviews unsaved work first; if a record seems missing, check the working company in your account. Development Shell preview is separate from operational selection and never changes access rights.",
   "shortcuts": [
     [

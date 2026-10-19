@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { openAccountPanel } from "../helpers/phone-menu";
 const path =
   "/schedule/policy-impact?day=2031-09-21&timezone=Australia/Brisbane";
 test.beforeEach(async ({ page }) => {
@@ -107,9 +108,7 @@ test("failed refresh and identity changes clear prior analysis, with no publish 
   await expect(
     page.getByText("Visit exceeds the proposed duration limit").first(),
   ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Change identity", exact: true })
-    .click();
+  await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption("systems");
   // Clearing the old page happens before the session cookie changes. Verify
   // the completed identity transition before asserting the new server scope.

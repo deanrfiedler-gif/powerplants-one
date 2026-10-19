@@ -1,6 +1,7 @@
 import { test, expect, type Request } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { keyActivate } from "../helpers/quality-keyboard";
+import { identityToggle } from "../helpers/phone-menu";
 
 test("desktop and phone preserve exact shell navigation and Back with the baseline prefetch policy", async ({ page, isMobile }, info) => {
   const origin = new URL(info.project.use.baseURL!).origin;
@@ -13,7 +14,7 @@ test("desktop and phone preserve exact shell navigation and Back with the baseli
   page.on("request", observe);
   await page.goto("/customers?department=sales");
   await expect(page.getByRole("heading", { name: "Organisations", exact: true })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
   await page.getByRole("button", { name: "More", exact: true }).click();
   const menu = page.getByRole("navigation", { name: isMobile ? "All modules" : "More navigation", exact: true });
   const link = menu.getByRole("link", { name: "People", exact: true });

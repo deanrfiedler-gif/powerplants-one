@@ -4,6 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { prepared, call, login } from "../helpers/offline-browser";
 import { base, draft, entry, png, startInput } from "../helpers/field";
+import { openAccountPanel } from "../helpers/phone-menu";
 
 test("Service photo inspection verifies exact bytes, preserves review input and clears protected previews", async ({
   page,
@@ -226,9 +227,7 @@ test("Service photo inspection verifies exact bytes, preserves review input and 
     revisions: before.revisions,
   });
   // Actual same-tab identity switch unmounts/revokes the protected photo.
-  await page
-    .getByRole("button", { name: "Change identity", exact: true })
-    .click();
+  await openAccountPanel(page);
   await page
     .getByLabel("Identity", { exact: true })
     .selectOption("assigned-technician");

@@ -6,6 +6,7 @@ import {
   jobPackViewports,
   assertJobPackHost,
 } from "../helpers/job-pack-design";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 const url = (name: string) =>
   pathToFileURL(resolve(`verification-evidence/${name}/index.html`)).href;
 test.setTimeout(120000);
@@ -69,9 +70,8 @@ test("Figma record owns one scroll surface, remembers its panels, and keeps all 
   await expect(page.locator("#jp-panel-revisions")).toBeVisible();
   await page.getByRole("tab", { name: "Pack", exact: true }).click();
   await expect(page.locator("#s-1")).toBeVisible();
-  await page
-    .getByRole("button", { name: "Job packs menu", exact: true })
-    .click();
+  // The phone header's view chooser opens the Job packs menu (phone header amendment P2).
+  await openSecondaryMenu(page);
   await page.getByRole("tab", { name: "Preparation", exact: true }).click();
   await expect(page.locator("#jp-panel-prepare")).toBeVisible();
   await expect(

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
+import { phoneWidth } from "../helpers/phone-menu";
 
 test("AD-01 people and exact company/site explanation on the native page", async ({
   page,
@@ -12,8 +13,11 @@ test("AD-01 people and exact company/site explanation on the native page", async
     baseURL!,
   );
   await page.goto("/admin/access");
+  // The phone header draws the page name as its title and no breadcrumb (phone header amendment P1, P2).
   await expect(
-    page.getByRole("navigation", { name: "Breadcrumb" }),
+    phoneWidth(page)
+      ? page.locator("#shell-header .ppo-phone-title-text")
+      : page.getByRole("navigation", { name: "Breadcrumb" }),
   ).toBeVisible();
   await expect(
     page.locator(
@@ -205,14 +209,17 @@ test("AD-01 capability catalogue shows unassigned keys and drills through exact 
   await page
     .getByRole("link", { name: "Browse the capability catalogue" })
     .click();
-  await expect(
-    page
-      .getByRole("navigation", { name: "Breadcrumb" })
-      .getByRole("list", {
-        name: "Users and access / Capability catalogue",
-        exact: true,
-      }),
-  ).toBeVisible();
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header .ppo-phone-title-text")).toContainText("Capability catalogue");
+  else
+    await expect(
+      page
+        .getByRole("navigation", { name: "Breadcrumb" })
+        .getByRole("list", {
+          name: "Users and access / Capability catalogue",
+          exact: true,
+        }),
+    ).toBeVisible();
   await page.getByLabel("Find a capability").fill("no-matching-capability");
   await page.getByRole("button", { name: "Search capabilities" }).click();
   await expect(

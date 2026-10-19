@@ -58,23 +58,31 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   tomorrow = local(scenario.slots.tomorrow).slice(0, 10);
   await open(page);
 
-  // Header, left to right on one row: My Work menu, title, search, page guide, account.
+  // Header, left to right on one 56 px row (phone header amendment P1, P2): Menu button, view chooser with the
+  // page name, Conversations. Search, the page guide and the account are in the Menu (P4); the brand and the
+  // breadcrumb are not drawn.
   const banner = page.getByRole("banner");
+  const title = banner.locator(".ppo-phone-title-text");
   const boxes = await Promise.all(
-    [banner.getByRole("button", { name: "My Work menu", exact: true }), banner.locator(".product-heading"), banner.getByRole("button", { name: "Open global search" }), banner.getByRole("button", { name: "Page guide" }), banner.getByRole("button", { name: "Change identity" })].map(
+    [banner.getByRole("button", { name: /^Menu(,|$)/ }), banner.getByRole("button", { name: /^Choose view\. Current view: My Work/ }), banner.getByRole("link", { name: /^Conversations/ })].map(
       async (l) => (await l.boundingBox())!,
     ),
   );
   for (let i = 1; i < boxes.length; i++) expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i - 1].x + boxes[i - 1].width - 1);
-  for (const b of boxes) expect(b.y + b.height).toBeLessThanOrEqual(64);
-  await expect(banner.locator(".product-heading")).toHaveText("My Work", { useInnerText: true });
-  await expect(banner.locator(".ppo-crumb-current")).toHaveAttribute("aria-current", "page");
+  for (const b of boxes) expect(b.y + b.height).toBeLessThanOrEqual(56);
+  expect(boxes[0].x).toBeLessThanOrEqual(8);
+  expect((await banner.boundingBox())!.height).toBe(56);
+  await expect(title).toHaveText("My Work");
+  expect(await title.evaluate(node => getComputedStyle(node).fontSize)).toBe("20px");
   await expect(banner.locator(".brand-logo:visible")).toHaveCount(0);
+  await expect(banner.locator(".product-heading")).toBeHidden();
+  await expect(banner.getByRole("button", { name: "Page guide" })).toBeHidden();
   await page.setViewportSize({ width: 320, height: 844 });
-  expect(await banner.locator(".ppo-crumb-current").evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
-  expect(await banner.locator("button:visible").evaluateAll(nodes => nodes.every(node => {
+  expect(await title.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+  expect(await title.evaluate(node => getComputedStyle(node).fontSize)).toBe("18px");
+  expect(await banner.locator("button:visible, a:visible").evaluateAll(nodes => nodes.every(node => {
     const box = node.getBoundingClientRect();
-    return box.width >= 44 && box.x >= 0 && box.right <= innerWidth && box.bottom <= 64;
+    return box.width >= 44 && box.height >= 44 && box.x >= 0 && box.right <= innerWidth && box.bottom <= 56;
   }))).toBe(true);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath("overview-header-320.png") });
@@ -454,7 +462,7 @@ test("weather is honest: hidden until a provider is connected, a provider's answ
   await expect(page.locator(".mw-mobile")).toHaveAttribute("aria-busy", "false");
   await expect(card).toHaveCount(0);
   // It comes back from Customise overview, reached through the My Work menu.
-  await page.getByRole("banner").getByRole("button", { name: "My Work menu", exact: true }).click();
+  await page.getByRole("banner").getByRole("button", { name: /^Choose view\. Current view: My Work/ }).click();
   await page.getByRole("dialog", { name: "My Work menu" }).getByRole("button", { name: "Customise overview" }).click();
   const customise = page.getByRole("dialog", { name: "Customise overview" });
   await customise.getByLabel("Local weather").check();

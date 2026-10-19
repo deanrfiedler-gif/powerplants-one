@@ -2,6 +2,7 @@ import { openPackView, showPackReadiness } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import type { Pack } from "../../src/documents/components/client/job-pack-types";
+import { phoneWidth } from "../helpers/phone-menu";
 async function setup(page: Page) {
   const read = JSON.parse(
     await readFile("tests/fixtures/job-pack-read.json", "utf8"),
@@ -69,15 +70,21 @@ test("SV05-I7 heading uses only the verified saved scope and retains references"
   await expect(page.locator("#s-1")).toContainText(
     revision.snapshot.work.reference,
   );
-  await page
-    .getByRole("button", { name: "Page hierarchy", exact: true })
-    .click();
-  await expect(
-    page
-      .locator("#page-hierarchy")
-      .getByRole("link", { name: "Service", exact: true }),
-  ).toHaveAttribute("href", "/service/tickets");
-  await page.keyboard.press("Escape");
+  if (phoneWidth(page))
+    // A phone record page leads with Back to its list and offers no Page hierarchy (phone header amendment P3), so
+    // the hierarchy disclosure is proved at wider screens only.
+    await expect(page.locator("#shell-header .ppo-phone-back")).toBeVisible();
+  else {
+    await page
+      .getByRole("button", { name: "Page hierarchy", exact: true })
+      .click();
+    await expect(
+      page
+        .locator("#page-hierarchy")
+        .getByRole("link", { name: "Service", exact: true }),
+    ).toHaveAttribute("href", "/service/tickets");
+    await page.keyboard.press("Escape");
+  }
   pack.section_view!.scope!.summary = "SYN newer summary";
   await open();
   await expect(page.locator("#jp-page-title")).toHaveText(

@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { CRM, crmBase, crmAction } from "../helpers/crm";
 import { leadCreate } from "../helpers/leads";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 test.describe.configure({ timeout: 120000 });
 test.beforeEach(async ({ page }) => {
   page.on("pageerror", error => console.error("Leads browser error:", error.message));
@@ -436,7 +437,8 @@ test("the accepted side menu opens each existing lead read with its full-match c
     await expect(page).toHaveURL(/q=SYN/);
     await expect(rows).toHaveCount(1);
     await expect(rows.first()).toContainText(overdue.title);
-    await page.getByRole("button", { name: "Leads menu", exact: true }).click();
+    // The phone header's view chooser opens the Leads menu (phone header amendment P2).
+    await openSecondaryMenu(page);
     const overlay = page.getByRole("dialog", { name: "Leads menu", exact: true });
     await expect(overlay.getByRole("link", { name: /^Overdue/ })).toHaveAttribute("aria-current", "page");
     await overlay.getByRole("link", { name: /^Next action needed/ }).click();

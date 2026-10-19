@@ -9,6 +9,7 @@ import { call, identity, capture } from "../helpers/quality-browser";
 import { qualityFieldVisit } from "../helpers/quality-field";
 import { base, entry, png } from "../helpers/field";
 import { operation } from "../helpers/offline";
+import { identityToggle, phoneWidth } from "../helpers/phone-menu";
 
 test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
 
@@ -378,7 +379,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       const original = await loaded.json();
       expect(loaded.headers()["cache-control"]).toBe("private, no-store");
       await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-      await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+      await expect(identityToggle(page)).toBeEnabled();
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
       // Successful status alone is not populated proof. Assert a record from
@@ -401,16 +402,18 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         expect(original.current.observations.length).toBeGreaterThan(0);
         await expect(page.locator("tbody tr").first()).toBeVisible();
       }
+      // The phone header names the page in its title; wider screens name it in the breadcrumb (phone header amendment P1, P2).
+      const pageName = page.getByRole("banner").locator(phoneWidth(page) ? ".ppo-phone-title-text" : ".ppo-crumb-current");
       if (s.id === "SC-08") {
-        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toHaveText("Schedule");
-        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toBeVisible();
+        await expect(pageName).toHaveText("Schedule");
+        await expect(pageName).toBeVisible();
         // The workspace rail/phone destinations replace the duplicate Service
         // header tabs. Schedule keeps its current breadcrumb and owned page.
         await expect(page.getByRole("banner").locator(".module-navigation")).toHaveCount(0);
       }
       if (s.id === "SC-14") {
-        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toHaveText("Documents");
-        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toBeVisible();
+        await expect(pageName).toHaveText("Documents");
+        await expect(pageName).toBeVisible();
       }
       await capture(page, info, `${s.id}-loaded`);
       const match = (url: URL) => url.pathname === `/api/v1/${s.api}`;

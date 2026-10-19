@@ -107,10 +107,13 @@ test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncert
   if (info.project.use.isMobile) {
     const viewport = page.viewportSize()!;
     await page.setViewportSize({ width: 320, height: viewport.height });
-    const heading = await page.locator(".topbar .product-heading").boundingBox();
-    const identityButton = await page.getByRole("button", { name: "Change identity", exact: true }).boundingBox();
-    expect(heading).not.toBeNull(); expect(identityButton).not.toBeNull();
-    expect(heading!.x + heading!.width).toBeLessThanOrEqual(identityButton!.x);
+    // Phone header amendment: the page name stays clear of the Conversations link at the right of the row, which
+    // keeps the 4 px side padding.
+    const heading = await page.locator(".topbar .ppo-phone-title-text").boundingBox();
+    const conversations = await page.getByRole("banner").getByRole("link", { name: /^Conversations/ }).boundingBox();
+    expect(heading).not.toBeNull(); expect(conversations).not.toBeNull();
+    expect(heading!.x + heading!.width).toBeLessThanOrEqual(conversations!.x);
+    expect(conversations!.x + conversations!.width).toBeLessThanOrEqual(320 - 4 + 1);
     await capture(page, info, "recovery-header-320");
     await page.setViewportSize(viewport);
   }

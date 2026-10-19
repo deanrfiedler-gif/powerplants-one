@@ -3,7 +3,7 @@ document_id: PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC
 title: Phone header amendment
 date: 2026-10-19
 owner: Dean Fiedler
-status: Owner-adopted rules; named Figma version saved and locked in on 19 October 2026; the Emails · EC-01 and Customer messages · EC-04 swaps and the application change not done
+status: Owner-adopted rules; named Figma version saved and locked in on 19 October 2026; the application change built in PR #609 with owner review pending; the Emails · EC-01 and Customer messages · EC-04 swaps remain separate
 versioning: git
 ---
 
@@ -101,7 +101,7 @@ Made on 19 October 2026, after Dean said yes and the named version "Phone header
 Still to do, in order (P9):
 
 1. Emails · EC-01 and Customer messages · EC-04 swap their detached compact headers for instances of `1530:110`, in their own sessions.
-2. The application's phone header (`ProductHeader` and the phone shell in `src/components/`) changes once, in its own pull request, before the EC pages are built.
+2. The application's phone header was built in PR #609 before the EC pages are built; see the [application shell master](../design/development/components/application-shell.md#phone-header-amendment--19-october-2026) and [measured evidence](../testing/evidence/phone-header/README.md). Owner review of the running app remains pending.
 3. Each accepted page drops its toolbar and context rows when it is next changed.
 
 ## 7. Verification

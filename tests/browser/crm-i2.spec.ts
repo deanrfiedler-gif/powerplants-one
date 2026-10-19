@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { CRM, crmCreate, crmAction, crmQualify } from "../helpers/crm";
 import { database, closeDatabase } from "../../src/platform/database";
+import { openAccountPanel } from "../helpers/phone-menu";
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 test.beforeAll(() => { process.loadEnvFile(".env.local"); });
@@ -18,7 +19,7 @@ async function call(page: Page, path: string, body?: unknown) {
 async function identity(page: Page, profile = "coordinator") {
   // The initial session read is asynchronous; use the same bounded budget as identity controls.
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page.getByRole("button", { name: "Use this identity", exact: true }).click();
   await expect(page.locator("#business-profile")).toBeEnabled();
@@ -137,7 +138,8 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
   expect(await page.evaluate(async () => (await document.fonts.load("16px Roboto")).length)).toBeGreaterThan(0);
   const font = await page.request.get("/brand/Roboto-variable.ttf");
   expect(createHash("sha256").update(await font.body()).digest("hex")).toBe("d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134");
-  const logo = page.locator(".brand-logo:visible");
+  // The phone header has no brand (phone header amendment P1): the hidden mobile brand keeps the original image.
+  const logo = info.project.use.isMobile ? page.locator(".brand-logo").first() : page.locator(".brand-logo:visible");
   await expect(logo).toHaveAttribute("src", "/brand/powerplants-logo-green-white.png");
   const original = await page.request.get("/brand/powerplants-logo-green-white.png");
   expect(createHash("sha256").update(await original.body()).digest("hex")).toBe("8d12f0ecc394950cd9eb66964c588efb71c8e6f445390336c245c3f6712b9694");
@@ -232,10 +234,22 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect(page.locator(".crm-action-text").first()).toContainText("END OF ACTION");
   await page.setViewportSize({ width: 320, height: 844 });
   await waitForCompactSearch(page);
-  await page.getByLabel("Search deals", { exact: true }).focus();
-  await page.keyboard.press("Tab");
   // r11 moves search into the shared header and Stage into the Filters panel.
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeFocused();
+  // Phone header amendment: the retained deal search is a second row of the header. Its keyboard order is Menu,
+  // Conversations, then the search; the account trigger left the phone row (it opens from Menu), so Tab leaves
+  // the header for the page.
+  const dealSearch = page.getByLabel("Search deals", { exact: true });
+  await dealSearch.focus();
+  await page.keyboard.press("Shift+Tab");
+  await expect(page.getByRole("banner").getByRole("link", { name: /^Conversations/ })).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(page.locator("#shell-phone-menu")).toBeFocused();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(dealSearch).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dealSearch).not.toBeFocused();
+  expect(await page.evaluate(() => { const a = document.activeElement; return !!a && a !== document.body && !a.closest(".header-account") && getComputedStyle(a).visibility === "visible"; })).toBe(true);
   const filterToggle = page.getByRole("button", { name: "Filters and sort", exact: true });
   await filterToggle.focus();
   await page.keyboard.press("Enter");
@@ -400,9 +414,14 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     // Retry the complete one-heading/title condition before inspecting the shell.
     await expect(page.locator("h1")).toHaveText([new RegExp(title)]);
     await expect(page.locator("h1")).toBeVisible();
-    // CS-01 D2 reuses the same phone menu slot as My Work; the existing shell owns this replacement.
-    if (info.project.use.isMobile && ["/", "/work", "/customers"].includes(path)) await expect(page.getByRole("banner").getByRole("button", { name: path === "/customers" ? "Organisations menu" : "My Work menu", exact: true })).toBeVisible();
-    else await expect(page.locator(".brand-logo:visible")).toBeVisible();
+    // The phone header has no brand: its Menu button leads the row, and a page with its own menu adds its view chooser
+    // (phone header amendment P2). CS-01 D2 gives Organisations that menu, as My Work has.
+    if (info.project.use.isMobile) {
+      await expect(page.getByRole("banner").getByRole("button", { name: /^Menu(,|$)/ })).toBeVisible();
+      await expect(page.locator(".brand-logo:visible")).toHaveCount(0);
+      if (["/", "/work"].includes(path)) await expect(page.getByRole("banner").getByRole("button", { name: /^Choose view\. Current view: My Work/ })).toBeVisible();
+      if (path === "/customers") await expect(page.getByRole("banner").getByRole("button", { name: /^Choose view\. Current view: Organisations/ })).toBeVisible();
+    } else await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
       await page.getByRole("button", { name: "More", exact: true }).click();
       const menu = page.getByRole("dialog", { name: "More", exact: true });

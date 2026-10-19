@@ -1,6 +1,7 @@
 import { test, expect, request as playwrightRequest, type APIRequestContext, type Page } from "@playwright/test";
 import { CHANGES, changeScenarioIds, seedChangesScenario } from "../helpers/engineering-changes";
 import type { Call, SignIn } from "../helpers/engineering-materials";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 
 // EN-07 Engineering Change-Impact Review. Every journey builds a package of its own through the ordinary API, as the
 // fictional people who would do each step, so the persistent development database never makes a rerun fail. The origin
@@ -321,7 +322,8 @@ test("EN07-A46: a phone reads flush stacked summaries with a full-width inspecto
   await expect(rows(page).nth(2).locator("td[data-label='Attention']")).toHaveText("Cost review");
   expect(await rows(page).nth(2).evaluate((e) => getComputedStyle(e).display)).toBe("grid");
   await expect(page.locator("#ppo-changes")).toHaveAttribute("data-menu", "overlay");
-  await page.getByRole("button", { name: "Engineering changes menu" }).first().click();
+  // The phone header's view chooser opens the page menu (phone header amendment P2).
+  await openSecondaryMenu(page);
   await expect(page.locator("#ec-menu")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.locator("#ec-menu")).toBeHidden();

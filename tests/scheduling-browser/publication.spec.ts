@@ -14,6 +14,7 @@ import {
 } from "../helpers/policy-commands";
 import { confirmed } from "../helpers/packs";
 import { publishSchedulingPolicy } from "../../src/scheduling/policy-commands";
+import { openAccountPanel } from "../helpers/phone-menu";
 
 const root = "/schedule/policy-impact";
 const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
@@ -25,9 +26,7 @@ async function login(request: APIRequestContext, profile: string) {
   expect(r.ok(), await r.text()).toBeTruthy();
 }
 async function switchTo(page: Page, profile: string) {
-  await page
-    .getByRole("button", { name: "Change identity", exact: true })
-    .click();
+  await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   const response = page.waitForResponse(
     (r) =>

@@ -18,6 +18,7 @@ import {
   basisContent,
 } from "../helpers/engineering-control";
 import type { ControlRead } from "../../src/engineering/control/reads";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 test.describe.configure({ timeout: 240000 });
 const origin = () =>
   new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin;
@@ -447,7 +448,7 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
       .basis[0];
     expect(saved.version).toBe(3);
     expect(saved.title).toBe("SYN-PPO retained local draft");
-    await page.getByRole("button", { name: "Page guide", exact: true }).click();
+    await openPageGuide(page);
     await expect(page.getByRole("dialog")).toContainText("Design basis");
     const guideClose = page.getByRole("dialog").getByRole("button", {
       name: "Close panel",
@@ -460,8 +461,11 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
     await expect(page.getByRole("dialog")).toContainText("Design basis");
     await expect(guideClose).toBeFocused();
     await page.keyboard.press("Escape");
+    // On a phone the guide opens from the header Menu, so focus returns to the Menu button.
     await expect(
-      page.getByRole("button", { name: "Page guide", exact: true }),
+      phoneWidth(page)
+        ? phoneMenuOpener(page)
+        : page.getByRole("button", { name: "Page guide", exact: true }),
     ).toBeFocused();
     await page
       .getByRole("button", { name: "Close inspector", exact: true })

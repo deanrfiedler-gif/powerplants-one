@@ -1,5 +1,6 @@
 import { test, expect, request as playwrightRequest, type APIRequestContext, type Page } from "@playwright/test";
 import { MATERIALS, scenarioIds, seedMaterialsScenario, type Call, type SignIn } from "../helpers/engineering-materials";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 
 // EN-06 Released Materials & Substitutions. Every journey builds a package of its own through the ordinary API, as the
 // fictional people who would do each step, so the persistent development database never makes a rerun fail. The origin
@@ -343,7 +344,8 @@ test("EN06-A30 A44: a phone keeps the page inside the viewport and the table in 
     expect(box.x + box.width).toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth));
   }
   await expect(page.locator("#ppo-materials")).toHaveAttribute("data-menu", "overlay");
-  await page.getByRole("button", { name: "Materials menu" }).first().click();
+  // The phone header's view chooser opens the Materials menu (phone header amendment P2).
+  await openSecondaryMenu(page);
   const menu = page.getByRole("dialog", { name: "Materials menu" });
   await expect(menu.getByRole("link", { name: "Review & release" })).toBeVisible();
   await page.keyboard.press("Escape");

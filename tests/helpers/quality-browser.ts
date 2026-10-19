@@ -2,6 +2,7 @@ import { expect, test, type Page, type TestInfo } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
+import { identityToggle, phoneMenuOpener, phoneWidth } from "./phone-menu";
 
 const TRANSIENT_FETCH_RETRY_DELAY_MS = 250;
 const PLAYWRIGHT_FETCH_ERROR = /^apiRequestContext\.fetch:/i;
@@ -98,8 +99,16 @@ export async function call(page: Page, path: string, body?: unknown) {
 }
 export async function openIdentityControls(page: Page) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
-    await page.getByRole("button", { name: "Change identity", exact: true }).press("Enter");
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) {
+    if (phoneWidth(page)) {
+      // Phone header amendment P4: the account is in the menu, so the keyboard path is the Menu button (the tab bar's More
+      // on a record page, whose row has Back in its place), then Account.
+      await phoneMenuOpener(page).press("Enter");
+      const menu = page.getByRole("dialog", { name: "More" });
+      await expect(menu).toBeVisible();
+      await menu.getByRole("button", { name: "Account", exact: true }).press("Enter");
+    } else await page.getByRole("button", { name: "Change identity", exact: true }).press("Enter");
+  }
   await expect(page.locator("#business-profile")).toBeEnabled();
 }
 export async function identity(page: Page, profile: string) {
@@ -115,7 +124,7 @@ export async function identity(page: Page, profile: string) {
   const current = await response.json();
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }).locator("strong").first()).toHaveText(current.display_name);
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
 }
 export async function capture(
   page: Page,
