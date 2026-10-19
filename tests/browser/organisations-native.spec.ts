@@ -3,6 +3,18 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 const org = "50000000-0000-4000-8000-000000000001";
 const company = "20000000-0000-4000-8000-000000000001";
+async function openRecord(page: Page, url: string) {
+  // Start observing before navigation; tab assertions concern the returned record,
+  // while the performance proof measures its loading time separately.
+  const [response] = await Promise.all([
+    page.waitForResponse(response =>
+      new URL(response.url()).pathname === `/api/v1/customers/${org}/workspace`
+      && response.request().method() === "GET"),
+    page.goto(url),
+  ]);
+  expect(response.status()).toBe(200);
+  expect(await response.finished()).toBeNull();
+}
 async function capture(page: Page, info: TestInfo, name: string) {
   const root = process.env.PPO_CS01_EVIDENCE;
   if (root) {
@@ -68,7 +80,7 @@ test("CS01 register and seven-tab record geometry at all retained widths", async
     }
     await capture(page, info, `register-${width}`);
     if (width === 1440) await page.setViewportSize({ width, height: 1234 });
-    await page.goto(`/customers/${org}?department=service`);
+    await openRecord(page, `/customers/${org}?department=service`);
     await expect(
       page.getByRole("tab", { name: "Overview", exact: true }),
     ).toHaveAttribute("aria-selected", "true");
@@ -151,7 +163,7 @@ test("CS01 Sales type/status URL and permitted source states", async ({
   page,
 }, info) => {
   await page.setViewportSize({ width: 1440, height: 1078 });
-  await page.goto(`/customers/${org}?view=deals&department=service`);
+  await openRecord(page, `/customers/${org}?view=deals&department=service`);
   await expect(
     page.getByRole("tab", { name: "Sales", exact: true }),
   ).toHaveAttribute("aria-selected", "true");

@@ -79,39 +79,62 @@ export async function organisationRegister(
   };
   // Same matching-name candidate basis as the existing DuplicateCandidates search; no identity merge
   // or fuzzy confidence is inferred. Every matching name is itself inside the permitted population.
+  // Materialise normalised names once and group related sources once per snapshot: the declared
+  // load has 1,000 organisations, so repeated per-pair lowercasing and per-row source reads add up.
   const data = (
     await c.query<OrganisationRegisterData & { cursor_found: boolean }>(
       `
     WITH permitted AS MATERIALIZED (
-      SELECT r.id,r.company_id,r.display_name,r.display_number,r.relationship_status AS status,r.sector,r.owner_id,u.display_name AS owner_name
+      SELECT r.id,r.company_id,r.display_name,lower(r.display_name) AS matching_name,r.display_number,r.relationship_status AS status,r.sector,r.owner_id,u.display_name AS owner_name
       FROM ppo.organisations r LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.owner_id)
       WHERE r.workspace_id=$1 AND ${visibility("Organisation")}
+    ), company_access AS MATERIALIZED (
+      SELECT r.company_id,
+        (${scopeSql("r.company_id", "NULL::uuid", "crm.opportunity.read")} AND ${scopeSql("r.company_id", "NULL::uuid", "shared.internal.read")}) AS deals,
+        ${scopeSql("r.company_id", "NULL::uuid", "activity.read")} AS follow_up
+      FROM (SELECT DISTINCT company_id FROM permitted) r
     ), current_sites AS MATERIALIZED (
       SELECT DISTINCT sp.organisation_id,s.id FROM ppo.site_parties sp
       JOIN ppo.sites s ON (s.workspace_id,s.id)=(sp.workspace_id,sp.site_id)
       JOIN permitted p ON p.id=sp.organisation_id
       WHERE sp.workspace_id=$1 AND sp.valid_from<=$6::timestamptz AND (sp.valid_to IS NULL OR sp.valid_to>$6::timestamptz)
         AND ${visibility("Site", "s")}
+    ), site_counts AS MATERIALIZED (
+      SELECT organisation_id,count(*)::int AS sites FROM current_sites GROUP BY organisation_id
+    ), area_counts AS MATERIALIZED (
+      SELECT s.organisation_id,count(*)::int AS areas FROM current_sites s
+      JOIN ppo.facilities f ON f.site_id=s.id AND f.workspace_id=$1
+      WHERE ${visibility("Facility", "f")} GROUP BY s.organisation_id
+    ), deal_counts AS MATERIALIZED (
+      SELECT o.organisation_id,count(*)::int AS deals FROM ppo.opportunities o
+      JOIN permitted r ON r.id=o.organisation_id
+      JOIN company_access ca ON ca.company_id=r.company_id AND ca.deals
+      WHERE o.workspace_id=$1 AND o.close_outcome='Open' AND ${opportunityVisibility()}
+      GROUP BY o.organisation_id
+    ), readable_activities AS MATERIALIZED (
+      SELECT a.workspace_id,a.id,a.summary,a.due_at,a.due_needed FROM ppo.activities a
+      WHERE a.workspace_id=$1 AND a.status NOT IN ('Completed','Cancelled')
+        AND ${activityVisibility("a", true, true, true)}
+    ), next_activities AS MATERIALIZED (
+      SELECT DISTINCT ON (al.object_id) al.object_id AS organisation_id,a.id,a.summary,a.due_at,a.due_needed
+      FROM readable_activities a
+      JOIN ppo.activity_links al ON al.workspace_id=a.workspace_id AND al.activity_id=a.id AND al.object_type='Organisation'
+      JOIN permitted r ON r.id=al.object_id
+      JOIN company_access ca ON ca.company_id=r.company_id AND ca.follow_up
+      ORDER BY al.object_id,a.due_at ASC NULLS LAST,a.id
     ), facts AS MATERIALIZED (
-      SELECT r.*,
-        (SELECT count(*)::int FROM current_sites s WHERE s.organisation_id=r.id) AS sites,
-        (SELECT count(*)::int FROM ppo.facilities f WHERE f.workspace_id=$1
-          AND f.site_id IN (SELECT id FROM current_sites WHERE organisation_id=r.id) AND ${visibility("Facility", "f")}) AS areas,
-        CASE WHEN ${scopeSql("r.company_id", "NULL::uuid", "crm.opportunity.read")} AND ${scopeSql("r.company_id", "NULL::uuid", "shared.internal.read")}
-          THEN (SELECT count(*)::int FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.organisation_id=r.id AND o.close_outcome='Open' AND ${opportunityVisibility()}) ELSE NULL END AS deals,
-        EXISTS(SELECT 1 FROM permitted d WHERE d.id<>r.id AND position(lower(r.display_name) IN lower(d.display_name))>0) AS possible_duplicate,
-        CASE WHEN ${scopeSql("r.company_id", "NULL::uuid", "activity.read")} THEN 'Available' ELSE 'Restricted' END AS follow_up_state,
+      SELECT r.*,coalesce(s.sites,0) AS sites,coalesce(f.areas,0) AS areas,
+        CASE WHEN ca.deals THEN coalesce(d.deals,0) ELSE NULL END AS deals,
+        EXISTS(SELECT 1 FROM permitted candidate WHERE candidate.id<>r.id AND position(r.matching_name IN candidate.matching_name)>0) AS possible_duplicate,
+        CASE WHEN ca.follow_up THEN 'Available' ELSE 'Restricted' END AS follow_up_state,
         CASE WHEN a.id IS NULL THEN NULL ELSE jsonb_build_object('id',a.id,'summary',a.summary,'due_at',a.due_at,'due_needed',a.due_needed) END AS next_follow_up,
         a.due_at AS follow_up_due
       FROM permitted r
-      LEFT JOIN LATERAL (
-        SELECT a.id,a.summary,a.due_at,a.due_needed FROM ppo.activities a
-        WHERE a.workspace_id=$1 AND a.status NOT IN ('Completed','Cancelled')
-          AND ${scopeSql("r.company_id", "NULL::uuid", "activity.read")}
-          AND EXISTS(SELECT 1 FROM ppo.activity_links al WHERE al.workspace_id=a.workspace_id AND al.activity_id=a.id AND al.object_type='Organisation' AND al.object_id=r.id)
-          AND ${activityVisibility("a", true, true, true)}
-        ORDER BY a.due_at ASC NULLS LAST,a.id LIMIT 1
-      ) a ON true
+      JOIN company_access ca ON ca.company_id=r.company_id
+      LEFT JOIN site_counts s ON s.organisation_id=r.id
+      LEFT JOIN area_counts f ON f.organisation_id=r.id
+      LEFT JOIN deal_counts d ON d.organisation_id=r.id
+      LEFT JOIN next_activities a ON a.organisation_id=r.id
     ), filtered AS MATERIALIZED (
       SELECT * FROM facts WHERE ($3='' OR position(lower($3) IN lower(concat_ws(' ',display_name,display_number,sector,owner_name)))>0)
         AND ($4='' OR status=$4) AND ($5::uuid IS NULL OR owner_id=$5)
@@ -121,7 +144,7 @@ export async function organisationRegister(
       SELECT * FROM ordered WHERE ordinal>coalesce((SELECT ordinal FROM ordered WHERE id=$7::uuid),0) ORDER BY ordinal LIMIT $8
     ) SELECT
       ($7::uuid IS NULL OR EXISTS(SELECT 1 FROM ordered WHERE id=$7::uuid)) AS cursor_found,
-      coalesce((SELECT jsonb_agg(to_jsonb(s)-'ordinal'-'follow_up_due' ORDER BY ordinal) FROM selected s),'[]'::jsonb) AS items,
+      coalesce((SELECT jsonb_agg(to_jsonb(s)-'ordinal'-'follow_up_due'-'matching_name' ORDER BY ordinal) FROM selected s),'[]'::jsonb) AS items,
       (SELECT count(*)::int FROM ordered) AS total,
       (SELECT jsonb_build_object(${Object.entries(views)
         .map(

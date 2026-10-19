@@ -60,7 +60,8 @@ test("SH notification event, explicit read, source guard, grouped state and pref
   if (!isMobile) {
     // First open the shell bell on Customers, before its full workspace is loaded.
     await page.goto("/customers");
-    await expect(page.locator(".crm-directory-table tbody th a").first()).toBeVisible();
+    // CS-01 D1 replaces the legacy directory table with the organisation register.
+    await expect(page.locator(".org-desktop-grid .org-col-name a").first()).toBeVisible();
     const bell = page.getByRole("button", { name: "Notifications", exact: true });
     await bell.click();
     await expect(page.locator(".sh-bell-list a").filter({ hasText: title })).toBeVisible();

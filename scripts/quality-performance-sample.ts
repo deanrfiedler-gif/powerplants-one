@@ -217,8 +217,8 @@ try {
     {
       name: "Customers",
       route: "/customers",
-      // The accepted directory now loads through the CRM directory read.
-      api: "/api/v1/crm/directory",
+      // CS-01 D1 uses the authorised register read for the drawn population.
+      api: "/api/v1/customers/register",
       profile: "coordinator",
     },
     {
