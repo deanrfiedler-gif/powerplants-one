@@ -300,11 +300,12 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
       && url.pathname === `/api/v1/customers/${CRM.org}/workspace`;
   });
   await page.goto(`/customers/${CRM.org}`);
-  await page.getByRole("tab", { name: "Activity & documents", exact: true }).click();
+  await page.getByRole("tab", { name: "Activity", exact: true }).click();
   const projection = await relatedRead;
   expect(projection.ok()).toBe(true);
   expect((await projection.json()).context.id).toBe(CRM.org);
-  const related = page.locator(`a[href="/work/${inputs[0].initial_action.id}"]`);
+  await expect(page.getByRole("tab", { name: "Activity", exact: true })).toHaveAttribute("aria-selected", "true");
+  const related = page.getByRole("tabpanel", { name: "Activity", exact: true }).locator(`a[href="/work/${inputs[0].initial_action.id}"]`);
   await expect(related).toHaveText(inputs[0].initial_action.summary);
   await related.focus();
   await related.evaluate(e => e.scrollIntoView({ block: "end" }));
@@ -399,8 +400,8 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
     // Retry the complete one-heading/title condition before inspecting the shell.
     await expect(page.locator("h1")).toHaveText([new RegExp(title)]);
     await expect(page.locator("h1")).toBeVisible();
-    // On a phone, My Work's header carries its own menu trigger where the brand sits elsewhere (mobile r07).
-    if (info.project.use.isMobile && ["/", "/work"].includes(path)) await expect(page.getByRole("banner").getByRole("button", { name: "My Work menu", exact: true })).toBeVisible();
+    // CS-01 D2 reuses the same phone menu slot as My Work; the existing shell owns this replacement.
+    if (info.project.use.isMobile && ["/", "/work", "/customers"].includes(path)) await expect(page.getByRole("banner").getByRole("button", { name: path === "/customers" ? "Organisations menu" : "My Work menu", exact: true })).toBeVisible();
     else await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
       await page.getByRole("button", { name: "More", exact: true }).click();

@@ -4,17 +4,31 @@ Stable entry: `route:/customers/[id]`. Scope: **CS-01**. Owner: Dean Fiedler.
 Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/customers/[id]`.
 Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
 
+## Current CS-01 implementation — 19 October 2026
+
+[Accepted D1–D7 / Q1–Q4](../../../decisions/organisations-figma-design.md) and [implementation/adaptations](../../../decisions/organisations-figma-implementation.md) govern the current native build. Earlier proposal sections below remain provenance, not the current target. No issued reference or parent requirement ID changes.
+
+Register: authorised one-snapshot rows/counts/owners, signed pagination, Status/owner/search/views in the URL, shared grid on desktop and rows on phones, snapshot and legacy saved-view commands. Open service is Unknown because no combined closure read is established. Organisation row selection never enters the URL. Numeric site/area links retain the exact organisation handover.
+
+Record: shared identity/source/facts layout, seven URL-retained tabs, type and status filters, exact source handovers and sticky phone follow-up. Current site roles are separate from historical relationships. Source limitations, unavailable/partial/denied states and finance restrictions stay explicit. Correct details uses only the existing display-name revision; stale and uncertain writes keep the original operation.
+
+Create: Organisation, Owner and source, Notes, and Check before creating; actual company/owner selectors and duplicate-name read, optional legal name/sector/notes using the existing create command. Notes keep Internal visibility. A Lead selection returns for explicit LC-12 review/save. Other shared-create variants retain their workflows.
+
+Desktop checks: 1440 × 900/1234, 1280 × 900 and 1024 × 900. Phone: 390 × 844 and 320 × 844. Exact source captures 01–10 are listed in [r01](../../../reference/ui/customers/organisations-design-r01/README.md). Additional snapshot, denied, correction and form-recovery states use established shared patterns; no additional accepted image exists for them. [Host state recipes](../organisations-native-fixtures.json) and [native evidence](../../../testing/evidence/organisations-native-r01/README.md) retain the verification limits.
+
+Guides remain Draft. Source presence, local proof, visual review, baseline acceptance and deployment remain separate.
+
 ## Purpose and page type
 
 Bring together the current permitted customer context and exact links into owning workspaces.
 
-r20 page type: **Record detail; Overview / dashboard**. Overview, Deals & quotations, Sales orders, Cases & service, Projects, Sites & equipment, Accounts, Activity & documents.
+r20 page type: **Record detail; Overview / dashboard**. Overview, Sales, Service, Projects, Sites, Accounts and Activity (D3/D5); phone puts Sites fourth (Q4).
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 02–04 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2745`, `1445:381060`, `1449:381169`). The record uses the accepted record layout with a "Sources for this customer" bar (D3), open work by source and owned follow-ups (D4), seven tabs (D5) and a Sales tab with type chips and a Status filter (D6). Create follow-up is the primary action (Q1). Nothing new is built; the native Customer workspace remains the built page.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 02–04 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2745`, `1445:381060`, `1449:381169`). The record uses the accepted record layout with a "Sources for this customer" bar (D3), open work by source and owned follow-ups (D4), seven tabs (D5) and a Sales tab with type chips and a Status filter (D6). Create follow-up is the primary action (Q1). The shared record composition above now implements that design, with its documented source adaptations.
 
-Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
+Use the current native PPO shell with the full-bleed shared record interior and its own content gutters. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 

@@ -65,7 +65,7 @@ test("P11 PT-27/29 shared validation links the actual control and retains entere
     if (route.request().method() !== "POST") return route.continue();
     await route.fulfill({ status: 422, contentType: "application/json", body: JSON.stringify({ message: "Check the highlighted details.", field_errors: [{ field: "display_name", message: "SYN explicit field validation challenge" }], retryable: false }) });
   });
-  await page.getByRole("button", { name: "Save record", exact: true }).focus(); await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "Create organisation", exact: true }).focus(); await page.keyboard.press("Enter");
   const summary = page.getByRole("alert").filter({ hasText: "SYN explicit field validation" });
   await expect(summary).toBeFocused();
   const fieldLink = summary.getByRole("link", { name: /SYN explicit field validation/ });
@@ -77,7 +77,7 @@ test("P11 PT-27/29 shared validation links the actual control and retains entere
   await capture(page, info, "linked-validation-retained");
   await page.unroute("**/api/v1/customers");
   const saved = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/customers" && response.request().method() === "POST");
-  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  await page.getByRole("button", { name: "Create organisation", exact: true }).click();
   expect((await saved).ok()).toBe(true);
   await expect(page.getByRole("heading", { name: "SYN retained proposed organisation", exact: true })).toBeVisible();
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);

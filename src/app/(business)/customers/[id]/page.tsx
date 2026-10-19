@@ -1,3 +1,4 @@
+import "../../../styles/organisations.css";
 import { Suspense } from "react";
 import { CustomerWorkspace } from "../../../../components/customer-workspace";
 export default async function Page({

@@ -671,6 +671,11 @@
           "id": "loading",
           "label": "Loading",
           "description": "First read in progress: no rows, and no result is inferred. Job Pack also verifies independent visit loading, unavailable and recovered counts in its compiled host test."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -701,7 +706,9 @@
         "src/app/styles/job-pack-figma.css",
         "src/documents/components/client/job-pack-register.tsx",
         "src/products/components/catalogue-register.tsx",
-        "src/products/components/catalogue-register.css"
+        "src/products/components/catalogue-register.css",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -720,7 +727,9 @@
         "route:/service/packs",
         "route:/estimating/cpq",
         "route:/estimating/rules",
-        "route:/products"
+        "route:/products",
+        "route:/customers",
+        "route:/customers/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -788,6 +797,14 @@
           "expected": "Corrected flat PPO catalogue with native controls and return navigation.",
           "actual": "PD-01 scoped compact white header; phone rows retain lifecycle/model/variant.",
           "action": "Review Products host evidence at 1440/1024/390/320; owner/device acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1499,6 +1516,11 @@
           "id": "create-leave-guard",
           "label": "Create-form leave guard",
           "description": "F42 / principle 11: useCreateDraft compares a create form's values with those it opened with and registers the shared useUnsavedChanges guard while they differ. Saving releases it before the form opens the new record. Hosts: /customers/new (every record kind outside the lead return, which keeps its command guard), /service/tickets/new, /work/new and /service/work-orders/new. Fixture: tests/browser/navigation-safety.spec.ts."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -1531,7 +1553,9 @@
         "src/components/sales-followup.tsx",
         "src/access/team-creation.tsx",
         "docs/decisions/access-team-creation.md",
-        "src/components/current-location-search.ts"
+        "src/components/current-location-search.ts",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1821,6 +1845,14 @@
           "expected": "Every create form asks before navigation discards typed input.",
           "actual": "Four forms adopt useCreateDraft here; /sales/opportunities/new and the other create routes already guard through their command hooks. /finance/handoffs/new and /estimating/configurations/new remain unguarded, and editing an existing service request keeps its previous behaviour.",
           "action": "Adopt the guard on the remaining create forms in a separate change; owner review of the prompt wording.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2289,6 +2321,11 @@
           "id": "es02-figma-host",
           "label": "ES-02 Figma host",
           "description": "Native Discovery/Alternatives/Revisions with shared draft and full-width comparison; actual host fixtures in estimating-wizard.spec.ts."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -2309,7 +2346,9 @@
         "src/components/crm-state.ts",
         "src/components/projects-screens.tsx",
         "src/components/equipment-forms.tsx",
-        "src/components/equipment-timeline.tsx"
+        "src/components/equipment-timeline.tsx",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2419,6 +2458,14 @@
           "action": "Compare FN-T118 desktop/phone host evidence with the retained Figma captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2457,6 +2504,11 @@
           "id": "es08-figma-host",
           "label": "Screen Configurator Workbench",
           "description": "Existing synthetic ES-08 host uses view-specific secondary contents and shared historical-run overflow actions. tests/browser/specialist-workbench.spec.ts."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -2475,7 +2527,9 @@
         "docs/design/projects-register/figma-measurements.json",
         "docs/decisions/job-pack-figma-implementation.md",
         "docs/testing/evidence/job-pack-figma-ui/README.md",
-        "src/app/styles/job-pack-figma.css"
+        "src/app/styles/job-pack-figma.css",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2493,7 +2547,9 @@
         "scope:SV-05",
         "route:/service/packs",
         "route:/service/packs/[id]",
-        "route:/service/packs/new"
+        "route:/service/packs/new",
+        "route:/customers",
+        "route:/customers/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2529,6 +2585,14 @@
           "expected": "Owner/device comparison against accepted Job Pack Figma frames.",
           "actual": "Actual component fixtures and focused verification; owner/device acceptance not recorded.",
           "action": "Review the implementation evidence and matching Figma frames before recording acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2629,6 +2693,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -2641,7 +2710,9 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2662,7 +2733,11 @@
         "scope:SC-09",
         "scope:SC-10",
         "scope:ES-01",
-        "route:/estimating"
+        "route:/estimating",
+        "scope:CS-01",
+        "route:/customers",
+        "route:/customers/[id]",
+        "route:/customers/new"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
@@ -2682,6 +2757,14 @@
           "expected": "Drawer geometry matches its reference or records an accepted page-specific variant.",
           "actual": "ES-01 reuses WorklistPanel behaviour (modal dialog, Escape, focus return) with page-scoped right-hand geometry, 448 px and full height, below the 1360 px panel width. The CRM drawer is a top sheet.",
           "action": "Compare the ES-01 drawer with the CRM drawer and the ES-01 board R1; accept the page variant or migrate to a shared right-hand drawer.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "drawer-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2793,6 +2876,11 @@
           "id": "ad01-team-access-host",
           "label": "Saved-team current access inspection",
           "description": "tests/browser/access-team-access.spec.ts: exact person handover, timestamped row counts, masked/zero/inactive presentation, refresh preserving draft, stale-read withholding, denial and rapid selection at 1440/390/320 widths. Actual SQL authority/count proofs are separate."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -2824,7 +2912,9 @@
         "docs/decisions/access-team-inspection-current.md",
         "src/app/styles/projects-register.css",
         "src/components/projects-register.tsx",
-        "docs/design/projects-register/figma-measurements.json"
+        "docs/design/projects-register/figma-measurements.json",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2945,7 +3035,9 @@
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
         "route:/admin/access/requests/[id]",
-        "route:/projects"
+        "route:/projects",
+        "scope:CS-01",
+        "route:/customers/new"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3109,6 +3201,14 @@
           "expected": "Requested Figma Projects geometry and accessible desktop/phone interactions.",
           "actual": "Scoped Projects consumer; functional and visual results are recorded in the Projects execution record. Owner/device acceptance remains separate.",
           "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3638,6 +3738,11 @@
           "id": "conversations-top-bar",
           "label": "Conversations action, badge and narrow headers (T1c-2)",
           "description": "D1, D2, D7 (PPO-CONV-T1C-DESIGN 10): a Conversations link left of the Page guide on every page and in the phone header, for viewers who hold conversation.read; current on /conversations; a badge of unread threads (\"9+\" above nine, none at zero) from GET /api/v1/conversations/badge, re-read on focus and after any Conversations command. At 360 px and narrower the phone header keeps 4 px sides and an 18 px title and the Page guide moves into the identity menu; from 781 to 1199 px and on phones the builder's design workspace moves into the identity menu. When the builder is also present above 1200 px, the search width is capped against the remaining header width to keep equal side zones (R9). Fixtures: tests/unit/conversations-badge.test.ts, tests/http/conversations.test.ts (badge), tests/browser/conversations.spec.ts (action and badge, 320 px header), tests/ui/desktop-shell.spec.ts (both rail states, Conversations and builder, 960–1920 px)."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -3728,7 +3833,9 @@
         "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md",
         "src/conversations/events.ts",
         "src/conversations/badge.ts",
-        "src/app/api/v1/conversations/badge/route.ts"
+        "src/app/api/v1/conversations/badge/route.ts",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3777,7 +3884,8 @@
         "scope:SH-02",
         "scope:CS-01",
         "route:/products",
-        "route:/sales/leads"
+        "route:/sales/leads",
+        "route:/customers/[id]"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4021,6 +4129,14 @@
           "expected": "Accepted T1 frames and the top-bar action state (Figma 1177:2196): the Conversations action left of the information icon with a badge on every page and in the phone header, and the 320 and 1024 px departures.",
           "actual": "Built on branch feat/conversations-t1c-2 and measured on the running app at 1440, 1024, 390 and 320 px. The local drawing stands in for the Font Awesome comments glyph wherever the Kit does not load. The action is shown only to viewers with conversation.read, a proposed refinement of \"available to every user\" for Dean's review. Integration #598 reproduced and repaired the R9 search-centre regression with Conversations and the builder at 1280 and 1366 px, expanded rail; the component fixture now exercises both controls together. The shared Figma Shell / Top bar and Shell / Phone header components are not yet changed and the icon-free T1 captures are not made: both wait for Dean's go-ahead. Owner/device review not recorded.",
           "action": "Dean's go-ahead for the Figma lock-in; owner review at 1440, 1024, 390 and 320 px.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -6478,6 +6594,11 @@
           "id": "figma-customer-register",
           "label": "Figma register and exact customer return",
           "description": "Reference-only proposed desktop table/phone cards, all/name-descending/preset-search/due-today states, two exact customers and conditional return. docs/design/development/customer-register-fixtures.json; no runtime behaviour is changed. Shared Leads Grid headers and row/column rules align sixteen table instances; r04 retains current desktop evidence."
+        },
+        {
+          "id": "cs01-native",
+          "label": "CS-01 accepted-design implementation",
+          "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         }
       ],
       "implementation": [
@@ -6488,6 +6609,10 @@
         {
           "path": "src/components/duplicate-candidates.tsx",
           "symbol": "DuplicateCandidates"
+        },
+        {
+          "path": "src/components/organisation-register.tsx",
+          "symbol": "OrganisationRegister"
         }
       ],
       "dependencies": [
@@ -6500,7 +6625,9 @@
         "src/components/customer-workspace.tsx",
         "docs/design/development/customer-register-fixtures.json",
         "docs/reference/ui/customers/customer-360-figma-r03/README.md",
-        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md",
+        "src/app/styles/organisations.css",
+        "docs/design/development/organisations-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
@@ -6518,7 +6645,7 @@
       "desktop": "Retain the existing register table, columns, real links and scoped content; activation loads the chosen destination.",
       "mobile": "Retain existing readable cards and touch activation at 390/320 CSS px.",
       "keyboard": "Real Tab/Shift+Tab and Enter activate ordinary links; existing leave-intent protection remains in force.",
-      "limitations": "Real host with synthetic data; no isolated renderer, hosted speed claim or owner/device acceptance. Shared-shell prefetch is outside this change.",
+      "limitations": "Real host with synthetic data; no isolated renderer, hosted speed claim or owner/device acceptance. Shared-shell prefetch is outside this change. Organisations now uses the dedicated authorised register; CrmDirectory continues to serve People/Contacts. Earlier proposal and timing fixtures remain historical evidence.",
       "gaps": [
         {
           "id": "crm-directory-prefetch-review",
@@ -6541,6 +6668,14 @@
           "expected": "Review the register-to-exact-customer journey in the shared PPO theme, with retained search/filter/sort and scroll context.",
           "actual": "Editable Figma register, two customer profiles and 48 conditional returns are structurally verified. Search is a fixed demonstration; runtime pairing, wider states and owner acceptance remain open. All sixteen table instances use the shared Figma Grid headers; body heights retain source detail.",
           "action": "Review r03 captures and customer-register-fixtures.json, then compare native desktop/phone receiving and Back behaviour before adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "crm-directory-cs01-native-review",
+          "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
+          "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
+          "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -7164,6 +7299,112 @@
           }
         ],
         "note": "Stays on the proposal page until Customer 360 is accepted."
+      },
+      "review": null
+    },
+    {
+      "id": "shared-record",
+      "title": "Shared record composition",
+      "category": "Navigation",
+      "module": "Shared",
+      "purpose": "Compose identity and actions, source states, ruled facts, tabs and a phone follow-up handover without taking domain authority.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "organisation-overview",
+          "label": "Organisation overview",
+          "description": "Real CS-01 host at 1440, 1280, 1024, 390 and 320; identity, current site roles, permitted people and owned source links."
+        },
+        {
+          "id": "sources-restricted",
+          "label": "Restricted and unconnected",
+          "description": "Finance with no counts; MYOB orders and general documents unconnected. Source permission outcomes are not zero."
+        },
+        {
+          "id": "source-unavailable",
+          "label": "Source unavailable",
+          "description": "Induced failure of the real Service source response; other observations are retained and individually dated."
+        },
+        {
+          "id": "sales-filter",
+          "label": "Sales type and status",
+          "description": "URL-retained type/status, exact revisions, unknown open status and no financial total."
+        },
+        {
+          "id": "correction",
+          "label": "Identity correction",
+          "description": "Existing revise-identity command, expected version, retained entries and original-operation recovery; no other correction fields implied."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/ui/shared-record.tsx",
+          "symbol": "SharedRecord"
+        },
+        {
+          "path": "src/components/ui/shared-record.tsx",
+          "symbol": "RecordFactSection"
+        },
+        {
+          "path": "src/components/ui/shared-record.tsx",
+          "symbol": "RecordSourceState"
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/organisations.css",
+        "src/components/customer-workspace.tsx",
+        "src/components/organisation-correction.tsx",
+        "src/shared/customer-360.ts",
+        "docs/design/development/organisations-native-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
+        "anchor": "",
+        "status": "Owner-accepted design D3; native review and acceptance separate"
+      },
+      "specification": "docs/design/development/components/shared-record.md",
+      "used_on": [
+        "scope:CS-01",
+        "route:/customers/[id]"
+      ],
+      "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
+      "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
+      "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance.",
+      "gaps": [
+        {
+          "id": "shared-record-cs01-review",
+          "expected": "Owner review of accepted source and real desktop/phone state pairs.",
+          "actual": "Implementation and local synthetic proof are separate from owner review; see the evidence pairing table.",
+          "action": "Review the retained evidence and explicit data/layout adaptations before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components > Record; accepted Organisations page 1443:2615",
+        "components": [
+          {
+            "node": "224:12",
+            "name": "Record / Field"
+          },
+          {
+            "node": "312:16",
+            "name": "Record / View tab"
+          },
+          {
+            "node": "239:1800",
+            "name": "Record / Readiness bar"
+          },
+          {
+            "node": "239:1799",
+            "name": "Record / Check item"
+          }
+        ],
+        "note": "Catalogue mappings reused without live Figma calls. Header composition comes from accepted CS-01 frame 1443:2745; no new main component or named version is asserted."
       },
       "review": null
     }
