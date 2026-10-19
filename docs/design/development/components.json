@@ -4023,6 +4023,14 @@
           "action": "Dean's go-ahead for the Figma lock-in; owner review at 1440, 1024, 390 and 320 px.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-phone-header-amendment",
+          "expected": "Phone header amendment (decision PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC, Figma page 1530:70, component set 1530:110): one compact 56 px row on phone pages; list pages show menu, view chooser and at most three icons (page action, Conversations, Filter); records show back, position or reference, previous/next and More; page guide, notifications and global search in the menu.",
+          "actual": "Rules adopted in words by Dean on 19 October 2026. The application still renders the global phone header with the page title, search, Conversations, page guide and account. The Figma library component Shell / Phone header (38:282) and the accepted pages are unchanged until the named version is saved; Calendar EC-03 is the first consumer.",
+          "action": "Dean saves the named version; lock-in swaps 38:282 and the accepted pages' headers; then one application pull request changes the shared phone header before the EC pages are built.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -4088,6 +4096,10 @@
           {
             "node": "38:282",
             "name": "Shell / Phone header"
+          },
+          {
+            "node": "1530:110",
+            "name": "Shell / Phone header · compact (proposed, Phone header amendment)"
           },
           {
             "node": "38:342",
