@@ -60,7 +60,7 @@ test("SH notification event, explicit read, source guard, grouped state and pref
   if (!isMobile) {
     // First open the shell bell on Customers, before its full workspace is loaded.
     await page.goto("/customers");
-    await expect(page.locator(".crm-directory-table tbody th a").first()).toBeVisible();
+    await expect(page.locator(".org-col-name a").first()).toBeVisible();
     const bell = page.getByRole("button", { name: "Notifications", exact: true });
     await bell.click();
     await expect(page.locator(".sh-bell-list a").filter({ hasText: title })).toBeVisible();

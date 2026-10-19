@@ -1,7 +1,11 @@
 import { database } from "../platform/database";
 import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
-import { hasPermission, type Capability } from "../platform/permissions";
+import {
+  hasPermission,
+  scopeSql,
+  type Capability,
+} from "../platform/permissions";
 import { opportunityVisibility } from "../crm/context";
 import { estimateContext, quoteContext } from "../estimating/context";
 import { projectRow } from "../projects/service";
@@ -21,6 +25,9 @@ export type CustomerRecordLink = {
   currency?: string | null;
   company_id?: string;
   source_as_at?: string | null;
+  open_state?: "Open" | "Closed";
+  record_kind?: "Estimate" | "Quotation";
+  due_at?: string | null;
 };
 export type CustomerSection = {
   state:
@@ -36,6 +43,19 @@ export type Customer360 = {
     id: string;
     version: number;
     company_id: string;
+    company_name?: string;
+    parent_organisation_id?: string | null;
+    updated_at: string;
+    contacts: {
+      id: string;
+      display_name: string;
+      email: string | null;
+      phone: string | null;
+      role_label: string;
+      valid_from: string;
+      valid_to: string | null;
+      relationship_id: string;
+    }[];
     display_number: string;
     display_name: string;
     legal_name: string | null;
@@ -50,6 +70,8 @@ export type Customer360 = {
       display_number: string;
       location_description: string;
       address: Record<string, string> | null;
+      primary_contact_id: string | null;
+      relationships?: { role: string; is_current: boolean }[];
       facilities: {
         items: {
           id: string;
@@ -88,6 +110,23 @@ export async function customer360(
     p,
     id,
   )) as unknown as Customer360["context"];
+  context.company_name = (
+    await c.query(
+      `SELECT co.display_name FROM ppo.companies co WHERE co.workspace_id=$1 AND co.id=$3 AND ${scopeSql("co.id")}`,
+      [p.workspace_id, p.actor_id, context.company_id],
+    )
+  ).rows[0]?.display_name;
+  // One query over sites already authorised by customerContext; no additional site disclosure.
+  const relationships = (
+    await c.query(
+      "SELECT site_id,role,(valid_from<=CURRENT_TIMESTAMP AND (valid_to IS NULL OR valid_to>CURRENT_TIMESTAMP)) AS is_current FROM ppo.site_parties WHERE workspace_id=$1 AND organisation_id=$2 AND site_id=ANY($3::uuid[]) ORDER BY site_id,valid_from,id",
+      [p.workspace_id, id, context.sites.map((s) => s.id)],
+    )
+  ).rows;
+  for (const site of context.sites)
+    site.relationships = relationships
+      .filter((r) => r.site_id === site.id)
+      .map((r) => ({ role: r.role, is_current: r.is_current }));
   const result = (
     state: CustomerSection["state"],
     owner: string,
@@ -168,6 +207,10 @@ export async function customer360(
           label: `${o.display_number} · ${o.title}`,
           href: `/sales/opportunities/${o.id}`,
           state: `${o.stage_id} · ${o.close_outcome}`,
+          open_state:
+            o.close_outcome === "Open"
+              ? ("Open" as const)
+              : ("Closed" as const),
           detail:
             o.value_amount === null
               ? "Opportunity value unknown"
@@ -196,6 +239,7 @@ export async function customer360(
         label: e.display_number,
         href: `/estimating/estimates/${e.id}`,
         state: e.state,
+        record_kind: "Estimate",
         detail:
           "Saved estimate; Estimating owns its selected basis and changes.",
       }));
@@ -215,6 +259,7 @@ export async function customer360(
             label: `Draft quotation · ${e.display_number}`,
             href: `/estimating/quotes/${q.id}`,
             state: "Draft",
+            record_kind: "Quotation",
             detail: "Exact saved revision; not an issued or accepted order.",
           });
       }
@@ -240,6 +285,9 @@ export async function customer360(
           label: `${t.display_number} · ${t.summary}`,
           href: `/service/tickets/${t.id}`,
           state: t.status,
+          open_state: ["Closed", "Cancelled", "Resolved"].includes(t.status)
+            ? ("Closed" as const)
+            : ("Open" as const),
         })),
         partial: rows.length > 100,
       };
@@ -288,6 +336,8 @@ export async function customer360(
           label: `${r.display_number} · ${r.title}`,
           href: `/projects/${r.id}`,
           state: r.lifecycle ?? "Active",
+          open_state:
+            r.lifecycle === "Closed" ? ("Closed" as const) : ("Open" as const),
         })),
         partial: true,
       };
@@ -341,7 +391,11 @@ export async function customer360(
           label: a.summary,
           href: `/work/${a.id}`,
           state: a.status,
-          detail: `${a.owner_name} · ${a.due_needed ? "Due date needed" : (a.due_at ?? "Date unknown")}`,
+          open_state: ["Completed", "Cancelled"].includes(a.status)
+            ? ("Closed" as const)
+            : ("Open" as const),
+          due_at: a.due_at,
+          detail: `${a.owner_name} · ${a.due_needed ? "Due date needed" : a.due_at ? "Due" : "Date unknown"}`,
         })),
         partial: !!page.next_cursor,
         next_cursor: page.next_cursor,

@@ -4,6 +4,20 @@ Stable entry: `route:/customers/new`. Owner: Dean Fiedler. Status: **Draft for v
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/customers/new`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
+## Current CS-01 implementation — 19 October 2026
+
+[Accepted D1–D7 / Q1–Q4](../../../decisions/organisations-figma-design.md) and [implementation/adaptations](../../../decisions/organisations-figma-implementation.md) govern the current native build. Earlier proposal sections below remain provenance, not the current target. No issued reference or parent requirement ID changes.
+
+Register: authorised one-snapshot rows/counts/owners, signed pagination, Status/owner/search/views in the URL, shared grid on desktop and rows on phones, snapshot and legacy saved-view commands. Open service is Unknown because no combined closure read is established. Organisation row selection never enters the URL. Numeric site/area links retain the exact organisation handover.
+
+Record: shared identity/source/facts layout, seven URL-retained tabs, type and status filters, exact source handovers and sticky phone follow-up. Current site roles are separate from historical relationships. Source limitations, unavailable/partial/denied states and finance restrictions stay explicit. Correct details uses only the existing display-name revision; stale and uncertain writes keep the original operation.
+
+Create: Organisation, Owner and source, Notes, and Check before creating; actual company/owner selectors and duplicate-name read, optional legal name/sector/notes using the existing create command. Notes keep Internal visibility. A Lead selection returns for explicit LC-12 review/save. Other shared-create variants retain their workflows.
+
+Desktop checks: 1440 × 900/1234, 1280 × 900 and 1024 × 900. Phone: 390 × 844 and 320 × 844. Exact source captures 01–10 are listed in [r01](../../../reference/ui/customers/organisations-design-r01/README.md). Additional snapshot, denied, correction and form-recovery states use established shared patterns; no additional accepted image exists for them. [Host state recipes](../organisations-native-fixtures.json) and [native evidence](../../../testing/evidence/organisations-native-r01/README.md) retain the verification limits.
+
+Guides remain Draft. Source presence, local proof, visual review, baseline acceptance and deployment remain separate.
+
 ## Purpose and task
 
 An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
@@ -15,7 +29,7 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with capture 05 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1445:381483`). The form follows the accepted Facilities create form (D7): Organisation, Owner and source, and Notes, with a "Check before creating" column that lists similar names in permitted companies and offers "Use this record". The check is a prompt, never a block, and nothing is merged automatically. Nothing new is built; the shared create form remains the built page.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with capture 05 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1445:381483`). The form follows the accepted Facilities create form (D7): Organisation, Owner and source, and Notes, with a "Check before creating" column that lists similar names in permitted companies and offers "Use this record". The check is a prompt, never a block, and nothing is merged automatically. The organisation variant now implements that composition; other shared-create variants retain their existing layouts.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
