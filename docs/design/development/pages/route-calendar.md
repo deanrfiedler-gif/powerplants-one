@@ -40,7 +40,7 @@ Icon-free Figma captures: [Calendar design r01](../../../reference/ui/sales/cale
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [Calendar design r01 captures](../../../reference/ui/sales/calendar-design-r01/README.md) (eighteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/calendar-figma-design.md). All-day items, recurring-series detail, Month view, phone Week and Team views, a tablet Day panel, the meeting Link records panel and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
+Accepted Figma design: [Calendar design r01 captures](../../../reference/ui/sales/calendar-design-r01/README.md) (eighteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/calendar-figma-design.md). All-day items, recurring-series detail, Month view, phone Week and Team views, a tablet Day panel, the meeting Link records panel and 200% zoom are not drawn. The named Figma version "Calendar — accepted" was saved on 19 October 2026.
 
 The draft User Guide `guide.page.calendar` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

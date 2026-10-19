@@ -17,7 +17,7 @@ Claude drew the page from these sources:
 - the [Email & Calendar integration design](../blueprints/email-calendar-integration.md): EC-S06 Calendar, section 7 (connection states) and section 8 (calendar ownership);
 - copies of accepted or concurrent designs: the Emails · EC-01 desktop and tablet shell, the Service planner PL-01 toolbar, the My Work phone activity row, and the EC-01 phone sheets.
 
-Dean then asked for an audit: "Carry out an audit and polish to ensure the pages look as professional as possible." With Pipedrive mobile calendar screenshots he added that the phone views should have fewer boxes, buttons and features at the top, even without the main top bar, and asked for Claude's opinion. Asked about Q5, he said: "I am happy for you to proceed based on your professional recommendations." That adopted the compact phone header for every phone page, recorded separately as the Phone header amendment (`docs/decisions/phone-header-amendment.md`, draft PR #606). He then asked Claude to play the prototype on his computer: "Did you want to take control of my computer and play the prototype for the EC-03 Calendar module in Figma to ensure all the UI pages are correct?" (section 6). Finally he accepted the design: "I accept the Calendar EC-03 design with your recommendations, including D1–D8 and Q1–Q5." That adopts D1–D8 and the recommended answers to Q1–Q5.
+Dean then asked for an audit: "Carry out an audit and polish to ensure the pages look as professional as possible." With Pipedrive mobile calendar screenshots he added that the phone views should have fewer boxes, buttons and features at the top, even without the main top bar, and asked for Claude's opinion. Asked about Q5, he said: "I am happy for you to proceed based on your professional recommendations." That adopted the compact phone header for every phone page, recorded separately as the Phone header amendment (`docs/decisions/phone-header-amendment.md`, draft PR #606). He then asked Claude to play the prototype on his computer: "Did you want to take control of my computer and play the prototype for the EC-03 Calendar module in Figma to ensure all the UI pages are correct?" (section 6). Finally he accepted the design: "I accept the Calendar EC-03 design with your recommendations, including D1–D8 and Q1–Q5." That adopts D1–D8 and the recommended answers to Q1–Q5. Dean then asked for the named version: "Yes, save the named Figma version "Calendar — accepted"." Claude saved it in the Figma desktop app (section 6).
 
 Scope:
 - `scope:EC-03` "Calendar and activity coordination", with `route:/calendar`.
@@ -39,7 +39,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 "Needs a next step" | Resolved as recommended | Counts meetings linked to an open deal or lead that ended with no later PPO activity on that record; nothing else |
 | Q5 The global header on phone module pages | Resolved as recommended | Decided once for every phone page as the Phone header amendment |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
-| Named Figma version | Not yet | "Calendar — accepted" waits for Dean's explicit yes |
+| Named Figma version | User decision, 19 October 2026 | Saved as "Calendar — accepted" at Dean's request quoted above. Section 6 |
 | Building the page | Not decided | Section 7 |
 
 ## 2. Design reference
@@ -72,7 +72,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 19 October 2026 |
 | Decision record | This file |
-| Named version | "Calendar — accepted", to be saved on Dean's yes |
+| Named version | "Calendar — accepted", saved 19 October 2026 |
 
 ## 4. What the design shows
 
@@ -116,6 +116,7 @@ The audit is recorded on the notes card `1516:404634`.
   - none of 1,348 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and the two flow starting points the copies brought were removed from the Captures page.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/sales/calendar-design-r01/README.md).
+- The named Figma version "Calendar — accepted" was saved on 19 October 2026 in the Figma desktop app (Ctrl+Alt+S, title typed, Save) at Dean's request. Claude confirmed it at the top of version history, opened from the file-name menu, and then updated the page header and notes card.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
 
 ## 7. Not decided and not drawn
