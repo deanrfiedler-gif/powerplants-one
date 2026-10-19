@@ -609,8 +609,25 @@
       "guide_key": "guide.cs.08",
       "design_path": "docs/design/development/pages/scope-cs-08.md",
       "html_path": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-02-Desktop-Survey-Scope-Full-Length-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-03-Desktop-Observations-Full-Length-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-04-Desktop-Photos-And-Evidence-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-05-Desktop-Follow-Up-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-06-Desktop-Review-Submission-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-07-Desktop-Record-Handover-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-08-Desktop-New-Survey-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-09-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-10-Phone-List-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-11-Phone-Survey-Scope-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-12-Phone-320-Survey-Scope-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-13-Phone-Record-Observation-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-14-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/site-surveys-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -10655,10 +10672,22 @@
       "guide_key": "guide.route-surveys-id",
       "design_path": "docs/design/development/pages/route-surveys-id.md",
       "html_path": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-02-Desktop-Survey-Scope-Full-Length-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-03-Desktop-Observations-Full-Length-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-04-Desktop-Photos-And-Evidence-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-05-Desktop-Follow-Up-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-06-Desktop-Review-Submission-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-07-Desktop-Record-Handover-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-11-Phone-Survey-Scope-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-12-Phone-320-Survey-Scope-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-13-Phone-Record-Observation-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-14-Phone-States-r01.png"
+      ],
       "dependencies": [
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/site-surveys-figma-design.md"
       ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
@@ -10691,8 +10720,16 @@
       "guide_key": "guide.route-surveys",
       "design_path": "docs/design/development/pages/route-surveys.md",
       "html_path": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-01-Desktop-Register-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-08-Desktop-New-Survey-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-09-Tablet-Register-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-10-Phone-List-r01.png",
+        "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-14-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/site-surveys-figma-design.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",

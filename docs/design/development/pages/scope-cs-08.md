@@ -12,11 +12,15 @@ r20 page type: **Register / worklist; Document & evidence workspace**. Survey re
 
 ## Desktop
 
+Accepted design: the [Site surveys design decision](../../../decisions/site-surveys-figma-design.md) of 19 October 2026 covers the register (`/surveys`), the survey record (`/surveys/[id]`) with its review and handover forms, and New survey, with fourteen icon-free captures in [design r01](../../../reference/ui/customers/site-surveys-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with status views, a record with a checks bar and six tabs, an observations table with kind chips, photo tiles shown by their file facts, Review submission and Record reviewed handover forms, and New survey with scope chips that add an equipment's installed area. Nothing new is built; the native pages below remain the built pages.
+
 Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
 ## Mobile
+
+Accepted design: captures 10–14 in [design r01](../../../reference/ui/customers/site-surveys-design-r01/README.md): the surveys list, Survey scope at 390 and 320, recording an observation in a successor draft, and four phone states, including a scope source that changed since submission.
 
 Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
@@ -29,5 +33,7 @@ Incoming: exact canonical customer/Site/Person and permitted source records. Out
 Reference: docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html
 
 ## Verification and acceptance
+
+Accepted Figma design: [Site surveys design r01 captures](../../../reference/ui/customers/site-surveys-design-r01/README.md) (fourteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/site-surveys-figma-design.md). The History tab at full size, the Return with clarification form, desktop draft editing, a Returned record, a view-only state, the photo upload dialog, a tablet record and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
 
 The detailed page guide is `guide.cs.08`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
