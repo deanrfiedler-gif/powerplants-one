@@ -1,4 +1,5 @@
 import { test, expect, type Page, type Locator, type Request } from "@playwright/test";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 import { writeFile } from "node:fs/promises";
 import { keyActivate } from "../helpers/quality-keyboard";
 import { waitForSampleCoreResponse } from "../../scripts/quality-core-response";
@@ -90,7 +91,8 @@ test("directory record links avoid automatic reads and keep exact receiving navi
   await directory(page, "/customers");
   for (const [label, path] of [["People", "/people"], ["Sites", "/sites"]]) {
     await directory(page, "/customers");
-    if(isMobile) await page.getByRole("button",{name:"Organisations menu",exact:true}).click();
+    // On a phone the Organisations menu opens from the header's view chooser (phone header amendment P2).
+    if(isMobile) await openSecondaryMenu(page);
     const link = page.getByRole("navigation", { name: "Shared records", exact: true }).getByRole("link", { name: label, exact: true });
     await activate(page, link, isMobile, !isMobile);
     await expect(page).toHaveURL(new URL(path, page.url()).href);
