@@ -1,3 +1,4 @@
+import "../../../styles/organisations.css";
 import { SharedCreateForm } from "../../../../components/shared-create-form";
 export default async function Page({
   searchParams,

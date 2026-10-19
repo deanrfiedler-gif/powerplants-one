@@ -1,5 +1,7 @@
+import "../../styles/organisations.css";
 import "../../styles/customers.css";
-import { CrmDirectory } from "../../../components/crm-directory";
+import { Suspense } from "react";
+import { OrganisationRegister } from "../../../components/organisation-register";
 export default function Page() {
-  return <CrmDirectory key="customers" kind="organisations" />;
+  return <Suspense fallback={<p>Loading organisations…</p>}><OrganisationRegister /></Suspense>;
 }

@@ -16,7 +16,7 @@ The [document register](../document-register.csv) is read together with every `.
 
 ## Changing a row
 
-Correct a row where it lives. Rows that were in `document-register.csv` on 19 October 2026 stay there and may still be edited there; a status change to one of them is a narrow edit to that line. The shared file may lose rows but not gain them: `check_naming.py` fails if it holds more than the 730 rows it had when this folder began.
+Correct a row where it lives. Rows that were in `document-register.csv` on 19 October 2026 stay there and may still be edited there; a status change to one of them is a narrow edit to that line. The shared file may lose rows but not gain them: `check_naming.py` fails if it holds more than the 731 rows it had when this folder began.
 
 ## Finding a document
 

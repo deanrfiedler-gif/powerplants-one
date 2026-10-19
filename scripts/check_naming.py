@@ -17,7 +17,7 @@ REGISTER = 'docs/standards/document-register.csv'
 # every design pull request appended at the same place and conflicted with the others
 # (docs/decisions/merge-conflict-reduction.md, section 5). Existing rows stay and may be corrected.
 REGISTER_ENTRIES = 'docs/standards/document-register-entries'
-REGISTER_ROWS_FROZEN = 730
+REGISTER_ROWS_FROZEN = 731
 ENTRY_NAME = re.compile(r'^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*\.csv$')
 
 

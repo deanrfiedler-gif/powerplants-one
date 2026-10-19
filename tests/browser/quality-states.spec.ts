@@ -249,7 +249,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     {
       id: "SC-02",
       url: "/customers",
-      api: "crm/directory",
+      api: "customers/register",
       profile: "coordinator",
       list: true,
     },
@@ -559,12 +559,15 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           route.fulfill({
             status: 200,
             contentType: "application/json",
-            body: JSON.stringify({ ...original, items: [], total: 0, next_cursor: null }),
+            body: JSON.stringify({ ...original, items: [], total: 0, next_cursor: null,
+              ...(s.id === "SC-02" ? { counts: Object.fromEntries(Object.keys(original.counts).map(key => [key, 0])) } : {}) }),
           }),
         );
         await page.reload({ waitUntil: "domcontentloaded" });
         await expect(screenLoading).toHaveCount(0);
-        const emptyResult = page.getByText(/No (permitted|current assigned|Finance handoffs)/).first();
+        const emptyResult = s.id === "SC-02"
+          ? page.getByText("No matching organisations", { exact: true }).filter({ visible: true })
+          : page.getByText(/No (permitted|current assigned|Finance handoffs)/).first();
         await expect(emptyResult).toBeVisible();
         // Capture the empty result itself, not only a tall filter panel above it.
         await emptyResult.scrollIntoViewIfNeeded();
