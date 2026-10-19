@@ -43,12 +43,12 @@ export async function assertJobPackHost(page: Page) {
       .querySelector(".ppo-shell-header")!
       .getBoundingClientRect();
     // A phone row (780 px and below) flattens the utilities group into the header (display: contents), so its own
-    // box is empty: check the visible controls it holds and the Menu button instead (phone header amendment P1).
+    // box is empty: check the visible controls it holds and the row's lead control (Menu, or Back on a record) instead (phone header amendment P1, P3).
     const group = document.querySelector(".ppo-header-utilities")!;
     const utilityBoxes =
       getComputedStyle(group).display === "contents"
-        ? [...group.querySelectorAll("a, button"), document.querySelector("#shell-phone-menu")!]
-            .filter((control) => control.getClientRects().length > 0)
+        ? [...group.querySelectorAll("a, button"), document.querySelector(".ppo-phone-lead")]
+            .filter((control): control is Element => !!control && control.getClientRects().length > 0)
             .map((control) => control.getBoundingClientRect())
         : [group.getBoundingClientRect()];
     return {

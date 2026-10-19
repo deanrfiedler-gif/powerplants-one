@@ -99,7 +99,26 @@ export function PhoneHeaderTitle({ model }: { model: PhoneHeaderModel }) {
   if (model.type === "record") {
     // P3, P7: the position ("1 of 3 to send") or the record reference; a reference never truncates.
     const position = model.config?.record?.position;
-    return <span className={`ppo-phone-title ppo-phone-reference${position ? " ppo-phone-position" : ""}`}>{position ?? model.reference}</span>;
+    const label = position ?? model.reference;
+    // A record page that has its own views (Job pack sections, for one) keeps the Choose view sheet: the reference is the
+    // chooser, with its chevron, so the sheet the old header toggle opened is still reachable (P2, P5).
+    const choose = model.config?.chooseView;
+    return choose ? (
+      <button
+        type="button"
+        className={`ppo-phone-title ppo-view-chooser ppo-phone-reference${position ? " ppo-phone-position" : ""}`}
+        aria-label={`Choose view. Current record: ${label}`}
+        aria-haspopup="dialog"
+        aria-expanded={choose.expanded}
+        aria-controls={choose.controls}
+        onClick={(event) => choose.open(event.currentTarget)}
+      >
+        <span className="ppo-phone-title-text">{label}</span>
+        <ShellIcon name="down" />
+      </button>
+    ) : (
+      <span className={`ppo-phone-title ppo-phone-reference${position ? " ppo-phone-position" : ""}`}>{label}</span>
+    );
   }
   const choose = model.config?.chooseView;
   const count = model.count ? <span className="ppo-phone-count">{model.count}</span> : null;

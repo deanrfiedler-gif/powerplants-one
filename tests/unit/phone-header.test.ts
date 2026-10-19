@@ -58,6 +58,14 @@ test("P3 a record page leads with Back to its list and shows its reference, whic
   assert.equal(position, '<span class="ppo-phone-title ppo-phone-reference ppo-phone-position">1 of 3 to send</span>');
 });
 
+test("P2 P5 a record page with views keeps its Choose view sheet: the reference becomes the chooser", () => {
+  const chooseView = { open: noop, expanded: false, controls: "ppo-job-pack-menu" };
+  const markup = html(createElement(PhoneHeaderTitle, { model: record({ chooseView }) }));
+  assert.match(markup, /<button type="button" class="ppo-phone-title ppo-view-chooser ppo-phone-reference" aria-label="Choose view\. Current record: SYN-DEAL-0042"/);
+  assert.match(markup, /aria-controls="ppo-job-pack-menu"/);
+  assert.match(markup, /<span class="ppo-phone-title-text">SYN-DEAL-0042<\/span>/);
+});
+
 test("P2 P5 a list page may add one page action before Conversations and Filter after it, with a dot when a filter is applied", () => {
   const config = {
     pageAction: { label: "Search", icon: "search" as const, onSelect: noop },
