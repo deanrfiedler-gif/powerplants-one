@@ -27,6 +27,11 @@ md_out = root / "tmp/ui-build-sequence.md"
 EXCLUDED_MODULES = {"Development": "Development tooling, not a business page"}
 # The shared systems already exist and carry every page, so they are verified with the baseline.
 SYSTEM_PHASE = "00"
+# SD-06: an owner scope decision that brings an issued conditional scope forward. The register keeps the issued
+# build_rank; the sequence places the entry straight after its anchor scope, and entries placed with it follow.
+OWNER_PLACEMENTS = {
+    "scope:CX-02": ("scope:SC-04", "PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D3"),
+}
 STATES = {
     "build": "To build",
     "refine": "To refine",
@@ -79,7 +84,11 @@ def build() -> dict:
     by_key = {e["key"]: e for e in entries}
     issued_after = {"scope:" + s["key"].removeprefix("scope:"): s["build"]["after"] for s in issued["scopes"]}
 
-    placed, excluded = {}, []
+    def rank_of(key: str) -> int | None:
+        return by_key[OWNER_PLACEMENTS[key][0]]["build_rank"] if key in OWNER_PLACEMENTS else by_key.get(key, {}).get("build_rank")
+
+    order = {e["key"]: i for i, e in enumerate(entries)}
+    placed, excluded, after = {}, [], {}
     for e in entries:
         if e["module"] in EXCLUDED_MODULES:
             excluded.append({"key": e["key"], "title": e["title"], "reason": EXCLUDED_MODULES[e["module"]]})
@@ -87,13 +96,21 @@ def build() -> dict:
         if e["kind"] == "system":
             placed[e["key"]] = (SYSTEM_PHASE, None, "Shared system: verified with the existing baseline")
             continue
+        if e["key"] in OWNER_PLACEMENTS:
+            anchor, source = OWNER_PLACEMENTS[e["key"]]
+            rank = rank_of(e["key"])
+            placed[e["key"]] = (phase_of_rank[rank], rank, f"Owner decision {source}: after {anchor.removeprefix('scope:')}; issued r02 rank {e['build_rank']}")
+            after[e["key"]] = (1, order[e["key"]])
+            continue
         if e.get("build_rank") is not None:
             placed[e["key"]] = (phase_of_rank[e["build_rank"]], e["build_rank"], "Issued r02 rank")
             continue
-        primary = next((k for k in e.get("related_keys") or [] if k.startswith("scope:") and by_key.get(k, {}).get("build_rank")), None)
+        primary = next((k for k in e.get("related_keys") or [] if k.startswith("scope:") and rank_of(k)), None)
         assert primary, f"{e['key']} has no rank and no ranked related scope"
-        rank = by_key[primary]["build_rank"]
+        rank = rank_of(primary)
         placed[e["key"]] = (phase_of_rank[rank], rank, f"Added after r05; placed with {primary.removeprefix('scope:')}")
+        if primary in OWNER_PLACEMENTS:
+            after[e["key"]] = (1, order[e["key"]])
 
     unplaced = [e["key"] for e in entries if e["key"] not in placed and e["key"] not in {x["key"] for x in excluded}]
     assert not unplaced, f"Unplaced entries: {unplaced}"
@@ -109,17 +126,17 @@ def build() -> dict:
                     "path": e.get("path") or "", "rank": rank, "state": state(e["scope_status"]),
                     "visual_review": "Owner review recorded" if e.get("reviewed_at") else "Pending", "placement": basis,
                 })
-        rows.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 0, r["kind"] != "scope", r["key"]))
+        rows.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 0, after.get(r["key"], (0, 0)), r["kind"] != "scope", r["key"]))
         counts = {k: sum(1 for r in rows if r["state"] == k) for k in STATES}
-        after = set()
+        prior = set()
         for r in rows:
             for dep in issued_after.get(r["key"], []):
                 dep_phase = placed.get("scope:" + dep, (None,))[0]
                 if dep_phase and dep_phase < p["id"]:
-                    after.add(dep_phase)
+                    prior.add(dep_phase)
         out_phases.append({
             "id": p["id"], "title": p["title"], "reason": p["reason"], "ranks": [p["start"], p["end"]],
-            "depends_on": sorted(after), "counts": counts,
+            "depends_on": sorted(prior), "counts": counts,
             "scopes": sum(1 for r in rows if r["kind"] == "scope"), "routes": sum(1 for r in rows if r["kind"] == "route"),
             "systems": sum(1 for r in rows if r["kind"] == "system"), "entries": rows,
         })
@@ -137,8 +154,8 @@ def build() -> dict:
         "title": "Powerplants One UI build and review sequence",
         "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
         "sources": {
-            "register": str(register_path.relative_to(root)), "register_sha256": sha(register_path),
-            "build_plan": str(plan_path.relative_to(root)), "build_plan_revision": plan["revision"], "build_plan_sha256": sha(plan_path),
+            "register": register_path.relative_to(root).as_posix(), "register_sha256": sha(register_path),
+            "build_plan": plan_path.relative_to(root).as_posix(), "build_plan_revision": plan["revision"], "build_plan_sha256": sha(plan_path),
             "build_plan_basis": plan["basis"],
         },
         "states": STATES,

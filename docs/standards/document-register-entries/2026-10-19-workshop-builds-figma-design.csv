@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CX02-WORKSHOP-BUILDS-FIGMA-DEC,Workshop builds design (Figma) owner decision,docs/decisions/workshop-builds-figma-design.md,,Owner-accepted design; workshop data model and native implementation separate,Dean Fiedler,47e47361f3bc9f321795117d357a8053d923cfb9,,,git,
+PPO-CX02-WORKSHOP-BUILDS-FIGMA-R01,Workshop builds design retained captures,docs/reference/ui/supply-chain/workshop-builds-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,47e47361f3bc9f321795117d357a8053d923cfb9,,,retained-record,

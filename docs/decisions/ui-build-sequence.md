@@ -47,6 +47,10 @@ The r02 phase order and every issued rank are kept. Five rules are added on top.
 | SD-04 | Walk one synthetic job, from customer to management report (15 steps), after each phase as far as the built pages reach. Re-check SH-01 home and SH-02 My Work after phase 08. | Phase order is not journey order. The walk shows handover gaps that page-by-page review misses; the 8 October direction asks for exactly these connected journey walks. Home aggregates later phases, so its content is only judgeable once they exist. r02 asked to "recheck affected flows after every later phase"; this makes the check concrete. |
 | SD-05 | A phase is complete when every placed entry has an owner visual review recorded in the register and every to-refine entry has a recorded outcome. Functional proof and deployment stay separate statuses. | Gives each phase a finish line that is visible in the register, without folding review into implementation evidence. |
 
+### Owner scope placement (19 October 2026)
+
+**SD-06.** When Dean confirms a phase 11 conditional scope, an owner placement in `scripts/build-ui-sequence.py` places it straight after a named anchor scope. Entries placed with it under SD-01 follow it. The register keeps the issued `build_rank`, and each row's placement names the decision and the issued rank. This applies decision WS-D3 of the [workshop scope decision](workshop-settings-preferences-scope.md); Dean did not review the mechanism separately. Its one use so far puts `scope:CX-02` (Workshop builds), `scope:CX-02/kitting` and `scope:CX-02/bench-testing` in phase 05 after SC-04 (issued r02 rank 146). r02 had listed both EN-08 and SC-04 as predecessors for CX-02. WS-D3 names only SC-04, so the workshop now comes before EN-08 (rank 94).
+
 ## Phase 00 first
 
 The first review phase is the existing baseline. It contains:
