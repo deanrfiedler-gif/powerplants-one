@@ -493,11 +493,23 @@ export function ProductHeader() {
     shell = useShell();
   const wide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
   const phoneConfig = usePhoneHeaderConfig();
-  // P4: a dot on the phone menu shows unread notifications. Read only on phones, where the bell has moved into the menu.
-  const inbox = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(!wide && shell.context ? "notifications" : null);
+  // P4: a dot on the phone menu shows unread notifications, read on phones only (the bell has moved into the menu). The
+  // inbox read is not cheap (it projects notices and reads each source activity), so it is not made on every page load:
+  // it waits until the shell has been up for ten seconds or the menu is first opened, and is not repeated on focus.
+  const [noticesArmed, setNoticesArmed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
-    const state = (event: Event) => setMenuOpen(!!(event as CustomEvent<boolean>).detail);
+    if (wide || !shell.context || noticesArmed) return;
+    const timer = setTimeout(() => setNoticesArmed(true), 10000);
+    return () => clearTimeout(timer);
+  }, [wide, shell.context, noticesArmed]);
+  const inbox = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(noticesArmed && !wide && shell.context ? "notifications" : null, false);
+  useEffect(() => {
+    const state = (event: Event) => {
+      const open = !!(event as CustomEvent<boolean>).detail;
+      setMenuOpen(open);
+      if (open) setNoticesArmed(true);
+    };
     window.addEventListener(phoneMenuStateEvent, state);
     return () => window.removeEventListener(phoneMenuStateEvent, state);
   }, []);
