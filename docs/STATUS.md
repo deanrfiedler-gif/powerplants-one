@@ -138,6 +138,12 @@ The final integration includes #604 through `7975492b` and main through `47e4736
 
 On the combined tree, the retained ten-reader database regression passed (one test, 38.7 seconds), and TypeScript checking passed. The integrated runtime, performance sampler and browser tests are byte-identical to the Linux load-validated `0ec66b99` tree.
 
+## Open PR integration and verification — 19 October 2026
+
+Dean requested review, repair and merging of the open Powerplants One pull requests. Codex is integrating #606, #609, #610, #615, #616, #617, #619 and #621 in a dedicated worktree, preserving their original commits and resolving shared documentation conflicts. The integration includes the compact phone header and the accepted design records, with #619's separate register/index entry files. Full combined validation remains pending. Design acceptance, source presence, application verification and deployment remain separate; no deployment or external business transaction is part of this work.
+
+Conversations T2b #620 remains a draft implementation claim: its remote changes contain a migration reservation and plan, not the assistant implementation. It is excluded from this integration.
+
 ## Open PR integration repairs Conversations and builder header fit — 19 October 2026
 
 [PR #598](https://github.com/deanrfiedler-gif/powerplants-one/pull/598) found and repaired an R9 header regression when the new Conversations action and the existing development workspace are both visible with an expanded rail. The search now reserves equal side space at laptop widths. The component fixture and regression case cover both rail states and the builder boundary; shared component and shell masters record the change without granting visual approval. [Evidence](testing/evidence/pr-backlog-integration/README.md) records the failed CI assertion, unchanged-main comparison and the separate existing 800 px expanded-rail limitation. Full combined CI remains the merge gate.
