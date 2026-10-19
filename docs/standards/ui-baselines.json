@@ -303,19 +303,34 @@
       "adaptations": "docs/delivery/facilities-growing-areas-handover.md"
     },
     {
+      "id": "cs01-organisations-register",
+      "route": "/customers",
+      "scope": "#ppo-organisations",
+      "layout": "full-bleed",
+      "scroll_owner": "#ppo-organisations .mw-content; .org-desktop-grid horizontal overflow",
+      "design": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-01-Desktop-Register-r01.png",
+      "sha256": "39e4dbff895dd765afef5a5def427e8a429f803b0fda30e88cdf2c5fe862f30d",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/organisations-native.spec.ts",
+      "application_proof": "tests/browser/organisations-native.spec.ts",
+      "authority": "Owner-accepted CS-01 D1-D7/Q1-Q4 source; native implementation and adaptations pending owner visual/device review. This is a host contract, not a newly accepted application baseline.",
+      "adaptations": "docs/decisions/organisations-figma-implementation.md"
+    },
+    {
       "id": "cs01-native-r01",
       "route": "/customers/[id]",
       "scope": "#ppo-customer-360",
-      "layout": "padded",
-      "scroll_owner": "#main",
-      "design": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-      "sha256": "ce8b117f5b62615389111c59e479f606c8c50b7b3c218cde5e5d86cd14edeab8",
+      "layout": "full-bleed",
+      "scroll_owner": "#ppo-customer-360",
+      "design": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
+      "sha256": "643c7521b574f9cc025b96b8bbb97c2e900f4f4e60de563fe094f61e37f11145",
       "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
       "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
-      "component_proof": "tests/browser/customer-location.spec.ts",
+      "component_proof": "tests/browser/organisations-native.spec.ts",
       "application_proof": "tests/browser/customer-location.spec.ts",
-      "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
-      "adaptations": "docs/delivery/cs-native-completion-handover.md"
+      "authority": "Stable CS-01 host identity retained. Owner-accepted D3-D7/Q1-Q4 source; native implementation and adaptations pending owner visual/device review. Historical receiving evidence remains in cs-native-completion-handover.md; no new accepted application baseline.",
+      "adaptations": "docs/decisions/organisations-figma-implementation.md"
     },
     {
       "id": "cs02-native-r01",

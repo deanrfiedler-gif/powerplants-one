@@ -52,7 +52,7 @@ test("LC-11 a site discovered after lead follow-up keeps source obligations thro
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
+    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL!).origin },
     data: body,
   });
   expect(r.ok(), await r.text()).toBe(true);
@@ -129,7 +129,8 @@ test("LC-12 creates a customer, dated contact affiliation and site then returns 
     if(route.request().method()!=="POST") return route.continue();
     creates++;const response=await route.fetch();expect(response.ok(),await response.text()).toBe(true);await route.abort("failed");
   });
-  await page.getByRole("button",{name:"Save record",exact:true}).click();
+  // CS-01 D7 names the organisation command; later contact/site commands retain their labels.
+  await page.getByRole("button",{name:"Create organisation",exact:true}).click();
   await page.getByRole("button",{name:"Confirm original save",exact:true}).click();
   expect(creates).toBe(1);
   await expect(page.getByRole("heading",{name:"Resolve customer context",exact:true})).toBeVisible();

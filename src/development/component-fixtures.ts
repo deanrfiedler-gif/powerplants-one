@@ -38,13 +38,12 @@ export const equipmentDateFixture = {
 };
 export const customerRecordTabsFixture = [
   { id: "overview", label: "Overview" },
-  { id: "deals", label: "Deals & quotations" },
-  { id: "orders", label: "Sales orders" },
-  { id: "service", label: "Cases & service" },
+  { id: "sales", label: "Sales" },
+  { id: "service", label: "Service" },
   { id: "projects", label: "Projects" },
-  { id: "sites", label: "Sites & equipment" },
+  { id: "sites", label: "Sites" },
   { id: "accounts", label: "Accounts" },
-  { id: "activity", label: "Activity & documents" },
+  { id: "activity", label: "Activity" },
 ];
 export const fixtureId = (n: number) =>
   `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
