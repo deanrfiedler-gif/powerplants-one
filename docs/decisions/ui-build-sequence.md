@@ -18,7 +18,7 @@ Dean's request did not need a new inventory or a new order:
 - **Inventory:** the live design register (`docs/design/development/register.json`) holds every page and scope: 350 entries, made up of 196 routes, 150 scopes and 4 shared systems. It also records each entry's build, visual-review and functional-proof status.
 - **Order:** the r05 App Page Register issued build plan r02 on 23 September 2026. It is a dependency-led sequence of 12 phases (00 to 11) with an explicit predecessor list for each of the 150 scopes. Its rank 1 is SH-01, the role-based home overview. r02 describes itself as "not an approved schedule or an estimate of effort".
 
-A second, hand-made list would drift from both. The sequence is therefore **derived**: `scripts/build-ui-sequence.py` reads the register and the issued plan, then writes [the generated sequence](../design/development/ui-build-sequence.md) and its JSON data. The `--check` mode fails if either output is stale. No `build_rank`, scope ID or issued byte is changed.
+A second, hand-made list would drift from both. The sequence is therefore **derived**: `scripts/build-ui-sequence.py` reads the register and the issued plan, then writes the sequence and its JSON data to `tmp/` (since 19 October 2026 they are no longer committed; see [the pointer page](../design/development/ui-build-sequence.md) and [merge-conflict-reduction.md](merge-conflict-reduction.md#5-design-pull-requests-no-longer-share-generated-or-appended-files)). The `--check` mode derives the sequence and fails if an entry cannot be placed. No `build_rank`, scope ID or issued byte is changed.
 
 ## Today's position (generated at this commit)
 
@@ -46,6 +46,10 @@ The r02 phase order and every issued rank are kept. Five rules are added on top.
 | SD-03 | Two tracks run in phase order. The **review track** covers built and to-refine entries and starts at phase 00. The **build track** covers unbuilt entries and starts at phase 01 (AD-01 first). Within a phase, review and refinement come before new builds. | Review is the constraint. Refinements to templates and shared controls should land before new pages copy them. The tracks are independent queues, so a review never waits on a build. |
 | SD-04 | Walk one synthetic job, from customer to management report (15 steps), after each phase as far as the built pages reach. Re-check SH-01 home and SH-02 My Work after phase 08. | Phase order is not journey order. The walk shows handover gaps that page-by-page review misses; the 8 October direction asks for exactly these connected journey walks. Home aggregates later phases, so its content is only judgeable once they exist. r02 asked to "recheck affected flows after every later phase"; this makes the check concrete. |
 | SD-05 | A phase is complete when every placed entry has an owner visual review recorded in the register and every to-refine entry has a recorded outcome. Functional proof and deployment stay separate statuses. | Gives each phase a finish line that is visible in the register, without folding review into implementation evidence. |
+
+### Owner scope placement (19 October 2026)
+
+**SD-06.** When Dean confirms a phase 11 conditional scope, an owner placement in `scripts/build-ui-sequence.py` places it straight after a named anchor scope. Entries placed with it under SD-01 follow it. The register keeps the issued `build_rank`, and each row's placement names the decision and the issued rank. This applies decision WS-D3 of the [workshop scope decision](workshop-settings-preferences-scope.md); Dean did not review the mechanism separately. Its one use so far puts `scope:CX-02` (Workshop builds), `scope:CX-02/kitting` and `scope:CX-02/bench-testing` in phase 05 after SC-04 (issued r02 rank 146). r02 had listed both EN-08 and SC-04 as predecessors for CX-02. WS-D3 names only SC-04, so the workshop now comes before EN-08 (rank 94).
 
 ## Phase 00 first
 

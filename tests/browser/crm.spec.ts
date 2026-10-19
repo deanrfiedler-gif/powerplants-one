@@ -4,6 +4,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { CRM, crmCreate, crmBase, crmAction } from "../helpers/crm";
+import { openAccountPanel } from "../helpers/phone-menu";
 async function pick(page: Page, label: string, id: string) {
   await page.getByRole("combobox", {name:label,exact:true}).click();
   await page.locator(`[role="option"][data-record-id="${id}"]`).click();
@@ -14,7 +15,7 @@ test.use({ actionTimeout: 15000 });
 async function identity(page: Page, profile = "coordinator") {
   // The initial session read is asynchronous; use the same bounded budget as identity controls.
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
@@ -354,11 +355,21 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page.setViewportSize({ width: 320, height: 844 });
   await waitForCompactSearch(page);
   await noOverflow(page);
-  await page.getByLabel("Search deals", { exact: true }).focus();
+  // Phone header amendment: the retained deal search is a second row of the header. Its keyboard order is Menu,
+  // Conversations, then the search; the account trigger left the phone row (it opens from Menu), so Tab leaves
+  // the header for the page.
+  const dealSearch = page.getByLabel("Search deals", { exact: true });
+  await dealSearch.focus();
+  await page.keyboard.press("Shift+Tab");
+  await expect(page.getByRole("banner").getByRole("link", { name: /^Conversations/ })).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(page.locator("#shell-phone-menu")).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dealSearch).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dealSearch).not.toBeFocused();
+  expect(await page.evaluate(() => { const a = document.activeElement; return !!a && a !== document.body && !a.closest(".header-account") && getComputedStyle(a).visibility === "visible"; })).toBe(true);
   const filterToggle = page.getByRole("button", {
     name: "Filters and sort",
     exact: true,

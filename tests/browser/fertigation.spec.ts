@@ -26,6 +26,7 @@ import {
   blankMaster,
   blankValve,
 } from "../../src/estimating/fertigation/definition";
+import { identityToggle, openAccountPanel, phoneWidth } from "../helpers/phone-menu";
 
 test.use({ actionTimeout: 15000 });
 test.setTimeout(90000);
@@ -52,9 +53,12 @@ async function login(page: Page, route = "/estimating/discovery") {
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeVisible();
+  // On a phone the trigger is mounted but hidden (the Menu button opens its panel), so wait for it to be enabled.
+  if (phoneWidth(page)) await expect(identityToggle(page)).toBeEnabled();
+  else
+    await expect(
+      page.getByRole("button", { name: "Change identity", exact: true }),
+    ).toBeVisible();
 }
 async function savedDiscovery(page: Page, visit = true) {
   await login(page);
@@ -288,9 +292,7 @@ test("FN-T61/77/78 native Discovery to saved valve and clean-context exact revis
   await page.screenshot({
     path: info.outputPath(`native-valves-${page.viewportSize()!.width}.png`),
   });
-  await page
-    .getByRole("button", { name: "Change identity", exact: true })
-    .click();
+  await openAccountPanel(page);
   await page.getByRole("button", { name: "Sign out", exact: true }).click();
   await expect(page.locator("#ppo-fertigation")).toHaveCount(0);
   const clean = await browser.newContext({

@@ -4,7 +4,12 @@
 The phases, their order and every ranked entry come from the r02 build plan issued inside the r05
 App Page Register. The live working master supplies today's entries and statuses. Entries added
 after r05 are placed by their primary related scope, so every register entry lands in exactly one
-phase or in the stated exclusions. Run with --check to confirm the committed outputs are current.
+phase or in the stated exclusions.
+
+The outputs are not committed: every register change altered them, so every design pull request
+conflicted with every other one (docs/decisions/merge-conflict-reduction.md, open decision 4).
+Run the script to write them under tmp/ (ignored by Git). --check derives the sequence and writes
+nothing; scripts/check_foundation.py runs it, so an entry that cannot be placed still fails CI.
 """
 from pathlib import Path
 import hashlib
@@ -15,13 +20,18 @@ import sys
 root = Path(__file__).resolve().parents[1]
 register_path = root / "docs/design/development/register.json"
 plan_path = root / "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html"
-json_out = root / "docs/design/development/ui-build-sequence.json"
-md_out = root / "docs/design/development/ui-build-sequence.md"
+json_out = root / "tmp/ui-build-sequence.json"
+md_out = root / "tmp/ui-build-sequence.md"
 
 # Development tooling is not a business page; it stays outside the business sequence.
 EXCLUDED_MODULES = {"Development": "Development tooling, not a business page"}
 # The shared systems already exist and carry every page, so they are verified with the baseline.
 SYSTEM_PHASE = "00"
+# SD-06: an owner scope decision that brings an issued conditional scope forward. The register keeps the issued
+# build_rank; the sequence places the entry straight after its anchor scope, and entries placed with it follow.
+OWNER_PLACEMENTS = {
+    "scope:CX-02": ("scope:SC-04", "PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D3"),
+}
 STATES = {
     "build": "To build",
     "refine": "To refine",
@@ -74,7 +84,11 @@ def build() -> dict:
     by_key = {e["key"]: e for e in entries}
     issued_after = {"scope:" + s["key"].removeprefix("scope:"): s["build"]["after"] for s in issued["scopes"]}
 
-    placed, excluded = {}, []
+    def rank_of(key: str) -> int | None:
+        return by_key[OWNER_PLACEMENTS[key][0]]["build_rank"] if key in OWNER_PLACEMENTS else by_key.get(key, {}).get("build_rank")
+
+    order = {e["key"]: i for i, e in enumerate(entries)}
+    placed, excluded, after = {}, [], {}
     for e in entries:
         if e["module"] in EXCLUDED_MODULES:
             excluded.append({"key": e["key"], "title": e["title"], "reason": EXCLUDED_MODULES[e["module"]]})
@@ -82,13 +96,21 @@ def build() -> dict:
         if e["kind"] == "system":
             placed[e["key"]] = (SYSTEM_PHASE, None, "Shared system: verified with the existing baseline")
             continue
+        if e["key"] in OWNER_PLACEMENTS:
+            anchor, source = OWNER_PLACEMENTS[e["key"]]
+            rank = rank_of(e["key"])
+            placed[e["key"]] = (phase_of_rank[rank], rank, f"Owner decision {source}: after {anchor.removeprefix('scope:')}; issued r02 rank {e['build_rank']}")
+            after[e["key"]] = (1, order[e["key"]])
+            continue
         if e.get("build_rank") is not None:
             placed[e["key"]] = (phase_of_rank[e["build_rank"]], e["build_rank"], "Issued r02 rank")
             continue
-        primary = next((k for k in e.get("related_keys") or [] if k.startswith("scope:") and by_key.get(k, {}).get("build_rank")), None)
+        primary = next((k for k in e.get("related_keys") or [] if k.startswith("scope:") and rank_of(k)), None)
         assert primary, f"{e['key']} has no rank and no ranked related scope"
-        rank = by_key[primary]["build_rank"]
+        rank = rank_of(primary)
         placed[e["key"]] = (phase_of_rank[rank], rank, f"Added after r05; placed with {primary.removeprefix('scope:')}")
+        if primary in OWNER_PLACEMENTS:
+            after[e["key"]] = (1, order[e["key"]])
 
     unplaced = [e["key"] for e in entries if e["key"] not in placed and e["key"] not in {x["key"] for x in excluded}]
     assert not unplaced, f"Unplaced entries: {unplaced}"
@@ -104,17 +126,17 @@ def build() -> dict:
                     "path": e.get("path") or "", "rank": rank, "state": state(e["scope_status"]),
                     "visual_review": "Owner review recorded" if e.get("reviewed_at") else "Pending", "placement": basis,
                 })
-        rows.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 0, r["kind"] != "scope", r["key"]))
+        rows.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 0, after.get(r["key"], (0, 0)), r["kind"] != "scope", r["key"]))
         counts = {k: sum(1 for r in rows if r["state"] == k) for k in STATES}
-        after = set()
+        prior = set()
         for r in rows:
             for dep in issued_after.get(r["key"], []):
                 dep_phase = placed.get("scope:" + dep, (None,))[0]
                 if dep_phase and dep_phase < p["id"]:
-                    after.add(dep_phase)
+                    prior.add(dep_phase)
         out_phases.append({
             "id": p["id"], "title": p["title"], "reason": p["reason"], "ranks": [p["start"], p["end"]],
-            "depends_on": sorted(after), "counts": counts,
+            "depends_on": sorted(prior), "counts": counts,
             "scopes": sum(1 for r in rows if r["kind"] == "scope"), "routes": sum(1 for r in rows if r["kind"] == "route"),
             "systems": sum(1 for r in rows if r["kind"] == "system"), "entries": rows,
         })
@@ -132,8 +154,8 @@ def build() -> dict:
         "title": "Powerplants One UI build and review sequence",
         "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
         "sources": {
-            "register": str(register_path.relative_to(root)), "register_sha256": sha(register_path),
-            "build_plan": str(plan_path.relative_to(root)), "build_plan_revision": plan["revision"], "build_plan_sha256": sha(plan_path),
+            "register": register_path.relative_to(root).as_posix(), "register_sha256": sha(register_path),
+            "build_plan": plan_path.relative_to(root).as_posix(), "build_plan_revision": plan["revision"], "build_plan_sha256": sha(plan_path),
             "build_plan_basis": plan["basis"],
         },
         "states": STATES,
@@ -160,7 +182,7 @@ def markdown(data: dict) -> str:
         "<!-- Generated by scripts/build-ui-sequence.py from the register and the issued r02 build plan. Do not edit by hand. -->",
         "",
         f"Status: **{data['status']}**. The proposal and its departures from r02 are in",
-        "[the decision record](../../decisions/ui-build-sequence.md).",
+        "[the decision record](../docs/decisions/ui-build-sequence.md).",
         "",
         f"- Register: `{s['register']}` (SHA-256 `{s['register_sha256'][:16]}…`).",
         f"- Phases and ranks: build plan {s['build_plan_revision']} in `{s['build_plan']}` (SHA-256 `{s['build_plan_sha256'][:16]}…`). {s['build_plan_basis']}",
@@ -185,15 +207,16 @@ def markdown(data: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-data = build()
-text_json = json.dumps(data, indent=1, ensure_ascii=False) + "\n"
-text_md = markdown(data)
-if "--check" in sys.argv:
-    stale = [str(p.relative_to(root)) for p, t in ((json_out, text_json), (md_out, text_md)) if not p.exists() or p.read_text(encoding="utf-8") != t]
-    if stale:
-        sys.exit("Stale UI build sequence: " + ", ".join(stale) + ". Run python3 scripts/build-ui-sequence.py.")
-    print("UI build sequence current:", data["totals"])
-else:
-    json_out.write_text(text_json, encoding="utf-8", newline="\n")
-    md_out.write_text(text_md, encoding="utf-8", newline="\n")
+def main() -> None:
+    data = build()
+    if "--check" in sys.argv:
+        print("UI build sequence derives:", data["totals"])
+        return
+    md_out.parent.mkdir(exist_ok=True)
+    json_out.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    md_out.write_text(markdown(data), encoding="utf-8", newline="\n")
     print("Wrote", json_out.relative_to(root), "and", md_out.relative_to(root), data["totals"], data["cursors"])
+
+
+if __name__ == "__main__":
+    main()

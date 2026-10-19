@@ -3,6 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { createCostingWorkspace, costingScopeSuccessor } from "../helpers/estimating-costing-api";
+import { openAccountPanel } from "../helpers/phone-menu";
 test.describe.configure({timeout:240000});
 test.use({actionTimeout:15000});
 async function call(page:Page,path:string,body?:unknown) {
@@ -21,7 +22,7 @@ async function reviewScopeForCosting(page:Page) {
 test("E2 browser explicitly adopts exact discovery into manual costs, reconciles an uncertain create and retains old scope through a successor",async({page},info)=>{
   await page.goto("/estimating/discovery");
   await expect(page.getByRole("region",{name:"Local demonstration identity",exact:true})).toHaveAttribute("aria-busy","false");
-  if(!(await page.getByLabel("Identity",{exact:true}).isVisible()))await page.getByRole("button",{name:"Change identity",exact:true}).click();
+  if(!(await page.getByLabel("Identity",{exact:true}).isVisible()))await openAccountPanel(page);
   await page.getByLabel("Identity",{exact:true}).selectOption("coordinator");await page.getByRole("button",{name:"Use this identity",exact:true}).click();
   await expect(page.getByRole("region",{name:"Local demonstration identity",exact:true})).toHaveAttribute("aria-busy","false");
   const api=(path:string,body?:unknown)=>call(page,path,body),s=await createCostingWorkspace(api),title=`SYN Discovery cost ${randomUUID()}`;

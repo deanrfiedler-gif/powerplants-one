@@ -246,6 +246,21 @@ def check_merge_markers():
     return scanned
 
 
+# Rows and dated paragraphs in docs/reference/ui/README.md on 19 October 2026. New designs go in design-entries/.
+UI_INDEX = 'docs/reference/ui/README.md'
+UI_INDEX_ROWS = 200
+UI_INDEX_NOTES = 56
+
+
+def check_ui_index_frozen():
+    """The HTML design index may be corrected but not extended; new designs add a file in design-entries/."""
+    lines = (ROOT / UI_INDEX).read_text(encoding='utf-8').splitlines()
+    rows_now = sum(1 for line in lines if line.startswith('| '))
+    notes_now = sum(1 for line in lines if re.match(r'\*\*.*20\d\d', line))
+    if rows_now > UI_INDEX_ROWS or notes_now > UI_INDEX_NOTES:
+        problem(f'{UI_INDEX} gained table rows or dated notes ({rows_now} rows, {notes_now} notes; limits {UI_INDEX_ROWS}, {UI_INDEX_NOTES}); add the design as a file in docs/reference/ui/design-entries/ instead')
+
+
 def check_conflict_controls():
     """STATUS.md and the decisions index must match docs/status/; migration numbers must be unique.
 
@@ -258,6 +273,11 @@ def check_conflict_controls():
         problem(message)
     for message in check_migrations.check_tree():
         problem(message)
+    check_ui_index_frozen()
+    # The UI build sequence is no longer committed; deriving it still proves every register entry places.
+    derived = subprocess.run([sys.executable, str(ROOT / 'scripts/build-ui-sequence.py'), '--check'], cwd=ROOT, capture_output=True, text=True)
+    if derived.returncode:
+        problem('UI build sequence does not derive from the register: ' + (derived.stderr.strip().splitlines() or ['no output'])[-1])
     return len(build_status.load_fragments())
 
 

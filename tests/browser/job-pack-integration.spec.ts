@@ -6,6 +6,7 @@ import {
   assertJobPackHost,
   jobPackViewports,
 } from "../helpers/job-pack-design";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 async function session(page: Page) {
   expect(
     (
@@ -61,8 +62,7 @@ test("SV05 Figma register uses the compiled shell and shared controls with scope
   const attention = page.getByRole("button", {
     name: /^Readiness not satisfied/,
   });
-  if (!(await attention.isVisible()))
-    await page.locator(".ppo-menu-toggle").click();
+  if (!(await attention.isVisible())) await openSecondaryMenu(page);
   await expect(page.getByRole("button", { name: /^Prepared by me/ })).toHaveCSS(
     "color",
     "rgb(36, 42, 55)",

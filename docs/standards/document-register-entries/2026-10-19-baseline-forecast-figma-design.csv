@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PJ03-BASELINE-FORECAST-FIGMA-DEC,Baseline forecast and dependency review design (Figma) owner decision,docs/decisions/baseline-forecast-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,9dad9aa5d205844412681c07b86e93e6daefd78d,,,git,
+PPO-PJ03-BASELINE-FORECAST-FIGMA-R01,Baseline forecast and dependency review design retained captures,docs/reference/ui/projects/baseline-forecast-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,9dad9aa5d205844412681c07b86e93e6daefd78d,,,retained-record,

@@ -1,3 +1,4 @@
+import { identityToggle } from "../tests/helpers/phone-menu";
 import assert from "node:assert/strict";
 import { chromium, expect, type Page, type BrowserContext } from "@playwright/test";
 import { spawn, execFileSync } from "node:child_process";
@@ -34,7 +35,7 @@ const recordVisits: unknown[] = [];
 const source = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 async function settled(page: Page) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
   await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, { timeout: 120000 });
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));

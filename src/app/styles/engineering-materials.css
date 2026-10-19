@@ -233,7 +233,7 @@
  #ppo-materials .em-tabs button{flex:1 0 auto;min-height:44px}
  #ppo-materials .em-search{flex:1 1 100%}
  #ppo-materials .em-toolbar>.mw-spacer{display:none}
- #ppo-materials .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
+ #ppo-materials .em-inspector{position:fixed;z-index:40;inset:56px 0 0 0;width:auto;border-left:0}
  #ppo-materials .em-attention{padding:8px 12px;flex-wrap:wrap}
  #ppo-materials .em-pair{grid-template-columns:120px minmax(0,1fr)}
 }

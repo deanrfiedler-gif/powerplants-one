@@ -32,6 +32,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted PJ-03 design, 19 October 2026: capture 09 in [Baseline, forecast and dependency review design r01](../../../reference/ui/projects/baseline-forecast-design-r01/README.md) shows each active project against its latest baseline in calendar days ([decision](../../../decisions/baseline-forecast-figma-design.md)).
 - [ppo-projects-gantt-content-r10.html](../../../reference/ui/projects/ppo-projects-gantt-content-r10.html)
 
 ## Behaviour, handovers and verification

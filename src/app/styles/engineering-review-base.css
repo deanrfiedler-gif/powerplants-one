@@ -204,7 +204,7 @@
  :is(#ppo-changes,#ppo-commissioning) .em-tabs button{flex:1 0 auto;min-height:44px}
  :is(#ppo-changes,#ppo-commissioning) .em-search{flex:1 1 100%}
  :is(#ppo-changes,#ppo-commissioning) .em-toolbar>.mw-spacer{display:none}
- :is(#ppo-changes,#ppo-commissioning) .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
+ :is(#ppo-changes,#ppo-commissioning) .em-inspector{position:fixed;z-index:40;inset:56px 0 0 0;width:auto;border-left:0}
  :is(#ppo-changes,#ppo-commissioning) .em-states{grid-template-columns:minmax(0,1fr)}
  :is(#ppo-changes,#ppo-commissioning) .em-states>div+div{border-left:0;border-top:1px solid var(--line)}
  :is(#ppo-changes,#ppo-commissioning) .em-states>div{padding:12px 16px}

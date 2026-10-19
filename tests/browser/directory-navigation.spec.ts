@@ -1,6 +1,7 @@
 import { test, expect, type Page, type Locator, type Request } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { keyActivate } from "../helpers/quality-keyboard";
+import { identityToggle } from "../helpers/phone-menu";
 import { waitForSampleCoreResponse } from "../../scripts/quality-core-response";
 
 test.describe.configure({ timeout: 180000 });
@@ -20,6 +21,9 @@ async function directory(page: Page, path: "/customers" | "/people") {
   const data = await response.json();
   if(path === "/people") expect(new URL(response.url()).searchParams.get("kind")).toBe("people");
   await expect(page.getByRole("heading", { name: path === "/customers" ? "Organisations" : "People", exact: true })).toBeVisible();
+  // Performance diagnostics share this readiness check; the phone trigger stays mounted behind Menu.
+  await expect(identityToggle(page)).toBeEnabled();
+  if (test.info().project.use.isMobile) await expect(identityToggle(page)).toBeHidden();
   await expect(page.locator(path === "/customers" ? ".org-col-name a" : ".crm-directory-table tbody th a").first()).toBeAttached();
   return data as { items: { id: string; display_name: string }[] };
 }
@@ -90,7 +94,12 @@ test("directory record links avoid automatic reads and keep exact receiving navi
   await directory(page, "/customers");
   for (const [label, path] of [["People", "/people"], ["Sites", "/sites"]]) {
     await directory(page, "/customers");
-    if(isMobile) await page.getByRole("button",{name:"Organisations menu",exact:true}).click();
+    if (isMobile) {
+      const chooser = page.getByRole("banner").getByRole("button", { name: "Choose view. Current view: Organisations", exact: true });
+      await chooser.tap();
+      await expect(chooser).toHaveAttribute("aria-expanded", "true");
+      await expect(page.getByRole("dialog", { name: "Organisations menu", exact: true })).toBeVisible();
+    }
     const link = page.getByRole("navigation", { name: "Shared records", exact: true }).getByRole("link", { name: label, exact: true });
     await activate(page, link, isMobile, !isMobile);
     await expect(page).toHaveURL(new URL(path, page.url()).href);

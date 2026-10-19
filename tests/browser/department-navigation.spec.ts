@@ -245,10 +245,15 @@ test("phone and 200 percent equivalent reflow keep the established navigation", 
   await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   const headerBounds = await page.locator(".ppo-shell-header").boundingBox();
-  for (const name of ["Open global search", "Page guide"]) {
-    const bounds = await page.getByRole("button", { name, exact: true }).boundingBox();
+  // Phone header amendment: the row keeps the Menu button and Conversations; search and the Page guide are in the Menu.
+  const row = page.locator(".ppo-shell-header");
+  for (const control of [row.getByRole("button", { name: /^Menu(,|$)/ }), row.getByRole("link", { name: /^Conversations/ })]) {
+    const bounds = await control.boundingBox();
+    expect(bounds!.y).toBeGreaterThanOrEqual(headerBounds!.y);
     expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(headerBounds!.y + headerBounds!.height);
   }
+  await expect(row.getByRole("button", { name: "Page guide", exact: true })).toBeHidden();
+  await expect(row.getByRole("button", { name: "Open global search", exact: true })).toHaveCount(0);
   await capture(page, "reflow-200-percent-equivalent");
 });
 test("restricted and empty access omit links; server guards still refuse account access", async ({ page }) => {

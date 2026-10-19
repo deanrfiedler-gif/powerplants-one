@@ -33358,7 +33358,7 @@
       "title": "Workshop assembly, testing and rework",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Conditional proposal",
+      "content_mode": "Confirmed scope; proposed page",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
@@ -33371,9 +33371,9 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Workshop assembly, testing and rework to work towards this outcome: A bounded workshop proposal with clear system ownership.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Do not introduce a competing manufacturing authority without a separate scope decision."
+            "Use Workshop builds to plan, record and release each workshop build: fertigation dosing units, control panels and other assemblies built for a project.",
+            "This is a proposed task guide for a confirmed scope (PPO-WORKSHOP-SETTINGS-SCOPE-DEC, 19 October 2026). Steps describe intended operation, not proof of available controls; no page is built yet.",
+            "Powerplants One holds the operational build record. MYOB Acumatica stays the book of record for items, stock, purchasing and financial reporting."
           ],
           "steps": [],
           "rows": [],
@@ -33384,7 +33384,7 @@
           "title": "Before you start",
           "paragraphs": [
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Assembly scope, materials, test criteria, rework and ERP boundary.",
+            "Prepare: the project or job, the released materials, the work instructions and the test criteria for the build.",
             "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
           ],
           "steps": [],
@@ -33399,7 +33399,7 @@
             "Choose the correct local or hosted environment and confirm your identity.",
             "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
             "Check the current scope, required information and outstanding decisions.",
-            "Confirm whether the workshop capability is required",
+            "Open the build for the project or job, or create one from its released materials.",
             "Check the saved result or explicit pending/error state before leaving the workflow."
           ],
           "rows": [],
@@ -33413,7 +33413,7 @@
           "rows": [
             [
               "Page context",
-              "Workshop assembly, testing and rework · Pages"
+              "Workshop builds · register and build record"
             ],
             [
               "Application links",
@@ -33441,7 +33441,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Assembly scope, materials, test criteria, rework and ERP boundary.",
+            "Project or job, released materials, work instructions, test criteria, rework and serial numbers.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
             "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
           ],
@@ -33456,9 +33456,10 @@
             "Proposed workflow: confirm the implemented subset before using these steps."
           ],
           "steps": [
-            "Confirm whether the workshop capability is required",
-            "Define traceable assembly and testing records",
-            "Review rework and receiving responsibilities"
+            "Check the parts list taken from the released materials and book out the materials used",
+            "Work through the steps and work instructions, recording each test result",
+            "Record any rework, and confirm a welder's qualification and weld inspection where welding is involved",
+            "Release the finished unit with its serial number"
           ],
           "rows": [],
           "headers": []
@@ -33467,9 +33468,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A bounded workshop proposal with clear system ownership.",
+            "A released build with its serial number, test results and materials booked out.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Do not introduce a competing manufacturing authority without a separate scope decision."
+            "Stock movements and costs go to MYOB Acumatica, which keeps stock valuation and financial reporting."
           ],
           "steps": [],
           "rows": [],
@@ -33515,8 +33516,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare assembly scope, materials, test criteria, rework and erp boundary. Follow the task sequence and check that a bounded workshop proposal with clear system ownership. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Workshop assembly, testing and rework has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Do not introduce a competing manufacturing authority without a separate scope decision."
+            "Synthetic normal case — Northbank Nursery: build a fertigation dosing unit from the project's released materials, record each test and release it with its serial number.",
+            "Synthetic exception — a test fails. Record the failed result and the rework, then retest; release the unit only after the retest passes."
           ],
           "steps": [],
           "rows": [],
@@ -33614,6 +33615,143 @@
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
+    },
+    {
+      "guide_key": "guide.cx.02.kitting",
+      "entry_key": "scope:CX-02/kitting",
+      "title": "Kitting and controller preparation",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Confirmed scope; proposed page",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-10-19",
+      "source_commit": "47e47361f3bc9f321795117d357a8053d923cfb9",
+      "related_entry_keys": [
+        "scope:CX-02",
+        "scope:CX-02/bench-testing",
+        "scope:SC-05",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Use this page to kit parts for a project or job, pre-configure each controller and record the configuration loaded.",
+            "This is a proposed task guide for a confirmed scope (PPO-WORKSHOP-SETTINGS-SCOPE-DEC, 19 October 2026). No page is built yet; steps describe intended operation, not available controls."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Proposed workflow: confirm the implemented subset before using these steps."
+          ],
+          "steps": [
+            "Choose the project or job and the parts to kit",
+            "Record the parts kitted and anything short",
+            "Pre-configure each controller and record the configuration loaded"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A kit ready for the build or job, and each controller's configuration on record.",
+            "MYOB Acumatica stays the book of record for items, stock, purchasing and financial reporting."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "The register holds a planned destination. Review the design and dependencies; do not treat the link as a working feature."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.cx.02.bench-testing",
+      "entry_key": "scope:CX-02/bench-testing",
+      "title": "Bench testing and returned units",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Confirmed scope; proposed page",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-10-19",
+      "source_commit": "47e47361f3bc9f321795117d357a8053d923cfb9",
+      "related_entry_keys": [
+        "scope:CX-02",
+        "scope:CX-02/kitting",
+        "scope:MA-06",
+        "scope:SC-08",
+        "scope:EQ-09"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Use this page to receive a returned unit, bench-test it, repair or reject it, and record the outcome.",
+            "This is a proposed task guide for a confirmed scope (PPO-WORKSHOP-SETTINGS-SCOPE-DEC, 19 October 2026). No page is built yet; steps describe intended operation, not available controls."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Proposed workflow: confirm the implemented subset before using these steps."
+          ],
+          "steps": [
+            "Receive the returned unit against its serial number and customer",
+            "Bench-test it and record the results",
+            "Repair or reject it, and record the outcome"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A recorded outcome for the returned unit: repaired, or rejected with the reason.",
+            "MYOB Acumatica stays the book of record for items, stock, purchasing and financial reporting."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "The register holds a planned destination. Review the design and dependencies; do not treat the link as a working feature."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
     },
     {
       "guide_key": "guide.cx.03",

@@ -9,6 +9,7 @@ import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, startInput, png, draft } from "../helpers/field";
 import { operation } from "../helpers/offline";
+import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
@@ -30,13 +31,13 @@ async function call(page: Page, path: string, body?: unknown) {
 }
 async function identity(page: Page, profile: string) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await openAccountPanel(page);
 
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
 }
 async function proof(

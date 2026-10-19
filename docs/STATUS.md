@@ -9,6 +9,24 @@ Dean decided which pages join the Figma design list after the remaining build-se
 
 Not done: no page is drawn, and no route, code, migration, permission or MYOB integration changes. The design register still records `scope:CX-02` as conditional; the pull request that draws the first workshop page reclassifies it and regenerates the UI build sequence.
 
+## Workshop CX-02 reclassified in the design register — 19 October 2026
+
+The follow-up in the [workshop scope decision](decisions/workshop-settings-preferences-scope.md) is done. The design register now records `scope:CX-02` as unbuilt, as the Workshop builds page. Two new entries, `scope:CX-02/kitting` (Kitting and controller preparation) and `scope:CX-02/bench-testing` (Bench testing and returned units), carry the other two workshop pages, each with a draft guide and page contract. The regenerated [UI build sequence](design/development/ui-build-sequence.md) places all three in phase 05 after SC-04, through new owner placement rule SD-06. The issued r02 rank 146 is kept in the register. Phase 11 now holds five conditional scopes.
+
+Not done: no workshop page is drawn in Figma, and no route, code, permission or MYOB integration exists. The two new routes (`/workshop/kitting`, `/workshop/bench-testing`) are proposals.
+
+## Workshop builds CX-02 design accepted — 19 October 2026
+
+Dean accepted the Figma design for the first workshop page, Workshop builds (CX-02, `/workshop`, proposed), after adopting the recommended answers to its six questions, an audit and polish, and both prototype flows played in Present mode: "I accept the Workshop builds CX-02 design with your recommendations, including D1–D8 and Q1–Q6. Lock it in." The [design decision](decisions/workshop-builds-figma-design.md) (PPO-CX02-WORKSHOP-BUILDS-FIGMA-DEC) records departures D1–D8 and the answers: a Workshop item in the Supply chain rail, a build register, a record with build checks and six tabs, a read-only parts list from released materials with booking out, steps with the welder's qualification and weld inspection, tests and rework, release by the workshop lead (never the builder) with a SYN-SN-26nnnn serial, and hand-over for dispatch. PPO sends only material issues and finished units to MYOB Acumatica, which stays the book of record. Sixteen icon-free captures with hashes are retained in [workshop-builds-design-r01](reference/ui/supply-chain/workshop-builds-design-r01/README.md), and the `scope:CX-02` design register page cites them. In Figma the File index has a Supply chain row for the page, the capture copies are on the Captures page at y = 312,000, and the parts moved to Components.
+
+Checked: no Font Awesome instance and no prototype link left in the capture copies. The named Figma version "Workshop builds — accepted" was saved at Dean's "Yes, save the named Figma version "Workshop builds — accepted"." Not done: nothing is built; Kitting & controllers and Bench testing & returns are not drawn; serial tracking in MYOB is to be confirmed with the MYOB partner. No application code, route, migration, permission or parent ID changes.
+
+## Stakeholder updates PJ-08 design accepted — 19 October 2026
+
+Dean accepted the Figma design for PJ-08, stakeholder update preparation and publication at the proposed `/projects/updates`, after three audits and a run of all eight prototype flows in Present mode: "I accept the Stakeholder updates PJ-08 design with your recommendations, including D1–D8 and Q1–Q6. Lock it in." The [design decision](decisions/stakeholder-updates-figma-design.md) (PPO-PJ08-STAKEHOLDER-UPDATES-FIGMA-DEC) records departures D1–D8 and answers Q1–Q6: a Customer updates group in the Projects side menu, numbered updates with revisions that never change, drafts written from the project's sources with typed dates read only, Prepare to send handing the exact revision to Customer messages as an M4 message, approval by someone other than the drafter beside the sources, a successor for any correction, and per-project cadence and recipients. Nineteen icon-free captures with hashes are retained in [stakeholder-updates-design-r01](reference/ui/projects/stakeholder-updates-design-r01/README.md). The design register page for `scope:PJ-08` cites the frames and captures. In Figma the File index has a Stakeholder updates row after PJ-05, and the capture copies sit on the Captures page at y = 300,000.
+
+Checked: no Font Awesome instance is left in the capture copies (537 swapped), and no copy carries a prototype link or flow start. The named Figma version "Stakeholder updates — accepted" is saved, on Dean's yes. Not done: the page is not built, and every prerequisite is a stage S6 gap in the customer communications decision. No application code, route, migration, permission or parent ID changes.
+
 ## Site surveys CS-08 design accepted — 19 October 2026
 
 Dean accepted the Figma design for CS-08, the site survey and as-found brief (`/surveys` and `/surveys/[id]`), after an audit and polish: "I accept the Site surveys CS-08 design with your recommendations, including D1–D7 and Q1–Q4." The [design decision](decisions/site-surveys-figma-design.md) (PPO-CS08-SITE-SURVEYS-FIGMA-DEC) records departures D1–D7 and answers Q1–Q4: the reference `SYN-PPO-SRV-000nnn`, planned visit and contact on site as recorded fields, no review by the survey owner or recorder, and a changed scope source shown to the reviewer without blocking review. Fourteen icon-free captures with hashes are retained in [site-surveys-design-r01](reference/ui/customers/site-surveys-design-r01/README.md). The design register pages for both routes and `scope:CS-08` cite the frames and captures. In Figma the File index has a Site surveys row after Access & readiness, and the capture copies sit on the Captures page from y = 256,000.
@@ -28,11 +46,33 @@ The accepted approach is option B, a PPO quotation page:
 
 Nothing is built. Stages QV-S1 to QV-S3 each need their own authorisation. They also depend on ADR-0059 being accepted, PR #608 merging, the privacy notice, request-log and link-domain gates, and the D-020 external-access review. No code, route, migration, capability, grant or parent ID changes. An owner decision paper needs a review by a second model before merge; none has taken place.
 
+## Project financial performance FN-03 design accepted — 19 October 2026
+
+Dean accepted the Figma design for FN-03, project financial performance at `/finance/projects`, after a read-only look at MYOB project screens, a redraw around his "I am happy for you to proceed based on your professional recommendations.", an audit with all three prototype flows played, and a final check: "I accept the Project financial performance FN-03 design with your recommendations, including D1–D9, Q6 and the adopted answers. Lock it in." The [design decision](decisions/project-financial-performance-figma-design.md) (PPO-FN03-PERFORMANCE-FIGMA-DEC) records departures D1–D9 and the answers: budget and committed cost from MYOB's own fields, forecasting and a monthly review in PPO with Finance acceptance, invoices as the billed figure with posted income as a check, PJ-05 as the commercial authority, and a details column that collapses like the secondary menu. Twenty-two icon-free captures with hashes are retained in [project-performance-design-r01](reference/ui/finance/project-performance-design-r01/README.md), and the `scope:FN-03` design register page cites them. In Figma the page sits under a new "— Finance —" divider, the File index has a Finance group, the capture copies are on the Captures page at y = 306,000, and the parts moved to Components › Finance parts and Shell and navigation.
+
+Checked: no Font Awesome instance left in the capture copies, no stored colour differing from its bound variable, no overlapping frames and no prototype link in the copies. The named Figma version "Project financial performance — accepted" was saved at Dean's "Yes, save the named Figma version "Project financial performance — accepted"." Not done: nothing is built and the rail item stays unavailable. Finance definitions (D-017) and a MYOB read adapter remain prerequisites. No application code, route, migration, permission or parent ID changes.
+
 ## PPO daily workspace and MYOB book of record — 19 October 2026
 
 Dean adopted a direction for all modules: "Yes, record the wider direction: PPO is the day-to-day workspace for all modules and MYOB Acumatica is the book of record, with the integration principles you recommended, as its own decision record." The [direction record](decisions/ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) keeps the existing authority split (ADR-0048, ADR-0049) and sets ten integration principles (EI-1 to EI-10). They cover one owner per item of data, master data entered once in PPO, finished business events sent to MYOB, approval before posting and correction by reversal, retry-safe sends with visible states, daily reconciliation, supported Acumatica interfaces only, least privilege, and a read-only start. MYOB subscription savings are to be confirmed with the MYOB partner before being counted.
 
 Not done: no integration technology is chosen, and no adapter, endpoint, credential, migration or production connection is added. The Acumatica tenant contract (DEC-CCE-10) remains open.
+
+## Compact phone header built in the application — 19 October 2026
+
+The shared phone header now follows the adopted [Phone header amendment](decisions/phone-header-amendment.md) (P1–P9) in the application, in draft PR #609: below 780 px every page shows one 56 px row (Menu, the page or view name, Conversations; Back and the record reference on a record), and the menu holds search, the account and working company, notifications, the page guide and Design & build. Pages with a secondary menu show it from the view chooser. Pages can hand over a page action, Filter and record navigation, but none does yet; each adopts them when it is next changed. Desktop and tablet are unchanged. Measured on the running app at 390 and 320 px ([evidence](testing/evidence/phone-header/README.md)); owner review against Figma `1530:110` and the named Figma version are pending. No migration, permission or parent ID changes.
+
+## Phone header amendment locked in — 19 October 2026
+
+On Dean's yes, the named Figma version "Phone header amendment — accepted" was saved on 19 October 2026 and the amendment was locked in the same day ([decision](decisions/phone-header-amendment.md) section 6a). The component set "Shell / Phone header · compact" now lives on Components beside the superseded global phone header, and 106 phone headers on 38 accepted pages use it, with each page's title, count, views, search and filter carried over; toolbar rows stay until each page is next changed. Icon-free captures are in `docs/reference/ui/application-shell/phone-header-amendment-r01/` and the File index has the row.
+
+Not done: the Emails · EC-01 and Customer messages · EC-04 swaps (their own sessions) and the application change, which comes in its own pull request. No application code, route, migration, permission or parent ID changes.
+
+## Phone header amendment adopted — 19 October 2026
+
+Dean adopted Claude's recommendation for phone headers on 19 October 2026: "I am happy for you to proceed based on your professional recommendations." Every phone page is to use one compact 56 px row in place of the global phone header (rules P1–P9 in the [decision](decisions/phone-header-amendment.md), PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC): menu, view chooser and at most three icons (a page action, Conversations, Filter) on list pages; back, position or reference, previous/next and More on records. Desktop and tablet are unchanged. In Figma the "Phone header amendment" page holds the rules, the component set "Shell / Phone header · compact" and examples at 390 and 320 px; the Calendar · EC-03 proposal is its first consumer.
+
+Not done: the named Figma version, captures and File index row; the lock-in that swaps the library phone header and the accepted pages' headers; the Emails · EC-01 and Customer messages · EC-04 swaps; and the application change, which comes in its own pull request. No application code, route, migration, permission or parent ID changes.
 
 ## Accepted page inventory and Organisations implementation claim — 19 October 2026
 
@@ -138,6 +178,12 @@ The final integration includes #604 through `7975492b` and main through `47e4736
 
 On the combined tree, the retained ten-reader database regression passed (one test, 38.7 seconds), and TypeScript checking passed. The integrated runtime, performance sampler and browser tests are byte-identical to the Linux load-validated `0ec66b99` tree.
 
+## Open PR integration and verification — 19 October 2026
+
+Dean requested review, repair and merging of the open Powerplants One pull requests. [PR #622](https://github.com/deanrfiedler-gif/powerplants-one/pull/622) integrates #606, #609, #610, #615, #616, #617, #619 and #621 in a dedicated worktree, preserving their original commits and resolving shared documentation conflicts. The integration includes the compact phone header and accepted design records, with #619's separate register/index entry files. Source review repaired stale phone action callbacks, and the first combined browser run identified one directory test still using the removed menu button; it now uses the header view chooser. [Evidence](testing/evidence/open-pr-integration-oct19/README.md) records 31 passing targeted unit tests, a register check with no errors and passing local application/documentation checks. The retained performance failure also exposed seven diagnostic scripts still querying the now-hidden phone identity trigger; they now share the established phone-aware readiness locator without changing the timed boundary or discarding failed samples. Final-head CI outcomes are retained with the PR checks and must pass before merging. Design acceptance, source presence, application verification and deployment remain separate; no deployment or external business transaction is part of this work.
+
+Conversations T2b #620 was initially excluded as an unfinished implementation claim, then merged separately into main as `f5ca408e` during this work. Its changes contain a migration reservation and design/plan, not the assistant implementation; incorporating that main update does not change this delivery boundary.
+
 ## Open PR integration repairs Conversations and builder header fit — 19 October 2026
 
 [PR #598](https://github.com/deanrfiedler-gif/powerplants-one/pull/598) found and repaired an R9 header regression when the new Conversations action and the existing development workspace are both visible with an expanded rail. The search now reserves equal side space at laptop widths. The component fixture and regression case cover both rail states and the builder boundary; shared component and shell masters record the change without granting visual approval. [Evidence](testing/evidence/pr-backlog-integration/README.md) records the failed CI assertion, unchanged-main comparison and the separate existing 800 px expanded-rail limitation. Full combined CI remains the merge gate.
@@ -153,6 +199,12 @@ Not done: nothing is built, registered or connected; no deferral text is edited 
 Dean accepted the Figma design for EC-01, the connected inbox and record linking (`/email` and `/email/[id]`), after four audit and polish passes: "I accept the Emails EC-01 design with your recommendations, including D1–D8 and Q1–Q5. Lock it in." The [design decision](decisions/emails-figma-design.md) (PPO-EC01-EMAILS-FIGMA-DEC) records departures D1–D8 and the answers to Q1–Q5: the reply composer stays an EC-04 proposal until an ADR settles sending; the rail item reads "Email" in the Sales, Projects and Service rails; the pilot mailbox scope stays; a follow-up never copies the body; and on phone the global actions move into the menu. During the lock-in Dean asked for sent email tracking and accepted it the same day as Amendment A1: "I accept amendment A1, sent email tracking, with your recommendations, including A1-D1–D6 and A1-Q1–Q4." It shows an eye with words on every email sent through PPO (Not opened, Opened, Opened · may be automatic, Viewed, Not tracked), a details popover or sheet that counts opens per email, and a composer switch; it depends on Q1. Twenty-two icon-free captures with hashes are retained in [emails-design-r01](reference/ui/email-calendar/emails-design-r01/README.md), and five A1 captures in [emails-design-r02](reference/ui/email-calendar/emails-design-r02/README.md). The design register pages for both routes and `scope:EC-01` cite the frames and captures. In Figma the File index has an Emails row after the Deal record page, and the capture copies sit on the Captures page from y = 270,000.
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, no copy carries a navigation link, contrast passes for every text and background pair, and both flows were played in Present mode. Both named Figma versions, "Emails — accepted" and "Emails — sent email tracking amendment A1", were saved on 19 October 2026 at Dean's request and confirmed in version history. Not done: the page is not built, and the built synthetic email page is unchanged. Open item: The accepted Organisations and Service requests designs disagree on the customer of SYN-PPO-WO-000040. No application code, route, migration, permission or parent ID changes.
+
+## Design pull requests no longer share three generated or appended files — 19 October 2026
+
+Amends open decision 4 of the merge-conflict record ([section 5](decisions/merge-conflict-reduction.md#5-design-pull-requests-no-longer-share-generated-or-appended-files)). The UI build sequence is no longer committed (`python3 scripts/build-ui-sequence.py` writes it to `tmp/`; `docs/design/development/ui-build-sequence.md` is a pointer page and the `.json` is removed). New document-register rows go in `docs/standards/document-register-entries/`, and new design index entries in `docs/reference/ui/design-entries/`, one file per change; `check_naming.py` reads them as one register and `check_foundation.py` refuses new rows or notes in the old shared files and still derives the sequence.
+
+Evidence: merging #604, #606, #610, #615, #616 and #617 pairwise with each converted to the new layout leaves conflicts on none of the three groups; only `STATUS.md` (open decision 2), #616's own edit to `build-ui-sequence.py` and an unrelated #604/#606 shell-components overlap remain. Not done: the converted branches were not built, and each open pull request still needs a one-time conversion when it next merges `main`. Branch protection and the access-review generated design are unchanged.
 
 ## Conversations T1d record-page lists, inbox asks and My Work asks — 19 October 2026
 
@@ -176,6 +228,38 @@ No migration, seed, capability, grant or parent ID changes. Nothing is deployed 
 ## Conversations context panel CI repair — 19 October 2026
 
 Dean requested repair and merge of [PR #600](https://github.com/deanrfiedler-gif/powerplants-one/pull/600) on 19 October 2026. Codex owns the repair on `codex/pr-600-context-repair`, integrating the original context-panel commits with current main. The failing jobs reported React immutability errors in the Context button focus restoration. The page now owns and consumes the focus request through a stable callback; the button no longer mutates a prop. Browser coverage checks repeated keyboard reopen cycles and that a later viewport-driven mount does not steal focus. The status conflict is resolved by regeneration, retaining both T1c-3 and current main. The working route master records the focus behaviour. Local design-register validation passes; full CI remains the merge gate. This repair does not grant visual approval or production readiness.
+
+## Calendar EC-03 design accepted — 19 October 2026
+
+Dean accepted the Figma design for EC-03, the calendar at `/calendar` (the Sales rail's "Activities"), after an audit and polish and a run of both prototype flows: "I accept the Calendar EC-03 design with your recommendations, including D1–D8 and Q1–Q5." The [design decision](decisions/calendar-figma-design.md) (PPO-EC03-CALENDAR-FIGMA-DEC) records departures D1–D8 and answers Q1–Q5: team availability built after the read-only Microsoft pilot behind its own permission, no Outlook write from Plan follow-up until a calendar-write stage is approved, owner-only meeting links as on Emails, a narrow "Needs a next step" rule, and the compact phone header decided once for every phone page. Eighteen icon-free captures with hashes are retained in [calendar-design-r01](reference/ui/email-calendar/calendar-design-r01/README.md). The design register pages for `route:/calendar` and `scope:EC-03` cite the frames and captures. In Figma the File index has a Calendar row after Emails, the capture copies sit on the Captures page from y = 280,000, and the Calendar parts moved to Components › Sales parts.
+
+Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link or flow start. The named Figma version "Calendar — accepted" was saved at Dean's "Yes, save the named Figma version "Calendar — accepted"." Not done: the page is not built, and the built Day and Agenda calendar is unchanged. No application code, route, migration, permission or parent ID changes.
+
+## Baseline, forecast and dependency review PJ-03 design accepted — 19 October 2026
+
+Dean accepted the Figma design for PJ-03, baseline, forecast and dependency review, after an audit and a run of both prototype flows in Present mode: "I accept the Baseline, forecast and dependency review PJ-03 design with your recommendations, including D1–D11 and Q1–Q8. Lock it in." The design extends the Schedule and Baselines views of `/projects/[id]` and the Programme at `/projects/programme`, with no new route.
+
+The [design decision](decisions/baseline-forecast-figma-design.md) (PPO-PJ03-BASELINE-FORECAST-FIGMA-DEC) records departures D1–D11:
+- baseline bars and "+nd" slip labels as a Gantt Display option;
+- calendar-day and working-day counts, each naming its calendar;
+- a working-calendar drawer that only the coordinator can change;
+- an Actual dates tab and an inline dependency check in the task panel;
+- nonworking shading from the saved calendar;
+- the Programme against latest baselines;
+- the reason for each move;
+- a prompt that asks successor owners to review (My Work activities);
+- a hand-off to a PJ-08 customer-update draft.
+
+It also records the answers to Q1–Q8, including calendar days first, today's calendar for working-day counts, and the coordinator only for the calendar.
+
+Sixteen icon-free captures with hashes are retained in [baseline-forecast-design-r01](reference/ui/projects/baseline-forecast-design-r01/README.md). The design register pages for `scope:PJ-03` and `route:/projects/programme` cite them. In Figma the File index has a PJ-03 row after the Project record page, and the capture copies sit on the Captures page at y = 320,000.
+
+Checked: no Font Awesome instance is left in the capture copies (393 swapped), and no copy carries a prototype link or flow start. The named Figma version "Baseline, forecast and dependency review — accepted" is saved, on Dean's yes.
+
+Not done:
+- The page is not built.
+- D9–D11 need their own reads or handovers.
+- No application code, route, migration, permission or parent ID changes.
 
 ## ADR-0059 sending email from PPO proposed — 19 October 2026
 

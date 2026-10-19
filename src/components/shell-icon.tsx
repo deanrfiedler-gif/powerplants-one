@@ -45,6 +45,11 @@ const shapes = {
   "down": <><path d="m6 9 6 6 6-6"/></>,
   "check": <><path d="m5 12 4 4L19 6"/></>,
   "chevron-right": <><path d="m9 5 7 7-7 7"/></>,
+  // Phone header amendment (Figma 1530:110): menu, Filter, back and previous on the compact phone row.
+  "menu": <><path d="M4 7h16M4 12h16M4 17h16"/></>,
+  "filter": <><path d="M3 6h18M7 12h10M10 18h4"/></>,
+  "chevron-left": <><path d="m15 5-7 7 7 7"/></>,
+  "chevron-up": <><path d="m6 15 6-6 6 6"/></>,
 };
 export type ShellShapeName = keyof typeof shapes;
 export type ShellIconName = ProductIconName | ShellShapeName;

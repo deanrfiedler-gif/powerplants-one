@@ -1,9 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { openAccountPanel } from "../helpers/phone-menu";
 test("P02 diagnostic context, labels, keyboard focus and scoped error state", async ({
   page,
 }, info) => {
   await page.goto("/foundation");
-  await page.getByRole("button", { name: "Account", exact: true }).click();
+  // Signed out, the shell's own Account control opens the panel: in the header on wider screens, from the Menu on a phone.
+  await openAccountPanel(page, "Account");
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close panel", exact: true }).click();
   await page.getByLabel("Demonstration identity").selectOption("coordinator");

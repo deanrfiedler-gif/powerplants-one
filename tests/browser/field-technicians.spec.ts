@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 
 async function identity(page: Page, profile = "coordinator") {
   await expect(
@@ -8,16 +9,12 @@ async function identity(page: Page, profile = "coordinator") {
     }),
   ).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
-    await page
-      .getByRole("button", { name: "Change identity", exact: true })
-      .click();
+    await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
 }
 async function open(page: Page) {
   await page.goto("/service/technicians");

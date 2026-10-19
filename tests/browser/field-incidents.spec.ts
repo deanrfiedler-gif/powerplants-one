@@ -6,6 +6,7 @@ import { pathToFileURL } from "node:url";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { base } from "../helpers/service-inspections";
 import type { incidentRead } from "../../src/incidents/service";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 type View = Awaited<ReturnType<typeof incidentRead>>;
 
 test("FI06 proposed incident/release reference and native shell comparison", async ({
@@ -175,9 +176,9 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
   await page
     .getByLabel("Reason for this report or correction", { exact: true })
     .fill("SYN factual initial report");
-  const guide = page.getByRole("button", { name: "Page guide", exact: true });
-  await guide.focus();
-  await page.keyboard.press("Enter");
+  // On a phone the guide opens from the header Menu by keyboard, and Escape returns focus to the Menu button.
+  const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
+  await openPageGuide(page, true);
   await expect(
     page.getByRole("dialog", { name: "Page guide", exact: true }),
   ).toBeVisible();

@@ -1,0 +1,7 @@
+# Baseline forecast figma design
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+**Baseline, forecast and dependency review design, 19 October 2026:** Dean accepted the Figma design for PJ-03 after an audit and a run of both prototype flows. It extends the Schedule and Baselines views of the project record and the Programme: baseline bars, a task panel for forecast changes and actual dates, calendar-day and working-day counts that name their calendar, the reason for each move, and a working-calendar drawer. The [decision](../../../decisions/baseline-forecast-figma-design.md) records it, and the [retained captures](../projects/baseline-forecast-design-r01/README.md) are sixteen icon-free PNGs with hashes. Nothing is built in this form. Listing it here does not repeat the dated inventory audit above.
+
+| Baseline, forecast and dependency review — Schedule and Baselines on `/projects/[id]`, `/projects/programme` | [Design r01 captures](../projects/baseline-forecast-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 19 October 2026 | [Decision](../../../decisions/baseline-forecast-figma-design.md). PJ-03; not built in this form. Baseline bars and slip labels on the Gantt, a task panel for forecast changes and actual dates, Baselines in calendar or working days with the reason for each move, a working-calendar drawer, and the Programme against latest baselines |

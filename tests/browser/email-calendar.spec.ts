@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmCreate } from "../helpers/crm";
+import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 async function call(page: Page, path: string, body?: unknown) {
@@ -27,16 +28,12 @@ async function identity(page: Page, profile = "coordinator") {
     }),
   ).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
-    await page
-      .getByRole("button", { name: "Change identity", exact: true })
-      .click();
+    await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
 }
 test("EC complete journey, reload, calendar navigation, details, narrow layout and denied identity", async ({
   page,

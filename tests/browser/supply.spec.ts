@@ -4,6 +4,7 @@ import { supplyPages, returnViews } from "../../src/supply/navigation";
 import { supplyInput, supplyFact, supplyBase } from "../helpers/supply";
 import { randomUUID } from "node:crypto";
 import { destination } from "../../src/shell/navigation";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 async function login(page: Page, origin: string, profile = "coordinator") {
   const r = await page.request.post(origin + "/api/v1/local-session", {
     headers: { origin },
@@ -146,7 +147,8 @@ for (const spec of supplyPages)
       await expect(page).not.toHaveURL(/record=/);
       await firstRecord.click();
     }
-    const guide = page.getByRole("button", { name: "Page guide", exact: true });
+    // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
+    const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
     if (spec.scope === "SC-08") {
       for (const view of returnViews) {
         const tab = surface.getByRole("navigation", { name: "Returns workspaces" }).getByRole("button", { name: view.label, exact: true });
@@ -156,7 +158,7 @@ for (const spec of supplyPages)
       }
       await surface.getByRole("button", { name: "Returns register", exact: true }).click();
     }
-    await guide.click();
+    await openPageGuide(page);
     await expect(
       page.getByText(`${spec.scope} — purpose and prerequisites`, {
         exact: true,

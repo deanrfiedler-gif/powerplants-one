@@ -43,7 +43,7 @@ function panelPosition(panel: Exclude<Panel, null>, target: HTMLElement) {
   const width = mobile ? window.innerWidth - 24 : panel === "search" ? rect.width : panel === "guide" ? 560 : panel === "quick" ? 320 : 344;
   return {
     width,
-    top: mobile ? 76 : panel === "guide" ? 76 : 60,
+    top: mobile ? 64 : panel === "guide" ? 76 : 60,
     left: mobile ? 12 : panel === "search" ? rect.left : panel === "quick" ? Math.max(86, Math.min(window.innerWidth - width - 20, rect.right - width)) : window.innerWidth - width - (panel === "guide" ? 16 : 20),
     right: "auto" as const,
   };
@@ -64,10 +64,15 @@ async function read<T>(path: string, signal: AbortSignal): Promise<T> {
 export function ShellControls({
   module,
   page,
+  phoneBefore,
+  phoneAfter,
   children,
 }: {
   module: string;
   page: string;
+  // Phone header amendment P2/P3: the compact row's page action (before Conversations), Filter or record controls (after).
+  phoneBefore?: ReactNode;
+  phoneAfter?: ReactNode;
   // The header's stable mounts, placed after the account fallback in the end zone.
   children?: ReactNode;
 }) {
@@ -184,10 +189,20 @@ export function ShellControls({
     window.addEventListener("resize", resize);
     const utility = (event: Event) => {
       const value = (event as CustomEvent).detail;
-      if (!["quick", "help", "notifications", "guide"].includes(value)) return;
-      // The Page guide is opened from the identity menu at 320 px (PPO-CONV-T1C-DESIGN 10.2); focus returns there.
+      if (!["quick", "help", "notifications", "guide", "search", "account"].includes(value)) return;
+      // Phone header amendment P4: on phones the menu opens the account panel the header keeps mounted. A session's own
+      // account control opens its panel; without one, the shell's account panel opens.
+      if (value === "account") {
+        const toggle = document.querySelector<HTMLElement>("#hosted-account-toggle, #identity-toggle");
+        if (toggle) {
+          toggle.click();
+          return;
+        }
+      }
+      // Focus returns to whatever opened the menu: the phone header's Menu button (a record page's row has Back in its
+      // place, so the tab bar's More), or the desktop More.
       opener.current =
-        (value === "guide" ? document.querySelector<HTMLElement>(".header-account .ppo-account-toggle, #identity-toggle") : null) ??
+        (window.innerWidth <= 780 ? document.getElementById("shell-phone-menu") : null) ??
         document.getElementById("navigation-toggle") ??
         document.getElementById("desktop-more-toggle");
       if (opener.current) setPosition(panelPosition(value, opener.current));
@@ -207,7 +222,7 @@ export function ShellControls({
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         const target =
-          input.current ?? document.getElementById("shell-mobile-search");
+          input.current ?? document.getElementById("shell-phone-menu") ?? document.getElementById("navigation-toggle");
         if (target) {
           opener.current = target;
           setPosition(panelPosition("search", target));
@@ -322,7 +337,7 @@ export function ShellControls({
           if (restoringFocus.current) return;
           opener.current = wide
             ? event.currentTarget
-            : document.getElementById("shell-mobile-search");
+            : (document.getElementById("shell-phone-menu") ?? document.getElementById("navigation-toggle"));
           setPosition(panelPosition("search", event.currentTarget));
           if (panel !== "search") {
             setResults(null);
@@ -374,21 +389,11 @@ export function ShellControls({
         </button>
         <div className="ppo-header-utilities" data-shell-header-control>
           {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & Development workspace" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
-          {!wide && (
-            <button
-              id="shell-mobile-search"
-              className="ppo-top-action"
-              aria-label="Open global search"
-              title="Search"
-              aria-expanded={panel === "search"}
-              aria-controls="shell-search-panel"
-              onClick={(event) => show("search", event.currentTarget)}
-            >
-              <ProductIcon name="search" />
-            </button>
-          )}
-          {/* D1 and D2: Conversations sits left of the Page guide, on every page and in the phone header. */}
+          {phoneBefore}
+          {/* D1 and D2: Conversations sits left of the Page guide, on every page and in the phone header. Global search
+              is in the phone menu (phone header amendment P4). */}
           <ShellConversations />
+          {phoneAfter}
           <button
             className="ppo-top-action ppo-guide-action"
             aria-label="Page guide"

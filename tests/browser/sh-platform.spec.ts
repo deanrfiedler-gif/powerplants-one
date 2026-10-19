@@ -14,6 +14,7 @@ import {
 import type { SignIn } from "../helpers/engineering-materials";
 import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 import { navigateToMyWork, resizeMyWork } from "../helpers/my-work-navigation";
+import { identityToggle } from "../helpers/phone-menu";
 
 test.beforeEach(async ({ page, baseURL }) => {
   await retainApiReadsForTeardown(page);
@@ -166,13 +167,15 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
   // Navigation can finish before hydration installs the global shortcut. Wait
   // for the client-loaded identity and responsive shell before sending a key;
   // keyboard.press has no locator readiness checks of its own.
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeVisible({ timeout: 15000 });
-  if (isMobile)
+  // On a phone the trigger stays mounted but hidden (its panel opens from the Menu button), so wait for it to be
+  // enabled and for the Menu button, which carries global search, to be visible.
+  if (isMobile) {
+    await expect(identityToggle(page)).toBeEnabled({ timeout: 15000 });
+    await expect(page.getByRole("button", { name: /^Menu(,|$)/ })).toBeVisible();
+  } else
     await expect(
-      page.getByRole("button", { name: "Open global search", exact: true }),
-    ).toBeVisible();
+      page.getByRole("button", { name: "Change identity", exact: true }),
+    ).toBeVisible({ timeout: 15000 });
   await page.keyboard.press("Control+k");
   const search = page.getByRole("combobox", { name: /Search/ });
   await expect(search).toBeFocused();

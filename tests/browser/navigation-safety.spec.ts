@@ -2,6 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { CRM, crmBase, crmDiscovery } from "../helpers/crm";
 import { leadCreate } from "../helpers/leads";
 import { randomUUID } from "node:crypto";
+import { openGlobalSearch, identityToggle } from "../helpers/phone-menu";
 const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function login(page: Page, profile = "coordinator") {
   const result = await page.request.post("/api/v1/local-session", { headers: { Origin: origin() }, data: { profile } });
@@ -58,7 +59,7 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
   expect(await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key.startsWith("ppo.shell"))))).toEqual(preference);
   await page.keyboard.press("Escape");
-  if(isMobile) await page.getByRole("button",{name:"Open global search",exact:true}).click();
+  if(isMobile) await openGlobalSearch(page);
   const search=page.getByRole("combobox",{name:"Search Powerplants One",exact:true});
   await search.fill("opportunity");
   const option=page.getByRole("option").filter({has:page.getByText("Deals",{exact:true})}).first();
@@ -73,7 +74,7 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   await expect.poll(()=>reviews).toBeGreaterThan(beforeBack);
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
   page.removeAllListeners("dialog");page.on("dialog",dialog=>void dialog.accept());
-  if(isMobile)await page.getByRole("button",{name:"Open global search",exact:true}).click();
+  if(isMobile)await openGlobalSearch(page);
   await search.click();await search.fill("opportunity");await expect(option).toBeVisible();await option.click();
   await expect(page).toHaveURL(/\/sales\/opportunities/);
 });
@@ -102,7 +103,7 @@ for (const selection of ["pointer", "keyboard"] as const) {
       if (dialog.type() === "beforeunload") { unloadWarnings++; void dialog.dismiss(); }
       else { confirmations++; void dialog.accept(); }
     });
-    if (isMobile) await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    if (isMobile) await openGlobalSearch(page);
     const search = page.getByRole("combobox", { name: "Search Powerplants One", exact: true });
     await search.fill(contact.display_name);
     const option = page.getByRole("option").filter({ has: page.getByText(contact.display_name, { exact: true }) });
@@ -124,7 +125,7 @@ for (const selection of ["pointer", "keyboard"] as const) {
     await expect(name).toHaveValue(laterDraft);
     expect(saves).toBe(0);
     // Approval remains available for a real departure, with one review only.
-    if (isMobile) await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    if (isMobile) await openGlobalSearch(page);
     await search.fill("opportunity");
     const deals = page.getByRole("option").filter({ has: page.getByText("Deals", { exact: true }) }).first();
     await expect(deals).toBeVisible(); await deals.click();
@@ -152,7 +153,7 @@ for (const form of [
   const open = async () => {
     await page.goto("/customers"); await page.goto(form.path);
     await expect(control).toBeEnabled();
-    await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+    await expect(identityToggle(page)).toBeEnabled();
   };
   const rail = async () => {
     const links = page.locator(isMobile ? ".mobile-navigation a[href]" : ".ppo-primary-nav a[href]");
@@ -161,7 +162,7 @@ for (const form of [
   };
   // The header's global search is on every page and opens its result through navigateWithReview.
   const header = async () => {
-    if (isMobile) await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    if (isMobile) await openGlobalSearch(page);
     await page.getByRole("combobox", { name: "Search Powerplants One", exact: true }).fill("opportunity");
     const option = page.getByRole("option").filter({ has: page.getByText("Deals", { exact: true }) }).first();
     await expect(option).toBeVisible();
@@ -283,7 +284,7 @@ test("N12Sales Activities preserves selected day in rail, phone, More and search
   await page.getByRole("button",{name:"More",exact:true}).click();
   await expect(page.locator(".ppo-more-panel:visible").getByRole("link",{name:"Activities",exact:true})).toHaveAttribute("href",href);
   await page.keyboard.press("Escape");
-  if(isMobile)await page.getByRole("button",{name:"Open global search",exact:true}).click();
+  if(isMobile)await openGlobalSearch(page);
   const search=page.getByRole("combobox",{name:"Search Powerplants One",exact:true});await search.fill("activities");
   const result=page.getByRole("option").filter({has:page.getByText("Activities",{exact:true})}).first();await result.click();
   await expect(page).toHaveURL(origin()+href);

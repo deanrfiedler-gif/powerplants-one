@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmCreate } from "../helpers/crm";
+import { openPageGuide } from "../helpers/phone-menu";
 import { projectInput } from "../helpers/projects";
 
 // Conversations T1c-1 (PPO-CONV-T1C-DESIGN): people-only threads on the /conversations page, built and changed
@@ -185,7 +186,9 @@ test.describe("T1c-1 thread view", () => {
     const { thread } = await askedThread(page);
     await signIn(page, asked);
     await page.goto(`/conversations/${thread}`);
-    await page.getByRole("link", { name: "Back to conversations" }).click();
+    // The header's own Back (phone header amendment P3) and the thread's in-page link both lead to the list.
+    await expect(page.getByRole("banner").locator(".ppo-phone-back")).toHaveAttribute("aria-label", "Back to Conversations");
+    await page.getByRole("main").getByRole("link", { name: "Back to conversations" }).click();
     await expect(page).toHaveURL(/\/conversations$/);
     await expect(page.getByRole("navigation", { name: "Conversations" })).toBeVisible();
   });
@@ -420,8 +423,9 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await expect(action).toHaveAccessibleName(`Conversations, ${unread} unread`);
     await expect(action.locator(".ppo-top-badge")).toHaveText(unread > 9 ? "9+" : String(unread));
     await expect(action).not.toHaveAttribute("aria-current", "page");
-    // D1: immediately left of the information (Page guide) icon, on desktop and in the phone header.
-    expect(await action.evaluate((link) => link.nextElementSibling?.getAttribute("aria-label"))).toBe("Page guide");
+    // D1: immediately left of the information (Page guide) icon on desktop. The phone row hides the Page guide
+    // button (phone header amendment P4: it is in the Menu), so only Conversations' place at the right is kept there.
+    if (!isMobile) expect(await action.evaluate((link) => link.nextElementSibling?.getAttribute("aria-label"))).toBe("Page guide");
     await action.click();
     await expect(page).toHaveURL(/\/conversations$/);
     await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAttribute("aria-current", "page");
@@ -429,12 +433,19 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await page.goto(`/conversations/${thread}`);
     await expect(page.getByText("SYN when does the controller arrive?")).toBeVisible();
     await expect.poll(() => badgeCount(page)).toBe(unread - 1);
-    await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAccessibleName(unread - 1 ? `Conversations, ${unread - 1} unread` : "Conversations");
-    await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAttribute("aria-current", "page");
+    // A phone thread is a record page, whose compact header hides Conversations (phone header amendment P3); the
+    // action keeps its name, badge and current state, so those are read from the hidden link there.
+    const threadAction = banner.getByRole("link", { name: /^Conversations/, includeHidden: isMobile });
+    if (isMobile) await expect(banner.getByRole("link", { name: /^Conversations/ })).toBeHidden();
+    const expectedName = unread - 1 ? `Conversations, ${unread - 1} unread` : "Conversations";
+    // A hidden element has no computed accessible name, so on a phone the label the action carries is read directly.
+    if (isMobile) await expect(threadAction).toHaveAttribute("aria-label", expectedName);
+    else await expect(threadAction).toHaveAccessibleName(expectedName);
+    await expect(threadAction).toHaveAttribute("aria-current", "page");
     if (isMobile) expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 
-  test("T1c-2 nothing new shows no badge, and a profile without conversations has no action", async ({ page }) => {
+  test("T1c-2 nothing new shows no badge, and a profile without conversations has no action", async ({ page, isMobile }) => {
     await signIn(page, bystander);
     await page.goto("/work");
     const action = page.getByRole("banner").getByRole("link", { name: /^Conversations/ });
@@ -442,7 +453,8 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await expect(action.locator(".ppo-top-badge")).toHaveCount(0);
     await signIn(page, "systems");
     await page.goto("/");
-    await expect(page.getByRole("banner").getByRole("button", { name: "Account" }).or(page.getByRole("banner").getByRole("button", { name: /Change identity/ })).first()).toBeVisible();
+    // On a phone the account trigger is not in the row (it opens from the Menu button), so the Menu button is the control to find.
+    await expect(isMobile ? page.getByRole("banner").getByRole("button", { name: /^Menu(,|$)/ }) : page.getByRole("banner").getByRole("button", { name: "Account" }).or(page.getByRole("banner").getByRole("button", { name: /Change identity/ })).first()).toBeVisible();
     await expect(page.getByRole("banner").getByRole("link", { name: /^Conversations/ })).toHaveCount(0);
   });
 
@@ -455,17 +467,51 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await expect(banner.getByRole("link", { name: /^Conversations/ })).toBeVisible();
     await expect(banner.getByRole("button", { name: "Page guide", exact: true })).toBeHidden();
     const header = await page.locator(".ppo-shell-header").evaluate((node) => {
-      const title = node.querySelector<HTMLElement>(".ppo-crumb-current, .ppo-product-name")!;
+      const title = node.querySelector<HTMLElement>(".ppo-phone-title .ppo-phone-title-text")!;
       const style = getComputedStyle(node);
       return { left: style.paddingLeft, right: style.paddingRight, size: getComputedStyle(title).fontSize, text: title.textContent, whole: title.scrollWidth <= title.clientWidth };
     });
     expect(header).toEqual({ left: "4px", right: "4px", size: "18px", text: "Conversations", whole: true });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-    await banner.getByRole("button", { name: /Change identity/ }).click();
-    await page.getByRole("button", { name: "Open page guide" }).click();
+    // Phone header amendment P4: the Page guide is in the Menu at every phone width; Escape returns focus to the Menu button.
+    await openPageGuide(page);
     await expect(page.getByRole("dialog", { name: "Page guide", exact: true })).toBeVisible();
     await page.keyboard.press("Escape");
-    await expect(banner.getByRole("button", { name: /Change identity/ })).toBeFocused();
+    await expect(page.locator("#shell-phone-menu")).toBeFocused();
+  });
+
+  test("T1c-2 a phone record row has no Menu button: its More starts with Open menu and Conversations, and focus returns to More", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "Phone header record row");
+    const { thread } = await askedThread(page);
+    await signIn(page, asked);
+    await page.goto(`/conversations/${thread}`);
+    await expect(page.getByText("SYN when does the controller arrive?")).toBeVisible();
+    const banner = page.getByRole("banner");
+    // Phone header amendment P3: Back and the reference, no Menu button and no Conversations icon; More carries both.
+    await expect(banner.getByRole("button", { name: /^Menu(,|$)/ })).toHaveCount(0);
+    await expect(banner.getByRole("link", { name: /^Conversations/ })).toBeHidden();
+    const more = banner.getByRole("button", { name: "More actions" });
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      await more.click();
+      const items = banner.getByRole("menuitem");
+      await expect(items.first()).toHaveText("Open menu");
+      await expect(items.nth(1)).toHaveAccessibleName(/^Conversations(, \d+ unread)?$/);
+      await items.first().click();
+      const menu = page.getByRole("dialog", { name: "More", exact: true });
+      await expect(menu).toBeVisible();
+      await menu.getByRole("button", { name: "Page guide", exact: true }).click();
+      await expect(page.getByRole("dialog", { name: "Page guide", exact: true })).toBeVisible();
+      await page.keyboard.press("Escape");
+      await more.click();
+      await items.first().click();
+      await expect(menu).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(more).toBeFocused();
+    }
+    await more.click();
+    await banner.getByRole("menuitem", { name: /^Conversations/ }).click();
+    await expect(page).toHaveURL(/\/conversations$/);
   });
 });
 
