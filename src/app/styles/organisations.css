@@ -1,0 +1,174 @@
+/* CS-01 consumes shared shell, menu, table and record controls. Interior responds to its container. */
+#ppo-organisations .org-register, .shared-record, .org-create { font:14px/1.45 Roboto,sans-serif; color:var(--ink); min-width:0; }
+#ppo-organisations .mw-content { padding:0; overflow:auto; container-type:inline-size; }
+#ppo-organisations .org-register { min-width:0; height:100%; display:flex; flex-direction:column; background:var(--white); }
+#ppo-organisations .mw-menu nav { display:flex; flex-direction:column; gap:2px; }
+#ppo-organisations .mw-menu nav :is(a,button) { display:flex; justify-content:space-between; gap:8px; min-height:44px; align-items:center; padding:8px 12px; border:0; border-radius:var(--radius-control); background:transparent; color:var(--ink); text-decoration:none; text-align:left; font:inherit; }
+#ppo-organisations .mw-menu nav [aria-current=page] { background:var(--ppo-shell-selected); color:var(--ppo-shell-link); }
+#ppo-organisations .org-menu-note { padding:12px; color:var(--text-secondary); }
+.org-search { display:flex; gap:4px; min-width:0; width:100%; }
+.org-search input { min-width:0; width:100%; }
+.org-search button { height:44px; min-height:44px; padding:8px 12px; align-self:center; }
+.org-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px 16px; min-height:60px; border-bottom:1px solid var(--line-strong); }
+.org-read-time { flex:1; margin:0; color:var(--text-secondary); font-size:12px; }
+.org-toolbar :is(button,a), .org-register .ppo-register-foot :is(button,select) { min-height:44px; }
+.org-desktop-grid { min-width:0; flex:1; overflow:auto; }
+#ppo-organisations .ppo-register { overflow:auto; border:0; border-radius:0; }
+#ppo-organisations .ppo-register-table { table-layout:fixed; width:max-content; min-width:100%; font-size:14px; }
+#ppo-organisations .ppo-register-table :is(th,td) { border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); padding:8px 12px; height:44px; vertical-align:middle; overflow-wrap:anywhere; }
+#ppo-organisations .ppo-register-table th { background:var(--paper); }
+#ppo-organisations .ppo-register-table td { background:var(--white); }
+#ppo-organisations .ppo-register-table tr[data-selected] td { background:var(--info-surface); }
+#ppo-organisations .ppo-register-table .org-pin-check { position:sticky; left:0; z-index:1; width:44px; padding:0; text-align:center; }
+#ppo-organisations .ppo-register-table .org-pin-actions { position:sticky; right:0; z-index:1; width:48px; padding:0; text-align:center; }
+#ppo-organisations .org-pin-check input { width:18px; height:18px; margin:13px; }
+#ppo-organisations .ppo-register-table .org-col-name { width:200px; }
+#ppo-organisations .ppo-register-table .org-col-owner { width:150px; }
+#ppo-organisations .ppo-register-table :is(.org-col-status,.org-col-deals,.org-col-service) { width:110px; }
+#ppo-organisations .ppo-register-table :is(.org-col-sites,.org-col-areas) { width:70px; }
+#ppo-organisations .ppo-register-table :is(.org-col-follow_up,.org-col-sector) { width:160px; }
+#ppo-organisations .ppo-register-table .org-col-reference { width:210px; }
+.org-col-follow_up small { display:block; color:var(--text-secondary); }
+.org-status { display:inline-block; padding:2px 6px; background:var(--neutral-surface); border-radius:var(--radius-control); font-size:12px; white-space:nowrap; }
+.org-status-active { background:var(--success-surface); color:var(--success); }
+.org-status-prospect { background:var(--info-surface); color:var(--info); }
+.org-duplicate { font-size:12px; color:var(--warning); display:block; }
+.org-register .ppo-register-foot { display:flex; flex-wrap:wrap; gap:12px; align-items:center; padding:8px 16px; border-top:1px solid var(--line); }
+.org-register .ppo-register-foot label { margin-left:auto; display:flex; gap:8px; align-items:center; }
+.org-phone-view,.org-phone-list { display:none; }
+#ppo-organisations .org-phone-list .ppo-register-empty { padding:40px 20px; text-align:center; color:var(--text-secondary); }
+#ppo-organisations .org-phone-list .ppo-register-empty strong { display:block; margin-bottom:4px; color:var(--ink); font-size:16px; }
+#ppo-organisations .org-phone-list .ppo-register-empty p { margin:0 0 12px; }
+.org-failure,.org-record-state { margin:16px; padding:16px; }
+.org-failure { border:1px solid var(--danger-border); background:var(--danger-surface); color:var(--danger); border-radius:var(--radius-card); }
+.org-failure .business-error { border:0; padding:0; margin:0 0 12px; background:transparent; color:inherit; }
+.org-saved-views label { display:grid; margin:12px 0; }
+/* The shared menu/panel components supply focus management; this scope supplies their presentation. */
+:is(#ppo-organisations,.shared-record) .crm-r38-menu-trigger { display:inline-flex; align-items:center; gap:6px; min-height:44px; }
+:is(#ppo-organisations,.shared-record) .product-icon { width:18px; height:18px; flex:none; }
+:is(#ppo-organisations,.shared-record) .crm-r38-popover { position:fixed; inset:auto; margin:0; max-width:calc(100vw - 24px); min-width:220px; max-height:70dvh; overflow:auto; border:1px solid var(--line-strong); border-radius:var(--radius-control); padding:8px; background:var(--white); box-shadow:var(--shadow-card); color:var(--ink); font:14px/1.45 Roboto,sans-serif; }
+:is(#ppo-organisations,.shared-record) .crm-r38-popover :is(button,a) { display:flex; width:100%; min-height:44px; padding:10px; align-items:center; gap:8px; text-align:left; }
+:is(#ppo-organisations,.shared-record) .crm-r38-popover h2 { font-size:14px; margin:8px; }
+:is(#ppo-organisations,.shared-record) .crm-r38-popover p { max-width:300px; margin:8px; }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel { padding:0; border:1px solid var(--line); border-radius:var(--radius-card); max-height:90dvh; width:min(560px,calc(100% - 24px)); color:var(--ink); background:var(--white); }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel::backdrop { background:color-mix(in srgb,var(--ink) 25%,transparent); }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel :is(header,footer) { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; border-bottom:1px solid var(--line); }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel-body { padding:16px; overflow:auto; }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel-body label { display:block; margin:8px 0; }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel-body dd { margin:4px 0 14px; }
+:is(#ppo-organisations,.shared-record) .crm-r38-panel-body .ppo-button { margin:8px 0; }
+#ppo-organisations .crm-r38-drawer { position:fixed; inset:0 0 0 auto; margin:0; width:min(380px,100%); height:100dvh; max-height:100dvh; border-radius:0; display:flex; flex-direction:column; }
+#ppo-organisations .crm-r38-drawer footer { margin-top:auto; }
+.shared-record { container-type:inline-size; background:var(--white); width:100%; overflow:auto; height:100%; }
+.shared-record-header { display:flex; justify-content:space-between; align-items:start; gap:16px; padding:20px 24px; border-bottom:1px solid var(--line); }
+.shared-record .business-heading { padding:0; margin:0 0 8px; border:0; }
+.shared-record .business-heading h1 { font-size:24px; margin:0; }
+.shared-record .business-heading .eyebrow { font-size:12px; }
+.shared-record-meta,.shared-record-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.shared-record-meta { color:var(--text-secondary); }
+.shared-record-actions { justify-content:flex-end; max-width:55%; }
+.shared-record-sources { display:flex; flex-wrap:wrap; gap:8px 16px; padding:12px 24px; border-bottom:1px solid var(--line); font-size:12px; }
+.shared-record-body { display:grid; grid-template-columns:380px minmax(0,1fr); min-height:calc(100% - 160px); }
+.shared-record-facts { border-right:1px solid var(--line); padding:0 24px; }
+.shared-record-fact-section { padding:20px 0; border-bottom:1px solid var(--line); }
+.shared-record-fact-section h2 { font-size:16px; margin:0 0 12px; }
+.shared-record-fact-section article { padding:10px 0; border-bottom:1px solid var(--line-soft); }
+.shared-record-fact-section dl { margin:0; }
+.shared-record-fact-section dl > div { display:grid; grid-template-columns:130px 1fr; gap:12px; margin:10px 0; }
+.shared-record-fact-section :is(dt,small) { color:var(--text-secondary); }
+.shared-record-fact-section dd { margin:0; overflow-wrap:anywhere; }
+.shared-record-fact-section p { margin:6px 0; }
+.shared-record-workspace { min-width:0; background:var(--paper); }
+.shared-record .record-tablist { display:flex; overflow-x:auto; gap:0; background:var(--white); padding:0 16px; border-bottom:1px solid var(--line); }
+.shared-record .record-tablist button { flex:none; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--text-secondary); min-height:48px; padding:12px 16px; font:inherit; border-radius:0; }
+.shared-record .record-tablist [aria-selected=true] { color:var(--ink); border-bottom-color:var(--navy); font-weight:600; }
+.shared-record-content { padding:20px 24px; }
+.shared-record-content h2 { font-size:18px; margin:0 0 12px; }
+.shared-record-content [hidden] { display:none!important; }
+.org-source-list,.org-source-table { margin:16px 0; border:1px solid var(--line-strong); border-radius:var(--radius-control); overflow:hidden; background:var(--white); }
+:is(.org-source-list,.org-source-table) > header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; border-bottom:1px solid var(--line-soft); }
+:is(.org-source-list,.org-source-table) h3 { font-size:14px; margin:0; }
+:is(.org-source-list,.org-source-table) > :is(details,p) { margin:12px 16px; font-size:12px; color:var(--text-secondary); }
+.org-work-rows article { display:flex; gap:16px; align-items:start; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--line-soft); }
+.org-work-rows article > div { min-width:0; }
+.org-work-rows small { display:block; color:var(--text-secondary); margin-top:4px; }
+.org-work-rows article > a { min-width:44px; min-height:44px; display:flex; align-items:center; }
+.org-work-rows article a { overflow-wrap:anywhere; }
+.shared-record-source-state { padding:16px; background:var(--neutral-surface); }
+.shared-record-source-state[data-state=Unavailable] { background:var(--warning-surface); color:var(--warning); }
+.org-source-filters { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center; }
+.org-type-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.org-type-chips button { min-height:44px; padding:8px 12px; }
+.org-type-chips button[aria-pressed=true] { background:var(--navy); color:var(--white); }
+.org-source-table .ppo-register { border:0; border-radius:0; }
+.org-source-table .ppo-register-table { width:100%; table-layout:fixed; font-size:14px; }
+.org-source-table :is(th,td) { padding:12px; white-space:normal; overflow-wrap:anywhere; }
+.org-scope-note { color:var(--text-secondary); font-size:12px; }
+.org-handover { display:flex; gap:16px; align-items:center; margin-top:16px; }
+.org-phone-contact,.shared-record-sticky { display:none; }
+.org-create { display:grid; grid-template-columns:minmax(0,1fr) 380px; height:100%; overflow:auto; container-type:inline-size; background:var(--paper); }
+.org-create-main { min-width:0; padding:24px; }
+.org-create-main > header { margin-bottom:16px; }
+.org-create-main .business-heading { margin:0; padding:0; border:0; }
+.org-create-main .business-heading h1 { font-size:16px; margin:0; }
+.org-create fieldset { border:0; padding:0; margin:0; min-width:0; }
+.org-create-form section { border:1px solid var(--line); border-radius:var(--radius-card); background:var(--white); padding:16px; margin:16px 0; }
+.org-create-form h2 { font-size:12px; margin:0 0 16px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.04em; }
+.org-create-form .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.org-create-form .field { margin:0; }
+.org-create-wide { grid-column:1/-1; }
+.org-create-form :is(input,select,textarea) { width:100%; min-height:44px; margin:0; font-weight:400; }
+.org-create-form .field > p { margin:0; font-weight:400; }
+.org-create-form textarea { height:64px; min-height:64px; }
+.org-create-form footer { display:flex; justify-content:flex-end; gap:12px; padding:16px 0; position:sticky; bottom:0; background:var(--paper); }
+.org-create-form footer small { margin-right:auto; align-self:center; color:var(--text-secondary); }
+.org-create-form footer :is(a,button) { min-height:44px; }
+.org-create-check { padding:24px; border-left:1px solid var(--line); background:var(--white); }
+.org-create-check h2 { font-size:18px; }
+.org-create-check article { padding:16px 0; border-bottom:1px solid var(--line); }
+.org-create-check h3 { font-size:16px; overflow-wrap:anywhere; }
+.org-create-check a { display:inline-flex; min-height:44px; align-items:center; }
+@container (max-width:900px) { .shared-record-body { grid-template-columns:280px minmax(0,1fr); } .shared-record-facts { padding:0 16px; } .shared-record-content { padding:16px; } .shared-record-fact-section dl > div { display:block; } .shared-record-actions { max-width:50%; } }
+@container (max-width:600px) { .shared-record-header { padding:12px 16px; flex-wrap:wrap; } .shared-record .business-heading h1 { font-size:20px; } .shared-record-actions { max-width:none; justify-content:start; } .shared-record-actions > .ppo-button:not(:first-child) { display:none; } .shared-record-body { display:flex; flex-direction:column; } .shared-record-facts { order:2; } .shared-record-content { padding:16px; } .shared-record .record-tablist { padding:0; } .shared-record .record-tablist button { padding:12px 16px; } .org-phone-contact { display:block; } .org-primary-contact { padding:16px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius-control); margin-bottom:24px; } .org-primary-contact > a { display:block; min-height:44px; overflow-wrap:anywhere; } .shared-record-sticky { display:flex; position:sticky; bottom:0; padding:12px 16px; background:var(--white); border-top:1px solid var(--line); } .shared-record-sticky a { width:100%; min-height:44px; justify-content:center; } .shared-record-sources { padding:8px 16px; } }
+@container (max-width:520px) { .org-desktop-grid { display:none; } .org-phone-view { display:block; } .org-phone-list { display:block; flex:1; } .org-phone-list article { padding:16px; border-bottom:1px solid var(--line); } .org-phone-list article > a { display:block; color:var(--ink); text-decoration:none; } .org-phone-list article div { display:flex; gap:8px; justify-content:space-between; align-items:start; } .org-phone-list p { margin:6px 0 0; color:var(--text-secondary); font-size:12px; } .org-toolbar { padding:10px 16px; } .org-read-time { flex-basis:100%; } }
+@media (max-width:780px) { .shared-record,.org-create,#ppo-organisations .org-register { font-size:16px; } .org-create { display:flex; flex-direction:column; } .org-create-main,.org-create-check { padding:16px; } .org-create-form .form-grid { grid-template-columns:1fr; } .org-create-check { border-left:0; border-top:1px solid var(--line); } :is(#ppo-organisations,.shared-record) .crm-r38-panel { margin:auto 0 0; width:100%; max-width:100%; border-radius:var(--radius-card) var(--radius-card) 0 0; } }
+
+.org-local-search { padding:8px 16px; border-bottom:1px solid var(--line-soft); }
+.org-local-search .org-search { max-width:420px; }
+.org-open-work { border:1px solid var(--line-strong); border-radius:var(--radius-control); background:var(--white); overflow:hidden; }
+.org-open-work > details { padding:12px 16px; font-size:12px; color:var(--text-secondary); }
+.shared-record-fact-section dt { text-transform:none; letter-spacing:normal; font-size:12px; }
+@container (max-width:600px) {
+ .shared-record-header { gap:8px; }
+ .shared-record-header > div:first-child { flex:1; min-width:0; }
+ .shared-record-actions { width:auto; }
+ .shared-record-actions > .ppo-button:not(:first-child) { display:none; }
+ .shared-record-header .business-heading { margin-bottom:8px; }
+ .shared-record-meta > span:not(:first-child) { display:none; }
+ .shared-record-sources > strong,.shared-record-sources [data-source-state=Complete],.shared-record-sources [data-source-state=Partial],.shared-record-sources [data-source-state="Not configured"] { display:none; }
+ .org-source-filters { align-items:stretch; }
+ .org-source-table .ppo-register-table { min-width:520px; }
+}
+
+.org-toolbar,.org-local-search,.org-register > .ppo-register-foot { flex-shrink:0; }
+.org-read-time { order:2; }
+.shared-record .crm-r38-popover .org-phone-account { display:none; }
+.org-phone-list article { display:flex; align-items:start; gap:8px; }
+.org-phone-list article > a { flex:1; min-width:0; overflow-wrap:anywhere; }
+.org-phone-list article > button { flex:none; width:44px; height:44px; }
+.org-open-work[data-expanded=false] .org-work-rows article:nth-of-type(n+9) { display:none; }
+.org-open-work > button { margin:12px 16px; min-height:44px; }
+.org-open-work > button[data-phone-only] { display:none; }
+.org-open-work .org-work-empty { padding:16px; margin:0; color:var(--text-secondary); }
+.shared-record .crm-r38-panel :is(button,input,select) { min-height:44px; }
+@container (max-width:600px) {
+ .shared-record-header { display:block; }
+ .shared-record .crm-r38-popover .org-phone-account { display:flex; }
+ .shared-record-header > div:first-child { width:100%; }
+ .shared-record-actions { margin-top:8px; justify-content:space-between; }
+ .org-open-work[data-expanded=false] .org-work-rows article:nth-of-type(n+5) { display:none; }
+ .org-open-work > button[data-phone-only] { display:inline-flex; }
+ .org-register { height:auto!important; min-height:100%; }
+ .org-create-form footer small { display:none; }
+ .org-read-time { order:2; }
+}
