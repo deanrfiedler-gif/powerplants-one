@@ -79,6 +79,8 @@ export async function organisationRegister(
   };
   // Same matching-name candidate basis as the existing DuplicateCandidates search; no identity merge
   // or fuzzy confidence is inferred. Every matching name is itself inside the permitted population.
+  // Aggregate related records once within that population. Repeating the full visibility
+  // queries for each organisation exceeds the statement limit at the declared load.
   const data = (
     await c.query<OrganisationRegisterData & { cursor_found: boolean }>(
       `
@@ -92,26 +94,49 @@ export async function organisationRegister(
       JOIN permitted p ON p.id=sp.organisation_id
       WHERE sp.workspace_id=$1 AND sp.valid_from<=$6::timestamptz AND (sp.valid_to IS NULL OR sp.valid_to>$6::timestamptz)
         AND ${visibility("Site", "s")}
+    ), site_counts AS (
+      SELECT organisation_id,count(*)::int AS sites FROM current_sites GROUP BY organisation_id
+    ), area_counts AS (
+      SELECT s.organisation_id,count(*)::int AS areas FROM current_sites s
+      JOIN ppo.facilities f ON f.workspace_id=$1 AND f.site_id=s.id
+      WHERE ${visibility("Facility", "f")} GROUP BY s.organisation_id
+    ), deal_counts AS (
+      SELECT o.organisation_id,count(*)::int AS deals FROM ppo.opportunities o
+      JOIN permitted r ON r.id=o.organisation_id
+      WHERE o.workspace_id=$1 AND o.close_outcome='Open'
+        AND ${scopeSql("r.company_id", "NULL::uuid", "crm.opportunity.read")}
+        AND ${scopeSql("r.company_id", "NULL::uuid", "shared.internal.read")}
+        AND ${opportunityVisibility()}
+      GROUP BY o.organisation_id
+    ), visible_follow_ups AS MATERIALIZED (
+      SELECT a.id,a.workspace_id,a.summary,a.due_at,a.due_needed FROM ppo.activities a
+      WHERE a.workspace_id=$1 AND a.status NOT IN ('Completed','Cancelled')
+        AND EXISTS(SELECT 1 FROM ppo.activity_links al JOIN permitted r ON r.id=al.object_id
+          WHERE al.workspace_id=a.workspace_id AND al.activity_id=a.id AND al.object_type='Organisation'
+            AND ${scopeSql("r.company_id", "NULL::uuid", "activity.read")})
+        AND ${activityVisibility("a", true, true, true)}
+    ), next_follow_ups AS (
+      SELECT DISTINCT ON (r.id) r.id AS organisation_id,a.id,a.summary,a.due_at,a.due_needed
+      FROM visible_follow_ups a
+      JOIN ppo.activity_links al ON al.workspace_id=a.workspace_id AND al.activity_id=a.id AND al.object_type='Organisation'
+      JOIN permitted r ON r.id=al.object_id
+      WHERE ${scopeSql("r.company_id", "NULL::uuid", "activity.read")}
+      ORDER BY r.id,a.due_at ASC NULLS LAST,a.id
     ), facts AS MATERIALIZED (
       SELECT r.*,
-        (SELECT count(*)::int FROM current_sites s WHERE s.organisation_id=r.id) AS sites,
-        (SELECT count(*)::int FROM ppo.facilities f WHERE f.workspace_id=$1
-          AND f.site_id IN (SELECT id FROM current_sites WHERE organisation_id=r.id) AND ${visibility("Facility", "f")}) AS areas,
+        coalesce(s.sites,0) AS sites,
+        coalesce(f.areas,0) AS areas,
         CASE WHEN ${scopeSql("r.company_id", "NULL::uuid", "crm.opportunity.read")} AND ${scopeSql("r.company_id", "NULL::uuid", "shared.internal.read")}
-          THEN (SELECT count(*)::int FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.organisation_id=r.id AND o.close_outcome='Open' AND ${opportunityVisibility()}) ELSE NULL END AS deals,
+          THEN coalesce(o.deals,0) ELSE NULL END AS deals,
         EXISTS(SELECT 1 FROM permitted d WHERE d.id<>r.id AND position(lower(r.display_name) IN lower(d.display_name))>0) AS possible_duplicate,
         CASE WHEN ${scopeSql("r.company_id", "NULL::uuid", "activity.read")} THEN 'Available' ELSE 'Restricted' END AS follow_up_state,
         CASE WHEN a.id IS NULL THEN NULL ELSE jsonb_build_object('id',a.id,'summary',a.summary,'due_at',a.due_at,'due_needed',a.due_needed) END AS next_follow_up,
         a.due_at AS follow_up_due
       FROM permitted r
-      LEFT JOIN LATERAL (
-        SELECT a.id,a.summary,a.due_at,a.due_needed FROM ppo.activities a
-        WHERE a.workspace_id=$1 AND a.status NOT IN ('Completed','Cancelled')
-          AND ${scopeSql("r.company_id", "NULL::uuid", "activity.read")}
-          AND EXISTS(SELECT 1 FROM ppo.activity_links al WHERE al.workspace_id=a.workspace_id AND al.activity_id=a.id AND al.object_type='Organisation' AND al.object_id=r.id)
-          AND ${activityVisibility("a", true, true, true)}
-        ORDER BY a.due_at ASC NULLS LAST,a.id LIMIT 1
-      ) a ON true
+      LEFT JOIN site_counts s ON s.organisation_id=r.id
+      LEFT JOIN area_counts f ON f.organisation_id=r.id
+      LEFT JOIN deal_counts o ON o.organisation_id=r.id
+      LEFT JOIN next_follow_ups a ON a.organisation_id=r.id
     ), filtered AS MATERIALIZED (
       SELECT * FROM facts WHERE ($3='' OR position(lower($3) IN lower(concat_ws(' ',display_name,display_number,sector,owner_name)))>0)
         AND ($4='' OR status=$4) AND ($5::uuid IS NULL OR owner_id=$5)

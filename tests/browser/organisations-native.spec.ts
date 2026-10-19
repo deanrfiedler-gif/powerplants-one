@@ -1,8 +1,17 @@
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { waitForSampleCoreResponse } from "../../scripts/quality-core-response";
 const org = "50000000-0000-4000-8000-000000000001";
 const company = "20000000-0000-4000-8000-000000000001";
+async function openRecord(page: Page, path: string) {
+  // The inherited workspace read completes before its tabs can render. Observe
+  // that exact navigation's response, as the retained directory journey does.
+  const response = waitForSampleCoreResponse(page, `/api/v1/customers/${org}/workspace`);
+  void response.catch(() => undefined);
+  await page.goto(path);
+  expect((await response).status()).toBe(200);
+}
 async function capture(page: Page, info: TestInfo, name: string) {
   const root = process.env.PPO_CS01_EVIDENCE;
   if (root) {
@@ -68,7 +77,7 @@ test("CS01 register and seven-tab record geometry at all retained widths", async
     }
     await capture(page, info, `register-${width}`);
     if (width === 1440) await page.setViewportSize({ width, height: 1234 });
-    await page.goto(`/customers/${org}?department=service`);
+    await openRecord(page, `/customers/${org}?department=service`);
     await expect(
       page.getByRole("tab", { name: "Overview", exact: true }),
     ).toHaveAttribute("aria-selected", "true");
@@ -151,7 +160,7 @@ test("CS01 Sales type/status URL and permitted source states", async ({
   page,
 }, info) => {
   await page.setViewportSize({ width: 1440, height: 1078 });
-  await page.goto(`/customers/${org}?view=deals&department=service`);
+  await openRecord(page, `/customers/${org}?view=deals&department=service`);
   await expect(
     page.getByRole("tab", { name: "Sales", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
@@ -288,12 +297,12 @@ test("CS01 loading, empty, unavailable, denied and partial source failures never
     };
     await route.fulfill({ response, json: body });
   });
-  await page.goto(`/customers/${org}`);
+  await openRecord(page, `/customers/${org}`);
   await expect(
     page.getByRole("button", { name: "Retry requests" }),
   ).toBeVisible();
   await capture(page, info, "service-unavailable-390");
-  await page.unrouteAll();
+  await page.unrouteAll({ behavior: "wait" });
 });
 
 test("CS01 saved columns and identity correction retain existing save/recovery authority", async ({

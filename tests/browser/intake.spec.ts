@@ -73,12 +73,11 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     "href", "/customers/50000000-0000-4000-8000-000000000001/stakeholders",
   );
   await stakeholders.click();
-  await expect(
-    page.getByRole("link", { name: "SYN Avery Contact", exact: true }),
-  ).toHaveAttribute("href", `/people/${person}`);
-  await page
-    .getByRole("link", { name: "SYN Avery Contact", exact: true })
-    .click();
+  await expect(page).toHaveURL(`/customers/50000000-0000-4000-8000-000000000001/stakeholders`);
+  const currentContact = page.getByRole("tabpanel", { name: "Current & future", exact: true })
+    .getByRole("link", { name: "SYN Avery Contact", exact: true });
+  await expect(currentContact).toHaveAttribute("href", `/people/${person}`);
+  await currentContact.click();
   await page.getByRole("tab", { name: "Relationships", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Organisation affiliations", exact: true }),

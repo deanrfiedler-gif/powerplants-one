@@ -10,6 +10,8 @@ This is an editable working specification. Existing accepted page baselines take
 
 Register: authorised one-snapshot rows/counts/owners, signed pagination, Status/owner/search/views in the URL, shared grid on desktop and rows on phones, snapshot and legacy saved-view commands. Open service is Unknown because no combined closure read is established. Organisation row selection never enters the URL. Numeric site/area links retain the exact organisation handover.
 
+Load contract: the register reads `/api/v1/customers/register`; the declared-load sampler observes that exact endpoint. Counts and the earliest permitted follow-up are aggregated within the same authorised population, retaining restricted/null distinctions and due-date/ID ordering. The 1,000-organisation regression retains exact counts, 25-row pages and signed continuation under the unchanged database statement limit. This is functional/load evidence, not visual acceptance.
+
 Record: shared identity/source/facts layout, seven URL-retained tabs, type and status filters, exact source handovers and sticky phone follow-up. Current site roles are separate from historical relationships. Source limitations, unavailable/partial/denied states and finance restrictions stay explicit. Correct details uses only the existing display-name revision; stale and uncertain writes keep the original operation.
 
 Create: Organisation, Owner and source, Notes, and Check before creating; actual company/owner selectors and duplicate-name read, optional legal name/sector/notes using the existing create command. Notes keep Internal visibility. A Lead selection returns for explicit LC-12 review/save. Other shared-create variants retain their workflows.

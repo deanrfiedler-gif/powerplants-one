@@ -9,6 +9,7 @@ import { organisationRegister } from "../../src/shared/organisation-register";
 import { customer360 } from "../../src/shared/customer-360";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { recordOpportunityOutcome } from "../../src/crm/outcomes";
+import { createActivity } from "../../src/activities/activities";
 import { CRM, crmBase, crmDiscovery } from "../helpers/crm";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -19,6 +20,52 @@ beforeEach(reset);
 after(closeDatabase);
 const principal = async () => (await createSession("coordinator")).principal;
 const invalid = (e: unknown) => (e as { code: string }).code === "InvalidData";
+
+test("CS01 aggregate follow-ups retain shared links, due ordering and revoked access", async () => {
+  const p = await principal();
+  const organisations = ["e6040000-0000-4000-8000-000000000001", "e6040000-0000-4000-8000-000000000002"];
+  for (const id of organisations) await database().query(
+    "INSERT INTO ppo.organisations(id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,relationship_status) VALUES($1,$2,$3,$4,$4,$4,$5,'Active')",
+    [id, CRM.workspace, CRM.company, p.actor_id, `SYN register aggregate ${id}`],
+  );
+  const activities = ["e6041000-0000-4000-8000-000000000001", "e6041000-0000-4000-8000-000000000002", "e6041000-0000-4000-8000-000000000003"];
+  for (const [index, id] of activities.entries()) await createActivity(p, {
+    ...crmBase(), id, company_id: CRM.company, site_id: null, kind: "CustomerContact",
+    owner_id: p.actor_id, summary: `SYN aggregate follow-up ${index}`,
+    due_at: index === 2 ? null : "2031-10-01T00:00:00Z", due_needed: index === 2,
+    access_class: "Internal",
+    links: organisations.map(object_id => ({ object_type: "Organisation", object_id })),
+  });
+  for (const expected of activities) {
+    const result = await organisationRegister(p, { q: "SYN register aggregate" });
+    assert.equal(result.total, 2);
+    assert.ok(result.items.every(row => row.next_follow_up?.id === expected));
+    assert.ok(result.items.every(row => row.sites === 0 && row.areas === 0 && row.deals === 0));
+    if (expected !== activities.at(-1)) await database().query("UPDATE ppo.activities SET status='Completed',outcome='SYN selection fixture completed',version=version+1 WHERE id=$1", [expected]);
+  }
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='activity.read'", [p.actor_id]);
+  const revoked = await organisationRegister(p, { q: "SYN register aggregate" });
+  assert.ok(revoked.items.every(row => row.follow_up_state === "Restricted" && row.next_follow_up === null));
+});
+
+test("CS01 thousand-organisation register keeps exact counts and bounded signed pages", async () => {
+  const p = await principal();
+  await database().query(`INSERT INTO ppo.organisations(id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,relationship_status)
+    SELECT ('e6042000-0000-4000-8000-'||lpad(n::text,12,'0'))::uuid,$1,$2,$3,$3,$3,'SYN register load '||n,'Active'
+    FROM generate_series(1,1000-(SELECT count(*)::int FROM ppo.organisations WHERE workspace_id=$1)) n`,
+    [CRM.workspace, CRM.company, p.actor_id]);
+  // The application's unchanged PostgreSQL statement timeout bounds both reads.
+  const first = await organisationRegister(p, {});
+  assert.equal(first.total, 1000);
+  assert.equal(first.counts.All, 1000);
+  assert.equal(first.items.length, 25);
+  assert.ok(first.next_cursor);
+  const second = await organisationRegister(p, { cursor: first.next_cursor });
+  assert.equal(second.total, 1000);
+  assert.deepEqual(second.counts, first.counts);
+  assert.equal(second.items.length, 25);
+  assert.equal(new Set([...first.items, ...second.items].map(row => row.id)).size, 50);
+});
 
 test("CS01 one authorised population supplies rows, view counts, owner options and signed pages", async () => {
   const p = await principal();
