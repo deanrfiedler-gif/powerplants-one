@@ -71,6 +71,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(stakeholders).toHaveAttribute(
     "href", "/customers/50000000-0000-4000-8000-000000000001/stakeholders",
   );
+  await page.getByRole("button", {name:"Organisation actions",exact:true}).click();
   await stakeholders.click();
   await expect(
     page.getByRole("link", { name: "SYN Avery Contact", exact: true }),
@@ -431,7 +432,7 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
   await page.route("**/api/v1/customers", (route) =>
     route.request().method() === "POST" ? route.abort() : route.continue(),
   );
-  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  await page.getByRole("button", { name: "Create organisation", exact: true }).click();
   await expect(
     page.getByRole("alert").filter({ hasText: /could not be confirmed/ }),
   ).toBeVisible();
@@ -462,14 +463,14 @@ test("P03 unavailable and empty queues stay distinct; keyboard focus and network
       });
     else await route.fulfill({ response });
   });
-  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  await page.getByRole("button", { name: "Create organisation", exact: true }).click();
   await expect(
     page.getByRole("alert").filter({ hasText: /response could not be read/ }),
   ).toBeVisible();
   await expect(page.getByLabel("Display name", { exact: true })).toHaveValue(
     retainedName,
   );
-  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  await page.getByRole("button", { name: "Create organisation", exact: true }).click();
   await expect(page).toHaveURL(/\/customers\/[0-9a-f-]{36}$/);
   expect(operationIds).toHaveLength(2);
   expect(operationIds[1]).toBe(operationIds[0]);

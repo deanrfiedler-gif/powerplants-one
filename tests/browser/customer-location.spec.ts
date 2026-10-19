@@ -57,12 +57,12 @@ test("CS01 source tabs restore through URL navigation and exact canonical links"
 }) => {
   await page.goto(`/customers/${org}?view=sites`);
   await expect(
-    page.getByRole("tab", { name: "Sites & equipment", exact: true }),
+    page.getByRole("tab", { name: "Sites", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
   await expect(
     page.getByRole("link", { name: "Account development", exact: true }),
   ).toHaveAttribute("href", `/customers/${org}/development`);
-  await page.getByRole("tab", { name: "Sales orders", exact: true }).click();
+  await page.getByRole("tab", { name: "Sales", exact: true }).click();
   await expect(
     page.getByText("No verified sales-order read contract is connected.", {
       exact: false,
@@ -70,10 +70,10 @@ test("CS01 source tabs restore through URL navigation and exact canonical links"
   ).toBeVisible();
   await page.reload();
   await expect(
-    page.getByRole("tab", { name: "Sales orders", exact: true }),
+    page.getByRole("tab", { name: "Sales", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
   await page
-    .getByRole("tab", { name: "Sales orders", exact: true })
+    .getByRole("tab", { name: "Sales", exact: true })
     .press("Home");
   await expect(
     page.getByRole("tab", { name: "Overview", exact: true }),

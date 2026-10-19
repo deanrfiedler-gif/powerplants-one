@@ -1,6 +1,7 @@
 // The shell allocates the viewport once; full-bleed modules own their toolbar,
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
+  { route: "/customers", moduleId: "CS-01", scope: "ppo-organisations", layout: "full-bleed", navigation: "workspace", baseline: "cs01-native-r01" },
   { route: "/projects", scope: "ppo-projects", layout: "full-bleed", navigation: "workspace", baseline: "projects-figma-register" },
   { route: "/service/packs/new", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-preparation" },
   { route: "/service/packs", moduleId: "SV-05", scope: "ppo-pack-register", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-register" },
@@ -43,7 +44,7 @@ export const moduleWorkspaces = [
   { route: "/equipment/lifecycle", moduleId: "EQ-07", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq07-native-r01" },
   { route: "/equipment/backups", moduleId: "EQ-08", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq08-native-r01" },
   { route: "/equipment/instruments", moduleId: "EQ-09", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq09-native-r01" },
-  { route: "/customers/[id]", moduleId: "CS-01", scope: "ppo-customer-360", layout: "padded", navigation: "workspace", baseline: "cs01-native-r01" },
+  { route: "/customers/[id]", moduleId: "CS-01", scope: "ppo-customer-360", layout: "full-bleed", navigation: "workspace", baseline: "cs01-native-r01" },
   { route: "/people/[id]", moduleId: "CS-02", scope: "ppo-contact", layout: "padded", navigation: "workspace", baseline: "cs02-native-r01" },
   { route: "/customers/[id]/stakeholders", moduleId: "CS-03", scope: "ppo-stakeholders", layout: "padded", navigation: "workspace", baseline: "cs03-native-r01" },
   { route: "/sites/[id]", moduleId: "CS-04", scope: "ppo-site", layout: "padded", navigation: "workspace", baseline: "cs04-native-r01" },

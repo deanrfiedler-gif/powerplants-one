@@ -47,3 +47,7 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## ES-01 consumer
 
 `/estimating` reuses WorklistPanel for the opportunity detail when the register is narrower than the 1360 px panel width (decision P7). The dialog, Escape handling and focus return are the shared implementation. The right-hand geometry (448 px, full height, header, scrolling body and Done footer) is scoped to the page, because the CRM drawer is a top sheet. The alignment item `es01-right-drawer` records this variant for review. At phone width the page uses cards instead of a drawer. The Estimating workload browser suite covers opening, the dialog name, Escape and focus return at 1359 px.
+
+## CS-01 native consumer — 19 October 2026
+
+The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.

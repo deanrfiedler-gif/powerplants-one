@@ -198,11 +198,12 @@ export function NewOpportunity() {
   return <SalesActivityCreation kind="Opportunity">{sales => <NewOpportunityForm sales={sales}/>}</SalesActivityCreation>;
 }
 function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
+  const initial = useSearchParams();
   const p = useIdentity(),
     router = useRouter(),
     [id] = useState(() => crypto.randomUUID()),
-    [company, setCompany] = useState(sales?.source.activity.company_id ?? ""),
-    [org, setOrg] = useState(sales?.source.customer_id ?? ""),
+    [company, setCompany] = useState(sales?.source.activity.company_id ?? initial.get("company_id") ?? ""),
+    [org, setOrg] = useState(sales?.source.customer_id ?? initial.get("organisation_id") ?? ""),
     [site, setSite] = useState(sales?.source.activity.site_id ?? ""),
     [person, setPerson] = useState(""),
     [owner, setOwner] = useState(p.actor_id),

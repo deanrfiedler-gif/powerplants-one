@@ -4,6 +4,20 @@ Stable entry: `route:/customers`. Owner: Dean Fiedler. Status: **Draft for visua
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/customers`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
+## Current CS-01 implementation — 19 October 2026
+
+[Accepted D1–D7 / Q1–Q4](../../../decisions/organisations-figma-design.md) and [implementation/adaptations](../../../decisions/organisations-figma-implementation.md) govern the current native build. Earlier proposal sections below remain provenance, not the current target. No issued reference or parent requirement ID changes.
+
+Register: authorised one-snapshot rows/counts/owners, signed pagination, Status/owner/search/views in the URL, shared grid on desktop and rows on phones, snapshot and legacy saved-view commands. Open service is Unknown because no combined closure read is established. Organisation row selection never enters the URL. Numeric site/area links retain the exact organisation handover.
+
+Record: shared identity/source/facts layout, seven URL-retained tabs, type and status filters, exact source handovers and sticky phone follow-up. Current site roles are separate from historical relationships. Source limitations, unavailable/partial/denied states and finance restrictions stay explicit. Correct details uses only the existing display-name revision; stale and uncertain writes keep the original operation.
+
+Create: Organisation, Owner and source, Notes, and Check before creating; actual company/owner selectors and duplicate-name read, optional legal name/sector/notes using the existing create command. Notes keep Internal visibility. A Lead selection returns for explicit LC-12 review/save. Other shared-create variants retain their workflows.
+
+Desktop checks: 1440 × 900/1234, 1280 × 900 and 1024 × 900. Phone: 390 × 844 and 320 × 844. Exact source captures 01–10 are listed in [r01](../../../reference/ui/customers/organisations-design-r01/README.md). Additional snapshot, denied, correction and form-recovery states use established shared patterns; no additional accepted image exists for them. [Host state recipes](../organisations-native-fixtures.json) and [native evidence](../../../testing/evidence/organisations-native-r01/README.md) retain the verification limits.
+
+Guides remain Draft. Source presence, local proof, visual review, baseline acceptance and deployment remain separate.
+
 ## Purpose and task
 
 Find a permitted canonical customer, confirm its identity and open that exact Customer 360 workspace. Returning to the register should retain the prior search, filter, sort, page and scroll context. The native directory already exists; the 14 October Figma composition remains a proposal for review.
@@ -14,7 +28,7 @@ Find a permitted canonical customer, confirm its identity and open that exact Cu
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 01 and 06 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2652`, tablet `1443:3145`). The register is a grid (D1): name, status, relationship owner, sites, open deals, open service and next follow-up, then sector, areas and reference. The side menu lists People and Sites, then All organisations, Prospects, Possible duplicates, Without a current site and Inactive (D2). Nothing new is built; the native directory remains the built page.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 01 and 06 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2652`, tablet `1443:3145`). The register is a grid (D1): name, status, relationship owner, sites, open deals, open service and next follow-up, then sector, areas and reference. The side menu lists People and Sites, then All organisations, Prospects, Possible duplicates, Without a current site and Inactive (D2). The native implementation is now tracked in the current section above.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -54,7 +68,7 @@ The organisation directory calculates relationship counts after selecting a page
 
 The PT-27 candidate imports CrmDirectory and its existing customer stylesheet directly from this route, avoiding the initial ContextList entry that also imports site and facility screens. CS-01/CS-02 remain Register/worklist. The shared session/shell, scoped directory data, desktop table, mobile cards, guide tasks and outgoing record contract stay in place. The component catalogue binds the cold-start fixture, original ten-browser comparison and actual receiving navigation. Source presence does not establish speed or visual acceptance; review the compiled manifest, stylesheet order, 1440 px desktop and 390 px phone captures, plus the existing 320 px contract. No new accepted image is available.
 
-The current directory consumer is `CrmDirectory`: CS-01/CS-02 Register/worklist with the existing desktop table and phone cards. Its record names, affiliation/count links, New and local context sections load destinations on activation. Shared shell and Contacts hub view links retain their separate behaviour. Exact hrefs, department context, permission checks and unsaved-work handling are unchanged. See [component contract](../components/crm-directory.md) and `tests/browser/directory-navigation.spec.ts`; source presence and automated proof do not grant visual or device acceptance.
+Historical PT-27 directory consumer: `CrmDirectory`: CS-01/CS-02 Register/worklist with the existing desktop table and phone cards. Its record names, affiliation/count links, New and local context sections load destinations on activation. Shared shell and Contacts hub view links retain their separate behaviour. Exact hrefs, department context, permission checks and unsaved-work handling are unchanged. See [component contract](../components/crm-directory.md) and `tests/browser/directory-navigation.spec.ts`; source presence and automated proof do not grant visual or device acceptance.
 
 ## Shell destination loading — PT-27
 

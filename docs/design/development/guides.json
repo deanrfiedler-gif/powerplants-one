@@ -1263,7 +1263,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "CS-01 local synthetic verification: docs/testing/evidence/organisations-native-r01/README.md; owner review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -1408,6 +1408,19 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "cs01-native",
+          "title": "Organisations native workflow",
+          "paragraphs": [
+            "Use the Organisations views, search, Status and Relationship owner filters to find permitted records. Filter and sort context stays in the URL; selection does not. Columns and views retains account-specific saved views.",
+            "Open a record for Overview, Sales, Service, Sites, Projects, Accounts and Activity. Source states and read times describe the actual permitted read. Unknown or restricted work is not zero; no financial values are combined.",
+            "Create organisation checks permitted matching names before the existing save. Legal name, sector and Internal notes are optional. Use this record from a Lead returns for explicit review/save. Correct details changes only the display name through the existing revision command.",
+            "A failed read removes the register results/counts. For an uncertain save, confirm the original operation rather than creating another. Refresh and compare a newer version before applying a correction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -35993,7 +36006,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "CS-01 local synthetic verification: docs/testing/evidence/organisations-native-r01/README.md; owner review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -36139,6 +36152,19 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "cs01-native",
+          "title": "Organisations native workflow",
+          "paragraphs": [
+            "Use the Organisations views, search, Status and Relationship owner filters to find permitted records. Filter and sort context stays in the URL; selection does not. Columns and views retains account-specific saved views.",
+            "Open a record for Overview, Sales, Service, Sites, Projects, Accounts and Activity. Source states and read times describe the actual permitted read. Unknown or restricted work is not zero; no financial values are combined.",
+            "Create organisation checks permitted matching names before the existing save. Legal name, sector and Internal notes are optional. Use this record from a Lead returns for explicit review/save. Correct details changes only the display name through the existing revision command.",
+            "A failed read removes the register results/counts. For an uncertain save, confirm the original operation rather than creating another. Refresh and compare a newer version before applying a correction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -36179,7 +36205,7 @@
       "prepared_at": "2026-10-07",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "CS-01 local synthetic verification: docs/testing/evidence/organisations-native-r01/README.md; owner review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -36424,6 +36450,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "cs01-native",
+          "title": "Organisations native workflow",
+          "paragraphs": [
+            "Use the Organisations views, search, Status and Relationship owner filters to find permitted records. Filter and sort context stays in the URL; selection does not. Columns and views retains account-specific saved views.",
+            "Open a record for Overview, Sales, Service, Sites, Projects, Accounts and Activity. Source states and read times describe the actual permitted read. Unknown or restricted work is not zero; no financial values are combined.",
+            "Create organisation checks permitted matching names before the existing save. Legal name, sector and Internal notes are optional. Use this record from a Lead returns for explicit review/save. Correct details changes only the display name through the existing revision command.",
+            "A failed read removes the register results/counts. For an uncertain save, confirm the original operation rather than creating another. Refresh and compare a newer version before applying a correction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -36463,7 +36502,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "CS-01 local synthetic verification: docs/testing/evidence/organisations-native-r01/README.md; owner review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -36689,6 +36728,19 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "cs01-native",
+          "title": "Organisations native workflow",
+          "paragraphs": [
+            "Use the Organisations views, search, Status and Relationship owner filters to find permitted records. Filter and sort context stays in the URL; selection does not. Columns and views retains account-specific saved views.",
+            "Open a record for Overview, Sales, Service, Sites, Projects, Accounts and Activity. Source states and read times describe the actual permitted read. Unknown or restricted work is not zero; no financial values are combined.",
+            "Create organisation checks permitted matching names before the existing save. Legal name, sector and Internal notes are optional. Use this record from a Lead returns for explicit review/save. Correct details changes only the display name through the existing revision command.",
+            "A failed read removes the register results/counts. For an uncertain save, confirm the original operation rather than creating another. Refresh and compare a newer version before applying a correction."
           ],
           "steps": [],
           "rows": [],

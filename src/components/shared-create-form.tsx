@@ -45,6 +45,9 @@ export function SharedCreateForm({
     access: "",
     biosecurity: "",
     status: "Prospect",
+    legal_name: "",
+    sector: "",
+    notes: "",
     role: "",
     from: "",
     to: "",
@@ -200,6 +203,9 @@ export function SharedCreateForm({
         display_name: v.name,
         relationship_status: v.status,
         owner_id: v.owner,
+        legal_name: v.legal_name || null,
+        sector: v.sector || null,
+        notes: v.notes || null,
       };
     }
     if (kind === "person") {
@@ -316,6 +322,191 @@ export function SharedCreateForm({
     party: "Add a site party",
     history: "Record attributed technical context",
   };
+  if (kind === "customer")
+    return (
+      <div className="org-create" data-module-layout="full-bleed">
+        <ValidationFields error={cmd.error}>
+          <div className="org-create-main">
+            <header>
+              <Link href={lead ? leadReturn() : "/customers"}>
+                ←{" "}
+                {lead
+                  ? "Return to lead and review the selection"
+                  : "Organisations"}
+              </Link>
+              <PageHeader eyebrow="CS-01" title="Create organisation" />
+              <p>
+                Use fictional data. A new organisation creates no ERP account or
+                work authority.
+              </p>
+            </header>
+            <ErrorNotice error={cmd.error} />
+            <ReadState
+              loading={companies.loading}
+              error={companies.error}
+              retry={companies.reload}
+            />
+            {v.company && (
+              <ReadState
+                loading={owners.loading}
+                error={owners.error}
+                retry={owners.reload}
+              />
+            )}
+            <form
+              className="org-create-form"
+              onSubmit={submit}
+              onChange={() => {
+                if (lead) leadCommand.dirty();
+              }}
+            >
+              <fieldset
+                disabled={
+                  locked || companies.loading || (!!v.company && owners.loading)
+                }
+              >
+                <section>
+                  <h2>Organisation</h2>
+                  <div className="form-grid">
+                    {select(
+                      "company",
+                      "Company visibility context",
+                      companies.data?.items ?? [],
+                      true,
+                    )}
+                    {field("name", "Display name", true)}
+                    {field("sector", "Sector")}
+                    <EnumField
+                      name="shared-status"
+                      label="Relationship status"
+                      value={v.status}
+                      values={["Prospect", "Active", "Inactive"]}
+                      onChange={(value) => set("status", value)}
+                    />
+                    {field("legal_name", "Legal name")}
+                  </div>
+                  <p>
+                    If the legal name differs, record it here. Unknown
+                    information can stay blank.
+                  </p>
+                </section>
+                <section>
+                  <h2>Owner and source</h2>
+                  <div className="form-grid">
+                    {select(
+                      "owner",
+                      "Relationship / site owner",
+                      owners.data?.items ?? [],
+                      true,
+                    )}
+                    <div className="field">
+                      <span>Created from</span>
+                      <p>
+                        {lead ? (
+                          <Link href={leadReturn()}>
+                            Lead · review selection on return
+                          </Link>
+                        ) : (
+                          "Direct creation"
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </section>
+                <section>
+                  <h2>Notes</h2>
+                  {field("notes", "Relationship notes", false, true, 10000)}
+                  <p>
+                    Notes use the existing Internal access class and may be
+                    restricted to other readers.
+                  </p>
+                  {field("reason", "Reason for capture", true, false, 1000)}
+                </section>
+                <footer>
+                  <Link
+                    className="button secondary"
+                    href={lead ? leadReturn() : "/customers"}
+                  >
+                    Cancel
+                  </Link>
+                  <button type="submit">Create organisation</button>
+                </footer>
+              </fieldset>
+            </form>
+            {lead && <p role="status">{leadCommand.status}</p>}
+            {lead && leadCommand.uncertain && (
+              <button
+                type="button"
+                disabled={leadCommand.busy}
+                onClick={() => void leadCommand.reconcile()}
+              >
+                Confirm original save
+              </button>
+            )}
+          </div>
+          <aside
+            className="org-create-check"
+            aria-label="Check before creating"
+          >
+            <h2>Check before creating</h2>
+            <p>
+              Matching names in permitted companies. This check is a prompt,
+              never a block.
+            </p>
+            <ReadState
+              loading={duplicates.loading}
+              error={duplicates.error}
+              retry={duplicates.reload}
+            />
+            {!v.name && <p>Enter a display name to check permitted records.</p>}
+            {duplicates.data && (
+              <>
+                {duplicates.data.items.map((o) => (
+                  <article key={o.id}>
+                    <h3>{o.display_name}</h3>
+                    <p>{o.display_number}</p>
+                    <div className="actions">
+                      <Link href={`/customers/${o.id}`}>Open</Link>
+                      {!locked && (
+                        <Link
+                          href={
+                            lead
+                              ? leadReturn(o.id, "", "")
+                              : `/customers/${o.id}`
+                          }
+                        >
+                          Use this record
+                        </Link>
+                      )}
+                    </div>
+                  </article>
+                ))}
+                {!duplicates.data.items.length && (
+                  <p>
+                    No matching names in this returned page. This is not proof
+                    of uniqueness.
+                  </p>
+                )}
+                {duplicates.data.next_cursor && (
+                  <p>More matches exist. Refine the name before creating.</p>
+                )}
+              </>
+            )}
+            <p>
+              Organisations in companies you cannot see are not checked or
+              shown. Nothing is merged automatically.
+            </p>
+            {lead && (
+              <p>
+                Use this record returns to the lead with a proposed selection.
+                Review and save that selection explicitly; no organisation is
+                created.
+              </p>
+            )}
+          </aside>
+        </ValidationFields>
+      </div>
+    );
   return (
     <ValidationFields error={cmd.error}>
       <Link href="/customers">← Customer context</Link>

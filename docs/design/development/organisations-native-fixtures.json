@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "scope": "CS-01",
+  "status": "Synthetic host fixtures; owner review pending",
+  "source": "docs/decisions/organisations-figma-design.md",
+  "host": "tests/browser/organisations-native.spec.ts",
+  "data": "Real permitted ppo_synthetic_test records; no Figma story copied into application code.",
+  "viewports": [
+    1440,
+    1280,
+    1024,
+    390,
+    320
+  ],
+  "states": [
+    "register",
+    "snapshot",
+    "overview",
+    "sales",
+    "sales-filtered",
+    "create",
+    "loading",
+    "empty",
+    "unavailable",
+    "denied",
+    "service-unavailable",
+    "correction",
+    "long-content",
+    "saved-view",
+    "dirty-leave",
+    "uncertain-save"
+  ],
+  "faults": "Only error/loading evidence uses controlled response interception; remaining captures use real reads."
+}
