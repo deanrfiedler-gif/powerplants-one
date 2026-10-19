@@ -50,10 +50,13 @@ test("CS01 aggregate follow-ups retain shared links, due ordering and revoked ac
 
 test("CS01 thousand-organisation register keeps exact counts and bounded signed pages", async () => {
   const p = await principal();
+  const baseline = await organisationRegister(p, {});
+  // The seed also holds a finance-restricted organisation. Fill the permitted
+  // population to 1,000 without treating that hidden row as visible.
   await database().query(`INSERT INTO ppo.organisations(id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,relationship_status)
     SELECT ('e6042000-0000-4000-8000-'||lpad(n::text,12,'0'))::uuid,$1,$2,$3,$3,$3,'SYN register load '||n,'Active'
-    FROM generate_series(1,1000-(SELECT count(*)::int FROM ppo.organisations WHERE workspace_id=$1)) n`,
-    [CRM.workspace, CRM.company, p.actor_id]);
+    FROM generate_series(1,1000-$4::int) n`,
+    [CRM.workspace, CRM.company, p.actor_id, baseline.total]);
   // The application's unchanged PostgreSQL statement timeout bounds both reads.
   const first = await organisationRegister(p, {});
   assert.equal(first.total, 1000);
