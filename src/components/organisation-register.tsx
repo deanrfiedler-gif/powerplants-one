@@ -311,19 +311,15 @@ function Register({ query }: { query: URLSearchParams }) {
             </button>
           </WorklistMenu>
         </div>
-        <ReadState
-          loading={resource.loading}
-          error={resource.error}
-          retry={resource.reload}
-        />
+        {!resource.error && <ReadState loading={resource.loading} error={null} retry={resource.reload} />}
         {resource.error != null && (
-          <div className="org-failure" role="status">
+          <div className="org-failure">
             <h2>Organisations could not be loaded</h2>
             <p>
               No list or counts are shown. Check your connection or access, then
               retry.
             </p>
-            <Button onClick={resource.reload}>Retry loading</Button>
+            <ReadState loading={false} error={resource.error} retry={resource.reload} />
           </div>
         )}
         {data && (

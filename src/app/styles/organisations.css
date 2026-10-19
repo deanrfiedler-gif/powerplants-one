@@ -36,8 +36,12 @@
 .org-register .ppo-register-foot { display:flex; flex-wrap:wrap; gap:12px; align-items:center; padding:8px 16px; border-top:1px solid var(--line); }
 .org-register .ppo-register-foot label { margin-left:auto; display:flex; gap:8px; align-items:center; }
 .org-phone-view,.org-phone-list { display:none; }
+#ppo-organisations .org-phone-list .ppo-register-empty { padding:40px 20px; text-align:center; color:var(--text-secondary); }
+#ppo-organisations .org-phone-list .ppo-register-empty strong { display:block; margin-bottom:4px; color:var(--ink); font-size:16px; }
+#ppo-organisations .org-phone-list .ppo-register-empty p { margin:0 0 12px; }
 .org-failure,.org-record-state { margin:16px; padding:16px; }
 .org-failure { border:1px solid var(--danger-border); background:var(--danger-surface); color:var(--danger); border-radius:var(--radius-card); }
+.org-failure .business-error { border:0; padding:0; margin:0 0 12px; background:transparent; color:inherit; }
 .org-saved-views label { display:grid; margin:12px 0; }
 /* The shared menu/panel components supply focus management; this scope supplies their presentation. */
 :is(#ppo-organisations,.shared-record) .crm-r38-menu-trigger { display:inline-flex; align-items:center; gap:6px; min-height:44px; }

@@ -261,6 +261,7 @@ test("CS01 loading, empty, unavailable, denied and partial source failures never
     await expect(
       page.getByText("Organisations could not be loaded", { exact: true }),
     ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Retry loading", exact: true })).toHaveCount(1);
     await expect(page.locator(".org-phone-list article")).toHaveCount(0);
     await expect(page.locator(".org-read-time")).toHaveText(
       "Current results unconfirmed",
