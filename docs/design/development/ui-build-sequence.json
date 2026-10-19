@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs/design/development/register.json",
-  "register_sha256": "cb83a4251999cd961cd5dadd095c80d29003239cb57f4a552344a4af490052fe",
+  "register_sha256": "90208d66cc84aff09d105b3816166b04993f34396ac1e79365d0418eb4c035ab",
   "build_plan": "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -24,8 +24,8 @@
   "placed": 363,
   "excluded": 3,
   "build": 46,
-  "refine": 106,
-  "review": 206,
+  "refine": 104,
+  "review": 208,
   "decide": 5,
   "owner_reviewed": 28
  },
@@ -392,8 +392,8 @@
    "depends_on": [],
    "counts": {
     "build": 5,
-    "refine": 17,
-    "review": 25,
+    "refine": 15,
+    "review": 27,
     "decide": 0
    },
    "scopes": 20,
@@ -616,7 +616,7 @@
      "module": "CS",
      "path": "/customers",
      "rank": 15,
-     "state": "refine",
+     "state": "review",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
     },
@@ -638,7 +638,7 @@
      "module": "CS",
      "path": "/customers/new",
      "rank": 15,
-     "state": "refine",
+     "state": "review",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"
     },

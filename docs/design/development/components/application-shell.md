@@ -280,3 +280,7 @@ The accepted Leads page draws a 240 px secondary menu (Figma `190:20519`, [Leads
 ## Conversations and builder header fit — 19 October 2026
 
 The combined PR tree exposed an R9 regression at 1280 and 1366 px with the rail expanded and both Conversations and the development workspace visible. Above 1200 px, that combination caps the search against the available header width, reserving 368 px per side and two 12 px gaps. The existing mobile and builder-menu boundaries remain in place. The component fixture accepts `conversations=1&development=1`; `tests/ui/desktop-shell.spec.ts` checks both rail states at 960, 1024, 1199, 1200, 1201, 1280, 1366, 1440 and 1920 px against the shared header contract. Consumer bindings remain the shared `ProductHeader` and `ShellProvider`. [Integration evidence](../../../testing/evidence/pr-backlog-integration/README.md) distinguishes the repaired regression from the existing 800 px expanded-rail overflow. This is functional proof; owner/device review remains pending and review fingerprints are unchanged.
+
+## CS-01 native consumer — 19 October 2026
+
+The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.
