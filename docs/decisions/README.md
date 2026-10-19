@@ -21,6 +21,8 @@
 
 [Conversations T1d design](conversations-t1d-design.md) (PPO-CONV-T1D-DESIGN) records how the record-page lists, inbox notices and My Work asks are built, and the departures for Dean's review; the [reminder proposal](conversations-reply-by-reminders.md) (PPO-CONV-REMINDERS-PROP) sets out the reply-by scheduling options for his decision.
 
+[Calendar design](calendar-figma-design.md) (PPO-EC03-CALENDAR-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the EC-03 design: a Week view with a Due lane so PPO activities never book time, a read-only meeting panel with attendees, links, overlap, source and zone, Plan follow-up, a To do list, free-or-busy team availability, sync states, and phone views with the compact header. Building it is not decided.
+
 [ADR-0059 — Sending email from Powerplants One](ADR-0059-email-sending-from-ppo.md) is **proposed**, 19 October 2026, not accepted. It recommends that correspondence written in PPO goes from the person's own mailbox through delegated Graph `Mail.Send`, and customer notices stay on the shared mailbox through the communications service as ADR-0058 decides. Sent email tracking (Emails A1) would apply to correspondence only, storing the event type and time for 12 months.
 
 [Travel review design — owner decision](travel-review-figma-design.md) (PPO-PL05-TRAVEL-REVIEW-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-05 Figma design for `/schedule/travel`: a route of travel legs and visits for one person, a day summary, conflicts on the leg they affect and an order comparison that changes no booking, with the route estimate kept "Unknown" and no map. Building it is not decided.
