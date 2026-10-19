@@ -33,6 +33,7 @@ import { localDay } from "../activities/work-view";
 import { useRecordIdentity } from "../shell/record-identity";
 import { usePhoneHeaderConfig } from "../shell/phone-header";
 import { usePlatformResource } from "./platform-resource";
+import { useConversationsAction } from "./shell-conversations";
 import { PhoneHeaderActions, PhoneHeaderLead, PhoneHeaderTitle, phoneMenuEvent, phoneMenuStateEvent, type PhoneHeaderModel } from "./shell-phone-header";
 import type { notificationInbox } from "../notifications/service";
 
@@ -125,7 +126,11 @@ function ProductNavigationView({
     canOpen(item, permitted, shell.hosted);
   // The phone header's menu button opens the same menu as the tab bar's More; focus returns to whichever opened it.
   const opener = useRef<HTMLElement | null>(null);
+  // A dismissal (Close, Escape, the backdrop) returns focus to the opener once the modal dialog has actually closed;
+  // while it is open, everything outside it is inert. A choice made inside the menu moves focus on by itself.
+  const dismissed = useRef(false);
   const close = () => {
+    dismissed.current = true;
     setMore(false);
     (opener.current ?? toggle.current)?.focus();
   };
@@ -161,6 +166,7 @@ function ProductNavigationView({
     };
     const key = (event: KeyboardEvent) => {
       if (event.key === "Escape" && more) {
+        dismissed.current = true;
         setMore(false);
         (opener.current ?? toggle.current)?.focus();
       }
@@ -430,8 +436,15 @@ function ProductNavigationView({
           className="ppo-more-panel ppo-mobile-menu"
           aria-labelledby="desktop-more-title"
           data-shell-navigation
-          onCancel={() => setMore(false)}
-          onClose={() => setMore(false)}
+          onCancel={() => {
+            dismissed.current = true;
+            setMore(false);
+          }}
+          onClose={() => {
+            setMore(false);
+            if (dismissed.current) (opener.current ?? toggle.current)?.focus();
+            dismissed.current = false;
+          }}
           onClick={(event) => {
             if (event.target === event.currentTarget) close();
           }}
@@ -542,6 +555,8 @@ export function ProductHeader() {
           config: phoneConfig,
         };
   const unread = !!inbox.data && inbox.data.state !== "unavailable" && inbox.data.unread > 0;
+  // A record row does not draw Conversations (as drawn in Figma); its More menu carries it instead (P3).
+  const recordConversations = useConversationsAction(!wide && phone.type === "record");
   return (
     <>
       <title>{title}</title>
@@ -602,7 +617,7 @@ export function ProductHeader() {
           module={currentModule}
           page={label || "Application shell"}
           phoneBefore={<PhoneHeaderActions model={phone} place="before" />}
-          phoneAfter={<PhoneHeaderActions model={phone} place="after" />}
+          phoneAfter={<PhoneHeaderActions model={phone} place="after" conversations={recordConversations} />}
         >
           <div className="header-tools">
             <div id="header-search" />

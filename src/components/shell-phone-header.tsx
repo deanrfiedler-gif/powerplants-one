@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ShellIcon } from "./shell-icon";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
+import type { ConversationsAction } from "./shell-conversations";
 import type { PhoneHeaderAction, PhoneHeaderConfig } from "../shell/phone-header";
 
 // Phone header amendment (PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC; Figma "Shell / Phone header · compact" 1530:110).
@@ -16,7 +17,7 @@ export type PhoneHeaderModel =
   | { type: "list"; title: string; count?: string; config: PhoneHeaderConfig | null }
   | { type: "record"; reference: string; back?: { href?: string; label: string }; config: PhoneHeaderConfig | null };
 
-function RecordMore({ items, narrow }: { items: PhoneHeaderAction[]; narrow: PhoneHeaderAction[] }) {
+function RecordMore({ items, narrow, conversations }: { items: PhoneHeaderAction[]; narrow: PhoneHeaderAction[]; conversations?: ConversationsAction | null }) {
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null), panel = useRef<HTMLDivElement>(null);
   const path = usePathname();
@@ -53,6 +54,16 @@ function RecordMore({ items, narrow }: { items: PhoneHeaderAction[]; narrow: Pho
         <ShellIcon name="more" />
       </button>
       <div ref={panel} id="shell-phone-more" className="ppo-phone-more-panel" role="menu" aria-label="More actions" hidden={!open}>
+        {/* P3, P4: a record row has no Menu button, so More always starts with the menu (the same dialog the list row's
+            Menu opens) and Conversations, which the record row does not draw; the page's own actions follow. */}
+        <button type="button" role="menuitem" onClick={() => { setOpen(false); if (button.current) window.dispatchEvent(new CustomEvent(phoneMenuEvent, { detail: button.current })); }}>Open menu</button>
+        {conversations && (
+          <Link href="/conversations" role="menuitem" aria-label={conversations.name} aria-current={conversations.current ? "page" : undefined} onClick={() => setOpen(false)}>
+            <span>Conversations</span>
+            {conversations.badge && <span className="ppo-phone-more-count" aria-hidden="true">{conversations.badge}</span>}
+          </Link>
+        )}
+        {(items.length > 0 || narrow.length > 0) && <div role="separator" className="ppo-phone-more-rule" />}
         {/* P7: at 320 px previous and next leave the row for this menu, so the record reference never truncates. */}
         {narrow.map((item) => <button key={item.label} type="button" role="menuitem" className="ppo-phone-narrow-item" onClick={() => choose(item)}>{item.label}</button>)}
         {items.map((item) => <button key={item.label} type="button" role="menuitem" onClick={() => choose(item)}>{item.label}</button>)}
@@ -146,7 +157,7 @@ export function PhoneHeaderTitle({ model }: { model: PhoneHeaderModel }) {
 }
 
 // Rendered on either side of the Conversations action (desktop-shell.css orders them).
-export function PhoneHeaderActions({ model, place }: { model: PhoneHeaderModel; place: "before" | "after" }) {
+export function PhoneHeaderActions({ model, place, conversations }: { model: PhoneHeaderModel; place: "before" | "after"; conversations?: ConversationsAction | null }) {
   const config = model.config;
   if (model.type === "record") {
     if (place === "before") return null;
@@ -158,7 +169,7 @@ export function PhoneHeaderActions({ model, place }: { model: PhoneHeaderModel; 
       <>
         {step(record?.previous, "chevron-up", "ppo-phone-previous")}
         {step(record?.next, "down", "ppo-phone-next")}
-        {(!!record?.more?.length || !!narrow.length) && <RecordMore items={record?.more ?? []} narrow={narrow} />}
+        <RecordMore items={record?.more ?? []} narrow={narrow} conversations={conversations} />
       </>
     );
   }

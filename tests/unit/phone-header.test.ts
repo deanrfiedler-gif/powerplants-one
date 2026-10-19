@@ -66,6 +66,33 @@ test("P2 P5 a record page with views keeps its Choose view sheet: the reference 
   assert.match(markup, /<span class="ppo-phone-title-text">SYN-DEAL-0042<\/span>/);
 });
 
+test("P3 P4 a record row always has More actions: Open menu, then Conversations with its unread count, then the page's own actions", () => {
+  const conversations = { name: "Conversations, 3 unread", title: "Conversations · 3 with new messages", badge: "3", count: 3, current: false };
+  // No Menu button on a record row (P3), so More is the way to the menu even when the page registers nothing.
+  const bare = html(createElement(PhoneHeaderActions, { model: record(), place: "after", conversations }));
+  assert.match(bare, /aria-label="More actions" aria-haspopup="menu" aria-expanded="false"/);
+  assert.match(bare, /<button type="button" role="menuitem">Open menu<\/button>/);
+  assert.match(bare, /role="menuitem"[^>]*aria-label="Conversations, 3 unread"|aria-label="Conversations, 3 unread"[^>]*role="menuitem"/);
+  assert.match(bare, /ppo-phone-more-count" aria-hidden="true">3<\/span>/);
+  assert.ok(bare.indexOf("Open menu") < bare.indexOf("Conversations, 3 unread"));
+  assert.doesNotMatch(bare, /role="separator"|Page guide/);
+  // A viewer without conversation.read gets only the menu item.
+  const none = html(createElement(PhoneHeaderActions, { model: record(), place: "after", conversations: null }));
+  assert.match(none, /Open menu/);
+  assert.doesNotMatch(none, /Conversations/);
+  // Nothing new: the name carries no count and no count is drawn.
+  const quiet = html(createElement(PhoneHeaderActions, { model: record(), place: "after", conversations: { name: "Conversations", title: "Conversations", badge: null, current: true } }));
+  assert.match(quiet, /aria-label="Conversations"/);
+  assert.match(quiet, /aria-current="page"/);
+  assert.doesNotMatch(quiet, /ppo-phone-more-count/);
+  // The page's own actions come after a rule that follows the two shell entries.
+  const withActions = html(createElement(PhoneHeaderActions, { model: record({ record: { more: [{ label: "Edit", onSelect: noop }] } }), place: "after", conversations }));
+  assert.ok(withActions.indexOf("Conversations, 3 unread") < withActions.indexOf('role="separator"'));
+  assert.ok(withActions.indexOf('role="separator"') < withActions.indexOf(">Edit<"));
+  // A list row has no More: its Menu button is the way in.
+  assert.doesNotMatch(html(createElement(PhoneHeaderActions, { model: list(), place: "after", conversations })), /More actions/);
+});
+
 test("P2 P5 a list page may add one page action before Conversations and Filter after it, with a dot when a filter is applied", () => {
   const config = {
     pageAction: { label: "Search", icon: "search" as const, onSelect: noop },

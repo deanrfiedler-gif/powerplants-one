@@ -479,6 +479,40 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await page.keyboard.press("Escape");
     await expect(page.locator("#shell-phone-menu")).toBeFocused();
   });
+
+  test("T1c-2 a phone record row has no Menu button: its More starts with Open menu and Conversations, and focus returns to More", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "Phone header record row");
+    const { thread } = await askedThread(page);
+    await signIn(page, asked);
+    await page.goto(`/conversations/${thread}`);
+    await expect(page.getByText("SYN when does the controller arrive?")).toBeVisible();
+    const banner = page.getByRole("banner");
+    // Phone header amendment P3: Back and the reference, no Menu button and no Conversations icon; More carries both.
+    await expect(banner.getByRole("button", { name: /^Menu(,|$)/ })).toHaveCount(0);
+    await expect(banner.getByRole("link", { name: /^Conversations/ })).toBeHidden();
+    const more = banner.getByRole("button", { name: "More actions" });
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      await more.click();
+      const items = banner.getByRole("menuitem");
+      await expect(items.first()).toHaveText("Open menu");
+      await expect(items.nth(1)).toHaveAccessibleName(/^Conversations(, \d+ unread)?$/);
+      await items.first().click();
+      const menu = page.getByRole("dialog", { name: "More", exact: true });
+      await expect(menu).toBeVisible();
+      await menu.getByRole("button", { name: "Page guide", exact: true }).click();
+      await expect(page.getByRole("dialog", { name: "Page guide", exact: true })).toBeVisible();
+      await page.keyboard.press("Escape");
+      await more.click();
+      await items.first().click();
+      await expect(menu).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(more).toBeFocused();
+    }
+    await more.click();
+    await banner.getByRole("menuitem", { name: /^Conversations/ }).click();
+    await expect(page).toHaveURL(/\/conversations$/);
+  });
 });
 
 // T1c-3 (PPO-CONV-T1C-DESIGN 11): the context panel, docked at 320 px from 1280 px, a drawer behind the Context button
