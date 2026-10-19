@@ -14677,7 +14677,7 @@
       "title": "Conversation thread",
       "kind": "route",
       "module": "AI",
-      "summary": "One people-only thread (Conversations T1c-1): header with record link and Resolve or Reopen, messages with @ tags and # record links drawn from each reader's access, tracked ask cards, and the composer with ask rows.",
+      "summary": "One people-only thread (Conversations T1c-1): header with record link and Resolve or Reopen, messages with @ tags and # record links drawn from each reader's access, tracked ask cards, and the composer with ask rows. T1c-3 adds the context panel (Record, Files and documents, Contacts, Related records, This thread), rebuilt per viewer: docked at 320 px from 1280 px, a drawer behind Context below that, a sheet on phones.",
       "path": "/conversations/[id]",
       "source_paths": [
         "src/app/(business)/conversations/[id]/page.tsx"
@@ -14701,11 +14701,15 @@
         "src/conversations/components/ask-rows.tsx",
         "src/conversations/ask-model.ts",
         "src/conversations/composer-mode.ts",
-        "src/conversations/composition.ts"
+        "src/conversations/composition.ts",
+        "src/conversations/components/context-panel.tsx",
+        "src/conversations/context-model.ts",
+        "src/conversations/context.ts",
+        "src/app/api/v1/conversations/[id]/context/route.ts"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "T1c-1 unit, HTTP-route and desktop/phone browser tests (tests/unit/conversations-*.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); acceptance remains separate.",
+      "functional_status": "T1c-1 and T1c-3 unit, database, HTTP-route and desktop/tablet/phone browser tests (tests/unit/conversations-*.test.ts, tests/database/conversations-context.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
