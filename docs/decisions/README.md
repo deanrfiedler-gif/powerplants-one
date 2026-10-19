@@ -11,6 +11,8 @@
 
 [Phone header amendment](phone-header-amendment.md) (PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC) records Dean's 19 October 2026 adoption of one compact phone header row for every phone page: a view chooser, at most three icons with Conversations kept, record headers with position and previous/next, and the page guide, notifications and global search moved into the menu. It amends R7 of the Shell top bar amendment for phone widths.
 
+[Marketing module scope proposal](marketing-module-scope-proposal.md) (PPO-MARKETING-SCOPE-DEC) proposes, for Dean's decision and following his direction to build rather than integrate, a Marketing module in which PPO owns marketing consent and audiences, sends person-approved newsletters and publishes social posts, with Mailchimp and the social tool kept until PPO meets switch-over criteria.
+
 [Conversations T1d design](conversations-t1d-design.md) (PPO-CONV-T1D-DESIGN) records how the record-page lists, inbox notices and My Work asks are built, and the departures for Dean's review; the [reminder proposal](conversations-reply-by-reminders.md) (PPO-CONV-REMINDERS-PROP) sets out the reply-by scheduling options for his decision.
 
 [ADR-0059 — Sending email from Powerplants One](ADR-0059-email-sending-from-ppo.md) is **proposed**, 19 October 2026, not accepted. It recommends that correspondence written in PPO goes from the person's own mailbox through delegated Graph `Mail.Send`, and customer notices stay on the shared mailbox through the communications service as ADR-0058 decides. Sent email tracking (Emails A1) would apply to correspondence only, storing the event type and time for 12 months.
