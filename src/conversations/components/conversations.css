@@ -620,3 +620,246 @@
 .cv-banner p {
   margin: 0;
 }
+/* Conversations T1c-3: the context panel (PPO-CONV-T1C-DESIGN 11; frames 1244:3423 and 1244:286582, phone sheet 1149:913
+   without Carl). Docked at 320 px from 1280 px; a drawer from the Context button below that; a sheet on phones. */
+.cv-thread-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.cv-thread-layout[data-context="docked"] {
+  grid-template-columns: minmax(0, 1fr) 320px;
+  min-height: calc(100vh - 64px);
+}
+/* A thread that is not available draws no panel, so its column closes too. */
+.cv-thread-layout[data-context="docked"]:not(:has(> .cv-context)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cv-context {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  background: var(--surface);
+  color: inherit;
+}
+aside.cv-context {
+  border-left: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+.cv-context-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.cv-context-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+.cv-context-close {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.cv-context-close:hover {
+  background: var(--surface-hover);
+}
+.cv-context-close .product-icon {
+  width: 16px;
+  height: 16px;
+}
+.cv-context-intro,
+.cv-context-empty {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.cv-context-group h3 {
+  margin: 0;
+}
+.cv-context-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.cv-context-heading .product-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.15s;
+}
+.cv-context-heading[aria-expanded="false"] .product-icon {
+  transform: rotate(-90deg);
+}
+.cv-context-record {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+.cv-context-record dl {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  font-size: 12px;
+}
+.cv-context-record dl > div {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 8px;
+}
+.cv-context-record dt {
+  color: var(--text-secondary);
+}
+.cv-context-record dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cv-context-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cv-context-item {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.cv-context-title {
+  color: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+a.cv-context-title {
+  text-decoration: none;
+}
+a.cv-context-title:hover,
+a.cv-context-title:focus-visible {
+  text-decoration: underline;
+}
+.cv-context-record > a.cv-context-title,
+.cv-context-reach a {
+  color: var(--link);
+}
+.cv-context-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+.cv-context-reach {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+}
+.cv-context-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+.cv-context-why {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--neutral-surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cv-context-error {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+.cv-context-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cv-context-button svg {
+  width: 16px;
+  height: 16px;
+}
+/* The drawer: full height at the right, over a dimmed page; Escape, the backdrop and Close return to the button. */
+.cv-context-overlay {
+  margin: 0 0 0 auto;
+  padding: 0;
+  width: 320px;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  border: 0;
+  box-shadow: -8px 0 24px rgb(0 0 0 / 14%);
+}
+.cv-context-overlay::backdrop {
+  background: rgb(36 42 55 / 45%);
+}
+.cv-context-sheet {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  height: 100%;
+  padding: 16px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.cv-context-handle {
+  display: none;
+}
+@media (max-width: 780px) {
+  /* The phone sheet rises from the bottom with a handle (1149:913). */
+  .cv-context-overlay {
+    margin: auto 0 0;
+    width: 100vw;
+    height: auto;
+    max-height: 85vh;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 24px rgb(0 0 0 / 14%);
+  }
+  .cv-context-sheet {
+    max-height: 85vh;
+    padding-top: 8px;
+  }
+  .cv-context-handle {
+    display: block;
+    justify-self: center;
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--surface-3);
+  }
+}
+@media (max-width: 360px) {
+  /* 320 px departure: the Context button is icon-only; its name stays "Context". */
+  .cv-context-button-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
