@@ -4027,8 +4027,8 @@
         {
           "id": "application-shell-phone-header-amendment",
           "expected": "Phone header amendment (decision PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC, Figma page 1530:70, component set 1530:110): one compact 56 px row on phone pages; list pages show menu, view chooser and at most three icons (page action, Conversations, Filter); records show back, position or reference, previous/next and More; page guide, notifications and global search in the menu.",
-          "actual": "Rules adopted in words by Dean on 19 October 2026. The application still renders the global phone header with the page title, search, Conversations, page guide and account. The Figma library component Shell / Phone header (38:282) and the accepted pages are unchanged until the named version is saved; Calendar EC-03 is the first consumer.",
-          "action": "Dean saves the named version; lock-in swaps 38:282 and the accepted pages' headers; then one application pull request changes the shared phone header before the EC pages are built.",
+          "actual": "Rules adopted in words by Dean on 19 October 2026; named version \"Phone header amendment — accepted\" saved the same day on his yes. Figma lock-in done: the component set 1530:110 moved onto Components 1:4 beside Shell / Phone header 38:282 (kept, superseded on phone pages), and 106 phone headers on 38 accepted pages swapped to it, toolbar rows kept until each page is next changed (decision section 6a). Icon-free captures: docs/reference/ui/application-shell/phone-header-amendment-r01/. Not yet swapped: Emails EC-01 and Customer messages EC-04 (own sessions), proposal pages and captures. The application still renders the global phone header with the page title, search, Conversations, page guide and account.",
+          "action": "EC-01 and EC-04 swap to 1530:110 in their sessions; one application pull request changes the shared phone header before the EC pages are built; owner/device review of the built header at 390 and 320 px.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4099,7 +4099,7 @@
           },
           {
             "node": "1530:110",
-            "name": "Shell / Phone header · compact (proposed, Phone header amendment)"
+            "name": "Shell / Phone header · compact (accepted, Phone header amendment)"
           },
           {
             "node": "38:342",

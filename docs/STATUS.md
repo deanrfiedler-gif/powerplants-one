@@ -9,6 +9,12 @@ Dean accepted the Figma design for CS-08, the site survey and as-found brief (`/
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The named Figma version "Site surveys — accepted" was saved at Dean's "Yes, save the named Figma version "Site surveys — accepted"." Not done: the page is not built, and the native CS-08 pages are unchanged. Open item: the accepted Access & readiness design shows the survey reference as "SYN-SRV-000031". No application code, route, migration, permission or parent ID changes.
 
+## Phone header amendment locked in — 19 October 2026
+
+On Dean's yes, the named Figma version "Phone header amendment — accepted" was saved on 19 October 2026 and the amendment was locked in the same day ([decision](decisions/phone-header-amendment.md) section 6a). The component set "Shell / Phone header · compact" now lives on Components beside the superseded global phone header, and 106 phone headers on 38 accepted pages use it, with each page's title, count, views, search and filter carried over; toolbar rows stay until each page is next changed. Icon-free captures are in `docs/reference/ui/application-shell/phone-header-amendment-r01/` and the File index has the row.
+
+Not done: the Emails · EC-01 and Customer messages · EC-04 swaps (their own sessions) and the application change, which comes in its own pull request. No application code, route, migration, permission or parent ID changes.
+
 ## Phone header amendment adopted — 19 October 2026
 
 Dean adopted Claude's recommendation for phone headers on 19 October 2026: "I am happy for you to proceed based on your professional recommendations." Every phone page is to use one compact 56 px row in place of the global phone header (rules P1–P9 in the [decision](decisions/phone-header-amendment.md), PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC): menu, view chooser and at most three icons (a page action, Conversations, Filter) on list pages; back, position or reference, previous/next and More on records. Desktop and tablet are unchanged. In Figma the "Phone header amendment" page holds the rules, the component set "Shell / Phone header · compact" and examples at 390 and 320 px; the Calendar · EC-03 proposal is its first consumer.

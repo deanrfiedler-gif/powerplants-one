@@ -32,7 +32,8 @@ The application implementation and exact consumer bindings are maintained in `..
 - Rail · Projects (proposal) `209:515`
 - Rail · Service (proposal) `198:3778`
 - Rail · Supply chain (proposal) `697:163173`
-- Shell / Phone header `38:282`
+- Shell / Phone header `38:282` (superseded on accepted phone frames by the compact header, 19 October 2026)
+- Shell / Phone header · compact `1530:110` (Type=List/Record × Width=390/320; accepted with the [phone header amendment](../../../decisions/phone-header-amendment.md))
 - Shell / Quick add (phone) `38:342`
 - v2 / Tab bar (phone) `107:149`
 - v2 / Tab item `107:148`
