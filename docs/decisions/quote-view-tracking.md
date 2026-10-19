@@ -3,13 +3,13 @@ document_id: PPO-QUOTE-VIEW-TRACKING-PROP
 title: Quotation view tracking, decision paper
 date: 2026-10-19
 owner: Dean Fiedler
-status: Proposal for Dean's decision; nothing tracks a quotation yet; no code, route, migration, capability, service, dependency, DNS change or customer message authorised by this record
+status: Accepted by the owner 19 October 2026 (Q1–Q10 as recommended); nothing tracks a quotation yet; no code, route, migration, capability, service, dependency, DNS change or customer message authorised by this record
 versioning: git
 ---
 
 # Quotation view tracking, decision paper
 
-**Owner:** Dean Fiedler. **State:** Proposed, 19 October 2026, for Dean's decision. Not accepted. Acceptance would choose the approach and its rules only. Each build stage in section 6 still needs its own authorisation.
+**Owner:** Dean Fiedler. **State:** Accepted by the owner, 19 October 2026: "Proceed with your recommendations for Q1 to Q10 of the quotation view tracking paper." Proposed the same day. Acceptance chooses option B and the rules in sections 4 and 7 only. Each build stage in section 6 still needs its own authorisation, and the gates in section 6 still apply. The document ID keeps its original `-PROP` suffix, because IDs are stable.
 
 **Raised by:** Dean, 19 October 2026: "One feature in Pandadoc that I did really like was the ability to see when a customer had opened a quotation, when they viewed it, how many times that had viewed it, what pages that had viewed, and how long they had viewed them for. I would like to include a similar feature to this within the Powerplants One app if possible." After Claude's recommendation he asked: "Yes, draft a decision paper for quote view tracking based on your recommendation, on a branch with a draft PR."
 
@@ -20,7 +20,7 @@ versioning: git
 - Records: the [native quotation release decision](quotation-release-native.md) and [release contract](../contracts/quotation-release.md); the [quotation response contract](../contracts/quotation-response.md); [ADR-0058](ADR-0058-outbound-customer-email.md) (Accepted); [ADR-0059](ADR-0059-email-sending-from-ppo.md) (Proposed); the [D-025 decision paper](customer-communications-d025.md); the [customer portal direction](customer-portal-direction.md). The Emails EC-01 design record `docs/decisions/emails-figma-design.md` (PPO-EC01-EMAILS-FIGMA-DEC), whose Amendment A1 (sent email tracking) Dean accepted on 19 October 2026, is in [PR #608](https://github.com/deanrfiedler-gif/powerplants-one/pull/608) and not yet on `main`. This record cites A1 by its IDs.
 - Scopes: `scope:ES-05` (quotation release, `/estimating/quotes/[id]/release`), `/estimating/quotes/[id]/response`, and `scope:CR-01` (deal record). The customer-facing page proposed in section 4 is a new route that is not registered until a build stage adds it.
 
-Everything below is a proposal for PPO. It is not an observed operating rule, and PandaDoc is a reference for the feature only. PPO does not copy its screens or wording.
+Everything below is a PPO design decision. It is not an observed operating rule, and PandaDoc is a reference for the feature only. PPO does not copy its screens or wording.
 
 ## 1. What PPO has today
 
@@ -51,9 +51,9 @@ Everything below is a proposal for PPO. It is not an observed operating rule, an
 | New services or vendors | None beyond A1 | One public page on PPO, beside the A1 routes | A new processor of customer pricing and view data, plus a subscription | None, but the PDF looks like malware to security tools |
 | Cost to build | Lowest; comes with A1 | Moderate | Integration plus ongoing licence | Low, but unreliable |
 
-**Recommendation: B.** It is the only option that gives what Dean described without sending quotations or customer behaviour outside PPO. It reuses the retained HTML that approval already binds, and the token and event rules of A1 and ADR-0059. A is a fallback that comes free with A1. C breaks the exact issue chain and adds a processor, and D does not work reliably.
+**Recommendation: B**, adopted by Dean on 19 October 2026 (Q1). It is the only option that gives what Dean described without sending quotations or customer behaviour outside PPO. It reuses the retained HTML that approval already binds, and the token and event rules of A1 and ADR-0059. A is a fallback that comes free with A1. C breaks the exact issue chain and adds a processor, and D does not work reliably.
 
-## 4. Recommended design (option B)
+## 4. Accepted design (option B)
 
 ### 4.1 How the customer receives it
 
@@ -127,7 +127,7 @@ The hosted demo stays synthetic. It may show the page for synthetic issued quota
 
 | Stage | What it does | Depends on |
 |---|---|---|
-| QV-S0 | This decision | Dean's answers to section 7 |
+| QV-S0 | This decision | Done: Dean accepted Q1–Q10 on 19 October 2026 |
 | QV-S1 | Synthetic build: the quotation page for synthetic issued quotations, section markers in a new template version, the three events, the Customer views line and Details, withdrawal, supersede and validity behaviour, with database, HTTP and browser proofs | QV-S0. Needs a migration (reserved first), a read duty in `src/platform/permissions.ts` with the AGENTS.md ripple, and the page's design register entry |
 | QV-S2 | Send quotation from the release page through the correspondence path, filling Distribution with real outcomes | ADR-0059 accepted and its correspondence pilot built; PR #608 merged |
 | QV-S3 | Real external recipients | Privacy notice confirmed, ADR-0059 E5 (logs) and E6 (link domain) met, and the D-020 external-access review of section 4.5 |
@@ -135,9 +135,9 @@ The hosted demo stays synthetic. It may show the page for synthetic issued quota
 
 ## 7. Questions for Dean
 
-If Dean answers "Proceed with your recommendations", these are adopted and recorded in his words.
+Dean answered on 19 October 2026: "Proceed with your recommendations for Q1 to Q10 of the quotation view tracking paper." Every recommendation below is therefore adopted as written. That includes Q4's departure from A1-Q2: a section's active seconds may be stored beside the event type and time, for quotation pages only. A1-Q2 is otherwise unchanged, and A1 email tracking keeps "event type and time" only.
 
-| ID | Question | Recommendation |
+| ID | Question | Recommendation (adopted 19 October 2026) |
 |---|---|---|
 | Q1 | Which option? | **B**, a PPO quotation page, with A1 email tracking as the fallback for anything sent with an attachment |
 | Q2 | Attach the PDF as well as the link? | **No by default**, with a switch for each email; the composer says attachment reading is not tracked |
@@ -152,4 +152,4 @@ If Dean answers "Proceed with your recommendations", these are adopted and recor
 
 ## 8. What this record does not do
 
-It authorises no code, route, page, migration, seed, capability, grant, service, dependency, DNS change, privacy notice change or customer message. It does not change D-025 R4, ADR-0058, ADR-0059, A1 or the quotation release and response contracts. It does not make view data a sales rule, a pipeline probability or evidence of acceptance.
+Acceptance authorises no code, route, page, migration, seed, capability, grant, service, dependency, DNS change, privacy notice change or customer message. It does not change D-025 R4, ADR-0058, ADR-0059, A1 or the quotation release and response contracts. It does not make view data a sales rule, a pipeline probability or evidence of acceptance.
