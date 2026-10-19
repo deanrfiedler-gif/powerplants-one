@@ -19,7 +19,7 @@ async function directory(page: Page, path: "/customers" | "/people") {
   const response = await pending;
   expect(response.status()).toBe(200);
   const data = await response.json();
-  await expect(page.getByRole("heading", { name: path === "/customers" ? "Organisations" : "People", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: path === "/customers" ? "Organisations" : "People", level: 1, exact: true })).toBeVisible();
   // Performance diagnostics share this readiness check; the phone trigger stays mounted behind Menu.
   await expect(identityToggle(page)).toBeEnabled();
   if (test.info().project.use.isMobile) await expect(identityToggle(page)).toBeHidden();
@@ -90,7 +90,7 @@ test("directory record links avoid automatic reads and keep exact receiving navi
       await page.getByRole('button',{name:isMobile ? 'Search people' : 'People options',exact:true}).click();
       await activate(page,page.getByRole('link',{name:'Create person',exact:true}),isMobile,!isMobile);
     }
-    await expect(page).toHaveURL(path === "/customers" ? /customers\/new$/ : new RegExp(`/customers/new\\?kind=${kind}$`));
+    await expect(page).toHaveURL(path === "/customers" ? /customers\/new$/ : new RegExp(`/customers/new\\?kind=${kind}(?:&department=[a-z]+)?$`));
     await expect(page.locator("main form").first()).toBeVisible();
   }
   await directory(page, "/customers");
@@ -105,7 +105,7 @@ test("directory record links avoid automatic reads and keep exact receiving navi
     const link = page.getByRole("navigation", { name: "Shared records", exact: true }).getByRole("link", { name: label, exact: true });
     await activate(page, link, isMobile, !isMobile);
     await expect(page).toHaveURL(new URL(path, page.url()).href);
-    await expect(page.getByRole("heading", { name: path === "/equipment" ? "Installed base" : label, exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: path === "/equipment" ? "Installed base" : label, level: 1, exact: true })).toBeVisible();
   }
   await page.screenshot({ path: info.outputPath("directory-navigation.png"), fullPage: false });
 });

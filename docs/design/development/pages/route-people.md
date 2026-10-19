@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable entry: `route:/people`. Scope **CS-02**. Owner: Dean Fiedler. Route `/people`, also the People view of `/contacts`. Source base: main `d512bd38`. Design accepted; application owner visual/device review **pending**. r20 page type: **Register / worklist**.
+Stable entry: `route:/people`. Scope **CS-02**. Owner: Dean Fiedler. Route `/people`, also the People view of `/contacts`. Source base: main `971ac350` after queue-only PR #624. Application draft PR #625. Design accepted; application owner visual/device review **pending**. r20 page type: **Register / worklist**.
 
 ## Authority and exact references
 
@@ -51,6 +51,7 @@ The existing account saved-view directory remains at `people_layout=directory`, 
 | Gap | Actual treatment and question for Dean |
 |---|---|
 | Phone toolbar rows | Removed under accepted P6/P9. Compared list content shifts from retained y=166 to y=56; this is an authorised amendment, not an altered reference. |
+| Phone Quick add | The inherited shell has no floating Quick add as drawn in the list/loading frames. Create person is reachable in the phone filter panel. Should a shared floating control be restored in a shell amendment? |
 | Tablet/menu and breakpoint | Existing shared tablet overlay replaces the drawn 20 px collapsed strip; inherited phone threshold 780 px differs from P1's below 768 px. Keep shell consistency pending separate shell alignment. |
 | Phone filters | No People filter frame. Existing modal uses Reset, Show people and refresh; no speculative count on the apply button. What is the accepted detailed composition? |
 | Checkbox/row actions | Grid draws them but specifies no bulk action or snapshot. Local page selection, Clear selection and Open person only. What job should selecting people enable? |
@@ -61,6 +62,7 @@ The existing account saved-view directory remains at `people_layout=directory`, 
 | Source summaries | Site roles/affiliations include permitted links only. Role text has no taxonomy. No Activities-to-Person history or purchasing authority is invented. |
 | Offline/device | Online-only per [offline contract](../systems/offline.md). Physical touch, screen-reader and owner/device review remain pending. |
 | Read-time format | Shared S6 timestamp formatting includes the year and zone abbreviation rather than the frame’s compact date. No new date format is introduced. |
+| State buttons | Shared 44 px phone touch buttons follow P8; older empty/error frames draw 40 px. Loading rows retain the drawn 75 px spacing. Clear the search removes only the text query, retaining applied organisation/notices filters. |
 | Fonts/icons/shell data | Shared Roboto/tokens and local fallback icons in public evidence. Live Kit artwork and synthetic shell badges differ from retained icons/counts; no Pro artwork is committed. |
 
 ## Evidence and delivery status

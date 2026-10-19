@@ -41974,9 +41974,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-20",
-      "source_commit": "d512bd382165c0fa87489f53733d3caa457163f9",
+      "source_commit": "5f3d78d079b92494b70867c46cd5745bae681d90",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "People register database proof passed; running application checks are recorded separately in docs/testing/evidence/people-native/README.md.",
+      "runtime_evidence": "Two database and ten People browser cases pass; desktop/mobile navigation and saved-view regression cases pass. Full unit and Windows baseline limits are recorded in docs/testing/evidence/people-native/README.md. Owner review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -42059,7 +42059,7 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access.",
+            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access. Clear the search removes the text query while retaining Organisation and Notices.",
             "People is online only. It makes no offline cache, queued correction or background-send promise."
           ],
           "steps": [],
@@ -51194,9 +51194,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-20",
-      "source_commit": "d512bd382165c0fa87489f53733d3caa457163f9",
+      "source_commit": "5f3d78d079b92494b70867c46cd5745bae681d90",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "People register database proof passed; running application checks are recorded separately in docs/testing/evidence/people-native/README.md.",
+      "runtime_evidence": "Two database and ten People browser cases pass; desktop/mobile navigation and saved-view regression cases pass. Full unit and Windows baseline limits are recorded in docs/testing/evidence/people-native/README.md. Owner review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -51279,7 +51279,7 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access.",
+            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access. Clear the search removes the text query while retaining Organisation and Notices.",
             "People is online only. It makes no offline cache, queued correction or background-send promise."
           ],
           "steps": [],

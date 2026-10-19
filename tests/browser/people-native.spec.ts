@@ -164,32 +164,52 @@ test("CS02 loading, empty, failed and denied reads never retain a list or stale 
   });
   await page.goto("/people?department=service");
   await expect(page.locator(".people-loading")).toBeVisible();
+  expect(
+    (await page.locator(".people-skeleton").first().boundingBox())!.height,
+  ).toBe(75);
   await capture(page, info, "loading-390");
   mode = "loaded";
   release?.();
   await expect(page.locator(".people-phone-row")).toHaveCount(8);
   for (const state of ["empty", "error", "denied"]) {
     mode = state;
-    await page.reload();
+    await page.goto(
+      state === "empty"
+        ? `/people?department=service&q=Prya&organisation=${peopleFixtureId(106)}`
+        : "/people?department=service",
+    );
     await expect(page.locator(".people-state")).toBeVisible();
     await expect(page.locator(".people-phone-row")).toHaveCount(0);
     await expect(page.locator("#people-menu small")).toHaveCount(
       state === "empty" ? 4 : 0,
     );
-    if (state === "empty")
+    if (state === "empty") {
       await expect(
         page.getByText("No matching people", { exact: true }),
       ).toBeVisible();
-    else
+      await expect(page.locator(".people-state")).toContainText(
+        "No permitted person at Hillview Growers matches “Prya”.",
+      );
+    } else
       await expect(page.locator(".people-error")).toContainText(
         state === "denied" ? "outside your access" : "could not be loaded",
       );
     await capture(page, info, `${state}-390`);
+    if (state === "empty") {
+      await page
+        .getByRole("button", { name: "Clear the search", exact: true })
+        .click();
+      await expect(page).not.toHaveURL(/q=Prya/);
+      expect(new URL(page.url()).searchParams.get("organisation")).toBe(
+        peopleFixtureId(106),
+      );
+    }
   }
 });
 test("CS02 Contacts hub preserves People and Organisations and real person receiving", async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/contacts?view=people&department=service");
   await expect(
     page.getByRole("navigation", { name: "Contacts views" }),

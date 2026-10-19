@@ -115,6 +115,9 @@ function PeopleList({ query }: { query: URLSearchParams }) {
     true,
   );
   const data = resource.data;
+  const appliedOrganisation = data?.organisations.find(
+    (option) => option.id === query.get("organisation"),
+  )?.label;
   const selectedHere = selected.filter((id) =>
     data?.items.some((row) => row.id === id),
   );
@@ -422,14 +425,13 @@ function PeopleList({ query }: { query: URLSearchParams }) {
           <section className="people-state">
             <strong>No matching people</strong>
             <p>
-              No permitted person matches these filters. People in companies you
-              cannot see are not shown or counted. Check the spelling, or clear
-              the search.
+              No permitted person
+              {appliedOrganisation ? ` at ${appliedOrganisation}` : ""} matches
+              {query.get("q") ? ` “${query.get("q")}”` : " these filters"}.
+              People in companies you cannot see are not shown or counted. Check
+              the spelling, or clear the search.
             </p>
-            <Button
-              variant="secondary"
-              onClick={() => change({ q: "", organisation: "", notices: "" })}
-            >
+            <Button variant="secondary" onClick={() => change({ q: "" })}>
               Clear the search
             </Button>
           </section>
@@ -693,20 +695,24 @@ function PeopleList({ query }: { query: URLSearchParams }) {
                     <option value="DoNotNotify">Do not notify</option>
                   </select>
                 </label>
-                <Button type="submit">Show people</Button>
-                <Button
-                  variant="quiet"
-                  onClick={() => {
-                    setSearch("");
-                    setOrganisation("");
-                    setNotices("All");
-                  }}
-                >
-                  Reset
-                </Button>
-                <Button variant="secondary" onClick={refresh}>
-                  Refresh people
-                </Button>
+                <div className="people-filter-actions">
+                  <Button variant="primary" type="submit">
+                    Show people
+                  </Button>
+                  <Button
+                    variant="quiet"
+                    onClick={() => {
+                      setSearch("");
+                      setOrganisation("");
+                      setNotices("All");
+                    }}
+                  >
+                    Reset
+                  </Button>
+                  <Button variant="secondary" onClick={refresh}>
+                    Refresh people
+                  </Button>
+                </div>
                 <p>
                   <Link href={href("/customers/new?kind=person")}>
                     Create person

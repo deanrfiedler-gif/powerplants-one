@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Scope **CS-02**. Owner: Dean Fiedler. Contributor: Codex. Branch `codex/accepted-ui-build`, draft PR #624, based on main `d512bd38`. Owner visual/device review **pending**. Application deployment is not claimed.
+Scope **CS-02**. Owner: Dean Fiedler. Contributor/branch owner: this Codex build session. Branch `codex/accepted-ui-build`, application draft PR [#625](https://github.com/deanrfiedler-gif/powerplants-one/pull/625), based on main `971ac3502f87d5ba7e093bbe37abc83e75d4fb99`. Queue/claim PR #624 merged separately. Implementation commit `5f3d78d0` and the subsequent validation commit containing this evidence form the delivered source. Owner visual/device review **pending**. Application deployment is not claimed.
 
 The accepted source is **PPO - Design**, page `1395:150275`, named version **People — accepted**: desktop `1395:150312` (1440 × 900), tablet `1395:150835` (1024 × 900), phone `1395:151069` (390 × 844), loading `1395:151245`, empty `1395:151303`, error `1395:151346` (390 × 844), notes `1395:151383`. Read live metadata, design context, variables and screenshots. Shell sources: top bar `35:138`, Service rail `198:3778`, compact phone header `1530:110`, named **Phone header amendment — accepted**. The [retained captures](../../../reference/ui/customers/people-design-r01/README.md) remain unchanged.
 
@@ -12,14 +12,58 @@ The accepted source is **PPO - Design**, page `1395:150275`, named version **Peo
 
 Application captures use the repository's local fallback icons with the Kit unavailable on 127.0.0.1. Font Awesome drawing differences are expected; the existing Kit mapping supplies Pro Light only under the repository's opt-in runtime contract. No reference capture is rewritten.
 
-## Results
+## Executed checks — 20 October 2026
 
-- Database: **2/2 passed** on 20 October 2026. Permitted rows/counts/options, stable bounded pages, actor/company/filter-bound cursor refusal, invalid filters, current affiliations, primary contacts, latest notice preference and restricted history. Uses only existing migration 0109 and earlier test history; no new migration or capability.
-- Initial typecheck found two invalid icon names; corrected to existing mapped icons. Final check pending.
-- Initial dev launch rejected the node_modules junction (Turbopack filesystem root). Removed only the verified junction, installed the unchanged lockfile into this worktree, and restarted successfully on loopback port 3034.
-- The existing `ppo_synthetic` database lacks 0109's notice-preference table. It was not upgraded. Application verification uses the disposable `ppo_synthetic_test` database after its normal test setup.
-- Browser comparison, studio, lint, final typecheck, unit, build and documentation results are being collected. No pending check is claimed as passed.
+| Check | Result and boundary |
+|---|---|
+| `npm run studio:check` | Passed: 366 entries, 48 components, 21 runnable components, zero errors. 338 unreviewed and 28 stale entries remain visible; this is not owner acceptance. |
+| `npm run lint` | Passed. Focused ESLint rerun covers the final People component and browser-test edits. |
+| `npm run typecheck` | Passed. |
+| `npm run build` | Passed on the initial implementation and again after the final state/layout changes, including compilation, TypeScript and route generation. |
+| `npm run test:unit` | **Failed: 942/947 passed.** Three failures reproduce on unchanged main; two timeouts pass in quiet reruns, detailed below. No full green claim. |
+| Quiet unit rerun | **19/19 passed**, serial: `cpq-packages.test.ts`, `foundation.test.ts`, `people-register.test.ts` and `phone-header.test.ts`. |
+| `tests/database/people-register.test.ts` | **2/2 passed** against `ppo_synthetic_test`. Permitted rows/counts/options; bounded pages and actor/company/filter-bound cursor refusal; invalid filters; current affiliations, primary contacts, latest notice preference and restricted correction history. Existing migration 0109 and earlier history only. |
+| `tests/browser/people-native.spec.ts` | **10/10 passed** across desktop and mobile projects, plus the five-case capture run: 1440/1024/390/320 geometry, filter drafts/apply, transient selection, exact URLs, loading/empty/error/denied, Contacts and actual Person receiving, phone chooser and modal focus. |
+| `tests/browser/directory-navigation.spec.ts` | **2/2 passed**, desktop and mobile projects: no automatic record-prefetch reads; exact Person/Organisation/Site receiving, keyboard/touch activation, creation links and shared navigation. |
+| `tests/browser/crm-refinements.spec.ts`, saved/scoped directory case | **2/2 passed**, desktop and mobile projects. Existing account saved views remain usable through `people_layout=directory`. |
+| `tests/browser/department-navigation.spec.ts`, storage/reflow cases | **2 passed, two existing mobile-project skips**. Engineering context survives unavailable browser storage; the explicit 720 px phone/reflow scenario retains navigation and avoids page overflow. This is not a full zoom/accessibility review. |
+| `tests/browser/shell-loading.spec.ts` | **4 passed, two existing mobile-project skips**. Exact shell navigation/Back passes on desktop and phone; desktop first-paint rail and delayed Planner-context checks pass. |
+| `python scripts/check_naming.py` | Passed: 741 document records; maintained ChatGPT instructions 7,989 characters, unchanged. |
+| `python scripts/check_foundation.py` | Passed: 22 issued artefacts and all 78 parent requirements preserved. |
+| `python scripts/build_status.py` | Regenerated status and decisions index from 58 fragments. |
+| `python scripts/build-ui-sequence.py` | Regenerated ignored `tmp/` outputs: 366 entries, 363 placed, three excluded. 46 build / 104 refine / 208 review / five decide; 28 owner-reviewed entries retained, no new review invented. |
+
+Windows baseline comparison used a separate untouched worktree at `971ac3502f87d5ba7e093bbe37abc83e75d4fb99`. Running the four affected existing unit files produced 9/12 passing and the same three failures: two `document-store.test.ts` cases throw `ExactDocumentUnavailable`; `recovery.test.ts` expects `/outside Git/` but receives `Unsafe recovery directory`. The full feature run also hit the CPQ worker's five-second `CalculationLimit` and the foundation launcher's five-second `ETIMEDOUT`. Those cases passed on main and in the feature's quiet 19-case serial run. This supports an environment/timing explanation; it does not turn the failed full run into a pass.
+
+Initial browser checks caught oversized checkbox rows, the modal's browser-default width, ambiguous heading selectors and a first-load receiving timeout. The fixes reset checkbox geometry, explicitly fill the phone viewport, select the page's level-one heading, and wait for the existing receiving API. A final live-frame comparison corrected the 75 px loading rows and the empty state's applied filter text. The final browser runs above include those fixes. The empty state's Clear the search action now preserves Organisation and Notices.
+
+The first [Engineering CI run](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39338126097) failed one existing department-navigation assertion because both the page and its new menu have a People heading. The affected department and shell assertions now target the level-one page heading; their local reruns pass as recorded above. Final-head CI is reported by the PR and is not inferred from those reruns.
+
+No new UI route was introduced, so `studio:sync` was not needed. The API route is registered through the existing People source bindings. No full database, HTTP, compiled-browser or physical-device suite was run locally; their status is not inferred from these focused checks. GitHub CI and independent review remain separate, with current results on the PR. No independent second-model review is claimed.
+
+## Reproduction environment
+
+Windows, locked Node/npm dependencies, stable Chrome through the repository's existing Playwright dependency. The application ran on loopback port 3034. Browser runs used a local config with that base URL, one worker, `en-AU`, 180-second per-test timeout, and desktop (1440 × 900) / mobile (390 × 844, touch enabled) project settings. Individual frame cases set the widths listed below. The normal repository browser configs discover the committed specs for CI; the local config did not change application code.
+
+Private local configuration was supplied directly to the process from outside this worktree. A local helper validated the loopback synthetic database setting and selected `ppo_synthetic_test`; no configuration values or connection strings are retained. The existing `ppo_synthetic` database lacks 0109's notice-preference table and **was not upgraded**. The disposable test database received its normal test setup with existing migrations only.
+
+The first dev launch rejected a node_modules junction under Turbopack's filesystem-root rules. Only the verified junction was removed; `npm ci --ignore-scripts --no-audit --no-fund` installed the unchanged lockfile in this worktree. No package or lockfile change was made.
+
+## Visual comparison
+
+These are contributor inspections, not Dean's visual review. The accepted live frame and the application were inspected at the same dimensions. No source capture was changed. All screenshots below use synthetic fixtures and local fallback icons.
+
+| Application capture | Compared source / observation |
+|---|---|
+| [Desktop 1440 × 900](register-1440.png) | `1395:150312`: full-bleed layout, 240 px secondary menu, 60 px toolbar, 40 px rows, pinned selection/actions and local horizontal grid scrolling. Shared timestamp includes year/zone; shell badges and icons reflect the real synthetic session. |
+| [Tablet 1024 × 900](register-1024.png) | `1395:150835`: compact register retained; shared menu opens as an overlay instead of the drawn 20 px collapsed strip. |
+| [Phone 390 × 844](register-390.png) | `1395:151069`: 85 px list rows. P9 removes the older two-row toolbar, moving the first row from y=166 to y=56. |
+| [Phone 320 × 844](register-320.png) | No drawn 320 px register. Compact header combines search/filter; no page-level horizontal overflow. This is an adaptation, not a matched reference. |
+| [Loading 390 × 844](loading-390.png) | `1395:151245`: six 75 px skeleton rows with 240/200/140 px bars and 8 px gaps, after the P9 header amendment. Shared tokens supply the colours. |
+| [Empty 390 × 844](empty-390.png) | `1395:151303`: Hillview Growers / “Prya” applied state, scoped absence wording and Clear the search. Touch button remains 44 px under P8, compared with 40 px in the older state frame. |
+| [Error 390 × 844](error-390.png) | `1395:151346`: error surface, no stale list/count, retry; the shared 44 px touch button differs from the older 40 px drawing. |
+| [Denied 390 × 844](denied-390.png), [filters 320 × 844](filters-320.png) | No accepted People frame for either composition. Existing state/modal primitives, explicit access boundary and return focus; owner composition review remains pending. |
 
 ## Recorded differences and questions
 
-The [page contract](../../../design/development/pages/route-people.md#recorded-gaps-and-open-questions) owns the complete list. In particular P9 removes two old phone toolbar rows, shifting the first list row from the retained frame's y=166 to y=56. The inherited tablet overlay replaces the drawn 20 px strip. The old saved-view workflow remains reachable separately; the accepted page draws no replacement. Owner review is independent of test results.
+The [page contract](../../../design/development/pages/route-people.md#recorded-gaps-and-open-questions) owns the complete list: tablet/menu breakpoint, undrawn phone filters and 320 px register, selection purpose, saved views, stakeholder context, date format, notice wording, offline/device limits and shell composition. In particular the inherited phone shell has no floating Quick add; Create person remains in the filter panel. Its navigation and badges reflect real synthetic permissions rather than the frame's example counts. These are declared differences, not new design acceptance. Owner review is independent of test results.

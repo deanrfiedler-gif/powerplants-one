@@ -37,7 +37,7 @@ test("desktop and phone preserve exact shell navigation and Back with the baseli
   }
   if (isMobile) await link.tap(); else await keyActivate(page, link);
   await expect(page).toHaveURL(target.href);
-  await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "People", level: 1, exact: true })).toBeVisible();
   await page.goBack();
   await expect(page).toHaveURL(`${origin}/customers?department=sales`);
   await expect(page.getByRole("heading", { name: "Organisations", exact: true })).toBeVisible();
