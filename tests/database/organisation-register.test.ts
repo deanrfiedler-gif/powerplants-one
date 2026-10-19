@@ -212,6 +212,39 @@ test("CS01 counts do not disclose hidden records or a revoked source", async () 
   );
 });
 
+test("CS01 ten concurrent readers retain scoped counts and bounded pages at 1000 organisations", async () => {
+  const p = await principal();
+  const before = await organisationRegister(p);
+  const added = (await database().query<{ id: string }>(
+    `INSERT INTO ppo.organisations(id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,relationship_status)
+     SELECT gen_random_uuid(),$1,$2,$3,$3,$3,'SYN CS01 load '||n,'Active'
+     FROM generate_series(1,1000-(SELECT count(*)::int FROM ppo.organisations WHERE workspace_id=$1)) n
+     RETURNING id`,
+    [p.workspace_id, CRM.company, p.actor_id],
+  )).rows.length;
+  assert.ok(added > 0);
+  // Use the normal pool/statement deadlines and all ten original reads; no retry.
+  const results = await Promise.all(Array.from({ length: 10 }, () => organisationRegister(p)));
+  for (const result of results) {
+    assert.equal(result.total, before.total + added);
+    assert.equal(result.counts.All, before.counts.All + added);
+    assert.equal(result.counts.NoSite, before.counts.NoSite + added);
+    assert.equal(result.counts.Prospects, before.counts.Prospects);
+    assert.equal(result.counts.Inactive, before.counts.Inactive);
+    // A numbered name has a longer matching name exactly when appending a digit
+    // still fits in this fixture's range. Case folding must preserve that basis.
+    assert.equal(result.counts.Duplicates, before.counts.Duplicates + Math.floor(added / 10));
+    assert.equal(result.items.length, 25);
+    assert.ok(result.items.every(row => !("matching_name" in row)));
+    assert.ok(result.next_cursor);
+    assert.deepEqual(result.owners, before.owners);
+  }
+  const remaining = await organisationRegister(p, { cursor: results[0].next_cursor });
+  assert.equal(remaining.total, results[0].total);
+  assert.equal(remaining.items.length, 25);
+  assert.ok(remaining.items.every(row => !results[0].items.some(first => first.id === row.id)));
+});
+
 test("CS01 retains current/historical site roles and never labels a restricted source empty", async () => {
   const p = await principal(),
     r = await customer360(p, CRM.org);
