@@ -40,7 +40,7 @@ Icon-free Figma captures: [Stakeholder updates design r01](../../../reference/ui
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [Stakeholder updates design r01 captures](../../../reference/ui/projects/stakeholder-updates-design-r01/README.md) (nineteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/stakeholder-updates-figma-design.md). The cadence trigger's My Work card, Update 4 after a correction, the History view, a tablet record, the phone sent view, attachments, a PDF output and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
+Accepted Figma design: [Stakeholder updates design r01 captures](../../../reference/ui/projects/stakeholder-updates-design-r01/README.md) (nineteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/stakeholder-updates-figma-design.md). The cadence trigger's My Work card, Update 4 after a correction, the History view, a tablet record, the phone sent view, attachments, a PDF output and 200% zoom are not drawn. The named Figma version "Stakeholder updates — accepted" is saved.
 
 The draft User Guide `guide.pj.08` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

@@ -41,14 +41,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Customer questions | Resolved as recommended | Recorded on the project with an owner and an answer-by date, shown in My Work as Waiting on customer (a new source for `src/activities/work-waiting.ts`); staff record the answer from the reply |
 | Q6 Empty sections | Resolved as recommended | An empty section (for example Done since in PRJ-000014 r2) is left out of the email, as the EC-04 held message shows |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
-| Named Figma version | Not yet | "Stakeholder updates — accepted" waits for Dean's explicit yes |
+| Named Figma version | Saved, 19 October 2026 | "Stakeholder updates — accepted", saved by Claude in the Figma desktop app on Dean's "Yes, save the named Figma version "Stakeholder updates — accepted" and mark the PR ready." and checked at the top of the version history |
 | Building the page | Not decided | Section 7 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, [ADR-0053](ADR-0053-figma-page-design.md)) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Stakeholder updates — accepted". The file's link is not recorded in this public repository (ADR-0050, [ADR-0053](ADR-0053-figma-page-design.md)) |
 | Page | "Stakeholder updates · PJ-08" `1577:10373`, under "— Projects —", after Contract obligations, notices and variations · PJ-05. The page header `1577:10374` holds the conformance declaration; the notes card `1602:3735` is in Flows and notes. File index row "Row / Stakeholder updates · PJ-08" `1657:356962`, after the PJ-05 row |
 | Desktop 1440 | All updates register `1577:427034`; Update 3 draft r3 written from sources `1577:429030` and full length `1577:429520`; the draft's Sources view `1613:3732`; Prepare to send dialog `1577:429822`; Prepared r3 with the approver, Kai Morgan's view `1577:430303`; Review and approve, Sasha Cole's view, full length `1582:1423`; Approve and send dialog `1583:1598`; Return for changes dialog `1613:4113`; Sent, Distribution view, full length `1585:1788`; Correct a sent update dialog `1591:2291`; Held, do not notify (PRJ-000014) `1587:1954`; Update settings panel `1589:2119`; Project record Updates view (PRJ-000027, under More) `1593:2473` |
 | Prototype frames | Scrolling 900 px viewports of the review `1631:4090` and sent views `1631:4423`; Sasha Cole's register at 09:05 `1640:4458` and at 09:12 `1640:5070`; Kai Morgan's sent view on Wed 14 Oct `1640:5690`; the phone review as a scrolling 844 px viewport `1631:4758` |
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 19 October 2026 |
 | Decision record | This file |
-| Named version | "Stakeholder updates — accepted", to be saved on Dean's yes |
+| Named version | "Stakeholder updates — accepted", saved 19 October 2026 |
 
 ## 4. What the design shows
 
