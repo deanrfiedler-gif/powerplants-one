@@ -199,10 +199,10 @@ export function ShellControls({
           return;
         }
       }
-      // Focus returns to whatever opened the menu: the phone header's menu button, or More.
+      // Focus returns to whatever opened the menu: the phone header's Menu button (a record page's row has Back in its
+      // place, so the tab bar's More), or the desktop More.
       opener.current =
         (window.innerWidth <= 780 ? document.getElementById("shell-phone-menu") : null) ??
-        (value === "guide" ? document.querySelector<HTMLElement>(".header-account .ppo-account-toggle, #identity-toggle") : null) ??
         document.getElementById("navigation-toggle") ??
         document.getElementById("desktop-more-toggle");
       if (opener.current) setPosition(panelPosition(value, opener.current));
@@ -222,7 +222,7 @@ export function ShellControls({
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         const target =
-          input.current ?? document.getElementById("shell-phone-menu");
+          input.current ?? document.getElementById("shell-phone-menu") ?? document.getElementById("navigation-toggle");
         if (target) {
           opener.current = target;
           setPosition(panelPosition("search", target));
@@ -337,7 +337,7 @@ export function ShellControls({
           if (restoringFocus.current) return;
           opener.current = wide
             ? event.currentTarget
-            : document.getElementById("shell-phone-menu");
+            : (document.getElementById("shell-phone-menu") ?? document.getElementById("navigation-toggle"));
           setPosition(panelPosition("search", event.currentTarget));
           if (panel !== "search") {
             setResults(null);

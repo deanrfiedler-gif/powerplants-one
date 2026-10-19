@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 const company = "20000000-0000-4000-8000-000000000001",
   // Preserve the seeded Site-01 observer window used by retained browser journeys.
   site = "70000000-0000-4000-8000-000000000002";
@@ -63,7 +63,7 @@ for (const [path, guide] of [
     await page.goto(path);
     // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
     const opener = phoneWidth(page)
-      ? page.locator("#shell-phone-menu")
+      ? phoneMenuOpener(page)
       : page.getByRole("button", { name: "Page guide", exact: true });
     const read = page.waitForResponse((response) =>
       response.url().includes("/api/development/catalog?pathname="),

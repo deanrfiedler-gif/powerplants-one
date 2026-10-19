@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
-import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 
 test.describe.configure({ timeout: 120000 });
 async function setup(page: Page) {
@@ -121,7 +121,7 @@ test("ES01 native workload supports keyboard filters, exact discovery entry, rel
     ),
   ).toBe(true);
   // On a phone the Page guide is opened from the header Menu, and Escape returns focus to the Menu button.
-  const guide = phoneWidth(page) ? page.locator("#shell-phone-menu") : page.getByRole("button", { name: "Page guide", exact: true });
+  const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
   await openPageGuide(page);
   await expect(
     page.getByRole("heading", {

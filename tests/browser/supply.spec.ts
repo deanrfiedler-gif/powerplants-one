@@ -4,7 +4,7 @@ import { supplyPages, returnViews } from "../../src/supply/navigation";
 import { supplyInput, supplyFact, supplyBase } from "../helpers/supply";
 import { randomUUID } from "node:crypto";
 import { destination } from "../../src/shell/navigation";
-import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 async function login(page: Page, origin: string, profile = "coordinator") {
   const r = await page.request.post(origin + "/api/v1/local-session", {
     headers: { origin },
@@ -148,7 +148,7 @@ for (const spec of supplyPages)
       await firstRecord.click();
     }
     // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
-    const guide = phoneWidth(page) ? page.locator("#shell-phone-menu") : page.getByRole("button", { name: "Page guide", exact: true });
+    const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
     if (spec.scope === "SC-08") {
       for (const view of returnViews) {
         const tab = surface.getByRole("navigation", { name: "Returns workspaces" }).getByRole("button", { name: view.label, exact: true });

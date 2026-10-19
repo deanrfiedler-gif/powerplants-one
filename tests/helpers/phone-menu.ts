@@ -9,8 +9,13 @@ export const phoneWidth = (page: Page) => (page.viewportSize()?.width ?? 1280) <
 // `keyboard` activates each control with Enter instead of a click, for the keyboard journeys.
 const activate = (target: Locator, keyboard: boolean) => (keyboard ? target.press("Enter") : target.click());
 
+// The control that opens the phone menu on this page and takes focus back when a panel from it closes: the header's
+// Menu button, or the tab bar's More on a record page, whose compact row has Back in its place (phone header
+// amendment P3). Both open the same "More" dialog.
+export const phoneMenuOpener = (page: Page) => page.locator("#shell-phone-menu, body:not(:has(#shell-phone-menu)) #navigation-toggle");
+
 export async function openPhoneMenu(page: Page, keyboard = false) {
-  await activate(page.getByRole("button", { name: /^Menu(,|$)/ }), keyboard);
+  await activate(phoneMenuOpener(page), keyboard);
   const menu = page.getByRole("dialog", { name: "More" });
   await expect(menu).toBeVisible();
   return menu;

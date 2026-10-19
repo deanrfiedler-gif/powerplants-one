@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
-import { openAccountPanel, openGlobalSearch, openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openAccountPanel, openGlobalSearch, openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 
 test.beforeEach(async ({ page }) => {
   await retainApiReadsForTeardown(page);
@@ -54,7 +54,7 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close account", exact: true }).click();
   // On a phone the account is opened from the header's Menu button, so closing it returns focus there (P4).
-  if (phoneWidth(page)) await expect(page.locator("#shell-phone-menu")).toBeFocused();
+  if (phoneWidth(page)) await expect(phoneMenuOpener(page)).toBeFocused();
   await page.getByRole("button", { name: "More", exact: true }).click();
   await page.getByRole("link", { name: "Foundation checks", exact: true }).click();
   await expect(
@@ -157,12 +157,12 @@ test("Workspace selection preserves permissions, contextual navigation and page 
     await expect(page.getByRole("combobox", { name: "Search Powerplants One" })).toBeFocused();
     await page.getByRole("button", { name: "Close search", exact: true }).click();
     await expect(page.getByRole("dialog", { name: "Global search", exact: true })).toBeHidden();
-    await expect(page.locator("#shell-phone-menu")).toBeFocused();
+    await expect(phoneMenuOpener(page)).toBeFocused();
   }
   await openPageGuide(page);
   await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("heading", { name: "Engineering workload & deliverables", exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(phoneWidth(page) ? page.locator("#shell-phone-menu") : page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
+  await expect(phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "More", exact: true }).click();
   await departments.getByRole("link", { name: "Supply chain", exact: true }).click();
   await expect(page).toHaveURL(/\/supply\/material-readiness$/);

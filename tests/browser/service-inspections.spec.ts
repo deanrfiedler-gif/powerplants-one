@@ -11,7 +11,7 @@ import {
 } from "../helpers/service-inspections";
 import { startInput } from "../helpers/field";
 import type { loadServiceInspections } from "../../src/inspections/service-context";
-import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 type View = Awaited<ReturnType<typeof loadServiceInspections>>;
 
 test("FI03/FI04 retained proposed Quality and r20 references are compared with the native shell", async ({
@@ -231,7 +231,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     api = `my-jobs/${id}/inspections`;
   await page.goto(capture);
   // On a phone the guide opens from the header Menu by keyboard, and Escape returns focus to the Menu button.
-  const guide = phoneWidth(page) ? page.locator("#shell-phone-menu") : page.getByRole("button", { name: "Page guide", exact: true });
+  const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
   await openPageGuide(page, true);
   await expect(
     page.getByRole("dialog", { name: "Page guide", exact: true }),

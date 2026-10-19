@@ -34,8 +34,9 @@ test("N14 exact permitted Finance account extends its module hierarchy",async({p
   // The phone header shows the record reference as its title and offers neither a breadcrumb nor Page hierarchy
   // (phone header amendment P1, P3), so the hierarchy disclosure is proved at wider screens only.
   const phone=phoneWidth(page);
-  const exact=await (await read).json();const breadcrumb=phone?page.locator("#shell-header .ppo-phone-reference"):page.getByRole("navigation",{name:"Breadcrumb",exact:true});
-  await expect(breadcrumb).toContainText(exact.account.fixture_key);
+  const exact=await (await read).json();const breadcrumb=phone?page.locator("#shell-header"):page.getByRole("navigation",{name:"Breadcrumb",exact:true});
+  if(phone)await expect(page.locator("#shell-header .ppo-phone-reference")).toContainText(exact.account.fixture_key);
+  else await expect(breadcrumb).toContainText(exact.account.fixture_key);
   if(!phone){
     await page.getByRole("button",{name:"Page hierarchy",exact:true}).click();
     const hierarchy=page.locator("#page-hierarchy");

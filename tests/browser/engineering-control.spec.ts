@@ -18,7 +18,7 @@ import {
   basisContent,
 } from "../helpers/engineering-control";
 import type { ControlRead } from "../../src/engineering/control/reads";
-import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 test.describe.configure({ timeout: 240000 });
 const origin = () =>
   new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin;
@@ -464,7 +464,7 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
     // On a phone the guide opens from the header Menu, so focus returns to the Menu button.
     await expect(
       phoneWidth(page)
-        ? page.locator("#shell-phone-menu")
+        ? phoneMenuOpener(page)
         : page.getByRole("button", { name: "Page guide", exact: true }),
     ).toBeFocused();
     await page

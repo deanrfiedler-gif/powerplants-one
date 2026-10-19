@@ -3,7 +3,7 @@ import { randomUUID, createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
+import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 const C = {
   company: "20000000-0000-4000-8000-000000000001",
   site: "70000000-0000-4000-8000-000000000001",
@@ -263,7 +263,7 @@ test("all fourteen native routes expose their exact guide and preserve shell foc
       ).toBeVisible();
       // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
       const opener = phoneWidth(page)
-          ? page.locator("#shell-phone-menu")
+          ? phoneMenuOpener(page)
           : page.getByRole("button", { name: "Page guide", exact: true }),
         response = page.waitForResponse((r) =>
           r.url().includes("/api/development/catalog?pathname="),
