@@ -39,7 +39,7 @@ Constraints:
 4. **Honest states.** Submitted, Sent, Delivered and Failed stay distinct (DOC-05), and failures stay visible (TR-03). Tracking is evidence, never proof (A1-D5).
 5. **Privacy.** A1-Q2: the event type and time only, no IP address, location or device, kept for 12 months, and a privacy notice that says sales email may contain tracking. No personal data in URLs.
 6. **No unrequested services.** A tracking endpoint is a new public surface. Dean asked for tracking, so the endpoint is in scope, but no third-party tracking vendor is.
-7. **The tenant is unverified.** Microsoft 365, Exchange Online, licences, the administrator and the mailboxes are all still to be confirmed (ADR-0058).
+7. **The tenant is unverified.** Dean said on 19 October 2026: "I believe our Microsoft Outlook is on Exchange Online, and is handled internally by our IT contractor." That is his belief, not a verified fact: the tenant, licences, mailboxes and who can grant consent are still to be confirmed with the IT contractor before any pilot (ADR-0058).
 8. **The repository is public and synthetic.** No real mailbox address, tenant identifier or credential appears here.
 
 ## Options
@@ -175,7 +175,7 @@ Tracking applies to correspondence only, on by default with a switch for each em
   - Opens by anyone the email is forwarded to, and the sender's own views of the Sent copy in Outlook, can count as opens.
 - **Retention.** Tracking events are deleted 12 months after they occur (A1-Q2). Deletion is automatic and logged as a count, not as content.
 - **Who sees it.** The sender, and a colleague the message is shared with; never a record's Email section for anyone else (A1-Q3). No alert unless the person asks for one on that email; the first open then adds one My Work notification (A1-Q4).
-- **Privacy notice.** Tracking stays off for every real recipient until Dean records that Powerplants' privacy notice says sales email may contain tracking. That update is a business action outside this repository, and this record gives no legal view on the Privacy Act 1988 or the Spam Act 2003.
+- **Privacy notice.** Tracking stays off for every real recipient until Dean records that Powerplants' privacy notice says sales email may contain tracking. On 19 October 2026 Dean decided to add it now (see "Dean's answers" below); the gate is met once he confirms the notice is updated. The update is a business action outside this repository, and this record gives no legal view on the Privacy Act 1988 or the Spam Act 2003.
 
 **Tracking under the other options**, for comparison:
 - A: the same mechanism, but on notices too, which R4 forbids.
@@ -249,10 +249,21 @@ If Dean answers "Proceed with your recommendations", these are adopted and recor
 | E8 | Signature on correspondence? | **A plain-text signature held in PPO for each person**, until D-024 decides branding. Graph does not apply the person's Outlook signature to mail sent through it; the pilot confirms this |
 | E9 | Can a person send correspondence from a team mailbox they share in Outlook? | **Not in this stage.** EC-01 Q3 keeps shared mailboxes out of the Email view, and this ADR grants no `Mail.Send.Shared`. A later decision can add named team mailboxes |
 
-Questions only Dean or Powerplants can answer, with no recommendation here:
-- Whether the company's mail is Exchange Online in a tenant PPO can be registered in, and who can grant consent (also open for ADR-0058).
-- When the privacy notice will say sales email may contain tracking (A1-Q2).
-- Whether any correspondence counts as a commercial electronic message under the Spam Act 2003, which would need an unsubscribe option. This record gives no legal view.
+### Dean's answers, 19 October 2026
+
+The record asked three questions that only Dean or Powerplants can answer. Dean answered them on 19 October 2026, relayed through the Emails design session. In his words:
+
+> "Yes, I believe our Microsoft Outlook is on Exchange Online, and is handled internally by our IT contractor.
+> We can mention tracking in our Privacy Notice right now for the purpose of developing the Powerplants One app.
+> No sales emails count as commercial under the Spam Act, so we will not need an unsubscribe button."
+
+These answers decide none of E1–E9. The ADR stays Proposed.
+
+| Question | Dean's answer | How it is recorded |
+|---|---|---|
+| Is the company's mail Exchange Online in a tenant PPO can be registered in, and who can grant consent? (also open for ADR-0058) | "I believe our Microsoft Outlook is on Exchange Online, and is handled internally by our IT contractor." | **Dean's statement, not verified.** Consent and administration sit with the company's IT contractor. Confirming the tenant, licences, mailboxes and the person who can grant consent stays a prerequisite of the E-S1 read pilot and the E-S3 sending pilot |
+| When will the privacy notice say sales email may contain tracking? (A1-Q2) | "We can mention tracking in our Privacy Notice right now for the purpose of developing the Powerplants One app." | **Dean's business decision.** He will add tracking to the privacy notice now. The §5 gate is met once Dean confirms the notice is updated; until then tracking stays off for every real recipient. Updating the notice is a business action outside this repository |
+| Does any correspondence count as a commercial electronic message under the Spam Act 2003, which would need an unsubscribe option? | "No sales emails count as commercial under the Spam Act, so we will not need an unsubscribe button." | **Dean's business position.** Correspondence gets no unsubscribe option on that basis. This record gives no legal view, and does not state this as a legal conclusion. Customer notices keep D-025 R2's plain instruction on how to stop them |
 
 ## Validation evidence and remaining questions
 
@@ -262,7 +273,7 @@ Questions only Dean or Powerplants can answer, with no recommendation here:
 - the Email & Calendar integration design (sections 5, 6, 7, 9 and 15), ADR-0020 and ADR-0021;
 - the lead and deal record design records (the composer's Email tab) and the `scope:EC-04` register entry.
 
-**Not inspected:** the company tenant, mailboxes, licences, DNS, hosting log settings, the privacy notice or any real mail. No Microsoft documentation was fetched for this record. The Graph behaviour it relies on (delegated `Mail.Send` limited to the signed-in user, `Mail.Send.Shared` for others' mailboxes, the `202 Accepted` response, custom `x-` headers, immutable identifiers, Outlook signatures not applied) is stated from the references ADR-0058 and the integration design already cite, and is to be verified in the E-S3 pilot.
+**Not inspected:** the company tenant (Dean's belief that it is Exchange Online is recorded above, not verified), mailboxes, licences, DNS, hosting log settings, the privacy notice or any real mail. No Microsoft documentation was fetched for this record. The Graph behaviour it relies on (delegated `Mail.Send` limited to the signed-in user, `Mail.Send.Shared` for others' mailboxes, the `202 Accepted` response, custom `x-` headers, immutable identifiers, Outlook signatures not applied) is stated from the references ADR-0058 and the integration design already cite, and is to be verified in the E-S3 pilot.
 
 **Planned validation, not executed:**
 - On the synthetic channel: a send creates one receipt; a retried command returns its original receipt; OutcomeUnknown reconciles before retry; Failed creates one follow-up; a record composer links on Sent; a colleague cannot see an unshared sent email or its tracking.

@@ -42,6 +42,12 @@ Dean requested repair and merge of [PR #600](https://github.com/deanrfiedler-gif
 
 Checked: `scripts/check_foundation.py`, `scripts/check_naming.py` and `scripts/build_status.py --check`. Not done: nothing is accepted, and no app registration, consent, mailbox, DNS change, migration, capability, sending code, tracking endpoint or customer message is authorised. No Microsoft documentation was fetched for this record; the Graph behaviour it relies on is to be verified in the pilot. No parent ID changes.
 
+## ADR-0059 owner answers recorded — 19 October 2026
+
+[ADR-0059](decisions/ADR-0059-email-sending-from-ppo.md) now records, in Dean's words, his 19 October 2026 answers to its three questions that only he or Powerplants can answer. Tenant: "I believe our Microsoft Outlook is on Exchange Online, and is handled internally by our IT contractor", recorded as his statement, not verified; confirming the tenant and who can grant consent stays a pilot prerequisite. Privacy notice: Powerplants will mention tracking now, recorded as his business decision; the tracking gate is met once he confirms the notice is updated, which is a business action outside the repository. Spam Act: his position that no sales email is commercial, so correspondence needs no unsubscribe button, recorded as a business position; the record still gives no legal view.
+
+Checked: `scripts/check_foundation.py`, `scripts/check_naming.py` and `scripts/build_status.py --check`. Not done: E1–E9 are not decided, and the ADR stays Proposed.
+
 ## Travel review PL-05 design accepted — 18 October 2026
 
 Dean accepted the Figma design for Travel review (PL-05, `/schedule/travel`) on 18 October 2026: "I accept the Travel review PL-05 design with your recommendations, including D1–D5 and Q1–Q2." The [decision](decisions/travel-review-figma-design.md) (PPO-PL05-TRAVEL-REVIEW-FIGMA-DEC) records it, and the [retained captures](reference/ui/service/travel-review-design-r01/README.md) are six icon-free PNGs with hashes.
