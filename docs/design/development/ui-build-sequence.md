@@ -5,10 +5,10 @@
 Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1**. The proposal and its departures from r02 are in
 [the decision record](../../decisions/ui-build-sequence.md).
 
-- Register: `docs\design\development\register.json` (SHA-256 `6de3b4fa5de3b59b…`).
-- Phases and ranks: build plan r02 in `docs\reference\ui\app-page-register\PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
-- 364 entries: 361 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
-- 206 built and awaiting owner review; 106 to refine; 43 to build; 6 awaiting a scope decision.
+- Register: `docs/design/development/register.json` (SHA-256 `184b86937de63394…`).
+- Phases and ranks: build plan r02 in `docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html` (SHA-256 `b07890f2cec60284…`). Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort.
+- 366 entries: 363 placed in a phase and 3 excluded. 28 have an owner visual review recorded.
+- 206 built and awaiting owner review; 106 to refine; 46 to build; 5 awaiting a scope decision.
 - Review track starts at phase 00; build track starts at phase 01.
 
 | Phase | Title | After phases | Scopes | Routes | Review | Refine | Build | Decide |
@@ -18,13 +18,13 @@ Status: **Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register
 | 02 | Products, equipment and survey evidence | 01 | 15 | 14 | 28 | 0 | 1 | 0 |
 | 03 | Sales through quotation and handover | 01, 02 | 13 | 36 | 29 | 19 | 1 | 0 |
 | 04 | Service, job packs and field quality | 00, 01, 02 | 14 | 21 | 17 | 17 | 1 | 0 |
-| 05 | Engineering, project delivery and supply | 00, 01, 02, 03, 04 | 27 | 60 | 44 | 39 | 4 | 0 |
+| 05 | Engineering, project delivery and supply | 00, 01, 02, 03, 04 | 30 | 60 | 44 | 39 | 7 | 0 |
 | 06 | Finance, maintenance and customer lifecycle | 01, 02, 03, 04, 05 | 19 | 25 | 32 | 7 | 5 | 0 |
 | 07 | Connected communications and knowledge | 00, 01 | 6 | 3 | 0 | 5 | 4 | 0 |
 | 08 | Reporting and customer access | 01, 02, 03, 04, 05, 06, 07 | 12 | 0 | 0 | 0 | 12 | 0 |
 | 09 | Evidence-based assistance | 01, 07 | 7 | 2 | 2 | 0 | 7 | 0 |
 | 10 | Cutover and full-app adoption | 01, 07, 08 | 4 | 0 | 0 | 1 | 3 | 0 |
-| 11 | Conditional future options | 01, 02, 04, 05, 07, 08 | 6 | 0 | 0 | 0 | 0 | 6 |
+| 11 | Conditional future options | 01, 02, 04, 05, 07, 08 | 5 | 0 | 0 | 0 | 0 | 5 |
 
 ## Synthetic job walk
 
@@ -334,6 +334,9 @@ Turn accepted scope into controlled design, project baselines, material fulfilme
 | 85 | `route:/supply/shipments` | supply / shipments | Built; owner review pending | Added after r05; placed with SC-03 |
 | 86 | `scope:SC-04` | Receipt, inspection and quarantine | Built; owner review pending | Issued r02 rank |
 | 86 | `route:/supply/receipts` | supply / receipts | Built; owner review pending | Added after r05; placed with SC-04 |
+| 86 | `scope:CX-02` | Workshop assembly, testing and rework | To build | Owner decision PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D3: after SC-04; issued r02 rank 146 |
+| 86 | `scope:CX-02/kitting` | Kitting and controller preparation | To build | Added after r05; placed with CX-02 |
+| 86 | `scope:CX-02/bench-testing` | Bench testing and returned units | To build | Added after r05; placed with CX-02 |
 | 87 | `scope:SC-05` | Stock availability and reservations | Built; owner review pending | Issued r02 rank |
 | 87 | `route:/supply/stock` | supply / stock | Built; owner review pending | Added after r05; placed with SC-05 |
 | 88 | `scope:SC-06` | Picking and dispatch preparation | Built; owner review pending | Issued r02 rank |
@@ -485,7 +488,6 @@ Provisional order only. Start these ideas after a separate scope decision and co
 | Rank | Entry | Title | State | Placement |
 |---:|---|---|---|---|
 | 145 | `scope:CX-01` | Company tools, loan units and calibration | Scope decision first | Issued r02 rank |
-| 146 | `scope:CX-02` | Workshop assembly, testing and rework | Scope decision first | Issued r02 rank |
 | 147 | `scope:CX-03` | Remote monitoring and alarm review | Scope decision first | Issued r02 rank |
 | 148 | `scope:CX-04` | Advanced customer training and subscription coordination | Scope decision first | Issued r02 rank |
 | 149 | `scope:CX-05` | Grower production and traceability integration | Scope decision first | Issued r02 rank |

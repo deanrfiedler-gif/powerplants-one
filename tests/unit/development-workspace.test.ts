@@ -117,7 +117,12 @@ test("real working register covers routes and retains stable imported scope iden
       sourceRoutes(root),
     ]);
   assert.deepEqual(catalog.errors, []);
-  assert.equal(master.entries.filter((e) => e.kind === "scope").length, 150);
+  const scopes = master.entries.filter((e) => e.kind === "scope"),
+    imported = scopes.filter((e) => !e.key.includes("/"));
+  assert.equal(imported.length, 150);
+  // Owner-decided pages within a scope (e.g. scope:CX-02/kitting) extend an imported identity, never replace one.
+  for (const e of scopes.filter((s) => !imported.includes(s)))
+    assert(imported.some((s) => e.key.startsWith(s.key + "/")), e.key);
   assert(catalog.entries.some((e) => e.key === "system:shell"));
   for (const route of routes.filter((r) => !r.path.startsWith("/crm/")))
     assert(

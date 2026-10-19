@@ -2,9 +2,9 @@
  "title": "Powerplants One UI build and review sequence",
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
-  "register": "docs\\design\\development\\register.json",
-  "register_sha256": "6de3b4fa5de3b59b30e578bfc9e9a4fd1873838440ad7f0186c1893652e0f647",
-  "build_plan": "docs\\reference\\ui\\app-page-register\\PPO-App-Page-Register-r05.html",
+  "register": "docs/design/development/register.json",
+  "register_sha256": "184b86937de633944b021b1b88022ae13d98ae1c6f2c3879258577a853fefd4c",
+  "build_plan": "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
   "build_plan_basis": "Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort."
@@ -20,13 +20,13 @@
   "build": "01"
  },
  "totals": {
-  "entries": 364,
-  "placed": 361,
+  "entries": 366,
+  "placed": 363,
   "excluded": 3,
-  "build": 43,
+  "build": 46,
   "refine": 106,
   "review": 206,
-  "decide": 6,
+  "decide": 5,
   "owner_reviewed": 28
  },
  "phases": [
@@ -2250,12 +2250,12 @@
     "04"
    ],
    "counts": {
-    "build": 4,
+    "build": 7,
     "refine": 39,
     "review": 44,
     "decide": 0
    },
-   "scopes": 27,
+   "scopes": 30,
    "routes": 60,
    "systems": 0,
    "entries": [
@@ -2885,6 +2885,39 @@
      "state": "review",
      "visual_review": "Pending",
      "placement": "Added after r05; placed with SC-04"
+    },
+    {
+     "key": "scope:CX-02",
+     "title": "Workshop assembly, testing and rework",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/workshop",
+     "rank": 86,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Owner decision PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D3: after SC-04; issued r02 rank 146"
+    },
+    {
+     "key": "scope:CX-02/kitting",
+     "title": "Kitting and controller preparation",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/workshop/kitting",
+     "rank": 86,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CX-02"
+    },
+    {
+     "key": "scope:CX-02/bench-testing",
+     "title": "Bench testing and returned units",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/workshop/bench-testing",
+     "rank": 86,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CX-02"
     },
     {
      "key": "scope:SC-05",
@@ -4225,9 +4258,9 @@
     "build": 0,
     "refine": 0,
     "review": 0,
-    "decide": 6
+    "decide": 5
    },
-   "scopes": 6,
+   "scopes": 5,
    "routes": 0,
    "systems": 0,
    "entries": [
@@ -4238,17 +4271,6 @@
      "module": "CX",
      "path": "/assets/tools",
      "rank": 145,
-     "state": "decide",
-     "visual_review": "Pending",
-     "placement": "Issued r02 rank"
-    },
-    {
-     "key": "scope:CX-02",
-     "title": "Workshop assembly, testing and rework",
-     "kind": "scope",
-     "module": "CX",
-     "path": "/workshop",
-     "rank": 146,
      "state": "decide",
      "visual_review": "Pending",
      "placement": "Issued r02 rank"

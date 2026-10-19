@@ -6,11 +6,20 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Conditional: in-house workshop assembly, testing and rework, subject to need and ERP capability.
+Dean confirmed the workshop as a full module on 19 October 2026 ([PPO-WORKSHOP-SETTINGS-SCOPE-DEC](../../../decisions/workshop-settings-preferences-scope.md), WS-D2 to WS-D5). It is designed as three pages. This entry is the first, **Workshop builds**; the other two are [Kitting and controller preparation](scope-cx-02-kitting.md) (`scope:CX-02/kitting`) and [Bench testing and returned units](scope-cx-02-bench-testing.md) (`scope:CX-02/bench-testing`). In the build sequence the module sits after Receipt, inspection and quarantine (SC-04) and before Picking and dispatch preparation (SC-06).
 
-1. Confirm whether the workshop capability is required
-2. Define traceable assembly and testing records
-3. Review rework and receiving responsibilities
+Workshop builds is a register of builds and a build record with tabs for:
+
+1. the parts list, taken from released materials;
+2. materials booked out;
+3. steps and work instructions;
+4. tests;
+5. rework;
+6. release, with a serial number.
+
+Welding and fabrication check the welder's qualification against the competence records of the accepted Field team design (`scope:PL-02`), and record weld inspections with the controlled-form pattern of the accepted Inspections design (`scope:FI-03`, `scope:FI-04`).
+
+Under option A, staff do this work in Powerplants One and MYOB Acumatica stays the book of record: PPO sends the resulting stock movements and costs, and MYOB keeps items, stock, purchasing, stock valuation and financial reporting. No MYOB endpoint, entity or posting is designed here.
 
 ## Desktop
 
@@ -32,7 +41,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+No exact image or HTML reference is linked, and no Figma page for the workshop has been drawn yet. Keep this gap visible.
 
 ## Behaviour, handovers and verification
 

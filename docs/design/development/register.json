@@ -5933,17 +5933,18 @@
       "title": "Workshop assembly, testing and rework",
       "kind": "scope",
       "module": "CX",
-      "summary": "Conditional: in-house workshop assembly, testing and rework, subject to need and ERP capability.",
+      "summary": "Confirmed full module (Dean, 19 October 2026; PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D2), one of three workshop pages. This entry is Workshop builds: a register of builds and a build record with tabs for the parts list from released materials, materials booked out, steps and work instructions, tests, rework, and release with a serial number. Welding needs a checked welder qualification and recorded weld inspections. Staff work in PPO; MYOB Acumatica stays the book of record (option A).",
       "path": "/workshop",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "docs/decisions/workshop-settings-preferences-scope.md"
       ],
       "guide_key": "guide.cx.02",
       "design_path": "docs/design/development/pages/scope-cx-02.md",
       "html_path": null,
       "image_paths": [],
       "dependencies": [],
-      "scope_status": "conditional",
+      "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
@@ -5952,8 +5953,75 @@
       "owner": "Dean Fiedler",
       "build_rank": 146,
       "related_keys": [
+        "scope:SC-04",
+        "scope:CX-02/kitting",
+        "scope:CX-02/bench-testing",
         "scope:EN-08",
-        "scope:SC-04"
+        "scope:PL-02",
+        "scope:FI-04"
+      ],
+      "reviewer": null
+    },
+    {
+      "key": "scope:CX-02/kitting",
+      "title": "Kitting and controller preparation",
+      "kind": "scope",
+      "module": "CX",
+      "summary": "Workshop page 2 of 3 under scope:CX-02 (PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D3): parts kitted for a project or job, and each controller's pre-configuration and the configuration loaded. Planned page; the route is proposed and no source exists yet.",
+      "path": "/workshop/kitting",
+      "source_paths": [
+        "docs/decisions/workshop-settings-preferences-scope.md"
+      ],
+      "guide_key": "guide.cx.02.kitting",
+      "design_path": "docs/design/development/pages/scope-cx-02-kitting.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "unbuilt",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CX-02",
+        "scope:CX-02/bench-testing",
+        "scope:SC-05",
+        "scope:EN-08"
+      ],
+      "reviewer": null
+    },
+    {
+      "key": "scope:CX-02/bench-testing",
+      "title": "Bench testing and returned units",
+      "kind": "scope",
+      "module": "CX",
+      "summary": "Workshop page 3 of 3 under scope:CX-02 (PPO-WORKSHOP-SETTINGS-SCOPE-DEC WS-D3): receive a returned unit, bench-test it, repair or reject it, and record the outcome. Planned page; the route is proposed and no source exists yet.",
+      "path": "/workshop/bench-testing",
+      "source_paths": [
+        "docs/decisions/workshop-settings-preferences-scope.md"
+      ],
+      "guide_key": "guide.cx.02.bench-testing",
+      "design_path": "docs/design/development/pages/scope-cx-02-bench-testing.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "unbuilt",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CX-02",
+        "scope:CX-02/kitting",
+        "scope:MA-06",
+        "scope:SC-08",
+        "scope:EQ-09"
       ],
       "reviewer": null
     },

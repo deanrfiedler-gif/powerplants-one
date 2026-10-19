@@ -9,6 +9,12 @@ Dean decided which pages join the Figma design list after the remaining build-se
 
 Not done: no page is drawn, and no route, code, migration, permission or MYOB integration changes. The design register still records `scope:CX-02` as conditional; the pull request that draws the first workshop page reclassifies it and regenerates the UI build sequence.
 
+## Workshop CX-02 reclassified in the design register — 19 October 2026
+
+The follow-up in the [workshop scope decision](decisions/workshop-settings-preferences-scope.md) is done. The design register now records `scope:CX-02` as unbuilt, as the Workshop builds page. Two new entries, `scope:CX-02/kitting` (Kitting and controller preparation) and `scope:CX-02/bench-testing` (Bench testing and returned units), carry the other two workshop pages, each with a draft guide and page contract. The regenerated [UI build sequence](design/development/ui-build-sequence.md) places all three in phase 05 after SC-04, through new owner placement rule SD-06. The issued r02 rank 146 is kept in the register. Phase 11 now holds five conditional scopes.
+
+Not done: no workshop page is drawn in Figma, and no route, code, permission or MYOB integration exists. The two new routes (`/workshop/kitting`, `/workshop/bench-testing`) are proposals.
+
 ## Site surveys CS-08 design accepted — 19 October 2026
 
 Dean accepted the Figma design for CS-08, the site survey and as-found brief (`/surveys` and `/surveys/[id]`), after an audit and polish: "I accept the Site surveys CS-08 design with your recommendations, including D1–D7 and Q1–Q4." The [design decision](decisions/site-surveys-figma-design.md) (PPO-CS08-SITE-SURVEYS-FIGMA-DEC) records departures D1–D7 and answers Q1–Q4: the reference `SYN-PPO-SRV-000nnn`, planned visit and contact on site as recorded fields, no review by the survey owner or recorder, and a changed scope source shown to the reviewer without blocking review. Fourteen icon-free captures with hashes are retained in [site-surveys-design-r01](reference/ui/customers/site-surveys-design-r01/README.md). The design register pages for both routes and `scope:CS-08` cite the frames and captures. In Figma the File index has a Site surveys row after Access & readiness, and the capture copies sit on the Captures page from y = 256,000.
