@@ -1,4 +1,4 @@
-import { database } from "../platform/database";
+import { database, transaction } from "../platform/database";
 import type { Principal } from "../platform/identity";
 import { requireCapability, scopeSql } from "../platform/permissions";
 import { workingCompanyFor } from "../platform/working-company";
@@ -81,13 +81,24 @@ export async function organisationRegister(
   // or fuzzy confidence is inferred. Every matching name is itself inside the permitted population.
   // Aggregate related records once within that population. Repeating the full visibility
   // queries for each organisation exceeds the statement limit at the declared load.
-  const data = (
-    await c.query<OrganisationRegisterData & { cursor_found: boolean }>(
-      `
+  const data = await transaction(async (c) => {
+    // This bounded interactive read has many visibility expressions. Their
+    // estimated cost can trigger JIT compilation even when almost all related
+    // rows are absent. Keep that compilation out of the request deadline; SET
+    // LOCAL is restored on commit/rollback before the pooled client is released.
+    await c.query("SET LOCAL jit = off");
+    return (
+      await c.query<OrganisationRegisterData & { cursor_found: boolean }>(
+        `
     WITH permitted AS MATERIALIZED (
       SELECT r.id,r.company_id,r.display_name,r.display_number,r.relationship_status AS status,r.sector,r.owner_id,u.display_name AS owner_name
       FROM ppo.organisations r LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.owner_id)
       WHERE r.workspace_id=$1 AND ${visibility("Organisation")}
+    ), name_candidates AS MATERIALIZED (
+      SELECT id,name,char_length(name) AS name_length,
+        count(*) OVER(PARTITION BY name) AS exact_matches,
+        max(char_length(name)) OVER() AS longest_name
+      FROM (SELECT id,lower(display_name) AS name FROM permitted) names
     ), current_sites AS MATERIALIZED (
       SELECT DISTINCT sp.organisation_id,s.id FROM ppo.site_parties sp
       JOIN ppo.sites s ON (s.workspace_id,s.id)=(sp.workspace_id,sp.site_id)
@@ -128,11 +139,14 @@ export async function organisationRegister(
         coalesce(f.areas,0) AS areas,
         CASE WHEN ${scopeSql("r.company_id", "NULL::uuid", "crm.opportunity.read")} AND ${scopeSql("r.company_id", "NULL::uuid", "shared.internal.read")}
           THEN coalesce(o.deals,0) ELSE NULL END AS deals,
-        EXISTS(SELECT 1 FROM permitted d WHERE d.id<>r.id AND position(lower(r.display_name) IN lower(d.display_name))>0) AS possible_duplicate,
+        (n.exact_matches>1 OR (n.name_length<n.longest_name AND EXISTS(
+          SELECT 1 FROM name_candidates d WHERE d.name_length>n.name_length AND position(n.name IN d.name)>0
+        ))) AS possible_duplicate,
         CASE WHEN ${scopeSql("r.company_id", "NULL::uuid", "activity.read")} THEN 'Available' ELSE 'Restricted' END AS follow_up_state,
         CASE WHEN a.id IS NULL THEN NULL ELSE jsonb_build_object('id',a.id,'summary',a.summary,'due_at',a.due_at,'due_needed',a.due_needed) END AS next_follow_up,
         a.due_at AS follow_up_due
       FROM permitted r
+      JOIN name_candidates n ON n.id=r.id
       LEFT JOIN site_counts s ON s.organisation_id=r.id
       LEFT JOIN area_counts f ON f.organisation_id=r.id
       LEFT JOIN deal_counts o ON o.organisation_id=r.id
@@ -154,18 +168,19 @@ export async function organisationRegister(
         )
         .join(",")}) FROM filtered) AS counts,
       coalesce((SELECT jsonb_agg(x ORDER BY label,id) FROM (SELECT DISTINCT owner_id AS id,owner_name AS label FROM permitted WHERE owner_id IS NOT NULL) x),'[]'::jsonb) AS owners`,
-      [
-        p.workspace_id,
-        p.actor_id,
-        pg.q,
-        status,
-        owner,
-        observed,
-        pg.after,
-        pg.limit + 1,
-      ],
-    )
-  ).rows[0];
+        [
+          p.workspace_id,
+          p.actor_id,
+          pg.q,
+          status,
+          owner,
+          observed,
+          pg.after,
+          pg.limit + 1,
+        ],
+      )
+    ).rows[0];
+  });
   if (!data.cursor_found)
     throw invalid(
       "cursor",

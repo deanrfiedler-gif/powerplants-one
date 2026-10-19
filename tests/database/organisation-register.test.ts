@@ -70,6 +70,31 @@ test("CS01 thousand-organisation register keeps exact counts and bounded signed 
   assert.equal(new Set([...first.items, ...second.items].map(row => row.id)).size, 50);
 });
 
+test("CS01 normalised duplicate candidates retain directional matching and permitted scope", async () => {
+  const p = await principal();
+  const jitBefore = (await database().query("SHOW jit")).rows[0].jit;
+  const rows = [
+    ["e6043000-0000-4000-8000-000000000001", CRM.company, "SYN Acme"],
+    ["e6043000-0000-4000-8000-000000000002", CRM.company, "syn ACME subsidiary"],
+    ["e6043000-0000-4000-8000-000000000003", CRM.company, "SYN ACME"],
+    ["e6043000-0000-4000-8000-000000000004", CRM.company, "SYN separate candidate"],
+    ["e6043000-0000-4000-8000-000000000005", CRM.companyB, "SYN separate candidate overseas"],
+  ];
+  for (const [id, company, name] of rows) await database().query(
+    "INSERT INTO ppo.organisations(id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,relationship_status) VALUES($1,$2,$3,$4,$4,$4,$5,'Active')",
+    [id, CRM.workspace, company, p.actor_id, name],
+  );
+  const result = await withWorkingCompany(p.actor_id, CRM.company, () => organisationRegister(p, { q: "SYN" }));
+  const candidate = (id: string) => result.items.find(row => row.id === id)!.possible_duplicate;
+  assert.equal(candidate(rows[0][0]), true);
+  assert.equal(candidate(rows[1][0]), false); // Matching remains directional substring containment.
+  assert.equal(candidate(rows[2][0]), true);
+  assert.equal(candidate(rows[3][0]), false); // An out-of-company match cannot set the flag.
+  assert.ok(result.items.every(row => row.id !== rows[4][0]));
+  assert.ok(result.items.every(row => !("name" in row))); // Normalised names are internal query data.
+  assert.equal((await database().query("SHOW jit")).rows[0].jit, jitBefore);
+});
+
 test("CS01 one authorised population supplies rows, view counts, owner options and signed pages", async () => {
   const p = await principal();
   const all = await organisationRegister(p, {});
