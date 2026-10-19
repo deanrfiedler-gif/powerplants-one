@@ -25,12 +25,14 @@ Each source head is retained as an ancestor of the integration branch. The share
 - Codex reviewed the Claude-authored source changes and design decision records for authority boundaries, preservation of source evidence, synthetic calculations, permission proposals and implementation scope. This is a different-model source review; no new Figma, device, operational or Finance acceptance is claimed.
 - The first combined phone-browser run passed 439 tests and failed the directory-navigation test because it still requested the removed Organisations menu button. The test now opens the accepted header view chooser by its accessible name, verifies the Organisations dialog and retains the exact People/Sites destination checks.
 - Bounded the Project financial performance decision's MYOB observations to the one inspected project; zero projection columns there do not establish company-wide forecasting usage.
+- The first performance run's retained phone sample shows successful core API responses followed by a 120-second wait for the hidden Change identity button. Seven diagnostic scripts now reuse the existing phone-aware identity locator. The identity region must still settle and the mounted trigger must still be enabled; no menu is opened inside the timed sample, and no original failed sample is discarded or replaced. The directory browser proof covers the shared locator on desktop and phone.
 
 ## Validation
 
 - Targeted unit tests: **31 passed**, including the stale-callback regression, phone markup/accessibility contracts, working-register identities, Font Awesome mapping, breadcrumbs and source-text integrity.
 - Development register: **0 errors**, 366 entries, 338 unreviewed and 28 stale; all 48 component reviews remain pending.
 - Foundation, prototype, naming, migration numbering, status generation, lint, typecheck and the full application build passed locally on the integration before the final test/documentation repair.
+- The repaired directory navigation and shared identity readiness checks passed against the compiled application on desktop and phone (**2 passed**) using a separate loopback `ppo_synthetic_test` instance. Targeted ESLint and typecheck also passed after the seven diagnostic scripts adopted the existing locator. The phone proof explicitly verifies that the retained trigger is hidden and enabled.
 - The first full CI run passed the general desktop browser suite, CRM, Email Calendar, Estimating E1, Supply, HTTP, reports and focused quality checks. The phone-browser failure above requires verification on the repaired head. [PR #622 checks](https://github.com/deanrfiedler-gif/powerplants-one/pull/622/checks) retain the authoritative final-head outcomes; merging requires the protected checks to pass.
 
 ## Limits

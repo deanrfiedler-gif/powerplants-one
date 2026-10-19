@@ -1,3 +1,4 @@
+import { identityToggle } from "../tests/helpers/phone-menu";
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { cpus, totalmem, freemem, loadavg, platform, release, arch } from "node:os";
@@ -401,7 +402,8 @@ try {
               await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", {
                 timeout: 120000,
               });
-              await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled({ timeout: 120000 });
+              // P4 keeps this trigger mounted but hidden on phones. Read its readiness state without opening a menu inside the timed sample.
+              await expect(identityToggle(page)).toBeEnabled({ timeout: 120000 });
               await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, {
                 timeout: 120000,
               });
@@ -596,7 +598,7 @@ try {
           cold_warm:
             "Each view begins with 10 fresh contexts, empty browser caches and no preceding measured navigation in those contexts. Only the first desktop visit can include first route compilation in this shared fresh server; later views/phone can reuse server modules and database/OS caches. Warm is three subsequent navigation waves in the same contexts. No OS cache flush or durable offline-storage inference.",
           boundary:
-            "Browser navigation initiation to successful core API response, settled identity region and enabled Change identity control, completed loading, no business error and two animation frames. Authentication setup is outside the timed boundary; navigation, HTML, assets, API and rendering are inside.",
+            "Browser navigation initiation to successful core API response, settled identity region and enabled mounted Change identity control (hidden on phones under P4), completed loading, no business error and two animation frames. Authentication setup is outside the timed boundary; navigation, HTML, assets, API and rendering are inside.",
           limits:
             "Headless Chromium on CI hardware with emulated viewport/network; not a real phone, screen-reader session, PDF accessibility or whole-product conformance proof. Candidate timing failures are recorded, not silently excluded. No exports or offline synchronisation in this core-read sample.",
         },

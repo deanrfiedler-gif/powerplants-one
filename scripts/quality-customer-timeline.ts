@@ -1,3 +1,4 @@
+import { identityToggle } from "../tests/helpers/phone-menu";
 import assert from "node:assert/strict";
 import { chromium, expect } from "@playwright/test";
 import { spawn, execFileSync } from "node:child_process";
@@ -310,10 +311,7 @@ try {
               }),
             ).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
             await expect(
-              page.getByRole("button", {
-                name: "Change identity",
-                exact: true,
-              }),
+              identityToggle(page),
             ).toBeEnabled({ timeout: 120000 });
             await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, {
               timeout: 120000,

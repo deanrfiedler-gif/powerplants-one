@@ -1,3 +1,4 @@
+import { identityToggle } from "../tests/helpers/phone-menu";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFileSync, spawn } from "node:child_process";
@@ -74,7 +75,7 @@ async function checkpoint(complete: boolean) {
 }
 async function settled(page: Page) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
   await expect(page.getByText(/^Loading .*\u2026$/)).toHaveCount(0, { timeout: 120000 });
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
