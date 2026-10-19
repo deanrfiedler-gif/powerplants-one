@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PJ08-STAKEHOLDER-UPDATES-FIGMA-DEC,Stakeholder updates design (Figma) owner decision,docs/decisions/stakeholder-updates-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,861e6195831a533c808066ac64153fbde465fdb5,,,git,
+PPO-PJ08-STAKEHOLDER-UPDATES-FIGMA-R01,Stakeholder updates design retained captures,docs/reference/ui/projects/stakeholder-updates-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,861e6195831a533c808066ac64153fbde465fdb5,,,retained-record,

@@ -1,0 +1,7 @@
+# Stakeholder updates figma design
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Stakeholder updates — `/projects/updates`, `/projects/[id]/updates/[update]` | [Design r01 captures](../projects/stakeholder-updates-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 19 October 2026 | [Decision](../../../decisions/stakeholder-updates-figma-design.md). PJ-08; not built. Updates across projects grouped by state, a draft written from the project's sources with typed dates read only, Prepare to send, a second person's review beside the sources with Approve and send or Return for changes, delivery steps, Correct a sent update as a successor, held updates, Update settings, a project record Updates view, and phone review under the compact header |
+
+**Stakeholder updates design, 19 October 2026:** Dean accepted the Figma design for PJ-08 (`/projects/updates`) at desktop, tablet and phone, with nine states. The coordinator writes each update from the project's sources, someone other than the drafter approves and sends the exact revision through Customer messages, sent, delivered and read stay distinct, and a sent update is corrected only by a successor. The [decision](../../../decisions/stakeholder-updates-figma-design.md) records it, and the [retained captures](../projects/stakeholder-updates-design-r01/README.md) are nineteen icon-free PNGs with hashes. Nothing is built. Listing it here does not repeat the dated inventory audit above.
