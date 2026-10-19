@@ -15,6 +15,12 @@ Dean accepted the Figma design for CS-08, the site survey and as-found brief (`/
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The named Figma version "Site surveys — accepted" was saved at Dean's "Yes, save the named Figma version "Site surveys — accepted"." Not done: the page is not built, and the native CS-08 pages are unchanged. Open item: the accepted Access & readiness design shows the survey reference as "SYN-SRV-000031". No application code, route, migration, permission or parent ID changes.
 
+## PPO daily workspace and MYOB book of record — 19 October 2026
+
+Dean adopted a direction for all modules: "Yes, record the wider direction: PPO is the day-to-day workspace for all modules and MYOB Acumatica is the book of record, with the integration principles you recommended, as its own decision record." The [direction record](decisions/ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) keeps the existing authority split (ADR-0048, ADR-0049) and sets ten integration principles (EI-1 to EI-10). They cover one owner per item of data, master data entered once in PPO, finished business events sent to MYOB, approval before posting and correction by reversal, retry-safe sends with visible states, daily reconciliation, supported Acumatica interfaces only, least privilege, and a read-only start. MYOB subscription savings are to be confirmed with the MYOB partner before being counted.
+
+Not done: no integration technology is chosen, and no adapter, endpoint, credential, migration or production connection is added. The Acumatica tenant contract (DEC-CCE-10) remains open.
+
 ## Open PR integration repairs Conversations and builder header fit — 19 October 2026
 
 [PR #598](https://github.com/deanrfiedler-gif/powerplants-one/pull/598) found and repaired an R9 header regression when the new Conversations action and the existing development workspace are both visible with an expanded rail. The search now reserves equal side space at laptop widths. The component fixture and regression case cover both rail states and the builder boundary; shared component and shell masters record the change without granting visual approval. [Evidence](testing/evidence/pr-backlog-integration/README.md) records the failed CI assertion, unchanged-main comparison and the separate existing 800 px expanded-rail limitation. Full combined CI remains the merge gate.

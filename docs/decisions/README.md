@@ -7,6 +7,8 @@
 
 [Site surveys design](site-surveys-figma-design.md) (PPO-CS08-SITE-SURVEYS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the CS-08 design: a grid register with status views, a survey record with a checks bar and six tabs, an observations table where an Unknown is never stored as zero, photo tiles shown by their original file facts, Review submission and Record reviewed handover forms that send nothing and change no estimate or design basis, and New survey with scope chips. Building it is not decided.
 
+[PPO as the daily workspace, MYOB Acumatica as the book of record](ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) records Dean's 19 October 2026 direction that staff do day-to-day work in PPO across all modules while MYOB Acumatica stays the book of record, with integration principles EI-1 to EI-10; integration technology and the tenant contract remain open.
+
 [Conversations T1d design](conversations-t1d-design.md) (PPO-CONV-T1D-DESIGN) records how the record-page lists, inbox notices and My Work asks are built, and the departures for Dean's review; the [reminder proposal](conversations-reply-by-reminders.md) (PPO-CONV-REMINDERS-PROP) sets out the reply-by scheduling options for his decision.
 
 [Travel review design — owner decision](travel-review-figma-design.md) (PPO-PL05-TRAVEL-REVIEW-FIGMA-DEC) records Dean's 18 October 2026 acceptance of the PL-05 Figma design for `/schedule/travel`: a route of travel legs and visits for one person, a day summary, conflicts on the leg they affect and an order comparison that changes no booking, with the route estimate kept "Unknown" and no map. Building it is not decided.
