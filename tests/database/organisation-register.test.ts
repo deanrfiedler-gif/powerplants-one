@@ -156,7 +156,11 @@ test("CS01 ten concurrent readers retain scoped counts and bounded pages at 1000
     assert.equal(result.counts.NoSite, before.counts.NoSite + added);
     assert.equal(result.counts.Prospects, before.counts.Prospects);
     assert.equal(result.counts.Inactive, before.counts.Inactive);
+    // A numbered name has a longer matching name exactly when appending a digit
+    // still fits in this fixture's range. Case folding must preserve that basis.
+    assert.equal(result.counts.Duplicates, before.counts.Duplicates + Math.floor(added / 10));
     assert.equal(result.items.length, 25);
+    assert.ok(result.items.every(row => !("matching_name" in row)));
     assert.ok(result.next_cursor);
     assert.deepEqual(result.owners, before.owners);
   }

@@ -49,9 +49,44 @@ The unit failures reproduced on unmodified `main` are the two P06 private-docume
 
 Earlier browser replays exposed the hidden register heading, an unlabelled saved-view select, the phone Account development handover and outdated D5/D7 selectors; these were corrected. The initial selected regression replay was 19/24: two Lead cases used a hard-coded port 3000 Origin, two Sites cases used an incorrect identity prefix in the new selector, and one phone Activity selector read the preceding panel before URL navigation completed. The final replay retains the original deadlines and exact checks, using the configured Origin, actual `SYN-PPO-SITE-` identity and named Activity panel. The final visual pass also removed duplicate error recovery controls and inherited form input margins.
 
-The full fifteen-family `quality-states` matrix requires its report/pack fixtures. Its CS-01 endpoint and empty-state assertion are updated but the full matrix is **authored, not executed locally** in this increment. CS-01 loading, denied, unavailable, empty, recovery and partial-source behaviour are executed by the focused native proof. The full cross-module suite is delegated to existing CI, whose status is recorded on PR #604; local results do not claim a green CI run.
+The full fifteen-family `quality-states` matrix requires its report/pack fixtures. Its CS-01 endpoint and empty-state assertion were updated but the full matrix was **not executed locally** in the initial increment. The [focused integrated quality and access CI job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39186201199/job/117849297769) subsequently passed on `8a7db7be`, including that matrix. This does not imply the other CI jobs passed.
 
-An earlier pushed-head CI run reported the [ES-08 phone bounding-box timeout](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39184471775/job/117843990233) named among the brief's known flakes: `specialist-workbench.spec.ts:576`, waiting for the Standard screen cloth dialog. That spec and its deadlines are unchanged. The workflow was still running when inspected; no cancelled run was restarted. The final push starts fresh CI, and the PR remains draft pending its outcome. This is not a claimed unmodified-main reproduction of that CI timeout.
+An earlier pushed-head CI run reported the [ES-08 phone bounding-box timeout](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39184471775/job/117843990233) named among the brief's known flakes: `specialist-workbench.spec.ts:576`, waiting for the Standard screen cloth dialog. That spec and its deadlines are unchanged. It passed in the subsequent `8a7db7be` run. This is not a claimed unmodified-main reproduction of that CI timeout.
+
+## CI correction follow-up
+
+The completed `8a7db7be` CI run reported four concrete failure paths:
+
+- The [P11 load job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39186201199/job/117849297669) exceeded its 25-minute step and 30-minute job limits. Its logs contain register statement timeouts at the declared load. The sampler also awaited the obsolete `/api/v1/crm/directory` response. It now observes `/api/v1/customers/register`, retaining every original profile, wave, concurrent user, network rule, success assertion and deadline.
+- The [mobile intake journey](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39186201199/job/117849297742) inspected the old record while the Stakeholders handover was still navigating. D3/D5 correctly present the primary contact in both record facts and Overview. The test now confirms the destination URL and Stakeholders content before asserting the exact contact handover.
+- The [compiled mobile](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39186201261/job/117849231611) and [compiled desktop](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39186201261/job/117849231672) Sales checks found the actual workspace still loading. Record navigation now observes and asserts the original successful workspace GET before testing its tabs. Existing tab assertions and test/expectation deadlines are unchanged.
+- The [desktop notification journey](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39186201199/job/117849297788) still selected `.crm-directory-table` on Customers. It now selects the D1 register's organisation link; the bell, notification state, source guard and preference assertions remain intact.
+
+The register correction materialises each permitted lower-case name once and groups related source reads within the existing SQL snapshot. It preserves all source visibility predicates, null-versus-zero states, matching semantics, nine sorts and scoped signed pagination. No migration, index, dependency, grant or timeout change is introduced.
+
+The [local load comparison](ci-load-comparison.json) uses the existing `qualityLoadFixture`: 1,000 organisations, 5,000 assets and 10,000 appointments in the synthetic workspace. On the same retained fixture, ten original reads completed in 3,193 ms as a group; ten corrected reads completed in 859 ms, with identical reported counts and 25 rows per page. All original reads also passed locally, so this is **not** a local reproduction of the CI timeout or a production latency claim. It is a bounded before/after observation; the unchanged CI performance procedure remains the full gate. A new database regression exercises ten concurrent readers at 1,000 organisations under the normal pool/statement deadlines, checking permitted counts, owner options and signed continuation.
+
+The first local database replay was interrupted when its isolated PostgreSQL process stopped; its timeout and connection failures are retained in the ignored log and are not counted as passing proof. The replay uses the restarted isolated cluster, never Dean's database.
+
+| Follow-up check | Executed result |
+|---|---|
+| Full `tests/database/organisation-register.test.ts`, serial, original 120-second test deadline | **Four passed** in 274.2 s. Includes all original authority/paging/source assertions and the new ten-reader load proof. |
+| Final selected ten-reader load proof after adding exact duplicate-count and internal-field assertions | **One passed** in 136.7 s overall; the individual test took 103.1 s, within its unchanged deadline. |
+| Focused `organisation-return`, `quality-comparison-profile`, `quality-network-conditioning`, `conversations-context` unit files | **Nine passed** in 8.8 s. The last file covers the newly integrated main change. The earlier Windows-only full-unit limits above remain accurately recorded. |
+| Full typecheck, lint and production build | **Passed** on the integrated application tree at `78a0fab5` (main `47e47361` plus correction `785aa259`). Build uses the same 8 GB Node heap. Targeted lint also passed on the subsequent test-only assertion/selector corrections. |
+| Compiled native CS-01 and notification journeys, both desktop and mobile projects | **16 passed** in the initial 18-test replay. The two intake failures exposed the newly added wait targeting a hidden eyebrow; it was corrected to the visible Relationship views tab list, retaining the destination URL and exact contact-link checks. |
+| Corrected intake journey, both projects | **Two passed** in 44.7 s. Together with the preceding replay, all 18 selected journeys pass. No application rebuild was needed for this test-selector correction. |
+| `tests/http/organisation-register.test.ts` against the compiled application | **One passed** in 1.75 s, retaining signed-scope, invalid-query and restricted-source checks. |
+| `npm run studio:check` | **Passed**: 364 pages, 48 components, 21 runnable examples; 48 component reviews pending, 336 unreviewed pages, 28 stale. No review state promoted. |
+| `node scripts/design-baseline-check.mjs` | **Passed**: six retained baselines, 24 captures, 41 shared token names, three documented divergences. |
+| Naming and generated UI sequence checks | **Passed**: 728 document records, 565 metadata records, 399 Git masters; 364 sequence entries. |
+
+The compiled browser replay uses the command below with `PPO_CS01_EVIDENCE` unset, preserving the 26 earlier visual captures and their manifest. The first replay raced the separately starting local server and logged an attempted second bind; the intended compiled server handled the tests. The corrected intake replay reused that server without a startup error. Fresh CI on the pushed correction remains the final execution gate; these local results do not pre-claim it.
+
+```powershell
+node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts --no-deps tests/browser/organisations-native.spec.ts tests/browser/intake.spec.ts tests/browser/sh-platform.spec.ts --grep 'CS01|P03 customer|SH notification' --reporter=list
+node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts --no-deps tests/browser/intake.spec.ts --grep 'P03 customer' --reporter=list
+```
 
 ### Browser commands
 

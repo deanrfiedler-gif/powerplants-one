@@ -76,7 +76,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   // CS-01 D3/D5 repeats the primary contact in the record facts and Overview.
   // Wait for the requested handover before inspecting the stakeholder link.
   await expect(page).toHaveURL(/\/customers\/50000000-0000-4000-8000-000000000001\/stakeholders(?:\?|$)/);
-  await expect(page.getByText("CS-03 / Stakeholders & relationships", { exact: true })).toBeVisible();
+  await expect(page.getByRole("tablist", { name: "Relationship views", exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "SYN Avery Contact", exact: true }),
   ).toHaveAttribute("href", `/people/${person}`);
