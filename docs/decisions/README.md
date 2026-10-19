@@ -11,6 +11,8 @@
 
 [PPO as the daily workspace, MYOB Acumatica as the book of record](ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) records Dean's 19 October 2026 direction that staff do day-to-day work in PPO across all modules while MYOB Acumatica stays the book of record, with integration principles EI-1 to EI-10; integration technology and the tenant contract remain open.
 
+[Phone header amendment](phone-header-amendment.md) (PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC) records Dean's 19 October 2026 adoption of one compact phone header row for every phone page: a view chooser, at most three icons with Conversations kept, record headers with position and previous/next, and the page guide, notifications and global search moved into the menu. It amends R7 of the Shell top bar amendment for phone widths.
+
 [Marketing module scope proposal](marketing-module-scope-proposal.md) (PPO-MARKETING-SCOPE-DEC) proposes, for Dean's decision and following his direction to build rather than integrate, a Marketing module in which PPO owns marketing consent and audiences, sends person-approved newsletters and publishes social posts, with Mailchimp and the social tool kept until PPO meets switch-over criteria.
 
 [Emails design](emails-figma-design.md) (PPO-EC01-EMAILS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the EC-01 design: a three-pane mailbox, thread rows that show linked records, suggest-then-select linking with reasons, a link panel across every record type, private-by-default sharing of one message on one record, the mailbox status in the side menu and a simplified phone layout, with Amendment A1 adding sent email tracking. Sending stays an EC-04 proposal. Building it is not decided.

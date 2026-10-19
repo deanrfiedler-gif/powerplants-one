@@ -34,6 +34,18 @@ Dean adopted a direction for all modules: "Yes, record the wider direction: PPO 
 
 Not done: no integration technology is chosen, and no adapter, endpoint, credential, migration or production connection is added. The Acumatica tenant contract (DEC-CCE-10) remains open.
 
+## Phone header amendment locked in — 19 October 2026
+
+On Dean's yes, the named Figma version "Phone header amendment — accepted" was saved on 19 October 2026 and the amendment was locked in the same day ([decision](decisions/phone-header-amendment.md) section 6a). The component set "Shell / Phone header · compact" now lives on Components beside the superseded global phone header, and 106 phone headers on 38 accepted pages use it, with each page's title, count, views, search and filter carried over; toolbar rows stay until each page is next changed. Icon-free captures are in `docs/reference/ui/application-shell/phone-header-amendment-r01/` and the File index has the row.
+
+Not done: the Emails · EC-01 and Customer messages · EC-04 swaps (their own sessions) and the application change, which comes in its own pull request. No application code, route, migration, permission or parent ID changes.
+
+## Phone header amendment adopted — 19 October 2026
+
+Dean adopted Claude's recommendation for phone headers on 19 October 2026: "I am happy for you to proceed based on your professional recommendations." Every phone page is to use one compact 56 px row in place of the global phone header (rules P1–P9 in the [decision](decisions/phone-header-amendment.md), PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC): menu, view chooser and at most three icons (a page action, Conversations, Filter) on list pages; back, position or reference, previous/next and More on records. Desktop and tablet are unchanged. In Figma the "Phone header amendment" page holds the rules, the component set "Shell / Phone header · compact" and examples at 390 and 320 px; the Calendar · EC-03 proposal is its first consumer.
+
+Not done: the named Figma version, captures and File index row; the lock-in that swaps the library phone header and the accepted pages' headers; the Emails · EC-01 and Customer messages · EC-04 swaps; and the application change, which comes in its own pull request. No application code, route, migration, permission or parent ID changes.
+
 ## Accepted page inventory and Organisations implementation claim — 19 October 2026
 
 Dean's 19 October implementation brief authorises an inventory of accepted page designs followed by Organisations CS-01 only, with a stop after that increment. This Codex session owns [draft PR #604](https://github.com/deanrfiedler-gif/powerplants-one/pull/604), branch `codex/cs01-organisations-figma-build`, cut from `main` at `fe0dd1c3` and integrated with `9e6f3434`, in its dedicated worktree. No application change or completed parity is claimed by this inventory entry.
