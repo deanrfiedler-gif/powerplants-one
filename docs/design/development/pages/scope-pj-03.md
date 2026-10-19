@@ -14,11 +14,15 @@ Extend the existing Gantt with controlled baselines, dependencies, calendars, ac
 
 ## Desktop
 
+Accepted design, 19 October 2026 ([decision](../../../decisions/baseline-forecast-figma-design.md)): captures 01–09 in [design r01](../../../reference/ui/projects/baseline-forecast-design-r01/README.md). Baseline bars and "+nd" slip labels on the Schedule Gantt as a Display option; nonworking shading from the saved calendar; a task panel from the right with Details (forecast change, inline dependency check, successors to review, Ask owners to review) and Actual dates; Baselines in calendar or working days, each count naming its calendar, with the reason for each move and Draft a customer update; a 680 px Working calendar drawer for viewing and changing the calendar; and the Programme against latest baselines.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 10–15 in [design r01](../../../reference/ui/projects/baseline-forecast-design-r01/README.md): the tablet Schedule, and on the phone the Schedule list with compare chips under the compact header, the Actual dates sheet, Baselines and Working calendar pages, and the list at 320.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Icon-free Figma captures: [Baseline, forecast and dependency review design r01](../../../reference/ui/projects/baseline-forecast-design-r01/README.md), sixteen PNGs including thirteen states.
 - [project-detail-desktop.png](../../../blueprints/projects-visuals/project-detail-desktop.png)
 - [ppo-projects-gantt-content-r10.html](../../../reference/ui/projects/ppo-projects-gantt-content-r10.html)
 
