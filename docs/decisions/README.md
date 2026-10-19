@@ -15,6 +15,8 @@
 
 [Emails design](emails-figma-design.md) (PPO-EC01-EMAILS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the EC-01 design: a three-pane mailbox, thread rows that show linked records, suggest-then-select linking with reasons, a link panel across every record type, private-by-default sharing of one message on one record, the mailbox status in the side menu and a simplified phone layout, with Amendment A1 adding sent email tracking. Sending stays an EC-04 proposal. Building it is not decided.
 
+[Reducing merge conflicts between parallel pull requests](merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) section 5, 19 October 2026: the UI build sequence stops being committed, and document-register rows and design index entries become one file per change.
+
 [Conversations T1d design](conversations-t1d-design.md) (PPO-CONV-T1D-DESIGN) records how the record-page lists, inbox notices and My Work asks are built, and the departures for Dean's review; the [reminder proposal](conversations-reply-by-reminders.md) (PPO-CONV-REMINDERS-PROP) sets out the reply-by scheduling options for his decision.
 
 [ADR-0059 — Sending email from Powerplants One](ADR-0059-email-sending-from-ppo.md) is **proposed**, 19 October 2026, not accepted. It recommends that correspondence written in PPO goes from the person's own mailbox through delegated Graph `Mail.Send`, and customer notices stay on the shared mailbox through the communications service as ADR-0058 decides. Sent email tracking (Emails A1) would apply to correspondence only, storing the event type and time for 12 months.
