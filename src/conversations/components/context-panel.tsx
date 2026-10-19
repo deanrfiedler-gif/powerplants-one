@@ -231,13 +231,14 @@ export function ContextOverlay({ threadId, onClose }: { threadId: string; onClos
 
 // The Context button in the thread header: shown whenever the panel is not docked open. Icon-only at 360 px and narrower.
 // Closing the docked panel moves focus here, so a keyboard user keeps their place.
-export function ContextButton({ onOpen, focusOnMount }: { onOpen: () => void; focusOnMount?: { current: boolean } }) {
+export function ContextButton({ onOpen, onMount }: {
+  onOpen: () => void;
+  onMount: (button: HTMLButtonElement | null) => void;
+}) {
   const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    if (!focusOnMount?.current) return;
-    focusOnMount.current = false;
-    ref.current?.closest("button")?.focus();
-  }, [focusOnMount]);
+    onMount(ref.current?.closest("button") ?? null);
+  }, [onMount]);
   return (
     <Button className="cv-context-button" aria-label="Context" onClick={onOpen}>
       <svg ref={ref} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round">

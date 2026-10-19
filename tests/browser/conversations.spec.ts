@@ -526,6 +526,17 @@ test.describe("T1c-3 context panel", () => {
     await expect(page.getByRole("button", { name: "Context", exact: true })).toBeFocused();
     await page.getByRole("button", { name: "Context", exact: true }).click();
     await expect(page.getByRole("complementary", { name: "Context", exact: true })).toBeVisible();
+    // A second close makes a fresh focus request; keyboard users can reopen without searching for the button.
+    await panel.getByRole("button", { name: "Close context" }).click();
+    await expect(page.getByRole("button", { name: "Context", exact: true })).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(panel).toBeVisible();
+    // The consumed request must not steal focus when the button next mounts because of a viewport change.
+    const title = page.getByRole("heading", { level: 1 });
+    await title.evaluate((node) => { node.setAttribute("tabindex", "-1"); node.focus(); });
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await expect(page.getByRole("button", { name: "Context", exact: true })).toBeVisible();
+    await expect(title).toBeFocused();
   });
 
   test("T1c-3 an item the viewer cannot open is absent, title included", async ({ page, isMobile }) => {

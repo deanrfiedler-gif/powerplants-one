@@ -16,6 +16,12 @@ export default function Page() {
   const [dockedClosed, setDockedClosed] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const focusButton = useRef(false);
+  // This page owns the one-shot focus request. The button reports its mount without mutating a prop.
+  const focusContextButton = useCallback((button: HTMLButtonElement | null) => {
+    if (!focusButton.current || !button) return;
+    focusButton.current = false;
+    button.focus();
+  }, []);
   const showDocked = docked === true && !dockedClosed;
   const open = useCallback(() => (docked ? setDockedClosed(false) : setOverlayOpen(true)), [docked]);
   const closeOverlay = useCallback(() => setOverlayOpen(false), []);
@@ -24,7 +30,7 @@ export default function Page() {
       <ThreadView
         key={id}
         id={id}
-        headerAction={docked !== null && !showDocked ? <ContextButton onOpen={open} focusOnMount={focusButton} /> : undefined}
+        headerAction={docked !== null && !showDocked ? <ContextButton onOpen={open} onMount={focusContextButton} /> : undefined}
         footer={(thread, reload) => <ThreadComposer thread={thread} reload={reload} draft={draft} onDraft={onDraft} />}
       />
       {showDocked && (
