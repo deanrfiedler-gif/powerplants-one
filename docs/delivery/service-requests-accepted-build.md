@@ -22,6 +22,8 @@ The live notes confirm D1–D6 and Q1–Q2. The working page contracts retain ol
 
 The accepted duplicate panel offers “Add as customer statement”, but [the existing integration plan](service-requests-integration-build-plan.md#i4--capture-with-a-duplicate-check-frames-5-and-18) explicitly defers that operation to ADR-0043. No Ticket statement command exists in current main. Dean has been asked whether this build should use a possible-duplicate panel with an Open request handover and an explicit unavailable statement-capture explanation. This question is unresolved; no replacement behaviour has been approved or implemented.
 
+A second contract conflict is visible in desktop triage frame `1256:287381`: reviewed priority, request owner, priority reason and next action are edited together with the clarification outcome, and the caption moves revision 3 to revision 4. The existing `triageTicket` command accepts only the expected version, reason and clarification outcome. `saveIntake` is a separate command with its own revision increment. Chaining them would produce two revisions and could save intake changes without completing triage. Dean has been asked whether to retain two explicit steps or pause for a separately authorised atomic command change. No chained save or command extension has been implemented.
+
 ## Delivery and verification
 
-Planning claim only. Application changes, verification, owner visual review and deployment are not complete.
+Planning claim only. Implementation is paused for the two scope answers above, under Dean’s instruction to stop on a material design/contract conflict. Application changes, application verification, owner visual review and deployment are not complete.
