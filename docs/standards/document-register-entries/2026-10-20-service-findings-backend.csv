@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-SV07-BACKEND-DEC,Service findings source projection,docs/decisions/service-findings-backend.md,,Authorised bounded implementation; verification and acceptance separate,Dean Fiedler,d512bd382165c0fa87489f53733d3caa457163f9,,,git,
+PPO-SV07-READ-CONTRACT,Service findings read contract,docs/contracts/service-findings.md,,Bounded synthetic backend contract; owner acceptance separate,Dean Fiedler,d512bd382165c0fa87489f53733d3caa457163f9,,,git,

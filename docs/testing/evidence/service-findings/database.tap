@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: SV07 scheduling findings use native source, stable paging and read-only closure projection
+ok 1 - SV07 scheduling findings use native source, stable paging and read-only closure projection
+  ---
+  duration_ms: 98834.2286
+  type: 'test'
+  ...
+# Subtest: SV07 source permissions, working company and Activity revocation hide data and counts
+ok 2 - SV07 source permissions, working company and Activity revocation hide data and counts
+  ---
+  duration_ms: 154267.5441
+  type: 'test'
+  ...
+# Subtest: SV07 failed inspection stays open after its Activity completes and follows native correction/review
+ok 3 - SV07 failed inspection stays open after its Activity completes and follows native correction/review
+  ---
+  duration_ms: 170033.112
+  type: 'test'
+  ...
+# Subtest: SV07 remaining work keeps the exact submitted revision and does not equate Activity completion with completion of scope
+ok 4 - SV07 remaining work keeps the exact submitted revision and does not equate Activity completion with completion of scope
+  ---
+  duration_ms: 173440.0739
+  type: 'test'
+  ...
+# Subtest: SV07 customer reservations remain exact and correction supersedes rather than overwrites the original
+ok 5 - SV07 customer reservations remain exact and correction supersedes rather than overwrites the original
+  ---
+  duration_ms: 119528.4294
+  type: 'test'
+  ...
+# Subtest: SV07 incident corrective action preserves source authority and excludes restricted facts
+ok 6 - SV07 incident corrective action preserves source authority and excludes restricted facts
+  ---
+  duration_ms: 70812.5687
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 815584.0336
