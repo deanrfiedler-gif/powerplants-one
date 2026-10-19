@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmCreate } from "../helpers/crm";
+import { projectInput } from "../helpers/projects";
 
 // Conversations T1c-1 (PPO-CONV-T1C-DESIGN): people-only threads on the /conversations page, built and changed
 // through the real API and the real page. Profiles: coordinator asks, crm-receiver is asked, and
@@ -465,5 +466,122 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await expect(page.getByRole("dialog", { name: "Page guide", exact: true })).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(banner.getByRole("button", { name: /Change identity/ })).toBeFocused();
+  });
+});
+
+// T1c-3 (PPO-CONV-T1C-DESIGN 11): the context panel, docked at 320 px from 1280 px, a drawer behind the Context button
+// below that, and a sheet on phones. Built from the real read: the asked person cannot open projects.
+test.describe("T1c-3 context panel", () => {
+  // A thread on a fresh deal that tags the asked person and links a project only the asker can open.
+  async function contextThread(page: Page) {
+    const askedId = await signIn(page, asked);
+    await signIn(page, asker);
+    const deal = crmCreate();
+    expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
+    const project = projectInput();
+    expect((await api(page, "projects", project)).status).toBe(201);
+    const started = await api<{ record_id: string }>(page, "conversations", {
+      ...base("Start a conversation"),
+      anchor_type: "Opportunity",
+      anchor_id: deal.id,
+      title: `SYN T1c-3 ${randomUUID().slice(0, 8)}`,
+      body: "@{1} SYN when does the controller arrive? See #{2}",
+      mentions: [
+        { ordinal: 1, kind: "Person", person_id: askedId },
+        { ordinal: 2, kind: "Record", record_type: "Project", record_id: project.id },
+      ],
+      asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" }],
+    });
+    expect(started.status).toBe(201);
+    return { thread: started.body.record_id, dealId: deal.id, project };
+  }
+
+  test("T1c-3 desktop docks the panel; every item says why; close and reopen", async ({ page, isMobile }) => {
+    test.skip(isMobile, "the docked panel is a desktop layout");
+    const { thread, dealId, project } = await contextThread(page);
+    await page.goto(`/conversations/${thread}`);
+    const panel = page.getByRole("complementary", { name: "Context", exact: true });
+    await expect(panel).toBeVisible();
+    expect(Math.round((await panel.boundingBox())!.width)).toBe(320);
+    await expect(panel.getByText("Rebuilt from the records each time it opens, from what you can open.")).toBeVisible();
+    await expect(panel.getByRole("link", { name: /^Deal .+ · SYN Controls upgrade qualification$/ })).toHaveAttribute("href", `/sales/opportunities/${dealId}`);
+    await expect(panel.getByText("The record this thread is about")).toBeVisible();
+    await expect(panel.getByText("Can open this deal")).toBeVisible();
+    await expect(panel.getByText("Deal owner")).toBeVisible();
+    // The asker can open the linked project: it is a related record, with why it is there.
+    const related = panel.locator(".cv-context-item", { hasText: project.title });
+    await expect(related.locator(".cv-context-why")).toHaveText(/^Mentioned by /);
+    await expect(panel.getByText(/: SYN delivery date$/)).toBeVisible();
+    await expect(panel.getByText("Open question · reply by 30 Oct 2026")).toBeVisible();
+    for (const item of await panel.locator(".cv-context-item").all()) await expect(item.locator(".cv-context-why").first()).toBeVisible();
+    // No Carl, pins or exclusions in T1.
+    await expect(panel.getByText(/Carl|Pin|Exclude/)).toHaveCount(0);
+    // Groups collapse from their headings.
+    const heading = panel.getByRole("button", { name: "Contacts" });
+    await heading.click();
+    await expect(heading).toHaveAttribute("aria-expanded", "false");
+    await expect(panel.getByText("Deal owner")).toBeHidden();
+    await panel.getByRole("button", { name: "Close context" }).click();
+    await expect(panel).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Context", exact: true })).toBeFocused();
+    await page.getByRole("button", { name: "Context", exact: true }).click();
+    await expect(page.getByRole("complementary", { name: "Context", exact: true })).toBeVisible();
+  });
+
+  test("T1c-3 an item the viewer cannot open is absent, title included", async ({ page, isMobile }) => {
+    const { thread, project } = await contextThread(page);
+    await signIn(page, asked);
+    await page.goto(`/conversations/${thread}`);
+    if (isMobile) await page.getByRole("button", { name: "Context", exact: true }).click();
+    const panel = isMobile ? page.getByRole("dialog", { name: "Context", exact: true }) : page.getByRole("complementary", { name: "Context", exact: true });
+    await expect(panel.getByText("The record this thread is about")).toBeVisible();
+    await expect(panel.getByText("Can open this deal")).toBeVisible();
+    await expect(panel.getByText(project.title)).toHaveCount(0);
+    await expect(panel.getByText(/Mentioned by/)).toHaveCount(0);
+    await expect(panel.getByText("No related records you can open.")).toBeVisible();
+    expect(await panel.evaluate((node, id) => node.innerHTML.includes(id), project.id)).toBe(false);
+  });
+
+  test("T1c-3 at 1024 px the panel is behind the Context button, as a drawer", async ({ page, isMobile }) => {
+    test.skip(isMobile, "tablet width is a desktop-browser layout");
+    const { thread } = await contextThread(page);
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.goto(`/conversations/${thread}`);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("complementary", { name: "Context", exact: true })).toHaveCount(0);
+    const button = page.getByRole("button", { name: "Context", exact: true });
+    await expect(button).toBeVisible();
+    await button.click();
+    const drawer = page.getByRole("dialog", { name: "Context", exact: true });
+    await expect(drawer.getByText("The record this thread is about")).toBeVisible();
+    const box = (await drawer.boundingBox())!;
+    expect(Math.round(box.width)).toBe(320);
+    expect(Math.round(box.x + box.width)).toBe(1024);
+    await page.keyboard.press("Escape");
+    await expect(drawer).toHaveCount(0);
+    await expect(button).toBeFocused();
+  });
+
+  test("T1c-3 phone opens the context as a sheet, icon-only at 320 px", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "the sheet is the phone layout");
+    const { thread } = await contextThread(page);
+    await page.goto(`/conversations/${thread}`);
+    const button = page.getByRole("button", { name: "Context", exact: true });
+    await expect(button.getByText("Context")).toBeVisible();
+    await button.click();
+    const sheet = page.getByRole("dialog", { name: "Context", exact: true });
+    await expect(sheet.getByText("The record this thread is about")).toBeVisible();
+    const box = (await sheet.boundingBox())!;
+    expect(Math.round(box.width)).toBe(390);
+    expect(Math.round(box.y + box.height)).toBe(844);
+    await sheet.getByRole("button", { name: "Close context" }).click();
+    await expect(sheet).toHaveCount(0);
+    await expect(button).toBeFocused();
+    await page.setViewportSize({ width: 320, height: 844 });
+    await expect(button).toHaveAccessibleName("Context");
+    await expect(button.locator(".cv-context-button-label")).toHaveCSS("position", "absolute");
+    await button.click();
+    await expect(page.getByRole("dialog", { name: "Context", exact: true }).getByText("The record this thread is about")).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   });
 });

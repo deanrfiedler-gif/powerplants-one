@@ -33,7 +33,16 @@ type Failure = { status?: number; code?: string; message?: string };
 const unavailable = (error: unknown) => [403, 404].includes((error as Failure | undefined)?.status ?? 0);
 const changedMeanwhile = ["VersionConflict", "ThreadResolved", "AskClosed", "AlreadyInState"];
 
-export function ThreadView({ id, footer }: { id: string; footer?: (thread: Thread, reload: () => void) => React.ReactNode }) {
+export function ThreadView({
+  id,
+  footer,
+  headerAction,
+}: {
+  id: string;
+  footer?: (thread: Thread, reload: () => void) => React.ReactNode;
+  // The Context button (T1c-3), beside Resolve.
+  headerAction?: React.ReactNode;
+}) {
   const read = usePlatformResource<Thread>(`conversations/${id}`);
   useVisibleRefresh(read.reload);
   const identity = useIdentity();
@@ -153,11 +162,14 @@ export function ThreadView({ id, footer }: { id: string; footer?: (thread: Threa
             {thread.is_main ? "Main thread" : "Thread"} · started by {creator}, {formatTimestamp(thread.created_at)}
           </span>
         </p>
-        {canChangeState && (
+        {(canChangeState || headerAction) && (
           <div className="cv-actions">
-            <Button busy={command.busy} disabled={!!command.pending} onClick={() => changeState(thread.state === "Open" ? "resolve" : "reopen")}>
-              {thread.state === "Open" ? "Resolve" : "Reopen"}
-            </Button>
+            {canChangeState && (
+              <Button busy={command.busy} disabled={!!command.pending} onClick={() => changeState(thread.state === "Open" ? "resolve" : "reopen")}>
+                {thread.state === "Open" ? "Resolve" : "Reopen"}
+              </Button>
+            )}
+            {headerAction}
           </div>
         )}
         {staleError && (
