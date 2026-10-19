@@ -140,6 +140,7 @@
   }
   #shell-header .ppo-top-action { width: 44px; height: 44px; min-height: 44px; flex: none; color: #242a37; }
   #shell-header .ppo-top-action .product-icon { width: 22px; height: 22px; }
+  #shell-header .ppo-phone-menu .product-icon { width: 18px; height: 18px; }
   #shell-header .ppo-phone-lead { display: inline-flex; order: 1; position: relative; text-decoration: none; }
   #shell-header .ppo-phone-title { display: flex; order: 2; align-items: center; gap: 6px; flex: 1 1 auto; min-width: 0; height: 44px; margin: 0; padding: 0 0 0 4px; border: 0; border-radius: 6px; background: none; color: #242a37; font: 700 20px/26px PPOShellRoboto, Roboto, Verdana, sans-serif; text-align: left; white-space: nowrap; box-shadow: none; justify-content: flex-start; }
   #shell-header .ppo-view-chooser { cursor: pointer; }
@@ -164,6 +165,7 @@
   #shell-header .ppo-phone-more-panel { position: absolute; top: 48px; right: 0; z-index: 85; display: flex; flex-direction: column; min-width: 200px; padding: 6px; border: 1px solid #dce1e8; border-radius: 10px; background: #fff; box-shadow: 0 8px 24px #242a3730; }
   #shell-header .ppo-phone-more-panel[hidden] { display: none; }
   #shell-header .ppo-phone-more-panel button { min-height: 44px; padding: 0 12px; border: 0; border-radius: 6px; background: none; color: #242a37; font: 400 15px/20px PPOShellRoboto, Roboto, Verdana, sans-serif; text-align: left; }
+  #shell-header .ppo-phone-more-panel button:not(.ppo-phone-narrow-item) { display: flex; align-items: center; justify-content: flex-start; }
   #shell-header .ppo-phone-more-panel button:hover { background: #f0f2f6; }
   #shell-header .ppo-phone-narrow-item, #shell-header .ppo-phone-search-filter { display: none; }
   /* P4: the menu's own top: global search, then the account and working company. */
@@ -183,6 +185,6 @@
 @media (max-width: 360px) {
   #shell-header .ppo-phone-title:not(.ppo-phone-reference) { font-size: 18px; }
   #shell-header .ppo-phone-previous, #shell-header .ppo-phone-next, #shell-header .ppo-phone-combines { display: none; }
-  #shell-header .ppo-phone-more-panel .ppo-phone-narrow-item { display: block; }
+  #shell-header .ppo-phone-more-panel .ppo-phone-narrow-item { display: flex; align-items: center; justify-content: flex-start; }
   #shell-header .ppo-phone-search-filter { display: inline-flex; order: 5; position: relative; }
 }

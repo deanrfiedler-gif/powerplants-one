@@ -3753,8 +3753,7 @@
         "src/components/shell-phone-header.tsx",
         "src/shell/phone-header.ts",
         "docs/decisions/phone-header-amendment.md",
-        "docs/testing/evidence/phone-header/README.md",
-        "tests/helpers/phone-menu.ts"
+        "docs/testing/evidence/phone-header/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
