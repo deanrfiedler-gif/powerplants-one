@@ -9,6 +9,12 @@ Dean accepted the Figma design for CS-08, the site survey and as-found brief (`/
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The named Figma version "Site surveys — accepted" was saved at Dean's "Yes, save the named Figma version "Site surveys — accepted"." Not done: the page is not built, and the native CS-08 pages are unchanged. Open item: the accepted Access & readiness design shows the survey reference as "SYN-SRV-000031". No application code, route, migration, permission or parent ID changes.
 
+## Phone header amendment adopted — 19 October 2026
+
+Dean adopted Claude's recommendation for phone headers on 19 October 2026: "I am happy for you to proceed based on your professional recommendations." Every phone page is to use one compact 56 px row in place of the global phone header (rules P1–P9 in the [decision](decisions/phone-header-amendment.md), PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC): menu, view chooser and at most three icons (a page action, Conversations, Filter) on list pages; back, position or reference, previous/next and More on records. Desktop and tablet are unchanged. In Figma the "Phone header amendment" page holds the rules, the component set "Shell / Phone header · compact" and examples at 390 and 320 px; the Calendar · EC-03 proposal is its first consumer.
+
+Not done: the named Figma version, captures and File index row; the lock-in that swaps the library phone header and the accepted pages' headers; the Emails · EC-01 and Customer messages · EC-04 swaps; and the application change, which comes in its own pull request. No application code, route, migration, permission or parent ID changes.
+
 ## Open PR integration repairs Conversations and builder header fit — 19 October 2026
 
 [PR #598](https://github.com/deanrfiedler-gif/powerplants-one/pull/598) found and repaired an R9 header regression when the new Conversations action and the existing development workspace are both visible with an expanded rail. The search now reserves equal side space at laptop widths. The component fixture and regression case cover both rail states and the builder boundary; shared component and shell masters record the change without granting visual approval. [Evidence](testing/evidence/pr-backlog-integration/README.md) records the failed CI assertion, unchanged-main comparison and the separate existing 800 px expanded-rail limitation. Full combined CI remains the merge gate.
