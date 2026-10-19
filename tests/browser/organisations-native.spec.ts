@@ -72,6 +72,9 @@ test("CS01 register and seven-tab record geometry at all retained widths", async
     await expect(
       page.getByRole("tab", { name: "Overview", exact: true }),
     ).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByRole("tab")).toHaveText(width < 780
+      ? ["Overview", "Sales", "Service", "Sites", "Projects", "Accounts", "Activity"]
+      : ["Overview", "Sales", "Service", "Projects", "Sites", "Accounts", "Activity"]);
     await expect(page.locator("h1")).toHaveCount(1);
     expect(
       await page.evaluate(

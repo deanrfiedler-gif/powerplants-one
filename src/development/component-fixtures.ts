@@ -40,8 +40,8 @@ export const customerRecordTabsFixture = [
   { id: "overview", label: "Overview" },
   { id: "sales", label: "Sales" },
   { id: "service", label: "Service" },
-  { id: "sites", label: "Sites" },
   { id: "projects", label: "Projects" },
+  { id: "sites", label: "Sites" },
   { id: "accounts", label: "Accounts" },
   { id: "activity", label: "Activity" },
 ];

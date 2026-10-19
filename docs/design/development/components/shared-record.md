@@ -10,6 +10,8 @@ Owner: Dean Fiedler. Review: pending. Scope: CS-01 first consumer; no other page
 
 Desktop: header and sources meet the workspace edges; the 380 px ruled facts column narrows to 280 px by container query.
 
+The CS-01 desktop tab sequence follows D3: Overview, Sales, Service, Projects, Sites, Accounts and Activity. The existing responsive hook switches the semantic/keyboard order on phones so Sites is fourth, following Q4; this is not a visual-only CSS reorder.
+
 ## Mobile
 
 Phone: Overview, Sales, Service and Sites lead the scrolling strip, with remaining tabs reachable by touch or keyboard. The primary contact is selected only from recorded current site/affiliation evidence. Calls/mail open the user's apps. Follow-up remains an explicit My Work handover.

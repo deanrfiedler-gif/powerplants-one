@@ -22,6 +22,7 @@ import {
 import { RegisterTable } from "./ui/register-table";
 import { WorklistChoice, WorklistMenu } from "./crm-worklist-tools";
 import { organisationReturn } from "../shared/organisation-register-model";
+import { usePhone } from "./specialist-ui";
 import type {
   Customer360,
   CustomerRecordLink,
@@ -32,11 +33,13 @@ const tabs = [
   "overview",
   "sales",
   "service",
-  "sites",
   "projects",
+  "sites",
   "accounts",
   "activity",
 ].map((id) => ({ id, label: id[0].toUpperCase() + id.slice(1) }));
+// D3 retains Projects before Sites on desktop; Q4 puts Sites among the four phone tabs.
+const phoneTabs = [tabs[0], tabs[1], tabs[2], tabs[4], tabs[3], tabs[5], tabs[6]];
 const sourceLabels = {
   deals: "Deals",
   quotations: "Quotations",
@@ -398,6 +401,7 @@ export function CustomerWorkspace({ id }: { id: string }) {
     o = r.data?.context;
   const [copyMessage, setCopyMessage] = useState(""),
     [correcting, setCorrecting] = useState(false);
+  const phone = usePhone();
   const oldTab = params.get("view") ?? params.get("tab"),
     requested = oldTab === "deals" || oldTab === "orders" ? "sales" : oldTab;
   const tab = tabs.some((t) => t.id === requested) ? requested! : "overview";
@@ -615,7 +619,7 @@ export function CustomerWorkspace({ id }: { id: string }) {
           label="Customer workspace"
           value={tab}
           onChange={(value) => change({ tab: value, type: "", status: "" })}
-          tabs={tabs}
+          tabs={phone ? phoneTabs : tabs}
         />
       }
       stickyAction={
