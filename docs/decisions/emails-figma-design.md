@@ -2,7 +2,7 @@
 document_id: PPO-EC01-EMAILS-FIGMA-DEC
 date: 2026-10-19
 owner: Dean Fiedler
-status: Owner-accepted design; native implementation and UI baseline acceptance separate
+status: Owner-accepted design, including Amendment A1 (sent email tracking) accepted on 19 October 2026; native implementation and UI baseline acceptance separate
 source_commit: 70450f2eaa1166ed575736beb10cd5b335a8a4fd
 versioning: git
 ---
@@ -22,6 +22,8 @@ Claude drew the page from these sources:
 - Dean's Pipedrive phone screenshots of 19 October 2026, for the phone views.
 
 Dean then asked for three audit and polish passes, and on the phone views: "I think we need to simplify the sections at the top. This means you may have to remove the main top bar that is shown at the very top of the mobile phone view." He asked whether the phone sheets should use the grey heading row of the Customer messages EC-04 sheets, which Claude recommended and applied. After Claude listed what was still missing, Dean said: "Proceed on the basis of your professional recommendations." Claude drew the missing frames. Dean then accepted the design: "I accept the Emails EC-01 design with your recommendations, including D1–D8 and Q1–Q5. Lock it in." That adopts D1–D8 and the recommended answers to Q1–Q5.
+
+Section 8 records Amendment A1, sent email tracking, which Dean asked for during the lock-in and accepted the same day. Sections 1 to 7 describe the design as first accepted; where A1 differs, A1 governs.
 
 Scope:
 - `scope:EC-01` "Connected inbox and record-linking review", with `route:/email` and `route:/email/[id]`. The design also shows the EC-02 mailbox status and, as a proposal only, an EC-04 reply composer.
@@ -44,6 +46,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 Follow-up and archive | Resolved as recommended | "Plan a follow-up" creates a My Work activity linked to the same record, without copying the body (blueprint). Archive changes the provider mailbox only once write access is approved; until then it hides the thread in PPO only |
 | Q5 Global phone actions | Resolved as recommended | On Email, the menu button opens the department menu with the account, Conversations (with its badge) and global search at its top. The bottom tab bar stays. Offering the same slim header to other phone work surfaces is one later shell decision, not page by page. The floating New email button depends on Q1 |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
+| Amendment A1, sent email tracking | User decision, 19 October 2026 | Requested and accepted the same day. Section 8 |
 | Named Figma version | Not yet decided | "Emails — accepted" waits for Dean's explicit yes. Section 7 |
 | Building the page | Not decided | Section 5 |
 
@@ -127,7 +130,7 @@ Reconnect required (email hidden, links kept, nothing deleted); no email matches
 - **The Conversations action** is part of the proposed top-bar shell amendment. On phone it moves into the menu (Q5).
 - **Not drawn:** drafts and scheduled send, and templates; the Gmail label picker; the mailbox settings page (EC-02); calendar (EC-03); filing attachments to SharePoint; bulk linking from the list; the composer at tablet and phone width (Q1); phone 320 versions of the states; 200% zoom.
 - **Open items:**
-  - **Sent email tracking, requested after acceptance.** On 19 October 2026, while this design was being locked in, Dean asked for it: "A feature that we do need to include in the Emails module is the ability to track sent emails so we can see when the customer (or receiver) has open and also when they have viewed the email." It is drawn as amendment A1 on the same Figma page, for separate acceptance. It depends on Q1, because only email sent through PPO can be tracked.
+  - **Sent email tracking** was requested after acceptance and is accepted as Amendment A1 (section 8). It depends on Q1, because only email sent through PPO can be tracked.
   - The accepted Organisations CS-01 design lists `SYN-PPO-WO-000040` under SYN Hillview Growers, but the accepted Service requests SV-01 design links it to SYN Greenhouse Demonstration. This design does not use that work order.
   - The Customer messages EC-04 page in the same Figma file uses the same phone sheet pattern; a change to one should be made to both.
 - **Data in the frames:** the people, addresses (`*.example`), organisations and records are synthetic. They are not operational records.
@@ -156,3 +159,37 @@ The audit is recorded on the notes card `1511:397359`.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/email-calendar/emails-design-r01/README.md).
 - The named Figma version "Emails — accepted" waits for Dean's explicit yes.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 8. Amendment A1 — sent email tracking (19 October 2026)
+
+While this design was being locked in, Dean asked for sent email tracking: "A feature that we do need to include in the Emails module is the ability to track sent emails so we can see when the customer (or receiver) has open and also when they have viewed the email. Pipedrive does this. They include an icon of an eye in the email section that changes colour/style depending of if the email has not been opened, has been open, and as been viewed, etc." Claude drew it as Amendment A1 in its own section of the page, and Dean accepted it: "I accept amendment A1, sent email tracking, with your recommendations, including A1-D1–D6 and A1-Q1–Q4."
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Add sent email tracking, Pipedrive-style | User decision, 19 October 2026 | Dean's request quoted above |
+| A1-D1 to A1-D6 | Accepted as recommended, 19 October 2026 | Dean's acceptance quoted above; the table below |
+| A1-Q1 Default | Resolved as recommended | On by default for email a person sends from PPO, with a switch for each email. Never on customer notices sent from the shared mailbox (EC-04) unless that ADR decides otherwise |
+| A1-Q2 Privacy | Resolved as recommended | Powerplants' privacy notice says sales email may contain tracking. PPO stores the event type and time only, with no IP address, location or device, and keeps tracking events for 12 months. Updating the notice is a business action outside this repository |
+| A1-Q3 Who sees it | Resolved as recommended | Whoever can see the message: the sender, and a colleague it is shared with. Never on a record's Email section for anyone else |
+| A1-Q4 Alerts | Resolved as recommended | No alert by default. An optional "Tell me when it is opened" on an email adds one My Work notification on the first open |
+| Building tracking | Not decided | It needs sending from PPO (Q1) first, then a tracking image and link service, event storage and the privacy notice |
+
+| ID | Change |
+|---|---|
+| A1-D1 | **What is tracked.** Email sent through PPO with tracking on carries a small tracking image (opens) and tracked links or shared documents (views). Email sent from Outlook or elsewhere shows "Not tracked" |
+| A1-D2 | **An eye with words on every sent email.** Thread rows show a tracking status in Sent items, threads and phone lists: Not opened, Opened n×, Opened · may be automatic, Viewed, or Not tracked. Colour is never the only signal. Sent items gains Opened and Not opened quick filters |
+| A1-D3 | **Details.** The reading pane shows a tracking line under the sender, with Details opening a popover (phone: a sheet) of dated events. Opens are counted for the email, not for each recipient, and the popover says so |
+| A1-D4 | **Composer.** "Track opens and link views" is on by default and can be turned off for one email. The footer says tracking adds a small image and tracked links |
+| A1-D5 | **Honest states.** An open loaded by a mail privacy service straight after delivery shows as "may be automatic". Tracking is evidence, never proof, and delivery stays a separate state (ADR-0058) |
+| A1-D6 | **New part.** Email / Tracking status (five states) is added to the Thread row behind a "Show tracking" switch. The switch is off on every r01 frame, so those frames and their captures do not change |
+
+**Design reference.** Section "A1 · Sent email tracking" `1543:7805` on the Emails page: desktop Sent items with tracking and the details popover `1543:7806`; the reply composer with the tracking switch `1544:5345`; phone Sent items with tracking `1544:5828`; the phone tracking sheet `1544:6128`; the tracking states legend `1546:5890`; and the A1 notes card `1546:5931`. New page part: Email / Tracking status `1541:8843` (Not opened, Opened, Opened automatically, Viewed, Not tracked). New icons on Components › Icons: `Icon/solid/eye` `1541:4106` and `Icon/arrow-pointer` `1541:4112`. The named version "Emails — sent email tracking amendment A1" waits for Dean's explicit yes.
+
+**Not drawn.** Tracking in the Inbox for threads whose last message is the reader's, a per-recipient view (not offered: opens cannot be told apart reliably), the "Tell me when it is opened" switch (A1-Q4), and the privacy notice text.
+
+**Verification.** Claude checked each A1 frame with screenshots taken inside Figma. A fresh export of the r01 capture 01 copy, made after the Thread row change, has the same byte size as the committed image, so the hidden tracking part leaves r01 unchanged. The five r02 captures are copies of the A1 frames, made on the Captures page at y = 272,000. Each of the 181 Font Awesome icon instances, including the tracking eye, was swapped for `Icon/placeholder`. Scans then found:
+- no icon or stray vector left;
+- no visible text, of 355, whose stored colour differed from its bound variable;
+- no navigation link.
+
+They were exported at scale 1; the hashes are in the [r02 README](../reference/ui/email-calendar/emails-design-r02/README.md). The register entries for `scope:EC-01`, `route:/email` and `route:/email/[id]` add the r02 captures. The r01 captures stay unchanged. A1 changes no application code, route, migration, permission or capability.

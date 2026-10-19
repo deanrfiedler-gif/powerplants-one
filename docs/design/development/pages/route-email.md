@@ -14,7 +14,7 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
-Accepted design: the [Emails design decision](../../../decisions/emails-figma-design.md) of 19 October 2026. The mailbox is captures 01, 02, 05, 06 and 16–19 in [design r01](../../../reference/ui/email-calendar/emails-design-r01/README.md): side menu with Mailbox, Views and Linked to, the thread list with day groups and quick filters, Sent items, and the reconnect, no-match, not-business and first-import states. Nothing new is built.
+Accepted design: the [Emails design decision](../../../decisions/emails-figma-design.md) of 19 October 2026. The mailbox is captures 01, 02, 05, 06 and 16–19 in [design r01](../../../reference/ui/email-calendar/emails-design-r01/README.md): side menu with Mailbox, Views and Linked to, the thread list with day groups and quick filters, Sent items, and the reconnect, no-match, not-business and first-import states. Nothing new is built. Amendment A1 adds tracking to Sent items (A1-01, A1-03 and A1-05 in [Amendment A1 captures (r02)](../../../reference/ui/email-calendar/emails-design-r02/README.md)).
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -40,7 +40,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [Emails design r01 captures](../../../reference/ui/email-calendar/emails-design-r01/README.md) (22 icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/emails-figma-design.md). Drafts, templates, sent email tracking (requested after acceptance, amendment A1), the mailbox settings page, the composer at tablet and phone width, phone 320 states and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
+Accepted Figma design: [Emails design r01 captures](../../../reference/ui/email-calendar/emails-design-r01/README.md) (22 icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/emails-figma-design.md). Drafts, templates, the mailbox settings page, the composer at tablet and phone width, phone 320 states and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
 
 The draft User Guide `guide.page.email` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

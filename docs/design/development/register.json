@@ -4906,7 +4906,12 @@
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-19-Desktop-First-Import-r01.png",
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-20-Desktop-Link-Not-Confirmed-r01.png",
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-21-Desktop-Share-And-Record-Section-r01.png",
-        "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-22-Phone-States-r01.png"
+        "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-22-Phone-States-r01.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-01-Desktop-Sent-Items-Tracking-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-02-Desktop-Composer-Tracking-Switch-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-03-Phone-Sent-Items-Tracking-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-04-Phone-Tracking-Sheet-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-05-Tracking-States-r02.png"
       ],
       "dependencies": [
         "docs/decisions/emails-figma-design.md"
@@ -6446,7 +6451,11 @@
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-14-Phone-Link-Sheet-r01.png",
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-15-Phone-Link-Sheet-Search-r01.png",
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-20-Desktop-Link-Not-Confirmed-r01.png",
-        "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-21-Desktop-Share-And-Record-Section-r01.png"
+        "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-21-Desktop-Share-And-Record-Section-r01.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-01-Desktop-Sent-Items-Tracking-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-02-Desktop-Composer-Tracking-Switch-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-04-Phone-Tracking-Sheet-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-05-Tracking-States-r02.png"
       ],
       "dependencies": [
         "docs/decisions/emails-figma-design.md"
@@ -6490,7 +6499,10 @@
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-17-Desktop-No-Matches-r01.png",
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-18-Desktop-Not-Business-r01.png",
         "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-19-Desktop-First-Import-r01.png",
-        "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-22-Phone-States-r01.png"
+        "docs/reference/ui/email-calendar/emails-design-r01/PPO-Emails-22-Phone-States-r01.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-01-Desktop-Sent-Items-Tracking-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-03-Phone-Sent-Items-Tracking-r02.png",
+        "docs/reference/ui/email-calendar/emails-design-r02/PPO-Emails-A1-05-Tracking-States-r02.png"
       ],
       "dependencies": [
         "docs/decisions/emails-figma-design.md"
