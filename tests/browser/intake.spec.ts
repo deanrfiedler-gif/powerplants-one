@@ -68,10 +68,10 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   const stakeholders = page.getByRole("link", {
     name: "Stakeholders & relationships", exact: true,
   });
+  await page.getByRole("button", {name:"Organisation actions",exact:true}).click();
   await expect(stakeholders).toHaveAttribute(
     "href", "/customers/50000000-0000-4000-8000-000000000001/stakeholders",
   );
-  await page.getByRole("button", {name:"Organisation actions",exact:true}).click();
   await stakeholders.click();
   await expect(
     page.getByRole("link", { name: "SYN Avery Contact", exact: true }),

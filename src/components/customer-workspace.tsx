@@ -492,6 +492,12 @@ export function CustomerWorkspace({ id }: { id: string }) {
             Create follow-up
           </ButtonLink>
           <WorklistMenu label="Organisation actions" text="…">
+            <Link
+              className="org-phone-account"
+              href={`/customers/${id}/development`}
+            >
+              Account development
+            </Link>
             <Link href={`/customers/${id}/stakeholders`}>
               Stakeholders &amp; relationships
             </Link>

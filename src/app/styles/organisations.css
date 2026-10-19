@@ -145,6 +145,7 @@
 
 .org-toolbar,.org-local-search,.org-register > .ppo-register-foot { flex-shrink:0; }
 .org-read-time { order:2; }
+.shared-record .crm-r38-popover .org-phone-account { display:none; }
 .org-phone-list article { display:flex; align-items:start; gap:8px; }
 .org-phone-list article > a { flex:1; min-width:0; overflow-wrap:anywhere; }
 .org-phone-list article > button { flex:none; width:44px; height:44px; }
@@ -153,6 +154,7 @@
 .shared-record .crm-r38-panel :is(button,input,select) { min-height:44px; }
 @container (max-width:600px) {
  .shared-record-header { display:block; }
+ .shared-record .crm-r38-popover .org-phone-account { display:flex; }
  .shared-record-header > div:first-child { width:100%; }
  .shared-record-actions { margin-top:8px; justify-content:space-between; }
  .org-open-work[data-expanded=false] .org-work-rows article:nth-of-type(n+5) { display:none; }

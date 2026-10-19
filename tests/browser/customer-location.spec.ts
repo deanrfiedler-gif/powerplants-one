@@ -54,14 +54,20 @@ async function survey(page: Page, origin: string) {
 test.beforeEach(async ({ page, baseURL }) => login(page, baseURL!));
 test("CS01 source tabs restore through URL navigation and exact canonical links", async ({
   page,
+  isMobile,
 }) => {
   await page.goto(`/customers/${org}?view=sites`);
   await expect(
     page.getByRole("tab", { name: "Sites", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
+  if (isMobile)
+    await page
+      .getByRole("button", { name: "Organisation actions", exact: true })
+      .click();
   await expect(
     page.getByRole("link", { name: "Account development", exact: true }),
   ).toHaveAttribute("href", `/customers/${org}/development`);
+  if (isMobile) await page.keyboard.press("Escape");
   await page.getByRole("tab", { name: "Sales", exact: true }).click();
   await expect(page).toHaveURL(/view=sales/);
   await expect(
@@ -73,12 +79,13 @@ test("CS01 source tabs restore through URL navigation and exact canonical links"
   await expect(
     page.getByRole("tab", { name: "Sales", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
-  await page
-    .getByRole("tab", { name: "Sales", exact: true })
-    .press("Home");
+  await page.getByRole("tab", { name: "Sales", exact: true }).press("Home");
   await expect(
     page.getByRole("tab", { name: "Overview", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
+  await page
+    .getByRole("button", { name: "Organisation actions", exact: true })
+    .click();
   await expect(
     page.getByRole("link", {
       name: "Stakeholders & relationships",
@@ -161,7 +168,9 @@ test("CS08 UI captures a measured zero with an explicit unit and independently r
   await page
     .getByRole("button", { name: "Edit observations", exact: true })
     .click();
-  await page.getByLabel("Survey scope and purpose",{exact:true}).fill("SYN inspect the water-line fall at this Site");
+  await page
+    .getByLabel("Survey scope and purpose", { exact: true })
+    .fill("SYN inspect the water-line fall at this Site");
   await page
     .getByRole("button", { name: "Add observation", exact: true })
     .click();
@@ -272,7 +281,10 @@ test("CS06 native preparation retains blockers and acknowledgement grants no aut
     .getByRole("button", { name: "Record action", exact: true })
     .click();
   await expect(
-    page.locator("summary").filter({hasText:/Preparation.*revision/}).first(),
+    page
+      .locator("summary")
+      .filter({ hasText: /Preparation.*revision/ })
+      .first(),
   ).toBeVisible();
   await page.getByLabel("Action", { exact: true }).selectOption("acknowledge");
   await page
@@ -363,7 +375,9 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
         .poll(() =>
           page.locator(".ppo-shell-header").evaluate((header) => {
             const bounds = header.getBoundingClientRect();
-            return Array.from(header.querySelectorAll(".ppo-header-utilities button"))
+            return Array.from(
+              header.querySelectorAll(".ppo-header-utilities button"),
+            )
               .filter((button) => button.getClientRects().length > 0)
               .every((button) => {
                 const rect = button.getBoundingClientRect();
