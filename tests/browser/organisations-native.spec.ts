@@ -348,6 +348,9 @@ test("CS01 saved columns and identity correction retain existing save/recovery a
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+  await expect(page.locator(".org-work-rows article")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Show all returned work", exact: true })).toHaveCount(0);
+  await expect(page.locator(".org-work-empty")).toContainText("No open work was returned");
   await capture(page, info, "long-identity-1440");
   await page
     .getByRole("button", { name: "Organisation actions", exact: true })

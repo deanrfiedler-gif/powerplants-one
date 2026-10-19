@@ -162,6 +162,9 @@ function OpenWork({
     "work_orders",
     "projects",
   ];
+  const returnedRows = sources.flatMap((key) => available(sections[key])
+    ? sections[key].items.filter((item) => item.open_state !== "Closed")
+    : []);
   return (
     <section className="org-open-work" data-expanded={expanded}>
       <div className="org-work-rows">
@@ -199,13 +202,15 @@ function OpenWork({
             ));
         })}
       </div>
-      <button
-        type="button"
-        className="secondary"
-        onClick={() => setExpanded(!expanded)}
-      >
-        {expanded ? "Show fewer records" : "Show all returned work"}
-      </button>
+      {!returnedRows.length && <p className="org-work-empty">No open work was returned in these permitted sources. Check source scope below for incomplete or unconnected sources.</p>}
+      {returnedRows.length > 4 && <button
+          type="button"
+          className="secondary"
+          data-phone-only={returnedRows.length <= 8 || undefined}
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? "Show fewer records" : "Show all returned work"}
+        </button>}
       <details>
         <summary>Source scope and read times</summary>
         {sources.map((key) => (

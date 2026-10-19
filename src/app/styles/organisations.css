@@ -158,6 +158,8 @@
 .org-phone-list article > button { flex:none; width:44px; height:44px; }
 .org-open-work[data-expanded=false] .org-work-rows article:nth-of-type(n+9) { display:none; }
 .org-open-work > button { margin:12px 16px; min-height:44px; }
+.org-open-work > button[data-phone-only] { display:none; }
+.org-open-work .org-work-empty { padding:16px; margin:0; color:var(--text-secondary); }
 .shared-record .crm-r38-panel :is(button,input,select) { min-height:44px; }
 @container (max-width:600px) {
  .shared-record-header { display:block; }
@@ -165,6 +167,7 @@
  .shared-record-header > div:first-child { width:100%; }
  .shared-record-actions { margin-top:8px; justify-content:space-between; }
  .org-open-work[data-expanded=false] .org-work-rows article:nth-of-type(n+5) { display:none; }
+ .org-open-work > button[data-phone-only] { display:inline-flex; }
  .org-register { height:auto!important; min-height:100%; }
  .org-create-form footer small { display:none; }
  .org-read-time { order:2; }
