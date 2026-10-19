@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { crmCreate } from "../helpers/crm";
+import { projectInput } from "../helpers/projects";
 // Conversations T1c-1 routes (PPO-CONV-T1C-DESIGN 5.1) over the T1b service.
 const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 const base = (reason: string) => ({ schema_version: 1, operation_id: randomUUID(), reason });
@@ -167,4 +168,57 @@ test("T1c-2 the badge counts unread threads the viewer takes part in", async () 
   // A profile without conversation.read has no badge to read.
   const systems = await login("systems");
   assert.equal((await call(systems.cookie, "conversations/badge")).status, 403);
+});
+
+// T1c-3 (PPO-CONV-T1C-DESIGN 11): the context panel, rebuilt for each viewer from their own access.
+test("T1c-3 the context route requires a session and answers an unreadable thread as a missing one", async () => {
+  assert.equal((await call(null, `conversations/${randomUUID()}/context`)).status, 401);
+  const { coordinator, record } = await fixture();
+  const outsider = await login("other-workspace");
+  const thread = (await call(coordinator.cookie, "conversations", start(record))).body.record_id as string;
+  const hidden = await call(outsider.cookie, `conversations/${thread}/context`);
+  const missing = await call(outsider.cookie, `conversations/${randomUUID()}/context`);
+  assert.equal(hidden.status, missing.status);
+  assert.equal(hidden.body.code, missing.body.code);
+  assert.equal(hidden.body.message, missing.body.message);
+  const absent = await call(coordinator.cookie, `conversations/${randomUUID()}/context`);
+  assert.equal(absent.status, 404);
+  assert.equal(absent.body.code, "RecordUnavailable");
+});
+
+test("T1c-3 the context panel leaves out what the viewer cannot open, title included", async () => {
+  const coordinator = await login("coordinator");
+  const dealer = await login("crm-receiver");
+  const deal = crmCreate();
+  assert.equal((await call(coordinator.cookie, "crm/opportunities", deal)).status, 201);
+  const project = projectInput();
+  assert.equal((await call(coordinator.cookie, "projects", project)).status, 201);
+  const thread = (
+    await call(coordinator.cookie, "conversations", {
+      ...base("Start a conversation"),
+      anchor_type: "Opportunity",
+      anchor_id: deal.id,
+      title: "SYN T1c-3 HTTP",
+      body: "@{1} SYN see #{2}",
+      mentions: [
+        { ordinal: 1, kind: "Person", person_id: dealer.actor_id },
+        { ordinal: 2, kind: "Record", record_type: "Project", record_id: project.id },
+      ],
+      asks: [],
+    })
+  ).body.record_id as string;
+  const own = await call(coordinator.cookie, `conversations/${thread}/context`);
+  assert.equal(own.status, 200);
+  assert.equal(own.body.record.href, `/sales/opportunities/${deal.id}`);
+  const linked = (own.body.related as { key: string; why: string[] }[]).find((r) => r.key === `Project:${project.id}`);
+  assert.ok(linked, "the coordinator can open the project");
+  assert.match(linked.why[0], /^Mentioned by /);
+  // crm-receiver reads deals only: the project is absent from its panel, with no ID, number or title.
+  const theirs = await call(dealer.cookie, `conversations/${thread}/context`);
+  assert.equal(theirs.status, 200);
+  const text = JSON.stringify(theirs.body);
+  assert.ok(!text.includes(project.id));
+  assert.ok(!text.includes(project.title));
+  for (const group of ["documents", "contacts", "related", "thread"])
+    for (const item of theirs.body[group] as { why: string[] }[]) assert.ok(item.why.length > 0, group);
 });
