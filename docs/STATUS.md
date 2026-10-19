@@ -235,6 +235,32 @@ Dean accepted the Figma design for EC-03, the calendar at `/calendar` (the Sales
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link or flow start. The named Figma version "Calendar — accepted" was saved at Dean's "Yes, save the named Figma version "Calendar — accepted"." Not done: the page is not built, and the built Day and Agenda calendar is unchanged. No application code, route, migration, permission or parent ID changes.
 
+## Baseline, forecast and dependency review PJ-03 design accepted — 19 October 2026
+
+Dean accepted the Figma design for PJ-03, baseline, forecast and dependency review, after an audit and a run of both prototype flows in Present mode: "I accept the Baseline, forecast and dependency review PJ-03 design with your recommendations, including D1–D11 and Q1–Q8. Lock it in." The design extends the Schedule and Baselines views of `/projects/[id]` and the Programme at `/projects/programme`, with no new route.
+
+The [design decision](decisions/baseline-forecast-figma-design.md) (PPO-PJ03-BASELINE-FORECAST-FIGMA-DEC) records departures D1–D11:
+- baseline bars and "+nd" slip labels as a Gantt Display option;
+- calendar-day and working-day counts, each naming its calendar;
+- a working-calendar drawer that only the coordinator can change;
+- an Actual dates tab and an inline dependency check in the task panel;
+- nonworking shading from the saved calendar;
+- the Programme against latest baselines;
+- the reason for each move;
+- a prompt that asks successor owners to review (My Work activities);
+- a hand-off to a PJ-08 customer-update draft.
+
+It also records the answers to Q1–Q8, including calendar days first, today's calendar for working-day counts, and the coordinator only for the calendar.
+
+Sixteen icon-free captures with hashes are retained in [baseline-forecast-design-r01](reference/ui/projects/baseline-forecast-design-r01/README.md). The design register pages for `scope:PJ-03` and `route:/projects/programme` cite them. In Figma the File index has a PJ-03 row after the Project record page, and the capture copies sit on the Captures page at y = 320,000.
+
+Checked: no Font Awesome instance is left in the capture copies (393 swapped), and no copy carries a prototype link or flow start. The named Figma version "Baseline, forecast and dependency review — accepted" is saved, on Dean's yes.
+
+Not done:
+- The page is not built.
+- D9–D11 need their own reads or handovers.
+- No application code, route, migration, permission or parent ID changes.
+
 ## ADR-0059 sending email from PPO proposed — 19 October 2026
 
 [ADR-0059](decisions/ADR-0059-email-sending-from-ppo.md) is proposed for Dean's decision. It settles Q1 of the accepted Emails EC-01 design, how people send email from PPO, which also gates Amendment A1 (sent email tracking). It compares four options for consent, permission, audit, retention, replies and tracking: everything from the person's own mailbox through Graph delegated `Mail.Send`; everything through the shared mailbox and the communications service (ADR-0058); a split; and no sending from PPO. It recommends the split: correspondence written in PPO goes from the person's own mailbox as that person, with delegated `Mail.Send` only and never `Mail.Send.Shared` or send-as, while customer notices M1–M4 stay on the shared mailbox exactly as ADR-0058 decides. Tracking applies to correspondence only, never to notices (D-025 R4, A1-Q1), through a tracking image and link redirect on PPO's own application that store the event type and time only for 12 months. Delivery states follow ADR-0058's mapping, and an open never counts as delivered. Questions E1–E9 carry recommendations.

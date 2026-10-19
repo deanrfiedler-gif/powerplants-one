@@ -2146,7 +2146,23 @@
       "design_path": "docs/design/development/pages/scope-pj-03.md",
       "html_path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
       "image_paths": [
-        "docs/blueprints/projects-visuals/project-detail-desktop.png"
+        "docs/blueprints/projects-visuals/project-detail-desktop.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-01-Desktop-Schedule-Baseline-Shown-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-02-Desktop-Display-Menu-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-03-Desktop-Forecast-Change-Panel-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-04-Desktop-Record-Actual-Dates-Panel-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-05-Desktop-Baselines-Working-Days-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-06-Desktop-Baselines-Full-Length-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-07-Desktop-Working-Calendar-Drawer-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-08-Desktop-Change-Working-Calendar-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-09-Desktop-Programme-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-10-Tablet-Schedule-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-11-Phone-Schedule-List-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-12-Phone-Actual-Dates-Sheet-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-13-Phone-Baselines-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-14-Phone-Working-Calendar-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-15-Phone-320-Schedule-List-r01.png",
+        "docs/reference/ui/projects/baseline-forecast-design-r01/PPO-BaselineForecast-16-States-r01.png"
       ],
       "dependencies": [
         "src/components/quotation-material-resolution.tsx",
