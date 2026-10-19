@@ -56,14 +56,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Whether "Ask owners to review" is ticked by default | Resolved as recommended | Yes. The owner can untick it, and nothing is sent outside PPO |
 | Q8 What the customer-update draft carries | Resolved as recommended | Milestone dates in calendar days and the reasons in plain words; never working-day counts or internal owner names. The coordinator edits the draft before it is prepared |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | "Baseline, forecast and dependency review — accepted" waits for Dean's yes |
+| Named Figma version | Saved, 19 October 2026 | "Baseline, forecast and dependency review — accepted", saved by Claude in the Figma desktop app on Dean's "Yes, save the named Figma version "Baseline, forecast and dependency review — accepted" and mark the PR ready." and checked at the top of the version history |
 | Building the page | Not decided | Section 7 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, [ADR-0053](ADR-0053-figma-page-design.md)) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Baseline, forecast and dependency review — accepted". The file's link is not recorded in this public repository (ADR-0050, [ADR-0053](ADR-0053-figma-page-design.md)) |
 | Page | "Baseline, forecast and dependency review · PJ-03" `1743:5636`, under "— Projects —", after the Project record page. The page header `1743:5637` holds the conformance declaration; the notes card `1768:1994` is in Flows and notes. File index row "Row / Baseline, forecast and dependency review · PJ-03" `1788:464416`, after the Project record page row |
 | Desktop 1440 | Schedule with baseline r1 shown `1743:5678`; Display menu `1748:259`; task panel, forecast change with a dependency check and successors to review `1749:3306`; task panel, record actual dates `1750:567`; Baselines in working days `1753:731` and full length `1774:2072`; Working calendar drawer `1756:1067`; the drawer changing the calendar to r2 `1757:1302`; Programme `1758:1467` |
 | Tablet 1024 | Schedule with baseline r1 shown, rail and project details collapsed `1758:456751` |
@@ -89,7 +89,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D11 in section 4, accepted |
 | Status | Owner-accepted design, 19 October 2026 |
 | Decision record | This file |
-| Named version | "Baseline, forecast and dependency review — accepted": waits for Dean's yes |
+| Named version | "Baseline, forecast and dependency review — accepted", saved 19 October 2026 |
 
 ## 4. What the design shows
 

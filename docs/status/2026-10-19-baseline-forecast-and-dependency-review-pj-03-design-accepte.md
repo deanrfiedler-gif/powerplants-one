@@ -20,10 +20,9 @@ It also records the answers to Q1–Q8, including calendar days first, today's c
 
 Sixteen icon-free captures with hashes are retained in [baseline-forecast-design-r01](../reference/ui/projects/baseline-forecast-design-r01/README.md). The design register pages for `scope:PJ-03` and `route:/projects/programme` cite them. In Figma the File index has a PJ-03 row after the Project record page, and the capture copies sit on the Captures page at y = 320,000.
 
-Checked: no Font Awesome instance is left in the capture copies (393 swapped), and no copy carries a prototype link or flow start.
+Checked: no Font Awesome instance is left in the capture copies (393 swapped), and no copy carries a prototype link or flow start. The named Figma version "Baseline, forecast and dependency review — accepted" is saved, on Dean's yes.
 
 Not done:
-- The named Figma version "Baseline, forecast and dependency review — accepted" waits for Dean's yes.
 - The page is not built.
 - D9–D11 need their own reads or handovers.
 - No application code, route, migration, permission or parent ID changes.
