@@ -183,3 +183,7 @@ At desktop and 390/320 widths use the existing vertical form fields and wrapped 
 Host fixtures: `tests/browser/access-team-creation.spec.ts`; current context/authority fixtures: `tests/database/access-local-teams.test.ts`. [Evidence](../../../testing/evidence/access-team-creation/README.md) separates functional checks from source-bound observations. Accepted native images, owner/device/zoom/screen-reader acceptance, membership editing and operational policy remain open. No review fingerprint is assigned.
 
 For the local-team host, supplement the native lead selector with its complete selected UUID in wrapped text: the closed selector clips long options at phone widths. Keep the exact ID visible before submission without changing the shared SelectField.
+
+## CS-01 native consumer — 19 October 2026
+
+The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.

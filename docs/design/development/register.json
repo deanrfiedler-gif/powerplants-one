@@ -281,7 +281,11 @@
         "docs/reference/ui/customers/customer-360-figma-r02/README.md",
         "docs/reference/ui/customers/customer-360-figma-r03/README.md",
         "docs/design/development/customer-register-fixtures.json",
-        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md",
+        "docs/decisions/organisations-figma-implementation.md",
+        "src/components/organisation-register.tsx",
+        "src/components/ui/shared-record.tsx",
+        "src/app/styles/organisations.css"
       ],
       "guide_key": "guide.cs.01",
       "design_path": "docs/design/development/pages/scope-cs-01.md",
@@ -307,12 +311,14 @@
         "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-10-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/organisations-figma-design.md"
+        "docs/decisions/organisations-figma-design.md",
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/testing/evidence/organisations-native-r01/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Figma register and exact customer workspaces in shared PPO shell; agent visual/structural inspection recorded; named version and owner acceptance pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "Native CS-01 implementation; owner acceptance pending",
+      "visual_status": "Accepted design source; native pairing and adaptations recorded; owner/device review pending",
+      "functional_status": "Local synthetic verification in progress; see organisations-native-r01 evidence",
+      "deployment_status": "Not deployed by PR #604",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -6255,7 +6261,11 @@
         "src/components/duplicate-candidates.tsx",
         "docs/reference/ui/customers/customer-360-figma-r03/README.md",
         "docs/decisions/customer-360-figma-design.md",
-        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md",
+        "docs/decisions/organisations-figma-implementation.md",
+        "src/components/organisation-register.tsx",
+        "src/components/ui/shared-record.tsx",
+        "src/app/styles/organisations.css"
       ],
       "guide_key": "guide.page.customers.id",
       "design_path": "docs/design/development/pages/route-customers-id.md",
@@ -6271,12 +6281,14 @@
         "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-10-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/organisations-figma-design.md"
+        "docs/decisions/organisations-figma-design.md",
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/testing/evidence/organisations-native-r01/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "Native CS-01 implementation; owner acceptance pending",
+      "visual_status": "Accepted design source; native pairing and adaptations recorded; owner/device review pending",
+      "functional_status": "Local synthetic verification in progress; see organisations-native-r01 evidence",
+      "deployment_status": "Not deployed by PR #604",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -6294,7 +6306,11 @@
       "summary": "Create a shared customer, person, dated affiliation or site; Leads callers return to an explicit customer-context review after each separate saved result.",
       "path": "/customers/new",
       "source_paths": [
-        "src/app/(business)/customers/new/page.tsx"
+        "src/app/(business)/customers/new/page.tsx",
+        "docs/decisions/organisations-figma-implementation.md",
+        "src/components/organisation-register.tsx",
+        "src/components/ui/shared-record.tsx",
+        "src/app/styles/organisations.css"
       ],
       "guide_key": "guide.page.customers.new",
       "design_path": "docs/design/development/pages/route-customers-new.md",
@@ -6306,12 +6322,14 @@
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/testing/evidence/lead-context-resolution/README.md",
-        "docs/decisions/organisations-figma-design.md"
+        "docs/decisions/organisations-figma-design.md",
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/testing/evidence/organisations-native-r01/README.md"
       ],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
-      "deployment_status": "Not verified",
+      "scope_status": "Native CS-01 implementation; owner acceptance pending",
+      "visual_status": "Accepted design source; native pairing and adaptations recorded; owner/device review pending",
+      "functional_status": "Local synthetic verification in progress; see organisations-native-r01 evidence",
+      "deployment_status": "Not deployed by PR #604",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -6337,7 +6355,11 @@
         "docs/reference/ui/customers/customer-360-figma-r03/README.md",
         "docs/design/development/customer-register-fixtures.json",
         "docs/decisions/customer-360-figma-design.md",
-        "docs/reference/ui/customers/customer-360-figma-r04/README.md"
+        "docs/reference/ui/customers/customer-360-figma-r04/README.md",
+        "docs/decisions/organisations-figma-implementation.md",
+        "src/components/organisation-register.tsx",
+        "src/components/ui/shared-record.tsx",
+        "src/app/styles/organisations.css"
       ],
       "guide_key": "guide.page.customers",
       "design_path": "docs/design/development/pages/route-customers.md",
@@ -6351,12 +6373,14 @@
         "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-10-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/organisations-figma-design.md"
+        "docs/decisions/organisations-figma-design.md",
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/testing/evidence/organisations-native-r01/README.md"
       ],
-      "scope_status": "refine",
-      "visual_status": "Figma proposal: desktop table, phone cards and exact customer navigation; agent inspection recorded; owner/named-version review pending",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "scope_status": "Native CS-01 implementation; owner acceptance pending",
+      "visual_status": "Accepted design source; native pairing and adaptations recorded; owner/device review pending",
+      "functional_status": "Local synthetic verification in progress; see organisations-native-r01 evidence",
+      "deployment_status": "Not deployed by PR #604",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",

@@ -4,17 +4,31 @@ Stable entry: `scope:CS-01`. Scope: **CS-01**. Owner: Dean Fiedler.
 Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/customers/[id]`.
 Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
 
+## Current CS-01 implementation — 19 October 2026
+
+[Accepted D1–D7 / Q1–Q4](../../../decisions/organisations-figma-design.md) and [implementation/adaptations](../../../decisions/organisations-figma-implementation.md) govern the current native build. Earlier proposal sections below remain provenance, not the current target. No issued reference or parent requirement ID changes.
+
+Register: authorised one-snapshot rows/counts/owners, signed pagination, Status/owner/search/views in the URL, shared grid on desktop and rows on phones, snapshot and legacy saved-view commands. Open service is Unknown because no combined closure read is established. Organisation row selection never enters the URL. Numeric site/area links retain the exact organisation handover.
+
+Record: shared identity/source/facts layout, seven URL-retained tabs, type and status filters, exact source handovers and sticky phone follow-up. Current site roles are separate from historical relationships. Source limitations, unavailable/partial/denied states and finance restrictions stay explicit. Correct details uses only the existing display-name revision; stale and uncertain writes keep the original operation.
+
+Create: Organisation, Owner and source, Notes, and Check before creating; actual company/owner selectors and duplicate-name read, optional legal name/sector/notes using the existing create command. Notes keep Internal visibility. A Lead selection returns for explicit LC-12 review/save. Other shared-create variants retain their workflows.
+
+Desktop checks: 1440 × 900/1234, 1280 × 900 and 1024 × 900. Phone: 390 × 844 and 320 × 844. Exact source captures 01–10 are listed in [r01](../../../reference/ui/customers/organisations-design-r01/README.md). Additional snapshot, denied, correction and form-recovery states use established shared patterns; no additional accepted image exists for them. [Host state recipes](../organisations-native-fixtures.json) and [native evidence](../../../testing/evidence/organisations-native-r01/README.md) retain the verification limits.
+
+Guides remain Draft. Source presence, local proof, visual review, baseline acceptance and deployment remain separate.
+
 ## Purpose and page type
 
 Bring together the current permitted customer context and exact links into owning workspaces.
 
-r20 page type: **Record detail; Overview / dashboard**. Overview, Deals & quotations, Sales orders, Cases & service, Projects, Sites & equipment, Accounts, Activity & documents.
+r20 page type: **Record detail; Overview / dashboard**. Overview, Sales, Service, Projects, Sites, Accounts and Activity (D3/D5); phone puts Sites fourth (Q4).
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026 covers the register (`/customers`, labelled Organisations), Customer 360 (`/customers/[id]`) and the create form (`/customers/new`), with ten icon-free captures in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with organisation views, a "Sources for this customer" bar, open work by source that is never totalled, seven tabs, a Sales tab with type chips and a Status filter, and Create organisation with "Check before creating". It supersedes the 14 October Figma proposal below as the design reference; that proposal (page `554:2`) is kept unchanged as history. Nothing new is built; the native pages below remain the built pages.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026 covers the register (`/customers`, labelled Organisations), Customer 360 (`/customers/[id]`) and the create form (`/customers/new`), with ten icon-free captures in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with organisation views, a "Sources for this customer" bar, open work by source that is never totalled, seven tabs, a Sales tab with type chips and a Status filter, and Create organisation with "Check before creating". It supersedes the 14 October Figma proposal below as the design reference; that proposal (page `554:2`) is kept unchanged as history. The native implementation is recorded above; owner review and baseline acceptance remain pending.
 
-Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
+Use the current native PPO shell with the full-bleed shared record interior and its own content gutters. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
