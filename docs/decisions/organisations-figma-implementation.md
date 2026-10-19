@@ -2,7 +2,7 @@
 document_id: PPO-CS01-ORGANISATIONS-FIGMA-IMPLEMENTATION
 date: 2026-10-19
 owner: Dean Fiedler
-status: Implementation in progress; native visual review and acceptance pending
+status: Native implementation; owner visual review and acceptance pending
 versioning: git
 ---
 
@@ -15,6 +15,8 @@ Dean's 19 October brief authorises this implementation. The [accepted design](or
 CS-01, `/customers`, `/customers/[id]` and organisation creation at `/customers/new`. Preserve CRM-01, CRM-04, CRM-06 and SVC-06, route keys and all other shared-create variants. r20 types: Register/worklist; Record detail with overview; Form. The application shell owns navigation and viewport; the page owns its full-bleed interior.
 
 Sources are the ten [icon-free retained captures](../reference/ui/customers/organisations-design-r01/README.md) and the accepted record's node IDs, including desktop register `1443:2652`, overview `1443:2745`, Sales `1445:381060`, filtered Sales `1449:381169`, create `1445:381483`, tablet `1443:3145`, phones `1443:3223`, `1443:3263`, `1443:3332`, and four state frames `1443:3400`, `1443:3458`, `1443:3501`, `1443:3537`. No live Figma read or write is made. The source record says the proposed named version **Organisations — accepted** is not saved; this implementation does not assert otherwise. Issued reference bytes remain unchanged.
+
+The [geometry record](../design/organisations/figma-measurements.json) separates the retained capture dimensions from native control dimensions and adaptations. It contains no artwork or private file link and does not claim a new Figma measurement session.
 
 ## Gap analysis before application changes
 
@@ -44,9 +46,13 @@ Undrawn states to verify: denied, empty versus filtered-empty, failed refresh, s
 
 ## Implementation decision
 
-Planned reuse: existing React/Next and CSS tokens; runtime/fallback icons; `SecondaryMenuFrame`, `RegisterTable`, `RegisterSortHeader`, `WorklistMenu`, `WorklistPanel`, `RecordTabs`/`RecordPanel`, Button/ButtonLink, fields and existing command hooks. Shared record presentation is extracted for later shared-record pages and registered with real fixture states. Figma Components page `1:4` mappings remain the catalogue authority: grid cells map to RegisterTable, View tab to RecordTabs, Button/Tag to the existing controls, record field/header/readiness patterns to the shared record composition. No new technology is selected.
+The implementation reuses existing React/Next and CSS tokens; runtime/fallback icons; `SecondaryMenuFrame`, `RegisterTable`, `RegisterSortHeader`, `WorklistMenu`, `WorklistPanel`, `RecordTabs`/`RecordPanel`, Button/ButtonLink, fields and existing command hooks. Shared record presentation is extracted for later shared-record pages and registered with real fixture states. Figma Components page `1:4` mappings remain the catalogue authority: grid cells map to RegisterTable, View tab to RecordTabs, Button/Tag to the existing controls, record field/header/readiness patterns to the shared record composition. No new technology is selected.
 
-The proposed dedicated CS-01 register and duplicate-candidate reads use existing source visibility and signed pagination. They do not change the older directory endpoint consumed by People or global search. Record source reuse preserves Complete, Partial, Restricted, Unavailable and Not configured. Schema inspection so far finds no reason for a migration, grant or capability. Any later need triggers the brief's explicit stop boundary.
+The dedicated `GET /api/v1/customers/register` uses existing source visibility and signed pagination. One SQL snapshot supplies authorised rows, full-match counts, view counts and owner options. The cursor binds actor, workspace, working company, search, view, filters, sort and page size; a missing anchor asks for refresh. Existing customer search supplies the duplicate candidates. Neither changes the older directory endpoint consumed by People or global search. Record source reuse preserves Complete, Partial, Restricted, Unavailable and Not configured. No migration, grant, capability, calculation rule or dependency was added.
+
+Current site relationships and permitted company labels supplement the existing Customer 360 read. That inherited read retains its per-record domain authorisation path; this increment does not eliminate its N+1 reads. Direct organisation-linked, non-completed follow-ups use the existing activity visibility predicate. Open deals use the existing `close_outcome='Open'` contract. Open service remains Unknown because work-order and visit closure is not established by the connected sources. Sales distinguishes existing estimates from Draft quotation revisions and retains Partial; it does not imply complete issued history or aggregate money.
+
+The organisation form uses the existing create command, adding its already-supported legal name, sector and internal notes fields. Other creation variants retain their workflow. Correct details uses the existing identity revision for display name with optimistic version, retained proposals and original-operation recovery; it does not invent a general organisation-edit command. Saved views reuse the existing versioned preferences contract; unsupported new view/owner/sort combinations remain in the URL and are explicitly excluded from saving as legacy presets.
 
 ## Handovers and adaptations
 
@@ -54,6 +60,10 @@ Incoming: authorised company/identity, shared-register navigation, exact organis
 
 Keep actual synthetic identities and the shared S6 year/time-zone formatter, even where captures abbreviate dates. Current application shell controls and department navigation are retained. Unavailable last-change author, site readiness, source amounts and record position are omitted or labelled unknown unless an authorised read supplies them. The create screenshot's broad notes-visibility wording is narrowed to actual existing internal-note permission; permissions are not widened. For Lead returns, Use this record preselects the organisation for explicit review/save in the Lead, preserving LC-12 rather than silently linking it. These adaptations remain visible for owner review.
 
+The additional local register search retains the shell's global search. Touch controls have a 44 px minimum, so table rows expand beyond the drawn 40 px where required; real names, IDs and S6 dates can wrap. The undrawn snapshot uses the shared 380 px drawer and a phone sheet, with Escape and opener focus return. Desktop tabs keep Projects before Sites (D3); phone tabs begin Overview, Sales, Service and Sites (Q4), with the rest scrolling horizontally. The existing responsive hook changes semantic and keyboard order together. Open work initially limits the visible presentation to eight desktop or four phone entries with an explicit expansion control. Source exceptions remain visible. These are presentation limits, not totals or claims that other sources contain no work.
+
+Create retains the shell's family navigation and the command's required capture reason, so its scroll body is taller than the drawing. Similar-name candidates use the existing permitted match read without inventing a closest-match ranking. Search, view, filters and sort survive record return in the URL; the signed cursor trail and scroll position restart, while selection remains transient. These limits are recorded for owner review.
+
 ## Verification
 
-In progress. This gap analysis precedes application changes; no completed implementation, parity, device review, independent review, baseline acceptance or deployment is recorded here. Captures will use an unconfigured Kit. Guides stay Draft and review fingerprints remain untouched.
+The [native evidence](../testing/evidence/organisations-native-r01/README.md) records capture pairings, executed commands, initial failures and final outcomes. The gap table above is the pre-implementation assessment; the implementation paragraphs describe the delivered scope. Captures use an unconfigured Kit. Guides stay Draft and review fingerprints remain untouched. Owner/device review, baseline acceptance, merge and deployment are separate; no live Figma operation or named-version save is claimed.

@@ -29,7 +29,7 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with capture 05 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1445:381483`). The form follows the accepted Facilities create form (D7): Organisation, Owner and source, and Notes, with a "Check before creating" column that lists similar names in permitted companies and offers "Use this record". The check is a prompt, never a block, and nothing is merged automatically. Nothing new is built; the shared create form remains the built page.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with capture 05 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1445:381483`). The form follows the accepted Facilities create form (D7): Organisation, Owner and source, and Notes, with a "Check before creating" column that lists similar names in permitted companies and offers "Use this record". The check is a prompt, never a block, and nothing is merged automatically. The organisation variant now implements that composition; other shared-create variants retain their existing layouts.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 

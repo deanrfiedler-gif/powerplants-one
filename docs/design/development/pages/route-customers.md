@@ -20,7 +20,7 @@ Guides remain Draft. Source presence, local proof, visual review, baseline accep
 
 ## Purpose and task
 
-Find a permitted canonical customer, confirm its identity and open that exact Customer 360 workspace. Returning to the register should retain the prior search, filter, sort, page and scroll context. The native directory already exists; the 14 October Figma composition remains a proposal for review.
+Find a permitted canonical organisation, confirm its identity and open that exact Customer 360 workspace. Search, filters and sort survive a record return through the URL. The signed page trail and scroll position are transient and restart on return; selection is not persisted. The 18 October accepted design supersedes the earlier proposal; native owner review remains pending.
 
 1. Search for an existing organisation before creating another
 2. Confirm contacts and sites belong to the correct organisation

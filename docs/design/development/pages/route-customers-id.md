@@ -22,13 +22,13 @@ Guides remain Draft. Source presence, local proof, visual review, baseline accep
 
 Bring together the current permitted customer context and exact links into owning workspaces.
 
-r20 page type: **Record detail; Overview / dashboard**. Overview, Deals & quotations, Sales orders, Cases & service, Projects, Sites & equipment, Accounts, Activity & documents.
+r20 page type: **Record detail; Overview / dashboard**. Overview, Sales, Service, Projects, Sites, Accounts and Activity (D3/D5); phone puts Sites fourth (Q4).
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 02–04 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2745`, `1445:381060`, `1449:381169`). The record uses the accepted record layout with a "Sources for this customer" bar (D3), open work by source and owned follow-ups (D4), seven tabs (D5) and a Sales tab with type chips and a Status filter (D6). Create follow-up is the primary action (Q1). Nothing new is built; the native Customer workspace remains the built page.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026, with captures 02–04 in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md) (Figma `1443:2745`, `1445:381060`, `1449:381169`). The record uses the accepted record layout with a "Sources for this customer" bar (D3), open work by source and owned follow-ups (D4), seven tabs (D5) and a Sales tab with type chips and a Status filter (D6). Create follow-up is the primary action (Q1). The shared record composition above now implements that design, with its documented source adaptations.
 
-Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
+Use the current native PPO shell with the full-bleed shared record interior and its own content gutters. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 

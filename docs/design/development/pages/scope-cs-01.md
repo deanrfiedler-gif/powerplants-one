@@ -22,13 +22,13 @@ Guides remain Draft. Source presence, local proof, visual review, baseline accep
 
 Bring together the current permitted customer context and exact links into owning workspaces.
 
-r20 page type: **Record detail; Overview / dashboard**. Overview, Deals & quotations, Sales orders, Cases & service, Projects, Sites & equipment, Accounts, Activity & documents.
+r20 page type: **Record detail; Overview / dashboard**. Overview, Sales, Service, Projects, Sites, Accounts and Activity (D3/D5); phone puts Sites fourth (Q4).
 
 ## Desktop
 
-Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026 covers the register (`/customers`, labelled Organisations), Customer 360 (`/customers/[id]`) and the create form (`/customers/new`), with ten icon-free captures in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with organisation views, a "Sources for this customer" bar, open work by source that is never totalled, seven tabs, a Sales tab with type chips and a Status filter, and Create organisation with "Check before creating". It supersedes the 14 October Figma proposal below as the design reference; that proposal (page `554:2`) is kept unchanged as history. Nothing new is built; the native pages below remain the built pages.
+Accepted design: the [Organisations design decision](../../../decisions/organisations-figma-design.md) of 18 October 2026 covers the register (`/customers`, labelled Organisations), Customer 360 (`/customers/[id]`) and the create form (`/customers/new`), with ten icon-free captures in [design r01](../../../reference/ui/customers/organisations-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with organisation views, a "Sources for this customer" bar, open work by source that is never totalled, seven tabs, a Sales tab with type chips and a Status filter, and Create organisation with "Check before creating". It supersedes the 14 October Figma proposal below as the design reference; that proposal (page `554:2`) is kept unchanged as history. The native implementation is recorded above; owner review and baseline acceptance remain pending.
 
-Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
+Use the current native PPO shell with the full-bleed shared record interior and its own content gutters. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
