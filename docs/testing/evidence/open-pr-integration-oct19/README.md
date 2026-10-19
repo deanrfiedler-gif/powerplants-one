@@ -7,7 +7,7 @@ Owner: Dean Fiedler. Integration and source review: Codex, at Dean's request to 
 | PR | Source head | Contribution |
 |---|---|---|
 | #606 | `6d50abc1` | Accepted compact phone-header design |
-| #609 | `f0d31c32` | Compact phone-header implementation and browser test adaptations |
+| #609 | `0b234ca1` | Compact phone-header implementation and browser test adaptations |
 | #610 | `3cc78b27` | Accepted Calendar design |
 | #615 | `614a3200` | Accepted Stakeholder updates design |
 | #616 | `5e25908f` | Workshop register pages, placement rule and accepted Workshop builds design |
@@ -19,6 +19,7 @@ Each source head is retained as an ancestor of the integration branch. The share
 
 ## Repairs and review
 
+- Incorporated #609's later `45efb317` directory-menu repair and `0b234ca1` main merge. Its selector repair overlaps the already-tested integration change; the resolution retains the explicit view-chooser/dialog assertions and shared identity-readiness checks. Before this evidence update, the merge tree is byte-identical to `71e16c51`.
 - Resolved additive index/register conflicts and the deleted generated UI sequence conflict. No parent requirement or scope identity is renamed.
 - Reconciled #606's completed Figma lock-in with #609's newer application implementation, keeping running-app owner review pending.
 - Fixed stale phone callbacks: replacing a registration's configuration without notifying its consumers left already-rendered controls holding the previous callbacks. Stable wrappers now dispatch to the latest page state, including an action retained by an open record menu. The regression exercises the chooser, action, separate/combined filter, previous/next and More actions.
