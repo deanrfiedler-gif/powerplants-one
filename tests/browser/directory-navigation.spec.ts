@@ -90,7 +90,12 @@ test("directory record links avoid automatic reads and keep exact receiving navi
   await directory(page, "/customers");
   for (const [label, path] of [["People", "/people"], ["Sites", "/sites"]]) {
     await directory(page, "/customers");
-    if(isMobile) await page.getByRole("button",{name:"Organisations menu",exact:true}).click();
+    if (isMobile) {
+      const chooser = page.getByRole("banner").getByRole("button", { name: "Choose view. Current view: Organisations", exact: true });
+      await chooser.tap();
+      await expect(chooser).toHaveAttribute("aria-expanded", "true");
+      await expect(page.getByRole("dialog", { name: "Organisations menu", exact: true })).toBeVisible();
+    }
     const link = page.getByRole("navigation", { name: "Shared records", exact: true }).getByRole("link", { name: label, exact: true });
     await activate(page, link, isMobile, !isMobile);
     await expect(page).toHaveURL(new URL(path, page.url()).href);
