@@ -12,6 +12,13 @@ FRONT_MATTER = re.compile(r'\A---\r?\n(.*?)\r?\n---\r?\n', re.S)
 # Preserve the 192 registered metadata comparisons measured before living-master
 # adoption. Git masters replace revision matching with explicit lifecycle checks.
 MIN_METADATA_DOCUMENTS = 192
+REGISTER = 'docs/standards/document-register.csv'
+# New documents are registered one file per change in this folder, never appended to REGISTER:
+# every design pull request appended at the same place and conflicted with the others
+# (docs/decisions/merge-conflict-reduction.md, section 5). Existing rows stay and may be corrected.
+REGISTER_ENTRIES = 'docs/standards/document-register-entries'
+REGISTER_ROWS_FROZEN = 730
+ENTRY_NAME = re.compile(r'^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*\.csv$')
 
 
 def require(condition, message):
@@ -43,12 +50,25 @@ def front_matter(path):
 
 
 def main():
-    documents = rows('docs/standards/document-register.csv')
-    table = grid('docs/standards/document-register.csv')
+    documents = rows(REGISTER)
+    table = grid(REGISTER)
     for number, row in enumerate(table[1:], start=2):
         if not row:
             continue  # csv.DictReader likewise ignores ordinary blank lines.
         require(len(row) == len(table[0]), f'Register line {number}: {len(row)} fields, expected {len(table[0])}; quote any field containing a comma')
+    shared = sum(1 for row in table[1:] if row)
+    require(shared <= REGISTER_ROWS_FROZEN, f'{REGISTER} has {shared} rows, more than its {REGISTER_ROWS_FROZEN}; add new documents as a file in {REGISTER_ENTRIES}/ (see its README)')
+    entry_files = sorted((ROOT / REGISTER_ENTRIES).glob('*.csv'))
+    for path in entry_files:
+        name = f'{REGISTER_ENTRIES}/{path.name}'
+        require(bool(ENTRY_NAME.match(path.name)), f'{name}: name must be YYYY-MM-DD-slug.csv')
+        entry = grid(name)
+        require(bool(entry) and entry[0] == table[0], f'{name}: first line must be the header of {REGISTER}')
+        body = [row for row in entry[1:] if row]
+        require(bool(body), f'{name}: no register rows')
+        for number, row in enumerate(entry[1:], start=2):
+            require(not row or len(row) == len(table[0]), f'{name} line {number}: {len(row)} fields, expected {len(table[0])}; quote any field containing a comma')
+        documents += rows(name)
     ids = [r['document_id'] for r in documents]
     paths = [r['canonical_path'] for r in documents]
     require(len(ids) == len(set(ids)), 'Duplicate document identity')
@@ -115,7 +135,7 @@ def main():
         require(f'SYN-PPO-{prefix}-000001-' in output, f'{prefix}: output naming example missing')
     decisions = {r['decision_id']:r for r in rows('docs/decisions/decision-register.csv')}
     require(decisions['D-003']['status'] == 'Resolved for private prototype', 'Naming decision state inconsistent')
-    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'standing_exceptions':len(exceptions),'metadata_documents_compared':compared,'git_masters':masters,'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
+    print(json.dumps({'status':'failed' if ERRORS else 'passed','document_records':len(documents),'register_entry_files':len(entry_files),'standing_exceptions':len(exceptions),'metadata_documents_compared':compared,'git_masters':masters,'project_instruction_characters':len(instructions),'errors':ERRORS,'scope':'Naming and documentation consistency only; runtime behaviour is verified separately'}, indent=2))
     return bool(ERRORS)
 
 
