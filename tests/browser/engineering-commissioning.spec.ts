@@ -47,8 +47,11 @@ test("EN-08 retains its six-view layout and reachable inspector after the EN-06 
       expect(Math.abs(register!.x - table!.x)).toBeLessThan(1);
       expect(Math.abs(register!.x + register!.width - table!.x - table!.width)).toBeLessThan(1);
     } else {
+      // The phone header is one 56 px row (phone header amendment P1); the inspector starts directly below it.
+      const header = await page.locator(".ppo-shell-header").boundingBox();
       const panel = await inspector.boundingBox();
-      expect(panel!.y).toBe(64);
+      expect(header!.height).toBe(56);
+      expect(panel!.y).toBe(header!.height);
       expect(panel!.width).toBe(page.viewportSize()!.width);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
@@ -57,7 +60,8 @@ test("EN-08 retains its six-view layout and reachable inspector after the EN-06 
     await page.getByRole("button", { name: "Close inspector", exact: true }).click();
     await expect(inspector).toHaveCount(0);
     if (isMobile) {
-      const toggle = page.getByRole("button", { name: "Commissioning menu", exact: true }).first();
+      // On a phone the page's menu opens from the header's view chooser (phone header amendment P2).
+      const toggle = page.getByRole("button", { name: /^Choose view\. Current view:/ });
       await toggle.click();
       await expect(page.locator("#cm-menu")).toBeVisible();
       await page.keyboard.press("Escape");

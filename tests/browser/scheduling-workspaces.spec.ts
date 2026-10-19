@@ -66,7 +66,8 @@ test("native scheduling pages retain context and reflow at coordination, phone a
         await page.locator(".ppo-shell-header").evaluate((header) => {
           const bounds = header.getBoundingClientRect();
           return [...header.querySelectorAll("button")]
-            .filter((button) => button.getBoundingClientRect().width > 0)
+            // The phone row keeps the account trigger mounted but visibility:hidden; only visible controls must fit.
+            .filter((button) => button.getBoundingClientRect().width > 0 && getComputedStyle(button).visibility === "visible")
             .every((button) => {
               const r = button.getBoundingClientRect();
               return r.top >= bounds.top && r.bottom <= bounds.bottom + 1;

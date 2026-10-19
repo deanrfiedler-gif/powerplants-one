@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
+import { phoneWidth } from "../helpers/phone-menu";
 
 test("AD-01 returning to earlier selections waits for a fresh comparison or explanation", async ({
   page,
@@ -79,11 +80,14 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
   await page
     .getByRole("link", { name: "Browse proposed role bundles" })
     .click();
+  // The phone header draws the page name as its title and no breadcrumb (phone header amendment P1, P2).
   await expect(
-    page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("list", {
-      name: "Users and access / Proposed role bundles",
-      exact: true,
-    }),
+    phoneWidth(page)
+      ? page.locator("#shell-header .ppo-phone-title-text")
+      : page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("list", {
+          name: "Users and access / Proposed role bundles",
+          exact: true,
+        }),
   ).toContainText("Proposed role bundles");
   await expect(
     page

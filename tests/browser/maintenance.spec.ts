@@ -3,6 +3,7 @@ import { randomUUID, createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
 const C = {
   company: "20000000-0000-4000-8000-000000000001",
   site: "70000000-0000-4000-8000-000000000001",
@@ -260,14 +261,14 @@ test("all fourteen native routes expose their exact guide and preserve shell foc
       await expect(
         page.locator(".ma-context, .ma-snapshot").first(),
       ).toBeVisible();
-      const opener = page.getByRole("button", {
-          name: "Page guide",
-          exact: true,
-        }),
+      // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
+      const opener = phoneWidth(page)
+          ? page.locator("#shell-phone-menu")
+          : page.getByRole("button", { name: "Page guide", exact: true }),
         response = page.waitForResponse((r) =>
           r.url().includes("/api/development/catalog?pathname="),
         );
-      await opener.click();
+      await openPageGuide(page);
       const body = await (await response).json();
       expect(body.guide_key).toBe(
         "guide.route-" + path.replaceAll("/", "-") + (tail ? "-id" : ""),
@@ -303,8 +304,7 @@ test("native reviewed forms preserve draft through guidance and recover a lost a
   await action
     .getByLabel("Reason for this action", { exact: true })
     .fill("SYN owned follow-up");
-  const opener = page.getByRole("button", { name: "Page guide", exact: true });
-  await opener.click();
+  await openPageGuide(page);
   await page.keyboard.press("Escape");
   await expect(action.getByLabel("Next action", { exact: false })).toHaveValue(
     "SYN retained keyboard draft",

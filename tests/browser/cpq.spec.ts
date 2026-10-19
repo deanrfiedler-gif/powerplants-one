@@ -12,6 +12,7 @@ import { createCostingWorkspace } from "../helpers/estimating-costing-api";
 import { screenDefinition, screenInput } from "../../src/cpq/pilot";
 import type { readRelease } from "../../src/cpq/reads";
 import type { previewCalculation } from "../../src/cpq/runs";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 test.describe.configure({ timeout: 240000 });
 const grants: string[] = [];
 test.beforeAll(async () => {
@@ -536,7 +537,7 @@ test("CPQ saves, explains, reopens and adopts an exact evaluation; rule drafts a
     exact: true,
   });
   if (!(await activeFilter.isVisible()))
-    await page.locator("button.ppo-menu-toggle").click();
+    await openSecondaryMenu(page, page.locator("button.ppo-menu-toggle"));
   await activeFilter.click();
   await expect(nextDraftLink).toHaveCount(0);
   await page.screenshot({ path: info.outputPath("cpq-active-rules.png") });

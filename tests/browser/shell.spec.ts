@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
+import { openAccountPanel, openGlobalSearch, openPageGuide, phoneWidth } from "../helpers/phone-menu";
 
 test.beforeEach(async ({ page }) => {
   await retainApiReadsForTeardown(page);
@@ -39,19 +40,21 @@ test("responsive shell, keyboard focus, server save, read-only refusal and stora
     fullPage: true,
   });
   // The first stop after the skip target is My Work itself: the docked menu's current view on a
-  // wide screen. On a phone the menu trigger is in the header, which the skip link passes over by
-  // design, so the first stop is the overview's own first control.
+  // wide screen. On a phone the view chooser is in the header (phone header amendment P2), which the skip
+  // link passes over by design, so the first stop is the overview's own first control.
   await page.keyboard.press("Tab");
   if (info.project.use.isMobile) {
-    await expect(page.getByRole("banner").getByRole("button", { name: "My Work menu", exact: true })).toBeVisible();
+    await expect(page.getByRole("banner").getByRole("button", { name: /^Choose view\. Current view: My Work/ })).toBeVisible();
     expect(await page.evaluate(() => !!document.activeElement?.closest("#mw-content .mw-mobile"))).toBe(true);
   } else
     await expect(
       page.getByRole("navigation", { name: "My Work views" }).getByRole("link", { name: "Overview", exact: true }),
     ).toBeFocused();
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await openAccountPanel(page);
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Close account", exact: true }).click();
+  // On a phone the account is opened from the header's Menu button, so closing it returns focus there (P4).
+  if (phoneWidth(page)) await expect(page.locator("#shell-phone-menu")).toBeFocused();
   await page.getByRole("button", { name: "More", exact: true }).click();
   await page.getByRole("link", { name: "Foundation checks", exact: true }).click();
   await expect(
@@ -143,21 +146,23 @@ test("Workspace selection preserves permissions, contextual navigation and page 
   await departments.getByRole("link", { name: "Engineering", exact: true }).click();
   await expect(page).toHaveURL(/\/engineering$/);
   // The rail carries the product identity and the department; the breadcrumb names the page (R1).
-  await expect(page.locator(".product-heading .ppo-crumbs")).toHaveText("Engineering workload");
+  // On a phone the breadcrumb is not drawn; the compact header's title names the page (phone header amendment P2).
+  await expect(phoneWidth(page) ? page.locator("#shell-header .ppo-phone-title-text") : page.locator(".product-heading .ppo-crumbs")).toHaveText("Engineering workload");
   if (info.project.use.isMobile) {
     const navigation = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
     await expect(navigation.getByRole("link", { name: "Engineering", exact: true })).toBeVisible();
     await expect(navigation.getByRole("link", { name: "Deals", exact: true })).toHaveCount(0);
-    await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    // Global search is the first row of the header Menu on a phone; closing it returns focus to the Menu button.
+    await openGlobalSearch(page);
     await expect(page.getByRole("combobox", { name: "Search Powerplants One" })).toBeFocused();
     await page.getByRole("button", { name: "Close search", exact: true }).click();
     await expect(page.getByRole("dialog", { name: "Global search", exact: true })).toBeHidden();
-    await expect(page.getByRole("button", { name: "Open global search", exact: true })).toBeFocused();
+    await expect(page.locator("#shell-phone-menu")).toBeFocused();
   }
-  await page.getByRole("button", { name: "Page guide", exact: true }).click();
+  await openPageGuide(page);
   await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("heading", { name: "Engineering workload & deliverables", exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
+  await expect(phoneWidth(page) ? page.locator("#shell-phone-menu") : page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "More", exact: true }).click();
   await departments.getByRole("link", { name: "Supply chain", exact: true }).click();
   await expect(page).toHaveURL(/\/supply\/material-readiness$/);
@@ -169,5 +174,5 @@ test("Workspace selection preserves permissions, contextual navigation and page 
   await navButton.click();
   await page.getByRole("navigation", { name: info.project.use.isMobile ? "All modules" : "More navigation", exact: true }).getByRole("link", { name: "Organisations", exact: true }).click();
   await expect(page).toHaveURL(/\/customers\?department=supply$/);
-  await expect(page.locator(".product-heading")).toHaveText("Organisations");
+  await expect(phoneWidth(page) ? page.locator("#shell-header .ppo-phone-title-text") : page.locator(".product-heading")).toHaveText("Organisations");
 });

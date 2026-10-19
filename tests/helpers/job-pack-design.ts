@@ -1,5 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
+import { openSecondaryMenu } from "./phone-menu";
 export const jobPackDesign =
   "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html";
 export const jobPackViewports = [
@@ -41,9 +42,15 @@ export async function assertJobPackHost(page: Page) {
     const header = document
       .querySelector(".ppo-shell-header")!
       .getBoundingClientRect();
-    const utility = document
-      .querySelector(".ppo-header-utilities")!
-      .getBoundingClientRect();
+    // A phone row (780 px and below) flattens the utilities group into the header (display: contents), so its own
+    // box is empty: check the visible controls it holds and the Menu button instead (phone header amendment P1).
+    const group = document.querySelector(".ppo-header-utilities")!;
+    const utilityBoxes =
+      getComputedStyle(group).display === "contents"
+        ? [...group.querySelectorAll("a, button"), document.querySelector("#shell-phone-menu")!]
+            .filter((control) => control.getClientRects().length > 0)
+            .map((control) => control.getBoundingClientRect())
+        : [group.getBoundingClientRect()];
     return {
       layout: node.getAttribute("data-module-layout"),
       overflow: style.overflowY,
@@ -51,7 +58,10 @@ export async function assertJobPackHost(page: Page) {
       pageFits: document.documentElement.scrollWidth <= innerWidth,
       moduleFits: node.scrollWidth <= node.clientWidth,
       utilityInHeader:
-        utility.top >= header.top && utility.bottom <= header.bottom,
+        utilityBoxes.length > 0 &&
+        utilityBoxes.every(
+          (box) => box.top >= header.top && box.bottom <= header.bottom,
+        ),
     };
   });
   expect(facts).toMatchObject({
@@ -67,7 +77,7 @@ export async function assertJobPackHost(page: Page) {
 // The same views live in the docked menu on desktop and its dialog on narrow screens.
 export async function openPackView(page: Page, name: string | RegExp) {
   const tab = page.getByRole("tab", { name, exact: typeof name === "string" });
-  if (!(await tab.isVisible())) await page.locator(".ppo-menu-toggle").click();
+  if (!(await tab.isVisible())) await openSecondaryMenu(page);
   await tab.click();
 }
 export async function showPackReadiness(page: Page) {

@@ -430,10 +430,8 @@ test("CS05 native source comparison, dense register and responsive geometry", as
         path: info.outputPath(`register-actions-${width}.png`),
         fullPage: true,
       });
-      const menu = page.getByRole("button", {
-        name: "Customer locations menu",
-        exact: true,
-      });
+      // The phone header's view chooser opens the page menu (phone header amendment P2).
+      const menu = page.getByRole("button", { name: /^Choose view\./ });
       await menu.click();
       await expect(
         page.getByRole("dialog", {

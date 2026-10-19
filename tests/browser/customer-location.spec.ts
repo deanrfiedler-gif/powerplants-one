@@ -362,7 +362,8 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
         .poll(() =>
           page.locator(".ppo-shell-header").evaluate((header) => {
             const bounds = header.getBoundingClientRect();
-            return Array.from(header.querySelectorAll(".ppo-header-utilities button"))
+            // The phone row's Menu button is outside the utilities group (phone header amendment P1, P4).
+            return Array.from(header.querySelectorAll(".ppo-header-utilities button, #shell-phone-menu"))
               .filter((button) => button.getClientRects().length > 0)
               .every((button) => {
                 const rect = button.getBoundingClientRect();

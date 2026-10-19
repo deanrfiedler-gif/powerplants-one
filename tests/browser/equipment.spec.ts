@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { openPageGuide, phoneWidth } from "../helpers/phone-menu";
 const company = "20000000-0000-4000-8000-000000000001",
   // Preserve the seeded Site-01 observer window used by retained browser journeys.
   site = "70000000-0000-4000-8000-000000000002";
@@ -60,14 +61,14 @@ for (const [path, guide] of [
     page,
   }) => {
     await page.goto(path);
-    const opener = page.getByRole("button", {
-      name: "Page guide",
-      exact: true,
-    });
+    // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
+    const opener = phoneWidth(page)
+      ? page.locator("#shell-phone-menu")
+      : page.getByRole("button", { name: "Page guide", exact: true });
     const read = page.waitForResponse((response) =>
       response.url().includes("/api/development/catalog?pathname="),
     );
-    await opener.click();
+    await openPageGuide(page);
     const response = await read;
     expect(response.status()).toBe(200);
     const body = await response.json();
@@ -235,7 +236,12 @@ test("EQ03 native proposal, uncertain response recovery and exact successor surv
     page.getByRole("button", { name: "Recover original operation" }),
   ).toBeVisible();
   const pendingUrl = page.url();
-  await page.getByRole("link", { name: "Powerplants One home", exact: true }).click();
+  // Leave through a shell link: the brand home link on wider screens. The phone header has no brand (phone header
+  // amendment P1), so the bottom bar's first destination is the shell link that must wait for the recovery.
+  await (phoneWidth(page)
+    ? page.locator(".mobile-navigation a[href]").first()
+    : page.getByRole("link", { name: "Powerplants One home", exact: true })
+  ).click();
   await expect(page).toHaveURL(pendingUrl);
   await page.getByRole("tab", { name: "Movement & retirement", exact: true }).click();
   await expect(page).toHaveURL(url => url.pathname === `/equipment/${id}` && url.searchParams.get("view") === "lifecycle");
@@ -540,11 +546,20 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
             const header = document
               .querySelector(".ppo-shell-header")!
               .getBoundingClientRect();
-            const utilities = document
-              .querySelector(".ppo-header-utilities")!
-              .getBoundingClientRect();
+            const group = document.querySelector(".ppo-header-utilities")!;
+            // A phone row (780 px and below) flattens the utilities group into the header (display: contents), so
+            // its own box is empty: check the controls it holds and the Menu button instead.
+            const boxes =
+              getComputedStyle(group).display === "contents"
+                ? [...group.querySelectorAll("a, button"), document.querySelector("#shell-phone-menu")!]
+                    .filter((control) => control.getClientRects().length > 0)
+                    .map((control) => control.getBoundingClientRect())
+                : [group.getBoundingClientRect()];
             return (
-              utilities.top >= header.top && utilities.bottom <= header.bottom
+              boxes.length > 0 &&
+              boxes.every(
+                (box) => box.top >= header.top && box.bottom <= header.bottom,
+              )
             );
           }),
         )

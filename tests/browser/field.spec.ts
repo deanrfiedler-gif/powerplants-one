@@ -4,6 +4,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { png } from "../helpers/field";
+import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch("/api/v1/" + path, {
     method: body === undefined ? "GET" : "POST",
@@ -22,13 +23,13 @@ async function call(page: Page, path: string, body?: unknown) {
 }
 async function identity(page: Page, profile: string) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await openAccountPanel(page);
 
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
 }
 async function capture(

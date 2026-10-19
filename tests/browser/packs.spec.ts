@@ -3,6 +3,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { renderPack, type PackSnapshot } from "../../src/documents/render";
+import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const keys = [
@@ -44,17 +45,13 @@ async function identity(page: Page, profile = "coordinator") {
     }),
   ).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
-    await page
-      .getByRole("button", { name: "Change identity", exact: true })
-      .click();
+    await openAccountPanel(page);
 
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeEnabled();
+  await expect(identityToggle(page)).toBeEnabled();
   await expect(
     page.getByRole("region", {
       name: "Local demonstration identity",

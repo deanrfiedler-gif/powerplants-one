@@ -2,6 +2,7 @@ import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort, searc
 import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { identityToggle, openAccountPanel, phoneWidth } from "../helpers/phone-menu";
 const fixture = pathToFileURL(
   resolve("verification-evidence/crm-ui/index.html"),
 ).href;
@@ -34,10 +35,12 @@ test("hosted header, populated board, filtering and independent card targets", a
   await expect(page.locator(".crm-worklist-stamp")).toContainText(
     "$538,500.50 known · 1 not estimated",
   );
-  await page.getByRole("button", { name: "Account", exact: true }).click();
+  // On a phone the hosted account opens from the header Menu (phone header amendment P4) and Escape returns focus there.
+  await openAccountPanel(page, "Account");
   await expect(page.getByRole("button", { name: "Sign out", exact: true })).toBeVisible();
   await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
+  if (phoneWidth(page)) await expect(page.locator("#shell-phone-menu")).toBeFocused();
   await expect(
     page.getByRole("button", { name:"Filters and sort", exact:true }),
   ).toBeVisible();
@@ -45,19 +48,23 @@ test("hosted header, populated board, filtering and independent card targets", a
   await expect(page.getByRole("navigation", { name: info.project.name === "desktop" ? "More navigation" : "All modules", exact: true })).toBeVisible();
   await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
   await page.getByRole("button", { name: info.project.name === "desktop" ? "Close More menu" : "Close menu", exact: true }).click();
-  const geometry = await page.evaluate(() => {
+  const phone = phoneWidth(page);
+  const geometry = await page.evaluate((phone) => {
     const header = document.querySelector(".topbar")!.getBoundingClientRect();
+    // On a phone the account trigger is not in the row (it opens from the Menu button), so the Menu button is the
+    // header control that must sit inside the header and clear the retained deal search; the page name is the
+    // compact header's title (phone header amendment P1, P4).
     const account = document
-      .querySelector(".identity-hosted")!
+      .querySelector(phone ? "#shell-phone-menu" : ".identity-hosted")!
       .getBoundingClientRect();
     const search = [...document.querySelectorAll(
       ".crm-header-search,.ppo-global-search",
     )].find((node) => node.getBoundingClientRect().width > 0)!
       .getBoundingClientRect();
-    const heading = document.querySelector<HTMLElement>(".product-heading")!;
+    const heading = document.querySelector<HTMLElement>(phone ? ".ppo-phone-title" : ".product-heading")!;
     const headingBounds = heading.getBoundingClientRect();
     const title = document.createRange();
-    title.selectNodeContents(heading.querySelector(".ppo-crumb-current")!);
+    title.selectNodeContents(heading.querySelector(phone ? ".ppo-phone-title-text" : ".ppo-crumb-current")!);
     const titleBounds = title.getBoundingClientRect();
     const rail = document.querySelector(".sidebar")!;
     const cards = [...document.querySelectorAll(".crm-card")].filter(
@@ -83,7 +90,7 @@ test("hosted header, populated board, filtering and independent card targets", a
         search.top >= account.bottom,
       cardHeights: cards.map((e) => e.getBoundingClientRect().height),
     };
-  });
+  }, phone);
   expect(geometry.pageFits).toBe(true);
   expect(geometry.headingFits).toBe(true);
   expect(geometry.accountInside).toBe(true);
@@ -164,12 +171,13 @@ test("local identity remains reachable in the shared header", async ({
   page,
 }, info) => {
   await page.goto(fixture + "?mode=local");
-  await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
-  ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Change identity", exact: true })
-    .click();
+  // On a phone the trigger is mounted but hidden; the Menu button opens the same panel.
+  if (phoneWidth(page)) await expect(identityToggle(page)).toBeEnabled();
+  else
+    await expect(
+      page.getByRole("button", { name: "Change identity", exact: true }),
+    ).toBeVisible();
+  await openAccountPanel(page);
   await expect(page.getByLabel("Identity", { exact: true })).toBeVisible();
   const bounds = await page.locator(".identity-controls").boundingBox();
   expect(bounds!.x).toBeGreaterThanOrEqual(0);
@@ -179,6 +187,8 @@ test("local identity remains reachable in the shared header", async ({
   await page.screenshot({ path: info.outputPath("local-identity.png") });
   await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("button", { name: "Change identity", exact: true }),
+    phoneWidth(page)
+      ? page.locator("#shell-phone-menu")
+      : page.getByRole("button", { name: "Change identity", exact: true }),
   ).toBeFocused();
 });

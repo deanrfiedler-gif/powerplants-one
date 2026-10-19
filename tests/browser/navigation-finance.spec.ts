@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { phoneWidth } from "../helpers/phone-menu";
 test("N29 Finance entry rechecks exact sources without creating a handoff",async({page,baseURL})=>{
   let f:{report:string;handoff:string;work:string;profile:string};
   try {f=JSON.parse(await readFile("verification-evidence/navigation/finance-fixture.json","utf8"));}
@@ -17,7 +18,9 @@ test("N29 Finance entry rechecks exact sources without creating a handoff",async
   await expect(page.getByText(/Source report unavailable or not eligible/)).toBeVisible();
   await expect(page.getByRole("button",{name:"Select this reviewed source report",exact:true})).toHaveCount(0);
   await page.goto(`/finance/handoffs/${f.handoff}`);
-  await expect(page.getByRole("navigation",{name:"Breadcrumb",exact:true})).toContainText("Finance handoff");
+  // A phone record page leads with Back to its owning list (phone header amendment P3) in place of the breadcrumb.
+  if(phoneWidth(page))await expect(page.locator("#shell-header .ppo-phone-back")).toHaveAttribute("aria-label",/^Back to Finance handoff/);
+  else await expect(page.getByRole("navigation",{name:"Breadcrumb",exact:true})).toContainText("Finance handoff");
   expect(writes).toBe(0);
 });
 
@@ -28,15 +31,20 @@ test("N14 exact permitted Finance account extends its module hierarchy",async({p
   await page.goto("/finance/accounts");
   const read=page.waitForResponse(r=>r.url().includes(`/api/v1/customers/${account.customer_id}/account-observations?account_id=${account.id}`)&&r.ok());
   await page.locator(`main a[href='/customers/${account.customer_id}/account?account_id=${account.id}&department=finance']`).click();
-  const exact=await (await read).json();const breadcrumb=page.getByRole("navigation",{name:"Breadcrumb",exact:true});
+  // The phone header shows the record reference as its title and offers neither a breadcrumb nor Page hierarchy
+  // (phone header amendment P1, P3), so the hierarchy disclosure is proved at wider screens only.
+  const phone=phoneWidth(page);
+  const exact=await (await read).json();const breadcrumb=phone?page.locator("#shell-header .ppo-phone-reference"):page.getByRole("navigation",{name:"Breadcrumb",exact:true});
   await expect(breadcrumb).toContainText(exact.account.fixture_key);
-  await page.getByRole("button",{name:"Page hierarchy",exact:true}).click();
-  const hierarchy=page.locator("#page-hierarchy");
-  await expect(hierarchy.getByRole("link",{name:"Customer accounts",exact:true})).toHaveAttribute("href","/finance/accounts");
-  await hierarchy.getByRole("link",{name:"Customer accounts",exact:true}).focus();
-  await page.screenshot({path:test.info().outputPath("finance-account-hierarchy.png")});
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("button",{name:"Page hierarchy",exact:true})).toBeFocused();
+  if(!phone){
+    await page.getByRole("button",{name:"Page hierarchy",exact:true}).click();
+    const hierarchy=page.locator("#page-hierarchy");
+    await expect(hierarchy.getByRole("link",{name:"Customer accounts",exact:true})).toHaveAttribute("href","/finance/accounts");
+    await hierarchy.getByRole("link",{name:"Customer accounts",exact:true}).focus();
+    await page.screenshot({path:test.info().outputPath("finance-account-hierarchy.png")});
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("button",{name:"Page hierarchy",exact:true})).toBeFocused();
+  }
   expect((await page.request.post("/api/v1/local-session",{headers:{Origin:baseURL!},data:{profile:"technician"}})).ok()).toBe(true);
   const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/customers/${account.customer_id}/account-observations?account_id=${account.id}`)&&[403,404].includes(r.status()));
   await page.reload();await denied;await expect(breadcrumb).not.toContainText(exact.account.fixture_key);
