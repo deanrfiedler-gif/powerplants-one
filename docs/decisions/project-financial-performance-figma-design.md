@@ -13,7 +13,7 @@ On 19 October 2026 Dean asked: "You task is to now design and build the "(FN-03)
 
 Before the audit, Dean opened MYOB Acumatica on his computer at one live project and asked Claude to review it read only: "Do not may any edits! This is a READ ONLY review." Claude clicked only the project's tabs (Summary, Tasks, Revenue Budget, Cost Budget, Balances, Commitments, Invoices, Change Orders, Change Requests and the » list) in its own browser tab, and saved and copied nothing. Section 5 records what the review showed. Dean then said: "We don't have to follow the exact same model as MYOB, but that gives you a good overview of our current process." He asked how Claude would design a more professional module and for recommendations on each open question, then said: "I am happy for you to proceed based on your professional recommendations." Claude redrew the page around a monthly review.
 
-Dean asked for an audit and polish, with permission to play the prototype on his computer, and then for a final check: "Before we lock it in, just make sure you are 100% happy that the design is a professional as possible, as it's a very important UI page in the Powerplants One app." During that check he added: "Also, it would be good if we could make the section in the attached screenshot collapsible (if not already), similar to how the secondary menu collapses." After the collapse had been played in Present mode, Dean accepted the design: "I accept the Project financial performance FN-03 design with your recommendations, including D1–D9, Q6 and the adopted answers. Lock it in."
+Dean asked for an audit and polish, with permission to play the prototype on his computer, and then for a final check: "Before we lock it in, just make sure you are 100% happy that the design is a professional as possible, as it's a very important UI page in the Powerplants One app." During that check he added: "Also, it would be good if we could make the section in the attached screenshot collapsible (if not already), similar to how the secondary menu collapses." After the collapse had been played in Present mode, Dean accepted the design: "I accept the Project financial performance FN-03 design with your recommendations, including D1–D9, Q6 and the adopted answers. Lock it in." Dean then asked for the named version: "Yes, save the named Figma version "Project financial performance — accepted"." Claude saved it in the Figma desktop app (section 6).
 
 Scope:
 - `scope:FN-03` "Project financial performance" at `/finance/projects`, with a record at `/finance/projects/[id]` and the monthly review at `/finance/projects/reviews` (both proposed).
@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q-C MYOB change orders and PJ-05 variations | Resolved as recommended | PJ-05 is the commercial authority. Only price-changing MYOB change orders are compared; a mismatch raises a difference for Finance |
 | Q-D Which MYOB sources | Resolved as recommended | Cost and budget, revenue budget, open purchase orders, invoices and receipts. WIP, stock, accruals, retention detail and the other tabs stay in MYOB |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | "Project financial performance — accepted" waits for Dean's explicit yes |
+| Named Figma version | User decision, 19 October 2026 | Saved as "Project financial performance — accepted" at Dean's request quoted above. Section 6 |
 | Building the page | Not decided | Section 8 |
 
 ## 2. Design reference
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D9 in section 4, accepted |
 | Status | Owner-accepted design, 19 October 2026 |
 | Decision record | This file |
-| Named version | Not yet saved; "Project financial performance — accepted" waits for Dean's yes |
+| Named version | "Project financial performance — accepted", saved 19 October 2026 |
 
 ## 4. What the design shows
 
@@ -127,6 +127,7 @@ The review was of screen structure only, on one live project, read only. No figu
 - Claude played all three flows in Present mode in Dean's Figma desktop app at Fit width, and added the missing rail, All reviews, Measure definitions, phone back, sheet close and Show links. The collapse was played at Dean's request: the edge turns blue on hover, a click collapses the column, and the strip expands it. Undrawn record tabs do nothing.
 - The twenty-two captures are copies of the accepted frames on the "Captures (icon-free)" page at y = 306,000 (`1676:442238` to `1676:444871`). Each copy's prototype links were removed and each of its 769 Font Awesome icon instances was swapped for `Icon/placeholder`; a check afterwards found none left. The vectors left are the logo and the margin chart's data marks. The copies added no flow starting point to the Captures page.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/finance/project-performance-design-r01/README.md).
+- The named Figma version "Project financial performance — accepted" was saved on 19 October 2026 in the Figma desktop app (Ctrl+Alt+S, title typed, Save) at Dean's request. Claude confirmed it at the top of version history, opened from the dialog's "Show full version history" link, and then updated the page header and notes card.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or Finance review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
 
 ## 7. Relationship to other records

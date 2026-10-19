@@ -40,7 +40,7 @@ Icon-free Figma captures: [Project financial performance design r01](../../../re
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [design r01 captures](../../../reference/ui/finance/project-performance-design-r01/README.md) (twenty-two icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/project-financial-performance-figma-design.md). A build needs Finance-approved definitions (D-017), a read-only MYOB adapter under its own decision, the FN-06 category map, review and difference records, and a cross-project read. The coordinator's review form, a returned review, the full record tabs, the difference record and the tablet record are not drawn. The named Figma version "Project financial performance — accepted" waits for Dean's yes.
+Accepted Figma design: [design r01 captures](../../../reference/ui/finance/project-performance-design-r01/README.md) (twenty-two icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/project-financial-performance-figma-design.md). A build needs Finance-approved definitions (D-017), a read-only MYOB adapter under its own decision, the FN-06 category map, review and difference records, and a cross-project read. The coordinator's review form, a returned review, the full record tabs, the difference record and the tablet record are not drawn. The named Figma version "Project financial performance — accepted" was saved on 19 October 2026.
 
 The draft User Guide `guide.fn.03` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
