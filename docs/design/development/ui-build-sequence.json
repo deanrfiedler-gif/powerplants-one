@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
  "sources": {
   "register": "docs/design/development/register.json",
-  "register_sha256": "461e3ccd01072f8ed97d66fa3f885e7ac9ef4b833bc99067c8724f074d38f3fd",
+  "register_sha256": "cb83a4251999cd961cd5dadd095c80d29003239cb57f4a552344a4af490052fe",
   "build_plan": "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",

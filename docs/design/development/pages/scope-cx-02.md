@@ -23,11 +23,15 @@ Under option A, staff do this work in Powerplants One and MYOB Acumatica stays t
 
 ## Desktop
 
+Accepted design: the [Workshop builds design decision](../../../decisions/workshop-builds-figma-design.md) of 19 October 2026 covers `/workshop` (Supply chain rail "Workshop", proposed) and a build record at `/workshop/[id]` (proposed), with sixteen icon-free captures in [design r01](../../../reference/ui/supply-chain/workshop-builds-design-r01/README.md). Departures D1–D8 and the answers to Q1–Q6 are recorded there: a grid register of builds, a record with build checks and six tabs, a read-only parts list from released materials with booking out, steps with the welder's qualification and weld inspection, tests whose result follows from value and limit, rework, release by the workshop lead (never the builder) with a serial number, and hand-over for dispatch. Nothing is built.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 08–16 in [design r01](../../../reference/ui/supply-chain/workshop-builds-design-r01/README.md): the list with the compact phone header, the build record at 390 and 320 with one full-width main action, a Record test result form, and five states. The phone tab bar shows My Work, Receiving, Inventory, Workshop and More.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -41,9 +45,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked, and no Figma page for the workshop has been drawn yet. Keep this gap visible.
+Icon-free Figma captures of the Workshop builds page: [Workshop builds design r01](../../../reference/ui/supply-chain/workshop-builds-design-r01/README.md). Kitting & controllers and Bench testing & returns have their own entries and are not drawn yet. No HTML reference is linked.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [design r01](../../../reference/ui/supply-chain/workshop-builds-design-r01/README.md) captures (design compositions, not application captures) and its [decision](../../../decisions/workshop-builds-figma-design.md). A build needs a workshop build model with its migration and permissions, a released-materials read, and the MYOB send adapter under its own decision. The Booked out and Rework tabs at full size, the New build form, desktop states and the tablet record are not drawn. The named Figma version "Workshop builds — accepted" was saved on 19 October 2026.
 
 The draft User Guide `guide.cx.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
