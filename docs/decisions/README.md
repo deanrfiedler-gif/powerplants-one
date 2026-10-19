@@ -7,6 +7,8 @@
 
 [Site surveys design](site-surveys-figma-design.md) (PPO-CS08-SITE-SURVEYS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the CS-08 design: a grid register with status views, a survey record with a checks bar and six tabs, an observations table where an Unknown is never stored as zero, photo tiles shown by their original file facts, Review submission and Record reviewed handover forms that send nothing and change no estimate or design basis, and New survey with scope chips. Building it is not decided.
 
+[Quotation view tracking](quote-view-tracking.md) (PPO-QUOTE-VIEW-TRACKING-PROP) records Dean's 19 October 2026 acceptance of option B: a PPO quotation page, reached from a "View quotation" link in the sender's email. The page records views, downloads and approximate time per section without IP, device or identity, as evidence that never changes the quotation's status, with Q1–Q10 adopted as recommended. Building it is not decided.
+
 [PPO as the daily workspace, MYOB Acumatica as the book of record](ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) records Dean's 19 October 2026 direction that staff do day-to-day work in PPO across all modules while MYOB Acumatica stays the book of record, with integration principles EI-1 to EI-10; integration technology and the tenant contract remain open.
 
 [Phone header amendment](phone-header-amendment.md) (PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC) records Dean's 19 October 2026 adoption of one compact phone header row for every phone page: a view chooser, at most three icons with Conversations kept, record headers with position and previous/next, and the page guide, notifications and global search moved into the menu. It amends R7 of the Shell top bar amendment for phone widths.

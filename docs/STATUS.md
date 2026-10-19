@@ -15,6 +15,19 @@ Dean accepted the Figma design for CS-08, the site survey and as-found brief (`/
 
 Checked: no Font Awesome instance or stray vector is left in the capture copies, no text colour differs from its bound variable, and no copy carries a prototype link. The named Figma version "Site surveys — accepted" was saved at Dean's "Yes, save the named Figma version "Site surveys — accepted"." Not done: the page is not built, and the native CS-08 pages are unchanged. Open item: the accepted Access & readiness design shows the survey reference as "SYN-SRV-000031". No application code, route, migration, permission or parent ID changes.
 
+## Quotation view tracking accepted — 19 October 2026
+
+Dean accepted the quotation view tracking decision paper on 19 October 2026 ([record](decisions/quote-view-tracking.md)): "Proceed with your recommendations for Q1 to Q10 of the quotation view tracking paper." He had asked for a feature like PandaDoc's earlier that day: "I would like to include a similar feature to this within the Powerplants One app if possible."
+
+The accepted approach is option B, a PPO quotation page:
+- **The link.** The issuer's email carries a "View quotation" link to a page that shows the exact issued quotation and offers the retained PDF.
+- **What it records.** PPO records views, downloads and approximate active time per section. Each event is stored by type and time, with no IP address, device or identity.
+- **What is decided.** The answers cover a link that anyone holding it can open, withdrawal and closure 30 days after validity, no PDF attachment by default, who sees the views, follow-up prompts, and no online acceptance yet.
+- **One departure.** Q4 departs from the Emails amendment A1-Q2 for quotation pages only: a section's active seconds may be stored.
+- **Status is untouched.** Views never change the quotation's status, response or deal stage.
+
+Nothing is built. Stages QV-S1 to QV-S3 each need their own authorisation. They also depend on ADR-0059 being accepted, PR #608 merging, the privacy notice, request-log and link-domain gates, and the D-020 external-access review. No code, route, migration, capability, grant or parent ID changes. An owner decision paper needs a review by a second model before merge; none has taken place.
+
 ## PPO daily workspace and MYOB book of record — 19 October 2026
 
 Dean adopted a direction for all modules: "Yes, record the wider direction: PPO is the day-to-day workspace for all modules and MYOB Acumatica is the book of record, with the integration principles you recommended, as its own decision record." The [direction record](decisions/ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) keeps the existing authority split (ADR-0048, ADR-0049) and sets ten integration principles (EI-1 to EI-10). They cover one owner per item of data, master data entered once in PPO, finished business events sent to MYOB, approval before posting and correction by reversal, retry-safe sends with visible states, daily reconciliation, supported Acumatica interfaces only, least privilege, and a read-only start. MYOB subscription savings are to be confirmed with the MYOB partner before being counted.
