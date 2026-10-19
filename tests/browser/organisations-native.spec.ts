@@ -26,6 +26,13 @@ test("CS01 register and seven-tab record geometry at all retained widths", async
     await page.goto("/customers?department=service");
     await expect(page.locator(".org-read-time")).toContainText("organisations");
     await expect(page.locator("h1")).toHaveCount(1);
+    await expect(
+      page.getByRole("heading", {
+        name: "Organisations",
+        level: 1,
+        exact: true,
+      }),
+    ).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -399,10 +406,13 @@ test("CS01 phone snapshot returns focus and context; create reflows without losi
 }, info) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/customers?q=SYN+Greenhouse&department=service");
-  const trigger = page.getByRole("button", {
-    name: "Snapshot for SYN Greenhouse Demonstration",
-    exact: true,
-  });
+  const trigger = page
+    .locator(".org-phone-list article")
+    .filter({ hasText: "SYN-PPO-ORG-000001" })
+    .getByRole("button", {
+      name: "Snapshot for SYN Greenhouse Demonstration",
+      exact: true,
+    });
   await trigger.click();
   const snapshot = page.getByRole("dialog", { name: "Organisation snapshot" });
   await expect(snapshot).toBeVisible();

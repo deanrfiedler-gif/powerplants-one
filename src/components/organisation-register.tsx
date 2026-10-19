@@ -11,7 +11,7 @@ const Stamp = ({ value }: { value: string }) => (
 import { ProductIcon } from "./product-icons";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { PageHeader, ReadState } from "./business-ui";
+import { ReadState } from "./business-ui";
 import { useCrmResource } from "./crm-state";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import {
@@ -188,7 +188,7 @@ function Register({ query }: { query: URLSearchParams }) {
             <Link href="/people">People</Link>
             <Link href="/sites">Sites</Link>
           </nav>
-          <h2>Organisations</h2>
+          <h2 aria-hidden="true">Organisations</h2>
           <nav aria-label="Organisation views">
             {organisationViews.map((v) => (
               <button
@@ -213,7 +213,7 @@ function Register({ query }: { query: URLSearchParams }) {
       }
     >
       <div className="org-register">
-        <PageHeader variant="register" eyebrow="CS-01" title="Organisations" />
+        <h1 className="ppo-register-title">Organisations</h1>
         <div className="org-local-search">
           <form
             onSubmit={(e) => {

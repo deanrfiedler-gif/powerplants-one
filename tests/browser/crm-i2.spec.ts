@@ -300,7 +300,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
       && url.pathname === `/api/v1/customers/${CRM.org}/workspace`;
   });
   await page.goto(`/customers/${CRM.org}`);
-  await page.getByRole("tab", { name: "Activity & documents", exact: true }).click();
+  await page.getByRole("tab", { name: "Activity", exact: true }).click();
   const projection = await relatedRead;
   expect(projection.ok()).toBe(true);
   expect((await projection.json()).context.id).toBe(CRM.org);

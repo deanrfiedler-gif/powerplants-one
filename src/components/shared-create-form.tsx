@@ -328,17 +328,7 @@ export function SharedCreateForm({
         <ValidationFields error={cmd.error}>
           <div className="org-create-main">
             <header>
-              <Link href={lead ? leadReturn() : "/customers"}>
-                ←{" "}
-                {lead
-                  ? "Return to lead and review the selection"
-                  : "Organisations"}
-              </Link>
               <PageHeader eyebrow="CS-01" title="Create organisation" />
-              <p>
-                Use fictional data. A new organisation creates no ERP account or
-                work authority.
-              </p>
             </header>
             <ErrorNotice error={cmd.error} />
             <ReadState
@@ -383,12 +373,10 @@ export function SharedCreateForm({
                       values={["Prospect", "Active", "Inactive"]}
                       onChange={(value) => set("status", value)}
                     />
-                    {field("legal_name", "Legal name")}
+                    <div className="org-create-wide">
+                      {field("legal_name", "Legal name")}
+                    </div>
                   </div>
-                  <p>
-                    If the legal name differs, record it here. Unknown
-                    information can stay blank.
-                  </p>
                 </section>
                 <section>
                   <h2>Owner and source</h2>
@@ -423,6 +411,9 @@ export function SharedCreateForm({
                   {field("reason", "Reason for capture", true, false, 1000)}
                 </section>
                 <footer>
+                  <small>
+                    A new organisation creates no ERP account or work authority.
+                  </small>
                   <Link
                     className="button secondary"
                     href={lead ? leadReturn() : "/customers"}

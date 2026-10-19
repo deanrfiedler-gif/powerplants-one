@@ -59,15 +59,16 @@ test("organisation summary opens the full Sites hierarchy; mobile menu contains 
   await call(page,"local-session",{profile:"coordinator"});
   await page.goto(`/customers/${CRM.org}`);
   await expect(page.getByRole("tab",{name:"Overview",exact:true})).toHaveAttribute("aria-selected","true");
-  const sitesTab=page.getByRole("tab",{name:"Sites & equipment",exact:true});
+  const sitesTab=page.getByRole("tab",{name:"Sites",exact:true});
   await sitesTab.focus();
   await page.keyboard.press("Enter");
   await expect(sitesTab).toBeFocused();
   await expect(sitesTab).toHaveAttribute("aria-selected","true");
   await expect(page).toHaveURL(/view=sites/);
-  const siteLink=page.locator(`.history-card h3 a[href="/sites/${CRM.site}"]`);
+  const sitesPanel=page.getByRole("tabpanel");
+  const siteLink=sitesPanel.locator(`a[href="/sites/${CRM.site}"]`).filter({hasText:"SYN-PPO-SIT-"});
   await expect(siteLink).toBeVisible();
-  await expect(page.locator(`a[href="/facilities?organisation_id=${CRM.org}"]`)).toBeVisible();
+  await expect(sitesPanel.locator(`a[href="/facilities?organisation_id=${CRM.org}"]`)).toBeVisible();
   await page.screenshot({path:info.outputPath("organisation-sites.png")});
   if(info.project.use.isMobile) {
     await page.setViewportSize({width:320,height:640});
