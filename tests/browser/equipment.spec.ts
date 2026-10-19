@@ -552,11 +552,11 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
               .getBoundingClientRect();
             const group = document.querySelector(".ppo-header-utilities")!;
             // A phone row (780 px and below) flattens the utilities group into the header (display: contents), so
-            // its own box is empty: check the controls it holds and the Menu button instead.
+            // its own box is empty: check the controls it holds and the row's lead control (Menu, or Back on a record).
             const boxes =
               getComputedStyle(group).display === "contents"
-                ? [...group.querySelectorAll("a, button"), document.querySelector("#shell-phone-menu")!]
-                    .filter((control) => control.getClientRects().length > 0)
+                ? [...group.querySelectorAll("a, button"), document.querySelector(".ppo-phone-lead")]
+                    .filter((control): control is Element => !!control && control.getClientRects().length > 0)
                     .map((control) => control.getBoundingClientRect())
                 : [group.getBoundingClientRect()];
             return (
