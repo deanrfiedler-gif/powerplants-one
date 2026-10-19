@@ -20,6 +20,7 @@ Quoted as written, 19 October 2026:
 1. "Regarding the mobile phone view, I think we will need to reduce the number of boxes, buttons, features, etc., that are at the top of the screen to allow more room for the actual content that is being displayed on the screen. … This means you may have to remove the main top bar that is shown at the very top of the mobile phone view. What is your professional opinion regarding this?"
 2. "Regarding Q5, the compact phone header, what is your professional recommendation?"
 3. After the recommendation: "I am happy for you to proceed based on your professional recommendations." — recorded as adopting P1–P9 and the rollout in section 4.
+4. Asked by the application session whether record headers need a Menu button, Dean asked "What is your professional opinion regarding the record headers and the menu button?" and, after Claude's recommendation, said "Ok.  I happy to proceed based on your professional recommendations." — recorded as the P3 note in section 3.
 
 ## 2. Decisions and evidence
 
@@ -28,6 +29,7 @@ Quoted as written, 19 October 2026:
 | Fewer controls at the top of phone screens, even without the main top bar | User decision | Quote 1 |
 | One compact header for every phone page, decided once as a shell amendment | Claude's recommendation, adopted | Quotes 2 and 3 |
 | Rules P1–P9 and the rollout order | Claude's recommendation, adopted | Quote 3 |
+| Records have no Menu button; More starts with Open menu and Conversations (P3 note) | Claude's recommendation, adopted 19 October 2026 | Quote 4 |
 | Acceptance of the drawn component | User decision: Dean said yes to saving the named version "Phone header amendment — accepted", saved 19 October 2026 | Section 6a |
 | Keeping Conversations in the phone row | Dean's 18 October 2026 rule for the top bar, carried to the phone row | [Conversations T1 scope](conversations-t1-scope.md) |
 | 320 px search and filter combined, 18 px title, outline Conversations icon | Dean's acceptance of three fixes on Customer messages · EC-04, 19 October 2026, carried into P7 | EC-04 Figma page, frame `1525:402853` |
@@ -39,6 +41,7 @@ Quoted as written, 19 October 2026:
 | P1 | Phone pages (below 768 px) use one compact 56 px header row instead of the global phone header. Desktop and tablet are unchanged. |
 | P2 | List and calendar pages (Type=List): menu · view chooser (view name, count, chevron; opens Choose view, the phone form of the side menu) · at most three icons: one page action, Conversations with its badge, Filter. A page without views shows its title without the chevron. |
 | P3 | Record pages (Type=Record): back · position ("1 of 3 to send") or the record reference · previous and next · More. Title and status move into the content; main actions sit in a sticky bottom bar; records have no tab bar. |
+| P3 note | Records have no Menu button: Back keeps the left slot, and the menu holds list-level jobs that Back reaches in one tap. The record's More (…) menu starts with Open menu and Conversations (its unread count in the accessible name), then the record's own actions, so the menu and Conversations stay reachable when a record has no tab bar or no list behind it. |
 | P4 | The menu holds the department menu, the account and working company, notifications, global search (at the top), the page guide and Design & build. A dot on the menu shows unread notifications. |
 | P5 | Choose view opens a bottom sheet. Filter opens a full-screen panel with Reset and "Show N items"; a dot on Filter shows a filter is applied. |
 | P6 | No toolbar or context rows under the header: views go into Choose view, filters into Filter, refresh is pull-down. Status lines appear only when something needs attention (out of date, offline, reconnect). |
