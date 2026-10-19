@@ -18,7 +18,7 @@ Dean's request did not need a new inventory or a new order:
 - **Inventory:** the live design register (`docs/design/development/register.json`) holds every page and scope: 350 entries, made up of 196 routes, 150 scopes and 4 shared systems. It also records each entry's build, visual-review and functional-proof status.
 - **Order:** the r05 App Page Register issued build plan r02 on 23 September 2026. It is a dependency-led sequence of 12 phases (00 to 11) with an explicit predecessor list for each of the 150 scopes. Its rank 1 is SH-01, the role-based home overview. r02 describes itself as "not an approved schedule or an estimate of effort".
 
-A second, hand-made list would drift from both. The sequence is therefore **derived**: `scripts/build-ui-sequence.py` reads the register and the issued plan, then writes [the generated sequence](../design/development/ui-build-sequence.md) and its JSON data. The `--check` mode fails if either output is stale. No `build_rank`, scope ID or issued byte is changed.
+A second, hand-made list would drift from both. The sequence is therefore **derived**: `scripts/build-ui-sequence.py` reads the register and the issued plan, then writes the sequence and its JSON data to `tmp/` (since 19 October 2026 they are no longer committed; see [the pointer page](../design/development/ui-build-sequence.md) and [merge-conflict-reduction.md](merge-conflict-reduction.md#5-design-pull-requests-no-longer-share-generated-or-appended-files)). The `--check` mode derives the sequence and fails if an entry cannot be placed. No `build_rank`, scope ID or issued byte is changed.
 
 ## Today's position (generated at this commit)
 

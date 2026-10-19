@@ -97,7 +97,7 @@ Limits of the guard. It searches what the `Change scope` job checks out (`script
 
 ### 5. Design pull requests no longer share generated or appended files
 
-Added on 19 October 2026 as an amendment to open decision 4, at Dean's request to stop one merged pull request making others conflict. Branch protection already had "Require branches to be up to date" off (`strict: false`, read from the API that day), so the conflicts were git text conflicts. Simulating a merge of each conflicting open pull request (#604, #610, #615, #616, #617; #606 did not conflict) into `main` showed that only three places conflicted, and all three are edited by every design lock-in:
+Added on 19 October 2026 as an amendment to open decision 4, at Dean's request to stop one merged pull request making others conflict. Branch protection already had "Require branches to be up to date" off (`strict: false`, read from the API that day), so the conflicts were git text conflicts. Simulating a merge of each conflicting open pull request (#604, #610, #615, #616, #617; #606 did not conflict with `main`) into `main` showed that only three places conflicted, and all three are edited by every design lock-in:
 
 | File | Why it conflicted | Change |
 |---|---|---|
@@ -106,6 +106,19 @@ Added on 19 October 2026 as an amendment to open decision 4, at Dean's request t
 | `docs/reference/ui/README.md` | Every design pull request added a table row and a dated paragraph at the same lines. | **New designs go in `docs/reference/ui/design-entries/YYYY-MM-DD-slug.md`**, one file each, row and paragraph together. `check_foundation.py` fails if the index gains table rows or dated paragraphs. Existing entries stay and may be corrected in place. |
 
 Who reads what, checked before the change: nothing in `src`, `tests`, `db`, `public`, `.github` or `package.json` reads any of the three groups. The only code readers are `scripts/check_naming.py` (the register), `scripts/check_foundation.py` (links) and `scripts/ci_scope.py` (a path in its self-test, still true). The document register is a CSV in a prose folder, so a pull request that only adds entry files stays documentation only. Fragments rendered by a script, as for `STATUS.md`, were rejected for the register and the index: a rendered file is the thing that conflicts, and these two have no ordering requirement a folder listing cannot meet.
+
+Replay (19 October 2026, `git merge-tree` on `origin/main` at `9dad9aa5`). Each of #604, #606, #610, #615, #616 and #617 was converted as above (generated files and shared appends taken from this change, its own rows and text moved to entry files) and merged with this change and with every other converted pull request, 12 of the 15 possible pairs (the three pairs that include #606 and #610, #615 or #617 were not run). Before conversion, 11 of those 12 pairs conflicted, all but one on the three file groups. After it:
+
+| Merge | Before | After |
+|---|---|---|
+| Each of the six onto this change | #604, #610, #615, #617: the three groups | none on the three groups; #616 conflicts on `scripts/build-ui-sequence.py` (below) |
+| #610, #615, #617, #604 with each other (6 pairs) | `ui-build-sequence.*`; also `document-register.csv` and `reference/ui/README.md` for the three lock-ins | none |
+| #616 with #604, #610, #617 | `ui-build-sequence.*`, and the register and index for #610 and #617 | none |
+| #616 with #606 | none | none |
+| #615 with #616 | the three groups and `STATUS.md` | `docs/STATUS.md` only (a rendered file, open decision 2) |
+| #604 with #606 | the same two sequence files and `STATUS.md` | `STATUS.md`, `components.json` and `components/application-shell.md`: both change the shell components, unrelated to this change |
+
+Two remaining effects are real. #616 edits `scripts/build-ui-sequence.py` itself (an owner-placement rule for CX-02), and this change edits the same script's output paths and `--check` mode, so it must merge `main` and keep both; its generated outputs then drop out. And six pull requests merged in sequence still hit `STATUS.md` whenever a rendered file changes in two of them, which only open decision 2 removes. The replay used the diff of each pull request, not a new CI run of the converted branches; the converted branches were not built or tested.
 
 What this does not fix, so it is not over-claimed:
 - Pull requests opened before this lands still carry the old edits. Each needs one conversion when it next merges `main`: take `main`'s copy of the three groups, then re-add its rows as entry files (the register rows and README text are in its own diff). Deleting the generated `.json` while a branch modifies it is a modify/delete conflict until that branch takes `main`'s side. The replay below shows the converted result.
