@@ -30,6 +30,7 @@ Quoted as written, 19 October 2026:
 | Rules P1–P9 and the rollout order | Claude's recommendation, adopted | Quote 3 |
 | Acceptance of the drawn component | Not yet: the named version "Phone header amendment — accepted" waits for Dean's yes | Section 6 |
 | Keeping Conversations in the phone row | Dean's 18 October 2026 rule for the top bar, carried to the phone row | [Conversations T1 scope](conversations-t1-scope.md) |
+| 320 px search and filter combined, 18 px title, outline Conversations icon | Dean's acceptance of three fixes on Customer messages · EC-04, 19 October 2026, carried into P7 | EC-04 Figma page, frame `1525:402853` |
 
 ## 3. Rules P1–P9, as adopted
 
@@ -41,7 +42,7 @@ Quoted as written, 19 October 2026:
 | P4 | The menu holds the department menu, the account and working company, notifications, global search (at the top), the page guide and Design & build. A dot on the menu shows unread notifications. |
 | P5 | Choose view opens a bottom sheet. Filter opens a full-screen panel with Reset and "Show N items"; a dot on Filter shows a filter is applied. |
 | P6 | No toolbar or context rows under the header: views go into Choose view, filters into Filter, refresh is pull-down. Status lines appear only when something needs attention (out of date, offline, reconnect). |
-| P7 | At 320 px the same icons stay and the title truncates first. A record reference never truncates: previous and next move into More instead. Never more than three icons to the right of the title. |
+| P7 | At 320 px the title drops to 18 px and truncates first. Where the page action is search, search and filter combine into one "Search and filter" control that opens one screen, as Dean accepted on Customer messages · EC-04. A record reference never truncates: previous and next move into More instead. Never more than three icons to the right of the title. |
 | P8 | Accessibility: 44 px targets; every icon has an accessible name; badge counts are read out ("Conversations, 3 unread"); the view chooser is a button announcing the current view; the title is the page's heading. |
 | P9 | Rollout: new phone frames use the component now; accepted pages swap their header in one batch after the named version is saved, and drop their toolbar rows when each page is next changed; the application changes the shared phone header once, in its own pull request, before the EC pages are built. |
 
@@ -54,7 +55,7 @@ Unchanged: the phone tab bar (five icon-only tabs), quick add, and the desktop a
 | Design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Phone header amendment" `1530:70`, under "— System —" after "Shell top bar amendment" |
 | Header and rules | Page header `1531:83` (conformance declaration); rules card `1531:118` with Dean's words |
-| Component | Component set "Shell / Phone header · compact" `1530:110`: Type=List `1530:108`, Type=Record `1530:109`. Properties: Title, Count, Show count, Show view chooser, Show page action, Page action icon, Show filter, Unread notifications dot, Position, Show previous and next. Built from the Customer messages · EC-04 compact headers (`1516:4177`, `1516:402151`) |
+| Component | Component set "Shell / Phone header · compact" `1530:110`: Type=List and Type=Record, each at Width=390 and Width=320 (`1530:108` and `1530:109` are the 390 px variants). Properties: Title, Count, Show count, Show view chooser, Show page action, Page action icon, Show filter, Unread notifications dot, Position, Show previous and next. Built from the Customer messages · EC-04 compact headers (`1516:4177`, `1516:402151`) |
 | Examples | Section `1531:131`: Calendar, Emails, Customer messages, Work orders, a page without views and three record cases at 390 and 320 px; before and after on the accepted Changes and follow-up PL-04 phone list (`1531:507`, `1531:543`) |
 | First consumer | Calendar · EC-03 (proposal, page `1511:396797`): every phone frame uses instances of `1530:110` |
 
