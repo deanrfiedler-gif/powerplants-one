@@ -38,6 +38,18 @@ test("CS01 register and seven-tab record geometry at all retained widths", async
       const bounds = await page.locator("#org-menu").boundingBox();
       expect(bounds?.width).toBe(240);
     }
+    const toolbarBounds = await page.locator(".org-toolbar").boundingBox();
+    expect(toolbarBounds!.height).toBeGreaterThanOrEqual(60);
+    if (width >= 1024) {
+      for (const selector of [
+        ".org-desktop-grid thead tr",
+        ".org-desktop-grid tbody tr",
+      ]) {
+        expect(
+          (await page.locator(selector).first().boundingBox())!.height,
+        ).toBeGreaterThanOrEqual(44);
+      }
+    }
     if (width < 600) {
       const toolbar = await page.locator(".org-toolbar").boundingBox(),
         first = await page
@@ -45,6 +57,7 @@ test("CS01 register and seven-tab record geometry at all retained widths", async
           .first()
           .boundingBox();
       expect(first!.y).toBeGreaterThanOrEqual(toolbar!.y + toolbar!.height - 1);
+      expect(first!.height).toBeGreaterThanOrEqual(88);
     }
     await capture(page, info, `register-${width}`);
     if (width === 1440) await page.setViewportSize({ width, height: 1234 });
@@ -95,6 +108,7 @@ test("CS01 filters, sorting, snapshot focus and return survive navigation", asyn
   await checkbox.check();
   const dialog = page.getByRole("dialog", { name: "Organisation snapshot" });
   await expect(dialog).toBeVisible();
+  expect((await dialog.boundingBox())!.width).toBe(380);
   await capture(page, info, "snapshot-1440");
   await dialog.press("Escape");
   await expect(dialog).not.toBeVisible();
@@ -133,6 +147,7 @@ test("CS01 Sales type/status URL and permitted source states", async ({
   ).toHaveAttribute("aria-selected", "true");
   await capture(page, info, "sales-1440");
   await page.getByRole("button", { name: /^Quotations/ }).click();
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.getByRole("button", { name: "Status", exact: true }).click();
   await capture(page, info, "sales-filtered-1440");
   await page
@@ -314,6 +329,15 @@ test("CS01 saved columns and identity correction retain existing save/recovery a
   });
   expect(created.status()).toBe(201);
   await page.goto(`/customers/${id}`);
+  await expect(
+    page.getByRole("heading", { name: recordName, exact: true }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await capture(page, info, "long-identity-1440");
   await page
     .getByRole("button", { name: "Organisation actions", exact: true })
     .click();
@@ -368,4 +392,50 @@ test("CS01 saved columns and identity correction retain existing save/recovery a
     ),
   ).toBe(true);
   await capture(page, info, "record-reflow-720");
+});
+
+test("CS01 phone snapshot returns focus and context; create reflows without losing entries", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/customers?q=SYN+Greenhouse&department=service");
+  const trigger = page.getByRole("button", {
+    name: "Snapshot for SYN Greenhouse Demonstration",
+    exact: true,
+  });
+  await trigger.click();
+  const snapshot = page.getByRole("dialog", { name: "Organisation snapshot" });
+  await expect(snapshot).toBeVisible();
+  const bounds = (await snapshot.boundingBox())!;
+  expect(bounds.x).toBeGreaterThanOrEqual(0);
+  expect(bounds.x + bounds.width).toBeLessThanOrEqual(391);
+  await capture(page, info, "snapshot-390");
+  await snapshot.press("Escape");
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await snapshot
+    .getByRole("link", { name: "Open organisation", exact: true })
+    .click();
+  await page
+    .getByRole("link", { name: "Back to organisations", exact: true })
+    .click();
+  await expect(page).toHaveURL(/q=SYN\+Greenhouse/);
+  await expect(page).toHaveURL(/department=service/);
+  await page.goto("/customers/new");
+  await page.getByLabel("Display name", { exact: true }).fill("SYN Greenhouse");
+  await expect(
+    page.getByRole("link", { name: "Open", exact: true }).first(),
+  ).toBeVisible();
+  for (const width of [1024, 390, 320]) {
+    await page.setViewportSize({ width, height: width === 1024 ? 900 : 844 });
+    await expect(page.getByLabel("Display name", { exact: true })).toHaveValue(
+      "SYN Greenhouse",
+    );
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await capture(page, info, `create-${width}`);
+  }
 });

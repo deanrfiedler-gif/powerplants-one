@@ -116,7 +116,7 @@ export async function customer360(
       [p.workspace_id, p.actor_id, context.company_id],
     )
   ).rows[0]?.display_name;
-  // One bounded query over sites already authorised by customerContext; no additional site disclosure.
+  // One query over sites already authorised by customerContext; no additional site disclosure.
   const relationships = (
     await c.query(
       "SELECT site_id,role,(valid_from<=CURRENT_TIMESTAMP AND (valid_to IS NULL OR valid_to>CURRENT_TIMESTAMP)) AS is_current FROM ppo.site_parties WHERE workspace_id=$1 AND organisation_id=$2 AND site_id=ANY($3::uuid[]) ORDER BY site_id,valid_from,id",

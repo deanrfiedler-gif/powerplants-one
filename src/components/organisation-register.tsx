@@ -520,6 +520,12 @@ function Register({ query }: { query: URLSearchParams }) {
                       · Open service unknown
                     </p>
                   </Link>
+                  <Button
+                    aria-label={`Snapshot for ${row.display_name}`}
+                    onClick={() => setSnapshot(row.id)}
+                  >
+                    <ProductIcon name="more" />
+                  </Button>
                 </article>
               ))}
             </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { api, ErrorNotice } from "./business-ui";
 import { useCrmResource } from "./crm-state";
 import type { DirectoryView } from "../crm/directory";
@@ -14,6 +14,7 @@ export function OrganisationViews({
   columns: string[];
   apply: (view: DirectoryView) => void;
 }) {
+  const id = useId();
   const resource = useCrmResource<{ version: number; views: DirectoryView[] }>(
     "crm/directory/views?kind=organisations",
     true,
@@ -71,33 +72,31 @@ export function OrganisationViews({
     <section className="org-saved-views">
       <h3>Saved views</h3>
       <ErrorNotice error={resource.error || error} />
-      <label>
-        Saved view
-        <select
-          value={selected}
-          onChange={(e) => {
-            const view = resource.data?.views.find(
-              (v) => v.name === e.target.value,
-            );
-            setSelected(e.target.value);
-            setName(e.target.value);
-            if (view) apply(view);
-          }}
-        >
-          <option value="">Custom view</option>
-          {resource.data?.views.map((v) => (
-            <option key={v.name}>{v.name}</option>
-          ))}
-        </select>
-      </label>
-      <label>
-        View name
-        <input
-          value={name}
-          maxLength={60}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
+      <label htmlFor={`${id}-saved`}>Saved view</label>
+      <select
+        id={`${id}-saved`}
+        value={selected}
+        onChange={(e) => {
+          const view = resource.data?.views.find(
+            (v) => v.name === e.target.value,
+          );
+          setSelected(e.target.value);
+          setName(e.target.value);
+          if (view) apply(view);
+        }}
+      >
+        <option value="">Custom view</option>
+        {resource.data?.views.map((v) => (
+          <option key={v.name}>{v.name}</option>
+        ))}
+      </select>
+      <label htmlFor={`${id}-name`}>View name</label>
+      <input
+        id={`${id}-name`}
+        value={name}
+        maxLength={60}
+        onChange={(e) => setName(e.target.value)}
+      />
       <button
         type="button"
         disabled={busy || !resource.data || !name.trim() || extended}

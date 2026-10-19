@@ -63,6 +63,7 @@ test("CS01 source tabs restore through URL navigation and exact canonical links"
     page.getByRole("link", { name: "Account development", exact: true }),
   ).toHaveAttribute("href", `/customers/${org}/development`);
   await page.getByRole("tab", { name: "Sales", exact: true }).click();
+  await expect(page).toHaveURL(/view=sales/);
   await expect(
     page.getByText("No verified sales-order read contract is connected.", {
       exact: false,
