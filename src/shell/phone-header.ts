@@ -26,7 +26,7 @@ export type PhoneHeaderConfig = {
     more?: PhoneHeaderAction[];
   };
 };
-type Entry = { path: string; config: PhoneHeaderConfig; shape: string };
+type Entry = { path: string; config: PhoneHeaderConfig; shape: string; update: (config: PhoneHeaderConfig) => void };
 
 const entries = new Map<object, Entry>(), listeners = new Set<() => void>();
 const none: Entry[] = [];
@@ -46,6 +46,31 @@ const subscribe = (listener: () => void) => {
 const shapeOf = (config: PhoneHeaderConfig) =>
   JSON.stringify(config, (_key, value) => (typeof value === "function" ? true : value));
 
+// The header can retain a configuration across page renders with the same visible shape. Its
+// callbacks must still use the latest page state, including callbacks held by an open More menu.
+export function createPhoneHeaderEntry(path: string, config: PhoneHeaderConfig): Entry {
+  let current = config;
+  const action = <T extends PhoneHeaderAction>(value: T | undefined, read: () => T | undefined): T | undefined =>
+    value && { ...value, onSelect: (opener: HTMLElement) => read()?.onSelect(opener) };
+  const bound: PhoneHeaderConfig = {
+    ...config,
+    chooseView: config.chooseView && { ...config.chooseView, open: (opener) => current.chooseView?.open(opener) },
+    pageAction: action(config.pageAction, () => current.pageAction),
+    filter: config.filter && {
+      ...config.filter,
+      open: (opener) => current.filter?.open(opener),
+      searchAndFilter: config.filter.searchAndFilter && ((opener) => current.filter?.searchAndFilter?.(opener)),
+    },
+    record: config.record && {
+      ...config.record,
+      previous: action(config.record.previous, () => current.record?.previous),
+      next: action(config.record.next, () => current.record?.next),
+      more: config.record.more?.map((item, index) => action(item, () => current.record?.more?.[index])!),
+    },
+  };
+  return { path, config: bound, shape: shapeOf(config), update: (next) => { current = next; } };
+}
+
 export function usePhoneHeader(config: PhoneHeaderConfig | null) {
   const path = usePathname();
   const key = useRef<object>({});
@@ -56,10 +81,10 @@ export function usePhoneHeader(config: PhoneHeaderConfig | null) {
       return;
     }
     const shape = shapeOf(config), entry = entries.get(owner);
-    // The entry is updated in place so the header's next click reads this render's callbacks.
-    if (entry && entry.shape === shape && entry.path === path) entry.config = config;
+    // Keep the rendered shape stable while forwarding its actions to this render's callbacks.
+    if (entry && entry.shape === shape && entry.path === path) entry.update(config);
     else {
-      entries.set(owner, { path, config, shape });
+      entries.set(owner, createPhoneHeaderEntry(path, config));
       emit();
     }
   });

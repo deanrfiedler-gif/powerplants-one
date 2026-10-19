@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { PhoneHeaderActions, PhoneHeaderLead, PhoneHeaderTitle, type PhoneHeaderModel } from "../../src/components/shell-phone-header";
+import { createPhoneHeaderEntry, type PhoneHeaderConfig } from "../../src/shell/phone-header";
 
 // Phone header amendment (PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC, P2, P3, P4, P5, P8). The browser suites find the
 // phone row's controls by these accessible names and classes, so the markup that carries them is pinned here
@@ -13,6 +14,36 @@ const list = (config: Extract<PhoneHeaderModel, { type: "list" }>["config"] = nu
 const record = (config: Extract<PhoneHeaderModel, { type: "record" }>["config"] = null, back?: { href?: string; label: string }): PhoneHeaderModel =>
   ({ type: "record", reference: "SYN-DEAL-0042", back, config });
 const html = (element: Parameters<typeof renderToStaticMarkup>[0]) => renderToStaticMarkup(element);
+
+test("unchanged header labels dispatch to the latest page state, including an already-open record menu", () => {
+  const calls: string[] = [];
+  const config = (revision: string): PhoneHeaderConfig => {
+    const run = (name: string) => () => { calls.push(`${revision}:${name}`); };
+    return {
+      chooseView: { open: run("view") },
+      pageAction: { label: "Search", icon: "search", onSelect: run("action") },
+      filter: { open: run("filter"), searchAndFilter: run("combined") },
+      record: {
+        previous: { label: "Previous", onSelect: run("previous") },
+        next: { label: "Next", onSelect: run("next") },
+        more: [{ label: "Edit", onSelect: run("edit") }],
+      },
+    };
+  };
+  const entry = createPhoneHeaderEntry("/records/one", config("old"));
+  const shown = entry.config;
+  const openMenuAction = shown.record!.more![0].onSelect;
+  entry.update(config("current"));
+  const opener = {} as HTMLElement;
+  shown.chooseView!.open(opener);
+  shown.pageAction!.onSelect(opener);
+  shown.filter!.open(opener);
+  shown.filter!.searchAndFilter!(opener);
+  shown.record!.previous!.onSelect(opener);
+  shown.record!.next!.onSelect(opener);
+  openMenuAction(opener);
+  assert.deepEqual(calls, ["view", "action", "filter", "combined", "previous", "next", "edit"].map((name) => `current:${name}`));
+});
 
 test("P2 a page without views shows its name as a plain title, not a button", () => {
   const markup = html(createElement(PhoneHeaderTitle, { model: list() }));
