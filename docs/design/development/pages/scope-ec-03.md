@@ -14,11 +14,15 @@ Extend current calendar/activity views with provider synchronisation, attendee h
 
 ## Desktop
 
+Accepted design: the [Calendar design decision](../../../decisions/calendar-figma-design.md) of 19 October 2026 covers `/calendar` (the Sales rail's "Activities"): Week (default), Day with the meeting detail panel, Team availability, Plan follow-up and List, with eighteen icon-free captures in [design r01](../../../reference/ui/sales/calendar-design-r01/README.md). Departures D1–D8 and answers Q1–Q5 are recorded there: meetings on the time grid and PPO activities in a Due lane, Outlook meetings read only with Plan follow-up and Link records, words for every state, overlaps shown side by side, time zone, source and sync state always visible, and free-or-busy team availability. Nothing new is built; the built Day and Agenda page remains.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 07–12 and 18 in [design r01](../../../reference/ui/sales/calendar-design-r01/README.md): Day at 390 and 320 with the compact phone header (Phone header amendment), the List, the meeting sheet, Choose view, the full-screen Filter and the out-of-date state.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,9 +36,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Icon-free Figma captures: [Calendar design r01](../../../reference/ui/sales/calendar-design-r01/README.md). No HTML reference is linked.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Calendar design r01 captures](../../../reference/ui/sales/calendar-design-r01/README.md) (eighteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/calendar-figma-design.md). All-day items, recurring-series detail, Month view, phone Week and Team views, a tablet Day panel, the meeting Link records panel and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
 
 The draft User Guide `guide.ec.03` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
