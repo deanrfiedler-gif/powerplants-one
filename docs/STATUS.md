@@ -17,6 +17,10 @@ Checked: no Font Awesome instance or stray vector is left in the capture copies,
 
 Dean started T1d of Conversations on 19 October 2026: "Yes, start T1c-3 (context panel) and T1d (record-page lists, notifications, My Work, reply-by reminders) as two parallel sessions with their own worktrees and PRs." It is being built on branch `claude/conversations-t1d-2baa2b` from the [T1d design](decisions/conversations-t1d-design.md): a Conversations section on deal and project pages (count, list, Open in Conversations and New thread, shown only to people who can read the threads), asks and mentions in the notification inbox under the Mentions category (projected from the audit log, checked against current access, no message prose, not counted on the bell), and the asks waiting on the viewer in My Work. Reply-by reminders are not built: their scheduling options are in the [reminder proposal](decisions/conversations-reply-by-reminders.md), waiting for Dean's decision. No migration, seed, capability or parent ID changes; nothing is deployed to the hosted demo. CI, Dean's visual review and production readiness are separate.
 
+## Conversations context panel CI repair — 19 October 2026
+
+Dean requested repair and merge of [PR #600](https://github.com/deanrfiedler-gif/powerplants-one/pull/600) on 19 October 2026. Codex owns the repair on `codex/pr-600-context-repair`, integrating the original context-panel commits with current main. The failing jobs report React immutability errors in the Context button focus restoration; the generated status file also conflicts. Validation and merge are pending. This repair does not grant visual approval or production readiness.
+
 ## Travel review PL-05 design accepted — 18 October 2026
 
 Dean accepted the Figma design for Travel review (PL-05, `/schedule/travel`) on 18 October 2026: "I accept the Travel review PL-05 design with your recommendations, including D1–D5 and Q1–Q2." The [decision](decisions/travel-review-figma-design.md) (PPO-PL05-TRAVEL-REVIEW-FIGMA-DEC) records it, and the [retained captures](reference/ui/service/travel-review-design-r01/README.md) are six icon-free PNGs with hashes.
