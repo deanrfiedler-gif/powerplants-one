@@ -61,6 +61,10 @@ for (const [path, guide] of [
     page,
   }) => {
     await page.goto(path);
+    // A record's phone row swaps Menu for Back once its identity has loaded; wait for that so the guide is opened from
+    // the control that stays (the tab bar's More), not from one that is about to leave.
+    if (phoneWidth(page) && /\/equipment\/[0-9a-f-]{36}$/.test(path))
+      await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
     // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
     const opener = phoneWidth(page)
       ? phoneMenuOpener(page)

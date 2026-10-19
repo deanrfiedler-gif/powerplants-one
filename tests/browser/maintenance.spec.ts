@@ -261,6 +261,9 @@ test("all fourteen native routes expose their exact guide and preserve shell foc
       await expect(
         page.locator(".ma-context, .ma-snapshot").first(),
       ).toBeVisible();
+      // A record's phone row swaps Menu for Back once its identity has loaded: wait for that before choosing the opener.
+      if (tail && phoneWidth(page))
+        await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
       // On a phone the guide opens from the header Menu, and Escape returns focus to the Menu button.
       const opener = phoneWidth(page)
           ? phoneMenuOpener(page)
