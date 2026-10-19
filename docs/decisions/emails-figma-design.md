@@ -47,7 +47,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Global phone actions | Resolved as recommended | On Email, the menu button opens the department menu with the account, Conversations (with its badge) and global search at its top. The bottom tab bar stays. Offering the same slim header to other phone work surfaces is one later shell decision, not page by page. The floating New email button depends on Q1 |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
 | Amendment A1, sent email tracking | User decision, 19 October 2026 | Requested and accepted the same day. Section 8 |
-| Named Figma version | Not yet decided | "Emails — accepted" waits for Dean's explicit yes. Section 7 |
+| Named Figma versions | User decision, 19 October 2026 | Saved as "Emails — accepted" and "Emails — sent email tracking amendment A1" at Dean's request: "Yes, save the named Figma versions "Emails — accepted" and "Emails — sent email tracking amendment A1"." Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -81,7 +81,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 19 October 2026 |
 | Decision record | This file |
-| Named version | "Emails — accepted" waits for Dean's explicit yes |
+| Named version | "Emails — accepted", saved 19 October 2026 |
 
 ## 4. What the design shows
 
@@ -157,7 +157,7 @@ The audit is recorded on the notes card `1511:397359`.
   - none of 1,837 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a navigation link. The only remaining interactions are the shell components' own hover and toggle behaviour.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/email-calendar/emails-design-r01/README.md).
-- The named Figma version "Emails — accepted" waits for Dean's explicit yes.
+- Both named versions were saved on 19 October 2026 in the Figma desktop app at Dean's request: "Yes, save the named Figma versions "Emails — accepted" and "Emails — sent email tracking amendment A1"." Claude saved "Emails — accepted" first and then "Emails — sent email tracking amendment A1", each with Ctrl+Alt+S, checking the typed title in the save dialog. Both entries appeared at the top of version history. Both versions were saved after A1 was drawn, so "Emails — accepted" also contains the A1 section. A1 keeps to its own section and its hidden Thread row switch, so the r01 frames in that version still match the r01 captures. The page header and notes cards were then updated to record the saves.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
 
 ## 8. Amendment A1 — sent email tracking (19 October 2026)
@@ -183,7 +183,7 @@ While this design was being locked in, Dean asked for sent email tracking: "A fe
 | A1-D5 | **Honest states.** An open loaded by a mail privacy service straight after delivery shows as "may be automatic". Tracking is evidence, never proof, and delivery stays a separate state (ADR-0058) |
 | A1-D6 | **New part.** Email / Tracking status (five states) is added to the Thread row behind a "Show tracking" switch. The switch is off on every r01 frame, so those frames and their captures do not change |
 
-**Design reference.** Section "A1 · Sent email tracking" `1543:7805` on the Emails page: desktop Sent items with tracking and the details popover `1543:7806`; the reply composer with the tracking switch `1544:5345`; phone Sent items with tracking `1544:5828`; the phone tracking sheet `1544:6128`; the tracking states legend `1546:5890`; and the A1 notes card `1546:5931`. New page part: Email / Tracking status `1541:8843` (Not opened, Opened, Opened automatically, Viewed, Not tracked). New icons on Components › Icons: `Icon/solid/eye` `1541:4106` and `Icon/arrow-pointer` `1541:4112`. The named version "Emails — sent email tracking amendment A1" waits for Dean's explicit yes.
+**Design reference.** Section "A1 · Sent email tracking" `1543:7805` on the Emails page: desktop Sent items with tracking and the details popover `1543:7806`; the reply composer with the tracking switch `1544:5345`; phone Sent items with tracking `1544:5828`; the phone tracking sheet `1544:6128`; the tracking states legend `1546:5890`; and the A1 notes card `1546:5931`. New page part: Email / Tracking status `1541:8843` (Not opened, Opened, Opened automatically, Viewed, Not tracked). New icons on Components › Icons: `Icon/solid/eye` `1541:4106` and `Icon/arrow-pointer` `1541:4112`. The named version "Emails — sent email tracking amendment A1" was saved on 19 October 2026 at Dean's request (section 7).
 
 **Not drawn.** Tracking in the Inbox for threads whose last message is the reader's, a per-recipient view (not offered: opens cannot be told apart reliably), the "Tell me when it is opened" switch (A1-Q4), and the privacy notice text.
 

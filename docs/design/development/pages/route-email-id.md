@@ -41,7 +41,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [Emails design r01 captures](../../../reference/ui/email-calendar/emails-design-r01/README.md) (22 icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/emails-figma-design.md). Drafts, templates, the mailbox settings page, the composer at tablet and phone width, phone 320 states and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
+Accepted Figma design: [Emails design r01 captures](../../../reference/ui/email-calendar/emails-design-r01/README.md) (22 icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/emails-figma-design.md). Drafts, templates, the mailbox settings page, the composer at tablet and phone width, phone 320 states and 200% zoom are not drawn. The named Figma versions "Emails — accepted" and "Emails — sent email tracking amendment A1" were saved on 19 October 2026.
 
 The draft User Guide `guide.page.email.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

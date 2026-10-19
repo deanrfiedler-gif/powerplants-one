@@ -58,7 +58,7 @@ Image 22 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Emails — accepted" waits for Dean's explicit yes |
+| Named version | "Emails — accepted", saved 19 October 2026 at Dean's request and confirmed in version history |
 | Accepted frames | Page "Emails · EC-01" `1499:392390`, in image order:<br>• `1502:91`, `1506:457`, `1507:788`, `1508:1222`, `1525:403768`;<br>• `1509:394014`, `1525:404343`;<br>• `1509:394623`, `1513:400714`, `1513:401853`, `1513:401924`, `1509:395121`, `1525:7819`, `1509:395314`, `1525:403554`;<br>• `1509:396707`, `1509:397179`, `1511:2492`, `1516:403478`, `1516:403770`;<br>• `1511:2966` and `1511:3028`;<br>• the phone states: `1525:402948`, `1525:403134`, `1525:403323` |
 | Capture copies | Page "Captures (icon-free)", from y = 270,000, images in order: `1532:192557`, `1532:192697`, `1532:192838`, `1532:193017`, `1532:193171`, `1532:193304`, `1532:193420`, `1532:193575`, `1532:193604`, `1532:193633`, `1532:193697`, `1532:193784`, `1532:193825`, `1532:193864`, `1532:193921`, `1532:193988`, `1532:194057`, `1532:194144`, `1532:194269`, `1532:194413`, `1532:194555`, `1532:194630` |
 

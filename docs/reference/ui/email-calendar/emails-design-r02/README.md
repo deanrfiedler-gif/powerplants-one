@@ -28,7 +28,7 @@ Each image is one Figma frame exported at scale 1 at its exact frame size. Every
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Emails — sent email tracking amendment A1" waits for Dean's explicit yes |
+| Named version | "Emails — sent email tracking amendment A1", saved 19 October 2026 at Dean's request and confirmed in version history |
 | Accepted frames | Page "Emails · EC-01" `1499:392390`, section "A1 · Sent email tracking" `1543:7805`, in image order: `1543:7806`, `1544:5345`, `1544:5828`, `1544:6128`, `1546:5890` |
 | Capture copies | Page "Captures (icon-free)", at y = 272,000, in order: `1546:416366`, `1546:416529`, `1546:416688`, `1546:416714`, `1546:416771` |
 
