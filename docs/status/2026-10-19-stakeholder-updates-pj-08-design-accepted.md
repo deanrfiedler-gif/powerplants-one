@@ -1,0 +1,11 @@
+---
+title: Stakeholder updates PJ-08 design accepted
+date: 2026-10-19
+---
+
+Dean accepted the Figma design for PJ-08, stakeholder update preparation and publication at the proposed `/projects/updates`, after three audits and a run of all eight prototype flows in Present mode: "I accept the Stakeholder updates PJ-08 design with your recommendations, including D1–D8 and Q1–Q6. Lock it in." The [design decision](../decisions/stakeholder-updates-figma-design.md) (PPO-PJ08-STAKEHOLDER-UPDATES-FIGMA-DEC) records departures D1–D8 and answers Q1–Q6: a Customer updates group in the Projects side menu, numbered updates with revisions that never change, drafts written from the project's sources with typed dates read only, Prepare to send handing the exact revision to Customer messages as an M4 message, approval by someone other than the drafter beside the sources, a successor for any correction, and per-project cadence and recipients. Nineteen icon-free captures with hashes are retained in [stakeholder-updates-design-r01](../reference/ui/projects/stakeholder-updates-design-r01/README.md). The design register page for `scope:PJ-08` cites the frames and captures. In Figma the File index has a Stakeholder updates row after PJ-05, and the capture copies sit on the Captures page at y = 300,000.
+
+Checked: no Font Awesome instance is left in the capture copies (537 swapped), and no copy carries a prototype link or flow start. Not done: the named Figma version "Stakeholder updates — accepted" waits for Dean's yes; the page is not built, and every prerequisite is a stage S6 gap in the customer communications decision. No application code, route, migration, permission or parent ID changes.
+
+<!-- decision-index -->
+[Stakeholder updates design](../decisions/stakeholder-updates-figma-design.md) (PPO-PJ08-STAKEHOLDER-UPDATES-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the PJ-08 design: an updates register across projects, drafts written from the project's sources, Prepare to send, a second person's review and approval beside the sources, delivery steps, corrections as successors, held updates, per-project cadence and recipients, and phone review under the compact header. Building it is not decided.
