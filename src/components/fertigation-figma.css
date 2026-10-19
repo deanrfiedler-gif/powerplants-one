@@ -750,16 +750,6 @@
   .app-frame[data-shell-design="fertigation"] .ppo-header-menu-slot {
     display: none;
   }
-  .app-frame[data-shell-design="fertigation"] .ppo-shell-header {
-    height: 64px;
-    min-height: 64px;
-  }
-  .app-frame[data-shell-design="fertigation"] .ppo-phone-page-name {
-    display: block;
-    font-size: 18px;
-    font-weight: 700;
-    padding-left: 16px;
-  }
   .app-frame[data-shell-design="fertigation"] .product-heading {
     display: none;
   }
@@ -981,8 +971,7 @@
   }
 }
 @media (min-width: 781px) {
-  .fn-mobile-label,
-  .ppo-phone-page-name {
+  .fn-mobile-label {
     display: none;
   }
 }
@@ -1185,25 +1174,6 @@
   }
 }
 @media (max-width: 780px) {
-  .app-frame[data-shell-design="fertigation"] .ppo-shell-header {
-    padding: 0 12px 0 16px;
-    gap: 4px;
-  }
-  .app-frame[data-shell-design="fertigation"] .ppo-shell-header #header-menu,
-  .app-frame[data-shell-design="fertigation"]
-    .ppo-shell-header
-    .ppo-studio-link,
-  .app-frame[data-shell-design="fertigation"]
-    .ppo-shell-header
-    #shell-mobile-search {
-    display: none;
-  }
-  .app-frame[data-shell-design="fertigation"] .ppo-phone-page-name {
-    flex: 1;
-    padding: 0;
-    font-size: 18px;
-    line-height: 24px;
-  }
   #ppo-fertigation .fn-page-head {
     flex-direction: row;
     align-items: flex-end;
@@ -1258,10 +1228,6 @@
     .ppo-shell-header
     .product-heading {
     display: none;
-  }
-  .app-frame[data-shell-design="fertigation"] .topbar.ppo-shell-header {
-    display: flex;
-    padding: 0 12px 0 16px;
   }
   #ppo-fertigation .fn-section-sheet .fn-menu-badge {
     display: inline-flex;
@@ -1393,12 +1359,6 @@
     .ppo-shell-header:has(#header-menu)
     .product-heading {
     display: none;
-  }
-  .app-frame[data-shell-design="fertigation"]
-    .workspace
-    .topbar.ppo-shell-header:has(#header-menu) {
-    padding: 0 12px 0 16px;
-    gap: 4px;
   }
   #ppo-fertigation .mw-content {
     background: var(--paper);

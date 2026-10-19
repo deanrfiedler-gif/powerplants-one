@@ -5,7 +5,7 @@ import { api, ErrorNotice } from "./business-ui";
 import { lockLocal } from "../offline/store";
 import { lockOtherBusinessViews, sessionReadyEvent } from "./session-signal";
 import { HeaderContent } from "./header-content";
-import { openShellPanel, shellPanelEvent } from "./shell-events";
+import { focusAccountOpener, openShellPanel, shellPanelEvent } from "./shell-events";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
 import { ShellIcon } from "./shell-icon";
 import { useShell } from "./shell-provider";
@@ -78,7 +78,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   }, []);
   const toggleAccount = () => { openShellPanel("account"); setShowIdentity(!showIdentity); };
   const initials = accountInitials(p?.display_name);
-  const closeAccount = () => { setShowIdentity(false); document.getElementById(hosted ? "hosted-account-toggle" : "identity-toggle")?.focus(); };
+  const closeAccount = () => { setShowIdentity(false); focusAccountOpener(hosted ? "hosted-account-toggle" : "identity-toggle"); };
   const accountTitle = <div className="ppo-panel-titlebar"><h2>Account</h2><button className="ppo-top-action ppo-account-close" aria-label="Close account" onClick={closeAccount}><ShellIcon name="close" /></button></div>;
   // PPO-CONV-T1C-DESIGN 10.2: the controls the narrow top bars give up. The Page guide moves here at 320 px, and the
   // builder's design workspace below 1200 px and on phones (D2); the stylesheet shows each only where the bar hides it.
@@ -164,7 +164,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   return (
     <>
       <HeaderContent slot="account">
-      {hosted ? <section ref={account} className="identity-strip identity-compact identity-hosted" aria-label="Private demo account" onKeyDown={event => { if (event.key === "Escape") { setShowIdentity(false); document.getElementById("hosted-account-toggle")?.focus(); } }}>
+      {hosted ? <section ref={account} className="identity-strip identity-compact identity-hosted" aria-label="Private demo account" onKeyDown={event => { if (event.key === "Escape") { setShowIdentity(false); focusAccountOpener("hosted-account-toggle"); } }}>
         <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" title={companyHint ? `Account · ${companyHint}` : "Account"} data-company={companyMarker} aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
         <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
           {accountTitle}<div className="ppo-panel-body">
@@ -190,7 +190,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         className="identity-strip identity-compact"
         aria-label="Local demonstration identity"
         aria-busy={loading || busy}
-        onKeyDown={(e) => { if (e.key === "Escape" && showIdentity) { setShowIdentity(false); document.getElementById("identity-toggle")?.focus(); } }}
+        onKeyDown={(e) => { if (e.key === "Escape" && showIdentity) { setShowIdentity(false); focusAccountOpener("identity-toggle"); } }}
       >
         <div>
           <strong>

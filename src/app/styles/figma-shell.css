@@ -109,3 +109,80 @@
   .app-frame:has(.mw-mobile) .ppo-shell-header .ppo-breadcrumb-trigger { display: none; }
   .app-frame:has(#ppo-my-work) .ppo-shell-header .product-heading { min-width: 0; flex: 1; }
 }
+
+/* Phone header amendment (PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC, rules P1–P9; Figma "Shell / Phone header · compact"
+   1530:110). Phones keep one 56 px row: menu, view chooser and at most three icons (page action, Conversations,
+   Filter) on list pages; back, position or reference, previous/next and More on records. Global search, the page
+   guide, notifications, the account and Design & build are in the menu (product-navigation.tsx). The header id
+   outranks the older phone rules that page stylesheets and the local identity strip still carry. Desktop and
+   tablet are unchanged: the compact parts are hidden above the shell's 780 px phone boundary. */
+.ppo-phone-lead, .ppo-phone-title, .ppo-phone-page-action, .ppo-phone-filter, .ppo-phone-search-filter,
+.ppo-phone-previous, .ppo-phone-next, .ppo-phone-more { display: none; }
+@media (max-width: 780px) {
+  .app-frame .workspace > #shell-header.topbar.ppo-shell-header {
+    display: flex; flex-wrap: nowrap; align-items: center; gap: 0; height: 56px; min-height: 56px; padding: 0 4px;
+    grid-template-columns: none; background: #fff; border-bottom: 1px solid #e1e5eb;
+  }
+  /* P6 rollout: a page that still supplies a header field (the Sales deal search) keeps it as a second row until
+     that page is next changed (P9); the compact row itself stays 56 px. */
+  .app-frame .workspace > #shell-header.topbar.ppo-shell-header:has(#header-search:not(:empty)) { flex-wrap: wrap; height: auto; padding-top: 6px; padding-bottom: 8px; }
+  #shell-header #header-search:not(:empty) { display: block; order: 20; flex: 0 0 100%; padding: 0 8px; }
+  #shell-header #header-search .crm-header-search { width: 100%; margin: 0; }
+  #shell-header > .mobile-brand, #shell-header .ppo-header-start, #shell-header .ppo-header-centre,
+  #shell-header .ppo-quick-add, #shell-header .ppo-desktop-utility, #shell-header .ppo-guide-action,
+  #shell-header .ppo-studio-link, #shell-header .ppo-account-fallback { display: none; }
+  #shell-header .ppo-header-end, #shell-header .ppo-header-utilities, #shell-header .header-tools { display: contents; }
+  /* The account control stays mounted for its panel; the menu's account row opens it (P4). Its own trigger is hidden
+     and out of the keyboard order on phones. */
+  #shell-header .header-account { order: 30; flex: 0 0 0; width: 0; min-width: 0; min-height: 0; }
+  #shell-header .header-account :is(.identity-strip > div:first-child, .hosted-account-summary) {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; visibility: hidden; white-space: nowrap;
+  }
+  #shell-header .ppo-top-action { width: 44px; height: 44px; min-height: 44px; flex: none; color: #242a37; }
+  #shell-header .ppo-top-action .product-icon { width: 22px; height: 22px; }
+  #shell-header .ppo-phone-lead { display: inline-flex; order: 1; position: relative; text-decoration: none; }
+  #shell-header .ppo-phone-title { display: flex; order: 2; align-items: center; gap: 6px; flex: 1 1 auto; min-width: 0; height: 44px; margin: 0; padding: 0 0 0 4px; border: 0; border-radius: 6px; background: none; color: #242a37; font: 700 20px/26px PPOShellRoboto, Roboto, Verdana, sans-serif; text-align: left; white-space: nowrap; box-shadow: none; justify-content: flex-start; }
+  #shell-header .ppo-view-chooser { cursor: pointer; }
+  #shell-header .ppo-view-chooser:hover { background: #f0f2f6; }
+  #shell-header .ppo-view-chooser:focus-visible { outline: 2px solid #365d8b; outline-offset: -2px; }
+  #shell-header .ppo-phone-title-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  #shell-header .ppo-phone-count { flex: none; color: #596779; font-size: 16px; font-weight: 400; }
+  #shell-header .ppo-view-chooser .product-icon { flex: none; width: 16px; height: 16px; }
+  /* P3, P7: a position truncates; a record reference never does. */
+  #shell-header .ppo-phone-reference { flex: 1 0 auto; padding-left: 0; font-size: 16px; font-weight: 500; line-height: 22px; }
+  #shell-header .ppo-phone-reference.ppo-phone-position { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  #shell-header .ppo-phone-page-action { display: inline-flex; order: 3; }
+  #shell-header .ppo-conversations-action { order: 4; }
+  #shell-header .ppo-phone-filter { display: inline-flex; order: 5; position: relative; }
+  #shell-header .ppo-phone-previous { display: inline-flex; order: 6; }
+  #shell-header .ppo-phone-next { display: inline-flex; order: 7; }
+  #shell-header .ppo-phone-more { display: block; order: 8; position: relative; }
+  #shell-header .ppo-top-action:disabled { color: #b5bdc8; }
+  #shell-header[data-phone-header=record] .ppo-conversations-action { display: none; }
+  /* P4: unread notifications on the menu; P5: an applied filter. 10 px, ringed in white, as drawn. */
+  #shell-header .ppo-phone-dot { position: absolute; top: 8px; left: 28px; width: 10px; height: 10px; border-radius: 50%; background: var(--danger, #993b2a); box-shadow: 0 0 0 2px #fff; pointer-events: none; }
+  #shell-header .ppo-phone-more-panel { position: absolute; top: 48px; right: 0; z-index: 85; display: flex; flex-direction: column; min-width: 200px; padding: 6px; border: 1px solid #dce1e8; border-radius: 10px; background: #fff; box-shadow: 0 8px 24px #242a3730; }
+  #shell-header .ppo-phone-more-panel[hidden] { display: none; }
+  #shell-header .ppo-phone-more-panel button { min-height: 44px; padding: 0 12px; border: 0; border-radius: 6px; background: none; color: #242a37; font: 400 15px/20px PPOShellRoboto, Roboto, Verdana, sans-serif; text-align: left; }
+  #shell-header .ppo-phone-more-panel button:hover { background: #f0f2f6; }
+  #shell-header .ppo-phone-narrow-item, #shell-header .ppo-phone-search-filter { display: none; }
+  /* P4: the menu's own top: global search, then the account and working company. */
+  .ppo-phone-menu-top { display: flex; flex-direction: column; gap: 4px; padding: 4px 0 8px; border-bottom: 1px solid #e9edf2; }
+  .ppo-phone-menu-top .ppo-phone-menu-search { display: flex; align-items: center; gap: 10px; min-height: 44px; margin: 0; padding: 0 13px; border: 1px solid #d8dee6; border-radius: 22px; background: #f8f9fb; color: #667181; font: 400 16px/20px PPOShellRoboto, Roboto, Verdana, sans-serif; text-align: left; }
+  .ppo-phone-menu-top .ppo-phone-menu-search .product-icon { width: 18px; height: 18px; flex: none; }
+  .ppo-phone-menu-top .ppo-phone-menu-search > span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; }
+  .ppo-phone-menu-top .ppo-phone-menu-account { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 52px; padding: 0 12px; justify-content: flex-start; border: 0; background: transparent; text-align: left; }
+  .ppo-phone-menu-top .ppo-phone-menu-account .account-avatar { display: inline-flex; flex: none; }
+  .ppo-phone-menu-top .ppo-phone-menu-account > span:last-child { display: flex; flex: 1; flex-direction: column; align-items: flex-start; min-width: 0; text-align: left; }
+  .ppo-phone-menu-top .ppo-phone-menu-account strong { overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+  .ppo-phone-menu-top .ppo-phone-menu-account small { color: #596779; font-size: 12px; line-height: 16px; white-space: normal; }
+  .ppo-mobile-menu .ppo-mobile-tools button { color: #242a37; }
+}
+/* P7: at 320 px the title is 18 px and truncates first; previous and next move into More so a record reference
+   stays whole; a search page action and Filter become one Search and filter control. */
+@media (max-width: 360px) {
+  #shell-header .ppo-phone-title:not(.ppo-phone-reference) { font-size: 18px; }
+  #shell-header .ppo-phone-previous, #shell-header .ppo-phone-next, #shell-header .ppo-phone-combines { display: none; }
+  #shell-header .ppo-phone-more-panel .ppo-phone-narrow-item { display: block; }
+  #shell-header .ppo-phone-search-filter { display: inline-flex; order: 5; position: relative; }
+}

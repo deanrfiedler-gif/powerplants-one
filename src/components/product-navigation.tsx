@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
+import { accountInitials } from "./shell-account-profile";
+import { navigateWithReview } from "./navigation-intent";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
@@ -29,6 +31,10 @@ import {
 } from "../shell/navigation";
 import { localDay } from "../activities/work-view";
 import { useRecordIdentity } from "../shell/record-identity";
+import { usePhoneHeaderConfig } from "../shell/phone-header";
+import { usePlatformResource } from "./platform-resource";
+import { PhoneHeaderActions, PhoneHeaderLead, PhoneHeaderTitle, phoneMenuEvent, phoneMenuStateEvent, type PhoneHeaderModel } from "./shell-phone-header";
+import type { notificationInbox } from "../notifications/service";
 
 const subscribe = (changed: () => void) => {
   const media = window.matchMedia("(min-width: 781px)");
@@ -85,6 +91,7 @@ function ProductNavigationView({
 }) {
   const shell = useShell(),
     current = pageForPath(path);
+  const router = useRouter();
   const permitted = shell.context?.navigation ?? [];
   const workspaceId = workspaceForLocation(path, new URLSearchParams(locationQuery), shell.preview, permitted);
   const workspace = workspaces.find(w => w.id === workspaceId)!;
@@ -116,10 +123,24 @@ function ProductNavigationView({
     toggle = useRef<HTMLButtonElement>(null);
   const allowed = (item: ShellDestination) =>
     canOpen(item, permitted, shell.hosted);
+  // The phone header's menu button opens the same menu as the tab bar's More; focus returns to whichever opened it.
+  const opener = useRef<HTMLElement | null>(null);
   const close = () => {
     setMore(false);
-    toggle.current?.focus();
+    (opener.current ?? toggle.current)?.focus();
   };
+  useEffect(() => {
+    const open = (event: Event) => {
+      opener.current = (event as CustomEvent<HTMLElement>).detail;
+      openShellPanel("navigation");
+      setMore(true);
+    };
+    window.addEventListener(phoneMenuEvent, open);
+    return () => window.removeEventListener(phoneMenuEvent, open);
+  }, []);
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent(phoneMenuStateEvent, { detail: !wide && more }));
+  }, [more, wide]);
   useEffect(() => {
     if (!wide && more) dialog.current?.showModal();
     else dialog.current?.close();
@@ -141,7 +162,7 @@ function ProductNavigationView({
     const key = (event: KeyboardEvent) => {
       if (event.key === "Escape" && more) {
         setMore(false);
-        toggle.current?.focus();
+        (opener.current ?? toggle.current)?.focus();
       }
     };
     document.addEventListener("pointerdown", outside);
@@ -229,6 +250,14 @@ function ProductNavigationView({
       </Link>
     );
   };
+  // A shell utility opened from the menu: the menu closes and the header controls open the panel (shell-controls.tsx).
+  const utility = (kind: "quick" | "notifications" | "guide" | "search" | "account") => {
+    dialog.current?.close();
+    setMore(false);
+    window.dispatchEvent(new CustomEvent("ppo-shell-utility", { detail: kind }));
+  };
+  const companies = shell.context?.companies ?? [];
+  const companyName = (companies.find((c) => c.id === shell.context?.working_company_id) ?? (companies.length === 1 ? companies[0] : undefined))?.name;
   const menu = (
     <>
       <header>
@@ -242,6 +271,23 @@ function ProductNavigationView({
         </button>
       </header>
       <div className="ppo-more-body" ref={body}>
+        {/* Phone header amendment P4: on phones the menu also holds global search (at the top), the account and
+            working company, notifications, the page guide and Design & build, which leave the compact header row. */}
+        {!wide && (
+          <div className="ppo-phone-menu-top">
+            <button type="button" className="ppo-phone-menu-search" aria-label="Search Powerplants One" onClick={() => utility("search")}>
+              <ProductIcon name="search" />
+              <span>Search Powerplants One</span>
+            </button>
+            <button type="button" className="ppo-more-link ppo-phone-menu-account" aria-label="Account" onClick={() => utility("account")}>
+              <span className="account-avatar" aria-hidden="true">{accountInitials(shell.context?.display_name)}</span>
+              <span>
+                <strong>{shell.context?.display_name ?? "Account"}</strong>
+                {companyName && <small>Working company: {companyName}</small>}
+              </span>
+            </button>
+          </div>
+        )}
         {shell.error && (
           <p className="ppo-menu-notice" role="status">
             {shell.error} <button onClick={shell.reload}>Try again</button>
@@ -276,21 +322,18 @@ function ProductNavigationView({
         />
         {!wide && (
           <div className="ppo-mobile-tools">
-            {(["quick", "notifications"] as const).map((kind) => (
-              <button
-                key={kind}
-                onClick={() => {
-                  dialog.current?.close();
-                  setMore(false);
-                  window.dispatchEvent(
-                    new CustomEvent("ppo-shell-utility", { detail: kind }),
-                  );
-                }}
-              >
-                <ProductIcon name={kind === "quick" ? "plus" : "bell"} />
-                {kind === "quick" ? "Quick add" : "Notifications"}
+            {(["quick", "notifications", "guide"] as const).map((kind) => (
+              <button key={kind} onClick={() => utility(kind)}>
+                <ProductIcon name={kind === "quick" ? "plus" : kind === "guide" ? "info" : "bell"} />
+                {kind === "quick" ? "Quick add" : kind === "guide" ? "Page guide" : "Notifications"}
               </button>
             ))}
+            {shell.development && (
+              <button onClick={() => { dialog.current?.close(); setMore(false); navigateWithReview(() => router.push("/development/page-register")); }}>
+                <ProductIcon name="engineering" />
+                Design and build
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -416,6 +459,7 @@ function ProductNavigationView({
             aria-haspopup="dialog"
             aria-expanded={more}
             onClick={() => {
+              opener.current = null;
               openShellPanel("navigation");
               setMore(true);
             }}
@@ -434,6 +478,16 @@ export function ProductHeader() {
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
+  const wide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
+  const phoneConfig = usePhoneHeaderConfig();
+  // P4: a dot on the phone menu shows unread notifications. Read only on phones, where the bell has moved into the menu.
+  const inbox = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(!wide && shell.context ? "notifications" : null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    const state = (event: Event) => setMenuOpen(!!(event as CustomEvent<boolean>).detail);
+    window.addEventListener(phoneMenuStateEvent, state);
+    return () => window.removeEventListener(phoneMenuStateEvent, state);
+  }, []);
   // The breadcrumb, Page hierarchy and tab title come from route metadata (src/shell/breadcrumb.ts).
   // The rail carries the product identity and the department, so neither is repeated beside the page.
   const { label, trail, crumbs, title, hierarchy } = breadcrumb({
@@ -451,7 +505,6 @@ export function ProductHeader() {
       : page?.workspace === "service"
         ? "Service"
         : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Home");
-  const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
   // NR-17: React hoists this <title> into the head and updates it in the same commit as the route,
   // before the route announcer reads document.title.
   const tabIds =
@@ -474,11 +527,27 @@ export function ProductHeader() {
   // F13: until the shell context names the permitted tabs, hold their row so the page below
   // does not move when they arrive. A placeholder anchor (no href) takes the tabs' own height.
   const reserveTabs = !shell.context && !shell.error && tabIds.length > 0;
+  // Phone header amendment P2/P3: a list row (menu, view chooser) unless the page is a record, which shows back and
+  // its position or reference. A page that hands nothing over (src/shell/phone-header.ts) shows its title alone.
+  const last = crumbs.at(-1), owner = crumbs.length > 1 ? crumbs[0] : undefined;
+  // A record's list is its owner crumb; where that has no address, Back returns to the previous page.
+  const recordBack = { href: owner?.href, label: owner ? `Back to ${owner.label}` : "Back" };
+  const phone: PhoneHeaderModel =
+    phoneConfig?.record || last?.kind === "record"
+      ? { type: "record", reference: last?.kind === "record" ? last.label : (phoneConfig?.record?.position ?? label), back: recordBack, config: phoneConfig }
+      : {
+          type: "list",
+          title: phoneConfig?.title ?? (last?.label || label || "Powerplants One"),
+          count: phoneConfig?.count === undefined ? undefined : String(phoneConfig.count),
+          config: phoneConfig,
+        };
+  const unread = !!inbox.data && inbox.data.state !== "unavailable" && inbox.data.unread > 0;
   return (
     <>
       <title>{title}</title>
-      <header className="topbar ppo-shell-header">
-        {fertigation && <span className="ppo-phone-page-name">Priva fertigation scope</span>}
+      <header id="shell-header" className="topbar ppo-shell-header" data-phone-header={phone.type}>
+        <PhoneHeaderLead model={phone} unread={unread} menuOpen={menuOpen} />
+        <PhoneHeaderTitle model={phone} />
         <Link
           className="mobile-brand"
           href="/"
@@ -532,6 +601,8 @@ export function ProductHeader() {
         <ShellControls
           module={currentModule}
           page={label || "Application shell"}
+          phoneBefore={<PhoneHeaderActions model={phone} place="before" />}
+          phoneAfter={<PhoneHeaderActions model={phone} place="after" />}
         >
           <div className="header-tools">
             <div id="header-search" />

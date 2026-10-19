@@ -3,7 +3,7 @@ document_id: PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC
 title: Phone header amendment
 date: 2026-10-19
 owner: Dean Fiedler
-status: Owner-adopted rules (in words); Figma amendment drawn; named version, lock-in on accepted pages and the application change not done
+status: Owner-adopted rules (in words); Figma amendment drawn; application change built (draft PR #609, owner review pending); named version and lock-in on accepted pages not done
 versioning: git
 ---
 
@@ -86,7 +86,7 @@ Not done, in order (P9):
 1. Dean saves the named version "Phone header amendment — accepted"; then the File index row and icon-free captures (`docs/reference/ui/application-shell/phone-header-amendment-r01/`) are made.
 2. Lock-in: the library component `Shell / Phone header` `38:282` takes the List and Record variants on Components `1:4`, and the accepted pages' phone headers are swapped in one batch. Their toolbar and context rows stay until each page is next changed.
 3. Emails · EC-01 and Customer messages · EC-04, still being drawn in other sessions, swap their detached compact headers for the component.
-4. The application's phone header (`ProductHeader` and the phone shell in `src/components/`) changes once, in its own pull request, before the EC pages are built.
+4. The application's phone header (`ProductHeader` and the phone shell in `src/components/`) changes once, in its own pull request, before the EC pages are built. Built in draft PR #609 (19 October 2026): see the [application shell master](../design/development/components/application-shell.md#phone-header-amendment--19-october-2026) and the [measured evidence](../testing/evidence/phone-header/README.md). Owner review of the running app is pending.
 
 ## 7. Verification
 

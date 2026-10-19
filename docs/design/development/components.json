@@ -3638,6 +3638,11 @@
           "id": "conversations-top-bar",
           "label": "Conversations action, badge and narrow headers (T1c-2)",
           "description": "D1, D2, D7 (PPO-CONV-T1C-DESIGN 10): a Conversations link left of the Page guide on every page and in the phone header, for viewers who hold conversation.read; current on /conversations; a badge of unread threads (\"9+\" above nine, none at zero) from GET /api/v1/conversations/badge, re-read on focus and after any Conversations command. At 360 px and narrower the phone header keeps 4 px sides and an 18 px title and the Page guide moves into the identity menu; from 781 to 1199 px and on phones the builder's design workspace moves into the identity menu. When the builder is also present above 1200 px, the search width is capped against the remaining header width to keep equal side zones (R9). Fixtures: tests/unit/conversations-badge.test.ts, tests/http/conversations.test.ts (badge), tests/browser/conversations.spec.ts (action and badge, 320 px header), tests/ui/desktop-shell.spec.ts (both rail states, Conversations and builder, 960–1920 px)."
+        },
+        {
+          "id": "phone-header-compact",
+          "label": "Compact phone header (phone header amendment, 19 October 2026)",
+          "description": "Phones (780 px and below) show one 56 px row (Figma Shell / Phone header · compact 1530:110): a Menu button, the page or view name (a view chooser button where the page has a secondary menu, which opens that menu's sheet), then Conversations with its badge; on a record, Back and the record reference. Search, the account and working company, Notifications, Page guide and Design & build are in the menu the button opens (dialog \"More\"), with a dot on Menu for unread notifications; focus returns to Menu. At 360 px and narrower the title is 18 px and truncates first and a record reference is never truncated. A page may hand over a page action, Filter, a Choose view sheet or record navigation through usePhoneHeader (src/shell/phone-header.ts); pages that hand over nothing show the title alone. Check at 390 and 320 px in the real host: /work (view chooser), /conversations (title only), a record such as /conversations/<thread> (Back and reference), /sales/opportunities (the retained deal-search row)."
         }
       ],
       "implementation": [
@@ -3668,6 +3673,22 @@
         {
           "path": "src/components/shell-conversations.tsx",
           "symbol": "ShellConversations"
+        },
+        {
+          "path": "src/components/shell-phone-header.tsx",
+          "symbol": "PhoneHeaderLead"
+        },
+        {
+          "path": "src/components/shell-phone-header.tsx",
+          "symbol": "PhoneHeaderTitle"
+        },
+        {
+          "path": "src/components/shell-phone-header.tsx",
+          "symbol": "PhoneHeaderActions"
+        },
+        {
+          "path": "src/shell/phone-header.ts",
+          "symbol": "usePhoneHeader"
         }
       ],
       "dependencies": [
@@ -3728,7 +3749,12 @@
         "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md",
         "src/conversations/events.ts",
         "src/conversations/badge.ts",
-        "src/app/api/v1/conversations/badge/route.ts"
+        "src/app/api/v1/conversations/badge/route.ts",
+        "src/components/shell-phone-header.tsx",
+        "src/shell/phone-header.ts",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/testing/evidence/phone-header/README.md",
+        "tests/helpers/phone-menu.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3780,8 +3806,8 @@
         "route:/sales/leads"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
-      "mobile": "Shell v2: accessible icon-only navy navigation with selected background/green stripe, equal touch targets, current page heading and retained Page guide. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
-      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus. The breadcrumb's current item is marked aria-current and is never a link; its separators are hidden from screen readers.",
+      "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
+      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus. The breadcrumb's current item is marked aria-current and is never a link; its separators are hidden from screen readers. On phones the Menu button opens the More dialog (search, account, Notifications, Page guide, Design & build); closing a panel opened from it returns focus to Menu. The view chooser is a button announcing the current view; Back and Menu are the first controls in order.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
         {
@@ -4027,8 +4053,8 @@
         {
           "id": "application-shell-phone-header-amendment",
           "expected": "Phone header amendment (decision PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC, Figma page 1530:70, component set 1530:110): one compact 56 px row on phone pages; list pages show menu, view chooser and at most three icons (page action, Conversations, Filter); records show back, position or reference, previous/next and More; page guide, notifications and global search in the menu.",
-          "actual": "Rules adopted in words by Dean on 19 October 2026. The application still renders the global phone header with the page title, search, Conversations, page guide and account. The Figma library component Shell / Phone header (38:282) and the accepted pages are unchanged until the named version is saved; Calendar EC-03 is the first consumer.",
-          "action": "Dean saves the named version; lock-in swaps 38:282 and the accepted pages' headers; then one application pull request changes the shared phone header before the EC pages are built.",
+          "actual": "Built on branch feat/phone-header-compact (draft PR #609): the shared phone header is the compact 56 px row and the menu holds search, account and working company, notifications, page guide and Design & build. Measured on the running app at 390 and 320 px (docs/testing/evidence/phone-header/README.md). Pages with a secondary menu wire their menu sheet as Choose view; no page yet hands over a page action, Filter or record navigation, so those parts of the component are built but not exercised by a page, and the retained Sales deal-search row still sits under the row until that page is next changed (P9). Records that publish no identity keep a list header. Icons are Font Awesome Light where the Kit loads and local drawings otherwise. Figma component 1530:110 is still proposed until the named version is saved.",
+          "action": "Dean's review of the running app at 390 and 320 px against 1530:110 and the named Figma version; then the Figma lock-in (38:282 and the accepted pages) and each page's own change (Filter, page action, record navigation, toolbar rows).",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

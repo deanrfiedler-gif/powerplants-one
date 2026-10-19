@@ -129,6 +129,10 @@ export const shellFontAwesome = {
   down: "chevron-down",
   check: "check",
   "chevron-right": "chevron-right",
+  menu: "bars",
+  filter: "bars-filter",
+  "chevron-left": "chevron-left",
+  "chevron-up": "chevron-up",
 } satisfies Record<ShellShapeName, FontAwesomeIcon>;
 
 // src/components/product-icons.tsx: Sales, CRM, Leads and Service controls.
