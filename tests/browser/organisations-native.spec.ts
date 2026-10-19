@@ -413,7 +413,8 @@ test("CS01 phone snapshot returns focus and context; create reflows without losi
       name: "Snapshot for SYN Greenhouse Demonstration",
       exact: true,
     });
-  await trigger.click();
+  const activate = () => info.project.use.isMobile ? trigger.tap() : trigger.click();
+  await activate();
   const snapshot = page.getByRole("dialog", { name: "Organisation snapshot" });
   await expect(snapshot).toBeVisible();
   const bounds = (await snapshot.boundingBox())!;
@@ -422,7 +423,7 @@ test("CS01 phone snapshot returns focus and context; create reflows without losi
   await capture(page, info, "snapshot-390");
   await snapshot.press("Escape");
   await expect(trigger).toBeFocused();
-  await trigger.click();
+  await activate();
   await snapshot
     .getByRole("link", { name: "Open organisation", exact: true })
     .click();
