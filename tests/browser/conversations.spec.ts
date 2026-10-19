@@ -437,7 +437,10 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     // action keeps its name, badge and current state, so those are read from the hidden link there.
     const threadAction = banner.getByRole("link", { name: /^Conversations/, includeHidden: isMobile });
     if (isMobile) await expect(banner.getByRole("link", { name: /^Conversations/ })).toBeHidden();
-    await expect(threadAction).toHaveAccessibleName(unread - 1 ? `Conversations, ${unread - 1} unread` : "Conversations");
+    const expectedName = unread - 1 ? `Conversations, ${unread - 1} unread` : "Conversations";
+    // A hidden element has no computed accessible name, so on a phone the label the action carries is read directly.
+    if (isMobile) await expect(threadAction).toHaveAttribute("aria-label", expectedName);
+    else await expect(threadAction).toHaveAccessibleName(expectedName);
     await expect(threadAction).toHaveAttribute("aria-current", "page");
     if (isMobile) expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
