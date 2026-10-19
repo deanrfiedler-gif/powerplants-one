@@ -1,0 +1,32 @@
+{
+  "source": "Accepted Organisations CS-01 record and retained icon-free r01 capture manifest; no live Figma measurement call",
+  "authority": "Owner accepted D1-D7 and Q1-Q4. Proposed named version remains unsaved in the source record.",
+  "capture_viewports": {
+    "register": {"node": "1443:2652", "width": 1440, "height": 900},
+    "overview": {"node": "1443:2745", "width": 1440, "height": 1234},
+    "sales": {"node": "1445:381060", "width": 1440, "height": 1078},
+    "sales_filtered": {"node": "1449:381169", "width": 1440, "height": 900},
+    "create": {"node": "1445:381483", "width": 1440, "height": 900},
+    "tablet": {"node": "1443:3145", "width": 1024, "height": 900},
+    "phone_register": {"node": "1443:3223", "width": 390, "height": 844},
+    "phone_overview": {"node": "1443:3263", "width": 390, "height": 844},
+    "small_phone_overview": {"node": "1443:3332", "width": 320, "height": 844},
+    "loading": {"node": "1443:3400", "width": 390, "height": 844},
+    "empty": {"node": "1443:3458", "width": 390, "height": 844},
+    "unavailable": {"node": "1443:3501", "width": 390, "height": 844},
+    "service_unavailable": {"node": "1443:3537", "width": 390, "height": 844}
+  },
+  "implementation_geometry": {
+    "basis": "Native shared controls and documented adaptations; these numbers are not new measurements of the Figma nodes",
+    "secondary_menu": 240,
+    "toolbar_minimum": 60,
+    "desktop_row_and_header_minimum": 44,
+    "snapshot_desktop": 380,
+    "phone_row_minimum": 88,
+    "touch_target_minimum": 44,
+    "phone_record_horizontal_padding": 16,
+    "additional_widths_checked": [1280, 320, 720]
+  },
+  "assets": {"icons": "Existing runtime FontAwesomeGlyph/ProductIcon controls; Kit unconfigured for captures", "logo": "Existing application-shell brand asset"},
+  "limitations": "Geometry and semantics only. No artwork, private file URL, Code Connect claim, new Figma inspection or owner acceptance. Final execution results and any mismatches belong in the native evidence README."
+}

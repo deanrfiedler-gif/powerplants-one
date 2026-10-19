@@ -420,8 +420,8 @@ test("desktop directory tables and mobile lists share saved, scoped queries", as
   await expect(
     page.locator(
       info.project.use.isMobile
-        ? ".crm-directory-mobile"
-        : ".crm-directory-table",
+        ? ".org-phone-list"
+        : ".org-desktop-grid",
     ),
   ).toContainText("SYN");
   await page.screenshot({

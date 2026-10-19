@@ -1,0 +1,308 @@
+{
+  "source_head_before": "8a7db7be70af25ffa6a26b2008f32b91a5d8c187",
+  "corrected_source_commit": "785aa259",
+  "query_source_sha256": "5ac6eca127e270e0f8f5c3b5609f65f77bb2830fc7a8de90a2957b23d6d47820",
+  "fixture": "scripts/quality-load-fixture.ts",
+  "workspace_totals": {
+    "organisations": 1000,
+    "assets": 5000,
+    "appointments": 10000
+  },
+  "database": "PostgreSQL 16.15 / isolated ppo_synthetic_test",
+  "runtime": "Node 24.22.0 / Windows",
+  "samples": [
+    {
+      "name": "original",
+      "elapsed_ms": 3192.6255,
+      "reads": [
+        {
+          "reader": 0,
+          "ok": true,
+          "elapsed_ms": 2209.6283000000003,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 1,
+          "ok": true,
+          "elapsed_ms": 3007.499599999999,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 2,
+          "ok": true,
+          "elapsed_ms": 1987.621,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 3,
+          "ok": true,
+          "elapsed_ms": 2577.9323000000004,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 4,
+          "ok": true,
+          "elapsed_ms": 2030.2026000000005,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 5,
+          "ok": true,
+          "elapsed_ms": 3103.7298999999994,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 6,
+          "ok": true,
+          "elapsed_ms": 2182.0371999999998,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 7,
+          "ok": true,
+          "elapsed_ms": 2998.2272999999996,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 8,
+          "ok": true,
+          "elapsed_ms": 2558.599,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 9,
+          "ok": true,
+          "elapsed_ms": 3190.2382000000007,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        }
+      ]
+    },
+    {
+      "name": "grouped-normalized",
+      "elapsed_ms": 859.4665999999997,
+      "reads": [
+        {
+          "reader": 0,
+          "ok": true,
+          "elapsed_ms": 553.3267999999998,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 1,
+          "ok": true,
+          "elapsed_ms": 540.2422000000006,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 2,
+          "ok": true,
+          "elapsed_ms": 647.4645999999993,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 3,
+          "ok": true,
+          "elapsed_ms": 685.4736000000012,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 4,
+          "ok": true,
+          "elapsed_ms": 727.1244000000006,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 5,
+          "ok": true,
+          "elapsed_ms": 857.1836999999987,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 6,
+          "ok": true,
+          "elapsed_ms": 833.7564000000002,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 7,
+          "ok": true,
+          "elapsed_ms": 483.3036999999995,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 8,
+          "ok": true,
+          "elapsed_ms": 820.3904999999995,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        },
+        {
+          "reader": 9,
+          "ok": true,
+          "elapsed_ms": 478.33889999999974,
+          "total": 999,
+          "rows": 25,
+          "counts": {
+            "All": 999,
+            "NoSite": 996,
+            "Inactive": 1,
+            "Prospects": 1,
+            "Duplicates": 101
+          }
+        }
+      ]
+    }
+  ],
+  "limits": "One ordered local comparison on the same retained fixture; original then corrected, with retained database/OS caches. Not a CI-timeout reproduction or production latency claim. No retries or deadline changes."
+}

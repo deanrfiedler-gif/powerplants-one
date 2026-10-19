@@ -217,8 +217,8 @@ try {
     {
       name: "Customers",
       route: "/customers",
-      // The accepted directory now loads through the CRM directory read.
-      api: "/api/v1/crm/directory",
+      // CS-01 loads its rows, counts and options through the Organisations read.
+      api: "/api/v1/customers/register",
       profile: "coordinator",
     },
     {
