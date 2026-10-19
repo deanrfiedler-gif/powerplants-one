@@ -1,0 +1,11 @@
+---
+title: Marketing module scope proposal
+date: 2026-10-19
+---
+
+Dean suggested a Marketing module, noting that Powerplants' small marketing team uses Mailchimp for newsletter subscribers and that he has liked Sprout Social. Claude first recommended integrating with Mailchimp and keeping social publishing in a dedicated tool. Dean then directed building both into PPO: "I am happy with matching what those tools do, even if it would take several months of build plus permanent upkeep." The [scope proposal](../decisions/marketing-module-scope-proposal.md) (PPO-MARKETING-SCOPE-DEC) is Proposed for his decision on that basis. PPO would hold marketing consent with its evidence, separate from D-025 notice preferences; build audiences from its own records; compose and send person-approved newsletters through a delivery service from a separate sending subdomain; and compose, schedule and publish social posts to the company's own pages. Engagement would appear on People, Organisation and Lead records, with a shared content calendar. Mailchimp and the social tool stay until switch-over criteria are met. The proposal states exactly what it changes in the BP-03 marketing deferral and PAR-17, notes that social publishing has no parent requirement, compares the options on cost, deliverability, platform approval and Spam Act risk, proposes scope keys MK-01 to MK-06 without registering them, and lists questions MK-Q1 to MK-Q12. Dean's Sprout Social trial was viewed read-only at his invitation; the Mailchimp account that opened appeared to be an older account and was not reviewed.
+
+Not done: nothing is built, registered or connected; no deferral text is edited yet; vendor prices and platform approval rules are unconfirmed; the second-model review that CONTRIBUTING.md requires for owner decision papers has not happened.
+
+<!-- decision-index -->
+[Marketing module scope proposal](../decisions/marketing-module-scope-proposal.md) (PPO-MARKETING-SCOPE-DEC) proposes, for Dean's decision and following his direction to build rather than integrate, a Marketing module in which PPO owns marketing consent and audiences, sends person-approved newsletters and publishes social posts, with Mailchimp and the social tool kept until PPO meets switch-over criteria.
