@@ -49,7 +49,7 @@ Icon-free Figma captures of the Workshop builds page: [Workshop builds design r0
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [design r01](../../../reference/ui/supply-chain/workshop-builds-design-r01/README.md) captures (design compositions, not application captures) and its [decision](../../../decisions/workshop-builds-figma-design.md). A build needs a workshop build model with its migration and permissions, a released-materials read, and the MYOB send adapter under its own decision. The Booked out and Rework tabs at full size, the New build form, desktop states and the tablet record are not drawn. The named Figma version "Workshop builds — accepted" waits for Dean's yes.
+Accepted Figma design: [design r01](../../../reference/ui/supply-chain/workshop-builds-design-r01/README.md) captures (design compositions, not application captures) and its [decision](../../../decisions/workshop-builds-figma-design.md). A build needs a workshop build model with its migration and permissions, a released-materials read, and the MYOB send adapter under its own decision. The Booked out and Rework tabs at full size, the New build form, desktop states and the tablet record are not drawn. The named Figma version "Workshop builds — accepted" was saved on 19 October 2026.
 
 The draft User Guide `guide.cx.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

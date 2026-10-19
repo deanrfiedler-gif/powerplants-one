@@ -11,7 +11,7 @@ versioning: git
 
 On 19 October 2026 Dean confirmed the workshop as a full module of three pages and adopted option A: staff do the workshop's work in Powerplants One, and MYOB Acumatica stays the book of record ([workshop scope decision](workshop-settings-preferences-scope.md), WS-D2 to WS-D5). The same day he asked: "Draw the Workshop builds page (CX-02) in Figma as a proposal for my review." Claude drew the first of the three pages, Workshop builds.
 
-Dean answered the six questions on the notes card: "Regarding the questions for me, I'm happy for you to proceed based on your recommendations." He then asked for an audit and polish, and for the prototype to be played on his computer: "You can take control of my computer and play the Workshop builds prototype in Present mode first." After both, Dean accepted the design: "I accept the Workshop builds CX-02 design with your recommendations, including D1–D8 and Q1–Q6. Lock it in."
+Dean answered the six questions on the notes card: "Regarding the questions for me, I'm happy for you to proceed based on your recommendations." He then asked for an audit and polish, and for the prototype to be played on his computer: "You can take control of my computer and play the Workshop builds prototype in Present mode first." After both, Dean accepted the design: "I accept the Workshop builds CX-02 design with your recommendations, including D1–D8 and Q1–Q6. Lock it in." Dean then asked for the named version: "Yes, save the named Figma version "Workshop builds — accepted"." Claude saved it in the Figma desktop app (section 5).
 
 Scope:
 - `scope:CX-02` "Workshop assembly, testing and rework", the Workshop builds page, at `/workshop` with a build record at `/workshop/[id]` (both proposed). The other two pages, `scope:CX-02/kitting` and `scope:CX-02/bench-testing`, are not drawn.
@@ -33,7 +33,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Audit and polish; play the prototype | User decision, 19 October 2026 | Section 5 |
 | Departures D1–D8 | Accepted as recommended | Dean's acceptance, quoted above. Section 4 |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | Waits for Dean's yes (section 5) |
+| Named Figma version | User decision, 19 October 2026 | Saved as "Workshop builds — accepted" at Dean's request quoted above. Section 5 |
 | Building the page | Not decided | Section 7 |
 
 ## 2. Design reference
@@ -66,7 +66,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 19 October 2026 |
 | Decision record | This file |
-| Named version | "Workshop builds — accepted", not yet saved |
+| Named version | "Workshop builds — accepted", saved 19 October 2026 |
 
 ## 4. What the design shows
 
@@ -88,7 +88,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - Claude played both flows in Present mode in Dean's Figma desktop app. Every link worked; the phone test form's Cancel and Save result were then linked back to the list.
 - The sixteen captures are copies of the accepted frames on the "Captures (icon-free)" page at y = 312,000 (`1736:215804` to `1736:220057`). Each copy's prototype links were removed and each of its Font Awesome icon instances was swapped for `Icon/placeholder`; a check afterwards found none left. The copies added no flow starting point to the Captures page.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/supply-chain/workshop-builds-design-r01/README.md).
-- The named Figma version "Workshop builds — accepted" has not been saved; it waits for Dean's yes.
+- The named Figma version "Workshop builds — accepted" was saved on 19 October 2026 in the Figma desktop app at Dean's request: Ctrl+Alt+S, title typed and checked, Save. Claude confirmed it at the top of version history and then updated the page header and notes card.
 - Nothing is built, so there is no application or device evidence. No owner device or accessibility review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
 
 ## 6. Relationship to other records
