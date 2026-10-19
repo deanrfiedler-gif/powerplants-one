@@ -55,7 +55,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Parts | Moved to Components › Sales parts at acceptance: Calendar / Event `1511:400437` (Kind Meeting, Tentative, Private, Busy, Cancelled, Conflict × State), Calendar / Due activity `1511:400452` (To do, Overdue, Done) and Calendar / Attendee row `1511:400453`. Icon/solid/calendar-days `1511:397397` on Components › Icons for the selected Activities rail item. The phone frames use Shell / Phone header · compact `1530:110` from the Phone header amendment |
 | Prototype | Flows "EC-03 — desktop" (Week → Thursday site visit → Day with panel → Plan follow-up → Save activity → List; side menu Team availability, To do and My calendar; Day, Week and List switches) and "EC-03 — phone" (Day → Priva call → meeting sheet; "Calendar ▾" → Choose view → List; Filter → Filter panel) |
 | Story | Synthetic, as at Tue 13 Oct 2026, 09:05 AEST, Outlook synced 08:58, signed in as Jamie Park (Sales). Week Mon 12 – Fri 16 Oct. The Thursday 08:00–10:00 site visit at SYN Isolation Nursery for SYN-PPO-OPP-000026 Substrate store dosing review follows Dana Brooks' email on Emails · EC-01 ("Thursday from 08:00 works for us") and overlaps the 08:30 stand-up. The Priva supplier call is organised in Sydney (AEDT). Six activities to do, one overdue, three done this week; Plan follow-up adds "Call Dana Brooks about dosing set points", Fri 16 Oct 10:00 |
-| Retained captures | [Calendar design r01](../reference/ui/sales/calendar-design-r01/README.md): eighteen icon-free PNGs with hashes |
+| Retained captures | [Calendar design r01](../reference/ui/email-calendar/calendar-design-r01/README.md): eighteen icon-free PNGs with hashes |
 
 ## 3. Conformance declaration
 
@@ -115,7 +115,7 @@ The audit is recorded on the notes card `1516:404634`.
   - no Font Awesome instance and no visible vector outside a placeholder or the logo was left;
   - none of 1,348 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and the two flow starting points the copies brought were removed from the Captures page.
-- The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/sales/calendar-design-r01/README.md).
+- The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/email-calendar/calendar-design-r01/README.md).
 - The named Figma version "Calendar — accepted" was saved on 19 October 2026 in the Figma desktop app (Ctrl+Alt+S, title typed, Save) at Dean's request. Claude confirmed it at the top of version history, opened from the file-name menu, and then updated the page header and notes card.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
 

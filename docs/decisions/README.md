@@ -7,7 +7,13 @@
 
 [Site surveys design](site-surveys-figma-design.md) (PPO-CS08-SITE-SURVEYS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the CS-08 design: a grid register with status views, a survey record with a checks bar and six tabs, an observations table where an Unknown is never stored as zero, photo tiles shown by their original file facts, Review submission and Record reviewed handover forms that send nothing and change no estimate or design basis, and New survey with scope chips. Building it is not decided.
 
+[Quotation view tracking](quote-view-tracking.md) (PPO-QUOTE-VIEW-TRACKING-PROP) records Dean's 19 October 2026 acceptance of option B: a PPO quotation page, reached from a "View quotation" link in the sender's email. The page records views, downloads and approximate time per section without IP, device or identity, as evidence that never changes the quotation's status, with Q1–Q10 adopted as recommended. Building it is not decided.
+
 [PPO as the daily workspace, MYOB Acumatica as the book of record](ppo-workspace-myob-book-of-record.md) (PPO-ERP-OPERATING-MODEL-DEC) records Dean's 19 October 2026 direction that staff do day-to-day work in PPO across all modules while MYOB Acumatica stays the book of record, with integration principles EI-1 to EI-10; integration technology and the tenant contract remain open.
+
+[Marketing module scope proposal](marketing-module-scope-proposal.md) (PPO-MARKETING-SCOPE-DEC) proposes, for Dean's decision and following his direction to build rather than integrate, a Marketing module in which PPO owns marketing consent and audiences, sends person-approved newsletters and publishes social posts, with Mailchimp and the social tool kept until PPO meets switch-over criteria.
+
+[Emails design](emails-figma-design.md) (PPO-EC01-EMAILS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the EC-01 design: a three-pane mailbox, thread rows that show linked records, suggest-then-select linking with reasons, a link panel across every record type, private-by-default sharing of one message on one record, the mailbox status in the side menu and a simplified phone layout, with Amendment A1 adding sent email tracking. Sending stays an EC-04 proposal. Building it is not decided.
 
 [Conversations T1d design](conversations-t1d-design.md) (PPO-CONV-T1D-DESIGN) records how the record-page lists, inbox notices and My Work asks are built, and the departures for Dean's review; the [reminder proposal](conversations-reply-by-reminders.md) (PPO-CONV-REMINDERS-PROP) sets out the reply-by scheduling options for his decision.
 
