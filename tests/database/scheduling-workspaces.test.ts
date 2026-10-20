@@ -5,6 +5,7 @@ import { createProject, saveTask } from "../../src/projects/service";
 import { createEngineeringRequest } from "../../src/engineering/service";
 import { projectInput, taskInput } from "../helpers/projects";
 import { engineeringInput } from "../helpers/engineering";
+import { readChangeReview } from "../../src/scheduling/change-review";
 import { reset } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -240,4 +241,18 @@ test("change queue includes pending proposed-window requests and exact handover;
   await assert.rejects(
     decideChangeRequest(actor, requestId, { ...decision, ...base() }, "accept"),
   );
+});
+
+
+test("PL-04 combined consequences read preserves source permissions and cannot write",async()=>{
+ const actor=await p();
+ const before=(await database().query("SELECT count(*)::int AS n FROM ppo.operation_receipts")).rows[0];
+ const review=await readChangeReview(actor,id("a8"));
+ assert.equal(review.id,id("a8"));assert.ok(review.observed_at);
+ assert.ok(["Available","Unavailable"].includes(review.consequences.state));
+ await assert.rejects(readChangeReview(await p("second-company"),id("a8")));
+ await assert.rejects(readChangeReview(await p("systems"),id("a8")));
+ const limited=await readChangeReview(await p("site-observer"),id("a8"));
+ assert.equal(limited.consequences.state,"Unavailable");assert.equal(limited.consequences.pack,null);
+ assert.deepEqual((await database().query("SELECT count(*)::int AS n FROM ppo.operation_receipts")).rows[0],before);
 });

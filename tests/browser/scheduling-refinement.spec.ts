@@ -86,8 +86,7 @@ test("changes queue and selected appointment survive reload and the appointment 
 }) => {
   await identity(page);
   await page.goto("/schedule/changes?day=2031-09-22&queue=history");
-  const queue = page.locator(".scheduling-queue");
-  const buttons = queue.getByRole("button");
+  const buttons = page.locator(".changes-link:visible, .changes-phone-list button:visible");
   await expect(buttons.first()).toBeVisible();
   await buttons.last().focus();
   await page.keyboard.press("Enter");
@@ -97,11 +96,9 @@ test("changes queue and selected appointment survive reload and the appointment 
     .locator("#scheduling-review-heading")
     .textContent();
   await page.reload();
-  await expect(page.getByLabel("Queue", { exact: true })).toHaveValue(
-    "history",
-  );
+  expect(new URL(page.url()).searchParams.get("queue")).toBe("history");
   await expect(page.locator("#scheduling-review-heading")).toHaveText(heading!);
-  const link = page.getByRole("link", { name: "Open appointment controls" });
+  const link = page.getByRole("link", { name: "Open appointment", exact: true });
   const target = new URL((await link.getAttribute("href"))!, page.url());
   const back = new URL(target.searchParams.get("returnTo")!, page.url());
   expect(back.searchParams.get("queue")).toBe("history");

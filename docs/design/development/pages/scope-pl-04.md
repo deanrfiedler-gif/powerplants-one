@@ -26,7 +26,7 @@ Accepted design: the [Changes and follow-up design decision](../../../decisions/
 - **Follow-up:** owned follow-up activities with owner, due time and state, then recorded customer contact; "Record customer contact" opens the existing SV-04 control (D5). After an accepted move it is the primary action (Q4).
 - **Policy holds** stay out of Needs review and show in the planner's Needs attention band (Q2).
 - **Shell:** the proposed Conversations action sits left of the information icon.
-- Nothing new is built.
+- Implementation is in progress; owner visual review remains pending.
 
 Accepted design: the [Changes and follow-up design decision](../../../decisions/changes-follow-up-figma-design.md) of 18 October 2026, with capture 07 in [design r01](../../../reference/ui/service/changes-follow-up-design-r01/README.md).
 
@@ -34,7 +34,7 @@ Accepted design: the [Changes and follow-up design decision](../../../decisions/
 - **Published rule:** maximum visit, effective since, sites and policy version, beside a Temporary comparison form with proposed effective time, proposed maximum visit in minutes and site restriction, then Compare with bookings.
 - **Bookings requiring review:** a table of Visit, Work, Booked, Length and Effect if published, with the effect in words and the count, period start and read time above it. Each visit opens its booking in the queue.
 - The comparison changes no rule and no booking; publishing stays a separate, controlled step.
-- Nothing new is built. The saved proposal, review and publication workspace on this route is not drawn.
+- Implementation is in progress; owner visual review remains pending. The saved proposal, review and publication workspace on this route is not drawn.
 
 Keep the bounded coordination queue beside one selected appointment at 1440 x 960 and 1024 x 768. Show current/requested time, crew roles, explicit travel and versions together before a request decision. Customer commitment, dispatch/preparation consequences, owner and history remain separate.
 
@@ -99,3 +99,8 @@ Reuse the shared online journal with an opt-in receipt check for server-allocate
 Scheduling change follow-up has its own breadcrumb and retains the shared secondary-menu view, day/timezone/site/resource query contract.
 
 Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+
+
+## Accepted design implementation
+
+The PL-04 implementation covers the existing Changes and Policy impact routes. See the [Changes contract](route-schedule-changes.md) for every accepted frame ID, states, components and open questions, and the [Policy impact contract](route-schedule-policy-impact.md) for the temporary comparison and retained saved-policy workflow. Named version: **Changes and follow-up — accepted**, file **PPO - Design**, page `1326:4525`, notes `1335:3505`. [Build evidence](../../../testing/evidence/changes-follow-up-build/README.md) records execution separately from owner visual review, which remains pending.

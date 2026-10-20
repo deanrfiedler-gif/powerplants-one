@@ -308,3 +308,8 @@ ES-02 `route:/estimating/discovery/[id]/costing` reuses this family. The page-lo
 PeopleRegister uses this control on `/people` and the People view of `/contacts`. [Host fixtures](../people-native-fixtures.json) bind 1440/1024 grids, 390/320 compact phone rows and loading/empty/error/denied states; `tests/browser/people-native.spec.ts` exercises the real host. The [page contract](../pages/route-people.md) records undrawn interactions and retained legacy behaviour. Owner review stays pending; no fingerprint is copied.
 
 `SecondaryMenuFrame.phoneHeader` accepts the page action, filter, title and count and combines them with its own Choose view callback in one registration. Existing callers omit the optional prop and retain their behaviour. The shared CSS selector lists add only `#ppo-people`. The inherited 780 px phone breakpoint and tablet overlay remain visible differences from the drawn shell.
+
+
+## PL-04 consumer
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

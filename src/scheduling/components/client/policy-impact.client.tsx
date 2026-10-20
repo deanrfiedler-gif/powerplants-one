@@ -8,7 +8,6 @@ import { useSearchParams } from "next/navigation";
 import {
   Field,
   SelectField,
-  PageHeader,
   ReadState,
   Stamp,
   useResource,
@@ -16,7 +15,6 @@ import {
   type Envelope,
 } from "../../../components/business-ui";
 import { Button } from "../../../components/ui/button";
-import { SchedulingNavigation } from "./workspace-navigation.client";
 import { plannerContext, plannerZones } from "../../navigation";
 import { utcFromLocal } from "../../time";
 import {
@@ -24,10 +22,17 @@ import {
   type PolicyImpactReview,
 } from "../../policy-impact-model";
 
+import { ChangesFrame, useChangesWindow } from "./changes-frame.client";
+import { changeQueueCounts } from "../../changes-model";
+import type { ChangesWorkspace } from "../../workspace-model";
+import { RegisterTable } from "../../../components/ui/register-table";
+import { VisitTime } from "./changes-review.client";
+import "../../../app/styles/changes-follow-up.css";
+
 export function PolicyImpactScreen() {
   const { context } = useShell();
   if (!context) return <p role="status">Loading current Scheduling access…</p>;
-  return <PolicyImpactBody key={context.preference_scope}/>;
+  return <PolicyImpactBody key={context.preference_scope} />;
 }
 function PolicyImpactBody() {
   const initial = plannerContext(
@@ -39,6 +44,17 @@ function PolicyImpactBody() {
     [site, setSite] = useState(initial.site),
     [query, setQuery] = useState<string | null>(null),
     [localError, setLocalError] = useState<unknown>(null);
+  const window = useChangesWindow("/schedule/policy-impact");
+  const countQuery = new URLSearchParams(window.query);
+  if (site) countQuery.set("site_id", site);
+  else countQuery.delete("site_id");
+  const countRead = useResource<ChangesWorkspace>(
+    "schedule/changes?" + countQuery,
+  );
+  const counts =
+    !countRead.loading && !countRead.error && countRead.data
+      ? changeQueueCounts(countRead.data.items)
+      : undefined;
   const source = useResource<PolicyImpactReview>("schedule/policy-impact"),
     sites =
       useResource<Envelope<{ id: string; display_name: string }>>(
@@ -76,41 +92,52 @@ function PolicyImpactBody() {
       });
     }
   }
+  const navigationQuery = new URLSearchParams(window.search.toString());
+  if (site) navigationQuery.set("site_id", site);
+  else navigationQuery.delete("site_id");
   return (
-    <section className="scheduling-workspace">
-      <SchedulingNavigation />
-      <PageHeader
-        eyebrow="PL-04 · Policy impact"
-        title="Review a scheduling rule change"
-        description="Compare a visit-duration change, or reopen saved policy evidence under your current duty."
-      />
-      <p>
-        The temporary comparison leaves the published rule, bookings and documents unchanged.
-      </p>
-      <PolicyPublicationWorkspace />
-      <PolicyHolds />
-      <h2>Temporary scoped comparison</h2>
-      <ReadState {...source} retry={() => change(source.reload)} />
-      {policy && (
-        <>
-          <article className="scheduling-card">
-            <h2>Published rule</h2>
-            <p>
-              {policy.name} · Version {policy.version} · Maximum visit{" "}
-              {policy.max_visit_minutes} minutes
-            </p>
-            <p>
-              Valid <Stamp value={policy.effective_from} timezone={zone} /> to{" "}
-              <Stamp value={policy.effective_to} timezone={zone} /> · {zone}
-            </p>
-            <p>{policy.evidence}</p>
-            <p>
-              Other rules and the original expiry remain fixed. Travel
-              allowances are separate from visit duration.
-            </p>
-          </article>
-          <form onSubmit={analyse}>
-            <div className="scheduling-toolbar">
+    <ChangesFrame selected="policy" counts={counts} query={navigationQuery}>
+      <section className="changes-policy">
+        <header>
+          <h1>Policy impact</h1>
+          <p>
+            Compare a scheduling rule change before publishing it. This
+            temporary comparison does not change bookings.
+          </p>
+        </header>
+        <ReadState {...source} retry={() => change(source.reload)} />
+        {policy && (
+          <div className="changes-policy-cards">
+            <article>
+              <h2>Published rule</h2>
+              <strong>
+                {policy.name} · v{policy.version}
+              </strong>
+              <dl>
+                <dt>Maximum visit</dt>
+                <dd>{policy.max_visit_minutes} minutes</dd>
+                <dt>Effective from</dt>
+                <dd>
+                  <Stamp value={policy.effective_from} timezone={zone} />
+                </dd>
+                <dt>Effective to</dt>
+                <dd>
+                  <Stamp value={policy.effective_to} timezone={zone} />
+                </dd>
+                <dt>Time zone</dt>
+                <dd>{zone}</dd>
+              </dl>
+              <p>{policy.evidence}</p>
+              <p className="read-meta">
+                Other rules and the original expiry remain fixed. Travel
+                allowances are separate from visit duration.
+              </p>
+              <Button onClick={() => change(source.reload)}>
+                Refresh published rule
+              </Button>
+            </article>
+            <form onSubmit={analyse}>
+              <h2>Temporary comparison</h2>
               <Field
                 name="policy-effective"
                 label="Proposed effective time"
@@ -145,104 +172,123 @@ function PolicyImpactBody() {
               />
               {!!sites.error && (
                 <p>
-                  Site options unavailable. All results still enforce your
-                  current access.
+                  Site options unavailable. Results still enforce your current
+                  access.
                 </p>
               )}
-            </div>
-            <div className="scheduling-toolbar">
               <Button type="submit" variant="primary" busy={review.loading}>
                 Compare future bookings
               </Button>
-              <Button onClick={() => change(source.reload)}>
-                Refresh published rule
-              </Button>
-            </div>
-          </form>
-        </>
-      )}
-      <ErrorNotice error={localError} />
-      <ReadState {...review} retry={review.reload} />
-      {data?.scenario && (
-        <div aria-live="polite">
-          <h2>Bookings requiring review</h2>
-          <p role="status">
-            {data.items.length} requiring review from {data.compared} compared
-            bookings.
-          </p>
-          <p className="read-meta">
-            Read at <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
-            {data.completeness}
-          </p>
-          <p>
-            Proposed limit: {data.scenario.max_visit_minutes} minutes from{" "}
-            <Stamp value={data.scenario.effective_from} timezone={zone} />.
-            Started, completed, cancelled, proposed and differently pinned
-            visits are outside this comparison.
-          </p>
-          {!data.items.length && (
-            <p>
-              No matching bookings require review under this comparison. This is
-              not publication or dispatch approval.
-            </p>
-          )}
-          <div className="scheduling-grid">
-            {data.items.map((a) => (
-              <article className="scheduling-card" key={a.id}>
-                <h3>
-                  {a.display_number} · {a.site_name}
-                </h3>
-                <p>
-                  <Stamp value={a.start_at} timezone={a.site_timezone} /> to{" "}
-                  <Stamp value={a.end_at} timezone={a.site_timezone} /> ·{" "}
-                  {a.site_timezone}
-                </p>
-                <ul>
-                  {a.reasons.map((reason) => (
-                    <li key={reason}>{policyImpactLabels[reason]}</li>
-                  ))}
-                </ul>
-                <p>
-                  Service owner: {a.service_owner_name}. No new task has been
-                  saved.
-                </p>
-                <p>
-                  Appointment v{a.version} · Schedule v{a.schedule_version} ·
-                  Crew v{a.assignment_version}
-                </p>
-                <Link
-                  href={
-                    "/schedule/changes?" +
-                    new URLSearchParams({
-                      day: a.start_at.slice(0, 10),
-                      timezone: a.site_timezone,
-                      appointment_id: a.id,
-                    })
-                  }
-                >
-                  Review {a.display_number}
-                </Link>
-              </article>
-            ))}
+            </form>
           </div>
-          <details>
-            <summary>Comparison provenance</summary>
-            <p>
-              Published policy: {data.policy.id} · v{data.policy.version}
+        )}
+        <ErrorNotice error={localError} />
+        <ReadState {...review} retry={review.reload} />
+        {data?.scenario && (
+          <div aria-live="polite">
+            <h2>Bookings requiring review</h2>
+            <p role="status">
+              {data.items.length} requiring review from {data.compared} compared
+              bookings.
             </p>
-            <p style={{ overflowWrap: "anywhere" }}>
-              Policy hash: {data.policy.content_hash}
+            <p className="read-meta">
+              Read at <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
+              {data.completeness}
             </p>
-            <p style={{ overflowWrap: "anywhere" }}>
-              Scenario hash: {data.scenario.content_hash}
-            </p>
-            <p>
-              Hashes identify compared content. They are not a publication
-              receipt.
-            </p>
-          </details>
-        </div>
-      )}
-    </section>
+            <RegisterTable
+              caption="Bookings affected by the temporary policy comparison"
+              variant="panel"
+              empty={
+                !data.items.length && (
+                  <p>
+                    No matching bookings require review. This is not publication
+                    or dispatch approval.
+                  </p>
+                )
+              }
+            >
+              <thead>
+                <tr>
+                  {[
+                    "Visit",
+                    "Work",
+                    "Booked",
+                    "Why review",
+                    "Service owner",
+                  ].map((h) => (
+                    <th key={h} scope="col">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.items.map((a) => (
+                  <tr key={a.id}>
+                    <td>
+                      <Link
+                        href={
+                          "/schedule/changes?" +
+                          new URLSearchParams({
+                            day: initial.day,
+                            timezone: zone,
+                            ...(site ? { site_id: site } : {}),
+                            appointment_id: a.id,
+                          })
+                        }
+                      >
+                        {a.display_number}
+                      </Link>
+                    </td>
+                    <td>
+                      {a.scope_summary}
+                      <small>
+                        {a.work_order_display_number} · {a.site_name}
+                      </small>
+                    </td>
+                    <td>
+                      <VisitTime
+                        start={a.start_at}
+                        end={a.end_at}
+                        zone={zone}
+                      />
+                    </td>
+                    <td className="changes-attention">
+                      {a.reasons.map((r) => policyImpactLabels[r]).join(" · ")}
+                    </td>
+                    <td>
+                      {a.service_owner_name}
+                      <small>No new task saved</small>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </RegisterTable>
+            <details className="changes-policy-provenance">
+              <summary>Comparison provenance</summary>
+              <p>
+                Published policy: {data.policy.id} · v{data.policy.version}
+              </p>
+              <p>Policy hash: {data.policy.content_hash}</p>
+              <p>Scenario hash: {data.scenario.content_hash}</p>
+              <p>
+                Hashes identify compared content. They are not a publication
+                receipt.
+              </p>
+            </details>
+          </div>
+        )}
+        <details
+          className="changes-policy-saved"
+          open={["proposal", "review", "publication"].some((k) =>
+            window.search.has(k),
+          )}
+        >
+          <summary>Saved policy reviews, publication and holds</summary>
+          <PolicyPublicationWorkspace />
+          <PolicyHolds />
+        </details>
+      </section>
+    </ChangesFrame>
   );
 }

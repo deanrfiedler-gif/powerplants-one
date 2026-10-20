@@ -81,3 +81,14 @@ Reopen saved records retains explicit open intent when choosing another record t
 Scheduling policy impact has its own breadcrumb; review and publication duties remain separate.
 
 Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+
+
+## Accepted PL-04 composition
+
+Figma **PPO - Design**, page `1326:4525`, Policy impact frame `1333:1881` (1440 × 900), named version **Changes and follow-up — accepted**, notes `1335:3505`. [Retained capture 07](../../../reference/ui/service/changes-follow-up-design-r01/README.md) is unchanged. The live frame supplies the paired Published rule / Temporary comparison layout and ruled affected-booking register.
+
+Reuse ChangesFrame/SecondaryMenuFrame, the shared compact phone header, RegisterTable, Field/SelectField, Button, Stamp and read/error controls. At narrow widths the two cards stack and the result table owns horizontal overflow. Side-menu counts reflect the selected period/site. Policy holds alone remain outside Needs review.
+
+The saved workflow is retained under **Saved policy reviews, publication and holds**, after the comparison. Exact proposal/review/publication links open it. This placement supersedes the earlier saved-first composition; the existing command authority, immutable evidence, dedicated duties and recovery remain. Changing a temporary input removes the previous result. A result links to its exact appointment in Changes without asserting publication or dispatch approval.
+
+Unspecified: accepted tablet/phone Policy impact drawings and saved-editor artwork. Shared responsive controls apply; no new behaviour is inferred. The compact phone header is the accepted later shell amendment. [Build evidence](../../../testing/evidence/changes-follow-up-build/README.md) reports actual checks and differences. Owner visual review is pending; no review fingerprint is adopted.

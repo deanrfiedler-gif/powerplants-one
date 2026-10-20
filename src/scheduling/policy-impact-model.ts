@@ -56,6 +56,8 @@ export type PolicyImpactReview = {
     site_timezone: string;
     work_order_id: string;
     work_order_version: number;
+    work_order_display_number: string;
+    scope_summary: string;
     service_owner_id: string;
     service_owner_name: string;
     reasons: PolicyImpactReason[];

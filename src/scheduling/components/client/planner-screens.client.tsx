@@ -892,15 +892,7 @@ function CancelForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
     </section>
   );
 }
-export function RequestDecision({
-  a,
-  request,
-  onSaved,
-}: {
-  a: Appointment;
-  request: Request;
-  onSaved: () => void;
-}) {
+export function useRequestDecision(a: Appointment, request: Request, onSaved: (action: string) => void) {
   const p = useIdentity(),
     [reason, setReason] = useState(""),
     command = useCommand();
@@ -927,8 +919,20 @@ export function RequestDecision({
         body,
       )
     )
-      onSaved();
+      onSaved(action);
   }
+  return { p, reason, setReason, command, resources, policyPreparation, resourceName, decide };
+}
+export function RequestDecision({
+  a,
+  request,
+  onSaved,
+}: {
+  a: Appointment;
+  request: Request;
+  onSaved: () => void;
+}) {
+  const { p, reason, setReason, command, policyPreparation, resourceName, decide } = useRequestDecision(a, request, onSaved);
   return (
     <article className="change-request">
       <div className="planner-card-head">
@@ -1014,7 +1018,7 @@ export function AppointmentScreen({ id }: { id: string }) {
     a = resource.data?.items[0],
     [mode, setMode] = useState<
       "confirm" | "move" | "request" | "contact" | "cancel" | null
-    >(null);
+    >(() => search.get("action") === "contact" ? "contact" : search.get("action") === "move" ? "move" : null);
   const reload = useRef(resource.reload);
   useEffect(() => {
     reload.current = resource.reload;
@@ -1159,16 +1163,16 @@ export function AppointmentScreen({ id }: { id: string }) {
               Refresh saved appointment
             </button>
           </div>
-          {(mode === "confirm" || mode === "move" || mode === "request") && (
+          {!resource.loading && !resource.error && ((mode === "confirm" || mode === "move") ? a.actions.can_manage : mode === "request" && a.actions.can_request) && (
             <BookingForm
               key={`${id}:${mode}`}
               appointment={a}
-              mode={mode}
+              mode={mode as "confirm" | "move" | "request"}
               onSaved={resource.reload}
               onClose={() => setMode(null)}
             />
           )}
-          {mode === "contact" && (
+          {mode === "contact" && a.actions.can_contact && !resource.loading && !resource.error && (
             <ContactForm
               key={`${a.id}:${a.version}`}
               a={a}
@@ -2061,7 +2065,7 @@ export function PlannerScreen() {
             <>
               <PlannerPhone
                 data={data}
-                mode={mode}
+                mode={mode as "confirm" | "move" | "request"}
                 day={day}
                 days={mode === "day" ? phoneWeek : days}
                 zone={zone}
@@ -2091,7 +2095,7 @@ export function PlannerScreen() {
               <PlannerBoard
                 data={data}
                 days={days}
-                mode={mode}
+                mode={mode as "confirm" | "move" | "request"}
                 zone={zone}
                 usable={usable}
                 onDrop={drop}
