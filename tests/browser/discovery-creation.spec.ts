@@ -52,8 +52,14 @@ async function capture(page: Page, path: string) {
   // Retained captures exclude the licensed runtime glyphs. No Pro artwork is evidence.
   await page.screenshot({ path, style: ".ppo-fa, .svg-inline--fa, [data-prefix], .es02-icon, .product-icon, .shell-icon, i[class*='fa-'] { visibility: hidden !important; }" });
 }
+async function waitForCreation(page: Page) {
+  // The Windows development runtime can take longer to hydrate the shared identity shell.
+  // Wait for its actual page boundary; subsequent assertions keep their normal timeout.
+  await expect(page.locator("#ppo-estimate-wizard.es02-create-workspace")).toBeVisible({ timeout: 20_000 });
+}
 async function enter(page: Page) {
   await page.goto("/estimating/discovery/new", { waitUntil: "domcontentloaded" });
+  await waitForCreation(page);
   await page.getByRole("radio", { name: /Northbank controls expansion/ }).check();
   await page.getByRole("button", { name: "Continue to discovery", exact: true }).click();
   await expect(page.getByLabel("Included work · Q01", { exact: true })).toBeVisible();
@@ -87,6 +93,7 @@ for (const width of [1440, 1024, 390, 320]) test(`ES02 creation: choose and wrap
     await fixture(page);
     await page.setViewportSize({ width, height: width >= 781 ? 1000 : 844 });
     await page.goto("/estimating/discovery/new", { waitUntil: "domcontentloaded" });
+    await waitForCreation(page);
     await expect(page.getByRole("radio")).toHaveCount(2);
     await expect(page.getByRole("button", { name: "Continue to discovery" })).toBeDisabled();
     await page.getByRole("searchbox", { name: "Search opportunity, number or customer" }).fill("Eastvale");
@@ -104,13 +111,16 @@ test("ES02 creation: empty, denied and loading choices", async ({ page }, info) 
   const state = await fixture(page);
   await page.setViewportSize({ width: 320, height: 844 });
   state.choices = "empty"; await page.goto("/estimating/discovery/new", { waitUntil: "domcontentloaded" });
+  await waitForCreation(page);
   await expect(page.getByRole("heading", { name: "No eligible opportunities" })).toBeVisible();
   await capture(page, info.outputPath("empty.png"));
   state.choices = "denied"; await page.reload({ waitUntil: "domcontentloaded" });
+  await waitForCreation(page);
   await expect(page.getByRole("radio")).toHaveCount(0);
   await expect(page.getByText("Current access does not permit these opportunities.")).toBeVisible();
   await capture(page, info.outputPath("denied-choices.png"));
   state.choices = "loading"; await page.reload({ waitUntil: "domcontentloaded" });
+  await waitForCreation(page);
   await expect(page.getByText("Loading permitted opportunities…")).toBeVisible();
   await capture(page, info.outputPath("loading-320.png"));
 });
@@ -169,6 +179,7 @@ test("ES02 creation: busy freezes review; duplicate and denied outcomes do not c
 test("ES02 creation: direct Sales handover locks the opportunity and validation focuses an owned question", async ({ page }, info) => {
   await fixture(page);
   await page.goto(`/estimating/discovery/new?opportunity=${creationIds.opportunity}&sales_handover=${creationIds.handover}`);
+  await waitForCreation(page);
   await expect(page.getByRole("radio")).toHaveCount(0);
   await expect(page.getByLabel("Included work · Q01", { exact: true })).toHaveValue(creationContextFixture.brief!.content.included_scope);
   await expect(page.getByRole("button", { name: "Choose another opportunity", exact: true })).toHaveCount(0);
