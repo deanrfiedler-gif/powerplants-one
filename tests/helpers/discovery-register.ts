@@ -2,6 +2,8 @@ import type {
   DiscoveryRegisterData,
   DiscoveryRegisterRow,
 } from "../../src/estimating/discovery-register-model";
+const fixtureId = (kind: number, n: number) => `e2000000-0000-4000-${kind}-${String(n).padStart(12, "0")}`;
+export const discoveryOwnerIds = { "Dean Fiedler": fixtureId(8001, 1), "Jordan Kim": fixtureId(8001, 2), "Alex Nguyen": fixtureId(8001, 3) };
 // Test-only synthetic story from the live ES-02 reference; no seeded business records.
 const stories = [
   [
@@ -103,7 +105,7 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
     ]): DiscoveryRegisterRow => {
       const id = `e2000000-0000-4000-8000-${String(number).padStart(12, "0")}`;
       const options = Array.from({ length: count }, (_, i) => ({
-        id: `${id}-option-${i + 1}`,
+        id: fixtureId(8100, number * 10 + i + 1),
         label: i
           ? i === 1
             ? "Reduced scope"
@@ -111,7 +113,7 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
           : "Base scope",
         ordinal: i + 1,
         state: "Active" as const,
-        revision_id: `${id}-revision-${i ? 1 : revision}`,
+        revision_id: fixtureId(8200, number * 100 + i * 10 + (i ? 1 : revision)),
         revision: i ? 1 : revision,
         kind:
           number === 318 ? ("LegacyManual" as const) : ("Discovery" as const),
@@ -121,21 +123,21 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
         id,
         title,
         version: 1,
-        company_id: "synthetic-company",
-        opportunity_id: `opportunity-${number}`,
+        company_id: "20000000-0000-4000-8000-000000000001",
+        opportunity_id: fixtureId(8002, number),
         display_number: `SYN-PPO-OPP-${String(number).padStart(6, "0")}`,
         selected_option_id: options[0].id,
         options,
-        customer: { id: customer, name: customer },
-        owner: { id: owner, name: owner },
+        customer: { id: fixtureId(8003, ["SYN Riverbend Nursery", "SYN Isolation Nursery", "SYN Greenhouse Demonstration", "SYN Systems", "SYN Northbank Nursery"].indexOf(customer) + 1), name: customer },
+        owner: { id: discoveryOwnerIds[owner], name: owner },
         updated_at: `${changed}T05:42:00.000Z`,
         cost:
           number === 340 || number === 318
             ? { status: "NoEstimate" }
             : {
                 status: "Available",
-                estimate_id: `${id}-estimate`,
-                version_id: `${id}-estimate-version`,
+                estimate_id: fixtureId(8300, number),
+                version_id: fixtureId(8400, number),
                 version:
                   number === 326 || number === 329
                     ? 4
@@ -144,7 +146,7 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
                       : number === 337
                         ? 1
                         : 2,
-                revision_id: `${id}-revision-${[334, 329].includes(number) ? 1 : number === 326 ? 2 : revision}`,
+                revision_id: fixtureId(8200, number * 100 + ([334, 329].includes(number) ? 1 : number === 326 ? 2 : revision)),
                 revision: [334, 329].includes(number)
                   ? 1
                   : number === 326
@@ -164,7 +166,7 @@ export function discoverySnapshotFixture() {
     selected = row.options[0];
   const history = {
     items: [3, 2, 1].map((version) => ({
-      id: `${row.id}-revision-${version}`,
+      id: fixtureId(8200, 32600 + version),
       version,
       kind: "Discovery",
       scope_readiness: version === 3 ? "Incomplete" : "Complete",
@@ -217,20 +219,20 @@ export function discoverySnapshotFixture() {
     },
     summary: {
       status: "Available",
-      estimate_id: `${row.id}-estimate`,
-      estimate_version_id: `${row.id}-estimate-version`,
+      estimate_id: fixtureId(8300, 326),
+      estimate_version_id: fixtureId(8400, 326),
       version: 4,
       sell_total: "58400.00",
       currency: "AUD",
       tax_basis: "ExcludingTax",
       tax_calculated: false,
-      basis: { revision: 2, revision_id: `${row.id}-revision-2` },
+      basis: { revision: 2, revision_id: fixtureId(8200, 32602) },
     },
   };
 }
 
 export const discoveryIdentityFixture = {
-  actor_id: "Dean Fiedler",
+  actor_id: discoveryOwnerIds["Dean Fiedler"],
   workspace_id: "10000000-0000-4000-8000-000000000001",
   display_name: "Dean Fiedler",
 };

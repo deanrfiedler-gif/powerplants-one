@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import {
   discoveryFixture,
+  discoveryOwnerIds,
   discoverySnapshotFixture,
   discoveryIdentityFixture,
   discoveryShellFixture,
@@ -49,7 +50,7 @@ test("ES-02 grid, counts, filters, read-only and failure recovery", async ({
     await expect(host.locator("tbody tr")).toHaveCount(8);
     await host.getByRole("button", { name: "Estimator", exact: true }).click();
     await page.getByRole("menuitemradio", { name: "Jordan Kim" }).click();
-    await expect(page).toHaveURL(/owner=Jordan/);
+    await expect(page).toHaveURL(new RegExp(`owner=${discoveryOwnerIds["Jordan Kim"]}`));
     await expect(host.locator("tbody tr")).toHaveCount(3);
   } else {
     await expect(host.locator(".dr-phone-row")).toHaveCount(8);
@@ -126,7 +127,7 @@ for (const state of [
       ["loading", "error", "denied"].includes(state)
         ? (state as "loading" | "error" | "denied")
         : fixture,
-      state === "no-matches" ? "?view=Incomplete&owner=Jordan%20Kim" : "",
+      state === "no-matches" ? `?view=Incomplete&owner=${discoveryOwnerIds["Jordan Kim"]}` : "",
     );
     const expected = {
       loading: "Loading permitted discovery workspaces…",
