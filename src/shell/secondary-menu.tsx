@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { HeaderContent } from "../components/header-content";
-import { usePhoneHeader } from "./phone-header";
+import { usePhoneHeader, type PhoneHeaderConfig } from "./phone-header";
 import { FontAwesomeGlyph } from "../components/font-awesome";
 import { secondaryMenuFontAwesome } from "../components/font-awesome-icons";
 
@@ -92,6 +92,7 @@ export function SecondaryMenuFrame({
   message,
   children,
   presentation = "figma",
+  phoneHeader,
 }: {
   state: SecondaryMenuState;
   id: string;
@@ -105,13 +106,14 @@ export function SecondaryMenuFrame({
   // Every menu takes the accepted Shell v2 menu from Figma (v2 / Menu item, heading, strip and edge;
   // figma-shell.css). "shared" and "baseline" remain only as explicit opt-outs to the earlier menus.
   presentation?: "shared" | "baseline" | "figma";
+  phoneHeader?: Omit<PhoneHeaderConfig, "chooseView">;
 }) {
   const { docked, phone, open, toggle, closeOverlay, overlay } = state;
   // A phone has three separate menus (this one, More and Create), so its trigger says which it is.
   const label = phone ? `${name} menu` : open ? "Hide menu" : "Show menu";
   // Phone header amendment P2: on phones this menu is the page's Choose view, opened from the compact header's view
   // chooser; the header trigger below is for wider screens.
-  usePhoneHeader(phone ? { chooseView: { open: (opener) => toggle(opener), expanded: open, controls: menuId } } : null);
+  usePhoneHeader(phone ? { ...phoneHeader, chooseView: { open: (opener) => toggle(opener), expanded: open, controls: menuId } } : null);
   return (
     <section id={id} data-module-layout="full-bleed" data-menu={docked ? (open ? "docked" : "collapsed") : "overlay"} data-menu-presentation={presentation} {...attributes} aria-label={name}>
       <HeaderContent slot="menu">
