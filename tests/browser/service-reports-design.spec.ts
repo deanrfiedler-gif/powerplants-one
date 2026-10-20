@@ -66,15 +66,15 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
     ).toBeVisible();
     if (width === 1024) {
       await expect(
-        page.getByRole("button", { name: /^(Collapse|Expand) navigation$/ }),
+        page.getByRole("button", { name: /^(Collapse|Expand) primary navigation$/ }),
       ).toBeVisible();
       const collapse = page.getByRole("button", {
-        name: "Collapse navigation",
+        name: "Collapse primary navigation",
         exact: true,
       });
       if (await collapse.isVisible()) await collapse.click();
       await expect(
-        page.getByRole("button", { name: "Expand navigation", exact: true }),
+        page.getByRole("button", { name: "Expand primary navigation", exact: true }),
       ).toBeVisible();
     }
     expect(

@@ -832,6 +832,11 @@
 #ppo-reports .sv06-response-savebar .ppo-button:first-child {
   margin-right: auto;
 }
+#ppo-reports .sv06-response-savebar .ppo-button--secondary {
+  background: var(--white);
+  color: var(--ink);
+  border-color: var(--control-border);
+}
 #ppo-reports .sv06-presented {
   margin: 20px 0;
   padding: 16px;
