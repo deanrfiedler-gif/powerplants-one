@@ -12,9 +12,12 @@ The prerequisite implements [reviewed initial ownership and Sales linking](../..
 - PostgreSQL 16 isolated on loopback, database `ppo_synthetic_test`; credentials and cluster files remain outside the repository.
 - Inspected the installed `ppo.check_sales_estimating_binding()` definition and workspace/binding triggers after migration through 0109 before implementing 0113.
 - The initial private database inherited Windows-1252 encoding; seeding failed on a Unicode arrow. Recreated that disposable test database as UTF-8. This is test-environment setup, not an application migration or reported application failure.
-- A first run of the six new database cases failed in `beforeEach(reset)` with connection timeouts while Windows had less than 200 MB free memory. No case reached its assertions. A serial rerun is pending; these failures have not been attributed to the change.
+- A first run of the six new database cases failed in `beforeEach(reset)` with connection timeouts while Windows had less than 200 MB free memory. No case reached its assertions. A serial focused rerun also timed out during connection setup before assertions. These failures have not been attributed to the change.
 - `npm run typecheck` was interrupted to reduce memory pressure; it has no passing result.
-- Migration-number check passed with 0113 registered and its reservation removed. Full application checks and CI are pending.
+- Migration-number check passed with 0113 registered and its reservation removed.
+- `node --import tsx --test tests/unit/discovery-creation-contract.test.ts`: 3/3 passed (legacy canonical input, explicit no-brief review, exact accepted-source identities).
+- CI at `f0cea402`: merged-tree, documentation assurance and development-register integrity passed; application and estimating suites were still queued when inspected. This is partial CI evidence, not a full passing build.
+- Added late outbox failure rollback and missing journal evidence database cases. These remain unverified until the focused suite completes.
 
 ## Required functional proof
 
