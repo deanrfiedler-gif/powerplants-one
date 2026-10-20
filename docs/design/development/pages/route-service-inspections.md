@@ -8,7 +8,27 @@ Stable entry: `route:/service/inspections`. Scope: FI-04. Owner: Dean Fiedler. N
 
 This worktree claims the FI-03/FI-04 Inspections implementation from the owner-accepted "Inspections — accepted" design in "PPO - Design" (page `1339:4184`, notes `1345:2979`). The current user instruction authorises the build. The existing inspection commands, attempt/retest authority and online-only recovery contract remain the basis. Owner visual review remains pending.
 
-Planned changes: the inspection screen and stylesheet, bounded inspection list reads if required, page-specific UI helpers and synthetic fixtures/tests; narrow FI-03/FI-04 register, guide and component bindings; both scope/route contracts; one status fragment and generated status/build sequence. Reuse the application shell, compact phone header, secondary menu, register table, Button/ButtonLink, Field, ReadState, ErrorNotice, record tabs/dialog and recoverable commands. No migration, capability or dependency is planned. Appointment detail and My jobs remain incoming handovers; their implementation files belong to their separate claims.
+Initial plan: the inspection screen and stylesheet, bounded inspection list reads if required, page-specific UI helpers and synthetic fixtures/tests; narrow FI-03/FI-04 register, guide and component bindings; both scope/route contracts; one status fragment and generated status/build sequence. Reuse the application shell, compact phone header, secondary menu, register table, Button/ButtonLink, Field, ReadState, ErrorNotice, record tabs/dialog and recoverable commands. The initial plan excluded migrations; the attribution gap below now requires an owner instruction. No new capability or dependency is proposed. Appointment detail and My jobs remain incoming handovers; their implementation files belong to their separate claims.
+
+### Data-contract gap requiring an owner instruction
+
+Source inspection found a gap between the accepted per-reading instrument presentation (D2/D5) and current persistence. Live Figma frames `1339:4442`, `1339:317844` and `1339:317680` show insulation resistance using SYN-MEG-002 and holding torque using SYN-TW-011. The attempt's readiness bar says an instrument is named for each reading. The live notes card `1345:2979` and File index row `1396:355197` agree with the acceptance record.
+
+The built `Reading`/`ResultRow` has no instrument reference. `SaveInput.instrument_ids` and `ppo.inspection_instrument_uses` retain a set for the whole attempt. The latter's identity is `(workspace_id, attempt_id, instrument_id)`, without `check_key`. The existing submit check establishes that at least one retained instrument matches a required measurement basis; it does not establish which instrument the technician used for a particular reading. Matching type, range and unit would be inference, especially if two retained instruments share that basis. The current form selects only one instrument for the attempt.
+
+Proposed bounded extension, **not adopted or implemented**:
+
+- Retain explicit check-to-instrument links with the draft, scoped by workspace, attempt and stable check key, and referencing that attempt's retained instrument use.
+- Freeze and include those links in submitted integrity evidence. Preserve historical attempt hashes and label earlier attribution as not recorded; never backfill an inferred association.
+- Keep existing calibration-at-use and required measurement-basis checks, independent review, defect/retest authority and online-only recovery.
+- Reserve a migration only after Dean authorises the extension and the live schema has been inspected. Include populated-upgrade proofs, exact migration-ledger updates and the shared Engineering consumer's compatibility checks. Add no capability, dependency or service infrastructure.
+- Prove two checks with different instruments, two instruments with the same measurement basis, saved-draft reload, immutable submission, historical unlinked evidence and recovery of the exact original.
+
+A layout-only alternative would explicitly label instruments as retained for the attempt and defer per-reading attribution. That would be a departure from the accepted design and also requires Dean's instruction. No such departure has been adopted.
+
+D4 has a separate implementation gap: the Service command currently renders and records an output during issue. The shared `prepareBundle` already retains exact bytes before database issue, and the append-only Service event store may support a preparation record without a migration. Its proposed implementation must prove that previewed bytes are the issued bytes, stale sources refuse issue, and an uncertain preparation recovers the original. This is not a claim that a prepared-outcome flow already exists.
+
+The read-only live schema inspection on 21 October 2026 could not connect to local PostgreSQL (`ECONNREFUSED`). The findings above come from current TypeScript and the repository migration history, not a verified live schema. Application implementation is held at the user's migration stop condition. Owner visual review remains pending; the claim does not deliver the page.
 
 Reference provenance: imported working baseline `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`; native implementation starts from merged Step 6 `feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd`. Guide keys and source references remain stable.
 
