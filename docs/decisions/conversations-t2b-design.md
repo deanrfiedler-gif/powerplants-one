@@ -161,3 +161,13 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 ## 12. What this record does not do
 
 It adds no UI, route, live provider, dependency or paid model request, and does not deploy anything. It does not settle Carl's agreement (C2), the hosted demo's credential, real data, the billing owner for operational use, or the T2d model and SDK pin. Business acceptance, the cross-model review the migration and capability require, and production readiness are separate.
+
+## 13. Implementation notes
+
+Implementation choices for Dean's pull-request review; these do not amend the accepted rules or P1 to P4.
+
+- The project evidence query uses the schedule and RAID arithmetic from `projectFactsSql()` with an explicit column projection. It omits that query's action counts, action-derived attention and reader-dependent external-owner details. Project evidence versions hash the permitted aggregate facts together with the project and acceptance versions, so a changed task, RAID state or baseline changes the source version without exposing its narrative.
+- Open RAID and acceptance-stage lists each use a 20-record window, ordered by creation time and ID. A project can have more than one received sales handover, so its received deals use the same 10-record window and update-time order as opportunity evidence. Every window reports returned count, limit and whether more exist. These bounds complete the design's list-coverage rule without reading an unbounded history.
+- Source routes use existing record pages: organisations open at `/customers/:id`, Activities at `/work/:id`, and task/RAID citations at their project page. No route is added.
+- An included Activity carries `is_next_action` for the anchor deal. The comparison uses the stored next-action ID inside the snapshot; only the boolean reaches the adapter. An older or inaccessible next action does not expand the bounded Activity window.
+- AI1 section 6 excludes non-CRM narratives. Deal evidence therefore uses the existing CRM `SALES_KINDS` (`CustomerContact` and `RelationshipReview`) as well as `Internal` access class and the Activity visibility rule. Internal technical and material Activities stay outside this envelope even when the tagger can open them.
