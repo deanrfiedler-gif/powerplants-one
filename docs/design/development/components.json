@@ -337,7 +337,8 @@
         "route:/estimating/cpq",
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules",
-        "route:/estimating/rules/[id]"
+        "route:/estimating/rules/[id]",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -1681,7 +1682,8 @@
         "route:/admin/access/requests",
         "route:/admin/access/requests/[id]",
         "route:/admin/access/roles",
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -3037,7 +3039,8 @@
         "route:/admin/access/requests/[id]",
         "route:/projects",
         "scope:CS-01",
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3910,7 +3913,8 @@
         "scope:CS-01",
         "route:/products",
         "route:/sales/leads",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4455,6 +4459,11 @@
           "id": "recovery",
           "label": "Unknown / stale / denied",
           "description": "Existing original-operation recovery, stale comparison invalidation and permission removal remain authoritative."
+        },
+        {
+          "id": "costing",
+          "label": "Saved discovery costing",
+          "description": "Existing estimate proposal, saved-source comparison, stale basis, review/adopt, original-operation recovery, legacy and permission states; 1440/1024/390/320 px API-boundary fixture."
         }
       ],
       "implementation": [
@@ -4469,6 +4478,10 @@
         {
           "path": "src/components/estimation-catalogue-ui.tsx",
           "symbol": "CatalogueUpgrade"
+        },
+        {
+          "path": "src/components/discovery-costing.tsx",
+          "symbol": "DiscoveryCosting"
         }
       ],
       "dependencies": [
@@ -4477,7 +4490,12 @@
         "src/components/estimation-wizard-changes.ts",
         "docs/decisions/es02-wizard-figma-implementation.md",
         "src/components/estimation-wizard.css",
-        "scripts/es02-fixture.ts"
+        "scripts/es02-fixture.ts",
+        "src/components/discovery-costing-parts.tsx",
+        "src/components/discovery-costing-model.ts",
+        "src/components/discovery-costing.css",
+        "tests/helpers/discovery-costing-presentation.ts",
+        "tests/browser/discovery-costing-presentation.spec.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
@@ -4488,7 +4506,8 @@
       "used_on": [
         "system:theme",
         "scope:ES-02",
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Accepted Figma: shared 240/76 px rail, 380 px summary, five 48 px steps, six family filters, full-width system grid and immutable save review. Summary closes for Alternatives/Revisions.",
       "mobile": "Phone record header, equal tabs, viewed alternative, 44 px step controls, scrolling family tiles, system cards and full-page editor, summary sheet and 72 px save footer. No shell bottom tabs.",
@@ -4500,6 +4519,14 @@
           "expected": "Paired accepted Figma review across desktop, tablet and phone, including saved and dirty states.",
           "actual": "Native host implementation and synthetic fixtures; execution evidence is recorded separately. No isolated renderer or owner acceptance claimed.",
           "action": "Review matching application captures against all accepted frames; retain Q6, missing phone Alternatives/Revisions images and device/screen-reader checks as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "discovery-costing-review",
+          "expected": "Accepted Discovery costing desktop/tablet/phone states and owner review.",
+          "actual": "Page-local composition reuses shared controls; phone editor and workspace tab handovers have no dedicated accepted frames.",
+          "action": "Review the implementation evidence and open questions in the costing page contract.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

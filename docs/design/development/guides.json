@@ -38546,23 +38546,20 @@
       "title": "Discovery costing",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native saved-estimate costing workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-20",
+      "source_commit": "971ac3502f87d5ba7e093bbe37abc83e75d4fb99",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/discovery-costing/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on saved cost projection within the registered workflow.",
-            "Use Discovery costing to work towards this outcome: A selected, traceable discovery basis with owned review items.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Cost an existing saved estimate against the exact current saved discovery revision. Manual edits stay in a proposal until Review and adopt creates a successor cost version. Discovery does not generate prices."
           ],
           "steps": [],
           "rows": [],
@@ -38572,9 +38569,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use an Active selected option with Complete discovery and an existing saved estimate. Adoption requires the existing estimating edit authority and current record/source access. First costing without a saved estimate continues through the existing manual screen."
           ],
           "steps": [],
           "rows": [],
@@ -38583,60 +38578,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the exact saved discovery revision and alternative being costed.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Check the option and discovery revision in the banner. Compare Scope being costed with the saved estimate basis. Open Exact saved source to inspect snapshots and content hash. Edit the cost lines manually, then check the totals and customer wording. Select Review and adopt, give a reason and confirm the exact scope and costs."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Discovery costing · Record workspace"
-            ],
-            [
-              "This page’s focus",
-              "Saved cost projection. The task sequence below is specific to this view."
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Desktop uses the Estimating rail, Discovery workspace tabs, Pricing step, ruled scope and cost sections, a costing summary and a fixed review footer. Tablet keeps the grid inside its own horizontal scroll. Summary opens a dialog at tablet and phone widths. Alternatives and Revisions open the discovery workspace, where you choose the corresponding view. Cost types has no implemented behaviour."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Each cost line keeps description, category, quantity, unit, unit cost, unit sell, source, source date and an explicit allowance choice. A retained reviewed source opens its exact Cost sources (ES-03) revision. Free text does not become a reviewed source link. Changing source-sensitive fields removes the inherited link, as the existing command does."
           ],
           "steps": [],
           "rows": [],
@@ -38646,14 +38609,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Select a line description on desktop or Edit on a phone. Keep line in proposal applies validated edits locally; Cancel discards the editor changes. Add manual line creates a new local line; Remove line removes it from this proposal only. Pen markers compare stable line IDs and content with the current saved cost version. Search lines filters the displayed rows only."
           ],
-          "steps": [
-            "Identify the exact saved discovery revision and alternative being costed.",
-            "Review the source quantities, price/cost basis and any unknown values.",
-            "Compare options using their explicit cost versions; discovery edits do not automatically reprice or adopt an estimate basis.",
-            "Wider workflow outcome: A selected, traceable discovery basis with owned review items."
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -38661,9 +38619,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A selected, traceable discovery basis with owned review items.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Review and adopt summarises the exact basis, changed/added/removed lines, totals, wording and allowance/new-line checks. Record a reason and tick the review confirmation. Adoption uses the existing native command. A confirmed receipt opens the saved estimate. Earlier estimates and draft quotations retain their original lines and discovery basis. Commercial approval remains with Estimate review (ES-04)."
           ],
           "steps": [],
           "rows": [],
@@ -38672,45 +38628,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Incomplete discovery shows its findings and keeps saved prices unchanged. Loading is distinct from missing or zero amounts. Incomplete lines and historical unknown allowance choices show Unknown until resolved. A changed discovery, selected option or saved estimate blocks adoption while keeping the proposal. Explicitly review the current basis before continuing; this does not reprice any line."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site, growing areas, requirements, alternatives and selected scope. Follow the task sequence and check that a selected, traceable discovery basis with owned review items. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Discovery costing has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Synthetic example: an estimate has four motors, while the next discovery revision calls for six. Reviewing discovery alone leaves the four-motor price unchanged. Manually change quantity to six, inspect the calculated delta and record the adoption reason."
           ],
           "steps": [],
           "rows": [],
@@ -38719,45 +38648,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "While Adopting, editing and repeated submission are disabled. If the outcome is not confirmed, keep the page open and use Check the save outcome. Recovery checks the original operation and may retry that same idempotent request when no receipt exists. Do not start a replacement save. A legacy manual option keeps its estimate and offers a handover to branch in the workspace. Lost access removes protected costing details."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px, the shared compact header, cost cards and fixed Summary / Review and adopt footer replace the desktop grid. Edit opens a full-screen line editor. Escape closes an idle dialog and restores focus; it cannot close an adopting dialog. Costing is online only. The proposal and original-operation recovery live in this page memory; reloading or leaving can lose them, and no offline queue is provided."
           ],
           "steps": [],
           "rows": [],
@@ -38767,8 +38669,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "ES-02 owns discovery and explicit costing adoption; ES-03 owns reviewed cost sources; ES-04 owns estimate review. The page contract names the accepted Figma source and retained icon-free references. Synthetic arithmetic remains a prototype policy, not an approved operating rule."
           ],
           "steps": [],
           "rows": [],
@@ -38778,9 +38679,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide prepared for the Discovery costing implementation. Owner visual review, device/assistive-technology review, business acceptance and deployment remain separate and pending. The evidence record distinguishes API-boundary browser fixtures from native database proof."
           ],
           "steps": [],
           "rows": [],
@@ -38794,9 +38693,15 @@
         "src/app/(business)/estimating/discovery/[id]/costing/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/discovery-costing.tsx",
+        "src/components/discovery-costing-parts.tsx",
+        "src/components/discovery-costing-model.ts",
+        "src/components/discovery-costing.css",
+        "docs/decisions/discovery-costing-figma-design.md",
+        "docs/testing/evidence/discovery-costing/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Replace generic draft with saved discovery comparison, manual proposal editing, exact source links, review/adopt and original-operation recovery.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-DISCOVERY-ID-COSTING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -38807,7 +38712,8 @@
         "src/app/(business)/estimating/discovery/[id]/costing/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/discovery-costing-figma-design.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
