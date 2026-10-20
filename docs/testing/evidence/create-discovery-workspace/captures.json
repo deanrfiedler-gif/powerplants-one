@@ -122,25 +122,29 @@
       "file": "captures/choose-1024.png",
       "width": 1024,
       "height": 768,
-      "sha256": "6a7e13492d8cd80893ad095b58d240a1f93314146efeec731d376099a43eedeb"
+      "sha256": "dfafb4002dc63c530c75fd76f1b895d28c66d6515ef9b784ac071dd37518269a",
+      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
     },
     {
       "file": "captures/choose-1440.png",
       "width": 1440,
       "height": 1000,
-      "sha256": "2ceb65a82f14f85fc0d402c4db801ecf0fa3c80b94c0977d8ea8af5dcc781e70"
+      "sha256": "79d9f2ad88d63d91b8c92c75b0e10c5165c15075430dab276f950182a4a22eca",
+      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
     },
     {
       "file": "captures/choose-320.png",
       "width": 320,
       "height": 844,
-      "sha256": "d68fd2e02ec4ce4911c12d26af26ef77bc29ba6baa1ed929fff6d354d637e887"
+      "sha256": "359e92039f062e5b7038399e82f99b8036c0992f38be654781df28088bf157b4",
+      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
     },
     {
       "file": "captures/choose-390.png",
       "width": 390,
       "height": 844,
-      "sha256": "42de9d61f6ca754fb22ef6d5ee2b3cdbc5f5408373374f984c5484936757505c"
+      "sha256": "a42257322d80ea1cc61c95c6ae39b8a1d118a5f4d206c79608403c509c566e73",
+      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
     },
     {
       "file": "captures/phone-dialog-outcome-not-confirmed.png",
