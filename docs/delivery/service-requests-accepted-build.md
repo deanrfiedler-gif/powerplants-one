@@ -16,7 +16,11 @@ Dean requested implementation on 20 October 2026 of the [accepted Service reques
 4. Update the five existing scope/route page contracts and their register/guide entries, relevant consumer bindings, generated build sequence and a generated status fragment in this PR. Owner visual review remains pending.
 5. Use synthetic test fixtures. Verify queue/filter agreement, permissions, duplicate handover, revision refusal preserving entries, keyboard/focus, desktop/tablet/390/320 layouts and drawn read/form states. Run studio, lint, typecheck, unit, build, naming and foundation checks; record actual results and limitations.
 
-## Pre-build findings and question
+## Scoped backend authorisation — 20 October 2026
+
+Dean directed: “Implement both customer-statement capture and atomic triage so the page matches the accepted design. I authorise all and any scoped backend changes needed to ensure the Powerplants One app is professional as possible; keep the rest of ADR-0043 out of scope.” This resolves both questions below. Add immutable, attributed statement storage and its intent-specific command using existing ticket edit authority; extend Complete triage to save reviewed intake values and the triage transition in one transaction and one ticket revision. Migration 0112 is reserved. No later lifecycle, resolution, closure, customer commitments, Conversations or live integrations are adopted.
+
+## Earlier pre-build findings
 
 The live notes confirm D1–D6 and Q1–Q2. The working page contracts retain older proposed compositions; the 17 October accepted design supersedes those layouts. ADR-0043 remains proposed. The tablet top-bar issue Q2 is a separate shell follow-up. Sites is being refined separately in draft PR #626.
 
@@ -26,4 +30,4 @@ A second contract conflict is visible in desktop triage frame `1256:287381`: rev
 
 ## Delivery and verification
 
-Planning claim only. Implementation is paused for the two scope answers above, under Dean’s instruction to stop on a material design/contract conflict. Application changes, application verification, owner visual review and deployment are not complete.
+Implementation authorised and in progress on a successor PR to the merged planning claim #632. Application verification and owner visual review remain pending; no deployment.
