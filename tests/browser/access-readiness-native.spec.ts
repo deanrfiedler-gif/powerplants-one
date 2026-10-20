@@ -4,7 +4,7 @@ import {
   readinessId,
   readinessSite,
 } from "../helpers/access-readiness-fixture";
-const path = `/sites/${readinessSite}/readiness`;
+const path = `/sites/${readinessSite}/readiness?department=service`;
 async function fixture(page: Page, value = accessReadinessFixture()) {
   await page.route("**/api/v1/cs/Readiness?*", (route) =>
     route.fulfill({
@@ -48,8 +48,15 @@ test("CS06 accepted view families fit desktop, tablet, 390 and 320; phone sectio
     await expect(
       page.getByRole("heading", { name: "Check overview", exact: true }),
     ).toBeVisible();
+    if (width === 1024) {
+      const collapse = page.getByRole("button", {
+        name: "Collapse primary navigation",
+        exact: true,
+      });
+      if (await collapse.isVisible()) await collapse.click();
+    }
     await expect(
-      page.getByRole("heading", { name: "Readiness contact", exact: true }),
+      page.getByRole("heading", { name: "Customer confirmation", exact: true }),
     ).toBeVisible();
     expect(
       await page.evaluate(
@@ -57,6 +64,9 @@ test("CS06 accepted view families fit desktop, tablet, 390 and 320; phone sectio
       ),
     ).toBe(true);
     if (width < 781) {
+      await expect(page.locator("#shell-header")).toContainText(
+        "Access & readiness",
+      );
       expect(await page.getByRole("tab").allTextContents()).toEqual([
         "Overview",
         "Evidence",
@@ -66,6 +76,16 @@ test("CS06 accepted view families fit desktop, tablet, 390 and 320; phone sectio
         "Visit preparation",
       ]);
       await expect(page.locator(".shared-record-sticky")).toBeVisible();
+      expect(
+        (await page.locator(".shared-record-sticky").boundingBox())!.y +
+          (await page.locator(".shared-record-sticky").boundingBox())!.height,
+      ).toBeCloseTo((await page.viewportSize())!.height, 0);
+      await expect(
+        page.getByRole("navigation", {
+          name: "Mobile navigation",
+          exact: true,
+        }),
+      ).toBeHidden();
       const trigger = page
         .locator(".shared-record-sticky")
         .getByRole("button", { name: "Check again", exact: true });
@@ -73,6 +93,12 @@ test("CS06 accepted view families fit desktop, tablet, 390 and 320; phone sectio
     }
     await page.screenshot({ path: info.outputPath(`overview-${width}.png`) });
     for (const tab of ["Requirements", "Evidence", "Visit preparation"]) {
+      if (width === 1440)
+        await page.setViewportSize({
+          width,
+          height:
+            tab === "Requirements" ? 1034 : tab === "Evidence" ? 1159 : 1716,
+        });
       await page.getByRole("tab", { name: tab, exact: true }).click();
       await expect(
         page.getByRole("tab", { name: tab, exact: true }),
@@ -82,6 +108,11 @@ test("CS06 accepted view families fit desktop, tablet, 390 and 320; phone sectio
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
       ).toBe(true);
+      await page.screenshot({
+        path: info.outputPath(
+          `${tab.toLowerCase().replaceAll(" ", "-")}-${width}.png`,
+        ),
+      });
     }
     await page
       .getByRole("tab", { name: "Visit preparation", exact: true })
@@ -94,6 +125,10 @@ test("CS06 accepted view families fit desktop, tablet, 390 and 320; phone sectio
 test("CS06 evidence review sends only the exact capture and note; acknowledgement retains a reason after stale refusal", async ({
   page,
 }, info) => {
+  await page.setViewportSize({
+    width: info.project.name.startsWith("mobile") ? 390 : 1440,
+    height: info.project.name.startsWith("mobile") ? 844 : 1159,
+  });
   const f = await fixture(page);
   const sent: Record<string, unknown>[] = [];
   await page.route(
@@ -110,13 +145,14 @@ test("CS06 evidence review sends only the exact capture and note; acknowledgemen
       });
     },
   );
-  await page.goto(`${path}?view=evidence`);
+  await page.goto(`${path}&view=evidence`);
   await page
     .getByRole("button", { name: "Review evidence", exact: true })
     .click();
   await expect(
     page.getByRole("heading", { name: "Review captured evidence" }),
   ).toBeVisible();
+  await expect(page.getByLabel("Review note", { exact: true })).toBeFocused();
   await page
     .getByLabel("Review note", { exact: true })
     .fill("SYN exact capture reviewed");
@@ -137,15 +173,21 @@ test("CS06 evidence review sends only the exact capture and note; acknowledgemen
   });
   expect(sent[0]).not.toHaveProperty("content");
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Review evidence", exact: true }),
+  ).toBeFocused();
   await page
     .getByRole("tab", { name: "Visit preparation", exact: true })
     .click();
   await page
     .getByRole("button", { name: "Acknowledge this check", exact: true })
     .click();
+  await expect(page.getByLabel("Reason", { exact: true })).toBeFocused();
   await page
     .getByLabel("Reason", { exact: true })
     .fill("SYN read blocker; work remains held");
+  if (!info.project.name.startsWith("mobile"))
+    await page.setViewportSize({ width: 1440, height: 1716 });
   await page.screenshot({ path: info.outputPath("acknowledge.png") });
   await page.getByRole("button", { name: "Acknowledge", exact: true }).click();
   await expect(
@@ -169,6 +211,73 @@ test("CS06 evidence review sends only the exact capture and note; acknowledgemen
     path: info.outputPath("source-changed-refused.png"),
   });
 });
+test("CS06 saved preparation waits for the refreshed record and selects the saved visit basis", async ({
+  page,
+}) => {
+  const f = await fixture(page);
+  const previous = f.data.snapshots[0];
+  const savedCheck = {
+    ...previous,
+    id: "ec060000-0000-4000-8000-000000000008",
+    basis: {
+      content: previous.basis.content,
+      preparation: previous.basis.preparation,
+      assessment: previous.basis.assessment,
+    },
+  };
+  const refreshed = {
+    ...f.data,
+    record: { ...f.data.record, version: f.data.record.version + 1 },
+    snapshots: [savedCheck, previous],
+  };
+  let saved = false;
+  let release!: () => void;
+  const readReady = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route(`**/api/v1/cs/Readiness/${readinessId}`, async (route) => {
+    if (saved) await readReady;
+    await route.fulfill({ json: saved ? refreshed : f.data });
+  });
+  await page.route(
+    `**/api/v1/cs/Readiness/${readinessId}/actions`,
+    async (route) => {
+      const body = route.request().postDataJSON();
+      expect(body.action).toBe("prepare");
+      expect(body.appointment_id).toBeNull();
+      saved = true;
+      await route.fulfill({
+        json: { operation_id: body.operation_id, status: "Applied" },
+      });
+    },
+  );
+  await page.goto(`${path}&view=preparation`);
+  await page.getByRole("button", { name: "New check", exact: true }).click();
+  await page.getByLabel("Visit", { exact: true }).selectOption("");
+  await page
+    .getByLabel("Reason for check", { exact: true })
+    .fill("SYN unbound check");
+  await page
+    .getByRole("button", { name: "Record preparation check", exact: true })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Refreshing the saved record" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Acknowledge this check", exact: true }),
+  ).toHaveCount(0);
+  release();
+  await page
+    .getByRole("button", { name: "Acknowledge this check", exact: true })
+    .click();
+  await expect(
+    page.getByLabel("Visit to prepare", { exact: true }),
+  ).toHaveValue("");
+  await expect(
+    page.getByText("Unbound preparation — no booking", { exact: true }),
+  ).toBeVisible();
+});
+
 test("CS06 empty and changed-source frames preserve unknown, gated P4 and denied source distinctions", async ({
   page,
 }, info) => {
@@ -209,7 +318,7 @@ test("CS06 read-only access removes every mutation; failed reads offer retry", a
   const f = accessReadinessFixture();
   f.data.can_edit = false;
   await fixture(page, f);
-  await page.goto(`${path}?view=evidence`);
+  await page.goto(`${path}&view=evidence`);
   await expect(page.getByText("Read only.", { exact: false })).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Review evidence", exact: true }),

@@ -1,5 +1,11 @@
 "use client";
-import { useState, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import {
   Field,
@@ -109,6 +115,13 @@ function Facts({ rows }: { rows: [string, ReactNode][] }) {
     </dl>
   );
 }
+function useFormFocus() {
+  const form = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    form.current?.querySelector<HTMLElement>("textarea,select,input")?.focus();
+  }, []);
+  return form;
+}
 function Card({
   title,
   children,
@@ -135,7 +148,12 @@ export function AccessReadinessLanding({ siteId }: { siteId: string }) {
     true,
   );
   usePhoneHeader(
-    records.data?.items[0] ? null : { title: "Access & readiness", record: {} },
+    records.data?.items[0]
+      ? null
+      : {
+          title: "Access & readiness",
+          record: { position: "Access & readiness" },
+        },
   );
   if (records.data?.items[0])
     return (
@@ -260,6 +278,17 @@ function Loaded({
   } | null>(null);
   const [reviewingDraft, setReviewingDraft] = useState<Workspace | null>(null);
   const [notice, setNotice] = useState("");
+  const [savedFromVersion, setSavedFromVersion] = useState<number | null>(null);
+  const refreshing =
+    savedFromVersion !== null && row.version <= savedFromVersion;
+  const canEdit = data.can_edit && !refreshing;
+  const returnFocus = useRef<HTMLElement | null>(null);
+  const rememberFocus = () => {
+    returnFocus.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+  };
   const visits = data.visits;
   const checks = data.snapshots.filter(
     (s) => s.kind === "Preparation",
@@ -280,13 +309,30 @@ function Loaded({
       ? "Recheck required"
       : check.basis.assessment.status;
   const completed = () => {
+    setSavedFromVersion(row.version);
     reload();
     setNotice("Saved to the server. No authority to proceed was granted.");
+    close();
   };
   const close = () => {
-    document.getElementById("readiness-check-primary")?.focus();
+    requestAnimationFrame(() => {
+      const previous = returnFocus.current;
+      const target = previous?.isConnected
+        ? previous
+        : previous?.id
+          ? document.getElementById(previous.id)
+          : null;
+      if (target?.getClientRects().length) target.focus();
+      else
+        document
+          .querySelector<HTMLElement>(
+            "#ppo-readiness [role=tab][aria-selected=true]",
+          )
+          ?.focus();
+    });
   };
   const edit = (mode: "requirements" | "evidence" | "windows") => {
+    rememberFocus();
     setEditor({
       mode,
       row:
@@ -305,6 +351,7 @@ function Loaded({
     setView(mode);
   };
   const prepare = () => {
+    rememberFocus();
     setPreparing({ row, check, visit });
     if (view !== "preparation") setView("preparation");
   };
@@ -314,6 +361,7 @@ function Loaded({
   usePhoneHeader({
     title: "Access & readiness",
     record: {
+      position: "Access & readiness",
       more: [
         ...more,
         {
@@ -357,8 +405,13 @@ function Loaded({
       >
         Record readiness contact
       </Button>
-      {data.can_edit && (
-        <Button variant="primary" id="readiness-check-primary" type="button" onClick={prepare}>
+      {canEdit && (
+        <Button
+          variant="primary"
+          id="readiness-check-primary"
+          type="button"
+          onClick={prepare}
+        >
           Check preparation
         </Button>
       )}
@@ -384,6 +437,22 @@ function Loaded({
         />
       </RecordFactSection>
       <RecordFactSection title="Selected visit">
+        {visits.length > 0 && (
+          <SelectField
+            name="selected_visit"
+            label="Visit to prepare"
+            value={selectedId}
+            options={[
+              { id: "", display_name: "Unbound preparation checks" },
+              ...visits.map((v) => ({
+                id: v.id,
+                display_name: `${v.reference} · ${format(v.starts_at, timezone)}`,
+              })),
+            ]}
+            onChange={setVisitId}
+          />
+        )}
+        <p className="readiness-subtle">{data.visits_scope}</p>
         <Facts
           rows={[
             [
@@ -460,9 +529,8 @@ function Loaded({
       }
       meta={
         <span>
-          {String(site.name || row.name)} ·{" "}
-          {requirementsState} · {timezone} · as at{" "}
-          {format(data.observed_at, timezone)}
+          {String(site.name || row.name)} · {requirementsState} · {timezone} ·
+          as at {format(data.observed_at, timezone)}
         </span>
       }
       actions={actions}
@@ -476,6 +544,20 @@ function Loaded({
           <span>{requirementsState}</span>
           <span>Customer info: not available</span>
           <span>No authority to proceed</span>
+          <span className="readiness-phone-summary">
+            <Tag
+              warning={
+                !!content.requirements.length &&
+                status !== "Recorded preparation checks satisfied"
+              }
+            >
+              {status}
+            </Tag>
+            {check && !!content.requirements.length && (
+              <span>{check.basis.assessment.blockers.length} blockers</span>
+            )}
+            {!content.requirements.length && <span>Nothing recorded</span>}
+          </span>
         </>
       }
       facts={facts}
@@ -491,14 +573,16 @@ function Loaded({
       stickyAction={
         <>
           {menu}
-          <Button
-            variant="secondary"
-            className="secondary readiness-contact"
-            disabled
-          >
-            Record contact
-          </Button>
-          {data.can_edit && (
+          {!!content.requirements.length && (
+            <Button
+              variant="secondary"
+              className="secondary readiness-contact"
+              disabled
+            >
+              Record contact
+            </Button>
+          )}
+          {canEdit && (
             <Button
               variant="primary"
               onClick={
@@ -516,6 +600,7 @@ function Loaded({
       {notice && (
         <p role="status" className="readiness-notice">
           {notice}
+          {refreshing && " Refreshing the saved record before another action."}
         </p>
       )}
       {data.requirements_draft_access === "Restricted" && (
@@ -543,32 +628,17 @@ function Loaded({
         </p>
       )}
       <RecordPanel id="readiness" tab="overview" value={view}>
-        {visits.length > 0 && (
-          <SelectField
-            name="selected_visit"
-            label="Selected visit"
-            value={selectedId}
-            options={[
-              { id: "", display_name: "Unbound preparation checks" },
-              ...visits.map((v) => ({
-                id: v.id,
-                display_name: `${v.reference} · ${format(v.starts_at, timezone)}`,
-              })),
-            ]}
-            onChange={setVisitId}
-          />
-        )}
         <CheckOverview
           check={check}
           empty={!content.requirements.length}
           options={options}
-          canEdit={data.can_edit}
+          canEdit={canEdit}
           onPrepare={prepare}
           onEvidence={() => setView("evidence")}
           onWindows={() => setView("windows")}
           onAdd={() => edit("requirements")}
         />
-        <P4 />
+        {!!content.requirements.length && <P4 />}
         <p className="readiness-footnote">
           Readiness is specific to the selected visit and its recorded basis. A
           saved check retains its source; changes require a new check.
@@ -580,7 +650,7 @@ function Loaded({
             <h2>Requirements</h2>
             <p>{requirementsState}</p>
           </div>
-          {data.can_edit && (
+          {canEdit && (
             <Button
               variant="secondary"
               className="secondary"
@@ -607,7 +677,7 @@ function Loaded({
               statuses={{}}
             />
             {data.requirements_draft.state === "Pending" &&
-              data.can_edit &&
+              canEdit &&
               (data.requirements_draft.basis.contributors.includes(
                 data.actor_id,
               ) ? (
@@ -618,7 +688,11 @@ function Loaded({
               ) : (
                 <Button
                   variant="primary"
-                  onClick={() => setReviewingDraft(data)}
+                  id="readiness-review-requirements"
+                  onClick={() => {
+                    rememberFocus();
+                    setReviewingDraft(data);
+                  }}
                 >
                   Review requirements revision
                 </Button>
@@ -632,7 +706,10 @@ function Loaded({
               setReviewingDraft(null);
               completed();
             }}
-            onCancel={() => setReviewingDraft(null)}
+            onCancel={() => {
+              setReviewingDraft(null);
+              close();
+            }}
           />
         )}
         {editor?.mode === "requirements" && (
@@ -659,55 +736,61 @@ function Loaded({
         </p>
       </RecordPanel>
       <RecordPanel id="readiness" tab="evidence" value={view}>
-        <div className="readiness-toolbar">
-          <h2>Evidence</h2>
-          {data.can_edit && (
-            <Button
-              variant="secondary"
-              className="secondary"
-              onClick={() => edit("evidence")}
-            >
-              Add or update evidence
-            </Button>
-          )}
-        </div>
-        {!content.evidence.length && (
-          <p>
-            No evidence recorded. Capturing evidence does not independently
-            review it.
-          </p>
-        )}
-        {content.evidence.map((e) => (
-          <article className="readiness-evidence" key={e.id}>
-            <div>
-              <h3>
-                {content.requirements.find((r) => r.id === e.requirement_id)
-                  ?.title ?? "Retained evidence for a retired requirement"}
-              </h3>
-              <p>
-                {optionName(
-                  options.people,
-                  e.person_id,
-                  "Site / area evidence",
-                )}{" "}
-                · requirement rev {e.requirement_revision}
-              </p>
-              <small>
-                {e.captured_on} – {e.expires_on} · {e.source}
-              </small>
-              <p>{data.evidence_status[e.id]}</p>
-            </div>
-            {data.can_edit && (
+        <div hidden={!!review}>
+          <div className="readiness-toolbar">
+            <h2>Evidence</h2>
+            {canEdit && (
               <Button
                 variant="secondary"
                 className="secondary"
-                onClick={() => setReview({ evidence: e, row })}
+                onClick={() => edit("evidence")}
               >
-                Review evidence
+                Add or update evidence
               </Button>
             )}
-          </article>
-        ))}
+          </div>
+          {!content.evidence.length && (
+            <p>
+              No evidence recorded. Capturing evidence does not independently
+              review it.
+            </p>
+          )}
+          {content.evidence.map((e) => (
+            <article className="readiness-evidence" key={e.id}>
+              <div>
+                <h3>
+                  {content.requirements.find((r) => r.id === e.requirement_id)
+                    ?.title ?? "Retained evidence for a retired requirement"}
+                </h3>
+                <p>
+                  {optionName(
+                    options.people,
+                    e.person_id,
+                    "Site / area evidence",
+                  )}{" "}
+                  · requirement rev {e.requirement_revision}
+                </p>
+                <small>
+                  {e.captured_on} – {e.expires_on} · {e.source}
+                </small>
+                <p>{data.evidence_status[e.id]}</p>
+              </div>
+              {canEdit && (
+                <Button
+                  variant="secondary"
+                  className="secondary"
+                  id={`readiness-review-${e.id}`}
+                  onClick={() => {
+                    rememberFocus();
+                    setReview({ evidence: e, row });
+                  }}
+                >
+                  Review evidence
+                </Button>
+              )}
+            </article>
+          ))}
+        </div>
         {review && (
           <EvidenceReview
             key={review.evidence.id}
@@ -745,7 +828,7 @@ function Loaded({
           check={check}
           empty={!content.requirements.length}
           options={options}
-          canEdit={data.can_edit}
+          canEdit={canEdit}
           onPrepare={prepare}
           onEvidence={() => setView("evidence")}
           onWindows={() => setView("windows")}
@@ -755,7 +838,7 @@ function Loaded({
       <RecordPanel id="readiness" tab="windows" value={view}>
         <div className="readiness-toolbar">
           <h2>Work windows</h2>
-          {data.can_edit && (
+          {canEdit && (
             <Button
               variant="secondary"
               className="secondary"
@@ -805,9 +888,12 @@ function Loaded({
         )}
       </RecordPanel>
       <RecordPanel id="readiness" tab="preparation" value={view}>
-        <div className="readiness-toolbar">
+        <div
+          className="readiness-toolbar"
+          hidden={!!acknowledgement && !preparing}
+        >
           <h2>Visit preparation</h2>
-          {data.can_edit && (
+          {canEdit && (
             <Button variant="secondary" className="secondary" onClick={prepare}>
               New check
             </Button>
@@ -821,7 +907,8 @@ function Loaded({
             visit={preparing.visit}
             visits={visits}
             options={options}
-            onSaved={() => {
+            onSaved={(savedVisitId) => {
+              setVisitId(savedVisitId);
               setPreparing(null);
               completed();
             }}
@@ -850,11 +937,15 @@ function Loaded({
             />
           </div>
         )}
-        {!acknowledgement && !preparing && check && data.can_edit && (
+        {!acknowledgement && !preparing && check && canEdit && (
           <Button
             variant="secondary"
             className="secondary"
-            onClick={() => setAcknowledgement({ check, row })}
+            id="readiness-acknowledge"
+            onClick={() => {
+              rememberFocus();
+              setAcknowledgement({ check, row });
+            }}
           >
             Acknowledge this check
           </Button>
@@ -863,7 +954,7 @@ function Loaded({
           check={check}
           empty={!content.requirements.length}
           options={options}
-          canEdit={data.can_edit}
+          canEdit={canEdit}
           onPrepare={prepare}
           onEvidence={() => setView("evidence")}
           onWindows={() => setView("windows")}
@@ -1022,7 +1113,7 @@ function CheckOverview({
     return (
       <Card
         title="No requirements recorded"
-        status={<Tag warning>Readiness unknown</Tag>}
+        status={<Tag>Readiness unknown</Tag>}
       >
         <p>
           Add the Site and area requirements before checking visit preparation.
@@ -1031,11 +1122,38 @@ function CheckOverview({
           Nothing recorded does not mean unrestricted access. The previous
           check, if any, remains in History.
         </p>
-        {canEdit && (
-          <Button variant="secondary" className="secondary" onClick={onAdd}>
-            Add requirement
+        <div className="readiness-check-row">
+          <ProductIcon name="info" />
+          <div>
+            <strong>Requirements</strong>
+            <p>None recorded. Confirm the Site and area requirements.</p>
+          </div>
+          {canEdit && (
+            <Button
+              variant="secondary"
+              className="readiness-row-action"
+              onClick={onAdd}
+            >
+              Add requirement
+            </Button>
+          )}
+        </div>
+        <div className="readiness-check-row">
+          <ProductIcon name="info" />
+          <div>
+            <strong>Work windows</strong>
+            <p>
+              Check recorded coverage. A missing window means access is unknown.
+            </p>
+          </div>
+          <Button
+            variant="secondary"
+            className="readiness-row-action"
+            onClick={onWindows}
+          >
+            View windows
           </Button>
-        )}
+        </div>
       </Card>
     );
   if (!check)
@@ -1097,7 +1215,7 @@ function CheckOverview({
             </div>
             <Button
               variant="secondary"
-              className="secondary"
+              className="readiness-row-action"
               onClick={/window/i.test(blocker) ? onWindows : onEvidence}
             >
               {/window/i.test(blocker) ? "View windows" : "View evidence"}
@@ -1133,23 +1251,35 @@ function CheckOverview({
 }
 function P4() {
   return (
-    <Card title="Readiness contact" status={<Tag>Not available · P4</Tag>}>
-      <p>
-        Customer confirmation belongs here once readiness contact is available.
-      </p>
-      <Facts
-        rows={[
-          ["Access confirmed", "Not available"],
-          ["Required shutdown", "Not available"],
-          ["Induction", "Not available"],
-          ["Customer information", "Not available"],
-        ]}
-      />
+    <section
+      className="readiness-confirmation"
+      aria-label="Customer confirmation"
+    >
+      <div className="readiness-confirmation-title">
+        <h2>Customer confirmation</h2>
+        <span className="readiness-subtle">Gate P4 · not available</span>
+      </div>
+      <div className="readiness-card readiness-confirmation-card">
+        {[
+          "Access arranged",
+          "Power and water available",
+          "Equipment accessible",
+          "Isolation arrangements agreed",
+        ].map((title) => (
+          <div className="readiness-check-row" key={title}>
+            <ProductIcon name="info" />
+            <div>
+              <strong>{title}</strong>
+              <p>Not available until readiness contact is built.</p>
+            </div>
+          </div>
+        ))}
+      </div>
       <p className="readiness-footnote">
         Contact confirmation does not replace evidence review or grant authority
         to proceed.
       </p>
-    </Card>
+    </section>
   );
 }
 
@@ -1174,9 +1304,11 @@ function ActionForm({
 }) {
   const [reason, setReason] = useState("");
   const command = useCrmCommand(onSaved);
+  const form = useFormFocus();
   return (
     <Card title={title}>
       <form
+        ref={form}
         onSubmit={(e) => {
           e.preventDefault();
           void command.send(`cs/Readiness/${row.id}/actions`, {
@@ -1337,7 +1469,7 @@ function PreparationForm({
   visit?: Visit;
   visits: Visit[];
   options: CsOptions;
-  onSaved: () => void;
+  onSaved: (visitId: string) => void;
   onCancel: () => void;
 }) {
   const [visitId, setVisitId] = useState(initialVisit?.id ?? ""),
@@ -1349,12 +1481,14 @@ function PreparationForm({
     [starts, setStarts] = useState(check?.basis.preparation.starts_at ?? ""),
     [ends, setEnds] = useState(check?.basis.preparation.ends_at ?? ""),
     [reason, setReason] = useState("");
-  const command = useCrmCommand(onSaved),
+  const command = useCrmCommand(() => onSaved(visitId)),
     visit = visits.find((v) => v.id === visitId),
     timezone = String(options.context.timezone || "Australia/Brisbane");
+  const form = useFormFocus();
   return (
     <Card title="Check preparation">
       <form
+        ref={form}
         onSubmit={(e) => {
           e.preventDefault();
           void command.send(`cs/Readiness/${row.id}/actions`, {
@@ -1516,12 +1650,14 @@ function Acknowledgement({
   const command = useCrmCommand(onSaved),
     check = selected.check,
     p = check.basis.preparation;
+  const form = useFormFocus();
   return (
     <Card
       title="Acknowledge this check"
       status={<Tag warning>Grants nothing</Tag>}
     >
       <form
+        ref={form}
         onSubmit={(e) => {
           e.preventDefault();
           void command.send(`cs/Readiness/${selected.row.id}/actions`, {

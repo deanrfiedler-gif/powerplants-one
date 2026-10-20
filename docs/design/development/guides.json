@@ -2326,7 +2326,7 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Overview shows the selected visit’s saved check and blockers. Requirements groups the source by whole Site and area. Evidence separates capture from independent review. Work windows shows recorded dates, seasons and local times. Visit preparation records a check or acknowledges one. History retains versions and reasons."
+            "Choose Visit to prepare in the Selected visit facts; on phone, use Site details in More. The list contains up to 40 permitted visits; Schedule remains the complete register. Overview shows the selected visit’s saved check and blockers. Requirements groups the source by whole Site and area. Evidence separates capture from independent review. Work windows shows recorded dates, seasons and local times. Visit preparation records a check or acknowledges one. History retains versions and reasons."
           ],
           "steps": [],
           "headers": [],
@@ -2361,7 +2361,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "Saved to the server confirms a recorded command. Publishing requirements makes only that independently reviewed draft active. It does not review its evidence. Acknowledging a check grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
+            "Saved to the server confirms a recorded command. Further actions wait for the refreshed record; a saved preparation selects its own visit basis. Publishing requirements makes only that independently reviewed draft active. It does not review its evidence. Acknowledging a check grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
           ],
           "steps": [],
           "headers": [],
@@ -2372,7 +2372,7 @@
           "title": "States and availability",
           "paragraphs": [
             "No requirements recorded means readiness unknown. A source change keeps the old check and requires a recheck. A pending or returned requirements draft does not replace the active requirements. Read-only access removes mutation controls. Loading, unavailable, restricted and empty results are separate states.",
-            "Readiness contact (P4) is not available. Its four checks and disabled contact controls show the intended place without recording customer confirmation."
+            "Readiness contact (P4) is not available. Access arranged, Power and water available, Equipment accessible and Isolation arrangements agreed show its intended place without recording customer confirmation. The no-requirements view leads to requirements and work windows."
           ],
           "steps": [],
           "headers": [],
@@ -2404,7 +2404,7 @@
           "title": "Keyboard and smaller screens",
           "paragraphs": [
             "The shared compact phone header and sticky footer keep the page actions reachable. Overview, Evidence, Windows and History lead the phone tabs; Requirements and Visit preparation remain in the scrolling strip and More. At 320 px the gated contact action is explained in More.",
-            "Use arrow keys, Home and End in the tab strip. Tabs retain their selection in the URL. Source facts stay available below the workspace. The requirements table has its own labelled horizontal scroll region."
+            "Use arrow keys, Home and End in the tab strip. Tabs retain their selection in the URL. Source facts and the visit picker stay available through Site details below the workspace. Review forms focus the first editable control and return focus on cancellation. The requirements table has its own labelled horizontal scroll region."
           ],
           "steps": [],
           "headers": [],
@@ -64280,7 +64280,7 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Overview shows the selected visit’s saved check and blockers. Requirements groups the source by whole Site and area. Evidence separates capture from independent review. Work windows shows recorded dates, seasons and local times. Visit preparation records a check or acknowledges one. History retains versions and reasons."
+            "Choose Visit to prepare in the Selected visit facts; on phone, use Site details in More. The list contains up to 40 permitted visits; Schedule remains the complete register. Overview shows the selected visit’s saved check and blockers. Requirements groups the source by whole Site and area. Evidence separates capture from independent review. Work windows shows recorded dates, seasons and local times. Visit preparation records a check or acknowledges one. History retains versions and reasons."
           ],
           "steps": [],
           "headers": [],
@@ -64315,7 +64315,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "Saved to the server confirms a recorded command. Publishing requirements makes only that independently reviewed draft active. It does not review its evidence. Acknowledging a check grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
+            "Saved to the server confirms a recorded command. Further actions wait for the refreshed record; a saved preparation selects its own visit basis. Publishing requirements makes only that independently reviewed draft active. It does not review its evidence. Acknowledging a check grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
           ],
           "steps": [],
           "headers": [],
@@ -64326,7 +64326,7 @@
           "title": "States and availability",
           "paragraphs": [
             "No requirements recorded means readiness unknown. A source change keeps the old check and requires a recheck. A pending or returned requirements draft does not replace the active requirements. Read-only access removes mutation controls. Loading, unavailable, restricted and empty results are separate states.",
-            "Readiness contact (P4) is not available. Its four checks and disabled contact controls show the intended place without recording customer confirmation."
+            "Readiness contact (P4) is not available. Access arranged, Power and water available, Equipment accessible and Isolation arrangements agreed show its intended place without recording customer confirmation. The no-requirements view leads to requirements and work windows."
           ],
           "steps": [],
           "headers": [],
@@ -64358,7 +64358,7 @@
           "title": "Keyboard and smaller screens",
           "paragraphs": [
             "The shared compact phone header and sticky footer keep the page actions reachable. Overview, Evidence, Windows and History lead the phone tabs; Requirements and Visit preparation remain in the scrolling strip and More. At 320 px the gated contact action is explained in More.",
-            "Use arrow keys, Home and End in the tab strip. Tabs retain their selection in the URL. Source facts stay available below the workspace. The requirements table has its own labelled horizontal scroll region."
+            "Use arrow keys, Home and End in the tab strip. Tabs retain their selection in the URL. Source facts and the visit picker stay available through Site details below the workspace. Review forms focus the first editable control and return focus on cancellation. The requirements table has its own labelled horizontal scroll region."
           ],
           "steps": [],
           "headers": [],
