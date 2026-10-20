@@ -2,7 +2,7 @@
 
 <!-- versioning: git -->
 
-Scope: ES-02 Create discovery workspace, PPO-010, EST-01–EST-09. Owner: Dean Fiedler. [Draft PR #637](https://github.com/deanrfiedler-gif/powerplants-one/pull/637). This record is in progress; it does not establish business acceptance, owner visual review or deployment.
+Scope: ES-02 Create discovery workspace, PPO-010, EST-01–EST-09. Owner: Dean Fiedler. [PR #637](https://github.com/deanrfiedler-gif/powerplants-one/pull/637). This record reports executed checks; it does not establish business acceptance, owner visual review or deployment.
 
 The prerequisite implements [reviewed initial ownership and Sales linking](../../../decisions/discovery-creation-journey.md). Visual reference: Figma **PPO - Design**, **Create discovery workspace — accepted**, page `1414:356570`, review dialog `1416:2974`. UI implementation and paired visual evidence follow separately.
 
@@ -17,7 +17,9 @@ The prerequisite implements [reviewed initial ownership and Sales linking](../..
 - Migration-number check passed with 0113 registered and its reservation removed.
 - `node --import tsx --test tests/unit/discovery-creation-contract.test.ts`: 3/3 passed (legacy canonical input, explicit no-brief review, exact accepted-source identities).
 - CI at `f0cea402`: merged-tree, documentation assurance and development-register integrity passed; application and estimating suites were still queued when inspected. This is partial CI evidence, not a full passing build.
-- Added late outbox failure rollback and missing journal evidence database cases. These remain unverified until the focused suite completes.
+- Focused PostgreSQL suite at `50b55385`: 7/8 passed, including populated 0109 → 0113 upgrade, exact-source refusal, eligibility/revocation, concurrency, rollback after forced outbox failure and missing journal evidence. The remaining test compared `observed_at` across two reads; all persisted Sales state was identical. The corrected test compares every business-state field and separately checks monotonic observation time. Its focused rerun passed (1/1). All eight cases therefore have passing assertion evidence; the whole suite was not repeated after this test-only correction.
+- The local standard 120-second timeout did not stop the populated upgrade, which took 146 seconds on this Windows host. Focused rerun used 180 seconds. CI remains authoritative for its normal Linux budgets.
+- Current-head CI at `50b55385` was queued when inspected. No full CI pass is claimed.
 
 ## Required functional proof
 

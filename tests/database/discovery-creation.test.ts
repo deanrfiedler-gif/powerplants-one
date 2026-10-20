@@ -78,7 +78,10 @@ test("reviewed creation keeps creator, accepted Sales receiver and assigned esti
   assert.equal(links.length, 1); assert.equal(links[0].recorded_by, f.creator.actor_id);
   assert.equal(links[0].acceptance_event_id, input.creation!.sales_brief!.acceptance_event_id);
   assert.equal(links[0].selected_revision_id, input.revision_id);
-  assert.deepEqual(await readHandover(f.receiver, f.handover_id), before);
+  const { observed_at: beforeObserved, ...beforeState } = before;
+  const { observed_at: afterObserved, ...afterState } = await readHandover(f.receiver, f.handover_id);
+  assert.deepEqual(afterState, beforeState);
+  assert.ok(Date.parse(afterObserved) >= Date.parse(beforeObserved));
   assert.equal((await readWorkspaceSalesBriefs(f.owner, input.id)).items.length, 1);
   const revision = (await rows("SELECT * FROM ppo.estimation_revisions WHERE id=$1", [input.revision_id]))[0];
   assert.deepEqual(revision.input, input.discovery);
