@@ -1,0 +1,102 @@
+#ppo-readiness { font:14px/1.45 Roboto,sans-serif; color:var(--ink); min-width:0; }
+#ppo-readiness.shared-record { overflow:auto; }
+#ppo-readiness .shared-record-header { padding:20px 24px; }
+#ppo-readiness .shared-record-title { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+#ppo-readiness .shared-record-meta { font-size:13px; }
+#ppo-readiness .shared-record-sources { min-height:42px; padding:10px 24px; align-items:center; }
+#ppo-readiness .shared-record-fact-section h2 { font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-secondary); }
+#ppo-readiness .shared-record-fact-section { padding:18px 0; }
+#ppo-readiness .shared-record-workspace { background:var(--paper); }
+#ppo-readiness .shared-record-content { padding:24px; }
+#ppo-readiness .record-tablist { padding:0 12px; margin:0; }
+#ppo-readiness .record-tablist button { font-size:13px; min-height:44px; padding:10px 12px; }
+#ppo-readiness .record-panel { border:0; padding:0; }
+#ppo-readiness button { font:inherit; cursor:pointer; min-height:36px; padding:8px 12px; border:1px solid var(--navy); border-radius:var(--radius-control); background:var(--navy); color:var(--white); }
+#ppo-readiness button.secondary { color:var(--ink); background:var(--white); border-color:var(--line-strong); }
+#ppo-readiness button:disabled { cursor:not-allowed; opacity:.65; }
+#ppo-readiness :is(button,a,input,select,textarea,[tabindex]):focus-visible { outline:2px solid var(--navy); outline-offset:3px; }
+#ppo-readiness button.text-button { padding:0 4px; background:none; border:0; color:var(--ink); text-decoration:underline; }
+#ppo-readiness .record-tablist button { border:0; border-bottom:2px solid transparent; border-radius:0; background:var(--white); color:var(--text-secondary); }
+#ppo-readiness .record-tablist [aria-selected=true] { color:var(--ink); border-bottom-color:var(--navy); }
+#ppo-readiness .readiness-facts { margin:0; }
+#ppo-readiness .readiness-facts > div { display:grid; grid-template-columns:112px minmax(0,1fr); gap:12px; margin:12px 0; }
+#ppo-readiness .readiness-facts dt { font-size:12px; color:var(--text-secondary); text-transform:none; letter-spacing:normal; }
+#ppo-readiness .readiness-facts dd { margin:0; overflow-wrap:anywhere; }
+#ppo-readiness .readiness-card { background:var(--white); border:1px solid var(--line); border-radius:var(--radius-card); padding:16px; margin-bottom:16px; }
+#ppo-readiness .readiness-card > header { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+#ppo-readiness h2 { margin:0; font-size:16px; line-height:1.4; }
+#ppo-readiness h3 { margin:0; font-size:14px; }
+#ppo-readiness p { margin:8px 0; }
+#ppo-readiness .readiness-tag { display:inline-block; width:fit-content; flex:none; border-radius:var(--radius-control); padding:3px 7px; background:var(--neutral-surface); color:var(--neutral); font-size:11px; font-weight:600; }
+#ppo-readiness .readiness-tag-warning { background:var(--warning-surface); color:var(--warning); }
+#ppo-readiness .readiness-subtle,#ppo-readiness small,#ppo-readiness .readiness-footnote { color:var(--text-secondary); font-size:12px; }
+#ppo-readiness .readiness-footnote { padding-top:12px; border-top:1px solid var(--line-soft); }
+#ppo-readiness .readiness-check-date { font-weight:600; margin-top:14px; }
+#ppo-readiness .readiness-check-row { display:flex; align-items:flex-start; gap:10px; border-top:1px solid var(--line-soft); padding:14px 0; }
+#ppo-readiness .readiness-check-row > div { flex:1; min-width:0; }
+#ppo-readiness .readiness-check-row .product-icon { color:var(--warning); margin-top:2px; }
+#ppo-readiness .readiness-check-row p { font-size:12px; color:var(--text-secondary); margin:4px 0 0; }
+#ppo-readiness .readiness-check-row button { font-size:12px; flex:none; }
+#ppo-readiness .readiness-check-row button.readiness-row-action { color:var(--link); background:none; border:0; padding:0; min-height:44px; text-align:right; }
+#ppo-readiness .readiness-confirmation-title { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:24px 0 16px; }
+#ppo-readiness .readiness-confirmation-card { padding:0; }
+#ppo-readiness .readiness-confirmation-card .readiness-check-row { padding:12px 16px; }
+#ppo-readiness .readiness-confirmation-card .readiness-check-row:first-child { border-top:0; }
+#ppo-readiness .readiness-confirmation-card .product-icon { color:var(--neutral); }
+#ppo-readiness .readiness-phone-summary { display:none; }
+#ppo-readiness .readiness-check-row > span { font-size:12px; color:var(--text-secondary); }
+#ppo-readiness .readiness-met .product-icon { color:var(--success); }
+#ppo-readiness .readiness-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px; }
+#ppo-readiness .readiness-toolbar[hidden] { display:none; }
+#ppo-readiness .readiness-toolbar > :first-child { margin-right:auto; }
+#ppo-readiness .readiness-toolbar p { font-size:12px; color:var(--text-secondary); }
+#ppo-readiness .readiness-table-scroll { overflow:auto; margin-bottom:20px; }
+#ppo-readiness .readiness-requirements { width:100%; min-width:540px; border-collapse:collapse; font-size:12px; background:var(--white); }
+#ppo-readiness .readiness-requirements :is(th,td) { text-align:left; vertical-align:top; padding:12px; border-bottom:1px solid var(--line); }
+#ppo-readiness .readiness-requirements thead { color:var(--text-secondary); }
+#ppo-readiness .readiness-requirements th[scope=row] { width:38%; font-weight:500; font-size:14px; }
+#ppo-readiness .readiness-requirements small { display:block; font-weight:400; margin-top:5px; }
+#ppo-readiness .readiness-group th { background:var(--neutral-surface); color:var(--ink); font-size:12px; }
+#ppo-readiness .readiness-evidence { display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); padding:16px 0; margin-bottom:16px; }
+#ppo-readiness .readiness-evidence > div { min-width:0; overflow-wrap:anywhere; }
+#ppo-readiness .readiness-evidence button { flex:none; align-self:start; }
+#ppo-readiness .readiness-stale,#ppo-readiness .readiness-notice { padding:12px; background:var(--warning-surface); color:var(--warning); border-radius:var(--radius-control); margin:12px 0; }
+#ppo-readiness .readiness-stale { display:flex; align-items:start; gap:10px; }
+#ppo-readiness .readiness-form-actions { display:flex; gap:8px; margin-top:16px; }
+#ppo-readiness fieldset { border:0; padding:0; margin:12px 0; min-width:0; }
+#ppo-readiness .cs-entry { border:1px solid var(--line); padding:12px; }
+#ppo-readiness .cs-checks label { display:flex; align-items:center; gap:8px; min-height:44px; }
+#ppo-readiness .field { margin:12px 0; }
+#ppo-readiness :is(input,textarea,select) { max-width:100%; font:inherit; }
+#ppo-readiness .readiness-history { border-bottom:1px solid var(--line); padding:14px 0; }
+#ppo-readiness .crm-r38-popover { padding:0; }
+.readiness-initial { padding:24px; }
+@media (min-width:781px) and (max-width:1200px) { #ppo-readiness .shared-record-body { grid-template-columns:300px minmax(0,1fr); } #ppo-readiness .shared-record-content { padding:20px; } #ppo-readiness .shared-record-actions { max-width:45%; } }
+@media (max-width:780px) {
+  .app-frame:has(#ppo-readiness) { padding-bottom:0; }
+  .app-frame:has(#ppo-readiness) .mobile-navigation { display:none; }
+  #ppo-readiness.shared-record { font-size:14px; height:auto; overflow:visible; }
+  #ppo-readiness .shared-record-header { display:none; }
+  #ppo-readiness .shared-record-sources { padding:8px 16px; min-height:34px; font-size:11px; background:var(--white); color:var(--warning); }
+  #ppo-readiness .shared-record-sources > :not(.readiness-phone-summary) { display:none; }
+  #ppo-readiness .shared-record-sources > .readiness-phone-summary { display:flex; gap:12px; align-items:center; }
+  #ppo-readiness .shared-record-body { display:flex; flex-direction:column; }
+  #ppo-readiness .shared-record-facts { order:2; padding:0 16px 88px; }
+  #ppo-readiness .shared-record-content { padding:14px 16px; }
+  #ppo-readiness .record-tablist { padding:0; }
+  #ppo-readiness .record-tablist button { padding:12px 14px; font-size:12px; min-height:44px; }
+  #ppo-readiness .readiness-card { padding:14px; }
+  #ppo-readiness .readiness-card > header { align-items:start; flex-wrap:wrap; gap:8px; }
+  #ppo-readiness .readiness-check-row { display:grid; grid-template-columns:18px minmax(0,1fr) auto; gap:10px; }
+  #ppo-readiness .readiness-check-row > button,#ppo-readiness .readiness-check-row > span { margin-left:0; }
+  #ppo-readiness .readiness-check-row button { min-height:40px; }
+  #ppo-readiness .shared-record-sticky { position:sticky; bottom:0; display:flex; align-items:center; gap:8px; padding:12px 16px; min-height:73px; background:var(--white); z-index:3; }
+  #ppo-readiness .shared-record-sticky > button { min-height:44px; }
+  #ppo-readiness .shared-record-sticky > button:last-child { flex:1; }
+  #ppo-readiness .readiness-evidence { display:block; }
+  #ppo-readiness .readiness-evidence button { margin-top:12px; min-height:44px; }
+  #ppo-readiness :is(input,textarea,select) { font-size:16px; min-height:44px; }
+  #ppo-readiness .readiness-facts > div { grid-template-columns:96px minmax(0,1fr); }
+  #ppo-readiness .readiness-confirmation-card { padding:0; }
+}
+@media (max-width:350px) { #ppo-readiness .shared-record-sticky .readiness-contact { display:none; } #ppo-readiness .shared-record-content { padding:12px; } #ppo-readiness .readiness-card { padding:12px; } }

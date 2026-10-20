@@ -257,49 +257,24 @@ async function ensurePlan(
   );
   return id;
 }
-test("CS06 native preparation retains blockers and acknowledgement grants no authority", async ({
-  page,
-  baseURL,
-}) => {
+test("CS06 native preparation retains blockers and acknowledgement grants no authority", async ({ page, baseURL }) => {
   await ensurePlan(page, baseURL!, "Readiness");
   await page.goto(`/sites/${site}/readiness?view=preparation`);
-  await page
-    .getByLabel("Exact activity basis", { exact: true })
-    .fill("SYN Inspection");
-  await page
-    .getByLabel("Attendance starts", { exact: true })
-    .fill("2026-10-01T09:00");
-  await page
-    .getByLabel("Attendance ends", { exact: true })
-    .fill("2026-10-01T10:00");
-  await page
-    .getByLabel("Review, clarification or acknowledgement reason", {
-      exact: true,
-    })
-    .fill("SYN retain unconfirmed work window");
-  await page
-    .getByRole("button", { name: "Record action", exact: true })
-    .click();
-  await expect(
-    page
-      .locator("summary")
-      .filter({ hasText: /Preparation.*revision/ })
-      .first(),
-  ).toBeVisible();
-  await page.getByLabel("Action", { exact: true }).selectOption("acknowledge");
-  await page
-    .getByLabel("Exact retained snapshot", { exact: true })
-    .selectOption({ index: 1 });
-  await page
-    .getByLabel("Review, clarification or acknowledgement reason", {
-      exact: true,
-    })
-    .fill("SYN read the retained blockers; no work authorised");
-  await page
-    .getByRole("button", { name: "Record action", exact: true })
-    .click();
-  await expect(page.getByText(/Acknowledged/).first()).toBeVisible();
-  await expect(page.getByText(/does not authorise work/).first()).toBeVisible();
+  await page.getByRole("button", { name: "New check", exact: true }).click();
+  await page.getByLabel("Visit", { exact: true }).selectOption("");
+  await page.getByLabel("Exact activity basis", { exact: true }).fill("SYN Inspection");
+  await page.getByLabel("Attendance starts", { exact: true }).fill("2026-10-01T09:00");
+  await page.getByLabel("Attendance ends", { exact: true }).fill("2026-10-01T10:00");
+  await page.getByLabel("Reason for check", { exact: true }).fill("SYN retain unconfirmed work window");
+  await page.getByRole("button", { name: "Record preparation check", exact: true }).click();
+  await expect(page.getByRole("status").filter({hasText:"Saved to the server"})).toBeVisible();
+  await page.getByRole("button", { name: "Acknowledge this check", exact: true }).click();
+  await page.getByLabel("Reason", { exact: true }).fill("SYN read the retained blockers; no work authorised");
+  await page.getByRole("button", { name: "Acknowledge", exact: true }).click();
+  await expect(page.getByLabel("Reason", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Not granted", {exact:true}).last()).toBeVisible();
+  await page.getByRole("tab", {name:"History",exact:true}).click();
+  await expect(page.getByText("Acknowledged",{exact:true}).first()).toBeVisible();
 });
 test("CS07 native plan saves proposed visits and retains unknown context", async ({
   page,
@@ -346,6 +321,14 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
       info.project.name !== "desktop-chromium",
       "One exact viewport proof per declared width.",
     );
+    // Retain layout geometry without licensed glyph artwork in evidence.
+    await page.addInitScript(() => {
+      document.addEventListener("DOMContentLoaded", () => {
+        const style = document.createElement("style");
+        style.textContent = ".ppo-fa, svg { visibility: hidden !important; }";
+        document.head.append(style);
+      });
+    });
     await page.setViewportSize({ width, height: 960 });
     await ensurePlan(page, baseURL!, "Readiness");
     await ensurePlan(page, baseURL!, "AccountPlan");
@@ -368,7 +351,16 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
         await expect(
           page.getByRole("tab", { name: new RegExp(tab) }).first(),
         ).toBeVisible();
-      await expect(page.locator(".business-heading h1").first()).toBeVisible();
+      if (name === "readiness" && width <= 780) {
+        const phoneTitle = page.locator("#shell-header .ppo-phone-title");
+        await expect(phoneTitle).toBeVisible();
+        await expect(phoneTitle).toHaveText("Access & readiness");
+        await expect(
+          page.locator("#ppo-readiness .shared-record-header"),
+        ).toBeHidden();
+      } else {
+        await expect(page.locator(".business-heading h1").first()).toBeVisible();
+      }
       await expect(page.getByText(/^Loading permitted records/)).toHaveCount(0);
       await expect(page.locator(".business-error[role=alert]")).toHaveCount(0);
       await expect

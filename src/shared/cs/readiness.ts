@@ -85,6 +85,14 @@ export function assessPreparation(
   reviewedHashes: string[],
 ) {
   const blockers: string[] = [];
+  const checks: {
+    title: string;
+    detail: string;
+    status: "Met" | "Blocked";
+    requirement_id: string | null;
+    person_id: string | null;
+    facility_id: string | null;
+  }[] = [];
   const starts = localParts(basis.starts_at, timezone),
     ends = localParts(basis.ends_at, timezone);
   const requirements = content.requirements.filter(
@@ -94,7 +102,11 @@ export function assessPreparation(
   );
   const targets = basis.facility_ids.length ? basis.facility_ids : [null];
   for (const facility of targets)
-    if (!requirements.some((r) => r.facility_id === null || r.facility_id === facility))
+    if (
+      !requirements.some(
+        (r) => r.facility_id === null || r.facility_id === facility,
+      )
+    )
       blockers.push(
         `${facility ? `Facility ${facility}` : "Site"}: no applicable requirements recorded; readiness is unknown.`,
       );
@@ -115,13 +127,22 @@ export function assessPreparation(
           e.captured_on <= starts.date &&
           e.expires_on >= ends.date,
       );
-      if (
-        !matching.some((e) =>
-          reviewedHashes.includes(
-            createHash("sha256").update(canonical(e)).digest("hex"),
-          ),
-        )
-      )
+      const met = matching.some((e) =>
+        reviewedHashes.includes(
+          createHash("sha256").update(canonical(e)).digest("hex"),
+        ),
+      );
+      checks.push({
+        title: requirement.title,
+        detail: met
+          ? "Exact reviewed evidence covers the whole attendance interval."
+          : "Current, exact reviewed evidence is missing. Captured, expired or superseded evidence does not clear this requirement.",
+        status: met ? "Met" : "Blocked",
+        requirement_id: requirement.id,
+        person_id: person,
+        facility_id: requirement.facility_id,
+      });
+      if (!met)
         blockers.push(
           `${requirement.title}${person ? ` · visitor ${person}` : ""}: current, exact reviewed evidence is missing. Captured, expired or superseded evidence does not clear this requirement.`,
         );
@@ -144,6 +165,7 @@ export function assessPreparation(
       ? "Recheck required"
       : "Recorded preparation checks satisfied",
     blockers,
+    checks,
     work_authority: "Not granted",
     booking: "Not confirmed",
     resource_reservation: "Not made",

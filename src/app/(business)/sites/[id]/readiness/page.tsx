@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { CsLanding } from "../../../../../components/cs-workspace";
+import { AccessReadinessLanding } from "../../../../../components/access-readiness-workspace";
 export default async function Page({
   params,
 }: {
@@ -8,7 +8,7 @@ export default async function Page({
   const { id } = await params;
   return (
     <Suspense fallback={<p>Loading Site readiness…</p>}>
-      <CsLanding kind="Readiness" contextId={id} />
+      <AccessReadinessLanding siteId={id} />
     </Suspense>
   );
 }

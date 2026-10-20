@@ -2,6 +2,7 @@ import { expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import type { WireOperation, Receipt } from "../../src/offline/protocol";
 import { call } from "./quality-browser";
+import { saveReadinessWithReview } from "./readiness-publication-http";
 
 export type OfflineRow = {
   original: WireOperation;
@@ -34,7 +35,7 @@ export async function createReadiness(page: Page) {
       owner_id,
     });
   const before = await call(page, `cs/Readiness/${id}`);
-  await call(page, `cs/Readiness/${id}/save`, {
+  await saveReadinessWithReview(page.request, new URL(page.url()).origin, id, {
     ...base(),
     expected_version: before.record.version,
     name,

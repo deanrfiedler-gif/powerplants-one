@@ -4,6 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
+import { saveReadinessWithReview } from "../helpers/readiness-publication-http";
 import {
   inspectionPreparation,
   png,
@@ -190,7 +191,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     await login(request, "coordinator");
     const record = (await call(`cs/Readiness/${source.id}`)).record,
       content = inspectionPreparation();
-    await call(`cs/Readiness/${source.id}/save`, {
+    await saveReadinessWithReview(request, origin, source.id, {
       ...base(),
       expected_version: record.version,
       name: record.name,

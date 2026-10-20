@@ -245,7 +245,18 @@ export function parseContent(
       };
       if (item.expires_on < item.captured_on)
         invalid("expires_on", "Expiry must not precede capture.");
-      if (!requirements.some((r) => r.id === item.requirement_id))
+      const retained = (old as ReadinessContent | undefined)?.evidence?.find(
+        (e) => e.id === item.id,
+      );
+      if (
+        !requirements.some((r) => r.id === item.requirement_id) &&
+        !(
+          retained &&
+          Object.entries(item).every(
+            ([key, value]) => retained[key as keyof Evidence] === value,
+          )
+        )
+      )
         invalid(
           "requirement_id",
           "Retain the exact source requirement for this evidence.",
