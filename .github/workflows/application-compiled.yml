@@ -70,18 +70,26 @@ jobs:
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
-    # a project remain serial. Retained fixtures/restarts stay independent.
+    # a shard remain serial. Desktop has two native shards; mobile retains its
+    # complete project. Retained fixtures/restarts stay independent.
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - suite: browser-desktop
+          - suite: browser-desktop-1
             project: desktop-chromium
+            shard: 1/2
             timeout_minutes: 60
-            artifact_name: compiled-application-browser-desktop-evidence
+            artifact_name: compiled-application-browser-desktop-1-evidence
+          - suite: browser-desktop-2
+            project: desktop-chromium
+            shard: 2/2
+            timeout_minutes: 60
+            artifact_name: compiled-application-browser-desktop-2-evidence
           - suite: browser-mobile
             project: mobile-chromium
+            shard: 1/1
             timeout_minutes: 60
             artifact_name: compiled-application-browser-mobile-evidence
           - suite: retained
@@ -146,10 +154,11 @@ jobs:
         if: ${{ startsWith(matrix.suite, 'browser-') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_BROWSER_PROJECT: ${{ matrix.project }}
+          PPO_BROWSER_SHARD: ${{ matrix.shard }}
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/compiled-browser/results.json
         run: |
           echo "Compiled build ${{ steps.build.outputs.build_id }} for source ${PPO_SOURCE_HEAD}"
-          npx playwright test --config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --shard="$PPO_BROWSER_SHARD" --reporter=list,json
       - name: Scheduling Steps 4–5 isolated publication, recovery and hold journeys
         if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
         env:
