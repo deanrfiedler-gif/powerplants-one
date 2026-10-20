@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useIdentity } from "./business-session";
 import { denied, useCrmResource } from "./crm-state";
@@ -75,6 +75,8 @@ function Register({ query }: { query: URLSearchParams }) {
     identity = useIdentity();
   const [menuOpen, setMenuOpen] = useState(true),
     menu = useSecondaryMenu(menuOpen, setMenuOpen);
+  const snapshotOpener = useRef<HTMLElement | null>(null);
+  const closeSnapshot = () => { setSnapshot(null); requestAnimationFrame(() => snapshotOpener.current?.focus({ preventScroll: true })); };
   const [filterOpen, setFilterOpen] = useState(false),
     [snapshot, setSnapshot] = useState<string | null>(null);
   const request = query.get("opportunity_id")
@@ -320,8 +322,8 @@ function Register({ query }: { query: URLSearchParams }) {
               </Button>
               <Button
                 className="dr-more dr-icon-button"
-                aria-label="More actions are not specified"
-                title="More actions are not specified"
+                aria-label="More actions unavailable"
+                title="More actions unavailable"
                 disabled
               >
                 <Icon name="more" />
@@ -385,10 +387,10 @@ function Register({ query }: { query: URLSearchParams }) {
                           <input
                             type="checkbox"
                             disabled
-                            aria-label="Bulk selection is not specified"
+                            aria-label="Bulk actions unavailable"
                           />
                         ) : index === 11 ? (
-                          <span title="Column settings are not specified">
+                          <span title="Column settings unavailable">
                             <ShellIcon name="settings" />
                           </span>
                         ) : (
@@ -408,13 +410,13 @@ function Register({ query }: { query: URLSearchParams }) {
                             <input
                               type="checkbox"
                               disabled
-                              aria-label={`Selection is not specified for ${row.title}`}
+                              aria-label={`Selection unavailable for ${row.title}`}
                             />
                           </td>
                           <td>
                             <button
                               className="dr-title"
-                              onClick={() => setSnapshot(row.id)}
+                              onClick={(event) => { snapshotOpener.current = event.currentTarget; setSnapshot(row.id); }}
                             >
                               {row.title}
                             </button>
@@ -445,7 +447,7 @@ function Register({ query }: { query: URLSearchParams }) {
                               variant="quiet"
                               className="dr-icon-button"
                               aria-label={`Inspect ${row.title}`}
-                              onClick={() => setSnapshot(row.id)}
+                              onClick={(event) => { snapshotOpener.current = event.currentTarget; setSnapshot(row.id); }}
                             >
                               <Icon name="more" />
                             </Button>
@@ -535,7 +537,7 @@ function Register({ query }: { query: URLSearchParams }) {
               row={current}
               rows={rows}
               onSelect={setSnapshot}
-              onClose={() => setSnapshot(null)}
+              onClose={closeSnapshot}
             />
           )}
         </div>

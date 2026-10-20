@@ -62,11 +62,7 @@ export function DiscoverySnapshot({
     true,
   );
   useEffect(() => {
-    const previous = document.activeElement as HTMLElement | null;
     panel.current?.focus();
-    return () => {
-      if (previous?.isConnected) previous.focus({ preventScroll: true });
-    };
   }, []);
   const index = rows.findIndex((r) => r.id === row.id),
     option = selectedOption(row);

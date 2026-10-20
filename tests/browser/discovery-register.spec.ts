@@ -34,7 +34,7 @@ async function open(
   await page.route("**/api/v1/shell/context", (route) =>
     route.fulfill({ json: discoveryShellFixture }),
   );
-  await page.goto(`/estimating/discovery${query}`);
+  await page.goto(`/estimating/discovery${query}`, { waitUntil: "domcontentloaded" });
   await expect(
     page.getByRole("heading", { name: "Discovery register", exact: true }),
   ).toBeAttached({ timeout: 30_000 });
