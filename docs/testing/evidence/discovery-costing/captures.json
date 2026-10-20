@@ -1,0 +1,244 @@
+{
+  "scope": "ES-02",
+  "date": "2026-10-20",
+  "kind": "Synthetic application presentation evidence",
+  "owner_visual_review": "pending",
+  "private_kit_artwork": "blocked by the browser fixture",
+  "note": "Image hashes identify capture bytes only, not an owner review. Null source commit denotes the documented working-tree copy refinement. Original references are unchanged.",
+  "captures": [
+    {
+      "file": "captures/adopting.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 227742,
+      "sha256": "9686b15e60fc2133b3b681691e94de3fe41e8991cdb5aeca310640269274be27",
+      "scenario_run": "Recovery and blocked-dialog copy rerun passed",
+      "source_commit": null
+    },
+    {
+      "file": "captures/costing-1024.png",
+      "width": 1024,
+      "height": 768,
+      "bytes": 104381,
+      "sha256": "828e0fa7a491984502507081d99b1269e1f81e48ac3eb05d9f0feb5f24f76388",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/costing-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 204246,
+      "sha256": "c068eca309956780e749bb2f30f561492619bf7545dcf0d671d94525d24b0c31",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/costing-320.png",
+      "width": 320,
+      "height": 844,
+      "bytes": 54891,
+      "sha256": "5072a86fed76b217cd9a6953c6d208239cfe8e5b74993e263495969cc5726429",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/costing-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 55915,
+      "sha256": "391137c014a7c5420ae87745fb9fbd163d1ff96122da1830e9efb75c32e18643",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/denied.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 170955,
+      "sha256": "a3b0adecf914d7bb1e41ef119f46fdadf455a43e2c9c200dcdcd8ea6298b7d78",
+      "scenario_run": "Incomplete, legacy, denied and read-error scenario passed",
+      "source_commit": "9364a0cf"
+    },
+    {
+      "file": "captures/error.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 144732,
+      "sha256": "420bd91aec0055df70ff07dc43201fa79f79a36e5cc7169d70bea32132dbae57",
+      "scenario_run": "Incomplete, legacy, denied and read-error scenario passed",
+      "source_commit": "9364a0cf"
+    },
+    {
+      "file": "captures/incomplete.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 168677,
+      "sha256": "c79c23841e847b1549d33999f492829723edb28c4af7c7919d5337cd4fcb2040",
+      "scenario_run": "Incomplete, legacy, denied and read-error scenario passed",
+      "source_commit": "9364a0cf"
+    },
+    {
+      "file": "captures/legacy.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 171501,
+      "sha256": "fa719247516bf6964d8eef394036017968eadb0d5dedd233b3c58ae6b53417ed",
+      "scenario_run": "Incomplete, legacy, denied and read-error scenario passed",
+      "source_commit": "9364a0cf"
+    },
+    {
+      "file": "captures/lines-1024.png",
+      "width": 1024,
+      "height": 768,
+      "bytes": 103626,
+      "sha256": "e336d771588ff2b038709b0e63d8ffe5fd031756ef01b3dbc970b3085213e793",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/lines-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 197886,
+      "sha256": "9535f360cacc4197e4e861639533defb7a3bf6cf9b1b9ea00b5d2c68c9cf45ba",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/lines-320.png",
+      "width": 320,
+      "height": 844,
+      "bytes": 56119,
+      "sha256": "b16908ce9c8fba2fe4bf0299bba7146da7a68d98f567cfeb01fa0a4bfd3b4c60",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/lines-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 65440,
+      "sha256": "cafb9eb9211f275da2b9190b0d7c259c7dd6db3898ab0b2c4a320c0d9dfe0fcc",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/loading.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 17191,
+      "sha256": "ec592f8b01173a7ebe256e6087899175aa3c87cd7ef8973766e9d3483b32f34f",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/proposal.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 205373,
+      "sha256": "66ee64aee68b072dfcb3b6611294e15e6a40805ef626ce53d9edfa757a353d04",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/review.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 225943,
+      "sha256": "dbff6228deaa578aadd4122eea486f71997d4433e0befb72f763e8f9c92de77b",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/stale.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 209318,
+      "sha256": "f31e00808aad7ab895fbc171c4cca2d4dd8e849eff9be5a0513c375d77c24ee5",
+      "scenario_run": "Stale comparison scenario rerun",
+      "source_commit": "9364a0cf"
+    },
+    {
+      "file": "captures/totals-1024.png",
+      "width": 1024,
+      "height": 768,
+      "bytes": 101024,
+      "sha256": "098879aedd90dd900c4c4a0dbf1e1e85b1c582689be2a585dfdab373f3823f7d",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/totals-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 201069,
+      "sha256": "6c0e17b2ee06f91cb8335738348c7df5f177a792d02e8a72f59cd0f9db5ea14f",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/totals-320.png",
+      "width": 320,
+      "height": 844,
+      "bytes": 55777,
+      "sha256": "ad8180bae050384709dd49a3770ada5f257a7a79a3dc6ff66aa0e2faef3be07d",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/totals-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 67047,
+      "sha256": "35912fda2379a43a4ea309d49c7a8fa9fe98429d60e11a98e41f1c36e8a7abb4",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/uncertain.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 223885,
+      "sha256": "b04e8f96b78ad2d3278687917a4043da76aa505f6f9289780fed8e7024404e82",
+      "scenario_run": "Recovery and blocked-dialog copy rerun passed",
+      "source_commit": null
+    },
+    {
+      "file": "captures/validation-1024.png",
+      "width": 1024,
+      "height": 768,
+      "bytes": 96189,
+      "sha256": "743be8406d3184dd6cc7e07937f8043a02d8865de854296674b59a409c7ea1cf",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/validation-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 183840,
+      "sha256": "05a68042a6144026fbfe2954b1f340fd22e7b60608b8da6f67bad2190236717b",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/validation-320.png",
+      "width": 320,
+      "height": 844,
+      "bytes": 36559,
+      "sha256": "9afad6401130485fb720681f57a31b4541d71ee9154239a889be3c3b05955b56",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    },
+    {
+      "file": "captures/validation-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 38138,
+      "sha256": "f3840454574d4176128933ec1bed68a6c5ba0d60cec1bf63b161e37c6bf43f75",
+      "scenario_run": "Nine-test focused suite passed",
+      "source_commit": "123b2dab"
+    }
+  ]
+}
