@@ -1,51 +1,80 @@
-# Create discovery workspace — design reference
+# Create discovery workspace — page contract
 
-Stable entry: `route:/estimating/discovery/new`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/estimating/discovery/new`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and task
+Stable entry: `route:/estimating/discovery/new`. Scope: **ES-02**, PPO-010, EST-01–EST-09. Owner: Dean Fiedler. Page type: r20 record workspace with an opportunity intake step. Owner visual review: **pending**. Functional evidence and deployment are separate.
 
-An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
+## Authority and visual source
 
-1. Search the related register for an existing record before creating another.
-2. Complete the information requested by the creation form; keep unknown values explicit.
-3. Review the entered context, save through the page action and inspect the resulting record/confirmation.
-4. Then continue the wider workflow: Check the saved cost basis before preparing a quotation
+Build from **PPO - Design**, page `1414:356570`, named version **Create discovery workspace — accepted**, confirmed against file index `630:2`. The [accepted decision](../../../decisions/create-discovery-workspace-figma-design.md) records D1–D7 and Q1–Q4. Read the live notes card `1416:366159`.
 
-## Desktop
+| Reference | Nodes |
+|---|---|
+| Desktop choose / first Requirements, full length | `1415:1065`, `1414:356639` |
+| Review and create / dialog content | `1416:2974`, `1416:3223` |
+| Tablet | `1416:361254` |
+| Phone choose, 390 / 320 | `1416:361934`, `1416:364983` |
+| Phone Requirements / full length | `1416:363399`, `1416:364882` |
+| Creating / outcome unconfirmed / already exists / not permitted | `1416:7553`, `1416:7630`, `1416:7715`, `1416:7799` |
+| Needs attention / no eligible opportunities / phone loading | `1416:359389`, `1416:359903`, `1416:365050` |
+| Parts / Opportunity choice row / notes | `1415:360239`, `1415:360253`, `1416:366159` |
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+The [eleven retained icon-free captures](../../../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md) remain immutable evidence. Live frames supply layout and variants; the captures cross-check provenance. The older [wizard HTML](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) is historical context.
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+The later [reviewed creation direction](../../../decisions/discovery-creation-journey.md) authorises initial estimator assignment and saving the exact accepted Sales link in the creation transaction. [Creation contract](../../../contracts/discovery-creation.md) and [LC-13](../../../contracts/lead-to-delivery-continuity.md) govern the relationship. Sales receiver, creator and assigned estimator remain distinct. This page introduces no migration, capability, dependency or operating rule; it depends on the separate prerequisite.
 
-## Mobile
+## Journey and current data
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+1. Choose one of the newest 100 eligible native opportunities, using search and radio rows. Existing `estimatingOptions` remains authoritative. Rows show internal reference, customer, optional Site and permitted Sales brief state. Restricted Sales context is labelled unavailable without its revision.
+2. Continue to the five-step first discovery. Entry from an accepted Sales handover skips selection and locks its opportunity. Review Sales problem and scope in the disclosure. Q01–Q03 start as reported **Answered** statements, never Confirmed; full text is retained even if it exceeds the discovery field limit.
+3. Requirements, Configuration, Scope & delivery, Pricing and Review share one draft. Work tags, effort, confirmations and follow-up reasons require explicit input. Required unconfirmed answers need eligible owners and reasons. The adopted six-family catalogue starts new configuration; no family implies technical suitability.
+4. Review and create from any step once the minimum is recorded. Server preview rechecks current context. The dialog names opportunity, estimator, exact brief, first option/revision, scope and owned follow-ups. Require a change reason and acknowledgements of values explicitly marked Confirmed.
+5. Only a successful receipt establishes the saved workspace. General entry opens its Requirements step; Sales entry returns to the handover with the created workspace reference. Existing-workspace linking retains its separate reviewed command.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Before creation, Alternatives and Revisions show zero. No price is calculated: cost basis is Not costed and routing Not configured. Readiness stays Not checked until server preview, then displays its result.
 
-## Shared components and states
+## Desktop and tablet
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Use the existing shell, Estimating navigation group and page guide. At 1440 px retain the 240 px rail, 380 px summary, ruled context/tabs, five 48 px steps and 64 px footer. No extra module container. Main column and summary own separate scrolling. Choice rows are compact and keyboard-selectable.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+At 1024 px the existing wizard rule uses the 76 px rail; Summary opens a native dialog. Requirements uses two-column canonical context, full-width included work and half-width declarations. AreasEditor, FamilyOverview, SystemsEditor and ResponsibilitiesEditor retain their editing contracts.
 
-## Visual references
+## Phone, accessibility and offline
 
-- [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html)
-- [Create discovery workspace design r01](../../../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md) — owner-accepted 18 October 2026: choose an eligible opportunity (or arrive locked from an accepted Sales brief), author the first discovery in the accepted wizard layout, then review and create in a dialog; desktop, tablet, phone 390 and 320, four dialog outcomes and three page states; [decision](../../../decisions/create-discovery-workspace-figma-design.md). Not built
+At 390 and 320 CSS px use the shared compact phone header, wrapped radio rows, equal view tabs, viewed alternative and step selector. The footer retains Summary and Create workspace; the scroll region contains the same draft. Native dialogs contain keyboard focus, Escape closes dismissible states and closing restores the opener. Creating is not dismissible.
 
-## Behaviour, handovers and verification
+Use visible focus, labelled inputs, associated validation, keyboard tabs and selected-step semantics. Go to first reaches the incomplete field or its editor. Colour supplements state words.
 
-The draft User Guide `guide.page.estimating.discovery.new` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+This route is **online only** under the [offline contract](../systems/offline.md). Draft and pending original request remain in page memory. No offline queue, autosave, reload recovery or device persistence is claimed. Identity changes clear the business view. Unsaved navigation is guarded.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+## States and recovery
 
-## Accepted Sales brief link (LC-13)
+- Loading has four skeletons and disabled continuation. Empty eligibility and filtered-empty have distinct copy/actions. Read failure offers reload.
+- Validation preserves input and links to the first issue; server validation remains authoritative.
+- Sales source drift requires renewed review without overwriting discovery entries.
+- Creating freezes reviewed input and close controls.
+- An unconfirmed outcome retains the original operation and payload. Confirm original save outcome checks its receipt and, only if absent, retries that exact request. Access loss during recovery keeps the outcome unconfirmed; it does not claim nothing was saved.
+- A definite duplicate refusal offers only a currently permitted existing workspace. Entries are not copied. A definite creation permission refusal says nothing was created by that request.
 
-Keep the existing scope ID and r20 record workspace/intake worklist page type. Incoming: exact current accepted Sales event and source facts. Outgoing: explicit immutable link to the existing native estimating workspace, selected option and scope revision. Reuse PageHeader, Button, Field, error/status controls, native details disclosure and the existing command journal. The existing CRM panel and estimating layout are retained legacy host exceptions; no shared style system changes.
+## Shared controls and adaptations
 
-From accepted Intake, open an existing workspace or create native Discovery. Show Sales problem, scope, exclusions, assumptions, unknowns and requested-date basis as reported context; do not pre-confirm Discovery answers. A successful creation returns to the handover for a separate link review. Compare both saved versions, record a reason and save the link. Keep that comparison fixed through background refresh. Separate current acceptance, source drift and historical links. A denied target displays no retained target identities. An interrupted link recovers the exact original from the actor-scoped journal, including after reload.
+Reuse Button/ButtonLink, Field/SelectField, ValidationFields/ErrorNotice, RecordTabs, usePhoneHeader, useCrmResource/useCrmCommand, AnswerFields/FollowUpFields, AreasEditor, FamilyOverview, SystemsEditor, ResponsibilitiesEditor, SalesBriefContent, wizard Icon/StateTag/Tag/Dot/Row/ChangeMarker and WizardDialog. WizardDialog is extracted from the saved wizard; creation adds busy dismissal and opener-focus handling. Icons resolve through `font-awesome-icons.ts`; no artwork is retained.
 
-Desktop: place the link comparison and separate native-creation result beside the accepted brief; use labelled saved versions and wrap long reasons. Phone: stack the same controls at 390 and 320 CSS px, keep recovery controls reachable and contain scope text without horizontal overflow. Keyboard navigation must reach the native workspace and original-result controls. The new-state mockup images are missing; retain the exact existing HTML/image references above. This is a proposed additive adaptation, not adopted paired visual or owner acceptance.
+The command hook adds an opt-in to retain an unconfirmed creation after a failed recovery lookup; other callers keep their behaviour. Consumer bindings, fixture states and alignment gaps are maintained in the component catalogue.
+
+Explicit adaptations for owner visual review:
+
+- Combined creation replaces the older separate-link banner, as authorised by the later direction.
+- The compact shared phone header supersedes the earlier task header.
+- Follow-up totals follow existing rules, not the example's two items. Answer state/source/follow-up details use the existing dialog editor; brief texts remain directly editable.
+- Required work tags and scope/effort controls remain visible. Phone area/family controls continue below the brief to retain the shared wizard's authoring capability.
+- Readiness and confirmation counts are not asserted before successful preview.
+- Estimator choices are bounded to the first 100 active users, creator first then name/ID, with a truncation message.
+
+## Verification and open questions
+
+`tests/helpers/discovery-creation.ts` supplies stable synthetic API observations. Unit proofs protect Sales provenance, explicit follow-ups and oversized text. Browser proofs cover responsive selection, direct Sales entry, validation, original recovery through access loss, duplicate/denied outcomes and busy freezing. These observations do not substitute for transactional database tests.
+
+See [execution evidence](../../../testing/evidence/create-discovery-workspace/README.md) for actual results and limits. Owner visual review, physical devices, screen-reader and 200% browser zoom review remain pending. No reviewer, date or fingerprint has been copied.
+
+Open questions: scalable estimator search beyond the bounded list; future reload-safe draft/recovery requirements; phone Alternatives/Revisions compositions beyond zero-state guidance. No guessed behaviour implements these. Accepted Q1–Q4 choices remain recorded.

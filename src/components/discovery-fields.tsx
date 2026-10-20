@@ -174,7 +174,7 @@ function Membership({
     </fieldset>
   );
 }
-function AnswerFields({
+export function AnswerFields({
   question: q,
   value: a,
   options,

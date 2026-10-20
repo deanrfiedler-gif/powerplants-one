@@ -871,6 +871,11 @@
           "id": "es02-figma-host",
           "label": "ES-02 Figma host",
           "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
+        },
+        {
+          "id": "first-creation",
+          "label": "First discovery creation",
+          "description": "Actual creation host with accepted Sales observations, owned follow-ups, busy/unknown/duplicate/denied states; tests/browser/discovery-creation.spec.ts."
         }
       ],
       "implementation": [
@@ -883,7 +888,12 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "tests/helpers/discovery-creation.ts",
+        "tests/browser/discovery-creation.spec.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -892,7 +902,8 @@
       },
       "specification": "docs/design/development/components/area-editor.md",
       "used_on": [
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/new"
       ],
       "desktop": "Select an area before changing its fields. Add/remove affects the preview only; saved configuration commands remain in the owning page.",
       "mobile": "Scroll the table within its container; the selected-area field editor must remain reachable below it.",
@@ -904,6 +915,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities. r02 family/category authoring awaits the separate accepted Figma implementation.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "area-editor-first-creation-review",
+          "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
+          "actual": "Creation consumer and deterministic host fixtures added; owner visual review remains pending.",
+          "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4455,6 +4474,11 @@
           "id": "recovery",
           "label": "Unknown / stale / denied",
           "description": "Existing original-operation recovery, stale comparison invalidation and permission removal remain authoritative."
+        },
+        {
+          "id": "first-creation",
+          "label": "First discovery creation",
+          "description": "Actual creation host with accepted Sales observations, owned follow-ups, busy/unknown/duplicate/denied states; tests/browser/discovery-creation.spec.ts."
         }
       ],
       "implementation": [
@@ -4469,6 +4493,18 @@
         {
           "path": "src/components/estimation-catalogue-ui.tsx",
           "symbol": "CatalogueUpgrade"
+        },
+        {
+          "path": "src/components/discovery-creation.tsx",
+          "symbol": "NewDiscoveryWorkspace"
+        },
+        {
+          "path": "src/components/estimation-wizard-dialog.tsx",
+          "symbol": "WizardDialog"
+        },
+        {
+          "path": "src/components/discovery-fields.tsx",
+          "symbol": "AnswerFields"
         }
       ],
       "dependencies": [
@@ -4477,7 +4513,12 @@
         "src/components/estimation-wizard-changes.ts",
         "docs/decisions/es02-wizard-figma-implementation.md",
         "src/components/estimation-wizard.css",
-        "scripts/es02-fixture.ts"
+        "scripts/es02-fixture.ts",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "tests/helpers/discovery-creation.ts",
+        "tests/browser/discovery-creation.spec.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
@@ -4488,7 +4529,8 @@
       "used_on": [
         "system:theme",
         "scope:ES-02",
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/new"
       ],
       "desktop": "Accepted Figma: shared 240/76 px rail, 380 px summary, five 48 px steps, six family filters, full-width system grid and immutable save review. Summary closes for Alternatives/Revisions.",
       "mobile": "Phone record header, equal tabs, viewed alternative, 44 px step controls, scrolling family tiles, system cards and full-page editor, summary sheet and 72 px save footer. No shell bottom tabs.",
@@ -4500,6 +4542,14 @@
           "expected": "Paired accepted Figma review across desktop, tablet and phone, including saved and dirty states.",
           "actual": "Native host implementation and synthetic fixtures; execution evidence is recorded separately. No isolated renderer or owner acceptance claimed.",
           "action": "Review matching application captures against all accepted frames; retain Q6, missing phone Alternatives/Revisions images and device/screen-reader checks as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "estimation-journey-first-creation-review",
+          "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
+          "actual": "Creation consumer and deterministic host fixtures added; owner visual review remains pending.",
+          "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

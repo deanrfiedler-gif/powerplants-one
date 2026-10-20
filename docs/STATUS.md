@@ -9,6 +9,12 @@ Dean authorised the long-term ES-02 creation journey while retaining the accepte
 
 The [execution record](testing/evidence/discovery-creation/README.md) records verification in progress and local Windows memory/connection limits. The accepted page implementation, paired responsive comparison, independent review and owner visual review remain pending. This draft is neither acceptance nor deployment.
 
+## ES-02 first discovery creation page — 20 October 2026
+
+The existing `/estimating/discovery/new` route now has the accepted choose-opportunity and five-step first-discovery composition in an isolated page change. The [page contract](design/development/pages/route-estimating-discovery-new.md) records **PPO - Design**, **Create discovery workspace — accepted**, page `1414:356570`, frame map, reused controls and adaptations. It depends on [reviewed creation and initial ownership](decisions/discovery-creation-journey.md): the first workspace, estimator and exact accepted Sales link are reviewed together; Sales statements remain independently confirmed discovery evidence.
+
+The same change updates the register, Australian English guide, component consumer/state bindings and status. [Execution evidence](testing/evidence/create-discovery-workspace/README.md) separates unit, type, browser, visual and environment results. Owner visual review remains pending; no deployment, production readiness or new business acceptance is claimed.
+
 ## BC-06 Service findings backend continuation — 20 October 2026
 
 Dean authorised continuing BC-06 Projects, Service and Supply on 20 October 2026 while another agent owns Conversations T2b. [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623), owned by this Codex BC-06 chat on `codex/bc06-service-findings`, supplies the first SV-07 backend increment: a permission-scoped findings register and exact source reads across inspection defects/not-tested checks, incident corrective actions, incomplete report revisions, customer reservations and scheduling follow-ups. The [contract](contracts/service-findings.md) preserves native source closure and Activity handovers. Set-based visibility runs before bounded paging; counts describe the authorised candidate window, not whole-register dashboard totals.
