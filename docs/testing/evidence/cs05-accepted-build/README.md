@@ -23,27 +23,27 @@ Five page contracts, register entries and guides describe the actual controls, d
 | Check | Result |
 | --- | --- |
 | npm ci | Passed; lockfile and dependencies unchanged. |
-| npm run studio:check (same checker invoked directly with Node/tsx) | Passed after correcting contract headings and source dependency paths: 366 entries, 49 components, no errors. Visual review remains separate. |
+| npm run studio:check | Passed again after merging main at 06395e10: 366 entries, 49 components, no errors. Visual review remains separate. |
 | Focused ESLint on all changed TypeScript/TSX files | Passed. Full npm run lint was attempted but did not return a result during local resource pressure. |
 | npm run typecheck / tsc --noEmit | Two reported type errors were fixed. A subsequent Windows run was stopped without a result under memory pressure; no passing typecheck is claimed. |
-| Focused Facilities unit tests | Passed: 5 tests, including Q3 counts, null/zero measurements, filtered hierarchy and conflict proposal carry-forward. |
+| Focused Facilities unit tests | Passed again after merging main: 5 tests, including Q3 completeness, null/zero measurements, filtered hierarchy and conflict proposal carry-forward. |
 | Full unit suite, serial equivalent of npm run test:unit | Partial run stopped after two operator CLI subprocesses exceeded their 15-second startup deadline. The two comparison tests passed in the primary checkout, but the isolated-branch retry timed out again. No passing full suite or confirmed non-regression is claimed. |
 | npm run build | Not run locally while the shared machine is under memory pressure; required in Application assurance. |
-| python scripts/check_naming.py | Passed. |
-| python scripts/check_foundation.py | Started; no result yet. |
+| python scripts/check_naming.py | Passed again after merging main; no errors. |
+| python scripts/check_foundation.py | Passed before the merge (78 parent requirements, no errors); the post-merge run is in progress. |
 | python scripts/build-ui-sequence.py | Completed. |
 | python scripts/build_status.py | Completed; generated status refreshed from the new fragment. |
 | git diff --check | Passed before the implementation and refinement commits. |
 | Focused accepted-design browser check | Passed: view-only record at 1440/390/320 px, no horizontal overflow, no correction grant, Equipment groups and site/record handovers. |
-| Complete accepted-design browser suite | Latest completed run: 5 passed, 4 failed. Register/snapshot/hierarchy/tablet, view-only/equipment, loading, no matches and denial passed. Three form cases had an incorrect Season label selector, now corrected; Chromium also crashed/closed. The error-state case closed before its assertion. A final rerun is pending. |
+| Complete accepted-design browser suite | Passed: all 9 tests in 4.5 minutes at d30e9fb3, before the documentation conflict resolution. Covers register/snapshot/hierarchy/tablet, view-only/equipment, editable record/create/review, loading/no matches/error/denial, changed-version carry-forward and exact original-operation replay. Local one-worker configuration uses 300-second test and 60-second assertion deadlines because of Windows resource pressure. The standard CI deadlines were not changed. |
 | Native database/browser suites | Database-backed proof not run locally. The app's local session endpoint returned a connection failure; the shared synthetic test database was not reset. This was not compared with main and is not attributed to this change. |
-| CI | [Application assurance run](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39358076214) ran at 34dac8c7 and failed the already-corrected design-contract headings/dependency paths. It cannot prove the refinement commits. |
+| CI | [Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39494672819) was queued for merged source 06395e10. The older run at 34dac8c7 failed already-corrected design-contract headings/dependency paths; it does not describe the current source. |
 
 The local machine had about 1 GiB free of 16 GiB while several unrelated sessions were active. The task's own cold route compile took 112 seconds. Other sessions' processes and databases were left alone. Do not treat a local timeout, a queued workflow or a documentation check as a passing application proof.
 
 ## Visual comparison and remaining differences
 
-Initial 1440 px record and 320 px phone comparisons confirmed the full-width shell, 380 px details column, card wrapping and reachable fixed phone action. Extra space above the view-only notice and missing Equipment status chips were found and corrected. The snapshot was changed from the full table to the compact summary shown in the accepted frame. These refinements still need the complete capture pass and owner review.
+Initial 1440 px record and 320 px phone comparisons confirmed the full-width shell, 380 px details column, card wrapping and reachable fixed phone action. Extra space above the view-only notice and missing Equipment status chips were found and corrected. The snapshot was changed from the full table to the compact summary shown in the accepted frame. The subsequent nine-test run produced 22 icon-free captures, retained here and listed in captures.json. Builder inspection is separate from owner review. These captures precede the merge of main; they are not evidence of the newly merged shell changes.
 
 - The later accepted compact phone-header amendment is used. The existing permission-aware rail shows only the synthetic identity's allowed destinations and available counts; it does not invent the complete Figma rail's badges.
 - Source names, crop names, dimensions, history length, IDs and dates follow the synthetic fixture or actual permitted read. Existing site-time Stamp formatting is retained; observation dates remain ISO dates. Data differences are separate from layout conformance.
@@ -52,7 +52,9 @@ Initial 1440 px record and 320 px phone comparisons confirmed the full-width she
 - Sources/History at full size, pin review and service-link commands retain native controls. Manage service links discloses those existing commands; the undrawn dialogs were not redesigned. Additional correction fields remain disclosed below the drawn measurements/context groups.
 - Native modal focus and Escape/return focus are used for the snapshot. The close control sits inside the modal; no floating previous/next control is invented.
 - The create form uses the existing exact Site picker and reason field inside the three groups. Additional native fields remain available; tablet record/mobile create adaptations are undrawn and await owner review.
-- Complete desktop/tablet/phone/state capture comparison and physical-device/accessibility review remain outstanding. No claim of pixel equivalence or full visual acceptance is made.
+- Correction and recovery retain native validation, parent IDs, operation controls and disclosure groups. The form is taller than the accepted correction frame; the comparison has three columns rather than the drawn four, and the conflict shows the existing validation summary above its recovery notice. These are visible layout deviations requiring review, not approved exceptions.
+- When creation is opened with a site_id handover, the existing form keeps the site fixed and shows its name above the groups; a fresh create route uses SitePicker. This differs from the editable Site control in the drawn create frame.
+- Desktop/tablet register and record cards, phone wrapping and all captured states were inspected. The complete paired comparison at every exact reference height, plus physical-device/accessibility review, remain outstanding. No claim of pixel equivalence or full visual acceptance is made.
 
 ## Questions for Dean
 
@@ -60,3 +62,7 @@ Initial 1440 px record and 320 px phone comparisons confirmed the full-width she
 2. Should previous/next follow the originating filtered register, and how long should that context survive a direct link or reload?
 
 Reloading an unsaved or uncertain proposal still loses in-tab recovery context; no durable offline draft or queued mutation is claimed.
+
+## Conflict resolution
+
+Merged current main (4c1097cc) in 06395e10. Preserved the Facilities, People, Service review and Discovery costing component consumers and alignment items. Regenerated status from all 68 fragments and regenerated the build-sequence report. No application source conflicted. GitHub reported the PR mergeable after the push.

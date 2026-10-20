@@ -44,6 +44,8 @@ Loading and failed reads hide old rows/counts. No matches preserves active filte
 - Sources, History, pin review and service-link commands retain earlier native controls. Additional correction fields are disclosed below Measurements and Growing context. They are not new accepted layouts.
 - The synthetic capture fixture is a UI-only composition, not a new database seed. Real register counts/names follow the existing synthetic database; device and source equality remain separate from authorisation.
 
+The running form also retains native validation, source disclosures and operation controls. This makes correction taller than the drawn frame; review currently has three columns and explicit parent IDs, and conflict recovery retains a separate validation summary. A create route handed a site_id keeps that site fixed instead of showing an editable Site control. These visible deviations are listed for review in the build evidence and are not accepted exceptions.
+
 ## Evidence and review
 
 [Build evidence, commands, results and visual differences](../../../testing/evidence/cs05-accepted-build/README.md). Automated source/functional checks are not business acceptance. Owner visual review, physical-device/accessibility review and hosted deployment remain pending; no fingerprint, reviewer or acceptance date has been manufactured.
