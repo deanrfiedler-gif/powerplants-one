@@ -1,47 +1,21 @@
-# Contact directory — native working reference
+# Contacts hub — CS-02 implementation contract
 
-Stable entry: `route:/contacts`. Scope: **CS-02**. Owner: Dean Fiedler.
-Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/contacts`.
-Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and page type
-
-Find a permitted canonical Person or organisation, review its directory summary and open the selected record. Detailed corrections and reliance checks belong to the separate record workspace.
-
-r20 page type: **Register / worklist**. `/people` shows People; the `/contacts` hub switches between People and Organisations. Identity, relationships, reliance and correction history belong to [Person detail](route-people-id.md).
+Stable entry `route:/contacts`. Owner: Dean Fiedler. Scope **CS-02**, r20 **Register / worklist**. Application owner visual/device review **pending**.
 
 ## Desktop
 
-Accepted design: the [People design decision](../../../decisions/people-figma-design.md) of 18 October 2026, with captures 01 (desktop 1440 × 900) and 05 (tablet 1024) in [design r01](../../../reference/ui/customers/people-design-r01/README.md). Figma page "People · CS-02" `1395:150275`: register `1395:150312`, tablet `1395:150835`.
+The People view at `/contacts?view=people` uses the [People register contract](route-people.md), including its exact Figma nodes, **PPO - Design**, named **People — accepted**, phone amendment, source captures, permissions, desktop/mobile geometry, retained legacy workflow and open questions. Those requirements apply unchanged inside this hub. The existing People / Organisations switch remains under accepted D2; `people_view` is separate from the hub's `view` query parameter.
 
-- **Register:** a grid, one row per person (D1). Columns: Name, Organisation, Role (recorded), Phone, Email, Status, Contact preference, Sites where primary contact, Notice preferences and Last correction. The toolbar has Organisation and Notices filters, the count with its read time, Refresh and "…".
-- **Hub:** `/contacts` keeps its People and Organisations switch; the People view takes this register. The Organisations view is not drawn.
-- **Views:** People is a shared record opened from More. The side menu lists Organisations and Sites, then Active people (default), Site contacts, Channels to review and Inactive, then Stakeholders and Service requests (D2).
-- **Shell:** the proposed Conversations action sits left of the information icon.
-- Nothing new is built; the CrmDirectory register below remains the built page.
+## Retained Organisations view
 
-Use the existing full-bleed CrmDirectory register with PageHeader, scoped search, saved views, columns, sortable table and pagination. Names open exact records; People affiliations open the related organisation. New opens the corresponding shared-record form. Keep shell navigation and Contacts hub view selection separately owned.
+`/contacts?view=organisations` retains `CrmDirectory`. The People decision explicitly does not draw this view, so this PR does not transfer the standalone CS-01 visual design into it. Existing saved filters, columns, scoped reads and exact organisation handovers remain. The People saved-view workflow is available at `people_layout=directory`. The selected hub view remains scoped to actor/workspace and in the URL; the application checks the existing Contacts navigation duty before rendering.
 
 ## Mobile
 
-Accepted design: captures 06 and 09 in [design r01](../../../reference/ui/customers/people-design-r01/README.md) (`1395:151069` and the states `1395:151245`, `1395:151303`, `1395:151346`). List rows with the name and preferred channel, the organisation and recorded role, and one status line. States: loading, no matching people (people in companies you cannot see are not shown or counted) and could not load, with no list or counts.
+The People view reuses the shared compact phone header with search/filter and its own menu; the hub switch remains accessible. No extra module card is added. Test both hub choices and the exact person receiving route. Failure clears People rows and counts, with retry; no offline storage or new permission is implied.
 
-Use the existing readable record cards, labelled directory controls and phone taps. Preserve keyboard access, loading/error recovery and the same scoped query across 390/320 CSS px. Person correction controls belong to the receiving detail page.
+## Evidence and pending review
 
-## Sources, handovers and authority
-
-Person has no invented display reference, structured role taxonomy or purchasing authority. Interaction history is explicitly derived from permitted linked workflows because Activities do not link directly to Person. Restricted contacts and affiliations are not presented as absent.
-
-Incoming: the current permitted directory kind and optional department context. Outgoing: the exact selected Person or organisation and the appropriate New form. Downstream Activity, survey and correction handovers are owned by the receiving record pages.
-
-Reference: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html
-
-## Verification and acceptance
-
-Accepted Figma design: [People design r01 captures](../../../reference/ui/customers/people-design-r01/README.md) (nine icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/people-figma-design.md). Images of the desktop register states, hover states and the phone filters are still missing.
-
-The detailed page guide is `guide.page.contacts`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
-
-## Directory link loading
-
-The current directory consumer is `CrmDirectory`: CS-01/CS-02 Register/worklist with the existing desktop table and phone cards. Its record names, affiliation/count links, New and local context sections load destinations on activation. Shared shell and Contacts hub view links retain their separate behaviour. Exact hrefs, department context, permission checks and unsaved-work handling are unchanged. See [component contract](../components/crm-directory.md) and `tests/browser/directory-navigation.spec.ts`; source presence and automated proof do not grant visual or device acceptance.
+[Fixture manifest](../people-native-fixtures.json) and [application evidence](../../../testing/evidence/people-native/README.md). Guide `guide.page.contacts` remains Draft. Source delivery, accepted design, functional proof, visual comparison, owner review and deployment are separate. No owner fingerprint, date or review is invented.
