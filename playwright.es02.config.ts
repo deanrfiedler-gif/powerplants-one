@@ -6,7 +6,7 @@ const url = `http://127.0.0.1:${process.env.PPO_PORT ?? "3012"}`;
 export default defineConfig({
   ...base,
   testMatch:
-    /(estimating-(wizard|discovery|cost-basis)|shell|my-work|engineering-materials)\.spec\.ts$/,
+    /(estimating-(wizard|discovery|cost-basis)|discovery-costing-presentation|shell|my-work|engineering-materials)\.spec\.ts$/,
   timeout: 180000,
   projects: [
     {

@@ -6,7 +6,7 @@ import {
 } from "../helpers/discovery-costing-presentation";
 
 test.describe.configure({ timeout: 120000 });
-test.use({ actionTimeout: 15000 });
+test.use({ actionTimeout: 15000, viewport: { width: 1440, height: 1000 } });
 const review = (page: Page) =>
   page.getByRole("button", { name: /^Review and adopt/ });
 async function ready(page: Page) {
@@ -46,7 +46,7 @@ test("manual edit compares saved lines, keeps provenance and submits native adop
   const modal = await openReview(page);
   await page.screenshot({ path: info.outputPath("review.png") });
   await modal.getByRole("button", { name: /^Adopt r02/ }).click();
-  await expect.poll(() => fixture.adoptions.length, {timeout:60000}).toBe(1);
+  await expect.poll(() => fixture.adoptions.length, { timeout: 60000 }).toBe(1);
   const body = fixture.adoptions[0];
   expect(body).toMatchObject({
     revision_id: costingId(12),
@@ -58,6 +58,10 @@ test("manual edit compares saved lines, keeps provenance and submits native adop
     (body.lines as { quantity: string; source: string }[])[0],
   ).toMatchObject({ quantity: "6", source: "SYN supplier quote SQ-108" });
   expect(body.operation_id).toBeTruthy();
+  await expect(page).toHaveURL(
+    new RegExp(`/estimating/estimates/${costingId(4)}`),
+    { timeout: 90000 },
+  );
 });
 for (const width of [1440, 1024, 390, 320])
   test(`layout and keyboard at ${width}px`, async ({ page }, info) => {
@@ -67,17 +71,26 @@ for (const width of [1440, 1024, 390, 320])
     });
     await mountCosting(page);
     await ready(page);
-    await expect(page.locator("#ppo-estimate-wizard")).toHaveAttribute("data-module-layout", "full-bleed");
-    const icon = await page.locator(".dc-basis-banner > .dc-banner > .es02-icon").boundingBox();
+    await expect(page.locator("#ppo-estimate-wizard")).toHaveAttribute(
+      "data-module-layout",
+      "full-bleed",
+    );
+    const icon = await page
+      .locator(".dc-basis-banner > .dc-banner > .es02-icon")
+      .boundingBox();
     expect(icon?.width).toBeLessThanOrEqual(20);
-    expect((await review(page).boundingBox())?.height).toBeGreaterThanOrEqual(36);
+    expect((await review(page).boundingBox())?.height).toBeGreaterThanOrEqual(
+      36,
+    );
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
     if (width < 780) {
-      await expect(page.locator("#shell-header.topbar.ppo-shell-header")).toBeVisible();
+      await expect(
+        page.locator("#shell-header.topbar.ppo-shell-header"),
+      ).toBeVisible();
       await expect(page.locator(".dc-phone-lines")).toBeVisible();
       await expect(page.locator(".dc-grid")).toBeHidden();
     }
@@ -86,6 +99,25 @@ for (const width of [1440, 1024, 390, 320])
       path: info.outputPath(`costing-${width}.png`),
       fullPage: true,
     });
+    await page.locator(".dc-cost-lines").scrollIntoViewIfNeeded();
+    await page.screenshot({ path: info.outputPath(`lines-${width}.png`) });
+    await page.locator(".dc-totals").scrollIntoViewIfNeeded();
+    await expect(page.locator(".dc-totals")).toBeInViewport();
+    await expect(page.locator(".dc-totals")).toContainText(
+      "v2 was AUD 31,210.00",
+    );
+    if (width < 780) {
+      const amount = await page
+        .locator(".dc-phone-total strong")
+        .first()
+        .boundingBox();
+      const comparison = await page
+        .locator(".dc-phone-total small")
+        .first()
+        .boundingBox();
+      expect(comparison!.y).toBeGreaterThanOrEqual(amount!.y + amount!.height);
+    }
+    await page.screenshot({ path: info.outputPath(`totals-${width}.png`) });
     const opener = page
       .getByRole("button", {
         name: "Edit Shade screen motor and gearbox",
@@ -159,7 +191,7 @@ test("adopting freezes confirmation; uncertain checks original operation without
     .click();
   await expect(page).toHaveURL(
     new RegExp(`/estimating/estimates/${costingId(4)}`),
-    {timeout:90000},
+    { timeout: 90000 },
   );
   expect(f.adoptions).toHaveLength(1);
 });
@@ -197,10 +229,13 @@ test("incomplete, retained manual, permission and source failure states", async 
 test("loading and revoked source never imply zero totals or retain protected costs", async ({
   page,
 }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   const f = costingFixture();
   f.mode = "loading";
   await mountCosting(page, f);
-  await expect(page.getByRole("status").filter({ hasText: "Loading the saved scope" })).toBeVisible();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Loading the saved scope" }),
+  ).toBeVisible();
   await page.screenshot({ path: info.outputPath("loading.png") });
   f.mode = "normal";
   f.release?.();

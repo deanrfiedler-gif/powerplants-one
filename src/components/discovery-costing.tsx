@@ -77,7 +77,12 @@ export function DiscoveryCosting({ id }: { id: string }) {
       </div>
     );
   return (
-    <section id="ppo-estimate-wizard" className="dc-host" data-module-layout="full-bleed" aria-label="Discovery costing">
+    <section
+      id="ppo-estimate-wizard"
+      className="dc-host"
+      data-module-layout="full-bleed"
+      aria-label="Discovery costing"
+    >
       {data.loading && <CostingLoading />}
       <ErrorNotice error={data.error} />
       {data.error != null && (
@@ -148,7 +153,13 @@ function CostingEditor({
     denied(savedRead.error) ||
     savedRead.data?.status === "Unavailable" ||
     option?.cost.status === "Unavailable";
-  const blockedRead = !!readError || !!savedRead.error || !!baseline.error || !!error || baseline.loading || savedRead.loading;
+  const blockedRead =
+    !!readError ||
+    !!savedRead.error ||
+    !!baseline.error ||
+    !!error ||
+    baseline.loading ||
+    savedRead.loading;
   const permitted =
     d.can_edit &&
     !denied(error) &&
@@ -569,7 +580,14 @@ function CostingEditor({
               <CostingBanner warning>
                 Current scope could not be rechecked. Your proposal is kept;
                 reconnect and reload the current scope before adopting.{" "}
-                <Button onClick={() => { reload(); savedRead.reload(); }}>Reload current scope</Button>
+                <Button
+                  onClick={() => {
+                    reload();
+                    savedRead.reload();
+                  }}
+                >
+                  Reload current scope
+                </Button>
               </CostingBanner>
             </div>
           )}
@@ -715,23 +733,26 @@ function CostingEditor({
                         </Link>
                       </div>
                     ))}
-                    {(unchangedSystems.length > 0 || changedScope.length === 0) && <div>
-                      <Icon name="check" />
-                      <span>
-                        <strong>
-                          {changedScope.length
-                            ? `Unchanged system definitions since ${rev(basis?.revision ?? 0)}`
-                            : "No scope changes between these saved revisions"}
-                        </strong>
-                        <small>
-                          {unchangedSystems.length
-                            ? unchangedSystems
-                                .map((system) => system.name)
-                                .join(", ")
-                            : "Open exact saved source for the full retained scope."}
-                        </small>
-                      </span>
-                    </div>}
+                    {(unchangedSystems.length > 0 ||
+                      changedScope.length === 0) && (
+                      <div>
+                        <Icon name="check" />
+                        <span>
+                          <strong>
+                            {changedScope.length
+                              ? `Unchanged system definitions since ${rev(basis?.revision ?? 0)}`
+                              : "No scope changes between these saved revisions"}
+                          </strong>
+                          <small>
+                            {unchangedSystems.length
+                              ? unchangedSystems
+                                  .map((system) => system.name)
+                                  .join(", ")
+                              : "Open exact saved source for the full retained scope."}
+                          </small>
+                        </span>
+                      </div>
+                    )}
                   </div>
                 )}
                 <details className="dc-source">
@@ -883,6 +904,12 @@ function CostingEditor({
             <Icon name="summary" />
             Summary
           </Button>
+          <ButtonLink
+            className="dc-previous"
+            href={`${workspaceHref}&step=Scope%20%26%20delivery`}
+          >
+            <Icon name="arrow-left" /> Previous
+          </ButtonLink>
           {command.uncertain ? (
             <Button variant="primary" onClick={() => setDialog(true)}>
               Check the save outcome
@@ -902,12 +929,7 @@ function CostingEditor({
           ) : (
             <Button
               variant="primary"
-              disabled={
-                frozen ||
-                !draft ||
-                blockedRead ||
-                baseline.loading
-              }
+              disabled={frozen || !draft || blockedRead || baseline.loading}
               onClick={openReview}
             >
               Review and adopt{" "}
