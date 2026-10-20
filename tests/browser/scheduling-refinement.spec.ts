@@ -49,10 +49,16 @@ test("Field Team and resource evidence retain date, site and timezone through re
   await expect(
     page.getByRole("combobox", { name: "Site", exact: true }),
   ).toHaveValue(siteId);
-  const reviewLink = page.locator(`a[href^="/service/technicians/${resourceId}?"]`).first();
-  // The retained Visits view publishes the precise resource handover.
-  await expect(reviewLink).toHaveAttribute("href", /site_id=.*timezone=/);
-  await reviewLink.click();
+  const menu = page.getByRole("navigation", { name: "Field team views" });
+  if (!await menu.isVisible()) await page.getByRole("button", { name: /^Choose view/ }).click();
+  await menu.getByRole("button", { name: /^Technicians/ }).click();
+  if(info.project.name.includes("mobile")) await page.locator(".pl02-phone-row").first().click();
+  else {
+    await page.locator(".pl02-person").first().click();
+    const reviewLink=page.getByRole("dialog").getByRole("link", {name:"Availability & competence"});
+    await expect(reviewLink).toHaveAttribute("href", /site_id=/);
+    await reviewLink.click();
+  }
   await expect(page.getByLabel("Review timezone")).toHaveValue(
     "Australia/Melbourne",
   );

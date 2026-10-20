@@ -1455,6 +1455,7 @@
 
 @media (max-width: 780px) {
   #ppo-field-team .pl02-toolbar {
+    padding-bottom: 9px;
     grid-template-columns: 146px minmax(0, 1fr) 40px;
   }
   #ppo-field-team .pl02-choose {

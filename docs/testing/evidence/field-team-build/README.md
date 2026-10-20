@@ -40,4 +40,3 @@ Known adaptations:
 - Page-local 40 px grid, purple avatar and availability colours are scoped accepted-design variants. Anonymous busy intervals stay unlabelled; no offline support is added.
 
 Open owner questions: define column-settings behaviour if required, and review the undrawn menu/filter/tablet/phone-panel compositions. Publication of job roles and reviewer names belongs to the resource/people source. None of these gaps is silently labelled accepted.
-
