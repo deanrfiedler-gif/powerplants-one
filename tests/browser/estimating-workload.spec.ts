@@ -5,6 +5,7 @@ import { estimateInput } from "../helpers/estimating";
 import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
 
 test.describe.configure({ timeout: 120000 });
+const iconFreeCaptureStyle = ".ppo-fa, .svg-inline--fa, [data-prefix], .es02-icon, .product-icon, .shell-icon, i[class*='fa-'] { visibility: hidden !important; }";
 async function setup(page: Page) {
   await page.goto("/estimating");
   const identity = await page.request.post("/api/v1/local-session", {
@@ -135,14 +136,14 @@ test("ES01 native workload supports keyboard filters, exact discovery entry, rel
   expect(guideBox.y + guideBox.height).toBeLessThanOrEqual(
     header.y + header.height,
   );
-  await page.screenshot({
+  await page.screenshot({ style: iconFreeCaptureStyle,
     path: info.outputPath("workload.png"),
     fullPage: true,
   });
   await page
     .getByRole("link", { name: "Start discovery", exact: true })
     .scrollIntoViewIfNeeded();
-  await page.screenshot({
+  await page.screenshot({ style: iconFreeCaptureStyle,
     path: info.outputPath("workload-card.png"),
     fullPage: true,
   });
@@ -155,7 +156,7 @@ test("ES01 native workload supports keyboard filters, exact discovery entry, rel
         () => document.documentElement.scrollWidth <= window.innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({
+    await page.screenshot({ style: iconFreeCaptureStyle,
       path: info.outputPath("workload-320.png"),
       fullPage: true,
     });
@@ -176,7 +177,7 @@ test("ES01 native workload supports keyboard filters, exact discovery entry, rel
         () => document.documentElement.scrollWidth <= window.innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({
+    await page.screenshot({ style: iconFreeCaptureStyle,
       path: info.outputPath("workload-200-percent.png"),
       fullPage: true,
     });
@@ -186,7 +187,7 @@ test("ES01 native workload supports keyboard filters, exact discovery entry, rel
   }
   const choicesLoaded = page.waitForResponse(
     (response) =>
-      new URL(response.url()).pathname === "/api/v1/estimating/options",
+      new URL(response.url()).pathname === "/api/v1/estimating/workspaces/create-choices",
   );
   await page
     .getByRole("link", { name: "Start discovery", exact: true })
@@ -195,9 +196,11 @@ test("ES01 native workload supports keyboard filters, exact discovery entry, rel
   await expect(page).toHaveURL(
     new RegExp(`/estimating/discovery/new\\?opportunity=${input.id}`),
   );
+  await expect(page.getByRole("radio", { name: new RegExp(input.title) })).toBeChecked();
+  await page.getByRole("button", { name: "Continue to discovery", exact: true }).click();
   await expect(
-    page.getByLabel("Existing opportunity", { exact: true }),
-  ).toHaveValue(input.id);
+    page.getByRole("link", { name: input.title, exact: true }),
+  ).toHaveAttribute("href", `/sales/opportunities/${input.id}`);
   await page.goto("/estimating?tab=estimates");
   await expect(
     page.getByRole("heading", { name: "Saved estimates", exact: true }),
@@ -264,7 +267,7 @@ test("ES01 register selects into the persistent panel from 1360 px, opens a draw
     "href",
     `/estimating/discovery/new?opportunity=${first.id}`,
   );
-  await page.screenshot({ path: info.outputPath("workload-panel-1360.png") });
+  await page.screenshot({ style: iconFreeCaptureStyle, path: info.outputPath("workload-panel-1360.png") });
   await page.setViewportSize({ width: 1359, height: 900 });
   await expect(panel).toHaveCount(0);
   const opener = page.getByRole("button", { name: second.title, exact: true });
@@ -277,7 +280,7 @@ test("ES01 register selects into the persistent panel from 1360 px, opens a draw
     "href",
     `/estimating/discovery/new?opportunity=${second.id}`,
   );
-  await page.screenshot({ path: info.outputPath("workload-drawer-1359.png") });
+  await page.screenshot({ style: iconFreeCaptureStyle, path: info.outputPath("workload-drawer-1359.png") });
   await page.keyboard.press("Escape");
   await expect(drawer).toHaveCount(0);
   await expect(opener).toBeFocused();

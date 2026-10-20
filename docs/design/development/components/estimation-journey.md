@@ -42,3 +42,9 @@ Reuse labelled Field/SelectField, shared RecordTabs, native dialogs, validation,
 ## Differences and verification
 
 Q6 timing fields remain a labelled proposal with no persistence. No new technical rule or equipment suitability follows from a category. Phone Alternatives/Revisions images, real devices, screen-reader review and owner acceptance remain open. See [execution evidence](../../../testing/evidence/es02-figma/README.md). Review fingerprints remain unchanged; automated tests and source presence do not approve the page.
+
+## First discovery creation consumer
+
+The existing /estimating/discovery/new route now reuses this host/control, with fixture states in tests/helpers/discovery-creation.ts and tests/browser/discovery-creation.spec.ts. The [creation page contract](../pages/route-estimating-discovery-new.md) records frame references, shared compact phone header, combined review and original-command recovery. WizardDialog is extracted from the saved wizard; AnswerFields is exported unchanged for the new consumer. Scope-specific CSS adopts the shared Button tokens above the legacy wizard reset. No new generic component family or independent catalogue renderer is claimed. Owner visual review and the first-creation alignment item remain pending.
+
+DiscoveryFields also exposes its existing scope and work controls together through `part="scope-and-work"`, without duplicating the question editors. Creation's site/effort dialog retains work-tag facility membership and specialist-clarification follow-ups. The scoped-create and incomplete-first-revision cases in `tests/browser/estimating-discovery.spec.ts`, plus the accepted Sales handover in `sales-estimating-binding.spec.ts`, exercise this variant with real synthetic persistence. Existing scope/brief consumers retain their rendering.

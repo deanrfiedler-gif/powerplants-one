@@ -2,11 +2,11 @@
 
 <!-- versioning: git -->
 
-Owner: this Codex ES-02 creation session. Implementation and verification in progress; owner visual review pending.
+Owner: this Codex ES-02 creation session. Implementation is delivered in [draft PR #641](https://github.com/deanrfiedler-gif/powerplants-one/pull/641). Executed checks and confirmed local baseline limits are recorded in the [evidence record](../testing/evidence/create-discovery-workspace/README.md). Complete pinned-runtime CI and owner visual review remain pending.
 
 This page change depends on the reviewed creation/initial-owner contract in PR #637. It retains the accepted **PPO - Design**, page `1414:356570`, named version **Create discovery workspace — accepted**, and the later [combined creation review direction](../decisions/discovery-creation-journey.md). No new parent ID, dependency, capability or deployment is proposed.
 
-## Build plan
+## Claimed build plan and delivered scope
 
 - Replace only `/estimating/discovery/new` with the choose-opportunity and five-step first-discovery composition. Keep neighbouring register and saved workspace behaviour intact.
 - Reuse the wizard's fields, configuration editors, family overview, status/change primitives and dialog pattern, shared Button, RecordTabs, command recovery and compact phone header. Extract only the existing dialog and question editor where a second consumer requires them.

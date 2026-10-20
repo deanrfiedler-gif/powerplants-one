@@ -85,7 +85,13 @@ export async function discoveryCreationOptions(p: Principal, query: Record<strin
       try { await eligibleCreationOwner(c, p, o.id, siteId, u.id); estimators.push(u); }
       catch (e) { if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e; }
     }
-    return { owner_id: p.actor_id, estimators, more_estimators: users.length > 100,
+    const labels = (await c.query<{ customer: string; site: string | null }>(
+      `SELECT r.display_name AS customer,s.display_name AS site FROM ppo.organisations r
+       LEFT JOIN ppo.sites s ON s.workspace_id=r.workspace_id AND s.id=$3
+       WHERE r.workspace_id=$1 AND r.id=$2`, [p.workspace_id, o.organisation_id, siteId],
+    )).rows[0];
+    return { opportunity: { id: o.id, display_number: o.display_number, title: o.title, organisation_id: o.organisation_id, ...labels },
+      owner_id: p.actor_id, estimators, more_estimators: users.length > 100,
       brief: await creationSalesBrief(c, p, o.id) };
   });
 }

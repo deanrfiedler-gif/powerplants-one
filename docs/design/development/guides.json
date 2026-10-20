@@ -5666,7 +5666,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-13",
+      "prepared_at": "2026-10-20",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "See docs/testing/evidence/es02-figma/README.md; bounded synthetic verification, not operational acceptance.",
@@ -5901,14 +5901,14 @@
           "section_id": "accepted-sales-workspace-link",
           "title": "Continue from the accepted Sales brief",
           "paragraphs": [
-            "The assigned receiver must also own and be allowed to edit the native workspace. Sales acceptance, Discovery confirmation and quotation approval remain separate. A later accepted Sales successor does not erase an earlier link."
+            "New workspace creation reviews the eligible estimating owner and exact accepted Sales brief together. The creator, Sales receiver and estimator can differ. Linking an existing workspace still requires its assigned Sales receiver to own and be allowed to edit it. Sales acceptance, Discovery confirmation and quotation approval remain separate."
           ],
           "steps": [
             "Open the accepted Sales handover and review its reported scope and current source status.",
-            "Open the native workspace, or choose Create native estimating workspace. Record and confirm Discovery independently. A saved creation returns here; it is not undone if linking later fails.",
-            "Choose Review workspace link, compare the Sales and native versions and record a reason. Link accepted brief.",
-            "If sources or the workspace changed, discard the old comparison and explicitly review the new one. If the outcome is uncertain, Check original link or retry the exact original before any new intent.",
-            "Open the linked workspace to see the attributed accepted Sales context and retain native discovery/cost history."
+            "For a new workspace, choose Create native estimating workspace. Record discovery independently and review the selected estimator and exact accepted brief before creating; the workspace and link are saved together.",
+            "For an existing workspace, choose Review workspace link, compare the Sales and native versions and record a reason, then choose Link accepted brief.",
+            "If sources or the workspace changed, review the new information explicitly. An unconfirmed creation uses Confirm original save outcome; an unconfirmed separate link uses Check original link. Both retain their exact original request.",
+            "Open the linked workspace to see the attributed accepted Sales context and retained native discovery/cost history."
           ],
           "headers": [],
           "rows": []
@@ -39106,18 +39106,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-20",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/create-discovery-workspace/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Create discovery workspace to work towards this outcome: A selected, traceable discovery basis with owned review items.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Create the first discovery workspace for one eligible opportunity. Review the initial estimating owner and exact accepted Sales brief together before saving Option A and discovery r01.",
+            "Sales statements remain reported evidence. Creating a workspace does not confirm them, calculate a price or configure delivery routing."
           ],
           "steps": [],
           "rows": [],
@@ -39127,9 +39126,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use your permitted synthetic identity and an online connection. The opportunity must have no estimate or discovery workspace. Confirm the customer and Site context and review any accepted Sales brief.",
+            "Prepare owned follow-ups for unresolved questions. The selected estimator must already have access to the proposed scope; selection does not grant permissions."
           ],
           "steps": [],
           "rows": [],
@@ -39140,11 +39138,11 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Search the related register for an existing record before creating another.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Search the opportunity list, select one radio row and choose Continue to discovery. A link from an accepted Sales handover opens its fixed opportunity directly.",
+            "Review the included work, exclusions and assumptions. Set work tags, effort and the estimating owner.",
+            "Record an answer with its source, or an owned follow-up. Move between all five steps without losing the working draft.",
+            "Choose Create discovery workspace from any step. Review the server preview, enter a change reason and acknowledge only values you marked Confirmed.",
+            "Create once and inspect the saved result. If the outcome is unconfirmed, keep the page open and confirm the original save outcome."
           ],
           "rows": [],
           "headers": []
@@ -39156,24 +39154,24 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Create discovery workspace · Creation form"
+              "Opportunity choice",
+              "Search the latest 100 eligible opportunities by name, number, customer or Site. Missing records may be outside access or already have an estimate/workspace."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
+              "Discovery",
+              "Requirements, Configuration, Scope & delivery, Pricing and Review use one draft."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Alternatives and Revisions",
+              "Both start at zero. Create the workspace before adding alternatives or viewing saved revision history."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
+              "Summary",
+              "Inspect current counts and the returned readiness. Not checked means no successful preview; Not estimated means no saved cost."
             ],
             [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Sales context",
+              "Expand Reported Sales problem and scope. Incoming statements remain Answered until you explicitly confirm them."
             ]
           ],
           "headers": [
@@ -39185,9 +39183,10 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Choose the Site or record an explicit unknown/no-Site declaration. Work tags determine which questions apply; equipment families describe configuration separately.",
+            "Use the state control beside each brief answer to review its source, owner and follow-up reason. The text itself is editable in Requirements. Each unresolved required answer, including an Answered Sales statement, needs an owned follow-up.",
+            "Growing areas, systems, responsibilities and evidence use the existing wizard editors. Do not infer technical suitability or verified quantities from a category.",
+            "Use Review site scope and effort details to assign work tags to selected facilities or record additional scope needing specialist clarification. These declarations use the existing wizard controls and remain separate from equipment families."
           ],
           "steps": [],
           "rows": [],
@@ -39196,14 +39195,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Search the related register for an existing record before creating another.",
-            "Complete the information requested by the creation form; keep unknown values explicit.",
-            "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Check the saved cost basis before preparing a quotation"
+            "Choose the opportunity or continue from its accepted handover.",
+            "Check canonical customer/Site context and select an eligible estimator; the creator is initially selected.",
+            "Review the brief, work tags and effort. Add configuration and scope declarations as required.",
+            "Use Go to first to address validation. All unresolved required items need an eligible owner and useful reason.",
+            "Review and create. The final dialog records the selected owner, exact accepted brief, scope, owned follow-ups and change reason together."
           ],
           "rows": [],
           "headers": []
@@ -39212,9 +39210,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A selected, traceable discovery basis with owned review items.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "A successful receipt opens the saved discovery, or returns Sales entry to its handover with the created workspace reference. The first option and revision, selected estimator and accepted Sales link are saved in one transaction.",
+            "Incomplete discovery can be saved with valid owned follow-ups. Costing remains unavailable until the required complete saved basis exists. Nothing here authorises a quotation, order or delivery commitment."
           ],
           "steps": [],
           "rows": [],
@@ -39227,32 +39224,32 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Loading / no eligible opportunities",
+              "Wait for permitted choices. An empty list is different from a read failure; use the Discovery register or CRM Sales as appropriate."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Needs attention",
+              "Entries remain in the working draft. Go to first opens or focuses the first incomplete item."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Creating",
+              "The reviewed request and dialog controls are frozen while the result is being obtained."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Creation outcome not confirmed",
+              "Keep this page open. Confirm original save outcome checks or retries the same original request; it does not create a new intent."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Already exists",
+              "Open the currently permitted existing workspace. Your draft is not copied into it."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Not permitted",
+              "A definite refusal creates nothing. Access loss while checking an earlier unconfirmed result leaves that result unconfirmed."
             ]
           ],
           "headers": [
-            "State or situation",
+            "State",
             "Meaning and response"
           ]
         },
@@ -39260,8 +39257,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site, growing areas, requirements, alternatives and selected scope. Follow the task sequence and check that a selected, traceable discovery basis with owned review items. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Create discovery workspace has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Synthetic Northbank example: the accepted brief supplies reported scope. Riley can assign Morgan as the estimator if Morgan already has the required access, retain independent discovery follow-ups and review the exact Sales link before creating.",
+            "Synthetic lost-response example: the creation response is interrupted. Keep the draft and use Confirm original save outcome. A later permission error does not prove the earlier request failed."
           ],
           "steps": [],
           "rows": [],
@@ -39274,41 +39271,38 @@
           "steps": [],
           "rows": [
             [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
+              "Opportunity missing",
+              "Search the bounded current list and check the Discovery register for an existing workspace. No wider search or access grant is implied."
             ],
             [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
+              "Sales brief changed",
+              "Review the current Sales context. Discovery entries are retained; a stale accepted source cannot be silently linked."
             ],
             [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
+              "Current choices unavailable",
+              "Use Reload permitted choices. Existing input is retained but creation waits for current permitted context."
             ],
             [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
+              "Outcome unconfirmed",
+              "Use Confirm original save outcome before any new request. Keep the tab open; this page does not retain its draft after reload."
             ],
             [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+              "Already exists",
+              "Open existing workspace only when the current scoped read permits it. Do not copy the unsaved draft automatically."
             ]
           ],
           "headers": [
-            "Symptom",
-            "Check and recovery"
+            "Situation",
+            "Response"
           ]
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, use the compact header, step selector and bottom Summary/Create workspace actions. The same working scope remains available at 390 and 320 px.",
+            "Use Tab/Shift+Tab for controls, arrow keys in native radio groups and tabs, and Escape for dismissible dialogs. Closing a dialog returns focus to its opener. Creating cannot be dismissed.",
+            "This page requires an online connection. It has no offline queue, autosave or reload-safe draft. Unsaved navigation is guarded; changing identity clears the business view."
           ],
           "steps": [],
           "rows": [],
@@ -39318,8 +39312,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Use the Discovery register, saved Estimation wizard and Sales handover guides for the surrounding journey. The page contract records accepted design references and remaining questions.",
+            "No operational SOP or production integration is authorised by this synthetic prototype guide."
           ],
           "steps": [],
           "rows": [],
@@ -39329,9 +39323,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft for owner review, prepared 20 October 2026. Implementation checks and visual comparison are recorded separately in the page evidence. No business reviewer, review fingerprint or deployment is asserted.",
+            "Report corrections against this stable guide and page contract through a reviewed repository change."
           ],
           "steps": [],
           "rows": [],
@@ -39341,17 +39334,12 @@
           "section_id": "accepted-sales-workspace-link",
           "title": "Continue from the accepted Sales brief",
           "paragraphs": [
-            "The assigned receiver must also own and be allowed to edit the native workspace. Sales acceptance, Discovery confirmation and quotation approval remain separate. A later accepted Sales successor does not erase an earlier link."
+            "Creation reviews and saves the exact current accepted brief link together with the first workspace and selected estimator. The Sales receiver, creator and estimator are separate identities.",
+            "Existing-workspace linking keeps its separate handover review. Discovery confirmations and quotation approval remain independent of Sales acceptance."
           ],
-          "steps": [
-            "Open the accepted Sales handover and review its reported scope and current source status.",
-            "Open the native workspace, or choose Create native estimating workspace. Record and confirm Discovery independently. A saved creation returns here; it is not undone if linking later fails.",
-            "Choose Review workspace link, compare the Sales and native versions and record a reason. Link accepted brief.",
-            "If sources or the workspace changed, discard the old comparison and explicitly review the new one. If the outcome is uncertain, Check original link or retry the exact original before any new intent.",
-            "Open the linked workspace to see the attributed accepted Sales context and retain native discovery/cost history."
-          ],
-          "headers": [],
-          "rows": []
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -39361,9 +39349,20 @@
         "src/app/(business)/estimating/discovery/new/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/decisions/create-discovery-workspace-figma-design.md",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation-parts.tsx",
+        "src/components/discovery-creation-model.ts",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/estimating/discovery-creation-context.ts",
+        "src/estimating/discovery-creation-reads.ts",
+        "docs/decisions/discovery-creation-journey.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Page-specific first-discovery workflow, atomic accepted Sales link and estimator review, owned follow-ups and original-request recovery; owner guide review pending.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-DISCOVERY-NEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -39374,7 +39373,18 @@
         "src/app/(business)/estimating/discovery/new/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/decisions/create-discovery-workspace-figma-design.md",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation-parts.tsx",
+        "src/components/discovery-creation-model.ts",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/estimating/discovery-creation-context.ts",
+        "src/estimating/discovery-creation-reads.ts",
+        "docs/decisions/discovery-creation-journey.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

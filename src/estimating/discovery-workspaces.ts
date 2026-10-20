@@ -271,7 +271,7 @@ export async function previewDiscoveryCreate(p: Principal, value: unknown) {
       )
     ).rows[0];
     if (existing) {
-      await workspaceAuthority(c, p, existing.id, true);
+      await workspaceAuthority(c, p, existing.id, !input.creation);
       throw new AppError(
         409,
         "RelationshipConflict",
