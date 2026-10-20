@@ -79,4 +79,37 @@ The native keyboard journey now uses the accepted controls and deliberately open
 
 Main `4c1097cc` introduced migration 0113 and other accepted-page consumers. The merge preserves both 0112 and 0113, all component bindings and all status fragments. Every conflicting ledger was reconciled, including object-shaped version lists, computed lists, the hosted-demo count and late Products upgrade expectations. The Service upgrade test now covers both 109 → 112/113 and installing reserved 112 after 113 is already applied, retaining original receipts, grants, seeds and ledger rows. No new migration, seed or capability is added in this repair.
 
-Local repair checks so far: the duplicate/statement fixture and six-width Create actionability matrix passed; the previously failed adopted-module conformance test passed; development-register integrity, migration numbering and naming checks passed; applying the merged migrations to the isolated `ppo_synthetic_test` database passed. Native browser/HTTP journeys and the remaining checks are still running at this repair checkpoint. Updated CI results belong to the pushed repair commit, not the earlier delivery.
+Repair source checkpoint: `3ef70139485afdf91ee770844debb842cdf622e0`. GitHub reports this branch mergeable with main; the merged-tree check passed. The following results belong to that repair source, independently of the earlier delivery checks above.
+
+| Repair check | Actual result |
+| --- | --- |
+| `npm run lint`, `npm run typecheck` | Both passed locally and in CI. |
+| `npm run studio:check` | Passed: 366 entries, 48 components, 210 source routes; 338 unreviewed and 28 stale entries remain visible. |
+| `python scripts/check_migrations.py`, `python scripts/check_naming.py`, `python scripts/check_foundation.py` | Passed. Foundation retained all 78 requirements, 22 issued sources and 69 status fragments. |
+| Status and sequence generators; `git diff --check` | Passed. Sequence: 366 entries, 363 placed, 3 excluded. |
+| Duplicate/statement fixture and six-width Create actionability | Passed, 1 focused browser case covering 1440, 1280, 1024, 820, 390 and 320 px. |
+| Adopted-module conformance | Previously failing case passed against the three route-specific host contracts. |
+| Queue HTTP regression | Passed, 1 focused case checking queue keys, counts, list authority and validation. |
+| Full intake HTTP attempt | 1 of 3 passed. The other two received local `DatabaseConnectTimeout` / HTTP 503 responses. The queue case then passed in isolation; the full run remains failed. |
+| Native navigation, keyboard quality and Sales handover browser attempts | All 6 desktop/mobile cases failed before reaching their repaired Service assertions: session/early reads returned HTTP 503 or customer/work-order setup exceeded the local timeout. These are not passing journey evidence. |
+| `npm run db:migrate` | Passed on the isolated `ppo_synthetic_test` database, including migration 0113. |
+| Two focused migration-history cases | Both failed during the reset hook while acquiring a database connection, before any migration assertion. The connection limit remained the application's existing 3 seconds. The revised 109 and 113 history assertions still require execution in CI. |
+| CI lint, typecheck and unit suite | Passed in the [Azure preparation job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39495216125/job/118878415783): all 964 unit tests passed. Its 17 disposable hosted-identity database cases also passed before browser installation failed. |
+| CI documentation, development register, dependency audit and merged-tree workflows | All passed at the repair source checkpoint. |
+| Production build and broad database/browser suites | No new local production-build pass. The inspected CI jobs stopped at browser installation before these checks; skipped steps are not passing evidence. |
+
+Focused local commands used the existing Playwright configurations, with an ignored local configuration selecting the isolated origin at port 3136:
+
+```text
+node node_modules/@playwright/test/cli.js test --config tmp/service-repair-playwright.config.ts --project desktop-chromium --grep "possible duplicate"
+node node_modules/@playwright/test/cli.js test --config playwright.crm-ui.config.ts --project desktop --grep "each adopted module"
+node --import tsx --test --test-name-pattern "SV-01 I1 register reads" tests/http/intake.test.ts
+node node_modules/@playwright/test/cli.js test --config tmp/service-repair-playwright.config.ts --grep "F42 /service/tickets/new|LC-16 Service intake|P11 selected UI"
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=600000 --test-name-pattern "SV-01 migration 112 preserves" tests/database/intake.test.ts
+```
+
+### Shared browser prerequisite
+
+The repaired branch's [compiled-browser job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39495216113/job/118878763087) installs Chrome `156.0.8078.47`, then the existing runtime policy refuses that unreviewed major. The same refusal occurs on [unmodified main `4c1097cc`](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39489858248/job/118862071685). This is a confirmed shared prerequisite failure; it does not validate the skipped Service journeys or upgrade suites.
+
+Dean authorised separate browser maintenance under ADR-0022. A concurrent session had already claimed that bounded repair in [draft PR #643](https://github.com/deanrfiedler-gif/powerplants-one/pull/643), preserving earlier floors and refusal of future majors. PR #636 keeps that runtime change separate. Broad CI must run again after the prerequisite is available. Owner visual review, business acceptance and deployment remain pending.
