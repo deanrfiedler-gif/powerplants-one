@@ -934,3 +934,24 @@
 .sv-record > form {display:flex;flex-direction:column;flex:1;min-height:0;}
 .sv-duplicate-actions {display:flex;flex-wrap:wrap;gap:8px;}
 .sv-company-context summary {font-size:12px;color:var(--text-secondary);cursor:pointer;}
+
+#ppo-service-record .sv-record-back:not(:has(span)) { display:none; }
+#ppo-service-record .sv-record-main > .record-tablist { margin:0; }
+#ppo-service-record .sv-record-main > .record-tablist button { flex:0 0 auto; }
+.sv-checks > [data-pass="false"] .product-icon { color:var(--warning); }
+@media (max-width:780px) {
+ #ppo-service-record .sv-checks > div { padding:8px 16px; }
+ #ppo-service-record .sv-phone-actions .sv-info-action { order:0; }
+ .sv-savebar .sv-info-action { grid-column:1; grid-row:2; }
+ .sv-savebar > .ppo-button:first-of-type:not(.ppo-button--primary) { grid-column:2; grid-row:2; }
+}
+
+.sv-triage-request {display:none;}
+@media(max-width:780px) { .sv-triage-request {display:block; padding:16px; margin-bottom:16px; background:var(--surface-hover); border:1px solid var(--line-soft); border-radius:var(--radius-control);} .sv-triage-request h3 {font-size:11px; line-height:16px; text-transform:uppercase; color:var(--text-secondary); margin-bottom:8px;} }
+
+#ppo-service-create .field {display:flex;flex-direction:column;gap:8px;margin:0;}
+#ppo-service-create .field label, #ppo-service-create .field :is(input,select,textarea) {margin:0;}
+.sv-earlier-equipment {border-top:1px solid var(--line-soft);margin-top:20px;padding-top:16px;}
+.sv-earlier-equipment h3 {text-transform:uppercase;font-size:11px;color:var(--text-secondary);}
+.sv-earlier-equipment article {border:0;padding:0;}
+.sv-earlier-equipment small {display:block;margin-top:6px;color:var(--text-secondary);}

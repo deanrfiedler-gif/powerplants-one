@@ -607,7 +607,7 @@ const priorityRank = (alias: string) =>
 // Filters shared by the register list and its queue counts; $1 workspace, $2 actor, then $3-$6.
 const registerFilters = (priorityIndex: number) => `t.workspace_id=$1 AND ${ticketVisibility()}
     AND ($3::uuid IS NULL OR t.company_id=$3) AND ($4::uuid IS NULL OR t.site_id=$4)
-    AND position(lower($5) in lower(t.summary||' '||t.display_number))>0 AND ($6::uuid IS NULL OR t.triage_owner_id=$6) AND (${priorityIndex}::text IS NULL OR t.priority=${priorityIndex})`;
+    AND position(lower($5) in lower(t.summary||' '||t.display_number))>0 AND ($6::uuid IS NULL OR t.triage_owner_id=$6) AND ($${priorityIndex}::text IS NULL OR t.priority=$${priorityIndex})`;
 // Queue predicates shared by the register list (queue filter, SV-01 I2) and its counts (ticketQueues), so a
 // toggle never disagrees with its badge. Keys are validated before use; `ca` is the clarification join.
 const queuePredicates = {

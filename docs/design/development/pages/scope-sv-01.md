@@ -46,6 +46,10 @@ States include loading, zero results, filtered no matches, failed/denied reads, 
 - Existing Board drag/Move behaviour remains native and is not an additional stage. All later ADR-0043 stages and Conversations remain out of scope.
 - Some form counters in Figma differ from existing command limits. Native limits remain explicit; no silent truncation or new business rule is added.
 
+- The later shared compact phone-header contract shows reference/revision and retains bottom navigation. The accepted Service record shows summary/reference and no bottom navigation. This build preserves the shared shell contract; owner alignment remains open.
+- Earlier on this equipment uses visible Triaged requests from the declared loaded window. Its date is labelled received because the register does not expose a triage-event timestamp. It implies neither resolution nor closure.
+- Existing Board Preview and Move actions remain in a labelled per-card menu. Standalone snapshots have no invented previous/next context; record sequence navigation is available through Open in sequence.
+
 ## Delivery and evidence
 
 Source implementation is under review in draft PR #636. [Verification ledger](../../../testing/evidence/service-requests-accepted/README.md) records actual check results and local limits. No review fingerprint, reviewer or review date is asserted. No deployment or production readiness is claimed. Passing documentation checks is not business acceptance.

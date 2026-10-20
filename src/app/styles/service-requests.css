@@ -643,7 +643,7 @@
   min-height: 0;
   overflow: auto;
 }
-#ppo-service-requests .ppo-register-table {
+#ppo-service-requests .ppo-register .ppo-register-table {
   table-layout: fixed;
   width: 2591px;
   min-width: 2591px;
@@ -652,7 +652,7 @@
     Verdana,
     sans-serif;
 }
-#ppo-service-requests .ppo-register-table :is(th, td) {
+#ppo-service-requests .ppo-register .ppo-register-table :is(th, td) {
   padding: 0 10px;
   height: 40px;
   white-space: nowrap;
@@ -661,7 +661,7 @@
   border-right: 1px solid var(--line-soft);
   font-weight: 400;
 }
-#ppo-service-requests .ppo-register-table thead th {
+#ppo-service-requests .ppo-register .ppo-register-table thead th {
   height: 40px;
   background: var(--white);
   font-weight: 500;
@@ -669,7 +669,7 @@
   top: 0;
   z-index: 2;
 }
-#ppo-service-requests .ppo-register-table tr > :first-child {
+#ppo-service-requests .ppo-register .ppo-register-table tr > :first-child {
   position: sticky;
   left: 0;
   z-index: 3;
@@ -678,7 +678,7 @@
   text-align: center;
   padding: 0;
 }
-#ppo-service-requests .ppo-register-table tr > :last-child {
+#ppo-service-requests .ppo-register .ppo-register-table tr > :last-child {
   position: sticky;
   right: 0;
   z-index: 3;
@@ -687,13 +687,13 @@
   padding: 0;
   text-align: center;
 }
-#ppo-service-requests .ppo-register-table input[type="checkbox"] {
+#ppo-service-requests .ppo-register .ppo-register-table input[type="checkbox"] {
   width: 16px;
   height: 16px;
   min-height: 0;
   accent-color: var(--navy);
 }
-#ppo-service-requests .ppo-register-table .sr-two-line small {
+#ppo-service-requests .ppo-register .ppo-register-table .sr-two-line small {
   display: none;
 }
 .sr-col-select,
@@ -1061,3 +1061,41 @@
 #ppo-service-requests .mw-menu li a {gap:12px;}
 #ppo-service-requests .mw-menu .sr-queue-label {flex:1;}
 #ppo-service-requests .mw-menu .product-icon {width:16px;height:16px;color:var(--text-secondary);}
+
+#ppo-service-requests .ppo-register input[type="checkbox"] { margin: 0 auto; }
+#ppo-service-requests .ppo-register a { color: var(--ink); text-decoration: none; font-weight: 500; }
+#ppo-service-requests .ppo-register a:hover { text-decoration: underline; }
+
+#ppo-service-requests .sv-dialog:has(.sv-record) { width: min(960px, calc(100vw - 48px)); max-width: 960px; height: calc(100dvh - 64px); max-height: calc(100dvh - 64px); inset: 64px 0 0 auto; margin: 0; }
+#ppo-service-requests .ppo-register tbody th { background: var(--white); vertical-align: middle; }
+#ppo-service-requests .ppo-register .sr-icon-button { border: 0; background: transparent; }
+
+@media (max-width: 780px) {
+ #ppo-service-requests .sr-phone-attention > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ #ppo-service-requests .sv-dialog:has(.sv-record) { inset: 0; width: 100vw; height: 100dvh; max-height: 100dvh; }
+}
+
+#ppo-service-requests .ppo-register-chip { padding: 2px 8px; font-size: 12px; line-height: 16px; font-weight: 400; }
+#ppo-service-requests .sr-attention-text { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; }
+#ppo-service-requests .sr-attention-text .product-icon { width: 14px; height: 14px; flex: none; }
+
+/* Compact accepted Board cards retain existing actions in a labelled menu. */
+#ppo-service-requests .sr-card { gap: 6px; }
+#ppo-service-requests .sr-card h3 { font-size: 14px; line-height: 20px; }
+#ppo-service-requests .sr-card-line { font-size: 12px; line-height: 18px; }
+#ppo-service-requests .sr-next { gap: 0; }
+#ppo-service-requests .sr-next > .product-icon { display: none; }
+#ppo-service-requests .sr-next strong { font-size: 12px; line-height: 18px; font-weight: 400; }
+#ppo-service-requests .sr-next span { font-size: 12px; line-height: 18px; }
+#ppo-service-requests .sr-card-menu { position: relative; }
+#ppo-service-requests .sr-card-menu summary { display:flex; padding: 2px; cursor:pointer; list-style:none; }
+#ppo-service-requests .sr-card-menu > div { position:absolute; right:0; top:100%; display:flex; background:var(--white); border:1px solid var(--line-soft); border-radius:var(--radius-control); z-index:3; box-shadow:var(--shadow-card); }
+#ppo-service-requests .sr-card-menu:not([open]) > div { display:none; }
+#ppo-service-requests .sv-snapshot-main .record-tablist button { background:var(--white); color:var(--ink); border:0; border-radius:0; padding:12px; width:auto; box-shadow:none; }
+#ppo-service-requests .sv-snapshot-main .record-tablist [aria-selected="true"] { color:var(--link); border-bottom:2px solid var(--link); }
+#ppo-service-requests .sv-snapshot-main .sv-decision-row .product-icon { color:var(--success); }
+#ppo-service-requests .sv-dialog:has(.sv-snapshot-columns) { overflow:visible; }
+#ppo-service-requests .sv-dialog:has(.sv-snapshot-columns) > header { position:absolute; left:-50px; top:16px; width:44px; padding:0; border:1px solid var(--line-soft); border-radius:var(--radius-control); background:var(--white); box-shadow:var(--shadow-card); }
+#ppo-service-requests .sv-dialog:has(.sv-snapshot-columns) > header h2 { display:none; }
+#ppo-service-requests .sv-dialog:has(.sv-snapshot-columns) > .sv-record { height:100%; }
+@media(max-width:780px) { #ppo-service-requests .sv-dialog:has(.sv-snapshot-columns) > header { left:auto; right:8px; top:8px; z-index:3; } }

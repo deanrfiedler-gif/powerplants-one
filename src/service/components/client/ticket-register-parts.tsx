@@ -2,7 +2,7 @@
 // SV-01 register parts (build plan I2): board, list, phone cards, preview and the Move dialog. Presentation
 // only. Every state, blocker and permitted action comes from the server read or from the existing commands.
 import Link from "next/link";
-import { RegisterTable } from "../../../components/ui/register-table";
+import { RegisterTable, RegisterChip } from "../../../components/ui/register-table";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ReadState, useResource, type Envelope } from "../../../components/business-ui";
 import { TriageActions, type Intake } from "../../../components/intake-screens";
@@ -43,10 +43,14 @@ export function Chip({
   children: ReactNode;
 }) {
   return (
-    <span className={`sr-chip tone-${tone}`}>
-      {icon && <ProductIcon name={icon} />}
+    <RegisterChip
+      tone={
+        tone === "danger" ? "negative" : tone === "warning" ? "attention" : tone === "success" ? "positive" : "neutral"
+      }
+      icon={icon ? <ProductIcon name={icon} /> : undefined}
+    >
       {children}
-    </span>
+    </RegisterChip>
   );
 }
 
@@ -182,12 +186,31 @@ function Card({
       <div className="sr-card-top">
         <span className="sr-ref">{item.display_number}</span>
         <PriorityChip priority={item.priority} />
+        <details className="sr-card-menu">
+          <summary aria-label={`Actions for ${item.display_number}`}>
+            <ProductIcon name="more" />
+          </summary>
+          <div>
+            {" "}
+            <button
+              type="button"
+              className="secondary sr-icon-button"
+              aria-label={`Preview ${item.display_number}`}
+              aria-pressed={selected}
+              onClick={() => onPreview(item)}
+            >
+              <ProductIcon name="eye" />
+            </button>
+            <MoveButton item={item} onMove={onMove} compact />
+          </div>
+        </details>
       </div>
       <h3>
         <Link href={href(item)}>{item.summary}</Link>
       </h3>
-      <p className="sr-card-line">{customer(item)}</p>
-      <p className="sr-card-line">{site(item)}</p>
+      <p className="sr-card-line">
+        {customer(item)} · {site(item)}
+      </p>
       <NextActionBlock item={item} now={now} />
       {(chips.length > 0 || item.work_orders.length > 0) && (
         <div className="sr-chip-row">
@@ -199,27 +222,6 @@ function Card({
           <WorkChips item={item} />
         </div>
       )}
-      <footer className="sr-card-foot">
-        <Avatar name={item.triage_owner_name} />
-        <div>
-          <span>
-            Owner <strong>{item.triage_owner_name}</strong>
-          </span>
-          <span>
-            Received {formatWhen(item.received_at, now)} · {channelLabel(item.channel)}
-          </span>
-        </div>
-        <button
-          type="button"
-          className="secondary sr-icon-button"
-          aria-label={`Preview ${item.display_number}`}
-          aria-pressed={selected}
-          onClick={() => onPreview(item)}
-        >
-          <ProductIcon name="eye" />
-        </button>
-        <MoveButton item={item} onMove={onMove} compact />
-      </footer>
     </article>
   );
 }
@@ -393,7 +395,11 @@ export const columns: Column[] = [
     key: "stage",
     label: "Stage",
     width: 176,
-    cell: (item) => <Chip tone={item.status === "NeedsInformation" ? "warning" : item.status === "Triaged" ? "success" : "neutral"}>{stageLabel(item.status)}</Chip>,
+    cell: (item) => (
+      <Chip tone={item.status === "NeedsInformation" ? "warning" : item.status === "Triaged" ? "success" : "neutral"}>
+        {stageLabel(item.status)}
+      </Chip>
+    ),
   },
   {
     key: "attention",
@@ -402,9 +408,10 @@ export const columns: Column[] = [
     cell: (item, now) => {
       const chip = attention(item, now);
       return chip ? (
-        <Chip tone={chip.tone} icon={chip.tone === "danger" || chip.tone === "warning" ? "warning" : undefined}>
-          {chip.text}
-        </Chip>
+        <span className={`sr-attention-text tone-${chip.tone}`} title={chip.text}>
+          {(chip.tone === "danger" || chip.tone === "warning") && <ProductIcon name="warning" />}
+          {clarificationOverdue(item, now) ? "Clarification overdue" : chip.text}
+        </span>
       ) : (
         <span className="sr-none">None</span>
       );
@@ -653,7 +660,11 @@ export function PhoneCards({ items, now }: { items: RegisterItem[]; now: Date })
             <Link className="sr-phone-row" href={href(item)} data-ticket-id={item.id}>
               <div className="sr-phone-title">
                 <strong>{item.summary}</strong>
-                <span>{formatWhen(item.received_at, now).split(",")[0]}</span>
+                <span>
+                  {formatWhen(item.received_at, now)
+                    .split(",")[0]
+                    .replace(/^today /i, "")}
+                </span>
               </div>
               <div className="sr-phone-context">
                 <small>
@@ -664,7 +675,8 @@ export function PhoneCards({ items, now }: { items: RegisterItem[]; now: Date })
               <div className="sr-phone-attention">
                 <span className={att ? `tone-${att.tone}` : "sr-none"}>
                   {att && <ProductIcon name="warning" />}
-                  {att?.text ?? (item.work_orders[0] ? workOrderLabel(item.work_orders[0]) : "No attention needed")}
+                  {(clarificationOverdue(item, now) ? "Clarification overdue" : att?.text) ??
+                    (item.work_orders[0] ? workOrderLabel(item.work_orders[0]) : "No attention needed")}
                 </span>
                 <small>{stageLabel(item.status)}</small>
               </div>
@@ -738,7 +750,11 @@ export function Preview({
           {customerLabel(item)} · {siteLabel(item)}
         </p>
         <div className="sr-chip-row">
-          <Chip tone={item.status === "NeedsInformation" ? "warning" : item.status === "Triaged" ? "success" : "neutral"}>{stageLabel(item.status)}</Chip>
+          <Chip
+            tone={item.status === "NeedsInformation" ? "warning" : item.status === "Triaged" ? "success" : "neutral"}
+          >
+            {stageLabel(item.status)}
+          </Chip>
           <Chip tone={item.priority === "Urgent" ? "danger" : item.priority === "High" ? "warning" : "neutral"}>
             {item.priority} priority
           </Chip>

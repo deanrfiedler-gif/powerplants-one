@@ -45991,7 +45991,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open All open or My requests. Use List for comparison or Board for the three native stages. Open a request title or snapshot before acting."
+            "Read the current revision, stage and readiness. Triage explains outstanding checks; Reported issue retains the original report, Updates retains customer statements, and Linked work opens separately authorised work orders."
           ],
           "steps": [],
           "rows": [],
@@ -46021,8 +46021,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Log a request keeps the draft beside an advisory check of open requests at the same site, narrowed to the selected equipment. Open a possible match and add the customer’s statement if appropriate.",
-            "Complete triage reviews priority, owner, priority reason, next action and the reason together. For Needs information, record the clarification outcome. An open linked clarification can be completed atomically only by its permitted current owner."
+            "Complete triage reviews priority, request owner, priority reason, next action, clarification outcome and reason in one save. Only the permitted current owner can also complete an open linked clarification. Until saving succeeds, the request stays at its existing stage.",
+            "Record customer statement keeps the source, time, channel and words as reported symptoms. It advances the request revision without changing its assessment. Update details and Request information remain separate permitted native actions."
           ],
           "steps": [],
           "rows": [],
@@ -46167,7 +46167,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open All open or My requests. Use List for comparison or Board for the three native stages. Open a request title or snapshot before acting."
+            "Choose or confirm Company context and Site. Enter Caller, Summary and What the customer reported. Review the possible matches before selecting Create request."
           ],
           "steps": [],
           "rows": [],
@@ -46177,7 +46177,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The side menu contains triage and linked-work queues. The record separates details, Triage, Reported issue, Linked work, Updates and History. On a phone, use the header view chooser and pinned actions."
+            "Caller and customer records the received time, channel and visible context. Issue retains the caller’s words. Location and impact records Equipment, Reported priority and its explanation. Ownership and next action identifies who will act. Check before creating remains beside the draft."
           ],
           "steps": [],
           "rows": [],
@@ -46197,8 +46197,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Log a request keeps the draft beside an advisory check of open requests at the same site, narrowed to the selected equipment. Open a possible match and add the customer’s statement if appropriate.",
-            "Complete triage reviews priority, owner, priority reason, next action and the reason together. For Needs information, record the clarification outcome. An open linked clarification can be completed atomically only by its permitted current owner."
+            "Use Add as customer statement on a possible match to carry the caller’s words, name, time and channel into that existing request. Review them and record a reason. Saving adds attributed reported-symptom evidence and keeps the new-request draft; it creates no new request and changes no priority, owner or stage.",
+            "If the issue is new, complete the required entries and select Create request. Successful creation opens the request at New. Cancelling unsaved work asks whether to discard it."
           ],
           "steps": [],
           "rows": [],
@@ -46279,7 +46279,9 @@
         {
           "section_id": "native-won-receiving",
           "title": "Continue an accepted Won handover",
-          "paragraphs": [],
+          "paragraphs": [
+            "When opened from an accepted Sales handover, retained source context and the native binding are checked again on save. Complete the request fields and use Create request. A changed or unavailable handover must be resolved at its source; entering a new customer statement does not consume that handover."
+          ],
           "steps": [],
           "rows": [],
           "headers": []
@@ -46381,8 +46383,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Log a request keeps the draft beside an advisory check of open requests at the same site, narrowed to the selected equipment. Open a possible match and add the customer’s statement if appropriate.",
-            "Complete triage reviews priority, owner, priority reason, next action and the reason together. For Needs information, record the clarification outcome. An open linked clarification can be completed atomically only by its permitted current owner."
+            "Use the queue menu, Owner and Priority filters to narrow visible requests. More contains search, Filters and column controls. Clear filters restores the list. List compares rows; Board shows New, Needs information and Triaged.",
+            "Select rows only for Open in sequence or Export list. Preview opens a large snapshot; Open request enters the full record. Selection does not grant bulk triage, booking or authorisation."
           ],
           "steps": [],
           "rows": [],
