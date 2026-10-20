@@ -1,0 +1,440 @@
+/* CS-02: accepted 40px grid, 60px toolbar and 85px phone rows. Shared tokens and shell remain authoritative. */
+#ppo-people .mw-content {
+  padding: 0;
+  overflow: auto;
+}
+#ppo-people .people-register {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100%;
+  background: var(--white);
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+}
+#ppo-people .mw-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+#ppo-people .mw-menu nav :is(a, button) {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+  text-align: left;
+  text-decoration: none;
+}
+#ppo-people .mw-menu nav small {
+  margin-left: auto;
+  color: var(--text-secondary);
+}
+#ppo-people .mw-menu nav [aria-current="page"] {
+  background: var(--ppo-shell-selected);
+  color: var(--ppo-shell-link);
+}
+#ppo-people :is(svg, .ppo-fa) {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+#ppo-people .people-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 9px 16px 10px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+}
+#ppo-people .people-toolbar :is(button, .ppo-button) {
+  min-height: 40px;
+  height: 40px;
+}
+#ppo-people .people-count {
+  margin: 0 0 0 auto;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+#ppo-people .people-icon-button {
+  width: 40px;
+  padding: 0;
+  flex: none;
+}
+#ppo-people .people-desktop {
+  min-width: 0;
+}
+#ppo-people .ppo-register {
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+}
+#ppo-people .ppo-register-table {
+  table-layout: fixed;
+  width: 1718px;
+  min-width: 100%;
+  font-size: 14px;
+}
+#ppo-people .ppo-register-table :is(th, td) {
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+  border-right: 1px solid var(--ppo-shell-line);
+  background: var(--white);
+  color: var(--ink);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#ppo-people .ppo-register-table th {
+  padding: 0;
+  font-weight: 500;
+}
+#ppo-people .ppo-register-table :is(.ppo-register-sort, .ppo-register-label) {
+  height: 39px;
+  min-height: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-people .ppo-register-table td a {
+  color: inherit;
+  text-decoration: none;
+}
+#ppo-people .ppo-register-table td a:hover {
+  text-decoration: underline;
+}
+#ppo-people .ppo-register-table td a + a::before {
+  content: "; ";
+}
+#ppo-people .people-col-name a {
+  font-weight: 500;
+}
+#ppo-people .ppo-register-table .people-check {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 44px;
+  padding: 0;
+  text-align: center;
+}
+#ppo-people .people-check input {
+  margin: 0;
+  padding: 0;
+  min-height: 16px;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  accent-color: var(--link);
+}
+#ppo-people .ppo-register-table .people-actions {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  width: 44px;
+  padding: 0;
+  text-align: center;
+}
+#ppo-people .people-actions button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 43px;
+  min-height: 39px;
+  height: 39px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+}
+#ppo-people .people-actions .crm-r38-popover button {
+  width: 100%;
+  min-height: 44px;
+  justify-content: flex-start;
+}
+#ppo-people .people-col-name {
+  width: 170px;
+}
+#ppo-people .people-col-organisation {
+  width: 190px;
+}
+#ppo-people .people-col-role {
+  width: 160px;
+}
+#ppo-people .people-col-phone {
+  width: 120px;
+}
+#ppo-people .people-col-email {
+  width: 230px;
+}
+#ppo-people .people-col-status {
+  width: 110px;
+}
+#ppo-people .people-col-preference {
+  width: 170px;
+}
+#ppo-people .people-col-sites {
+  width: 130px;
+}
+#ppo-people .people-col-notices {
+  width: 170px;
+}
+#ppo-people .people-col-corrected {
+  width: 150px;
+}
+#ppo-people .ppo-register-table tr[data-selected] td {
+  background: var(--ppo-shell-selected);
+}
+#ppo-people .people-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: var(--radius-control);
+  background: var(--neutral-surface);
+  font-size: 12px;
+}
+#ppo-people .people-phone-list {
+  display: none;
+}
+#ppo-people .people-state {
+  margin: 12px 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  color: var(--text-secondary);
+}
+#ppo-people .people-state strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+#ppo-people .people-state p {
+  margin: 8px 0;
+}
+#ppo-people .people-error {
+  background: var(--danger-surface);
+  border-color: var(--danger-border);
+}
+#ppo-people .people-error strong {
+  color: var(--danger);
+}
+#ppo-people .people-loading > p {
+  padding: 12px 16px 8px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-people .people-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-people .people-skeleton i {
+  display: block;
+  height: 10px;
+  width: 240px;
+  max-width: 80%;
+  margin: 0;
+  border-radius: var(--radius-control);
+  background: var(--surface-hover);
+}
+#ppo-people .people-skeleton i:nth-child(2) {
+  width: 200px;
+}
+#ppo-people .people-skeleton i:nth-child(3) {
+  width: 140px;
+}
+#ppo-people .crm-r38-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+}
+#ppo-people .crm-r38-popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  min-width: 220px;
+  max-width: calc(100vw - 24px);
+  overflow: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  padding: 8px;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+}
+#ppo-people .crm-r38-popover :is(button, a) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px;
+  text-align: left;
+}
+#ppo-people .crm-r38-popover h2 {
+  font-size: 14px;
+  margin: 8px;
+}
+#ppo-people .crm-r38-panel {
+  padding: 0;
+  width: min(520px, calc(100vw - 24px));
+  max-height: 90dvh;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+}
+#ppo-people .crm-r38-panel::backdrop {
+  background: color-mix(in srgb, var(--ink) 25%, transparent);
+}
+#ppo-people .crm-r38-panel :is(header, footer) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--line-strong);
+}
+#ppo-people .crm-r38-panel h2 {
+  font-size: 18px;
+  margin: 0;
+}
+#ppo-people .crm-r38-panel-body {
+  padding: 16px;
+  overflow: auto;
+}
+#ppo-people .crm-r38-panel label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#ppo-people .crm-r38-panel form label {
+  display: grid;
+}
+#ppo-people .people-filter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+#ppo-people .people-filter-actions .ppo-button--quiet:hover {
+  background: var(--neutral-surface);
+  color: var(--ink);
+}
+#ppo-people .crm-r38-panel :is(input:not([type="checkbox"]), select) {
+  width: 100%;
+  min-height: 44px;
+  font-size: 16px;
+}
+#ppo-people .ppo-register-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+}
+@media (max-width: 1199px) {
+  #ppo-people .people-as-at {
+    display: none;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-people .people-toolbar,
+  #ppo-people .people-desktop {
+    display: none;
+  }
+  #ppo-people .people-phone-list {
+    display: block;
+  }
+  #ppo-people .people-phone-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 16px;
+    min-height: 85px;
+    border-bottom: 1px solid var(--ppo-shell-line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  #ppo-people .people-phone-row > div {
+    flex: 1;
+    min-width: 0;
+  }
+  #ppo-people .people-phone-title {
+    display: flex;
+    /* The accepted row top-aligns its 20px name and 16px preference lines. */
+    align-items: flex-start;
+    gap: 12px;
+    justify-content: space-between;
+  }
+  #ppo-people .people-phone-title strong {
+    font-weight: 500;
+  }
+  #ppo-people .people-phone-title span {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+    max-width: 40%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-people .people-phone-row p {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    overflow-wrap: anywhere;
+  }
+  #ppo-people .people-phone-row .people-channel-warning {
+    color: var(--warning);
+  }
+  #ppo-people .people-phone-row p :is(svg, .ppo-fa) {
+    width: 14px;
+    height: 14px;
+  }
+  #ppo-people .crm-r38-panel {
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+  #ppo-people .crm-r38-panel header {
+    background: var(--ppo-shell-surface);
+  }
+  #ppo-people .mw-menu nav :is(a, button) {
+    min-height: 44px;
+  }
+}

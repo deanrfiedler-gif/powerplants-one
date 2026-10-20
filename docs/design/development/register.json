@@ -7497,7 +7497,7 @@
     },
     {
       "key": "route:/people",
-      "title": "Contact directory",
+      "title": "People",
       "kind": "route",
       "module": "CS",
       "summary": "Find a canonical Person and maintain accurate contact information without inventing customer authority or consent.",
@@ -7505,9 +7505,13 @@
       "source_paths": [
         "src/app/(business)/people/page.tsx",
         "src/components/crm-directory.tsx",
-        "src/components/context-screens.tsx",
         "src/crm/directory.ts",
-        "src/app/layout.tsx"
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx"
       ],
       "guide_key": "guide.page.people",
       "design_path": "docs/design/development/pages/route-people.md",
@@ -7519,12 +7523,14 @@
         "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/people-figma-design.md"
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/design/development/people-native-fixtures.json"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-02 accepted People register implemented for synthetic review; person record follows separately",
+      "visual_status": "Accepted People and compact-header sources compared with application captures at 1440, 1024, 390 and 320 px; deviations recorded; owner visual/device review pending",
+      "functional_status": "Two real database cases and ten People browser cases pass; desktop/mobile navigation and retained saved views also pass. Full unit run has three main-reproduced Windows failures and two timeouts that pass in quiet reruns. Check results and boundaries: docs/testing/evidence/people-native/README.md",
+      "deployment_status": "Dedicated local worktree; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7535,7 +7541,7 @@
         "route:/contacts"
       ],
       "reviewer": null,
-      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
+      "notes": "PPO - Design page 1395:150275, register 1395:150312, tablet 1395:150835, phone 1395:151069; named People — accepted. No review fingerprint copied. Existing saved views remain at people_layout=directory; Organisations hub and Person record remain earlier native workflows."
     },
     {
       "key": "route:/projects/[id]",
@@ -9106,7 +9112,13 @@
         "src/app/(business)/contacts/page.tsx",
         "src/components/crm-directory.tsx",
         "src/components/contacts-navigation.tsx",
-        "src/crm/directory.ts"
+        "src/crm/directory.ts",
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx"
       ],
       "guide_key": "guide.page.contacts",
       "design_path": "docs/design/development/pages/route-contacts.md",
@@ -9118,12 +9130,14 @@
         "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/people-figma-design.md"
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/design/development/people-native-fixtures.json"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-02 accepted People register implemented for synthetic review; person record follows separately",
+      "visual_status": "Accepted People and compact-header sources compared with application captures at 1440, 1024, 390 and 320 px; deviations recorded; owner visual/device review pending",
+      "functional_status": "Two real database cases and ten People browser cases pass; desktop/mobile navigation and retained saved views also pass. Full unit run has three main-reproduced Windows failures and two timeouts that pass in quiet reruns. Check results and boundaries: docs/testing/evidence/people-native/README.md",
+      "deployment_status": "Dedicated local worktree; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -9134,7 +9148,7 @@
         "route:/people"
       ],
       "reviewer": null,
-      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
+      "notes": "PPO - Design page 1395:150275, register 1395:150312, tablet 1395:150835, phone 1395:151069; named People — accepted. No review fingerprint copied. Existing saved views remain at people_layout=directory; Organisations hub and Person record remain earlier native workflows."
     },
     {
       "key": "route:/engineering/[id]/changes",
