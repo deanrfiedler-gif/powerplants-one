@@ -757,6 +757,7 @@
         "route:/products",
         "route:/customers",
         "route:/customers/[id]",
+        "route:/service/reports",
         "route:/people",
         "route:/contacts"
       ],
@@ -2434,7 +2435,8 @@
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2596,6 +2598,8 @@
         "route:/service/packs/new",
         "route:/customers",
         "route:/customers/[id]",
+        "route:/service/reports",
+        "route:/service/reports/[id]",
         "route:/people",
         "route:/contacts"
       ],
@@ -2715,6 +2719,7 @@
         "scope:SC-08",
         "scope:SC-09",
         "scope:SC-10",
+        "route:/service/reports",
         "route:/people",
         "route:/contacts"
       ],

@@ -14,6 +14,7 @@ import {
   amendReport,
   recordResponse,
   readReport,
+  listReports,
   presentationBytes,
 } from "../../src/reports/service";
 import {
@@ -145,6 +146,28 @@ test("P09 exact submission freezes entries; duplicate original recovers same rec
     ),
   );
   assert.equal(q.report.finance_state, "Separate Finance authority required");
+});
+test("SV-06 register projects permitted exact attendance facts and recorded return counts", async () => {
+  const fixture = await submitted();
+  const listed = await listReports(fixture.reviewer);
+  const row = listed.items.find(item => item.id === fixture.report.id)!;
+  const snapshot = fixture.report.revisions[0].snapshot;
+  assert.equal(row.technician_id, fixture.p.actor_id);
+  assert.equal(row.customer_id, snapshot.customer.id);
+  assert.equal(row.customer, snapshot.customer.name);
+  assert.equal(row.site, snapshot.site.name);
+  assert.equal(row.attendance_start, snapshot.attendance.start_at);
+  assert.equal(row.outcome, snapshot.completion.scope_outcome);
+  assert.equal(row.response, null);
+  assert.equal(row.mine, true);
+  assert.equal(listed.completeness, "Complete");
+  const returned = decision(fixture.report, "Returned");
+  await reviewReport(fixture.reviewer, fixture.report.id, returned);
+  const changed = (await listReports(fixture.reviewer)).items.find(item => item.id === fixture.report.id)!;
+  assert.equal(changed.status, "Returned");
+  assert.equal(changed.returned_entries, returned.entry_decisions.filter(item => item.decision === "Returned").length);
+  await database().query("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='report.read'", [fixture.reviewer.workspace_id, fixture.reviewer.actor_id]);
+  await assert.rejects(listReports(fixture.reviewer), code("Forbidden"));
 });
 test("P09 return comments, linked correction, successor submission and narrow attendance acceptance", async () => {
   const q = await submitted(),

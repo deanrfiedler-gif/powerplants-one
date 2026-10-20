@@ -2705,7 +2705,7 @@
       "title": "Service review and controlled report workspace",
       "kind": "scope",
       "module": "SV",
-      "summary": "Integrate the fuller Service Review & Reports workspace over the existing review/report routes and commands.",
+      "summary": "SV-06 accepted-design register, report snapshot and tabbed record over the existing exact review, issue and FI-07 response commands. Latest-200 window, permission-filtered queues and owned work remain bounded.",
       "path": "/service/reports",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2728,11 +2728,16 @@
         "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/service-review-figma-design.md"
+        "docs/decisions/service-review-figma-design.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/reports/register-model.ts",
+        "src/app/styles/service-reports.css",
+        "docs/testing/evidence/service-review-build/README.md"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
+      "functional_status": "SV-06 build verification and local limits: docs/testing/evidence/service-review-build/README.md. FI-07 prior persisted proof remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8175,7 +8180,7 @@
       "title": "Service report detail",
       "kind": "route",
       "module": "SV",
-      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate. Submitted Photo entries support exact original inspection by the current Service review owner; customer output remains separate.",
+      "summary": "SV-06 accepted-design register, report snapshot and tabbed record over the existing exact review, issue and FI-07 response commands. Latest-200 window, permission-filtered queues and owned work remain bounded.",
       "path": "/service/reports/[id]",
       "source_paths": [
         "src/app/(business)/service/reports/[id]/page.tsx"
@@ -8206,11 +8211,16 @@
         "src/components/report-photo.tsx",
         "src/reports/photos.ts",
         "docs/decisions/report-photo-inspection.md",
-        "docs/decisions/service-review-figma-design.md"
+        "docs/decisions/service-review-figma-design.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/reports/register-model.ts",
+        "src/app/styles/service-reports.css",
+        "docs/testing/evidence/service-review-build/README.md"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
+      "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
+      "functional_status": "SV-06 build verification and local limits: docs/testing/evidence/service-review-build/README.md. FI-07 prior persisted proof remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8230,7 +8240,7 @@
       "title": "Service review & reports",
       "kind": "route",
       "module": "SV",
-      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
+      "summary": "SV-06 accepted-design register, report snapshot and tabbed record over the existing exact review, issue and FI-07 response commands. Latest-200 window, permission-filtered queues and owned work remain bounded.",
       "path": "/service/reports",
       "source_paths": [
         "src/app/(business)/service/reports/page.tsx"
@@ -8255,11 +8265,16 @@
         "src/offline/app.ts",
         "docs/decisions/field-customer-response.md",
         "docs/testing/evidence/field-customer-response/README.md",
-        "docs/decisions/service-review-figma-design.md"
+        "docs/decisions/service-review-figma-design.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/reports/register-model.ts",
+        "src/app/styles/service-reports.css",
+        "docs/testing/evidence/service-review-build/README.md"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
+      "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
+      "functional_status": "SV-06 build verification and local limits: docs/testing/evidence/service-review-build/README.md. FI-07 prior persisted proof remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
