@@ -42,3 +42,7 @@ Reuse labelled Field/SelectField, shared RecordTabs, native dialogs, validation,
 ## Differences and verification
 
 Q6 timing fields remain a labelled proposal with no persistence. No new technical rule or equipment suitability follows from a category. Phone Alternatives/Revisions images, real devices, screen-reader review and owner acceptance remain open. See [execution evidence](../../../testing/evidence/es02-figma/README.md). Review fingerprints remain unchanged; automated tests and source presence do not approve the page.
+
+## Discovery costing consumer
+
+ES-02 `route:/estimating/discovery/[id]/costing` reuses this family. The page-local composition and synthetic state fixture are described in [the page contract](../pages/route-estimating-discovery-id-costing.md); [execution evidence](../../../testing/evidence/discovery-costing/README.md) is separate from owner review. No new shared component, token, grant or offline capability is introduced.

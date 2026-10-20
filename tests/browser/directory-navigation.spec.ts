@@ -13,18 +13,17 @@ async function login(page: Page) {
   expect(result.status()).toBe(200);
 }
 async function directory(page: Page, path: "/customers" | "/people") {
-  const pending = waitForSampleCoreResponse(page, path === "/customers" ? "/api/v1/customers/register" : "/api/v1/crm/directory");
+  const pending = waitForSampleCoreResponse(page, path === "/customers" ? "/api/v1/customers/register" : "/api/v1/people/register");
   void pending.catch(() => undefined);
   await page.goto(path);
   const response = await pending;
   expect(response.status()).toBe(200);
   const data = await response.json();
-  if(path === "/people") expect(new URL(response.url()).searchParams.get("kind")).toBe("people");
-  await expect(page.getByRole("heading", { name: path === "/customers" ? "Organisations" : "People", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: path === "/customers" ? "Organisations" : "People", level: 1, exact: true })).toBeVisible();
   // Performance diagnostics share this readiness check; the phone trigger stays mounted behind Menu.
   await expect(identityToggle(page)).toBeEnabled();
   if (test.info().project.use.isMobile) await expect(identityToggle(page)).toBeHidden();
-  await expect(page.locator(path === "/customers" ? ".org-col-name a" : ".crm-directory-table tbody th a").first()).toBeAttached();
+  await expect(page.locator(path === "/customers" ? ".org-col-name a" : ".people-col-name a").first()).toBeAttached();
   return data as { items: { id: string; display_name: string }[] };
 }
 async function activate(page: Page, link: Locator, touch: boolean, keyboard = false) {
@@ -59,7 +58,7 @@ test("directory record links avoid automatic reads and keep exact receiving navi
     };
     page.on("request", onRequest);
     const data = await directory(page, path);
-    const link = page.locator(path === "/customers" ? (isMobile ? ".org-phone-list article > a" : ".org-col-name a") : (isMobile ? ".crm-directory-mobile-main" : ".crm-directory-table tbody th a")).first();
+    const link = page.locator(path === "/customers" ? (isMobile ? ".org-phone-list article > a" : ".org-col-name a") : (isMobile ? ".people-phone-row" : ".people-col-name a")).first();
     if (!isMobile) await link.hover();
     // A bounded observation of automatic work, not a readiness/performance target.
     await page.waitForTimeout(1000);
@@ -82,13 +81,16 @@ test("directory record links avoid automatic reads and keep exact receiving navi
       await receive(page, page.locator(".org-desktop-grid tbody tr").first().locator("th,td").nth(index).getByRole("link"), false);
     }
     await directory(page, "/people");
-    await receive(page, page.locator(".crm-affiliation-list a").first(), false);
+    await receive(page, page.locator(".people-col-organisation a").first(), false);
   }
   for (const [path, kind] of [["/customers", "customer"], ["/people", "person"]] as const) {
     await directory(page, path);
     if(path === "/customers") { await page.getByRole("button",{name:"Organisation actions",exact:true}).click(); await activate(page,page.getByRole("link",{name:"Create organisation",exact:true}),isMobile,!isMobile); }
-    else await activate(page, page.locator(".crm-directory .primary-link"), isMobile, !isMobile);
-    await expect(page).toHaveURL(path === "/customers" ? /customers\/new$/ : new RegExp(`/customers/new\\?kind=${kind}$`));
+    else {
+      await page.getByRole('button',{name:isMobile ? 'Search people' : 'People options',exact:true}).click();
+      await activate(page,page.getByRole('link',{name:'Create person',exact:true}),isMobile,!isMobile);
+    }
+    await expect(page).toHaveURL(path === "/customers" ? /customers\/new$/ : new RegExp(`/customers/new\\?kind=${kind}(?:&department=[a-z]+)?$`));
     await expect(page.locator("main form").first()).toBeVisible();
   }
   await directory(page, "/customers");
@@ -103,7 +105,7 @@ test("directory record links avoid automatic reads and keep exact receiving navi
     const link = page.getByRole("navigation", { name: "Shared records", exact: true }).getByRole("link", { name: label, exact: true });
     await activate(page, link, isMobile, !isMobile);
     await expect(page).toHaveURL(new URL(path, page.url()).href);
-    await expect(page.getByRole("heading", { name: path === "/equipment" ? "Installed base" : label, exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: path === "/equipment" ? "Installed base" : label, level: 1, exact: true })).toBeVisible();
   }
   await page.screenshot({ path: info.outputPath("directory-navigation.png"), fullPage: false });
 });

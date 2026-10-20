@@ -2278,23 +2278,23 @@
     {
       "guide_key": "guide.cs.06",
       "entry_key": "scope:CS-06",
-      "title": "Site access & horticultural readiness",
+      "title": "Access & readiness",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "Accepted Figma design implemented; native owner review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "source_commit": "55c3852",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Current verification is recorded in docs/testing/evidence/access-readiness-native/README.md. Historical receiving evidence is not proof of this implementation.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation."
+            "Prepare an exact Site visit from recorded requirements, evidence and work windows. An acknowledgement records that you read the check; it grants no authority to proceed."
           ],
           "steps": [],
           "headers": [],
@@ -2304,7 +2304,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Choose the canonical Site and exact Facilities, individuals, activity and attendance interval. Confirm the Site time zone."
+            "Open the canonical Site. Confirm the Site time zone, scheduled visit, activity, areas and every individual visitor. Only permitted records are offered; a missing choice is not proof that no record exists."
           ],
           "steps": [],
           "headers": [],
@@ -2315,9 +2315,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Create a Site readiness record with an accountable owner.",
-            "Record each source requirement and explicit Site or Facility applicability. Use * only when a source explicitly applies to all activities.",
-            "Capture source evidence separately for Site approval, movement plan, individual induction, clean-down, shutdown approval and tool check."
+            "Create a Site readiness record if none exists.",
+            "In Requirements, start a revision, record exact scope and source references, then Submit revision for review. Another permitted editor reviews and publishes it, or returns it for changes.",
+            "In Evidence, capture each exact requirement revision, area, activity and visitor where applicable. A different permitted editor reviews the exact capture and records a review note."
           ],
           "headers": [],
           "rows": []
@@ -2326,7 +2326,7 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Overview, Requirements, Visitor / biosecurity / evidence, Work windows, Visit preparation and Review / history."
+            "Choose Visit to prepare in the Selected visit facts; on phone, use Site details in More. The list contains up to 40 permitted visits; Schedule remains the complete register. Overview shows the selected visit’s saved check and blockers. Requirements groups the source by whole Site and area. Evidence separates capture from independent review. Work windows shows recorded dates, seasons and local times. Visit preparation records a check or acknowledges one. History retains versions and reasons."
           ],
           "steps": [],
           "headers": [],
@@ -2336,7 +2336,7 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Facility type or hierarchy does not imply readiness. Captured evidence is not reviewed evidence; edited or expired evidence does not satisfy an earlier review. No work window means access is unknown. Acknowledgement grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
+            "MYOB remains the ERP authority and SharePoint owns business documents. PPO retains synthetic source references, exact capture revisions and immutable checks. Captured, expired or superseded evidence does not clear a requirement. A missing work window means readiness is unknown."
           ],
           "steps": [],
           "headers": [],
@@ -2347,12 +2347,12 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Create a Site readiness record with an accountable owner.",
-            "Record each source requirement and explicit Site or Facility applicability. Use * only when a source explicitly applies to all activities.",
-            "Capture source evidence separately for Site approval, movement plan, individual induction, clean-down, shutdown approval and tool check.",
-            "Have another permitted editor review each exact captured item.",
-            "Record effective dates, seasonal boundaries and local work-window times.",
-            "Evaluate the exact visit basis, review blockers and acknowledge the exact retained preparation if appropriate."
+            "Create a Site readiness record if none exists.",
+            "In Requirements, start a revision, record exact scope and source references, then Submit revision for review. Another permitted editor reviews and publishes it, or returns it for changes.",
+            "In Evidence, capture each exact requirement revision, area, activity and visitor where applicable. A different permitted editor reviews the exact capture and records a review note.",
+            "Record the effective dates, seasonal boundaries and local times in Work windows. Weekdays remain outside this increment.",
+            "Check preparation for the selected visit, activity, areas and every visitor. Scheduled attendance times come from the server. Review all blockers.",
+            "To record that you have read a check, choose Acknowledge this check and give a reason. The basis is read only; the acknowledgement grants nothing."
           ],
           "headers": [],
           "rows": []
@@ -2361,8 +2361,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "Saved to the server confirms a recorded command. Further actions wait for the refreshed record; a saved preparation selects its own visit basis. Publishing requirements makes only that independently reviewed draft active. It does not review its evidence. Acknowledging a check grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
           ],
           "steps": [],
           "headers": [],
@@ -2372,8 +2371,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Survey states are Draft, Submitted, Returned and Reviewed. Readiness snapshots separately show whether their exact source still matches."
+            "No requirements recorded means readiness unknown. A source change keeps the old check and requires a recheck. A pending or returned requirements draft does not replace the active requirements. Read-only access removes mutation controls. Loading, unavailable, restricted and empty results are separate states.",
+            "Readiness contact (P4) is not available. Access arranged, Power and water available, Equipment accessible and Isolation arrangements agreed show its intended place without recording customer confirmation. The no-requirements view leads to requirements and work windows."
           ],
           "steps": [],
           "headers": [],
@@ -2383,7 +2382,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "A requirement source revision changes after acknowledgement. The original preparation stays in history and is marked for recheck; the new evidence must match the successor requirement revision."
+            "An induction source changes after a check. Submit a requirements revision; a different permitted editor publishes it. The old evidence and check remain in History. Capture evidence against the new requirement revision, have it independently reviewed, and check the visit again."
           ],
           "steps": [],
           "headers": [],
@@ -2393,10 +2392,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Correct labelled validation errors before retrying. A source or version conflict refuses the command. The acknowledgement reason stays in the form: Check again, then explicitly Use latest check and retain reason before acknowledging.",
+            "When a save outcome is uncertain, use Confirm original save. The original operation is reconciled before another intent can be sent. This page is online only; it has no offline save queue. Inaccessible source content is removed on revalidation."
           ],
           "steps": [],
           "headers": [],
@@ -2406,9 +2403,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The shared compact phone header and sticky footer keep the page actions reachable. Overview, Evidence, Windows and History lead the phone tabs; Requirements and Visit preparation remain in the scrolling strip and More. At 320 px the gated contact action is explained in More.",
+            "Use arrow keys, Home and End in the tab strip. Tabs retain their selection in the URL. Source facts and the visit picker stay available through Site details below the workspace. Review forms focus the first editable control and return focus on cancellation. The requirements table has its own labelled horizontal scroll region."
           ],
           "steps": [],
           "headers": [],
@@ -2418,8 +2414,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html"
+            "Open Site returns to the exact canonical Site; Open survey opens its scoped survey register. A selected scheduled visit links to its exact appointment. No communication or business transaction is performed.",
+            "Accepted source: PPO - Design, Access & readiness — accepted. Page 1400:346423; notes 1400:347414. Retained icon-free evidence: docs/reference/ui/site-access/access-readiness-design-r01/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -2429,8 +2425,8 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "Figma design acceptance is recorded separately from native implementation and owner visual review. Native owner review and independent review remain pending; deployment and business acceptance are not asserted.",
+            "See docs/testing/evidence/access-readiness-native/README.md for executed checks, viewport results and limitations."
           ],
           "steps": [],
           "headers": [],
@@ -38546,23 +38542,20 @@
       "title": "Discovery costing",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native saved-estimate costing workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-20",
+      "source_commit": "971ac3502f87d5ba7e093bbe37abc83e75d4fb99",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/discovery-costing/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on saved cost projection within the registered workflow.",
-            "Use Discovery costing to work towards this outcome: A selected, traceable discovery basis with owned review items.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Cost an existing saved estimate against the exact current saved discovery revision. Manual edits stay in a proposal until Review and adopt creates a successor cost version. Discovery does not generate prices."
           ],
           "steps": [],
           "rows": [],
@@ -38572,9 +38565,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use an Active selected option with Complete discovery and an existing saved estimate. Adoption requires the existing estimating edit authority and current record/source access. First costing without a saved estimate continues through the existing manual screen."
           ],
           "steps": [],
           "rows": [],
@@ -38583,60 +38574,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the exact saved discovery revision and alternative being costed.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Check the option and discovery revision in the banner. Compare Scope being costed with the saved estimate basis. Open Exact saved source to inspect snapshots and content hash. Edit the cost lines manually, then check the totals and customer wording. Select Review and adopt, give a reason and confirm the exact scope and costs."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Discovery costing · Record workspace"
-            ],
-            [
-              "This page’s focus",
-              "Saved cost projection. The task sequence below is specific to this view."
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Desktop uses the Estimating rail, Discovery workspace tabs, Pricing step, ruled scope and cost sections, a costing summary and a fixed review footer. Tablet keeps the grid inside its own horizontal scroll. Summary opens a dialog at tablet and phone widths. Alternatives and Revisions open the discovery workspace, where you choose the corresponding view. Cost types has no implemented behaviour."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Each cost line keeps description, category, quantity, unit, unit cost, unit sell, source, source date and an explicit allowance choice. A retained reviewed source opens its exact Cost sources (ES-03) revision. Free text does not become a reviewed source link. Changing source-sensitive fields removes the inherited link, as the existing command does."
           ],
           "steps": [],
           "rows": [],
@@ -38646,14 +38605,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Select a line description on desktop or Edit on a phone. Keep line in proposal applies validated edits locally; Cancel discards the editor changes. Add manual line creates a new local line; Remove line removes it from this proposal only. Pen markers compare stable line IDs and content with the current saved cost version. Search lines filters the displayed rows only."
           ],
-          "steps": [
-            "Identify the exact saved discovery revision and alternative being costed.",
-            "Review the source quantities, price/cost basis and any unknown values.",
-            "Compare options using their explicit cost versions; discovery edits do not automatically reprice or adopt an estimate basis.",
-            "Wider workflow outcome: A selected, traceable discovery basis with owned review items."
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -38661,9 +38615,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A selected, traceable discovery basis with owned review items.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Review and adopt summarises the exact basis, changed/added/removed lines, totals, wording and allowance/new-line checks. Record a reason and tick the review confirmation. Adoption uses the existing native command. A confirmed receipt opens the saved estimate. Earlier estimates and draft quotations retain their original lines and discovery basis. Commercial approval remains with Estimate review (ES-04)."
           ],
           "steps": [],
           "rows": [],
@@ -38672,45 +38624,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Incomplete discovery shows its findings and keeps saved prices unchanged. Loading is distinct from missing or zero amounts. Incomplete lines and historical unknown allowance choices show Unknown until resolved. A changed discovery, selected option or saved estimate blocks adoption while keeping the proposal. Explicitly review the current basis before continuing; this does not reprice any line."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site, growing areas, requirements, alternatives and selected scope. Follow the task sequence and check that a selected, traceable discovery basis with owned review items. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Discovery costing has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Synthetic example: an estimate has four motors, while the next discovery revision calls for six. Reviewing discovery alone leaves the four-motor price unchanged. Manually change quantity to six, inspect the calculated delta and record the adoption reason."
           ],
           "steps": [],
           "rows": [],
@@ -38719,45 +38644,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "While Adopting, editing and repeated submission are disabled. If the outcome is not confirmed, keep the page open and use Check the save outcome. Recovery checks the original operation and may retry that same idempotent request when no receipt exists. Do not start a replacement save. A legacy manual option keeps its estimate and offers a handover to branch in the workspace. Lost access removes protected costing details."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px, the shared compact header, cost cards and fixed Summary / Review and adopt footer replace the desktop grid. Edit opens a full-screen line editor. Escape closes an idle dialog and restores focus; it cannot close an adopting dialog. Costing is online only. The proposal and original-operation recovery live in this page memory; reloading or leaving can lose them, and no offline queue is provided."
           ],
           "steps": [],
           "rows": [],
@@ -38767,8 +38665,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "ES-02 owns discovery and explicit costing adoption; ES-03 owns reviewed cost sources; ES-04 owns estimate review. The page contract names the accepted Figma source and retained icon-free references. Synthetic arithmetic remains a prototype policy, not an approved operating rule."
           ],
           "steps": [],
           "rows": [],
@@ -38778,9 +38675,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide prepared for the Discovery costing implementation. Owner visual review, device/assistive-technology review, business acceptance and deployment remain separate and pending. The evidence record distinguishes API-boundary browser fixtures from native database proof."
           ],
           "steps": [],
           "rows": [],
@@ -38794,9 +38689,15 @@
         "src/app/(business)/estimating/discovery/[id]/costing/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/discovery-costing.tsx",
+        "src/components/discovery-costing-parts.tsx",
+        "src/components/discovery-costing-model.ts",
+        "src/components/discovery-costing.css",
+        "docs/decisions/discovery-costing-figma-design.md",
+        "docs/testing/evidence/discovery-costing/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Replace generic draft with saved discovery comparison, manual proposal editing, exact source links, review/adopt and original-operation recovery.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-DISCOVERY-ID-COSTING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -38807,7 +38708,8 @@
         "src/app/(business)/estimating/discovery/[id]/costing/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/discovery-costing-figma-design.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -41966,23 +41868,23 @@
     {
       "guide_key": "guide.page.people",
       "entry_key": "route:/people",
-      "title": "Contact directory and detail",
+      "title": "People register",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "Accepted design implemented with synthetic data; owner application review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "prepared_at": "2026-10-20",
+      "source_commit": "5f3d78d079b92494b70867c46cd5745bae681d90",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Two database and ten People browser cases pass; desktop/mobile navigation and saved-view regression cases pass. Full unit and Windows baseline limits are recorded in docs/testing/evidence/people-native/README.md. Owner review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find a canonical Person and maintain accurate contact information without inventing customer authority or consent."
+            "Find a permitted person, check their recorded contact channels and organisation role, and open the exact person record. A recorded role or contact preference does not establish purchasing authority or consent."
           ],
           "steps": [],
           "headers": [],
@@ -41992,7 +41894,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the Person and affiliations. A contact may be shared across companies; correction requires permission in every company context."
+            "Confirm your working company. Rows and counts cover only records you may read; a missing result does not prove that no person exists."
           ],
           "steps": [],
           "headers": [],
@@ -42003,9 +41905,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance."
+            "Choose Active people, Site contacts, Channels to review or Inactive in the People menu.",
+            "Use Organisation and Notices filters, or open Search and filter from People options. On a phone use the header search/filter control.",
+            "Open the person by name or by tapping their phone row."
           ],
           "headers": [],
           "rows": []
@@ -42014,7 +41916,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Identity & channels, Relationships, Downstream reliance and Correction history. The Contacts directory continues to switch between People and Organisations."
+            "The desktop grid shows name, organisation, recorded role, phone, email, status, contact preference, primary sites, notice exceptions and last correction. Scroll the grid horizontally for later columns. The checkbox and actions columns stay at the edges.",
+            "Counts are for the complete permitted filtered result, not just the current page. The read time identifies the last successful response. Contacts retains its People and Organisations switch."
           ],
           "steps": [],
           "headers": [],
@@ -42024,7 +41927,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Person has no invented display reference, structured role taxonomy or purchasing authority. Interaction history is explicitly derived from permitted linked workflows because Activities do not link directly to Person. Restricted contacts and affiliations are not presented as absent."
+            "Current affiliations have started and have not ended. Role text is recorded, not a structured role or authority. Site links name only permitted primary-contact roles.",
+            "Notice exceptions count the latest Do not notify entries per company and message class that you can read. They do not express marketing consent or authorise sending. Last corrected is shown only when you can correct the person in every company context."
           ],
           "steps": [],
           "headers": [],
@@ -42033,14 +41937,12 @@
         {
           "section_id": "tasks",
           "title": "Workflow",
-          "paragraphs": [
-            "Select a record name to open its details. On desktop, a Person's organisation link opens that organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance.",
-            "Use Correct contact details for a reasoned correction or active-state change; retain the server save outcome."
+            "Change a view or filter to read a new permitted population. On desktop, Name, Email, Phone and Status headers change the sort.",
+            "Use Choose columns to hide optional grid columns. Selection is limited to the current page and clears when filters, sorting or pagination change; no bulk action is offered.",
+            "Use Create person to open the existing shared-record form. Saved views (earlier directory) opens the preserved account saved-view workflow.",
+            "Open a person to use the existing identity, relationship, reliance and correction workspace. Its accepted Figma redesign is a separate delivery."
           ],
           "headers": [],
           "rows": []
@@ -42049,8 +41951,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "This register reads data. Opening a record, changing filters or selecting rows saves no business transaction. Creating or correcting a person belongs to the receiving form and its existing server-confirmed workflow."
           ],
           "steps": [],
           "headers": [],
@@ -42060,8 +41961,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Current and historic source records remain distinguishable. Optional unknown context stays Not recorded or Unknown."
+            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access. Clear the search removes the text query while retaining Organisation and Notices.",
+            "People is online only. It makes no offline cache, queued correction or background-send promise."
           ],
           "steps": [],
           "headers": [],
@@ -42071,7 +41972,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An affiliation ends while its historic service reliance remains visible. Ending the affiliation does not delete the Person or transfer an approval."
+            "Synthetic example: Channels to review can include Leo Park because no email is recorded. Opening Leo preserves his exact internal identity; another person with the same name is a separate record."
           ],
           "steps": [],
           "headers": [],
@@ -42081,10 +41982,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Use Retry loading after a failed read. On desktop Refresh rereads the first page. On a phone pull down from the top of the list; Refresh people in the filter panel is the non-gesture alternative.",
+            "If a page cursor no longer belongs to the current population, refresh. If access changed, return to a permitted workspace rather than treating hidden information as empty."
           ],
           "steps": [],
           "headers": [],
@@ -42094,9 +41993,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The compact header contains the view chooser, search, Conversations when permitted, and Filter. Search and filter combine at 320 px. No repeated toolbar rows sit beneath it.",
+            "Filter opens a full-screen panel. Apply edits together with Show people; Reset clears the draft filters. The panel returns focus to its opener on closing. Phone rows open exact people."
           ],
           "steps": [],
           "headers": [],
@@ -42106,8 +42004,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html"
+            "Person detail, Organisations, Sites and Service requests are separate workspaces. Stakeholders requires an organisation, so the menu first opens Organisations.",
+            "Accepted design: PPO - Design, People — accepted; docs/decisions/people-figma-design.md. Application evidence: docs/testing/evidence/people-native/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -42117,8 +42015,8 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "This guide is Draft. Code delivery, design acceptance, functional proof, owner visual/device review and deployment are separate. Owner review remains pending.",
+            "Phone filters, bulk-selection purpose and the final saved-view presentation are not drawn; the page contract records the remaining questions."
           ],
           "steps": [],
           "headers": [],
@@ -42133,9 +42031,16 @@
       "source_paths": [
         "src/app/(business)/people/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/design/development/pages/route-people.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "CS-02 register grid, compact phone rows, permitted summaries, filters and exact handovers; existing saved-view directory and record workflows retained.",
       "document_id": "PPO-GUIDE-PAGE-PEOPLE",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42145,7 +42050,9 @@
       "workflow_basis": [
         "src/app/(business)/people/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -51181,23 +51088,23 @@
     {
       "guide_key": "guide.page.contacts",
       "entry_key": "route:/contacts",
-      "title": "Contact directory and detail",
+      "title": "Contacts: People and Organisations",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "Accepted design implemented with synthetic data; owner application review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "prepared_at": "2026-10-20",
+      "source_commit": "5f3d78d079b92494b70867c46cd5745bae681d90",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Two database and ten People browser cases pass; desktop/mobile navigation and saved-view regression cases pass. Full unit and Windows baseline limits are recorded in docs/testing/evidence/people-native/README.md. Owner review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find a canonical Person and maintain accurate contact information without inventing customer authority or consent."
+            "Find a permitted person, check their recorded contact channels and organisation role, and open the exact person record. A recorded role or contact preference does not establish purchasing authority or consent."
           ],
           "steps": [],
           "headers": [],
@@ -51207,7 +51114,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the Person and affiliations. A contact may be shared across companies; correction requires permission in every company context."
+            "Confirm your working company. Rows and counts cover only records you may read; a missing result does not prove that no person exists."
           ],
           "steps": [],
           "headers": [],
@@ -51218,9 +51125,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance."
+            "Choose Active people, Site contacts, Channels to review or Inactive in the People menu.",
+            "Use Organisation and Notices filters, or open Search and filter from People options. On a phone use the header search/filter control.",
+            "Open the person by name or by tapping their phone row."
           ],
           "headers": [],
           "rows": []
@@ -51229,7 +51136,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Identity & channels, Relationships, Downstream reliance and Correction history. The Contacts directory continues to switch between People and Organisations."
+            "The desktop grid shows name, organisation, recorded role, phone, email, status, contact preference, primary sites, notice exceptions and last correction. Scroll the grid horizontally for later columns. The checkbox and actions columns stay at the edges.",
+            "Counts are for the complete permitted filtered result, not just the current page. The read time identifies the last successful response. Contacts retains its People and Organisations switch."
           ],
           "steps": [],
           "headers": [],
@@ -51239,7 +51147,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Person has no invented display reference, structured role taxonomy or purchasing authority. Interaction history is explicitly derived from permitted linked workflows because Activities do not link directly to Person. Restricted contacts and affiliations are not presented as absent."
+            "Current affiliations have started and have not ended. Role text is recorded, not a structured role or authority. Site links name only permitted primary-contact roles.",
+            "Notice exceptions count the latest Do not notify entries per company and message class that you can read. They do not express marketing consent or authorise sending. Last corrected is shown only when you can correct the person in every company context."
           ],
           "steps": [],
           "headers": [],
@@ -51248,14 +51157,12 @@
         {
           "section_id": "tasks",
           "title": "Workflow",
-          "paragraphs": [
-            "Select a record name to open its details. On desktop, a Person's organisation link opens that organisation. In the Organisations view, Site/Facility count links also open the organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance.",
-            "Use Correct contact details for a reasoned correction or active-state change; retain the server save outcome."
+            "Change a view or filter to read a new permitted population. On desktop, Name, Email, Phone and Status headers change the sort.",
+            "Use Choose columns to hide optional grid columns. Selection is limited to the current page and clears when filters, sorting or pagination change; no bulk action is offered.",
+            "Use Create person to open the existing shared-record form. Saved views (earlier directory) opens the preserved account saved-view workflow.",
+            "Open a person to use the existing identity, relationship, reliance and correction workspace. Its accepted Figma redesign is a separate delivery."
           ],
           "headers": [],
           "rows": []
@@ -51264,8 +51171,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "This register reads data. Opening a record, changing filters or selecting rows saves no business transaction. Creating or correcting a person belongs to the receiving form and its existing server-confirmed workflow."
           ],
           "steps": [],
           "headers": [],
@@ -51275,8 +51181,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Current and historic source records remain distinguishable. Optional unknown context stays Not recorded or Unknown."
+            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access. Clear the search removes the text query while retaining Organisation and Notices.",
+            "People is online only. It makes no offline cache, queued correction or background-send promise."
           ],
           "steps": [],
           "headers": [],
@@ -51286,7 +51192,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An affiliation ends while its historic service reliance remains visible. Ending the affiliation does not delete the Person or transfer an approval."
+            "Synthetic example: Channels to review can include Leo Park because no email is recorded. Opening Leo preserves his exact internal identity; another person with the same name is a separate record."
           ],
           "steps": [],
           "headers": [],
@@ -51296,10 +51202,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Use Retry loading after a failed read. On desktop Refresh rereads the first page. On a phone pull down from the top of the list; Refresh people in the filter panel is the non-gesture alternative.",
+            "If a page cursor no longer belongs to the current population, refresh. If access changed, return to a permitted workspace rather than treating hidden information as empty."
           ],
           "steps": [],
           "headers": [],
@@ -51309,9 +51213,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The compact header contains the view chooser, search, Conversations when permitted, and Filter. Search and filter combine at 320 px. No repeated toolbar rows sit beneath it.",
+            "Filter opens a full-screen panel. Apply edits together with Show people; Reset clears the draft filters. The panel returns focus to its opener on closing. Phone rows open exact people."
           ],
           "steps": [],
           "headers": [],
@@ -51321,8 +51224,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html"
+            "Person detail, Organisations, Sites and Service requests are separate workspaces. Stakeholders requires an organisation, so the menu first opens Organisations.",
+            "Accepted design: PPO - Design, People — accepted; docs/decisions/people-figma-design.md. Application evidence: docs/testing/evidence/people-native/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -51332,8 +51235,8 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "This guide is Draft. Code delivery, design acceptance, functional proof, owner visual/device review and deployment are separate. Owner review remains pending.",
+            "Phone filters, bulk-selection purpose and the final saved-view presentation are not drawn; the page contract records the remaining questions."
           ],
           "steps": [],
           "headers": [],
@@ -51348,9 +51251,16 @@
       "source_paths": [
         "src/app/(business)/contacts/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/design/development/pages/route-people.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "CS-02 register grid, compact phone rows, permitted summaries, filters and exact handovers; existing saved-view directory and record workflows retained.",
       "document_id": "PPO-GUIDE-PAGE-CONTACTS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -51360,7 +51270,9 @@
       "workflow_basis": [
         "src/app/(business)/contacts/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -64236,14 +64148,14 @@
     {
       "guide_key": "guide.route-sites-id-readiness",
       "entry_key": "route:/sites/[id]/readiness",
-      "title": "Site access & horticultural readiness",
+      "title": "Access & readiness",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "content_mode": "Accepted Figma design implemented; native owner review pending",
+      "source_commit": "55c3852",
       "related_entry_keys": [
         "scope:CS-06"
       ],
@@ -64252,7 +64164,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation."
+            "Prepare an exact Site visit from recorded requirements, evidence and work windows. An acknowledgement records that you read the check; it grants no authority to proceed."
           ],
           "steps": [],
           "headers": [],
@@ -64262,7 +64174,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Choose the canonical Site and exact Facilities, individuals, activity and attendance interval. Confirm the Site time zone."
+            "Open the canonical Site. Confirm the Site time zone, scheduled visit, activity, areas and every individual visitor. Only permitted records are offered; a missing choice is not proof that no record exists."
           ],
           "steps": [],
           "headers": [],
@@ -64273,9 +64185,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Create a Site readiness record with an accountable owner.",
-            "Record each source requirement and explicit Site or Facility applicability. Use * only when a source explicitly applies to all activities.",
-            "Capture source evidence separately for Site approval, movement plan, individual induction, clean-down, shutdown approval and tool check."
+            "Create a Site readiness record if none exists.",
+            "In Requirements, start a revision, record exact scope and source references, then Submit revision for review. Another permitted editor reviews and publishes it, or returns it for changes.",
+            "In Evidence, capture each exact requirement revision, area, activity and visitor where applicable. A different permitted editor reviews the exact capture and records a review note."
           ],
           "headers": [],
           "rows": []
@@ -64284,7 +64196,7 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Overview, Requirements, Visitor / biosecurity / evidence, Work windows, Visit preparation and Review / history."
+            "Choose Visit to prepare in the Selected visit facts; on phone, use Site details in More. The list contains up to 40 permitted visits; Schedule remains the complete register. Overview shows the selected visit’s saved check and blockers. Requirements groups the source by whole Site and area. Evidence separates capture from independent review. Work windows shows recorded dates, seasons and local times. Visit preparation records a check or acknowledges one. History retains versions and reasons."
           ],
           "steps": [],
           "headers": [],
@@ -64294,7 +64206,7 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Facility type or hierarchy does not imply readiness. Captured evidence is not reviewed evidence; edited or expired evidence does not satisfy an earlier review. No work window means access is unknown. Acknowledgement grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
+            "MYOB remains the ERP authority and SharePoint owns business documents. PPO retains synthetic source references, exact capture revisions and immutable checks. Captured, expired or superseded evidence does not clear a requirement. A missing work window means readiness is unknown."
           ],
           "steps": [],
           "headers": [],
@@ -64305,12 +64217,12 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Create a Site readiness record with an accountable owner.",
-            "Record each source requirement and explicit Site or Facility applicability. Use * only when a source explicitly applies to all activities.",
-            "Capture source evidence separately for Site approval, movement plan, individual induction, clean-down, shutdown approval and tool check.",
-            "Have another permitted editor review each exact captured item.",
-            "Record effective dates, seasonal boundaries and local work-window times.",
-            "Evaluate the exact visit basis, review blockers and acknowledge the exact retained preparation if appropriate."
+            "Create a Site readiness record if none exists.",
+            "In Requirements, start a revision, record exact scope and source references, then Submit revision for review. Another permitted editor reviews and publishes it, or returns it for changes.",
+            "In Evidence, capture each exact requirement revision, area, activity and visitor where applicable. A different permitted editor reviews the exact capture and records a review note.",
+            "Record the effective dates, seasonal boundaries and local times in Work windows. Weekdays remain outside this increment.",
+            "Check preparation for the selected visit, activity, areas and every visitor. Scheduled attendance times come from the server. Review all blockers.",
+            "To record that you have read a check, choose Acknowledge this check and give a reason. The basis is read only; the acknowledgement grants nothing."
           ],
           "headers": [],
           "rows": []
@@ -64319,8 +64231,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "Saved to the server confirms a recorded command. Further actions wait for the refreshed record; a saved preparation selects its own visit basis. Publishing requirements makes only that independently reviewed draft active. It does not review its evidence. Acknowledging a check grants no work authority, booking, resource reservation, pack issue or dispatch clearance."
           ],
           "steps": [],
           "headers": [],
@@ -64330,8 +64241,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Survey states are Draft, Submitted, Returned and Reviewed. Readiness snapshots separately show whether their exact source still matches."
+            "No requirements recorded means readiness unknown. A source change keeps the old check and requires a recheck. A pending or returned requirements draft does not replace the active requirements. Read-only access removes mutation controls. Loading, unavailable, restricted and empty results are separate states.",
+            "Readiness contact (P4) is not available. Access arranged, Power and water available, Equipment accessible and Isolation arrangements agreed show its intended place without recording customer confirmation. The no-requirements view leads to requirements and work windows."
           ],
           "steps": [],
           "headers": [],
@@ -64341,7 +64252,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "A requirement source revision changes after acknowledgement. The original preparation stays in history and is marked for recheck; the new evidence must match the successor requirement revision."
+            "An induction source changes after a check. Submit a requirements revision; a different permitted editor publishes it. The old evidence and check remain in History. Capture evidence against the new requirement revision, have it independently reviewed, and check the visit again."
           ],
           "steps": [],
           "headers": [],
@@ -64351,10 +64262,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Correct labelled validation errors before retrying. A source or version conflict refuses the command. The acknowledgement reason stays in the form: Check again, then explicitly Use latest check and retain reason before acknowledging.",
+            "When a save outcome is uncertain, use Confirm original save. The original operation is reconciled before another intent can be sent. This page is online only; it has no offline save queue. Inaccessible source content is removed on revalidation."
           ],
           "steps": [],
           "headers": [],
@@ -64364,9 +64273,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The shared compact phone header and sticky footer keep the page actions reachable. Overview, Evidence, Windows and History lead the phone tabs; Requirements and Visit preparation remain in the scrolling strip and More. At 320 px the gated contact action is explained in More.",
+            "Use arrow keys, Home and End in the tab strip. Tabs retain their selection in the URL. Source facts and the visit picker stay available through Site details below the workspace. Review forms focus the first editable control and return focus on cancellation. The requirements table has its own labelled horizontal scroll region."
           ],
           "steps": [],
           "headers": [],
@@ -64376,8 +64284,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/site-access/PPO-Site-Access-and-Horticultural-Readiness-r01.html"
+            "Open Site returns to the exact canonical Site; Open survey opens its scoped survey register. A selected scheduled visit links to its exact appointment. No communication or business transaction is performed.",
+            "Accepted source: PPO - Design, Access & readiness — accepted. Page 1400:346423; notes 1400:347414. Retained icon-free evidence: docs/reference/ui/site-access/access-readiness-design-r01/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -64387,15 +64295,15 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "Figma design acceptance is recorded separately from native implementation and owner visual review. Native owner review and independent review remain pending; deployment and business acceptance are not asserted.",
+            "See docs/testing/evidence/access-readiness-native/README.md for executed checks, viewport results and limitations."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+      "runtime_evidence": "Current verification is recorded in docs/testing/evidence/access-readiness-native/README.md. Historical receiving evidence is not proof of this implementation."
     },
     {
       "guide_key": "guide.route-surveys-id",
