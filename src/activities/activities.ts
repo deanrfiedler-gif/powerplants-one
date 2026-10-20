@@ -542,11 +542,11 @@ export async function activityCommand(
     },
     async (c, a) => {
       // Recover an accepted original before this new-operation guard. Native
-      // owner start/complete/cancel remain available; assignment edits use R2.
+      // owner start/complete/cancel remain available; adopted tasks use R2.
       if (action === "update") {
         if (await isManagedFindingActivity(c,p,a.id))
           throw new AppError(422,"SourceWorkflowRequired","Change this next action through its source finding.");
-        await legacyFindingActivityAuthority(c,p,a,changes.owner_id);
+        await legacyFindingActivityAuthority(c,p,a,"owner_id" in changes ? changes.owner_id : undefined);
       }
       return mutateActivity(c, p, a, command.expected_version, changes, action);
     },
