@@ -28,8 +28,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -194,8 +194,8 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -742,8 +742,8 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -2415,8 +2415,8 @@
         "src/components/equipment-timeline.tsx",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2609,8 +2609,8 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2735,8 +2735,8 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3033,8 +3033,8 @@
         "docs/design/projects-register/figma-measurements.json",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3990,8 +3990,8 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
-        "tests/browser/changes-follow-up.spec.ts",
-        "tests/helpers/changes-follow-up.ts"
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",

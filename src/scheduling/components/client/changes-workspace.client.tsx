@@ -323,6 +323,7 @@ export function ChangesWorkspaceScreen() {
             </span>
             <Button aria-label="Refresh review" onClick={refresh}>
               <FontAwesomeGlyph
+                className="mw-icon"
                 icon={myWorkFontAwesome.refresh}
                 fallback={<span aria-hidden="true">↻</span>}
               />

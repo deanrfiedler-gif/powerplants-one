@@ -2065,7 +2065,7 @@ export function PlannerScreen() {
             <>
               <PlannerPhone
                 data={data}
-                mode={mode as "confirm" | "move" | "request"}
+                mode={mode}
                 day={day}
                 days={mode === "day" ? phoneWeek : days}
                 zone={zone}
@@ -2095,7 +2095,7 @@ export function PlannerScreen() {
               <PlannerBoard
                 data={data}
                 days={days}
-                mode={mode as "confirm" | "move" | "request"}
+                mode={mode}
                 zone={zone}
                 usable={usable}
                 onDrop={drop}
