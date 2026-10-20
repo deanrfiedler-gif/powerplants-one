@@ -11,13 +11,17 @@ Verification snapshot: 21 October 2026. Delivery PR #649 contains the implementa
 | Check | Result |
 |---|---|
 | `npm run browser:check` | Passed: Chrome 155.0.8059.85, Node 24.22.0, Playwright 1.64.0. |
-| Focused PL-04 unit tests | 2 passed: queue counts and named stale-booking changes. |
-| `tests/browser/changes-follow-up.spec.ts` | All 6 passed against the running app with synthetic API fixtures; final responsive rerun also passed. |
+| Focused unit tests | Final run: 10 passed across `changes-follow-up`, `navigation-safety` and `component-catalogue`. |
+| `tests/browser/changes-follow-up.spec.ts` | Final run at `242b6e9`: all 6 passed in 1.5 minutes against the running app with synthetic API fixtures. Desktop compact geometry and responsive controls are asserted. |
 | `python scripts/check_naming.py` | Passed; all 78 parent scope IDs retained. |
-| Foundation | CI passed on the first implementation commit; local final run pending. |
+| Foundation | CI passed at `0313e682`; local run interrupted under memory pressure. |
 | Full unit suite | Interrupted under local memory pressure. The four observed operator CLI/CPQ timeout failures reproduced in a targeted unchanged-main run (21 passed, 4 failed). The catalogue failure was an implementation defect, subsequently corrected. No full-suite pass claimed. |
 | Database tests | Blocked by connection refusal on the configured local test endpoint, also reproduced on unchanged main. No server test pass claimed. |
-| Typecheck, lint, studio and build | Final verification in progress; initial own errors were corrected. |
+| `npm run studio:check` | Passed locally after correcting the catalogue dependencies; CI also passed at `0313e682`. |
+| `npm run typecheck` | Local runs found and led to corrected own errors; final local run interrupted. CI's merged-tree typecheck passed at `0313e682`. The subsequent code change is CSS and a browser geometry assertion. |
+| `npm run lint` | Initial full run found three own errors, corrected. Full local rerun interrupted; final ESLint run over every changed TypeScript/TSX file passed. Full CI result remains pending. |
+| `npm run build` | Failed on this branch and unchanged main: Turbopack rejects the external `node_modules` junction. Pinned production build proof remains with CI; no local build pass claimed. |
+| Status and build sequence | `python scripts/build_status.py` and `python scripts/build-ui-sequence.py` ran successfully. Build sequence outputs remain generated under ignored `tmp/`, as the repository workflow specifies. |
 
 The unchanged-main comparison used `0685e30c99d3146005f7699345623d5c5476942d` in a separate worktree. The local dependency junction supplies Next 16.4.0 and Playwright 1.64.0, behind the lockfile's 16.4.2 and 1.64.1. CI uses the pinned install. Local memory pressure interrupted broad checks; they are not reported as passes.
 
@@ -25,7 +29,7 @@ The configured local synthetic database port refused the connection. No database
 
 ## Visual comparison
 
-Application captures are in [images](images/), made with `tests/helpers/changes-follow-up.ts` and the real application shell. The browser spec blocks Kit requests, asserts no licensed icon nodes and waits for fonts before capture. These are current implementation evidence, not replacements for the accepted reference. The capture set precedes the final compact-cell adjustment; that small difference requires a final capture refresh.
+Application captures are in [images](images/), made from source commit `242b6e9` with `tests/helpers/changes-follow-up.ts` and the real application shell. The browser spec blocks Kit requests, asserts no licensed icon nodes and waits for fonts before capture. These are current implementation evidence, not replacements for the accepted reference. The final set includes the compact-cell and toolbar corrections.
 
 | Accepted frame/state | Application capture |
 |---|---|
@@ -54,6 +58,7 @@ The shell/menu, ruled snapshot sections, request comparison, consequences and ph
 - Checkbox bulk actions and column settings are unspecified and omitted. No operation has been invented.
 - Existing saved policy publication, discovery and holds are retained in a separate disclosure; exact saved-record links open it.
 - Actual record versions, people, dates and evidence determine copy and counts. Missing source evidence is labelled rather than filled with design examples.
+- Manual requests retain the source-neutral “Change request” label: the existing data does not establish that the requester is the customer. The grid has horizontal access to Requested, Customer, Follow-up and Site; long evidence stays on one compact row and is fully available in the snapshot.
 - Tablet snapshot, Policy impact phone/tablet, Cancel request menu and detailed uncertain-send artwork are not supplied. Existing shared controls apply, pending owner review.
 
 Code delivery, source presence, functional proof, owner visual review, native-device acceptance and deployment remain separate. No reviewer, review date or fingerprint is adopted.
