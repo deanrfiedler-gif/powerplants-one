@@ -1,6 +1,6 @@
 {
-  "application_source": "067c5273f2894661625ccac23385ca33a32ad339",
-  "browser_spec_source": "52f350a94c7fe088fcb07fda2dad26e32a8fc090",
+  "application_source": "48673e879c1099af9c3d0fc17cbcb731a58779bc",
+  "browser_spec_source": "48673e879c1099af9c3d0fc17cbcb731a58779bc",
   "runtime": "Local Windows Webpack development launcher; installed Chrome; synthetic API fixtures; licensed runtime icons hidden by screenshot style",
   "owner_visual_review": "pending",
   "captures": [
@@ -8,7 +8,7 @@
       "file": "captures/outcome-not-confirmed.png",
       "width": 1440,
       "height": 1000,
-      "sha256": "b7522fdcc7d3e6fc0a081af6c7a64365937c3f1e0f020e50e33e2d6abafbf258"
+      "sha256": "f87bedf02470b24630903523aacd035d7b3a9b0461cd61950217ec4947fafb56"
     },
     {
       "file": "captures/review.png",
@@ -92,65 +92,61 @@
       "file": "captures/denied-choices.png",
       "width": 320,
       "height": 844,
-      "sha256": "5ea0273b6a07398eb9b75ed665462bebc781f24ac808b63296e510e96b84075a"
+      "sha256": "a25c7f5e5ed90e54d8055cb3894c0bd0ba2c32cf11f5767485401cfd03175aef"
     },
     {
       "file": "captures/empty-desktop.png",
       "width": 1440,
       "height": 1000,
-      "sha256": "794dea3f23e413526296b358a6fefc5f1b0ec0b0d57f88a5135dbadcf5c532de"
+      "sha256": "5e6d4e0384d546f4cd139a52ae53d52a933560fc2d9b6d4415807f8682d40611"
     },
     {
       "file": "captures/empty.png",
       "width": 320,
       "height": 844,
-      "sha256": "af26e083c15c0b5e816c2fb7fb555d18ee7ec7ac18790f3902c609732647fc9c"
+      "sha256": "ca8514a7ef91c0dbdd18dbc907ecd7f59a76d2b9d3980d2acaadfcb1fbd80a41"
     },
     {
       "file": "captures/loading-320.png",
       "width": 320,
       "height": 844,
-      "sha256": "a0d39a78d85878308358e06ba77ca3bb32ad53bd62bdb801e8dbce87ddcb1251"
+      "sha256": "fb3946ff2db04f8abdf55183e4e48dd8f2d47f1048a6bb87636b2c8343467930"
     },
     {
       "file": "captures/loading-390.png",
       "width": 390,
       "height": 844,
-      "sha256": "610b775767e6cd42516cafc0f1c326164ce3676bc2d92038c5ec44bfc31be386"
+      "sha256": "33fabf340d969f15c8b4301dea7fd17586762f61a45c83fc22905b2d830f3ba1"
     },
     {
       "file": "captures/choose-1024.png",
       "width": 1024,
       "height": 768,
-      "sha256": "dfafb4002dc63c530c75fd76f1b895d28c66d6515ef9b784ac071dd37518269a",
-      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
+      "sha256": "dfafb4002dc63c530c75fd76f1b895d28c66d6515ef9b784ac071dd37518269a"
     },
     {
       "file": "captures/choose-1440.png",
       "width": 1440,
       "height": 1000,
-      "sha256": "79d9f2ad88d63d91b8c92c75b0e10c5165c15075430dab276f950182a4a22eca",
-      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
+      "sha256": "79d9f2ad88d63d91b8c92c75b0e10c5165c15075430dab276f950182a4a22eca"
     },
     {
       "file": "captures/choose-320.png",
       "width": 320,
       "height": 844,
-      "sha256": "359e92039f062e5b7038399e82f99b8036c0992f38be654781df28088bf157b4",
-      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
+      "sha256": "359e92039f062e5b7038399e82f99b8036c0992f38be654781df28088bf157b4"
     },
     {
       "file": "captures/choose-390.png",
       "width": 390,
       "height": 844,
-      "sha256": "a42257322d80ea1cc61c95c6ae39b8a1d118a5f4d206c79608403c509c566e73",
-      "application_source": "fcf92e1548748767ca91821cf6c27c8c1aa0bc33"
+      "sha256": "a42257322d80ea1cc61c95c6ae39b8a1d118a5f4d206c79608403c509c566e73"
     },
     {
       "file": "captures/phone-dialog-outcome-not-confirmed.png",
       "width": 390,
       "height": 844,
-      "sha256": "182afc534d4c8873fc9a75bb4c26811190d0538102bf39e4814292d14bad2f87"
+      "sha256": "1e1e8bd847defcb0afb246e7f2cf9696acea9b6f6b2cf93d50ca84741e27e44c"
     },
     {
       "file": "captures/phone-dialog-review.png",
