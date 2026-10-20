@@ -4,6 +4,12 @@
 
 Stable entry: `route:/service/inspections`. Scope: FI-04. Owner: Dean Fiedler. Native implementation; independent visual and owner acceptance pending.
 
+## Accepted design implementation claim — 21 October 2026
+
+This worktree claims the FI-03/FI-04 Inspections implementation from the owner-accepted "Inspections — accepted" design in "PPO - Design" (page `1339:4184`, notes `1345:2979`). The current user instruction authorises the build. The existing inspection commands, attempt/retest authority and online-only recovery contract remain the basis. Owner visual review remains pending.
+
+Planned changes: the inspection screen and stylesheet, bounded inspection list reads if required, page-specific UI helpers and synthetic fixtures/tests; narrow FI-03/FI-04 register, guide and component bindings; both scope/route contracts; one status fragment and generated status/build sequence. Reuse the application shell, compact phone header, secondary menu, register table, Button/ButtonLink, Field, ReadState, ErrorNotice, record tabs/dialog and recoverable commands. No migration, capability or dependency is planned. Appointment detail and My jobs remain incoming handovers; their implementation files belong to their separate claims.
+
 Reference provenance: imported working baseline `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`; native implementation starts from merged Step 6 `feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd`. Guide keys and source references remain stable.
 
 ## Page and handovers
