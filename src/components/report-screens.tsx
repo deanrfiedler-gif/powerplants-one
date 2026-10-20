@@ -33,6 +33,7 @@ import { useRecoverableCommand } from "../shared/ui/use-recoverable-command";
 import type { JournalEntry } from "../shared/lib/command-journal";
 import { RecordPanel, useUnsavedChanges } from "./record-ui";
 import { ReportPhoto } from "./report-photo";
+import { ProductIcon } from "./product-icons";
 type Report = Awaited<ReturnType<typeof readReport>>["items"][number];
 type Presentation = {
   id: string;
@@ -514,6 +515,7 @@ function ResponseForm({
   command: c,
   correction,
   onDirty,
+  onCancel,
 }: {
   r: Report;
   v: Presentation;
@@ -522,6 +524,7 @@ function ResponseForm({
   command: ReturnType<typeof useRecoverableCommand>;
   correction?: Report["responses"][number];
   onDirty: () => void;
+  onCancel: () => void;
 }) {
   const [dirty, setDirty] = useState(false);
   const subjectId = useId();
@@ -545,7 +548,7 @@ function ResponseForm({
     markSelection = useRef(0);
   return (
     <form
-      className="business-card"
+      className="sv06-response-form"
       onChange={() => {
         setDirty(true);
         onDirty();
@@ -590,12 +593,12 @@ function ResponseForm({
           reload();
       }}
     >
-      <h2>Response details</h2>
+      <h2 className="sr-only">Response details</h2>
       <fieldset
         disabled={c.busy || !!c.pending || !c.ready}
         className="report-response-fields"
       >
-        <legend>
+        <legend className="sr-only">
           {correction
             ? "Correct or clarify the selected response"
             : "New independent response"}
@@ -628,10 +631,6 @@ function ResponseForm({
           {subject === "AttendanceFacts"
             ? "Customer acknowledgement of the named technician’s attendance facts in this exact presentation. This does not accept technical work or the whole report."
             : "Customer response to the exact report content shown. This is separate from acknowledgement of attendance and internal Service review."}
-        </p>
-        <p>
-          <strong>{friendly(v.kind)}</strong> · exact content{" "}
-          <code>{v.content_hash}</code>
         </p>
         <p>
           Presentation recorded <Stamp value={presentedAt} />. A fictional name
@@ -762,15 +761,35 @@ function ResponseForm({
             . Do not transfer a response or mark to different content.
           </p>
         )}
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={
-            c.busy || !!c.pending || !c.ready || !!fileError || markLoading
-          }
-        >
-          Save response to presented content
-        </Button>
+        <footer className="sv06-response-savebar">
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={
+              c.busy || !!c.pending || !c.ready || !!fileError || markLoading
+            }
+          >
+            Record response
+          </Button>
+          <Button
+            onClick={(event) => {
+              setChoice("Unavailable");
+              markSelection.current++;
+              setSignature(null);
+              setFileError(null);
+              setMarkLoading(false);
+              setDirty(true);
+              onDirty();
+              const form = event.currentTarget.form;
+              requestAnimationFrame(() =>
+                form?.querySelector<HTMLElement>('[data-validation-field="remarks"]')?.focus(),
+              );
+            }}
+          >
+            Customer unavailable
+          </Button>
+          <Button onClick={onCancel}>Cancel</Button>
+        </footer>
       </fieldset>
       <p role="status">
         {c.busy
@@ -822,13 +841,26 @@ export function ReportScreen({ id }: { id: string }) {
     resource.reload();
   };
   const presentationOpener = useRef<string>("");
+  const responseDialog = useRef<HTMLDialogElement>(null);
   const wasShown = useRef(false);
   useEffect(() => {
-    if (shown) document.getElementById("report-presentation-heading")?.focus();
+    if (shown) {
+      if (!responseDialog.current?.open) responseDialog.current?.showModal();
+      document.getElementById("report-presentation-heading")?.focus();
+    }
     else if (wasShown.current)
       document.getElementById(presentationOpener.current)?.focus();
     wasShown.current = !!shown;
   }, [shown]);
+  const closeResponse = () => {
+    if (responseCommand.busy || responseCommand.pending) return;
+    if (
+      responseDirty &&
+      !window.confirm("Return to staff review and discard this unsaved response?")
+    )
+      return;
+    setShown(null);
+  };
   async function preview(
     v: Presentation,
     correction?: Report["responses"][number],
@@ -910,46 +942,53 @@ export function ReportScreen({ id }: { id: string }) {
     );
   if (r && shown)
     return (
-      <div
+      <dialog
+        ref={responseDialog}
         id="ppo-reports"
         className="sv06-response-sheet report-screen"
+        aria-labelledby="report-presentation-heading"
         data-module-layout="full-bleed"
+        onCancel={(event) => {
+          event.preventDefault();
+          closeResponse();
+        }}
       >
-        <h1 id="report-presentation-heading" tabIndex={-1}>
-          Record customer response
-        </h1>
+        <header className="sv06-response-heading">
+          <h1 id="report-presentation-heading" tabIndex={-1}>
+            Record customer response
+          </h1>
+          <Button
+            variant="quiet"
+            aria-label="Return to staff review"
+            disabled={responseCommand.busy || !!responseCommand.pending}
+            onClick={closeResponse}
+          >
+            <ProductIcon name="close" />
+          </Button>
+        </header>
+        <div className="sv06-response-body">
         <RecordIdentity reference={`${r.reference} r${r.revision}`} title="Record customer response" />
         <p>
-          Record against the exact presentation. Nothing is sent to the
-          customer.
+          {r.reference} · {friendly(shown.v.kind)}. The response is bound to this
+          exact report. Powerplants One sends nothing to the customer.
         </p>
-        <Button
-          disabled={responseCommand.busy || !!responseCommand.pending}
-          onClick={() => {
-            if (
-              responseDirty &&
-              !window.confirm(
-                "Return to staff review and discard this unsaved response?",
-              )
-            )
-              return;
-            setShown(null);
-          }}
-        >
-          Return to staff review
-        </Button>
+        <section className="sv06-response-summary" aria-label="Presented report">
+          <h2>Report</h2>
+          <p>{r.revisions[0].snapshot.scope.summary}</p>
+          <p>{r.revisions[0].snapshot.customer.name}</p>
+        </section>
         <details className="sv06-presented">
           <summary>
             View exact presented report · {shown.v.kind} · {r.reference}
           </summary>
           <ExactReportPresentation html={shown.html} />
           <p className="report-hash">{shown.v.content_hash}</p>
+          <p>
+            Current context: {friendly(r.response_applicability.state)}. This
+            retained presentation and any factual response grant no new work
+            authority or technical clearance.
+          </p>
         </details>
-        <p>
-          Current context: {friendly(r.response_applicability.state)}. This
-          retained presentation and any factual response grant no new work
-          authority or technical clearance.
-        </p>
         {r.can_respond &&
         shown.v.revision_id === r.revisions[0].id &&
         ["Reviewed", "Issued"].includes(r.status) ? (
@@ -962,6 +1001,7 @@ export function ReportScreen({ id }: { id: string }) {
             command={responseCommand}
             correction={shown.correction}
             onDirty={() => setResponseDirty(true)}
+            onCancel={closeResponse}
           />
         ) : (
           <p>
@@ -970,7 +1010,8 @@ export function ReportScreen({ id }: { id: string }) {
           </p>
         )}
         {recovery}
-      </div>
+        </div>
+      </dialog>
     );
   if (!r || resource.error)
     return (

@@ -55,3 +55,5 @@ The [Job Pack dialog](job-pack-dialog.md) is separately inventoried with its act
 ## SV-06 host binding
 
 Service review and reports uses this existing component in `route:/service/reports`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.
+
+The report record's exact-response sheet is page-local native `dialog`, not a new shared component. It keeps a modal focus boundary, focused heading, guarded Escape/Cancel, opener return and a pinned phone save bar. Customer unavailable selects the existing response choice without submitting it. Subject, separate stated name/role, optional mark and capture-time controls remain explicit because the existing command distinguishes them.

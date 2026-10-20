@@ -597,7 +597,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     if (value === "AcceptedWithReservations") {
       await page
         .getByRole("button", {
-          name: "Save response to presented content",
+          name: "Record response",
           exact: true,
         })
         .click();
@@ -633,7 +633,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     await proof(page, info, `response-${value}-presented`);
     await page
       .getByRole("button", {
-        name: "Save response to presented content",
+        name: "Record response",
         exact: true,
       })
       .click();
@@ -839,6 +839,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   const id = page.url().split("/").at(-1)!;
   await identity(page, "coordinator");
   await review(page);
+  await reportTab(page, "Customer response");
   await expect(page.getByText("No customer attendance acknowledgement recorded.", { exact: true })).toBeVisible();
   await expect(page.getByText("No report-content response recorded.", { exact: true })).toBeVisible();
   const initial = (await call(page, "reports/" + id)).items[0];
@@ -866,7 +867,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
     await expect(page.getByLabel(label, { exact: true })).toBeFocused();
   }
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("button", { name: "Save response to presented content", exact: true })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Record response", exact: true })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("alert").first()).toBeFocused();
   await expect(page.getByLabel("Stated respondent name (synthetic)", { exact: true })).toHaveValue("SYN FI07 audience representative");
@@ -882,7 +883,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
     expect(committed.status()).toBe(201);
     await route.fulfill({ status: 200, contentType: "application/json", body: '{"receipt":"interrupted"}' });
   }, { times: 1 });
-  await page.getByRole("button", { name: "Save response to presented content", exact: true }).focus();
+  await page.getByRole("button", { name: "Record response", exact: true }).focus();
   await page.keyboard.press("Enter");
   await expect(page.getByText("Uncertain response — original operation retained", { exact: true })).toBeVisible();
   await proof(page, info, "FI07-uncertain-original");
@@ -905,7 +906,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await page.getByLabel("Stated respondent role", { exact: true }).fill("SYN site witness");
   await page.getByLabel("Response remarks / reservations", { exact: true }).fill("SYN label identification remains reserved pending clarification");
   await page.getByLabel("Owned next action (required unless accepted)", { exact: true }).fill("SYN Service owner to clarify the exact retained label finding");
-  await page.getByRole("button", { name: "Save response to presented content", exact: true }).click();
+  await page.getByRole("button", { name: "Record response", exact: true }).click();
   await expect(reportState(page, "Issued")).toBeVisible();
   current = (await call(page, "reports/" + id)).items[0];
   const reservation = current.responses.find((x: { response: string }) => x.response === "AcceptedWithReservations");
@@ -913,7 +914,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await expect(page.getByLabel("Response concerns", { exact: true })).toBeDisabled();
   await page.getByLabel("Customer response", { exact: true }).selectOption("Disputed");
   await page.getByLabel("Correction or clarification reason", { exact: true }).fill("SYN witness clarified that this remains a factual dispute");
-  await page.getByRole("button", { name: "Save response to presented content", exact: true }).click();
+  await page.getByRole("button", { name: "Record response", exact: true }).click();
   await expect(reportState(page, "Issued")).toBeVisible();
   current = (await call(page, "reports/" + id)).items[0];
   expect(current.responses).toHaveLength(3);

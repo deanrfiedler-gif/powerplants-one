@@ -58,12 +58,25 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
   for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({
       width,
-      height: width < 1024 ? 844 : width === 1024 ? 768 : 900,
+      height: width < 1024 ? 844 : 900,
     });
     await page.goto("/service/reports?department=service");
     await expect(
       page.getByText("Recent 200-report window", { exact: false }),
     ).toBeVisible();
+    if (width === 1024) {
+      await expect(
+        page.getByRole("button", { name: /^(Collapse|Expand) navigation$/ }),
+      ).toBeVisible();
+      const collapse = page.getByRole("button", {
+        name: "Collapse navigation",
+        exact: true,
+      });
+      if (await collapse.isVisible()) await collapse.click();
+      await expect(
+        page.getByRole("button", { name: "Expand navigation", exact: true }),
+      ).toBeVisible();
+    }
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -156,6 +169,22 @@ test("SV-06 exact review draft survives tabs and newer reads; view-only hides co
     page.getByLabel("Entry 1 review reason", { exact: true }),
   ).toHaveValue("SYN verify original measurement");
   current = { ...current, version: 2 };
+  const refreshed = page.waitForResponse(
+    (response) => response.url().endsWith(`/api/v1/reports/${reportId}`),
+  );
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await page.getByRole("button", { name: "More actions", exact: true }).click();
+    await page
+      .getByRole("menuitem", { name: "Refresh exact report", exact: true })
+      .click();
+  } else
+    await page
+      .getByRole("button", { name: "Refresh exact report", exact: true })
+      .click();
+  expect((await refreshed).ok()).toBe(true);
+  await expect(
+    page.getByLabel("Entry 1 review reason", { exact: true }),
+  ).toHaveValue("SYN verify original measurement");
   await page
     .getByRole("button", { name: "Commit exact review", exact: true })
     .click();
@@ -292,6 +321,19 @@ test("SV-06 prepared and issued output keep exact response binding on refusal", 
     .getByRole("button", { name: "Present Issued Report", exact: true })
     .click();
   await expect(page.locator("#report-presentation-heading")).toBeFocused();
+  const sheet = page.getByRole("dialog", { name: "Record customer response" });
+  await expect(sheet).toBeVisible();
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    const bounds = await sheet.boundingBox();
+    expect(bounds?.x).toBe(0);
+    expect(bounds?.y).toBe(0);
+    expect(bounds?.width).toBe(page.viewportSize()?.width);
+    expect(bounds?.height).toBe(page.viewportSize()?.height);
+  }
+  await page.getByRole("button", { name: "Customer unavailable", exact: true }).click();
+  await expect(page.getByLabel("Customer response", { exact: true })).toHaveValue("Unavailable");
+  await expect(page.getByLabel("Unavailable reason", { exact: true })).toBeFocused();
+  expect(submitted).toBeUndefined();
   await page
     .getByLabel("Customer response", { exact: true })
     .selectOption("AcceptedWithReservations");
@@ -307,10 +349,15 @@ test("SV-06 prepared and issued output keep exact response binding on refusal", 
   await page
     .getByLabel("Owned next action (required unless accepted)", { exact: true })
     .fill("SYN call to clarify the gland");
+  await sheet.evaluate((dialog) => { dialog.scrollTop = 0; });
+  if ((page.viewportSize()?.width ?? 1440) <= 780)
+    await expect(
+      page.getByRole("button", { name: "Record response", exact: true }),
+    ).toBeInViewport();
   await page.screenshot({ path: info.outputPath("response-sheet.png") });
   await page
     .getByRole("button", {
-      name: "Save response to presented content",
+      name: "Record response",
       exact: true,
     })
     .click();

@@ -13503,7 +13503,8 @@
           "paragraphs": [
             "Review submission opens in Evidence. Choose Approved or Returned for every original entry and give reasons for returns. Review decision, authority disposition, internal remarks and the permitted site contact remain explicit. Saving the review does not issue the report.",
             "Customer report shows protected presentations and SHA-256 hashes. DraftEvidence never becomes IssuedReport: the existing issue command renders and verifies separate output. Present a retained version to record an exact response. PDF retrieval captures no response.",
-            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed."
+            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed.",
+            "Record response saves the exact presentation shown. Customer unavailable selects Unavailable and focuses its reason without saving. Cancel or Escape confirms discarding unsaved input; an uncertain operation must be recovered before closing. On phones the sheet covers the shell and keeps its actions at the bottom."
           ],
           "steps": [],
           "rows": [],
@@ -45599,7 +45600,8 @@
           "paragraphs": [
             "Review submission opens in Evidence. Choose Approved or Returned for every original entry and give reasons for returns. Review decision, authority disposition, internal remarks and the permitted site contact remain explicit. Saving the review does not issue the report.",
             "Customer report shows protected presentations and SHA-256 hashes. DraftEvidence never becomes IssuedReport: the existing issue command renders and verifies separate output. Present a retained version to record an exact response. PDF retrieval captures no response.",
-            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed."
+            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed.",
+            "Record response saves the exact presentation shown. Customer unavailable selects Unavailable and focuses its reason without saving. Cancel or Escape confirms discarding unsaved input; an uncertain operation must be recovered before closing. On phones the sheet covers the shell and keeps its actions at the bottom."
           ],
           "steps": [],
           "rows": [],
@@ -45791,7 +45793,8 @@
           "paragraphs": [
             "Review submission opens in Evidence. Choose Approved or Returned for every original entry and give reasons for returns. Review decision, authority disposition, internal remarks and the permitted site contact remain explicit. Saving the review does not issue the report.",
             "Customer report shows protected presentations and SHA-256 hashes. DraftEvidence never becomes IssuedReport: the existing issue command renders and verifies separate output. Present a retained version to record an exact response. PDF retrieval captures no response.",
-            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed."
+            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed.",
+            "Record response saves the exact presentation shown. Customer unavailable selects Unavailable and focuses its reason without saving. Cancel or Escape confirms discarding unsaved input; an uncertain operation must be recovered before closing. On phones the sheet covers the shell and keeps its actions at the bottom."
           ],
           "steps": [],
           "rows": [],

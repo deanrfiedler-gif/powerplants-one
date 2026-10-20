@@ -537,7 +537,7 @@ export async function serviceJourney(
     keyActivate(
       page,
       page.getByRole("button", {
-        name: "Save response to presented content",
+        name: "Record response",
         exact: true,
       }),
     ),

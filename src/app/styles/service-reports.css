@@ -758,9 +758,79 @@
   }
 }
 #ppo-reports.sv06-response-sheet {
+  width: min(960px, calc(100vw - 48px));
   max-width: 960px;
-  margin: 0 auto;
-  padding: 24px;
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--ppo-shell-line);
+  border-radius: var(--radius-control);
+  overflow: auto;
+}
+#ppo-reports .sv06-response-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 24px 0;
+}
+#ppo-reports .sv06-response-heading h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 30px;
+}
+#ppo-reports .sv06-response-heading .ppo-button {
+  min-height: 32px;
+  padding: 6px;
+}
+#ppo-reports .sv06-response-body {
+  padding: 0 24px 24px;
+}
+#ppo-reports .sv06-response-body > p,
+#ppo-reports .sv06-response-form p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 20px;
+}
+#ppo-reports .sv06-response-summary {
+  padding: 14px;
+  border: 1px solid var(--ppo-shell-line);
+  border-radius: var(--radius-control);
+  background: var(--ppo-shell-surface);
+}
+#ppo-reports .sv06-response-summary h2 {
+  margin: 0 0 8px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+#ppo-reports .sv06-response-summary p {
+  margin: 4px 0;
+}
+#ppo-reports .sv06-response-form fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+#ppo-reports .sv06-response-form .report-field {
+  margin: 0 0 20px;
+}
+#ppo-reports .sv06-response-form :is(input, select, textarea) {
+  margin-bottom: 0;
+}
+#ppo-reports .sv06-response-savebar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+  background: var(--white);
+  border-top: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-response-savebar .ppo-button:first-child {
+  margin-right: auto;
 }
 #ppo-reports .sv06-presented {
   margin: 20px 0;
@@ -975,11 +1045,31 @@
     flex-basis: 100%;
   }
   #ppo-reports.sv06-response-sheet {
-    padding: 16px;
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
   }
-  #ppo-reports.sv06-response-sheet h1 {
-    font-size: 18px;
-    line-height: 24px;
+  #ppo-reports .sv06-response-body {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
+  }
+  #ppo-reports .sv06-response-savebar {
+    position: fixed;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    z-index: 2;
+  }
+  #ppo-reports .sv06-response-savebar .ppo-button:first-child {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+  #ppo-reports .sv06-response-form :is(input, select, textarea, button) {
+    scroll-margin-block: 24px 150px;
   }
   #ppo-reports .sv06-review-entries dl > div {
     grid-template-columns: 96px minmax(0, 1fr);
