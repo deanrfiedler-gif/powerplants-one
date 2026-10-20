@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Contributor: this Codex Sites session, branch `codex/sites-cs04-implementation`, dedicated worktree from main `8f5ad31b`. PR #626 merged the preflight record only. This follow-up implements the page after Dean resolved the numbering question. Owner visual review pending.
+Owner: Dean Fiedler. Contributor: this Codex Sites session, branch `codex/sites-cs04-page`, dedicated worktree updated through main `0ebb26a3`. PR #626 merged the preflight record; PR #635 merged the reference decision and build claim only. This follow-up contains the page implementation. Owner visual review pending.
 
 Authority: [Sites accepted design](../decisions/sites-figma-design.md), PPO - Design, page `1375:2901`, named version **Sites — accepted**. Desktop register `1375:2937`, overview `1375:3183`, equipment `1375:3312`; tablet `1375:3449`; phones `1375:328008`, `1375:3678`, `1379:2365`; states `1375:328046`, `1375:328103`, `1375:328145`; notes `1380:2175`. The later [compact phone header](../decisions/phone-header-amendment.md) applies. Existing [icon-free captures](../reference/ui/sites/sites-design-r01/README.md) stay unchanged.
 
@@ -29,7 +29,7 @@ Dean approved adopting the shorter convention deliberately on 20 October 2026: "
 
 The Git acceptance record, live notes card and File index agree on CS-04 and the accepted design. Live screenshots of all ten viewport/state frames plus the notes card were read privately; high-fidelity design context and tokens were retrieved, with register/tablet context split into visible child nodes where the full frame response was sparse. Existing icon-free repository captures remain unchanged. No Figma link, file key or licensed artwork is retained in this contribution.
 
-Existing routes, Site reads, permanent identifiers, equipment installed/served reads, permissions, shared controls, page contracts, build queue and offline boundary were inspected. Existing dependencies were installed without changing the lockfile. PR #626 contained only this preflight record; the follow-up PR #635 now contains the implementation and its verification work.
+Existing routes, Site reads, permanent identifiers, equipment installed/served reads, permissions, shared controls, page contracts, build queue and offline boundary were inspected. Existing dependencies were installed without changing the lockfile. PRs #626 and #635 merged the preflight and numbering records while implementation continued in the isolated worktree; this PR contains the code and verification evidence.
 
 ## Implementation and adaptations
 

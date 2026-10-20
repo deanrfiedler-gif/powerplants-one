@@ -92,6 +92,7 @@ test("CS04 accepted compositions at desktop, tablet and 390/320 with exact hando
     await expect(
       page.locator(width > 780 ? ".sites-desktop-grid" : ".sites-phone-list"),
     ).toBeVisible();
+    await expect(page.locator(".module-navigation")).toBeHidden();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -238,9 +239,11 @@ test("CS04 loading, empty, retry, revoked access and partial source states", asy
     }),
   );
   await page.goto(`/sites/${siteId}`);
-  await expect(page.getByText("Work orders: Access restricted")).toBeVisible();
-  await expect(page.getByText(/Could not load this source/)).toBeVisible();
+  const overview = page.getByRole("tabpanel", { name: "Overview", exact: true });
+  await expect(overview.getByText("Work orders: Access restricted")).toBeVisible();
+  await expect(overview.getByText(/Could not load this source/)).toBeVisible();
   await expect(
-    page.getByText(/Showing the first permitted records/),
+    overview.getByText(/Showing the first permitted records/),
   ).toBeVisible();
+  await capture(page, info, "partial-390");
 });

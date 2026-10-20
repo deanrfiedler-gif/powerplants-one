@@ -1,4 +1,7 @@
 /* CS-04: accepted Sites composition using the shared menu, table, controls and theme tokens. */
+.app-frame:has(#ppo-sites) > .workspace > .module-navigation {
+  display: none;
+}
 #ppo-sites {
   height: 100%;
 }
@@ -18,6 +21,9 @@
 }
 #ppo-sites a:hover {
   text-decoration: underline;
+}
+#ppo-sites a.ppo-button--primary {
+  color: var(--white);
 }
 #ppo-sites .product-icon {
   width: 16px;
@@ -65,7 +71,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 8px 16px;
   min-height: 60px;
   border-bottom: 1px solid var(--line-strong);
 }
@@ -132,7 +138,16 @@
 #ppo-sites .sites-pin-check input {
   width: 16px;
   height: 16px;
+  min-height: 0;
+  min-width: 0;
   margin: 12px;
+}
+#ppo-sites .sites-desktop-grid th {
+  padding-block: 0;
+}
+#ppo-sites .sites-desktop-grid .ppo-register-sort {
+  height: 39px;
+  padding-inline: 0;
 }
 #ppo-sites .sites-pin-actions .crm-r38-menu-trigger {
   width: 40px;
@@ -490,6 +505,7 @@
 }
 #ppo-sites .record-tablist {
   display: flex;
+  margin: 0;
   gap: 0;
   padding: 0 10px;
   border-bottom: 1px solid var(--line);
@@ -539,6 +555,8 @@
   line-height: 22px;
 }
 #ppo-sites .site-card {
+  margin: 0;
+  padding: 0;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
@@ -674,6 +692,10 @@
   #ppo-sites .site-record-body {
     grid-template-columns: 280px minmax(0, 1fr);
   }
+  #ppo-sites .site-record,
+  #ppo-sites .record-tablist {
+    background: var(--white);
+  }
   #ppo-sites .site-facts {
     padding: 8px 16px;
   }
@@ -784,12 +806,13 @@
     min-height: 44px;
   }
   #ppo-sites .site-card-heading {
-    flex-wrap: wrap;
     padding: 14px;
   }
   #ppo-sites .site-card-heading > div {
-    flex-basis: calc(100% - 32px);
+    flex: 1;
   }
+  #ppo-sites .site-readiness-card .site-card-heading > .ppo-register-chip,
+  #ppo-sites .site-readiness-card > footer { display: none; }
   #ppo-sites .site-card-heading h2 {
     font-size: 15px;
   }
@@ -797,17 +820,15 @@
     font-size: 13px;
   }
   #ppo-sites :is(.site-card-row, .site-access-row) {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr) auto;
+    gap: 10px;
     padding: 12px 14px;
   }
   #ppo-sites .site-card-row > a {
-    margin-left: 28px;
-    min-height: 32px;
+    min-height: 44px;
     display: flex;
     align-items: center;
-  }
-  #ppo-sites .site-card-row > div {
-    flex-basis: calc(100% - 28px);
   }
   #ppo-sites .site-phone-access {
     display: block;

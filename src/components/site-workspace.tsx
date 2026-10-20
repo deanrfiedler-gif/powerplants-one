@@ -262,7 +262,7 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
             Access & readiness
           </ButtonLink>
           {s.can_request && (
-            <ButtonLink href={request}>Start service request</ButtonLink>
+            <ButtonLink href={request} variant="primary">Start service request</ButtonLink>
           )}
           {more}
         </div>
@@ -415,10 +415,8 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
                         : "Site readiness"}
                     </h2>
                     <p>
-                      Customer readiness confirmation (P4) is not available in
-                      this prototype. Check Access & readiness before the visit.
-                      Access details do not establish readiness or authority to
-                      work.
+                      Customer readiness confirmation (P4) is not available.
+                      Check Access & readiness before visiting.
                     </p>
                   </div>
                   <RegisterChip tone="attention">Check in CS-06</RegisterChip>
@@ -439,7 +437,7 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
                       </small>
                     </div>
                     <Link href={`/service/appointments/${s.next_visit.id}`}>
-                      Open visit
+                      Open
                     </Link>
                   </div>
                 )}
@@ -455,7 +453,7 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
                       Access, biosecurity and the current visit context
                     </small>
                   </div>
-                  <Link href={readiness}>Access & readiness</Link>
+                  <Link href={readiness} aria-label="Access & readiness">Readiness</Link>
                 </div>
                 <footer>
                   <ProductIcon name="info" />
@@ -527,7 +525,7 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
           Readiness
         </ButtonLink>
         {s.can_request && (
-          <ButtonLink href={request}>Service request</ButtonLink>
+          <ButtonLink href={request} variant="primary">Service request</ButtonLink>
         )}
       </footer>
       {details && (
