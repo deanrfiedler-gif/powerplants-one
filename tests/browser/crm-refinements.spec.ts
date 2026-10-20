@@ -308,7 +308,7 @@ test("desktop directory tables and mobile lists share saved, scoped queries", as
   page,
 }, info) => {
   await call(page, "local-session", { profile: "coordinator" });
-  await page.goto("/people");
+  await page.goto("/people?people_layout=directory");
   await expect(
     page.getByRole("heading", { name: "People", exact: true }),
   ).toBeVisible();
