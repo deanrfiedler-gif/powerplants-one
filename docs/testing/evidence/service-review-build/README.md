@@ -38,6 +38,16 @@ Persisted P09/P11 CI reruns remain required after this fix. Native owner visual 
 
 Follow-up checks passed: `npm run studio:check` (366 entries, 48 components, no errors), `npm run typecheck`, `npm run lint`, the three report-register unit tests, naming (743 records), foundation (78 requirements, 12,849 links, 60 status fragments) and `git diff --check`. Status and build-sequence generators ran. The first concurrent lint attempt lost the temporary test configuration during cleanup and exited `ENOENT`; the complete rerun after cleanup passed. Full local unit/build and persisted database checks were not rerun for this CSS/test fix; their limits above still apply.
 
+## CI follow-up: original-response recovery
+
+The completed `3677e4f1` run confirms the previous footer repair: P11 selected Service/Finance journey and original-failure replay passed, alongside all four database shards, Finance, HTTP, load and output isolation. Nineteen workflows passed. Application and compiled-browser assurance still failed; neither aggregate gate is claimed green.
+
+The five failing browser/report jobs (**118482889587**, **118482889581**, **118482889580**, **118482418616**, **118482418590**) all found two instances of **Customer response saved.** after recovering an uncertain FI-07 receipt. The tabbed page mounted the recovery section both above the active panel and inside the hidden Customer response panel. The page now mounts that section in only its applicable location. The existing strict saved-message assertion remains unchanged; it is not replaced with a first-match or visible-only filter. A new fixture test reproduced the two-message failure before the repair, then passed across Evidence, Customer response, History and reload while proving no response command was resent.
+
+One development-mobile P09 run also failed to find the response sheet after clicking Present Issued Report on its fifth presentation. The focused replay and compiled-mobile copy of this journey passed. The failure snapshot retained the Customer report panel rather than an open sheet; it does not establish a server or baseline failure. The long-report handover now waits for the exact preview body to load and checks its retained HTML hash before clicking, in addition to the existing hash assertion inside the response sheet. No deadline, command assertion or response-count assertion is relaxed. A new desktop/phone fixture exercises all five response choices as independent exact presentations with unique response/operation IDs and increasing report versions.
+
+The two new tests passed **4/4** across desktop and phone after the repair, followed by the complete page fixture suite **16/16**. An initial local attempt preceded diagnostic server readiness and failed with connection refused; the subsequent pre-fix run reproduced the duplicate status. The temporary local configuration is removed. Persisted CI reruns and owner visual review remain required; the PR stays draft.
+
 ## Visual comparison and limits
 
 Application captures are local-only test artefacts, outside Git, under the temporary `ppo-sv06-browser` folder. No Font Awesome Pro artwork is retained in the public repository. The immutable source captures are the existing icon-free files under `docs/reference/ui/service/service-review-design-r01/`.

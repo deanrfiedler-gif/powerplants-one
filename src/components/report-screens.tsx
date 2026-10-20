@@ -1473,7 +1473,7 @@ export function ReportScreen({ id }: { id: string }) {
             </p>
           </nav>
         )}
-        {recovery}
+        {tab === "response" && recovery}
       </RecordPanel>
       <RecordPanel id="sv06" tab="history" value={tab}>
         <h2>Submission history</h2>

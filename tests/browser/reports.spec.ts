@@ -559,6 +559,13 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     "Disputed",
   ].entries()) {
     await reportTab(page, "Customer report");
+    await expect(
+      page.frameLocator(".report-preview").locator("body"),
+    ).toBeVisible();
+    const previewHtml = await page
+      .getByTitle("Exact customer-safe report presentation", { exact: true })
+      .getAttribute("srcdoc");
+    expect(hash(previewHtml!)).toBe(old.v.content_hash);
     await page
       .getByRole("button", { name: "Present Issued Report", exact: true })
       .first()

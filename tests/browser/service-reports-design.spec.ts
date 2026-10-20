@@ -7,7 +7,9 @@ import {
 import { destinations } from "../../src/shell/navigation";
 
 test.beforeEach(async ({ page }) => {
-  await page.route(/^https:\/\/[^/]+\.fontawesome\.com\//, (route) => route.abort());
+  await page.route(/^https:\/\/[^/]+\.fontawesome\.com\//, (route) =>
+    route.abort(),
+  );
   await page.route("**/api/v1/**", (route) =>
     route.fulfill({
       json: {
@@ -66,7 +68,9 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
     ).toBeVisible();
     if (width === 1024) {
       await expect(
-        page.getByRole("button", { name: /^(Collapse|Expand) primary navigation$/ }),
+        page.getByRole("button", {
+          name: /^(Collapse|Expand) primary navigation$/,
+        }),
       ).toBeVisible();
       const collapse = page.getByRole("button", {
         name: "Collapse primary navigation",
@@ -74,7 +78,10 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
       });
       if (await collapse.isVisible()) await collapse.click();
       await expect(
-        page.getByRole("button", { name: "Expand primary navigation", exact: true }),
+        page.getByRole("button", {
+          name: "Expand primary navigation",
+          exact: true,
+        }),
       ).toBeVisible();
     }
     expect(
@@ -169,11 +176,13 @@ test("SV-06 exact review draft survives tabs and newer reads; view-only hides co
     page.getByLabel("Entry 1 review reason", { exact: true }),
   ).toHaveValue("SYN verify original measurement");
   current = { ...current, version: 2 };
-  const refreshed = page.waitForResponse(
-    (response) => response.url().endsWith(`/api/v1/reports/${reportId}`),
+  const refreshed = page.waitForResponse((response) =>
+    response.url().endsWith(`/api/v1/reports/${reportId}`),
   );
   if ((page.viewportSize()?.width ?? 1440) <= 780) {
-    await page.getByRole("button", { name: "More actions", exact: true }).click();
+    await page
+      .getByRole("button", { name: "More actions", exact: true })
+      .click();
     await page
       .getByRole("menuitem", { name: "Refresh exact report", exact: true })
       .click();
@@ -378,9 +387,15 @@ test("SV-06 prepared and issued output keep exact response binding on refusal", 
     expect(bounds?.width).toBe(page.viewportSize()?.width);
     expect(bounds?.height).toBe(page.viewportSize()?.height);
   }
-  await page.getByRole("button", { name: "Customer unavailable", exact: true }).click();
-  await expect(page.getByLabel("Customer response", { exact: true })).toHaveValue("Unavailable");
-  await expect(page.getByLabel("Unavailable reason", { exact: true })).toBeFocused();
+  await page
+    .getByRole("button", { name: "Customer unavailable", exact: true })
+    .click();
+  await expect(
+    page.getByLabel("Customer response", { exact: true }),
+  ).toHaveValue("Unavailable");
+  await expect(
+    page.getByLabel("Unavailable reason", { exact: true }),
+  ).toBeFocused();
   expect(submitted).toBeUndefined();
   await page
     .getByLabel("Customer response", { exact: true })
@@ -397,7 +412,9 @@ test("SV-06 prepared and issued output keep exact response binding on refusal", 
   await page
     .getByLabel("Owned next action (required unless accepted)", { exact: true })
     .fill("SYN call to clarify the gland");
-  await sheet.evaluate((dialog) => { dialog.scrollTop = 0; });
+  await sheet.evaluate((dialog) => {
+    dialog.scrollTop = 0;
+  });
   if ((page.viewportSize()?.width ?? 1440) <= 780)
     await expect(
       page.getByRole("button", { name: "Record response", exact: true }),
@@ -468,4 +485,209 @@ test("SV-06 clears failed reads and provides loading, empty and retry states", a
   await expect(
     page.getByRole("heading", { name: "No reports in this window" }),
   ).toBeVisible();
+});
+
+test("SV-06 repeated exact presentations save independent responses", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  const { createHash } = await import("node:crypto");
+  const html = `<!doctype html><html><body><h1>SYN long retained report</h1>${"<p>SYN original attendance evidence, not an operating record.</p>".repeat(100)}</body></html>`;
+  const contentHash = createHash("sha256").update(html).digest("hex");
+  const presentation = {
+    id: "16000000-0000-4000-8000-000000000031",
+    revision_id: reportFixture.revisions[0].id,
+    kind: "IssuedReport",
+    content_hash: contentHash,
+  };
+  const responses: Record<string, unknown>[] = [];
+  const receipts = new Map<string, Record<string, unknown>>();
+  const report = {
+    ...reportFixture,
+    status: "Issued",
+    presentations: [presentation],
+    responses,
+  };
+  await page.route(`**/api/v1/reports/${reportId}`, (route) =>
+    route.fulfill({ json: { items: [report] } }),
+  );
+  await page.route(`**/api/v1/reports/${reportId}/html?*`, (route) =>
+    route.fulfill({ contentType: "text/html", body: html }),
+  );
+  await page.route(`**/api/v1/reports/${reportId}/respond`, async (route) => {
+    const body = route.request().postDataJSON();
+    expect(body.expected_report_version).toBe(report.version);
+    expect(body.presented_hash).toBe(contentHash);
+    expect(body.presentation_id).toBe(presentation.id);
+    responses.push({ ...body, received_at: reportRow.updated_at });
+    report.version++;
+    const receipt = {
+      operation_id: body.operation_id,
+      record_id: body.id,
+      record_version: report.version,
+      state: "Accepted",
+      receipt_id: "16000000-0000-4000-8000-000000000032",
+      accepted_at: reportRow.updated_at,
+    };
+    receipts.set(body.operation_id, receipt);
+    await route.fulfill({ status: 201, json: receipt });
+  });
+  await page.route("**/api/v1/operations/*", (route) =>
+    route.fulfill({
+      json: receipts.get(route.request().url().split("/").at(-1)!),
+    }),
+  );
+  await page.goto(`/service/reports/${reportId}?tab=report`);
+  for (const choice of [
+    "Accepted",
+    "AcceptedWithReservations",
+    "Declined",
+    "Unavailable",
+    "Disputed",
+  ]) {
+    await page
+      .getByRole("tab", { name: "Customer report", exact: true })
+      .click();
+    await expect(
+      page.frameLocator(".report-preview").locator("body"),
+    ).toBeVisible();
+    expect(
+      createHash("sha256")
+        .update((await page.locator(".report-preview").getAttribute("srcdoc"))!)
+        .digest("hex"),
+    ).toBe(contentHash);
+    await page
+      .getByRole("button", { name: "Present Issued Report", exact: true })
+      .click();
+    const sheet = page.getByRole("dialog", {
+      name: "Record customer response",
+    });
+    await expect(
+      sheet.getByRole("heading", { name: "Record customer response" }),
+    ).toBeFocused();
+    await page
+      .getByLabel("Customer response", { exact: true })
+      .selectOption(choice);
+    if (choice !== "Unavailable") {
+      await page
+        .getByLabel("Stated respondent name (synthetic)", { exact: true })
+        .fill("SYN Jordan");
+      await page
+        .getByLabel("Stated respondent role", { exact: true })
+        .fill("SYN witness");
+    }
+    if (choice !== "Accepted") {
+      await page
+        .getByLabel(
+          choice === "Unavailable"
+            ? "Unavailable reason"
+            : "Response remarks / reservations",
+          { exact: true },
+        )
+        .fill("SYN retained response detail");
+      await page
+        .getByLabel("Owned next action (required unless accepted)", {
+          exact: true,
+        })
+        .fill("SYN Service owner to clarify");
+    }
+    await page
+      .getByRole("button", { name: "Record response", exact: true })
+      .click();
+    await expect(sheet).toHaveCount(0);
+    await expect(
+      page.getByRole("tab", { name: "Customer response", exact: true }),
+    ).toHaveAttribute("aria-selected", "true");
+    await expect(
+      page.getByText("Customer response saved.", { exact: true }),
+    ).toBeVisible();
+  }
+  expect(responses).toHaveLength(5);
+  expect(new Set(responses.map((response) => response.id)).size).toBe(5);
+  expect(new Set(responses.map((response) => response.operation_id)).size).toBe(
+    5,
+  );
+});
+
+test("SV-06 restores one original response receipt across record tabs", async ({
+  page,
+}) => {
+  const operationId = "16000000-0000-4000-8000-000000000021";
+  const responseId = "16000000-0000-4000-8000-000000000022";
+  const actorId = "30000000-0000-4000-8000-000000000001";
+  const journalKey = `ppo.report-response.${actorId}.${reportId}`;
+  const original = {
+    version: 1,
+    scope: {
+      actor_id: actorId,
+      workspace_id: "10000000-0000-4000-8000-000000000001",
+    },
+    path: `reports/${reportId}/respond`,
+    target: `/service/reports/${reportId}`,
+    label: "Customer response",
+    record_id: responseId,
+    phase: "pending",
+    body: { operation_id: operationId, schema_version: 1, id: responseId },
+  };
+  await page.addInitScript(
+    ({ key, entry }) => {
+      if (!sessionStorage.getItem(key + ":accepted"))
+        sessionStorage.setItem(key, JSON.stringify(entry));
+    },
+    { key: journalKey, entry: original },
+  );
+  await page.route(`**/api/v1/reports/${reportId}`, (route) =>
+    route.fulfill({ json: { items: [reportFixture] } }),
+  );
+  let commands = 0;
+  await page.route(`**/api/v1/reports/${reportId}/respond`, (route) => {
+    commands++;
+    return route.fulfill({
+      status: 500,
+      json: { message: "Unexpected resend" },
+    });
+  });
+  await page.route(`**/api/v1/operations/${operationId}`, (route) =>
+    route.fulfill({
+      json: {
+        operation_id: operationId,
+        record_id: responseId,
+        record_version: 1,
+        state: "Accepted",
+        receipt_id: "16000000-0000-4000-8000-000000000023",
+        accepted_at: reportRow.updated_at,
+      },
+    }),
+  );
+  await page.goto(`/service/reports/${reportId}`);
+  for (const label of [
+    "Evidence",
+    "Customer response",
+    "History",
+    "Evidence",
+  ]) {
+    await page.getByRole("tab", { name: label, exact: true }).click();
+    const saved = page.getByText("Customer response saved.", { exact: true });
+    await expect(saved).toHaveCount(1);
+    await expect(saved).toBeVisible();
+    await expect(
+      page.getByRole("region", { name: "Customer response recovery" }),
+    ).toHaveCount(1);
+  }
+  await page.reload();
+  await expect(
+    page.getByText("Customer response saved.", { exact: true }),
+  ).toBeVisible();
+  expect(commands).toBe(0);
+  expect(
+    await page.evaluate((key) => sessionStorage.getItem(key), journalKey),
+  ).toBeNull();
+  expect(
+    await page.evaluate(
+      (key) =>
+        JSON.parse(sessionStorage.getItem(key + ":accepted")!).body
+          .operation_id,
+      journalKey,
+    ),
+  ).toBe(operationId);
 });

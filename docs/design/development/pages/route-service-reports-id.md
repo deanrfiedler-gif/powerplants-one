@@ -38,6 +38,8 @@ D5: Review submission opens in Evidence. Entry decisions and reasons, submission
 
 Customer report retains DraftEvidence and IssuedReport identities, protected byte/hash checking, exact HTML, PDF retrieval, issue and original output retry. Issuing sends nothing. Customer response retains subject, explicit response choice, stated name/role, optional synthetic PNG mark, remarks, next action, capture time, append-only correction and same-tab uncertain-receipt recovery.
 
+Receipt recovery has one mounted status/control section: inside the active Customer response panel or above another active tab when an original is pending or saved, never duplicated in a hidden panel. Restoring its receipt does not send a new response.
+
 ## Mobile
 
 At 390 and 320 CSS px use the shared compact header and five-tab phone navigation; Service review remains under More (D6). Register rows show visit/date, report/customer, state, attention and declared outcome. Filters open a labelled panel; no horizontal document overflow. Evidence keeps readable entry facts, horizontal tabs and the pinned work-order/review actions. View-only omits mutation actions. Response capture uses a full-width sheet; protected exact presentation remains inspectable.
