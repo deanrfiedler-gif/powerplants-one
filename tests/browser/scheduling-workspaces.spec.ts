@@ -94,15 +94,19 @@ test("native scheduling pages retain context and reflow at coordination, phone a
 });
 test("resource detail exposes read-only evidence, calendar intervals and anonymous reservations", async ({
   page,
-}) => {
+}, info) => {
   await identity(page);
   await page.goto("/service/technicians/" + id("a4") + "?day=2031-09-22");
   await expect(
     page.getByRole("heading", { name: "Competence and evidence" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Published calendar" }),
-  ).toBeAttached();
+    page.getByRole("heading", {
+      name: info.project.name.includes("mobile")
+        ? "Resource and calendar"
+        : "Published calendar",
+    }),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Seven-day availability" }),
   ).toBeVisible();

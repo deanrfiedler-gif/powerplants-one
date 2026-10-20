@@ -70,8 +70,12 @@ test("Field Team and resource evidence retain date, site and timezone through re
   await page.getByLabel("Week starting").fill("2031-09-23");
   await page.reload();
   await expect(
-    page.getByRole("heading", { name: "Published calendar" }),
-  ).toBeAttached();
+    page.getByRole("heading", {
+      name: info.project.name.includes("mobile")
+        ? "Resource and calendar"
+        : "Published calendar",
+    }),
+  ).toBeVisible();
   await expect(page.getByLabel("Week starting")).toHaveValue("2031-09-23");
   await expect(page.getByLabel("Review timezone")).toHaveValue("UTC");
   await page.screenshot({
@@ -83,13 +87,17 @@ test("Field Team and resource evidence retain date, site and timezone through re
     .filter({ visible: true })
     .click();
   await page
+    .getByRole("dialog", { name: "Person record actions" })
     .getByRole("link", { name: "Back to Field team", exact: true })
     .click();
+  await expect(page).toHaveURL(/\/service\/technicians\?/);
   // The new default is Technicians; returning retains the full URL context.
   expect(new URL(page.url()).searchParams.get("day")).toBe("2031-09-23");
   expect(new URL(page.url()).searchParams.get("site_id")).toBe(siteId);
   expect(new URL(page.url()).searchParams.get("timezone")).toBe("UTC");
-  await page.goto(page.url() + "&view=visits");
+  const visits = new URL(page.url());
+  visits.searchParams.set("view", "visits");
+  await page.goto(visits.toString());
   await expect(page.getByLabel("Visit date", { exact: true })).toHaveValue(
     "2031-09-23",
   );
