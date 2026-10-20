@@ -34,7 +34,7 @@ Site handover accepts site and site_id query parameters and derives the company 
 
 ## Shared components and states
 
-Reuses SecondaryMenuFrame/useSecondaryMenu, usePhoneHeader, RegisterTable, Button/ButtonLink, ProductIcon through font-awesome-icons.ts, Field/EnumField/SelectField, LocalDateTimeField, ValidationFields/ErrorNotice, ReadState, RecordTabs/RecordPanel, useResource/useCommand and existing IntakeForm/TriageActions. These are consumer bindings; no new shared component is introduced.
+Reuses SecondaryMenuFrame/useSecondaryMenu, usePhoneHeader, RegisterTable/RegisterChip, Button/ButtonLink, ProductIcon through font-awesome-icons.ts, Field/EnumField/SelectField, LocalDateTimeField, ValidationFields/ErrorNotice, ReadState, RecordTabs/RecordPanel, useResource/useCommand and existing IntakeForm/TriageActions. These are consumer bindings; no new shared component is introduced.
 
 States include loading, zero results, filtered no matches, failed/denied reads, partial bounded results, view-only actions, validation, unsaved-discard confirmation and refused newer revisions. Reads never present stale rows as current after failure. Board and duplicate windows disclose their bounds. Existing Request information and Update details forms retain native behaviour because their accepted layouts are not drawn.
 
@@ -44,7 +44,7 @@ States include loading, zero results, filtered no matches, failed/denied reads, 
 - Duplicate detection is advisory matching of permitted open requests at the same site, narrowed to selected equipment, within a declared 20-result window; it does not assert a verified duplicate. Semantic matching rules remain unspecified.
 - Reported issue, Updates, History, Request information, Update details, phone filter internals and tablet record layouts are not drawn. Existing controls and native data are reused; their final visual treatment remains an owner question.
 - Existing Board drag/Move behaviour remains native and is not an additional stage. All later ADR-0043 stages and Conversations remain out of scope.
-- Some form counters in Figma differ from existing command limits. Native limits remain explicit; no silent truncation or new business rule is added.
+- Some form counters in Figma differ from existing command limits. Native limits remain explicit; no silent truncation or new business rule is added. Request information remains available only from New; the existing command refuses a second clarification while the request is already NeedsInformation.
 
 - The later shared compact phone-header contract shows reference/revision and retains bottom navigation. The accepted Service record shows summary/reference and no bottom navigation. This build preserves the shared shell contract; owner alignment remains open.
 - Earlier on this equipment uses visible Triaged requests from the declared loaded window. Its date is labelled received because the register does not expose a triage-event timestamp. It implies neither resolution nor closure.

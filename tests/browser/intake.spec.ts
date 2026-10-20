@@ -174,11 +174,14 @@ test("SV-01/SV-02 persisted logging, customer statement and atomic owned clarifi
 }, info) => {
   test.setTimeout(120000);
   const origin = baseURL!;
-  await page.request.post(origin + "/api/v1/local-session", {
+  const session = await page.request.post(origin + "/api/v1/local-session", {
     headers: { origin },
     data: { profile: "coordinator" },
   });
+  expect(session.status()).toBe(200);
   await page.goto(`/service/tickets/new?site_id=${site}`);
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }))
+    .toHaveAttribute("aria-busy", "false");
   await expect(page.getByLabel("Site", { exact: true })).toHaveValue(site);
   await page.getByLabel("Summary", { exact: true }).fill(`SYN accepted intake ${info.project.name}`);
   await page.getByLabel("Caller", { exact: true }).selectOption(person);
@@ -231,7 +234,7 @@ test("SV-01/SV-02 persisted logging, customer statement and atomic owned clarifi
   await page
     .getByLabel("Reason for this triage action", { exact: true })
     .fill("Clarification received; review next action");
-  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await page.locator(".sv-triage-form").getByRole("button", { name: "Complete triage", exact: true }).click();
   await expect(page.locator(".sv-triage-form")).toHaveCount(0);
   t = (await (await page.request.get(`/api/v1/service/tickets/${id}`)).json()).items[0];
   expect(t.version).toBe(4);

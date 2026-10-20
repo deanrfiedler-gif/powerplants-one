@@ -323,7 +323,17 @@ function TriageForm({
           {t.display_number} · Nothing moves until you save. A newer revision refuses the save and keeps your entries.
         </p>
         <ValidationFields error={failure}>
-          <ErrorNotice error={failure} />
+          <ErrorNotice
+            error={
+              conflict
+                ? {
+                    code: "VersionConflict",
+                    message:
+                      "Not saved. A newer request revision exists. Your entries are kept; review the changes before saving again.",
+                  }
+                : failure
+            }
+          />
           <section className="sv-triage-request">
             <h3>Request</h3>
             <p>{t.summary}</p>
@@ -331,10 +341,8 @@ function TriageForm({
               {t.customer?.display_name ?? "Customer not identified"} · {label(t.site)}
             </p>
           </section>
-          {conflict && (
+          {conflict && reviewing && (
             <section className="sv-conflict">
-              <p>Not saved. Your entries are kept. Review the current revision before trying again.</p>
-              <Button onClick={() => setReviewing(true)}>Review changes</Button>
               {reviewing && (
                 <>
                   <ReadState loading={current.loading} error={current.error} retry={current.reload} />
@@ -437,14 +445,20 @@ function TriageForm({
         >
           Request information
         </Button>
-        <Button
-          type="submit"
-          variant="primary"
-          busy={cmd.busy}
-          disabled={!!conflict || reviewing || owners.loading || !!owners.error}
-        >
-          Complete triage
-        </Button>
+        {conflict ? (
+          <Button variant="primary" onClick={() => setReviewing(true)} disabled={reviewing && current.loading}>
+            Review changes
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            variant="primary"
+            busy={cmd.busy}
+            disabled={reviewing || owners.loading || !!owners.error}
+          >
+            Complete triage
+          </Button>
+        )}
       </footer>
       {discard && (
         <ServiceDialog title="Discard triage entries?" onClose={() => setDiscard(false)}>

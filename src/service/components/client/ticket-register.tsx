@@ -381,7 +381,7 @@ export function TicketRegister() {
   // Relative times read against the list's own as-at time, never the viewer's clock.
   const now = useMemo(() => new Date(list.data?.observed_at ?? 0), [list.data?.observed_at]);
   const selected = items.find((item) => item.id === preview) ?? null;
-  const total = counts.data?.[queue];
+  const total = list.loading || list.error || counts.error ? undefined : counts.data?.[queue];
   const firstRow = cursors.length * pageSize + 1;
 
   const reload = () => {
@@ -616,7 +616,7 @@ export function TicketRegister() {
           {queues.find((q) => q.key === queue)?.label}
           <ProductIcon name="chevron" />
         </button>
-        <span>{total ?? "–"} open</span>
+        <span>{list.loading ? "Loading…" : list.error ? "Unavailable" : `${total ?? "–"} open`}</span>
         <button className="secondary sr-icon-button" aria-label="Filters" onClick={() => setFiltersOpen(true)}>
           <ProductIcon name="filter" />
         </button>

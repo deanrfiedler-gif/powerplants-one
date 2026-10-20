@@ -187,12 +187,54 @@ async function setup(page: Page) {
 async function fits(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 }
+test("SV-02 bounded evidence stays explicit and cancelling triage requires a discard decision", async ({ page }) => {
+  await setup(page);
+  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) =>
+    r.fulfill({ json: envelope([{ ...record(), history_partial: true }]) }),
+  );
+  await page.route("**/api/v1/service/tickets/*/statements", (r) =>
+    r.fulfill({
+      json: {
+        items: Array.from({ length: 100 }, (_, i) => ({
+          id: uuid(1000 + i), body: `SYN retained customer statement ${i + 1}`, source_label: "SYN Ravi Patel",
+          occurred_at: now, channel: "Phone", recorded_at: now, recorded_by: actor,
+          recorded_by_name: "SYN Sasha Cole", ticket_version: 103 - i, basis: "ReportedSymptom",
+        })),
+        partial: true,
+      },
+    }),
+  );
+  const writes: string[] = [];
+  page.on("request", (request) => {
+    if (request.method() === "POST") writes.push(request.url());
+  });
+  await page.goto("/service/tickets/" + items[1].id);
+  await page.getByRole("tab", { name: "Updates", exact: true }).click();
+  await expect(page.getByText("Showing the latest 100 statements.", { exact: true })).toBeVisible();
+  await page.getByRole("tab", { name: "History", exact: true }).click();
+  await expect(page.getByText("Showing the latest 100 events.", { exact: true })).toBeVisible();
+  await page.getByRole("tab", { name: "Triage", exact: true }).click();
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await page.getByLabel("Reason for this triage action", { exact: true }).fill("SYN retained draft");
+  await page.locator(".sv-savebar").getByRole("button", { name: "Cancel", exact: true }).click();
+  const discard = page.getByRole("dialog", { name: "Discard triage entries?", exact: true });
+  await expect(discard).toBeVisible();
+  await discard.getByRole("button", { name: "Keep editing", exact: true }).click();
+  await expect(page.getByLabel("Reason for this triage action", { exact: true })).toHaveValue("SYN retained draft");
+  await expect(page.locator(".sv-savebar").getByRole("button", { name: "Cancel", exact: true })).toBeFocused();
+  await page.locator(".sv-savebar").getByRole("button", { name: "Cancel", exact: true }).click();
+  await discard.getByRole("button", { name: "Discard entries", exact: true }).click();
+  await expect(page.locator(".sv-triage-form")).toHaveCount(0);
+  expect(writes).toHaveLength(0);
+});
 for (const width of [1440, 1024, 390, 320])
   test(`SV-01 accepted register at ${width}px: list, named controls and no page overflow`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: width > 780 ? 900 : 844 });
     await setup(page);
     await page.goto("/service/tickets");
     await expect(page.getByText(titles[0], { exact: true }).first()).toBeVisible();
+    // The accepted tablet frame shows the shared rail's compact, user-selected state.
+    if (width === 1024) await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
     await fits(page);
     await page.screenshot({ path: info.outputPath(`register-${width}.png`) });
     if (width > 780) {
@@ -286,6 +328,7 @@ test("SV-02 phone triage keeps entries on validation and newer revision, then su
   await page.getByLabel("Reason for this triage action", { exact: true }).fill("SYN clarification received");
   await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
   await expect(page.getByRole("button", { name: "Review changes", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Complete triage", exact: true })).toHaveCount(0);
   await expect(page.getByLabel("Clarification outcome", { exact: true })).toHaveValue(
     "SYN caller confirmed the sensor identity",
   );
@@ -392,7 +435,16 @@ test("SV-01 possible duplicate hands caller words to statement capture and prese
       },
     ],
   };
-  await page.route("**/api/v1/sites?*", (r) => r.fulfill({ json: envelope([location]) }));
+  let releaseSites!: () => void;
+  const sitesReady = new Promise<void>((resolve) => { releaseSites = resolve; });
+  await page.route("**/api/v1/sites?*", async (r) => {
+    await sitesReady;
+    await r.fulfill({ json: envelope([location]) });
+  });
+  await page.route("**/api/v1/selectors/owners?*", async (r) => {
+    await sitesReady;
+    await r.fulfill({ json: envelope([{ id: actor, display_name: "SYN Sasha Cole" }]) });
+  });
   await page.route("**/api/v1/sites/" + site, (r) => r.fulfill({ json: envelope([location]) }));
   await page.route("**/api/v1/people?*", (r) =>
     r.fulfill({
@@ -406,6 +458,11 @@ test("SV-01 possible duplicate hands caller words to statement capture and prese
   );
   await page.route("**/api/v1/service/tickets?*", (r) => r.fulfill({ json: envelope([items[1]]) }));
   await page.goto("/service/tickets/new?site_id=" + site);
+  await expect(page.getByRole("combobox", { name: "Site", exact: true })).toHaveValue(site);
+  await expect(page.getByRole("combobox", { name: "Site", exact: true }).locator("option:checked"))
+    .toHaveText("SYN Block C Plant Room");
+  await expect(page.getByRole("button", { name: "Create request", exact: true })).toBeDisabled();
+  releaseSites();
   await page.getByLabel("Caller", { exact: true }).selectOption(uuid(600));
   await page.getByLabel("Summary", { exact: true }).fill("Heating loop still drifting overnight");
   await page

@@ -36,6 +36,7 @@ function CreateContext({ siteId, sales }: { siteId?: string; sales?: SalesCreati
       {(!siteId || (!site.loading && !site.error && site.data)) && (
         <CreateForm
           initialSite={siteId}
+          initialSiteOption={site.data?.items[0]}
           initialCompany={site.data?.items[0].company_id ?? sales?.source.company_id}
           sales={sales}
         />
@@ -45,10 +46,12 @@ function CreateContext({ siteId, sales }: { siteId?: string; sales?: SalesCreati
 }
 function CreateForm({
   initialSite,
+  initialSiteOption,
   initialCompany,
   sales,
 }: {
   initialSite?: string;
+  initialSiteOption?: Option;
   initialCompany?: string;
   sales?: SalesCreation;
 }) {
@@ -106,6 +109,13 @@ function CreateForm({
         .map((p) => [p.organisation_id, p]),
     ).values(),
   ];
+  // The handover already read this permitted Site. Keep its name visible while
+  // the broader selector loads, rather than displaying "Not identified".
+  const siteOptions = sites.data?.items ?? [];
+  const visibleSites =
+    initialSiteOption && v.site === initialSiteOption.id && !siteOptions.some((site) => site.id === v.site)
+      ? [initialSiteOption, ...siteOptions]
+      : siteOptions;
   const duplicates = useResource<Envelope<RegisterItem>>(
     v.site ? `service/tickets?site_id=${v.site}&queue=all_open&limit=20&sort=urgency` : null,
   );
@@ -211,7 +221,7 @@ function CreateForm({
                     name="site_id"
                     label="Site"
                     value={v.site}
-                    options={sites.data?.items ?? []}
+                    options={visibleSites}
                     empty="Not identified — clarify later"
                     onChange={(value) => setV((old) => ({ ...old, site: value, asset: "" }))}
                   />
@@ -301,7 +311,12 @@ function CreateForm({
         <footer className="sv-savebar">
           <small>The request starts at New. Logging it authorises no work and books no visit.</small>
           <ButtonLink href="/service/tickets">Cancel</ButtonLink>
-          <Button type="submit" variant="primary" busy={busy}>
+          <Button
+            type="submit"
+            variant="primary"
+            busy={busy}
+            disabled={companies.loading || owners.loading || !!companies.error || !!owners.error}
+          >
             Create request
           </Button>
         </footer>
