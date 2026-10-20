@@ -7081,7 +7081,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Implementation and focused checks recorded in docs/testing/evidence/create-discovery-workspace/README.md; transactional prerequisite proof, complete CI and owner visual review remain separate.",
+      "functional_status": "Implemented; page unit, scoped read, eight browser and two phone dialog checks passed. Evidence and baseline limits: docs/testing/evidence/create-discovery-workspace/README.md. Prerequisite transaction proof, complete CI and owner visual review remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

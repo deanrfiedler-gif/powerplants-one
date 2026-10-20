@@ -69,11 +69,12 @@ Explicit adaptations for owner visual review:
 - Follow-up totals follow existing rules, not the example's two items. Answer state/source/follow-up details use the existing dialog editor; brief texts remain directly editable.
 - Required work tags and scope/effort controls remain visible. Phone area/family controls continue below the brief to retain the shared wizard's authoring capability.
 - Readiness and confirmation counts are not asserted before successful preview.
+- The shared permission-filtered shell supplies the current navigation and breadcrumb; the capture fixture exposes fewer shortcuts than the design sample. Existing family cards retain their current catalogue copy and horizontal phone strip. Technical areas/systems start empty until entered; the populated Figma example is not an inferred Sales-to-configuration mapping.
 - Estimator choices are bounded to the first 100 active users, creator first then name/ID, with a truncation message.
 
 ## Verification and open questions
 
-`tests/helpers/discovery-creation.ts` supplies stable synthetic API observations. Unit proofs protect Sales provenance, explicit follow-ups and oversized text. Browser proofs cover responsive selection, direct Sales entry, validation, original recovery through access loss, duplicate/denied outcomes and busy freezing. These observations do not substitute for transactional database tests.
+`tests/helpers/discovery-creation.ts` supplies stable synthetic API observations. Unit proofs protect Sales provenance, explicit follow-ups and oversized text. Browser proofs cover responsive selection, direct Sales entry, validation, original recovery through access loss, duplicate/denied outcomes and busy freezing. A focused database proof additionally checks eligible choice metadata, disappearance after creation, cross-workspace refusal and current-access refusal on the existing-workspace link. API observations do not substitute for the prerequisite transactional database tests.
 
 See [execution evidence](../../../testing/evidence/create-discovery-workspace/README.md) for actual results and limits. Owner visual review, physical devices, screen-reader and 200% browser zoom review remain pending. No reviewer, date or fingerprint has been copied.
 
