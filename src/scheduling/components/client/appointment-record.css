@@ -419,8 +419,12 @@
   }
 }
 @media (max-width: 780px) {
-  .app-frame:has(#ppo-appointment) .mobile-navigation { display: none; }
-  .app-frame:has(#ppo-appointment) { padding-bottom: 0; }
+  .app-frame:has(#ppo-appointment) .mobile-navigation {
+    display: none;
+  }
+  .app-frame:has(#ppo-appointment) {
+    padding-bottom: 0;
+  }
   main:has(#ppo-appointment) {
     padding: 0;
   }
@@ -544,6 +548,9 @@
     padding: 8px;
   }
   #ppo-appointment :is(button, input, select, textarea) {
+    min-height: 44px;
+  }
+  #ppo-appointment .ppo-button {
     min-height: 44px;
   }
   #ppo-appointment :is(input, select, textarea) {

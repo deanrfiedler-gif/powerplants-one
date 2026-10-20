@@ -68,7 +68,15 @@ async function refresh(page: Page) {
       .locator("#shell-header")
       .getByRole("button", { name: /More/ })
       .click();
-  await page.getByRole("button", { name: "Refresh saved appointment", exact: true }).or(page.getByRole("menuitem", { name: "Refresh saved appointment", exact: true })).click();
+  await page
+    .getByRole("button", { name: "Refresh saved appointment", exact: true })
+    .or(
+      page.getByRole("menuitem", {
+        name: "Refresh saved appointment",
+        exact: true,
+      }),
+    )
+    .click();
 }
 test.beforeEach(async ({ page }) => {
   // Preserve layout while keeping Font Awesome Pro artwork out of retained evidence.
@@ -81,15 +89,44 @@ test.beforeEach(async ({ page }) => {
   );
   // This suite proves rendered state/commands, not authentication or database authority.
   // Keep presentation fixtures independent of destructive database upgrade suites.
-  await page.route("**/api/v1/local-session", route => route.fulfill({json:{actor_id:sv04Id(90),workspace_id:sv04Id(91),display_name:"Sasha Cole"}}));
-  await page.route("**/api/v1/shell/context",route => route.fulfill({json:{display_name:"Sasha Cole",preference_scope:"sv04-synthetic",can_preview:true,actions:[],navigation:navigationForCapabilities(new Set(["schedule.read","shared.read","service.work_order.read","service.ticket.read","activity.read","pack.read","field.read"]))}}));
+  await page.route("**/api/v1/local-session", (route) =>
+    route.fulfill({
+      json: {
+        actor_id: sv04Id(90),
+        workspace_id: sv04Id(91),
+        display_name: "Sasha Cole",
+      },
+    }),
+  );
+  await page.route("**/api/v1/shell/context", (route) =>
+    route.fulfill({
+      json: {
+        display_name: "Sasha Cole",
+        preference_scope: "sv04-synthetic",
+        can_preview: true,
+        actions: [],
+        navigation: navigationForCapabilities(
+          new Set([
+            "schedule.read",
+            "shared.read",
+            "service.work_order.read",
+            "service.ticket.read",
+            "activity.read",
+            "pack.read",
+            "field.read",
+          ]),
+          false,
+        ),
+      },
+    }),
+  );
 });
 test("SV04 shared record fits desktop, tablet and both phones, with one content scroll and reachable actions", async ({
   page,
 }, info) => {
   test.setTimeout(180000);
   await fixture(page);
-  for (const width of [1440, 1024, 390, 320]) {
+  for (const width of [1440, 1024, 390, 320] as const) {
     await page.setViewportSize({ width, height: width === 1440 ? 1000 : 844 });
     await page.goto(path);
     await expect(
@@ -146,6 +183,15 @@ test("SV04 shared record fits desktop, tablet and both phones, with one content 
       );
     }
     await page.screenshot({ path: info.outputPath(`held-${width}.png`) });
+    // Match the retained full-length Figma frame dimensions as well as usable viewports.
+    await page.setViewportSize({
+      width,
+      height: { 1440: 1739, 1024: 2506, 390: 1696, 320: 1728 }[width]!,
+    });
+    await page.screenshot({
+      path: info.outputPath(`paired-held-${width}.png`),
+    });
+    await page.setViewportSize({ width, height: width === 1440 ? 1000 : 844 });
     await page.locator(".sv04-integrity summary").scrollIntoViewIfNeeded();
     await page.locator(".sv04-integrity summary").focus();
     await page.keyboard.press("Enter");
@@ -160,6 +206,17 @@ test("SV04 ready, supply hold, proposed and cancelled preserve dates and command
   const f = await fixture(page);
   f.appointment.dispatch_hold = false;
   f.appointment.readiness[0].outcome = "Pass";
+  f.appointment.readiness[0].parts = {
+    ...f.appointment.readiness[0].parts!,
+    outcome: "Pass",
+    summary: "1 of 1 line ready for the stated scope",
+    lines: f.appointment.readiness[0].parts!.lines.map((line) => ({
+      ...line,
+      state: "Ready",
+      shortage: "0",
+      promised_on: "2026-10-13",
+    })),
+  };
   f.pack.readiness = {
     ...f.pack.readiness,
     dispatch_hold: false,
@@ -179,6 +236,17 @@ test("SV04 ready, supply hold, proposed and cancelled preserve dates and command
   const start = f.appointment.start_at;
   f.appointment.dispatch_hold = true;
   f.appointment.readiness[0].outcome = "Blocked";
+  f.appointment.readiness[0].parts = {
+    ...f.appointment.readiness[0].parts!,
+    outcome: "Blocked",
+    summary: "Supplier promise changed; 0 of 1 line ready for the stated scope",
+    lines: f.appointment.readiness[0].parts!.lines.map((line) => ({
+      ...line,
+      state: "At risk",
+      shortage: "1",
+      promised_on: "2026-10-14",
+    })),
+  };
   f.pack.readiness.dispatch_hold = true;
   f.pack.readiness.component_ready = false;
   f.pack.readiness.reasons = ["Parts: supplier promise changed; line at risk"];
@@ -209,6 +277,12 @@ test("SV04 ready, supply hold, proposed and cancelled preserve dates and command
     page.getByRole("heading", { name: "Cancelled", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".shared-record-sticky")).toHaveCount(0);
+  await expect(
+    page
+      .getByRole("region", { name: "Dispatch checks", exact: true })
+      .getByRole("link"),
+  ).toHaveCount(0);
+  await expect(page.locator(".sv04-parts-lines")).toHaveCount(0);
   await expect(
     page.getByRole("button", {
       name: /^(Record contact|Move or reassign|Confirm appointment|Cancel appointment)$/,
@@ -270,6 +344,92 @@ test("SV04 failed refresh keeps evidence but removes commands; denial clears it;
     }),
   ).toBeVisible();
 });
+test("SV04 a delayed ready pack cannot clear a newer appointment hold", async ({
+  page,
+}, info) => {
+  const f = await fixture(page);
+  f.appointment.dispatch_hold = false;
+  f.pack.readiness = {
+    ...f.pack.readiness,
+    dispatch_hold: false,
+    component_ready: true,
+    reasons: [],
+  };
+  let release = () => {};
+  const wait = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  let delayed = true,
+    oldRequests = 0,
+    oldCompleted = 0;
+  await page.route(`**/api/v1/packs/${sv04Id(40)}`, async (route) => {
+    const old = delayed,
+      snapshot = structuredClone(f.pack);
+    if (old) {
+      oldRequests++;
+      await wait;
+    }
+    await route.fulfill({
+      json: sv04Envelope(snapshot),
+      headers: { "x-sv04-generation": old ? "old" : "current" },
+    });
+    if (old) oldCompleted++;
+  });
+  try {
+    await page.goto(path);
+    await expect.poll(() => oldRequests).toBeGreaterThan(0);
+    await expect(
+      page.getByRole("heading", { name: "Readiness unavailable", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Loading permitted records…", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Open job pack", exact: true }),
+    ).toHaveCount(0);
+    await page.screenshot({ path: info.outputPath("loading-pack.png") });
+    delayed = false;
+    f.appointment.dispatch_hold = true;
+    f.pack.readiness = {
+      ...f.pack.readiness,
+      dispatch_hold: true,
+      component_ready: false,
+      reasons: ["Parts: current supplier promise changed"],
+    };
+    await refresh(page);
+    await expect(
+      page.getByText("Parts: current supplier promise changed", {
+        exact: true,
+      }),
+    ).toBeVisible();
+    const oldRead = page.waitForResponse(
+      (response) => response.headers()["x-sv04-generation"] === "old",
+    );
+    release();
+    await (await oldRead).finished();
+    await expect.poll(() => oldCompleted).toBe(oldRequests);
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
+    await expect(
+      page.getByRole("heading", { name: "Dispatch held", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Ready to dispatch", exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByText("Parts: current supplier promise changed", {
+        exact: true,
+      }),
+    ).toBeVisible();
+  } finally {
+    release();
+  }
+});
+
 test("SV04 contact stale refusal retains entries; uncertain save retries the exact original", async ({
   page,
 }) => {

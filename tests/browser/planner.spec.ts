@@ -2,6 +2,12 @@ import { test, expect, type Page, type Request } from "@playwright/test";
 import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+async function appointmentMenuAction(page: Page, name: string) {
+  const menu = page.getByRole("button", { name: "Appointment actions", exact: true });
+  if (await menu.isVisible()) await menu.click();
+  else await page.locator("#shell-header").getByRole("button", { name: "More actions", exact: true }).click();
+  await page.getByRole("button", { name, exact: true }).or(page.getByRole("menuitem", { name, exact: true })).click();
+}
 async function identity(page: Page, profile = "coordinator") {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await openAccountPanel(page);
@@ -310,7 +316,7 @@ test("P05 SC-08 contact refusal, owned failure, exact agreement, full crew confi
     page.getByText("Contact outcome saved.", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Owned follow-up" }),
+    page.getByRole("heading", { name: "Follow-ups" }),
   ).toBeVisible();
   await capture(page, info, "failed-contact-owned");
   await page.getByLabel("Contact outcome").selectOption("Confirmed");
@@ -334,9 +340,7 @@ test("P05 SC-08 contact refusal, owned failure, exact agreement, full crew confi
     page.getByRole("button", { name: "Move or reassign", exact: true }),
   ).toBeVisible();
   await capture(page, info, "confirmed-crew");
-  await page
-    .getByRole("button", { name: "Cancel appointment", exact: true })
-    .click();
+  await appointmentMenuAction(page, "Cancel appointment");
   await page
     .getByLabel("Cancellation reason")
     .fill(
@@ -344,7 +348,7 @@ test("P05 SC-08 contact refusal, owned failure, exact agreement, full crew confi
     );
   await page.getByRole("button", { name: "Cancel future appointment" }).click();
   await expect(
-    page.getByText(/Cancellation reason: SYN customer defers/),
+    page.getByText("SYN customer defers planned inspection; release all future crew reservations and retain history.", { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Move or reassign", exact: true }),
@@ -507,9 +511,7 @@ test("P05 project requests reject then accept through keyboard; technician reque
     true,
   );
   await page.goto("/service/appointments/" + aid);
-  await page
-    .getByRole("button", { name: "Propose change", exact: true })
-    .click();
+  await appointmentMenuAction(page, "Propose change");
   const form = page.getByRole("region", {
     name: "Propose a schedule change",
     exact: true,
@@ -545,9 +547,7 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await page
     .getByRole("button", { name: "Close proposal", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Propose change", exact: true })
-    .click();
+  await appointmentMenuAction(page, "Propose change");
   const fresh = page.getByRole("region", {
     name: "Propose a schedule change",
     exact: true,
@@ -588,9 +588,7 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await expect(
     page.getByRole("button", { name: "Move or reassign", exact: true }),
   ).toHaveCount(0);
-  await page
-    .getByRole("button", { name: "Propose change", exact: true })
-    .click();
+  await appointmentMenuAction(page, "Propose change");
   await expect(page.getByLabel("Request source")).toHaveValue(
     "TechnicianRequest",
   );

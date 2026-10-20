@@ -7595,10 +7595,8 @@
         "src/scheduling/components/client/appointment-record.css",
         "src/scheduling/appointment-presentation.ts",
         "src/scheduling/planner.ts",
-        "tests/helpers/appointment-detail-fixture.ts",
-        "tests/browser/appointment-detail.spec.ts",
-        "tests/unit/appointment-detail.test.ts",
-        "docs/testing/evidence/appointment-detail-native/README.md"
+        "docs/testing/evidence/appointment-detail-native/README.md",
+        "src/app/styles/my-work.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",

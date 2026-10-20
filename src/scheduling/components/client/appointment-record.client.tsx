@@ -17,6 +17,7 @@ import {
 import { WorklistMenu } from "../../../components/crm-worklist-tools";
 import { ProductIcon } from "../../../components/product-icons";
 import { usePhoneHeader } from "../../../shell/phone-header";
+import { formatRange, zoneDisplayName } from "../../../shell/date-format";
 import { visitPreparationGuidance } from "../../../field/visit-guidance";
 import { readableValue } from "../../../documents/pack-view";
 import { returnReasonsText } from "../../../documents/pack-view";
@@ -169,12 +170,7 @@ export function AppointmentRecord({
   const workHref = `/service/work-orders/${a.work_order_id}`;
   const link = (href: string, children: ReactNode) =>
     current ? <Link href={href}>{children}</Link> : <span>{children}</span>;
-  const visit = (
-    <>
-      <Stamp value={a.start_at} timezone={a.site_timezone} /> –{" "}
-      <Stamp value={a.end_at} timezone={a.site_timezone} />
-    </>
-  );
+  const visit = formatRange(a.start_at, a.end_at, a.site_timezone);
   const more = [
     ...(actions.request
       ? [{ label: "Propose change", onSelect: () => onAction("request") }]
@@ -209,14 +205,16 @@ export function AppointmentRecord({
   const status = (
     <>
       <RegisterChip tone="neutral">{readableValue(a.status)}</RegisterChip>
-      <RegisterChip tone={dispatch.tone}>{dispatch.title}</RegisterChip>
+      {dispatch.title !== readableValue(a.status) && (
+        <RegisterChip tone={dispatch.tone}>{dispatch.title}</RegisterChip>
+      )}
     </>
   );
   const crew = a.assignments.filter((x) => x.active);
   const summary: [string, ReactNode][] = [
     ["State", readableValue(a.status)],
     ["Visit", visit],
-    ["Site time", a.site_timezone],
+    ["Site time", zoneDisplayName(a.site_timezone, a.start_at)],
     [
       "Customer dates",
       a.customer_commitment === "Confirmed"
@@ -432,7 +430,7 @@ export function AppointmentRecord({
               id={item.code === "PartsReadiness" ? "sv04-parts" : undefined}
             >
               <Check item={item}>
-                {item.code === "PartsReadiness" && (
+                {item.code === "PartsReadiness" && a.status !== "Cancelled" && (
                   <>
                     <ul className="sv04-parts-lines">
                       {a.readiness
@@ -455,13 +453,11 @@ export function AppointmentRecord({
                           </li>
                         ))}
                     </ul>
-                    <small>
-                      Linking a demand, Parts statements and permitted
-                      exceptions need their separately designed controls.
-                    </small>
+                    <small>Parts updates are managed in Supply Chain.</small>
                   </>
                 )}
                 {item.code === "DispatchControls" &&
+                  a.status !== "Cancelled" &&
                   current &&
                   link(
                     `${workHref}?returnTo=${encodeURIComponent(`/service/appointments/${a.id}`)}#visit-${a.id}`,
@@ -475,12 +471,13 @@ export function AppointmentRecord({
       {a.status !== "Proposed" && !closed && (
         <p className="sv04-note">
           <ProductIcon name="info" />
-          Job pack deadline · Not available yet. The issue lead-time warning is
-          a separate planned increment.
+          Job pack deadline · Not available yet.
         </p>
       )}
       <section id="sv04-visit" className="sv04-phone-visit">
-        <Heading title="Visit">Site time · {a.site_timezone}</Heading>
+        <Heading title="Visit">
+          {zoneDisplayName(a.site_timezone, a.start_at)}
+        </Heading>
         <Facts
           rows={[
             ["Reference", a.display_number],

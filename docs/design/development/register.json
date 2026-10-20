@@ -2622,12 +2622,10 @@
         "src/scheduling/components/client/appointment-record.css",
         "src/scheduling/appointment-presentation.ts",
         "src/scheduling/planner.ts",
-        "tests/helpers/appointment-detail-fixture.ts",
-        "tests/browser/appointment-detail.spec.ts",
-        "tests/unit/appointment-detail.test.ts",
         "docs/decisions/field-readiness-gate-proposal.md",
         "docs/decisions/phone-header-amendment.md",
-        "docs/testing/evidence/appointment-detail-native/README.md"
+        "docs/testing/evidence/appointment-detail-native/README.md",
+        "src/app/styles/my-work.css"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review pending for the SV-04 implementation; accepted Figma design is separate. Prior 9 October Refine review retained in the page contract.",
@@ -8038,12 +8036,10 @@
         "src/scheduling/components/client/appointment-record.css",
         "src/scheduling/appointment-presentation.ts",
         "src/scheduling/planner.ts",
-        "tests/helpers/appointment-detail-fixture.ts",
-        "tests/browser/appointment-detail.spec.ts",
-        "tests/unit/appointment-detail.test.ts",
         "docs/decisions/field-readiness-gate-proposal.md",
         "docs/decisions/phone-header-amendment.md",
-        "docs/testing/evidence/appointment-detail-native/README.md"
+        "docs/testing/evidence/appointment-detail-native/README.md",
+        "src/app/styles/my-work.css"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review pending for the SV-04 implementation; accepted Figma design is separate. Prior 9 October Refine review retained in the page contract.",

@@ -1,3 +1,7 @@
+import {
+  appointmentPackFixture,
+  sv04Envelope,
+} from "../helpers/appointment-detail-fixture";
 import { openPackView } from "../helpers/job-pack-design";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
@@ -250,6 +254,12 @@ test("SV05-I5 field and appointment handovers use current pack identity and hide
   await expect(entry.getByRole("status")).toHaveCount(0);
   await expect(entry.getByRole("link")).toHaveCount(0);
   state = "existing";
+  const pack = appointmentPackFixture();
+  pack.id = id;
+  pack.appointment_id = appointment!.split("/").pop()!.split("?")[0];
+  await page.route(`**/api/v1/packs/${id}`, (route) =>
+    route.fulfill({ json: sv04Envelope(pack) }),
+  );
   await page.goto(appointment!);
   await expect(
     entry.getByRole("link", { name: "Open job pack", exact: true }),
