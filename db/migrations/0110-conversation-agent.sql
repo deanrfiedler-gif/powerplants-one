@@ -228,6 +228,8 @@ DECLARE committed bigint; ceiling bigint;
 BEGIN
  IF TG_OP='DELETE' OR (TG_OP='UPDATE' AND OLD.state IN ('Settled','Released')) THEN
   RAISE EXCEPTION 'Settled budget evidence is permanent' USING ERRCODE='55000'; END IF;
+ IF current_setting('transaction_isolation')<>'read committed' THEN
+  RAISE EXCEPTION 'Budget writes require read committed isolation' USING ERRCODE='25001'; END IF;
  PERFORM pg_advisory_xact_lock(hashtextextended('assistant-budget:'||NEW.workspace_id,0));
  IF TG_OP='INSERT' THEN
   IF NEW.state<>'Reserved' OR NOT EXISTS(SELECT 1 FROM ppo.assistant_turns t WHERE t.workspace_id=NEW.workspace_id AND t.id=NEW.turn_id
