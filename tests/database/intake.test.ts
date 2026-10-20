@@ -11,6 +11,7 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { recordOperation } from "../../src/platform/operations";
 import { reset, seed, migrate } from "../../scripts/database";
+import { migrationFiles } from "../../scripts/migration-registry";
 import {
   createTicket,
   saveIntake,
@@ -1182,10 +1183,19 @@ test("SV-02 receipt failure rolls back assessment, clarification and retained st
   assert.equal((await readActivity(p, before.clarification_activity!.id)).status, "Open");
 });
 
-test("SV-01 migration 112 preserves the 109 history and legacy triage receipts without grants or seeds", async () => {
+for (const through of [109, 113])
+test(`SV-01 migration 112 preserves the ${through} history and legacy triage receipts without grants or seeds`, async () => {
   await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
-  await migrate(109);
+  // Reproduce main both before 0113 and after it shipped with reserved 0112 absent.
+  const files = migrationFiles as unknown as string[];
+  const index = files.indexOf("0112-service-request-statements.sql");
+  const [statementMigration] = files.splice(index, 1);
+  try {
+    await migrate(through);
+  } finally {
+    files.splice(index, 0, statementMigration);
+  }
   await seed();
   const p = await principal(),
     input = ticket();
@@ -1203,8 +1213,10 @@ test("SV-01 migration 112 preserves the 109 history and legacy triage receipts w
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), before);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<>112 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109"), [{ version: 112 }]);
+  const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  const previousVersions = new Set(ledger.map((row) => row.version));
+  assert.deepEqual(migrated.filter((row) => previousVersions.has(row.version)), ledger);
+  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [112, 113] : [112]);
   assert.deepEqual((await triageTicket(p, input.id, command)).receipt, original.receipt);
   assert.equal((await ticketStatements(p, input.id)).items.length, 0);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");

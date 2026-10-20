@@ -163,14 +163,17 @@ test("SV-01 I1 register reads: the queues route and the urgency order share the 
   assert.deepEqual(Object.keys(queues.body).sort(), [
     "all_open",
     "as_at",
+    "my_requests",
     "needs_information",
     "new",
+    "no_work_order",
     "overdue_clarifications",
     "source",
     "triaged",
     "urgent",
+    "work_order_linked",
   ]);
-  for (const key of ["all_open", "new", "needs_information", "triaged", "urgent", "overdue_clarifications"])
+  for (const key of ["all_open", "new", "needs_information", "triaged", "urgent", "overdue_clarifications", "my_requests", "no_work_order", "work_order_linked"])
     assert.equal(Number.isInteger(queues.body[key]), true, key);
   assert.equal((await call(cookie, `service/tickets/queues?site_id=${site}`)).status, 200);
   assert.equal((await call(cookie, "service/tickets/queues?status=New")).status, 422);
@@ -186,6 +189,11 @@ test("SV-01 I1 register reads: the queues route and the urgency order share the 
   const urgent = await call(cookie, "service/tickets?queue=urgent&sort=urgency&limit=200");
   assert.equal(urgent.status, 200);
   assert.equal(urgent.body.items.length, queues.body.urgent);
+  for (const queue of ["my_requests", "no_work_order", "work_order_linked"]) {
+    const filtered = await call(cookie, `service/tickets?queue=${queue}&limit=200`);
+    assert.equal(filtered.status, 200);
+    assert.equal(filtered.body.items.length, queues.body[queue], queue);
+  }
   assert.equal((await call(cookie, "service/tickets?queue=resolved")).status, 422);
   const denied = await session("finance-processor");
   assert.equal((await call(denied, "service/tickets/queues")).status, 403);

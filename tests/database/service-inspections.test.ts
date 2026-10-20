@@ -1,3 +1,4 @@
+import { saveCsWithReviewedRequirements as saveCs } from "../helpers/readiness-publication";
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -21,7 +22,7 @@ import {
 } from "../helpers/service-inspections";
 import { activityCommand, readActivity } from "../../src/activities/activities";
 import { recordCalibration } from "../../src/equipment/evidence";
-import { saveCs, readCs } from "../../src/shared/cs/service";
+import { readCs } from "../../src/shared/cs/service";
 import { rename } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
@@ -619,9 +620,14 @@ test("FI03 missing criteria and unknown applicability remain incomplete owned ob
     [f.tech.actor_id],
   );
   await assert.rejects(readOperation(f.tech, cmd.operation_id));
-  const member = (await rows(`SELECT r.user_id FROM ppo.assignments x JOIN ppo.resources r
+  const member = (
+    await rows(
+      `SELECT r.user_id FROM ppo.assignments x JOIN ppo.resources r
     ON r.workspace_id=x.workspace_id AND r.id=x.resource_id
-    WHERE x.appointment_id=$1 AND x.active AND x.crew_role<>'Lead'`, [f.id]))[0];
+    WHERE x.appointment_id=$1 AND x.active AND x.crew_role<>'Lead'`,
+      [f.id],
+    )
+  )[0];
   const removed = member.user_id === f.tech.actor_id ? f.tech : f.second;
   await inspect(removed, f.id);
   // Simulate loss of the live crew association with the same complete

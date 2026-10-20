@@ -22,8 +22,8 @@ export const moduleWorkspaces = [
   {route:"/warranty/cases/[id]",moduleId:"MA-06",scope:"ppo-warranty",layout:"padded",navigation:"workspace",baseline:"ma06-record-native-r01"},
   {route:"/warranty/supplier-recovery",moduleId:"MA-07",scope:"ppo-warranty",layout:"padded",navigation:"workspace",baseline:"ma07-native-r01"},
   {route:"/warranty/supplier-recovery/[id]",moduleId:"MA-07",scope:"ppo-warranty",layout:"padded",navigation:"workspace",baseline:"ma07-record-native-r01"},
-  { route: "/service/reports", moduleId: "FI-07", scope: "ppo-reports", layout: "padded", navigation: "workspace", baseline: "fi07-reports-register" },
-  { route: "/service/reports/[id]", moduleId: "FI-07", scope: "ppo-reports", layout: "padded", navigation: "workspace", baseline: "fi07-reports-record" },
+  { route: "/service/reports", moduleId: "SV-06", scope: "ppo-reports", layout: "full-bleed", navigation: "workspace", baseline: "fi07-reports-register" },
+  { route: "/service/reports/[id]", moduleId: "SV-06", scope: "ppo-reports", layout: "full-bleed", navigation: "workspace", baseline: "fi07-reports-record" },
   { route: "/service/incidents", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-register" },
   { route: "/service/incidents/new", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-capture" },
   { route: "/service/incidents/[id]", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-record" },
@@ -53,13 +53,14 @@ export const moduleWorkspaces = [
   { route: "/surveys", moduleId: "CS-08", scope: "ppo-survey", layout: "padded", navigation: "workspace", baseline: "cs08-native-r01" },
   { route: "/estimating/fertigation", scope: "ppo-fertigation", layout: "full-bleed", navigation: "workspace", baseline: "fertigation-native-r01" },
   { route: "/estimating/configurations", scope: "ppo-specialist", layout: "full-bleed", navigation: "workspace", baseline: "es08-native-r01" },
-  { route: "/service/tickets/new", moduleId: "SV-01", scope: "ppo-service-create", layout: "full-bleed", navigation: "workspace", baseline: "sv01-native-r01" },
-  { route: "/service/tickets/[id]", moduleId: "SV-02", scope: "ppo-service-record", layout: "full-bleed", navigation: "workspace", baseline: "sv01-native-r01" },
+  { route: "/service/tickets/new", moduleId: "SV-01", scope: "ppo-service-create", layout: "full-bleed", navigation: "workspace", baseline: "sv01-create-native-r01" },
+  { route: "/service/tickets/[id]", moduleId: "SV-02", scope: "ppo-service-record", layout: "full-bleed", navigation: "workspace", baseline: "sv02-record-native-r01" },
   { route: "/service/tickets", moduleId: "SV-01", scope: "ppo-service-requests", layout: "full-bleed", navigation: "workspace", baseline: "sv01-native-r01" },
   { route: "/facilities", moduleId: "CS-05", scope: "ppo-facilities", layout: "full-bleed", navigation: "workspace", baseline: "cs05-native-r01" },
   { route: "/projects/acceptance", moduleId: "PJ-09", scope: "ppo-acceptance", layout: "full-bleed", navigation: "workspace", baseline: "pj09-r01" },
   { route: "/sales/opportunities", scope: "ppo-deals", layout: "full-bleed", navigation: "workspace", baseline: "deals-r38" },
   { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
+  { route: "/estimating/discovery/[id]/costing", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-costing-figma" },
 ] as const;
 
 export function moduleWorkspaceForPath(path: string) {

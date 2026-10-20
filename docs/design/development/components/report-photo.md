@@ -25,3 +25,7 @@ At 390 and 320 CSS px the same labelled controls and original image fit the avai
 The retained Service Review & Reports r02 HTML supplies the task reference. No native desktop or phone composition is owner accepted. Working adaptation: inline protected original rather than a demonstration inspector; no public image optimiser, external image link or customer distribution. Missing accepted paired images, actual assistive-technology use and physical-device review remain visible gaps.
 
 See [decision](../../../decisions/report-photo-inspection.md) and [execution](../../../testing/evidence/report-photo-inspection/README.md). Exact historical revision reads are server supported for the current review owner, while this component is initially offered only for the current Submitted revision.
+
+## SV-06 host binding
+
+Service review and reports uses this existing component in `route:/service/reports/[id]`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.

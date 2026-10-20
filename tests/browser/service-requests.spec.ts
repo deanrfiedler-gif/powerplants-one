@@ -490,5 +490,16 @@ test("SV-01 possible duplicate hands caller words to statement capture and prese
   page.once("dialog", (d) => d.accept());
   await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
   await expect(page.getByLabel("Summary", { exact: true })).toHaveValue("Heating loop still drifting overnight");
-  await fits(page);
+  // The duplicate panel must never cover the form's save action, including
+  // the default expanded shell at the narrower desktop/tablet widths.
+  const create = page.getByRole("button", { name: "Create request", exact: true });
+  for (const width of [1440, 1280, 1024, 820, 390, 320]) {
+    await page.setViewportSize({ width, height: width > 780 ? 900 : 844 });
+    await create.click({ trial: true });
+    await fits(page);
+    const bounds = await create.boundingBox();
+    expect(bounds).not.toBeNull();
+    expect(bounds!.x).toBeGreaterThanOrEqual(0);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+  }
 });

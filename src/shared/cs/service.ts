@@ -42,6 +42,12 @@ import {
   type PreparationBasis,
 } from "./model";
 import { assessPreparation } from "./readiness";
+import {
+  latestRequirementsDraft,
+  parseRequirementsDraft,
+  retainRequirementsDraft,
+  reviewRequirementsDraft,
+} from "./requirement-revisions";
 
 export const hash = (value: unknown) =>
   createHash("sha256").update(canonical(value)).digest("hex");
@@ -145,9 +151,13 @@ export async function contentAuthority(
     const x = content as SurveyContent;
     if (
       submitting &&
-      (!x.purpose.trim() || x.purpose === "Record the survey scope before submission.")
+      (!x.purpose.trim() ||
+        x.purpose === "Record the survey scope before submission.")
     )
-      invalid("purpose", "Record the actual survey scope and purpose before submission.");
+      invalid(
+        "purpose",
+        "Record the actual survey scope and purpose before submission.",
+      );
     for (const id of x.facility_ids) facilityIds.add(id);
     for (const id of x.asset_ids) assetIds.add(id);
     for (const o of x.observations) {
@@ -197,7 +207,7 @@ export async function contentAuthority(
       }
     }
   }
-  const dependencies: Record<string, number> = {};
+  const dependencies: Record<string, number | string> = {};
   const parent = await visible(
     c,
     p,
@@ -416,13 +426,23 @@ export async function saveCs(
     (c) => csRecord(c, p, kind, id, true),
     async (c, row) => {
       currentVersion(row.version, command.expected_version);
-      if (row.state !== "Draft")
+      if (kind !== "Readiness" && row.state !== "Draft")
         throw new AppError(
           409,
           "StateConflict",
           "Start a new draft revision before changing this reviewed or submitted content.",
         );
       const content = parseContent(kind, command.content, row.content);
+      if (
+        kind === "Readiness" &&
+        hash((content as ReadinessContent).requirements) !==
+          hash((row.content as ReadinessContent).requirements)
+      )
+        throw new AppError(
+          409,
+          "RequirementsReviewRequired",
+          "Submit a requirements revision for independent review. Active requirements cannot be changed by an evidence or window save.",
+        );
       await contentAuthority(c, p, kind, row, content);
       await scopedOwner(
         c,
@@ -455,7 +475,7 @@ export async function saveCs(
         content,
         name: command.name,
         owner_id: command.owner_id,
-        ...(kind === "Survey" ? {} : { revision: row.revision + 1 }),
+        ...(kind === "AccountPlan" ? { revision: row.revision + 1 } : {}),
       });
     },
     types[kind],
@@ -532,6 +552,8 @@ export async function csAction(
     "preparation",
     "destination",
     "receiving_owner_id",
+    "requirements",
+    "appointment_id",
   ]);
   const command = {
     ...common(r),
@@ -548,12 +570,17 @@ export async function csAction(
       "revise",
       "handover",
       "review_plan",
+      "draft_requirements",
+      "publish_requirements",
+      "return_requirements",
     ] as const),
     snapshot_id: optionalId(r.snapshot_id, "snapshot_id"),
     evidence_id: optionalId(r.evidence_id, "evidence_id"),
     preparation: r.preparation ?? null,
     destination: r.destination ?? null,
     receiving_owner_id: optionalId(r.receiving_owner_id, "receiving_owner_id"),
+    requirements: r.requirements ?? null,
+    appointment_id: optionalId(r.appointment_id, "appointment_id"),
   };
   return sharedOperation(
     p,
@@ -602,7 +629,53 @@ export async function csAction(
         return snapshotId;
       };
       if (kind === "Readiness") {
-        if (command.action === "review_evidence") {
+        if (command.action === "draft_requirements") {
+          const requirements = parseRequirementsDraft(
+            row,
+            command.requirements,
+          );
+          await contentAuthority(c, p, kind, row, {
+            schema_version: 1,
+            requirements,
+            evidence: [],
+            windows: [],
+          });
+          await retainRequirementsDraft(c, p, row, requirements);
+          return update(c, p, kind, row, command.reason);
+        } else if (
+          ["publish_requirements", "return_requirements"].includes(
+            command.action,
+          )
+        ) {
+          const draft = await latestRequirementsDraft(c, p, row);
+          if (draft)
+            await contentAuthority(c, p, kind, row, draft.basis.content);
+          const reviewed = await reviewRequirementsDraft(
+            c,
+            p,
+            row,
+            command.snapshot_id,
+            command.reason,
+            command.action === "return_requirements",
+          );
+          return update(
+            c,
+            p,
+            kind,
+            row,
+            command.reason,
+            command.action === "return_requirements"
+              ? {}
+              : {
+                  content: {
+                    ...(row.content as ReadinessContent),
+                    requirements: reviewed.basis.requirements,
+                  },
+                  revision: reviewed.revision,
+                  state: "Reviewed",
+                },
+          );
+        } else if (command.action === "review_evidence") {
           const evidence = (row.content as ReadinessContent).evidence.find(
             (e) => e.id === command.evidence_id,
           );
@@ -639,6 +712,19 @@ export async function csAction(
               ends_at: instant(x.ends_at, "ends_at"),
               person_ids: ids(x.person_ids, "person_ids"),
             };
+          const visit = command.appointment_id
+            ? await readinessVisit(c, p, row, command.appointment_id)
+            : null;
+          if (visit) {
+            if (["Cancelled", "Completed"].includes(visit.status))
+              invalid(
+                "appointment_id",
+                "Choose a visit that still needs preparation.",
+              );
+            preparation.starts_at = visit.starts_at;
+            preparation.ends_at = visit.ends_at;
+            basis.dependencies[`appointment:${visit.id}`] = hash(visit);
+          }
           if (preparation.ends_at <= preparation.starts_at)
             invalid(
               "ends_at",
@@ -674,9 +760,19 @@ export async function csAction(
             ...basis,
             preparation,
             assessment,
+            ...(visit ? { visit } : {}),
           });
         } else if (command.action === "acknowledge") {
           if (!snapshot || snapshot.kind !== "Preparation") throw unavailable();
+          if (snapshot.basis.visit) {
+            const visit = await readinessVisit(
+              c,
+              p,
+              row,
+              snapshot.basis.visit.id,
+            );
+            basis.dependencies[`appointment:${visit.id}`] = hash(visit);
+          }
           // Recompute selected-context versions, not only source requirement fields.
           for (const f of snapshot.basis.preparation.facility_ids) {
             const facility = await visible(c, p, "Facility", f);
@@ -874,6 +970,33 @@ export async function listCs(
     actor_id: p.actor_id,
   };
 }
+export async function readinessVisit(
+  c: QueryClient,
+  p: Principal,
+  row: CsRow,
+  id: string,
+) {
+  // Only visit-bound reads need Scheduling's command graph. Keep other CS reads independent.
+  const { visibleAppointment } = await import("../../scheduling/planner");
+  const { a } = await visibleAppointment(c, p, id);
+  if (a.site_id !== row.site_id || a.company_id !== row.company_id)
+    throw unavailable();
+  return {
+    id: a.id,
+    reference: a.display_number,
+    work_order_id: a.work_order_id,
+    version: a.version,
+    schedule_version: a.schedule_version,
+    assignment_version: a.assignment_version,
+    scope_revision_id: a.scope_revision_id,
+    scope_version: a.scope_version,
+    status: a.status,
+    starts_at: a.start_at.toISOString(),
+    ends_at: a.end_at.toISOString(),
+    timezone: a.site_timezone,
+  };
+}
+
 export async function readCs(p: Principal, kind: CsKind, id: string) {
   const c = database(),
     row = await csRecord(c, p, kind, id),
@@ -891,6 +1014,15 @@ export async function readCs(p: Principal, kind: CsKind, id: string) {
       let currentBasis = basis;
       if (snapshot.kind === "Preparation") {
         currentBasis = structuredClone(basis);
+        if (snapshot.basis.visit) {
+          const visit = await readinessVisit(
+            c,
+            p,
+            row,
+            snapshot.basis.visit.id,
+          );
+          currentBasis.dependencies[`appointment:${visit.id}`] = hash(visit);
+        }
         for (const f of snapshot.basis.preparation.facility_ids) {
           const facility = await visible(c, p, "Facility", f);
           if (facility.site_id !== row.site_id) throw unavailable();
@@ -924,6 +1056,40 @@ export async function readCs(p: Principal, kind: CsKind, id: string) {
       [p.workspace_id, id],
     )
   ).rows;
+  let requirementsDraft =
+    kind === "Readiness" ? await latestRequirementsDraft(c, p, row) : null;
+  let draftAccess = "Available";
+  if (requirementsDraft) {
+    try {
+      await contentAuthority(c, p, kind, row, requirementsDraft.basis.content);
+    } catch (error) {
+      if (!(error instanceof AppError) || ![403, 404].includes(error.status))
+        throw error;
+      requirementsDraft = null;
+      draftAccess = "Restricted";
+    }
+  }
+  const visits = [];
+  const canReadVisits =
+    kind === "Readiness" &&
+    (await hasPermission(c, p, "schedule.read", row.company_id, row.site_id!));
+  if (canReadVisits) {
+    const candidates = (
+      await c.query<{ id: string }>(
+        `SELECT id FROM ppo.appointments WHERE workspace_id=$1 AND site_id=$2 AND company_id=$3
+        AND status NOT IN ('Cancelled','Completed') ORDER BY CASE WHEN end_at>=clock_timestamp() THEN 0 ELSE 1 END,start_at,id LIMIT 41`,
+        [p.workspace_id, row.site_id, row.company_id],
+      )
+    ).rows;
+    for (const candidate of candidates.slice(0, 40)) {
+      try {
+        visits.push(await readinessVisit(c, p, row, candidate.id));
+      } catch (error) {
+        if (!(error instanceof AppError) || ![403, 404].includes(error.status))
+          throw error;
+      }
+    }
+  }
   return {
     record: row,
     kind,
@@ -935,6 +1101,12 @@ export async function readCs(p: Principal, kind: CsKind, id: string) {
       row.site_id ?? undefined,
     ),
     actor_id: p.actor_id,
+    requirements_draft: requirementsDraft,
+    requirements_draft_access: draftAccess,
+    visits,
+    visits_scope: canReadVisits
+      ? "Up to 40 permitted visits; use Schedule for the complete register."
+      : "Visit details are restricted in this context.",
     photos: basis.photos,
     reviews: basis.reviews,
     evidence_status:

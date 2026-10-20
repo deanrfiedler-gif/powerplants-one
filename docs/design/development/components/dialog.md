@@ -51,3 +51,13 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Page-scoped Job Pack variant
 
 The [Job Pack dialog](job-pack-dialog.md) is separately inventoried with its actual pack consumers and state fixtures. I4 adds explicit Tab containment, including Shift+Tab from the focused heading. It retains r03 styling and does not change WorklistPanel or claim one universal dialog contract.
+
+## SV-06 host binding
+
+Service review and reports uses this existing component in `route:/service/reports`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.
+
+The report record's exact-response sheet is page-local native `dialog`, not a new shared component. It keeps a modal focus boundary, focused heading, guarded Escape/Cancel, opener return and a pinned phone save bar. Customer unavailable selects the existing response choice without submitting it. Subject, separate stated name/role, optional mark and capture-time controls remain explicit because the existing command distinguishes them.
+
+## CS-02 People register consumer — 20 October 2026
+
+PeopleRegister uses this control on `/people` and the People view of `/contacts`. [Host fixtures](../people-native-fixtures.json) bind 1440/1024 grids, 390/320 compact phone rows and loading/empty/error/denied states; `tests/browser/people-native.spec.ts` exercises the real host. The [page contract](../pages/route-people.md) records undrawn interactions and retained legacy behaviour. Owner review stays pending; no fingerprint is copied.

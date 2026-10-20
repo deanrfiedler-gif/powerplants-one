@@ -95,3 +95,7 @@ The [Organisations implementation](../../../decisions/organisations-figma-implem
 SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-02`, `route:/service/tickets/[id]`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.
 
 `RecordTabs.disabled` keeps all tabs visible but unavailable while a consumer owns an unsaved edit form. Service requests keeps the Triage panel and its labelled relationship present until save or cancel; other consumers retain normal keyboard navigation.
+
+## SV-06 host binding
+
+Service review and reports uses this existing component in `route:/service/reports/[id]`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.

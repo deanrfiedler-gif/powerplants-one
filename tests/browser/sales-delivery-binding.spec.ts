@@ -8,7 +8,7 @@ test.describe.configure({ timeout: 120000 });
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
+    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL!).origin },
     data: body,
   });
   expect(r.ok(), await r.text()).toBe(true);

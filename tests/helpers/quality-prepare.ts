@@ -248,6 +248,9 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   ).toBeVisible();
   await capture(page, info, "journey-original-attributed-failed-fix");
   await page.goto("/service/tickets/new");
+  const companyContext = page.locator(".sv-company-context");
+  if ((await companyContext.getAttribute("open")) === null)
+    await keyActivate(page, companyContext.locator("summary"));
   await keySelect(
     page,
     page.getByLabel("Company visibility context", { exact: true }),
@@ -255,37 +258,32 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   );
   await keyType(
     page,
-    page.getByLabel("Request summary", { exact: true }),
+    page.getByLabel("Summary", { exact: true }),
     summary,
   );
   await keySelect(
     page,
-    page.getByLabel("Known requester", { exact: true }),
+    page.getByLabel("Caller", { exact: true }),
     id("60"),
   );
   await keySelect(
     page,
-    page.getByLabel("Known site", { exact: true }),
+    page.getByLabel("Site", { exact: true }),
     id("70"),
   );
   await keyType(
     page,
-    page.getByLabel("Requester description / clarification"),
-    "SYN fictional caller reports repeated external display alarm after an unsuccessful earlier check.",
-  );
-  await keyType(
-    page,
-    page.getByLabel("Reported symptoms / explicit symptom uncertainty"),
+    page.getByLabel("What the customer reported", { exact: true }),
     "SYN intermittent external display alarm; root cause and coverage remain uncertain.",
   );
   await keyType(
     page,
-    page.getByLabel("Operational impact", { exact: true }),
+    page.getByLabel("Impact and backup", { exact: true }),
     "SYN monitoring interrupted; no invented production loss.",
   );
   await keyType(
     page,
-    page.getByLabel("Priority rationale", { exact: true }),
+    page.getByLabel("Priority reason", { exact: true }),
     "SYN assessment needed; urgency does not authorise physical work.",
   );
   await keyType(
@@ -295,21 +293,22 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   );
   await keyType(
     page,
-    page.getByLabel("Reason for saving"),
+    page.getByLabel("Reason for logging", { exact: true }),
     "SYN preserve complete fictional intake before separate work authority.",
   );
   await capture(page, info, "journey-keyboard-intake-ready");
   await keyActivate(
     page,
-    page.getByRole("button", { name: "Save service request", exact: true }),
+    page.getByRole("button", { name: "Create request", exact: true }),
   );
   await expect(page).toHaveURL(/\/service\/tickets\/[a-f0-9-]{36}$/);
   const ticket = page.url().split("/").at(-1)!;
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
   await page
     .getByLabel("Reason for this triage action")
     .fill("SYN exact intake reviewed; triage does not approve scope or dates.");
   await committed(page, `service/tickets/${ticket}/triage`, () =>
-    page.getByRole("button", { name: "Complete triage", exact: true }).click(),
+    page.locator(".sv-triage-form").getByRole("button", { name: "Complete triage", exact: true }).click(),
   );
   await capture(page, info, "journey-intake-triaged");
 

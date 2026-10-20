@@ -9,7 +9,7 @@ import {
   readiness,
   savePreparation,
 } from "./quality-prepare";
-import { submit, review, issue } from "./quality-report";
+import { submit, review, issue, reportState } from "./quality-report";
 import { png } from "./field";
 
 export type ReturnSource = {
@@ -491,8 +491,9 @@ export async function completeReturnVisit(
   await capture(page, info, "return-next-technician-history");
   await page.goto(`/service/reports/${rid}`);
   await expect(
-    page.getByRole("heading", { name: /Revision 1 · Issued/ }),
+    reportState(page, "Issued"),
   ).toBeVisible();
+  await expect(page.locator(".sv06-record-header p")).toContainText("r01");
   await expect(
     page.getByText(/FINANCE_PRIVATE_CANARY|P11_PRIVATE_REVIEW_CANARY/),
   ).toHaveCount(0);

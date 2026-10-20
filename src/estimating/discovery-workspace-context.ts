@@ -7,6 +7,8 @@ import { uuid } from "../shared/validation";
 import { visibleOpportunity, relationshipContext } from "../crm/context";
 import { estimateContext, type Estimate } from "./context";
 import { readDiscoveryTargets } from "./discovery-context";
+import { creationBriefReceiptAuthority } from "./discovery-creation-context";
+import type { CreationReview } from "./discovery-creation-review";
 import type { Answer, DiscoveryInput } from "./discovery";
 
 export type DiscoveryWorkspace = {
@@ -305,16 +307,23 @@ export async function discoveryReceiptAuthority(
   groupId: string,
   operationId: string,
 ) {
-  const g = await workspaceAuthority(c, p, groupId, true);
   const event = (
     await c.query<{
-      details: { revision_id?: string; source_revision_id?: string; historical_source_id?: string };
+      details: { command?: string; creation?: CreationReview; revision_id?: string; source_revision_id?: string; historical_source_id?: string };
     }>(
       "SELECT details FROM ppo.audit_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3 AND object_type='EstimatingWorkspace' AND object_id=$4",
-      [p.workspace_id, p.actor_id, operationId, g.id],
+      [p.workspace_id, p.actor_id, operationId, groupId],
     )
   ).rows[0];
   if (!event) throw unavailable();
+  const assignedCreation = event.details.command === "CreateEstimatingWorkspace" && !!event.details.creation;
+  const g = await workspaceAuthority(c, p, groupId, !assignedCreation);
+  if (assignedCreation) {
+    if (g.created_by !== p.actor_id) throw unavailable();
+    await relationshipContext(c, p, await visibleOpportunity(c, p, g.opportunity_id), "estimating.edit");
+    if (event.details.creation!.sales_brief)
+      await creationBriefReceiptAuthority(c, p, groupId, operationId, event.details.creation!.sales_brief);
+  }
   for (const id of new Set(
     [event.details.revision_id, event.details.source_revision_id, event.details.historical_source_id].filter(
       (id): id is string => Boolean(id),

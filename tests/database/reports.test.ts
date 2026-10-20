@@ -14,6 +14,7 @@ import {
   amendReport,
   recordResponse,
   readReport,
+  listReports,
   presentationBytes,
 } from "../../src/reports/service";
 import {
@@ -116,7 +117,7 @@ test("P09 fresh and P08 upgrade preserve originals and repeat seed does not revi
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(row=>row.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 112],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 112, 113],
   );
 });
 test("P09 exact submission freezes entries; duplicate original recovers same receipt; changed reuse conflicts", async () => {
@@ -145,6 +146,28 @@ test("P09 exact submission freezes entries; duplicate original recovers same rec
     ),
   );
   assert.equal(q.report.finance_state, "Separate Finance authority required");
+});
+test("SV-06 register projects permitted exact attendance facts and recorded return counts", async () => {
+  const fixture = await submitted();
+  const listed = await listReports(fixture.reviewer);
+  const row = listed.items.find(item => item.id === fixture.report.id)!;
+  const snapshot = fixture.report.revisions[0].snapshot;
+  assert.equal(row.technician_id, fixture.p.actor_id);
+  assert.equal(row.customer_id, snapshot.customer.id);
+  assert.equal(row.customer, snapshot.customer.name);
+  assert.equal(row.site, snapshot.site.name);
+  assert.equal(row.attendance_start, snapshot.attendance.start_at);
+  assert.equal(row.outcome, snapshot.completion.scope_outcome);
+  assert.equal(row.response, null);
+  assert.equal(row.mine, true);
+  assert.equal(listed.completeness, "Complete");
+  const returned = decision(fixture.report, "Returned");
+  await reviewReport(fixture.reviewer, fixture.report.id, returned);
+  const changed = (await listReports(fixture.reviewer)).items.find(item => item.id === fixture.report.id)!;
+  assert.equal(changed.status, "Returned");
+  assert.equal(changed.returned_entries, returned.entry_decisions.filter(item => item.decision === "Returned").length);
+  await database().query("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='report.read'", [fixture.reviewer.workspace_id, fixture.reviewer.actor_id]);
+  await assert.rejects(listReports(fixture.reviewer), code("Forbidden"));
 });
 test("P09 return comments, linked correction, successor submission and narrow attendance acceptance", async () => {
   const q = await submitted(),
