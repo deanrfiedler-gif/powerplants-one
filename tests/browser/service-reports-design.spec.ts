@@ -7,6 +7,7 @@ import {
 import { destinations } from "../../src/shell/navigation";
 
 test.beforeEach(async ({ page }) => {
+  await page.route(/^https:\/\/[^/]+\.fontawesome\.com\//, (route) => route.abort());
   await page.route("**/api/v1/**", (route) =>
     route.fulfill({
       json: {
@@ -55,7 +56,10 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
     route.fulfill({ json: { items: [reportFixture] } }),
   );
   for (const width of [1440, 1024, 390, 320]) {
-    await page.setViewportSize({ width, height: width < 1024 ? 844 : width === 1024 ? 768 : 900 });
+    await page.setViewportSize({
+      width,
+      height: width < 1024 ? 844 : width === 1024 ? 768 : 900,
+    });
     await page.goto("/service/reports?department=service");
     await expect(
       page.getByText("Recent 200-report window", { exact: false }),
@@ -67,6 +71,12 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
     ).toBe(true);
     if (width >= 1024) {
       await expect(page.locator(".sv06-grid")).toBeVisible();
+      expect(
+        (await page.locator(".sv06-grid thead tr").boundingBox())?.height,
+      ).toBeLessThanOrEqual(44);
+      expect(
+        (await page.locator(".sv06-grid tbody tr").boundingBox())?.height,
+      ).toBeLessThanOrEqual(44);
       await page
         .getByRole("checkbox", {
           name: `Select ${reportRow.reference}`,
@@ -79,7 +89,19 @@ test("SV-06 register: bounded filters, selection, snapshot focus and responsive 
       await expect(
         page.getByRole("region", { name: "Report snapshot" }),
       ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Close snapshot", exact: true }),
+      ).toBeInViewport();
       await page.screenshot({ path: info.outputPath(`snapshot-${width}.png`) });
+      await page
+        .getByRole("button", { name: "Close snapshot", exact: true })
+        .click();
+      await expect(
+        page.getByRole("button", { name: reportRow.reference, exact: true }),
+      ).toBeFocused();
+      await page
+        .getByRole("button", { name: reportRow.reference, exact: true })
+        .click();
       await page.keyboard.press("Escape");
       await expect(
         page.getByRole("button", { name: reportRow.reference, exact: true }),
@@ -159,6 +181,49 @@ test("SV-06 exact review draft survives tabs and newer reads; view-only hides co
     page.getByRole("button", { name: "Review submission", exact: true }),
   ).toHaveCount(0);
   await page.screenshot({ path: info.outputPath("view-only.png") });
+});
+
+test("SV-06 no-matches queue clears without confusing an empty window", async ({
+  page,
+}, info) => {
+  await page.route("**/api/v1/reports", (route) =>
+    route.fulfill({
+      json: {
+        items: [reportRow],
+        observed_at: reportRow.updated_at,
+        completeness: "BoundedWindow",
+      },
+    }),
+  );
+  await page.goto("/service/reports?department=service");
+  if (info.project.name.startsWith("mobile")) {
+    await page
+      .getByRole("button", { name: "Report view", exact: true })
+      .click();
+    await page
+      .getByRole("menuitemradio", {
+        name: "Returned to technician",
+        exact: true,
+      })
+      .click();
+  } else
+    await page.getByRole("button", { name: /^Returned to technician/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "No reports match these filters" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Remove queue filter" }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("no-matches.png") });
+  await page
+    .getByRole("button", { name: "Clear filters", exact: true })
+    .click();
+  await expect(
+    page.getByText("Recent 200-report window", { exact: false }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "No reports match these filters" }),
+  ).toHaveCount(0);
 });
 
 test("SV-06 prepared and issued output keep exact response binding on refusal", async ({

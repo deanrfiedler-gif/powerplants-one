@@ -1,5 +1,11 @@
 "use client";
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import {
   useResource,
@@ -308,8 +314,14 @@ export function ReportRecordFrame({
   children: ReactNode;
 }) {
   const title = report.revisions[0].snapshot.scope.summary ?? "Service report";
-  const phone = useSyncExternalStore(subscribePhone, () => window.matchMedia("(max-width: 780px)").matches, () => false);
-  useEffect(() => { if (!phone && tab === "details") onTab("evidence"); }, [phone, tab, onTab]);
+  const phone = useSyncExternalStore(
+    subscribePhone,
+    () => window.matchMedia("(max-width: 780px)").matches,
+    () => false,
+  );
+  useEffect(() => {
+    if (!phone && tab === "details") onTab("evidence");
+  }, [phone, tab, onTab]);
   usePhoneHeader({
     title,
     record: {
@@ -387,7 +399,11 @@ export function ReportRecordFrame({
           <RecordTabs
             id="sv06"
             label="Report views"
-            tabs={phone ? reportTabs : reportTabs.filter(item => item.id !== "details")}
+            tabs={
+              phone
+                ? reportTabs
+                : reportTabs.filter((item) => item.id !== "details")
+            }
             value={tab}
             onChange={onTab}
           />
@@ -411,6 +427,77 @@ export function ReportRecordFrame({
           )}
         </footer>
       )}
+    </div>
+  );
+}
+function SnapshotSummary({ report }: { report: ServiceReport }) {
+  const snapshot = report.revisions[0].snapshot;
+  return (
+    <div className="sv06-snapshot-summary">
+      <h3>Summary</h3>
+      <ul>
+        <li>
+          <ProductIcon name="person" />
+          <div>
+            {snapshot.customer.name}
+            <small>Customer</small>
+          </div>
+        </li>
+        <li>
+          <ProductIcon name="sites" />
+          <div>
+            {snapshot.site.name}
+            <small>Site</small>
+          </div>
+        </li>
+        <li>
+          <ProductIcon name="work" />
+          <div>
+            <Link href={`/service/work-orders/${report.work_order.id}`}>
+              {snapshot.work.reference}
+            </Link>
+            <small>Work order · {report.work_order.status}</small>
+          </div>
+        </li>
+        <li>
+          <ProductIcon name="person" />
+          <div>
+            {snapshot.attendance.name}
+            <small>
+              Technician · <Stamp value={snapshot.attendance.start_at} />
+            </small>
+          </div>
+        </li>
+        <li>
+          <ProductIcon name="list" />
+          <div>
+            {friendly(snapshot.completion.scope_outcome)}
+            <small>Declared outcome</small>
+          </div>
+        </li>
+      </ul>
+      <h3>Submitted entries</h3>
+      <ul>
+        {(snapshot.entries as SubmittedEntry[]).map((entry) => (
+          <li key={entry.id}>
+            <ProductIcon name={entry.kind === "Finding" ? "search" : "clock"} />
+            <div>
+              {entry.kind === "Reading"
+                ? `${entry.payload.label ?? "Reading"}: ${entry.payload.value ?? "Not recorded"} ${entry.payload.unit ?? ""}`
+                : entry.kind}
+              <small>
+                {entry.kind === "Reading"
+                  ? String(entry.payload.context ?? "Technician original")
+                  : entryDescription(entry)}
+              </small>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p className="sv06-snapshot-note">
+        Approving covers only this exact technical evidence. You cannot change
+        the technician’s facts: return an entry with a reason for correction.
+      </p>
     </div>
   );
 }
@@ -485,17 +572,7 @@ export function ReportSnapshot({
               </p>
               <ReportState status={report.status} />
             </header>
-            <ReportDetails report={report} />
-            <h3>Submitted entries</h3>
-            {(report.revisions[0].snapshot.entries as SubmittedEntry[]).map(
-              (entry) => (
-                <p key={entry.id}>
-                  <strong>{entry.kind}</strong>
-                  <br />
-                  {entryDescription(entry)}
-                </p>
-              ),
-            )}
+            <SnapshotSummary report={report} />
             <footer>
               <ButtonLink href={`/service/reports/${id}`}>
                 Open report
@@ -511,62 +588,90 @@ export function ReportSnapshot({
             </footer>
           </div>
           <div className="sv06-snapshot-side">
-            <RecordTabs
-              id="sv06-snapshot"
-              label="Snapshot views"
-              tabs={[
-                { id: "review", label: "Review" },
-                { id: "report", label: "Customer report" },
-              ]}
-              value={tab}
-              onChange={setTab}
-            />
-            <section
-              role="tabpanel"
-              id={`sv06-snapshot-panel-${tab}`}
-              aria-labelledby={`sv06-snapshot-tab-${tab}`}
-            >
-              {tab === "review" ? (
-                <>
-                  <h3>Before review · {friendly(report.status)}</h3>
-                  <p>
-                    Outcome declared:{" "}
-                    {friendly(
-                      report.revisions[0].snapshot.completion.scope_outcome,
-                    )}
-                  </p>
-                  <p>
-                    {report.revisions[0].snapshot.completion.remaining_work ||
-                      "No remaining work declared"}
-                  </p>
-                  <p>
-                    Customer report:{" "}
-                    {report.presentations.length
-                      ? "Presentation available"
-                      : "Prepared after review"}
-                  </p>
-                  <h3>History</h3>
-                  {report.revisions.map((revision) => (
-                    <p key={revision.id}>
-                      Revision {revision.revision} submitted
-                      <br />
-                      <Stamp value={revision.submitted_at} />
+            <div className="sv06-snapshot-review">
+              <RecordTabs
+                id="sv06-snapshot"
+                label="Snapshot views"
+                tabs={[
+                  { id: "review", label: "Review" },
+                  { id: "report", label: "Customer report" },
+                ]}
+                value={tab}
+                onChange={setTab}
+              />
+              <section
+                role="tabpanel"
+                id={`sv06-snapshot-panel-${tab}`}
+                aria-labelledby={`sv06-snapshot-tab-${tab}`}
+              >
+                {tab === "review" ? (
+                  <>
+                    <h3>
+                      {report.status === "Submitted"
+                        ? "Before review · nothing approved yet"
+                        : friendly(report.status)}
+                    </h3>
+                    <p>
+                      <ProductIcon name="converted" /> Outcome declared:{" "}
+                      {friendly(
+                        report.revisions[0].snapshot.completion.scope_outcome,
+                      )}
                     </p>
-                  ))}
-                </>
-              ) : (
-                <>
-                  <h3>Customer report</h3>
-                  <p>
-                    Open the report to inspect its exact protected presentation.
-                    Issuing sends nothing.
-                  </p>
-                  <ButtonLink href={`/service/reports/${id}?tab=report`}>
-                    Inspect customer report
-                  </ButtonLink>
-                </>
-              )}
-            </section>
+                    <p>
+                      <ProductIcon name="work" />{" "}
+                      {report.revisions[0].snapshot.completion.remaining_work
+                        ? "Remaining work recorded"
+                        : "No remaining work declared"}
+                    </p>
+                    <small>
+                      {report.revisions[0].snapshot.completion.remaining_work ||
+                        "No remaining work declared"}
+                    </small>
+                    <p>
+                      <ProductIcon name="info" />{" "}
+                      {report.reviews.some(
+                        (review) =>
+                          review.revision_id === report.revisions[0].id &&
+                          review.decision === "Approved",
+                      )
+                        ? "Site contact selected in approved review"
+                        : "Choose the site contact before approving"}
+                    </p>
+                    <p>
+                      <ProductIcon name="list" /> Customer report:{" "}
+                      {report.presentations.length
+                        ? "Presentation available"
+                        : "Prepared after review"}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3>Customer report</h3>
+                    <p>
+                      Open the report to inspect its exact protected
+                      presentation. Issuing sends nothing.
+                    </p>
+                    <ButtonLink href={`/service/reports/${id}?tab=report`}>
+                      Inspect customer report
+                    </ButtonLink>
+                  </>
+                )}
+              </section>
+            </div>
+            <div className="sv06-snapshot-history">
+              <h3>History</h3>
+              {report.revisions.map((revision) => (
+                <p key={revision.id}>
+                  <ProductIcon name="clock" />
+                  <span>
+                    Revision {revision.revision} submitted
+                    <small>
+                      <Stamp value={revision.submitted_at} />
+                    </small>
+                  </span>
+                </p>
+              ))}
+            </div>
           </div>
         </>
       )}

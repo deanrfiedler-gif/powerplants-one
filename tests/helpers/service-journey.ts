@@ -8,7 +8,7 @@ import { writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { call, identity, capture, saveOriginal } from "./quality-browser";
 import { prepareJourney, committed } from "./quality-prepare";
-import { completion, submit, review, issue } from "./quality-report";
+import { completion, submit, review, issue, reportState, technicianEvidence } from "./quality-report";
 import { png } from "./field";
 import { financeJourney } from "./quality-finance";
 import { returnVisit } from "./quality-return";
@@ -414,12 +414,7 @@ export async function serviceJourney(
   await review(page, true);
   await capture(page, info, "journey-exact-evidence-returned");
   await identity(page, "assigned-technician");
-  await page
-    .getByRole("link", {
-      name: "Technician evidence and correction",
-      exact: true,
-    })
-    .click();
+  await technicianEvidence(page);
   await page.getByRole("button", { name: "History", exact: true }).click();
   await page
     .getByRole("button", {
@@ -455,9 +450,10 @@ export async function serviceJourney(
   expect(report.work_order.status).toBe("Authorised");
   await page
     .getByRole("link", {
-      name: "Remaining work and return proposal",
+      name: "Open work order",
       exact: true,
     })
+    .filter({ visible: true })
     .click();
   await page.getByText("Propose a visit", { exact: true }).click();
   const returnDay = info.project.name.startsWith("mobile")
@@ -680,10 +676,16 @@ export async function serviceJourney(
       .getByRole("link", { name: "Service review", exact: true })
       .click();
   }
-  await page.getByRole("link", { name: issued.reference, exact: true }).click();
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await page.locator(".sv06-phone-list a").filter({ hasText: issued.reference }).click();
+  } else {
+    await page.getByRole("button", { name: issued.reference, exact: true }).click();
+    await page.getByRole("link", { name: "Open report", exact: true }).click();
+  }
   await expect(
-    page.getByRole("heading", { name: /Revision 2 · Issued/ }),
+    reportState(page, "Issued"),
   ).toBeVisible();
+  await expect(page.locator(".sv06-record-header p")).toContainText("r02");
   await expect(
     page.getByText(/FINANCE_PRIVATE_CANARY|P11_PRIVATE_REVIEW_CANARY/),
   ).toHaveCount(0);

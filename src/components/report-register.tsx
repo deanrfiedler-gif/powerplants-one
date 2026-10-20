@@ -79,7 +79,12 @@ export function ReportListScreen() {
   const close = () => {
     setSnapshot(null);
     if (opener.current?.getClientRects().length) opener.current.focus();
-    else document.querySelector<HTMLButtonElement>('.sv06-toolbar button[aria-label="Report actions"]')?.focus();
+    else
+      document
+        .querySelector<HTMLButtonElement>(
+          '.sv06-toolbar button[aria-label="Report actions"]',
+        )
+        ?.focus();
   };
   const exportRows = () => {
     const url = URL.createObjectURL(
@@ -225,9 +230,10 @@ export function ReportListScreen() {
           </Button>
           <Button
             className="sv06-refresh"
+            aria-label="Refresh reports"
             onClick={() => change(resource.reload)}
           >
-            Refresh reports
+            <ProductIcon name="changes" />
           </Button>
           <WorklistMenu label="Report actions" icon="more">
             <Button
@@ -327,7 +333,7 @@ export function ReportListScreen() {
               <RegisterTable caption="Recent permitted service reports. Open a row for its snapshot; tick a checkbox to select it for export or sequential review.">
                 <thead>
                   <tr>
-                    <th className="sv06-check">
+                    <th className="sv06-check ppo-register-check">
                       <input
                         type="checkbox"
                         aria-label="Select all visible reports"
@@ -383,7 +389,7 @@ export function ReportListScreen() {
                           inspect(row.id);
                       }}
                     >
-                      <td className="sv06-check">
+                      <td className="sv06-check ppo-register-check">
                         <input
                           type="checkbox"
                           aria-label={`Select ${row.reference}`}

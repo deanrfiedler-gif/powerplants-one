@@ -88,4 +88,6 @@ test("SV-06 CSV exports only supplied rows, quotes content and neutralises formu
   assert.equal(csv.split("\r\n").length, 2);
   assert.equal(reportCsv([]).split("\r\n").length, 1);
   assert.doesNotMatch(csv, /technician-synthetic|customer-synthetic/);
+  for (const title of [" =1+1", "\n=1+1", "\tvalue", "\rvalue", "+1", "-1", "@SUM(1)"])
+    assert.ok(reportCsv([{ ...row, title }]).includes(`"'${title}"`));
 });

@@ -78,7 +78,7 @@ export function reportAttention(row: ReportRegisterRow) {
 export function reportCsv(rows: ReportRegisterRow[]) {
   const cell = (value: unknown) => {
     const text = String(value ?? "");
-    return `"${(/^[=+@\-\t\r]/.test(text) ? "'" + text : text).replaceAll('"', '""')}"`;
+    return `"${(/^[\t\r\n]|^\s*[=+@-]/.test(text) ? "'" + text : text).replaceAll('"', '""')}"`;
   };
   const fields: (keyof ReportRegisterRow)[] = [
     "reference",

@@ -183,7 +183,10 @@ async function reportTab(page: Page, name: string) {
 }
 async function technicianEvidence(page: Page) {
   const details = page.getByRole("tab", { name: "Details", exact: true });
-  if (await details.isVisible()) await details.click();
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await expect(details).toBeVisible();
+    await details.click();
+  }
   await page.getByRole("link", { name: "Technician evidence and correction" }).filter({ visible: true }).click();
 }
 async function review(page: Page, returned = false, commit = true) {
