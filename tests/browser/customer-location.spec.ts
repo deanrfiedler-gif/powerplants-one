@@ -321,6 +321,14 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
       info.project.name !== "desktop-chromium",
       "One exact viewport proof per declared width.",
     );
+    // Retain layout geometry without licensed glyph artwork in evidence.
+    await page.addInitScript(() => {
+      document.addEventListener("DOMContentLoaded", () => {
+        const style = document.createElement("style");
+        style.textContent = ".ppo-fa, svg { visibility: hidden !important; }";
+        document.head.append(style);
+      });
+    });
     await page.setViewportSize({ width, height: 960 });
     await ensurePlan(page, baseURL!, "Readiness");
     await ensurePlan(page, baseURL!, "AccountPlan");
@@ -343,7 +351,16 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
         await expect(
           page.getByRole("tab", { name: new RegExp(tab) }).first(),
         ).toBeVisible();
-      await expect(page.locator(".business-heading h1").first()).toBeVisible();
+      if (name === "readiness" && width <= 780) {
+        const phoneTitle = page.locator("#shell-header .ppo-phone-title");
+        await expect(phoneTitle).toBeVisible();
+        await expect(phoneTitle).toHaveText("Access & readiness");
+        await expect(
+          page.locator("#ppo-readiness .shared-record-header"),
+        ).toBeHidden();
+      } else {
+        await expect(page.locator(".business-heading h1").first()).toBeVisible();
+      }
       await expect(page.getByText(/^Loading permitted records/)).toHaveCount(0);
       await expect(page.locator(".business-error[role=alert]")).toHaveCount(0);
       await expect

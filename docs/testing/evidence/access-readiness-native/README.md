@@ -24,6 +24,14 @@ The configured local database port was initially unavailable; the same connectio
 
 The persisted browser journey also exposed a save/read race: the old check could briefly be selected after a successful save. Further actions now wait for the refreshed record version, and saving a preparation selects its visit basis. A delayed-read browser regression covers that interval. The longer Field/inspection browser journeys were attempted locally; cold development compilation exceeded their budgets. Their complete compiled results remain CI evidence, not a local pass.
 
+### Compiled CI follow-up
+
+At `e8ff69fd`, the compiled mobile suite passed all 445 executed tests (79 skipped), including the five native CS-06 tests and persisted preparation/acknowledgement journey. Field readiness and service inspection journeys also passed in compiled CI. Both desktop runs passed 499 tests (21 skipped) and failed the same four cross-page viewport cases at 768, 430, 390 and 320 px.
+
+Those four failures expected `.business-heading h1` to remain visible on Access & readiness. The accepted phone composition deliberately hides that desktop header and uses the compact shell title. The family test now requires the exact visible **Access & readiness** phone title and a hidden desktop record header at those widths; its desktop-heading, viewport overflow and shell-control geometry assertions remain in place. This corrects the test contract without changing the accepted layout or increasing the CI timeout. Family captures now hide licensed glyphs before rendering.
+
+After merging current `main`, the seven family viewport cases passed locally at 1440, 1280, 1024, 768, 430, 390 and 320 px, each exercising Customer, People, Stakeholders, Sites, Access & readiness, Account plan and Survey. The first attempt reached the server before it was listening: four cases failed with `ECONNREFUSED`, while the remaining three passed. Rerunning only those four after server startup passed all four. Typecheck, the changed test's ESLint check and `studio:check` also passed. Logs and icon-free captures are local ignored outputs; the final pushed head requires its own compiled CI result.
+
 New database proofs cover draft isolation, contributor independence, return/publication, stale draft rejection, publication retry, retired IDs, visit binding, schedule invalidation and acknowledgement without authority. Existing Customer/location, Field, equipment and inspection fixtures use independent publication. Browser fixtures exercise accepted view families, exact command payloads, reason retention, keyboard tabs, empty/read-only/denied states. Mock responses prove presentation behaviour, not persistence.
 
 ## Visual comparison
