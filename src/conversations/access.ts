@@ -124,7 +124,9 @@ export async function conversationReceiptAuthority(
           await c.query(
             objectType === "ConversationMessage"
               ? "SELECT thread_id AS id FROM ppo.conversation_messages WHERE workspace_id=$1 AND id=$2"
-              : "SELECT thread_id AS id FROM ppo.conversation_asks WHERE workspace_id=$1 AND id=$2",
+              : objectType === "AssistantTurn"
+                ? "SELECT thread_id AS id FROM ppo.assistant_turns WHERE workspace_id=$1 AND id=$2"
+                : "SELECT thread_id AS id FROM ppo.conversation_asks WHERE workspace_id=$1 AND id=$2",
             [p.workspace_id, recordId],
           )
         ).rows[0]?.id;

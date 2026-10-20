@@ -42,3 +42,7 @@ The canonical capability union now has 159 keys, including `conversation.read` (
 ## D-025 S2 customer message duties
 
 The canonical capability union now has 161 keys, including `customer_message.send` ("Confirm and send prepared customer messages as the named sender") and `customer_message.switch` ("Switch a customer message class on or off") in a new Customer messages family. These are the minimal existing-client catalogue labels required to expose the new backend duties accurately. Both are default denied, with no seed grant. No page layout, component or visual acceptance changes. Existing pending design review remains pending. [Decision](../../../decisions/customer-communications-core-s2.md) and [contract](../../../contracts/customer-communications.md).
+
+## Conversations T2b assistant duty
+
+The canonical capability union now has 162 keys, including `conversation.agent.ask` ("Ask Carl, the AI assistant, in conversation threads"). Seed 110 copies each active local synthetic profile's live `conversation.post` grant, in the same scope and validity. Hosted testers receive no ask duty. Carl also requires the local, off-by-default assistant switch. This change supplies the catalogue label and contract count; the T2c answer UI remains separate. Existing visual review status is unchanged. [Scope](../../../decisions/conversations-t2-scope.md) and [design](../../../decisions/conversations-t2b-design.md).

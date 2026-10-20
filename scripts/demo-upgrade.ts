@@ -341,7 +341,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // rows, four identity types, eight outbox kinds and two default-denied duties. No seed, grant,
   // user or existing row changes; every class stays Off, and the hosted worker does not drain the
   // synthetic queue. Existing all-table runtime privileges cover the new tables.
-  if (latestMigrationVersion !== 109) throw Error("Review the existing-demo upgrade for this release.");
+  // 0110 (Conversations T2b) adds empty agent-turn, answer-part and budget-ledger tables,
+  // nullable agent message columns, the AssistantTurn identity and conversation.agent.ask.
+  // Seed 110 replays as the owner: it copies only active PPO-LocalSynthetic posters' live grants
+  // and inserts the workspace ceiling. Hosted testers gain no ask duty. Carl remains off there;
+  // existing all-table runtime privileges cover these objects, with no provider or hosted worker.
+  if (latestMigrationVersion !== 110) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

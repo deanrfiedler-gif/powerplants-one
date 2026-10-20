@@ -13,6 +13,7 @@ export const capabilityLabels = {
   "document.review": "Independently review documents and finding responses",
   "conversation.read": "Read conversation threads on deals and projects",
   "conversation.post": "Start and post in conversation threads",
+  "conversation.agent.ask": "Ask Carl, the AI assistant, in conversation threads",
   "cpq.read": "Read CPQ releases and commercial calculation evidence",
   "cpq.author": "Author CPQ rule releases",
   "cpq.review": "Independently review exact CPQ releases",

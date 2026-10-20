@@ -25,5 +25,6 @@ export const conversationObjectTypes = [
   "ConversationThread",
   "ConversationMessage",
   "ConversationAsk",
+  "AssistantTurn",
 ] as const;
 export const conversationOutboxKind = "ConversationChanged";

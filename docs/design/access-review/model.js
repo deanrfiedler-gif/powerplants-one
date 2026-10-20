@@ -76,7 +76,7 @@
     'shared.read':'Read shared customer, site and equipment records','shared.create':'Create shared records','shared.edit':'Edit shared records','shared.internal.read':'Read internal-only notes','shared.finance.read':'Read restricted Finance context','shared.history.record':'Record equipment and site history',
     'service.ticket.read':'Read service requests','service.ticket.edit':'Edit service requests','service.work_order.read':'Read work orders','service.work_order.edit':'Edit work orders','service.scope.authorise':'Authorise work scope','service.readiness.assess':'Assess job readiness',
     'activity.read':'Read activities','activity.edit':'Create and complete activities',
-    'conversation.read':'Read conversation threads on deals and projects','conversation.post':'Start and post in conversation threads',
+    'conversation.read':'Read conversation threads on deals and projects','conversation.post':'Start and post in conversation threads','conversation.agent.ask':'Ask Carl, the AI assistant, in conversation threads',
     'schedule.policy.review':'Review workspace scheduling policy','schedule.policy.publish':'Publish reviewed workspace scheduling policy','schedule.read':'Read the schedule','schedule.manage':'Book and change appointments','schedule.request':'Request a schedule change','schedule.contact':'Record customer contact about a visit',
     'customer_message.send':'Confirm and send prepared customer messages as the named sender','customer_message.switch':'Switch a customer message class on or off',
     'pack.read':'Read job packs','pack.prepare':'Prepare job packs','pack.check':'Check job packs','pack.issue':'Issue job packs','pack.acknowledge':'Acknowledge an issued job pack',

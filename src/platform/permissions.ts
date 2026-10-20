@@ -161,6 +161,7 @@ export type Capability =
   | "service.ticket.edit"
   | "conversation.read"
   | "conversation.post"
+  | "conversation.agent.ask"
   | "activity.read"
   | "activity.edit"
   | "shared.read"
