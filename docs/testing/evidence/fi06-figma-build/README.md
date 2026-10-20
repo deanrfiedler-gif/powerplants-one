@@ -27,19 +27,19 @@ Application captures use deliberately synthetic API fixtures in `tests/helpers/i
 
 | Application capture | Accepted node / state | Viewport |
 |---|---|---|
-| `register-1440.png` | `1348:3008` register | 1440 × 900 |
-| `register-1024.png` | `1348:3756` tablet, collapsed primary rail | 1024 × 900 |
-| `submitted.png` | `1348:3253` submitted and held | 1440 × 900 |
-| `triage.png` | `1348:3382` editable triage | 1440 × 900 |
-| `accepting-evidence.png` | `1348:3516` exact evidence decision | 1440 × 900 |
-| `ready-to-close.png` | `1348:4410` accepted, still held | 1440 × 900 |
-| `saved-draft-1440.png` | `1348:3653` saved report draft | 1440 × 900 |
-| `saved-draft-390.png` | `1348:3985` phone form | 390 × 1477 |
-| `saved-draft-320.png` | `1354:3721` narrow phone form | 320 × 1625 |
-| `submit-sheet-390.png` | `1354:3275` confirmation sheet | 390 × 844 |
-| `reporter-390.png` | `1348:4149` reporter held view | 390 × 844 |
-| `not-connected-390.png` | `1354:3435` not connected | 390 × 844 |
-| `uncertain-submit-390.png` | `1354:3571` original operation recovery | 390 × 844 |
+| [register-1440.png](register-1440.png) | `1348:3008` register | 1440 × 900 |
+| [register-1024.png](register-1024.png) | `1348:3756` tablet, collapsed primary rail | 1024 × 900 |
+| [submitted.png](submitted.png) | `1348:3253` submitted and held | 1440 × 900 |
+| [triage.png](triage.png) | `1348:3382` editable triage | 1440 × 900 |
+| [accepting-evidence.png](accepting-evidence.png) | `1348:3516` exact evidence decision | 1440 × 900 |
+| [ready-to-close.png](ready-to-close.png) | `1348:4410` accepted, still held | 1440 × 900 |
+| [saved-draft-1440.png](saved-draft-1440.png) | `1348:3653` saved report draft | 1440 × 900 |
+| [saved-draft-390.png](saved-draft-390.png) | `1348:3985` phone form | 390 × 1477 |
+| [saved-draft-320.png](saved-draft-320.png) | `1354:3721` narrow phone form | 320 × 1625 |
+| [submit-sheet-390.png](submit-sheet-390.png) | `1354:3275` confirmation sheet | 390 × 844 |
+| [reporter-390.png](reporter-390.png) | `1348:4149` reporter held view | 390 × 844 |
+| [not-connected-390.png](not-connected-390.png) | `1354:3435` not connected | 390 × 844 |
+| [uncertain-submit-390.png](uncertain-submit-390.png) | `1354:3571` original operation recovery | 390 × 844 |
 
 Additional empty, denied, loading, failed-read, partial-record and 320 px viewport states are exercised by the browser spec. Accepted images are missing for these states, the phone register, tablet record and full Evidence/History/rebinding/reopening flows; shared patterns are used without asserting new design acceptance.
 
@@ -62,15 +62,20 @@ Base: unmodified `main` at `4c1097cc`. Windows uses the existing shared dependen
 | `python scripts/build_status.py` | Generated status and decisions index from the new fragment. |
 | `npm run test:unit` | Initial run: 956/966 passed. Catalogue dependency assertion fixed and its focused rerun passed. The two new FI-06 presentation tests pass. See limits below. |
 | Focused browser spec | Six tests passed. Final screenshots/checks repeated after layout refinements; no horizontal page overflow at 1440, 1024, 390 or 320 px. |
-| Existing FI-06 database suite | Initial run: two passed, four failed (two connection timeouts; two `RenderOrStorageFailure`). Retest results recorded below. |
+| Existing FI-06 database suite | Initial run: two passed, four failed (two connection timeouts; two `RenderOrStorageFailure`). All four failed cases passed on the focused retest: all six cases passed across the two runs. |
 | `npm run build` | Failed because Turbopack refuses the external `node_modules` junction; reproduced on unmodified base. The `--webpack` fallback was stopped after about 18 minutes without leaving “Creating an optimized production build”; no completed production build claimed. |
-| Existing compiled browser journey | Updated for the new controls; no successful final compiled run claimed locally. |
+| Existing browser journey | Updated for the new controls. Attempted against the local webpack development server after a clean synthetic reset; stopped at incident-context loading with `ECONNRESET`, before form interaction. No successful persisted or compiled browser journey claimed locally. |
+| Final synthetic command/read projection | Passed using the existing create, submit, triage and action commands. Reporter, current action-owner name, site timezone, scheduled time and identity were compared with the live database; reporter acceptance/close controls remain false. |
 
 The initial unit failures also included Windows private-store/path checks and CLI/CPQ/launcher time budgets. A focused 32-test base comparison reproduced five failures (CPQ workload timing, both document-store checks, launcher timeout and recovery path); the branch focused rerun passed 28/32 including the repaired catalogue and exact CPQ checks. Timing failures varied across runs. The full unit suite is **not** claimed green and non-reproduced failures remain a validation limit.
 
-Persisted tests use only a task-owned `ppo_synthetic_test` database. Existing migrations and seeds were applied unchanged. The disposable cluster disables crash-durability settings for this local test run; this is no durability or operational-data proof. The full incident journey passed on unmodified base. Final branch retest: pending when this ledger was prepared.
+Persisted tests use only a task-owned `ppo_synthetic_test` database. Existing migrations and seeds were applied unchanged. The disposable cluster disables crash-durability settings for this local test run; this is no durability or operational-data proof. The full incident journey passed on unmodified base. The branch retest passed the full incident journey, current-authority/two-reporter case, factual-before-Start/offline-hold case and concurrent-review/authority-loss case (four tests, no failures). The other two cases had passed the original run. No persisted assertion failed on the retest.
+
+The authority-loss test deliberately expires the technician's grant, so the later browser attempt used a clean seeded fixture. Its development-server connection reset is unresolved, not labelled a proven baseline failure. A separate final command/read proof used that prepared synthetic visit and succeeded; a read-only comparison then checked the returned identity, reporter, occurrence context and current action-owner display against the live schema. The first read-only attempt lacked an action fixture and was not counted as a pass; the subsequent command proof supplied one explicitly.
 
 CI on the initial claim commit passed Documentation assurance, Development register integrity, dependency audit and merged-tree checks. Application/browser jobs failed before their proofs at the existing controlled-browser gate: the installer provided Chrome 156 while the repository permits majors 153–155. That run contains no implementation proof. Current-head CI status belongs to the PR, separately from this dated local evidence.
+
+After merging the parallel status fragment and regenerating, implementation head `51e263a` passed CI Documentation assurance, Development register integrity and Merged-tree checks. The inspected Projects workflow again failed before static proof at the same Chrome version gate. No overall CI success is claimed.
 
 ## Remaining review
 

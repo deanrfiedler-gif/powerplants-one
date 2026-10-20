@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-21",
+  "source_commit": "1c7255fb",
+  "fixture": "tests/helpers/incident-design-fixture.ts",
+  "type": "Synthetic presentation captures; owner visual review pending",
+  "icons": "Font Awesome requests blocked; existing repository fallback icons only",
+  "captures": [
+    {
+      "file": "register-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "37541fa570a1aebeddbd7f10e3082b8802b937b31ecffcaec6c1eed7b79e5486"
+    },
+    {
+      "file": "register-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "43310528f5bcccff1a25ce775465a080103a6cdaa176d2363c979cb5c67d3182"
+    },
+    {
+      "file": "submitted.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "68839ec6a8df51b456b007511e4ff75c8de8e8cbf6d42b3afc84893053542a36"
+    },
+    {
+      "file": "triage.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "9efc1bd990570ae9a952cb68b8764b5d23075929686b7500cb2bf909119166f6"
+    },
+    {
+      "file": "accepting-evidence.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "11c540a4e416389d7422f148729b7fce22a60e98a01833233f4fb4e68bc6794b"
+    },
+    {
+      "file": "ready-to-close.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "adac1320ab6c9658166283a805a9cb19abe4e3863fe6b6c5277e0bfe10a462ec"
+    },
+    {
+      "file": "saved-draft-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "cd8ba37a6f19a13020ae37e1c4e081fe84d84ac474561c4dc44d0d896e05f207"
+    },
+    {
+      "file": "saved-draft-390.png",
+      "width": 390,
+      "height": 1477,
+      "sha256": "1b28365a1b15247b4badc8d5e2b3494b9de5123d0630730211036983743f0b56"
+    },
+    {
+      "file": "saved-draft-320.png",
+      "width": 320,
+      "height": 1625,
+      "sha256": "4946fc5bbb3d39bfb34f7dfd4b8d51bda7437a2e112812f4cce02f158295f7a3"
+    },
+    {
+      "file": "submit-sheet-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "b4ee7ae101d89aaa18c28eaac014c60a4446866964d9309e4f1882d8322e78ca"
+    },
+    {
+      "file": "reporter-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "eaa8c9a5b69d9af9cc722bcb95ee2f1bae3d53518adf1ee537e8412dc3d750ac"
+    },
+    {
+      "file": "not-connected-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "4082839547b9215de39548d9b371ad146c2998d2de169af1c04cdfd37c57bd5a"
+    },
+    {
+      "file": "uncertain-submit-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "81a76d662374d18f9c3b9462795f16cb246df69f508c1909d830a37b2f5b9a9d"
+    }
+  ]
+}

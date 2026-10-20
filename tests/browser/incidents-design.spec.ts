@@ -209,6 +209,15 @@ test("FI-06 uncertain submit retries the exact original operation and sends site
     });
   }
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.context().setOffline(true);
+  await expect(
+    page.getByRole("button", { name: "Save draft", exact: true }),
+  ).toBeDisabled();
+  await expect(page.locator(".shared-record-meta")).toContainText("Last saved");
+  await page.screenshot({
+    path: info.outputPath("saved-not-connected-390.png"),
+  });
+  await page.context().setOffline(false);
   await page.getByRole("tab", { name: /^Evidence / }).click();
   await expect(page.locator(".fi06-phone-savebar")).toHaveCount(0);
   await page.getByRole("tab", { name: "Report", exact: true }).click();
@@ -441,6 +450,13 @@ test("FI-06 record states keep authority and original evidence separate", async 
       exact: true,
     }),
   ).toHaveCount(0);
+  current = {
+    ...current,
+    row: { ...current.row, state: "InReview" },
+    sensitive: true,
+    duties: { ...current.duties, save: true, evidence: true },
+  };
+  await page.reload();
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
     await page
