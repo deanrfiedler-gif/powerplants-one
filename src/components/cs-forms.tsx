@@ -221,6 +221,7 @@ export function ContentEditor({
   view,
   onSaved,
   onCancel,
+  readinessMode,
 }: {
   row: CsRow;
   kind: CsKind;
@@ -228,6 +229,7 @@ export function ContentEditor({
   view: string;
   onSaved: () => void;
   onCancel: () => void;
+  readinessMode?: "requirements" | "evidence" | "windows";
 }) {
   const [draft, setDraft] = useState<CsContent>(structuredClone(row.content)),
     [name, setName] = useState(row.name),
@@ -291,6 +293,15 @@ export function ContentEditor({
       className="cs-form detail-section"
       onSubmit={(e) => {
         e.preventDefault();
+        if (readinessMode === "requirements") {
+          void command.send(`cs/Readiness/${row.id}/actions`, {
+            expected_version: row.version,
+            action: "draft_requirements",
+            requirements: r.requirements,
+            reason,
+          });
+          return;
+        }
         void command.send(`cs/${kind}/${row.id}/save`, {
           expected_version: row.version,
           name,
@@ -307,7 +318,7 @@ export function ContentEditor({
       </p>
       <ValidationFields error={command.error}>
         <fieldset disabled={command.busy || command.uncertain}>
-          <div className="cs-fields">
+          <div className="cs-fields" hidden={!!readinessMode}>
             <Field
               name="name"
               label="Name"
@@ -332,7 +343,10 @@ export function ContentEditor({
           </div>
           {kind === "Readiness" && (
             <>
-              <details open={view === "requirements" || view === "overview"}>
+              <details
+                hidden={!!readinessMode && readinessMode !== "requirements"}
+                open={view === "requirements" || view === "overview"}
+              >
                 <summary>Requirements and exact applicability</summary>
                 <Rows
                   title="Requirement"
@@ -350,7 +364,10 @@ export function ContentEditor({
                   })}
                 />
               </details>
-              <details open={view === "evidence"}>
+              <details
+                hidden={!!readinessMode && readinessMode !== "evidence"}
+                open={view === "evidence"}
+              >
                 <summary>Visitor, biosecurity and captured evidence</summary>
                 <p>
                   Capture records a source. Another permitted editor must review
@@ -412,7 +429,10 @@ export function ContentEditor({
                   })}
                 />
               </details>
-              <details open={view === "windows"}>
+              <details
+                hidden={!!readinessMode && readinessMode !== "windows"}
+                open={view === "windows"}
+              >
                 <summary>Seasonal and dated work windows</summary>
                 <p>
                   Use the Site time zone: {options.context.timezone}. Missing
@@ -645,7 +665,11 @@ export function ContentEditor({
             required
           />
           <div className="button-row">
-            <button disabled={command.busy}>Save revision</button>
+            <button disabled={command.busy}>
+              {readinessMode === "requirements"
+                ? "Submit revision for review"
+                : "Save revision"}
+            </button>
             <button
               type="button"
               className="secondary"

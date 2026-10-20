@@ -1,6 +1,7 @@
 import { test, expect, type APIRequestContext } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
+import { saveReadinessWithReview } from "../helpers/readiness-publication-http";
 
 test("FI05 assigned visit, unchanged originals, changed sources and responsive field review", async ({
   page,
@@ -66,7 +67,7 @@ test("FI05 assigned visit, unchanged originals, changed sources and responsive f
     windows: [],
   };
   const before = await call(`cs/Readiness/${id}`);
-  await call(`cs/Readiness/${id}/save`, {
+  await saveReadinessWithReview(request, origin, id, {
     ...base(),
     expected_version: before.record.version,
     name,
@@ -162,7 +163,7 @@ test("FI05 assigned visit, unchanged originals, changed sources and responsive f
   expect(saved.headers()["cache-control"]).toContain("no-store");
   expect((await saved.json()).acknowledgements).toHaveLength(1);
   const current = await call(`cs/Readiness/${id}`);
-  await call(`cs/Readiness/${id}/save`, {
+  await saveReadinessWithReview(request, origin, id, {
     ...base(),
     expected_version: current.record.version,
     name: current.record.name,

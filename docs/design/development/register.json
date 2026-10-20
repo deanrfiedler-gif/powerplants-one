@@ -514,17 +514,20 @@
     },
     {
       "key": "scope:CS-06",
-      "title": "Site access and horticultural readiness",
+      "title": "Access & readiness",
       "kind": "scope",
       "module": "CS",
-      "summary": "Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation.",
+      "summary": "Review the exact visit basis, independently publish requirements and review evidence; acknowledgement grants no authority to proceed.",
       "path": "/sites/[id]/readiness",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "src/components/cs-workspace.tsx",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css",
         "src/components/cs-forms.tsx",
+        "src/components/ui/shared-record.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/readiness.ts"
+        "src/shared/cs/readiness.ts",
+        "src/shared/cs/requirement-revisions.ts"
       ],
       "guide_key": "guide.cs.06",
       "design_path": "docs/design/development/pages/scope-cs-06.md",
@@ -540,12 +543,14 @@
         "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/access-readiness-figma-design.md"
+        "docs/decisions/access-readiness-figma-design.md",
+        "docs/decisions/access-readiness-native-build.md",
+        "docs/decisions/field-readiness-gate-proposal.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-06 native implementation of the accepted design; owner application acceptance pending",
+      "visual_status": "Accepted Figma source; native owner visual review pending",
+      "functional_status": "Focused database, unit and browser proof executed; Windows limits and CI status in access-readiness-native evidence; owner review pending",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -10894,17 +10899,20 @@
     },
     {
       "key": "route:/sites/[id]/readiness",
-      "title": "sites /  id  / readiness",
+      "title": "Access & readiness",
       "kind": "route",
       "module": "CS",
-      "summary": "Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation.",
+      "summary": "Review the exact visit basis, independently publish requirements and review evidence; acknowledgement grants no authority to proceed.",
       "path": "/sites/[id]/readiness",
       "source_paths": [
         "src/app/(business)/sites/[id]/readiness/page.tsx",
-        "src/components/cs-workspace.tsx",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css",
         "src/components/cs-forms.tsx",
+        "src/components/ui/shared-record.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/readiness.ts"
+        "src/shared/cs/readiness.ts",
+        "src/shared/cs/requirement-revisions.ts"
       ],
       "guide_key": "guide.route-sites-id-readiness",
       "design_path": "docs/design/development/pages/route-sites-id-readiness.md",
@@ -10920,12 +10928,14 @@
         "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/access-readiness-figma-design.md"
+        "docs/decisions/access-readiness-figma-design.md",
+        "docs/decisions/access-readiness-native-build.md",
+        "docs/decisions/field-readiness-gate-proposal.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-06 native implementation of the accepted design; owner application acceptance pending",
+      "visual_status": "Accepted Figma source; native owner visual review pending",
+      "functional_status": "Focused database, unit and browser proof executed; Windows limits and CI status in access-readiness-native evidence; owner review pending",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "reviewer": null,
