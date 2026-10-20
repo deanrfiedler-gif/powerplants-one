@@ -47,6 +47,19 @@ test("a missing stored citation fails closed without hiding the gaps", async () 
   assert.equal(view.claims[2].text, claims[2].text);
 });
 
+test("an open Activity is labelled by its summary; it has no display_number column", async () => {
+  const client = { query: async (sql: string) => {
+    if (sql.startsWith("SELECT a.id")) return { rows: [{ id: "SYN-activity" }] };
+    assert.ok(!sql.includes("display_number"));
+    return { rows: [{ title: "SYN Activity summary" }] };
+  } } as unknown as QueryClient;
+  const view = await readerView(client, "SYN-workspace", "SYN-reader", [claims[0]], [{ ...sources[0], record_id: "SYN-activity" }]);
+  assert.deepEqual(view.sources, [{
+    number: 1, can_open: true, type: "Activity", record_id: "SYN-activity",
+    label: "SYN Activity summary", route: "/work/SYN-activity",
+  }]);
+});
+
 test("P1 only server-rendered coverage and left-out footer lines survive a reader redraw", () => {
   const prefix = claims.map(claimLine).join("\n");
   const footer = "\nCoverage: 20 Internal Activities shown (limit 20; more exist).\n2 sources left out because not everyone here can see them.";

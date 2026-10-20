@@ -18,7 +18,7 @@ export async function readerView(
   const labels: Record<SourceType, string> = {
     Opportunity: "SELECT display_number,title FROM ppo.opportunities WHERE workspace_id=$1 AND id=$2",
     Organisation: "SELECT display_number,display_name AS title FROM ppo.organisations WHERE workspace_id=$1 AND id=$2",
-    Activity: "SELECT display_number,summary AS title FROM ppo.activities WHERE workspace_id=$1 AND id=$2",
+    Activity: "SELECT summary AS title FROM ppo.activities WHERE workspace_id=$1 AND id=$2",
     Project: "SELECT display_number,title FROM ppo.projects WHERE workspace_id=$1 AND id=$2",
     ProjectTask: "SELECT project_id,title FROM ppo.project_tasks WHERE workspace_id=$1 AND id=$2",
     ProjectRaid: "SELECT project_id,kind AS title FROM ppo.project_raid_entries WHERE workspace_id=$1 AND id=$2",

@@ -43,7 +43,7 @@ export type EvidenceEnvelope = {
 export type AdapterRequest = {
   question: UntrustedText;
   envelope: Pick<EvidenceEnvelope, "anchor_type" | "messages" | "coverage" | "left_out"> & {
-    items: Pick<EvidenceItem, "source_id" | "type" | "fields" | "untrusted_fields">[];
+    items: Pick<EvidenceItem, "source_id" | "fields" | "untrusted_fields">[];
   };
   allowance: Usage;
 };
@@ -71,3 +71,5 @@ export interface AssistantAdapter {
   readonly model: string;
   answer(request: AdapterRequest, signal: AbortSignal): Promise<AdapterResult>;
 }
+export const requestTokens = (request: Pick<AdapterRequest, "question" | "envelope">) =>
+  Math.ceil(JSON.stringify({ question: request.question, envelope: request.envelope }).length / 4);
