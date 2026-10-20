@@ -118,7 +118,7 @@ test("estimator choices and commit recheck active scoped authority without grant
 test("stale accepted brief or explicit omission cannot silently become an unlinked workspace", async () => {
   const f = await setup(), input = await proposed(f);
   await assert.rejects(createDiscoveryWorkspace(f.creator, { ...input, creation: { ...input.creation, sales_brief: null } }), code("SalesBriefChanged"));
-  await rows("UPDATE ppo.sites SET name='SYN changed Sales source',version=version+1 WHERE id=$1", [CRM.site]);
+  await rows("UPDATE ppo.sites SET display_name='SYN changed Sales source',version=version+1 WHERE id=$1", [CRM.site]);
   // A fresh Discovery context still cannot rescue a stale Sales selection.
   await assert.rejects(previewDiscoveryCreate(f.creator, { opportunity_id: f.opportunity.id, discovery: input.discovery, creation: input.creation }), code("SalesBriefChanged"));
   assert.equal(await countCreated(f), 0);
@@ -159,4 +159,38 @@ test("0113 preserves populated original links, receipts, grants and migration le
   assert.deepEqual(await readOperation(f.receiver, legacy.operation_id), created.receipt);
   assert.deepEqual(await readOperation(f.receiver, link.operation_id), linked.receipt);
   const next = await setup(); await createDiscoveryWorkspace(next.creator, await proposed(next));
+});
+
+test("late publication failure rolls back the workspace, first revision and Sales binding together", async () => {
+  const f = await setup(), input = await proposed(f);
+  await rows("CREATE SCHEMA IF NOT EXISTS ppo_proof");
+  await rows(`CREATE FUNCTION ppo_proof.reject_discovery_publication() RETURNS trigger LANGUAGE plpgsql AS $$
+    BEGIN IF NEW.kind='EstimatingWorkspaceCreated' THEN
+      RAISE EXCEPTION 'SYN forced publication failure' USING ERRCODE='23514';
+    END IF; RETURN NEW; END $$`);
+  await rows(`CREATE TRIGGER reject_discovery_publication BEFORE INSERT ON ppo.outbox_jobs
+    FOR EACH ROW EXECUTE FUNCTION ppo_proof.reject_discovery_publication()`);
+  await assert.rejects(createDiscoveryWorkspace(f.creator, input));
+  assert.equal(await countCreated(f), 0);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.estimation_revisions WHERE id=$1", [input.revision_id]))[0].n, 0);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.sales_estimating_bindings WHERE operation_id=$1", [input.operation_id]))[0].n, 0);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.operation_receipts WHERE operation_id=$1", [input.operation_id]))[0].n, 0);
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.outbox_jobs WHERE operation_id=$1", [input.operation_id]))[0].n, 0);
+  await rows("DROP TRIGGER reject_discovery_publication ON ppo.outbox_jobs");
+  const recovered = await createDiscoveryWorkspace(f.creator, input);
+  assert.equal(recovered.receipt.record_id, input.id);
+  assert.equal(await countCreated(f), 1);
+});
+
+test("the database refuses an exact-source binding without matching creation or separate-link evidence", async () => {
+  const f = await setup(), input = await proposed(f, true);
+  await createDiscoveryWorkspace(f.creator, input);
+  const brief = (await discoveryCreationOptions(f.creator, { opportunity_id: f.opportunity.id })).brief!.selection!;
+  await assert.rejects(rows(`INSERT INTO ppo.sales_estimating_bindings
+    (workspace_id,company_id,handover_id,acceptance_event_id,estimating_workspace_id,
+     estimating_version,selected_option_id,selected_revision_id,operation_id,recorded_by,reason)
+    SELECT workspace_id,company_id,$2,$3,id,1,$4,$5,$6,$7,$8 FROM ppo.estimating_workspaces WHERE id=$1`,
+    [input.id, f.handover_id, brief.acceptance_event_id, input.option_id, input.revision_id,
+      input.operation_id, f.creator.actor_id, input.reason]), code("23514"));
+  assert.equal((await rows("SELECT count(*)::int n FROM ppo.sales_estimating_bindings WHERE estimating_workspace_id=$1", [input.id]))[0].n, 0);
 });
