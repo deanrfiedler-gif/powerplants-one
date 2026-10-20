@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Contributor: this Codex Sites session, branch `codex/sites-cs04-page`, dedicated worktree updated through main `0ebb26a3`. PR #626 merged the preflight record; PR #635 merged the reference decision and build claim only. This follow-up contains the page implementation. Owner visual review pending.
+Owner: Dean Fiedler. Contributor: this Codex Sites session, branch `codex/sites-cs04-page`, dedicated worktree updated through main `4c1097cc`. PR #626 merged the preflight record; PR #635 merged the reference decision and build claim only. This follow-up contains the page implementation. Owner visual review pending.
 
 Authority: [Sites accepted design](../decisions/sites-figma-design.md), PPO - Design, page `1375:2901`, named version **Sites — accepted**. Desktop register `1375:2937`, overview `1375:3183`, equipment `1375:3312`; tablet `1375:3449`; phones `1375:328008`, `1375:3678`, `1379:2365`; states `1375:328046`, `1375:328103`, `1375:328145`; notes `1380:2175`. The later [compact phone header](../decisions/phone-header-amendment.md) applies. Existing [icon-free captures](../reference/ui/sites/sites-design-r01/README.md) stay unchanged.
 
@@ -17,7 +17,7 @@ Authority: [Sites accepted design](../decisions/sites-figma-design.md), PPO - De
 
 ## Risks and unresolved design
 
-P4 is unbuilt; the drawn confirmed/reconfirmed customer-readiness story cannot be reported as live operating state. Undrawn tabs, editing/creation, restricted states and checkbox actions retain existing behaviours or explicit unavailable explanations. No invented business workflow. The accepted phone amendment supersedes duplicate phone toolbar rows. People PR #625 is a separate active claim; its source files are not owned here. No independent review, deployment or owner/device acceptance is claimed.
+P4 is unbuilt; the drawn confirmed/reconfirmed customer-readiness story cannot be reported as live operating state. Undrawn tabs, editing/creation, restricted states and checkbox actions retain existing behaviours or explicit unavailable explanations. No invented business workflow. The accepted phone amendment supersedes duplicate phone toolbar rows. The merged People patterns are preserved; Sites uses the shared frame’s phone-header binding. No independent review, deployment or owner/device acceptance is claimed.
 
 ## Numbering clarification resolved
 
@@ -51,6 +51,21 @@ Explicit differences from the accepted frames:
 
 Open for Dean: owner visual review of the implementation and these adaptations; review of the undrawn tabs and source-state wording. No implementation decision grants visual approval or business acceptance.
 
-## Verification in progress
+## Verification and PR repair — 21 October 2026
 
-The focused lint, typecheck, naming and design-register checks have passed. Three Sites database assertions passed against the current schema and full synthetic seed set after setup completed; the diagnostic run omitted the reset hook, leaving every assertion unchanged. Standard reset/seed initially hit Windows timezone-scan timeouts; unmodified main subsequently seeded the isolated instance successfully. Full build, serial unit suite, foundation check and browser comparison results are still being collected. These provisional results are replaced by the final check table before handover.
+PR #640 initially failed TypeScript because the survey link used an unsupported icon name. It now uses the existing mapped clipboard icon. Current main is merged, retaining People, Service reports and Discovery component consumers and regenerating the status/index from all fragments. The phone filter now uses the shared dialog's initial Close focus, keyboard navigation and opener restoration; the frame owns its phone-header registration.
+
+The Contacts deterministic builder also pinned the changed shared-read source. Its Person projection, visibility, filtering and pagination were re-read and remain unchanged: only the Site branch maps references. The Reports pin was already stale on unmodified main `4c1097cc`; its register additions preserve the named-primary-contact approval contract. Both content pins were refreshed after that check. The issued Contacts HTML is byte-identical, and all 103 Contacts model groups pass. No owner-review fingerprint or reference capture is changed.
+
+| Check | Executed result |
+| --- | --- |
+| `npm run studio:check` | Pass after merge: 366 entries, 48 components; owner reviews still pending. |
+| `python scripts/check_naming.py` | Pass after merge: 745 records. |
+| Contacts builder `--check` and model | Pass after source-contract inspection; issued HTML unchanged; 103/103 groups. |
+| Lint, typecheck, foundation | Earlier runs passed before final polish; merged-branch runs in progress. The rejected icon is explicitly fixed, not recorded as a passing CI run. |
+| Focused reference/development unit tests | Earlier focused run 9/9 passed. Full unit attempts did not complete under Windows memory pressure; two document-store failures reproduced on pristine main `8f5ad31b`. |
+| Sites database assertions | Three passed diagnostically against the full schema/seed set, with the reset hook omitted. The normal reset/seed suite has not yet passed locally; this is not a full database-suite pass. |
+| Sites browser tests | Two fixture journeys previously passed at 1440/1024/390/320 and drawn states. Added focus test exposed the autofocus issue now fixed; merged-branch rerun pending. |
+| `npm run build` | Earlier compilation/type stage completed, but build was stopped under Windows memory pressure before completion. No build pass claimed. |
+
+CI rerun and final browser evidence are pending. Owner visual/device review, deployment and business acceptance remain pending and separate.

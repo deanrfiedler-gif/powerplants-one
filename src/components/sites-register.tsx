@@ -4,7 +4,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useCrmResource, denied } from "./crm-state";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
-import { usePhoneHeader } from "../shell/phone-header";
 import { ProductIcon } from "./product-icons";
 import { Button } from "./ui/button";
 import {
@@ -154,36 +153,6 @@ function Register({ query }: { query: URLSearchParams }) {
   }
   const href = (id: string) =>
     `/sites/${id}?${new URLSearchParams({ from: query.toString(), ...(query.has("department") ? { department: query.get("department")! } : {}) })}`;
-  // Register alongside the frame only once its phone mode is known, so the page's
-  // full header configuration follows the frame's Choose view configuration.
-  usePhoneHeader(
-    menu.phone
-      ? {
-          title: siteViews[view],
-          count: data?.total,
-          chooseView: {
-            open: menu.toggle,
-            expanded: menu.open,
-            controls: "sites-menu",
-          },
-          pageAction: {
-            label: "Search sites",
-            icon: "search",
-            search: true,
-            onSelect: () => setFilterOpen(true),
-          },
-          filter: {
-            open: () => setFilterOpen(true),
-            applied: !!(
-              query.get("q") ||
-              query.get("customer_id") ||
-              query.get("readiness")
-            ),
-            searchAndFilter: () => setFilterOpen(true),
-          },
-        }
-      : null,
-  );
   function cell(row: SiteRow, key: string) {
     if (key === "name")
       return (
@@ -246,7 +215,6 @@ function Register({ query }: { query: URLSearchParams }) {
         }}
       >
         <input
-          autoFocus
           id="sites-search"
           type="search"
           value={search}
@@ -298,6 +266,19 @@ function Register({ query }: { query: URLSearchParams }) {
       menuId="sites-menu"
       contentId="sites-content"
       state={menu}
+      phoneHeader={{
+        title: siteViews[view],
+        count: data?.total,
+        pageAction: {
+          label: "Search sites", icon: "search", search: true,
+          onSelect: () => setFilterOpen(true),
+        },
+        filter: {
+          open: () => setFilterOpen(true),
+          applied: !!(query.get("q") || query.get("customer_id") || query.get("readiness")),
+          searchAndFilter: () => setFilterOpen(true),
+        },
+      }}
       message={
         data ? `${data.total} permitted sites` : "Current results unconfirmed"
       }

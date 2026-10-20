@@ -114,6 +114,8 @@ test("CS04 accepted compositions at desktop, tablet and 390/320 with exact hando
         const searchButton = page.getByRole("button", { name: "Search sites", exact: true });
         await searchButton.click();
         const filters = page.getByRole("dialog", { name: "Search and filter sites" });
+        await expect(filters.getByRole("button", { name: "Close Search and filter sites" })).toBeFocused();
+        await page.keyboard.press("Tab");
         await expect(filters.getByLabel("Search sites", { exact: true })).toBeFocused();
         await capture(page, info, "filters-390");
         await filters.press("Escape");
