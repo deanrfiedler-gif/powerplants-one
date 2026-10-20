@@ -1,4 +1,4 @@
-import { ContextList } from "../../../components/context-screens";
+import { PeopleRegister } from "../../../components/people-register";
 export default function Page() {
-  return <ContextList section="people" />;
+  return <PeopleRegister />;
 }

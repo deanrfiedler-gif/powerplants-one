@@ -1,4 +1,5 @@
 import { canonical } from "../platform/operations";
+import { parseCreationReview } from "./discovery-creation-review";
 import {
   common,
   commonKeys,
@@ -48,13 +49,14 @@ function extendedConfirmations(value: unknown): ConfigurationConfirmation[] {
   if (new Set(result.map(r => r.fact_id)).size !== result.length) invalid("configuration_confirmations", "Confirm each entity once.");
   return result;
 }
-const createKeys = ["opportunity_id", "discovery"];
+const createKeys = ["opportunity_id", "discovery", "creation"];
 export function discoveryCreateProposal(value: unknown) {
   bounded(value);
   const r = object(value, createKeys);
   return {
     opportunity_id: uuid(r.opportunity_id, "opportunity_id"),
     discovery: compileDiscovery(r.discovery).input,
+    ...(Object.hasOwn(r, "creation") ? { creation: parseCreationReview(r.creation) } : {}),
   };
 }
 export function createWorkspaceInput(value: unknown) {
@@ -76,6 +78,7 @@ export function createWorkspaceInput(value: unknown) {
     ...discoveryCreateProposal({
       opportunity_id: r.opportunity_id,
       discovery: r.discovery,
+      ...(Object.hasOwn(r, "creation") ? { creation: r.creation } : {}),
     }),
     id: uuid(r.id, "id"),
     option_id: uuid(r.option_id, "option_id"),
