@@ -1,0 +1,41 @@
+# SV-07 Service findings read contract
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Date: 20 October 2026. Status: bounded synthetic backend contract; application design and owner acceptance separate. [Decision](../decisions/service-findings-backend.md), [accepted design](../decisions/findings-figma-design.md).
+
+## Reads and identity
+
+`GET /api/v1/service/findings` returns the permitted findings register. `GET /api/v1/service/findings/{source}:{source_id}` returns one exact source observation. Both use current server identity and private/no-store responses. There is no command endpoint, new finding record, migration, seed or grant.
+
+| Source key | Identity and owning record | Closure/disposition |
+|---|---|---|
+| `inspection` | Existing Service inspection defect UUID; exact defect version, appointment, equipment and native inspection link. Required Fail/NotTested/UnableToAssess results already create these defects | Only native defect Closed is Closed. CorrectionRecorded is WaitingReview. Activity completion alone is FollowUpCompleted |
+| `incident` | Corrective action UUID; incident UUID/version, appointment and currently bound equipment | Only incident Closed is Closed. Accepted action evidence is WaitingReview. Completing an Activity leaves the incident open |
+| `completion` | Immutable submitted report revision UUID; exact report reference/revision and Partial/UnableToProceed source | A successor report revision is Superseded. A current incomplete observation remains open after its Activity completes; no generic source closure exists |
+| `response` | Immutable non-Accepted customer response UUID and parent report | Only an explicit correction makes this observation Superseded. A follow-up does not change the response. AcceptedWithReservations, Declined and Unavailable retain their native words |
+| `schedule` | Native scheduling follow-up Activity UUID; appointment reference and retained schedule version | Completed Activity is Closed for this follow-up only. It does not move a booking or establish acknowledgement. Cancellation requires disposition |
+
+An identifier combines the source key and existing UUID. Defect display references are qualified by appointment because `DEF-001` is only unique within its host. No new business number is allocated. Superseded observations are separate from resolved/Closed sources; their original Activities and immutable evidence survive.
+
+## Authority and privacy
+
+Every read requires current shared, work-order and scheduling read permissions. Each row then uses the source's existing authority: Service review or assigned field inspection access, incident access, report context, or appointment access, plus current access to its Activity and equipment. Native work-order visibility retains all historical-asset restrictions. A source link never grants access to an Activity outside the same company/site. Working-company scope is applied by the existing permission helpers.
+
+Payloads are allowlisted. There are no signature bytes/hashes, private incident facts, evidence-storage metadata, source bindings, contact details or provider data. An inaccessible source contributes no title, identifier, count, search match or continuation. A missing Activity can be an explicit source-owned unknown; an existing inaccessible Activity suppresses the row. Set-based source, Activity, field-assignment and historical-asset authority predicates run before pagination. Every returned/count-contributing source and continuation source is checked again through the native reader. Reads serialize with native writes at the existing workspace boundary; detailed hydration is bounded to 50 candidates and one continuation check. Clock-based permissions are rechecked as well.
+
+## Queries and counts
+
+Filters: `q` (up to 200 printable characters), `source`, `company_id`, `site_id`, `owner_id`. Search covers permitted source references, remaining-work text, site/equipment labels and next-action summary/owner. Unknown keys and invalid identifiers are refused.
+
+Views: `open` (default), `all`, `needs_owner`, `overdue`, `waiting_review`, `follow_up_completed`, `closed`, `superseded`. Open excludes Closed and Superseded. NeedsOwner includes a missing or cancelled Activity: it calls for assignment/disposition and does not assert the prior owner's identity was deleted. WaitingReview is sourced from recorded correction or accepted incident-action evidence; it is not a computed assertion that every closure prerequisite passes.
+
+`count_scope` is `AuthorisedCandidateWindow`, following the existing Work Orders register convention. Search/source/company/site/owner filters and authority run in SQL before taking `limit + 1` candidates. Only the first `limit` are hydrated; the selected view then filters that window. `counts` covers that window before the view; `total` is the number of returned rows in the selected view, not a whole-register total. `offset` is 0–1,000,000; `limit` is 1–50, default 25. Ordering is newest source/Activity update first, then the stable source-qualified ID. A permitted continuation yields `next_offset = offset + limit`; follow it even when the selected view has no rows in the current window. An expired grant or failed native authority check removes that row and marks `completeness: Partial`; `Complete` means the candidate window was fully checked, not that all history was returned. Each response carries its database `as_of` and synthetic provenance. Page requests are fresh reads; concurrent business changes may change pagination. Consumers must not present these window counts as whole-register dashboard totals.
+
+Due times remain the native Activity deadline instants, accompanied by `due_date_only` and site timezone. Overdue means an active Activity's deadline has passed, strictly; completed/cancelled Activities and Closed/Superseded observations are never labelled overdue. No deadline, ownership, acceptance or customer-contact result is inferred from the source's title.
+
+## Verification and limits
+
+Prove all five sources using native commands, count/search/detail isolation, working-company scope, field assignment and revoked source/Activity permissions, immutable original content, completion-versus-closure, correction/supersession, deterministic paging and absence of business writes. The [execution ledger](../testing/evidence/service-findings/README.md) records actual results and limits.
+
+This increment supplies no native page, write, recurrence match, escalation case, automatic message or operational integration. Existing source routes receive the handover. Source-specific closure gaps remain visible rather than being filled by a new workflow in this projection.

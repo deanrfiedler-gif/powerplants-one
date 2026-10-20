@@ -1,5 +1,9 @@
 # Backend implementation reconciliation
 
+## BC-06 continuation — 20 October 2026
+
+Main `d512bd38` includes PJ-06 R1/R2/R3 and the Documents corrections described by the historical checkpoints below. The next bounded contribution is [SV-07 findings reads, PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623), governed by its [source/authority contract](../contracts/service-findings.md) and [execution evidence](../testing/evidence/service-findings/README.md). This supplies the five-source register/detail API dependency; source-owned commands, recurrence, escalation receiving and UI remain separate. The broader BC-06 gaps remain open. Another agent owns Conversations T2b; this contribution changes none of its source, migration, seed or permission files.
+
 ## Integrated source follow-up — 15 October 2026
 
 After the initial inspection, #498 merged externally at main `d070a61ff17e04ffa0f0d37c16052c24a0bb0e26`. Code Review diagnostics verified its final head `e3ec866758a8b88b5bcc26fc9cc7a0a1cddfd20d` with 59 successful checks and only the intentional PT-27 skip; independent review was clean and the existing monitor completed. Both Documents contributions integrate this main, including migration 0102 and its historical-upgrade obligations. Earlier open/monitor checkpoints below are retained history. There was no merge or deployment by the continuing backend task. Operational package owners/rates/workloads remain unapproved.

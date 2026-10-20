@@ -1,0 +1,25 @@
+# Service findings source projection
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Date: 20 October 2026. Status: implementation decision under Dean's BC-06 instruction; verification, independent review and owner acceptance are separate.
+
+Dean authorised the BC-06 Projects, Service and Supply backend continuation while another agent owns Conversations T2b. Main `d512bd38` already contains PJ-06 R1/R2/R3, the Documents corrections and the newer accepted Service designs. This increment supplies the missing SV-07 read dependency in the [accepted Findings design](findings-figma-design.md), under the [backend completion plan](../delivery/backend-completion-plan.md). Traceability remains with SVC-06/SVC-10, AT-14/AT-20/AT-36 and the existing SV-07 key; it introduces no parent requirement.
+
+Reuse the existing TypeScript/PostgreSQL services, native authority checks and read-route boundary. A separate findings store was rejected: it would duplicate source state and permit contradictory closure. A new permission or migration is unnecessary for a read that remains subject to every existing source permission. There is no new technology choice or external adapter.
+
+The [contract](../contracts/service-findings.md) defines source-qualified identifiers, exact source versions, owned Activity handovers, query semantics and the explicit limits below. The register exposes required failed/not-tested inspection defects, incident corrective actions, submitted incomplete report revisions, non-accepted customer responses and scheduling follow-up Activities. It does not expose private unsubmitted completion drafts or manufacture a finding number.
+
+Independent review rejected scanning and hydrating the whole historical register while holding the native workspace lock. R1 instead follows the existing Work Orders API's bounded authorised candidate-window convention: set-based source visibility and filters before pagination; at most 50 hydrated rows, plus a separately authorised continuation. Counts describe this window, not global dashboard totals. A future whole-register summary needs a separately proved set-based aggregation contract; it must not restore an unbounded sequence of native reads. This API limitation is explicit and does not silently change the accepted design's intended dashboard presentation.
+
+## Closure and incomplete source contracts
+
+The accepted design's examples are not executable authority where the native source has no corresponding transition. Inspection closure comes only from the native accepted retest; incident closure comes only from its independent source decision. Scheduling follows its native Activity outcome. Completing an Activity is shown separately from closing a defect, incident, incomplete report or customer reservation. Cancelled Activities remain visible as requiring disposition.
+
+Report revisions and customer responses are immutable observations. A successor supersedes the earlier observation without deleting it or completing its Activity. The current services contain no generic `close finding` command for report remaining work or customer reservations. Those rows therefore remain open after follow-up completion and explicitly identify Service disposition or response correction as the owning workflow. This increment does not invent a rule that a reissued report, a later visit or an unrelated Accepted response clears them.
+
+## Scope and continuation
+
+This is the R1 read dependency, not all SV-07 or BC-06. D5 source-bound next-action assignment/editing, D6 equipment/check recurrence, D7 SV-08 receiving, page implementation and owner/device review remain open. Existing Activities are linked, not changed here. The proposed "Ready to close" label is not exposed as a decision claim; the API distinguishes `WaitingReview` and `FollowUpCompleted`. Closed history has no invented 30-day retention rule. The API carries site timezone alongside the Activity's retained deadline instant; it does not rewrite existing due dates.
+
+PJ-06 competence/downstream disposition, PJ-07's controlling design-source discrepancy, PJ-08 update records, Warranty-to-Supply receiving and capacity/reservation rules remain BC-06 work. PJ-08's newer accepted design is preserved. None of these depends on duplicating T2b. Execution and exact failures belong in [evidence](../testing/evidence/service-findings/README.md).
