@@ -43,6 +43,7 @@ import {
   schedulingPolicyHoldFixture,
   areaFixture,
   customerRecordTabsFixture,
+  serviceRequestTabsFixture,
   salesEvidenceFixture,
   salesRecordTabsFixture,
   equipmentDateFixture,
@@ -685,8 +686,8 @@ function NavigationExample({
   menu?: boolean;
   state?: string;
 }) {
-  const [value, setValue] = useState("overview");
-  const options = state === "cs-customer" ? customerRecordTabsFixture : state === "sales-workspace" ? salesRecordTabsFixture : [
+  const [value, setValue] = useState(state === "sv-triage-edit" ? "triage" : "overview");
+  const options = state === "sv-triage-edit" ? serviceRequestTabsFixture : state === "cs-customer" ? customerRecordTabsFixture : state === "sales-workspace" ? salesRecordTabsFixture : [
     { id: "overview", label: "Overview" },
     { id: "details", label: "Details" },
     { id: "history", label: "History" },
@@ -706,6 +707,7 @@ function NavigationExample({
       <RecordTabs
         id="catalogue-tabs"
         label="Example record"
+        disabled={state === "sv-triage-edit"}
         tabs={options}
         value={value}
         onChange={setValue}
@@ -714,8 +716,7 @@ function NavigationExample({
         <RecordPanel key={o.id} id="catalogue-tabs" tab={o.id} value={value}>
           <h2>{o.label}</h2>
           <p>
-            Synthetic {o.label.toLowerCase()} panel. Use Left/Right, Home and
-            End to move between tabs.
+            {state === "sv-triage-edit" ? "Synthetic triage edit: save or cancel before changing views." : `Synthetic ${o.label.toLowerCase()} panel. Use Left/Right, Home and End to move between tabs.`}
           </p>
         </RecordPanel>
       ))}

@@ -928,3 +928,5 @@
     grid-template-columns: 42% minmax(0, 1fr);
   }
 }
+
+.sv-triage-panel { display:flex;flex:1;min-height:0; }

@@ -6,12 +6,12 @@ import { localDateTime, utcFromLocal } from "../scheduling/time";
 import { usePendingWork } from "./pending-work";
 import { guardBrowserNavigation } from "./navigation-intent";
 
-export function RecordTabs({ id, label, tabs, value, onChange }: {
+export function RecordTabs({ id, label, tabs, value, onChange, disabled = false }: {
   id: string; label: string; tabs: { id: string; label: React.ReactNode }[];
-  value: string; onChange: (value: string) => void;
+  value: string; onChange: (value: string) => void; disabled?: boolean;
 }) {
   return <div className="record-tablist" role="tablist" aria-label={label}>
-    {tabs.map((tab, index) => <button key={tab.id} type="button" role="tab"
+    {tabs.map((tab, index) => <button key={tab.id} type="button" role="tab" disabled={disabled}
       id={`${id}-tab-${tab.id}`} aria-controls={`${id}-panel-${tab.id}`}
       aria-selected={value === tab.id} tabIndex={value === tab.id ? 0 : -1}
       onClick={() => onChange(tab.id)} onKeyDown={event => {

@@ -1,7 +1,5 @@
 "use client";
-// SV-01 service requests register (build plan I2; frames 1–3, 6, 14, 16, 19, 20 and 23 for the three native
-// states). A full-bleed module workspace: the shell supplies the rail, header and breadcrumb, and this module
-// draws no masthead. The server read decides every state, blocker and permitted action.
+// Service requests — accepted, SV-01/SV-02. Shared shell and current server authority.
 import Link from "next/link";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../../../shell/secondary-menu";
 import { TicketRecord, ServiceDialog } from "./ticket-record";

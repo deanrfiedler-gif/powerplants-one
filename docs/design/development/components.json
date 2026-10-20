@@ -523,6 +523,14 @@
           "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -811,6 +819,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1864,6 +1880,14 @@
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2335,6 +2359,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "sv-triage-edit",
+          "label": "Service triage editing",
+          "description": "Disabled RecordTabs retain their visible labels while the triage panel owns an unsaved edit. Synthetic catalogue fixture; owner review pending."
         }
       ],
       "implementation": [
@@ -2475,6 +2504,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3227,6 +3264,14 @@
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -3580,6 +3625,14 @@
           "expected": "Confirmed post-save routing and readable/reachable phone controls with unchanged pending recovery.",
           "actual": "Repair host fixtures and checks are recorded separately; owner/device acceptance remains pending.",
           "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "mobile-form-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4193,6 +4246,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

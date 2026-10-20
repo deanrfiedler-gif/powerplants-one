@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePublishRecordIdentity } from "../../../shell/record-identity";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { Button, ButtonLink } from "../../../components/ui/button";
 import {
   EnumField,
@@ -180,6 +180,15 @@ function TriageForm({
   onCancel: () => void;
   onInformation: () => void;
 }) {
+  const phone = useSyncExternalStore(
+    (listener) => {
+      const m = window.matchMedia("(max-width: 780px)");
+      m.addEventListener("change", listener);
+      return () => m.removeEventListener("change", listener);
+    },
+    () => window.matchMedia("(max-width: 780px)").matches,
+    () => false,
+  );
   const [basis, setBasis] = useState(t);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -215,7 +224,8 @@ function TriageForm({
   const set = (key: keyof typeof v, value: string) => setV((old) => ({ ...old, [key]: value }));
   const cancel = () => {
     if (cmd.busy || (cmd.error as Failure | null)?.retryable) return;
-    dirty ? setDiscard(true) : onCancel();
+    if (dirty) setDiscard(true);
+    else onCancel();
   };
   const field = (key: keyof typeof v, title: string, hint?: string) => (
     <Field
@@ -269,6 +279,32 @@ function TriageForm({
   return (
     <form
       className="sv-triage-form"
+      role={phone ? "dialog" : undefined}
+      aria-modal={phone || undefined}
+      aria-label={phone ? "Complete triage" : undefined}
+      onKeyDown={(event) => {
+        if (!phone) return;
+        if (event.key === "Escape") {
+          event.preventDefault();
+          cancel();
+        }
+        if (event.key === "Tab") {
+          const controls = Array.from(
+            event.currentTarget.querySelectorAll<HTMLElement>(
+              'button:not(:disabled),[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]',
+            ),
+          ).filter((el) => el.getClientRects().length > 0);
+          const first = controls[0],
+            last = controls.at(-1);
+          if (event.shiftKey && (document.activeElement === first || document.activeElement === heading.current)) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }
+      }}
       data-save-uncertain={!!(cmd.error as Failure | null)?.retryable || undefined}
       onSubmit={submit}
       noValidate
@@ -333,7 +369,7 @@ function TriageForm({
               )}
             </section>
           )}
-          <fieldset disabled={cmd.busy}>
+          <fieldset disabled={cmd.busy || !!(cmd.error as Failure | null)?.retryable}>
             <section className="sv-form-section">
               <h3>Response decision</h3>
               {basis.status === "NeedsInformation" &&
@@ -394,7 +430,12 @@ function TriageForm({
         >
           Request information
         </Button>
-        <Button type="submit" variant="primary" busy={cmd.busy} disabled={!!conflict || reviewing}>
+        <Button
+          type="submit"
+          variant="primary"
+          busy={cmd.busy}
+          disabled={!!conflict || reviewing || owners.loading || !!owners.error}
+        >
           Complete triage
         </Button>
       </footer>
@@ -486,7 +527,7 @@ function StatementForm({ t, onSaved, onCancel }: { t: Intake; onSaved: () => voi
               )}
             </div>
           )}
-          <fieldset disabled={cmd.busy}>
+          <fieldset disabled={cmd.busy || uncertain}>
             <Field
               name="body"
               label="Customer statement"
@@ -686,7 +727,7 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
   ];
   const actions = (
     <>
-      <Button onClick={() => setMode("details")} disabled={!t.can_edit_intake}>
+      <Button onClick={() => setMode("details")} disabled={!t.can_edit_intake || mode === "triage"}>
         Update details
       </Button>
       {t.status === "Triaged" && t.work_orders[0] ? (
@@ -694,7 +735,7 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
           Open work order
         </ButtonLink>
       ) : (
-        <Button variant="primary" onClick={() => setMode("triage")} disabled={!t.can_edit_intake}>
+        <Button variant="primary" onClick={() => setMode("triage")} disabled={!t.can_edit_intake || mode === "triage"}>
           Complete triage
         </Button>
       )}
@@ -725,10 +766,10 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
             {actions}
             <details>
               <summary aria-label="More request actions">…</summary>
-              <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement}>
+              <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement || mode === "triage"}>
                 Record customer statement
               </Button>
-              <Button onClick={() => setMode("information")} disabled={!t.can_edit}>
+              <Button onClick={() => setMode("information")} disabled={!t.can_edit || mode === "triage"}>
                 Request information
               </Button>
             </details>
@@ -760,7 +801,8 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
           <RecordTabs
             id="sv-record"
             label="Request views"
-            value={tab}
+            disabled={mode === "triage"}
+            value={mode === "triage" ? "triage" : tab}
             onChange={setTab}
             tabs={[
               { id: "details", label: "Details" },
@@ -772,12 +814,19 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
             ]}
           />
           {mode === "triage" ? (
-            <TriageForm
-              t={t}
-              onSaved={saved}
-              onCancel={() => setMode(null)}
-              onInformation={() => setMode("information")}
-            />
+            <div
+              className="sv-triage-panel"
+              role="tabpanel"
+              id="sv-record-panel-triage"
+              aria-labelledby="sv-record-tab-triage"
+            >
+              <TriageForm
+                t={t}
+                onSaved={saved}
+                onCancel={() => setMode(null)}
+                onInformation={() => setMode("information")}
+              />
+            </div>
           ) : (
             <div className="sv-record-scroll">
               <RecordPanel id="sv-record" tab="details" value={tab}>
@@ -818,7 +867,11 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                         <strong>Open question</strong>
                         <small>{t.open_questions}</small>
                       </div>
-                      <Button variant="quiet" disabled={!t.can_edit_intake} onClick={() => setMode("triage")}>
+                      <Button
+                        variant="quiet"
+                        disabled={!t.can_edit_intake || mode === "triage"}
+                        onClick={() => setMode("triage")}
+                      >
                         Answer
                       </Button>
                     </div>
@@ -866,7 +919,7 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                 <p className="sv-narrative">{t.symptom}</p>
                 <h3>Impact and backup</h3>
                 <p className="sv-narrative">{t.impact ?? "Not recorded"}</p>
-                <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement}>
+                <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement || mode === "triage"}>
                   Record customer statement
                 </Button>
               </RecordPanel>
@@ -876,18 +929,11 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                   <LinkedWork key={w.id} order={w} active={tab === "linked"} />
                 ))}
                 {!t.work_orders.length && <p>No visible work order linked.</p>}
-                {t.site_id && (
-                  <ButtonLink
-                    href={`/service/work-orders/new?${new URLSearchParams({ company_id: t.company_id, site_id: t.site_id, ticket_id: t.id })}`}
-                  >
-                    Create work order
-                  </ButtonLink>
-                )}
                 <p className="sv-note">A linked work order has its own readiness and authorisation checks.</p>
               </RecordPanel>
               <RecordPanel id="sv-record" tab="updates" value={tab}>
                 <h2>Customer statements</h2>
-                <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement}>
+                <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement || mode === "triage"}>
                   Record customer statement
                 </Button>
                 <ReadState loading={statements.loading} error={statements.error} retry={statements.reload} />
@@ -931,16 +977,18 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
         <footer className="sv-phone-actions">
           <Button
             aria-label="Record customer statement"
-            disabled={!t.can_record_statement}
+            disabled={!t.can_record_statement || mode === "triage"}
             onClick={() => setMode("statement")}
           >
             …
           </Button>
-          {t.can_edit_intake ? (
+          {t.can_edit_intake || (t.status === "Triaged" && t.work_orders.length > 0) ? (
             actions
           ) : (
             <small>
-              View only. Triage needs service request edit permission; ask the request owner, {t.owner_name}.
+              {t.status === "Triaged"
+                ? "Triage complete. No visible work order linked."
+                : `View only. Triage needs service request edit permission; ask the request owner, ${t.owner_name}.`}
             </small>
           )}
         </footer>

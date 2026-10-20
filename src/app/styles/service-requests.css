@@ -1,6 +1,4 @@
-/* SV-01 service requests register (build plan I2). Native adaptation of the proposed refinement frames 1–3, 6,
-   14, 16, 19, 20 and 23; theme r22 tokens. The shell owns navigation, identity and viewport height; this module
-   owns its toolbar, spacing and one scroll surface. */
+/* Service requests — accepted. Scoped register controls use shared theme tokens; the shell owns navigation and viewport height. */
 #ppo-service-requests {
   --sr-surface: var(--surface-hover);
   --sr-lane: var(--surface-2);

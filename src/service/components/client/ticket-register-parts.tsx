@@ -224,8 +224,7 @@ function Card({
   );
 }
 
-// Lanes for the three states the application moves a request through today (frame 14, D3). An empty lane
-// collapses to a narrow strip, stays a drop target and expands while a permitted card is dragged over it (D2).
+// Retain the existing three native lanes and permission-checked Move command.
 export function Board({
   items,
   now,
