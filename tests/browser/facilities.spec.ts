@@ -57,7 +57,7 @@ test("CS05 Equipment add and end keep one installation and show accepted version
     await (await page.request.get(`${baseURL}/api/v1/assets/${pump}`)).json()
   ).items[0];
   await page.goto(`/facilities/${id}`);
-  await page.getByRole("tab", { name: "Equipment", exact: true }).click();
+  await page.getByRole("tab", { name: /^Equipment(?: \d+)?$/ }).click();
   await page
     .locator("summary")
     .filter({ hasText: "Manage service links" })
@@ -117,6 +117,8 @@ test("CS05 Equipment add and end keep one installation and show accepted version
   await page.screenshot({
     path: info.outputPath("service-ended.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
 });
 test("CS05 register, exact hierarchy, create, controlled clearing, reload and history", async ({
@@ -174,7 +176,7 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   await page.reload();
   await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
   if ((page.viewportSize()?.width ?? 1440) <= 780)
-    await page.getByRole("tab", { name: "Sources", exact: true }).click();
+    await page.getByRole("tab", { name: /^Sources(?: \d+)?$/ }).click();
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
   await page
     .getByRole("button", { name: "Copy full record ID", exact: true })
@@ -184,6 +186,8 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   await page.screenshot({
     path: info.outputPath("canonical-detail.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
   await page
     .getByRole("link", { name: "Correct details", exact: true })
@@ -220,6 +224,8 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   await page.screenshot({
     path: info.outputPath("clearing-review.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
   if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
     await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
@@ -232,7 +238,7 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   await page
     .getByRole("link", { name: "Open saved facility", exact: true })
     .click();
-  await page.getByRole("tab", { name: "History", exact: true }).click();
+  await page.getByRole("tab", { name: /^History(?: \d+)?$/ }).click();
   await expect(
     page.getByText("SYN changed recorded structure", { exact: true }),
   ).toBeVisible();
@@ -285,6 +291,8 @@ test("CS05 lost response freezes original, absent lookup replays exactly once, a
   await page.screenshot({
     path: info.outputPath("uncertain-original.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
   await page.route("**/api/v1/operations/*", (route) =>
     route.fulfill({
@@ -361,10 +369,12 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
   await page.screenshot({
     path: info.outputPath("version-conflict.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("link", { name: "Cancel", exact: true }).click();
-  await page.getByRole("tab", { name: "Sources", exact: true }).click();
+  await page.getByRole("tab", { name: /^Sources(?: \d+)?$/ }).click();
   await page
     .getByRole("button", { name: "Record location pin", exact: true })
     .click();
@@ -380,6 +390,8 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
   await page.screenshot({
     path: info.outputPath("pin-review.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
   if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
     await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
@@ -390,13 +402,15 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
     page.getByText("0, 0 · Proposed", { exact: true }),
   ).toBeVisible();
   await page.goto("/facilities/c5050002-0000-4000-8000-000000000001");
-  await page.getByRole("tab", { name: "Equipment", exact: true }).click();
+  await page.getByRole("tab", { name: /^Equipment(?: \d+)?$/ }).click();
   await expect(
     page.getByRole("link", { name: /SYN Willowbank irrigation pump/ }),
   ).toBeVisible();
   await page.screenshot({
     path: info.outputPath("related-equipment.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
   await login(page, baseURL!, "site-observer");
   await page.reload();
@@ -552,6 +566,8 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
   await page.screenshot({
     path: info.outputPath("reload-memory-boundary.png"),
     fullPage: true,
+    style:
+      "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
 });
 

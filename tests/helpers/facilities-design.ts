@@ -45,6 +45,7 @@ export const facility: Facility = {
     },
   ],
   can_edit: true,
+  counts: { equipment: 3, sources: 1, history: 1 },
   updated_at: "2026-10-11T22:40:00.000Z",
   updated_by: "SYN Sasha Cole",
   updated_by_name: "Sasha Cole",
@@ -118,16 +119,16 @@ export function designRows(): RegisterRow[] {
     structure_type:
       i === 5
         ? "unknown"
-        : i === 3 || i === 4 || i >= 19
+        : i === 3 || i === 4 || i >= 20
           ? "non_growing_facility"
           : "greenhouse",
     use:
       i === 5
         ? "unknown"
-        : i === 3 || i === 4 || i >= 19
+        : i === 3 || i === 4 || i >= 20
           ? "non_growing"
           : "production",
-    crop: i === 3 || i === 4 || i >= 19 ? null : "Tomatoes",
+    crop: i === 3 || i === 4 || i >= 20 ? null : "Tomatoes",
     footprint_m2: [5, 9, 10, 11].includes(i) ? null : i === 2 ? "1152" : "2400",
     measurement_basis: "approximate",
     on_site_position: null,
@@ -317,6 +318,18 @@ export async function mockFacilities(
     return route.fallback();
   });
   await page.route(`**/api/v1/sites/${siteId}`, (route) =>
+    route.fulfill({
+      json: envelope([
+        {
+          id: siteId,
+          company_id: companyId,
+          display_name: "SYN Glasshouse 4",
+          timezone: "Australia/Brisbane",
+        },
+      ]),
+    }),
+  );
+  await page.route("**/api/v1/sites?*", (route) =>
     route.fulfill({
       json: envelope([
         {

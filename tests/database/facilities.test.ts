@@ -885,6 +885,10 @@ test("CS05 accepted register views count permitted records independently of filt
   });
   assert.deepEqual(filtered.view_counts, all.view_counts);
   assert.equal(filtered.total, 1);
+  const workspaceRead = await facilityWorkspace(p, normal.id);
+  assert.equal(workspaceRead.counts?.equipment, 0);
+  assert.equal(workspaceRead.counts?.sources, 0);
+  assert.equal(workspaceRead.counts?.history, 1);
   assert.equal(typeof filtered.items[0].updated_by_name, "string");
   assert.equal(filtered.items[0].installed_equipment_count, 0);
   assert.ok(filtered.items[0].timezone);

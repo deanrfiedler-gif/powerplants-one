@@ -338,6 +338,7 @@ export type Facility = {
   updated_at: string;
   updated_by: string;
   updated_by_name?: string;
+  counts?: { equipment: number; sources: number; history: number };
   can_edit: boolean;
 };
 export type ChangeRow = {

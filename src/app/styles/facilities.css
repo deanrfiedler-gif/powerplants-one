@@ -1368,3 +1368,68 @@
   font-size: 12px;
   color: var(--text-secondary);
 }
+
+.facility-record-scroll .record-panel > .facility-banner:first-child {
+  margin-top: 0;
+  padding-block: 10px;
+}
+.facility-equipment-view > .facility-banner {
+  font-size: 12px;
+  line-height: 16px;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+.facility-equipment-view > .facility-table-scroll {
+  border: 1px solid var(--facility-line);
+  border-radius: 7px;
+}
+.facility-equipment-table :is(td, th) {
+  vertical-align: middle;
+}
+
+.facility-tab-count {
+  background: var(--ppo-shell-selected);
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 1px 5px;
+  margin-left: 4px;
+}
+
+#ppo-facilities .facility-phone-add {
+  display: none;
+}
+#ppo-facilities .facility-row-open {
+  justify-content: flex-start;
+  text-align: left;
+  font-weight: 500;
+}
+#ppo-facilities .facility-desktop-grid :is(th, td):last-child {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: var(--white);
+  border-left: 1px solid var(--facility-line);
+}
+.facility-workspace .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.facility-workspace .field label,
+.facility-workspace .field small {
+  margin: 0;
+}
+.facility-workspace .field :is(input, select, textarea) {
+  margin: 0;
+  font-weight: 400;
+}
+.facility-workspace .field :is(input, select) {
+  height: 40px;
+  min-height: 40px;
+}
+@media (max-width: 780px) {
+  #ppo-facilities .facility-phone-add {
+    display: flex;
+  }
+}

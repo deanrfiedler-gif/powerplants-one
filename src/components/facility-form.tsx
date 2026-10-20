@@ -345,31 +345,6 @@ function FacilityForm({
               </button>
             </section>
           )}
-          {!baseline && !siteId && (
-            <fieldset disabled={blocked}>
-              <SitePicker
-                value={site}
-                onChange={(id) => {
-                  if (
-                    command.hasUnsavedChanges &&
-                    !window.confirm(
-                      "Changing Site clears the entered location and details. Continue?",
-                    )
-                  )
-                    return;
-                  setSite(id);
-                  setDraft(editableDetails());
-                  setPreview(null);
-                  command.dirty();
-                }}
-              />
-              <ReadState
-                loading={siteRead.loading}
-                error={siteRead.error}
-                retry={siteRead.reload}
-              />
-            </fieldset>
-          )}
           {siteRead.data && (
             <p className="facility-meta">
               {siteRead.data.items[0].display_name} · Dates use{" "}
@@ -398,6 +373,7 @@ function FacilityForm({
               ? [
                   "Measurements",
                   "Growing context",
+                  "Other growing context",
                   "Identity & location",
                   "Structure",
                   "Source & notes",
@@ -418,11 +394,47 @@ function FacilityForm({
                   !["Measurements", "Growing context"].includes(group)
                 }
               >
+                {group === "Identity & location" && (
+                  <>
+                    {" "}
+                    {!baseline && !siteId && (
+                      <fieldset disabled={blocked}>
+                        <SitePicker
+                          value={site}
+                          onChange={(id) => {
+                            if (
+                              command.hasUnsavedChanges &&
+                              !window.confirm(
+                                "Changing Site clears the entered location and details. Continue?",
+                              )
+                            )
+                              return;
+                            setSite(id);
+                            setDraft(editableDetails());
+                            setPreview(null);
+                            command.dirty();
+                          }}
+                        />
+                        <ReadState
+                          loading={siteRead.loading}
+                          error={siteRead.error}
+                          retry={siteRead.reload}
+                        />
+                      </fieldset>
+                    )}
+                  </>
+                )}
                 <div className="facility-grid">
                   {Object.entries(fields)
                     .filter(
                       ([k, f]) =>
-                        (f.group === group ||
+                        ((f.group === group &&
+                          (!baseline ||
+                            group !== "Growing context" ||
+                            k === "season_label")) ||
+                          (group === "Other growing context" &&
+                            f.group === "Growing context" &&
+                            k !== "season_label") ||
                           (group === "Structure and use" &&
                             ["Structure", "Growing context"].includes(
                               f.group,
@@ -432,6 +444,28 @@ function FacilityForm({
                               f.group,
                             ))) &&
                         applicable(k, draft),
+                    )
+                    .sort(([a], [b]) =>
+                      group === "Measurements"
+                        ? [
+                            "footprint_m2",
+                            "measurement_basis",
+                            "length_m",
+                            "width_m",
+                            "maximum_height_m",
+                            "measurement_observed_on",
+                            "measurement_source",
+                          ].indexOf(a) -
+                          [
+                            "footprint_m2",
+                            "measurement_basis",
+                            "length_m",
+                            "width_m",
+                            "maximum_height_m",
+                            "measurement_observed_on",
+                            "measurement_source",
+                          ].indexOf(b)
+                        : 0,
                     )
                     .map(([k, f]) => {
                       if (k === "parent_facility_id")
@@ -498,9 +532,7 @@ function FacilityForm({
                           hint={
                             baseline && before[k] !== null && draft[k] === null
                               ? `Not recorded · saved value “${displayValue(baseline.details[k], k)}” will be cleared`
-                              : f.kind === "decimal"
-                                ? "Optional. Record this measurement independently; no area totals are calculated."
-                                : undefined
+                              : undefined
                           }
                           onChange={(v) =>
                             change(
@@ -518,19 +550,34 @@ function FacilityForm({
                       );
                     })}
                 </div>
+                {group === "Measurements and reason" && (
+                  <Field
+                    name="reason"
+                    label={baseline ? "Change reason" : "Reason for recording"}
+                    required
+                    value={reason}
+                    maxLength={1000}
+                    onChange={(v) => {
+                      setReason(v);
+                      command.dirty();
+                    }}
+                  />
+                )}
               </FormGroup>
             ))}
-            <Field
-              name="reason"
-              label={baseline ? "Change reason" : "Reason for recording"}
-              required
-              value={reason}
-              maxLength={1000}
-              onChange={(v) => {
-                setReason(v);
-                command.dirty();
-              }}
-            />
+            {baseline && (
+              <Field
+                name="reason"
+                label={baseline ? "Change reason" : "Reason for recording"}
+                required
+                value={reason}
+                maxLength={1000}
+                onChange={(v) => {
+                  setReason(v);
+                  command.dirty();
+                }}
+              />
+            )}
           </fieldset>
           {preview && (
             <Comparison

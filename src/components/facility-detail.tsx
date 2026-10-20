@@ -10,12 +10,12 @@ import {
   FacilityOverviewCards,
 } from "./facility-record-layout";
 import { Button, ButtonLink } from "./ui/button";
+import { RegisterChip } from "./ui/register-table";
 import { usePhoneHeader } from "../shell/phone-header";
 import {
   api,
   ErrorNotice,
   Field,
-  PageHeader,
   ReadState,
   SelectField,
   Stamp,
@@ -230,9 +230,54 @@ export function FacilityDetail({
         onChange={selectTab}
         tabs={[
           { id: "overview", label: "Overview" },
-          { id: "equipment", label: "Equipment" },
-          { id: "sources", label: "Sources" },
-          { id: "history", label: "History" },
+          {
+            id: "equipment",
+            label: (
+              <>
+                Equipment
+                {f.counts && (
+                  <>
+                    {" "}
+                    <span className="facility-tab-count">
+                      {f.counts.equipment}
+                    </span>
+                  </>
+                )}
+              </>
+            ),
+          },
+          {
+            id: "sources",
+            label: (
+              <>
+                Sources
+                {f.counts && (
+                  <>
+                    {" "}
+                    <span className="facility-tab-count">
+                      {f.counts.sources}
+                    </span>
+                  </>
+                )}
+              </>
+            ),
+          },
+          {
+            id: "history",
+            label: (
+              <>
+                History
+                {f.counts && (
+                  <>
+                    {" "}
+                    <span className="facility-tab-count">
+                      {f.counts.history}
+                    </span>
+                  </>
+                )}
+              </>
+            ),
+          },
         ]}
       />
       <div className="facility-record-scroll">
@@ -686,11 +731,13 @@ function FacilityEquipment({
                           : "No recorded service links"}
                       </td>
                       <td>
-                        {a.installed
-                          ? a.link_id
-                            ? "Installed and serves"
-                            : "Installed only"
-                          : "Serves this area"}
+                        <RegisterChip tone={a.link_id ? "positive" : "neutral"}>
+                          {a.installed
+                            ? a.link_id
+                              ? "Installed and serves"
+                              : "Installed only"
+                            : "Serves this area"}
+                        </RegisterChip>
                       </td>
                     </tr>
                   ))}
@@ -722,7 +769,9 @@ function FacilityEquipment({
                     <td>{a.installed_name ?? "Site only or unavailable"}</td>
                     <td>Ended for this area</td>
                     <td>
-                      <Stamp value={a.ended_at} timezone={f.timezone} />
+                      <RegisterChip tone="neutral">
+                        <Stamp value={a.ended_at} timezone={f.timezone} />
+                      </RegisterChip>
                     </td>
                   </tr>
                 ))}

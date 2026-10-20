@@ -171,6 +171,16 @@ export async function projectFacility(
         [p.workspace_id, row.updated_by],
       )
     ).rows[0]?.display_name,
+    counts: (
+      await c.query<{ equipment: number; sources: number; history: number }>(
+        `SELECT
+        (SELECT count(*)::integer FROM ppo.assets a WHERE a.workspace_id=$1 AND ${visibility("Asset", "a")} AND
+          (a.facility_id=$3 OR EXISTS (SELECT 1 FROM ppo.asset_served_facilities l WHERE l.workspace_id=a.workspace_id AND l.asset_id=a.id AND l.facility_id=$3 AND l.ended_at IS NULL))) AS equipment,
+        (SELECT count(*)::integer FROM ppo.facility_sources WHERE workspace_id=$1 AND facility_id=$3) AS sources,
+        (SELECT count(*)::integer FROM ppo.audit_events WHERE workspace_id=$1 AND object_type='Facility' AND object_id=$3) AS history`,
+        [p.workspace_id, p.actor_id, row.id],
+      )
+    ).rows[0],
     can_edit: await hasPermission(
       c,
       p,

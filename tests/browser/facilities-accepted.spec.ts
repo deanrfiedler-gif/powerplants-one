@@ -61,7 +61,7 @@ async function contained(page: Page) {
 async function review(page: Page) {
   await page.goto(`/facilities/${areaId}/edit`);
   await page.getByLabel("Footprint (m²)", { exact: true }).fill("1188");
-  await page.getByLabel("Season label", { exact: true }).fill("");
+  await page.getByLabel("Season / context label", { exact: true }).fill("");
   await page
     .getByLabel("Change reason", { exact: true })
     .fill("SYN remeasured at grower walkthrough");
@@ -79,6 +79,13 @@ test("CS05 accepted register, snapshot, hierarchy and tablet handovers", async (
   for (const width of [1440, 1024, 390]) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
     await page.goto(`/facilities${width === 390 ? `?site_id=${siteId}` : ""}`);
+    if (width === 1024)
+      await page
+        .getByRole("button", {
+          name: "Collapse primary navigation",
+          exact: true,
+        })
+        .click();
     await expect(
       page.getByRole("heading", { name: "Facilities & growing areas" }),
     ).toBeAttached({ timeout: 30000 });
@@ -105,6 +112,12 @@ test("CS05 accepted register, snapshot, hierarchy and tablet handovers", async (
       await expect(
         snapshot.getByRole("link", { name: "Open facility", exact: true }),
       ).toHaveAttribute("href", `/facilities/${areaId}`);
+      await expect(
+        snapshot.getByRole("link", {
+          name: "Shade screen motor M-4",
+          exact: true,
+        }),
+      ).toBeVisible();
       await capture(page, info, "snapshot-1440");
       await page.keyboard.press("Escape");
       await expect(
@@ -143,7 +156,7 @@ test("CS05 record widths, Equipment groups, view-only and site handovers", async
     await capture(page, info, `view-only-${width}`);
   }
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.getByRole("tab", { name: "Equipment", exact: true }).click();
+  await page.getByRole("tab", { name: /^Equipment(?: \d+)?$/ }).click();
   await expect(
     page.getByRole("cell", { name: "Shade screen motor M-4", exact: true }),
   ).toBeVisible();

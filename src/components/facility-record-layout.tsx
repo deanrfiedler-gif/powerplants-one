@@ -399,7 +399,10 @@ export function FacilityOverviewCards({
               Footprint {measurement(f.details.footprint_m2, " m²")}
             </strong>
             <small>
-              Approximate length {measurement(f.details.length_m, " m")} · width{" "}
+              {f.details.measurement_basis === "approximate"
+                ? "Approximate length"
+                : "Length"}{" "}
+              {measurement(f.details.length_m, " m")} · width{" "}
               {measurement(f.details.width_m, " m")} · maximum height{" "}
               {measurement(f.details.maximum_height_m, " m")}
             </small>
