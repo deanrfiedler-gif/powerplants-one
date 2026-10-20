@@ -48,7 +48,6 @@ import {
   retainRequirementsDraft,
   reviewRequirementsDraft,
 } from "./requirement-revisions";
-import { visibleAppointment } from "../../scheduling/planner";
 
 export const hash = (value: unknown) =>
   createHash("sha256").update(canonical(value)).digest("hex");
@@ -977,6 +976,8 @@ export async function readinessVisit(
   row: CsRow,
   id: string,
 ) {
+  // Only visit-bound reads need Scheduling's command graph. Keep other CS reads independent.
+  const { visibleAppointment } = await import("../../scheduling/planner");
   const { a } = await visibleAppointment(c, p, id);
   if (a.site_id !== row.site_id || a.company_id !== row.company_id)
     throw unavailable();

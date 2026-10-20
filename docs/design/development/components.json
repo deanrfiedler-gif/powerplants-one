@@ -7401,8 +7401,7 @@
         "src/shared/customer-360.ts",
         "docs/design/development/organisations-native-fixtures.json",
         "src/components/access-readiness-workspace.tsx",
-        "src/app/styles/access-readiness.css",
-        "tests/helpers/access-readiness-fixture.ts"
+        "src/app/styles/access-readiness.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",

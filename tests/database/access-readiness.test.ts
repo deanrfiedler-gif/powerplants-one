@@ -223,6 +223,6 @@ test("CS06 visit check uses server times, moving a visit refuses acknowledgement
       { ...r.record, site_id: randomUUID() },
       appointment.id,
     ),
-    code("NotFound"),
+    code("RecordUnavailable"),
   );
 });

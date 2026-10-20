@@ -124,7 +124,11 @@ test("CS06 evidence review sends only the exact capture and note; acknowledgemen
   await page
     .getByRole("button", { name: "Record review", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText("Nothing saved");
+  await expect(
+    page
+      .getByRole("tabpanel", { name: "Evidence", exact: true })
+      .getByRole("alert"),
+  ).toContainText("Nothing saved");
   expect(sent[0]).toMatchObject({
     action: "review_evidence",
     expected_version: 8,
@@ -144,7 +148,11 @@ test("CS06 evidence review sends only the exact capture and note; acknowledgemen
     .fill("SYN read blocker; work remains held");
   await page.screenshot({ path: info.outputPath("acknowledge.png") });
   await page.getByRole("button", { name: "Acknowledge", exact: true }).click();
-  await expect(page.getByRole("alert")).toContainText("Nothing saved");
+  await expect(
+    page
+      .getByRole("tabpanel", { name: "Visit preparation", exact: true })
+      .getByRole("alert"),
+  ).toContainText("Nothing saved");
   await expect(page.getByLabel("Reason", { exact: true })).toHaveValue(
     "SYN read blocker; work remains held",
   );
@@ -170,7 +178,9 @@ test("CS06 empty and changed-source frames preserve unknown, gated P4 and denied
   await fixture(page, f);
   await page.goto(path);
   await expect(
-    page.getByText("Source changed since this check", { exact: true }),
+    page
+      .getByRole("tabpanel", { name: "Overview", exact: true })
+      .getByText("Source changed since this check", { exact: true }),
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("source-changed-390.png") });
   f.data.record.content.requirements = [];
@@ -188,7 +198,9 @@ test("CS06 empty and changed-source frames preserve unknown, gated P4 and denied
     route.fulfill({ status: 403, json: { message: "Access is restricted." } }),
   );
   await page.reload();
-  await expect(page.getByRole("alert")).toContainText("restricted");
+  await expect(
+    page.getByRole("alert").filter({ hasText: "restricted" }),
+  ).toBeVisible();
   await expect(page.getByText("SYN Jamie Visitor")).toHaveCount(0);
 });
 test("CS06 read-only access removes every mutation; failed reads offer retry", async ({
@@ -212,7 +224,9 @@ test("CS06 read-only access removes every mutation; failed reads offer retry", a
     }),
   );
   await page.reload();
-  await expect(page.getByRole("alert")).toContainText("could not be read");
+  await expect(
+    page.getByRole("alert").filter({ hasText: "could not be read" }),
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: /retry|try again/i }),
   ).toBeVisible();

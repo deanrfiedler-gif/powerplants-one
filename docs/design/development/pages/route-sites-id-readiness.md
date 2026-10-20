@@ -19,7 +19,7 @@ The [accepted design](../../../decisions/access-readiness-figma-design.md) recor
 
 All files and provenance are in the unchanged [icon-free design r01 evidence](../../../reference/ui/site-access/access-readiness-design-r01/README.md). Live metadata, screenshots, design contexts, variables and notes were inspected. No private file locator or Pro artwork is retained. Generated Figma code is a reference, not application code.
 
-## Desktop and tablet
+## Desktop
 
 Use the live shell's Service / More context and a full-bleed shared record. The title and readiness tag precede Site, revision, time zone and as-at metadata. Actions open preparation; P4 contact remains disabled with an explanation. The bar meets the record edges. A ruled 380 px facts column contains Site/owner, selected visit, source basis and boundaries; tablet uses 300 px and the shell's collapsed rail. Tabs are Overview, Requirements, Evidence, Work windows, Visit preparation and History.
 
@@ -27,7 +27,7 @@ The check card states the exact interval, activity, areas and requirement revisi
 
 Evidence review shows exact capture facts as read-only rows; only the note is editable. Acknowledgement shows visit, check, requirement revision, areas, activity, visitors and blocker count; only the reason is editable. Its five authority outcomes remain explicit. A stale refusal keeps the reason in memory; a new check must be explicitly selected before reusing it.
 
-## Phone and accessibility
+## Mobile
 
 Use the current 56 px shared compact header at 390 and 320 CSS px. The check precedes gated P4. Overview, Evidence, Windows and History lead the semantic tab order; Requirements and Visit preparation remain in the scrolling strip and More. Facts remain below the workspace, with a Site details handover. The sticky footer has More, gated Record contact and Check again (Add requirement when empty). At 320 px the contact explanation is in More.
 

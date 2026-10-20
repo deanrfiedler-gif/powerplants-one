@@ -7,3 +7,11 @@ The [route contract](route-sites-id-readiness.md) maintains desktop, tablet, 390
 [Retained icon-free captures](../../../reference/ui/site-access/access-readiness-design-r01/README.md) stay unchanged. [Native verification](../../../testing/evidence/access-readiness-native/README.md) is separate. Parents PRJ-04, SVC-03, SVC-04, SVC-06, SVC-10 and NFR-02 are preserved.
 
 Requirement drafts stay isolated until independent publication. Exact evidence review and current permission checks remain mandatory. Acknowledging grants nothing. P4, weekdays and Conversations remain outside scope. No migration, capability or dependency is introduced. The [implementation decision](../../../decisions/access-readiness-native-build.md) records owner-authorised supporting work without claiming native acceptance or deployment.
+
+## Desktop
+
+The route contract specifies the full-bleed record, 380 px facts column, six tabs and exact review/acknowledgement facts; tablet narrows the facts column to 300 px. Source/state references above remain binding.
+
+## Mobile
+
+The route contract specifies the compact shared header, check-first 390/320 layout, semantic tab order, sticky footer and source-changed/empty states. Every section remains reachable; owner/device review is pending.
