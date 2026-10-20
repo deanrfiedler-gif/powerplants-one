@@ -4,15 +4,15 @@
 
 Owner: Dean Fiedler. Independent visual/device acceptance pending.
 
-ServiceInspectionScreen binds FI-03/FI-04 to real permitted appointments. Reuse shared Button, Field, ReadState, ErrorNotice, original-command recovery and global guidance. State fixtures: tests/browser/service-inspections.spec.ts and tests/database/service-inspections.test.ts. No isolated catalogue renderer is claimed.
+ServiceInspectionScreen binds FI-03/FI-04 to permitted synthetic appointments. It reuses Button/ButtonLink, ReadState, ErrorNotice, RecordTabs/RecordPanel, LocalDateTimeField, RegisterTable/RegisterChip/RegisterEmpty/RegisterFooter, SecondaryMenuFrame, WizardDialog, RecordIdentity, the compact phone header, original-command recovery and global guidance. Presentation states use tests/fixtures/inspections-accepted.ts and tests/browser/inspections-design.spec.ts. Authority proof uses tests/browser/service-inspections.spec.ts, tests/database/service-inspections.test.ts and tests/database/inspection-attribution-upgrade.test.ts. No isolated catalogue renderer is claimed.
 
-At 1440/1024 use wrapped cards and fieldsets; at 390/320 stack controls with 16 px input text and 44 px targets. Keep one shell content scroll owner, readable exact evidence, keyboard validation, guide focus return and actual 200% zoom.
+At 1440 use the flush review register, ruled record summary, readiness strip and tabbed readings; at 1024 collapse the shared secondary menu. At 390/320 use stacked capture sections, compact saved checks, per-reading instruments, a pinned Save/Submit bar and a bottom submission sheet. Four choices wrap into two columns at 320. Use 16 px input text and 44 px primary targets. Keep one shell content scroll owner, readable exact evidence, keyboard validation and guide focus return. Physical-device and 200% zoom acceptance remain separate.
 
 Show required measurement type/range/unit and certificate requirements beside capture fields. Distinguish the unsaved catalogue selection from the test-time snapshot retained by saving; submitted review shows that exact certificate reference/revision and its current assessment.
 
 The host permits a bounded 6,000,000-character journal for evidence originals. Quota failure precedes transport. All other consumers retain the 32 KiB default. Same-tab reload retains the unchanged original; unsaved entries remain browser memory. No offline queue is introduced.
 
-Quality r01 is a proposed reference. Accepted native desktop/phone images are missing. See page contracts, decision and verification evidence; delivery grants no owner approval.
+The accepted source is "PPO - Design", named version "Inspections — accepted", page 1339:4184 and notes 1345:2979. The four owning page contracts list every desktop, tablet, phone and state node and the retained icon-free captures. Quality r01 remains historical context. Reading attribution is separately authorised in inspections-reading-instruments.md. See the [verification record](../../../testing/evidence/service-inspections/accepted-design.md); delivery grants no owner visual approval.
 
 ## Figma components
 
@@ -22,11 +22,11 @@ No main component on the Components page yet. Page frames may draw this pattern;
 
 ## Desktop
 
-1440/1024: responsive columns, shared card/line/focus tokens, exact sources and wrapped evidence; one shell content scroll owner.
+1440/1024: flush register and shared secondary menu; summary and readings columns; shared line/focus/surface tokens; exact sources and wrapped evidence. Preparation exposes retained HTML/PDF before a separate issue confirmation.
 
 ## Mobile
 
-390/320: stacked controls, no horizontal page overflow, readable evidence and 200% browser zoom.
+390/320: compact phone header, stacked controls, offline last-saved notice, uncertainty recovery and attendance refusal. Preserve unsaved memory and the original command journal; no offline queue. Reviewer actions stay reachable below the retest timeline. Verify page overflow and focus at both widths.
 
 ## Original-receipt selection availability — 3 October 2026
 

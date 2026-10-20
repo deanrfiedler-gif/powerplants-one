@@ -61,3 +61,7 @@ The report record's exact-response sheet is page-local native `dialog`, not a ne
 ## CS-02 People register consumer — 20 October 2026
 
 PeopleRegister uses this control on `/people` and the People view of `/contacts`. [Host fixtures](../people-native-fixtures.json) bind 1440/1024 grids, 390/320 compact phone rows and loading/empty/error/denied states; `tests/browser/people-native.spec.ts` exercises the real host. The [page contract](../pages/route-people.md) records undrawn interactions and retained legacy behaviour. Owner review stays pending; no fingerprint is copied.
+
+## Inspections consumer — 21 October 2026
+
+FI-03 reuses WizardDialog for the saved-attempt submission confirmation, including failed checks and the owned-defect consequence. FI-04 reuses it for the separate internal outcome issue confirmation. Phone presentation is a bottom sheet; the existing focus trap, Escape handling and return to opener remain shared. Pending original commands disable dismissal and repeat submission. Owner visual review remains pending. See [Service inspections](service-inspections.md) and the four FI-03/FI-04 consumer bindings in components.json.

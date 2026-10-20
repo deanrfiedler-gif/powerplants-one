@@ -3190,7 +3190,7 @@
       "title": "Inspection and commissioning form runner",
       "kind": "scope",
       "module": "FI",
-      "summary": "Persisted Service appointment procedure capture with exact versioned basis, raw readings and durable drafts.",
+      "summary": "Accepted-design inspection capture with explicit reading instruments, saved drafts and original-command recovery.",
       "path": "/my-jobs/inspections",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3216,11 +3216,14 @@
         "docs/testing/evidence/service-inspections/README.md",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/inspections-figma-design.md"
+        "docs/decisions/inspections-figma-design.md",
+        "src/inspections/service-register.ts",
+        "src/inspections/service-register-screen.tsx",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "functional_status": "Accepted-design build verification in progress; see docs/testing/evidence/service-inspections/accepted-design.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3240,7 +3243,7 @@
       "title": "Inspection review, defects and retests",
       "kind": "scope",
       "module": "FI",
-      "summary": "Independent Service review, owned corrections, retained fresh retests and exact internal inspection output.",
+      "summary": "Attempt register, independent review, retained corrections and exact prepared internal outcomes.",
       "path": "/service/inspections",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3266,11 +3269,14 @@
         "docs/testing/evidence/service-inspections/README.md",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/inspections-figma-design.md"
+        "docs/decisions/inspections-figma-design.md",
+        "src/inspections/service-register.ts",
+        "src/inspections/service-register-screen.tsx",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "functional_status": "Accepted-design build verification in progress; see docs/testing/evidence/service-inspections/accepted-design.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13128,7 +13134,7 @@
       "title": "my jobs / inspections",
       "kind": "route",
       "module": "FI",
-      "summary": "Persisted Service appointment procedure capture with exact versioned basis, raw readings and durable drafts.",
+      "summary": "Accepted-design inspection capture with explicit reading instruments, saved drafts and original-command recovery.",
       "path": "/my-jobs/inspections",
       "source_paths": [
         "src/app/(business)/my-jobs/inspections/page.tsx",
@@ -13154,11 +13160,14 @@
         "docs/testing/evidence/service-inspections/README.md",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/inspections-figma-design.md"
+        "docs/decisions/inspections-figma-design.md",
+        "src/inspections/service-register.ts",
+        "src/inspections/service-register-screen.tsx",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "functional_status": "Accepted-design build verification in progress; see docs/testing/evidence/service-inspections/accepted-design.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13178,7 +13187,7 @@
       "title": "service / inspections",
       "kind": "route",
       "module": "FI",
-      "summary": "Independent Service review, owned corrections, retained fresh retests and exact internal inspection output.",
+      "summary": "Attempt register, independent review, retained corrections and exact prepared internal outcomes.",
       "path": "/service/inspections",
       "source_paths": [
         "src/app/(business)/service/inspections/page.tsx",
@@ -13204,11 +13213,14 @@
         "docs/testing/evidence/service-inspections/README.md",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/inspections-figma-design.md"
+        "docs/decisions/inspections-figma-design.md",
+        "src/inspections/service-register.ts",
+        "src/inspections/service-register-screen.tsx",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "functional_status": "Accepted-design build verification in progress; see docs/testing/evidence/service-inspections/accepted-design.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
