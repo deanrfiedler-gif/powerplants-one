@@ -218,10 +218,19 @@ function CostingEditor({
         ]
       : []),
   ]);
-  const findings =
-    option?.evaluation?.findings?.filter(
+  const findings = [
+    ...(option?.evaluation?.findings?.filter(
       (item) => item.category === "Readiness",
-    ) ?? [];
+    ) ?? []),
+    ...(option?.evaluation?.open_items
+      .filter((item) => item.blocks_scope)
+      .map((item) => ({
+        key: item.key,
+        field: item.key,
+        step: item.key.startsWith("Q") ? "Requirements" : "Scope & delivery",
+        message: item.follow_up.reason,
+      })) ?? []),
+  ];
   const counts = option?.revision.input?.configuration
     ? configurationCounts(
         option.revision.input.configuration,
@@ -1013,7 +1022,9 @@ function CostingEditor({
               <small>
                 {command.uncertain
                   ? "Check the original request; no new save is created."
-                  : "The server assigns the version and time."}
+                  : deny || original
+                    ? "No adoption is confirmed here."
+                    : "The server assigns the version and time."}
               </small>
               <Button
                 disabled={command.busy}
@@ -1069,9 +1080,9 @@ function CostingEditor({
                 discards this proposal.
               </CostingBanner>
               <p role="status">
-                The existing command recovery checks the original request and
-                may retry that same idempotent request if no receipt is
-                available.
+                We will check the original save. If it has not completed,
+                checking can finish that same save without creating a second
+                one.
               </p>
             </>
           ) : deny ? (

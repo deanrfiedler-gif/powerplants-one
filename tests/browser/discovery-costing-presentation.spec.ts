@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import {
   costingFixture,
+  incompleteCostingFixture,
   costingId,
   mountCosting,
 } from "../helpers/discovery-costing-presentation";
@@ -162,6 +163,9 @@ test("new discovery keeps proposal and blocks adoption until explicit fresh comp
   await expect(page.getByLabel("Included scope", { exact: true })).toHaveValue(
     "SYN kept proposal wording",
   );
+  await page.locator(".dc-scroll").evaluate((element) => {
+    element.scrollTop = 0;
+  });
   await page.screenshot({ path: info.outputPath("stale.png") });
   expect(f.adoptions).toHaveLength(0);
 });
@@ -199,11 +203,11 @@ test("incomplete, retained manual, permission and source failure states", async 
   page,
 }, info) => {
   for (const state of ["incomplete", "legacy", "denied", "error"] as const) {
-    const f = costingFixture();
-    if (state === "incomplete")
-      f.detail.options[0].revision.scope_readiness = "Incomplete";
+    const f =
+      state === "incomplete" ? incompleteCostingFixture() : costingFixture();
     if (state === "legacy") {
       f.summary.basis_kind = "LegacyManual";
+      f.summary.basis = null;
       f.detail.options[0].revision.kind = "LegacyManual" as "Discovery";
     }
     if (state === "denied") f.detail.can_edit = false;
@@ -221,6 +225,10 @@ test("incomplete, retained manual, permission and source failure states", async 
         { exact: true },
       ),
     ).toBeVisible();
+    if (state === "incomplete")
+      await expect(page.locator(".dc-main")).toContainText(
+        "SYN confirm the included work before costing",
+      );
     await page.screenshot({ path: info.outputPath(`${state}.png`) });
     expect(f.adoptions).toHaveLength(0);
     await page.unroute("**/api/v1/**");

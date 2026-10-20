@@ -258,6 +258,21 @@
       "adaptations": "docs/decisions/es02-wizard-figma-implementation.md"
     },
     {
+      "id": "es02-costing-figma",
+      "route": "/estimating/discovery/[id]/costing",
+      "scope": "#ppo-estimate-wizard",
+      "layout": "full-bleed",
+      "scroll_owner": ".dc-scroll; independent summary, cost-grid and phone line-editor overflow",
+      "design": "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-01-Desktop-Cost-Lines-Full-Length-r01.png",
+      "sha256": "39693c0684d2eb9aae773d9b97c16fceb7cf9948545e8d737cbadffdfc58a8db",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/discovery-costing-presentation.spec.ts",
+      "application_proof": "tests/browser/estimating-cost-basis.spec.ts",
+      "authority": "PPO - Design, Discovery costing — accepted, ES-02 D1–D7/Q1–Q4. Source acceptance is separate from this host integration; owner implementation visual review and deployment remain pending.",
+      "adaptations": "docs/design/development/pages/route-estimating-discovery-id-costing.md"
+    },
+    {
       "id": "es08-native-r01",
       "route": "/estimating/configurations",
       "scope": "#ppo-specialist",

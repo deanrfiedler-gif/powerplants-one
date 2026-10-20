@@ -125,7 +125,7 @@ export function costingFixture() {
     status: "Available",
     ...saved,
     estimate_version_id: saved.id,
-    basis,
+    basis: basis as typeof basis | null,
     basis_kind: "Discovery",
   };
   const preview = {
@@ -244,5 +244,25 @@ export async function mountCosting(page: Page, fixture = costingFixture()) {
     return reply({ items: [] });
   });
   await page.goto(costingPath);
+  return fixture;
+}
+
+export function incompleteCostingFixture() {
+  const fixture = costingFixture();
+  fixture.current.input.answers[0] = {
+    question_id: "Q01",
+    state: "Deferred",
+    value: null,
+    source: null,
+    follow_up: {
+      owner_id: costingId(90),
+      reason: "SYN confirm the included work before costing",
+    },
+  };
+  fixture.detail.options[0].evaluation = compileDiscovery(
+    fixture.current.input,
+  );
+  fixture.current.scope_readiness =
+    fixture.detail.options[0].evaluation.scope_readiness;
   return fixture;
 }

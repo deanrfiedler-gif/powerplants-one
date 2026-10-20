@@ -51,6 +51,7 @@ Reused components: `Button`, `ButtonLink`, `Field`, `SelectField`, `ValidationFi
 - The phone editor is authorised by Q4 but undrawn. The desktop uses that labelled editor rather than introducing an unreviewed editable-grid interaction. Search and Add manual line remain accessible on phones.
 - Native estimate title and arithmetic explanation remain available alongside customer wording even where omitted from the phone reference. Dynamic native readiness and data replace illustrative Figma quantities, counters and timestamps.
 - The current shared compact phone header supersedes the older page-specific header illustration, as requested. Icon-free evidence cannot establish the appearance of the private Pro kit.
+- Recovery wording describes the unchanged original-save recovery accurately: a missing receipt can retry the same save. A request-sent timestamp is not invented when the hook does not expose one.
 - The saved-revision comparison can contain narrative changes, historical source identities and removals beyond the three illustrated scope rows. Do not truncate it to match the mock example.
 
 Owner questions: confirm the undrawn line-editor treatment and desktop edit interaction; specify Cost types if needed; decide whether direct Alternatives/Revisions/option navigation should be adopted in the owning wizard. None changes native costing or authorises automatic pricing.
