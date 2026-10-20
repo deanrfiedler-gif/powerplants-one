@@ -202,7 +202,7 @@ test("shared URL context survives unavailable browser storage", async ({ page })
   await expect(page.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("navigation", { name: "Engineering shortcuts" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "People", level: 1, exact: true })).toBeVisible();
 });
 test("specific Engineering, Projects and Fertigation destinations preserve their active parent", async ({ page }) => {
   await login(page);
@@ -242,7 +242,7 @@ test("phone and 200 percent equivalent reflow keep the established navigation", 
   await expect(page.getByRole("button", { name: "More", exact: true })).toBeVisible();
   await capture(page, "mobile-leads-global-navigation");
   await page.setViewportSize({ width: 720, height: 450 }); await page.goto("/contacts?view=people&department=sales");
-  await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "People", level: 1, exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   const headerBounds = await page.locator(".ppo-shell-header").boundingBox();
   // Phone header amendment: the row keeps the Menu button and Conversations; search and the Page guide are in the Menu.

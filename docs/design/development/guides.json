@@ -41962,23 +41962,23 @@
     {
       "guide_key": "guide.page.people",
       "entry_key": "route:/people",
-      "title": "Contact directory and detail",
+      "title": "People register",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "Accepted design implemented with synthetic data; owner application review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "prepared_at": "2026-10-20",
+      "source_commit": "5f3d78d079b92494b70867c46cd5745bae681d90",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Two database and ten People browser cases pass; desktop/mobile navigation and saved-view regression cases pass. Full unit and Windows baseline limits are recorded in docs/testing/evidence/people-native/README.md. Owner review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find a canonical Person and maintain accurate contact information without inventing customer authority or consent."
+            "Find a permitted person, check their recorded contact channels and organisation role, and open the exact person record. A recorded role or contact preference does not establish purchasing authority or consent."
           ],
           "steps": [],
           "headers": [],
@@ -41988,7 +41988,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the Person and affiliations. A contact may be shared across companies; correction requires permission in every company context."
+            "Confirm your working company. Rows and counts cover only records you may read; a missing result does not prove that no person exists."
           ],
           "steps": [],
           "headers": [],
@@ -41999,9 +41999,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance."
+            "Choose Active people, Site contacts, Channels to review or Inactive in the People menu.",
+            "Use Organisation and Notices filters, or open Search and filter from People options. On a phone use the header search/filter control.",
+            "Open the person by name or by tapping their phone row."
           ],
           "headers": [],
           "rows": []
@@ -42010,7 +42010,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Identity & channels, Relationships, Downstream reliance and Correction history. The Contacts directory continues to switch between People and Organisations."
+            "The desktop grid shows name, organisation, recorded role, phone, email, status, contact preference, primary sites, notice exceptions and last correction. Scroll the grid horizontally for later columns. The checkbox and actions columns stay at the edges.",
+            "Counts are for the complete permitted filtered result, not just the current page. The read time identifies the last successful response. Contacts retains its People and Organisations switch."
           ],
           "steps": [],
           "headers": [],
@@ -42020,7 +42021,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Person has no invented display reference, structured role taxonomy or purchasing authority. Interaction history is explicitly derived from permitted linked workflows because Activities do not link directly to Person. Restricted contacts and affiliations are not presented as absent."
+            "Current affiliations have started and have not ended. Role text is recorded, not a structured role or authority. Site links name only permitted primary-contact roles.",
+            "Notice exceptions count the latest Do not notify entries per company and message class that you can read. They do not express marketing consent or authorise sending. Last corrected is shown only when you can correct the person in every company context."
           ],
           "steps": [],
           "headers": [],
@@ -42029,14 +42031,12 @@
         {
           "section_id": "tasks",
           "title": "Workflow",
-          "paragraphs": [
-            "Select a record name to open its details. On desktop, a Person's organisation link opens that organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance.",
-            "Use Correct contact details for a reasoned correction or active-state change; retain the server save outcome."
+            "Change a view or filter to read a new permitted population. On desktop, Name, Email, Phone and Status headers change the sort.",
+            "Use Choose columns to hide optional grid columns. Selection is limited to the current page and clears when filters, sorting or pagination change; no bulk action is offered.",
+            "Use Create person to open the existing shared-record form. Saved views (earlier directory) opens the preserved account saved-view workflow.",
+            "Open a person to use the existing identity, relationship, reliance and correction workspace. Its accepted Figma redesign is a separate delivery."
           ],
           "headers": [],
           "rows": []
@@ -42045,8 +42045,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "This register reads data. Opening a record, changing filters or selecting rows saves no business transaction. Creating or correcting a person belongs to the receiving form and its existing server-confirmed workflow."
           ],
           "steps": [],
           "headers": [],
@@ -42056,8 +42055,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Current and historic source records remain distinguishable. Optional unknown context stays Not recorded or Unknown."
+            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access. Clear the search removes the text query while retaining Organisation and Notices.",
+            "People is online only. It makes no offline cache, queued correction or background-send promise."
           ],
           "steps": [],
           "headers": [],
@@ -42067,7 +42066,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An affiliation ends while its historic service reliance remains visible. Ending the affiliation does not delete the Person or transfer an approval."
+            "Synthetic example: Channels to review can include Leo Park because no email is recorded. Opening Leo preserves his exact internal identity; another person with the same name is a separate record."
           ],
           "steps": [],
           "headers": [],
@@ -42077,10 +42076,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Use Retry loading after a failed read. On desktop Refresh rereads the first page. On a phone pull down from the top of the list; Refresh people in the filter panel is the non-gesture alternative.",
+            "If a page cursor no longer belongs to the current population, refresh. If access changed, return to a permitted workspace rather than treating hidden information as empty."
           ],
           "steps": [],
           "headers": [],
@@ -42090,9 +42087,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The compact header contains the view chooser, search, Conversations when permitted, and Filter. Search and filter combine at 320 px. No repeated toolbar rows sit beneath it.",
+            "Filter opens a full-screen panel. Apply edits together with Show people; Reset clears the draft filters. The panel returns focus to its opener on closing. Phone rows open exact people."
           ],
           "steps": [],
           "headers": [],
@@ -42102,8 +42098,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html"
+            "Person detail, Organisations, Sites and Service requests are separate workspaces. Stakeholders requires an organisation, so the menu first opens Organisations.",
+            "Accepted design: PPO - Design, People — accepted; docs/decisions/people-figma-design.md. Application evidence: docs/testing/evidence/people-native/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -42113,8 +42109,8 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "This guide is Draft. Code delivery, design acceptance, functional proof, owner visual/device review and deployment are separate. Owner review remains pending.",
+            "Phone filters, bulk-selection purpose and the final saved-view presentation are not drawn; the page contract records the remaining questions."
           ],
           "steps": [],
           "headers": [],
@@ -42129,9 +42125,16 @@
       "source_paths": [
         "src/app/(business)/people/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/design/development/pages/route-people.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "CS-02 register grid, compact phone rows, permitted summaries, filters and exact handovers; existing saved-view directory and record workflows retained.",
       "document_id": "PPO-GUIDE-PAGE-PEOPLE",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42141,7 +42144,9 @@
       "workflow_basis": [
         "src/app/(business)/people/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -51177,23 +51182,23 @@
     {
       "guide_key": "guide.page.contacts",
       "entry_key": "route:/contacts",
-      "title": "Contact directory and detail",
+      "title": "Contacts: People and Organisations",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "Accepted design implemented with synthetic data; owner application review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "prepared_at": "2026-10-20",
+      "source_commit": "5f3d78d079b92494b70867c46cd5745bae681d90",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Two database and ten People browser cases pass; desktop/mobile navigation and saved-view regression cases pass. Full unit and Windows baseline limits are recorded in docs/testing/evidence/people-native/README.md. Owner review remains pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Find a canonical Person and maintain accurate contact information without inventing customer authority or consent."
+            "Find a permitted person, check their recorded contact channels and organisation role, and open the exact person record. A recorded role or contact preference does not establish purchasing authority or consent."
           ],
           "steps": [],
           "headers": [],
@@ -51203,7 +51208,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the Person and affiliations. A contact may be shared across companies; correction requires permission in every company context."
+            "Confirm your working company. Rows and counts cover only records you may read; a missing result does not prove that no person exists."
           ],
           "steps": [],
           "headers": [],
@@ -51214,9 +51219,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance."
+            "Choose Active people, Site contacts, Channels to review or Inactive in the People menu.",
+            "Use Organisation and Notices filters, or open Search and filter from People options. On a phone use the header search/filter control.",
+            "Open the person by name or by tapping their phone row."
           ],
           "headers": [],
           "rows": []
@@ -51225,7 +51230,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Identity & channels, Relationships, Downstream reliance and Correction history. The Contacts directory continues to switch between People and Organisations."
+            "The desktop grid shows name, organisation, recorded role, phone, email, status, contact preference, primary sites, notice exceptions and last correction. Scroll the grid horizontally for later columns. The checkbox and actions columns stay at the edges.",
+            "Counts are for the complete permitted filtered result, not just the current page. The read time identifies the last successful response. Contacts retains its People and Organisations switch."
           ],
           "steps": [],
           "headers": [],
@@ -51235,7 +51241,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Person has no invented display reference, structured role taxonomy or purchasing authority. Interaction history is explicitly derived from permitted linked workflows because Activities do not link directly to Person. Restricted contacts and affiliations are not presented as absent."
+            "Current affiliations have started and have not ended. Role text is recorded, not a structured role or authority. Site links name only permitted primary-contact roles.",
+            "Notice exceptions count the latest Do not notify entries per company and message class that you can read. They do not express marketing consent or authorise sending. Last corrected is shown only when you can correct the person in every company context."
           ],
           "steps": [],
           "headers": [],
@@ -51244,14 +51251,12 @@
         {
           "section_id": "tasks",
           "title": "Workflow",
-          "paragraphs": [
-            "Select a record name to open its details. On desktop, a Person's organisation link opens that organisation. In the Organisations view, Site/Facility count links also open the organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the Person in Contacts and open the detail.",
-            "Read identity, channels and the recorded contact preference; preference is not consent.",
-            "Review current and historic affiliations, Site primary-contact links and downstream reliance.",
-            "Use Correct contact details for a reasoned correction or active-state change; retain the server save outcome."
+            "Change a view or filter to read a new permitted population. On desktop, Name, Email, Phone and Status headers change the sort.",
+            "Use Choose columns to hide optional grid columns. Selection is limited to the current page and clears when filters, sorting or pagination change; no bulk action is offered.",
+            "Use Create person to open the existing shared-record form. Saved views (earlier directory) opens the preserved account saved-view workflow.",
+            "Open a person to use the existing identity, relationship, reliance and correction workspace. Its accepted Figma redesign is a separate delivery."
           ],
           "headers": [],
           "rows": []
@@ -51260,8 +51265,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "This register reads data. Opening a record, changing filters or selecting rows saves no business transaction. Creating or correcting a person belongs to the receiving form and its existing server-confirmed workflow."
           ],
           "steps": [],
           "headers": [],
@@ -51271,8 +51275,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Current and historic source records remain distinguishable. Optional unknown context stays Not recorded or Unknown."
+            "Loading, no matching people and failed reads are distinct. A failed or denied read clears the list and all counts. An empty result counts only records in your access. Clear the search removes the text query while retaining Organisation and Notices.",
+            "People is online only. It makes no offline cache, queued correction or background-send promise."
           ],
           "steps": [],
           "headers": [],
@@ -51282,7 +51286,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An affiliation ends while its historic service reliance remains visible. Ending the affiliation does not delete the Person or transfer an approval."
+            "Synthetic example: Channels to review can include Leo Park because no email is recorded. Opening Leo preserves his exact internal identity; another person with the same name is a separate record."
           ],
           "steps": [],
           "headers": [],
@@ -51292,10 +51296,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Use Retry loading after a failed read. On desktop Refresh rereads the first page. On a phone pull down from the top of the list; Refresh people in the filter panel is the non-gesture alternative.",
+            "If a page cursor no longer belongs to the current population, refresh. If access changed, return to a permitted workspace rather than treating hidden information as empty."
           ],
           "steps": [],
           "headers": [],
@@ -51305,9 +51307,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The compact header contains the view chooser, search, Conversations when permitted, and Filter. Search and filter combine at 320 px. No repeated toolbar rows sit beneath it.",
+            "Filter opens a full-screen panel. Apply edits together with Show people; Reset clears the draft filters. The panel returns focus to its opener on closing. Phone rows open exact people."
           ],
           "steps": [],
           "headers": [],
@@ -51317,8 +51318,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html"
+            "Person detail, Organisations, Sites and Service requests are separate workspaces. Stakeholders requires an organisation, so the menu first opens Organisations.",
+            "Accepted design: PPO - Design, People — accepted; docs/decisions/people-figma-design.md. Application evidence: docs/testing/evidence/people-native/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -51328,8 +51329,8 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "This guide is Draft. Code delivery, design acceptance, functional proof, owner visual/device review and deployment are separate. Owner review remains pending.",
+            "Phone filters, bulk-selection purpose and the final saved-view presentation are not drawn; the page contract records the remaining questions."
           ],
           "steps": [],
           "headers": [],
@@ -51344,9 +51345,16 @@
       "source_paths": [
         "src/app/(business)/contacts/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/design/development/pages/route-people.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "CS-02 register grid, compact phone rows, permitted summaries, filters and exact handovers; existing saved-view directory and record workflows retained.",
       "document_id": "PPO-GUIDE-PAGE-CONTACTS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -51356,7 +51364,9 @@
       "workflow_basis": [
         "src/app/(business)/contacts/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

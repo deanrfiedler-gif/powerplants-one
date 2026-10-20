@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useIdentity } from "./business-session";
 import { useShell } from "./shell-provider";
 import { CrmDirectory } from "./crm-directory";
+import { PeopleRegister } from "./people-register";
 import { departmentHref } from "../shell/navigation";
 import { ShellIcon } from "./shell-icon";
 
@@ -31,6 +32,6 @@ export function ContactsNavigation({ view }: { view?: string }) {
         <ShellIcon name={kind === "people" ? "nav-people" : "nav-organisations"}/>{kind === "people" ? "People" : "Organisations"}
       </Link>)}
     </nav>
-    {selected ? <CrmDirectory key={selected} kind={selected} contactsHub/> : <p role="status">Opening your Contacts view…</p>}
+    {selected === "people" ? <PeopleRegister/> : selected ? <CrmDirectory key={selected} kind={selected} contactsHub/> : <p role="status">Opening your Contacts view…</p>}
   </section>;
 }
