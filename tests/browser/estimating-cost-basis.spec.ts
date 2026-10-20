@@ -57,12 +57,15 @@ test("E2 browser explicitly adopts exact discovery into manual costs, reconciles
   await expect(page.getByText("Latest discovery is revision 2 · Complete. It has not replaced this saved cost basis.",{exact:true})).toBeVisible();
   await page.getByRole("link",{name:"Review discovery and explicit scope adoption",exact:true}).click();
   await reviewScopeForCosting(page);
-  await page.getByRole("button",{name:"Review selected scope for costing",exact:true}).click();
+  await expect(page.getByRole("button",{name:/^Review and adopt/})).toBeEnabled();
   await expect(page.getByLabel("Estimate title",{exact:true})).toHaveValue(title);
-  await expect(page.getByLabel("Unit sell AUD 1",{exact:true})).toHaveValue("175.00");
+  await page.getByRole("button",{name:"Edit SYN supplied controller",exact:true}).filter({visible:true}).click();
+  await expect(page.getByRole("dialog",{name:"Edit cost line 1"}).getByLabel("Unit sell AUD",{exact:true})).toHaveValue("175.00");
+  await page.getByRole("dialog",{name:"Edit cost line 1"}).getByRole("button",{name:"Cancel",exact:true}).click();
+  await page.getByRole("button",{name:/^Review and adopt/}).click();
   await page.getByLabel("Reason for adopting this cost basis",{exact:true}).fill("SYN retain manual prices and adopt reviewed revised scope");
   await page.getByRole("checkbox",{name:"I reviewed this exact discovery basis and the manual scope and costs",exact:true}).check();
-  await page.getByRole("button",{name:"Adopt scope in a new cost version",exact:true}).click();
+  await page.getByRole("button",{name:"Adopt r02 in cost version v2",exact:true}).click();
   await expect(page.getByRole("heading",{name:title,exact:true})).toBeVisible();
   const current=await api(`estimating/estimates/${estimateId}`);expect(current.version).toBe(2);expect(current.saved.discovery_basis.revision_id).toBe(successor.body.revision_id);
   expect((await api(`estimating/estimates/${estimateId}?version_id=${first.saved.id}`)).saved).toEqual(first.saved);

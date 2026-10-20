@@ -58,6 +58,7 @@ export const moduleWorkspaces = [
   { route: "/projects/acceptance", moduleId: "PJ-09", scope: "ppo-acceptance", layout: "full-bleed", navigation: "workspace", baseline: "pj09-r01" },
   { route: "/sales/opportunities", scope: "ppo-deals", layout: "full-bleed", navigation: "workspace", baseline: "deals-r38" },
   { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
+  { route: "/estimating/discovery/[id]/costing", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-costing-figma" },
 ] as const;
 
 export function moduleWorkspaceForPath(path: string) {
