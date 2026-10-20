@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-INSPECTIONS-READING-INSTRUMENTS-DEC,Inspections reading instrument attribution,docs/decisions/inspections-reading-instruments.md,,Owner-authorised attribution extension; implementation and visual review separate,Dean Fiedler,4c1097cc4d6c5504a65aa4b359bd40a08078d199,,,git,

@@ -1,3 +1,12 @@
+---
+document_id: PPO-INSPECTIONS-READING-INSTRUMENTS-DEC
+date: 2026-10-21
+owner: Dean Fiedler
+status: Owner-authorised attribution extension; implementation and visual review separate
+source_commit: 4c1097cc4d6c5504a65aa4b359bd40a08078d199
+versioning: git
+---
+
 # Inspections reading instrument attribution
 
 Dean authorised the attribution extension and migration on 21 October 2026, in response to the implementation gap recorded in draft PR #647: “Authorise the attribution extension and migration (recommended)”. This supplements the [accepted Inspections design](inspections-figma-design.md).

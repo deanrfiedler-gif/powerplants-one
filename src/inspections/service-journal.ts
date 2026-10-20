@@ -17,6 +17,7 @@ const fields = [
   "findings",
   "readings",
   "instrument_ids",
+  "reading_instruments",
   "evidence",
   "evidence_id",
   "decision",
@@ -62,7 +63,7 @@ export function acceptsServiceInspectionEntry(e: JournalEntry) {
         "correct",
         "clarify",
       ]
-    : ["review", "defect", "release"];
+    : ["review", "defect", "prepare", "release"];
   return (
     allowed.includes(String(e.body.action)) &&
     Object.keys(e.body).every((k) => fields.includes(k))

@@ -344,7 +344,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
   // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
   // grants, users or seeds change; existing runtime privileges and historical receipts remain.
-  if (latestMigrationVersion !== 113) throw Error("Review the existing-demo upgrade for this release.");
+  // 0115 adds explicit reading attribution. Existing attempts gain only a zero contract
+  // marker: hashes, readings, snapshots and issued output bytes are unchanged. The empty
+  // attribution table uses existing all-table runtime grants; no seed, user or grant changes.
+  if (latestMigrationVersion !== 115) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

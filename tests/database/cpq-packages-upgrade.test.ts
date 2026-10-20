@@ -75,7 +75,7 @@ test("populated 0101 upgrade preserves exact CPQ/cost/adoption histories, origin
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [102, 103, 104, 105, 106, 107, 108, 109, 113],
+    [102, 103, 104, 105, 106, 107, 108, 109, 113, 115],
   );
   assert.deepEqual(
     await rows(

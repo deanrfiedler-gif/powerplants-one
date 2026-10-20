@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   retainedCalibration,
+  attemptHash,
   type InstrumentRow,
 } from "../../src/inspections/service";
 import { assessInstrument } from "../../src/inspections/model";
@@ -17,6 +18,20 @@ import {
 } from "../../src/shared/lib/command-journal";
 const id = (n: number) =>
   `10000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+
+test("reading attribution changes only the explicit contract and binds the instrument to its check", () => {
+  const basis = { plan_hash:"a".repeat(64), scope_keys:["scope"],check_keys:["one","two"],configuration_reference:"SYN configuration 1",
+    configuration_source_id:null,performer_id:id(1),occurred_at:"2026-10-15T00:00:00.000Z",timezone:"Australia/Brisbane",clock_concern:null,prerequisites:[],findings:null };
+  const original = attemptHash(basis,[],[],[]);
+  assert.equal(attemptHash({...basis,reading_instrument_version:0},[],[],[]),original);
+  // The legacy format does not gain a field, even when read by the extended core.
+  assert.equal(attemptHash({...basis,reading_instrument_version:0},[],[],[],[]),original);
+  const links=[{check_key:"one",instrument_id:id(2)},{check_key:"two",instrument_id:id(3)}];
+  const attributed = attemptHash({...basis,reading_instrument_version:1},[],[],[],links);
+  assert.notEqual(attributed,original);
+  assert.equal(attemptHash({...basis,reading_instrument_version:1},[],[],[],[...links].reverse()),attributed);
+  assert.notEqual(attemptHash({...basis,reading_instrument_version:1},[],[],[],links.map((r,i)=>({...r,instrument_id:links[1-i].instrument_id}))),attributed);
+});
 test("Service check occurrence identity separates equipment, scope and procedures while retaining a stable version lineage", () => {
   const template: Template = {
     id: id(1),
