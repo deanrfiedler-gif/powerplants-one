@@ -2,6 +2,12 @@ import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { areaId, siteId, mockFacilities } from "../helpers/facilities-design";
 
 test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem(
+      "ppo.shell.r15.preferences:cs05-design-fixture",
+      JSON.stringify({ schema_version: 1, workspace: "service" }),
+    ),
+  );
   // These are composition/state tests. Real permissions and writes are covered
   // separately by facilities.spec.ts and tests/database/facilities.test.ts.
   await page.route("**/api/v1/local-session", (route) =>
@@ -19,7 +25,18 @@ test.beforeEach(async ({ page }) => {
         display_name: "SYN Sasha Cole",
         preference_scope: "cs05-design-fixture",
         actions: [],
-        navigation: ["shared", "service", "crm", "activity", "equipment"],
+        navigation: [
+          "work",
+          "tickets",
+          "orders",
+          "planner",
+          "technicians",
+          "packs",
+          "reports",
+          "equipment",
+          "sites",
+          "facilities",
+        ],
         can_preview: true,
         conversations: false,
       },

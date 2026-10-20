@@ -173,11 +173,14 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   const id = page.url().split("/").at(-1)!;
   await page.reload();
   await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+  if ((page.viewportSize()?.width ?? 1440) <= 780)
+    await page.getByRole("tab", { name: "Sources", exact: true }).click();
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
   await page
     .getByRole("button", { name: "Copy full record ID", exact: true })
     .click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(id);
+  await page.getByRole("tab", { name: "Overview", exact: true }).click();
   await page.screenshot({
     path: info.outputPath("canonical-detail.png"),
     fullPage: true,

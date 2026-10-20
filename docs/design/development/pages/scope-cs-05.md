@@ -12,7 +12,7 @@ Desktop: register `1415:357195`, snapshot `1416:363644`, hierarchy `1416:365147`
 
 [Seventeen icon-free retained captures](../../../reference/ui/customers/facilities-design-r01/README.md) remain unchanged. No reference image is missing for the listed frames. Sources/History at full size, pin review, service-link dialogs, tablet record and mobile create are not drawn. [Earlier native evidence](../../../testing/evidence/cs05-native-r01/README.md) remains provenance, not the current visual target.
 
-## Desktop and tablet
+## Desktop
 
 Use All facilities, Growing areas, Non-growing or Details to complete. Filter by Site, Structure or Use; Search and filter holds extra filters. The view counts cover permitted areas, while the toolbar count follows the active filters.
 

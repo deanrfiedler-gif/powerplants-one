@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import {
   FacilityRecordLayout,
   FacilityPath,
-  FacilityAreaDetails,
+  FacilitySnapshotDetails,
   FacilityOverviewCards,
 } from "./facility-record-layout";
 import { Button, ButtonLink } from "./ui/button";
@@ -207,8 +207,7 @@ export function FacilityDetail({
               <FacilityPath facility={f} /> · version {f.version}
             </p>
           </header>
-          <FacilityAreaDetails facility={f} />
-          <FacilityOverview facility={f} compact />
+          <FacilitySnapshotDetails facility={f} />
           <footer className="facility-actions">
             <ButtonLink href={`/sites/${f.site_id}`}>Open site</ButtonLink>
             <ButtonLink variant="primary" href={`/facilities/${id}`}>
@@ -217,9 +216,8 @@ export function FacilityDetail({
           </footer>
         </div>
         <div className="facility-snapshot-right">
-          <FacilityEquipment facility={f} />
-          <h2>History</h2>
-          <FacilityHistory id={id} timezone={f.timezone} />
+          <FacilityEquipment facility={f} compact />
+          <FacilityHistory id={id} timezone={f.timezone} compact />
         </div>
       </div>
     );
@@ -548,7 +546,13 @@ type Equipment = {
   serves?: { id: string; name: string }[];
   serving_since?: string;
 };
-function FacilityEquipment({ facility: f }: { facility: Facility }) {
+function FacilityEquipment({
+  facility: f,
+  compact = false,
+}: {
+  facility: Facility;
+  compact?: boolean;
+}) {
   const current = useFacilityPages<Equipment>(`facilities/${f.id}/equipment`);
   const ended = useFacilityPages<{
     id: string;
@@ -560,6 +564,64 @@ function FacilityEquipment({ facility: f }: { facility: Facility }) {
     end_reason: string;
     ended_by_name: string;
   }>(`facilities/${f.id}/equipment?state=ended`);
+  if (compact)
+    return (
+      <section className="facility-snapshot-equipment facility-card">
+        <h2>Equipment</h2>
+        <ReadState
+          loading={current.loading || ended.loading}
+          error={current.error || ended.error}
+          retry={() => {
+            current.reload();
+            ended.reload();
+          }}
+        />
+        {!current.loading &&
+          !ended.loading &&
+          !current.error &&
+          !ended.error && (
+            <>
+              <p>
+                {current.items.filter((a) => a.installed).length} installed here
+                · {current.items.filter((a) => a.link_id).length} serve this
+                area · {ended.items.length} ended
+                {current.next || ended.next ? " (loaded records)" : ""}
+              </p>
+              {current.items.map((a) => (
+                <div className="facility-snapshot-equipment-row" key={a.id}>
+                  <Link href={`/equipment/${a.id}`}>{a.description}</Link> ·{" "}
+                  {a.installed ? "installed here" : "serves this area"}
+                  <small>
+                    {a.installed
+                      ? "Serves "
+                      : `Installed in ${a.installed_name ?? "site only"} · serves `}
+                    {a.serves?.map((s) => s.name).join(", ") ||
+                      "no recorded areas"}
+                  </small>
+                </div>
+              ))}
+              {ended.items.map((a) => (
+                <div
+                  className="facility-snapshot-equipment-row facility-meta"
+                  key={a.id}
+                >
+                  {a.description} · service ended{" "}
+                  <Stamp value={a.ended_at} timezone={f.timezone} />
+                  <small>
+                    Reason: {a.end_reason} · {a.ended_by_name}
+                  </small>
+                </div>
+              ))}
+              {current.next && (
+                <Button onClick={current.more}>More equipment</Button>
+              )}
+              {ended.next && (
+                <Button onClick={ended.more}>More ended links</Button>
+              )}
+            </>
+          )}
+      </section>
+    );
   return (
     <section className="facility-equipment-view">
       <h2>Equipment for this area</h2>
@@ -1013,8 +1075,35 @@ type Event = {
     context_observation?: boolean;
   };
 };
-function FacilityHistory({ id, timezone }: { id: string; timezone: string }) {
+function FacilityHistory({
+  id,
+  timezone,
+  compact = false,
+}: {
+  id: string;
+  timezone: string;
+  compact?: boolean;
+}) {
   const r = useFacilityPages<Event>(`facilities/${id}/history`);
+  if (compact)
+    return (
+      <section className="facility-snapshot-history">
+        <h2>History</h2>
+        <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+        {!r.loading && !r.error && !r.items.length && (
+          <p>No retained changes.</p>
+        )}
+        {r.items.map((e) => (
+          <article key={e.id}>
+            <p>{e.reason}</p>
+            <small>
+              <Stamp value={e.occurred_at} timezone={timezone} /> · {e.actor}
+            </small>
+          </article>
+        ))}
+        {r.next && <Button onClick={r.more}>More history</Button>}
+      </section>
+    );
   return (
     <>
       <h2>Immutable change history</h2>

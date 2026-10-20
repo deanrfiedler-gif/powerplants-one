@@ -7572,9 +7572,7 @@
         "src/shared/facilities/presentation.ts",
         "src/app/styles/facilities.css",
         "src/components/facility-detail.tsx",
-        "src/shared/facilities/reads.ts",
-        "tests/helpers/facilities-design.ts",
-        "tests/browser/facilities-accepted.spec.ts"
+        "src/shared/facilities/reads.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/facilities-design-r01/README.md",

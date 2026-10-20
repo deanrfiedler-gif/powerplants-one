@@ -6,9 +6,13 @@ Stable component: `facility-workspace`. CS-05 page-local composition; owner Dean
 
 `FacilityRegister`, `FacilityRecordLayout` and `FacilityFormEntry` bind existing controls on the four Facilities routes. The source/consumer bindings are in components.json. `tests/helpers/facilities-design.ts` supplies UI-only synthetic Bay 4 data and `tests/browser/facilities-accepted.spec.ts` exercises register, hierarchy, snapshot, loading/empty/error/denied, view-only, review, conflict and original-operation recovery. No production adapter or new seed is implied.
 
-## Desktop and mobile
+## Desktop
 
 Use the accepted ruled grid, native read-only snapshot dialog, shared shell and compact phone header. Desktop record details occupy 380 px; phone record cards and saved/proposed values stack at 390/320 px. Buttons, fields, tabs, lookup and feedback remain shared controls. No green fill is placed on navy.
+
+## Mobile
+
+At 390/320 px, use the compact phone header, stacked cards and comparison, with reachable record actions.
 
 ## Keyboard, state and authority
 

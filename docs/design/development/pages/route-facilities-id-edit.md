@@ -12,7 +12,7 @@ Desktop: register `1415:357195`, snapshot `1416:363644`, hierarchy `1416:365147`
 
 [Seventeen icon-free retained captures](../../../reference/ui/customers/facilities-design-r01/README.md) remain unchanged. No reference image is missing for the listed frames. Sources/History at full size, pin review, service-link dialogs, tablet record and mobile create are not drawn. [Earlier native evidence](../../../testing/evidence/cs05-native-r01/README.md) remains provenance, not the current visual target.
 
-## Desktop and tablet
+## Desktop
 
 Correct details opens Measurements and Growing context within the record. Expand Site and name, Structure or Source & notes for the other saved fields. Expand a source row to retain, replace or clear its reported note.
 

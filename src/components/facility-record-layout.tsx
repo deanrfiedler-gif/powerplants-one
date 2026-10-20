@@ -29,6 +29,122 @@ export function FacilityPath({ facility: f }: { facility: Facility }) {
     </>
   );
 }
+export function FacilitySnapshotDetails({
+  facility: f,
+}: {
+  facility: Facility;
+}) {
+  const summary = (
+    icon: "sites" | "equipment" | "engineering",
+    title: ReactNode,
+    detail: ReactNode,
+  ) => (
+    <div className="facility-snapshot-fact">
+      <ShellIcon name={icon} />
+      <div>
+        <strong>{title}</strong>
+        <small>{detail}</small>
+      </div>
+    </div>
+  );
+  return (
+    <>
+      <p className="facility-snapshot-classification">
+        <RegisterChip tone="neutral">
+          {displayValue(f.details.structure_type, "structure_type")}
+        </RegisterChip>
+        {displayValue(f.details.use, "use")} · {displayValue(f.details.crop)}
+      </p>
+      <section>
+        <h3>Identity & location</h3>
+        {summary(
+          "sites",
+          f.path.length ? (
+            <>
+              {displayValue(
+                f.details.parent_relationship,
+                "parent_relationship",
+              )}{" "}
+              <Link href={`/facilities/${f.path.at(-1)!.id}`}>
+                {f.path.at(-1)!.name}
+              </Link>
+            </>
+          ) : (
+            "Directly under site"
+          ),
+          "Nothing is inherited from the parent",
+        )}
+        {summary(
+          "sites",
+          displayValue(f.details.on_site_position),
+          <>
+            On-site position ·{" "}
+            {(f.details.location_source as Source | null)?.title ??
+              "Source not recorded"}
+          </>,
+        )}
+        {summary(
+          "sites",
+          f.pin
+            ? f.pin.state === "confirmed"
+              ? "Location pin checked"
+              : "Location pin proposed, not checked"
+            : "Location pin not recorded",
+          f.pin ? (
+            <a href={mapUrl(f.pin)!} target="_blank" rel="noopener noreferrer">
+              Open in maps to check
+            </a>
+          ) : (
+            "No coordinates recorded"
+          ),
+        )}
+      </section>
+      <section>
+        <h3>Structure, context and measurements</h3>
+        {summary(
+          "equipment",
+          <>
+            {displayValue(f.details.structure_type, "structure_type")} ·{" "}
+            {displayValue(f.details.greenhouse_cladding, "greenhouse_cladding")}{" "}
+            cladding
+          </>,
+          <>Bay count: {displayValue(f.details.bay_count)}</>,
+        )}
+        {summary(
+          "sites",
+          <>
+            {displayValue(f.details.use, "use")} ·{" "}
+            {displayValue(f.details.crop)}
+          </>,
+          <>
+            Observed {displayValue(f.details.context_observed_on)} ·{" "}
+            {(f.details.context_source as Source | null)?.title ??
+              "Source not recorded"}
+          </>,
+        )}
+        {summary(
+          "engineering",
+          <>
+            Footprint {measurement(f.details.footprint_m2, " m²")} ·{" "}
+            {measurement(f.details.length_m, " m")} ×{" "}
+            {measurement(f.details.width_m, " m")}
+          </>,
+          <>
+            {displayValue(f.details.measurement_basis, "measurement_basis")} ·
+            observed {displayValue(f.details.measurement_observed_on)} ·{" "}
+            {(f.details.measurement_source as Source | null)?.title ??
+              "Source not recorded"}
+          </>,
+        )}
+      </section>
+      <p className="facility-banner">
+        Structure, use, measurements and equipment service are separate facts.
+        None is inferred from another, and no area total, crop or price is
+        calculated from them. Access to this area follows the site’s access.
+      </p>
+    </>
+  );
+}
 export function FacilityRecordLayout({
   facility: f,
   children,
