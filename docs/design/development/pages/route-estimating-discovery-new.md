@@ -39,6 +39,8 @@ Use the existing shell, Estimating navigation group and page guide. At 1440 px r
 
 At 1024 px the existing wizard rule uses the 76 px rail; Summary opens a native dialog. Requirements uses two-column canonical context, full-width included work and half-width declarations. AreasEditor, FamilyOverview, SystemsEditor and ResponsibilitiesEditor retain their editing contracts.
 
+“Review site scope and effort details” also retains the existing work-tag facility membership and specialist-clarification controls through DiscoveryFields. These legacy scope declarations remain distinct from technical equipment families.
+
 ## Mobile
 
 At 390 and 320 CSS px use the shared compact phone header, wrapped radio rows, equal view tabs, viewed alternative and step selector. The footer retains Summary and Create workspace; the scroll region contains the same draft. Native dialogs contain keyboard focus, Escape closes dismissible states and closing restores the opener. Creating is not dismissible.

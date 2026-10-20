@@ -17,8 +17,9 @@ Scope ES-02, route `/estimating/discovery/new`. Reference: **PPO - Design**, pag
 | Browser page/state proof | Final 8/8 passed at desktop 1440×1000, tablet 1024×768 and phone 390/320×844. Covers selection/search, loading/empty/denied reads, direct Sales entry, validation focus, reviewed estimator/source, exact original retry through access loss, duplicate/denied outcomes and frozen creation. |
 | Search hint follow-up | 4/4 choose/search/wrapping cases passed again at 1440, 1024, 390 and 320 px after restoring the accepted shorter hint. |
 | Phone dialogs | 2/2 additional cases passed at 390×844 with mobile/touch emulation: recovery and busy/duplicate/denied outcomes. Dialog bounds and return of focus to answer-state openers are asserted. |
+| Existing journey compatibility | Four affected real-database journeys passed on desktop and again with 390×844 mobile/touch emulation, across targeted runs: workload entry, scoped creation with uncertain-outcome recovery, incomplete first revision, and exact accepted Sales brief creation/linking. The final phone recovery rerun passed after waiting for the original operation-receipt response. |
 | Naming | Passed; 78 parent requirement IDs preserved. |
-| Foundation | Passed: 78 requirements, 22 issued sources and 12,869 local links checked. Documentation assurance only. |
+| Foundation | Passed: 78 requirements, 22 issued sources and 12,889 local links checked. Documentation assurance only. |
 | Generated records | `build_status.py` rendered 61 fragments after merging the prerequisite; `build-ui-sequence.py` regenerated the temporary sequence (366 entries). No generated index was hand-edited. |
 | Standard `npm run build` | Failed before application compilation: Turbopack cannot resolve the dependency junction outside its filesystem root. No successful standard build is claimed. |
 | CI | Latest inspected page/prerequisite runs were queued or pending. No complete passing CI result is claimed. |
@@ -29,13 +30,15 @@ Initial browser retries exposed a five-second shared identity-shell hydration li
 
 The local real-database walkthrough also created the reviewed workspace with Morgan as estimator and the exact accepted Sales brief linked. The saved workspace remained Incomplete with the original owned follow-ups; the creator correctly received a view-only saved page. A direct persisted-result assertion confirmed one workspace, the chosen estimator, original creator, exact brief and unchanged Answered states/follow-up owners. This is synthetic end-to-end evidence, not business acceptance.
 
+The existing journey checks exposed omitted work-tag facility membership and specialist clarification in the replacement form. The site/effort dialog now reuses those existing `DiscoveryFields` controls through its documented `scope-and-work` variant. The checks retain their original scope, confirmation, persisted-revision and recovery assertions while entering through the accepted controls. Initial failed runs also exposed obsolete selectors and a receipt-response timing assumption; these were corrected before the passing targeted reruns. Existing-workspace Sales linking remains a separate unchanged journey.
+
 ## Local runtime and scope
 
 Existing installed dependencies were reused through a junction; no package installation or dependency change was made. Installed Next.js was 16.4.0, React 19.3.0, Playwright test 1.64.0 and TypeScript 6.0.3. The manifest declares newer patch versions for the first three. CI with the pinned lockfile is therefore still required.
 
 The standard Windows development launcher hit the same Turbopack junction boundary. An ignored local copy of the loopback launcher selected installed Webpack on port 3107 for browser verification. It was stopped before the standard build attempt. This is development-runtime evidence, not a compiled production build or deployment.
 
-Browser tests use stable synthetic API fixtures with real page controls. They prove requests and interaction states, not database transaction acceptance. Separate database tests supply that proof. No offline support, reload persistence, renderer proof or operational integration is claimed.
+The dedicated page/state browser tests use stable synthetic API fixtures with real page controls. They prove requests and interaction states, not database transaction acceptance. Separate database tests and the existing journey browser tests use the isolated synthetic database. No offline support, reload persistence, renderer proof or operational integration is claimed.
 
 ## Visual comparison
 

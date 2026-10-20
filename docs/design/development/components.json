@@ -919,7 +919,7 @@
         {
           "id": "area-editor-first-creation-review",
           "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
-          "actual": "Creation consumer and deterministic host fixtures added; owner visual review remains pending.",
+          "actual": "Creation consumer, deterministic host fixtures and real-database handovers added. Shared scope-and-work details retain facility membership and specialist clarification; owner visual review remains pending.",
           "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

@@ -5666,7 +5666,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-13",
+      "prepared_at": "2026-10-20",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "See docs/testing/evidence/es02-figma/README.md; bounded synthetic verification, not operational acceptance.",
@@ -5901,14 +5901,14 @@
           "section_id": "accepted-sales-workspace-link",
           "title": "Continue from the accepted Sales brief",
           "paragraphs": [
-            "The assigned receiver must also own and be allowed to edit the native workspace. Sales acceptance, Discovery confirmation and quotation approval remain separate. A later accepted Sales successor does not erase an earlier link."
+            "New workspace creation reviews the eligible estimating owner and exact accepted Sales brief together. The creator, Sales receiver and estimator can differ. Linking an existing workspace still requires its assigned Sales receiver to own and be allowed to edit it. Sales acceptance, Discovery confirmation and quotation approval remain separate."
           ],
           "steps": [
             "Open the accepted Sales handover and review its reported scope and current source status.",
-            "Open the native workspace, or choose Create native estimating workspace. Record and confirm Discovery independently. A saved creation returns here; it is not undone if linking later fails.",
-            "Choose Review workspace link, compare the Sales and native versions and record a reason. Link accepted brief.",
-            "If sources or the workspace changed, discard the old comparison and explicitly review the new one. If the outcome is uncertain, Check original link or retry the exact original before any new intent.",
-            "Open the linked workspace to see the attributed accepted Sales context and retain native discovery/cost history."
+            "For a new workspace, choose Create native estimating workspace. Record discovery independently and review the selected estimator and exact accepted brief before creating; the workspace and link are saved together.",
+            "For an existing workspace, choose Review workspace link, compare the Sales and native versions and record a reason, then choose Link accepted brief.",
+            "If sources or the workspace changed, review the new information explicitly. An unconfirmed creation uses Confirm original save outcome; an unconfirmed separate link uses Check original link. Both retain their exact original request.",
+            "Open the linked workspace to see the attributed accepted Sales context and retained native discovery/cost history."
           ],
           "headers": [],
           "rows": []
@@ -39185,7 +39185,8 @@
           "paragraphs": [
             "Choose the Site or record an explicit unknown/no-Site declaration. Work tags determine which questions apply; equipment families describe configuration separately.",
             "Use the state control beside each brief answer to review its source, owner and follow-up reason. The text itself is editable in Requirements. Each unresolved required answer, including an Answered Sales statement, needs an owned follow-up.",
-            "Growing areas, systems, responsibilities and evidence use the existing wizard editors. Do not infer technical suitability or verified quantities from a category."
+            "Growing areas, systems, responsibilities and evidence use the existing wizard editors. Do not infer technical suitability or verified quantities from a category.",
+            "Use Review site scope and effort details to assign work tags to selected facilities or record additional scope needing specialist clarification. These declarations use the existing wizard controls and remain separate from equipment families."
           ],
           "steps": [],
           "rows": [],
