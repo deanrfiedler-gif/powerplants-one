@@ -32,6 +32,8 @@ Shell references: top bar `35:138`, Service rail `198:3778`, side-menu component
 
 At the shared phone breakpoint (780 px), one 56 px compact header owns the view/count, search, Conversations where permitted, and Filter. At 320 px search and filter combine. P9 removes the two old toolbar rows; the first list row begins directly below the header. The 390 px row is 85 px, with name/preference, organisation/recorded role, one permitted status line and a chevron. Longer content may grow for readability, including at 320 px.
 
+The name and contact preference are top-aligned 20 px and 16 px line boxes, respectively, as drawn in `1395:151069` (row `1396:355730`). Baseline-aligning two 20 px lines of different font sizes can enlarge the title under different font metrics. Geometry verification waits for the local fonts and checks both line boxes as well as the exact 85 px compact row; the row remains a minimum height so longer content can grow.
+
 The shared modal supplies full-screen filters. Search, organisation and notices apply together; Reset changes draft inputs. The response count is not predicted for unsaved filters. A downward gesture of at least 80 px from the top, with less than 40 px horizontal movement, requests refresh; the filter panel retains a Refresh button as an accessible alternative. No offline support is claimed. Empty, loading and error compositions come from the three phone state frames. Failed/denied reads clear the rows and counts.
 
 ## Data, permissions and handovers

@@ -44,6 +44,8 @@ test("CS02 grid, compact phone list and menu at drawn and narrow widths", async 
     await expect(page.locator(".people-col-name a").first()).toHaveText(
       "Ava Singh",
     );
+    // Geometry must hold after the local Roboto font replaces any fallback.
+    await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("h1")).toHaveCount(1);
     expect(
       await page.evaluate(
@@ -72,6 +74,14 @@ test("CS02 grid, compact phone list and menu at drawn and narrow widths", async 
       expect(
         (await page.locator(".people-phone-row").first().boundingBox())!.height,
       ).toBe(85);
+      expect(
+        (await page.locator(".people-phone-title").first().boundingBox())!
+          .height,
+      ).toBe(20);
+      expect(
+        (await page.locator(".people-phone-title span").first().boundingBox())!
+          .height,
+      ).toBe(16);
       await expect(page.locator(".people-phone-row").first()).toHaveAttribute(
         "href",
         new RegExp(`/people/${peopleFixtureId(1)}`),

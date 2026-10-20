@@ -387,7 +387,8 @@
   }
   #ppo-people .people-phone-title {
     display: flex;
-    align-items: baseline;
+    /* The accepted row top-aligns its 20px name and 16px preference lines. */
+    align-items: flex-start;
     gap: 12px;
     justify-content: space-between;
   }
@@ -396,6 +397,7 @@
   }
   #ppo-people .people-phone-title span {
     font-size: 12px;
+    line-height: 16px;
     color: var(--text-secondary);
     max-width: 40%;
     overflow: hidden;
