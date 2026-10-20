@@ -6,6 +6,26 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
+## SV-04 implementation claim — 21 October 2026
+
+Owner: Dean Fiedler. Contributor: Codex appointment-detail session on its dedicated
+`codex/sv04-appointment-detail` worktree. Owner visual review of the build is pending.
+
+Build the accepted shared record composition from the live "PPO - Design" page
+`1187:50`, named version "Appointment detail — shared record layout, accepted".
+Refine this existing route and its appointment presentation; preserve booking and
+contact command recovery. Reuse the shell, compact phone header, shared buttons,
+status/read feedback, existing forms and job-pack handover. Show P4 site readiness
+and P5 lead time as unavailable pending their separate increments. Do not invent
+the undrawn demand-link, Parts-statement or permitted-exception dialogs.
+
+Expected changes: page-specific scheduling presentation/styles, bounded existing
+read projections if required, focused unit/browser fixtures, this contract and
+`scope-sv-04.md`, narrow register/guide/component bindings and a status fragment.
+Run Studio, lint, typecheck, unit, build, naming and foundation checks as applicable;
+compare desktop 1440, tablet 1024 and phone 390/320 plus supported states with the
+accepted frames. No migration, capability, dependency or deployment is planned.
+
 This page address exists in the inspected application source. Open it from a running app using an identity with the required access.
 
 1. Confirm the record reference and customer/site context in this record workspace.
