@@ -9,6 +9,8 @@ versioning: git
 
 # Create discovery workspace design — owner decision
 
+Implementation direction, 20 October 2026: [Reviewed discovery creation and initial ownership](discovery-creation-journey.md) authorises the Q1/Q4 prerequisite and a combined final creation/link review. The accepted visual reference below is retained. The earlier build exclusions describe the authority of the design acceptance itself; the later direction separately authorises the bounded command and database changes. Owner visual review of the implementation remains pending.
+
 On 18 October 2026 Dean accepted the [Discovery register design](discovery-register-figma-design.md) with its recommendations, including Q4: draw Create discovery workspace (`/estimating/discovery/new`) next. The built page (`NewDiscovery`, `NewDiscoveryContext` and `ProposalEditor` in `src/components/discovery-screens.tsx`) is one long form: an opportunity select, every discovery field, "Compare discovery proposal", then "Create discovery workspace". When it is opened from a Sales handover (`?sales_handover=`), the select is locked and `CreatingFromSalesBrief` (`src/components/sales-estimating-link.tsx`) shows the brief above the editor.
 
 Claude drew the page from these sources:

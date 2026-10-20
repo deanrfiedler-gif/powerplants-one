@@ -341,7 +341,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // rows, four identity types, eight outbox kinds and two default-denied duties. No seed, grant,
   // user or existing row changes; every class stays Off, and the hosted worker does not drain the
   // synthetic queue. Existing all-table runtime privileges cover the new tables.
-  if (latestMigrationVersion !== 109) throw Error("Review the existing-demo upgrade for this release.");
+  // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
+  // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
+  // grants, users or seeds change; existing runtime privileges and historical receipts remain.
+  if (latestMigrationVersion !== 113) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

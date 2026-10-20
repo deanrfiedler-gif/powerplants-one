@@ -41,6 +41,20 @@ Current main `0ebb26a3` was integrated before the correction. The [page contract
 
 At repair commit `53fb1a6a`, all four full browser suites pass the People cases: each desktop suite reports 503 passed / 21 skipped, and each mobile suite 445 passed / 79 skipped. CI also passes 950 unit tests, static/type/build checks, the PostgreSQL shards and other application lanes. The compiled desktop job nevertheless reaches its existing 60-minute job limit after reporting successful tests, leaving its aggregate red; a targeted retry was requested. Unchanged main's corresponding workflow passes, and no test or timeout was weakened. Current main `0909db97` adds claim/reservation records only; its generated-status conflict is resolved through the generator. Exact-run evidence and remaining gate results are distinguished on PR #625. Owner review remains pending.
 
+## ES-02 reviewed discovery creation prerequisite — 20 October 2026
+
+Dean authorised the long-term ES-02 creation journey while retaining the accepted Figma design. [Draft PR #637](https://github.com/deanrfiedler-gif/powerplants-one/pull/637), `codex/es02-discovery-creation-contract`, implements an optional reviewed initial estimator and exact accepted Sales binding in the existing creation transaction. Existing clients and separate-workspace linking retain their contracts. Migration 0113 replaces the binding evidence guard only; it adds no tables, seed, capability or grant. The [contract](contracts/discovery-creation.md) separates creator, Sales receiver and assigned estimator, and retains current-access original recovery.
+
+The [execution record](testing/evidence/discovery-creation/README.md) records verification in progress and local Windows memory/connection limits. The accepted page implementation, paired responsive comparison, independent review and owner visual review remain pending. This draft is neither acceptance nor deployment.
+
+## ES-02 creation CI evidence and integration — 20 October 2026
+
+[Contract PR #637](https://github.com/deanrfiedler-gif/powerplants-one/pull/637) passed all 22 workflows at `b48c8af7ce8d3c095ffcb93ea299a2f2a832d369`: 72 checks passed, including all seven reported required checks, with one intentional PT-27 skip. [Page PR #641](https://github.com/deanrfiedler-gif/powerplants-one/pull/641) passed all 15 workflows at `9df19416757676bc199dc31f3100c86341815721`: 65 checks passed with the same intentional skip. Its Linux evidence includes all 955 unit tests, lint, TypeScript, the standard build and desktop/mobile browser suites. The retained Windows limitations remain accurate local observations.
+
+GitHub records #641 merged into the contract branch at `0369e3349b86989645f913b005ad37ae071dee0d`, rather than into `main`. The combined change therefore continues in #637. Initial integration with `main` required regenerating the status document from both sets of fragments. After Discovery costing and Access readiness landed, the shared estimation component register and guide also needed additive conflict resolution: both creation and costing consumers, fixtures, dependencies and pending review items were preserved. No application conflict required a manual resolution. Earlier passing results belong to their exact source commits. Verification of the combined integration head remains pending and is reported in #637.
+
+The [page contract](design/development/pages/route-estimating-discovery-new.md) and [visual evidence](testing/evidence/create-discovery-workspace/README.md) retain the accepted design references, adaptations and open questions. Owner visual review and independent review remain pending. No deployment or business acceptance is implied.
+
 ## Discovery costing ES-02 implementation — 20 October 2026
 
 Dean requested implementation of the accepted Discovery costing design at `/estimating/discovery/[id]/costing`. The dedicated `codex/discovery-costing-es02` branch claims the page component, page-local presentation and tests, its shell route binding, and the corresponding design register, guide and generated status/build-sequence entries. The source is the [accepted design decision](decisions/discovery-costing-figma-design.md), Figma file "PPO - Design", page `1431:809`, named version "Discovery costing — accepted".
@@ -48,6 +62,14 @@ Dean requested implementation of the accepted Discovery costing design at `/esti
 The implementation composes the saved discovery comparison, manual proposal grid/cards, source/date links, summary delta, review/adopt dialog and stale/pending/uncertain/legacy/permission states around the existing costing commands. The page contract, guide and shared-component consumer bindings are maintained in the same change. First costing without a saved estimate retains its existing screen. Native commands, validation, arithmetic, permissions and schema are unchanged.
 
 [Execution evidence](testing/evidence/discovery-costing/README.md) distinguishes browser fixtures from database proof and records local Windows limits. [PR #631](https://github.com/deanrfiedler-gif/powerplants-one/pull/631) is the review vehicle. Owner visual review is pending; code delivery, functional proof and deployment remain separate. The undrawn editor, unavailable Cost types and workspace tab handovers remain explicit review items in the page contract.
+
+## ES-02 first discovery creation page — 20 October 2026
+
+The existing `/estimating/discovery/new` route now has the accepted choose-opportunity and five-step first-discovery composition in an isolated page change. The [page contract](design/development/pages/route-estimating-discovery-new.md) records **PPO - Design**, **Create discovery workspace — accepted**, page `1414:356570`, frame map, reused controls and adaptations. It depends on [reviewed creation and initial ownership](decisions/discovery-creation-journey.md): the first workspace, estimator and exact accepted Sales link are reviewed together; Sales statements remain reported context requiring independent discovery confirmation.
+
+The same change updates the register, Australian English guide, component consumer/state bindings and status. [Execution evidence](testing/evidence/create-discovery-workspace/README.md) separates unit, type, browser, visual and environment results. Owner visual review remains pending; no deployment, production readiness or new business acceptance is claimed.
+
+Follow-up verification restored the shared work-tag facility membership and specialist-clarification controls inside the site/effort dialog, retained started-step status and corrected the 320 px search hint. The existing workload, scoped-create, incomplete-first-revision and Sales handover tests now use the accepted controls and atomic creation contract; the shared ES-02 guide distinguishes new creation from separately linking an existing workspace. CI results and the saved wizard’s pre-existing view-only owner-label limitation remain explicit in the execution evidence.
 
 ## BC-06 Service findings backend continuation — 20 October 2026
 

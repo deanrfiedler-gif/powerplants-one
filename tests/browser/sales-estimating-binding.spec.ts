@@ -5,10 +5,11 @@ import { discoveryInput } from "../helpers/estimating-discovery";
 import { discoveryDefinition } from "../../src/estimating/discovery-definition";
 import { emptyHandover } from "../../src/sales/handover-model";
 test.describe.configure({ timeout: 120000 });
+const iconFreeCaptureStyle = ".ppo-fa, .svg-inline--fa, [data-prefix], .es02-icon, .product-icon, .shell-icon, i[class*='fa-'] { visibility: hidden !important; }";
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
+    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin },
     data: body,
   });
   expect(r.ok(), await r.text()).toBe(true);
@@ -86,10 +87,11 @@ async function createNative(page: Page, opportunity: string) {
   await call(page, "estimating/workspaces", input);
   return input;
 }
-test("LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery", async ({
+test("LC-13 reviewed creation atomically links the exact accepted Sales brief and recovers the original outcome", async ({
   page,
 }, info) => {
   const f = await fixture(page);
+  const acceptedSales = await call(page, `sales/handovers/${f.id}`);
   await page.goto(`/sales/handoffs/estimating/${f.id}`);
   await page
     .getByRole("link", {
@@ -97,9 +99,9 @@ test("LC-13 create native Discovery from accepted Sales and return for an explic
       exact: true,
     })
     .click();
-  await expect(
-    page.getByLabel("Existing opportunity", { exact: true }),
-  ).toBeDisabled();
+  await expect(page.getByRole("link", { name: f.o.title, exact: true })).toHaveAttribute("href", `/sales/opportunities/${f.o.id}`);
+  await expect(page.getByRole("radio")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Choose another opportunity", exact: true })).toHaveCount(0);
   await page
     .getByText("Reported Sales problem and scope", { exact: true })
     .click();
@@ -111,6 +113,7 @@ test("LC-13 create native Discovery from accepted Sales and return for an explic
       page,
       `estimating/workspaces/form-options?opportunity_id=${f.o.id}`,
     );
+  await page.getByRole("button", { name: "Review site scope and effort details", exact: true }).click();
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .check();
@@ -141,10 +144,17 @@ test("LC-13 create native Discovery from accepted Sales and return for an explic
   await page
     .getByLabel("Effort source", { exact: true })
     .fill("SYN independent estimator declaration");
+  await page.getByRole("dialog").getByRole("button", { name: "Done", exact: true }).click();
   for (const a of input.answers) {
     const q = discoveryDefinition.questions.find(
       (q) => q.id === a.question_id,
     )!;
+    const briefQuestion = ["Q01", "Q02", "Q03"].includes(q.id);
+    const step = briefQuestion ? "Requirements" : ["Q05", "Q06"].includes(q.id) ? "Configuration" : "Scope & delivery";
+    const selector = page.getByLabel("Discovery step", { exact: true });
+    if (await selector.isVisible()) await selector.selectOption(step);
+    else await page.getByRole("navigation", { name: "Discovery steps", exact: true }).getByRole("button").filter({ hasText: step }).click();
+    if (briefQuestion) await page.getByRole("button", { name: `Review ${q.id} state, source and follow-up`, exact: true }).click();
     await page
       .getByLabel(`${q.id} answer state`, { exact: true })
       .selectOption("Confirmed");
@@ -163,16 +173,12 @@ test("LC-13 create native Discovery from accepted Sales and return for an explic
     await page
       .getByLabel(`${q.id} source`, { exact: true })
       .fill("SYN independently reviewed native source");
+    if (briefQuestion) await page.getByRole("dialog").getByRole("button", { name: "Done", exact: true }).click();
   }
-  await page
-    .getByLabel("Discovery change reason", { exact: true })
-    .fill("SYN independent native creation");
-  await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
-    .click();
-  await expect(
-    page.getByRole("region", { name: "Discovery comparison", exact: true }),
-  ).toBeVisible();
+  await page.locator(".es02-bottom").getByRole("button", { name: /^Create (discovery )?workspace$/ }).click();
+  const review = page.getByRole("dialog", { name: "Create discovery workspace", exact: true });
+  await review.getByLabel("Discovery change reason", { exact: true }).fill("SYN independent native creation");
+  await expect(review).toContainText("exact acceptance linked with this creation");
   for (const checkbox of await page
     .getByRole("checkbox", { name: /^I confirm Q/ })
     .all())
@@ -186,32 +192,25 @@ test("LC-13 create native Discovery from accepted Sales and return for an explic
     expect((await route.fetch()).ok()).toBe(true);
     await route.abort("failed");
   });
-  await page
+  await review
     .getByRole("button", { name: "Create discovery workspace", exact: true })
     .click();
-  await page
+  await page.getByRole("dialog", { name: "Creation outcome not confirmed", exact: true })
     .getByRole("button", { name: "Confirm original save outcome", exact: true })
     .click();
   await expect(page).toHaveURL(
     new RegExp(`/sales/handoffs/estimating/${f.id}`),
   );
   expect(posts).toBe(1);
-  await expect(
-    page.getByRole("button", { name: "Review workspace link", exact: true }),
-  ).toBeVisible();
-  expect(
-    (await call(page, `estimating/workspaces/${workspace}/sales-briefs`)).items,
-  ).toHaveLength(0);
+  await expect(page.getByRole("button", { name: "Review workspace link", exact: true })).toHaveCount(0);
+  const linked = (await call(page, `estimating/workspaces/${workspace}/sales-briefs`)).items;
+  expect(linked).toHaveLength(1);
+  expect(linked[0].handover_id).toBe(f.id);
+  expect(linked[0].acceptance_event_id).toBe(acceptedSales.history.find((event: { action: string }) => event.action === "Accept").id);
+  const salesAfter = await call(page, `sales/handovers/${f.id}`);
+  expect(salesAfter.record).toEqual(acceptedSales.record);
+  expect(salesAfter.history).toEqual(acceptedSales.history);
   const before = await call(page, `estimating/workspaces/${workspace}`);
-  await page
-    .getByRole("button", { name: "Review workspace link", exact: true })
-    .click();
-  await page
-    .getByLabel("Link reason", { exact: true })
-    .fill("SYN reviewed accepted brief beside native scope");
-  await page
-    .getByRole("button", { name: "Link accepted brief", exact: true })
-    .click();
   await expect(
     page.getByRole("heading", { name: /Current accepted brief linked/ }),
   ).toBeVisible();
@@ -242,7 +241,7 @@ test("LC-13 create native Discovery from accepted Sales and return for an explic
   await page
     .getByRole("heading", { name: "Accepted Sales context", exact: true })
     .scrollIntoViewIfNeeded();
-  await page.screenshot({
+  await page.screenshot({ style: iconFreeCaptureStyle,
     path: info.outputPath("accepted-sales-context.png"),
   });
 });
@@ -319,7 +318,7 @@ test("LC-13 stale reviewed link is refused and accepted lost-response link survi
   await expect(
     page.getByRole("button", { name: "Check original link", exact: true }),
   ).toBeVisible();
-  await page.screenshot({
+  await page.screenshot({ style: iconFreeCaptureStyle,
     path: info.outputPath("estimating-link-recovery.png"),
   });
   page.on("dialog", (dialog) => dialog.accept());

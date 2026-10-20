@@ -7057,7 +7057,7 @@
       "title": "Create discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Choose an eligible opportunity, author the first discovery with shared wizard controls, then review its estimator and exact accepted Sales brief link together. Original-request recovery and all drawn creation states remain explicit.",
       "path": "/estimating/discovery/new",
       "source_paths": [
         "src/app/(business)/estimating/discovery/new/page.tsx"
@@ -7083,11 +7083,20 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/decisions/create-discovery-workspace-figma-design.md"
+        "docs/decisions/create-discovery-workspace-figma-design.md",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation-parts.tsx",
+        "src/components/discovery-creation-model.ts",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/estimating/discovery-creation-context.ts",
+        "src/estimating/discovery-creation-reads.ts",
+        "docs/decisions/discovery-creation-journey.md",
+        "docs/testing/evidence/create-discovery-workspace/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Implemented; page unit, scoped read, eight browser and two phone dialog checks passed. Evidence and baseline limits: docs/testing/evidence/create-discovery-workspace/README.md. Prerequisite transaction proof, complete CI and owner visual review remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
