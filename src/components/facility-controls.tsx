@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   api,
   ErrorNotice,
@@ -19,6 +19,7 @@ import {
   type SourceInput,
 } from "../shared/facilities/definition";
 import type { RegisterRow } from "../shared/facilities/reads";
+import type { FacilityViewCounts } from "../shared/facilities/presentation";
 
 export function reviewOf(p: Preview): Review {
   return {
@@ -35,12 +36,14 @@ export function SourceField({
   value,
   onChange,
   existing = [],
+  compact = false,
 }: {
   name: string;
   label: string;
   value: SourceInput | null;
   onChange: (s: SourceInput | null) => void;
   existing?: Source[];
+  compact?: boolean;
 }) {
   const note =
     value?.kind === "reported_note"
@@ -51,7 +54,7 @@ export function SourceField({
           note: null,
           source_date: null,
         };
-  return (
+  const content = (
     <fieldset className="facility-source">
       <legend>{label}</legend>
       <SelectField
@@ -130,46 +133,105 @@ export function SourceField({
       </small>
     </fieldset>
   );
+  return compact ? (
+    <details className="facility-source-disclosure">
+      <summary>
+        {label}:{" "}
+        {value?.kind === "reported_note"
+          ? value.title || "New reported note"
+          : value?.kind === "existing_source"
+            ? (existing.find((s) => s.id === value.id)?.title ??
+              "Retained source")
+            : "Not recorded"}
+      </summary>
+      {content}
+    </details>
+  ) : (
+    content
+  );
 }
 export function Comparison({
   preview,
   confirm,
   onConfirm,
   onCancel,
+  requireAcknowledgement = false,
+  title,
+  reason,
 }: {
   preview: Preview;
   confirm: () => void;
   onConfirm?: boolean;
   onCancel: () => void;
+  requireAcknowledgement?: boolean;
+  title?: string;
+  reason?: string;
 }) {
+  const [acknowledged, setAcknowledged] = useState(false);
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
+  const groups = requireAcknowledgement
+    ? [
+        {
+          label: "Changed",
+          rows: preview.rows.filter(
+            (r) => !preview.clearing.some((c) => c.field === r.field),
+          ),
+        },
+        {
+          label: "Will be cleared",
+          rows: preview.rows.filter((r) =>
+            preview.clearing.some((c) => c.field === r.field),
+          ),
+        },
+      ]
+    : [{ label: "Changes", rows: preview.rows }];
   return (
     <section
+      ref={ref}
       className="facility-comparison"
       aria-label="Review facility changes"
       tabIndex={-1}
     >
-      <h2>Review these changes</h2>
+      <h2>{title ?? "Review these changes"}</h2>
       <div className="facility-table-scroll">
         <table>
           <thead>
             <tr>
               <th>Field</th>
-              <th>Saved</th>
+              <th>Saved · version {preview.version}</th>
               <th>Proposed</th>
             </tr>
           </thead>
           <tbody>
-            {preview.rows.map((r) => (
-              <tr key={r.field}>
-                <th>
-                  {r.label}
-                  {preview.clearing.some((c) => c.field === r.field)
-                    ? " — will be cleared"
-                    : ""}
-                </th>
-                <td>{displayValue(r.before, r.field)}</td>
-                <td>{displayValue(r.after, r.field)}</td>
-              </tr>
+            {groups.map((group) => (
+              <Fragment key={group.label}>
+                {requireAcknowledgement && group.rows.length > 0 && (
+                  <tr className="facility-group-band">
+                    <th colSpan={3}>
+                      {group.label} · {group.rows.length}
+                    </th>
+                  </tr>
+                )}
+                {group.rows.map((r) => (
+                  <tr key={r.field}>
+                    <th>
+                      {r.label}
+                      {preview.clearing.some((c) => c.field === r.field)
+                        ? " — will be cleared"
+                        : ""}
+                    </th>
+                    <td data-label="Saved">
+                      {displayValue(r.before, r.field)}
+                    </td>
+                    <td data-label="Proposed">
+                      {displayValue(r.after, r.field)}
+                    </td>
+                  </tr>
+                ))}
+              </Fragment>
             ))}
           </tbody>
         </table>
@@ -200,7 +262,7 @@ export function Comparison({
         </ul>
       )}
       {preview.dependencies && (
-        <p>
+        <p className="facility-parent-comparison">
           Saved parent path:{" "}
           {preview.dependencies.parent_before
             .map((a) => `${a.name} (${a.id})`)
@@ -210,6 +272,26 @@ export function Comparison({
           {preview.dependencies.parent_after
             .map((a) => `${a.name} (${a.id})`)
             .join(" / ") || "Directly under Site"}
+        </p>
+      )}
+      {requireAcknowledgement && (
+        <label className="facility-acknowledgement">
+          <input
+            type="checkbox"
+            checked={acknowledged}
+            onChange={(e) => setAcknowledged(e.target.checked)}
+          />
+          <span>
+            I have reviewed the saved and proposed values
+            {preview.clearing.length > 0 &&
+              ", including the values that will be cleared"}
+            .
+          </span>
+        </label>
+      )}
+      {reason && (
+        <p className="facility-review-reason">
+          <strong>Reason</strong> {reason}
         </p>
       )}
       {preview.acknowledgements.includes("adopt_older_observation") && (
@@ -228,7 +310,11 @@ export function Comparison({
         <button type="button" className="secondary" onClick={onCancel}>
           Back to proposal
         </button>
-        <button type="button" onClick={confirm} disabled={onConfirm}>
+        <button
+          type="button"
+          onClick={confirm}
+          disabled={onConfirm || (requireAcknowledgement && !acknowledged)}
+        >
           Confirm these changes
         </button>
       </div>
@@ -371,6 +457,8 @@ export function useFacilityPages<T extends { id: string }>(
     next: string | null;
     total?: number;
     can_create?: boolean;
+    view_counts?: FacilityViewCounts;
+    read_at?: string;
     error: unknown;
     loading: boolean;
   }>({ binding: "", items: [], next: null, error: null, loading: true });
@@ -386,7 +474,11 @@ export function useFacilityPages<T extends { id: string }>(
       if (!path) return;
       try {
         const data = await api<
-          Envelope<T> & { total?: number; can_create?: boolean }
+          Envelope<T> & {
+            total?: number;
+            can_create?: boolean;
+            view_counts?: FacilityViewCounts;
+          }
         >(
           `${path}${path.includes("?") ? "&" : "?"}${current.cursor ? `cursor=${encodeURIComponent(current.cursor)}` : ""}`,
         );
@@ -400,6 +492,8 @@ export function useFacilityPages<T extends { id: string }>(
           next: data.next_cursor,
           total: data.total,
           can_create: data.can_create,
+          view_counts: data.view_counts,
+          read_at: data.observed_at,
           error: null,
           loading: false,
         }));
@@ -431,8 +525,10 @@ export function useFacilityPages<T extends { id: string }>(
     };
   }, [binding, path, current.cursor, current.revision]);
   const data = state.binding === binding ? state : null;
-  const reload = () =>
+  const reload = () => {
+    setState((old) => ({ ...old, loading: true, error: null }));
     setRequest({ binding, cursor: null, revision: current.revision + 1 });
+  };
   useEffect(() => {
     window.addEventListener("focus", reload);
     const t = setInterval(reload, 30000);
@@ -446,6 +542,8 @@ export function useFacilityPages<T extends { id: string }>(
     next: data?.next ?? null,
     total: data?.total,
     can_create: data?.can_create,
+    view_counts: data?.view_counts,
+    read_at: data?.read_at,
     error: data?.error,
     loading: !!path && (!data || data.loading),
     reload,

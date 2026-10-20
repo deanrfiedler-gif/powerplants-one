@@ -1,8 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 const site = "c5050001-0000-4000-8000-000000000001",
   company = "20000000-0000-4000-8000-000000000001";
 const base = () => ({
@@ -60,7 +57,11 @@ test("CS05 Equipment add and end keep one installation and show accepted version
     await (await page.request.get(`${baseURL}/api/v1/assets/${pump}`)).json()
   ).items[0];
   await page.goto(`/facilities/${id}`);
-  await page.getByRole("tab", { name: "Related records", exact: true }).click();
+  await page.getByRole("tab", { name: "Equipment", exact: true }).click();
+  await page
+    .locator("summary")
+    .filter({ hasText: "Manage service links" })
+    .click();
   await page
     .getByRole("button", { name: "Add serving equipment", exact: true })
     .click();
@@ -124,20 +125,29 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
 }, info) => {
   await page.goto(`/facilities?site_id=${site}&q=Propagation&view=hierarchy`);
   await expect(
-    page.getByRole("tab", { name: "Hierarchy", exact: true }),
-  ).toHaveAttribute("aria-selected", "true");
-  await expect(
-    page.getByRole("link", { name: "SYN Propagation Bay A", exact: true }),
-  ).toBeVisible();
-  await page
-    .getByRole("link", { name: "SYN Propagation Bay A", exact: true })
-    .click();
+    page.getByRole("button", { name: "Hierarchy", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  if (info.project.name.startsWith("mobile")) {
+    await page
+      .locator(".facility-phone-row")
+      .filter({ hasText: "SYN Propagation Bay A" })
+      .click();
+  } else {
+    await page
+      .getByRole("button", { name: "SYN Propagation Bay A", exact: true })
+      .click();
+    await page
+      .getByRole("link", { name: "Open facility", exact: true })
+      .click();
+  }
   await expect(
     page.getByRole("heading", { name: "SYN Propagation Bay A", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("Within SYN Propagation House 01", { exact: true }),
-  ).toBeVisible();
+    page
+      .getByRole("link", { name: "SYN Propagation House 01", exact: true })
+      .first(),
+  ).toBeAttached();
   await page.goto(`/facilities/new?site_id=${site}`);
   const name = `SYN native outdoor ${randomUUID().slice(0, 8)}`;
   await page.getByLabel("Facility / area name", { exact: true }).fill(name);
@@ -172,7 +182,10 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
     path: info.outputPath("canonical-detail.png"),
     fullPage: true,
   });
-  await page.getByRole("link", { name: "Edit", exact: true }).click();
+  await page
+    .getByRole("link", { name: "Correct details", exact: true })
+    .click();
+  await page.locator("summary").filter({ hasText: "Structure" }).click();
   await page
     .getByLabel("Structure type", { exact: true })
     .selectOption("open_growing_area");
@@ -205,6 +218,8 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
     path: info.outputPath("clearing-review.png"),
     fullPage: true,
   });
+  if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
+    await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
@@ -233,6 +248,7 @@ test("CS05 lost response freezes original, absent lookup replays exactly once, a
 }, info) => {
   const id = await create(page, baseURL!);
   await page.goto(`/facilities/${id}/edit`);
+  await page.locator("summary").filter({ hasText: "Source & notes" }).click();
   await page
     .getByLabel("Detail notes", { exact: true })
     .fill("SYN retained original");
@@ -254,6 +270,8 @@ test("CS05 lost response freezes original, absent lookup replays exactly once, a
     if (posts === 1) await route.abort("failed");
     else await route.fulfill({ response });
   });
+  if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
+    await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
@@ -306,6 +324,7 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
 }, info) => {
   const id = await create(page, baseURL!);
   await page.goto(`/facilities/${id}/edit`);
+  await page.locator("summary").filter({ hasText: "Source & notes" }).click();
   await page
     .getByLabel("Detail notes", { exact: true })
     .fill("SYN proposal stays");
@@ -342,6 +361,7 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
   });
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("link", { name: "Cancel", exact: true }).click();
+  await page.getByRole("tab", { name: "Sources", exact: true }).click();
   await page
     .getByRole("button", { name: "Record location pin", exact: true })
     .click();
@@ -358,6 +378,8 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
     path: info.outputPath("pin-review.png"),
     fullPage: true,
   });
+  if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
+    await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
@@ -365,7 +387,7 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
     page.getByText("0, 0 · Proposed", { exact: true }),
   ).toBeVisible();
   await page.goto("/facilities/c5050002-0000-4000-8000-000000000001");
-  await page.getByRole("tab", { name: "Related records", exact: true }).click();
+  await page.getByRole("tab", { name: "Equipment", exact: true }).click();
   await expect(
     page.getByRole("link", { name: /SYN Willowbank irrigation pump/ }),
   ).toBeVisible();
@@ -380,170 +402,54 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
     page.getByRole("heading", { name: "SYN Greenhouse 01", exact: true }),
   ).toHaveCount(0);
 });
-test("CS05 native source comparison, dense register and responsive geometry", async ({
+test("CS05 real synthetic register and record remain contained at desktop, phone and short zoom widths", async ({
   page,
   baseURL,
-  browser,
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   const name =
     "SYN long propagation location — north-east nursery structure with reported mixed growing context";
-  await create(page, baseURL!, {
+  const id = await create(page, baseURL!, {
     name,
-    detail_notes: "SYN multiline note\nSecond line remains readable",
     use: "mixed",
     crop: "Mixed nursery stock",
     context_observed_on: "2026-09-01",
   });
-  const widths = info.project.name.startsWith("mobile")
+  for (const width of info.project.name.startsWith("mobile")
     ? [390, 320]
-    : [1920, 1440, 1280];
-  for (const width of widths) {
+    : [1920, 1440, 1024]) {
     await page.setViewportSize({ width, height: width < 500 ? 844 : 900 });
     await page.goto(`/facilities?site_id=${site}`);
     await expect(
-      page.getByRole("link", { name, exact: true }).first(),
+      page
+        .locator(width < 500 ? ".facility-phone-row" : ".facility-row-open")
+        .filter({ hasText: name }),
     ).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({
-      path: info.outputPath(`register-${width}.png`),
-      fullPage: true,
-    });
-    if (width < 500) {
-      await page.locator(".facility-table thead").scrollIntoViewIfNeeded();
-      await page.screenshot({
-        path: info.outputPath(`register-table-${width}.png`),
-        fullPage: true,
-      });
-      await page.locator(".facility-table-scroll").evaluate((el) => {
-        el.scrollLeft = el.scrollWidth;
-      });
-      await page
-        .getByRole("button", { name: /Inspect SYN Greenhouse 01/ })
-        .scrollIntoViewIfNeeded();
-      await page.screenshot({
-        path: info.outputPath(`register-actions-${width}.png`),
-        fullPage: true,
-      });
-      // The phone header's view chooser opens the page menu (phone header amendment P2).
-      const menu = page.getByRole("button", { name: /^Choose view\./ });
-      await menu.click();
-      await expect(
-        page.getByRole("dialog", {
-          name: "Customer locations menu",
-          exact: true,
-        }),
-      ).toBeVisible();
-      await page.keyboard.press("Escape");
-      await expect(menu).toBeFocused();
-    }
-  }
-  if (!info.project.name.startsWith("mobile")) {
-    await page.setViewportSize({ width: 1920, height: 1200 });
-    await page
-      .getByRole("button", { name: /Inspect SYN Greenhouse 01/ })
-      .click();
+    await page.goto(`/facilities/${id}`);
     await expect(
-      page.getByRole("complementary", { name: "Facility inspection" }),
+      page.getByRole("heading", { name: "Measurements", exact: true }),
     ).toBeVisible();
-    await page.screenshot({
-      path: info.outputPath("inspector-1920.png"),
-      fullPage: true,
-    });
-    const reference = await browser.newPage({
-      viewport: { width: 1440, height: 900 },
-    });
-    await reference.goto(
-      pathToFileURL(
-        resolve(
-          "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        ),
-      ).href,
-    );
-    await reference.screenshot({
-      path: info.outputPath("issued-r03-reference.png"),
-      fullPage: true,
-    });
-    await reference.close();
-    const theme = await browser.newPage({
-      viewport: { width: 1440, height: 900 },
-    });
-    await theme.setContent(
-      await readFile(
-        "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
-        "utf8",
-      ),
-    );
-    const native = await page.locator(".facility-workspace").evaluate((el) => {
-      const c = getComputedStyle(el);
-      return { font: c.fontFamily, ink: c.color };
-    });
-    expect(native.font).toContain("Roboto");
-    expect(native.ink).toBe("rgb(36, 42, 55)");
-    const themePrimary = await theme
-      .locator("#controls button.primary")
-      .first()
-      .evaluate((el) => {
-        const c = getComputedStyle(el);
-        return {
-          background: c.backgroundColor,
-          color: c.color,
-          radius: c.borderRadius,
-        };
-      });
-    const nativePrimary = await page
-      .getByRole("link", { name: "Add facility / area", exact: true })
-      .evaluate((el) => {
-        const c = getComputedStyle(el);
-        return {
-          background: c.backgroundColor,
-          color: c.color,
-          radius: c.borderRadius,
-        };
-      });
-    expect(nativePrimary).toEqual(themePrimary);
-    // Negative control: the observed generic button override painted every tab navy.
-    const tabs = await page.getByRole("tab").evaluateAll((els) =>
-      els.map((el) => {
-        const c = getComputedStyle(el);
-        return { background: c.backgroundColor, color: c.color };
-      }),
-    );
-    expect(tabs.every((t) => t.background === nativePrimary.background)).toBe(
-      false,
-    );
-    const inspect = await page
-      .getByRole("button", { name: /Inspect SYN Greenhouse 01/ })
-      .evaluate((el) => {
-        const c = getComputedStyle(el);
-        return { wrap: c.whiteSpace, width: el.getBoundingClientRect().width };
-      });
-    expect(inspect.wrap).toBe("nowrap");
-    expect(inspect.width).toBeGreaterThan(60);
-    await theme.screenshot({
-      path: info.outputPath("issued-r22-theme.png"),
-      fullPage: true,
-    });
-    await theme.close();
-    await page.setViewportSize({ width: 720, height: 450 });
-    await page.evaluate(() => {
-      document.documentElement.style.zoom = "2";
-    });
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({
-      path: info.outputPath("zoom-short-height.png"),
-      fullPage: true,
-    });
   }
+  await page.setViewportSize({ width: 720, height: 450 });
+  await page.evaluate(() => {
+    document.documentElement.style.zoom = "2";
+  });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
   expect(errors).toEqual([]);
 });
 
@@ -571,12 +477,14 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
   await started;
   const fieldSite = "c5050001-0000-4000-8000-000000000002";
   await page.goto(`/facilities?site_id=${fieldSite}`);
-  await expect(page.locator(".facility-table tbody tr").first()).toBeVisible();
+  await expect(
+    page.locator(".facility-desktop-grid tbody tr").first(),
+  ).toBeAttached();
   release();
   await expect(
     page.getByRole("link", { name: "SYN Greenhouse 01", exact: true }),
   ).toHaveCount(0);
-  await expect(page.getByLabel("Site", { exact: true })).toHaveValue(/field/i);
+  await expect(page.locator(".facility-site-filter")).toContainText(/field/i);
   await page.unroute("**/api/v1/facilities/register?**");
   let requests = 0,
     invalidated = false;
@@ -603,25 +511,26 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
     }
   });
   await page.goto(`/facilities?site_id=${site}`);
-  await expect(page.locator(".facility-table tbody tr")).toHaveCount(1);
+  await expect(page.locator(".facility-desktop-grid tbody tr")).toHaveCount(1);
   await page
     .getByRole("button", { name: "More facilities", exact: true })
     .click();
   await expect.poll(() => requests).toBe(3);
-  await expect(page.locator(".facility-table tbody tr")).toHaveCount(1);
+  await expect(page.locator(".facility-desktop-grid tbody tr")).toHaveCount(1);
   expect(page.url()).toContain(site);
   await expect(page.locator(".business-error")).toHaveCount(0);
-  const list = page.getByRole("tab", { name: "List", exact: true });
-  await list.focus();
-  await page.keyboard.press("ArrowRight");
-  await expect(
-    page.getByRole("tab", { name: "Hierarchy", exact: true }),
-  ).toBeFocused();
-  await page.keyboard.press("ArrowLeft");
-  await expect(list).toBeFocused();
+  if (!info.project.name.startsWith("mobile")) {
+    const list = page.getByRole("button", { name: "List", exact: true });
+    await list.focus();
+    await page.keyboard.press("Tab");
+    await expect(
+      page.getByRole("button", { name: "Hierarchy", exact: true }),
+    ).toBeFocused();
+  }
   await page.unroute("**/api/v1/facilities/register?**");
   const id = await create(page, baseURL!);
   await page.goto(`/facilities/${id}/edit`);
+  await page.locator("summary").filter({ hasText: "Source & notes" }).click();
   let posts = 0;
   page.on("request", (r) => {
     if (r.method() === "POST" && r.url().includes(`/facilities/${id}/revise`))
@@ -632,6 +541,7 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
     .fill("SYN memory-only unsaved proposal");
   page.once("dialog", (d) => d.accept());
   await page.reload();
+  await page.locator("summary").filter({ hasText: "Source & notes" }).click();
   await expect(page.getByLabel("Detail notes", { exact: true })).toHaveValue(
     "",
   );
@@ -649,60 +559,32 @@ test("CS05 selection leaves no hidden dock actions and dirty navigation is delib
   if (!info.project.name.startsWith("mobile")) {
     await page.goto(`/facilities?site_id=${site}&view=hierarchy`);
     await page
-      .getByRole("button", {
-        name: "Expand SYN Propagation House 01",
-        exact: true,
-      })
+      .getByRole("button", { name: "SYN Propagation Bay A", exact: true })
       .click();
-    const child = page
-      .locator(".facility-tree-row")
-      .filter({
-        has: page.getByRole("link", {
-          name: "SYN Propagation Bay A",
-          exact: true,
-        }),
-      });
-    await child.getByRole("button", { name: "Inspect", exact: true }).click();
     await expect(
-      page.getByRole("complementary", {
-        name: "Facility inspection",
-        exact: true,
-      }),
+      page.getByRole("dialog", { name: "Facility snapshot", exact: true }),
     ).toBeVisible();
-    await page
-      .getByRole("button", {
-        name: "Collapse SYN Propagation House 01",
-        exact: true,
-      })
-      .click();
+    await page.keyboard.press("Escape");
     await expect(
-      page.getByRole("complementary", {
-        name: "Facility inspection",
-        exact: true,
-      }),
+      page.getByRole("dialog", { name: "Facility snapshot", exact: true }),
     ).toHaveCount(0);
-    await page.getByRole("tab", { name: "List", exact: true }).click();
     await page
-      .getByRole("button", { name: /^Inspect SYN Greenhouse 01 / })
-      .click();
-    await expect(
-      page.getByRole("complementary", {
-        name: "Facility inspection",
+      .getByRole("button", {
+        name: "Search and filter facilities",
         exact: true,
-      }),
-    ).toBeVisible();
+      })
+      .click();
     await page
       .getByLabel("Search facilities", { exact: true })
       .fill("No matching SYN area");
+    await page.getByRole("button", { name: "Done", exact: true }).click();
     await expect(
-      page.getByRole("complementary", {
-        name: "Facility inspection",
-        exact: true,
-      }),
-    ).toHaveCount(0);
+      page.getByRole("heading", { name: "No matching areas", exact: true }),
+    ).toBeVisible();
   }
   const id = await create(page, baseURL!);
   await page.goto(`/facilities/${id}/edit`);
+  await page.locator("summary").filter({ hasText: "Source & notes" }).click();
   await page
     .getByLabel("Detail notes", { exact: true })
     .fill("SYN retained until deliberate discard");

@@ -467,7 +467,12 @@
         "src/components/facility-detail.tsx",
         "src/components/facility-form.tsx",
         "src/shared/facilities/reads.ts",
-        "src/shared/facilities/commands.ts"
+        "src/shared/facilities/commands.ts",
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css"
       ],
       "guide_key": "guide.cs.05",
       "design_path": "docs/design/development/pages/scope-cs-05.md",
@@ -493,12 +498,13 @@
         "docs/reference/ui/customers/facilities-design-r01/PPO-Facilities-17-Desktop-State-View-Only-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/facilities-figma-design.md"
+        "docs/decisions/facilities-figma-design.md",
+        "docs/testing/evidence/cs05-accepted-build/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native adaptation; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see CS-05 native handover",
-      "deployment_status": "Local compiled verification; hosted deployment not verified",
+      "scope_status": "Accepted CS-05 design implemented in existing routes; owner build review pending",
+      "visual_status": "Live Figma comparison and deviations tracked in CS-05 build evidence; owner visual review pending",
+      "functional_status": "Verification results and limits recorded in CS-05 build evidence",
+      "deployment_status": "Local synthetic application only; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -10025,7 +10031,12 @@
       "path": "/facilities",
       "source_paths": [
         "src/app/(business)/facilities/page.tsx",
-        "src/components/facility-register.tsx"
+        "src/components/facility-register.tsx",
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css"
       ],
       "guide_key": "guide.page.facilities",
       "design_path": "docs/design/development/pages/route-facilities.md",
@@ -10040,12 +10051,13 @@
         "docs/reference/ui/customers/facilities-design-r01/PPO-Facilities-14-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/facilities-figma-design.md"
+        "docs/decisions/facilities-figma-design.md",
+        "docs/testing/evidence/cs05-accepted-build/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native adaptation; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see CS-05 native handover",
-      "deployment_status": "Local compiled verification; hosted deployment not verified",
+      "scope_status": "Accepted CS-05 design implemented in existing routes; owner build review pending",
+      "visual_status": "Live Figma comparison and deviations tracked in CS-05 build evidence; owner visual review pending",
+      "functional_status": "Verification results and limits recorded in CS-05 build evidence",
+      "deployment_status": "Local synthetic application only; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -10064,7 +10076,12 @@
       "path": "/facilities/[id]",
       "source_paths": [
         "src/app/(business)/facilities/[id]/page.tsx",
-        "src/components/facility-detail.tsx"
+        "src/components/facility-detail.tsx",
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css"
       ],
       "guide_key": "guide.page.facilities.id",
       "design_path": "docs/design/development/pages/route-facilities-id.md",
@@ -10077,12 +10094,13 @@
         "docs/reference/ui/customers/facilities-design-r01/PPO-Facilities-17-Desktop-State-View-Only-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/facilities-figma-design.md"
+        "docs/decisions/facilities-figma-design.md",
+        "docs/testing/evidence/cs05-accepted-build/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native adaptation; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see CS-05 native handover",
-      "deployment_status": "Local compiled verification; hosted deployment not verified",
+      "scope_status": "Accepted CS-05 design implemented in existing routes; owner build review pending",
+      "visual_status": "Live Figma comparison and deviations tracked in CS-05 build evidence; owner visual review pending",
+      "functional_status": "Verification results and limits recorded in CS-05 build evidence",
+      "deployment_status": "Local synthetic application only; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -10101,7 +10119,12 @@
       "path": "/facilities/[id]/edit",
       "source_paths": [
         "src/app/(business)/facilities/[id]/edit/page.tsx",
-        "src/components/facility-form.tsx"
+        "src/components/facility-form.tsx",
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css"
       ],
       "guide_key": "guide.page.facilities.id.edit",
       "design_path": "docs/design/development/pages/route-facilities-id-edit.md",
@@ -10114,12 +10137,13 @@
         "docs/reference/ui/customers/facilities-design-r01/PPO-Facilities-16-Desktop-State-Result-Not-Confirmed-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/facilities-figma-design.md"
+        "docs/decisions/facilities-figma-design.md",
+        "docs/testing/evidence/cs05-accepted-build/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native adaptation; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see CS-05 native handover",
-      "deployment_status": "Local compiled verification; hosted deployment not verified",
+      "scope_status": "Accepted CS-05 design implemented in existing routes; owner build review pending",
+      "visual_status": "Live Figma comparison and deviations tracked in CS-05 build evidence; owner visual review pending",
+      "functional_status": "Verification results and limits recorded in CS-05 build evidence",
+      "deployment_status": "Local synthetic application only; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -10138,7 +10162,12 @@
       "path": "/facilities/new",
       "source_paths": [
         "src/app/(business)/facilities/new/page.tsx",
-        "src/components/facility-form.tsx"
+        "src/components/facility-form.tsx",
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css"
       ],
       "guide_key": "guide.page.facilities.new",
       "design_path": "docs/design/development/pages/route-facilities-new.md",
@@ -10147,12 +10176,13 @@
         "docs/reference/ui/customers/facilities-design-r01/PPO-Facilities-08-Desktop-Add-Area-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/facilities-figma-design.md"
+        "docs/decisions/facilities-figma-design.md",
+        "docs/testing/evidence/cs05-accepted-build/README.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native adaptation; no capture retained; owner review pending",
-      "functional_status": "Focused automated proof; see CS-05 native handover",
-      "deployment_status": "Local compiled verification; hosted deployment not verified",
+      "scope_status": "Accepted CS-05 design implemented in existing routes; owner build review pending",
+      "visual_status": "Live Figma comparison and deviations tracked in CS-05 build evidence; owner visual review pending",
+      "functional_status": "Verification results and limits recorded in CS-05 build evidence",
+      "deployment_status": "Local synthetic application only; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",

@@ -337,6 +337,7 @@ export type Facility = {
   pin: Pin | null;
   updated_at: string;
   updated_by: string;
+  updated_by_name?: string;
   can_edit: boolean;
 };
 export type ChangeRow = {
