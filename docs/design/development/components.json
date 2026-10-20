@@ -354,6 +354,7 @@
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules",
         "route:/estimating/rules/[id]",
+        "route:/estimating/discovery/[id]/costing",
         "route:/people",
         "route:/contacts",
         "route:/estimating/discovery"
@@ -781,6 +782,7 @@
         "route:/products",
         "route:/customers",
         "route:/customers/[id]",
+        "route:/service/reports",
         "route:/people",
         "route:/contacts",
         "route:/estimating/discovery"
@@ -941,6 +943,11 @@
           "id": "es02-figma-host",
           "label": "ES-02 Figma host",
           "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
+        },
+        {
+          "id": "first-creation",
+          "label": "First discovery creation",
+          "description": "Actual creation host with accepted Sales observations, owned follow-ups, busy/unknown/duplicate/denied states; tests/browser/discovery-creation.spec.ts."
         }
       ],
       "implementation": [
@@ -953,7 +960,10 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -962,7 +972,8 @@
       },
       "specification": "docs/design/development/components/area-editor.md",
       "used_on": [
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/new"
       ],
       "desktop": "Select an area before changing its fields. Add/remove affects the preview only; saved configuration commands remain in the owning page.",
       "mobile": "Scroll the table within its container; the selected-area field editor must remain reachable below it.",
@@ -974,6 +985,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities. r02 family/category authoring awaits the separate accepted Figma implementation.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "area-editor-first-creation-review",
+          "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
+          "actual": "Creation consumer, deterministic host fixtures and real-database handovers added. Shared scope-and-work details retain facility membership and specialist clarification; owner visual review remains pending.",
+          "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1751,7 +1770,8 @@
         "route:/admin/access/requests",
         "route:/admin/access/requests/[id]",
         "route:/admin/access/roles",
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2475,7 +2495,8 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/estimating/fertigation/[id]",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2653,6 +2674,8 @@
         "route:/service/packs/new",
         "route:/customers",
         "route:/customers/[id]",
+        "route:/service/reports",
+        "route:/service/reports/[id]",
         "route:/people",
         "route:/contacts",
         "route:/estimating/discovery"
@@ -2789,6 +2812,7 @@
         "scope:SC-08",
         "scope:SC-09",
         "scope:SC-10",
+        "route:/service/reports",
         "route:/people",
         "route:/contacts",
         "route:/estimating/discovery"
@@ -3194,7 +3218,8 @@
         "route:/admin/access/requests/[id]",
         "route:/projects",
         "scope:CS-01",
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -4084,6 +4109,7 @@
         "route:/products",
         "route:/sales/leads",
         "route:/customers/[id]",
+        "route:/estimating/discovery/[id]/costing",
         "route:/contacts",
         "route:/estimating/discovery"
       ],
@@ -4646,6 +4672,16 @@
           "id": "recovery",
           "label": "Unknown / stale / denied",
           "description": "Existing original-operation recovery, stale comparison invalidation and permission removal remain authoritative."
+        },
+        {
+          "id": "first-creation",
+          "label": "First discovery creation",
+          "description": "Actual creation host with accepted Sales observations, owned follow-ups, busy/unknown/duplicate/denied states; tests/browser/discovery-creation.spec.ts."
+        },
+        {
+          "id": "costing",
+          "label": "Saved discovery costing",
+          "description": "Existing estimate proposal, saved-source comparison, stale basis, review/adopt, original-operation recovery, legacy and permission states; 1440/1024/390/320 px API-boundary fixture."
         }
       ],
       "implementation": [
@@ -4660,6 +4696,22 @@
         {
           "path": "src/components/estimation-catalogue-ui.tsx",
           "symbol": "CatalogueUpgrade"
+        },
+        {
+          "path": "src/components/discovery-creation.tsx",
+          "symbol": "NewDiscoveryWorkspace"
+        },
+        {
+          "path": "src/components/estimation-wizard-dialog.tsx",
+          "symbol": "WizardDialog"
+        },
+        {
+          "path": "src/components/discovery-fields.tsx",
+          "symbol": "AnswerFields"
+        },
+        {
+          "path": "src/components/discovery-costing.tsx",
+          "symbol": "DiscoveryCosting"
         }
       ],
       "dependencies": [
@@ -4668,7 +4720,13 @@
         "src/components/estimation-wizard-changes.ts",
         "docs/decisions/es02-wizard-figma-implementation.md",
         "src/components/estimation-wizard.css",
-        "scripts/es02-fixture.ts"
+        "scripts/es02-fixture.ts",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/components/discovery-costing-parts.tsx",
+        "src/components/discovery-costing-model.ts",
+        "src/components/discovery-costing.css"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
@@ -4679,7 +4737,9 @@
       "used_on": [
         "system:theme",
         "scope:ES-02",
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/new",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Accepted Figma: shared 240/76 px rail, 380 px summary, five 48 px steps, six family filters, full-width system grid and immutable save review. Summary closes for Alternatives/Revisions.",
       "mobile": "Phone record header, equal tabs, viewed alternative, 44 px step controls, scrolling family tiles, system cards and full-page editor, summary sheet and 72 px save footer. No shell bottom tabs.",
@@ -4691,6 +4751,22 @@
           "expected": "Paired accepted Figma review across desktop, tablet and phone, including saved and dirty states.",
           "actual": "Native host implementation and synthetic fixtures; execution evidence is recorded separately. No isolated renderer or owner acceptance claimed.",
           "action": "Review matching application captures against all accepted frames; retain Q6, missing phone Alternatives/Revisions images and device/screen-reader checks as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "estimation-journey-first-creation-review",
+          "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
+          "actual": "Creation consumer and deterministic host fixtures added; owner visual review remains pending.",
+          "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "discovery-costing-review",
+          "expected": "Accepted Discovery costing desktop/tablet/phone states and owner review.",
+          "actual": "Page-local composition reuses shared controls; phone editor and workspace tab handovers have no dedicated accepted frames.",
+          "action": "Review the implementation evidence and open questions in the costing page contract.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -7584,6 +7660,11 @@
           "id": "correction",
           "label": "Identity correction",
           "description": "Existing revise-identity command, expected version, retained entries and original-operation recovery; no other correction fields implied."
+        },
+        {
+          "id": "readiness-check",
+          "label": "Readiness check",
+          "description": "CS-06 check, exact review and acknowledgement forms, source changed, empty and denied hosts at 1440/1024/390/320."
         }
       ],
       "implementation": [
@@ -7605,7 +7686,9 @@
         "src/components/customer-workspace.tsx",
         "src/components/organisation-correction.tsx",
         "src/shared/customer-360.ts",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
@@ -7615,18 +7698,28 @@
       "specification": "docs/design/development/components/shared-record.md",
       "used_on": [
         "scope:CS-01",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-06",
+        "route:/sites/[id]/readiness"
       ],
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
       "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
-      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern.",
       "gaps": [
         {
           "id": "shared-record-cs01-review",
           "expected": "Owner review of accepted source and real desktop/phone state pairs.",
           "actual": "Implementation and local synthetic proof are separate from owner review; see the evidence pairing table.",
           "action": "Review the retained evidence and explicit data/layout adaptations before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-cs06-review",
+          "expected": "Paired owner review of the accepted CS-06 frames and native state families.",
+          "actual": "Native implementation; owner visual and device review pending.",
+          "action": "Review the CS-06 pairing and undrawn authoring forms before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

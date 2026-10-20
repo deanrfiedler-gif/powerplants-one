@@ -26,6 +26,15 @@ Baseline comparison used a detached, unchanged checkout of main `0ebb26a3cccb106
 
 The page ran through the existing Webpack test mode on a separate local port; no committed launcher configuration changed. The first browser run exposed a snapshot focus-return bug, now fixed and passing. Later reruns corrected the phone test's assumption that its hidden desktop menu remained mounted, and allowed the observed Windows URL navigation latency. After integrating main 5ebb5c0a, the page uses SecondaryMenuFrame's current phoneHeader prop for one shared registration. The full browser matrix and all seven focused unit tests pass after that integration. A verification attempt made while the preview process was stopped failed with connection refused; it was rerun once the preview was ready. The first CI failures identified the required Desktop/Mobile contract headings and the icon-catalogue expectation; both are corrected. Engineering CI static assurance passed on 963382ed after those corrections; the later database/browser stages were still running. Check the PR checks for the final pushed commit rather than treating earlier successful checks as proof of a newer commit.
 
+## Integration on 21 October 2026
+
+Merged main `4c1097cc` into the existing PR branch. Resolved only shared component-consumer documentation and regenerated STATUS and the decisions index from all 68 fragments. Both Discovery register and incoming Service reports, Discovery creation and Costing entries are retained. An array-entry comparison confirms that no existing main component entry was lost. The automatically merged Discovery list read retains its authorised register projection alongside the creation contract already on main.
+
+- Passed after the merge: `npm run studio:check` (366 entries, 48 components, 210 routes), `npm run lint`, `npm run typecheck`, naming assurance and 16 focused unit tests covering the register, icon mappings, creation contract/page and costing presentation.
+- Passed after the merge: desktop/phone Playwright, 15 tests and the same intentional phone-snapshot skip. No source frame or owner review record changed.
+- Status and build-sequence generation succeeded. Full local unit, production build and database suites were not rerun for the documentation conflict resolution; their earlier local limitations remain recorded above.
+- All 16 GitHub workflows for prior head `1d814490` completed successfully, including Application, Engineering, Estimating, compiled-browser, documentation and development-register assurance. These prior-head results do not certify the new merge commit; its CI status is reported on the PR.
+
 ## Visual comparison
 
 | Live reference | App comparison |

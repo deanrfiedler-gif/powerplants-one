@@ -174,7 +174,7 @@ function Membership({
     </fieldset>
   );
 }
-function AnswerFields({
+export function AnswerFields({
   question: q,
   value: a,
   options,
@@ -348,7 +348,7 @@ export function DiscoveryFields({
   step?: "Requirements" | "Configuration" | "Scope & delivery";
   // Requirements is drawn as two sections on design board r01: the opportunity and site
   // (scope membership and effort) and the brief (work in scope and its questions).
-  part?: "scope" | "brief";
+  part?: "scope" | "brief" | "scope-and-work";
 }) {
   const s = value.scope,
     owner = { owner_id: options.owner.id, reason: "" };
@@ -356,9 +356,9 @@ export function DiscoveryFields({
     onChange({ ...value, scope: { ...s, ...patch } });
   const questions = applicableQuestions(s, value.answers, options.definition);
   const requirements = !step || step === "Requirements",
-    showScope = requirements && (!part || part === "scope"),
-    showBrief = requirements && (!part || part === "brief"),
-    showQuestions = !requirements || showBrief;
+    showScope = requirements && (!part || part === "scope" || part === "scope-and-work"),
+    showBrief = requirements && (!part || part === "brief" || part === "scope-and-work"),
+    showQuestions = !requirements || (showBrief && part !== "scope-and-work");
   const effort = (
     <>
       <h3 className="es02-h3">Estimating effort</h3>

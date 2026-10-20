@@ -94,6 +94,7 @@ test("Service photo inspection verifies exact bytes, preserves review input and 
     ).body(),
   ).toEqual(bytes);
   await page.goto(`/service/reports/${reportId}`);
+  await page.getByRole("button", { name: "Review submission", exact: true }).filter({ visible: true }).click();
   const photo = page.locator(".report-photo"),
     image = photo.getByRole("img", {
       name: "SYN visual evidence for Service inspection",
@@ -192,9 +193,15 @@ test("Service photo inspection verifies exact bytes, preserves review input and 
   await expect(image).toBeVisible();
   const beforeRefreshUrl = await image.getAttribute("src");
   const freshPhoto = page.waitForResponse((r) => r.url().endsWith(path));
-  await page
-    .getByRole("button", { name: "Refresh exact report", exact: true })
-    .click();
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await page.getByRole("button", { name: "More actions", exact: true }).click();
+    await page
+      .getByRole("menuitem", { name: "Refresh exact report", exact: true })
+      .click();
+  } else
+    await page
+      .getByRole("button", { name: "Refresh exact report", exact: true })
+      .click();
   expect((await freshPhoto).status()).toBe(200);
   await expect(image).toBeVisible();
   expect(await image.getAttribute("src")).not.toBe(beforeRefreshUrl);

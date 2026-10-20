@@ -59,6 +59,7 @@ export function useCrmCommand(
   onPendingChange?: (pending: boolean) => void,
   nativeGuard = true,
   retainedQuery: readonly string[] = [],
+  recovery: { retainUnconfirmed?: boolean } = {},
 ) {
   const [changed, setChanged] = useState(false);
   const [busy, setBusy] = useState(false),
@@ -99,6 +100,7 @@ export function useCrmCommand(
     } catch (e) {
       setError(e);
       const unknown =
+        (lookup && recovery.retainUnconfirmed === true) ||
         !!(e as Failure).retryable ||
         !(e as Failure).status ||
         ((e as Failure).status ?? 0) >= 500;

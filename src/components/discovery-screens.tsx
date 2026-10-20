@@ -1,9 +1,7 @@
 "use client";
 import Link from "next/link";
-import { CreatingFromSalesBrief } from "./sales-estimating-link";
 import { discoveryDefinition } from "../estimating/discovery-definition";
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import type { DiscoveryInput } from "../estimating/discovery";
 import type { DiscoveryRevision } from "../estimating/discovery-workspace-context";
 import type {
@@ -12,12 +10,10 @@ import type {
   previewDiscoveryCreate,
   previewDiscoveryChange,
 } from "../estimating/discovery-workspaces";
-import type { estimatingOptions } from "../estimating/reads";
 import {
   api,
   ErrorNotice,
   Field,
-  SelectField,
   PageHeader,
   ValidationFields,
 } from "./business-ui";
@@ -325,87 +321,6 @@ export function DiscoveryList() {
         </>
       )}
     </div>
-  );
-}
-export function NewDiscovery() {
-  const choices =
-      useCrmResource<Awaited<ReturnType<typeof estimatingOptions>>>(
-        "estimating/options",
-      ),
-    params = useSearchParams(),
-    [selected, setSelected] = useState(params.get("opportunity") ?? ""),
-    salesHandover = /^[0-9a-f-]{36}$/i.test(params.get("sales_handover") ?? "") ? params.get("sales_handover")! : null,
-    [pending, setPending] = useState(false);
-  return (
-    <div className="est-screen">
-      <Link href="/estimating/discovery">Scope and options</Link>
-      <Heading title="New discovery workspace" />
-      <ResourceState {...choices} />
-      {choices.data && (
-        <>
-          <fieldset className="est-form" disabled={pending || !!salesHandover}>
-            <SelectField
-              label="Existing opportunity"
-              name="opportunity_id"
-              value={selected}
-              options={choices.data.items.map((o) => ({
-                id: o.id,
-                display_name: `${o.display_number} · ${o.title} · ${o.customer}`,
-              }))}
-              onChange={setSelected}
-            />
-          </fieldset>
-          {!choices.data.items.length && (
-            <p>
-              No eligible opportunities without an estimating workspace are
-              available. <Link href="/sales/opportunities">Open CRM Sales</Link>.
-            </p>
-          )}
-          {selected && (
-            <NewDiscoveryContext
-              key={selected}
-              opportunityId={selected}
-              salesHandover={salesHandover}
-              onPending={setPending}
-            />
-          )}
-        </>
-      )}
-    </div>
-  );
-}
-function NewDiscoveryContext({
-  opportunityId,
-  salesHandover,
-  onPending,
-}: {
-  opportunityId: string;
-  salesHandover: string | null;
-  onPending: (pending: boolean) => void;
-}) {
-  const options = useCrmResource<FormOptions>(
-      `estimating/workspaces/form-options?opportunity_id=${opportunityId}`,
-    ),
-    router = useRouter(),
-    command = useCrmCommand(
-      (r) => router.push(salesHandover ? `/sales/handoffs/estimating/${salesHandover}?created_workspace=${r.record_id}` : `/estimating/discovery/${r.record_id}`),
-      "Unsaved",
-      onPending,
-    );
-  if (denied(command.error)) return <ErrorNotice error={command.error} />;
-  return (
-    <>
-      {salesHandover && <CreatingFromSalesBrief id={salesHandover} opportunityId={opportunityId}/>}
-      <ResourceState {...options} />
-      {options.data && (
-        <ProposalEditor
-          initialOptions={options.data}
-          opportunityId={opportunityId}
-          command={command}
-        />
-      )}
-      <CommandState command={command} />
-    </>
   );
 }
 export function ProposalEditor({

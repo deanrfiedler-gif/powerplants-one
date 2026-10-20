@@ -96,6 +96,7 @@ async function capture(
     .evaluate((e) => e.scrollIntoView({ block: "start" }));
   const bytes = await page.screenshot({
       path: info.outputPath(`E2-${name}.png`),
+      style: ".ppo-fa, .svg-inline--fa, [data-prefix], .es02-icon, .product-icon, .shell-icon, i[class*='fa-'] { visibility: hidden !important; }",
     }),
     checkout = execFileSync("git", ["rev-parse", "HEAD"], {
       encoding: "utf8",
@@ -130,12 +131,17 @@ async function acknowledge(page: Page) {
         name: "Save discovery revision",
         exact: true,
       }),
-    ),
+    ).or(page.getByRole("dialog", { name: "Create discovery workspace", exact: true })),
   ).toBeVisible();
   for (const checkbox of await page
     .getByRole("checkbox", { name: /^I confirm Q/ })
     .all())
     await checkbox.check();
+}
+async function expectCreationFrozen(page: Page) {
+  const controls = page.locator(".create-editable").locator("input, select, textarea, button");
+  expect(await controls.count()).toBeGreaterThan(0);
+  for (const control of await controls.all()) await expect(control).toBeDisabled();
 }
 async function compareSave(page: Page, reason: string) {
   await page
@@ -156,6 +162,12 @@ async function compareSave(page: Page, reason: string) {
   ).toHaveCount(0);
 }
 async function openStep(page: Page, label: string) {
+  if (await page.locator(".es02-create-workspace").count()) {
+    const creationStep = page.getByLabel("Discovery step", { exact: true });
+    if (await creationStep.isVisible()) await creationStep.selectOption(label.replace(/^\d+\. /, ""));
+    else await page.getByRole("navigation", { name: "Discovery steps", exact: true }).getByRole("button").filter({ hasText: label }).click();
+    return;
+  }
   const selector = page.getByRole("combobox", { name: /^Step \d of 5$/ });
   if (await selector.isVisible())
     await selector.selectOption(label.replace(/^\d+\. /, ""));
@@ -198,6 +210,8 @@ async function fillQuestion(
         : "3. Scope & delivery";
     await openStep(page, label);
   }
+  const creationBrief = !!(await page.locator(".es02-create-workspace").count()) && ["Q01", "Q02", "Q03"].includes(id);
+  if (creationBrief) await page.getByRole("button", { name: `Review ${id} state, source and follow-up`, exact: true }).click();
   const q = discoveryDefinition.questions.find((q) => q.id === id)!;
   await page
     .getByLabel(`${id} answer state`, { exact: true })
@@ -217,6 +231,7 @@ async function fillQuestion(
   await page
     .getByLabel(`${id} source`, { exact: true })
     .fill("SYN browser recorded source");
+  if (creationBrief) await page.getByRole("dialog").getByRole("button", { name: "Done", exact: true }).click();
 }
 
 test("E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh", async ({
@@ -229,6 +244,9 @@ test("E2 browser creates scoped discovery and retains the original unknown creat
       `estimating/workspaces/form-options?opportunity_id=${o.id}`,
     );
   await page.goto(`/estimating/discovery/new?opportunity=${o.id}`);
+  await page.getByRole("radio", { name: new RegExp(o.title) }).check();
+  await page.getByRole("button", { name: "Continue to discovery", exact: true }).click();
+  await page.getByRole("button", { name: "Review site scope and effort details", exact: true }).click();
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .check();
@@ -259,26 +277,24 @@ test("E2 browser creates scoped discovery and retains the original unknown creat
   await page
     .getByLabel("Effort source", { exact: true })
     .fill("SYN estimator declaration");
+  await page.getByRole("dialog").getByRole("button", { name: "Done", exact: true }).click();
   for (const answer of input.answers)
     await fillQuestion(
       page,
       answer.question_id,
       answer.value as string | number | { choice: string },
     );
-  await page
-    .getByLabel("Discovery change reason", { exact: true })
-    .fill("SYN create exact scoped discovery");
-  await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
-    .click();
-  const save = page.getByRole("button", {
+  await page.locator(".es02-bottom").getByRole("button", { name: /^Create (discovery )?workspace$/ }).click();
+  const review = page.getByRole("dialog", { name: "Create discovery workspace", exact: true });
+  await review.getByLabel("Discovery change reason", { exact: true }).fill("SYN create exact scoped discovery");
+  const save = review.getByRole("button", {
     name: "Create discovery workspace",
     exact: true,
   });
   await expect(save).toBeDisabled();
   await acknowledge(page);
   await expect(save).toBeEnabled();
-  await capture(page, info, "create-comparison", ".e2-comparison");
+  await capture(page, info, "create-comparison", "dialog");
   let original: Record<string, unknown> | undefined;
   await page.route("**/api/v1/estimating/workspaces", async (route) => {
     if (route.request().method() !== "POST") return route.continue();
@@ -288,33 +304,33 @@ test("E2 browser creates scoped discovery and retains the original unknown creat
     await route.abort("failed");
   });
   await save.click();
-  const recovery = page.getByRole("button", {
+  const recovery = page.getByRole("dialog", { name: "Creation outcome not confirmed", exact: true }).getByRole("button", {
     name: "Confirm original save outcome",
     exact: true,
   });
   await expect(recovery).toBeVisible();
-  await expect(
-    page.getByLabel("Existing opportunity", { exact: true }),
-  ).toBeDisabled();
+  await expectCreationFrozen(page);
   const refreshed = page.waitForResponse(
     (r) =>
-      r.url().endsWith("/api/v1/estimating/options") &&
+      r.url().includes("/api/v1/estimating/workspaces/create-options?") &&
       r.request().method() === "GET",
   );
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await refreshed;
   await expect(recovery).toBeVisible();
-  await expect(
-    page.getByLabel("Q01 Included work", { exact: true }),
-  ).toBeDisabled();
+  await expectCreationFrozen(page);
   await capture(
     page,
     info,
     "creation-original-retained",
-    '.business-error[role="alert"]',
+    "dialog",
   );
   await page.unroute("**/api/v1/estimating/workspaces");
+  const originalReceipt = page.waitForResponse(response =>
+    new URL(response.url()).pathname === `/api/v1/operations/${original!.operation_id}` &&
+    response.request().method() === "GET");
   await recovery.click();
+  expect((await originalReceipt).ok()).toBe(true);
   await expect(
     page.getByRole("tab", { name: "Revisions 1", exact: true }),
   ).toBeVisible();
@@ -623,6 +639,9 @@ test("ES02-T70: an empty form becomes an explicit valid incomplete first revisio
 }) => {
   const o = await opportunity(page);
   await page.goto(`/estimating/discovery/new?opportunity=${o.id}`);
+  await page.getByRole("radio", { name: new RegExp(o.title) }).check();
+  await page.getByRole("button", { name: "Continue to discovery", exact: true }).click();
+  await page.getByRole("button", { name: "Review site scope and effort details", exact: true }).click();
   await page
     .getByRole("checkbox", { name: "Product supply", exact: true })
     .check();
@@ -635,19 +654,27 @@ test("ES02-T70: an empty form becomes an explicit valid incomplete first revisio
   const reasons = page.getByLabel(/follow-up reason$/, { exact: false });
   for (const reason of await reasons.all())
     await reason.fill("SYN owner to gather missing discovery information");
-  await page
-    .getByLabel("Discovery change reason", { exact: true })
-    .fill("SYN first owned incomplete discovery");
-  await page
-    .getByRole("button", { name: "Compare discovery proposal", exact: true })
-    .click();
+  await page.getByRole("dialog").getByRole("button", { name: "Done", exact: true }).click();
+  for (const id of ["Q01", "Q02", "Q03"]) {
+    await page.getByRole("button", { name: `Review ${id} state, source and follow-up`, exact: true }).click();
+    await page.getByLabel(`${id} follow-up reason`, { exact: true }).fill("SYN owner to gather missing discovery information");
+    await page.getByRole("dialog").getByRole("button", { name: "Done", exact: true }).click();
+  }
+  for (const label of ["2. Configuration", "3. Scope & delivery"]) {
+    await openStep(page, label);
+    for (const reason of await page.getByLabel(/follow-up reason$/, { exact: false }).all())
+      await reason.fill("SYN owner to gather missing discovery information");
+  }
+  await page.locator(".es02-bottom").getByRole("button", { name: /^Create (discovery )?workspace$/ }).click();
+  const review = page.getByRole("dialog", { name: "Create discovery workspace", exact: true });
+  await review.getByLabel("Discovery change reason", { exact: true }).fill("SYN first owned incomplete discovery");
   await expect(
-    page.getByRole("region", { name: "Discovery comparison", exact: true }),
+    review,
   ).toContainText("Incomplete");
   await expect(page.getByRole("checkbox", { name: /^I confirm/ })).toHaveCount(
     0,
   );
-  await page
+  await review
     .getByRole("button", { name: "Create discovery workspace", exact: true })
     .click();
   await expect(

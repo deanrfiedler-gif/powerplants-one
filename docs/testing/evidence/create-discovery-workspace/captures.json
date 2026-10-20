@@ -1,0 +1,176 @@
+{
+  "application_source": "48673e879c1099af9c3d0fc17cbcb731a58779bc",
+  "browser_spec_source": "48673e879c1099af9c3d0fc17cbcb731a58779bc",
+  "runtime": "Local Windows Webpack development launcher; installed Chrome; synthetic API fixtures; licensed runtime icons hidden by screenshot style",
+  "owner_visual_review": "pending",
+  "captures": [
+    {
+      "file": "captures/outcome-not-confirmed.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "f87bedf02470b24630903523aacd035d7b3a9b0461cd61950217ec4947fafb56"
+    },
+    {
+      "file": "captures/review.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "698077a89b946110280ea4daf69340392965f8e670deadc2f022f79891966787"
+    },
+    {
+      "file": "captures/already-exists.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "5431900d7bfb4aff7b8824e99e2bfc5ba2344517b5182aa81e103950606e5ed0"
+    },
+    {
+      "file": "captures/creating.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "e26c31f2831e4f9bfdb925328fa8be3301db0b8e620c3a29040aba9455cb99ae"
+    },
+    {
+      "file": "captures/creation-not-permitted.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "1e59371bbf35fdaaa88d571f199c2cfb36e2b93f1bcbb56d32cc98264c958ed3"
+    },
+    {
+      "file": "captures/needs-attention.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "8a6781998dfe7d39dd4adfa9a8b8139041ea7d19958a66021cdf7bd5685bfc0d"
+    },
+    {
+      "file": "captures/requirements-1024.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "89bac5f9646619aab3e74c8f1f96864e56ce2245fe932e564c777ef8c04b53a5"
+    },
+    {
+      "file": "captures/requirements-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "79808ff15fa7396abd6fca288bf04d60eb3ed18f8bfb169c1503e4205ce46177"
+    },
+    {
+      "file": "captures/requirements-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "bf735b06578614027187b78fb549e61b8594691a9c73763c1554297601af8aae"
+    },
+    {
+      "file": "captures/requirements-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "3ff6162f6bf315da72bdf751871ef7a6ae3ce7723ef9d4bcb091818e980d9ee4"
+    },
+    {
+      "file": "captures/requirements-full-1024.png",
+      "width": 1024,
+      "height": 2010,
+      "sha256": "fdaa9fffdbdbfea8eb5940c704c3ab106547f5a883fbf841042cbcce57811061"
+    },
+    {
+      "file": "captures/requirements-full-1440.png",
+      "width": 1440,
+      "height": 2010,
+      "sha256": "1974c48e76c3bd0571b8a024ab8546aab24167a70d0ddb063b1b5606afdd73f7"
+    },
+    {
+      "file": "captures/requirements-full-320.png",
+      "width": 320,
+      "height": 2579,
+      "sha256": "85b0228991bd0aead885337a5609f63c310454854ea2eff223e4f9e8bd0d6c8e"
+    },
+    {
+      "file": "captures/requirements-full-390.png",
+      "width": 390,
+      "height": 2457,
+      "sha256": "def28517ce78e12259c8b5695c776ac25a9a95f50ca4b48f7e6bc3e71b213f6a"
+    },
+    {
+      "file": "captures/denied-choices.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "a25c7f5e5ed90e54d8055cb3894c0bd0ba2c32cf11f5767485401cfd03175aef"
+    },
+    {
+      "file": "captures/empty-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "5e6d4e0384d546f4cd139a52ae53d52a933560fc2d9b6d4415807f8682d40611"
+    },
+    {
+      "file": "captures/empty.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "ca8514a7ef91c0dbdd18dbc907ecd7f59a76d2b9d3980d2acaadfcb1fbd80a41"
+    },
+    {
+      "file": "captures/loading-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "fb3946ff2db04f8abdf55183e4e48dd8f2d47f1048a6bb87636b2c8343467930"
+    },
+    {
+      "file": "captures/loading-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "33fabf340d969f15c8b4301dea7fd17586762f61a45c83fc22905b2d830f3ba1"
+    },
+    {
+      "file": "captures/choose-1024.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "dfafb4002dc63c530c75fd76f1b895d28c66d6515ef9b784ac071dd37518269a"
+    },
+    {
+      "file": "captures/choose-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "79d9f2ad88d63d91b8c92c75b0e10c5165c15075430dab276f950182a4a22eca"
+    },
+    {
+      "file": "captures/choose-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "359e92039f062e5b7038399e82f99b8036c0992f38be654781df28088bf157b4"
+    },
+    {
+      "file": "captures/choose-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "a42257322d80ea1cc61c95c6ae39b8a1d118a5f4d206c79608403c509c566e73"
+    },
+    {
+      "file": "captures/phone-dialog-outcome-not-confirmed.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "1e1e8bd847defcb0afb246e7f2cf9696acea9b6f6b2cf93d50ca84741e27e44c"
+    },
+    {
+      "file": "captures/phone-dialog-review.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "961403666155c3e5650b21720e9546190eec8bc430d475fab7f72df35d5570c3"
+    },
+    {
+      "file": "captures/phone-dialog-already-exists.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "795d44e263062fa11ff56fb3a3c4a5a1592cd7474f45ed4284272460fb55ceab"
+    },
+    {
+      "file": "captures/phone-dialog-creating.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "46467dbdfa2f7ebe8ae65994d29db47055cb0af091048489a53700bfc1d1d213"
+    },
+    {
+      "file": "captures/phone-dialog-creation-not-permitted.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "5ca8de3da0601549d617b9b5dab900ed6e6c9206200623a8c86a94d4bc8f2956"
+    }
+  ]
+}
