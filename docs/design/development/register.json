@@ -2599,7 +2599,7 @@
       "title": "Appointment coordination detail",
       "kind": "scope",
       "module": "SV",
-      "summary": "Appointment detail and controlled scheduling already exist. Any further design refinement should extend that route.",
+      "summary": "SV-04 accepted shared record composition: derived dispatch checks, current pack responses, contact and follow-ups. Customer site readiness (P4) and pack deadline (P5) remain gated.",
       "path": "/schedule",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2617,20 +2617,30 @@
         "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-07-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/appointment-detail-figma-design.md"
+        "docs/decisions/appointment-detail-figma-design.md",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "tests/helpers/appointment-detail-fixture.ts",
+        "tests/browser/appointment-detail.spec.ts",
+        "tests/unit/appointment-detail.test.ts",
+        "docs/decisions/field-readiness-gate-proposal.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/testing/evidence/appointment-detail-native/README.md"
       ],
       "scope_status": "built",
-      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
-      "review_fingerprint": "6b2abf9c34fb7d4ce918acce3e3416ff6c0d14e93dce2beab9cbc592f7711e2f",
-      "reviewed_at": "2026-10-09",
+      "visual_status": "Owner visual review pending for the SV-04 implementation; accepted Figma design is separate. Prior 9 October Refine review retained in the page contract.",
+      "functional_status": "Synthetic automated results and visual differences: docs/testing/evidence/appointment-detail-native/README.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 3,
       "related_keys": [
         "route:/service/appointments/[id]"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": null
     },
     {
       "key": "scope:SV-05",
@@ -8001,7 +8011,7 @@
       "title": "Appointment detail",
       "kind": "route",
       "module": "SV",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access. The Job pack handover uses the current permitted canonical pack read and server preparation flag.",
+      "summary": "SV-04 accepted shared record composition: derived dispatch checks, current pack responses, contact and follow-ups. Customer site readiness (P4) and pack deadline (P5) remain gated.",
       "path": "/service/appointments/[id]",
       "source_paths": [
         "src/app/(business)/service/appointments/[id]/page.tsx"
@@ -8019,27 +8029,35 @@
         "docs/reference/ui/service/appointment-detail-design-r01/PPO-Appointment-Detail-07-States-r01.png"
       ],
       "dependencies": [
-        "src/documents/components/client/job-pack-entry.tsx",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/field/visit-guidance.ts",
-        "src/components/field-visit-entry.tsx",
         "docs/decisions/field-closed-visit-guidance.md",
-        "docs/decisions/appointment-detail-figma-design.md"
+        "docs/decisions/appointment-detail-figma-design.md",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "tests/helpers/appointment-detail-fixture.ts",
+        "tests/browser/appointment-detail.spec.ts",
+        "tests/unit/appointment-detail.test.ts",
+        "docs/decisions/field-readiness-gate-proposal.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/testing/evidence/appointment-detail-native/README.md"
       ],
       "scope_status": "built",
-      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
-      "deployment_status": "Not verified",
-      "review_fingerprint": "3e0e3ea89dbd0f7d72dc95a9fa714aa54cfda627c1eb8102e37056beb7607740",
-      "reviewed_at": "2026-10-09",
+      "visual_status": "Owner visual review pending for the SV-04 implementation; accepted Figma design is separate. Prior 9 October Refine review retained in the page contract.",
+      "functional_status": "Synthetic automated results and visual differences: docs/testing/evidence/appointment-detail-native/README.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 3,
       "related_keys": [
         "scope:SV-04",
         "route:/service/work-orders/[id]"
       ],
-      "reviewer": "Dean Fiedler"
+      "reviewer": null
     },
     {
       "key": "route:/service/packs/[id]",

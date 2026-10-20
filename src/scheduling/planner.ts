@@ -1272,6 +1272,18 @@ async function appointmentActions(
 export async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
   const core = await appointmentCore(c, p, id),
     { a, w, r } = core;
+  let primaryContactName: string | null = null;
+  if (core.site.primary_contact_id) {
+    try {
+      primaryContactName = (await visible(c, p, "Person", core.site.primary_contact_id)).display_name;
+    } catch (error) {
+      if (!(error instanceof AppError) || ![403, 404].includes(error.status)) throw error;
+    }
+  }
+  const owner = (await c.query<{ display_name: string }>(
+    "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+    [p.workspace_id, w.service_owner_id],
+  )).rows[0];
   const contacts = (
     await c.query(
       "SELECT * FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2 ORDER BY created_at DESC,id",
@@ -1337,6 +1349,9 @@ export async function appointmentDetail(c: QueryClient, p: Principal, id: string
   ).rows;
   return {
     ...appointmentHeader(core),
+    customer_id: core.customer.id,
+    primary_contact_name: primaryContactName,
+    service_owner_name: owner?.display_name ?? null,
     contacts,
     requests,
     followups,
@@ -1346,7 +1361,7 @@ export async function appointmentDetail(c: QueryClient, p: Principal, id: string
     policy_impacts: await policyImpactHolds(c, p, id),
     readiness: await readiness(c, p, r, a.id),
     authorisation_blockers: await blockers(c, p, w, r),
-    actions: { ...await appointmentActions(c, p, a), can_resolve_policy: await canResolvePolicyImpact(c, p, a.company_id, a.site_id, w.service_owner_id) },
+    actions: { ...await appointmentActions(c, p, a), can_read_supply: await hasPermission(c, p, "supply.read", a.company_id, a.site_id), can_resolve_policy: await canResolvePolicyImpact(c, p, a.company_id, a.site_id, w.service_owner_id) },
   };
 }
 export async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {

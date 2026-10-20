@@ -5168,8 +5168,7 @@
       },
       "specification": "docs/design/development/components/job-pack-entry.md",
       "used_on": [
-        "route:/service/technicians",
-        "route:/service/appointments/[id]"
+        "route:/service/technicians"
       ],
       "desktop": "Shared ButtonLink and quiet refresh within the visit context.",
       "mobile": "Text wraps; 44 px actions stay within the drawer or appointment panel.",
@@ -7563,6 +7562,11 @@
           "id": "readiness-check",
           "label": "Readiness check",
           "description": "CS-06 check, exact review and acknowledgement forms, source changed, empty and denied hosts at 1440/1024/390/320."
+        },
+        {
+          "id": "appointment-dispatch",
+          "label": "Appointment dispatch",
+          "description": "SV-04 real host fixture: held, current ready, supply rehold, proposed, cancelled, empty, denied and failed refresh at 1440/1024/390/320. P4/P5 remain unavailable."
         }
       ],
       "implementation": [
@@ -7586,7 +7590,15 @@
         "src/shared/customer-360.ts",
         "docs/design/development/organisations-native-fixtures.json",
         "src/components/access-readiness-workspace.tsx",
-        "src/app/styles/access-readiness.css"
+        "src/app/styles/access-readiness.css",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "tests/helpers/appointment-detail-fixture.ts",
+        "tests/browser/appointment-detail.spec.ts",
+        "tests/unit/appointment-detail.test.ts",
+        "docs/testing/evidence/appointment-detail-native/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
@@ -7598,12 +7610,14 @@
         "scope:CS-01",
         "route:/customers/[id]",
         "scope:CS-06",
-        "route:/sites/[id]/readiness"
+        "route:/sites/[id]/readiness",
+        "scope:SV-04",
+        "route:/service/appointments/[id]"
       ],
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
       "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
-      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern. SV-04 uses no tabs, moves facts below the tablet workspace and puts visit facts in the phone flow. No shared component API changes.",
       "gaps": [
         {
           "id": "shared-record-cs01-review",
@@ -7618,6 +7632,14 @@
           "expected": "Paired owner review of the accepted CS-06 frames and native state families.",
           "actual": "Native implementation; owner visual and device review pending.",
           "action": "Review the CS-06 pairing and undrawn authoring forms before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-sv04-review",
+          "expected": "Owner review of accepted Appointment detail frames and the scoped native host.",
+          "actual": "Implementation and synthetic verification are separate from design acceptance; P4/P5 and undrawn controls remain gated.",
+          "action": "Review the SV-04 evidence pairing and listed source/data differences before adopting a UI baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

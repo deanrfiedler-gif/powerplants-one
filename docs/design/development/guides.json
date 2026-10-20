@@ -12886,18 +12886,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-21",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/appointment-detail-native/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Appointment coordination detail to work towards this outcome: An appointment has an explicit scheduling and acknowledgement state.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A proposed time, a confirmed booking and a technician acknowledgement are different."
+            "Review one appointment, its current dispatch checks and individual pack responses before using the existing booking controls. A confirmed visit is not permission to attend.",
+            "Customer date agreement, customer site readiness and acknowledgement of an exact issued pack are distinct. PPO records contact here; it sends nothing to the customer."
           ],
           "steps": [],
           "rows": [],
@@ -12907,9 +12906,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Work order, appointment identity, site timezone, crew and readiness.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Open an appointment from Schedule or its work order using your permitted identity. Check its reference, customer, site and site time zone.",
+            "The current dispatch result requires both the appointment and job pack to load. A missing or denied source is not a pass."
           ],
           "steps": [],
           "rows": [],
@@ -12976,13 +12974,14 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review the proposed visit and its contact/readiness evidence",
-            "Confirm available crew through the scheduling workflow",
-            "Track changes and individual acknowledgement"
+            "Read the dispatch decision and its reasons. Review Parts on the linked demand when you have supply access; otherwise ask the supply owner to review it.",
+            "Open the current job pack to review the issued revision, individual acknowledgements and returned issues. An earlier issue acknowledgement does not acknowledge a replacement.",
+            "Use Record contact for the current site's contact. Choose the channel and outcome and record what was agreed. This records dates, not site readiness.",
+            "For a proposal, use Confirm appointment to review the booking. For an unstarted confirmed visit, use Move or reassign. Current policy, crew and server checks still govern saving.",
+            "Use Appointment actions (More on phone) for Propose change, Cancel appointment or Refresh saved appointment. A request reserves no crew or time.",
+            "Open visible follow-up tasks and the work order for controlled preparation or further attendance. A supply change can restore a hold without moving the booking."
           ],
           "rows": [],
           "headers": []
@@ -12991,9 +12990,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An appointment has an explicit scheduling and acknowledgement state.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A proposed time, a confirmed booking and a technician acknowledgement are different."
+            "Read the saved receipt. Booking, contact, pack preparation, issue, acknowledgement and attendance remain separate actions.",
+            "Open job pack uses the exact appointment pack. Where no pack exists and preparation is permitted, Prepare job pack opens the existing preparation workflow.",
+            "Completed and cancelled visits retain evidence and links but have no appointment editing actions here. Further attendance needs a separate visit on the work order."
           ],
           "steps": [],
           "rows": [],
@@ -13002,38 +13001,14 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Dispatch held explains the current server reasons. Ready to dispatch reflects the implemented gate only: customer site-readiness recording is not available yet.",
+            "P4 site readiness and P5 issue lead-time warnings are shown as unavailable. This screen cannot record a site-readiness statement, link a demand or record a Parts statement or exception.",
+            "Proposed visits reserve no people or time. Cancelled visits show their reason and retained records. Missing values remain explicitly unavailable."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
@@ -13049,45 +13024,23 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "After a failed refresh, previously read evidence may remain visible, but editing and receiving links are removed until a current read succeeds. A denied appointment read clears it. Use Retry loading or Refresh saved appointment.",
+            "Validation and stale-save refusals retain your form entries. Compare the current appointment and use the existing policy-review controls before another save.",
+            "An uncertain contact or confirmation result retains its exact original in this tab. Check original receipt or Retry unchanged original. Do not create a replacement operation while its outcome is unresolved.",
+            "Policy impacts retain their named owner, source publication and guarded resolution. Completing a task or acknowledging a pack cannot clear a policy hold."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone the compact record header provides Back and More. The dispatch decision and checks come first; Visit includes a Crew and visit details disclosure. Record contact and the primary booking action stay at the bottom for an editable visit.",
+            "Use Tab and Shift+Tab to reach controls, Enter or Space to open disclosures and the menu keyboard controls to select an action. Existing booking forms appear within the page.",
+            "This appointment workspace requires an online read and online commands. It does not add offline booking or dispatch authority. Same-tab recovery retains an uncertain original; it is not an offline queue."
           ],
           "steps": [],
           "rows": [],
@@ -13108,9 +13061,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Updated for the SV-04 implementation on 21 October 2026. Guide and owner visual review remain pending. Automated evidence is recorded separately; it is not business acceptance.",
+            "The accepted design is the PPO - Design named version Appointment detail — shared record layout, accepted. The implementation retains the separately adopted compact phone header and gates the unbuilt increments."
           ],
           "steps": [],
           "rows": [],
@@ -13122,9 +13074,17 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "tests/helpers/appointment-detail-fixture.ts",
+        "tests/browser/appointment-detail.spec.ts",
+        "tests/unit/appointment-detail.test.ts",
+        "docs/decisions/appointment-detail-figma-design.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe the real SV-04 shared record controls, source failures, online command recovery and gated P4/P5.",
       "document_id": "PPO-GUIDE-SV-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -44325,18 +44285,17 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-03",
+      "prepared_at": "2026-10-21",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "runtime_evidence": "docs/testing/evidence/appointment-detail-native/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Appointment detail to work towards this outcome: An appointment has an explicit scheduling and acknowledgement state.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A proposed time, a confirmed booking and a technician acknowledgement are different."
+            "Review one appointment, its current dispatch checks and individual pack responses before using the existing booking controls. A confirmed visit is not permission to attend.",
+            "Customer date agreement, customer site readiness and acknowledgement of an exact issued pack are distinct. PPO records contact here; it sends nothing to the customer."
           ],
           "steps": [],
           "rows": [],
@@ -44346,9 +44305,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Work order, appointment identity, site timezone, crew and readiness.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Open an appointment from Schedule or its work order using your permitted identity. Check its reference, customer, site and site time zone.",
+            "The current dispatch result requires both the appointment and job pack to load. A missing or denied source is not a pass."
           ],
           "steps": [],
           "rows": [],
@@ -44415,15 +44373,14 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release.",
-            "Review current booking policy prepares the proposed interval, including published future windows. Confirmation, moves and request acceptance carry exact policy/hash and publication-head evidence. A stale save requires fresh preparation; existing bookings retain their historic pin."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Review the proposed visit and its contact/readiness evidence",
-            "Confirm available crew through the scheduling workflow",
-            "Track changes and individual acknowledgement"
+            "Read the dispatch decision and its reasons. Review Parts on the linked demand when you have supply access; otherwise ask the supply owner to review it.",
+            "Open the current job pack to review the issued revision, individual acknowledgements and returned issues. An earlier issue acknowledgement does not acknowledge a replacement.",
+            "Use Record contact for the current site's contact. Choose the channel and outcome and record what was agreed. This records dates, not site readiness.",
+            "For a proposal, use Confirm appointment to review the booking. For an unstarted confirmed visit, use Move or reassign. Current policy, crew and server checks still govern saving.",
+            "Use Appointment actions (More on phone) for Propose change, Cancel appointment or Refresh saved appointment. A request reserves no crew or time.",
+            "Open visible follow-up tasks and the work order for controlled preparation or further attendance. A supply change can restore a hold without moving the booking."
           ],
           "rows": [],
           "headers": []
@@ -44432,11 +44389,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An appointment has an explicit scheduling and acknowledgement state.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A proposed time, a confirmed booking and a technician acknowledgement are different.",
-            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save.",
-            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
+            "Read the saved receipt. Booking, contact, pack preparation, issue, acknowledgement and attendance remain separate actions.",
+            "Open job pack uses the exact appointment pack. Where no pack exists and preparation is permitted, Prepare job pack opens the existing preparation workflow.",
+            "Completed and cancelled visits retain evidence and links but have no appointment editing actions here. Further attendance needs a separate visit on the work order."
           ],
           "steps": [],
           "rows": [],
@@ -44446,39 +44401,13 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
+            "Dispatch held explains the current server reasons. Ready to dispatch reflects the implemented gate only: customer site-readiness recording is not available yet.",
+            "P4 site readiness and P5 issue lead-time warnings are shown as unavailable. This screen cannot record a site-readiness statement, link a demand or record a Parts statement or exception.",
+            "Proposed visits reserve no people or time. Cancelled visits show their reason and retained records. Missing values remain explicitly unavailable."
           ],
           "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
-          ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
@@ -44495,48 +44424,22 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original.",
-            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
+            "After a failed refresh, previously read evidence may remain visible, but editing and receiving links are removed until a current read succeeds. A denied appointment read clears it. Use Retry loading or Refresh saved appointment.",
+            "Validation and stale-save refusals retain your form entries. Compare the current appointment and use the existing policy-review controls before another save.",
+            "An uncertain contact or confirmation result retains its exact original in this tab. Check original receipt or Retry unchanged original. Do not create a replacement operation while its outcome is unresolved.",
+            "Policy impacts retain their named owner, source publication and guarded resolution. Completing a task or acknowledging a pack cannot clear a policy hold."
           ],
           "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
-          ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
-            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
+            "On a phone the compact record header provides Back and More. The dispatch decision and checks come first; Visit includes a Crew and visit details disclosure. Record contact and the primary booking action stay at the bottom for an editable visit.",
+            "Use Tab and Shift+Tab to reach controls, Enter or Space to open disclosures and the menu keyboard controls to select an action. Existing booking forms appear within the page.",
+            "This appointment workspace requires an online read and online commands. It does not add offline booking or dispatch authority. Same-tab recovery retains an uncertain original; it is not an offline queue."
           ],
           "steps": [],
           "rows": [],
@@ -44558,10 +44461,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application.",
-            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
+            "Updated for the SV-04 implementation on 21 October 2026. Guide and owner visual review remain pending. Automated evidence is recorded separately; it is not business acceptance.",
+            "The accepted design is the PPO - Design named version Appointment detail — shared record layout, accepted. The implementation retains the separately adopted compact phone header and gates the unbuilt increments."
           ],
           "steps": [],
           "rows": [],
@@ -44579,9 +44480,17 @@
         "docs/decisions/field-closed-visit-guidance.md",
         "docs/delivery/field-integrated-owner-walkthrough.md",
         "docs/testing/field-integrated-acceptance-ledger.md",
-        "docs/testing/field-benefit-measurement.md"
+        "docs/testing/field-benefit-measurement.md",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "tests/helpers/appointment-detail-fixture.ts",
+        "tests/browser/appointment-detail.spec.ts",
+        "tests/unit/appointment-detail.test.ts",
+        "docs/decisions/appointment-detail-figma-design.md"
       ],
-      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
+      "change_summary": "Describe the real SV-04 shared record controls, source failures, online command recovery and gated P4/P5.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-APPOINTMENTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
