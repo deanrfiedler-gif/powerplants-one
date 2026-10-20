@@ -143,7 +143,9 @@ export function IncidentRegister() {
         <span className="fi06-count">
           {r.data
             ? `${rows.length} incidents · as at ${incidentTime(r.data.as_at)}`
-            : "Loading incidents…"}
+            : r.error
+              ? "Incident counts unavailable"
+              : "Loading incidents…"}
         </span>
         <Button aria-label="Refresh incidents" onClick={r.reload}>
           <ProductIcon name="changes" />
@@ -248,12 +250,17 @@ export function IncidentRegister() {
               {rows.map((i) => {
                 const values: Record<string, React.ReactNode> = {
                   Incident: (
-                    <Link href={`/service/incidents/${i.id}`}>
+                    <Link
+                      href={`/service/incidents/${i.id}`}
+                      title={i.reference}
+                    >
                       {i.reference}
                     </Link>
                   ),
                   Summary: (
-                    <Link href={`/service/incidents/${i.id}`}>{i.summary}</Link>
+                    <Link href={`/service/incidents/${i.id}`} title={i.summary}>
+                      {i.summary}
+                    </Link>
                   ),
                   Classification: incidentLabel(i.classification),
                   State: (

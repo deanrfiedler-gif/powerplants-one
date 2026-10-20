@@ -46,15 +46,124 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
-test("FI-06 uncertain submit retries the exact original operation and sends site time as UTC", async ({ page }, info) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+test("FI-06 visit More menu passes an authorised exact target", async ({
+  page,
+}) => {
+  await page.route("**/api/v1/my-jobs", (route) =>
+    route.fulfill({
+      json: {
+        items: [
+          {
+            id: incidentRow.appointment_id,
+            reference: incidentContext.appointment.reference,
+            work_order_reference: incidentContext.appointment.work_order,
+            site_name: incidentRow.site,
+            site_timezone: incidentRow.timezone,
+            start_at: incidentContext.appointment.scheduled_start_at,
+            end_at: incidentContext.appointment.scheduled_end_at,
+            status: "InProgress",
+            my_started_at: incidentRow.reported_at,
+            dispatch_hold: true,
+            policy_impacts: [],
+          },
+        ],
+        observed_at: incidentRow.reported_at,
+        next_cursor: null,
+      },
+    }),
+  );
+  await page.goto("/my-jobs");
+  await page
+    .getByRole("button", { name: "Visit more actions", exact: true })
+    .click();
+  const link = page.getByRole("menuitem", {
+    name: "Report an incident",
+    exact: true,
+  });
+  await expect(link).toHaveAttribute(
+    "href",
+    `/service/incidents/new?appointment_id=${incidentRow.appointment_id}&scope_item_id=${incidentContext.targets[0].scope_item_id}&asset_id=${incidentContext.targets[0].asset_id}`,
+  );
+  await link.click();
+  await expect(
+    page.getByLabel("Exact affected scope and equipment", { exact: true }),
+  ).toHaveValue(
+    `${incidentContext.targets[0].scope_item_id}:${incidentContext.targets[0].asset_id}`,
+  );
+});
+
+test("FI-06 loading, failed and partial reads remain separate from authority", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/api/v1/service/incidents", async (route) => {
+    await gate;
+    await route.fulfill({
+      status: 503,
+      json: { code: "Unavailable", message: "SYN incident read unavailable" },
+    });
+  });
+  await page.goto("/service/incidents");
+  await expect(
+    page.getByText("Loading incidents…", { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("loading.png") });
+  release();
+  await expect(
+    page.getByText("Incident counts unavailable", { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("read-error.png") });
+  let failed = false;
+  await page.route(`**/api/v1/service/incidents/${incidentId}`, (route) =>
+    route.fulfill(
+      failed
+        ? {
+            status: 503,
+            json: {
+              code: "Unavailable",
+              message: "SYN current incident read failed",
+            },
+          }
+        : { json: incidentFixture },
+    ),
+  );
+  await page.goto(`/service/incidents/${incidentId}`);
+  await expect(
+    page.getByText("Scope held: SYN Dosing pump DP-01", { exact: true }),
+  ).toBeVisible();
+  failed = true;
+  await page
+    .getByRole("button", { name: "Refresh saved record", exact: true })
+    .click();
+  await expect(page.getByText(/Last-known context only/)).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Correct report", exact: true }),
+  ).toBeDisabled();
+  await page.screenshot({ path: info.outputPath("partial-record.png") });
+});
+
+test("FI-06 uncertain submit retries the exact original operation and sends site time as UTC", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   const current = structuredClone(incidentFixture);
   current.row.state = "Draft";
   let first: Record<string, unknown> | undefined;
   let retry: Record<string, unknown> | undefined;
-  await page.route(`**/api/v1/service/incidents/${incidentId}`, route => route.fulfill({ json: current }));
-  await page.route("**/api/v1/operations/*", route => route.fulfill({ status: 404, json: { code: "Unavailable", message: "Original receipt unavailable" } }));
-  await page.route("**/api/v1/service/incidents", async route => {
+  await page.route(`**/api/v1/service/incidents/${incidentId}`, (route) =>
+    route.fulfill({ json: current }),
+  );
+  await page.route("**/api/v1/operations/*", (route) =>
+    route.fulfill({
+      status: 404,
+      json: { code: "Unavailable", message: "Original receipt unavailable" },
+    }),
+  );
+  await page.route("**/api/v1/service/incidents", async (route) => {
     const body = route.request().postDataJSON();
     if (body.action === "save") {
       expect(body.facts.occurred_at).toBe("2026-10-12T01:35:00.000Z");
@@ -69,18 +178,62 @@ test("FI-06 uncertain submit retries the exact original operation and sends site
       current.row.state = "Submitted";
       current.row.version++;
     }
-    await route.fulfill({ status: 201, json: { operation_id: body.operation_id, record_id: incidentId, record_version: current.row.version, state: current.row.state, receipt_id: "16000000-0000-4000-8000-000000000069", accepted_at: incidentRow.reported_at } });
+    await route.fulfill({
+      status: 201,
+      json: {
+        operation_id: body.operation_id,
+        record_id: incidentId,
+        record_version: current.row.version,
+        state: current.row.state,
+        receipt_id: "16000000-0000-4000-8000-000000000069",
+        accepted_at: incidentRow.reported_at,
+      },
+    });
   });
   await page.goto(`/service/incidents/${incidentId}`);
+  await expect(page.getByLabel("Occurred", { exact: true })).toBeVisible();
+  await page.screenshot({ path: info.outputPath("saved-draft-1440.png") });
+  for (const [width, height] of [
+    [390, 1477],
+    [320, 1625],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.locator(".shared-record").evaluate((e) => (e.scrollTop = 0));
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    ).toBe(true);
+    await page.screenshot({
+      path: info.outputPath(`saved-draft-${width}.png`),
+    });
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("tab", { name: /^Evidence / }).click();
+  await expect(page.locator(".fi06-phone-savebar")).toHaveCount(0);
+  await page.getByRole("tab", { name: "Report", exact: true }).click();
   await page.getByLabel("Occurred", { exact: true }).fill("2026-10-12T11:35");
-  await page.getByLabel("Reason for this report or correction", { exact: true }).fill("SYN occurrence clarified before submission");
-  await page.getByRole("button", { name: "Submit report", exact: true }).click();
-  await page.getByRole("dialog", { name: "Submit this report?" }).getByRole("button", { name: "Submit report", exact: true }).click();
-  await expect(page.getByText("We don’t know if your report arrived", { exact: true })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Save draft", exact: true })).toBeDisabled();
-  await page.locator(".shared-record").evaluate(e => e.scrollTop = 0);
+  await page
+    .getByLabel("Reason for this report or correction", { exact: true })
+    .fill("SYN occurrence clarified before submission");
+  await page
+    .getByRole("button", { name: "Submit report", exact: true })
+    .click();
+  await page
+    .getByRole("dialog", { name: "Submit this report?" })
+    .getByRole("button", { name: "Submit report", exact: true })
+    .click();
+  await expect(
+    page.getByText("We don’t know if your report arrived", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Save draft", exact: true }),
+  ).toBeDisabled();
+  await page.locator(".shared-record").evaluate((e) => (e.scrollTop = 0));
   await page.screenshot({ path: info.outputPath("uncertain-submit-390.png") });
-  await page.getByRole("button", { name: "Recover the original", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Recover the original", exact: true })
+    .click();
   await expect(page.locator(".shared-record-title")).toContainText("Submitted");
   expect(first?.action).toBe("submit");
   expect(retry).toEqual(first);
@@ -124,12 +277,19 @@ test("FI-06 register filters, counts, semantic grid, menu focus and responsive w
   for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({
       width,
-      height: width < 600 ? 844 : width === 1024 ? 768 : 900,
+      height: width < 600 ? 844 : 900,
     });
     await page.goto("/service/incidents?department=service");
     await expect(
       page.getByRole("link", { name: incidentRow.reference, exact: true }),
     ).toBeVisible();
+    if (width === 1024)
+      await page
+        .getByRole("button", {
+          name: "Collapse primary navigation",
+          exact: true,
+        })
+        .click();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth + 1,
@@ -190,6 +350,18 @@ test("FI-06 record states keep authority and original evidence separate", async 
     page.getByText("Scope held: SYN Dosing pump DP-01", { exact: true }),
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("submitted.png") });
+  const owners = await page
+    .locator("main")
+    .evaluate((main) =>
+      [main, ...main.querySelectorAll("*")]
+        .filter(
+          (e) =>
+            e.scrollHeight > e.clientHeight + 1 &&
+            ["auto", "scroll"].includes(getComputedStyle(e).overflowY),
+        )
+        .map((e) => e.id || e.tagName.toLowerCase()),
+    );
+  expect(owners).toEqual(["fi06-record"]);
   await page
     .getByRole("tab", { name: "Triage and review", exact: true })
     .click();
@@ -319,6 +491,10 @@ test("FI-06 report form validates, uses site time, confirms hold and retains inp
       ),
     ).toBe(true);
     await page.locator(".shared-record").evaluate((e) => (e.scrollTop = 0));
+    if (width < 600)
+      await expect(
+        page.getByRole("button", { name: "Submit report", exact: true }),
+      ).toBeInViewport();
     await page.screenshot({
       path: info.outputPath(`report-form-${width}.png`),
     });
@@ -330,6 +506,9 @@ test("FI-06 report form validates, uses site time, confirms hold and retains inp
       exact: true,
     });
     await expect(sheet).toBeVisible();
+    await expect(
+      sheet.getByRole("button", { name: "Done", exact: true }),
+    ).toHaveCount(0);
     await expect(sheet.getByText(/until the incident is closed/)).toBeVisible();
     await page.screenshot({
       path: info.outputPath(`submit-sheet-${width}.png`),

@@ -109,6 +109,7 @@ export const incidentFixture = {
       activity_id: "16000000-0000-4000-8000-000000000063",
       accepted_by: null as string | null,
       assignment_current: true,
+      owner_name: incidentRow.reporter,
       activity: {
         id: "16000000-0000-4000-8000-000000000063",
         version: 1,

@@ -184,13 +184,6 @@
   height: 40px;
   padding-block: 0;
 }
-#ppo-incidents .fi06-selection {
-  padding: 16px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-control);
-  margin-bottom: 16px;
-}
 #ppo-incidents .ppo-register-table [data-column="Summary"] {
   width: 290px;
 }
@@ -267,6 +260,9 @@
   overflow: hidden;
   clip-path: inset(50%);
 }
+.fi06-phone-savebar {
+  display: none;
+}
 #ppo-incidents .shared-record {
   min-height: 100%;
 }
@@ -339,7 +335,7 @@
   line-height: 16px;
 }
 #ppo-incidents .shared-record-workspace {
-  background: var(--surface);
+  background: var(--paper);
   min-width: 0;
 }
 #ppo-incidents .shared-record-content {
@@ -348,7 +344,7 @@
 #ppo-incidents .record-tablist {
   margin: 0;
   padding: 0 16px;
-  background: var(--surface-2);
+  background: var(--white);
   border-bottom: 1px solid var(--line);
   gap: 0;
   overflow: auto;
@@ -456,6 +452,11 @@
   padding: 0;
   border: 0;
 }
+#ppo-incidents .fi06-scope-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
 #ppo-incidents .business-card > fieldset {
   border: 0;
   padding: 0;
@@ -482,8 +483,11 @@
   color: var(--ink);
   padding: 8px 12px;
   font: inherit;
+  font-weight: 400;
+  margin: 6px 0 0;
 }
 #ppo-incidents textarea {
+  height: 64px;
   min-height: 62px;
   resize: vertical;
 }
@@ -596,7 +600,16 @@
   align-items: center;
   padding: 12px 0;
 }
-.fi06-submit .crm-r38-panel > footer {
+#ppo-incidents .fi06-evidence-choice input {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--navy);
+}
+#ppo-incidents .fi06-submit .crm-r38-panel > footer {
   display: none;
 }
 .fi06-submit .crm-r38-panel {
@@ -632,6 +645,26 @@
   }
 }
 @media (max-width: 780px) {
+  .fi06-phone-savebar {
+    display: flex;
+    position: fixed;
+    inset: auto 0 calc(64px + env(safe-area-inset-bottom));
+    z-index: 35;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+  }
+  .fi06-phone-savebar button {
+    flex: 1;
+    min-height: 48px;
+  }
+  #ppo-incidents .fi06-form-actions {
+    display: none;
+  }
+  #ppo-incidents .shared-record:has(.fi06-facts-form) .shared-record-content {
+    padding-bottom: 90px;
+  }
   #ppo-incidents .mw-menu-overlay {
     inset: 56px 0 0;
     width: 100%;
@@ -654,6 +687,12 @@
   #ppo-incidents .shared-record-header h1 {
     font-size: 18px;
     line-height: 24px;
+  }
+  #ppo-incidents
+    .shared-record:has(.fi06-facts-form)
+    .shared-record-title
+    .business-heading {
+    display: none;
   }
   #ppo-incidents .shared-record-actions,
   #ppo-incidents .shared-record-sources,
@@ -699,7 +738,7 @@
   #ppo-incidents .shared-record:has(.fi06-facts-form) .shared-record-sticky {
     display: none;
   }
-  .fi06-submit .crm-r38-panel {
+  #ppo-incidents .fi06-submit .crm-r38-panel {
     position: fixed;
     inset: auto 0 0;
     margin: 0;

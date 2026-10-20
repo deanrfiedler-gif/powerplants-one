@@ -6,7 +6,11 @@ import { pathToFileURL } from "node:url";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { base } from "../helpers/service-inspections";
 import type { incidentRead } from "../../src/incidents/service";
-import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
+import {
+  openPageGuide,
+  phoneWidth,
+  phoneMenuOpener,
+} from "../helpers/phone-menu";
 type View = Awaited<ReturnType<typeof incidentRead>>;
 
 test("FI06 retained historical reference and current native shell comparison", async ({
@@ -57,9 +61,9 @@ test("FI06 retained historical reference and current native shell comparison", a
       ).ok(),
     ).toBe(true);
     await page.goto(`${baseURL}/service/incidents`);
-    await expect(
-      page.locator("#ppo-incidents h1"),
-    ).toHaveText("Incidents and corrective actions");
+    await expect(page.locator("#ppo-incidents h1")).toHaveText(
+      "Incidents and corrective actions",
+    );
     const tokens = await page.locator("#ppo-incidents").evaluate((e) => {
       const s = getComputedStyle(e);
       return Object.fromEntries(
@@ -113,9 +117,16 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
   const origin = baseURL!;
   const refreshIncident = async () => {
     if (phoneWidth(page)) {
-      await page.getByRole("button", { name: "More actions", exact: true }).click();
-      await page.getByRole("menuitem", { name: "Refresh incident", exact: true }).click();
-    } else await page.getByRole("button", { name: "Refresh saved record", exact: true }).click();
+      await page
+        .getByRole("button", { name: "More actions", exact: true })
+        .click();
+      await page
+        .getByRole("menuitem", { name: "Refresh incident", exact: true })
+        .click();
+    } else
+      await page
+        .getByRole("button", { name: "Refresh saved record", exact: true })
+        .click();
   };
   const login = async (client: APIRequestContext, profile: string) => {
     const r = await client.post(origin + "/api/v1/local-session", {
@@ -158,9 +169,7 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
       exact: true,
     })
     .selectOption(`${t.scope_item_id}:${t.asset_id}`);
-  await page
-    .getByRole("radio", { name: "Incident", exact: true })
-    .check();
+  await page.getByRole("radio", { name: "Incident", exact: true }).check();
   await page
     .getByLabel("Operational summary", { exact: true })
     .fill("SYN external leak observation");
@@ -174,25 +183,22 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
     .getByLabel("Immediate response already taken", { exact: true })
     .fill("Reported only; no equipment control");
   await page
-    .getByLabel(
-      "Restricted details",
-      { exact: true },
-    )
+    .getByLabel("Restricted details", { exact: true })
     .fill("FI06-PRIVATE-CANARY");
   await page
     .getByLabel("Reason for this report or correction", { exact: true })
     .fill("SYN factual initial report");
   // On a phone the guide opens from the header Menu by keyboard, and Escape returns focus to the Menu button.
-  const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
+  const guide = phoneWidth(page)
+    ? phoneMenuOpener(page)
+    : page.getByRole("button", { name: "Page guide", exact: true });
   await openPageGuide(page, true);
   await expect(
     page.getByRole("dialog", { name: "Page guide", exact: true }),
   ).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(guide).toBeFocused();
-  await page
-    .getByRole("button", { name: "Save draft", exact: true })
-    .focus();
+  await page.getByRole("button", { name: "Save draft", exact: true }).focus();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/service\/incidents\/[0-9a-f-]{36}$/);
   const id = page.url().split("/").pop()!,
@@ -207,11 +213,16 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
       await route.abort("connectionreset");
     } else await route.continue();
   });
-  await page.getByLabel("Reason for this report or correction", { exact: true }).fill("SYN submit unchanged factual report");
+  await page
+    .getByLabel("Reason for this report or correction", { exact: true })
+    .fill("SYN submit unchanged factual report");
   await page
     .getByRole("button", { name: "Submit report", exact: true })
     .click();
-  await page.getByRole("dialog", { name: "Submit this report?" }).getByRole("button", { name: "Submit report", exact: true }).click();
+  await page
+    .getByRole("dialog", { name: "Submit this report?" })
+    .getByRole("button", { name: "Submit report", exact: true })
+    .click();
   await expect(
     page.getByText("We don’t know if your report arrived", {
       exact: true,
@@ -226,7 +237,9 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
   const saved = await read();
   expect(saved.row.version).toBe(2);
   expect(saved.operational_hold).toBe(true);
-  await page.getByRole("button", { name: "Correct report", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Correct report", exact: true })
+    .click();
   await page
     .getByLabel("Factual observations", { exact: true })
     .fill("SYN retained during disconnected factual correction");
@@ -234,32 +247,40 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
     .getByLabel("Reason for this report or correction", { exact: true })
     .fill("SYN reconnect proof");
   await page.context().setOffline(true);
-  await expect(page.getByRole("button", { name: "Save factual correction", exact: true })).toBeDisabled();
-  await expect(page.getByLabel("Factual observations", { exact: true })).toHaveValue("SYN retained during disconnected factual correction");
+  await expect(
+    page.getByRole("button", { name: "Save factual correction", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByLabel("Factual observations", { exact: true }),
+  ).toHaveValue("SYN retained during disconnected factual correction");
   await page.context().setOffline(false);
-  await page.getByRole("button", { name: "Save factual correction", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Save factual correction", exact: true })
+    .click();
   await expect(page.locator(".shared-record-meta")).toContainText("v3");
   const startContext = await own(`my-jobs/${setup.appointment_id}`);
   expect(startContext.items[0].readiness.component_ready).toBe(false);
   await login(page.request, "coordinator");
   await page.goto(url);
-  await page.getByRole("tab", { name: "Triage and review", exact: true }).click();
+  await page
+    .getByRole("tab", { name: "Triage and review", exact: true })
+    .click();
   await page.getByLabel("Assessment", { exact: true }).selectOption("Assessed");
-  await page.getByLabel("Basis for the assessment", { exact: true }).fill("SYN independent triage, exact scope");
+  await page
+    .getByLabel("Basis for the assessment", { exact: true })
+    .fill("SYN independent triage, exact scope");
   await page
     .getByRole("combobox", { name: "Accountable owner", exact: true })
     .selectOption("30000000-0000-4000-8000-000000000010");
-  await page
-    .getByLabel("Due time", { exact: true })
-    .fill("2031-12-24T10:00");
+  await page.getByLabel("Due time", { exact: true }).fill("2031-12-24T10:00");
   await page
     .getByRole("combobox", { name: "Priority", exact: true })
     .selectOption("Routine");
-  await page
-    .getByRole("button", { name: "Save triage", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Save triage", exact: true }).click();
   await expect(page.locator(".shared-record-title")).toContainText("In review");
-  await page.getByText("Review decisions and corrective work", { exact: true }).click();
+  await page
+    .getByText("Review decisions and corrective work", { exact: true })
+    .click();
   await page
     .getByLabel("Operational corrective instruction", { exact: true })
     .fill("SYN owned external observation and correction evidence");
@@ -270,18 +291,26 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
     })
     .click();
   await page.getByRole("tab", { name: /^Actions / }).click();
-  await expect(page.getByRole("link", { name: "Open activity", exact: true })).toBeVisible();
-  await page.getByRole("tab", { name: "Triage and review", exact: true }).click();
+  await expect(
+    page.getByRole("link", { name: "Open activity", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("tab", { name: "Triage and review", exact: true })
+    .click();
   await page
     .getByLabel("Review or closure reason", { exact: true })
     .fill("SYN clarify the exact original observation");
   await page
     .getByRole("button", { name: "Request clarification", exact: true })
     .click();
-  await expect(page.locator(".shared-record-title")).toContainText("Clarification required");
+  await expect(page.locator(".shared-record-title")).toContainText(
+    "Clarification required",
+  );
   await login(page.request, "assigned-technician");
   await page.goto(url);
-  await page.getByRole("button", { name: "Correct report", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Correct report", exact: true })
+    .click();
   await page
     .getByLabel("Factual observations", { exact: true })
     .fill("Corrected observation retaining original context");
@@ -441,12 +470,22 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
   await login(page.request, "coordinator");
   await page.goto(url);
   await page.getByRole("tab", { name: /^Actions / }).click();
-  await page.getByRole("radio", { name: /Use SYN exact corrective record/ }).check();
-  await page.getByLabel("Reason for your decision", { exact: true }).fill("SYN independent exact evidence review");
-  await page.getByRole("button", { name: "Accept evidence", exact: true }).click();
+  await page
+    .getByRole("radio", { name: /Use SYN exact corrective record/ })
+    .check();
+  await page
+    .getByLabel("Reason for your decision", { exact: true })
+    .fill("SYN independent exact evidence review");
+  await page
+    .getByRole("button", { name: "Accept evidence", exact: true })
+    .click();
   await expect(page.getByText(/Evidence independently accepted/)).toBeVisible();
-  await page.getByRole("tab", { name: "Triage and review", exact: true }).click();
-  await page.getByLabel("Basis for the assessment", { exact: true }).fill("SYN independently verified exact scope and evidence");
+  await page
+    .getByRole("tab", { name: "Triage and review", exact: true })
+    .click();
+  await page
+    .getByLabel("Basis for the assessment", { exact: true })
+    .fill("SYN independently verified exact scope and evidence");
   await page
     .getByRole("button", { name: "Accept exact closure evidence", exact: true })
     .click();
@@ -485,7 +524,9 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
     ).body();
   expect(html.toString()).not.toContain("FI06-PRIVATE-CANARY");
   await page.reload();
-  await page.getByRole("tab", { name: "Triage and review", exact: true }).click();
+  await page
+    .getByRole("tab", { name: "Triage and review", exact: true })
+    .click();
   await expect(
     page.getByText("Current incident closure", { exact: true }),
   ).toBeVisible();

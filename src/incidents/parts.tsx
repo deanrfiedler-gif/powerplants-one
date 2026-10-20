@@ -1,5 +1,6 @@
 "use client";
 import { useSyncExternalStore, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { WorklistPanel } from "../components/crm-worklist-tools";
 import { Button } from "../components/ui/button";
 import { RegisterChip } from "../components/ui/register-table";
@@ -20,6 +21,57 @@ export const useIncidentOnline = () =>
     () => navigator.onLine,
     () => true,
   );
+const subscribeMounted = () => () => {};
+export function IncidentFormActions({
+  formId,
+  label,
+  locked,
+  submit,
+  active,
+}: {
+  formId: string;
+  label: string;
+  locked: boolean;
+  submit: boolean;
+  active: boolean;
+}) {
+  const mounted = useSyncExternalStore(
+    subscribeMounted,
+    () => true,
+    () => false,
+  );
+  const buttons = (
+    <>
+      <Button disabled={locked} type="submit" form={formId}>
+        {label}
+      </Button>
+      {submit && (
+        <Button
+          disabled={locked}
+          variant="primary"
+          type="submit"
+          form={formId}
+          data-intent="submit"
+        >
+          Submit report
+        </Button>
+      )}
+    </>
+  );
+  return (
+    <>
+      <div className="fi06-form-actions">{buttons}</div>
+      {mounted &&
+        active &&
+        createPortal(
+          <div className="fi06-phone-savebar" aria-label="Report actions">
+            {buttons}
+          </div>,
+          document.body,
+        )}
+    </>
+  );
+}
 export function IncidentState({ state }: { state: string }) {
   return (
     <RegisterChip

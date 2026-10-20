@@ -782,9 +782,10 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
   ).rows;
   const duties: Record<string, boolean> = {};
   // Reflect the existing command's independence test in the available controls.
-  const isIndependent = row.reporter_id !== p.actor_id &&
-    !g.actions.some(a => a.owner_id === p.actor_id) &&
-    !g.evidence.some(e => e.added_by === p.actor_id);
+  const isIndependent =
+    row.reporter_id !== p.actor_id &&
+    !g.actions.some((a) => a.owner_id === p.actor_id) &&
+    !g.evidence.some((e) => e.added_by === p.actor_id);
   for (const action of [
     "save",
     "submit",
@@ -802,7 +803,8 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
   ]) {
     try {
       await access(c, p, id, action);
-      duties[action] = !["accept_action", "accept", "close"].includes(action) || isIndependent;
+      duties[action] =
+        !["accept_action", "accept", "close"].includes(action) || isIndependent;
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       duties[action] = false;
@@ -812,12 +814,17 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
     row.state !== "Closed" || (await closedEvidenceCurrent(c, p, id));
   const equipment = await visible(c, p, "Asset", b.asset_id),
     site = await visible(c, p, "Site", row.site_id);
-  const reporter = (
-    await c.query(
-      "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
-      [p.workspace_id, row.reporter_id],
+  const people = (
+    await c.query<{ id: string; display_name: string }>(
+      "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+      [
+        p.workspace_id,
+        [row.reporter_id, ...g.actions.map((a) => a.activity.owner_id)],
+      ],
     )
-  ).rows[0];
+  ).rows;
+  const personName = (id: string) =>
+    people.find((person) => person.id === id)?.display_name ?? id;
   const identity = (
     await c.query<{ display_number: string | null }>(
       "SELECT display_number FROM ppo.business_identities WHERE workspace_id=$1 AND id=$2",
@@ -836,7 +843,7 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
       equipment: equipment.display_number,
       task: (b.snapshot.scope_item as { task_description?: string })
         ?.task_description,
-      reporter: reporter?.display_name ?? row.reporter_id,
+      reporter: personName(row.reporter_id),
     },
     row: {
       ...row,
@@ -862,6 +869,7 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
         : row.hold || row.assessment === "Unassessed"),
     actions: g.actions.map((a) => ({
       ...a,
+      owner_name: personName(a.activity.owner_id),
       accepted_evidence_id:
         sensitive ||
         g.evidence.some(

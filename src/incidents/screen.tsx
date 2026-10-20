@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { Fragment, useRef, useState, type ReactNode } from "react";
+import { Fragment, useId, useRef, useState, type ReactNode } from "react";
 import { api, ReadState, Field, ErrorNotice } from "../components/business-ui";
 import { useCrmResource } from "../components/crm-state";
 import { useIdentity } from "../components/business-session";
@@ -22,6 +22,7 @@ import { RecordIdentity } from "../shell/record-identity";
 import { IncidentRegister } from "./register";
 import {
   IncidentSection,
+  IncidentFormActions,
   IncidentState,
   SubmitIncident,
   useIncidentOnline,
@@ -229,6 +230,7 @@ function FactsForm({
   scope = "the exact affected scope",
   selection,
   submit,
+  active = true,
 }: {
   initial: Facts;
   send: (
@@ -244,6 +246,7 @@ function FactsForm({
   timezone?: string;
   scope?: string;
   selection?: ReactNode;
+  active?: boolean;
   submit?: (
     facts: Facts,
     reason: string,
@@ -255,6 +258,7 @@ function FactsForm({
     [dirty, setDirty] = useState(false),
     [originalVersion, setOriginalVersion] = useState(version),
     [confirm, setConfirm] = useState(false);
+  const formId = useId();
   const release = useUnsavedChanges(dirty, locked && dirty);
   if (!dirty && version !== originalVersion) {
     setOriginalVersion(version);
@@ -284,6 +288,7 @@ function FactsForm({
   };
   return (
     <form
+      id={formId}
       className="fi06-facts-form"
       onSubmit={(e) => {
         e.preventDefault();
@@ -296,24 +301,24 @@ function FactsForm({
         else void save();
       }}
     >
-      {selection && <div className="fi06-selection">{selection}</div>}
-      <fieldset disabled={locked}>
-        <legend className="fi06-sr-only">Factual event record</legend>
-        {version !== originalVersion && (
-          <p role="alert">
-            The saved version changed. Your input is retained. Compare the
-            current history before continuing.{" "}
-            <Button onClick={() => setOriginalVersion(version)}>
-              Use current version for this correction
-            </Button>
-          </p>
-        )}
-        {dirty && (
-          <p className="fi06-edit-state" role="status">
-            Unsaved changes
-          </p>
-        )}
-        <IncidentSection title="What and where">
+      {version !== originalVersion && (
+        <p role="alert">
+          The saved version changed. Your input is retained. Compare the current
+          history before continuing.{" "}
+          <Button disabled={locked} onClick={() => setOriginalVersion(version)}>
+            Use current version for this correction
+          </Button>
+        </p>
+      )}
+      {dirty && (
+        <p className="fi06-edit-state" role="status">
+          Unsaved changes
+        </p>
+      )}
+      <IncidentSection title="What and where">
+        {selection}
+        <fieldset disabled={locked} className="fi06-scope-fields">
+          <legend className="fi06-sr-only">Event facts</legend>
           <fieldset className="fi06-classification">
             <legend>Event classification</legend>
             <div>
@@ -341,7 +346,10 @@ function FactsForm({
             onChange={(v) => change("occurred_at", v)}
             timezone={timezone}
           />
-        </IncidentSection>
+        </fieldset>
+      </IncidentSection>
+      <fieldset disabled={locked}>
+        <legend className="fi06-sr-only">Factual event record</legend>
         <IncidentSection title="What happened">
           <Field
             name="summary"
@@ -410,14 +418,13 @@ function FactsForm({
             multiline
           />
         </IncidentSection>
-        <div className="fi06-form-actions">
-          <Button type="submit">{label}</Button>
-          {submit && (
-            <Button variant="primary" type="submit" data-intent="submit">
-              Submit report
-            </Button>
-          )}
-        </div>
+        <IncidentFormActions
+          formId={formId}
+          label={label}
+          locked={locked}
+          submit={!!submit}
+          active={active}
+        />
       </fieldset>
       {confirm && (
         <SubmitIncident
@@ -598,7 +605,15 @@ function Capture() {
           }
           tabs={<div className="fi06-report-tabs">Report</div>}
         >
-          {command.panel}
+          {command.panel || (
+            <section className="fi06-command">
+              <strong>Reports save online only</strong>
+              <p>
+                {savedDraft ? "Draft saved." : "This new report is not saved."}{" "}
+                Nothing is sent to triage until you submit.
+              </p>
+            </section>
+          )}
           {!r.data.can_report && (
             <p role="alert">
               You can read this visit but cannot report an incident from it.
@@ -932,7 +947,17 @@ function Record() {
               </>
             }
           >
-            {command.panel}
+            {command.panel ||
+              (v.row.state === "Draft" && (
+                <section className="fi06-command">
+                  <strong>Reports save online only</strong>
+                  <p>
+                    Last saved{" "}
+                    {incidentTime(v.row.updated_at, v.context.timezone)}.
+                    Nothing is sent to triage until you submit.
+                  </p>
+                </section>
+              ))}
             <RecordPanel id="incident" tab="report" value={tab}>
               {v.row.state !== "Draft" && (
                 <section className="fi06-hold fi06-card">
@@ -976,6 +1001,7 @@ function Record() {
               )}
               {(v.row.state === "Draft" || correcting) && v.duties.save ? (
                 <FactsForm
+                  active={tab === "report"}
                   initial={v.row.facts}
                   version={v.row.version}
                   onDirty={mark("facts")}
@@ -1206,14 +1232,13 @@ function Record() {
               restricted={!!v.row.facts.restricted_details}
               locked={otherLocked}
               onClose={() => setConfirm(false)}
-              onSubmit={() =>
+              onSubmit={() => {
+                setConfirm(false);
                 void send({
                   action: "submit",
                   reason: "Submit factual report for independent triage",
-                }).then((ok) => {
-                  if (ok) setConfirm(false);
-                })
-              }
+                });
+              }}
             />
           )}
         </>
@@ -1294,7 +1319,7 @@ function ActionEvidence({
             </p>
             <Link href={`/work/${a.activity_id}`}>Open activity</Link>
             <p>
-              {a.activity.status} · Owner {a.activity.owner_id} · Due{" "}
+              {a.activity.status} · Owner {a.owner_name} · Due{" "}
               {incidentTime(a.activity.due_at, v.context.timezone)}
               {a.activity.overdue ? " · Overdue" : ""}
             </p>
