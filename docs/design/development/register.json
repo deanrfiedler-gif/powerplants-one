@@ -2895,7 +2895,7 @@
       "title": "Resource availability and competence",
       "kind": "scope",
       "module": "PL",
-      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
+      "summary": "PL-02 accepted Field team design implemented: Technicians default, scoped people filters, desktop snapshot, read-only seven-day person record, competence evidence and person-filtered View visits. Owner visual review pending.",
       "path": "/service/technicians",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2921,13 +2921,17 @@
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
-        "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css",
-        "docs/decisions/field-team-figma-design.md"
+        "docs/decisions/field-team-figma-design.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css",
+        "docs/decisions/field-team-native-build.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "PL-02 build checks recorded in docs/testing/evidence/field-team-build/README.md; owner review separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8300,10 +8304,10 @@
     },
     {
       "key": "route:/service/technicians",
-      "title": "Field technicians",
+      "title": "Field team",
       "kind": "route",
       "module": "PL",
-      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
+      "summary": "PL-02 accepted Field team design implemented: Technicians default, scoped people filters, desktop snapshot, read-only seven-day person record, competence evidence and person-filtered View visits. Owner visual review pending.",
       "path": "/service/technicians",
       "source_paths": [
         "src/app/(business)/service/technicians/page.tsx"
@@ -8324,14 +8328,18 @@
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
-        "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css",
         "src/documents/components/client/job-pack-entry.tsx",
-        "docs/decisions/field-team-figma-design.md"
+        "docs/decisions/field-team-figma-design.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css",
+        "docs/decisions/field-team-native-build.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "PL-02 build checks recorded in docs/testing/evidence/field-team-build/README.md; owner review separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11193,10 +11201,10 @@
     },
     {
       "key": "route:/service/technicians/[id]",
-      "title": "Resource detail",
+      "title": "Field team person record",
       "kind": "route",
       "module": "PL",
-      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
+      "summary": "PL-02 accepted Field team design implemented: Technicians default, scoped people filters, desktop snapshot, read-only seven-day person record, competence evidence and person-filtered View visits. Owner visual review pending.",
       "path": "/service/technicians/[id]",
       "source_paths": [
         "src/app/(business)/service/technicians/[id]/page.tsx"
@@ -11216,13 +11224,17 @@
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
-        "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css",
-        "docs/decisions/field-team-figma-design.md"
+        "docs/decisions/field-team-figma-design.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css",
+        "docs/decisions/field-team-native-build.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "PL-02 build checks recorded in docs/testing/evidence/field-team-build/README.md; owner review separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

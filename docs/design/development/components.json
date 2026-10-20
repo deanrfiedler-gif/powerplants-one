@@ -149,6 +149,11 @@
           "id": "cs02-register",
           "label": "CS-02 People register host",
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -189,7 +194,12 @@
         "docs/design/projects-register/figma-measurements.json",
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
-        "src/app/styles/people-register.css"
+        "src/app/styles/people-register.css",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -348,7 +358,8 @@
         "route:/estimating/rules/[id]",
         "route:/estimating/discovery/[id]/costing",
         "route:/people",
-        "route:/contacts"
+        "route:/contacts",
+        "route:/service/technicians"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -538,6 +549,14 @@
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -700,6 +719,11 @@
           "id": "cs02-register",
           "label": "CS-02 People register host",
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -735,7 +759,12 @@
         "docs/design/development/organisations-native-fixtures.json",
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
-        "src/app/styles/people-register.css"
+        "src/app/styles/people-register.css",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -759,7 +788,10 @@
         "route:/customers/[id]",
         "route:/service/reports",
         "route:/people",
-        "route:/contacts"
+        "route:/contacts",
+        "scope:PL-02",
+        "route:/service/technicians",
+        "route:/service/technicians/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -843,6 +875,14 @@
           "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
           "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2571,6 +2611,11 @@
           "id": "cs02-register",
           "label": "CS-02 People register host",
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -2594,7 +2639,12 @@
         "docs/design/development/organisations-native-fixtures.json",
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
-        "src/app/styles/people-register.css"
+        "src/app/styles/people-register.css",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2618,7 +2668,10 @@
         "route:/service/reports",
         "route:/service/reports/[id]",
         "route:/people",
-        "route:/contacts"
+        "route:/contacts",
+        "scope:PL-02",
+        "route:/service/technicians",
+        "route:/service/technicians/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2670,6 +2723,14 @@
           "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
           "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3850,6 +3911,11 @@
           "id": "cs02-register",
           "label": "CS-02 People register host",
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -3965,7 +4031,12 @@
         "docs/design/development/organisations-native-fixtures.json",
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
-        "src/app/styles/people-register.css"
+        "src/app/styles/people-register.css",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4017,7 +4088,10 @@
         "route:/sales/leads",
         "route:/customers/[id]",
         "route:/estimating/discovery/[id]/costing",
-        "route:/contacts"
+        "route:/contacts",
+        "scope:PL-02",
+        "route:/service/technicians",
+        "route:/service/technicians/[id]"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4285,6 +4359,14 @@
           "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
           "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -41,10 +41,11 @@ test("native scheduling pages retain context and reflow at coordination, phone a
     for (const [path, name] of screenshots) {
       await page.setViewportSize({ width, height });
       await page.goto(path);
-      await expect(
+      if (name !== "resource") await expect(
         page.getByRole("navigation", { name: "Scheduling workspace" }),
       ).toBeVisible();
-      if (name !== "planner")
+      if (name === "resource") await expect(page.locator(".pl02-review-meta")).toContainText("Complete.");
+      else if (name !== "planner")
         await expect(
           page
             .locator(".scheduling-workspace .read-meta")
@@ -87,16 +88,14 @@ test("resource detail exposes read-only evidence, calendar intervals and anonymo
   await identity(page);
   await page.goto("/service/technicians/" + id("a4") + "?day=2031-09-22");
   await expect(
-    page.getByRole("heading", { name: "Competence & evidence" }),
+    page.getByRole("heading", { name: "Competence and evidence" }),
   ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Published calendar" })).toBeAttached();
   await expect(
-    page.getByRole("heading", { name: "Published calendar" }),
+    page.getByRole("heading", { name: "Seven-day availability" }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Busy reservations" }),
-  ).toBeVisible();
-  await page.getByText("Review evidence", { exact: true }).first().click();
-  await expect(page.getByText(/Hash:/).first()).toBeVisible();
+  await page.getByRole("button", { name: /^Review evidence for/ }).first().click();
+  await expect(page.getByRole("dialog").getByText("Content hash", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("button", { name: /Save|Edit calendar|Add skill/ }),
   ).toHaveCount(0);

@@ -16,23 +16,23 @@ async function identity(page: Page, profile = "coordinator") {
     .click();
   await expect(identityToggle(page)).toBeEnabled();
 }
+async function chooseView(page: Page, view: string) {
+  const menu=page.getByRole("navigation",{name:"Field team views"});
+  if (!await menu.isVisible()) await page.getByRole("button",{name:/^Choose view/}).click();
+  await menu.getByRole("button",{name:new RegExp("^"+view)}).click();
+}
 async function open(page: Page) {
-  await page.goto("/service/technicians");
+  await page.goto("/service/technicians?view=visits");
   await identity(page);
   await page.getByLabel("Visit date", { exact: true }).fill("2031-09-22");
   await expect(
     page.getByRole("table", { name: "Scheduled service visits", exact: true }),
   ).toBeVisible();
 }
-test("approved field views keep filters, open controlled records and preserve outer padding", async ({
+test("retained field visit views keep filters and open controlled records", async ({
   page,
-}, info) => {
+}) => {
   await open(page);
-  const root = page.locator("#ppo-field-technicians");
-  await expect(root).toHaveCSS(
-    "padding-left",
-    info.project.name.startsWith("mobile") ? "16px" : "24px",
-  );
   const first = page.getByRole("button", { name: /^Open visit:/ }).first();
   const name = await first.getAttribute("aria-label");
   await first.click();
@@ -65,11 +65,9 @@ test("approved field views keep filters, open controlled records and preserve ou
   await expect(
     page.getByRole("heading", { name: "No matching results" }),
   ).toBeVisible();
-  await page.getByRole("tab", { name: /^Technicians/ }).click();
-  await expect(
-    page.getByRole("table", { name: "Field technicians", exact: true }),
-  ).toBeVisible();
-  await page.getByRole("tab", { name: /^Visits/ }).click();
+  await chooseView(page, "Technicians");
+  await expect(page.locator(".pl02-count")).toContainText("technicians");
+  await chooseView(page, "Visits");
   await expect(
     page.getByRole("searchbox", { name: "Search visits", exact: true }),
   ).toHaveValue("SYN-no-match-484fb");

@@ -38,7 +38,7 @@ test("Field Team and resource evidence retain date, site and timezone through re
 }, info) => {
   await identity(page);
   await page.goto(
-    `/service/technicians?day=2031-09-22&site_id=${siteId}&timezone=Australia%2FMelbourne`,
+    `/service/technicians?view=visits&day=2031-09-22&site_id=${siteId}&timezone=Australia%2FMelbourne`,
   );
   await expect(page.getByLabel("Visit date", { exact: true })).toHaveValue(
     "2031-09-22",
@@ -49,11 +49,10 @@ test("Field Team and resource evidence retain date, site and timezone through re
   await expect(
     page.getByRole("combobox", { name: "Site", exact: true }),
   ).toHaveValue(siteId);
-  await page.getByRole("tab", { name: /^Technicians/ }).click();
-  await page
-    .getByRole("link", { name: "Availability & competence" })
-    .first()
-    .click();
+  const reviewLink = page.locator(`a[href^="/service/technicians/${resourceId}?"]`).first();
+  // The retained Visits view publishes the precise resource handover.
+  await expect(reviewLink).toHaveAttribute("href", /site_id=.*timezone=/);
+  await reviewLink.click();
   await expect(page.getByLabel("Review timezone")).toHaveValue(
     "Australia/Melbourne",
   );
@@ -62,14 +61,20 @@ test("Field Team and resource evidence retain date, site and timezone through re
   await page.reload();
   await expect(
     page.getByRole("heading", { name: "Published calendar" }),
-  ).toBeVisible();
+  ).toBeAttached();
   await expect(page.getByLabel("Week starting")).toHaveValue("2031-09-23");
   await expect(page.getByLabel("Review timezone")).toHaveValue("UTC");
   await page.screenshot({
     path: info.outputPath("resource-timezone-context.png"),
     fullPage: true,
   });
-  await page.getByRole("link", { name: "Back to Field Team" }).click();
+  await page.getByRole("button", { name: "Person record actions" }).filter({visible:true}).click();
+  await page.getByRole("link", { name: "Back to Field team", exact:true }).click();
+  // The new default is Technicians; returning retains the full URL context.
+  expect(new URL(page.url()).searchParams.get("day")).toBe("2031-09-23");
+  expect(new URL(page.url()).searchParams.get("site_id")).toBe(siteId);
+  expect(new URL(page.url()).searchParams.get("timezone")).toBe("UTC");
+  await page.goto(page.url()+"&view=visits");
   await expect(page.getByLabel("Visit date", { exact: true })).toHaveValue(
     "2031-09-23",
   );
