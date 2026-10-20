@@ -44,9 +44,7 @@ P10 reads immutable P09 reviews and preserves field Drafts. Incomplete declarati
 
 Job Packs: job-pack-figma-implementation.md. Preserve issued revisions/hashes/scope/distribution. Keep approval, issue, delivery and acknowledgement distinct; changes need a new revision/acknowledgement.
 
-Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict; retain context and unsent evidence.
-
-[SV-07 findings](../decisions/service-findings-backend.md): source-bound next actions use one Activity and its history; changing or completing the task does not close its inspection, incident, incomplete report or customer response. Preserve source authority and explicit native disposition.
+Prevent duplicates; reconcile Unknown. Keep offline context/evidence; separate local-save/queued/synced/failed/conflict. SV-07: one Activity; source closes natively.
 
 ## 7. UX and quality
 

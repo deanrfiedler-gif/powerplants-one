@@ -1,4 +1,4 @@
-import { activityRequirements, isFindingActivity } from "./requirements";
+import { activityRequirements, isManagedFindingActivity, legacyFindingActivityAuthority, canEditFindingActivity } from "./requirements";
 import { activityIncidentSource } from "../incidents/context";
 import { activityReportSource } from "../reports/context";
 import { projectRow } from "../projects/service";
@@ -543,8 +543,11 @@ export async function activityCommand(
     async (c, a) => {
       // Recover an accepted original before this new-operation guard. Native
       // owner start/complete/cancel remain available; assignment edits use R2.
-      if (action === "update" && await isFindingActivity(c,p,a.id))
-        throw new AppError(422,"SourceWorkflowRequired","Change this next action through its source finding.");
+      if (action === "update") {
+        if (await isManagedFindingActivity(c,p,a.id))
+          throw new AppError(422,"SourceWorkflowRequired","Change this next action through its source finding.");
+        await legacyFindingActivityAuthority(c,p,a,changes.owner_id);
+      }
       return mutateActivity(c, p, a, command.expected_version, changes, action);
     },
     "Activity",
@@ -604,7 +607,7 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     report_source: await activityReportSource(c,p,id),
     can_edit:
       ["Open", "InProgress"].includes(a.status) &&
-      !(await isFindingActivity(c,p,id)) &&
+      (await canEditFindingActivity(c,p,a)) &&
       (await hasPermission(
         c,
         p,

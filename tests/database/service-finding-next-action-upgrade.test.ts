@@ -64,8 +64,8 @@ test("0111 preserves populated 0109 sources, Activities, grants and exact migrat
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), before);
-  // Source-bound tasks now use the guarded next-action editor; owner execution survives.
-  assert.deepEqual(await readActivity(p, id), { ...activity, can_edit: false });
+  // Unadopted native follow-ups retain the coordinator's existing editor.
+  assert.deepEqual(await readActivity(p, id), activity);
   assert.deepEqual(await activityCommand(p, id, command, "update"), {
     ...accepted,
     replayed: true,

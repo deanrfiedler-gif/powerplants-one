@@ -97,28 +97,26 @@ test("SV07 R2 changes one scheduling Activity, retains history, retries and sour
   const row = (
     await readFindings(p, { source: "schedule", q: a.display_number })
   ).items[0];
+  const original = await readActivity(p, row.action!.id);
+  assert.equal(original.can_edit, true);
+  // Preserve the native coordinator workflow until R2 adopts this Activity.
+  await activityCommand(
+    p,
+    original.id,
+    {
+      ...base(),
+      expected_version: original.version,
+      owner_id: p.actor_id,
+      summary: "SYN native coordinator follow-up",
+      due_at: "2031-11-10T00:00:00Z",
+      due_needed: false,
+    },
+    "update",
+  );
   const cmd = await input(p, row.id),
     before = await state(),
     origins = await nativeRows();
   cmd.due_at = "2020-01-01T00:00:00Z";
-  const original = await readActivity(p, row.action!.id);
-  assert.equal(original.can_edit, false);
-  await assert.rejects(
-    activityCommand(
-      p,
-      original.id,
-      {
-        ...base(),
-        expected_version: original.version,
-        owner_id: p.actor_id,
-        summary: "SYN bypass",
-        due_at: null,
-        due_needed: true,
-      },
-      "update",
-    ),
-    code("SourceWorkflowRequired"),
-  );
   const results = await Promise.all([
     setNextAction(p, row.id, cmd),
     setNextAction(p, row.id, cmd),
@@ -139,6 +137,23 @@ test("SV07 R2 changes one scheduling Activity, retains history, retries and sour
   assert.equal(detail.summary, cmd.instruction);
   assert.equal(detail.required_evidence, cmd.required_evidence);
   assert.equal(detail.due_date_only, false);
+  assert.equal(detail.can_edit, false);
+  await assert.rejects(
+    activityCommand(
+      p,
+      detail.id,
+      {
+        ...base(),
+        expected_version: detail.version,
+        owner_id: p.actor_id,
+        summary: "SYN generic bypass",
+        due_at: null,
+        due_needed: true,
+      },
+      "update",
+    ),
+    code("SourceWorkflowRequired"),
+  );
   assert.equal((await readNextAction(p, row.id)).item.overdue, true);
   assert.equal((await readFinding(p, row.id)).item.overdue, true);
   const change = {
@@ -236,6 +251,24 @@ test("SV07 R2 creates only a missing inspection task; technician cannot set it a
   );
   const defect = (await inspect(f.tech, f.id)).defects[0],
     key = `inspection:${defect.id}`;
+  const native = await readActivity(f.tech, defect.activity_id!);
+  assert.equal(native.can_edit, false);
+  await assert.rejects(
+    activityCommand(
+      f.tech,
+      native.id,
+      {
+        ...base(),
+        expected_version: native.version,
+        owner_id: f.tech.actor_id,
+        summary: "SYN native technician bypass",
+        due_at: null,
+        due_needed: true,
+      },
+      "update",
+    ),
+    denied,
+  );
   // A legacy/imported missing-task source, within the nullable native schema.
   // Retain the original Activity and every source field thereafter.
   await database().query(
@@ -444,6 +477,23 @@ test("SV07 R2 incident action changes retain hold, accepted facts and source-aut
     );
     const before = await state();
     await assert.rejects(setNextAction(f.co, key, cmd), denied);
+    const native = (await readNextAction(f.co, key)).item.action!;
+    await assert.rejects(
+      activityCommand(
+        f.co,
+        native.id,
+        {
+          ...base(),
+          expected_version: native.version,
+          owner_id: f.second.actor_id,
+          summary: "SYN inaccessible incident owner",
+          due_at: cmd.due_at,
+          due_needed: false,
+        },
+        "update",
+      ),
+      denied,
+    );
     assert.deepEqual(await state(), before);
   } finally {
     for (const g of grants)

@@ -1,34 +1,91 @@
 import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
+import { AppError } from "../platform/errors";
+import { companyContext, scopedOwner } from "../shared/authority";
+import {
+  authorise,
+  nativeCandidateSql,
+  type Candidate,
+} from "../service/findings/sources";
 
-// Keep native source-bound next actions on their guarded editing route, including
-// tasks which predate their first R2 save. Owner execution remains native My Work.
-export async function isFindingActivity(
+async function available(c: QueryClient) {
+  return !!(
+    await c.query(
+      "SELECT to_regclass('ppo.service_finding_activity_bindings') AS relation",
+    )
+  ).rows[0].relation;
+}
+// An R2-adopted next action uses its exact source-token editor. Existing native
+// coordinator follow-ups remain in My Work under the same source/owner authority.
+export async function isManagedFindingActivity(
   c: QueryClient,
   p: Principal,
   id: string,
 ): Promise<boolean> {
-  if (
-    !(
-      await c.query(
-        "SELECT to_regclass('ppo.service_finding_activity_bindings') AS relation",
-      )
-    ).rows[0].relation
-  )
-    return false;
+  if (!(await available(c))) return false;
   return (
     await c.query<{ governed: boolean }>(
-      `SELECT (
-    EXISTS(SELECT 1 FROM ppo.service_finding_activity_bindings WHERE workspace_id=$1 AND activity_id=$2) OR
-    EXISTS(SELECT 1 FROM ppo.inspection_defects WHERE workspace_id=$1 AND activity_id=$2 AND host_type='ServiceAppointment') OR
-    EXISTS(SELECT 1 FROM ppo.incident_actions WHERE workspace_id=$1 AND activity_id=$2) OR
-    EXISTS(SELECT 1 FROM ppo.report_revisions WHERE workspace_id=$1 AND snapshot#>>'{completion,follow_up_activity_id}'=$2::text AND snapshot#>>'{completion,scope_outcome}' IN ('Partial','UnableToProceed')) OR
-    EXISTS(SELECT 1 FROM ppo.customer_responses WHERE workspace_id=$1 AND follow_up_activity_id=$2 AND response<>'Accepted') OR
-    EXISTS(SELECT 1 FROM ppo.schedule_follow_ups WHERE workspace_id=$1 AND activity_id=$2)
-    ) AS governed`,
+      `SELECT EXISTS(SELECT 1 FROM ppo.service_finding_activity_bindings WHERE workspace_id=$1 AND activity_id=$2) AS governed`,
       [p.workspace_id, id],
     )
   ).rows[0].governed;
+}
+
+type ActivityContext = {
+  id: string;
+  company_id: string;
+  site_id: string | null;
+};
+export async function legacyFindingActivityAuthority(
+  c: QueryClient,
+  p: Principal,
+  a: ActivityContext,
+  ownerId?: string,
+) {
+  if (!(await available(c))) return;
+  const sources = (
+    await c.query<Candidate>(
+      `SELECT * FROM (${nativeCandidateSql}) f WHERE activity_id=$2`,
+      [p.workspace_id, a.id],
+    )
+  ).rows;
+  if (!sources.length) return;
+  await companyContext(
+    c,
+    p,
+    a.company_id,
+    a.site_id,
+    "service.work_order.edit",
+  );
+  const owner = ownerId
+    ? await scopedOwner(
+        c,
+        p,
+        ownerId,
+        a.company_id,
+        a.site_id ?? undefined,
+        "activity.edit",
+      )
+    : null;
+  // A shared Activity does not let one source's rights override another's.
+  for (const source of sources) {
+    await authorise(c, p, source);
+    if (owner) await authorise(c, owner, source);
+  }
+}
+export async function canEditFindingActivity(
+  c: QueryClient,
+  p: Principal,
+  a: ActivityContext,
+) {
+  if (await isManagedFindingActivity(c, p, a.id)) return false;
+  try {
+    await legacyFindingActivityAuthority(c, p, a);
+    return true;
+  } catch (e) {
+    if (e instanceof AppError && [403, 404].includes(e.status)) return false;
+    throw e;
+  }
 }
 
 // Activity detail also runs against historical schemas during populated upgrades.
