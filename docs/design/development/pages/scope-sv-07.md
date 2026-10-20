@@ -52,6 +52,12 @@ Accepted Figma design: [Findings design r01 captures](../../../reference/ui/serv
 
 ## Behaviour, handovers and verification
 
+### Backend read dependency — 20 October 2026
+
+The [SV-07 read contract](../../../contracts/service-findings.md) adds a native-source register and exact source reads through `/api/v1/service/findings`. It preserves each source's permissions, original identities, owned Activity links and closure rules. Completing a follow-up does not close an inspection, incident, incomplete report or customer reservation. Superseded observations remain distinct from source closure. See the [implementation decision](../../../decisions/service-findings-backend.md) and [execution evidence](../../../testing/evidence/service-findings/README.md).
+
+This is backend R1. The accepted page, next-action writes, recurrence, SV-08 receiving and closed-history window remain open. Existing visual-review fingerprints and owner/device acceptance are unchanged. The earlier design-only statements describe the retained design checkpoint, not the presence of this later API.
+
 The draft User Guide `guide.sv.07` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.

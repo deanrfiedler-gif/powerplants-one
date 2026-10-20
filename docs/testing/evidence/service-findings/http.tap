@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: SV07 HTTP uses authenticated no-store reads and strict query validation
+ok 1 - SV07 HTTP uses authenticated no-store reads and strict query validation
+  ---
+  duration_ms: 32970.9546
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34704.4321
