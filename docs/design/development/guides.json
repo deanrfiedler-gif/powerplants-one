@@ -13433,22 +13433,20 @@
       "title": "Service review and controlled report workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "SV-06 native workspace with existing bounded FI-07 commands",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-20",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-review-build/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service review and controlled report workspace to work towards this outcome: A reviewed report reflects evidence and retained responsibilities.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A completed visit does not mean all customer issues are resolved."
+            "Review exact technician submissions, return factual corrections, issue controlled reports and retain customer responses in SV-06, including embedded FI-07. Technical approval is not inspection clearance, Finance approval or customer acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -13469,48 +13467,23 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the exact technician submission",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose a queue, Technician or Customer filter. On desktop open a row for its snapshot, then Open report or Review submission. On a phone tap the report row. Review every entry, select the named permitted site contact when approving, then save the exact review. Issue separately on Customer report; nothing is sent."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service review and controlled report workspace · Pages"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "All reports and My reviews sit above Review and After issue queues. My reviews means reports on work orders you currently own. Counts, filters and CSV exports cover the latest-200 candidate window only. Tick rows for Open in sequence or Export list; neither changes business records.",
+            "The record has Evidence, Work outcome, Customer report, Customer response and History tabs. Phones also have Details. Open work order retains the existing work-order and proposed-return workflow."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
@@ -13528,13 +13501,11 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Review submission opens in Evidence. Choose Approved or Returned for every original entry and give reasons for returns. Review decision, authority disposition, internal remarks and the permitted site contact remain explicit. Saving the review does not issue the report.",
+            "Customer report shows protected presentations and SHA-256 hashes. DraftEvidence never becomes IssuedReport: the existing issue command renders and verifies separate output. Present a retained version to record an exact response. PDF retrieval captures no response.",
+            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed."
           ],
-          "steps": [
-            "Review the exact technician submission",
-            "Resolve unclear evidence and separate follow-up work",
-            "Issue the controlled report through the permitted review workflow"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -13553,38 +13524,13 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading and failed reads do not keep a usable stale register. Try again reloads the window. No matches offers Clear filters. Submitted, Returned, Reviewed and Issued are report states; the technician’s Complete, Partial or Unable to proceed declaration is separate.",
+            "View-only users can inspect permitted records but cannot review, issue or respond. A stale source refuses the exact command and retains input. Review tabs do not discard edits. Cancel and leaving the page ask before discarding a dirty draft."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
@@ -13637,8 +13583,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use the compact phone header and More to reach Service review. Report rows, horizontal record tabs and pinned state-specific actions support 390 and 320 px layouts; filter panels retain labelled controls.",
+            "These review/issue routes are online only. Existing owner-bound field offline capture and explicit replay remain separate. No offline review, issue or background customer sending is added."
           ],
           "steps": [],
           "rows": [],
@@ -13659,9 +13605,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft working guidance owned by Dean Fiedler. Figma source acceptance is recorded for PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review and guide review are pending. Functional checks, physical-device/screen-reader acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
@@ -13680,7 +13624,7 @@
         "docs/delivery/p09-handover.md",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted-design Service review register, queues, exact review tabs and embedded response; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-SV-06",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13691,7 +13635,11 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
         "docs/delivery/p09-handover.md",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/components/report-screens.tsx",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -45584,20 +45532,20 @@
       "title": "Service report detail",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Implemented bounded FI-07 with retained P07/P09",
+      "content_mode": "SV-06 native workspace with existing bounded FI-07 commands",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-02",
+      "prepared_at": "2026-10-20",
       "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "runtime_evidence": "docs/testing/evidence/service-review-build/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Record a customer acknowledgement of attendance facts or a response to exact report content. Internal Service review, customer response, technical acceptance and Finance authority are different records. FI-07 uses the existing Service reports register and report detail."
+            "Review exact technician submissions, return factual corrections, issue controlled reports and retain customer responses in SV-06, including embedded FI-07. Technical approval is not inspection clearance, Finance approval or customer acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -45617,7 +45565,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open the report from My Jobs, Service reports or its owned Activity. Check internal review and current restrictions. Present the exact retained HTML. Choose Response concerns and an explicit customer response. Save and obtain the server receipt; follow any owned next action."
+            "Choose a queue, Technician or Customer filter. On desktop open a row for its snapshot, then Open report or Review submission. On a phone tap the report row. Review every entry, select the named permitted site contact when approving, then save the exact review. Issue separately on Customer report; nothing is sent."
           ],
           "steps": [],
           "rows": [],
@@ -45627,7 +45575,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The record shows attendance/internal review, current source applicability and restrictions, exact completion/reviews, controlled files, presentations, response history and owned follow-up. The presentation shows exact customer-safe content; Return to staff review returns keyboard focus to its opener."
+            "All reports and My reviews sit above Review and After issue queues. My reviews means reports on work orders you currently own. Counts, filters and CSV exports cover the latest-200 candidate window only. Tick rows for Open in sequence or Export list; neither changes business records.",
+            "The record has Evidence, Work outcome, Customer report, Customer response and History tabs. Phones also have Details. Open work order retains the existing work-order and proposed-return workflow."
           ],
           "steps": [],
           "rows": [],
@@ -45648,9 +45597,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Non-Accepted choices require meaningful remarks and an owned next action. Follow-up belongs to the current Service owner with Due date needed until explicitly set through the Activity.",
-            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject.",
-            "In a Submitted report, use Inspect submitted photo beside the Photo entry. Check the original image and its caption before choosing your entry decision and reason. Hide submitted photo closes the preview. Inspection does not approve the entry or share the photo with the customer."
+            "Review submission opens in Evidence. Choose Approved or Returned for every original entry and give reasons for returns. Review decision, authority disposition, internal remarks and the permitted site contact remain explicit. Saving the review does not issue the report.",
+            "Customer report shows protected presentations and SHA-256 hashes. DraftEvidence never becomes IssuedReport: the existing issue command renders and verifies separate output. Present a retained version to record an exact response. PDF retrieval captures no response.",
+            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed."
           ],
           "steps": [],
           "rows": [],
@@ -45671,8 +45620,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Unsaved input, saving, saved, validation failure, stale/conflict and uncertain result have explicit wording. A blank response cannot save. A source, audience or authority change can refuse fresh capture while original records remain.",
-            "An incident hold or inspection failure permits only factual capture about unchanged exact content. Current restrictions are separate from the observed restrictions retained at receipt. Missing context never appears clear."
+            "Loading and failed reads do not keep a usable stale register. Try again reloads the window. No matches offers Clear filters. Submitted, Returned, Reviewed and Issued are report states; the technician’s Complete, Partial or Unable to proceed declaration is separate.",
+            "View-only users can inspect permitted records but cannot review, issue or respond. A stale source refuses the exact command and retains input. Review tabs do not discard edits. Cancel and leaving the page ask before discarding a dirty draft."
           ],
           "steps": [],
           "rows": [],
@@ -45704,9 +45653,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls by keyboard with visible focus; guidance preserves input and returns focus. The exact HTML expands in the native page scroll at 1440/1024/390/320 widths and browser zoom. Physical-device and screen-reader acceptance remain open.",
-            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported.",
-            "Photo inspection needs a connection. Inspect, Hide and Retry support keyboard activation. The image fits the available page width; no offline review or cached photo-inspection copy is created."
+            "Use the compact phone header and More to reach Service review. Report rows, horizontal record tabs and pinned state-specific actions support 390 and 320 px layouts; filter panels retain labelled controls.",
+            "These review/issue routes are online only. Existing owner-bound field offline capture and explicit replay remain separate. No offline review, issue or background customer sending is added."
           ],
           "steps": [],
           "rows": [],
@@ -45727,7 +45675,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft working guidance owned by Dean Fiedler. No accepted native FI-07 mockup is available. Functional evidence, independent visual review, owner acceptance, physical-device/screen-reader testing and deployment remain separate."
+            "Draft working guidance owned by Dean Fiedler. Figma source acceptance is recorded for PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review and guide review are pending. Functional checks, physical-device/screen-reader acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
@@ -45750,7 +45698,7 @@
         "src/reports/photos.ts",
         "docs/decisions/report-photo-inspection.md"
       ],
-      "change_summary": "Add on-demand submitted photo inspection, exact original verification and retry/cleanup guidance; owner review remains pending.",
+      "change_summary": "Accepted-design Service review register, queues, exact review tabs and embedded response; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-REPORTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45761,7 +45709,11 @@
         "src/app/(business)/service/reports/[id]/page.tsx",
         "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
         "docs/delivery/p09-handover.md",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/components/report-screens.tsx",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -45772,20 +45724,20 @@
       "title": "Service review & reports",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Implemented bounded FI-07 with retained P07/P09",
+      "content_mode": "SV-06 native workspace with existing bounded FI-07 commands",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-02",
+      "prepared_at": "2026-10-20",
       "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
+      "runtime_evidence": "docs/testing/evidence/service-review-build/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Record a customer acknowledgement of attendance facts or a response to exact report content. Internal Service review, customer response, technical acceptance and Finance authority are different records. FI-07 uses the existing Service reports register and report detail."
+            "Review exact technician submissions, return factual corrections, issue controlled reports and retain customer responses in SV-06, including embedded FI-07. Technical approval is not inspection clearance, Finance approval or customer acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -45805,7 +45757,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open the report from My Jobs, Service reports or its owned Activity. Check internal review and current restrictions. Present the exact retained HTML. Choose Response concerns and an explicit customer response. Save and obtain the server receipt; follow any owned next action."
+            "Choose a queue, Technician or Customer filter. On desktop open a row for its snapshot, then Open report or Review submission. On a phone tap the report row. Review every entry, select the named permitted site contact when approving, then save the exact review. Issue separately on Customer report; nothing is sent."
           ],
           "steps": [],
           "rows": [],
@@ -45815,7 +45767,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The record shows attendance/internal review, current source applicability and restrictions, exact completion/reviews, controlled files, presentations, response history and owned follow-up. The presentation shows exact customer-safe content; Return to staff review returns keyboard focus to its opener."
+            "All reports and My reviews sit above Review and After issue queues. My reviews means reports on work orders you currently own. Counts, filters and CSV exports cover the latest-200 candidate window only. Tick rows for Open in sequence or Export list; neither changes business records.",
+            "The record has Evidence, Work outcome, Customer report, Customer response and History tabs. Phones also have Details. Open work order retains the existing work-order and proposed-return workflow."
           ],
           "steps": [],
           "rows": [],
@@ -45836,8 +45789,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Non-Accepted choices require meaningful remarks and an owned next action. Follow-up belongs to the current Service owner with Due date needed until explicitly set through the Activity.",
-            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject."
+            "Review submission opens in Evidence. Choose Approved or Returned for every original entry and give reasons for returns. Review decision, authority disposition, internal remarks and the permitted site contact remain explicit. Saving the review does not issue the report.",
+            "Customer report shows protected presentations and SHA-256 hashes. DraftEvidence never becomes IssuedReport: the existing issue command renders and verifies separate output. Present a retained version to record an exact response. PDF retrieval captures no response.",
+            "Customer response retains Report content versus Attendance facts, explicit choices, stated identity/role, optional synthetic PNG mark and capture time. A non-accepted response needs remarks and an owned next action. The current Service owner receives the Activity with Due date needed."
           ],
           "steps": [],
           "rows": [],
@@ -45858,8 +45812,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Unsaved input, saving, saved, validation failure, stale/conflict and uncertain result have explicit wording. A blank response cannot save. A source, audience or authority change can refuse fresh capture while original records remain.",
-            "An incident hold or inspection failure permits only factual capture about unchanged exact content. Current restrictions are separate from the observed restrictions retained at receipt. Missing context never appears clear."
+            "Loading and failed reads do not keep a usable stale register. Try again reloads the window. No matches offers Clear filters. Submitted, Returned, Reviewed and Issued are report states; the technician’s Complete, Partial or Unable to proceed declaration is separate.",
+            "View-only users can inspect permitted records but cannot review, issue or respond. A stale source refuses the exact command and retains input. Review tabs do not discard edits. Cancel and leaving the page ask before discarding a dirty draft."
           ],
           "steps": [],
           "rows": [],
@@ -45890,8 +45844,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls by keyboard with visible focus; guidance preserves input and returns focus. The exact HTML expands in the native page scroll at 1440/1024/390/320 widths and browser zoom. Physical-device and screen-reader acceptance remain open.",
-            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported."
+            "Use the compact phone header and More to reach Service review. Report rows, horizontal record tabs and pinned state-specific actions support 390 and 320 px layouts; filter panels retain labelled controls.",
+            "These review/issue routes are online only. Existing owner-bound field offline capture and explicit replay remain separate. No offline review, issue or background customer sending is added."
           ],
           "steps": [],
           "rows": [],
@@ -45911,7 +45865,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft working guidance owned by Dean Fiedler. No accepted native FI-07 mockup is available. Functional evidence, independent visual review, owner acceptance, physical-device/screen-reader testing and deployment remain separate."
+            "Draft working guidance owned by Dean Fiedler. Figma source acceptance is recorded for PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review and guide review are pending. Functional checks, physical-device/screen-reader acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
@@ -45928,7 +45882,7 @@
         "docs/delivery/p09-handover.md",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted-design Service review register, queues, exact review tabs and embedded response; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-REPORTS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45939,7 +45893,11 @@
         "src/app/(business)/service/reports/page.tsx",
         "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
         "docs/delivery/p09-handover.md",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/components/report-screens.tsx",
+        "docs/decisions/service-review-figma-design.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

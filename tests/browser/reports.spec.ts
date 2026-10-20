@@ -172,10 +172,23 @@ async function submit(page: Page) {
   await reportLink.click();
   expect((await reportRead).ok()).toBe(true);
   await expect(
-    page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
+    reportState(page, "Submitted"),
   ).toBeVisible();
 }
+function reportState(page: Page, state: string) {
+  return page.locator(".sv06-record-header .ppo-register-chip, .sv06-phone-status .ppo-register-chip").filter({ visible: true }).filter({ hasText: state });
+}
+async function reportTab(page: Page, name: string) {
+  await page.getByRole("tab", { name, exact: true }).click();
+}
+async function technicianEvidence(page: Page) {
+  const details = page.getByRole("tab", { name: "Details", exact: true });
+  if (await details.isVisible()) await details.click();
+  await page.getByRole("link", { name: "Technician evidence and correction" }).filter({ visible: true }).click();
+}
 async function review(page: Page, returned = false, commit = true) {
+  if (!(await page.getByLabel("Entry 1 review reason", { exact: true }).isVisible()))
+    await page.getByRole("button", { name: "Review submission", exact: true }).filter({ visible: true }).click();
   const fields = page.getByLabel(/Entry \d+ review reason/);
   await expect(fields.first()).toBeVisible();
   for (let n = 0; n < (await fields.count()); n++)
@@ -210,12 +223,11 @@ async function review(page: Page, returned = false, commit = true) {
     .getByRole("button", { name: "Commit exact review", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", {
-      name: returned ? /Revision \d+ · Returned/ : /Revision \d+ · Reviewed/,
-    }),
+    reportState(page, returned ? "Returned" : "Reviewed"),
   ).toBeVisible();
 }
 async function issue(page: Page) {
+  await reportTab(page, "Customer report");
   const requested = page.waitForResponse(
     (r) =>
       /\/api\/v1\/reports\/[^/]+\/issue$/.test(r.url()) &&
@@ -253,7 +265,7 @@ async function issue(page: Page) {
   expect(output.output_available).toBe(true);
   expect(output.attempts).toBeGreaterThan(0);
   await expect(
-    page.getByRole("heading", { name: /Revision \d+ · Issued/ }),
+    reportState(page, "Issued"),
   ).toBeVisible();
 }
 async function saveOutputs(
@@ -403,6 +415,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await submit(page);
   const reportId = page.url().split("/").at(-1)!;
   await identity(page, "coordinator");
+  await page.getByRole("button", { name: "Review submission", exact: true }).filter({ visible: true }).click();
   await expect(
     page.getByLabel("Customer audience", { exact: true }),
   ).toHaveValue("");
@@ -440,9 +453,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   });
   await staleReview.close();
   await identity(page, "assigned-technician");
-  await page
-    .getByRole("link", { name: "Technician evidence and correction" })
-    .click();
+  await technicianEvidence(page);
   await page.getByRole("button", { name: "History", exact: true }).click();
   await page
     .getByRole("button", { name: "Correct this observation entry" })
@@ -465,10 +476,10 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await submit(page);
   await identity(page, "coordinator");
   await review(page);
-  await page
-    .getByRole("heading", { name: /Revision \d+ · Reviewed/ })
+  await reportState(page, "Reviewed")
     .evaluate((element) => element.scrollIntoView({ block: "start" }));
   await proof(page, info, "accepted-attendance-partial-work");
+  await reportTab(page, "Customer response");
   await page
     .getByRole("heading", { name: "Owned actions", exact: true })
     .evaluate((element) => element.scrollIntoView({ block: "start" }));
@@ -476,9 +487,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   let report = (await call(page, `reports/${reportId}`)).items[0];
   expect(report.appointment.status).toBe("Completed");
   expect(report.work_order.status).toBe("Authorised");
-  await page
-    .getByRole("link", { name: "Remaining work and return proposal" })
-    .click();
+  await page.getByRole("link", { name: "Open work order", exact: true }).filter({ visible: true }).click();
   const visitLinks = page.locator('a[href^="/service/appointments/"]');
   await expect(
     page.getByRole("heading", { name: "Planned visits", exact: true }),
@@ -546,6 +555,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     "Unavailable",
     "Disputed",
   ].entries()) {
+    await reportTab(page, "Customer report");
     await page
       .getByRole("button", { name: "Present Issued Report", exact: true })
       .first()
@@ -643,6 +653,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     (x: { signature_hash: string | null }) => x.signature_hash,
   );
   await identity(page, "assigned-technician");
+  await reportTab(page, "History");
   await page
     .getByLabel("Report correction reason", { exact: true })
     .fill(
@@ -652,11 +663,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
     .getByRole("button", { name: "Open successor correction", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: /Revision \d+ · Draft/ }),
+    reportState(page, "Draft"),
   ).toBeVisible();
-  await page
-    .getByRole("link", { name: "Technician evidence and correction" })
-    .click();
+  await technicianEvidence(page);
   await page.getByRole("button", { name: "History", exact: true }).click();
   await page
     .getByRole("button", { name: "Correct this observation entry" })
@@ -714,6 +723,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   expect(
     (await call(page, `reports/${reportId}`)).items[0].responses,
   ).toHaveLength(5);
+  await reportTab(page, "Customer report");
   await page
     .getByRole("button", { name: "Present Issued Report", exact: true })
     .last()
@@ -830,9 +840,10 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await expect(page.getByText("No report-content response recorded.", { exact: true })).toBeVisible();
   const initial = (await call(page, "reports/" + id)).items[0];
   const draftPresentation = initial.presentations.find((v: { kind: string }) => v.kind === "DraftEvidence");
+  await reportTab(page, "Customer report");
   const open = page.locator("#present-" + draftPresentation.id);
   await open.focus(); await page.keyboard.press("Enter");
-  await expect(page.getByRole("heading", { name: "Customer report presentation", exact: true })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "Record customer response", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Return to staff review", exact: true }).click();
   await expect(open).toBeFocused(); await open.click();
   await page.getByLabel("Response concerns", { exact: true }).focus();
@@ -892,7 +903,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await page.getByLabel("Response remarks / reservations", { exact: true }).fill("SYN label identification remains reserved pending clarification");
   await page.getByLabel("Owned next action (required unless accepted)", { exact: true }).fill("SYN Service owner to clarify the exact retained label finding");
   await page.getByRole("button", { name: "Save response to presented content", exact: true }).click();
-  await expect(page.getByRole("heading", { name: /Revision \d+ · Issued/ })).toBeVisible();
+  await expect(reportState(page, "Issued")).toBeVisible();
   current = (await call(page, "reports/" + id)).items[0];
   const reservation = current.responses.find((x: { response: string }) => x.response === "AcceptedWithReservations");
   await page.locator("#correct-" + reservation.id).click();
@@ -900,7 +911,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await page.getByLabel("Customer response", { exact: true }).selectOption("Disputed");
   await page.getByLabel("Correction or clarification reason", { exact: true }).fill("SYN witness clarified that this remains a factual dispute");
   await page.getByRole("button", { name: "Save response to presented content", exact: true }).click();
-  await expect(page.getByRole("heading", { name: /Revision \d+ · Issued/ })).toBeVisible();
+  await expect(reportState(page, "Issued")).toBeVisible();
   current = (await call(page, "reports/" + id)).items[0];
   expect(current.responses).toHaveLength(3);
   const correction = current.responses.find((x: { supersedes_response_id: string }) => x.supersedes_response_id === reservation.id);
@@ -920,6 +931,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await page.getByRole("button", { name: "Complete with outcome", exact: true }).click();
   await expect(page.getByRole("button", { name: "Complete with outcome", exact: true })).toHaveCount(0);
   await page.getByRole("link", { name: "Return to original service report and response", exact: true }).click();
+  await reportTab(page, "Customer response");
   await expect(page.getByRole("heading", { name: "Response history", exact: true })).toBeVisible();
   const final = (await call(page, "reports/" + id)).items[0];
   expect(final.responses).toEqual(current.responses);
@@ -968,6 +980,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   expect((await call(page, "reports/" + id)).items[0].responses).toEqual(replayed.responses);
   await page.goto("/service/reports/" + id);
   await identity(page, "coordinator");
+  await reportTab(page, "Customer response");
   await expect(page.getByRole("heading", { name: "Response history", exact: true })).toBeVisible();
   await writeFile(info.outputPath("FI07-journey.json"), JSON.stringify({ report: id, appointment: job.id, response: original!.id, operation: original!.operation_id, follow_up: reservation.follow_up_activity_id, issued: issued.id }, null, 2));
   await proof(page, info, "FI07-retained-history");

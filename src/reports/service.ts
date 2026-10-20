@@ -41,6 +41,7 @@ import {
 import { customerSnapshot } from "./render";
 import { supportedReportHtml } from "../documents/p11-render";
 import { supportedTemplateDefinition } from "../documents/p11-template";
+import type { ReportRegisterRow } from "./register-model";
 
 export async function verifyEvidence(
   c: QueryClient,
@@ -820,17 +821,58 @@ export async function listReports(p: Principal, input: unknown = {}) {
           [p.workspace_id],
         )
       ).rows,
-      items = [];
+      items: ReportRegisterRow[] = [];
+    const contextsInstalled = await responseContextsInstalled(c);
+    const activityScope = activityVisibility("a", await crmAvailable(c), await leadsAvailable(c));
     for (const v of candidates)
       try {
-        const { report, a } = await reportContext(c, p, v.id);
+        const { report, a, w } = await reportContext(c, p, v.id);
+        const revision = (await c.query(
+          "SELECT snapshot FROM ppo.report_revisions WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, report.current_revision_id],
+        )).rows[0];
+        const snapshot = revision?.snapshot;
+        const response = (await c.query(
+          `SELECT cr.response FROM ppo.customer_responses cr
+           JOIN ppo.report_presentations presentation ON (presentation.workspace_id,presentation.id)=(cr.workspace_id,cr.presentation_id)
+           ${contextsInstalled ? "LEFT JOIN ppo.customer_response_contexts context ON (context.workspace_id,context.response_id)=(cr.workspace_id,cr.id)" : ""}
+           WHERE cr.workspace_id=$1 AND cr.report_id=$2 AND presentation.revision_id=$3 AND presentation.kind='IssuedReport'
+           ${contextsInstalled ? "AND COALESCE(context.subject,'ReportContent')='ReportContent'" : ""}
+           ORDER BY cr.received_at DESC LIMIT 1`,
+          [p.workspace_id, report.id, report.current_revision_id],
+        )).rows[0];
+        const remaining = (await c.query(
+          `SELECT count(*)::integer AS count FROM ppo.report_follow_ups f
+           JOIN ppo.activities a ON (a.workspace_id,a.id)=(f.workspace_id,f.activity_id)
+           WHERE f.workspace_id=$1 AND f.report_id=$3 AND f.kind='RemainingWork'
+           AND a.status NOT IN ('Completed','Cancelled') AND ${activityScope}`,
+          [p.workspace_id, p.actor_id, report.id],
+        )).rows[0].count;
+        const review = (await c.query(
+          "SELECT entry_decisions FROM ppo.report_reviews WHERE workspace_id=$1 AND report_id=$2 AND revision_id=$3 ORDER BY reviewed_at DESC LIMIT 1",
+          [p.workspace_id, report.id, report.current_revision_id],
+        )).rows[0];
         items.push({
           id: report.id,
           reference: report.display_number,
           revision: report.revision,
           status: report.status,
           appointment_reference: a.display_number,
-          updated_at: report.updated_at,
+          updated_at: report.updated_at.toISOString(),
+          title: snapshot?.scope?.summary ?? a.display_number,
+          outcome: snapshot?.completion?.scope_outcome ?? "Not declared",
+          technician_id: report.actor_id,
+          technician: snapshot?.attendance?.name ?? "Not recorded",
+          attendance_start: snapshot?.attendance?.start_at ?? null,
+          attendance_end: snapshot?.attendance?.end_at ?? null,
+          customer_id: snapshot?.customer?.id ?? "",
+          customer: snapshot?.customer?.name ?? "Not recorded",
+          site: snapshot?.site?.name ?? "Not recorded",
+          work_order_reference: snapshot?.work?.reference ?? w.display_number,
+          mine: w.service_owner_id === p.actor_id,
+          response: response?.response ?? null,
+          remaining_open: remaining,
+          returned_entries: review?.entry_decisions.filter((entry: { decision: string }) => entry.decision === "Returned").length ?? 0,
         });
       } catch (e) {
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;

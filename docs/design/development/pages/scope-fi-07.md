@@ -1,5 +1,9 @@
 # Customer attendance and report response — design reference
 
+## Embedded SV-06 build
+
+The existing report-record response is now hosted by the [SV-06 tabbed contract](scope-sv-06.md), using PPO - Design, Service review and reports — accepted, page 1265:53. This does not accept or build the standalone Customer response proposal at 1490:70. Existing FI-07 parent IDs, exact draft/issued binding, attendance subject, append-only correction and uncertain-receipt recovery remain unchanged. Native owner visual review and deployment remain pending; see [SV-06 verification](../../../testing/evidence/service-review-build/README.md).
+
 Stable entry: `scope:FI-07`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/reports`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.

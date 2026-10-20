@@ -1,0 +1,839 @@
+#ppo-reports {
+  color: var(--ink);
+  font:
+    400 14px/20px Roboto,
+    sans-serif;
+  background: var(--white);
+  min-width: 0;
+}
+#ppo-reports[data-menu] {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+#ppo-reports .mw-menu {
+  flex: 0 0 240px;
+  width: 240px;
+  padding: 8px;
+  background: var(--ppo-shell-surface);
+  border-right: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .mw-menu-title {
+  display: none;
+}
+#ppo-reports .mw-menu[hidden] {
+  display: none;
+}
+#ppo-reports .mw-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+#ppo-reports .mw-menu-edge {
+  position: absolute;
+  left: 236px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  z-index: 3;
+}
+#ppo-reports .mw-menu-strip {
+  flex: 0 0 20px;
+  width: 20px;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--ppo-shell-line);
+  border-radius: 0;
+  background: var(--ppo-shell-surface);
+}
+#ppo-reports .mw-menu-grip {
+  display: block;
+  height: 36px;
+  width: 4px;
+  margin: auto;
+  border-radius: 2px;
+  background: var(--hairline);
+}
+#ppo-reports .mw-menu-overlay {
+  position: fixed;
+  inset: 64px auto 0 var(--ppo-rail-width, 72px);
+  margin: 0;
+  height: calc(100dvh - 64px);
+  max-height: none;
+  border: 0;
+  border-right: 1px solid var(--ppo-shell-line);
+  border-radius: 0;
+}
+#ppo-reports .mw-menu-overlay::backdrop {
+  background: transparent;
+}
+#ppo-reports .mw-menu-close {
+  display: flex;
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+}
+#ppo-reports .mw-menu-close svg {
+  width: 16px;
+  height: 16px;
+}
+#ppo-reports .mw-menu nav {
+  display: grid;
+  gap: 2px;
+}
+#ppo-reports .mw-menu h2 {
+  margin: 0;
+  padding: 18px 12px 2px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ppo-shell-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.66px;
+}
+#ppo-reports .mw-menu nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font-weight: 400;
+}
+#ppo-reports .mw-menu nav button[aria-current] {
+  background: var(--ppo-shell-selected);
+  color: var(--link);
+  font-weight: 500;
+}
+#ppo-reports .mw-menu nav button:hover {
+  background: var(--surface-hover);
+}
+#ppo-reports .mw-menu small {
+  margin-left: auto;
+  font-size: 12px;
+}
+#ppo-reports .mw-menu .product-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+#ppo-reports .mw-content {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding: 0;
+}
+#ppo-reports .sv06-register {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#ppo-reports .sv06-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+  flex: none;
+}
+#ppo-reports .sv06-desktop-filters {
+  display: flex;
+  gap: 8px;
+}
+#ppo-reports .sv06-count {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+#ppo-reports .sv06-toolbar .ppo-button {
+  min-height: 32px;
+  padding: 5px 10px;
+}
+#ppo-reports .sv06-chips {
+  display: flex;
+  gap: 8px;
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--line-soft);
+  flex-wrap: wrap;
+}
+#ppo-reports .sv06-chips button {
+  min-height: 28px;
+  padding: 3px 8px;
+  font-size: 12px;
+  background: var(--neutral-surface);
+  border-color: var(--line-soft);
+}
+#ppo-reports .sv06-grid {
+  overflow: auto;
+}
+#ppo-reports .ppo-register-table {
+  width: max-content;
+  min-width: 100%;
+}
+#ppo-reports .ppo-register-table th,
+#ppo-reports .ppo-register-table td {
+  height: 42px;
+  padding: 8px 12px;
+  border-right: 1px solid var(--line-soft);
+  white-space: nowrap;
+}
+#ppo-reports .ppo-register-table th {
+  height: 40px;
+  background: var(--ppo-shell-surface);
+}
+#ppo-reports .ppo-register-table td:nth-child(3) {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-reports .ppo-register-table .sv06-check {
+  width: 40px;
+  padding: 8px 12px;
+}
+#ppo-reports .sv06-row-link {
+  border: 0;
+  padding: 0;
+  min-height: 24px;
+  background: transparent;
+  color: var(--link);
+  font-weight: 400;
+}
+#ppo-reports .sv06-window {
+  margin: auto 0 0;
+  padding: 12px 20px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-reports .sv06-state {
+  padding: 80px 24px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+#ppo-reports .sv06-state h2 {
+  font-size: 18px;
+}
+#ppo-reports .sv06-loading {
+  padding: 16px;
+}
+#ppo-reports .sv06-loading > div {
+  display: grid;
+  gap: 8px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+#ppo-reports .sv06-loading span {
+  height: 12px;
+  width: 65%;
+  background: var(--surface-2);
+  border-radius: var(--radius-control);
+}
+#ppo-reports .sv06-loading span:nth-child(2) {
+  width: 45%;
+}
+#ppo-reports .sv06-loading span:nth-child(3) {
+  width: 25%;
+}
+#ppo-reports .sv06-phone-view,
+#ppo-reports .sv06-phone-filter,
+#ppo-reports .sv06-phone-list,
+#ppo-reports .sv06-phone-status,
+#ppo-reports .sv06-phone-actions {
+  display: none;
+}
+.sv06-filter-panel {
+  display: grid;
+  gap: 16px;
+}
+#ppo-reports.sv06-record {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+#ppo-reports .sv06-record-header {
+  padding: 20px 24px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-record-header h1 {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0;
+  font-weight: 500;
+}
+#ppo-reports .sv06-record-header h1 .ppo-register-chip {
+  vertical-align: middle;
+  margin-left: 12px;
+}
+#ppo-reports .sv06-record-header p {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-reports .sv06-header-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+#ppo-reports .sv06-readiness {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--ppo-shell-surface);
+  border-bottom: 1px solid var(--ppo-shell-line);
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+#ppo-reports .sv06-readiness > span {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--text-secondary);
+}
+#ppo-reports .sv06-readiness [data-complete="true"] .product-icon {
+  color: var(--success);
+}
+#ppo-reports .sv06-record-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+#ppo-reports .sv06-record-aside {
+  flex: 0 0 32%;
+  max-width: 380px;
+  overflow: auto;
+  border-right: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-details section {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-details h2 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 500;
+}
+#ppo-reports .sv06-details dl {
+  display: grid;
+  grid-template-columns: 98px minmax(0, 1fr);
+  gap: 12px 8px;
+  margin: 0;
+}
+#ppo-reports .sv06-details dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-reports .sv06-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-reports .sv06-details p {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+#ppo-reports .sv06-tab-workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+#ppo-reports .record-tablist {
+  flex: none;
+  display: flex;
+  flex-wrap: nowrap;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 24px;
+  gap: 24px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+  overflow: auto;
+}
+#ppo-reports .record-tablist button {
+  background: transparent;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  min-height: 48px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+}
+#ppo-reports .record-tablist button[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--navy);
+  font-weight: 500;
+}
+#ppo-reports .sv06-tab-workspace > .record-tablist [id$="-tab-details"] {
+  display: none;
+}
+#ppo-reports .sv06-tab-scroll {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+#ppo-reports .record-panel {
+  padding: 24px;
+}
+#ppo-reports .record-panel[hidden] {
+  display: none;
+}
+#ppo-reports .sv06-notice {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  padding: 16px;
+  background: var(--ppo-shell-surface);
+}
+#ppo-reports .sv06-notice header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+#ppo-reports .sv06-notice h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+#ppo-reports .sv06-notice .ppo-register-chip {
+  margin-left: auto;
+}
+#ppo-reports .sv06-notice p {
+  margin: 12px 0;
+}
+#ppo-reports .sv06-notice-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-notice footer {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding-top: 12px;
+  border-top: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-section-title {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0 8px;
+  font-size: 16px;
+}
+#ppo-reports .sv06-section-title small {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+#ppo-reports .sv06-entries article {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-entry-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+#ppo-reports .sv06-entry-row > div {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-reports .sv06-entry-row p {
+  margin: 4px 0;
+}
+#ppo-reports .sv06-entry-row > .product-icon {
+  flex: 0 0 16px;
+  margin-top: 3px;
+  color: var(--text-secondary);
+}
+#ppo-reports .sv06-muted {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-reports .business-card {
+  border: 0;
+  border-bottom: 1px solid var(--ppo-shell-line);
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0 0 20px;
+  padding: 0 0 20px;
+  background: transparent;
+}
+#ppo-reports .business-card h2,
+#ppo-reports .sv06-review-form h2 {
+  font-size: 18px;
+  font-weight: 500;
+}
+#ppo-reports .sv06-review-entries fieldset {
+  border: 0;
+  border-bottom: 1px solid var(--ppo-shell-line);
+  padding: 16px 0;
+  margin: 0;
+  min-width: 0;
+}
+#ppo-reports .sv06-review-entries legend {
+  padding-top: 16px;
+  font-weight: 500;
+}
+#ppo-reports .sv06-review-entries dl {
+  margin: 0 0 16px;
+  font-size: 13px;
+}
+#ppo-reports .sv06-review-entries dl > div {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 12px;
+}
+#ppo-reports .sv06-review-entries dt {
+  color: var(--text-secondary);
+}
+#ppo-reports .sv06-review-entries dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-reports .report-field {
+  margin: 0 0 16px;
+  min-width: 0;
+}
+#ppo-reports .report-field label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+#ppo-reports .report-field :is(input, select, textarea) {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  padding: 8px 10px;
+  font: inherit;
+  min-height: 38px;
+}
+#ppo-reports .sv06-review-decision {
+  padding: 24px 0;
+}
+#ppo-reports .sv06-savebar {
+  position: sticky;
+  bottom: -24px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--ppo-shell-line);
+  background: var(--white);
+  z-index: 2;
+}
+#ppo-reports .sv06-savebar > span {
+  flex: 1;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-reports .sv06-snapshot {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(960px, 100%);
+  z-index: 8;
+  display: flex;
+  background: var(--white);
+  border-left: 1px solid var(--ppo-shell-line);
+  box-shadow: var(--shadow-card);
+}
+#ppo-reports .sv06-snapshot-controls {
+  position: absolute;
+  right: 100%;
+  top: 12px;
+  display: grid;
+  gap: 4px;
+}
+#ppo-reports .sv06-snapshot-controls button {
+  background: var(--white);
+}
+#ppo-reports .sv06-snapshot-main {
+  width: 46%;
+  overflow: auto;
+}
+#ppo-reports .sv06-snapshot-main > :is(header, h3, p) {
+  margin: 0;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-snapshot-main header h2 {
+  font-size: 20px;
+  line-height: 28px;
+  margin: 0 0 8px;
+}
+#ppo-reports .sv06-snapshot-main footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  background: var(--white);
+  border-top: 1px solid var(--ppo-shell-line);
+}
+#ppo-reports .sv06-snapshot-side {
+  flex: 1;
+  border-left: 1px solid var(--ppo-shell-line);
+  background: var(--ppo-shell-surface);
+  overflow: auto;
+}
+#ppo-reports .sv06-snapshot-side section {
+  padding: 24px;
+}
+#ppo-reports.sv06-response-sheet {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+#ppo-reports .sv06-presented {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid var(--ppo-shell-line);
+  border-radius: var(--radius-control);
+}
+#ppo-reports .report-hash {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-reports :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 1199px) {
+  #ppo-reports .sv06-as-at {
+    display: none;
+  }
+  #ppo-reports .sv06-toolbar {
+    padding: 8px 16px;
+  }
+  #ppo-reports .sv06-record-header {
+    flex-wrap: wrap;
+  }
+  #ppo-reports .sv06-header-actions {
+    margin-left: 0;
+  }
+  #ppo-reports .sv06-record-aside {
+    flex-basis: 30%;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-reports .mw-menu-overlay {
+    inset: 56px 0 60px;
+    width: 100%;
+    height: auto;
+  }
+  #ppo-reports .report-field :is(input, select, textarea) {
+    font-size: 16px;
+  }
+  #ppo-reports[data-menu] {
+    height: 100%;
+  }
+  #ppo-reports .sv06-desktop-filters,
+  #ppo-reports .sv06-grid,
+  #ppo-reports .sv06-refresh,
+  #ppo-reports .sv06-count {
+    display: none;
+  }
+  #ppo-reports .sv06-toolbar {
+    min-height: 48px;
+    padding: 8px 16px;
+    gap: 8px;
+  }
+  #ppo-reports .sv06-phone-view {
+    display: block;
+    margin-right: auto;
+  }
+  #ppo-reports .sv06-phone-filter {
+    display: inline-flex;
+  }
+  #ppo-reports .sv06-phone-list {
+    display: block;
+  }
+  #ppo-reports .sv06-phone-list > a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 8px;
+    padding: 16px;
+    border-bottom: 1px solid var(--ppo-shell-line);
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+  }
+  #ppo-reports .sv06-phone-title {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-reports .sv06-phone-list time,
+  #ppo-reports .sv06-phone-reference {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+  #ppo-reports .sv06-phone-reference {
+    grid-column: 1 / -1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-reports .sv06-phone-list .ppo-register-chip {
+    justify-self: start;
+    grid-column: 1;
+  }
+  #ppo-reports .sv06-phone-attention {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    grid-column: 1 / -1;
+    font-size: 12px;
+  }
+  #ppo-reports .sv06-phone-outcome {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  #ppo-reports .sv06-phone-list > a > .product-icon {
+    position: absolute;
+    right: 16px;
+    bottom: 18px;
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+  }
+  #ppo-reports .sv06-window {
+    padding: 12px 16px;
+  }
+  #ppo-reports .sv06-chips {
+    padding: 8px 16px;
+    gap: 6px;
+  }
+  #ppo-reports .sv06-state {
+    padding: 80px 20px;
+  }
+  #ppo-reports.sv06-record {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+    padding-bottom: 72px;
+  }
+  #ppo-reports .sv06-record-header,
+  #ppo-reports .sv06-readiness,
+  #ppo-reports .sv06-record-aside {
+    display: none;
+  }
+  #ppo-reports .sv06-phone-status {
+    display: block;
+    padding: 0 16px 10px;
+  }
+  #ppo-reports .sv06-tab-workspace > .record-tablist [id$="-tab-details"] {
+    display: block;
+  }
+  #ppo-reports .record-tablist {
+    padding: 0 16px;
+    gap: 24px;
+  }
+  #ppo-reports .sv06-record-body,
+  #ppo-reports .sv06-tab-workspace,
+  #ppo-reports .sv06-tab-scroll {
+    display: block;
+    overflow: visible;
+    min-width: 0;
+  }
+  #ppo-reports .record-panel {
+    padding: 16px;
+  }
+  #ppo-reports .sv06-notice {
+    padding: 12px;
+  }
+  #ppo-reports .sv06-notice header {
+    flex-wrap: wrap;
+  }
+  #ppo-reports .sv06-notice h2 {
+    font-size: 14px;
+  }
+  #ppo-reports .sv06-notice-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  #ppo-reports .sv06-section-title {
+    display: block;
+  }
+  #ppo-reports .sv06-section-title small {
+    display: block;
+    margin-top: 4px;
+  }
+  #ppo-reports .sv06-entry-row {
+    flex-wrap: wrap;
+  }
+  #ppo-reports .sv06-entry-row .ppo-button {
+    margin-left: 28px;
+  }
+  #ppo-reports .sv06-phone-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    bottom: var(--ppo-phone-nav-height, 60px);
+    left: 0;
+    right: 0;
+    z-index: 4;
+    padding: 12px 16px;
+    border-top: 1px solid var(--ppo-shell-line);
+    background: var(--white);
+  }
+  #ppo-reports .sv06-phone-actions p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--text-secondary);
+  }
+  #ppo-reports .sv06-details section {
+    padding: 16px 0;
+  }
+  #ppo-reports .sv06-savebar {
+    bottom: var(--ppo-phone-nav-height, 60px);
+    flex-wrap: wrap;
+  }
+  #ppo-reports .sv06-savebar > span {
+    flex-basis: 100%;
+  }
+  #ppo-reports.sv06-response-sheet {
+    padding: 16px;
+  }
+  #ppo-reports.sv06-response-sheet h1 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  #ppo-reports .sv06-review-entries dl > div {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+}

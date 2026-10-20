@@ -729,7 +729,8 @@
         "route:/estimating/rules",
         "route:/products",
         "route:/customers",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "route:/service/reports"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -2396,7 +2397,8 @@
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2549,7 +2551,9 @@
         "route:/service/packs/[id]",
         "route:/service/packs/new",
         "route:/customers",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "route:/service/reports",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2650,7 +2654,8 @@
         "scope:SC-07",
         "scope:SC-08",
         "scope:SC-09",
-        "scope:SC-10"
+        "scope:SC-10",
+        "route:/service/reports"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",

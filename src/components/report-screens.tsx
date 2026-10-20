@@ -1,6 +1,14 @@
 "use client";
 import { OfflineEntry } from "./offline-entry";
+import { useSearchParams } from "next/navigation";
 import { RecordIdentity } from "../shell/record-identity";
+import { usePhoneHeader } from "../shell/phone-header";
+import {
+  ReportRecordFrame,
+  ReportDetails,
+  ReportEvidence,
+} from "./report-workspace";
+import "../app/styles/service-reports.css";
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -13,7 +21,6 @@ import {
   Stamp,
   friendly,
   type Envelope,
-  RegisterHeading,
 } from "./business-ui";
 import type { Job } from "./field-screens";
 import type { readReport } from "../reports/service";
@@ -24,7 +31,7 @@ import { useIdentity } from "./business-session";
 import { Button } from "./ui/button";
 import { useRecoverableCommand } from "../shared/ui/use-recoverable-command";
 import type { JournalEntry } from "../shared/lib/command-journal";
-import { useUnsavedChanges } from "./record-ui";
+import { RecordPanel, useUnsavedChanges } from "./record-ui";
 import { ReportPhoto } from "./report-photo";
 type Report = Awaited<ReturnType<typeof readReport>>["items"][number];
 type Presentation = {
@@ -87,6 +94,49 @@ function Input({
     </div>
   );
 }
+function RetainedPreview({
+  reportId,
+  presentation,
+}: {
+  reportId: string;
+  presentation: Presentation;
+}) {
+  const [result, setResult] = useState<{
+    id: string;
+    html?: string;
+    error?: unknown;
+  } | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    void (async () => {
+      try {
+        const response = await fetch(
+          `/api/v1/reports/${reportId}/html?presentation_id=${presentation.id}`,
+          { cache: "no-store", signal: controller.signal },
+        );
+        if (!response.ok) throw await response.json();
+        const html = await response.text();
+        if ((await sha256(html)) !== presentation.content_hash)
+          throw new Error(
+            "Exact report hash mismatch. No preview is displayed.",
+          );
+        if (!controller.signal.aborted)
+          setResult({ id: presentation.id, html });
+      } catch (error) {
+        if (!controller.signal.aborted)
+          setResult({ id: presentation.id, error });
+      }
+    })();
+    return () => controller.abort();
+  }, [reportId, presentation.id, presentation.content_hash]);
+  if (result?.id !== presentation.id)
+    return <p role="status">Loading exact report preview…</p>;
+  return result.error ? (
+    <ErrorNotice error={result.error} />
+  ) : (
+    <ExactReportPresentation html={result.html!} />
+  );
+}
 export function ExactReportPresentation({ html }: { html: string }) {
   const frame = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
@@ -125,15 +175,6 @@ export function ExactReportPresentation({ html }: { html: string }) {
       className="report-preview"
       srcDoc={html}
     />
-  );
-}
-function Synthetic() {
-  return (
-    <p className="field-preview">
-      <strong>Synthetic service review — private prototype</strong> Attendance,
-      remaining work, report issue and customer response are separate facts.
-      Customer response does not approve billing.
-    </p>
   );
 }
 export function CompletionSubmission({
@@ -230,7 +271,9 @@ export function CompletionSubmission({
           <ErrorNotice error={localError ?? c.error} />
           {!!localError && (
             <p>
-              <OfflineEntry newTab>Verify saved workspace in another tab</OfflineEntry>
+              <OfflineEntry newTab>
+                Verify saved workspace in another tab
+              </OfflineEntry>
               . Keep this form open, verify your identity there and resolve any
               pending originals, then return to submit these same details.
             </p>
@@ -248,51 +291,25 @@ export function CompletionSubmission({
     </section>
   );
 }
-export function ReportListScreen() {
-  const r = useResource<
-    Envelope<{
-      id: string;
-      reference: string;
-      revision: number;
-      status: string;
-      appointment_reference: string;
-    }>
-  >("reports");
-  // One main landmark belongs to the shell; these screens are sections within it.
-  return (
-    <div id="ppo-reports" className="business-shell report-screen">
-      <RegisterHeading
-        title="Service review and reports"
-        description="Recent permitted reports from a bounded 200-record window. Older reports remain linked to their original attendance."
-      >
-        <button onClick={r.reload}>Refresh reports</button>
-      </RegisterHeading>
-      <Synthetic />
-      <ErrorNotice error={r.error} />
-      {r.loading && <p role="status">Loading reports…</p>}
-      {!r.loading && !r.error && r.data?.items.length === 0 && (
-        <p>
-          No permitted submissions appear in this recent window. Technicians
-          submit from their job’s Completion tab.
-        </p>
-      )}
-      {!r.loading &&
-        !r.error &&
-        r.data?.items.map((x) => (
-          <article className="business-card" key={x.id}>
-            <h2>
-              <Link href={`/service/reports/${x.id}`}>{x.reference}</Link>
-            </h2>
-            <p>
-              {x.appointment_reference} · revision {x.revision} ·{" "}
-              {friendly(x.status)}
-            </p>
-          </article>
-        ))}
-    </div>
-  );
-}
-function ReviewForm({ r, reload, available }: { r: Report; reload: () => void; available: boolean }) {
+export { ReportListScreen } from "./report-register";
+function ReviewForm({
+  r: current,
+  reload,
+  available,
+  onCancel,
+}: {
+  r: Report;
+  reload: () => void;
+  available: boolean;
+  onCancel: () => void;
+}) {
+  const [r] = useState(current);
+  const [dirty, setDirty] = useState(false);
+  const release = useUnsavedChanges(dirty);
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    heading.current?.focus();
+  }, []);
   const c = useCommand(),
     v = r.revisions[0],
     [decision, setDecision] = useState("Approved"),
@@ -311,7 +328,8 @@ function ReviewForm({ r, reload, available }: { r: Report; reload: () => void; a
     );
   return (
     <form
-      className="business-card"
+      className="sv06-review-form"
+      onChange={() => setDirty(true)}
       onSubmit={async (e) => {
         e.preventDefault();
         if (
@@ -332,110 +350,159 @@ function ReviewForm({ r, reload, available }: { r: Report; reload: () => void; a
               decision === "Approved" ? selectedRecipient || null : null,
             reason: remarks,
           })
-        )
+        ) {
+          setDirty(false);
+          release();
           reload();
+        }
       }}
     >
-      <h2>Review exact submitted entries</h2>
+      <h2 ref={heading} tabIndex={-1}>
+        Review submission
+      </h2>
+      {current.version !== r.version && (
+        <p role="alert">
+          A newer report is available. Your unsaved review still concerns
+          revision {r.revision}; saving cannot overwrite the newer source.
+          Cancel only when you are ready to discard these entries.
+        </p>
+      )}
       <p>
         Reviewing preserves every technician original. Return factual
         corrections to the technician. Quantities shown here remain captured
         quantities; approval records the exact same reviewed quantity, without
         financial treatment.
       </p>
-      {entries.map((x, i) => (
-        <fieldset key={x.id}>
-          <legend>
-            {x.kind} · v{x.version}
-          </legend>
-          <dl>
-            {Object.entries(x.payload).map(([k, value]) => (
-              <div key={k}>
-                <dt>{friendly(k)}</dt>
-                <dd>{String(value ?? "—")}</dd>
-              </div>
-            ))}
-          </dl>
-          {x.kind === "Photo" && (() => {
-            const attachment = v.snapshot.attachments.find((a: { id: string }) => a.id === x.payload.attachment_id);
-            return attachment ? <ReportPhoto available={available} reportId={r.id} revisionId={v.id} revision={v.revision} attachment={attachment} caption={String(x.payload.caption ?? "")} /> : <p>The submitted photo reference is unavailable. Retain this entry and resolve it before review.</p>;
-          })()}
-          <Input
-            label={`Entry ${i + 1} decision`}
-            value={x.decision}
-            options={["Approved", "Returned"]}
-            onChange={(value) =>
-              setEntries(
-                entries.map((a, n) =>
-                  n === i ? { ...a, decision: value } : a,
-                ),
-              )
-            }
-          />
-          <Input
-            label={`Entry ${i + 1} review reason`}
-            value={x.remarks}
-            multiline
-            onChange={(value) =>
-              setEntries(
-                entries.map((a, n) => (n === i ? { ...a, remarks: value } : a)),
-              )
-            }
-          />
-        </fieldset>
-      ))}
-      <Input
-        label="Review decision"
-        value={decision}
-        options={["Approved", "Returned"]}
-        onChange={setDecision}
-      />
-      <Input
-        label="Authority disposition"
-        value={authority}
-        options={["Current", "OriginalAttendanceOnly"]}
-        onChange={setAuthority}
-      />
-      <p>
-        Original attendance only records changed scope or pack context; it
-        grants no new physical work authority.
-      </p>
-      <Input
-        label="Review remarks (internal)"
-        value={remarks}
-        onChange={setRemarks}
-        multiline
-      />
-      {decision === "Approved" && (
-        <div className="report-field">
-          <label htmlFor="report-customer-audience">Customer audience</label>
-          <select
-            id="report-customer-audience"
-            value={selectedRecipient}
-            onChange={(e) => setSelectedRecipient(e.target.value)}
-          >
-            <option value="">Select the permitted site contact</option>
-            {r.permitted_recipient && (
-              <option value={r.permitted_recipient.id}>
-                {r.permitted_recipient.name} · Site primary contact
-              </option>
-            )}
-          </select>
-          <p>
-            The exact reviewed report is prepared for this named contact. This
-            selection does not send or deliver it.
-          </p>
-          {!r.permitted_recipient && (
+      <div className="sv06-review-entries">
+        {entries.map((x, i) => (
+          <fieldset key={x.id}>
+            <legend>
+              {x.kind} · v{x.version}
+            </legend>
+            <dl>
+              {Object.entries(x.payload).map(([k, value]) => (
+                <div key={k}>
+                  <dt>{friendly(k)}</dt>
+                  <dd>{String(value ?? "—")}</dd>
+                </div>
+              ))}
+            </dl>
+            {x.kind === "Photo" &&
+              (() => {
+                const attachment = v.snapshot.attachments.find(
+                  (a: { id: string }) => a.id === x.payload.attachment_id,
+                );
+                return attachment ? (
+                  <ReportPhoto
+                    available={available}
+                    reportId={r.id}
+                    revisionId={v.id}
+                    revision={v.revision}
+                    attachment={attachment}
+                    caption={String(x.payload.caption ?? "")}
+                  />
+                ) : (
+                  <p>
+                    The submitted photo reference is unavailable. Retain this
+                    entry and resolve it before review.
+                  </p>
+                );
+              })()}
+            <Input
+              label={`Entry ${i + 1} decision`}
+              value={x.decision}
+              options={["Approved", "Returned"]}
+              onChange={(value) =>
+                setEntries(
+                  entries.map((a, n) =>
+                    n === i ? { ...a, decision: value } : a,
+                  ),
+                )
+              }
+            />
+            <Input
+              label={`Entry ${i + 1} review reason`}
+              value={x.remarks}
+              multiline
+              onChange={(value) =>
+                setEntries(
+                  entries.map((a, n) =>
+                    n === i ? { ...a, remarks: value } : a,
+                  ),
+                )
+              }
+            />
+          </fieldset>
+        ))}
+      </div>
+      <div className="sv06-review-decision">
+        <Input
+          label="Review decision"
+          value={decision}
+          options={["Approved", "Returned"]}
+          onChange={setDecision}
+        />
+        <Input
+          label="Authority disposition"
+          value={authority}
+          options={["Current", "OriginalAttendanceOnly"]}
+          onChange={setAuthority}
+        />
+        <p>
+          Original attendance only records changed scope or pack context; it
+          grants no new physical work authority.
+        </p>
+        <Input
+          label="Review remarks (internal)"
+          value={remarks}
+          onChange={setRemarks}
+          multiline
+        />
+        {decision === "Approved" && (
+          <div className="report-field">
+            <label htmlFor="report-customer-audience">Customer audience</label>
+            <select
+              id="report-customer-audience"
+              value={selectedRecipient}
+              onChange={(e) => setSelectedRecipient(e.target.value)}
+            >
+              <option value="">Select the permitted site contact</option>
+              {r.permitted_recipient && (
+                <option value={r.permitted_recipient.id}>
+                  {r.permitted_recipient.name} · Site primary contact
+                </option>
+              )}
+            </select>
             <p>
-              No currently permitted active primary contact is available.
-              Resolve the site contact before approving; a return remains
-              available.
+              The exact reviewed report is prepared for this named contact. This
+              selection does not send or deliver it.
             </p>
-          )}
-        </div>
-      )}
+            {!r.permitted_recipient && (
+              <p>
+                No currently permitted active primary contact is available.
+                Resolve the site contact before approving; a return remains
+                available.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
       <ErrorNotice error={c.error} />
-      <button disabled={c.busy}>Commit exact review</button>
+      <footer className="sv06-savebar">
+        <span>Saving records the review only. Issuing is a separate step.</span>
+        <Button
+          disabled={c.busy}
+          onClick={() => {
+            if (!dirty || window.confirm("Discard this unsaved review?"))
+              onCancel();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant="primary" disabled={c.busy || !available}>
+          Commit exact review
+        </Button>
+      </footer>
     </form>
   );
 }
@@ -523,7 +590,7 @@ function ResponseForm({
           reload();
       }}
     >
-      <h2>Record customer response</h2>
+      <h2>Response details</h2>
       <fieldset
         disabled={c.busy || !!c.pending || !c.ready}
         className="report-response-fields"
@@ -682,6 +749,19 @@ function ResponseForm({
           <p role="status">Checking the selected synthetic PNG…</p>
         )}
         <ErrorNotice error={fileError ?? c.error} />
+        {c.error && (
+          <p>
+            Your input remains here against the original presentation.{" "}
+            <a
+              href={`/service/reports/${r.id}?tab=report`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Review current report in a new tab
+            </a>
+            . Do not transfer a response or mark to different content.
+          </p>
+        )}
         <Button
           type="submit"
           variant="primary"
@@ -705,6 +785,11 @@ function ResponseForm({
   );
 }
 export function ReportScreen({ id }: { id: string }) {
+  const params = useSearchParams();
+  const [tab, setTab] = useState(
+    params.get("tab") === "report" ? "report" : "evidence",
+  );
+  const [editing, setEditing] = useState(params.get("review") === "1");
   const identity = useIdentity();
   const responseCommand = useRecoverableCommand({
     key: `ppo.report-response.${identity.actor_id}.${id}`,
@@ -729,9 +814,11 @@ export function ReportScreen({ id }: { id: string }) {
     } | null>(null),
     [error, setError] = useState<unknown>(null);
   const [responseDirty, setResponseDirty] = useState(false);
+  usePhoneHeader(shown ? { title: "Record customer response", record: { more: [] } } : null);
   const reload = () => {
     setResponseDirty(false);
     setShown(null);
+    setEditing(false);
     resource.reload();
   };
   const presentationOpener = useRef<string>("");
@@ -823,11 +910,19 @@ export function ReportScreen({ id }: { id: string }) {
     );
   if (r && shown)
     return (
-      <div id="ppo-reports" className="business-shell report-screen">
+      <div
+        id="ppo-reports"
+        className="sv06-response-sheet report-screen"
+        data-module-layout="full-bleed"
+      >
         <h1 id="report-presentation-heading" tabIndex={-1}>
-          Customer report presentation
+          Record customer response
         </h1>
-        <Synthetic />
+        <RecordIdentity reference={`${r.reference} r${r.revision}`} title="Record customer response" />
+        <p>
+          Record against the exact presentation. Nothing is sent to the
+          customer.
+        </p>
         <Button
           disabled={responseCommand.busy || !!responseCommand.pending}
           onClick={() => {
@@ -843,7 +938,13 @@ export function ReportScreen({ id }: { id: string }) {
         >
           Return to staff review
         </Button>
-        <ExactReportPresentation html={shown.html} />
+        <details className="sv06-presented">
+          <summary>
+            View exact presented report · {shown.v.kind} · {r.reference}
+          </summary>
+          <ExactReportPresentation html={shown.html} />
+          <p className="report-hash">{shown.v.content_hash}</p>
+        </details>
         <p>
           Current context: {friendly(r.response_applicability.state)}. This
           retained presentation and any factual response grant no new work
@@ -857,7 +958,7 @@ export function ReportScreen({ id }: { id: string }) {
             r={{ ...r, version: shown.version }}
             v={shown.v}
             presentedAt={shown.at}
-            reload={reload}
+            reload={() => { setTab("response"); reload(); }}
             command={responseCommand}
             correction={shown.correction}
             onDirty={() => setResponseDirty(true)}
@@ -871,497 +972,537 @@ export function ReportScreen({ id }: { id: string }) {
         {recovery}
       </div>
     );
-  return (
-    <div id="ppo-reports" className="business-shell report-screen">
-      <Link href="/service/reports">All service reports</Link>
-      {r && !resource.error && <RecordIdentity reference={`${r.reference} · Revision ${r.revision}`} title="Service report" />}
-      <h1>{r?.reference ?? "Service report"}</h1>
-      {r?.finance_navigation && <nav aria-label="Report Finance handoff">{r.finance_navigation.existing.map(h => <p key={h.id}><Link href={h.href}>Review Finance handoff · {h.reference}</Link></p>)}{r.finance_navigation.prepare_href && <p><Link href={r.finance_navigation.prepare_href}>Prepare Finance handoff for this reviewed report</Link></p>}<p>Opening a handoff creates no record or allocation. Finance validates current sources and recipients independently.</p></nav>}
-      <Synthetic />
+  if (!r || resource.error)
+    return (
       <ReadState
         loading={resource.loading}
         error={resource.error}
         retry={reload}
-        retained={!!r}
+      />
+    );
+  const startReview = () => {
+    setEditing(true);
+    setTab("evidence");
+  };
+  return (
+    <ReportRecordFrame
+      report={r}
+      tab={tab}
+      onTab={setTab}
+      editing={editing}
+      onReview={startReview}
+      onRefresh={resource.reload}
+      onIssue={() => {
+        setTab("report");
+        requestAnimationFrame(() =>
+          document.getElementById("sv06-issue-confirm")?.focus(),
+        );
+      }}
+      onRespond={() => {
+        const presentation = r.presentations.find(
+          (item) =>
+            item.kind === "IssuedReport" &&
+            item.revision_id === r.revisions[0].id,
+        );
+        if (presentation) void preview(presentation);
+        else setTab("report");
+      }}
+    >
+      <ReadState
+        loading={resource.loading}
+        error={resource.error}
+        retry={reload}
+        retained
       />
       <ErrorNotice error={error ?? c.error} />
-      <button className="secondary" onClick={reload}>
-        Refresh exact report
-      </button>
-      {!r ? (
-        resource.loading ? (
-          <p role="status">Loading report…</p>
-        ) : null
-      ) : (
-        <>
+    {(responseCommand.pending || responseCommand.saved) && tab !== "response" && recovery}
+      <RecordPanel id="sv06" tab="details" value={tab}>
+        <ReportDetails report={r} />
+      </RecordPanel>
+      <RecordPanel id="sv06" tab="evidence" value={tab}>
+        {editing && r.status === "Submitted" && r.can_review ? (
+          <ReviewForm
+            key={r.id}
+            r={r}
+            reload={reload}
+            available={!resource.loading && !resource.error}
+            onCancel={() => setEditing(false)}
+          />
+        ) : (
+          <ReportEvidence
+            report={r}
+            available={!resource.loading && !resource.error}
+            onReview={
+              r.can_review && r.status === "Submitted" ? startReview : undefined
+            }
+          />
+        )}
+      </RecordPanel>
+      <RecordPanel id="sv06" tab="outcome" value={tab}>
+        {" "}
+        <section className="business-card">
+          <h2>Exact submitted completion</h2>
+          <p>
+            Outcome:{" "}
+            <strong>{r.revisions[0].snapshot.completion.scope_outcome}</strong>{" "}
+            · Time: {r.revisions[0].snapshot.completion.time_declaration} ·
+            Materials: {r.revisions[0].snapshot.completion.material_declaration}
+          </p>
+          <p className="preserve-lines">
+            {r.revisions[0].snapshot.completion.work_performed}
+          </p>
+          <p>
+            <strong>Exclusions:</strong>{" "}
+            {r.revisions[0].snapshot.completion.exclusions}
+          </p>
+          <p>
+            <strong>Remaining work:</strong>{" "}
+            {r.revisions[0].snapshot.completion.remaining_work}
+          </p>
+          {r.revisions[0].snapshot.completion.task_outcomes.map(
+            (t: { scope_item_id: string; outcome: string; reason: string }) => (
+              <p key={t.scope_item_id}>
+                <strong>{t.outcome}</strong> · {t.reason}
+              </p>
+            ),
+          )}
+          {r.revisions[0].snapshot.completion.blockers.map(
+            (b: string, i: number) => (
+              <p className="note" key={i}>
+                {b}
+              </p>
+            ),
+          )}
+        </section>
+      </RecordPanel>
+      <RecordPanel id="sv06" tab="report" value={tab}>
+        {" "}
+        {r.status === "Reviewed" && r.can_issue && (
           <section className="business-card">
-            <h2>
-              Revision {r.revision} · {friendly(r.status)}
+            <h2 id="sv06-issue-confirm" tabIndex={-1}>
+              Generate and issue controlled report
             </h2>
             <p>
-              Visit: <strong>{friendly(r.appointment.status)}</strong> · This
-              technician’s attendance:{" "}
-              <strong>
-                {r.attendance_acceptance
-                  ? "Internally accepted by Service review"
-                  : "Awaiting internal Service acceptance"}
-              </strong>{" "}
-              · Work order: {r.work_order.status} · Finance: {r.finance_state}
+              Draft evidence is not an issued report. Issue creates separately
+              verified output and sends nothing to a customer.
             </p>
             <p>
-              <Link href={`/my-jobs/${r.appointment.id}`}>
-                Technician evidence and correction
-              </Link>{" "}
-              ·{" "}
-              <Link href={`/service/work-orders/${r.work_order.id}`}>
-                Remaining work and return proposal
-              </Link>
+              Exact reviewed evidence, named site contact and current template
+              are checked before and after durable rendering. Rendering alone is
+              not issuance.
             </p>
-            <p>
-              A proposed return requires the existing scope and booking checks.
-              It is not a confirmed booking.
-            </p>
+            <Button
+              disabled={
+                c.busy ||
+                rendering !== null ||
+                resource.loading ||
+                !!resource.error
+              }
+              onClick={async () => {
+                const v = r.revisions[0],
+                  review = r.reviews.find(
+                    (x: { revision_id: string; decision: string }) =>
+                      x.revision_id === v.id && x.decision === "Approved",
+                  );
+                if (
+                  await c.send(`reports/${id}/issue`, {
+                    expected_version: r.version,
+                    revision_id: v.id,
+                    review_id: review.id,
+                    template_id: r.template.id,
+                    template_version: r.template.version,
+                    reason:
+                      "Generate and issue the exact synthetic reviewed report.",
+                  })
+                )
+                  reload();
+              }}
+            >
+              Request exact report issue
+            </Button>
           </section>
-          <section
-            className="business-card"
-            aria-label="Attendance and current response context"
-          >
-            <h2>Attendance, customer response and current restrictions</h2>
-            <p>
-              {r.revisions[0].snapshot.customer.name} ·{" "}
-              {r.revisions[0].snapshot.site.name} ·{" "}
-              {r.revisions[0].snapshot.attendance.name}
-            </p>
-            <p>
-              Actual attendance{" "}
-              <code>{r.revisions[0].snapshot.attendance.id}</code> ·{" "}
-              <Stamp value={r.revisions[0].snapshot.attendance.start_at} /> to{" "}
-              <Stamp value={r.revisions[0].snapshot.attendance.end_at} />
-            </p>
-            <p>
-              Exact scope{" "}
-              <code>
-                {r.revisions[0].snapshot.attendance.scope_revision_id}
-              </code>
-              . Customer acknowledgement is separate from internal acceptance
-              and report-content response.
-            </p>
-            <p>
-              <strong>{friendly(r.response_applicability.state)}</strong> ·{" "}
-              {r.response_applicability.message}
-            </p>
-            {r.response_applicability.restrictions ? (
+        )}
+        {r.jobs.map(
+          (j: {
+            id: string;
+            state: string;
+            error_code: string | null;
+            attempts: number;
+          }) => (
+            <section className="business-card" key={j.id}>
+              <h2>Output attempt · {friendly(j.state)}</h2>
               <p>
-                Incident:{" "}
-                {friendly(r.response_applicability.restrictions.incident)} ·
-                Inspection:{" "}
-                {friendly(r.response_applicability.restrictions.inspection)} ·
-                Readiness:{" "}
-                {friendly(r.response_applicability.restrictions.readiness)}
+                {j.error_code ?? "Original output identity retained"} · attempts{" "}
+                {j.attempts}
               </p>
-            ) : (
-              <p>Current technical context is not established here.</p>
-            )}
-            <p>
-              Recording a factual response never clears a hold or defect,
-              permits work, completes another record or approves Finance.
-              Independent scheduling, inspection and incident controls remain in
-              force.
-            </p>
-            {!r.responses.some((x) => x.subject === "AttendanceFacts") && (
-              <p>No customer attendance acknowledgement recorded.</p>
-            )}
-            {!r.responses.some((x) => x.subject === "ReportContent") && (
-              <p>No report-content response recorded.</p>
-            )}
-          </section>
-          {recovery}
-          <section className="business-card">
-            <h2>Exact submitted completion</h2>
-            <p>
-              Outcome:{" "}
-              <strong>
-                {r.revisions[0].snapshot.completion.scope_outcome}
-              </strong>{" "}
-              · Time: {r.revisions[0].snapshot.completion.time_declaration} ·
-              Materials:{" "}
-              {r.revisions[0].snapshot.completion.material_declaration}
-            </p>
-            <p className="preserve-lines">
-              {r.revisions[0].snapshot.completion.work_performed}
-            </p>
-            <p>
-              <strong>Exclusions:</strong>{" "}
-              {r.revisions[0].snapshot.completion.exclusions}
-            </p>
-            <p>
-              <strong>Remaining work:</strong>{" "}
-              {r.revisions[0].snapshot.completion.remaining_work}
-            </p>
-            {r.revisions[0].snapshot.completion.task_outcomes.map(
-              (t: {
-                scope_item_id: string;
-                outcome: string;
-                reason: string;
-              }) => (
-                <p key={t.scope_item_id}>
-                  <strong>{t.outcome}</strong> · {t.reason}
-                </p>
-              ),
-            )}
-            {r.revisions[0].snapshot.completion.blockers.map(
-              (b: string, i: number) => (
-                <p className="note" key={i}>
-                  {b}
-                </p>
-              ),
-            )}
-          </section>
-          {r.status === "Submitted" && r.can_review && (
-            <ReviewForm key={r.version} r={r} reload={reload} available={!resource.loading && !resource.error} />
-          )}
-          {r.reviews.map(
-            (v: {
-              id: string;
-              revision_id: string;
-              decision: string;
-              remarks?: string;
-              entry_decisions: {
-                id: string;
-                decision: string;
-                remarks?: string;
-              }[];
-            }) => (
-              <section className="business-card" key={v.id}>
-                <h2>{v.decision} review</h2>
-                {v.remarks && <p>{v.remarks}</p>}
-                {v.entry_decisions
-                  .filter((e) => e.decision === "Returned" && e.remarks)
-                  .map((e) => (
-                    <p key={e.id}>
-                      <strong>Returned entry:</strong> {e.remarks} ·{" "}
-                      <code>{e.id}</code>
-                    </p>
-                  ))}
-              </section>
-            ),
-          )}
-          {r.status === "Reviewed" && r.can_issue && (
-            <section className="business-card">
-              <h2>Generate and issue controlled report</h2>
-              <p>
-                Exact reviewed evidence, named site contact and current template
-                are checked before and after durable rendering. Rendering alone
-                is not issuance.
-              </p>
-              <button
-                disabled={
-                  c.busy ||
-                  rendering !== null ||
-                  resource.loading ||
-                  !!resource.error
-                }
-                onClick={async () => {
-                  const v = r.revisions[0],
-                    review = r.reviews.find(
-                      (x: { revision_id: string; decision: string }) =>
-                        x.revision_id === v.id && x.decision === "Approved",
-                    );
-                  if (
-                    await c.send(`reports/${id}/issue`, {
-                      expected_version: r.version,
-                      revision_id: v.id,
-                      review_id: review.id,
-                      template_id: r.template.id,
-                      template_version: r.template.version,
-                      reason:
-                        "Generate and issue the exact synthetic reviewed report.",
-                    })
-                  )
-                    reload();
-                }}
-              >
-                Request exact report issue
-              </button>
-            </section>
-          )}
-          {r.jobs.map(
-            (j: {
-              id: string;
-              state: string;
-              error_code: string | null;
-              attempts: number;
-            }) => (
-              <section className="business-card" key={j.id}>
-                <h2>Output attempt · {friendly(j.state)}</h2>
-                <p>
-                  {j.error_code ?? "Original output identity retained"} ·
-                  attempts {j.attempts}
-                </p>
-                {r.can_issue &&
-                  !["Issued", "StaleSource"].includes(j.state) && (
-                    <button
-                      disabled={
-                        rendering !== null ||
-                        resource.loading ||
-                        !!resource.error
-                      }
-                      onClick={async () => {
-                        setError(null);
-                        setRendering(j.id);
-                        try {
-                          await api(`report-render-jobs/${j.id}/retry`, {});
-                          reload();
-                        } catch (e) {
-                          setError(e);
-                        } finally {
-                          setRendering(null);
-                        }
-                      }}
-                    >
-                      Generate / recover original report
-                    </button>
-                  )}
-                {rendering === j.id && (
-                  <p role="status">
-                    Preparing the original report. Issuance is not confirmed
-                    until processing completes.
-                  </p>
-                )}
-                {j.state === "StaleSource" && (
-                  <p>
-                    Open a correction cycle and submit a successor. This owned
-                    stale output cannot be issued.
-                  </p>
-                )}
-              </section>
-            ),
-          )}
-          <section className="business-card">
-            <h2>Immutable report presentations</h2>
-            {r.presentations.length === 0 && (
-              <p>No reviewed presentation is available.</p>
-            )}
-            {r.presentations.map((v: Presentation) => (
-              <article key={v.id}>
-                <h3>
-                  {friendly(v.kind)} ·{" "}
-                  {v.revision_id === r.revisions[0].id
-                    ? "current revision"
-                    : "prior revision retained"}
-                </h3>
-                <p className="report-hash">{v.content_hash}</p>
-                <p>
-                  Attendance acknowledgement:{" "}
-                  {r.responses.some(
-                    (x) =>
-                      x.presentation_id === v.id &&
-                      x.subject === "AttendanceFacts",
-                  )
-                    ? "recorded for this exact presentation"
-                    : "no response yet"}
-                  . Report-content response:{" "}
-                  {r.responses.some(
-                    (x) =>
-                      x.presentation_id === v.id &&
-                      x.subject === "ReportContent",
-                  )
-                    ? "recorded for this exact presentation"
-                    : "no response yet"}
-                  .
-                </p>
-                {v.kind === "DraftEvidence" && (
-                  <p>
-                    A response to this draft never becomes a response to an
-                    issued report.
-                  </p>
-                )}
+              {r.can_issue && !["Issued", "StaleSource"].includes(j.state) && (
                 <Button
-                  id={`present-${v.id}`}
-                  onClick={(e) => {
-                    presentationOpener.current = e.currentTarget.id;
-                    void preview(v);
+                  disabled={
+                    rendering !== null || resource.loading || !!resource.error
+                  }
+                  onClick={async () => {
+                    setError(null);
+                    setRendering(j.id);
+                    try {
+                      await api(`report-render-jobs/${j.id}/retry`, {});
+                      reload();
+                    } catch (e) {
+                      setError(e);
+                    } finally {
+                      setRendering(null);
+                    }
                   }}
                 >
-                  Present {friendly(v.kind)}
+                  Generate / recover original report
                 </Button>
-                {v.kind === "IssuedReport" && (
-                  <a
-                    href={`/api/v1/reports/${id}/pdf?presentation_id=${v.id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open exact A4 PDF
-                  </a>
-                )}
-              </article>
-            ))}
-          </section>
-          <section className="business-card">
-            <h2>Response history</h2>
-            {r.responses.length === 0 && (
-              <p>No response has been accepted by the server.</p>
-            )}
-            {r.responses.map((v) => (
-              <article key={v.id}>
-                <p>
-                  <strong>
-                    {v.subject === "AttendanceFacts"
-                      ? "Customer attendance acknowledgement"
-                      : "Report-content response"}
-                  </strong>{" "}
-                  · <code>{v.id}</code>
+              )}
+              {rendering === j.id && (
+                <p role="status">
+                  Preparing the original report. Issuance is not confirmed until
+                  processing completes.
                 </p>
-                <h3>
-                  {friendly(v.response)} ·{" "}
-                  {v.respondent_name ?? "No respondent available"}
-                </h3>
-                <p>{v.remarks}</p>
-                <p>{v.next_action}</p>
+              )}
+              {j.state === "StaleSource" && (
                 <p>
-                  Stated role: {v.respondent_role ?? "No respondent"} · Captured
-                  by: {v.captured_by}
+                  Open a correction cycle and submit a successor. This owned
+                  stale output cannot be issued.
                 </p>
-                <p>
-                  Presented <Stamp value={v.presented_at} /> · Captured{" "}
-                  <Stamp value={v.captured_at} />
-                </p>
-                <p>
-                  {friendly(
-                    r.presentations.find((p) => p.id === v.presentation_id)
-                      ?.kind ?? "Unavailable",
-                  )}{" "}
-                  · Presentation <code>{v.presentation_id}</code>
-                </p>
-                <p>
-                  {r.presentations.find((p) => p.id === v.presentation_id)
-                    ?.revision_id === r.revisions[0].id &&
-                  ["Reviewed", "Issued"].includes(r.status)
-                    ? "Response concerns the current report revision; current applicability is separate."
-                    : "Historical response; no transfer to current or successor content."}
-                </p>
-                {v.supersedes_response_id && (
-                  <p>
-                    Corrects / clarifies <code>{v.supersedes_response_id}</code>
-                    : {v.correction_reason}
-                  </p>
-                )}
-                {r.responses.some((x) => x.supersedes_response_id === v.id) && (
-                  <p>Retained original with an explicit successor response.</p>
-                )}
-                {v.restrictions && (
-                  <p>
-                    At receipt — Incident: {friendly(v.restrictions.incident)} ·
-                    Inspection: {friendly(v.restrictions.inspection)} ·
-                    Readiness: {friendly(v.restrictions.readiness)}. No
-                    clearance granted.
-                  </p>
-                )}
-                {v.follow_up_activity_id &&
-                  r.follow_ups.some(
-                    (f) => f.id === v.follow_up_activity_id,
-                  ) && (
-                    <p>
-                      <Link href={`/work/${v.follow_up_activity_id}`}>
-                        Open original owned response action
-                      </Link>
-                    </p>
-                  )}
-                <p className="report-hash">Bound content: {v.presented_hash}</p>
-                <p>
-                  Server received <Stamp value={v.received_at} />
-                </p>
-                {v.signature_hash && (
-                  <a
-                    href={`/api/v1/customer-responses/${v.id}/signature`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View protected original synthetic mark
-                  </a>
-                )}
-                {r.can_respond &&
-                  !r.responses.some((x) => x.supersedes_response_id === v.id) &&
-                  ["Reviewed", "Issued"].includes(r.status) &&
-                  r.presentations.find((p) => p.id === v.presentation_id)
-                    ?.revision_id === r.revisions[0].id && (
-                    <Button
-                      id={`correct-${v.id}`}
-                      onClick={(e) => {
-                        const presentation = r.presentations.find(
-                          (p) => p.id === v.presentation_id,
-                        );
-                        if (presentation) {
-                          presentationOpener.current = e.currentTarget.id;
-                          void preview(presentation, v);
-                        }
-                      }}
-                    >
-                      Correct or clarify this response
-                    </Button>
-                  )}
-              </article>
-            ))}
-          </section>
-          {r.can_amend && ["Reviewed", "Issued"].includes(r.status) && (
-            <section className="business-card">
-              <h2>Open a report correction cycle</h2>
+              )}
+            </section>
+          ),
+        )}
+        <section className="business-card">
+          <h2>Immutable report presentations</h2>
+          {r.presentations.length === 0 && (
+            <p>No reviewed presentation is available.</p>
+          )}
+          {r.presentations.map((v: Presentation) => (
+            <article key={v.id}>
+              <h3>
+                {friendly(v.kind)} ·{" "}
+                {v.revision_id === r.revisions[0].id
+                  ? "current revision"
+                  : "prior revision retained"}
+              </h3>
+              <p className="report-hash">{v.content_hash}</p>
+              {tab === "report" && v.id === r.presentations[0]?.id && (
+                <RetainedPreview reportId={id} presentation={v} />
+              )}
               <p>
-                Accepted attendance and previous reports remain immutable.
-                Correct an original entry, save a successor draft and resubmit
-                for review. Further physical work needs a separate authorised
-                visit.
+                Attendance acknowledgement:{" "}
+                {r.responses.some(
+                  (x) =>
+                    x.presentation_id === v.id &&
+                    x.subject === "AttendanceFacts",
+                )
+                  ? "recorded for this exact presentation"
+                  : "no response yet"}
+                . Report-content response:{" "}
+                {r.responses.some(
+                  (x) =>
+                    x.presentation_id === v.id && x.subject === "ReportContent",
+                )
+                  ? "recorded for this exact presentation"
+                  : "no response yet"}
+                .
               </p>
-              <Input
-                label="Report correction reason"
-                value={reason}
-                onChange={setReason}
-                multiline
-              />
-              <button
-                disabled={c.busy}
-                onClick={async () => {
-                  if (
-                    await c.send(`reports/${id}/amend`, {
-                      expected_version: r.version,
-                      revision_id: r.revisions[0].id,
-                      reason,
-                    })
-                  )
-                    reload();
+              {v.kind === "DraftEvidence" && (
+                <p>
+                  A response to this draft never becomes a response to an issued
+                  report.
+                </p>
+              )}
+              <Button
+                id={`present-${v.id}`}
+                onClick={(e) => {
+                  presentationOpener.current = e.currentTarget.id;
+                  void preview(v);
                 }}
               >
-                Open successor correction
-              </button>
-            </section>
+                Present {friendly(v.kind)}
+              </Button>
+              {v.kind === "IssuedReport" && (
+                <a
+                  href={`/api/v1/reports/${id}/pdf?presentation_id=${v.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open exact A4 PDF
+                </a>
+              )}
+            </article>
+          ))}
+        </section>
+      </RecordPanel>
+      <RecordPanel id="sv06" tab="response" value={tab}>
+        {" "}
+        <section className="business-card">
+          <h2>Response history</h2>
+          {r.responses.length === 0 && (
+            <p>No response has been accepted by the server.</p>
           )}
-          <section className="business-card">
-            <h2>Owned actions</h2>
-            {r.follow_ups.map(
-              (f: {
-                id: string;
-                summary: string;
-                owner_name: string;
-                status: string;
-                due_at: string | null;
-                due_needed: boolean;
-              }) => (
-                <p key={f.id}>
-                  <Link href={`/work/${f.id}`}>{f.summary}</Link>
-                  <br />
-                  {f.owner_name} · {f.status}
-                  {" · "}
-                  {f.due_needed ? (
-                    "Due date needed"
-                  ) : (
-                    <Stamp value={f.due_at} />
-                  )}
+          {r.responses.map((v) => (
+            <article key={v.id}>
+              <p>
+                <strong>
+                  {v.subject === "AttendanceFacts"
+                    ? "Customer attendance acknowledgement"
+                    : "Report-content response"}
+                </strong>{" "}
+                · <code>{v.id}</code>
+              </p>
+              <h3>
+                {friendly(v.response)} ·{" "}
+                {v.respondent_name ?? "No respondent available"}
+              </h3>
+              <p>{v.remarks}</p>
+              <p>{v.next_action}</p>
+              <p>
+                Stated role: {v.respondent_role ?? "No respondent"} · Captured
+                by: {v.captured_by}
+              </p>
+              <p>
+                Presented <Stamp value={v.presented_at} /> · Captured{" "}
+                <Stamp value={v.captured_at} />
+              </p>
+              <p>
+                {friendly(
+                  r.presentations.find((p) => p.id === v.presentation_id)
+                    ?.kind ?? "Unavailable",
+                )}{" "}
+                · Presentation <code>{v.presentation_id}</code>
+              </p>
+              <p>
+                {r.presentations.find((p) => p.id === v.presentation_id)
+                  ?.revision_id === r.revisions[0].id &&
+                ["Reviewed", "Issued"].includes(r.status)
+                  ? "Response concerns the current report revision; current applicability is separate."
+                  : "Historical response; no transfer to current or successor content."}
+              </p>
+              {v.supersedes_response_id && (
+                <p>
+                  Corrects / clarifies <code>{v.supersedes_response_id}</code>:{" "}
+                  {v.correction_reason}
                 </p>
-              ),
+              )}
+              {r.responses.some((x) => x.supersedes_response_id === v.id) && (
+                <p>Retained original with an explicit successor response.</p>
+              )}
+              {v.restrictions && (
+                <p>
+                  At receipt — Incident: {friendly(v.restrictions.incident)} ·
+                  Inspection: {friendly(v.restrictions.inspection)} · Readiness:{" "}
+                  {friendly(v.restrictions.readiness)}. No clearance granted.
+                </p>
+              )}
+              {v.follow_up_activity_id &&
+                r.follow_ups.some((f) => f.id === v.follow_up_activity_id) && (
+                  <p>
+                    <Link href={`/work/${v.follow_up_activity_id}`}>
+                      Open original owned response action
+                    </Link>
+                  </p>
+                )}
+              <p className="report-hash">Bound content: {v.presented_hash}</p>
+              <p>
+                Server received <Stamp value={v.received_at} />
+              </p>
+              {v.signature_hash && (
+                <a
+                  href={`/api/v1/customer-responses/${v.id}/signature`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View protected original synthetic mark
+                </a>
+              )}
+              {r.can_respond &&
+                !r.responses.some((x) => x.supersedes_response_id === v.id) &&
+                ["Reviewed", "Issued"].includes(r.status) &&
+                r.presentations.find((p) => p.id === v.presentation_id)
+                  ?.revision_id === r.revisions[0].id && (
+                  <Button
+                    id={`correct-${v.id}`}
+                    onClick={(e) => {
+                      const presentation = r.presentations.find(
+                        (p) => p.id === v.presentation_id,
+                      );
+                      if (presentation) {
+                        presentationOpener.current = e.currentTarget.id;
+                        void preview(presentation, v);
+                      }
+                    }}
+                  >
+                    Correct or clarify this response
+                  </Button>
+                )}
+            </article>
+          ))}
+        </section>
+        <section className="business-card">
+          <h2>Owned actions</h2>
+          {r.follow_ups.map(
+            (f: {
+              id: string;
+              summary: string;
+              owner_name: string;
+              status: string;
+              due_at: string | null;
+              due_needed: boolean;
+            }) => (
+              <p key={f.id}>
+                <Link href={`/work/${f.id}`}>{f.summary}</Link>
+                <br />
+                {f.owner_name} · {f.status}
+                {" · "}
+                {f.due_needed ? "Due date needed" : <Stamp value={f.due_at} />}
+              </p>
+            ),
+          )}
+        </section>
+        <section
+          className="business-card"
+          aria-label="Attendance and current response context"
+        >
+          <h2>Attendance, customer response and current restrictions</h2>
+          <p>
+            {r.revisions[0].snapshot.customer.name} ·{" "}
+            {r.revisions[0].snapshot.site.name} ·{" "}
+            {r.revisions[0].snapshot.attendance.name}
+          </p>
+          <p>
+            Actual attendance{" "}
+            <code>{r.revisions[0].snapshot.attendance.id}</code> ·{" "}
+            <Stamp value={r.revisions[0].snapshot.attendance.start_at} /> to{" "}
+            <Stamp value={r.revisions[0].snapshot.attendance.end_at} />
+          </p>
+          <p>
+            Exact scope{" "}
+            <code>{r.revisions[0].snapshot.attendance.scope_revision_id}</code>.
+            Customer acknowledgement is separate from internal acceptance and
+            report-content response.
+          </p>
+          <p>
+            <strong>{friendly(r.response_applicability.state)}</strong> ·{" "}
+            {r.response_applicability.message}
+          </p>
+          {r.response_applicability.restrictions ? (
+            <p>
+              Incident:{" "}
+              {friendly(r.response_applicability.restrictions.incident)} ·
+              Inspection:{" "}
+              {friendly(r.response_applicability.restrictions.inspection)} ·
+              Readiness:{" "}
+              {friendly(r.response_applicability.restrictions.readiness)}
+            </p>
+          ) : (
+            <p>Current technical context is not established here.</p>
+          )}
+          <p>
+            Recording a factual response never clears a hold or defect, permits
+            work, completes another record or approves Finance. Independent
+            scheduling, inspection and incident controls remain in force.
+          </p>
+          {!r.responses.some((x) => x.subject === "AttendanceFacts") && (
+            <p>No customer attendance acknowledgement recorded.</p>
+          )}
+          {!r.responses.some((x) => x.subject === "ReportContent") && (
+            <p>No report-content response recorded.</p>
+          )}
+        </section>
+        {r?.finance_navigation && (
+          <nav aria-label="Report Finance handoff">
+            {r.finance_navigation.existing.map((h) => (
+              <p key={h.id}>
+                <Link href={h.href}>
+                  Review Finance handoff · {h.reference}
+                </Link>
+              </p>
+            ))}
+            {r.finance_navigation.prepare_href && (
+              <p>
+                <Link href={r.finance_navigation.prepare_href}>
+                  Prepare Finance handoff for this reviewed report
+                </Link>
+              </p>
             )}
+            <p>
+              Opening a handoff creates no record or allocation. Finance
+              validates current sources and recipients independently.
+            </p>
+          </nav>
+        )}
+        {recovery}
+      </RecordPanel>
+      <RecordPanel id="sv06" tab="history" value={tab}>
+        <h2>Submission history</h2>
+        {r.revisions.map((revision) => (
+          <section className="business-card" key={revision.id}>
+            <h3>Revision {revision.revision}</h3>
+            <p>
+              Submitted <Stamp value={revision.submitted_at} />
+            </p>
+            <p className="report-hash">Exact source: {revision.source_hash}</p>
           </section>
-        </>
-      )}
-    </div>
+        ))}{" "}
+        {r.reviews.map(
+          (v: {
+            id: string;
+            revision_id: string;
+            decision: string;
+            remarks?: string;
+            entry_decisions: {
+              id: string;
+              decision: string;
+              remarks?: string;
+            }[];
+          }) => (
+            <section className="business-card" key={v.id}>
+              <h2>{v.decision} review</h2>
+              {v.remarks && <p>{v.remarks}</p>}
+              {v.entry_decisions
+                .filter((e) => e.decision === "Returned" && e.remarks)
+                .map((e) => (
+                  <p key={e.id}>
+                    <strong>Returned entry:</strong> {e.remarks} ·{" "}
+                    <code>{e.id}</code>
+                  </p>
+                ))}
+            </section>
+          ),
+        )}
+        {r.can_amend && ["Reviewed", "Issued"].includes(r.status) && (
+          <section className="business-card">
+            <h2>Open a report correction cycle</h2>
+            <p>
+              Accepted attendance and previous reports remain immutable. Correct
+              an original entry, save a successor draft and resubmit for review.
+              Further physical work needs a separate authorised visit.
+            </p>
+            <Input
+              label="Report correction reason"
+              value={reason}
+              onChange={setReason}
+              multiline
+            />
+            <Button
+              disabled={c.busy}
+              onClick={async () => {
+                if (
+                  await c.send(`reports/${id}/amend`, {
+                    expected_version: r.version,
+                    revision_id: r.revisions[0].id,
+                    reason,
+                  })
+                )
+                  reload();
+              }}
+            >
+              Open successor correction
+            </Button>
+          </section>
+        )}
+      </RecordPanel>
+    </ReportRecordFrame>
   );
 }

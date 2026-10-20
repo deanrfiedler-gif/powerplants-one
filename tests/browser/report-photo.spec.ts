@@ -94,6 +94,7 @@ test("Service photo inspection verifies exact bytes, preserves review input and 
     ).body(),
   ).toEqual(bytes);
   await page.goto(`/service/reports/${reportId}`);
+  await page.getByRole("button", { name: "Review submission", exact: true }).filter({ visible: true }).click();
   const photo = page.locator(".report-photo"),
     image = photo.getByRole("img", {
       name: "SYN visual evidence for Service inspection",
