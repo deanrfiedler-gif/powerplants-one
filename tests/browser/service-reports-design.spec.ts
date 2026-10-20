@@ -255,6 +255,54 @@ test("SV-06 no-matches queue clears without confusing an empty window", async ({
   ).toHaveCount(0);
 });
 
+test("SV-06 phone Details handover stays above the action and view-only footer", async ({
+  page,
+}, info) => {
+  test.setTimeout(120000);
+  let current = structuredClone(reportFixture);
+  await page.route(`**/api/v1/reports/${reportId}`, (route) =>
+    route.fulfill({ json: { items: [current] } }),
+  );
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    for (const canAct of [true, false]) {
+      current = {
+        ...current,
+        can_review: canAct,
+        can_issue: canAct,
+        can_respond: canAct,
+      };
+      await page.goto(`/service/reports/${reportId}?department=service`);
+      await page.getByRole("tab", { name: "Details", exact: true }).click();
+      const handover = page
+        .getByRole("link", {
+          name: "Technician evidence and correction",
+          exact: true,
+        })
+        .filter({ visible: true });
+      await handover.scrollIntoViewIfNeeded();
+      const linkBounds = await handover.boundingBox();
+      const footerBounds = await page
+        .locator(".sv06-phone-actions")
+        .boundingBox();
+      expect(linkBounds).not.toBeNull();
+      expect(footerBounds).not.toBeNull();
+      expect(linkBounds!.y + linkBounds!.height).toBeLessThanOrEqual(
+        footerBounds!.y,
+      );
+      await page.screenshot({
+        path: info.outputPath(
+          `details-${width}-${canAct ? "action" : "view-only"}.png`,
+        ),
+      });
+      await handover.click();
+      await expect(page).toHaveURL(
+        new RegExp(`/my-jobs/${reportFixture.appointment.id}$`),
+      );
+    }
+  }
+});
+
 test("SV-06 prepared and issued output keep exact response binding on refusal", async ({
   page,
 }, info) => {

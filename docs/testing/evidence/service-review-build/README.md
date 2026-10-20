@@ -26,6 +26,18 @@ The persisted login failure preceded the fixture-only run and is not hidden by i
 
 Design-register validation passed with 366 entries and no errors after the page contracts were corrected to the required Desktop/Mobile headings. The build-sequence generator writes ignored `tmp/` outputs by current repository policy; it was run rather than hand-edited. Status is generated from the same-PR fragment. No failed or unexecuted check is a pass.
 
+## CI follow-up: phone handover
+
+Application assurance run **39370352393**, head `1434b4827088395df72381a2e13769244b14b568`, exposed a real layout regression in the P11 selected journey and original-failure replay (jobs **118460485832** and **118460485880**). Their phone P09/P11 procedures reached the Details tab but could not click **Technician evidence and correction**: the fixed view-only footer intercepted pointer events. Static/unit/build checks passed in those jobs; the HTTP/output isolation job also passed. These results do not make the entire run green.
+
+The new synthetic regression reproduced the overlap before the fix: the link ended at 764 px while the footer started at 715 px. The phone override had removed the tab scroller inside the shell's bounded, overflow-hidden module, then overlaid a fixed footer. The record now keeps its bounded flex layout and scrolling tab body, with the footer reserving its real height above the shared navigation. The review save bar sticks to that scroller. No permission, command, evidence or business assertion was weakened; no forced clicks or extra sleeps were added.
+
+After the CSS fix, three focused phone cases passed, then the complete page fixture suite passed **12/12** across desktop and phone projects. The new case exercises both 390 and 320 px, action and view-only footers, checks the handover is above the footer and follows the real link. Existing geometry, exact review retention/refusal, response binding, unavailable selection and read-state cases also passed. The 320 px view-only capture was inspected; the link and footer are separate. The first local attempt used the wrong loopback hostname and was refused by the launcher; it is not part of the passing run. The temporary local test configuration was removed. Captures remain outside Git with the external icon Kit blocked.
+
+Persisted P09/P11 CI reruns remain required after this fix. Native owner visual review remains **pending**.
+
+Follow-up checks passed: `npm run studio:check` (366 entries, 48 components, no errors), `npm run typecheck`, `npm run lint`, the three report-register unit tests, naming (743 records), foundation (78 requirements, 12,849 links, 60 status fragments) and `git diff --check`. Status and build-sequence generators ran. The first concurrent lint attempt lost the temporary test configuration during cleanup and exited `ENOENT`; the complete rerun after cleanup passed. Full local unit/build and persisted database checks were not rerun for this CSS/test fix; their limits above still apply.
+
 ## Visual comparison and limits
 
 Application captures are local-only test artefacts, outside Git, under the temporary `ppo-sv06-browser` folder. No Font Awesome Pro artwork is retained in the public repository. The immutable source captures are the existing icon-free files under `docs/reference/ui/service/service-review-design-r01/`.
