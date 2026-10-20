@@ -7373,6 +7373,11 @@
           "id": "correction",
           "label": "Identity correction",
           "description": "Existing revise-identity command, expected version, retained entries and original-operation recovery; no other correction fields implied."
+        },
+        {
+          "id": "readiness-check",
+          "label": "Readiness check",
+          "description": "CS-06 check, exact review and acknowledgement forms, source changed, empty and denied hosts at 1440/1024/390/320."
         }
       ],
       "implementation": [
@@ -7394,7 +7399,10 @@
         "src/components/customer-workspace.tsx",
         "src/components/organisation-correction.tsx",
         "src/shared/customer-360.ts",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css",
+        "tests/helpers/access-readiness-fixture.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
@@ -7404,18 +7412,28 @@
       "specification": "docs/design/development/components/shared-record.md",
       "used_on": [
         "scope:CS-01",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-06",
+        "route:/sites/[id]/readiness"
       ],
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
       "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
-      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern.",
       "gaps": [
         {
           "id": "shared-record-cs01-review",
           "expected": "Owner review of accepted source and real desktop/phone state pairs.",
           "actual": "Implementation and local synthetic proof are separate from owner review; see the evidence pairing table.",
           "action": "Review the retained evidence and explicit data/layout adaptations before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-cs06-review",
+          "expected": "Paired owner review of the accepted CS-06 frames and native state families.",
+          "actual": "Native implementation; owner visual and device review pending.",
+          "action": "Review the CS-06 pairing and undrawn authoring forms before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

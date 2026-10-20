@@ -1,10 +1,12 @@
 ---
-title: Access & readiness CS-06 build investigation
+title: Access & readiness CS-06 native build
 date: 2026-10-20
 ---
 
-Dean requested the native implementation of the accepted Access & readiness design at `/sites/[id]/readiness`. This session claims the page on `codex/cs06-access-readiness`, in its dedicated worktree from current main `971ac350`. The [accepted decision](../decisions/access-readiness-figma-design.md), live Figma notes and File index agree on CS-06 and D1–D7/Q1–Q4. The design reference is "PPO - Design", named version "Access & readiness — accepted"; page `1400:346423`, notes `1400:347414`.
+The claimed CS-06 page at `/sites/[id]/readiness` is being refined against the [accepted Access & readiness design](../decisions/access-readiness-figma-design.md), including D1–D7/Q1–Q4. Live PPO - Design frames, notes and File index were read. Source: Access & readiness — accepted, page `1400:346423`, notes `1400:347414`; retained icon-free evidence remains unchanged.
 
-Preflight found an implementation prerequisite behind D4: the existing readiness command supports preparation, evidence review and acknowledgement, but not the requirement draft/submission/independent-review lifecycle that preserves an approved revision while a successor is edited. Current preparation and Field readiness read the mutable content. Read-only inspection of the local live schema confirmed the single readiness content record and generic retained snapshots/events. A snapshot-based solution may avoid a migration, but still changes source selection used by Field readiness. The owner has been asked whether to include that prerequisite or explicitly gate revision editing in this page increment, under this task's scope and migration stop rules.
+Dean authorised professional supporting backend/journey improvements on 20 October. The [implementation decision](../decisions/access-readiness-native-build.md) records isolated requirement drafts in existing immutable snapshots, independent publication, visit binding and stale acknowledgement refusal. No migration, new capability or dependency is required. Field consumers continue to read active requirements. Existing journey fixtures now establish independently published requirements.
 
-No runtime code, schema, permission, capability or dependency has changed. P4, work-window weekdays and the Conversations action remain outside this build. Implementation, browser comparison, owner visual review and deployment are pending; the accepted Figma design is not evidence that the native page has passed review.
+The native composition reuses the shared record, tabs, controls, icons and compact phone header, with grouped requirements and exact review/acknowledgement facts. Register, both page contracts, guides and component bindings are updated together. P4 is gated; weekdays and Conversations stay outside scope. Acknowledgement grants no work authority, booking, resources, pack issue or dispatch clearance.
+
+[Verification evidence](../testing/evidence/access-readiness-native/README.md) records current results and limits. Source presence, functional proof, owner visual review, independent review and deployment remain separate. Native owner visual review and deployment are pending; Figma acceptance is not application acceptance.

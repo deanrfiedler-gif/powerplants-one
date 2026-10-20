@@ -1,3 +1,4 @@
+import { saveCsWithReviewedRequirements as saveCs } from "../helpers/readiness-publication";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { beforeEach, after, test } from "node:test";
@@ -14,7 +15,7 @@ import {
 } from "../../tests/helpers/field";
 import { readFieldJob } from "../../src/field/reads";
 import { readFieldReadiness } from "../../src/field/readiness";
-import { createCs, readCs, saveCs } from "../../src/shared/cs/service";
+import { createCs, readCs } from "../../src/shared/cs/service";
 import { syncBatch, digest } from "../../src/offline/server";
 import { downloadContext, preserveRecovery } from "../../src/offline/recovery";
 import { readTimer } from "../../src/field/timer";

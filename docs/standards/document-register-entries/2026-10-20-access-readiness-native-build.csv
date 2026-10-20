@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CS06-NATIVE-BUILD-DEC,Access & readiness native implementation,docs/decisions/access-readiness-native-build.md,,Implementation direction authorised; native owner visual review pending,Dean Fiedler,55c3852,,,git,
