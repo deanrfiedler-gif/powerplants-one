@@ -9,12 +9,12 @@ Source: Figma **PPO - Design**, named version **Discovery register — Pipedrive
 | Check | Observed result |
 | --- | --- |
 | `npm run studio:check` | Passed: 366 entries, 48 components, 210 routes, no errors. Review statuses remain separate. |
-| `npm run typecheck` | Passed. |
-| ESLint over changed application, fixture and test files | Passed. Full `npm run lint` was also invoked; its final local result was not retained across the tool-session restart. CI remains authoritative for the whole-tree result. |
+| `npm run typecheck` | Passed, including the post-merge shared-header integration. |
+| `npm run lint` | Passed after merging main, exit 0. Changed-file ESLint also passed. |
 | Discovery model unit tests | Passed, 3 tests: overlapping views, archived alternatives, withheld cost access and exact saved basis. |
 | Font Awesome unit tests | Passed, 4 tests, after extending the catalogue assertion and fallback rendering proof for the new name mapping. |
 | `npm run test:unit` | Initial complete run: 942 passed, 10 failed out of 952. One failure was this change's omitted icon-catalogue expectation; the focused rerun passes. The other nine reproduce on unchanged main, as detailed below. No all-green full local suite is claimed. |
-| ES-02 Playwright, desktop and phone | All 15 applicable cases passed across the final matrix and targeted recovery rerun; the phone snapshot case is intentionally skipped because phone rows open the wizard. Tests cover counts/filtering, refresh failure clearing rows/counts, retry into view-only mode, 390/320 overflow, loading/error/denied/empty/no-matches, saved-version handovers, tab keys, inert covered controls and focus return. |
+| ES-02 Playwright, desktop and phone | Post-merge full run passed: 15 tests, 1 intentional skip; the phone snapshot case is intentionally skipped because phone rows open the wizard. Tests cover counts/filtering, refresh failure clearing rows/counts, retry into view-only mode, 390/320 overflow, loading/error/denied/empty/no-matches, saved-version handovers, tab keys, inert covered controls and focus return. |
 | `npm run build` / ordinary local dev | Turbopack cannot resolve the worktree's node_modules junction outside its root. The same build failure reproduces on unchanged main. No successful production build is claimed locally. |
 | `python scripts/check_naming.py` | Passed. |
 | `python scripts/check_foundation.py` | Passed: all 78 parent requirements retained, 22 issued sources, no errors. |
@@ -24,7 +24,7 @@ Source: Figma **PPO - Design**, named version **Discovery register — Pipedrive
 
 Baseline comparison used a detached, unchanged checkout of main `0ebb26a3cccb1060f67186bf9f4e97b5c6118c8c` with the same installed dependencies. Its six relevant unit files produced 23 passes and the same nine failures: two operator CLI probes, two CPQ worker workloads, two document-store private-path checks, two foundation launcher probes and one recovery private-path check. These are observed Windows baseline failures, not newly attributed regressions. The shared local installation reports Next 16.4.0 while the lockfile pins 16.4.2; CI uses the pinned installation.
 
-The page ran through the existing Webpack test mode on a separate local port; no committed launcher configuration changed. The first browser run exposed a snapshot focus-return bug, now fixed and passing. Later reruns corrected the phone test's assumption that its hidden desktop menu remained mounted, and allowed the observed Windows URL navigation latency. The first CI failures identified the required Desktop/Mobile contract headings and the icon-catalogue expectation; both are corrected. Check the PR checks for the final pushed commit rather than treating earlier successful checks as proof of a newer commit.
+The page ran through the existing Webpack test mode on a separate local port; no committed launcher configuration changed. The first browser run exposed a snapshot focus-return bug, now fixed and passing. Later reruns corrected the phone test's assumption that its hidden desktop menu remained mounted, and allowed the observed Windows URL navigation latency. After integrating main 5ebb5c0a, the page uses SecondaryMenuFrame's current phoneHeader prop for one shared registration. The full browser matrix and all seven focused unit tests pass after that integration. A verification attempt made while the preview process was stopped failed with connection refused; it was rerun once the preview was ready. The first CI failures identified the required Desktop/Mobile contract headings and the icon-catalogue expectation; both are corrected. Engineering CI static assurance passed on 963382ed after those corrections; the later database/browser stages were still running. Check the PR checks for the final pushed commit rather than treating earlier successful checks as proof of a newer commit.
 
 ## Visual comparison
 

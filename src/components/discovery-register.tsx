@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useIdentity } from "./business-session";
 import { denied, useCrmResource } from "./crm-state";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
-import { usePhoneHeader, type PhoneHeaderConfig } from "../shell/phone-header";
 import { Button, ButtonLink } from "./ui/button";
 import { RegisterTable, RegisterChip } from "./ui/register-table";
 import { WorklistChoice, WorklistPanel } from "./crm-worklist-tools";
@@ -40,10 +39,6 @@ const readTime = (value: string) =>
     hour12: false,
     timeZone: "Australia/Brisbane",
   }).format(new Date(value));
-function PhoneConfig({ config }: { config: PhoneHeaderConfig }) {
-  usePhoneHeader(config);
-  return null;
-}
 export function DiscoveryReadiness({ row }: { row: DiscoveryRegisterRow }) {
   const option = selectedOption(row),
     label = readiness(option);
@@ -224,6 +219,14 @@ function Register({ query }: { query: URLSearchParams }) {
         menuId="discovery-views"
         contentId="discovery-content"
         state={menu}
+        phoneHeader={{
+          title: "Estimation wizard",
+          count: data ? rows.length : undefined,
+          filter: {
+            open: () => setFilterOpen(true),
+            applied: !!(owner || customer || view !== "All"),
+          },
+        }}
         message={data ? count : "Current results unconfirmed"}
         menu={
           <nav aria-label="Discovery views">
@@ -568,21 +571,6 @@ function Register({ query }: { query: URLSearchParams }) {
           )}
         </div>
       </SecondaryMenuFrame>
-      <PhoneConfig
-        config={{
-          title: "Estimation wizard",
-          count: data ? rows.length : undefined,
-          chooseView: {
-            open: (opener) => menu.toggle(opener),
-            expanded: menu.open,
-            controls: "discovery-views",
-          },
-          filter: {
-            open: () => setFilterOpen(true),
-            applied: !!(owner || customer || view !== "All"),
-          },
-        }}
-      />
       {filterOpen && (
         <WorklistPanel
           title="Filter discovery workspaces"
