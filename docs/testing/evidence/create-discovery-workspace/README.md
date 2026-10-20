@@ -25,7 +25,9 @@ Scope ES-02, route `/estimating/discovery/new`. Reference: **PPO - Design**, pag
 
 The full unit command was `node --import tsx --test --test-concurrency=1 tests/unit/*.test.ts`, equivalent to the repository's unit script with serial execution to limit Windows memory pressure. The three failures were two `ExactDocumentUnavailable` results in `document-store.test.ts` and the recovery test expecting “outside Git” while receiving “Unsafe recovery directory”. Unmodified main `0909db97aff551e37fbd349b43e797f5793e8cba`, in a separate clean worktree using the same installed runtime, reproduced exactly those three failures (1 passed, 3 failed across the two files). Its standard build reproduced the same Turbopack junction error. These are confirmed baseline limitations; neither the full unit run nor the standard build is labelled passed.
 
-Initial browser retries exposed a five-second shared identity-shell hydration limit on this host. The tests now wait for the actual creation-page boundary (up to 20 seconds), then retain the normal business-state assertion timeout. The final eight-case run completed in one minute. A separate busy-label regression introduced during verification was corrected before the passing run; no failed run is presented as passing evidence.
+Initial browser retries exposed a five-second shared identity-shell hydration limit on this host. The tests now wait for the actual creation-page boundary (up to 20 seconds), then retain the normal business-state assertion timeout. The final eight-case run after the started-step correction completed in 32 seconds; the two additional phone cases also passed again. Navigation assertions keep a started Requirements step “In progress” while an untouched Configuration step remains “Not started”. A separate busy-label regression introduced during verification was corrected before the passing run; no failed run is presented as passing evidence.
+
+The local real-database walkthrough also created the reviewed workspace with Morgan as estimator and the exact accepted Sales brief linked. The saved workspace remained Incomplete with the original owned follow-ups; the creator correctly received a view-only saved page. A direct persisted-result assertion confirmed one workspace, the chosen estimator, original creator, exact brief and unchanged Answered states/follow-up owners. This is synthetic end-to-end evidence, not business acceptance.
 
 ## Local runtime and scope
 
@@ -50,6 +52,10 @@ Browser tests use stable synthetic API fixtures with real page controls. They pr
 | Empty / attention / loading `1416:359903`, `1416:359389`, `1416:365050` | [Empty desktop](captures/empty-desktop.png), [validation](captures/needs-attention.png), [loading 390](captures/loading-390.png). Validation captures the focused first incomplete field; the alert remains in the scroll region and the footer retains the count. |
 
 Remaining visual differences are explicit: current permission-filtered shell shortcuts and breadcrumb; shared field and family-card copy; editable work tags, scope/effort details and answer-state dialogs; no readiness assertion before preview; no copied technical configuration; phone area/family controls below the brief. The existing phone family strip scrolls horizontally within its own region. These are recorded adaptations or review items, not a claim of pixel identity. Desktop summary spacing and choice-heading size were tightened after comparison.
+
+## Downstream observation outside this page
+
+The existing saved wizard’s view-only fallback offers only the workspace owner in follow-up owner selectors. A recorded follow-up assigned to a different person can therefore display “Choose…” even though its original owner is preserved in the saved revision. The same fallback is present in unmodified main `0909db97`. This needs a separate saved-wizard read/display correction; creation does not silently reassign follow-ups to conceal it.
 
 ## Review and delivery
 

@@ -77,7 +77,11 @@ async function reviewed(page: Page) {
     await expect(page.getByRole("button", { name: `Review ${id} state, source and follow-up`, exact: true })).toBeFocused();
   }
   if ((page.viewportSize()?.width ?? 1440) <= 780) await page.getByLabel("Discovery step", { exact: true }).selectOption("Scope & delivery");
-  else await page.getByRole("button", { name: /3\. Scope & delivery/ }).click();
+  else {
+    await page.getByRole("button", { name: /3\. Scope & delivery/ }).click();
+    await expect(page.getByRole("button", { name: "1. Requirements In progress", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "2. Configuration Not started", exact: true })).toBeVisible();
+  }
   for (const id of ["Q04", "Q09"]) await page.getByLabel(`${id} follow-up reason`, { exact: true }).fill(`SYN review ${id}`);
   await page.locator(".es02-bottom .ppo-button--primary").click();
   const dialog = page.getByRole("dialog", { name: "Create discovery workspace", exact: true });

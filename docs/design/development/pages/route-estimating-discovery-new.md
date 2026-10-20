@@ -35,7 +35,7 @@ Before creation, Alternatives and Revisions show zero. No price is calculated: c
 
 ## Desktop
 
-Use the existing shell, Estimating navigation group and page guide. At 1440 px retain the 240 px rail, 380 px summary, ruled context/tabs, five 48 px steps and 64 px footer. No extra module container. Main column and summary own separate scrolling. Choice rows are compact and keyboard-selectable.
+Use the existing shell, Estimating navigation group and page guide. At 1440 px retain the 240 px rail, 380 px summary, ruled context/tabs, five 48 px steps and 64 px footer. No extra module container. Main column and summary own separate scrolling. Choice rows are compact and keyboard-selectable. Started discovery steps retain “In progress” when navigating elsewhere; visiting a step does not claim completion or saved readiness.
 
 At 1024 px the existing wizard rule uses the 76 px rail; Summary opens a native dialog. Requirements uses two-column canonical context, full-width included work and half-width declarations. AreasEditor, FamilyOverview, SystemsEditor and ResponsibilitiesEditor retain their editing contracts.
 

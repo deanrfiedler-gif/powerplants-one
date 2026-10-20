@@ -108,6 +108,7 @@ function CreationEditor({ opportunityId, salesHandover, initialOptions, initialC
   const router = useRouter(), identity = useIdentity();
   const [draft, setDraft] = useState(() => initialCreationDraft(initialOptions, initialContext.brief)), [owner, setOwner] = useState(initialContext.owner_id);
   const [brief, setBrief] = useState(initialContext.brief), [step, setStep] = useState<CreationStep>("Requirements"), [tab, setTab] = useState("Discovery");
+  const [startedSteps, setStartedSteps] = useState<CreationStep[]>(["Requirements"]);
   const [preview, setPreview] = useState<CreationPreview | null>(null), [previewError, setPreviewError] = useState<unknown>(null), [previewBusy, setPreviewBusy] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false), [reason, setReason] = useState(""), [attempted, setAttempted] = useState(false), [sentAt, setSentAt] = useState<Date | null>(null);
   const [question, setQuestion] = useState<string | null>(null), [scopeOpen, setScopeOpen] = useState(false), [briefReview, setBriefReview] = useState(false), [evidence, setEvidence] = useState<{ id?: string } | null>(null);
@@ -126,7 +127,7 @@ function CreationEditor({ opportunityId, salesHandover, initialOptions, initialC
   function dirty() { latestPreviewRequest.current++; setPreview(null); setPreviewError(null); command.clearError(); command.dirty(); }
   function update(value: DiscoveryInput) { if (!blocked) { dirty(); setDraft(value); } }
   function updateConfig(configuration: Configuration) { update({ ...draft, configuration }); }
-  function go(next: CreationStep) { setTab("Discovery"); setStep(next); }
+  function go(next: CreationStep) { setTab("Discovery"); setStep(next); setStartedSteps(started => started.includes(next) ? started : [...started, next]); }
   function locate(id: string) {
     if (initialOptions.definition.questions.some(q => q.id === id)) { go(questionStep(id)); setQuestion(id); }
     else if (id.startsWith("Configuration")) go("Configuration");
@@ -185,7 +186,7 @@ function CreationEditor({ opportunityId, salesHandover, initialOptions, initialC
     <div className="create-phone-option">{viewedOption("create-option-phone")}</div>
     {tab !== "Discovery" ? <section role="tabpanel" id={`create-workspace-panel-${tab}`} aria-labelledby={`create-workspace-tab-${tab}`} className="create-empty-view"><h2>{tab}</h2><p>{tab === "Alternatives" ? "Option A is the first scope. Create the workspace before adding alternatives." : "No revision has been saved. Creation will retain the first discovery revision."}</p><Button onClick={() => setTab("Discovery")}>Return to discovery</Button></section>
     : <div role="tabpanel" id="create-workspace-panel-Discovery" aria-labelledby="create-workspace-tab-Discovery">
-      <nav className="es02-steps" aria-label="Discovery steps">{creationSteps.map((s, i) => <button key={s} type="button" className="es02-step" aria-current={step === s ? "step" : undefined} onClick={() => go(s)}><strong>{i + 1}. {s}</strong><small>{step === s ? <><Dot />In progress</> : s === "Pricing" ? "After a Complete save" : s === "Review" ? "Review and create" : attempted && issues.some(issue => issue.step === s) ? "Needs attention" : "Not started"}</small></button>)}</nav>
+      <nav className="es02-steps" aria-label="Discovery steps">{creationSteps.map((s, i) => <button key={s} type="button" className="es02-step" aria-current={step === s ? "step" : undefined} onClick={() => go(s)}><strong>{i + 1}. {s}</strong><small>{step === s ? <><Dot />In progress</> : s === "Pricing" ? "After a Complete save" : s === "Review" ? "Review and create" : attempted && issues.some(issue => issue.step === s) ? "Needs attention" : startedSteps.includes(s) ? "In progress" : "Not started"}</small></button>)}</nav>
       <div className="create-step-select"><small>Step {creationSteps.indexOf(step) + 1} of 5 · In progress</small><div><Button aria-label="Previous discovery step" disabled={step === "Requirements"} onClick={() => go(creationSteps[creationSteps.indexOf(step) - 1])}><Icon name="arrow-left" /></Button><select aria-label="Discovery step" value={step} onChange={e => go(e.target.value as CreationStep)}>{creationSteps.map(s => <option key={s}>{s}</option>)}</select><Button aria-label="Next discovery step" disabled={step === "Review"} onClick={() => go(creationSteps[creationSteps.indexOf(step) + 1])}><Icon name="arrow-right" /></Button></div></div>
       <fieldset disabled={blocked || !canRead} className="create-editable"><ValidationFields error={validation}>
         {step === "Requirements" && <>
