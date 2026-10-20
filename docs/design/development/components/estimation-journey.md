@@ -42,3 +42,6 @@ Reuse labelled Field/SelectField, shared RecordTabs, native dialogs, validation,
 ## Differences and verification
 
 Q6 timing fields remain a labelled proposal with no persistence. No new technical rule or equipment suitability follows from a category. Phone Alternatives/Revisions images, real devices, screen-reader review and owner acceptance remain open. See [execution evidence](../../../testing/evidence/es02-figma/README.md). Review fingerprints remain unchanged; automated tests and source presence do not approve the page.
+
+
+The Discovery register now uses the shell navigation directly; its previous EstimationJourney consumer binding is removed. The accepted wizard retains this component.

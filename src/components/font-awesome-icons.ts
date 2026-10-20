@@ -480,3 +480,11 @@ export const specialistFontAwesome = {
   drawing: "pen-ruler",
   spinner: "spinner",
 } satisfies Record<SpecialistIconName, FontAwesomeIcon>;
+
+// Discovery register ES-02 live Icon/<name> references. Names only; Kit artwork is not stored.
+export const discoveryRegisterFontAwesome = {
+  summary: "list", user: "user", branch: "code-branch", incomplete: "hourglass-half",
+  unrecorded: "circle-dashed", check: "circle-check", legacy: "file-pen",
+  warning: "triangle-exclamation", cost: "calculator", refresh: "rotate-left",
+  document: "calculator", history: "clock-rotate-left", family: "layer-group", copy: "code-branch",
+} as const;
