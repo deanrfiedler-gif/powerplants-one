@@ -41,10 +41,14 @@ test("native scheduling pages retain context and reflow at coordination, phone a
     for (const [path, name] of screenshots) {
       await page.setViewportSize({ width, height });
       await page.goto(path);
-      if (name !== "resource") await expect(
-        page.getByRole("navigation", { name: "Scheduling workspace" }),
-      ).toBeVisible();
-      if (name === "resource") await expect(page.locator(".pl02-review-meta")).toContainText("Complete.");
+      if (name !== "resource")
+        await expect(
+          page.getByRole("navigation", { name: "Scheduling workspace" }),
+        ).toBeVisible();
+      if (name === "resource")
+        await expect(page.locator(".pl02-review-meta")).toContainText(
+          "Complete.",
+        );
       else if (name !== "planner")
         await expect(
           page
@@ -66,13 +70,19 @@ test("native scheduling pages retain context and reflow at coordination, phone a
       expect(
         await page.locator(".ppo-shell-header").evaluate((header) => {
           const bounds = header.getBoundingClientRect();
-          return [...header.querySelectorAll("button")]
-            // The phone row keeps the account trigger mounted but visibility:hidden; only visible controls must fit.
-            .filter((button) => button.getBoundingClientRect().width > 0 && getComputedStyle(button).visibility === "visible")
-            .every((button) => {
-              const r = button.getBoundingClientRect();
-              return r.top >= bounds.top && r.bottom <= bounds.bottom + 1;
-            });
+          return (
+            [...header.querySelectorAll("button")]
+              // The phone row keeps the account trigger mounted but visibility:hidden; only visible controls must fit.
+              .filter(
+                (button) =>
+                  button.getBoundingClientRect().width > 0 &&
+                  getComputedStyle(button).visibility === "visible",
+              )
+              .every((button) => {
+                const r = button.getBoundingClientRect();
+                return r.top >= bounds.top && r.bottom <= bounds.bottom + 1;
+              })
+          );
         }),
         "Header utilities stay above Service tabs",
       ).toBe(true);
@@ -90,12 +100,19 @@ test("resource detail exposes read-only evidence, calendar intervals and anonymo
   await expect(
     page.getByRole("heading", { name: "Competence and evidence" }),
   ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Published calendar" })).toBeAttached();
+  await expect(
+    page.getByRole("heading", { name: "Published calendar" }),
+  ).toBeAttached();
   await expect(
     page.getByRole("heading", { name: "Seven-day availability" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: /^Review evidence for/ }).first().click();
-  await expect(page.getByRole("dialog").getByText("Content hash", { exact: true })).toBeVisible();
+  await page
+    .getByRole("button", { name: /^Review evidence for/ })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("dialog").getByText("Content hash", { exact: true }),
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: /Save|Edit calendar|Add skill/ }),
   ).toHaveCount(0);

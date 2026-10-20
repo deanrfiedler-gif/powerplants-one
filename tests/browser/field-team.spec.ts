@@ -80,7 +80,10 @@ test("accepted Field team register, snapshot and person record reflow at all dra
       });
       if (await collapse.isVisible()) await collapse.click();
     }
-    if(width<=780) expect((await root.locator(".pl02-toolbar").boundingBox())!.height).toBe(110);
+    if (width <= 780)
+      expect((await root.locator(".pl02-toolbar").boundingBox())!.height).toBe(
+        110,
+      );
     await noOverflow(page);
     await page.screenshot({
       path: info.outputPath(`register-${width}.png`),
@@ -126,6 +129,15 @@ test("accepted Field team register, snapshot and person record reflow at all dra
         "Casey Ward",
       );
     await noOverflow(page);
+    if (width <= 780) {
+      const refresh = page.getByRole("button", {
+        name: "Refresh evidence",
+        exact: true,
+      });
+      expect(
+        (await refresh.boundingBox())!.x + (await refresh.boundingBox())!.width,
+      ).toBeLessThanOrEqual(width - 16);
+    }
     await page.setViewportSize({
       width,
       height: width > 780 ? 1705 : width === 390 ? 2664 : 2842,

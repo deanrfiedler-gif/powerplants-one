@@ -50,12 +50,16 @@ test("Field Team and resource evidence retain date, site and timezone through re
     page.getByRole("combobox", { name: "Site", exact: true }),
   ).toHaveValue(siteId);
   const menu = page.getByRole("navigation", { name: "Field team views" });
-  if (!await menu.isVisible()) await page.getByRole("button", { name: /^Choose view/ }).click();
+  if (!(await menu.isVisible()))
+    await page.getByRole("button", { name: /^Choose view/ }).click();
   await menu.getByRole("button", { name: /^Technicians/ }).click();
-  if(info.project.name.includes("mobile")) await page.locator(".pl02-phone-row").first().click();
+  if (info.project.name.includes("mobile"))
+    await page.locator(".pl02-phone-row").first().click();
   else {
     await page.locator(".pl02-person").first().click();
-    const reviewLink=page.getByRole("dialog").getByRole("link", {name:"Availability & competence"});
+    const reviewLink = page
+      .getByRole("dialog")
+      .getByRole("link", { name: "Availability & competence" });
     await expect(reviewLink).toHaveAttribute("href", /site_id=/);
     await reviewLink.click();
   }
@@ -74,13 +78,18 @@ test("Field Team and resource evidence retain date, site and timezone through re
     path: info.outputPath("resource-timezone-context.png"),
     fullPage: true,
   });
-  await page.getByRole("button", { name: "Person record actions" }).filter({visible:true}).click();
-  await page.getByRole("link", { name: "Back to Field team", exact:true }).click();
+  await page
+    .getByRole("button", { name: "Person record actions" })
+    .filter({ visible: true })
+    .click();
+  await page
+    .getByRole("link", { name: "Back to Field team", exact: true })
+    .click();
   // The new default is Technicians; returning retains the full URL context.
   expect(new URL(page.url()).searchParams.get("day")).toBe("2031-09-23");
   expect(new URL(page.url()).searchParams.get("site_id")).toBe(siteId);
   expect(new URL(page.url()).searchParams.get("timezone")).toBe("UTC");
-  await page.goto(page.url()+"&view=visits");
+  await page.goto(page.url() + "&view=visits");
   await expect(page.getByLabel("Visit date", { exact: true })).toHaveValue(
     "2031-09-23",
   );

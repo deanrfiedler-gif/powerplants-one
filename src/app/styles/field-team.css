@@ -1393,7 +1393,7 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--white);
-  box-shadow: 0 4px 20px #23293626;
+  box-shadow: var(--shadow-card);
 }
 .pl02-snapshot > header > div {
   position: absolute;

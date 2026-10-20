@@ -302,6 +302,7 @@ export function ResourceWorkspaceScreen({ id }: { id: string }) {
               </select>
             </label>
             <Button
+              aria-label="Refresh evidence"
               disabled={read.loading}
               onClick={() => {
                 setEvidence("");
@@ -310,7 +311,8 @@ export function ResourceWorkspaceScreen({ id }: { id: string }) {
               }}
             >
               <MyWorkIcon name="refresh" />
-              <span>Refresh evidence</span>
+              <span className="pl02-desktop">Refresh evidence</span>
+              <span className="pl02-phone">Refresh</span>
             </Button>
           </div>
           <p className="pl02-review-meta">

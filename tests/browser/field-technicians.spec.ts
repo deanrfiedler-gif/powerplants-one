@@ -17,9 +17,10 @@ async function identity(page: Page, profile = "coordinator") {
   await expect(identityToggle(page)).toBeEnabled();
 }
 async function chooseView(page: Page, view: string) {
-  const menu=page.getByRole("navigation",{name:"Field team views"});
-  if (!await menu.isVisible()) await page.getByRole("button",{name:/^Choose view/}).click();
-  await menu.getByRole("button",{name:new RegExp("^"+view)}).click();
+  const menu = page.getByRole("navigation", { name: "Field team views" });
+  if (!(await menu.isVisible()))
+    await page.getByRole("button", { name: /^Choose view/ }).click();
+  await menu.getByRole("button", { name: new RegExp("^" + view) }).click();
 }
 async function open(page: Page) {
   await page.goto("/service/technicians?view=visits");
