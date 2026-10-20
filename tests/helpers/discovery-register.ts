@@ -2,8 +2,13 @@ import type {
   DiscoveryRegisterData,
   DiscoveryRegisterRow,
 } from "../../src/estimating/discovery-register-model";
-const fixtureId = (kind: number, n: number) => `e2000000-0000-4000-${kind}-${String(n).padStart(12, "0")}`;
-export const discoveryOwnerIds = { "Dean Fiedler": fixtureId(8001, 1), "Jordan Kim": fixtureId(8001, 2), "Alex Nguyen": fixtureId(8001, 3) };
+const fixtureId = (kind: number, n: number) =>
+  `e2000000-0000-4000-${kind}-${String(n).padStart(12, "0")}`;
+export const discoveryOwnerIds = {
+  "Dean Fiedler": fixtureId(8001, 1),
+  "Jordan Kim": fixtureId(8001, 2),
+  "Alex Nguyen": fixtureId(8001, 3),
+};
 // Test-only synthetic story from the live ES-02 reference; no seeded business records.
 const stories = [
   [
@@ -104,6 +109,7 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
       changed,
     ]): DiscoveryRegisterRow => {
       const id = `e2000000-0000-4000-8000-${String(number).padStart(12, "0")}`;
+      const selectedIndex = number === 334 ? 1 : 0;
       const options = Array.from({ length: count }, (_, i) => ({
         id: fixtureId(8100, number * 10 + i + 1),
         label: i
@@ -113,8 +119,11 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
           : "Base scope",
         ordinal: i + 1,
         state: "Active" as const,
-        revision_id: fixtureId(8200, number * 100 + i * 10 + (i ? 1 : revision)),
-        revision: i ? 1 : revision,
+        revision_id: fixtureId(
+          8200,
+          number * 100 + i * 10 + (i === selectedIndex ? revision : 1),
+        ),
+        revision: i === selectedIndex ? revision : 1,
         kind:
           number === 318 ? ("LegacyManual" as const) : ("Discovery" as const),
         scope_readiness: state,
@@ -126,9 +135,21 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
         company_id: "20000000-0000-4000-8000-000000000001",
         opportunity_id: fixtureId(8002, number),
         display_number: `SYN-PPO-OPP-${String(number).padStart(6, "0")}`,
-        selected_option_id: options[0].id,
+        selected_option_id: options[selectedIndex].id,
         options,
-        customer: { id: fixtureId(8003, ["SYN Riverbend Nursery", "SYN Isolation Nursery", "SYN Greenhouse Demonstration", "SYN Systems", "SYN Northbank Nursery"].indexOf(customer) + 1), name: customer },
+        customer: {
+          id: fixtureId(
+            8003,
+            [
+              "SYN Riverbend Nursery",
+              "SYN Isolation Nursery",
+              "SYN Greenhouse Demonstration",
+              "SYN Systems",
+              "SYN Northbank Nursery",
+            ].indexOf(customer) + 1,
+          ),
+          name: customer,
+        },
         owner: { id: discoveryOwnerIds[owner], name: owner },
         updated_at: `${changed}T05:42:00.000Z`,
         cost:
@@ -146,7 +167,16 @@ export const discoveryFixture = (): DiscoveryRegisterData => ({
                       : number === 337
                         ? 1
                         : 2,
-                revision_id: fixtureId(8200, number * 100 + ([334, 329].includes(number) ? 1 : number === 326 ? 2 : revision)),
+                revision_id: fixtureId(
+                  8200,
+                  number * 100 +
+                    selectedIndex * 10 +
+                    ([334, 329].includes(number)
+                      ? 1
+                      : number === 326
+                        ? 2
+                        : revision),
+                ),
                 revision: [334, 329].includes(number)
                   ? 1
                   : number === 326
@@ -199,7 +229,7 @@ export function discoverySnapshotFixture() {
                 { tag: "Irrigation" },
                 { tag: "Screening" },
               ],
-              facility_ids: ["synthetic-facility-a", "synthetic-facility-b"],
+              facility_ids: [fixtureId(8500, 1), fixtureId(8500, 2)],
             },
           },
         },
@@ -237,6 +267,7 @@ export const discoveryIdentityFixture = {
   display_name: "Dean Fiedler",
 };
 export const discoveryShellFixture = {
+  preference_scope: "synthetic-discovery-register",
   display_name: "Dean Fiedler",
   actions: [],
   navigation: [

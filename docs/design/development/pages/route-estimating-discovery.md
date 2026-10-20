@@ -21,7 +21,7 @@ Figma **PPO - Design**, named version **Discovery register — Pipedrive pattern
 
 ## Mobile
 
-390 × 844 `1400:354630`; 320 × 844 `1400:354952`. Reuse compact phone header and estimation bottom navigation. Title stays Estimation wizard with ellipsis where necessary; page guide is in the identity menu. List rows show title/date, SYN-PPO-OPP number/customer, selected-option letter at 390 only, then readiness and cost basis in words. Truncate long context with accessible full link text. Rows open the wizard; there is no phone snapshot. New workspace uses the existing route and is hidden without edit permission.
+390 × 844 `1400:354630`; 320 × 844 `1400:354952`. Reuse compact phone header and estimation bottom navigation. Title stays Estimation wizard with ellipsis where necessary; page guide is in the identity menu. List rows show title/date, SYN-PPO-OPP number/customer, selected-option letter at 390 (omit A at 320; retain another selected option), then readiness and cost basis in words. Truncate long context with accessible full link text. Rows open the wizard; there is no phone snapshot. New workspace uses the existing route and is hidden without edit permission.
 
 ## States, controls and offline contract
 
@@ -31,6 +31,6 @@ Shared consumers: application shell, menu, buttons, register table, tabs and dia
 
 ## Unspecified and deviations awaiting review
 
-Bulk actions, column settings, denied-row composition, 200% zoom, full Revisions tab, desktop loading/error and hover captures are missing. Disabled placeholders preserve the drawn grid without inventing commands. Recent activity uses available selected-option discovery revisions; a combined estimate/alternative activity feed remains an open question. Recorded follow-up/system/facility facts replace unsupported growing-area and systems-to-confirm counts. Local fallback icons can differ when the owner's Kit is unavailable. These adaptations are implementation proposals, not accepted design changes.
+Bulk actions, column settings, denied-row composition, 200% zoom, full Revisions tab, desktop loading/error and hover captures are missing. Disabled placeholders preserve the drawn grid without inventing commands. Recent activity uses available selected-option discovery revisions; a combined estimate/alternative activity feed remains an open question. Recorded follow-up/system/facility facts replace unsupported growing-area and systems-to-confirm counts. The existing compact shell may truncate the 320 px title; its global search stays in the phone menu. The unavailable Reviews & approvals destination and example notification counts are not fabricated. Shared date/version formatting and fallback icons can differ from the frames when the owner's Kit is unavailable. These adaptations are implementation proposals, not accepted design changes.
 
 The guide `guide.page.estimating.discovery` describes real controls and recovery in Australian English. [Verification record](../../../testing/evidence/discovery-register-native/README.md) records functional and visual evidence and limits. Owner device review, UI baseline adoption, business acceptance and deployment remain pending.

@@ -34,7 +34,9 @@ async function open(
   await page.route("**/api/v1/shell/context", (route) =>
     route.fulfill({ json: discoveryShellFixture }),
   );
-  await page.goto(`/estimating/discovery${query}`, { waitUntil: "domcontentloaded" });
+  await page.goto(`/estimating/discovery${query}`, {
+    waitUntil: "domcontentloaded",
+  });
   await expect(
     page.getByRole("heading", { name: "Discovery register", exact: true }),
   ).toBeAttached({ timeout: 30_000 });
@@ -50,7 +52,10 @@ test("ES-02 grid, counts, filters, read-only and failure recovery", async ({
     await expect(host.locator("tbody tr")).toHaveCount(8);
     await host.getByRole("button", { name: "Estimator", exact: true }).click();
     await page.getByRole("menuitemradio", { name: "Jordan Kim" }).click();
-    await expect(page).toHaveURL(new RegExp(`owner=${discoveryOwnerIds["Jordan Kim"]}`));
+    await expect(page).toHaveURL(
+      new RegExp(`owner=${discoveryOwnerIds["Jordan Kim"]}`),
+      { timeout: 30_000 },
+    );
     await expect(host.locator("tbody tr")).toHaveCount(3);
   } else {
     await expect(host.locator(".dr-phone-row")).toHaveCount(8);
@@ -75,9 +80,8 @@ test("ES-02 grid, counts, filters, read-only and failure recovery", async ({
   );
   await expect(host.locator(".dr-phone-row")).toHaveCount(0);
   await expect(host.locator("tbody tr")).toHaveCount(0);
-  await expect(
-    host.getByRole("link", { name: /^All workspaces/ }),
-  ).not.toContainText("8");
+  await expect(host.locator(".dr-count")).toHaveText("—");
+  await expect(host.locator(".mw-badge")).toHaveCount(0);
   await page.unroute("**/api/v1/estimating/workspaces*");
   await page.route("**/api/v1/estimating/workspaces*", (route) =>
     route.fulfill({ json: { ...discoveryFixture(), can_create: false } }),
@@ -86,6 +90,9 @@ test("ES-02 grid, counts, filters, read-only and failure recovery", async ({
     .getByRole("button", { name: "Retry loading" })
     .filter({ visible: true })
     .click();
+  await expect(host.locator(phone ? ".dr-phone-row" : "tbody tr")).toHaveCount(
+    phone ? 8 : 3,
+  );
   await expect(
     host.getByRole("link", { name: "New discovery workspace" }),
   ).toHaveCount(0);
@@ -127,7 +134,9 @@ for (const state of [
       ["loading", "error", "denied"].includes(state)
         ? (state as "loading" | "error" | "denied")
         : fixture,
-      state === "no-matches" ? `?view=Incomplete&owner=${discoveryOwnerIds["Jordan Kim"]}` : "",
+      state === "no-matches"
+        ? `?view=Incomplete&owner=${discoveryOwnerIds["Jordan Kim"]}`
+        : "",
     );
     const expected = {
       loading: "Loading permitted discovery workspaces…",

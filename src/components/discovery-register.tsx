@@ -76,7 +76,12 @@ function Register({ query }: { query: URLSearchParams }) {
   const [menuOpen, setMenuOpen] = useState(true),
     menu = useSecondaryMenu(menuOpen, setMenuOpen);
   const snapshotOpener = useRef<HTMLElement | null>(null);
-  const closeSnapshot = () => { setSnapshot(null); requestAnimationFrame(() => snapshotOpener.current?.focus({ preventScroll: true })); };
+  const closeSnapshot = () => {
+    setSnapshot(null);
+    requestAnimationFrame(() =>
+      snapshotOpener.current?.focus({ preventScroll: true }),
+    );
+  };
   const [filterOpen, setFilterOpen] = useState(false),
     [snapshot, setSnapshot] = useState<string | null>(null);
   const request = query.get("opportunity_id")
@@ -269,7 +274,16 @@ function Register({ query }: { query: URLSearchParams }) {
         }
       >
         <div className="dr-register">
-          <button className="dr-tablet-menu-strip" type="button" aria-label="Show discovery views" aria-controls="discovery-views" aria-expanded={menu.open} onClick={event => menu.toggle(event.currentTarget)}><span aria-hidden="true" /></button>
+          <button
+            className="dr-tablet-menu-strip"
+            type="button"
+            aria-label="Show discovery views"
+            aria-controls="discovery-views"
+            aria-expanded={menu.open}
+            onClick={(event) => menu.toggle(event.currentTarget)}
+          >
+            <span aria-hidden="true" />
+          </button>
           <h1 className="sr-only">Discovery register</h1>
           <div className="dr-register-list" inert={!!current && !menu.phone}>
             <div className="dr-toolbar">
@@ -416,7 +430,10 @@ function Register({ query }: { query: URLSearchParams }) {
                           <td>
                             <button
                               className="dr-title"
-                              onClick={(event) => { snapshotOpener.current = event.currentTarget; setSnapshot(row.id); }}
+                              onClick={(event) => {
+                                snapshotOpener.current = event.currentTarget;
+                                setSnapshot(row.id);
+                              }}
                             >
                               {row.title}
                             </button>
@@ -447,7 +464,10 @@ function Register({ query }: { query: URLSearchParams }) {
                               variant="quiet"
                               className="dr-icon-button"
                               aria-label={`Inspect ${row.title}`}
-                              onClick={(event) => { snapshotOpener.current = event.currentTarget; setSnapshot(row.id); }}
+                              onClick={(event) => {
+                                snapshotOpener.current = event.currentTarget;
+                                setSnapshot(row.id);
+                              }}
                             >
                               <Icon name="more" />
                             </Button>
@@ -490,7 +510,10 @@ function Register({ query }: { query: URLSearchParams }) {
                         </div>
                         <div className="dr-phone-reference">
                           {row.display_number} · {row.customer.name}
-                          <span className="dr-phone-option">
+                          <span
+                            className="dr-phone-option"
+                            data-base={option.ordinal === 1}
+                          >
                             {" "}
                             · {optionLetter(option.ordinal)}
                           </span>
@@ -511,7 +534,10 @@ function Register({ query }: { query: URLSearchParams }) {
                             }
                           />
                           <span>
-                            {option.kind === "LegacyManual" ? "Legacy manual basis" : readiness(option)} · {phoneCostLabel(row)}
+                            {option.kind === "LegacyManual"
+                              ? "Legacy manual basis"
+                              : readiness(option)}{" "}
+                            · {phoneCostLabel(row)}
                           </span>
                         </div>
                       </div>
