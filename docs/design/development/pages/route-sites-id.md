@@ -39,6 +39,7 @@ This is an online page under the [offline system contract](../systems/offline.md
 - P4 states in the design story are replaced by explicit unavailability and CS-06 links. No readiness calculation or customer confirmation is invented.
 - Global search remains cross-application. A labelled local Search and filter control provides Site filtering without changing the shell search contract.
 - Every row shows its short Site reference. This adds a second line to desktop rows and phone rows; the grid remains compact and may exceed the drawn 40 px for readable content.
+- The shared record breadcrumb prefers the short reference; the record body retains the Site name. The fixture shell shows only its explicitly permitted navigation.
 - Shared date formatting retains year and time-zone/offset information. Long dates wrap rather than copying the abbreviated synthetic story dates.
 - Equipment grouping uses the recorded installation facility; it does not invent a parent-building relationship. Installed and served links remain distinct.
 - Undrawn Facilities, Work and visits, History, details/editing, tablet record and restricted/partial states compose existing controls. Work/History tab totals are omitted because no exact combined source total exists. Record previous/next appears only within a complete returned population; UUID identity replaces an unknown position.

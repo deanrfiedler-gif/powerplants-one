@@ -62,10 +62,11 @@ The Contacts deterministic builder also pinned the changed shared-read source. I
 | `npm run studio:check` | Pass after merge: 366 entries, 48 components; owner reviews still pending. |
 | `python scripts/check_naming.py` | Pass after merge: 745 records. |
 | Contacts builder `--check` and model | Pass after source-contract inspection; issued HTML unchanged; 103/103 groups. |
-| Lint, typecheck, foundation | Earlier runs passed before final polish; merged-branch runs in progress. The rejected icon is explicitly fixed, not recorded as a passing CI run. |
-| Focused reference/development unit tests | Earlier focused run 9/9 passed. Full unit attempts did not complete under Windows memory pressure; two document-store failures reproduced on pristine main `8f5ad31b`. |
-| Sites database assertions | Three passed diagnostically against the full schema/seed set, with the reset hook omitted. The normal reset/seed suite has not yet passed locally; this is not a full database-suite pass. |
-| Sites browser tests | Two fixture journeys previously passed at 1440/1024/390/320 and drawn states. Added focus test exposed the autofocus issue now fixed; merged-branch rerun pending. |
+| `npm run lint`, `npm run typecheck` | Pass on the merged branch. CI merged-tree typecheck also passes at `3ecd0135`. |
+| `python scripts/check_foundation.py` | Pass locally and in CI after merge; all 78 parent requirements retained. |
+| Focused reference/development unit tests | 10/10 pass on the merged branch, including history. Full unit attempts did not complete under Windows memory pressure; two document-store failures reproduced on pristine main `8f5ad31b`. No full unit-suite pass claimed. |
+| Sites database assertions | Three previously passed diagnostically against the full schema/seed set, with the reset hook omitted. The normal reset/seed rerun on 21 October hit its 120 s deadline and failed all three cases. This remains unresolved; no normal database-suite pass claimed. |
+| Sites browser tests | Both merged-branch fixture journeys pass at 1440/1024/390/320, including keyboard focus and handovers; state capture rerun also passes. Fifteen inspected captures are retained in the evidence folder. The real API journey remains separate and has no final merged-head pass. |
 | `npm run build` | Earlier compilation/type stage completed, but build was stopped under Windows memory pressure before completion. No build pass claimed. |
 
-CI rerun and final browser evidence are pending. Owner visual/device review, deployment and business acceptance remain pending and separate.
+The CI rerun now passes the merged-tree typecheck and documentation checks, but browser-dependent jobs stop before application tests because the stable installer supplies Chrome 156. The unchanged main guard reproduces the refusal. Dean authorised separate runtime maintenance PR #643; Sites does not alter browser policy. Full runtime CI remains pending that prerequisite. Owner visual/device review, deployment and business acceptance remain pending and separate.

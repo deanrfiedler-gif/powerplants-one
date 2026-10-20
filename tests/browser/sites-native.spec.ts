@@ -10,6 +10,8 @@ import {
 } from "../helpers/sites-native";
 
 async function capture(page: Page, info: TestInfo, name: string) {
+  if ((page.viewportSize()?.width ?? 1440) <= 390)
+    await expect(page.locator(".mobile-navigation")).toBeVisible();
   const root = process.env.PPO_CS04_EVIDENCE;
   if (root) {
     await mkdir(root, { recursive: true });
@@ -257,5 +259,6 @@ test("CS04 loading, empty, retry, revoked access and partial source states", asy
   await expect(
     overview.getByText(/Showing the first permitted records/),
   ).toBeVisible();
+  await overview.getByRole("heading", { name: "Work at this site" }).scrollIntoViewIfNeeded();
   await capture(page, info, "partial-390");
 });
