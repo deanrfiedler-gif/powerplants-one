@@ -2766,7 +2766,9 @@
         "docs/reference/ui/service/findings-design-r01/PPO-Findings-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/findings-figma-design.md"
+        "docs/decisions/findings-figma-design.md",
+        "docs/decisions/service-findings-backend.md",
+        "docs/contracts/service-findings.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

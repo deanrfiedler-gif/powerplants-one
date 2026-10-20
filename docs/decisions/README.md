@@ -5,6 +5,8 @@
 
 [Discovery register native implementation](discovery-register-native.md) (PPO-ES02-DISCOVERY-REGISTER-NATIVE-DEC) records the ES-02 build, confirmed workspace owner, bounded read extensions and pending native review.
 
+[Service findings source projection](service-findings-backend.md) (SV-07 / BC-06 R1) defines five-source reads, native closure authority and bounded authorised-window counts. It preserves the accepted page design and records the write, recurrence, receiving and dashboard-total boundaries that remain open.
+
 [Workshop, Settings and personal preferences scope](workshop-settings-preferences-scope.md) (PPO-WORKSHOP-SETTINGS-SCOPE-DEC) records Dean's 19 October 2026 decisions: a full workshop module (CX-02) as three Figma pages placed after SC-04, with day-to-day work in PPO and MYOB kept as the book of record (option A); the other Phase 11 options left off the design list; a Settings hub around AD-02; and one My account and preferences page.
 
 [Workshop builds design](workshop-builds-figma-design.md) (PPO-CX02-WORKSHOP-BUILDS-FIGMA-DEC) records Dean's 19 October 2026 acceptance of the CX-02 Workshop builds design: a Supply chain rail item, a build register and record with build checks, parts list, booking out, steps, welding, tests, rework and release by the workshop lead with a serial number, with only material issues and finished units sent to MYOB. Building it is not decided.

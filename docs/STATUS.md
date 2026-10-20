@@ -9,6 +9,12 @@ The existing `/estimating/discovery` route is being refined to the accepted Disc
 
 The page contract, design/component register and guide are updated together. [Verification](testing/evidence/discovery-register-native/README.md) records checks and limitations. Native owner visual review, business approval and deployment remain pending; the accepted Figma design is not evidence of an accepted native baseline.
 
+## BC-06 Service findings backend continuation — 20 October 2026
+
+Dean authorised continuing BC-06 Projects, Service and Supply on 20 October 2026 while another agent owns Conversations T2b. [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623), owned by this Codex BC-06 chat on `codex/bc06-service-findings`, supplies the first SV-07 backend increment: a permission-scoped findings register and exact source reads across inspection defects/not-tested checks, incident corrective actions, incomplete report revisions, customer reservations and scheduling follow-ups. The [contract](contracts/service-findings.md) preserves native source closure and Activity handovers. Set-based visibility runs before bounded paging; counts describe the authorised candidate window, not whole-register dashboard totals.
+
+The [execution ledger](testing/evidence/service-findings/README.md) records local tests, retained failures/fixes, independent review and the exact limits of CI/build evidence. No migration, permission, seed, UI or T2b files change. SV-07 source-bound next-action commands and recurrence, SV-08 receiving, the remaining Project work, Warranty-to-Supply and capacity/reservation policy remain in the [backend plan](delivery/backend-completion-plan.md). Code, owner acceptance, integration and deployment remain separate.
+
 ## Accepted UI queue and People register claim — 20 October 2026
 
 Dean requested page-by-page implementation of accepted Figma designs. The [queue](delivery/accepted-ui-build-plan.md) reconciles current main `d512bd38`, the generated UI sequence, routes, modules, register, decisions and status. Organisations and the compact phone header are already implemented. Facilities, Discovery costing and Project financial performance are accepted despite their earlier proposal labels in the brief. ADR-0059 remains Proposed. AD-01 has no matching Figma acceptance record; Dean instructed this session to leave it blocked and continue with accepted pages.
