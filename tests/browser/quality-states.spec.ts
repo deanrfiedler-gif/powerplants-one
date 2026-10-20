@@ -405,8 +405,9 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       // The phone header names the page in its title; wider screens name it in the breadcrumb (phone header amendment P1, P2).
       const pageName = page.getByRole("banner").locator(phoneWidth(page) ? ".ppo-phone-title-text" : ".ppo-crumb-current");
       if (s.id === "SC-08") {
-        await expect(pageName).toHaveText(record.display_number);
-        await expect(pageName).toBeVisible();
+        const appointmentName = phoneWidth(page) ? page.getByRole("banner").locator(".ppo-phone-reference") : pageName;
+        await expect(appointmentName).toHaveText(record.display_number);
+        await expect(appointmentName).toBeVisible();
         // The workspace rail/phone destinations replace the duplicate Service
         // header tabs. The record publishes its appointment identity in the header.
         await expect(page.getByRole("banner").locator(".module-navigation")).toHaveCount(0);

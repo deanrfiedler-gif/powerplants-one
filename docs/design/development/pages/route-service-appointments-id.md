@@ -47,7 +47,7 @@ The appointment projection adds customer identity, visible contact name, service
 
 ### Verification and open review
 
-See [execution evidence](../../../testing/evidence/appointment-detail-native/README.md) for commands, results, screenshots, viewport comparisons and limitations. Synthetic UI fixtures exercise supported states, permissions, read races and original-operation recovery; database proof covers the added projection. The stable route and scope keys and all parent IDs remain unchanged. Build sequence and status are generated, not hand-edited.
+See [execution evidence](../../../testing/evidence/appointment-detail-native/README.md) for commands, results, screenshots, viewport comparisons and limitations. Synthetic UI fixtures exercise supported states, permissions and original-operation recovery; a database test is added for the projection, but local setup timed out before its assertions and also failed on unmodified main. The stable route and scope keys and all parent IDs remain unchanged. Build sequence and status are generated, not hand-edited.
 
 Open for Dean: review the native visual differences; settle the undrawn demand/statement/exception controls before implementation; decide the later P4/P5 increments; provide a structured R2 cause/task association if the detailed rehold narrative is required. Owner visual, physical-device, screen-reader and business review remain pending. No deployment is claimed.
 
