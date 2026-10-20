@@ -1,5 +1,5 @@
 import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
-import { productsSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
+import { productsSeedGrants, conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import { supplySeedGrants } from "../helpers/engineering-materials-grants";
@@ -244,7 +244,9 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       // Seed 108 copies every live Opportunity and Project read, including those the earlier seeds above added.
       expected.push(...conversationSeedGrants([...originalGrants.map(g=>g.value), ...expected] as never).map(g=>({...g,capability:String(g.capability)})));
       const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
-    assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
+    assert.deepEqual(sorted(added.map(g => g.value).filter(g => g.capability !== "conversation.agent.ask")), sorted(expected));
+    assert.deepEqual(sorted(added.map(g => g.value).filter(g => g.capability === "conversation.agent.ask")),
+      sorted(agentAskSeedGrants([...originalGrants.map(g => g.value), ...expected])));
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);
     assert.deepEqual(
       await rows(

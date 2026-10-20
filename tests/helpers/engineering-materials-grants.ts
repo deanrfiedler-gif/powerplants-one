@@ -110,7 +110,9 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
-  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id))), sorted(expected));
+  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id) && g.capability !== "conversation.agent.ask")), sorted(expected));
+  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id) && g.capability === "conversation.agent.ask")),
+    sorted(agentAskSeedGrants([...original, ...expected], at)));
 }
 
 // Seed 49 copies exact duties from existing synthetic scopes and adds no user.
@@ -226,5 +228,22 @@ export function conversationSeedGrants(original: Grant[], at = new Date()): Gran
     .filter(g => ["crm.opportunity.read", "project.read"].includes(String(g.capability)) && live(g))
     .sort((a, b) => String(a.capability).localeCompare(String(b.capability), "en") || (String(a.id) < String(b.id) ? -1 : 1))
     .flatMap(g => ["conversation.read", "conversation.post"].map(capability => ({ ...g, id: conversationGrantId(g.id, capability), capability })))
+    .filter(g => !seen.has(key(g)) && !!seen.add(key(g)));
+}
+
+// Seed 110 copies live conversation.post grants of active local profiles. Callers supply those
+// profiles' grants, including the exact conversationSeedGrants added earlier in the same upgrade.
+export function agentAskGrantId(source: string): string {
+  const h = createHash("md5").update(`ppo-conversations-t2b:${source}:conversation.agent.ask`).digest("hex");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+export function agentAskSeedGrants(original: Grant[], at = new Date()): Grant[] {
+  const time = (v: unknown) => new Date(v as string | Date).getTime();
+  const key = (g: Grant) => [g.workspace_id, g.user_id, g.capability, g.scope_type, g.scope_id].join(":");
+  const seen = new Set(original.map(key));
+  return original.filter(g => g.capability === "conversation.post" && time(g.valid_from) <= at.getTime()
+      && (g.valid_to === null || time(g.valid_to) > at.getTime()))
+    .sort((a, b) => String(a.id) < String(b.id) ? -1 : 1)
+    .map(g => ({ ...g, id: agentAskGrantId(String(g.id)), capability: "conversation.agent.ask" }))
     .filter(g => !seen.has(key(g)) && !!seen.add(key(g)));
 }

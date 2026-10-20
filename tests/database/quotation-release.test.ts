@@ -1,4 +1,4 @@
-import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -513,7 +513,7 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations WHERE version>58 ORDER BY version")).map(r => r.version),
-    [59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109],
+    [59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
   );
   const after = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
     ids = new Set(grants.map((g) => g.id));
@@ -524,10 +524,13 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
   const sorted = (gs: typeof grants) =>
     gs.map(({ id: _, ...g }) => JSON.stringify(g)).sort();
   assert.deepEqual(
-    sorted(after.filter((g) => !ids.has(g.id))),
+    sorted(after.filter((g) => !ids.has(g.id) && g.capability !== "conversation.agent.ask")),
     sorted(((others) => [...others, ...conversationSeedGrants([...grants, ...others])])([...quotationReleaseSeedGrants(grants), ...accessInspectionSeedGrants(grants), ...accessReviewSeedGrants(grants), ...accessTeamSeedGrants(grants), ...accessApplicationSeedGrants(grants), ...accessRequestSeedGrants(grants)])),
   );
-  assert.equal(after.length - grants.length, 20 + after.filter((g) => String(g.capability).startsWith("conversation.")).length);
+  assert.deepEqual(sorted(after.filter(g => !ids.has(g.id) && g.capability === "conversation.agent.ask")),
+    sorted(agentAskSeedGrants(after.filter(g => g.capability !== "conversation.agent.ask"))));
+  assert.equal(after.filter(g => g.capability !== "conversation.agent.ask").length - grants.length,
+    20 + after.filter(g => ["conversation.read", "conversation.post"].includes(String(g.capability))).length);
   assert.equal(
     (await rows("SELECT id FROM ppo.users")).length - users.length,
     2,

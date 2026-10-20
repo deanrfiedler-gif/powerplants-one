@@ -13,7 +13,7 @@ import { draftBytes, readQuoteJob, runQuoteJob } from "../../src/estimating/work
 import { crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { principal, rows } from "../helpers/maintenance";
-import { maintenanceSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
+import { maintenanceSeedGrants, conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import { snapshot } from "../helpers/policy-commands";
 import { recoverSchema } from "../helpers/recover-schema";
 
@@ -81,8 +81,10 @@ test("late reserved Maintenance migration preserves the current schema, original
   assert.equal(actual.length - grants.length, 22);
   const shape = (g: Record<string, unknown>[]) => g.map((r) => JSON.stringify(Object.fromEntries(Object.entries(r).filter(([k]) => k !== "id")), Object.keys(r).filter((k) => k !== "id").sort())).sort();
   // A late reserved 0051 installed after 0108 starts with the conversation duties already present.
-  const conversationAdded = everything.filter((g) => String(g.capability).startsWith("conversation.") && !ids.has(g.id));
+  const conversationAdded = everything.filter((g) => ["conversation.read", "conversation.post"].includes(String(g.capability)) && !ids.has(g.id));
   assert.deepEqual(shape(conversationAdded), shape(grants.some((g) => String(g.capability).startsWith("conversation.")) ? [] : conversationSeedGrants([...grants, ...maintenanceSeedGrants(grants)])));
+  assert.deepEqual(shape(everything.filter(g => g.capability === "conversation.agent.ask" && !ids.has(g.id))),
+    shape(seeds.some(s => s.version === 110) ? [] : agentAskSeedGrants([...grants, ...maintenanceSeedGrants(grants), ...conversationAdded])));
   const extended = (await rows("SELECT pg_get_functiondef('ppo.identity_has_typed_record()'::regprocedure) AS definition"))[0].definition;
   for (const branch of identity.match(/WHEN '[^']+'[^\n]*/g) ?? []) assert.ok(extended.includes(branch), branch);
   assert.match(extended, /ServiceAgreement/);
