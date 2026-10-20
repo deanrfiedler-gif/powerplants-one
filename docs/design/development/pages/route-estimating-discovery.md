@@ -10,7 +10,7 @@ Authority: [accepted design and D1–D7/Q1–Q4](../../../decisions/discovery-re
 
 Figma **PPO - Design**, named version **Discovery register — Pipedrive pattern, accepted**; use live corrected SYN-PPO-OPP numbers. File index `630:2`, row `1414:357730`; page `1400:345306`; notes `1402:350109`. Retained references: [eight icon-free captures](../../../reference/ui/estimating/discovery-register-figma-design-r01/README.md), unchanged, plus historical [wizard container r03](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html).
 
-## Desktop and tablet
+## Desktop
 
 - All workspaces `1400:345640`, Northbank snapshot `1400:352346` at 1440 × 900; tablet `1400:355129` at 1024 × 900. Parts `1400:345375`, grid header `1400:345376`, row `1400:345440`.
 - Reuse the rail, Conversations top bar and Estimation wizard breadcrumb. Dock the 240 px menu on desktop; collapse it at tablet width. The tablet reference has the shared rail collapsed; its existing owner preference remains available. Compact 60 px toolbar, flush grid, 40 px ruled rows. No extra module card.
